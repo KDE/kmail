@@ -171,8 +171,15 @@ public:
   bool htmlOverride() const { return mHtmlOverride; }
   void setHtmlOverride( bool override );
 
+  /** Override default load external references setting */
+  bool htmlLoadExtOverride() const { return mHtmlLoadExtOverride; }
+  void setHtmlLoadExtOverride( bool override );
+
   /** Is html mail to be supported? Takes into account override */
   bool htmlMail();
+
+  /** Is loading ext. references to be supported? Takes into account override */
+  bool htmlLoadExternal();
 
   /** Returns the MD5 hash for the list of new features */
   static QString newFeaturesMD5();
@@ -411,7 +418,7 @@ private:
 
 
 private:
-  bool mHtmlMail, mHtmlOverride;
+  bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;

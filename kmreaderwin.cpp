@@ -510,6 +510,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   readConfig();
 
   mHtmlOverride = false;
+  mHtmlLoadExtOverride = false;
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
@@ -862,6 +863,7 @@ void KMReaderWin::readConfig(void)
   mToggleFixFontAction->setChecked( mUseFixedFont );
 
   mHtmlMail = reader.readBoolEntry( "htmlMail", false );
+  mHtmlLoadExternal = reader.readBoolEntry( "htmlLoadExternal", false );
 
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
@@ -873,8 +875,6 @@ void KMReaderWin::readConfig(void)
   raction = actionForAttachmentStrategy( attachmentStrategy() );
   assert( raction );
   raction->setChecked( true );
-
-  mViewer->setOnlyLocalReferences( !reader.readBoolEntry( "htmlLoadExternal", false ) );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
@@ -1234,6 +1234,8 @@ void KMReaderWin::enableMsgDisplay() {
 void KMReaderWin::updateReaderWin()
 {
   if (!mMsgDisplay) return;
+
+  mViewer->setOnlyLocalReferences(!htmlLoadExternal());
 
   htmlWriter()->reset();
 
@@ -2229,9 +2231,26 @@ void KMReaderWin::setHtmlOverride(bool override)
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::setHtmlLoadExtOverride(bool override)
+{
+  mHtmlLoadExtOverride = override;
+  //if (message())
+  //    message()->setDecodeHTML(htmlMail());
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMReaderWin::htmlMail()
 {
   return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMReaderWin::htmlLoadExternal()
+{
+  return ((mHtmlLoadExternal && !mHtmlLoadExtOverride) ||
+          (!mHtmlLoadExternal && mHtmlLoadExtOverride));
 }
 
 

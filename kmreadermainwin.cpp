@@ -30,7 +30,8 @@
 
 #include "kmreadermainwin.h"
 
-KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
+KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, 
+                                  char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
     mMsg( 0 )
 {
@@ -38,6 +39,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
   //mReaderWin->setShowCompleteMessage( true );
   mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
+  mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
   initKMReaderMainWin();
 }
 
@@ -98,7 +100,8 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride(), mReaderWin->overrideCodec() );
+      mReaderWin->htmlOverride(),  mReaderWin->htmlLoadExtOverride(), 
+      mReaderWin->overrideCodec() );
   command->start();
 }
 

@@ -21,7 +21,7 @@ class KMReaderMainWin : public KMail::SecondaryWindow
   Q_OBJECT
 
 public:
-  KMReaderMainWin( bool htmlOverride, char *name = 0 );
+  KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, char *name = 0 );
   KMReaderMainWin( char *name = 0 );
   KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,

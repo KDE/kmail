@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="79" name="kmmainwin" >
+<kpartgui version="80" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -77,6 +77,7 @@
    <Action name="delete_folder" />
    <Separator/>
    <Action name="prefer_html" />
+   <Action name="prefer_html_external_refs" />
    <Action name="thread_messages" />
    <Action name="thread_messages_by_subject" />
    <Separator/>

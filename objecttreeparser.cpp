@@ -778,6 +778,16 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
           if ( 0 <= i ) cstr.truncate(i);
         }
         // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+        if ( !mReader->htmlLoadExternal() ) {
+          htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
+          htmlWriter()->queue( i18n("<b>Note:</b> This HTML message may contain external "
+                                    "references to images etc. For security/privacy reasons "
+                                    "external references are not loaded. If you trust the "
+                                    "sender of this message then you can load the external "
+                                    "references for this message "
+                                    "<a href=\"kmail:loadExternal\">by clicking here</a>.") );
+          htmlWriter()->queue( "</div><br><br>" );
+        }
       } else {
         htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
         htmlWriter()->queue( i18n("<b>Note:</b> This is an HTML message. For "

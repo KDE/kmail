@@ -120,6 +120,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
+  mFolderHtmlLoadExtPref = false;
   mSystemTray = 0;
   mDestructed = false;
   mActionCollection = actionCollection;
@@ -239,6 +240,7 @@ void KMMainWidget::readFolderConfig(void)
   mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
   mFolderThreadSubjPref = config->readBoolEntry( "threadMessagesBySubject", true );
   mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
+  mFolderHtmlLoadExtPref = config->readBoolEntry( "htmlLoadExternalOverride", false );
 }
 
 
@@ -253,6 +255,7 @@ void KMMainWidget::writeFolderConfig(void)
   config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
   config->writeEntry( "threadMessagesBySubject", mFolderThreadSubjPref );
   config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
+  config->writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
 
 
@@ -292,6 +295,7 @@ void KMMainWidget::readConfig(void)
   // read "Reader" config options
   KConfigGroup readerConfig( config, "Reader" );
   mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
+  mHtmlLoadExtPref = readerConfig.readBoolEntry( "htmlLoadExternal", false );
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
@@ -1174,6 +1178,30 @@ void KMMainWidget::slotOverrideHtml()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotOverrideHtmlLoadExt()
+{
+  if( mHtmlLoadExtPref == mFolderHtmlLoadExtPref ) {
+    int result = KMessageBox::warningContinueCancel( this,
+      // the warning text is taken from configuredialog.cpp:
+      i18n( "Loading external references in html mail will make you more vulnerable to "
+        "\"spam\" and may increase the likelihood that your system will be "
+        "compromised by other present and anticipated security exploits." ),
+      i18n( "Security Warning" ),
+      i18n( "Load External References" ),
+      "OverrideHtmlLoadExtWarning", false);
+    if( result == KMessageBox::Cancel ) {
+      mPreferHtmlLoadExtAction->setChecked( false );
+      return;
+    }
+  }
+  mFolderHtmlLoadExtPref = !mFolderHtmlLoadExtPref;
+  if (mMsgView) {
+    mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+    mMsgView->update( true );
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
@@ -1501,9 +1529,11 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
+  bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
-                        htmlOverride, mCodec );
+                        htmlOverride, htmlLoadExtOverride,
+                        mCodec );
   command->start();
 }
 
@@ -1662,7 +1692,10 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   }
   readFolderConfig();
   if (mMsgView)
+  {
     mMsgView->setHtmlOverride(mFolderHtmlPref);
+    mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
+  }
   mHeaders->setFolder( mFolder, forceJumpToUnread );
   updateMessageActions();
   updateFolderMenu();
@@ -1694,6 +1727,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   }
   // reset HTML override to the folder setting
   mMsgView->setHtmlOverride(mFolderHtmlPref);
+  mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
 }
 
 //-----------------------------------------------------------------------------
@@ -1981,7 +2015,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   }
 
   assert( msg != 0 );
-  KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref );
+  KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
@@ -2227,6 +2261,9 @@ void KMMainWidget::setupActions()
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+
+  mPreferHtmlLoadExtAction = new KToggleAction( i18n("Load e&xternal references"), 0, this,
+		      SLOT(slotOverrideHtmlLoadExt()), actionCollection(), "prefer_html_external_refs" );
 
   mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
@@ -2939,9 +2976,11 @@ void KMMainWidget::updateFolderMenu()
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   updateMarkAsReadAction();
   mPreferHtmlAction->setEnabled( mFolder ? true : false );
+  mPreferHtmlLoadExtAction->setEnabled( mFolder && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mThreadMessagesAction->setEnabled( mFolder ? true : false );
 
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
+  mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mThreadMessagesAction->setChecked(
       mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
   mThreadBySubjectAction->setEnabled(

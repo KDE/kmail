@@ -1290,19 +1290,22 @@ KMCommand::Result KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride, const QTextCodec* codec )
-  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mCodec( codec )
+  KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride, 
+  const QTextCodec *codec )
+  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ),
+    mHtmlLoadExtOverride( htmlLoadExtOverride ), mCodec( codec )
 {
 }
 
 KMCommand::Result KMPrintCommand::execute()
 {
   KMReaderWin printWin( 0, 0, 0 );
-  printWin.setPrinting(TRUE);
+  printWin.setPrinting( true );
   printWin.readConfig();
   printWin.setHtmlOverride( mHtmlOverride );
+  printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printWin.setOverrideCodec( mCodec );
-  printWin.setMsg(retrievedMessage(), TRUE);
+  printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
 
   return OK;

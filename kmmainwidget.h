@@ -243,6 +243,7 @@ protected slots:
   void slotRefreshFolder();
   void slotCompactAll();
   void slotOverrideHtml();
+  void slotOverrideHtmlLoadExt();
   void slotOverrideThread();
   void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
@@ -445,7 +446,8 @@ private:
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
-  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref,
+  bool mHtmlPref, mHtmlLoadExtPref, mThreadPref,
+       mFolderHtmlPref, mFolderHtmlLoadExtPref, mFolderThreadPref,
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
 
 //  QPopupMenu *mMessageMenu;
@@ -454,7 +456,7 @@ private:
   KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
       *mMarkAllAsReadAction;
-  KToggleAction *mPreferHtmlAction, *mThreadMessagesAction;
+  KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 

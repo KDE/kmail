@@ -325,14 +325,19 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 
 namespace {
   bool ShowHtmlSwitchURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
-    if ( url.protocol() == "kmail" )
-	{
-	  if ( url.path() == "showHTML" )
-	  {
-	    if ( w ) {
-            w->setHtmlOverride( !w->htmlOverride() );
-            w->update( true );
-        }
+    if ( url.protocol() == "kmail" ) {
+      if ( !w )
+        return false;
+
+      if ( url.path() == "showHTML" ) {
+        w->setHtmlOverride( !w->htmlOverride() );
+        w->update( true );
+        return true;
+      }
+
+      if ( url.path() == "loadExternal" ) {
+        w->setHtmlLoadExtOverride( !w->htmlLoadExtOverride() );
+        w->update( true );
         return true;
       }
 //       if ( url.path() == "startIMApp" )
@@ -346,9 +351,11 @@ namespace {
   }
 
   QString ShowHtmlSwitchURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
-    return url.url() == "kmail:showHTML"
-      ? i18n("Turn on HTML rendering for this message.")
-      : QString::null ;
+    if ( url.url() == "kmail:showHTML" )
+      return i18n("Turn on HTML rendering for this message.");
+    if ( url.url() == "kmail:loadExternal" )
+      return i18n("Load external references from the Internet for this message.");
+    return QString::null ;
   }
 }
 
