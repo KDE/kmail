@@ -128,7 +128,7 @@ QString Signature::textFromFile( bool * ok ) const
   }
   if ( ok ) *ok = true;
   // ### hmm, should we allow other encodings, too?
-  return QString::fromLocal8Bit( kFileToString( mUrl ) );
+  return QString::fromLocal8Bit( kFileToString( mUrl, false ) );
 }
 
 QString Signature::withSeparator( bool * ok ) const
