@@ -13,6 +13,7 @@
 class QPopupMenu;
 class QTextCodec;
 class KMainWindow;
+class KAction;
 class KProgressDialog;
 class KMComposeWin;
 class KMFilter;
@@ -585,6 +586,27 @@ private:
   KMFilter *mFilter;
   KMHeaders *mHeaders;
   KMMainWidget *mMainWidget;
+};
+
+class FolderShortcutCommand : public QObject
+{
+  Q_OBJECT
+
+public:
+  FolderShortcutCommand( KMMainWidget* mainwidget, KMFolder *folder );
+  ~FolderShortcutCommand();
+
+public slots:
+  void start();
+  /** Assign a KActio to the command which is used to trigger it. This 
+   * action will be deleted along with the command, so you don't need to
+   * keep track of it separately. */
+  void setAction( KAction* );
+
+private:
+  KMMainWidget *mMainWidget;
+  KMFolder *mFolder;
+  KAction *mAction;
 };
 
 

@@ -1449,6 +1449,28 @@ void KMMetaFilterActionCommand::start()
 #endif
 }
 
+FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
+                                              KMFolder *folder )
+    : mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
+{
+}
+
+
+FolderShortcutCommand::~FolderShortcutCommand()
+{
+  if ( mAction ) mAction->unplugAll();
+  delete mAction;
+}
+
+void FolderShortcutCommand::start()
+{
+  mMainWidget->slotSelectFolder( mFolder );
+}
+
+void FolderShortcutCommand::setAction( KAction* action )
+{
+  mAction = action;
+}
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
                                                         KMMessage *msg )

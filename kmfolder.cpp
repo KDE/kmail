@@ -22,6 +22,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kshortcut.h>
 #include <kmessagebox.h>
 #include <qfile.h>
 
@@ -127,6 +128,12 @@ void KMFolder::readConfig( KConfig* config )
 
   if ( mUseCustomIcons )
     emit iconsChanged();
+
+  QString shortcut( config->readEntry( "Shortcut" ) );
+  if ( !shortcut.isEmpty() ) {
+    KShortcut sc( shortcut );
+    setShortcut( sc );
+  }
 }
 
 void KMFolder::writeConfig( KConfig* config ) const
@@ -153,6 +160,8 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
+  if ( !mShortcut.isNull() ) 
+    config->writeEntry( "Shortcut", mShortcut.toString() );
 }
 
 KMFolderType KMFolder::folderType() const
@@ -802,6 +811,14 @@ void KMFolder::reallyAddMsg( KMMessage* aMsg )
 void KMFolder::reallyAddCopyOfMsg( KMMessage* aMsg )
 {
   mStorage->reallyAddCopyOfMsg( aMsg );
+}
+
+void KMFolder::setShortcut( const KShortcut &sc )
+{
+  if ( mShortcut != sc ) {
+    mShortcut = sc;
+    emit shortcutChanged( this );
+  }
 }
 
 #include "kmfolder.moc"

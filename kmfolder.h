@@ -25,6 +25,7 @@ using KMail::MailingList;
 #include <qptrvector.h>
 #include <sys/types.h>
 #include <stdio.h>
+#include <kshortcut.h>
 
 class KMMessage;
 class KMFolderDir;
@@ -495,6 +496,9 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
+  const KShortcut &shortcut() const { return mShortcut; }
+  void setShortcut( const KShortcut& );
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -513,6 +517,9 @@ signals:
 
   /** Emitted when the name of the folder changes. */
   void nameChanged();
+
+  /** Emitted when the shortcut associated with this folder changes. */
+  void shortcutChanged( KMFolder * );
 
   /** Emitted before a message is removed from the folder. */
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
@@ -589,6 +596,9 @@ private:
 
   /** Should new mail in this folder be ignored? */
   bool mIgnoreNewMail;
+
+  /** shortcut associated with this folder or null, if none is configured. */
+  KShortcut mShortcut;
 };
 
 #endif /*kmfolder_h*/

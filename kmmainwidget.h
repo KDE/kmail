@@ -36,6 +36,7 @@ class KMFolderTreeItem;
 class KMHeaders;
 class KMCommand;
 class KMMetaFilterActionCommand;
+class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
@@ -142,6 +143,7 @@ public:
 
   KMSystemTray *systray() const;
 
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash
@@ -187,6 +189,9 @@ public slots:
 
   /** Create actions for marked filters */
   void initializeFilterActions();
+ 
+  /** Add, remove or adjust the folder's shortcut. */
+  void slotShortcutChanged( KMFolder *folder );
 
 signals:
   void messagesTransfered( bool );
@@ -370,6 +375,8 @@ protected slots:
   void slotPrintMsg();
 
   void slotConfigChanged();
+  /** Remove the shortcut actions associated with a folder. */
+  void slotFolderRemoved( KMFolder *folder );
 
 private:
   // Message actions
@@ -468,6 +475,7 @@ private:
   QPtrList<KAction> mFilterMenuActions;
   QPtrList<KAction> mFilterTBarActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
+  QDict<FolderShortcutCommand> mFolderShortcutCommands;
   QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;

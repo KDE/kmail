@@ -124,6 +124,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFilterMenuActions.setAutoDelete(true);
   mFilterTBarActions.setAutoDelete(false);
   mFilterCommands.setAutoDelete(true);
+  mFolderShortcutCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
@@ -160,6 +161,18 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
+
+  connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+          this, SLOT(slotFolderRemoved(KMFolder*)));
+
+  connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+          this, SLOT(slotFolderRemoved(KMFolder*)));
+
+  connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+          this, SLOT(slotFolderRemoved(KMFolder*)));
+
+  connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+          this, SLOT(slotFolderRemoved(KMFolder*)));
 
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -3353,6 +3366,28 @@ void KMMainWidget::initializeFilterActions()
   }
 }
 
+void KMMainWidget::slotFolderRemoved( KMFolder *folder )
+{
+  mFolderShortcutCommands.remove( folder->idString() );
+}
+
+void KMMainWidget::slotShortcutChanged( KMFolder *folder )
+{
+  // remove the old one, autodelete
+  mFolderShortcutCommands.remove( folder->idString() );
+  if ( folder->shortcut().isNull() ) 
+    return;
+  
+  FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
+  mFolderShortcutCommands.insert( folder->idString(), c );
+
+  QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
+  QString normalizedName = actionname.replace(" ", "_");
+  KAction* action = 
+    new KAction(actionname, folder->shortcut(), c, SLOT(start()), 
+                actionCollection(), normalizedName.local8Bit());
+  c->setAction( action ); // will be deleted along with the command
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubscriptionDialog()

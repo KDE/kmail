@@ -16,6 +16,7 @@
 #include "kmkernel.h"
 #include "globalsettings.h"
 #include "kmcommands.h"
+#include "foldershortcutdialog.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -247,6 +248,18 @@ void KMFolderTreeItem::properties()
                               i18n("Properties of Folder %1").arg( mFolder->label() ) );
   props->exec();
   //Nothing here the above exec() may actually delete this KMFolderTreeItem
+  return;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTreeItem::assignShortcut()
+{
+  if ( !mFolder )
+    return;
+
+  KMail::FolderShortcutDialog *shorty = 
+    new KMail::FolderShortcutDialog( mFolder, listView() );
+  shorty->exec();
   return;
 }
 
@@ -537,6 +550,11 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
 
+    disconnect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
+               mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
+    connect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
+            mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
+
     if (!openFolders)
       slotUpdateCounts(fti->folder());
   }
@@ -619,9 +637,11 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
         fti->setExpandable( false );
 
       connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),
-               this, SIGNAL(iconChanged(KMFolderTreeItem*)));
+          this, SIGNAL(iconChanged(KMFolderTreeItem*)));
       connect (fti, SIGNAL(nameChanged(KMFolderTreeItem*)),
-               this, SIGNAL(nameChanged(KMFolderTreeItem*)));
+          this, SIGNAL(nameChanged(KMFolderTreeItem*)));
+      mMainWidget->slotShortcutChanged( folder ); // load the initial accel
+
     }
     // restore last open-state
     fti->setOpen( readIsListViewItemOpen(fti) );
@@ -1004,6 +1024,10 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   if (fti->folder() && fti->parent())
   {
     folderMenu->insertSeparator();
+    folderMenu->insertItem(SmallIcon("configure"),
+        i18n("&Assign Shortcut"),
+        fti,
+        SLOT(assignShortcut()));
     folderMenu->insertItem(SmallIcon("configure"),
         i18n("&Properties"),
         fti,

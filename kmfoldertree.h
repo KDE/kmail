@@ -81,9 +81,9 @@ signals:
 
 public slots:
   void properties();
+  void assignShortcut();
   void slotRepaint();
   void slotNameChanged() { emit nameChanged( this ); }
-
 
 protected:
   void init();
