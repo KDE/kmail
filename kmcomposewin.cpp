@@ -3429,55 +3429,58 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   }
 
   if (saveInDrafts)
-	{
-		KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
-		// get the draftsFolder
-		if ( !mMsg->drafts().isEmpty() )
-		{
-			draftsFolder = kernel->folderMgr()->findIdString( mMsg->drafts() );
-			if ( draftsFolder == 0 )
-				imapDraftsFolder = kernel->imapFolderMgr()->findIdString( mMsg->drafts() );
-		}
-		if (imapDraftsFolder && imapDraftsFolder->noContent()) imapDraftsFolder = NULL;
+  {
+    KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
+    // get the draftsFolder
+    if ( !mMsg->drafts().isEmpty() )
+    {
+      draftsFolder = kernel->folderMgr()->findIdString( mMsg->drafts() );
+      if ( draftsFolder == 0 )
+	imapDraftsFolder = kernel->imapFolderMgr()->findIdString( mMsg->drafts() );
+    }
+    if (imapDraftsFolder && imapDraftsFolder->noContent())
+      imapDraftsFolder = NULL;
 
-		if ( draftsFolder == 0 ) {
-			draftsFolder = kernel->draftsFolder();
-		} else {
-			draftsFolder->open();
-		}	
-		kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
-		if (imapDraftsFolder) kdDebug(5006) << "saveindrafts: imapdrafts=" << imapDraftsFolder->name() << endl;
+    if ( draftsFolder == 0 ) {
+      draftsFolder = kernel->draftsFolder();
+    } else {
+      draftsFolder->open();
+    }	
+    kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
+    if (imapDraftsFolder)
+      kdDebug(5006) << "saveindrafts: imapdrafts="
+		    << imapDraftsFolder->name() << endl;
 		
     sentOk = !(draftsFolder->addMsg(mMsg));
-		if (imapDraftsFolder)
-		{
-			// move the message to the imap-folder and highlight it
-			imapDraftsFolder->moveMsg(mMsg);
-			(static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder();
-		}
+    if (imapDraftsFolder)
+    {
+      // move the message to the imap-folder and highlight it
+      imapDraftsFolder->moveMsg(mMsg);
+      (static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder();
+    }
 
   } else {
-     mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
-     mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
-     mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
-     QString recips = mMsg->headerField( "X-KMail-Recipients" );
-     if( !recips.isEmpty() ) {
-       mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
-     }
-     mMsg->cleanupHeader();
-     sentOk = kernel->msgSender()->send(mMsg, aSendNow);
-     KMMessage* msg;
-     for( msg = bccMsgList.first(); msg; msg = bccMsgList.next() ) {
-       msg->setTo( KabcBridge::expandDistributionLists( to() ));
-       msg->setCc( KabcBridge::expandDistributionLists( cc() ));
-       msg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
-       QString recips = msg->headerField( "X-KMail-Recipients" );
-       if( !recips.isEmpty() ) {
-          msg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
-       }
-       msg->cleanupHeader();
-       sentOk &= kernel->msgSender()->send(msg, aSendNow);
-     }
+    mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
+    mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
+    mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+    QString recips = mMsg->headerField( "X-KMail-Recipients" );
+    if( !recips.isEmpty() ) {
+      mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
+    }
+    mMsg->cleanupHeader();
+    sentOk = kernel->msgSender()->send(mMsg, aSendNow);
+    KMMessage* msg;
+    for( msg = bccMsgList.first(); msg; msg = bccMsgList.next() ) {
+      msg->setTo( KabcBridge::expandDistributionLists( to() ));
+      msg->setCc( KabcBridge::expandDistributionLists( cc() ));
+      msg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+      QString recips = msg->headerField( "X-KMail-Recipients" );
+      if( !recips.isEmpty() ) {
+	msg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
+      }
+      msg->cleanupHeader();
+      sentOk &= kernel->msgSender()->send(msg, aSendNow);
+    }
   }
 
   kernel->kbp()->idle();
