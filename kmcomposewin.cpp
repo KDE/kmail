@@ -1242,7 +1242,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const QString aUrl)
 {
-  KIO::Job *job = KIO::get(aUrl, false, false);
+  KIO::Job *job = KIO::get(aUrl);
   atmLoadData ld;
   ld.url = aUrl;
   ld.data = QByteArray();
