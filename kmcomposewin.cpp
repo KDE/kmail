@@ -138,7 +138,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnTo = new QPushButton("...",mMainWidget);
   mBtnCc = new QPushButton("...",mMainWidget);
   mBtnBcc = new QPushButton("...",mMainWidget);
-  mBtnFrom = new QPushButton("...",mMainWidget);
+  //mBtnFrom = new QPushButton("...",mMainWidget);
   mBtnReplyTo = new QPushButton("...",mMainWidget);
 
   //setWFlags( WType_TopLevel | WStyle_Dialog );
@@ -173,7 +173,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnTo->setFocusPolicy(QWidget::NoFocus);
   mBtnCc->setFocusPolicy(QWidget::NoFocus);
   mBtnBcc->setFocusPolicy(QWidget::NoFocus);
-  mBtnFrom->setFocusPolicy(QWidget::NoFocus);
+  //mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
   mAtmListView = new AttachmentListView( this, mMainWidget,
@@ -225,7 +225,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
-  connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
+  //connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(mIdentity,SIGNAL(identityChanged(uint)),
 	  SLOT(slotIdentityChanged(uint)));
 
@@ -727,7 +727,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 		    mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
-		    mLblFrom, mEdtFrom, mBtnFrom);
+		    mLblFrom, mEdtFrom /*, mBtnFrom */ );
   if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
 		    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);

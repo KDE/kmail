@@ -758,7 +758,7 @@ protected:
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
   QLabel    *mDictionaryLabel;
   QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
-  QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
+  QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, /* *mBtnFrom, */ *mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
   bool mAtmModified;
