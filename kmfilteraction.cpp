@@ -339,8 +339,8 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   char buf[8192];
   FILE *fh;
   bool ok = TRUE;
-  KTempFile inFile("kmail-filter", "in");
-  KTempFile outFile("kmail-filter", "out");
+  KTempFile inFile("/tmp/kmail-filter", "in");
+  KTempFile outFile("/tmp/kmail-filter", "out");
 
   if (mCmd.isEmpty()) return 1;
 
