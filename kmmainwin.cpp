@@ -64,8 +64,6 @@ KMMainWin::KMMainWin(QWidget *)
 
 KMMainWin::~KMMainWin()
 {
-  delete mKMMainWidget;
-  mKMMainWidget = 0;
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KMKernel::config()->sync();
 }

@@ -609,8 +609,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
-  delete mHtmlWriter;
-  delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete message();
   delete mRootNode;
   removeTempFiles();
