@@ -78,8 +78,6 @@ public:
   virtual QString type() const;
   virtual void processNewMail( bool interactive );
 
-  void processNewMail( KMFolderCachedImap* folder, bool interactive );
-
   /**
    * Update the progress bar
    */
@@ -171,6 +169,10 @@ protected slots:
   void postProcessNewMail(KMFolderCachedImap*, bool);
 
   virtual void slotCheckQueuedFolders();
+
+private:
+  void processNewMail( KMFolderCachedImap* folder, bool interactive, bool recurse );
+
 private:
   QPtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;

@@ -121,7 +121,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
-    mSuppressDialog( false ), mHoldSyncs( false )
+    mSuppressDialog( false ), mHoldSyncs( false ), mRecurse( true )
 {
   setUidValidity("");
   mLastUid=0;
@@ -441,7 +441,7 @@ void KMFolderCachedImap::slotTroubleshoot()
   }
 }
 
-void KMFolderCachedImap::serverSync( bool suppressDialog )
+void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
     if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset\nit to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ) ) == KMessageBox::Yes ) {
@@ -449,6 +449,7 @@ void KMFolderCachedImap::serverSync( bool suppressDialog )
     } else return;
   }
 
+  mRecurse = recurse;
   assert( account() );
 
   // Connect to the imap progress dialog
@@ -799,8 +800,11 @@ void KMFolderCachedImap::serverSyncInternal()
     emit newState( label(), progress(), i18n("Synchronization done"));
     emit syncRunning( folder(), false );
     mAccount->displayProgress();
-    // Carry on
 
+    if ( !mRecurse ) // "check mail for this folder" only
+      mSubfoldersForSync.clear();
+
+    // Carry on
   case SYNC_STATE_SYNC_SUBFOLDERS:
     {
       if( mCurrentSubfolder ) {
@@ -823,7 +827,7 @@ void KMFolderCachedImap::serverSyncInternal()
         // kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
         mCurrentSubfolder->setAccount( account() );
-        mCurrentSubfolder->serverSync( mSuppressDialog );
+        mCurrentSubfolder->serverSync( mSuppressDialog, mRecurse /*which is true*/ );
       }
     }
     break;

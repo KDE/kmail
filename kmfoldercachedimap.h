@@ -98,7 +98,7 @@ public:
   virtual void remove();
 
   /** Synchronize this folder and it's subfolders with the server */
-  virtual void serverSync( bool suppressDialog );
+  virtual void serverSync( bool suppressDialog, bool recurse );
 
   /** Force the sync state to be done. */
   void resetSyncState();
@@ -360,6 +360,7 @@ private:
   bool mResync;
   bool mSuppressDialog;
   bool mHoldSyncs;
+  bool mRecurse;
 };
 
 #endif /*kmfoldercachedimap_h*/

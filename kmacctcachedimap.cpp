@@ -254,16 +254,17 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
 void KMAcctCachedImap::processNewMail( bool interactive )
 {
   if ( mMailCheckFolders.isEmpty() )
-   processNewMail( mFolder, interactive );
+   processNewMail( mFolder, interactive, true );
   else {
     KMFolder* f = mMailCheckFolders.front();
     mMailCheckFolders.pop_front();
-    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), interactive );
+    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), interactive, false );
   }
 }
 
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
-				       bool interactive )
+				       bool interactive,
+                                       bool recurse )
 {
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
@@ -278,14 +279,13 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
 	  this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  folder->serverSync( interactive && isProgressDialogEnabled() );
+  folder->serverSync( interactive && isProgressDialogEnabled(), recurse );
 }
 
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  emit finishedCheck(false);
 
   // We remove everything from the deleted folders list after a sync, unconditionally.
   // Even if it fails (no permission), because on the next sync we want the folder to reappear,
