@@ -164,6 +164,20 @@ static QString check_x_loop(const KMMessage  *message,
     return header;
 }
 
+/* X-ML-Name: (.+) */
+static QString check_x_ml_name(const KMMessage  *message,
+                                    QCString &header_name,
+                                    QString &header_value ){
+    QString header = message->headerField( "X-ML-Name");
+    if ( header.isEmpty() )
+        return QString::null;
+
+    header_name = "X-ML-Name";
+    header_value = header;
+    header = header.left(header.find( "@" ));
+    return header;
+}
+
 MagicDetectorFunc magic_detector[] =
 {
     check_list_id,
@@ -173,7 +187,8 @@ MagicDetectorFunc magic_detector[] =
     check_mailing_list,
     check_delivered_to,
     check_x_beenthere,
-    check_x_loop
+    check_x_loop,
+    check_x_ml_name
 };
 
 static const int num_detectors = sizeof (magic_detector) / sizeof (magic_detector[0]);
