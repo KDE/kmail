@@ -314,6 +314,9 @@ public:
   virtual QString systemLabel() const { return mSystemLabel; }
   void setSystemLabel( const QString& l ) { mSystemLabel = l; }
 
+  /** URL of the node for visualization purposes. */
+  virtual QString prettyURL() const;
+
   /** Type of the folder. Inherited. */
   const char* type() const;
 

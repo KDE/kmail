@@ -6,6 +6,7 @@
 #include "kmfolderdir.h"
 #include "kmfoldersearch.h"
 #include "kmfoldercachedimap.h"
+#include "kmfolder.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -19,7 +20,7 @@
 //=============================================================================
 KMFolderRootDir::KMFolderRootDir(KMFolderMgr* manager, const QString& path,
                                  KMFolderDirType dirType):
-  KMFolderDir(0, path, dirType)
+  KMFolderDir( 0, 0, path, dirType )
 {
   setPath(path);
   mManager = manager;
@@ -49,6 +50,13 @@ QString KMFolderRootDir::path() const
 
 
 //-----------------------------------------------------------------------------
+QString KMFolderRootDir::prettyURL() const
+{
+  return QString::null;
+}
+
+
+//-----------------------------------------------------------------------------
 KMFolderMgr* KMFolderRootDir::manager() const
 {
   return mManager;
@@ -57,15 +65,13 @@ KMFolderMgr* KMFolderRootDir::manager() const
 
 //=============================================================================
 //=============================================================================
-KMFolderDir::KMFolderDir(KMFolderDir* parent, const QString& name,
-                         KMFolderDirType dirType):
-  KMFolderNode(parent,name), KMFolderNodeList()
+KMFolderDir::KMFolderDir( KMFolder * owner, KMFolderDir* parent,
+                          const QString& name, KMFolderDirType dirType )
+  : KMFolderNode( parent, name ), KMFolderNodeList(),
+    mOwner( owner ), mDirType( dirType )
 {
-
-  setAutoDelete(TRUE);
-
-  mType = "dir";
-  mDirType = dirType;
+  setAutoDelete( true );
+  setType( "dir" );
 }
 
 
@@ -136,6 +142,26 @@ QString KMFolderDir::path() const
 }
 
 
+//----------------------------------------------------------------------------
+QString KMFolderDir::label() const
+{
+  if ( mOwner )
+    return mOwner->label();
+  else
+    return QString::null;
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMFolderDir::prettyURL() const
+{
+  if ( parent() )
+    return parent()->prettyURL() + '/' + label();
+  else
+    return '/' + label();
+}
+
+
 //-----------------------------------------------------------------------------
 bool KMFolderDir::reload(void)
 {
@@ -158,7 +184,7 @@ bool KMFolderDir::reload(void)
     return FALSE;
   }
 
-  QFileInfoList* fiList=(QFileInfoList*)dir.entryInfoList(); 
+  QFileInfoList* fiList=(QFileInfoList*)dir.entryInfoList();
   if (!fiList)
   {
     QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>").arg(fldPath);
@@ -188,7 +214,7 @@ bool KMFolderDir::reload(void)
       && path().startsWith( KMFolderImap::cacheLocation() ) )
     {
        // Is the below needed for dimap as well?
-       if ( KMFolderImap::encodeFileName( 
+       if ( KMFolderImap::encodeFileName(
                 KMFolderImap::decodeFileName( fname ) ) == fname )
        {
           folder = new KMFolder(  this, KMFolderImap::decodeFileName( fname ),
@@ -197,16 +223,16 @@ bool KMFolderDir::reload(void)
           folderList.append(folder);
        }
     }
-    else if ( mDirType == KMDImapDir 
+    else if ( mDirType == KMDImapDir
            && path().startsWith( KMFolderCachedImap::cacheLocation() ) )
     {
-       if (fileInfo->isDir()) // a directory 
+       if (fileInfo->isDir()) // a directory
        {
           // For this to be a cached IMAP folder, it must be in the KMail dimap
           // subdir and must be have a uidcache file or be a maildir folder
           QString maildir(fname + "/new");
           QString imapcachefile = QString::fromLatin1(".%1.uidcache").arg(fname);
-          if ( dir.exists( imapcachefile) || dir.exists( maildir ) ) 
+          if ( dir.exists( imapcachefile) || dir.exists( maildir ) )
           {
              folder = new KMFolder( this, fname, KMFolderTypeCachedImap );
              append(folder);
@@ -220,21 +246,21 @@ bool KMFolderDir::reload(void)
        append(folder);
        folderList.append(folder);
     }
-    else if ( mDirType == KMStandardDir ) 
+    else if ( mDirType == KMStandardDir )
     {
-       // This is neither an imap, dimap nor a search folder. Can be either 
+       // This is neither an imap, dimap nor a search folder. Can be either
        // mbox or maildir.
        if (fileInfo->isDir())
        {
           // Maildir folder
-          if( dir.exists( fname + "/new" ) ) 
+          if( dir.exists( fname + "/new" ) )
           {
              folder = new KMFolder( this, fname, KMFolderTypeMaildir );
              append(folder);
              folderList.append(folder);
           }
-       } 
-       else 
+       }
+       else
        {
           // all other files are folders (at the moment ;-)
           folder = new KMFolder( this, fname, KMFolderTypeMbox );
@@ -251,7 +277,7 @@ bool KMFolderDir::reload(void)
         ++it)
       if (*it == "." + folder->fileName() + ".directory")
       {
-        KMFolderDir* folderDir = new KMFolderDir(this, *it, mDirType);
+        KMFolderDir* folderDir = new KMFolderDir( folder, this, *it, mDirType);
         folderDir->reload();
         append(folderDir);
         folder->setChild(folderDir);

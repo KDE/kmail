@@ -7,14 +7,13 @@
 #include "kmfolderdir.h"
 
 //-----------------------------------------------------------------------------
-KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
-//: KMFolderNodeInherited(aParent)
+KMFolderNode::KMFolderNode( KMFolderDir * parent, const QString & name )
+  : mName( name ),
+    mType( "node" ),
+    mParent( parent ),
+    mDir( false ),
+    mId( 0 )
 {
-  mType = "node";
-  mName = aName;
-  mParent = aParent;
-  mDir = FALSE;
-  mId = 0;
 }
 
 

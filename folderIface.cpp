@@ -65,6 +65,18 @@ FolderIface::path() const
   return mPath;
 }
 
+QString
+FolderIface::displayName() const
+{
+  return mFolder->label();
+}
+
+QString
+FolderIface::displayPath() const
+{
+  return mFolder->prettyURL();
+}
+
 bool
 FolderIface::usesCustomIcons() const
 {

@@ -187,7 +187,7 @@ KMFolderDir* KMFolder::createChildFolder()
     }
   }
 
-  mChild = new KMFolderDir(parent(), childName,
+  mChild = new KMFolderDir( this, parent(), childName,
     (folderType() == KMFolderTypeImap) ? KMImapDir : KMStandardDir);
   if( !mChild )
     return 0;
@@ -488,6 +488,15 @@ QString KMFolder::label() const
   if ( isSystemFolder() )
      return i18n( name().latin1() );
   return name();
+}
+
+//-----------------------------------------------------------------------------
+QString KMFolder::prettyURL() const
+{
+  if ( parent() )
+    return parent()->prettyURL() + "/" + label();
+  else
+    return "/" + label();
 }
 
 //--------------------------------------------------------------------------

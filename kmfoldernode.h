@@ -17,7 +17,7 @@ class KMFolderNode: public QObject
   Q_OBJECT
 
 public:
-  KMFolderNode(KMFolderDir* parent, const QString& name);
+  KMFolderNode( KMFolderDir * parent, const QString & name );
   virtual ~KMFolderNode();
 
   /** Is it a directory where mail folders are stored or is it a folder that
@@ -55,8 +55,11 @@ public:
   void setName(const QString& aName) { mName = aName; }
 
   /** Label of the node for visualzation purposes. Default the same as
-   the name. */
-  virtual QString label(void) const;
+      the name. */
+  virtual QString label() const;
+
+  /** URL of the node for visualization purposes. */
+  virtual QString prettyURL() const = 0;
 
   /** ID of the node */
   uint id() const;

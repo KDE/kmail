@@ -50,6 +50,8 @@ namespace KMail {
 
   k_dcop:
     virtual QString path() const;
+    virtual QString displayName() const;
+    virtual QString displayPath() const;
     virtual bool usesCustomIcons() const;
     virtual QString normalIconPath() const;
     virtual QString unreadIconPath() const;

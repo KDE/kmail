@@ -17,8 +17,9 @@ class KMFolderDir: public KMFolderNode, public KMFolderNodeList
   Q_OBJECT
 
 public:
-  KMFolderDir(KMFolderDir* parent=0, const QString& path=QString::null, 
-	      KMFolderDirType = KMStandardDir );
+  KMFolderDir( KMFolder * owner, KMFolderDir * parent = 0, 
+               const QString& path = QString::null, 
+	       KMFolderDirType = KMStandardDir );
   virtual ~KMFolderDir();
 
   virtual bool isDir() const { return TRUE; }
@@ -28,6 +29,12 @@ public:
 
   /** Return full pathname of this directory. */
   virtual QString path() const;
+
+  /** Returns the label of the folder for visualization. */
+  QString label() const;
+
+  /** URL of the node for visualization purposes. */
+  virtual QString prettyURL() const;
 
   /** Create a mail folder in this directory with given name. If sysFldr==TRUE
    the folder is marked as a (KMail) system folder.
@@ -45,6 +52,7 @@ public:
   virtual KMFolderDirType type() { return mDirType; }
 
 protected:
+  KMFolder * mOwner;
   KMFolderDirType mDirType;
 };
 
@@ -64,6 +72,9 @@ public:
 
   /** set the absolute path */
   virtual void setPath(const QString&);
+
+  /** returns an empty string */
+  virtual QString prettyURL() const;
 
   virtual KMFolderMgr* manager() const;
 
