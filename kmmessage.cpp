@@ -1003,6 +1003,11 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     // strip my own address from the list of recipients
     QStringList recipients = splitEmailAddrList( toStr );
     toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
+
+    if ( toStr.isEmpty() ) {
+      // fallback to From if everything else fails
+      toStr = from();
+    }
   }
   else if ( replyToAll ) {
     QStringList recipients;
