@@ -7,6 +7,7 @@
 #include "kmstartup.h"
 
 #include "kmkernel.h" //control center
+#include "kcursorsaver.h"
 
 #include <klocale.h>
 #include <ksimpleconfig.h>
@@ -15,6 +16,8 @@
 #include <dcopclient.h>
 #include <kcrash.h>
 #include <kglobal.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
 
 #include <errno.h>
 #include <sys/types.h>
@@ -102,10 +105,23 @@ void checkConfigUpdates() {
 
 void lockOrDie() {
 // Check and create a lock file to prevent concurrent access to kmail files
+  QString appName = kapp->instanceName();
+  if ( appName.isEmpty() )
+    appName = "kmail";
+
+  QString programName;
+  const KAboutData *about = kapp->aboutData();
+  if ( about )
+    programName = about->programName();
+  if ( programName.isEmpty() )
+    programName = i18n("KMail");
+
   QString lockLocation = locateLocal("data", "kmail/lock");
   KSimpleConfig config(lockLocation);
   int oldPid = config.readNumEntry("pid", -1);
   const QString oldHostName = config.readEntry("hostname");
+  const QString oldAppName = config.readEntry( "appName", appName );
+  const QString oldProgramName = config.readEntry( "programName", programName );
   const QString hostName = getMyHostName();
   bool first_instance = false;
   if ( oldPid == -1 )
@@ -118,28 +134,52 @@ void lockOrDie() {
           first_instance = ( errno == ESRCH );
   }
 
-  if ( !first_instance )
-  {
-    QString msg( i18n("<qt>"
-       "To prevent <b>major damage to your existing mails</b> KMail has "
-       "been locked by another instance of KMail which seems to run "
-       "on host %1 with process id (PID) %2.<br><br>"
-       "In case you are really sure that this instance is not running any "
-       "longer, press <b>Yes</b> and restart KMail afterwards again.<br>"
-       "If unsure, press <b>No</b>.<br><br>"
-       "Are you sure the other KMail instance has exited ?"
-       "</qt>").arg(oldHostName).arg(oldPid) );
-
-    if ( KMessageBox::Yes == KMessageBox::warningYesNo(0, msg) ) {
-       // remove stale lock file entry
-       config.writeEntry("pid", -1);
-       config.sync();
+  if ( !first_instance ) {
+    QString msg;
+    if ( oldHostName == hostName ) {
+      if ( oldAppName == appName )
+        msg = i18n("%1 already seems to be running. Running %2 more than once "
+                   "can cause the loss of mail. You should not start %1 "
+                   "unless you are sure that it is not already running.")
+              .arg( programName, programName );
+              // QString::arg( st ) only replaces the first occurrence of %1
+              // with st while QString::arg( s1, s2 ) replacess all occurrences
+              // of %1 with s1 and all occurrences of %2 with s2. So don't
+              // even think about changing the above to .arg( programName ).
+      else
+        msg = i18n("%1 seems to be running. Running %1 and %2 at the same "
+                   "time can cause the loss of mail. You should not start %2 "
+                   "unless you are sure that %1 is not running.")
+              .arg( oldProgramName, programName );
     }
-    exit(1);
+    else {
+      if ( oldAppName == appName )
+        msg = i18n("%1 already seems to be running on %2. Running %1 more "
+                   "than once can cause the loss of mail. You should not "
+                   "start %1 on this computer unless you are sure that it is "
+                   "not already running on %2.")
+              .arg( programName, oldHostName );
+      else
+        msg = i18n("%1 seems to be running on %3. Running %1 and %2 at the "
+                   "same time can cause the loss of mail. You should not "
+                   "start %2 on this computer unless you are sure that %1 is "
+                   "not running on %3.")
+              .arg( oldProgramName, programName, oldHostName );
+    }
+
+    KCursorSaver idle( KBusyPtr::idle() );
+    if ( KMessageBox::No ==
+         KMessageBox::warningYesNo( 0, msg, QString::null,
+                                    i18n("Start %1").arg( programName ),
+                                    i18n("Exit") ) ) {
+      exit(1);
+    }
   }
 
   config.writeEntry("pid", getpid());
   config.writeEntry("hostname", hostName);
+  config.writeEntry( "appName", appName );
+  config.writeEntry( "programName", programName );
   config.sync();
 }
 
