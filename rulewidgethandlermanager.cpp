@@ -627,7 +627,7 @@ namespace {
     const char *displayName;
   } StatusFunctions[] = {
     { KMSearchRule::FuncContains,    I18N_NOOP( "is" )    },
-    { KMSearchRule::FuncContainsNot, I18N_NOOP( "isn't" ) }
+    { KMSearchRule::FuncContainsNot, I18N_NOOP( "is not" ) }
   };
   static const int StatusFunctionCount =
     sizeof( StatusFunctions ) / sizeof( *StatusFunctions );
@@ -905,7 +905,7 @@ namespace {
     const char *displayName;
   } NumericFunctions[] = {
     { KMSearchRule::FuncEquals,           I18N_NOOP( "is equal to" )         },
-    { KMSearchRule::FuncNotEqual,         I18N_NOOP( "isn't equal to" )      },
+    { KMSearchRule::FuncNotEqual,         I18N_NOOP( "is not equal to" )      },
     { KMSearchRule::FuncIsGreater,        I18N_NOOP( "is greater than" )     },
     { KMSearchRule::FuncIsLessOrEqual,    I18N_NOOP( "is less than or equal to" ) },
     { KMSearchRule::FuncIsLess,           I18N_NOOP( "is less than" )        },
