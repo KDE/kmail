@@ -78,11 +78,6 @@ public:
   virtual void processNewMail( bool interactive );
 
   /**
-   * Does nothing for cached imap
-   */
-  virtual void displayProgress() {}
-
-  /**
    * Kill all jobs related the the specified folder
    */
   void killJobsForItem(KMFolderTreeItem * fti);
@@ -157,7 +152,7 @@ public:
   /**
    * Add a folder's unread count to the last "unread messages count", i.e. the counts before getting new mail
    */
-  void addLastUnreadMsgCount( const KMFolderCachedImap *folder, 
+  void addLastUnreadMsgCount( const KMFolderCachedImap *folder,
                               int countLastUnread );
 
 protected:

@@ -47,6 +47,7 @@ class KMFolderImap;
 namespace KMail {
 
 class AttachmentStrategy;
+class ProgressItem;
 
 class ImapJob : public FolderJob
 {
@@ -61,6 +62,9 @@ public:
   virtual ~ImapJob();
 
   void setParentFolder( const KMFolderImap* parent );
+  ProgressItem* parentProgressItem() const { return mParentProgressItem; }
+  void setParentProgressItem( ProgressItem *p ) { mParentProgressItem = p; }
+
 private slots:
   void slotGetMessageResult( KIO::Job * job );
   void slotGetBodyStructureResult( KIO::Job * job );
@@ -82,6 +86,7 @@ private:
   QByteArray mData;
   const AttachmentStrategy *mAttachmentStrategy;
   KMFolderImap *mParentFolder;
+  ProgressItem *mParentProgressItem;
 };
 
 }

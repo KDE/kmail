@@ -142,8 +142,6 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
     checkDone( false, CheckOK ); // returned 0 new messages
     mCountRemainChecks = 0;
   }
-  displayProgress();
-
   if ( disconnectSlave && slave() ) {
     KIO::Scheduler::disconnectSlave( slave() );
     mSlave = 0;
@@ -247,6 +245,7 @@ void KMAcctImap::processNewMail(bool interactive)
     }
   }
   // Ok, we're really checking, get a progress item;
+  Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem =
     ProgressManager::createProgressItem(
         "MailCheckAccount" + name(),

@@ -416,6 +416,7 @@ void KMSender::doSendMsg()
   // start the sender process or initialize communication
   if (!mSendInProgress)
   {
+    Q_ASSERT( !mProgressItem );
     mProgressItem = KMail::ProgressManager::createProgressItem(
       "Sender",
       i18n( "Sending messages" ),

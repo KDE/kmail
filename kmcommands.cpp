@@ -1595,6 +1595,7 @@ void KMMoveCommand::execute()
 
   // TODO connect cancel
   // TODO set SSL state according to sourceand destfolder connection?
+  Q_ASSERT( !mProgressItem );
   mProgressItem =
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),

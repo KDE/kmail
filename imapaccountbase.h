@@ -111,12 +111,14 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), inboxOnly(false), quiet(false), cancellable(false) {}
+      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0),
+          progressItem(0), inboxOnly(false), quiet(false), cancellable(false)
+      {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-      inboxOnly(_inboxOnly), quiet(_quiet), cancellable(false)
+          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(false)
       {}
       // Return "url" in a form that can be displayed in HTML (w/o password)
       QString htmlURL() const;
@@ -129,6 +131,7 @@ namespace KMail {
       KMFolder *parent;
       QPtrList<KMMessage> msgList;
       int total, done, offset;
+      ProgressItem *progressItem;
       bool inboxOnly, quiet, onlySubscribed, cancellable;
     };
 
@@ -138,7 +141,6 @@ namespace KMail {
      */
     void insertJob( KIO::Job* job, const jobData& data ) {
       mapJobData.insert( job, data );
-      displayProgress();
     }
     /**
      * Look for the jobData related to a given job. Compare with end()
@@ -149,14 +151,11 @@ namespace KMail {
      * Call this when a job is finished.
      * Don't use @p *it afterwards!
      */
-    void removeJob( JobIterator& it ) {
-      mapJobData.remove( it );
-      displayProgress();
-    }
+    void removeJob( JobIterator& it );
+
     // for KMImapJob::ignoreJobsForMessage...
     void removeJob( KIO::Job* job ) {
       mapJobData.remove( job );
-      displayProgress();
     }
 
     /**
@@ -281,12 +280,6 @@ namespace KMail {
      * emits subscriptionChanged
      */
     void slotSubscriptionResult(KIO::Job * job);
-
-  public slots:
-    /**
-     * Update the progress bar
-     */
-    virtual void displayProgress();
 
   protected slots:
     virtual void slotCheckQueuedFolders();

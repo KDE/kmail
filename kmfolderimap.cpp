@@ -196,6 +196,12 @@ void KMFolderImap::remove()
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url());
+  jd.progressItem = ProgressManager::createProgressItem(
+                      "ImapFolderRemove" + ProgressManager::getUniqueID(),
+                      "Removing folder",
+                      "URL: " + folder()->prettyURL(),
+                      false,
+                      mAccount->useSSL() || mAccount->useTLS() );
   mAccount->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotRemoveFolderResult(KIO::Job *)));
@@ -212,9 +218,9 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
     emit removed(folder(), false);
   } else {
     mAccount->removeJob(it);
-    mAccount->displayProgress();
     FolderStorage::remove();
   }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -375,9 +381,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             }
             imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
             connect(imapJob, SIGNAL(messageStored(KMMessage*)),
-                SLOT(addMsgQuiet(KMMessage*)));
-            connect( imapJob, SIGNAL( progress(unsigned long, unsigned long) ),
-                mAccount, SLOT( displayProgress() ) );
+                     SLOT(addMsgQuiet(KMMessage*)));
             imapJob->start();
           }
 
@@ -436,9 +440,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
       msg->setTransferInProgress(true);
     imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
     connect(imapJob, SIGNAL(messageStored(KMMessage*)),
-        SLOT(addMsgQuiet(KMMessage*)));
-    connect( imapJob, SIGNAL( progress(unsigned long, unsigned long) ),
-        mAccount, SLOT( displayProgress() ) );
+            SLOT(addMsgQuiet(KMMessage*)));
     imapJob->start();
   }
 
@@ -736,7 +738,6 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   if (job->error()) {
     mAccount->handleJobError( job, i18n("Error while querying the server status.") );
     emit folderComplete(this, FALSE);
-    mAccount->displayProgress();
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
@@ -808,7 +809,6 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
     emit folderComplete(this, FALSE);
-    mAccount->displayProgress();
     return;
   }
   quiet(true);
@@ -854,7 +854,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     quiet( false );
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
-    mAccount->displayProgress();
     return;
   }
   mCheckFlags = FALSE;
@@ -898,7 +897,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
-    mAccount->displayProgress();
     return;
   }
 
@@ -1037,7 +1035,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       {
         kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
-        mAccount->displayProgress();
         reallyGetFolder( QString::null );
         (*it).cdata.remove(0, pos);
         return;
@@ -1115,7 +1112,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
-    mAccount->displayProgress();
   }
 }
 
@@ -1148,8 +1144,6 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
       partSpecifier = QString::null;
 
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
-    connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
-        mAccount, SLOT( displayProgress() ) );
     job->setParentFolder( this );
     return job;
   }
@@ -1188,9 +1182,6 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
     }
     mAccount->removeJob(it);
   }
-
-  mAccount->displayProgress();
-
 }
 
 
@@ -1385,7 +1376,6 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
        mAccount->setImapStatus(folder(), imappath, flags);
      }
   }
-  mAccount->displayProgress();
 }
 
 //-----------------------------------------------------------------------------
@@ -1557,8 +1547,6 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
     }
     emit numUnreadMsgsChanged( folder() );
   }
-  mAccount->displayProgress();
-
   slotCompleteMailCheckProgress();
 }
 

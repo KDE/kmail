@@ -99,8 +99,6 @@ namespace KMail {
                             this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
                             this, SLOT(slotSchedulerSlaveConnected(KIO::Slave *)));
-    connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotAbortRequested()));
     connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
   }
 
@@ -279,59 +277,6 @@ namespace KMail {
       mCountUnread = 0;
       checkDone( false, CheckOK );
     }
-  }
-
-  //-----------------------------------------------------------------------------
-  void ImapAccountBase::displayProgress()
-  {
-    if (mProgressEnabled == mapJobData.isEmpty())
-    {
-      mProgressEnabled = !mapJobData.isEmpty();
-      if ( !mProgressItem ) {
-        mProgressItem = ProgressManager::createProgressItem(
-          "Account" + name(),
-          i18n("Data transmission: " ) + name(),
-          QString::null,
-          true, // can be cancelled
-          useSSL() || useTLS() );
-        connect ( mProgressItem,
-                  SIGNAL( progressItemCanceled( ProgressItem *) ),
-                  ProgressManager::instance(),
-                  SLOT ( slotStandardCancelHandler( ProgressItem *) ) );
-        connect ( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem *) ),
-                  this, SLOT ( slotAbortRequested() ));
-      } else {
-        mProgressItem->setComplete();
-        mProgressItem = 0;
-      }
-      KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
-          mProgressEnabled );
-    }
-    mIdle = FALSE;
-    if (mapJobData.isEmpty())
-      mIdleTimer.start(15000);
-    else
-      mIdleTimer.stop();
-    int total = 0, done = 0;
-    for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-        it != mapJobData.end(); ++it)
-    {
-      total += (*it).total;
-      done += (*it).done;
-    }
-    if (total == 0)
-    {
-      mTotal = 0;
-      return;
-    }
-    if (total > mTotal) mTotal = total;
-    done += mTotal - total;
-
-    if ( mProgressItem ) {
-      mProgressItem->setProgress( 100*done/mTotal );
-    }
-    KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
-        100*done / mTotal );
   }
 
   //-----------------------------------------------------------------------------
@@ -653,7 +598,6 @@ namespace KMail {
           slaveDied();
       }
     }
-    displayProgress();
   }
 
   //-----------------------------------------------------------------------------
@@ -964,6 +908,15 @@ namespace KMail {
     NetworkAccount::setFolder(folder, addAccount);
   }
 
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::removeJob( JobIterator& it )
+  {
+    if( (*it).progressItem ) {
+      (*it).progressItem->setComplete();
+      (*it).progressItem = 0;
+    }
+    mapJobData.remove( it );
+  }
 } // namespace KMail
 
 #include "imapaccountbase.moc"

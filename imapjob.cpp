@@ -37,6 +37,7 @@
 #include "kmfolderimap.h"
 #include "kmfolder.h"
 #include "kmmsgpart.h"
+#include "progressmanager.h"
 
 #include <kio/scheduler.h>
 #include <kdebug.h>
@@ -52,7 +53,7 @@ namespace KMail {
 ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
     QString partSpecifier, const AttachmentStrategy *as )
   : FolderJob( msg, jt, folder? folder->folder() : 0, partSpecifier ),
-    mAttachmentStrategy( as )
+    mAttachmentStrategy( as ), mParentProgressItem(0)
 {
 }
 
@@ -60,7 +61,7 @@ ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
 ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
                   KMFolderImap* folder )
   : FolderJob( msgList, sets, jt, folder? folder->folder() : 0 ),
-    mAttachmentStrategy ( 0 )
+    mAttachmentStrategy ( 0 ), mParentProgressItem(0)
 {
 }
 
@@ -134,6 +135,16 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       i++;
     }
     jd.data = mData;
+    jd.progressItem = ProgressManager::createProgressItem(
+                          mParentProgressItem,
+                          "ImapJobUploading"+ProgressManager::getUniqueID(),
+                          i18n("Uploading message data"),
+                          i18n("Destination folder: ") + folder->folder()->prettyURL(),
+                          true, // cannot be cannceled
+                          account->useSSL() || account->useTLS() );
+    jd.progressItem->setTotalItems( jd.total );
+    connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+              account, SLOT( slotAbortRequested() ) );
     KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -185,18 +196,20 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 //-----------------------------------------------------------------------------
 ImapJob::~ImapJob()
 {
-
   if ( mDestFolder )
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
     if ( account &&  mJob ) {
       ImapAccountBase::JobIterator it = account->findJob( mJob );
-      if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() ) {
-        for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-          mit.current()->setTransferInProgress( false );
+      if ( it != account->jobsEnd() ) {
+        if( (*it).progressItem )
+          (*it).progressItem->setComplete();
+        if ( !(*it).msgList.isEmpty() ) {
+          for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+            mit.current()->setTransferInProgress( false );
+        }
       }
       account->removeJob( mJob );
-      account->displayProgress();
     }
     account->mJobList.remove( this );
     mDestFolder->close();
@@ -208,12 +221,15 @@ ImapJob::~ImapJob()
       KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder->storage())->account();
       if ( account && mJob ) {
         ImapAccountBase::JobIterator it = account->findJob( mJob );
-        if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() ) {
-          for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-            mit.current()->setTransferInProgress( false );
+        if ( it != account->jobsEnd() ) {
+          if( (*it).progressItem )
+            (*it).progressItem->setComplete();
+          if ( !(*it).msgList.isEmpty() ) {
+            for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+              mit.current()->setTransferInProgress( false );
+          }
         }
         account->removeJob( mJob ); // remove the associated kio job
-        account->displayProgress(); // make sure the progress is reset
       }
       account->mJobList.remove( this ); // remove the folderjob
     }
@@ -262,6 +278,17 @@ void ImapJob::slotGetNextMessage()
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
+  jd.progressItem = ProgressManager::createProgressItem(
+                          mParentProgressItem,
+                          "ImapJobDownloading"+ProgressManager::getUniqueID(),
+                          i18n("Downloading message data"),
+                          i18n("Message with subject: ") + msg->subject(),
+                          true,
+                          account->useSSL() || account->useTLS() );
+  connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+            account, SLOT( slotAbortRequested() ) );
+  jd.progressItem->setTotalItems( jd.total );
+
   KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );
   KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
   mJob = simpleJob;
@@ -306,7 +333,9 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   bool gotData = true;
   if (job->error())
   {
-    account->handleJobError( job, i18n( "Error while retrieving messages from the server." ) );
+    QString errorStr = i18n( "Error while retrieving messages from the server." );
+    account->handleJobError( job, errorStr );
+    (*it).progressItem->setStatus( errorStr );
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -439,10 +468,10 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
-
   if (job->error())
   {
     account->handlePutError( job, *it, mDestFolder );
+    (*it).progressItem->setStatus("Uploading message data failed.");
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )
@@ -454,6 +483,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
       emit messageStored(msg);
     }
     msg = 0;
+    (*it).progressItem->setStatus("Uploading message data completed.");
   }
   if (account->slave()) {
     account->removeJob(it);
@@ -590,6 +620,10 @@ void ImapJob::slotProcessedSize(KIO::Job * job, KIO::filesize_t processed)
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
   (*it).done = processed;
+  if ( (*it).progressItem ) {
+    (*it).progressItem->setCompletedItems( processed );
+    (*it).progressItem->updateProgress();
+  }
   emit progress( (*it).done, (*it).total );
 }
 
