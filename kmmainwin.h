@@ -125,7 +125,6 @@ protected slots:
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
-  void slotPostToList();
   void slotForwardMsg();
   void slotRedirectMsg();
   void slotBounceMsg();

@@ -703,7 +703,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   int m4 = folderMenu->insertItem(i18n("&Post to mailing-list"),
                                   topLevelWidget(),
-				  SLOT(slotPostToList()));
+				  SLOT(slotCompose()));
 
   if (fti->folder->isSystemFolder()) {
     folderMenu->setItemEnabled(m1,false);

@@ -663,8 +663,14 @@ void KMMainWin::slotCompose()
   KMMessage* msg = new KMMessage;
   msg->initHeader();
 
+  if (mFolder && mFolder->isMailingList()) {
+    qDebug("mFolder->isMailingList() %s", mFolder->mailingListPostAddress().latin1());
+    msg->setTo(mFolder->mailingListPostAddress());
+  }
+
   win = new KMComposeWin(msg);
   win->show();
+
 }
 
 
@@ -829,19 +835,6 @@ void KMMainWin::slotReplyAllToMsg()
 void KMMainWin::slotReplyListToMsg()
 {
   mHeaders->replyListToMsg(mMsgView->copyText());
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotPostToList()
-{
-  if (!mFolder || !mFolder->isMailingList()) return;
-
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setTo(mFolder->mailingListPostAddress());
-  KMComposeWin *win = new KMComposeWin(msg);
-  win->show();
 }
 
 
