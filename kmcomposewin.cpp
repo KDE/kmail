@@ -2,6 +2,9 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
+// keep this in sync with the define in configuredialog.h
+#define DEFAULT_EDITOR_STR "kwrite %f"
+
 #undef GrayScale
 #undef Color
 #include <qtooltip.h>
@@ -31,7 +34,6 @@
 #include <kdebug.h>
 
 #include "kmmainwin.h"
-#include "configuredialog.h"
 #include "kmreaderwin.h"
 
 #include <assert.h>
