@@ -19,6 +19,7 @@
 
 #include <qregexp.h>
 #include <qstring.h>
+#include <qstringlist.h>
 
 #include <assert.h>
 //#include <string.h>
@@ -38,11 +39,7 @@ KMFilter::KMFilter( KMFilter * aFilter )
   mActions.setAutoDelete( TRUE );
 
   if ( aFilter ) {
-    kdDebug() << "KMFilter: copying pattern:\n"
-	      << aFilter->pattern()->asString() << endl;
     mPattern = *aFilter->pattern();
-    kdDebug() << "KMFilter: resulting pattern:\n"
-	      << mPattern.asString() << endl;
     
     QListIterator<KMFilterAction> it( *aFilter->actions() );
     for ( it.toFirst() ; it.current() ; ++it ) {
@@ -75,17 +72,14 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 
     switch ( result ) {
     case KMFilterAction::CriticalError:
-      kdDebug() << "got result CriticalError" << endl;
       return CriticalError;
     case KMFilterAction::ErrorButGoOn:
       // Small problem, keep a copy
-      kdDebug() << "got result ErrorButGoOn" << endl;
       status = GoOn;
       break;
     case KMFilterAction::Finished:
       kdDebug() << "got result Finished" << endl;
       if ( status == NoResult )
-	kdDebug() << "  and setting status to MsgExpropriated" << endl;
 	// Message saved in a folder
 	status = MsgExpropriated;
     }
@@ -120,6 +114,7 @@ void KMFilter::readConfig(KConfig* config)
 
   int i, numActions;
   QString actName, argsName;
+  QStringList actNames, actArgs;
 
   mActions.clear();
 
@@ -129,29 +124,37 @@ void KMFilter::readConfig(KConfig* config)
     KMessageBox::information( 0, i18n("Too many filter actions in filter rule `%1'").arg( mPattern.name() ) );
   }
 
+  // (mmutz) Some KMFilterAction* constructors want to read
+  // from the config, too. So make sure we have read our stuff
+  // before they can switch the group...
   for ( i=0 ; i < numActions ; i++ ) {
-    actName.sprintf("action-name-%d", i);
-    argsName.sprintf("action-args-%d", i);
-    // get the action description...
-    KMFilterActionDesc *desc = (*kernel->filterActionDict())[ config->readEntry( actName ) ];
+    actNames.append( config->readEntry( actName.sprintf("action-name-%d", i) ) );
+    actArgs.append( config->readEntry( argsName.sprintf("action-args-%d", i) ) );
+  }
+
+  QStringList::Iterator nIt = actNames.begin(), aIt = actArgs.begin();
+  for ( ; nIt != actNames.end() && aIt != actArgs.end(); ++nIt, ++aIt ) {
+    KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*nIt) ];
     if ( desc ) {
       //...create an instance...
       KMFilterAction *fa = desc->create();
       if ( fa ) {
 	//...load it with it's parameter...
-	fa->argsFromString( config->readEntry( argsName ) );
+	fa->argsFromString( *aIt );
 	//...check if it's emoty and...
-	if ( !fa->isEmpty() )
+	if ( !fa->isEmpty() ) {
 	  //...append it if it's not and...
 	  mActions.append( fa );
-	else
-	  //...delete is else.
+	} else {
+	  //...delete it else.
 	  delete fa;
+	}
       }
-    } else
+    } else {
       KMessageBox::information( 0 /* app-global modal dialog box */,
 				i18n("Unknown filter action `%1'\n in filter rule `%2'."
-				     "\nIgnoring it.").arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
+				     "\nIgnoring it.").arg( *nIt ).arg( mPattern.name() ) );
+    }
   }
 }
 

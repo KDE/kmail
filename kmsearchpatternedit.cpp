@@ -67,10 +67,6 @@ void KMSearchRuleWidget::initWidget()
 void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
 {
   assert ( aRule );
-  kdDebug() << "KMSearchRuleWidget::setRule:" << endl;
-  kdDebug() << aRule->asString() << endl;
-
-  kdDebug() << aRule->function() << endl;
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
@@ -90,19 +86,13 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   //--------------set function and contents
   mRuleFunc->setCurrentItem( (int)aRule->function() );
   mRuleValue->setText( aRule->contents() );
-
-  kdDebug() << "KMSearchRule::setRule: left" << endl;
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const
 {
   KMSearchRule *r = new KMSearchRule;
 
-  kdDebug() << "r->init( " << mRuleField->currentText() << ", "
-	    << mRuleFunc->currentItem() << ", "
-	    << mRuleValue->text() << " );" << endl;
-
-  r->init( ruleFieldToEnglish(mRuleField->currentText()),
+  r->init( ruleFieldToEnglish( mRuleField->currentText() ),
 	   (KMSearchRule::Function)mRuleFunc->currentItem(),
 	   mRuleValue->text() );
 
@@ -111,8 +101,6 @@ KMSearchRule* KMSearchRuleWidget::rule() const
 
 void KMSearchRuleWidget::reset()
 {
-  kdDebug() << "KMSearchRuleWidget::reset" << endl;
-
   mRuleField->changeItem( " ", 0 );
   mRuleField->setCurrentItem( 0 );
 
@@ -123,11 +111,10 @@ void KMSearchRuleWidget::reset()
 
 QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
 {
-  kdDebug() << "ruleFieldToEnglish: 18nVal = \"" << i18nVal << "\"" << endl;
-  if (i18nVal == i18n("<message>")) return QString("<message>");
-  if (i18nVal == i18n("<body>")) return QString("<body>");
-  if (i18nVal == i18n("<any header>")) return QString("<any header>");
   if (i18nVal == i18n("<To or Cc>")) return QString("<To or Cc>");
+  if (i18nVal == i18n("<body>")) return QString("<body>");
+  if (i18nVal == i18n("<message>")) return QString("<message>");
+  if (i18nVal == i18n("<any header>")) return QString("<any header>");
   return i18nVal;
 }
 
@@ -145,7 +132,6 @@ int KMSearchRuleWidget::indexOfRuleField(const QString aName) const
 
 void KMSearchRuleWidget::initLists() const
 {
-  kdDebug() << "KMSearchRuleWidget:: initLists" << endl;
   //---------- initialize list of filter operators
   if ( sFilterFuncList.isEmpty() )
   {
@@ -191,7 +177,6 @@ void KMSearchRuleWidget::initLists() const
 KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name )
   : KWidgetLister( 1, FILTER_MAX_RULES, parent, name )
 {
-  kdDebug() << "KMSearchRuleWidgetLister::KMSearchRuleWidgetLister" << endl;
   mRuleList = 0;
 }
 
@@ -202,8 +187,6 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
 {
   assert ( aList );
-  kdDebug() << "KMSearchRuleWidgetLister::setRuleList called with a list containing "
-	    << aList->count() << " items" << endl;
 
   if ( mRuleList )
     regenerateRuleListFromWidgets();
@@ -236,8 +219,6 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
   QListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
-    kdDebug() << "about to call setRule for rule:\n" 
-	      << (*rIt)->asString() << endl;
     ((KMSearchRuleWidget*)(*wIt))->setRule( (*rIt) );
   }
 
@@ -267,7 +248,6 @@ void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )
 
 void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 {
-  kdDebug() << "KMSearchRuleWidgetLister::regenerateRuleListFromWidgets" << endl;
   if ( !mRuleList ) return;
 
   mRuleList->clear();
@@ -292,7 +272,6 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name )
   : QGroupBox( 1/*columns*/, Horizontal, parent, name )
 {
-  kdDebug() << "KMSearchPatternEdit::KMSearchPatternEdit" << endl;
   setTitle( i18n("Search Criteria") );
   initLayout();
 }
@@ -300,7 +279,6 @@ KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name )
 KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name )
   : QGroupBox( 1/*column*/, Horizontal, title, parent, name )
 {
-  kdDebug() << "KMSearchPatternEdit::KMSearchPatternEdit" << endl;
   initLayout();
 }
 
@@ -310,8 +288,6 @@ KMSearchPatternEdit::~KMSearchPatternEdit()
 
 void KMSearchPatternEdit::initLayout()
 {
-  kdDebug() << "KMSearchPatternEdit::initLayout" << endl;
-
   //------------the radio buttons	
   mAllRBtn = new QRadioButton( i18n("Match all of the following"), this, "mAllRBtn" );
   mAnyRBtn = new QRadioButton( i18n("Match any of the following"), this, "mAnyRBtn" );
@@ -345,8 +321,6 @@ void KMSearchPatternEdit::initLayout()
 void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
 {
   assert( aPattern );
-  kdDebug() << "KMSearchPatternEdit::setSearchPattern called with a pattern containing "
-	    << aPattern->count() << " rules" << endl;
 
   blockSignals(TRUE);
 
@@ -373,13 +347,6 @@ void KMSearchPatternEdit::reset()
 
 void KMSearchPatternEdit::slotRadioClicked(int aIdx)
 {
-  dumpObjectInfo();
-  kdDebug() << "signals blocked: " << signalsBlocked() << endl;
-  mRuleLister->dumpObjectInfo();
-  kdDebug() << "signals blocked: " << mRuleLister->signalsBlocked() << endl;
-  mRuleLister->mWidgetList.first()->dumpObjectInfo();
-  kdDebug() << "signals blocked: " << mRuleLister->mWidgetList.first()->signalsBlocked() << endl;
-  kdDebug() << "KMSearchPatternEdit::slotRadioClicked: aIdx=" << aIdx << endl;
   if ( mPattern ) 
     mPattern->setOp( (KMSearchPattern::Operator)aIdx );
 }

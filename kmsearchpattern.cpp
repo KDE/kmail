@@ -9,8 +9,6 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
-//#include <qstring.h>
-
 #include <string.h>
 
 static const char* funcConfigNames[] =
@@ -56,9 +54,6 @@ KMSearchRule::KMSearchRule()
 void KMSearchRule::init(const QString aField, Function aFunction,
 			const QString aContents)
 {
-  kdDebug() << "KMSearchRule::init: aField=\"" << aField << "\"\n"
-	    << "                 aFunction=\"" << aFunction << "\"\n"
-	    << "                 aContents=\"" << aContents << "\"" << endl;
   mField    = aField;
   mFunction = aFunction;
   mContents = aContents;
@@ -85,8 +80,6 @@ void KMSearchRule::init(const QString aField, const char* aStrFunction,
 //-----------------------------------------------------------------------------
 bool KMSearchRule::matches(const KMMessage* msg) const
 {
-  if ( isEmpty() ) return FALSE;
-
   QString msgContents;
 
   assert(msg != NULL); // This assert seems to be important
@@ -135,7 +128,6 @@ bool KMSearchRule::matches(const KMMessage* msg) const
 void KMSearchRule::readConfig( KConfig *config, int aIdx )
 {
   char cIdx = char( int('A') + aIdx );
-  kdDebug() << "KMSearchRule::readConfig for rule" << cIdx << "\"" << endl;
 
   init( config->readEntry( QString("field") + cIdx  ),
 	config->readEntry( QString("func") + cIdx ),
@@ -147,7 +139,6 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
 void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
 {
   char cIdx = char('A' + aIdx);
-  kdDebug() << "KMSearchRule::writeConfig for rule \"" << cIdx << "\"" << endl;
 
   config->writeEntry( QString("field") + cIdx, mField );
   config->writeEntry( QString("func") + cIdx, funcConfigNames[(int)mFunction] );
@@ -157,7 +148,6 @@ void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
 //-----------------------------------------------------------------------------
 bool KMSearchRule::isEmpty() const
 {
-  kdDebug() << "KMSearchRule::isEmpty" << endl;
   return mField.stripWhiteSpace().isEmpty() || mContents.isEmpty();
 }
 
@@ -183,7 +173,6 @@ const QString KMSearchRule::asString() const
 KMSearchPattern::KMSearchPattern( KConfig *config )
   : QList<KMSearchRule>()
 {
-  kdDebug() << "KMSearchPattern::KMSearchPattern" << endl;
   setAutoDelete(TRUE);
   if (config)
     readConfig(config);
@@ -194,8 +183,6 @@ KMSearchPattern::KMSearchPattern( KConfig *config )
 
 bool KMSearchPattern::matches( const KMMessage *msg ) const
 {
-  if ( isEmpty() ) return FALSE;
-
   QListIterator<KMSearchRule> it(*this);
   switch (mOperator ) {
     case OpAnd: // all rules must match
@@ -230,12 +217,11 @@ void KMSearchPattern::purify()
 
 void KMSearchPattern::readConfig( KConfig *config )
 {
-  kdDebug() << "KMSearchPattern::readConfig" << endl;
   init();
 
   mName = config->readEntry("name");
   if ( !config->hasKey("rules") ) {
-    kdDebug() << "  found legacy config!" << endl;
+    kdDebug() << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
     importLegacyConfig(config);
     return;
   }
@@ -257,7 +243,6 @@ void KMSearchPattern::readConfig( KConfig *config )
 
 void KMSearchPattern::importLegacyConfig( KConfig *config )
 {
-  kdDebug() << "KMSearchPattern::importLegacyConfig" << endl;
   KMSearchRule *rule = new KMSearchRule();
   rule->init( config->readEntry("fieldA"),
 	      config->readEntry("funcA").latin1(),
@@ -304,11 +289,7 @@ void KMSearchPattern::importLegacyConfig( KConfig *config )
 
 void KMSearchPattern::writeConfig( KConfig *config ) const
 {
-  kdDebug() << "KMSearchPattern::writeConfig" << endl;
   int i;
-
-  // don't write if we're empty.
-  if ( isEmpty() ) return;
 
   config->writeEntry("name", mName );
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
@@ -323,23 +304,8 @@ void KMSearchPattern::writeConfig( KConfig *config ) const
   config->writeEntry("rules", i);
 }
 
-#if 0
-void KMSearchPattern::setName( const QString newName )
-{
-  kdDebug() << "KMSearchPattern::setName: newName = \"" << newName << "\"" << endl;
-  mName = newName;
-}
-
-
-bool KMSearchPattern::folderRemoved ( KMFolder *, KMFolder * )
-{
-  return ( FALSE );
-}
-#endif
-
 void KMSearchPattern::init()
 {
-  kdDebug() << "KMSearchPattern::init" << endl;
   mOperator = KMSearchPattern::OpAnd;
   mName = "<" + i18n("name used for a virgin filter","unknown") + ">";
   clear();
