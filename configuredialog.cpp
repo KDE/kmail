@@ -476,7 +476,6 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   makeNetworkPage();
   makeAppearancePage();
   makeComposerPage();
-  makeMimePage();
   makeSecurityPage();
   makeMiscPage();
 }
@@ -1197,6 +1196,14 @@ void ConfigureDialog::makeAppearancePage( void )
 
 void ConfigureDialog::makeComposerPage( void )
 {
+  // temp. vars:
+  QWidget     *page;
+  QHBoxLayout *hlay;
+  QVBoxLayout *vlay;
+  QGridLayout *glay;
+  QLabel      *label;
+  QPushButton *button;
+
   QVBox *vbox = addVBoxPage( i18n("Composer"),
 			  i18n("Phrases and general behavior"),
       KGlobal::instance()->iconLoader()->loadIcon( "edit", KIcon::NoGroup,
@@ -1204,7 +1211,7 @@ void ConfigureDialog::makeComposerPage( void )
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
   mComposer.pageIndex = pageIndex(vbox);
 
-  QWidget *page = new QWidget( tabWidget );
+  page = new QWidget( tabWidget );
   tabWidget->addTab( page, i18n("&General") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, spacingHint() );
 
@@ -1224,7 +1231,7 @@ void ConfigureDialog::makeComposerPage( void )
     new QCheckBox( i18n("Automatically encrypt messages if possible"), page );
   topLevel->addWidget( mComposer.pgpAutoEncryptCheck );
 
-  QHBoxLayout *hlay = new QHBoxLayout( topLevel );
+  hlay = new QHBoxLayout( topLevel );
   mComposer.wordWrapCheck =
     new QCheckBox( i18n("&Word wrap at column:"), page );
   connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
@@ -1237,7 +1244,7 @@ void ConfigureDialog::makeComposerPage( void )
 
   QGroupBox * editorGroup = new QGroupBox( i18n("External Editor"), page );
   topLevel->addWidget(editorGroup);
-  QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
+  vlay = new QVBoxLayout( editorGroup, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
   mComposer.externalEditorCheck =
     new QCheckBox(i18n("&Use external editor instead of composer"),
@@ -1274,11 +1281,11 @@ void ConfigureDialog::makeComposerPage( void )
   topLevel->addWidget( group );
   topLevel->addStretch( 10 );
 
-  QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
+  glay = new QGridLayout( group, 8, 2, spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay->setColStretch( 1, 10 );
 
-  QLabel *label = new QLabel( group );
+  label = new QLabel( group );
   label->setText(
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
@@ -1446,107 +1453,99 @@ void ConfigureDialog::makeComposerPage( void )
 
   topLevel3->addSpacing( spacingHint() );
   topLevel3->addStretch();
-}
 
+  //
+  // Tab Widget: Headers
+  //
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("&Headers") );
+  vlay = new QVBoxLayout( page, marginHint(), spacingHint() );
 
+  // "create own message id"
+  mComposer.createOwnMessageIdCheck =
+    new QCheckBox( i18n("&Create own Message-Id headers "
+			"(see \"What's This\" (Shift-F1) help!)"), page );
+  vlay->addWidget( mComposer.createOwnMessageIdCheck );
+  QWhatsThis::add( mComposer.createOwnMessageIdCheck,
+		   i18n("<qt><p>Check this option if your mail server doesn't "
+			"add a <i>Message-ID</i> header to your mails. "
+			"<i>Message-ID</i> headers are used to control the "
+			"grouping of mails that belong together "
+			"(\"threading\").</p>"
+			"<p>You can find out if your mail server adds a "
+			"<i>Message-ID</i> header to your mails by sending a "
+			"message to yourself and then choosing <i>View|All "
+			"headers</i> to see if the header includes such a "
+			"field.</p>"
+			"<p>If it doesn't, you should add a custom suffix in "
+			"the lineedit below. It must be unique and it must "
+			"consist of only latin letters, arabic numbers and "
+			"\".\".</p>"
+			"<p>Recommended values include the hostname of your "
+			"mail server or a domainname you control.</p></qt>") );
 
-void ConfigureDialog::makeMimePage( void )
-{
-  QFrame *page = addPage( i18n("Mime Headers"),
-    i18n("Custom header tags for outgoing emails"),
-    KGlobal::instance()->iconLoader()->loadIcon( "readme", KIcon::NoGroup,
-    KIcon::SizeMedium ));
-  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
-  mMime.pageIndex = pageIndex(page);
+  // "msg-id suffix" line edit and label:
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mComposer.messageIdSuffixEdit = new QLineEdit( page );
+  label = new QLabel( mComposer.messageIdSuffixEdit,
+		      i18n("&Use this Message-Id suffix:"), page );
+  label->setEnabled( false );
+  mComposer.messageIdSuffixEdit->setEnabled( false );
+  hlay->addWidget( label );
+  hlay->addWidget( mComposer.messageIdSuffixEdit, 1 );
+  connect( mComposer.createOwnMessageIdCheck, SIGNAL(toggled(bool) ),
+	   label, SLOT(setEnabled(bool)) );
+  connect( mComposer.createOwnMessageIdCheck, SIGNAL(toggled(bool) ),
+	   mComposer.messageIdSuffixEdit, SLOT(setEnabled(bool)) );
 
-  mMime.createOwnMessageIdCheck =
-    new QCheckBox( i18n("&Create own Message-Id headers"), page );
-  topLevel->addWidget( mMime.createOwnMessageIdCheck );
+  // horizontal rule and "custom header fields" label:
+  vlay->addWidget( new KSeparator( KSeparator::HLine, page ) );
+  vlay->addWidget( new QLabel( i18n("Define custom mime header fields:"), page ) );
 
-  QGridLayout *glay0 = new QGridLayout( topLevel, 1, 2 );
-  glay0->setColStretch( 1, 10 );
-
-  int indent = 20;
-  QString lblTxt = i18n("&Use this Message-Id suffix:");
-  mMime.messageIdSuffixLabel = new QLabel( lblTxt, page );
-  mMime.messageIdSuffixLabel->setAlignment( AlignLeft );
-  mMime.messageIdSuffixLabel->setFixedHeight( mMime.messageIdSuffixLabel->sizeHint().height() );
-  mMime.messageIdSuffixLabel->setIndent( indent );
-  glay0->addWidget( mMime.messageIdSuffixLabel, 0, 0 );
-
-  mMime.messageIdSuffixEdit = new QLineEdit( page );
-  mMime.messageIdSuffixLabel->setBuddy( mMime.messageIdSuffixEdit );
-  mMime.messageIdSuffixEdit->setFocus();
-  glay0->addWidget( mMime.messageIdSuffixEdit,  0, 1 );
-
-  lblTxt = i18n("(Name must be unique, you may use a domain name\n"
-    "that you are the owner of.)");
-  mMime.messageIdSuffixHintLabel = new QLabel( lblTxt, page );
-  mMime.messageIdSuffixHintLabel->setAlignment( AlignLeft );
-  mMime.messageIdSuffixHintLabel->setFixedHeight( mMime.messageIdSuffixHintLabel->sizeHint().height() );
-  mMime.messageIdSuffixHintLabel->setIndent( indent );
-  topLevel->addWidget( mMime.messageIdSuffixHintLabel );
-
-  connect( mMime.createOwnMessageIdCheck, SIGNAL(clicked() ),
-	   this, SLOT(slotCreateOwnMessageIdChanged()) );
-  slotCreateOwnMessageIdChanged();
-
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
-  topLevel->addWidget( hline );
-
-  QLabel *label = new QLabel( page );
-  label->setText(i18n("Define custom mime header tags:"));
-  topLevel->addWidget( label );
-
-  mMime.tagList = new ListView( page, "tagList" );
-  mMime.tagList->addColumn( i18n("Name") );
-  mMime.tagList->addColumn( i18n("Value") );
-  mMime.tagList->setAllColumnsShowFocus( true );
-  mMime.tagList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
-  mMime.tagList->setSorting( -1 );
-  mMime.tagList->setMinimumSize( 0, 0 );
-  connect( mMime.tagList, SIGNAL(selectionChanged()),
+  // "custom header fields" listbox:
+  glay = new QGridLayout( vlay, 5, 3 ); // inherits spacing
+  glay->setRowStretch( 2, 1 );
+  glay->setColStretch( 1, 1 );
+  mComposer.tagList = new ListView( page, "tagList" );
+  mComposer.tagList->addColumn( i18n("Name") );
+  mComposer.tagList->addColumn( i18n("Value") );
+  mComposer.tagList->setAllColumnsShowFocus( true );
+  mComposer.tagList->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
+  mComposer.tagList->setSorting( -1 );
+  connect( mComposer.tagList, SIGNAL(selectionChanged()),
 	   this, SLOT(slotMimeHeaderSelectionChanged()) );
-  topLevel->addWidget( mMime.tagList );
+  glay->addMultiCellWidget( mComposer.tagList, 0, 2, 0, 1 );
 
-  QGridLayout *glay = new QGridLayout( topLevel, 3, 2 );
-  glay->setColStretch( 1, 10 );
+  // "new" and "remove" buttons:
+  button = new QPushButton( i18n("&New"), page );
+  connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
+  button->setAutoDefault( false );
+  glay->addWidget( button, 0, 2 );
+  button = new QPushButton(i18n("&Remove"), page );
+  connect( button, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()) );
+  button->setAutoDefault( false );
+  glay->addWidget( button, 1, 2 );
 
-  mMime.tagNameLabel = new QLabel(i18n("N&ame:"), page );
-  mMime.tagNameLabel->setEnabled(false);
-  glay->addWidget( mMime.tagNameLabel, 0, 0 );
-  mMime.tagNameEdit = new QLineEdit(page);
-  mMime.tagNameLabel->setBuddy(mMime.tagNameEdit);
-  mMime.tagNameEdit->setEnabled(false);
-  connect( mMime.tagNameEdit, SIGNAL(textChanged(const QString&)),
+  // "name" and "value" line edits and labels:
+  mComposer.tagNameEdit = new QLineEdit( page );
+  mComposer.tagNameEdit->setEnabled( false );
+  mComposer.tagNameLabel = new QLabel( mComposer.tagNameEdit, i18n("N&ame:"), page );
+  mComposer.tagNameLabel->setEnabled( false );
+  glay->addWidget( mComposer.tagNameLabel, 3, 0 );
+  glay->addWidget( mComposer.tagNameEdit, 3, 1 );
+  connect( mComposer.tagNameEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotMimeHeaderNameChanged(const QString&)) );
-  glay->addWidget( mMime.tagNameEdit, 0, 1 );
 
-  mMime.tagValueLabel = new QLabel(i18n("&Value:"), page );
-  mMime.tagValueLabel->setEnabled(false);
-  glay->addWidget( mMime.tagValueLabel, 1, 0 );
-  mMime.tagValueEdit = new QLineEdit(page);
-  mMime.tagValueLabel->setBuddy(mMime.tagValueEdit);
-  mMime.tagValueEdit->setEnabled(false);
-  connect( mMime.tagValueEdit, SIGNAL(textChanged(const QString&)),
+  mComposer.tagValueEdit = new QLineEdit( page );
+  mComposer.tagValueEdit->setEnabled( false );
+  mComposer.tagValueLabel = new QLabel( mComposer.tagValueEdit, i18n("&Value:"), page );
+  mComposer.tagValueLabel->setEnabled(false);
+  glay->addWidget( mComposer.tagValueLabel, 4, 0 );
+  glay->addWidget( mComposer.tagValueEdit, 4, 1 );
+  connect( mComposer.tagValueEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotMimeHeaderValueChanged(const QString&)) );
-  glay->addWidget( mMime.tagValueEdit, 1, 1 );
-
-  QWidget *helper = new QWidget( page );
-  glay->addWidget( helper, 2, 1 );
-  QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
-  QPushButton *pushButton = new QPushButton(i18n("&New"), helper );
-  connect( pushButton, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
-  pushButton->setAutoDefault( false );
-  hlay->addWidget( pushButton );
-  pushButton = new QPushButton(i18n("&Delete"), helper );
-  connect( pushButton, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()));
-  pushButton->setAutoDefault( false );
-  hlay->addWidget( pushButton );
-  hlay->addStretch(10);
-
-  topLevel->addSpacing( spacingHint()*2 );
 }
+
 
 
 void ConfigureDialog::makeSecurityPage( void )
@@ -1732,7 +1731,6 @@ void ConfigureDialog::setup( void )
   setupNetworkPage();
   setupAppearancePage();
   setupComposerPage();
-  setupMimePage();
   setupSecurityPage();
   setupMiscPage();
 }
@@ -2067,53 +2065,39 @@ void ConfigureDialog::setupComposerPage( void )
     state = config->readBoolEntry( "force-reply-charset", false );
     mComposer.forceReplyCharsetCheck->setChecked( !state );
   }
-}
 
-void ConfigureDialog::setupMimePage( void )
-{
-  KConfig *config = kapp->config();
-  KConfigGroupSaver saver(config, "General");
-
-  mMime.tagList->clear();
-  mMime.currentTagItem = 0;
-  mMime.tagNameEdit->clear();
-  mMime.tagValueEdit->clear();
-  mMime.tagNameEdit->setEnabled(false);
-  mMime.tagValueEdit->setEnabled(false);
-  mMime.tagNameLabel->setEnabled(false);
-  mMime.tagValueLabel->setEnabled(false);
+  // custom headers
+  mComposer.tagList->clear();
+  mComposer.currentTagItem = 0;
+  mComposer.tagNameEdit->clear();
+  mComposer.tagValueEdit->clear();
+  mComposer.tagNameEdit->setEnabled(false);
+  mComposer.tagValueEdit->setEnabled(false);
+  mComposer.tagNameLabel->setEnabled(false);
+  mComposer.tagValueLabel->setEnabled(false);
 
   QString str = config->readEntry( "myMessageIdSuffix", "" );
-  mMime.messageIdSuffixEdit->setText( str );
-  bool state = (str.isNull() || str.isEmpty())
-             ? false
-             : config->readBoolEntry("createOwnMessageIdHeaders", false );
-  mMime.createOwnMessageIdCheck->setChecked(  state );
-  mMime.messageIdSuffixLabel->setEnabled(     state );
-  mMime.messageIdSuffixEdit->setEnabled(      state );
-  mMime.messageIdSuffixHintLabel->setEnabled( state );
-
+  mComposer.messageIdSuffixEdit->setText( str );
+  state = ( !str.isEmpty() &&
+	    config->readBoolEntry("createOwnMessageIdHeaders", false ) );
+  mComposer.createOwnMessageIdCheck->setChecked( state );
 
   QListViewItem *top = 0;
 
   int count = config->readNumEntry( "mime-header-count", 0 );
-  mMime.tagList->clear();
+  mComposer.tagList->clear();
   for(int i = 0; i < count; i++)
   {
     KConfigGroupSaver saver(config, QString("Mime #%1").arg(i) );
     QString name  = config->readEntry("name", "");
     QString value = config->readEntry("value", "");
     if( name.length() > 0 )
-    {
-      QListViewItem *listItem =
-	new QListViewItem( mMime.tagList, top, name, value );
-      top = listItem;
-    }
+      top = new QListViewItem( mComposer.tagList, top, name, value );
   }
-  if (mMime.tagList->childCount() > 0)
+  if (mComposer.tagList->childCount() > 0)
   {
-    mMime.tagList->setCurrentItem(mMime.tagList->firstChild());
-    mMime.tagList->setSelected(mMime.tagList->firstChild(), TRUE);
+    mComposer.tagList->setCurrentItem(mComposer.tagList->firstChild());
+    mComposer.tagList->setSelected(mComposer.tagList->firstChild(), TRUE);
   }
 }
 
@@ -2572,30 +2556,28 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry("force-reply-charset",
 			 !mComposer.forceReplyCharsetCheck->isChecked() );
     }
-  }
-  if( activePage == mMime.pageIndex || everything )
-  {
-    KConfigGroupSaver saver(config, "General");
-    config->writeEntry( "createOwnMessageIdHeaders",
-                       mMime.createOwnMessageIdCheck->isChecked() );
-    config->writeEntry( "myMessageIdSuffix",
-                       mMime.messageIdSuffixEdit->text() );
-
-    int numValidEntry = 0;
-    int numEntry = mMime.tagList->childCount();
-    QListViewItem *item = mMime.tagList->firstChild();
-    for (int i = 0; i < numEntry; i++)
-    {
-      KConfigGroupSaver saver(config, QString("Mime #%1").arg(i));
-      if( item->text(0).length() > 0 )
-      {
-	config->writeEntry( "name",  item->text(0) );
-	config->writeEntry( "value", item->text(1) );
-	numValidEntry += 1;
+    
+    { // "headers" tab:
+      KConfigGroupSaver saver(config, "General");
+      config->writeEntry( "createOwnMessageIdHeaders",
+			  mComposer.createOwnMessageIdCheck->isChecked() );
+      config->writeEntry( "myMessageIdSuffix",
+			  mComposer.messageIdSuffixEdit->text() );
+      
+      int numValidEntry = 0;
+      int numEntry = mComposer.tagList->childCount();
+      QListViewItem *item = mComposer.tagList->firstChild();
+      for (int i = 0; i < numEntry; i++) {
+	KConfigGroupSaver saver(config, QString("Mime #%1").arg(i));
+	if( item->text(0).length() > 0 ) {
+	  config->writeEntry( "name",  item->text(0) );
+	  config->writeEntry( "value", item->text(1) );
+	  numValidEntry++;
+	}
+	item = item->nextSibling();
       }
-      item = item->nextSibling();
+      config->writeEntry("mime-header-count", numValidEntry );
     }
-    config->writeEntry("mime-header-count", numValidEntry );
   }
   if( activePage == mSecurity.pageIndex || everything )
   {
@@ -3406,15 +3388,6 @@ void ConfigureDialog::slotCustomFontSelectionChanged( void )
 }
 
 
-void ConfigureDialog::slotCreateOwnMessageIdChanged( void )
-{
-  bool flag = mMime.createOwnMessageIdCheck->isChecked();
-  mMime.messageIdSuffixLabel->setEnabled( flag );
-  mMime.messageIdSuffixEdit->setEnabled( flag );
-  mMime.messageIdSuffixHintLabel->setEnabled( flag );
-}
-
-
 void ConfigureDialog::slotFontSelectorChanged( int index )
 {
   if( index < 0 || index >= mAppearance.fontLocationCombo->count() )
@@ -3656,78 +3629,78 @@ void ConfigureDialog::slotCharsetSelectionChanged( void )
 
 void ConfigureDialog::slotMimeHeaderSelectionChanged( void )
 {
-  mMime.currentTagItem = mMime.tagList->selectedItem();
-  if( mMime.currentTagItem != 0 )
+  mComposer.currentTagItem = mComposer.tagList->selectedItem();
+  if( mComposer.currentTagItem != 0 )
   {
-    mMime.tagNameEdit->setText( mMime.currentTagItem->text(0) );
-    mMime.tagValueEdit->setText( mMime.currentTagItem->text(1) );
-    mMime.tagNameEdit->setEnabled(true);
-    mMime.tagValueEdit->setEnabled(true);
-    mMime.tagNameLabel->setEnabled(true);
-    mMime.tagValueLabel->setEnabled(true);
+    mComposer.tagNameEdit->setText( mComposer.currentTagItem->text(0) );
+    mComposer.tagValueEdit->setText( mComposer.currentTagItem->text(1) );
+    mComposer.tagNameEdit->setEnabled(true);
+    mComposer.tagValueEdit->setEnabled(true);
+    mComposer.tagNameLabel->setEnabled(true);
+    mComposer.tagValueLabel->setEnabled(true);
   }
 }
 
 
 void ConfigureDialog::slotMimeHeaderNameChanged( const QString &text )
 {
-  if( mMime.currentTagItem != 0 )
+  if( mComposer.currentTagItem != 0 )
   {
-    mMime.currentTagItem->setText(0, text );
+    mComposer.currentTagItem->setText(0, text );
   }
 }
 
 
 void ConfigureDialog::slotMimeHeaderValueChanged( const QString &text )
 {
-  if( mMime.currentTagItem != 0 )
+  if( mComposer.currentTagItem != 0 )
   {
-    mMime.currentTagItem->setText(1, text );
+    mComposer.currentTagItem->setText(1, text );
   }
 }
 
 
 void ConfigureDialog::slotNewMimeHeader( void )
 {
-  QListViewItem *listItem = new QListViewItem( mMime.tagList, "", "" );
-  mMime.tagList->setCurrentItem( listItem );
-  mMime.tagList->setSelected( listItem, true );
+  QListViewItem *listItem = new QListViewItem( mComposer.tagList, "", "" );
+  mComposer.tagList->setCurrentItem( listItem );
+  mComposer.tagList->setSelected( listItem, true );
 
-  mMime.currentTagItem = mMime.tagList->selectedItem();
-  if( mMime.currentTagItem != 0 )
+  mComposer.currentTagItem = mComposer.tagList->selectedItem();
+  if( mComposer.currentTagItem != 0 )
   {
-    mMime.tagNameEdit->setEnabled(true);
-    mMime.tagValueEdit->setEnabled(true);
-    mMime.tagNameLabel->setEnabled(true);
-    mMime.tagValueLabel->setEnabled(true);
-    mMime.tagNameEdit->setFocus();
+    mComposer.tagNameEdit->setEnabled(true);
+    mComposer.tagValueEdit->setEnabled(true);
+    mComposer.tagNameLabel->setEnabled(true);
+    mComposer.tagValueLabel->setEnabled(true);
+    mComposer.tagNameEdit->setFocus();
   }
 }
 
 
 void ConfigureDialog::slotDeleteMimeHeader( void )
 {
-  if( mMime.currentTagItem != 0 )
+  if( mComposer.currentTagItem != 0 )
   {
-    QListViewItem *next = mMime.currentTagItem->itemAbove();
+    QListViewItem *next = mComposer.currentTagItem->itemAbove();
     if( next == 0 )
     {
-      next = mMime.currentTagItem->itemBelow();
+      next = mComposer.currentTagItem->itemBelow();
     }
 
-    mMime.tagNameEdit->clear();
-    mMime.tagValueEdit->clear();
-    mMime.tagNameEdit->setEnabled(false);
-    mMime.tagValueEdit->setEnabled(false);
-    mMime.tagNameLabel->setEnabled(false);
-    mMime.tagValueLabel->setEnabled(false);
+    mComposer.tagNameEdit->clear();
+    mComposer.tagValueEdit->clear();
+    mComposer.tagNameEdit->setEnabled(false);
+    mComposer.tagValueEdit->setEnabled(false);
+    mComposer.tagNameLabel->setEnabled(false);
+    mComposer.tagValueLabel->setEnabled(false);
 
-    mMime.tagList->takeItem( mMime.currentTagItem );
-    mMime.currentTagItem = 0;
+    mComposer.tagList->takeItem( mComposer.currentTagItem );
+    mComposer.currentTagItem = 0;
 
     if( next != 0 )
     {
-      mMime.tagList->setSelected( next, true );
+      mComposer.tagList->setSelected( next, true );
     }
   }
 }

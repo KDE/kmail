@@ -349,6 +349,9 @@ private:
     };
     struct ComposerWidget
     {
+      ComposerWidget()
+	: currentTagItem( 0 ) {}
+
       int       pageIndex;
       LanguageComboBox *phraseLanguageCombo;
       QPushButton  *removeButton;
@@ -383,15 +386,7 @@ private:
       QPushButton *charsetUpButton;
       QPushButton *charsetDownButton;
       QCheckBox* forceReplyCharsetCheck;
-    };
-    struct MimeWidget
-    {
-      MimeWidget( void )
-      {
-	currentTagItem = 0;
-      }
-
-      int           pageIndex;
+      // custom headers tab:
       ListView      *tagList;
       QListViewItem *currentTagItem;
       QLineEdit     *tagNameEdit;
@@ -432,7 +427,6 @@ private:
       page_network,
       page_appearance,
       page_composer,
-      page_mimeheader,
       page_security,
       page_misc,
       page_folder,
@@ -456,7 +450,6 @@ private:
     void makeNetworkPage( void );
     void makeAppearancePage( void );
     void makeComposerPage( void );
-    void makeMimePage( void );
     void makeSecurityPage( void );
     void makeMiscPage( void );
 
@@ -464,7 +457,6 @@ private:
     void setupNetworkPage( void );
     void setupAppearancePage( void );
     void setupComposerPage( void );
-    void setupMimePage( void );
     void setupSecurityPage( void );
     void setupMiscPage( void );
     void installProfile( void );
@@ -496,7 +488,6 @@ private:
     void slotModifySelectedAccount( void );
     void slotRemoveSelectedAccount( void );
     void slotCustomFontSelectionChanged( void );
-    void slotCreateOwnMessageIdChanged( void );
     void slotFontSelectorChanged( int index );
     void slotAddressbookSelectorChanged( int index );
     void slotCustomColorSelectionChanged( void );
@@ -531,7 +522,6 @@ private:
     NetworkWidget    mNetwork;
     AppearanceWidget mAppearance;
     ComposerWidget   mComposer;
-    MimeWidget       mMime;
     SecurityWidget   mSecurity;
     MiscWidget       mMisc;
 
