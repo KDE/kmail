@@ -10,11 +10,11 @@
 #include <ctype.h>
 
 #define NUM_STATUSLIST 9
-static KMMsgStatus sStatusList[NUM_STATUSLIST] = 
+static KMMsgStatus sStatusList[NUM_STATUSLIST] =
 {
-  KMMsgStatusDeleted, KMMsgStatusNew, 
+  KMMsgStatusDeleted, KMMsgStatusNew,
   KMMsgStatusUnread,  KMMsgStatusOld,
-  KMMsgStatusRead,    KMMsgStatusReplied, 
+  KMMsgStatusRead,    KMMsgStatusReplied,
   KMMsgStatusSent,    KMMsgStatusQueued,
   KMMsgStatusUnknown /* "Unknown" must be at the *end* of the list */
 };
@@ -123,6 +123,13 @@ bool KMMsgBase::isUnread(void) const
 {
   KMMsgStatus st = status();
   return (st==KMMsgStatusNew || st==KMMsgStatusUnread);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isNew(void) const
+{
+  KMMsgStatus st = status();
+  return (st==KMMsgStatusNew);
 }
 
 
@@ -304,7 +311,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
   char encoding, ch;
   bool valid;
   int i;
-  
+
   result.truncate(aStr.length());
   for (pos=aStr.data(), dest=result.data(); *pos; pos++)
   {
@@ -324,7 +331,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
     {
       // get encoding and check delimiting question marks
       encoding = toupper(pos[1]);
-      if (pos[2]!='?' || (encoding!='Q' && encoding!='B')) 
+      if (pos[2]!='?' || (encoding!='Q' && encoding!='B'))
 	valid = FALSE;
       pos+=3;
       i+=3;
@@ -444,7 +451,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
            p2 += 2;
 	}
       }
-    } 
+    }
     else result += decodeBase64(aStr.mid (p1+3, end-p1-3).data());
 
     start = end + 2;

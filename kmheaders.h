@@ -20,7 +20,7 @@ class KMHeaders : public KTabListBox
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
-  
+
   virtual void setFolder(KMFolder *);
   KMFolder* folder(void) { return mFolder; }
 
@@ -91,7 +91,7 @@ public slots:
 protected:
   void makeHeaderVisible();
 
-  virtual bool prepareForDrag (int col, int row, char** data, int* size, 
+  virtual bool prepareForDrag (int col, int row, char** data, int* size,
 			       int* type);
 
   /** Find next/prev unread message. Starts at currentItem() if startAt
@@ -123,6 +123,7 @@ private:
   KMFolder* mFolder;
   KMMainWin* mOwner;
   int mTopItem;
+  int mCurrentItem;
   int getMsgIndex;
   bool getMsgMulti;
   KMMessageList mSelMsgList;

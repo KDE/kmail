@@ -49,6 +49,9 @@ public:
   /** Returns TRUE if status is new or unread. */
   virtual bool isUnread(void) const;
 
+  /** Returns TRUE if status is new. */
+  virtual bool isNew(void) const;
+    
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
@@ -105,14 +108,14 @@ public:
   /** Compare with other message by position in folder. Returns -1/0/1 like strcmp.*/
   int compareByIndex(const KMMsgBase* other) const;
 
-  /** Skip leading keyword if keyword has given character at it's end 
+  /** Skip leading keyword if keyword has given character at it's end
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
    * If keywordFound is specified it will be TRUE if a keyword was skipped
    * and FALSE otherwise. */
   static const char* skipKeyword(const QString str, char sepChar=':',
 				 bool* keywordFound=NULL);
 
-  /** Copy all values from other to this object. */ 
+  /** Copy all values from other to this object. */
   void assign(const KMMsgBase* other);
 
   /** Assignment operator that simply calls assign(). */
@@ -124,7 +127,7 @@ public:
 
   /** Decode given string from possibly quoted-printable encoded
     string. These strings contain parts of the type "=?iso8859-1?Q?...?=".
-    These parts are not correct decoded by decodeQuotedPrintable(). 
+    These parts are not correct decoded by decodeQuotedPrintable().
     Use this method if you want to ensure that a given header field
     is readable. */
   static const QString decodeQuotedPrintableString(const QString str);

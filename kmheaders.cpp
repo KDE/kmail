@@ -112,6 +112,7 @@ void KMHeaders::readFolderConfig (void)
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol);
   mTopItem = config->readNumEntry("Top", 0);
+  mCurrentItem = config->readNumEntry("Current", 0);
 }
 
 
@@ -127,6 +128,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("DateWidth", columnWidth(3));
   config->writeEntry("SortColumn", (mSortDescending ? -mSortCol : mSortCol));
   config->writeEntry("Top", topItem());
+  config->writeEntry("Current", currentItem());
 }
 
 
@@ -187,13 +189,16 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     if (mFolder)
     {
       id = findUnread(TRUE, 0);
-      if (id >= 0) 
+      if (id >= 0 && mFolder->getMsgBase(id)->isNew()) 
       {
 	setCurrentItem(id);
 	msgHeaderChanged(id);
 	makeHeaderVisible();
       }
-      else setTopItem(mTopItem);
+      else { 
+	  setTopItem(mTopItem);
+	  setCurrentItem(mCurrentItem);
+      }
     }
     else setCurrentItem(0);
   }
