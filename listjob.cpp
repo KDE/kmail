@@ -98,6 +98,12 @@ void ListJob::execute()
   url.setPath( ( jd.inboxOnly ? QString("/") : mPath )
       + ";TYPE=" + ltype
       + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
+  // at least here we have to be connected
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+  {
+    delete this;
+    return;
+  }
   // go
   KIO::SimpleJob *job = KIO::listDir( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
