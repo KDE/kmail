@@ -59,10 +59,10 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   KConfigGroupSaver saver(config, "Folder-" + idString());
   mUidValidity = config->readEntry("UidValidity");
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
-  if (aName == "INBOX" && mImapPath == "/INBOX/")
+  if (QString(aName).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder->setSystemFolder( true );
-    mLabel = i18n("inbox");
+    setLabel( i18n("inbox") );
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
