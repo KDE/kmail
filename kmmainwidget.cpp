@@ -2388,6 +2388,7 @@ void KMMainWidget::setupActions()
   mReplyActionMenu->insert( mReplyListAction );
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+                                 "mail_forward",
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
