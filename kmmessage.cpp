@@ -1557,14 +1557,43 @@ void KMMessage::setBody(const QString& aStr)
 }
 
 
+// Patched by Daniel Moisset <dmoisset@grulic.org.ar>
+// modified numbodyparts, bodypart to take nested body parts as
+// a linear sequence.
+// third revision, Sep 26 2000
+
+// this is support structure for traversing tree without recursion
+
 //-----------------------------------------------------------------------------
 int KMMessage::numBodyParts(void) const
 {
-  int count;
+  int count = 0;
   DwBodyPart* part = mMsg->Body().FirstBodyPart();
+  QList< DwBodyPart > parts;
+  QString mp = "multipart";
 
-  for (count=0; part; count++)
-    part = part->Next();
+  while (part) 
+  {
+     //dive into multipart messages
+     while ( part && part->Headers().HasContentType() &&
+             (mp == part->Headers().ContentType().TypeStr().c_str()) )
+     {
+	 parts.append( part );
+	 part = part->Body().FirstBodyPart();
+     }
+     // this is where currPart->msgPart contains a leaf message part
+     count++;
+     // go up in the tree until reaching a node with next
+     // (or the last top-level node)
+     while (part && !(part->Next()) && !(parts.isEmpty()))
+     {
+	part = parts.getLast();
+	parts.removeLast();
+     } ;
+     
+     if (part)
+	 part = part->Next();
+  }
 
   return count;
 }
@@ -1573,14 +1602,38 @@ int KMMessage::numBodyParts(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 {
-  DwBodyPart* part;
+  DwBodyPart *part, *curpart;
+  QList< DwBodyPart > parts;
+  QString mp = "multipart";
   DwHeaders* headers;
-  int curIdx;
-
+  int curIdx = 0;
   // Get the DwBodyPart for this index
-  part = mMsg->Body().FirstBodyPart();
-  for (curIdx=0; curIdx < aIdx && part; ++curIdx)
-    part = part->Next();
+
+  curpart = mMsg->Body().FirstBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+     //dive into multipart messages
+     while ( curpart && curpart->Headers().HasContentType() &&
+             (mp == curpart->Headers().ContentType().TypeStr().c_str()) )
+     {
+	 parts.append( curpart );
+	 curpart = curpart->Body().FirstBodyPart();
+     }
+     // this is where currPart->msgPart contains a leaf message part
+     if (curIdx==aIdx)
+        part = curpart;
+     curIdx++;
+     // go up in the tree until reaching a node with next
+     // (or the last top-level node)
+     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
+     {
+	curpart = parts.getLast();
+	parts.removeLast();
+     } ;
+     if (curpart)
+	 curpart = curpart->Next();
+  }  
 
   // If the DwBodyPart was found get the header fields and body
   if (part)
@@ -1607,9 +1660,11 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     }
     // Modification by Markus
     if (!headers->ContentType().Name().empty())
-      aPart->setName(headers->ContentType().Name().c_str());
+	aPart->setName(headers->ContentType().Name().c_str());
+    else if (!headers->Subject().AsString().empty())
+	aPart->setName( headers->Subject().AsString().c_str() );
     else
-      aPart->setName("unnamed");
+      aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
 
     // Content-transfer-encoding
     if (headers->HasContentTransferEncoding())

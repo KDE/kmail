@@ -966,6 +966,10 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   fileName = aMsgPart->fileName();
   if (fileName.isEmpty()) fileName = aMsgPart->name();
   label = fileName;
+      /* HTMLize label */
+  label.replace(QRegExp("\""), "&quot;");
+  label.replace(QRegExp("<"), "&lt;");
+  label.replace(QRegExp(">"), "&gt;");
 
 //--- Sven's save attachments to /tmp start ---
   bool ok = true;
