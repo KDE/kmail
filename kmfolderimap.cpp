@@ -185,7 +185,7 @@ void KMFolderImap::writeConfig()
 //-----------------------------------------------------------------------------
 void KMFolderImap::remove()
 {
-  if ( mAlreadyRemoved || !mAccount ) 
+  if ( mAlreadyRemoved || !mAccount )
   {
     // override
     FolderStorage::remove();
@@ -542,7 +542,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
     kdDebug(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
     return false;
   }
-  
+
   // reset
   if ( this == mAccount->rootFolder() )
   {
@@ -586,7 +586,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
   account()->listDirProgressItem()->incCompletedItems();
   account()->listDirProgressItem()->updateProgress();
   account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
-  
+
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
   if (it_inboxOnly) {
@@ -819,10 +819,10 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     mAccount->removeJob(it);
     if ( mMailCheckProgressItem )
     {
-      if ( startUid.isEmpty() ) { 
+      if ( startUid.isEmpty() ) {
         // flags for all messages are loaded
         mMailCheckProgressItem->setTotalItems( exists );
-      } else { 
+      } else {
         // only an approximation but doesn't hurt
         int remain = exists - count();
         if ( remain < 0 ) remain = 1;
@@ -929,35 +929,45 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   }
   mCheckFlags = FALSE;
   QStringList::Iterator uid;
-  // Check for already retrieved headers
-  if (count())
-  {
-    QCString cstr;
-    int idx = 0, a, b, c, serverFlags;
+  /*
+    The code below does the following:
+    - for each mail in the local store and each entry we got from the server,
+      compare the local uid with the one from the server and update the status
+      flags of the mails
+    - for all mails that are not already locally present, start a job which
+      gets the envelope of each
+    - remove all locally present mails if the server does not list them anymore
+  */
+  if ( count() ) {
+    int idx = 0, c, serverFlags;
     ulong mailUid, serverUid;
     uid = (*it).items.begin();
-    while (idx < count() && uid != (*it).items.end())
-    {
-      getMsgString(idx, cstr);
-      a = cstr.find("X-UID: ");
-      b = cstr.find("\n", a);
-      if (a == -1 || b == -1) mailUid = 0;
-      else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
+    while ( idx < count() && uid != (*it).items.end() ) {
+      KMMsgBase *msgBase = getMsgBase( idx );
+      mailUid = msgBase->UID();
+      // parse the uid from the server and the flags out of the list from
+      // the server. Format: 1234, 1
       c = (*uid).find(",");
-      serverUid = (*uid).left(c).toLong();
-      serverFlags = (*uid).mid(c+1).toInt();
-      if (mailUid < serverUid) removeMsg(idx, TRUE);
-      else if (mailUid == serverUid)
-      {
+      serverUid = (*uid).left( c ).toLong();
+      serverFlags = (*uid).mid( c+1 ).toInt();
+      if ( mailUid < serverUid ) {
+        removeMsg( idx, TRUE );
+      } else if ( mailUid == serverUid ) {
+        // if this is a read only folder, ignore status updates from the server
+        // since we can't write our status back our local version is what has to
+        // be considered correct.
         if (!mReadOnly)
-          flagsToStatus(getMsgBase(idx), serverFlags, false);
+          flagsToStatus( msgBase, serverFlags, false );
         idx++;
         uid = (*it).items.remove(uid);
       }
       else break;  // happens only, if deleted mails reappear on the server
     }
+    // remove all remaining entries in the local cache, they are no longer
+    // present on the server
     while (idx < count()) removeMsg(idx, TRUE);
   }
+  // strip the flags from the list of uids, so it can be reused
   for (uid = (*it).items.begin(); uid != (*it).items.end(); uid++)
     (*uid).truncate((*uid).find(","));
   ImapAccountBase::jobData jd( QString::null, (*it).parent );
@@ -985,6 +995,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   else sets = makeSets( (*it).items );
   mAccount->removeJob(it); // don't use *it below
 
+  // Now kick off the getting of envelopes for the new mails in the folder
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
   {
     KURL url = mAccount->getUrl();
@@ -1112,13 +1123,18 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       bool ok;
       int exists = (*it).cdata.mid( c+10,
           (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
-      if ( ok && exists < count() )
-      {
+      if ( ok && exists < count() ) {
         kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
         reallyGetFolder( QString::null );
         (*it).cdata.remove(0, pos);
         return;
+      } else if ( ok ) {
+        int delta = exists - count();
+        if ( mMailCheckProgressItem ) {
+          mMailCheckProgressItem->setTotalItems( delta );
+          mMailCheckProgressItem->setStatus( i18n("Retrieving message list") );
+        }
       }
     }
     (*it).cdata.remove(0, pos);
@@ -1194,6 +1210,10 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+    if ( mMailCheckProgressItem ) {
+      mMailCheckProgressItem->incCompletedItems();
+      mMailCheckProgressItem->updateProgress();
+    }
   } // while
   close();
 }
@@ -1577,7 +1597,7 @@ void KMFolderImap::slotProcessNewMail( int errorCode, const QString &errorMsg )
 {
   Q_UNUSED( errorMsg );
   disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
-      this, SLOT( slotProcessNewMail(int, const QString&) ) );
+              this, SLOT( slotProcessNewMail(int, const QString&) ) );
   if ( !errorCode )
     processNewMail( false );
   else
