@@ -2579,7 +2579,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
     useSignatureFile = entry->useSignatureFile();
     if (entry->transport().isNull() || entry->transport().isEmpty())
-      mIdentity.transportButton->setText(i18n("Add Transport..."));
+      mIdentity.transportButton->setText(i18n("&Add Transport..."));
     else
       mIdentity.transportButton->setText(i18n("Edit Transport..."));
   }
@@ -4006,8 +4006,8 @@ void ConfigureDialog::slotIdentityTransport(void)
   if (ctd.exec() == QDialog::Accepted) {
     id->setTransport(ctd.getTransport());
     if (ctd.getTransport().isEmpty())
-      mIdentity.transportButton->setText("Add Transport...");
+      mIdentity.transportButton->setText(i18n("&Add Transport..."));
     else
-      mIdentity.transportButton->setText("Edit Transport...");
+      mIdentity.transportButton->setText(i18n("Edit Transport..."));
   }
 }
