@@ -56,25 +56,32 @@ namespace KMail {
     kdDebug(5006) << "~Vacation()" << endl;
   }
 
+  static inline QString lf2crlf( QString s ) {
+    return s.replace( '\n', "\r\n" );
+  }
+  static inline QString dotstuff( QString s ) {
+    if ( s.startsWith( "." ) )
+      return '.' + s.replace( "\n.", "\n.." );
+    else
+      return s.replace( "\n.", "\n.." );
+  }
+
   QString Vacation::composeScript( const QDate & returnDate, int notificationInterval ) {
     QString script
-      = QString::fromLatin1("require \"vacation\";\r\n"
-			    "# keep next two lines:\r\n"
+      = QString::fromLatin1("require \"vacation\";\n"
+			    "# keep next two lines:\n"
 			    // if you change these lines, change parseScript, too!
-			    "# return date: %1\r\n"
-			    "# notification interval: %2\r\n"
+			    "# return date: %1\n"
+			    "# notification interval: %2\n"
 			    "vacation ").arg( returnDate.toString( ISODate ) )
                                         .arg( notificationInterval );
     if ( notificationInterval > 0 )
       script += QString::fromLatin1(":days %1 ").arg( notificationInterval );
-    script += QString::fromLatin1("text:\r\n");
-    script += i18n("mutz@kde.org: If your translation results in a line "
-		   "beginning with a dot (.), escape it by prepending another "
-		   "dot. Keep the trailing line with the single dot!",
-		   "This is to inform you that I'm out of office until %1.\r\n"
-		   ".\r\n"
-		   ";\r\n").arg( KGlobal::locale()->formatDate( returnDate ) );
-    return script;
+    script += QString::fromLatin1("text:\n");
+    script += dotstuff( i18n("This is to inform you that I'm out of office until %1.") )
+      .arg( KGlobal::locale()->formatDate( returnDate ) );
+    script += QString::fromLatin1( "\n.\n;\n" );
+    return lf2crlf( script );
   }
 
   static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
