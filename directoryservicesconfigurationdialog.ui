@@ -152,7 +152,7 @@ By clicking this button, you can select a new directory service to be used for r
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>&amp;Remove Service...</string>
+                        <string>&amp;Remove Service</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to remove the currently selected service</string>

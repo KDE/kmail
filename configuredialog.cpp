@@ -327,7 +327,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   QPushButton * button = new QPushButton( i18n("&New..."), this );
   mModifyButton = new QPushButton( i18n("&Modify..."), this );
   mRenameButton = new QPushButton( i18n("&Rename"), this );
-  mRemoveButton = new QPushButton( i18n("Remo&ve..."), this );
+  mRemoveButton = new QPushButton( i18n("Remo&ve"), this );
   mSetAsDefaultButton = new QPushButton( i18n("Set as &Default"), this );
   button->setAutoDefault( false );
   mModifyButton->setAutoDefault( false );
@@ -510,7 +510,7 @@ void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
   if ( item ) {
     menu->insertItem( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
     if ( mIdentityList->childCount() > 1 )
-      menu->insertItem( i18n("Remove..."), this, SLOT(slotRemoveIdentity()) );
+      menu->insertItem( i18n("Remove"), this, SLOT(slotRemoveIdentity()) );
     if ( !item->identity().isDefault() )
       menu->insertItem( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
   }

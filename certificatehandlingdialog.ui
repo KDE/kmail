@@ -265,7 +265,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>&amp;Delete...</string>
+                        <string>&amp;Delete</string>
                     </property>
                 </widget>
             </hbox>
