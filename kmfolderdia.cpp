@@ -69,15 +69,6 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       fileInFolder->setCurrentItem( i );
     ++i;
   }
-<<<<<<< kmfolderdia.cpp
-
-  setMainWidget( hb );
-  hb->setMinimumSize( hb->sizeHint() );
-
-  //setResizeMode( KDialogBase::ResizeMinimum );
-
-=======
->>>>>>> 1.20
 }
 
 
