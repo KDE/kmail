@@ -334,22 +334,25 @@ int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlSt
 
 int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
-int retval;
-QCString bericht;
-static QStringList *msgIds=0;
-static QString      lastFolder="";
-bool readFolderMsgIds=false;
+  if ( foldername.isEmpty() )
+    return -1;
+
+  int retval;
+  QCString messageText;
+  static QStringList *msgIds = 0;
+  static QString      lastFolder = "";
+  bool readFolderMsgIds = false;
 
   //kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
-  if (foldername!=lastFolder) {
-    if (msgIds!=0) {
+  if ( foldername != lastFolder ) {
+    if ( msgIds != 0 ) {
       delete msgIds;
       msgIds = 0;
     }
-    msgIds=new QStringList;
-    readFolderMsgIds=true;
-    lastFolder=foldername;
+    msgIds = new QStringList;
+    readFolderMsgIds = true;
+    lastFolder = foldername;
   }
 
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
@@ -361,18 +364,17 @@ bool readFolderMsgIds=false;
     // because of the implicit sharing this poses
     // no memory or performance penalty.
 
-    bericht=kFileToString(msgUrl.path(),true,false);
-    if (bericht.isNull()) { return -2; }
+    messageText = kFileToString( msgUrl.path(), true, false);
+    if ( messageText.isNull() )
+      return -2;
 
-    KMMessage *M=new KMMessage();
-    M->fromString(bericht);
+    KMMessage *msg = new KMMessage();
+    msg->fromString( messageText );
 
-    KMFolder  *F=the_folderMgr->findOrCreate(foldername, FALSE);
+    KMFolder *folder = the_folderMgr->findOrCreate(foldername, false);
 
-    if (F==0) { retval=-1; }
-    else {
-
-      if (readFolderMsgIds) {int i;
+    if ( folder ) {
+      if (readFolderMsgIds) {
 
         // Try to determine if a message already exists in
         // the folder. The message id that is searched for, is
@@ -382,49 +384,65 @@ bool readFolderMsgIds=false;
 
         // If the subject is empty, the fromStrip string
         // is taken.
+        int i;
 
-        F->open();
-        for(i=0;i<F->count();i++) {KMMsgBase *mb=F->getMsgBase(i);
-          time_t  DT=mb->date();
-          QString dt=ctime(&DT);
-          QString id=mb->subject();
+        folder->open();
+        for( i=0; i<folder->count(); i++) {
+          KMMsgBase *mb = folder->getMsgBase(i);
+          time_t  DT = mb->date();
+          QString dt = ctime(&DT);
+          QString id = mb->subject();
 
-          if (id.isEmpty()) { id=mb->fromStrip(); }
-          if (id.isEmpty()) { id=mb->toStrip(); }
+          if (id.isEmpty())
+            id = mb->fromStrip();
+          if (id.isEmpty())
+            id = mb->toStrip();
 
           id+=dt;
 
           //fprintf(stderr,"%s\n",(const char *) id);
-          if (!id.isEmpty()) { msgIds->append(id); }
+          if (!id.isEmpty()) { 
+            msgIds->append(id); 
+          }
         }
-        F->close();
+        folder->close();
       }
 
-      time_t  DT=M->date();
-      QString dt=ctime(&DT);
-      QString msgId=M->subject();
+      time_t DT = msg->date();
+      QString dt = ctime( &DT );
+      QString msgId = msg->subject();
 
-      if (msgId.isEmpty()) { msgId=M->fromStrip(); }
-      if (msgId.isEmpty()) { msgId=M->toStrip(); }
+      if ( msgId.isEmpty() )
+        msgId = msg->fromStrip();
+      if ( msgId.isEmpty() )
+        msgId = msg->toStrip();
 
-      msgId+=dt;
+      msgId += dt;
 
-      int     k=msgIds->findIndex(msgId);
+      int k = msgIds->findIndex( msgId );
       //fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
 
-      if (k==-1) {
-        if (!msgId.isEmpty()) { msgIds->append(msgId); }
-        if (F->addMsg(M)==0) { retval=1; }
-        else { retval=-2;delete M; M = 0; }
+      if ( k == -1 ) {
+        if ( !msgId.isEmpty() ) {
+          msgIds->append( msgId );
+        }
+        if ( folder->addMsg( msg ) == 0 ) { 
+          retval = 1;
+        } else {
+          retval =- 2;
+          delete msg;
+          msg = 0;
+        }
+      } else { 
+        retval = -4; 
       }
-      else { retval=-4; }
+    } else {
+      retval = -1;
     }
-
-    return retval;
+  } else {
+    retval = -2;
   }
-  else {
-    return -2;
-  }
+  return retval;
 }
 
 void KMKernel::requestAddresses( QString filename )
