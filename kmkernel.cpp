@@ -663,7 +663,7 @@ void KMKernel::initFolders(KConfig* cfg)
   // in the base folder directory.
   //if (name.isEmpty()) name = getenv("MAIL");
 
-  if (name.isEmpty()) name = "inbox";
+  if (name.isEmpty()) name = I18N_NOOP("inbox");
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
 
@@ -674,7 +674,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_inboxFolder->setSystemFolder(TRUE);
   // inboxFolder->open();
 
-  the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
+  the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
   if (the_outboxFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
@@ -683,7 +683,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_outboxFolder->setSystemFolder(TRUE);
   the_outboxFolder->open();
 
-  the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
+  the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
   if (the_sentFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
@@ -691,7 +691,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_sentFolder->setSystemFolder(TRUE);
   // the_sentFolder->open();
 
-  the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
+  the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
@@ -699,7 +699,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_trashFolder->setSystemFolder(TRUE);
   // the_trashFolder->open();
 
-  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
+  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
