@@ -143,6 +143,13 @@ int KMKernel::ready()
   return 1;
 }
 
+void KMKernel::compactAllFolders ()
+{
+  kdDebug() << "KMKernel::compactAllFolders called" << endl;
+  the_folderMgr->compactAll();
+  kdDebug() << "KMKernel::compactAllFolders finished" << endl;
+}
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/
@@ -219,7 +226,7 @@ void KMKernel::testDir(const char *_name)
                                  "KMail cannot start without it.\n"));
       exit(-1);
   }
-		
+
   c += _name;
   dp = opendir(c.data());
   if (dp == NULL) ::mkdir(c.data(), S_IRWXU);

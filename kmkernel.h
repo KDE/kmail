@@ -44,6 +44,7 @@ public:
   int send(int composerId, int how); //0=now, 1=later
   int addAttachment(int composerId, KURL url, QString comment);
   int setBody (int composerId, QString body);
+  void compactAllFolders();
   // normal control stuff
 
   static KMKernel *self() { return mySelf; }

@@ -30,6 +30,7 @@ k_dcop:
                             QString comment) = 0;
   virtual int setBody (int composerId, QString body) = 0;
   virtual int ready() = 0; //1=yes, 0=no
+  virtual void compactAllFolders() = 0;
 };
 
 #endif
