@@ -1641,6 +1641,14 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   return result;
 }
 
+QString KMMessage::forwardSubject() const {
+  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
+}
+
+QString KMMessage::replySubject() const {
+  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
+}
+
 KMMessage* KMMessage::createDeliveryReceipt() const
 {
   QString str, receiptTo;

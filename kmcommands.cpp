@@ -759,6 +759,7 @@ void KMForwardAttachedCommand::execute()
   else if (msgList.count() == 1) {
     KMMessage *msg = msgList.getFirst();
     fwdMsg->initFromMessage(msg);
+    fwdMsg->setSubject( msg->forwardSubject() );
   }
 
   fwdMsg->setAutomaticFields(true);
