@@ -300,11 +300,11 @@ void KMMainWin::readConfig(void)
 
       // activate them
       if (unreadColumn != -1) {
-        slotToggleUnreadColumn();
+        mFolderTree->toggleColumn(KMFolderTree::unread);
         mFolderTree->setColumnWidth(mFolderTree->getUnreadColumnNumber(), config->readNumEntry("UnreadColumnWidth"));
       }
       if (totalColumn != -1) {
-        slotToggleTotalColumn();
+        mFolderTree->toggleColumn(KMFolderTree::total);
         mFolderTree->setColumnWidth(mFolderTree->getTotalColumnNumber(), config->readNumEntry("TotalColumnWidth"));
       }
       // get the correct order back
@@ -1418,7 +1418,7 @@ void KMMainWin::slotToggleUnreadColumn()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotToggleTotalColumn()
 {
-  mFolderTree->toggleColumn(KMFolderTree::total);
+  mFolderTree->toggleColumn(KMFolderTree::total, true);
 }
 
 //-----------------------------------------------------------------------------
