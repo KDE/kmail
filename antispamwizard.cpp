@@ -141,6 +141,7 @@ void AntiSpamWizard::accept()
                     << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
+  QPtrList<KMFilter> filterList;
 
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
@@ -168,7 +169,7 @@ void AntiSpamWizard::accept()
         pipeFilter->setStopProcessingHere( FALSE );
         pipeFilter->setConfigureShortcut( FALSE );
 
-        KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
+        filterList.append( pipeFilter );
       }
     }
 
@@ -213,7 +214,7 @@ void AntiSpamWizard::accept()
       virusFilter->setStopProcessingHere( TRUE );
       virusFilter->setConfigureShortcut( FALSE );
 
-      KMKernel::self()->filterMgr()->appendFilter( virusFilter );
+      filterList.append( virusFilter );
     }
   }
   else { // AntiSpam mode
@@ -240,7 +241,7 @@ void AntiSpamWizard::accept()
         pipeFilter->setStopProcessingHere( FALSE );
         pipeFilter->setConfigureShortcut( FALSE );
 
-        KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
+        filterList.append( pipeFilter );
       }
     }
 
@@ -288,7 +289,7 @@ void AntiSpamWizard::accept()
       spamFilter->setStopProcessingHere( TRUE );
       spamFilter->setConfigureShortcut( FALSE );
 
-      KMKernel::self()->filterMgr()->appendFilter( spamFilter );
+      filterList.append( spamFilter );
     }
 
     if ( mSpamRulesPage->classifyRulesSelected() )
@@ -323,7 +324,8 @@ void AntiSpamWizard::accept()
       classSpamFilter->setApplyOnExplicit( FALSE );
       classSpamFilter->setStopProcessingHere( TRUE );
       classSpamFilter->setConfigureShortcut( TRUE );
-      KMKernel::self()->filterMgr()->appendFilter( classSpamFilter );
+      classSpamFilter->setConfigureToolbar( TRUE );
+      filterList.append( classSpamFilter );
 
       // Classify messages manually as not Spam / as Ham
       KMFilter* classHamFilter = new KMFilter();
@@ -350,92 +352,15 @@ void AntiSpamWizard::accept()
       classHamFilter->setApplyOnExplicit( FALSE );
       classHamFilter->setStopProcessingHere( TRUE );
       classHamFilter->setConfigureShortcut( TRUE );
-      KMKernel::self()->filterMgr()->appendFilter( classHamFilter );
+      classHamFilter->setConfigureToolbar( TRUE );
+      filterList.append( classHamFilter );
 
-      // add the classification filter actions to the toolbar
-      QString filterNameSpam =
-          QString( "Filter %1" ).arg( classSpamFilterPattern->name() );
-      filterNameSpam = filterNameSpam.replace( " ", "_" );
-      QString filterNameHam =
-          QString( "Filter %1" ).arg( classHamFilterPattern->name() );
-      filterNameHam = filterNameHam.replace( " ", "_" );
-
-      // FIXME post KDE 3.2
-      // The following code manipulates the kmmainwin.rc file directly. Usuallay
-      // one would expect to let the toolbar write back it's change from above
-      // i.e. the new structure including the two added actions.
-      // In KDE 3.2 there is no API for that so I only fund the way to read in
-      // the XML file myself, to change it and write it out then.
-      // As soon as an API is available, the following part can certainly get
-      // replaced by one or two statements.
-      // (a.gungl@gmx.de)
-
-      // make the toolbar changes persistent - let's be very conservative here
-      QString config =
-          KXMLGUIFactory::readConfigFile( "kmmainwin.rc", KMKernel::self()->xmlGuiInstance() );
-#ifndef NDEBUG
-      kdDebug(5006) << "Read kmmainwin.rc contents (last 1000 chars printed):" << endl;
-      kdDebug(5006) << config.right( 1000 ) << endl;
-      kdDebug(5006) << "#####################################################" << endl;
-#endif
-      QDomDocument domDoc;
-      domDoc.setContent( config );
-      QDomNodeList domNodeList = domDoc.elementsByTagName( "ToolBar" );
-      if ( domNodeList.count() > 0 )
-        kdDebug(5006) << "ToolBar section found." << endl;
-      else
-        kdDebug(5006) << "No ToolBar section found." << endl;
-      for ( unsigned int i = 0; i < domNodeList.count(); i++ )
-      {
-        QDomNode domNode = domNodeList.item( i );
-        QDomNamedNodeMap nodeMap = domNode.attributes();
-        kdDebug(5006) << "name=" << nodeMap.namedItem( "name" ).nodeValue() << endl;
-        if ( nodeMap.namedItem( "name" ).nodeValue() == "mainToolBar" )
-        {
-          kdDebug(5006) << "mainToolBar section found." << endl;
-          bool spamActionFound = false;
-          bool hamActionFound = false;
-          QDomNodeList domNodeChildList = domNode.childNodes();
-          for ( unsigned int j = 0; j < domNodeChildList.count(); j++ )
-          {
-            QDomNode innerDomNode = domNodeChildList.item( j );
-            QDomNamedNodeMap innerNodeMap = innerDomNode.attributes();
-            if ( innerNodeMap.namedItem( "name" ).nodeValue() == filterNameSpam )
-              spamActionFound = true;
-            if ( innerNodeMap.namedItem( "name" ).nodeValue() == filterNameHam )
-              hamActionFound = true;
-          }
-
-          // append the new actions if not yet existing
-          if ( !spamActionFound )
-          {
-            QDomElement domElemSpam = domDoc.createElement( "Action" );
-            domElemSpam.setAttribute( "name", filterNameSpam );
-            domNode.appendChild( domElemSpam );
-            kdDebug(5006) << "Spam action added to toolbar." << endl;
-          }
-          if ( !hamActionFound )
-          {
-            QDomElement domElemHam = domDoc.createElement( "Action" );
-            domElemHam.setAttribute( "name", filterNameHam );
-            domNode.appendChild( domElemHam );
-            kdDebug(5006) << "Ham action added to toolbar." << endl;
-          }
-          if ( !spamActionFound || !hamActionFound )
-          {
-#ifndef NDEBUG
-            kdDebug(5006) << "New kmmainwin.rc structur (last 1000 chars printed):" << endl;
-            kdDebug(5006) << domDoc.toString().right( 1000 ) << endl;
-            kdDebug(5006) << "####################################################" << endl;
-#endif
-            // write back the modified resource file
-            KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc",
-                KMKernel::self()->xmlGuiInstance() );
-          }
-        }
-        else
-          kdDebug(5006) << "No mainToolBar section found." << endl;
-      }
+      /* Now that all the filters have been added to the list, tell
+       * the filter manager about it. That will emit filterListUpdate
+       * which will result in the filter list in kmmainwidget being 
+       * initialized. This should happend only once. */
+      KMKernel::self()->filterMgr()->appendFilters( filterList );
+      
     }
   }
 

@@ -9,6 +9,7 @@
 #define __KMMAINWIDGET
 
 #include <kurl.h>
+#include <kxmlguiclient.h>
 #include <qlistview.h>
 #include <qvbox.h>
 
@@ -67,7 +68,8 @@ class KMMainWidget : public QWidget
 
 public:
   KMMainWidget(QWidget *parent, const char *name,
-	       KActionCollection *actionCollection,
+               KXMLGUIClient *aGUIClient,
+               KActionCollection *actionCollection,
          KConfig*config = KMKernel::config() );
   virtual ~KMMainWidget();
   void destruct();
@@ -186,7 +188,6 @@ public slots:
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
-  void modifiedToolBarConfig( void );
 
 protected:
   void setupActions();
@@ -348,8 +349,6 @@ protected slots:
   void removeDuplicates();
   /** Create actions for marked filters */
   void initializeFilterActions();
-  /** Plug filter actions into a popup menu */
-  void plugFilterActions(QPopupMenu*);
 
   /** Slot to reply to a message */
   void slotReplyToMsg();
@@ -462,13 +461,15 @@ private:
   KActionCollection *mActionCollection;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread;
-  QPtrList<KAction> mFilterActions;
+  QPtrList<KAction> mFilterMenuActions;
+  QPtrList<KAction> mFilterTBarActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
   QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
-
+  KXMLGUIClient *mGUIClient;
+  
   static QPtrList<KMMainWidget>* s_mainWidgetList;
 };
 

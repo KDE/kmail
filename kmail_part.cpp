@@ -118,7 +118,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   setXMLFile( "kmmainwin.rc" );
   kmkernel->inboxFolder()->close();
 #else
-  mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection(), kapp->config());
+  mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(), 
+                                 kapp->config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);

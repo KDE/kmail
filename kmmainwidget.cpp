@@ -101,8 +101,9 @@ QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
 static KStaticDeleter<QPtrList<KMMainWidget> > mwlsd;
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
-			   KActionCollection *actionCollection, KConfig* config ) :
+KMMainWidget::KMMainWidget(QWidget *parent, const char *name, 
+                           KXMLGUIClient *aGUIClient,
+                           KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name),
     mQuickSearchLine( 0 )
 {
@@ -120,10 +121,12 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
-  mFilterActions.setAutoDelete(true);
+  mFilterMenuActions.setAutoDelete(true);
+  mFilterTBarActions.setAutoDelete(false);
   mFilterCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
+  mGUIClient = aGUIClient;
 
   if( !s_mainWidgetList )
     mwlsd.setObject( s_mainWidgetList, new QPtrList<KMMainWidget>() );
@@ -3137,6 +3140,9 @@ void KMMainWidget::slotShowStartupFolder()
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
+  // plug shortcut filter actions now
+  initializeFilterActions();
+  
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
@@ -3256,12 +3262,22 @@ void KMMainWidget::initializeFilterActions()
 {
   QString filterName, normalizedName;
   KMMetaFilterActionCommand *filterCommand;
-  KAction *filterAction;
-  mApplyFilterActionsMenu->popupMenu()->clear();
-  mFilterActions.clear();
+  KAction *filterAction = 0;
+  
+  if ( !mFilterTBarActions.isEmpty() ) {
+    if ( mGUIClient->factory() )
+      mGUIClient->unplugActionList( "toolbar_filter_actions" );
+    mFilterTBarActions.clear();
+  }
+  if ( !mFilterMenuActions.isEmpty() ) {
+    mApplyFilterActionsMenu->popupMenu()->clear();
+    if ( mGUIClient->factory() )
+      mGUIClient->unplugActionList( "menu_filter_actions" );
+    mFilterMenuActions.clear();
+  }
   mFilterCommands.clear();
   for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
-        it.current() ; ++it )
+        it.current() ; ++it ) {
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
       filterName = QString("Filter %1").arg((*it)->name());
       normalizedName = filterName.replace(" ", "_");
@@ -3276,26 +3292,24 @@ void KMMainWidget::initializeFilterActions()
       filterAction = new KAction(as, icon, 0, filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
-      mFilterActions.append(filterAction);
+      filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
+      mFilterMenuActions.append(filterAction);
+      // FIXME
+      // uncomment the next if statement after the filter dialog supports
+      // separate activation of filters for the toolbar - currently 
+      // we better use the coupled way
+      // if ( (*it)->configureToolbar() )
+        mFilterTBarActions.append(filterAction);
     }
-
-  plugFilterActions(mApplyFilterActionsMenu->popupMenu());
+  }
+  if ( !mFilterMenuActions.isEmpty() && mGUIClient->factory() )
+    mGUIClient->plugActionList( "menu_filter_actions", mFilterMenuActions );
+  if ( !mFilterTBarActions.isEmpty() && mGUIClient->factory() )
+    mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::plugFilterActions(QPopupMenu *menu)
-{
-  for (QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()); it.current(); ++it)
-      if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-	  QString filterName = QString("Filter %1").arg((*it)->name());
-	  filterName = filterName.replace(" ","_");
-	  KAction *filterAction = action(filterName.local8Bit());
-	  if (filterAction && menu)
-	      filterAction->plug(menu);
-      }
-}
-
 void KMMainWidget::slotSubscriptionDialog()
 {
   if (!mFolder) return;
@@ -3355,7 +3369,6 @@ void KMMainWidget::slotAntiSpamWizard()
   AntiSpamWizard wiz( AntiSpamWizard::AntiSpam,
                       this, folderTree(), actionCollection() );
   wiz.exec();
-  emit modifiedToolBarConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -3364,7 +3377,6 @@ void KMMainWidget::slotAntiVirusWizard()
   AntiSpamWizard wiz( AntiSpamWizard::AntiVirus,
                       this, folderTree(), actionCollection() );
   wiz.exec();
-  //emit modifiedToolBarConfig();
 }
 
 //-----------------------------------------------------------------------------
