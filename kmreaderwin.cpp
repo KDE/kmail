@@ -102,6 +102,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
+  connect( &mHtmlTimer, SIGNAL(timeout()),
+           this, SLOT(sendNextHtmlChunk()) );
 
   mCodec = 0;
   mAutoDetectEncoding = true;
@@ -620,6 +622,14 @@ void KMReaderWin::updateReaderWin()
   mViewer->view()->setUpdatesEnabled( false );
   mViewer->view()->viewport()->setUpdatesEnabled( false );
   static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
+
+  if (mHtmlTimer.isActive())
+  {
+    mHtmlTimer.stop();
+    mViewer->end();
+  }
+  mHtmlQueue.clear();
+
   if (mMsg)
   { 
     if ( mShowColorbar )
@@ -639,10 +649,38 @@ void KMReaderWin::updateReaderWin()
       mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
     mViewer->write("></body></html>");
     mViewer->end();
+    mViewer->view()->viewport()->setUpdatesEnabled( true );
+    mViewer->view()->setUpdatesEnabled( true );
+    mViewer->view()->viewport()->repaint( false );
   }
-  mViewer->view()->viewport()->setUpdatesEnabled( true );
-  mViewer->view()->setUpdatesEnabled( true );
-  mViewer->view()->viewport()->repaint( false );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::queueHtml(const QString &aStr)
+{
+  uint pos = 0;
+  while (aStr.length() > pos)
+  {
+    mHtmlQueue += aStr.mid(pos, 16384);
+    pos += 16384;
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::sendNextHtmlChunk()
+{
+  QStringList::Iterator it = mHtmlQueue.begin();
+  if (it == mHtmlQueue.end())
+  {
+    mViewer->end();
+    mViewer->view()->viewport()->setUpdatesEnabled( true );
+    mViewer->view()->setUpdatesEnabled( true );
+    mViewer->view()->viewport()->repaint( false );
+    return;
+  }
+  mViewer->write(*it);
+  mHtmlQueue.remove(it);
+  mHtmlTimer.start(0, TRUE);
 }
 
 //-----------------------------------------------------------------------------
@@ -681,7 +719,7 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   QColorGroup cg = kapp->palette().active();
-  mViewer->write("<html><head><style type=\"text/css\">" +
+  queueHtml("<html><head><style type=\"text/css\">" +
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
                            "color: #000000; background-color: #FFFFFF; }\n")
         .arg( mBodyFamily ).arg( fntSize )
@@ -758,8 +796,8 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(mMsg);
 
-  mViewer->write("</body></html>");
-  mViewer->end();
+  queueHtml("</body></html>");
+  sendNextHtmlChunk();
 }
 
 //-----------------------------------------------------------------------------
@@ -802,7 +840,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     }
   }
   
-  mViewer->write("<div id=\"header\" style=\"margin-bottom: 1em;\">" + (writeMsgHeader()) + "</div>");
+  queueHtml("<div id=\"header\" style=\"margin-bottom: 1em;\">" + (writeMsgHeader()) + "</div>");
 
   if (numParts > 0)
   {
@@ -871,7 +909,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	{
           QCString cstr(msgPart.bodyDecoded());
 	  if (i>0)
-	      mViewer->write("<br><hr><br>");
+	      queueHtml("<br><hr><br>");
 
           QTextCodec *atmCodec = (mAutoDetectEncoding) ?
             KMMsgBase::codecForName(msgPart.charset()) : mCodec;
@@ -1264,7 +1302,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
     mColorBar->setEraseColor( cCBplain );
     mColorBar->setText(i18n("\nN\no\n\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne"));
   }
-  mViewer->write(htmlStr);
+  queueHtml(htmlStr);
 }
 
 
@@ -1273,7 +1311,7 @@ void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
   mColorBar->setEraseColor( cCBhtml );
   mColorBar->setText(i18n("\nH\nT\nM\nL\n\nM\ne\ns\ns\na\ng\ne"));
-  mViewer->write(aStr);
+  queueHtml(aStr);
 }
 
 //-----------------------------------------------------------------------------
@@ -1435,7 +1473,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
     iconName = aMsgPart->iconName();
   }
   if (!quiet)
-    mViewer->write("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
+    queueHtml("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
                    iconName + "\" border=\"0\">" + label +
                    "</a></td></tr></table>" + comment + "<br>");
 }
@@ -1786,7 +1824,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       else
 	win->setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       win->mViewer->begin( KURL( "file:/" ) );
-      win->mViewer->write("<html><head><style type=\"text/css\">" +
+      win->queueHtml("<html><head><style type=\"text/css\">" +
 		 QString("a { color: %1;").arg(win->c2.name()) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
@@ -1800,8 +1838,8 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 	win->writeHTMLStr(win->codec()->toUnicode(str));
       else  // plain text
 	win->writeBodyStr(str, win->codec());
-      win->mViewer->write("</body></html>");
-      win->mViewer->end();
+      win->queueHtml("</body></html>");
+      win->sendNextHtmlChunk();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }

@@ -123,6 +123,9 @@ public:
 
   bool isfixedFont() { return mUseFixedFont; }
 
+  /** Queue HTML code to be sent later in chunks to khtml */
+  void queueHtml(const QString &aStr);
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
@@ -171,6 +174,9 @@ public slots:
 
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
+
+  /** Starts sending the queued HTML code to khtml */
+  void sendNextHtmlChunk();
 
 protected slots:
   /** Some attachment operations. */
@@ -257,6 +263,8 @@ protected:
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
+  QTimer mHtmlTimer;
+  QStringList mHtmlQueue;
   QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;
