@@ -173,7 +173,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mSearchFolderLbl = new QLabel(i18n("Search folder &name:"), searchWidget);
   hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
-  if (searchFolder) 
+  if (searchFolder)
     mSearchFolderEdt->setText(searchFolder->name());
   else
     mSearchFolderEdt->setText("search");
@@ -533,8 +533,9 @@ void KMFldSearch::folderInvalidated(KMFolder *folder)
 {
     if (folder == mFolder) {
 	mLbxMatches->clear();
-	connect(mFolder->search(), SIGNAL(finished(bool)),
-		this, SLOT(searchDone()));
+	if (mFolder->search())
+	    connect(mFolder->search(), SIGNAL(finished(bool)),
+		    this, SLOT(searchDone()));
 	mTimer->start(200);
 	enableGUI();
     }

@@ -167,7 +167,7 @@ void KMSearch::start()
 		if (!node->isDir())
 		{
 		    KMFolder* kmf = dynamic_cast<KMFolder*>(node);
-		    if (kmf) 
+		    if (kmf)
 			folders.append(kmf);
 		}
 	    }
@@ -398,17 +398,23 @@ void KMFolderSearch::setSearch(KMSearch *search)
     if (mSearch != search) {
 	delete mSearch;
 	mSearch = search; // take ownership
-	QObject::connect(search, SIGNAL(found(Q_UINT32)), SLOT(addSerNum(Q_UINT32)));
-	QObject::connect(search, SIGNAL(finished(bool)), SLOT(searchFinished(bool)));
+	if (mSearch) {
+	    QObject::connect(search, SIGNAL(found(Q_UINT32)), 
+			     SLOT(addSerNum(Q_UINT32)));
+	    QObject::connect(search, SIGNAL(finished(bool)), 
+			     SLOT(searchFinished(bool)));
+	}
     }
-    mSearch->write(location());
+    if (mSearch)
+	mSearch->write(location());
     clearIndex();
     mTotalMsgs = 0;
     mUnreadMsgs = 0;
     emit numUnreadMsgsChanged(this);
     emit changed(); // really want a kmfolder cleared signal
     /* TODO There is KMFolder::cleared signal now. Adjust. */
-    mSearch->start();
+    if (mSearch)
+	mSearch->start();
     open();
 }
 
@@ -1064,6 +1070,10 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     if (!mTempOpened) {
 	open();
 	mTempOpened = true;
+    }
+    if (mSearch->root() == folder) {
+	delete mSearch;
+	mSearch = 0;
     }
     QTimer::singleShot(0, this, SLOT(executeSearch()));
 }
