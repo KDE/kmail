@@ -634,11 +634,11 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
   int index;
-  QString md5 = aMsg->msgIdMD5();
+  ulong serNum = aMsg->getMsgSerNum();
   addMsg(aMsg, &index);
   if (index < 0) return;
   unGetMsg(index);
-  kernel->undoStack()->pushAction( md5, folder, this );
+  kernel->undoStack()->pushAction( serNum, folder, this );
 }
 
 

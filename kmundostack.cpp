@@ -32,10 +32,10 @@ void KMUndoStack::clear()
 }
 
 void 
-KMUndoStack::pushAction(QString msgIdMD5, KMFolder *folder, KMFolder *destFolder)
+KMUndoStack::pushAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
 {
    KMUndoInfo *info = new KMUndoInfo;
-   info->msgIdMD5 = msgIdMD5;
+   info->serNum = serNum;
    info->folder = folder;
    info->destFolder = destFolder;
    if ((int) mStack.count() == mSize)
@@ -77,11 +77,11 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
 }
 
 bool 
-KMUndoStack::popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder)
+KMUndoStack::popAction(ulong &serNum, KMFolder *&folder, KMFolder *&destFolder)
 {
    if (mStack.count() == 0) return false;
    KMUndoInfo *info = mStack.take(0);
-   msgIdMD5 = info->msgIdMD5;
+   serNum = info->serNum;
    folder = info->folder;
    destFolder = info->destFolder;
    delete info;

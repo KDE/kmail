@@ -147,7 +147,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  kernel->undoStack()->pushAction( aMsg->msgIdMD5(), folder, this );
+  kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) folder->take(folder->find(aMsg));
   delete aMsg;
 }

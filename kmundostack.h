@@ -31,7 +31,7 @@ class KMMsgBase;
 class KMUndoInfo
 {
 public:
-   QString msgIdMD5;
+   ulong serNum;
    KMFolder *folder;
    KMFolder *destFolder;
 };
@@ -43,10 +43,10 @@ public:
 
    void clear();
    int size() const { return mStack.count(); }
-   void pushAction(QString msgIdMD5, KMFolder *folder, KMFolder* destFolder);
+   void pushAction(ulong serNum, KMFolder *folder, KMFolder* destFolder);
    void msgDestroyed( KMMsgBase *msg);
    void folderDestroyed( KMFolder *folder);
-   bool popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder);
+   bool popAction(ulong &serNum, KMFolder *&folder, KMFolder *&destFolder);
 protected:
    QPtrList<KMUndoInfo> mStack;
    int mSize;

@@ -33,6 +33,7 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmreaderwin.h"
+#include "kmmsgdict.h"
 #ifdef SCORING
 #include "kmscoring.h"
 #endif
@@ -1584,7 +1585,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
       rc = destFolder->moveMsg(msg, &index);
       if (rc == 0 && index != -1) {
 	KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
-	kernel->undoStack()->pushAction( mb->msgIdMD5(), mFolder, destFolder );
+	kernel->undoStack()->pushAction( mb->getMsgSerNum(), mFolder, destFolder );
       }
     }
     else
@@ -1628,14 +1629,15 @@ bool KMHeaders::canUndo() const
 void KMHeaders::undo()
 {
   KMMessage *msg;
-  QString msgIdMD5;
-  KMFolder *folder, *curFolder;
-  if (kernel->undoStack()->popAction(msgIdMD5, folder, curFolder))
+  ulong serNum;
+  int idx = -1;
+  KMFolder *folder, *curFolder, *oldCurFolder;
+  if (kernel->undoStack()->popAction(serNum, folder, oldCurFolder))
   {
-    curFolder->open();
-    int idx = curFolder->find(msgIdMD5);
-    if (idx == -1) // message moved to folder that has been emptied
+    kernel->msgDict()->getLocation(serNum, &curFolder, &idx);
+    if (idx == -1 || curFolder != oldCurFolder)
       return;
+    curFolder->open();
     msg = curFolder->getMsg( idx );
     folder->moveMsg( msg );
     if (folder->count() > 1)
