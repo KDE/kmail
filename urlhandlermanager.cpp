@@ -41,6 +41,7 @@
 #include "partNode.h"
 #include "partnodebodypart.h"
 #include "kmreaderwin.h"
+#include "callback.h"
 
 #include <kurl.h>
 
@@ -189,7 +190,7 @@ static partNode * partNodeFromXKMailUrl( const KURL & url, KMReaderWin * w, QStr
   if ( !w || url.protocol() != "x-kmail" )
     return 0;
   const QString urlPath = url.path();
-  
+
   // urlPath format is: /bodypart/<random number>/<part id>/<path>
 
   kdDebug( 5006 ) << "BodyPartURLHandler: urlPath == \"" << urlPath << "\"" << endl;
@@ -205,7 +206,7 @@ static partNode * partNodeFromXKMailUrl( const KURL & url, KMReaderWin * w, QStr
     return 0;
   *path = KURL::decode_string( urlParts[2], 106 );
   return w->partNodeForId( part_id );
-}  
+}
 
 bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KURL & url, KMReaderWin * w ) const {
   QString path;
@@ -213,9 +214,10 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUR
   if ( !node )
     return false;
 
+  Callback callback( w->message() );
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
-    if ( (*it)->handleClick( &part, path ) )
+    if ( (*it)->handleClick( &part, path, callback ) )
       return true;
   return false;
 }
