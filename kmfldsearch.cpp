@@ -110,7 +110,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   spacer->setMinimumHeight( 2 );
   vbl->addWidget( spacer );
 
-  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false );
+  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false, true );
   mPatternEdit->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
   mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();

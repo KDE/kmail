@@ -11,6 +11,7 @@
 #include <qhbox.h>
 #include <qgroupbox.h>
 #include <qptrlist.h>
+#include <qstringlist.h>
 
 class QPushButton;
 class QVBoxLayout;
@@ -43,7 +44,7 @@ class KMSearchRuleWidget: public QHBox
 public:
   /** Constructor. You can give a @ref KMSearchRule as parameter, which will
       be used to initialize the widget. */
-  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false );
+  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
   /** Set the rule. The rule is accepted regardless of the return
       value of @ref KMSearchRule::isEmpty. This widget makes a shallow
@@ -81,13 +82,14 @@ protected slots:
 
 private:
   void initWidget();
-  void initLists(bool headersOnly) const;
+  void initLists(bool headersOnly, bool absoluteDates);
 
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
   QLineEdit* mRuleValue;
   QPushButton* mRuleEditBut;
   QDialog* mRegExpEditDialog;
+  QStringList mFilterFieldList, mFilterFuncList;
 };
 
 
@@ -98,7 +100,7 @@ class KMSearchRuleWidgetLister : public KWidgetLister
   friend class KMSearchPatternEdit;
 
 public:
-  KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false);
+  KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
   virtual ~KMSearchRuleWidgetLister();
 
@@ -115,6 +117,7 @@ private:
   void regenerateRuleListFromWidgets();
   QPtrList<KMSearchRule> *mRuleList;
   bool mHeadersOnly;
+  bool mAbsoluteDates;
 };
 
 
@@ -155,10 +158,10 @@ class KMSearchPatternEdit : public QGroupBox  {
 public:
   /** Constructor. The parent and name parameters are passed to the underlying
       @ref QGroupBox, as usual. */
-  KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false);
+  KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false, bool absoluteDates = false);
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
-  KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0, bool headersOnly = false);
+  KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0, bool headersOnly = false, bool absoluteDates = false);
   ~KMSearchPatternEdit();
 
   /** Set the search pattern. Rules are inserted regardless of the
@@ -185,7 +188,7 @@ private slots:
   void slotAutoNameHack();
 
 private:
-  void initLayout( bool headersOnly );
+  void initLayout( bool headersOnly, bool absoluteDates );
 
   KMSearchPattern *mPattern;
   QRadioButton    *mAllRBtn, *mAnyRBtn;

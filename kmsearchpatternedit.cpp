@@ -12,7 +12,6 @@
 #include <klineedit.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
-#include <qstringlist.h>
 
 #include <assert.h>
 #include <kparts/componentfactory.h>
@@ -20,20 +19,18 @@
 #include <qpushbutton.h>
 #include <qdialog.h>
 
-static QStringList sFilterFieldList, sFilterFuncList;
-
 //=============================================================================
 //
 // class KMSearchRuleWidget
 //
 //=============================================================================
 
-KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly)
+KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly, bool absoluteDates)
   : QHBox(parent,name),
     mRuleEditBut(0),
     mRegExpEditDialog(0)
 {
-  initLists( headersOnly ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
+  initLists( headersOnly, absoluteDates ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
 
   if ( aRule )
@@ -57,10 +54,10 @@ void KMSearchRuleWidget::initWidget()
     functionChanged( mRuleFunc->currentItem() );
   }
 
-  mRuleFunc->insertStringList(sFilterFuncList);
+  mRuleFunc->insertStringList(mFilterFuncList);
   mRuleFunc->adjustSize();
 
-  mRuleField->insertStringList(sFilterFieldList);
+  mRuleField->insertStringList(mFilterFieldList);
   // don't show sliders when popping up this menu
   mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
@@ -160,55 +157,55 @@ int KMSearchRuleWidget::indexOfRuleField(const QString aName) const
 
   QString i18n_aName = i18n( aName.latin1() );
 
-  for (i=sFilterFieldList.count()-1; i>=0; i--) {
-    if (*(sFilterFieldList.at(i))==i18n_aName) break;
+  for (i=mFilterFieldList.count()-1; i>=0; i--) {
+    if (*(mFilterFieldList.at(i))==i18n_aName) break;
   }
   return i;
 }
 
-void KMSearchRuleWidget::initLists(bool headersOnly) const
+void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
 {
   //---------- initialize list of filter operators
-  if ( sFilterFuncList.isEmpty() )
+  if ( mFilterFuncList.isEmpty() )
   {
     // also see KMSearchRule::matches() and KMSearchRule::Function
     // if you change the following strings!
-    sFilterFuncList.append(i18n("contains"));
-    sFilterFuncList.append(i18n("doesn't contain"));
-    sFilterFuncList.append(i18n("equals"));
-    sFilterFuncList.append(i18n("doesn't equal"));
-    sFilterFuncList.append(i18n("matches regular expr."));
-    sFilterFuncList.append(i18n("doesn't match reg. expr."));
-    sFilterFuncList.append(i18n("is greater than"));
-    sFilterFuncList.append(i18n("is less than or equal to"));
-    sFilterFuncList.append(i18n("is less than"));
-    sFilterFuncList.append(i18n("is greater than or equal to"));
+    mFilterFuncList.append(i18n("contains"));
+    mFilterFuncList.append(i18n("doesn't contain"));
+    mFilterFuncList.append(i18n("equals"));
+    mFilterFuncList.append(i18n("doesn't equal"));
+    mFilterFuncList.append(i18n("matches regular expr."));
+    mFilterFuncList.append(i18n("doesn't match reg. expr."));
+    mFilterFuncList.append(i18n("is greater than"));
+    mFilterFuncList.append(i18n("is less than or equal to"));
+    mFilterFuncList.append(i18n("is less than"));
+    mFilterFuncList.append(i18n("is greater than or equal to"));
   }
 
   //---------- initialize list of filter operators
-  if ( sFilterFieldList.isEmpty() )
+  if ( mFilterFieldList.isEmpty() )
   {
-    sFilterFieldList.append("");
+    mFilterFieldList.append("");
     // also see KMSearchRule::matches() and ruleFieldToEnglish() if
     // you change the following i18n-ized strings!
-    if( !headersOnly )  sFilterFieldList.append(i18n("<message>"));
-    if( !headersOnly )  sFilterFieldList.append(i18n("<body>"));
-    sFilterFieldList.append(i18n("<any header>"));
-    sFilterFieldList.append(i18n("<recipients>"));
-    sFilterFieldList.append(i18n("<size>"));
-    sFilterFieldList.append(i18n("<age in days>"));
+    if( !headersOnly )  mFilterFieldList.append(i18n("<message>"));
+    if( !headersOnly )  mFilterFieldList.append(i18n("<body>"));
+    mFilterFieldList.append(i18n("<any header>"));
+    mFilterFieldList.append(i18n("<recipients>"));
+    mFilterFieldList.append(i18n("<size>"));
+    if ( !absoluteDates )  mFilterFieldList.append(i18n("<age in days>"));
     // these others only represent message headers and you can add to
     // them as you like
-    sFilterFieldList.append("Subject");
-    sFilterFieldList.append("From");
-    sFilterFieldList.append("To");
-    sFilterFieldList.append("CC");
-    sFilterFieldList.append("Reply-To");
-    sFilterFieldList.append("List-Id");
-    sFilterFieldList.append("Organization");
-    sFilterFieldList.append("Resent-From");
-    sFilterFieldList.append("X-Loop");
-    sFilterFieldList.append("X-Mailing-List");
+    mFilterFieldList.append("Subject");
+    mFilterFieldList.append("From");
+    mFilterFieldList.append("To");
+    mFilterFieldList.append("CC");
+    mFilterFieldList.append("Reply-To");
+    mFilterFieldList.append("List-Id");
+    mFilterFieldList.append("Organization");
+    mFilterFieldList.append("Resent-From");
+    mFilterFieldList.append("X-Loop");
+    mFilterFieldList.append("X-Mailing-List");
   }
 }
 
@@ -218,11 +215,12 @@ void KMSearchRuleWidget::initLists(bool headersOnly) const
 //
 //=============================================================================
 
-KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name, bool headersOnly )
+KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name, bool headersOnly, bool absoluteDates )
   : KWidgetLister( 2, FILTER_MAX_RULES, parent, name )
 {
   mRuleList = 0;
   mHeadersOnly = headersOnly;
+  mAbsoluteDates = absoluteDates;
 }
 
 KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
@@ -284,7 +282,7 @@ void KMSearchRuleWidgetLister::reset()
 
 QWidget* KMSearchRuleWidgetLister::createWidget( QWidget *parent )
 {
-  return new KMSearchRuleWidget(parent, 0, 0, mHeadersOnly);
+  return new KMSearchRuleWidget(parent, 0, 0, mHeadersOnly, mAbsoluteDates);
 }
 
 void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )
@@ -316,24 +314,24 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //
 //=============================================================================
 
-KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly )
+KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly, bool absoluteDates )
   : QGroupBox( 1/*columns*/, Horizontal, parent, name )
 {
   setTitle( i18n("Search Criteria") );
-  initLayout( headersOnly );
+  initLayout( headersOnly, absoluteDates );
 }
 
-KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly )
+KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly, bool absoluteDates)
   : QGroupBox( 1/*column*/, Horizontal, title, parent, name )
 {
-  initLayout( headersOnly );
+  initLayout( headersOnly, absoluteDates );
 }
 
 KMSearchPatternEdit::~KMSearchPatternEdit()
 {
 }
 
-void KMSearchPatternEdit::initLayout(bool headersOnly)
+void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
 {
   //------------the radio buttons
   mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this, "mAllRBtn" );
@@ -348,7 +346,7 @@ void KMSearchPatternEdit::initLayout(bool headersOnly)
   bg->insert( mAnyRBtn, (int)KMSearchPattern::OpOr );
 
   //------------the list of KMSearchRuleWidget's
-  mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly );
+  mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly, absoluteDates );
   mRuleLister->slotClear();
 
   //------------connect a few signals
