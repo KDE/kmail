@@ -75,21 +75,61 @@ public:
   void start();
 
 signals:
+  /**
+   * Emitted whenever a KMMessage has been completely
+   * retrieved from the server/folder.
+   */
   void messageRetrieved( KMMessage * );
+
+  /**
+   * Emitted whenever a message has been stored in
+   * the folder.
+   */
   void messageStored( KMMessage * );
-  void messageCopied( KMMessage * );
+
+  /**
+   * Emitted when a list of messages has been
+   * copied to the specified location. QPtrList contains
+   * the list of the copied messages.
+   */
   void messageCopied( QPtrList<KMMessage> );
+
+  /**
+   * Overloaded signal to the one above. A lot of copying
+   * specifies only one message as the argument and this
+   * signal is easier to use when this happens.
+   */
+  void messageCopied( KMMessage * );
+
+  /**
+   * Emitted when the job finishes all processing.
+   */
   void finished();
+
+  /**
+   * This progress signal contains the "done" and the "total" numbers so
+   * that the caller can either make a % out of it, or combine it into
+   * a higher-level progress info.
+   */
   void progress( unsigned long bytesDownloaded, unsigned long bytesTotal );
 
 protected:
+  /**
+   * Has to be reimplemented. It's called by the start() method. Should
+   * start the processing of the specified job function.
+   */
   virtual void execute()=0;
+
+  /**
+   * Is used to implement asynchronous expiring of messages in folders.
+   */
   virtual void expireMessages()=0;
 
   QPtrList<KMMessage> mMsgList;
   JobType             mType;
   QString             mSets;
   KMFolder*           mDestFolder;
+
   //finished() won't be emitted when this is set
   bool                mPassiveDestructor;
 };
