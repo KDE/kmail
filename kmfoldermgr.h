@@ -30,6 +30,10 @@ public:
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
   KMFolder* find(const char* folderName, bool foldersOnly=TRUE);
 
+  /** Create a mail folder in the root folder directory dir()
+    with given name. Returns Folder on success. */
+  KMFolder* createFolder(const char* fName) {return mDir.createFolder(fName);}
+
 protected:
   QString mBasePath;
   KMFolderRootDir mDir;

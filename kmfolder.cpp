@@ -17,7 +17,7 @@
 
 
 #define MAX_LINE 4096
-#define INIT_MSGS 8
+#define INIT_MSGS 32
 
 #define MSG_SEPERATOR_START "From "
 #define MSG_SEPERATOR_REGEX "^From.*..\\:..\\:...*$"
@@ -121,16 +121,17 @@ int KMFolder::create(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::close(void)
+void KMFolder::close(bool aForce)
 {
   int i;
 
   if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0) return;
+  if (mOpenCount > 0 && !aForce) return;
 
   if (mStream) fclose(mStream);
   if (mTocStream) fclose(mTocStream);
 
+  mOpenCount  = 0;
   mStream     = NULL;
   mTocStream  = NULL;
   mMsgs       = 0;
@@ -177,6 +178,7 @@ int KMFolder::createToc(void)
   offs = 0;
   size = 0;
   strcpy(status, "RO");
+  mHeaderOffset = ftell(mTocStream);
 
   msg = re_comp(MSG_SEPERATOR_REGEX);
   if (msg)
@@ -297,6 +299,7 @@ void KMFolder::readToc(void)
   mActiveMsgs = 0;
 
   readTocHeader();
+  mHeaderOffset = ftell(mTocStream);
 
   msgArrNum = mMsgInfo.size();
 
@@ -335,7 +338,11 @@ void KMFolder::quiet(bool beQuiet)
   else 
   {
     mQuiet--;
-    if (mQuiet < 0) mQuiet = 0;
+    if (mQuiet <= 0)
+    {
+      mQuiet = 0;
+      emit changed();
+    }
   }
 }
 
@@ -441,13 +448,21 @@ void KMFolder::readMsg(int msgno)
 //-----------------------------------------------------------------------------
 int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
-  unsigned long offs, size;
+  long offs, size, len;
   int rc, msgArrNum = mMsgInfo.size();
 
   assert(mStream != NULL);
+  len = aMsg->msgStr().length() - 2;
+
+  if (len <= 0)
+  {
+    warning("KMFolder::addMsg():\nmessage contains no data !");
+    return 0;
+  }
 
   if (mMsgs >= msgArrNum)
   {
+    if (msgArrNum < 16) msgArrNum = 16;
     msgArrNum <<= 1;
     mMsgInfo.resize(msgArrNum);
   }
@@ -456,11 +471,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   offs = ftell(mStream);
 
   fwrite("From ???@??? 00:00:00 1997 +0000\n", 33, 1, mStream);
-  if (errno) return errno;
-  fwrite((char*)aMsg->msgStr().data(), aMsg->msgStr().length()-2, 1, mStream);
-  if (errno) return errno;
-
-  debug("writing new message to file");
+  fwrite((char*)aMsg->msgStr().data(), len, 1, mStream);
   fflush(mStream);
 
   size = ftell(mStream) - offs;
@@ -510,7 +521,7 @@ int KMFolder::remove(void)
   rc = unlink(path()+"/"+name());
   if (rc) return rc;
 
-  mMsgInfo.truncate(0);
+  mMsgInfo.truncate(INIT_MSGS);
   mMsgs = 0;
 
   return 0;
@@ -531,8 +542,23 @@ void KMFolder::ping()
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::expunge()
+int KMFolder::expunge(void)
 {
+  int rc;
+  QString p = path();
+  
+  assert(name() != NULL);
+
+  close(TRUE);
+
+  if (mAutoCreateToc) truncate(p+"/."+name(), mHeaderOffset);
+  rc = truncate(p+"/"+name(), 0);
+  if (rc) return rc;
+
+  mMsgInfo.truncate(INIT_MSGS);
+  mMsgs = 0;
+
+  return 0;
 }
 
 

@@ -33,6 +33,7 @@ private slots:
 	void doCompose();
 	void doModifyFolder();
 	void doRemoveFolder();
+	void doEmptyFolder();
 	void folderSelected(KMFolder*);
 	void messageSelected(KMMessage*);
 	void pannerHasChanged();

@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 
 
 //-----------------------------------------------------------------------------
@@ -51,6 +52,8 @@ bool KMAcctLocal::processNewMail(void)
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
     return FALSE;
   }
+
+  mFolder->quiet(TRUE);
   mFolder->open();
 
   num = mailFolder.numMsgs();
@@ -58,15 +61,24 @@ bool KMAcctLocal::processNewMail(void)
 
   for (i=1; i<=num; i++)
   {
-    printf("processing message %d\n", i);
+    debug(QString("processing message ")+i);
     msg = mailFolder.getMsg(i);
     mailFolder.detachMsg(i);
-    if (msg) mFolder->addMsg(msg);
+    if (msg) 
+    {
+      rc = mFolder->addMsg(msg);
+      if (rc) perror("failed to add message");
+      if (rc) warning("Failed to add message:\n" + QString(sys_errlist[rc]));
+    }
   }
-  printf("done, closing folders\n");
+  debug("done, closing folders");
+
+  if (mailFolder.expunge())
+    warning("Cannot remove mail from\nsystem mail folder.\n");
 
   mailFolder.close();
   mFolder->close();
+  mFolder->quiet(FALSE);
 
   return (num > 0);
 }

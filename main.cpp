@@ -7,16 +7,20 @@
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
 #include "kmfoldermgr.h"
+#include "kmsender.h"
 #include "kbusyptr.h"
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <kmsgbox.h>
+#include <klocale.h>
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
 KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
+KMSender* msgSender = NULL;
+KLocale* nls = NULL;
 
 static msg_handler oldMsgHandler = NULL;
 
@@ -25,21 +29,24 @@ static msg_handler oldMsgHandler = NULL;
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
+  QString appName = app->appName();
+
   switch (aType)
   {
   case QtDebugMsg:
-    fprintf(stderr, "kmail: %s\n", aMsg);
+    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), aMsg);
     break;
 
   case QtWarningMsg:
-    KMsgBox::message(NULL, "KMail Warning", aMsg, KMsgBox::EXCLAMATION);
+    KMsgBox::message(NULL, appName+" "+nls->translate("warning"), aMsg, 
+		     KMsgBox::EXCLAMATION);
     break;
 
   case QtFatalMsg:
-    fprintf(stderr, "kmail fatal error: %s\n", aMsg);
-    KMsgBox::message(NULL, "KMail Fatal Error", aMsg, KMsgBox::STOP);
-    //abort(); // coredump
-    break;
+    fprintf(stderr, appName+" "+nls->translate("fatal")+": %s\n", aMsg);
+    KMsgBox::message(NULL, appName+nls->translate("fatal"),
+		     aMsg, KMsgBox::STOP);
+    abort();
   }
 }
 
@@ -51,6 +58,8 @@ static void init(int argc, char *argv[])
   KConfig* cfg;
 
   app = new KApplication(argc, argv, "kmail");
+  nls = new KLocale;
+
   kbp = new KBusyPtr(app);
   cfg = app->getConfig();
 
@@ -66,6 +75,8 @@ static void init(int argc, char *argv[])
     cfg->readEntry("folders", &QString("/.kde/mail-folders"));
   folderMgr = new KMFolderMgr(fname);
 
+  msgSender = new KMSender(folderMgr);
+
   debug("init done");
 }
 
@@ -75,6 +86,7 @@ static void cleanup(void)
 {
   qInstallMsgHandler(oldMsgHandler);
 
+  if (msgSender) delete msgSender;
   if (folderMgr) delete folderMgr;
   if (acctMgr) delete acctMgr;
   if (kbp) delete kbp;

@@ -151,6 +151,15 @@ void KMMainView::doModifyFolder()
 
 
 //-----------------------------------------------------------------------------
+void KMMainView::doEmptyFolder()
+{
+  currentFolder->expunge();
+  currentFolder->open();
+  headers->setFolder(currentFolder);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainView::doRemoveFolder()
 {
 #ifdef BROKEN

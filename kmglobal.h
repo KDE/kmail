@@ -23,4 +23,10 @@ extern KMAcctMgr* acctMgr;
 class KMFolderMgr;
 extern KMFolderMgr* folderMgr;
 
+class KMSender;
+extern KMSender* msgSender;
+
+class KLocale;
+extern KLocale* nls;
+
 #endif /*kmglobal_h*/

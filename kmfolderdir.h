@@ -7,6 +7,8 @@
 #include <qstring.h>
 #include "kmfoldernode.h"
 
+class KMFolder;
+
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
   Q_OBJECT
@@ -17,11 +19,15 @@ public:
 
   virtual bool isDir(void) const { return TRUE; }
 
-  /** Read contents of directory */
+  /** Read contents of directory. */
   virtual bool reload(void);
 
-  /** Return full pathname of this directory */
+  /** Return full pathname of this directory. */
   virtual const QString& path(void) const;
+
+  /** Create a mail folder in this directory with given name. 
+   Returns Folder on success. */
+  virtual KMFolder* createFolder(const char* folderName);
 };
 
 

@@ -146,6 +146,7 @@ const char* KMMessage::to(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setTo(const char* aStr)
 {
+  if (!aStr) return;
   mMsg->Headers().To().FromString(aStr);
 }
 
@@ -162,6 +163,7 @@ const char* KMMessage::replyTo(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setReplyTo(const char* aStr)
 {
+  if (!aStr) return;
   mMsg->Headers().ReplyTo().FromString(aStr);
 }
 
@@ -185,6 +187,7 @@ const char* KMMessage::cc(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setCc(const char* aStr)
 {
+  if (!aStr) return;
   mMsg->Headers().Cc().FromString(aStr);
 }
 
@@ -201,6 +204,7 @@ const char* KMMessage::bcc(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBcc(const char* aStr)
 {
+  if (!aStr) return;
   mMsg->Headers().Bcc().FromString(aStr);
 }
 
@@ -234,6 +238,7 @@ const char* KMMessage::subject(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubject(const char* aStr)
 {
+  if (!aStr) return;
   mMsg->Headers().Subject().FromString(aStr);
 }
 

@@ -9,7 +9,8 @@
 #include <qfileinf.h>
 
 
-//-----------------------------------------------------------------------------
+//=============================================================================
+//=============================================================================
 KMFolderRootDir::KMFolderRootDir(const char* path):
   KMFolderDir(NULL, path)
 {
@@ -34,6 +35,7 @@ const QString& KMFolderRootDir::path(void) const
 
 
 //=============================================================================
+//=============================================================================
 KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
   KMFolderNode(parent,name), KMFolderNodeList()
 {
@@ -45,6 +47,30 @@ KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
 KMFolderDir::~KMFolderDir()
 {
   clear();
+}
+
+
+//-----------------------------------------------------------------------------
+KMFolder* KMFolderDir::createFolder(const char* aFolderName)
+{
+  KMAcctFolder* fld;
+  int rc;
+
+  assert(aFolderName != NULL);
+
+  fld = new KMAcctFolder(this, aFolderName);
+  assert(fld != NULL);
+
+  rc = fld->create();
+  if (rc)
+  {
+    delete fld;
+    return rc;
+  }
+
+  append(fld);
+
+  return fld;
 }
 
 

@@ -7,8 +7,10 @@
 #include "kbusyptr.h"
 #include "kmdragdata.h"
 #include "kmglobal.h"
+
 #include <drag.h>
 #include <qstrlist.h>
+#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------
@@ -18,10 +20,10 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
   getMsgIndex = -1;
 
   //setNumCols(4);
-  setColumn(0, "F", 16, KTabListBox::PixmapColumn);
-  setColumn(1, "Sender", 150);
-  setColumn(2, "Subject", 250);
-  setColumn(3, "Date", 100);
+  setColumn(0, nls->translate("F"), 16, KTabListBox::PixmapColumn);
+  setColumn(1, nls->translate("Sender"), 150);
+  setColumn(2, nls->translate("Subject"), 250);
+  setColumn(3, nls->translate("Date"), 100);
 
   dict().insert(KMMessage::statusToStr(KMMessage::stNew),
 		new QPixmap("pics/kmmsgnew.xpm"));
@@ -46,16 +48,27 @@ void KMHeaders::setFolder (KMFolder *f)
   {
     disconnect(folder, SIGNAL(msgHeaderChanged(int)),
 	       this, SLOT(msgHeaderChanged(int)));
+    disconnect(folder, SIGNAL(changed()),
+	       this, SLOT(msgChanged()));
   }
 
   folder=f;
 
   if (folder)
   {
-    connect(folder, SIGNAL(msgHeaderChanged(int)),
+    connect(folder, SIGNAL(msgHeaderChanged(int)), 
 	    this, SLOT(msgHeaderChanged(int)));
+    connect(folder, SIGNAL(changed()),
+	    this, SLOT(msgChanged()));
   }
 
+  updateMessageList();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::msgChanged()
+{
   updateMessageList();
 }
 
@@ -281,7 +294,6 @@ void KMHeaders::updateMessageList(void)
 
   kbp->busy();
   setAutoUpdate(FALSE);
-  folder->quiet(TRUE);
 
   for (i = 1; i <= folder->numMsgs(); i++)
   {
@@ -295,7 +307,6 @@ void KMHeaders::updateMessageList(void)
     else if(flag==KMMessage::stUnread) changeItemColor(darkBlue);
   }
 
-  folder->quiet(FALSE);
   setAutoUpdate(TRUE);
   repaint();
   kbp->idle();

@@ -88,6 +88,7 @@ void KMMainWin::setupMenuBar()
 	folderMenu->insertItem("&Create...", mainView, SLOT(doAddFolder()), ALT + Key_C);
 	folderMenu->insertItem("&Modify...", mainView, SLOT(doModifyFolder()), ALT + Key_M);
 	folderMenu->insertItem("&Remove", mainView, SLOT(doRemoveFolder()), ALT + Key_R);
+	folderMenu->insertItem("&Empty", mainView, SLOT(doEmptyFolder()), ALT + Key_E);
 
 	QPopupMenu *helpMenu = new QPopupMenu();
 	helpMenu->insertItem("&Help", this, SLOT(doHelp()), ALT + Key_H),

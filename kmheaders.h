@@ -51,6 +51,7 @@ protected slots:
   void selectMessage(int msgId, int colId);
   void highlightMessage(int msgId, int colId);
   void msgHeaderChanged(int msgId);
+  void msgChanged();
 
 protected:
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 

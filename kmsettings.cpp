@@ -3,73 +3,88 @@
 #include <qfiledlg.h>
 #include <qframe.h>
 #include <kmsgbox.h>
+#include <qlayout.h>
 #include "util.h"
 #include "kmmainwin.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kmglobal.h"
-
+#include "kmsender.h"
+#include <klocale.h>
+//------
 #include "kmsettings.moc"
 
 //-----------------------------------------------------------------------------
 KMSettings::KMSettings(QWidget *parent, const char *name) :
   QTabDialog(parent,name,TRUE)
 {
-  KMAccount* act;
   config=app->getConfig();
-  setCaption("Settings");
+  setCaption(nls->translate("Settings"));
   resize(570,545);
   setCancelButton();
   setDefaultButton();
   connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
 
-  identityTab=new QWidget(this);
+  createTabIdentity(this);
+  createTabNetwork(this);
+}
 
-  QLabel* label;
-  label = new QLabel(identityTab);
-  label->setGeometry(30,15,90,25);
-  label->setText("Name");
-  label->setAlignment(290);
 
-  nameEdit = new QLineEdit(identityTab);
-  nameEdit->setGeometry(130,15,410,25);
+//-----------------------------------------------------------------------------
+KMSettings::~KMSettings()
+{
+  delete acctMgr;
+}
 
-  label = new QLabel(identityTab);
-  label->setGeometry(30,50,90,25);
-  label->setText("Organization");
-  label->setAlignment(290);
 
-  orgEdit = new QLineEdit(identityTab);
-  orgEdit->setGeometry(130,50,410,25);
+//-----------------------------------------------------------------------------
+QLineEdit* KMSettings::createLabeledEntry(QWidget* parent, QGridLayout* grid,
+					  const char* aLabel,
+					  const char* aText, 
+					  int gridx, int gridy,
+					  QPushButton** detail_return)
+{
+  QLabel* label = new QLabel(parent);
+  QLineEdit* edit = new QLineEdit(parent);
+  QPushButton* sel;
 
-  label = new QLabel(identityTab);
-  label->setGeometry(20,95,100,25);
-  label->setText("Email Address");
-  label->setAlignment(290);
+  label->setText(nls->translate(aLabel));
+  label->adjustSize();
+  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
+  label->setMinimumSize(label->size());
+  grid->addWidget(label, gridy, gridx++);
 
-  emailEdit = new QLineEdit(identityTab);
-  emailEdit->setGeometry(130,95,410,25);
+  if (aText) edit->setText(aText);
+  edit->setMinimumSize(100, label->height());
+  edit->setMaximumSize(1000, label->height());
+  grid->addWidget(edit, gridy, gridx++);
 
-  label = new QLabel(identityTab);
-  label->setGeometry(10,130,110,25);
-  label->setText("Reply-To Address");
-  label->setAlignment(290);
+  if (detail_return)
+  {
+    sel = new QPushButton("...", parent);
+    sel->setFixedSize(sel->sizeHint().width(), label->height());
+    grid->addWidget(sel, gridy, gridx++);
+    *detail_return = sel;
+  }
 
-  replytoEdit = new QLineEdit(identityTab);
-  replytoEdit->setGeometry(130,130,410,25);
+  return edit;
+}
 
-  label = new QLabel(identityTab);
-  label->setGeometry(30,175,90,25);
-  label->setText("Signature File");
-  label->setAlignment(290);
 
-  sigEdit = new QLineEdit(identityTab);
-  sigEdit->setGeometry(130,175,370,25);
-
+//-----------------------------------------------------------------------------
+void KMSettings::createTabIdentity(QWidget* parent)
+{
+  QWidget* tab = new QWidget(parent);
+  QGridLayout* grid = new QGridLayout(tab, 8, 3, 6, 3);
   QPushButton* button;
-  button = new QPushButton(identityTab);
-  button->setGeometry(505,175,35,25);
-  button->setText("...");
+
+  nameEdit = createLabeledEntry(tab, grid, "Name", NULL, 0, 0);
+  orgEdit = createLabeledEntry(tab, grid, "Organization", NULL, 0, 1);
+  emailEdit = createLabeledEntry(tab, grid, "Email Address", NULL, 0, 2);
+  replytoEdit = createLabeledEntry(tab, grid, "Reply-To Address", NULL, 0, 3);
+
+  sigEdit = createLabeledEntry(tab, grid, "Signature File", NULL, 0, 4, 
+			       &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
 
   config->setGroup("Identity");
@@ -79,9 +94,27 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   replytoEdit->setText(config->readEntry("Reply-To Address"));
   sigEdit->setText(config->readEntry("Signature File"));
 
-  addTab(identityTab,"Identity");
+  grid->setColStretch(0,0);
+  grid->setColStretch(1,1);
+  grid->setColStretch(2,0);
 
-  networkTab=new QWidget(this);
+  addTab(tab,nls->translate("Identity"));
+  grid->activate();
+  identityTab = tab;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::createTabNetwork(QWidget* parent)
+{
+  QWidget* tab = new QWidget(parent);
+  QGridLayout* grid = new QGridLayout(tab, 8, 3, 6, 3);
+  QPushButton* button;
+
+#ifdef BROKEN
+  nameEdit = createLabeledEntry(tab, grid, "Name", NULL, 0, 0);
+
+  networkTab = new QWidget(parent);
 
   outgoingGroup = new QButtonGroup(networkTab);
   outgoingGroup->setGeometry(15,15,525,200);
@@ -143,36 +176,37 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
     accountList->inSort(act->name());
 
   addButton = new QPushButton(networkTab);
-  addButton->setGeometry(405,280,120,40);
-  addButton->setText("Add...");
+  addButton->setGeometry(405,280,120,20);
+  addButton->setText(nls->translate("Add..."));
   connect(addButton,SIGNAL(clicked()),this,SLOT(addAccount()));
 
   modifyButton = new QPushButton(networkTab);
-  modifyButton->setGeometry(405,340,120,40);
-  modifyButton->setText("Modify...");
+  modifyButton->setGeometry(405,340,120,20);
+  modifyButton->setText(nls->translate("Modify..."));
   modifyButton->setEnabled(FALSE);
   connect(modifyButton,SIGNAL(clicked()),this,SLOT(modifyAccount2()));
 
   removeButton = new QPushButton(networkTab);
-  removeButton->setGeometry(405,400,120,40);
-  removeButton->setText("Remove");
+  removeButton->setGeometry(405,400,120,20);
+  removeButton->setText(nls->translate("Remove"));
   removeButton->setEnabled(FALSE);
   connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
 
-  config->setGroup("Network");
-  if (config->readEntry("Outgoing Type")=="Sendmail") sendmailRadio->setChecked(TRUE);
-  else if (config->readEntry("Outgoing Type")=="SMTP") smtpRadio->setChecked(TRUE);
-  sendmailLocationEdit->setText(config->readEntry("Sendmail Location"));
-  smtpServerEdit->setText(config->readEntry("SMTP Server"));
-  smtpPortEdit->setText(config->readEntry("SMTP Port"));
+  if (msgSender->method()==KMSender::smMail) 
+    sendmailRadio->setChecked(TRUE);
+  else if (msgSender->method()==KMSender::smSMTP)
+    smtpRadio->setChecked(TRUE);
 
-  addTab(networkTab,"Network");
+  sendmailLocationEdit->setText(msgSender->mailer());
+  smtpServerEdit->setText(msgSender->smtpHost());
+  smtpPortEdit->setText(QString(msgSender->smtpPort()));
+
+  addTab(networkTab, nls->translate("Network"));
+#endif
+
+  networkTab = tab;
 }
 
-//-----------------------------------------------------------------------------
-KMSettings::~KMSettings() {
-  delete acctMgr;
-}
 
 //-----------------------------------------------------------------------------
 void KMSettings::accountSelected(int) {

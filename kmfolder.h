@@ -69,8 +69,9 @@ public:
     fopen call otherwise (errno). */
   virtual int open(void);
 
-  /** Close folder. */
-  virtual void close(void);
+  /** Close folder. If force is TRUE the files are closed even if
+   others still use it (e.g. other mail reader windows). */
+  virtual void close(bool force=FALSE);
 
   /** Try to lock the folder. The folder has to be open. Returns 0 
     on success or an errno error code on failure. The toc file is
@@ -107,11 +108,14 @@ public:
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
 
+  /** Delete contents of folder. Forces a close and does not open the
+    folder again. Returns errno(3) error code or zero on success. */
+  virtual int expunge(void);
+
   //---| yet not implemented (and maybe not needed) are: |-------------------
   virtual int rename(const char* fileName);
   virtual long status(long/* = SA_MESSAGES | SA_RECENT | SA_UNSEEN*/);
   virtual void ping();
-  virtual void expunge();
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -157,6 +161,7 @@ protected:
   int mMsgs, mUnreadMsgs, mActiveMsgs;
   KMMsgInfoList mMsgInfo;
   int mOpenCount, mQuiet;
+  unsigned long mHeaderOffset;
   bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
 };
 
