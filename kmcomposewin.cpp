@@ -140,6 +140,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
     mComposer( 0 )
 {
+  // Set this to be the group leader for all subdialogs - this means
+  // modal subdialogs will only affect this dialog, not the other windows
+  setWFlags( getWFlags() | WGroupLeader );
+
   mSubjectTextWasSpellChecked = false;
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
@@ -1153,7 +1157,7 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
     format2cb(   (0 <= aCryptoMessageFormat)
                ? (Kleo::CryptoMessageFormat)aCryptoMessageFormat
                : ident.preferredCryptoMessageFormat() ) );
-  
+
   slotSelectCryptoModule();
 
   QStringList styleItems;
@@ -1475,7 +1479,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   if( !mMsg->headerField("X-KMail-CryptoFormat").isEmpty() ){
     const int format = mMsg->headerField("X-KMail-CryptoFormat").stripWhiteSpace().toInt();
     if( 0 <= format ){
-      mCryptoModuleAction->setCurrentItem( 
+      mCryptoModuleAction->setCurrentItem(
         format2cb( (Kleo::CryptoMessageFormat)format ) );
       slotSelectCryptoModule();
     }
@@ -2997,10 +3001,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if( saveInDrafts )
     mMsg->setHeaderField("X-KMail-CryptoFormat", QString::number(cryptoMessageFormat()));
-  
+
   mDisableBreaking = saveInDrafts;
 
-  const bool neverEncrypt = ( saveInDrafts && mNeverEncryptWhenSavingInDrafts ) 
+  const bool neverEncrypt = ( saveInDrafts && mNeverEncryptWhenSavingInDrafts )
                            || mSigningAndEncryptionExplicitlyDisabled;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );

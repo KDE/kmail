@@ -26,6 +26,10 @@ KMMainWin::KMMainWin(QWidget *)
     : KMainWindow( 0, "kmail-mainwindow#" ),
       mReallyClose( false )
 {
+  // Set this to be the group leader for all subdialogs - this means
+  // modal subdialogs will only affect this dialog, not the other windows
+  setWFlags( getWFlags() | WGroupLeader );
+
   kapp->ref();
   mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
@@ -113,7 +117,7 @@ void KMMainWin::slotEditToolbars()
 {
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
-  
+
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
