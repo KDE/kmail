@@ -1249,12 +1249,12 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
         if ( dragAccepted ) {
             setCurrentItem( i );
         }
-            e->accept( dragAccepted );
-            if ( i != dropItem ) {
-                autoopen_timer.stop();
-                dropItem = i;
-                autoopen_timer.start( autoopenTime );
-            }
+        e->accept( dragAccepted );
+        if ( i != dropItem ) {
+            autoopen_timer.stop();
+            dropItem = i;
+            autoopen_timer.start( autoopenTime );
+        }
         if ( dragAccepted ) {
             switch ( e->action() ) {
                 case QDropEvent::Copy:
