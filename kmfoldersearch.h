@@ -10,6 +10,7 @@
 #include <qvaluelist.h>
 #include <qvaluevector.h>
 #include <qvaluestack.h>
+#include <qmap.h>
 #include "kmfolder.h"
 #include "folderstorage.h"
 
@@ -187,6 +188,7 @@ private:
   bool mInvalid, mUnlinked;
   bool mTempOpened;
   QTimer *mExecuteSearchTimer;
+  QMap<const KMFolder*, unsigned int>mFoldersCurrentlyBeingSearched;
 };
 #endif /*kmfoldersearch_h*/
 

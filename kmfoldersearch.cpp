@@ -922,10 +922,17 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     assert(folder == aFolder);
     folder->open();
 
-    connect( folder->storage(), 
-            SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
-            this,
-            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+    // if we are already checking this folder, refcount
+    if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
+      unsigned int count = mFoldersCurrentlyBeingSearched[folder];
+      mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
+    } else {
+      connect( folder->storage(), 
+              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
+              this,
+              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+      mFoldersCurrentlyBeingSearched.insert( folder, 1 );
+    }
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
@@ -935,10 +942,21 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
 {
     if ( search()->searchPattern() != pattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNum << endl;
-    disconnect( folder->storage(), 
-            SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
-            this,
-            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+
+    if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
+      unsigned int count = mFoldersCurrentlyBeingSearched[folder];
+      if ( count == 1 ) {
+        disconnect( folder->storage(), 
+                SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
+                this,
+                SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+        mFoldersCurrentlyBeingSearched.remove( folder );
+      } else {
+        mFoldersCurrentlyBeingSearched.replace( folder, count-1 );
+      }
+    } else {
+      Q_ASSERT( 0 ); // Can't happen (TM)
+    }
     folder->close();
 
     if ( serNum == 0 )
