@@ -458,6 +458,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   {
     if (mFolder)
     {
+      // WABA: Make sure that no KMReaderWin is still using a msg
+      // from this folder, since it's msg's are about to be deleted.
+      emit selected(0);
       mFolder->markNewAsUnread();
       writeFolderConfig();
       disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
