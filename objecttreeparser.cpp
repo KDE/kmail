@@ -175,7 +175,7 @@ namespace KMail {
 
     // make widgets visible that might have been hidden by
     // previous groupware activation
-    if ( mReader && mReader->mUseGroupware )
+    if ( mReader && kernel->groupware().isEnabled() )
       emit mReader->signalGroupwareShow( false );
 
     if ( showOnlyOneMimePart() && mReader ) {
