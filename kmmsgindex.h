@@ -12,7 +12,6 @@
 #include <qmap.h>
 #include <qobject.h>
 #include <qstring.h>
-#include <qthread.h>
 #include <qintdict.h>
 #include <qdatetime.h>
 #include <qvaluelist.h>
