@@ -262,7 +262,7 @@ void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::processNewMail(bool /*interactive*/)
+void KMAcctCachedImap::processNewMail(bool interactive)
 {
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
@@ -271,7 +271,7 @@ void KMAcctCachedImap::processNewMail(bool /*interactive*/)
   // assert(mFolder && mFolder->imapPath() == "/");
   emit newMailsProcessed(-1);
 
-  if( isProgressDialogEnabled() ) {
+  if( interactive && isProgressDialogEnabled() ) {
     imapProgressDialog()->clear();
     imapProgressDialog()->show();
     imapProgressDialog()->raise();
