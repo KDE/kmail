@@ -301,11 +301,13 @@ kdDebug(5006) << "pgp encrypted" << endl;
 kdDebug(5006) << "pgp signed" << endl;
             break;
           case DwMime::kSubtypePkcs7Mime: {
-kdDebug(5006) << "pkcs7 mime" << endl;
+kdDebug(5006) << "pkcs7 mime     (keeping part as is)" << endl;
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
-              if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
+              bKeepPartAsIs = true;
+              if ( child && curNode->encryptionState() != KMMsgNotEncrypted ){
                 dataNode = child;
+              }
             }
             break;
           case DwMime::kSubtypePkcs7Signature: {
@@ -422,9 +424,14 @@ kdDebug(5006) << "Multipart processing children - DONE" << endl;
         // decrypt and store simple part
 kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (if inline encrypted):" << endl;
         // Problem: body text may be inline PGP encrypted, so we can not just dump it.
+        
+kdDebug(5006) << "\n\n\npart as is:\n" << part->Body().AsString().c_str() << endl;
+        
         if( bKeepPartAsIs ){
+kdDebug(5006) << "bKeepPartAsIs == TRUE" << endl;
           resultingData += part->Body().AsString().c_str();
         }else{
+kdDebug(5006) << "bKeepPartAsIs == FALSE" << endl;
           // Note: parseObjectTree() does no inline PGP decrypting anymore.
           ObjectTreeParser otp( 0, 0, false, false, true );
           dataNode->setProcessed( false, true );
