@@ -359,7 +359,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
   msg->fromByteArray( curMsgData , true );
   if (stage == Head)
   {
-    int size = mMsgsPendingDownload[ headerIt.current()->uid() ];
+    int size = mMsgsPendingDownload[ headerIt.current()->id() ];
     kdDebug(5006) << "Size of Message: " << size << endl;
     msg->setMsgLength( size );
     headerIt.current()->setHeader(msg);
@@ -528,8 +528,8 @@ void KMAcctExpPop::slotJobFinished() {
           headersOnServer.current()->action() == Later) {
         //remove entries from the lists when the mails should not be downloaded
         //(deleted or downloaded later)
-        int idx = idsOfMsgs.findIndex( headersOnServer.current()->id() );
-        if (idx != -1) {
+        if ( mMsgsPendingDownload.contains( headersOnServer.current()->id() ) ) {
+          int idx = idsOfMsgs.findIndex( headersOnServer.current()->id() );
           mMsgsPendingDownload.remove( headersOnServer.current()->id() );
           idsOfMsgs.remove(idsOfMsgs.at( idx ));
           uidsOfMsgs.remove(uidsOfMsgs.at( idx ));
@@ -666,7 +666,7 @@ void KMAcctExpPop::slotGetNextMsg()
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
-    kdDebug(5006) << "Data: <End>" << endl; 
+    kdDebug(5006) << "Data: <End>" << endl;
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
