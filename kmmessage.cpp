@@ -394,7 +394,6 @@ QString KMMessage::formatString(const QString& aStr) const
     ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
-      QString langSave = KGlobal::locale()->language();
       switch ((char)ch) {
       case 'D':
 	/* I'm not too sure about this change. Is it not possible
