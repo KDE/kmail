@@ -54,7 +54,7 @@ public:
   virtual void setInlineAttach(int maxLines);
 
   /** Style of the message header. */
-  enum HeaderStyle { HdrBrief=1, HdrFancy=2, HdrStandard=3, HdrLong=4,
+  enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
   /** Style of attachments. */
   enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3};

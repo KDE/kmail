@@ -1247,7 +1247,7 @@ void KMMainWin::slotViewChange()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetHeaderStyle(int id)
 {
-  if (id >= KMReaderWin::HdrBrief && id <= KMReaderWin::HdrAll)
+  if (id >= KMReaderWin::HdrFancy && id <= KMReaderWin::HdrAll)
   {
     mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
     mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
