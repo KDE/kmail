@@ -41,7 +41,10 @@ namespace KMail {
 
 /** This class is used for callback hooks needed by bodypart
     formatter plugins. It also holds a pointer to the message we are
-    working on. */
+    working on.
+    Feel free to put whatever you want in here. It's not supposed to be
+    a nicely formatted class, but simply include everything necessary
+    for the plugins. */
 class Callback {
 public:
   Callback( KMMessage* msg );
@@ -49,8 +52,9 @@ public:
   /** Get the full message */
   KMMessage* getMsg() const { return mMsg; }
 
-  /** Mail something */
-  bool mail() const;
+  /** Mail a message */
+  bool mailICal( const QString& to, const QString iCal,
+                 const QString& subject ) const;
 
   /** Get the receiver of the mail */
   QString receiver() const;

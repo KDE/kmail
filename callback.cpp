@@ -36,6 +36,9 @@
 #include "kmmessage.h"
 #include "identitymanager.h"
 #include "kmmainwin.h"
+#include "kmcomposewin.h"
+
+#include <mimelib/enum.h>
 
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -48,10 +51,37 @@ Callback::Callback( KMMessage* msg ) : mMsg( msg ),  mReceiverSet( false )
 {
 }
 
-bool Callback::mail() const
+bool Callback::mailICal( const QString& to, const QString iCal,
+                         const QString& subject ) const
 {
-  kdDebug(5006) << "bool Callback::mail() const: NYI\n";
-  return false;
+  kdDebug(5006) << "Mailing message:\n" << iCal << endl;
+
+  KMMessage *msg = new KMMessage;
+  msg->initHeader();
+  msg->setCharset( "utf-8" );
+  msg->setSubject( subject );
+  msg->setTo( to );
+  msg->setBody( iCal.utf8() );
+
+  KMComposeWin *cWin = new KMComposeWin(msg);
+  cWin->setCharset( "", true );
+  KMMessagePart *msgPart = new KMMessagePart;
+  msgPart->setName( "cal.ics");
+  msgPart->setCteStr( "7bit" );
+  msgPart->setBodyEncoded( iCal.utf8() );
+  msgPart->setTypeStr( "text" );
+  msgPart->setSubtypeStr( "calendar" );
+  msgPart->setParameter( "method", "reply" );
+  msgPart->setContentDisposition( "attachment" );
+  cWin->addAttach( msgPart );
+
+  cWin->slotWordWrapToggled( false );
+  cWin->mNeverSign = true;
+  cWin->mNeverEncrypt = true;
+  // win.slotSendNow();
+  cWin->show();
+
+  return true;
 }
 
 QString Callback::receiver() const
