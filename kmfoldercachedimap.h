@@ -128,9 +128,9 @@ public:
   /* Reimplemented from KMFolderMaildir */
   virtual KMMessage* take(int idx);
   /* Reimplemented from KMFolderMaildir */
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+  virtual int addMsg(KMMessage* msg, int* index_return = 0);
   /* internal version that doesn't remove the X-UID header */
-  virtual int addMsgInternal(KMMessage* msg, int* index_return = NULL);
+  virtual int addMsgInternal(KMMessage* msg, bool, int* index_return = 0);
 
   /* Reimplemented from KMFolderMaildir */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);

@@ -205,12 +205,12 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       mMsg->setHeaderField("X-UID",uid);
       mMsg->setTransferInProgress( false );
       mMsg->setComplete( true );
-      mFolder->addMsgInternal(mMsg);
-      emit messageRetrieved(mMsg);
+      mFolder->addMsgInternal( mMsg, true );
+      emit messageRetrieved( mMsg );
     } else {
-      emit messageRetrieved(NULL);
+      emit messageRetrieved( 0 );
     }
-    mMsg = NULL;
+    mMsg = 0;
 
     mSentBytes += size;
     emit progress( mSentBytes, mTotalBytes );
@@ -218,7 +218,6 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   }
 
   if( mMsgsForDownload.isEmpty() ) {
-    //emit messageRetrieved(mMsg);
     delete this;
     return;
   }

@@ -261,7 +261,8 @@ KMMessage* KMFolderCachedImap::take(int idx)
 }
 
 // Add a message without clearing it's X-UID field.
-int KMFolderCachedImap::addMsgInternal(KMMessage* msg, int* index_return)
+int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
+                                        int* index_return )
 {
   bool ok;
   int idx_return;
@@ -279,6 +280,10 @@ int KMFolderCachedImap::addMsgInternal(KMMessage* msg, int* index_return)
     if( uid > mLastUid ) setLastUid( uid );
   }
 
+  if( newMail && imapPath() == "/INBOX/" )
+    // This is a new message. Filter it
+    mAccount->processNewMsg( msg );
+
   return rc;
 }
 
@@ -291,7 +296,7 @@ int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
   msg->removeHeaderField( "X-UID" );
 
   // Add it to storage
-  return addMsgInternal( msg, index_return );
+  return addMsgInternal( msg, false, index_return );
 }
 
 
@@ -664,21 +669,11 @@ void KMFolderCachedImap::serverSyncInternal()
       // Some conflict have been resolved, so restart the sync
       mResync = false;
       mSyncState = SYNC_STATE_INITIAL;
+      serverSyncInternal();
+      break;
     } else
       // Continue with the subfolders
       mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
-
-    if( imapPath() == "/INBOX/" ) {
-      // Filter new messages
-      QValueList<ulong>::Iterator it = mUidsForDownload.begin();
-      for ( ; it != mUidsForDownload.end(); ++it ) {
-	KMMessage* msg = findByUID( *it );
-        if( msg ) mAccount->processNewMsg( msg );
-      }
-    }
-    // Don't carry on - it might be that we must resync
-    serverSyncInternal();
-    break;
 
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
