@@ -639,10 +639,15 @@ void ImapJob::expireMessages()
 void ImapJob::slotProcessedSize(KIO::Job * job, KIO::filesize_t processed)
 {
   KMMessage *msg = mMsgList.first();
-  if (!msg || !msg->parent() || !job) {
+  if (!msg || !job) {
     return;
   }
-  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent()->storage());
+  KMFolderImap* parent = 0;
+  if (msg->parent())
+    parent = static_cast<KMFolderImap*>(msg->parent()->storage());
+  else if (mDestFolder) // put
+    parent = static_cast<KMFolderImap*>(mDestFolder->storage());
+  if (!parent) return;
   KMAcctImap *account = parent->account();
   if ( !account ) return;
   ImapAccountBase::JobIterator it = account->findJob( job );

@@ -371,6 +371,8 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
             connect(imapJob, SIGNAL(messageStored(KMMessage*)),
                 SLOT(addMsgQuiet(KMMessage*)));
+            connect( imapJob, SIGNAL( progress(unsigned long, unsigned long) ),
+                mAccount, SLOT( displayProgress() ) );
             imapJob->start();
           }
 
@@ -430,6 +432,8 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
     imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
     connect(imapJob, SIGNAL(messageStored(KMMessage*)),
         SLOT(addMsgQuiet(KMMessage*)));
+    connect( imapJob, SIGNAL( progress(unsigned long, unsigned long) ),
+        mAccount, SLOT( displayProgress() ) );
     imapJob->start();
   }
 
