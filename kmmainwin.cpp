@@ -1112,8 +1112,6 @@ void KMMainWin::slotAtmMsg(KMMessage *msg)
   KMReaderWin *win;
   assert(msg != NULL);
   win = new KMReaderWin;
-  connect(win, SIGNAL(showAtmMsg(KMMessage *)),
-	  this, SLOT(slotAtmMsg(KMMessage *)));
   win->setAutoDelete(true); //delete on end
   showMsg(win, msg);
 }
@@ -1122,6 +1120,7 @@ void KMMainWin::slotAtmMsg(KMMessage *msg)
 void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 {
   KWin::setIcons(win->winId(), kapp->icon(), kapp->miniIcon());
+  win->setCodec(mCodec);
   win->setMsg(msg, true); // hack to work around strange QTimer bug
   win->resize(550,600);
 
@@ -1131,6 +1130,8 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
           this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
   connect(win, SIGNAL(urlClicked(const KURL&,int)),
           this, SLOT(slotUrlClicked(const KURL&,int)));
+  connect(win, SIGNAL(showAtmMsg(KMMessage *)),
+	  this, SLOT(slotAtmMsg(KMMessage *)));
 
   QAccel *accel = new QAccel(win);
   accel->connectItem(accel->insertItem(Key_Up),
