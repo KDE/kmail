@@ -363,7 +363,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 	if (stricmp(msgPart.typeStr(),"text")==0 || 
 	    stricmp(msgPart.typeStr(),"message")==0)
 	{
-	  result += aIndentStr;
+	  result += nlIndentStr;
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
 	  QString part;
