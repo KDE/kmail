@@ -468,7 +468,6 @@ kdDebug(5006) << "* text *" << endl;
 kdDebug(5006) << "v-card" << endl;
               // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
               //             _before_ calling parseObjectTree()
-              bDone = true;
             }
             break;
           // Every 'Text' type that is not 'Html' or 'V-Card'
@@ -788,7 +787,7 @@ kdDebug(5006) << "* message *" << endl;
 kdDebug(5006) << "RfC 822" << endl;
               if( reader->mAttachmentStyle != InlineAttmnt &&
                   (reader->mAttachmentStyle != SmartAttmnt ||
-                   curNode->isAttachment()) )
+                   curNode->isAttachment()) && !showOneMimePart)
                  break;
 
               if( curNode->mChild ) {
@@ -3124,10 +3123,11 @@ kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
   } else {
 kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
-    showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
-                      (DwMime::kTypeApplication == rootNodeCntType) ||
-                      (DwMime::kTypeMessage     == rootNodeCntType) ||
-                      (DwMime::kTypeModel       == rootNodeCntType) );
+    if (!onlyProcessHeaders)
+      showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
+                        (DwMime::kTypeApplication == rootNodeCntType) ||
+                        (DwMime::kTypeMessage     == rootNodeCntType) ||
+                        (DwMime::kTypeModel       == rootNodeCntType) );
 
     if( mColorBar->text().isEmpty() ) {
       if(    (KMMsgFullyEncrypted     == encryptionState)
@@ -4547,6 +4547,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
 	  errstring += VCard::getError(vcerr);
+          kernel->kbp()->idle();
 	  KMessageBox::error(NULL, errstring, i18n("vCard error"));
 	  return;
 	}
