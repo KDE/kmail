@@ -961,8 +961,8 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   // "default send method" combo:
   mSendMethodCombo = new QComboBox( false, group );
   mSendMethodCombo->insertStringList( QStringList()
-				      << i18n("Send now")
-				      << i18n("Send later") );
+				      << i18n("Send Now")
+				      << i18n("Send Later") );
   glay->addWidget( mSendMethodCombo, 2, 1 );
 
   // "message property" combo:
@@ -3651,9 +3651,9 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 			   "By default, &message folders on disk are:"), this );
   mMailboxPrefCombo->insertStringList( QStringList()
 	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "flat files (\"mbox\" format)")
+		  "Flat Files (\"mbox\" format)")
 	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "directories (\"maildir\" format)") );
+		  "Directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
 

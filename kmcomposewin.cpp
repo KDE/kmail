@@ -3854,7 +3854,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, pname);
+  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, "Save Attachment As");
 
   if( url.isEmpty() )
     return;

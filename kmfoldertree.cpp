@@ -916,11 +916,11 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
         folderMenu->insertItem(SmallIcon("goto"),
                                i18n("&Mark All Messages as Read"), topLevelWidget(),
                                SLOT(slotMarkAllAsRead()));
-      folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
+      folderMenu->insertItem(i18n("&Empty..."), topLevelWidget(),
                              SLOT(slotEmptyFolder()));
     }
     if ( !fti->folder()->isSystemFolder() )
-        folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
+        folderMenu->insertItem(i18n("&Remove..."), topLevelWidget(),
                                SLOT(slotRemoveFolder()));
 
     if (!fti->folder()->noContent() && fti->folder()->isMailingList())

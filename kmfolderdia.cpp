@@ -217,7 +217,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   expLayout->addMultiCellWidget(expireFolder, 0, 0, 0, 1);
 
   // Expiry time for read documents.
-  label = new QLabel(i18n("Expire &read email after"), expGroup);
+  label = new QLabel(i18n("Expire &read email after:"), expGroup);
   label->setEnabled(false);
   QObject::connect( expireFolder, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
@@ -229,15 +229,15 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   readExpiryUnits = new QComboBox(expGroup);
   readExpiryUnits->insertItem(i18n("Never"));
-  readExpiryUnits->insertItem(i18n("day(s)"));
-  readExpiryUnits->insertItem(i18n("week(s)"));
-  readExpiryUnits->insertItem(i18n("month(s)"));
+  readExpiryUnits->insertItem(i18n("Day(s)"));
+  readExpiryUnits->insertItem(i18n("Week(s)"));
+  readExpiryUnits->insertItem(i18n("Month(s)"));
   expLayout->addWidget(readExpiryUnits, 1, 2);
   connect( readExpiryUnits, SIGNAL( activated( int ) ),
            this, SLOT( slotReadExpiryUnitChanged( int ) ) );
 
   // Expiry time for unread documents.
-  label = new QLabel(i18n("Expire &unread email after"), expGroup);
+  label = new QLabel(i18n("Expire &unread email after:"), expGroup);
   label->setEnabled(false);
   QObject::connect( expireFolder, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
@@ -249,9 +249,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   unreadExpiryUnits = new QComboBox(expGroup);
   unreadExpiryUnits->insertItem(i18n("Never"));
-  unreadExpiryUnits->insertItem(i18n("day(s)"));
-  unreadExpiryUnits->insertItem(i18n("week(s)"));
-  unreadExpiryUnits->insertItem(i18n("month(s)"));
+  unreadExpiryUnits->insertItem(i18n("Day(s)"));
+  unreadExpiryUnits->insertItem(i18n("Week(s)"));
+  unreadExpiryUnits->insertItem(i18n("Month(s)"));
   expLayout->addWidget(unreadExpiryUnits, 2, 2);
   connect( unreadExpiryUnits, SIGNAL( activated( int ) ),
            this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
