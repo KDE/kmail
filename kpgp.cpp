@@ -148,18 +148,18 @@ Kpgp::setMessage(const QCString mess)
 
   if(havePgp)
     retval = pgp->setMessage(mess);
+  else
+  {
+    errMsg = i18n("Couldn't find PGP executable.\n"
+		  "Please check your PATH is set correctly.");
+    return FALSE;
+  }
+
 
   // "-----BEGIN PGP" must be at the beginning of a line
-  if (((index = mess.find("-----BEGIN PGP")) != -1) && 
+  if (((index = mess.find("-----BEGIN PGP")) != -1) &&
        ((index == 0) || (mess[index-1] == '\n')))
   {
-    if(!havePgp)
-    {
-      errMsg = i18n("Couldn't find PGP executable.\n"
-			 "Please check your PATH is set correctly.");
-      return FALSE;
-    }
-
     // The following if-condition is always true!
     // Proof:
     // If (havePgp) and (mess contains "-----BEGIN PGP")
@@ -176,9 +176,12 @@ Kpgp::setMessage(const QCString mess)
     front = mess.left(index);
     // "-----END PGP" must be at the beginning of a line
     index = mess.find("\n-----END PGP",index);
-    // begin the search for the next '\n' after "-----END PGP"
-    index = mess.find("\n",index+13);
-    back  = mess.right(mess.length() - index);
+    if (index >= 0)
+    {
+      // begin the search for the next '\n' after "-----END PGP"
+      index = mess.find("\n",index+13);
+      back  = mess.right(mess.length() - index);
+    }
 
     return TRUE;
   }
@@ -751,8 +754,6 @@ Kpgp::checkForPGP(void)
        {
             kdDebug() << "Kpgp: pgp 2 or 6 found" << endl;
 	    havePgp=TRUE;
-	    havePGP5=FALSE;
-	    haveGpg=FALSE;
             break;
        }
        ++it;
