@@ -1297,7 +1297,7 @@ void KMKernel::slotResult(KIO::Job *job)
     {
       if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?")
-        .arg((*it).url.prettyURL()), i18n("Save to file"), i18n("&Replace"))
+        .arg((*it).url.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue)
         byteArrayToRemoteFile((*it).data, (*it).url, TRUE);
     }

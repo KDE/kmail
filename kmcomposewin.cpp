@@ -1734,7 +1734,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
 							 "<p>Should this message also be "
 							 "encrypted?</p></qt>"),
 						    i18n("Encrypt Message?"),
-						    KGuiItem( i18n("Sign and &Encrypt") ),
+						    KGuiItem( i18n("Sign && &Encrypt") ),
 						    KGuiItem( i18n("&Sign Only") ) );
 	  else
 	    ret = KMessageBox::questionYesNoCancel( this,
