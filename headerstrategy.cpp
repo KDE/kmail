@@ -30,14 +30,20 @@ namespace KMail {
   //
 
   static const char * headerTable[] = {
-    "subject", "from", "date", // brief
-    "to", "cc", "bcc", "organisation", "organization", // standard
-    "reply-to" // rich
+    "date", // brief only
+    "subject", "from", // brief
+    "to", "cc", "bcc", // standard
+    "organisation", "organization", "reply-to", "date" // rich
   };
 
+  static const char ** briefHeaders = &headerTable[0];
   static const int numBriefHeaders = 3;
-  static const int numRichHeaders = sizeof headerTable / sizeof *headerTable;
-  static const int numStandardHeaders = numRichHeaders - 1;
+
+  static const char ** richHeaders = &headerTable[1];
+  static const int numRichHeaders = sizeof headerTable / sizeof *headerTable - 1;
+
+  static const char ** standardHeaders = richHeaders;
+  static const int numStandardHeaders = numRichHeaders - 4;
 
   //
   // Convenience function
@@ -83,7 +89,7 @@ namespace KMail {
   protected:
     RichHeaderStrategy()
       : HeaderStrategy(),
-	mHeadersToDisplay( stringList( headerTable, numRichHeaders ) ) {}
+	mHeadersToDisplay( stringList( richHeaders, numRichHeaders ) ) {}
     virtual ~RichHeaderStrategy() {}
     
   public:
@@ -108,7 +114,7 @@ namespace KMail {
   protected:
     StandardHeaderStrategy()
       : HeaderStrategy(),
-	mHeadersToDisplay( stringList( headerTable, numStandardHeaders) ) {}
+	mHeadersToDisplay( stringList( standardHeaders, numStandardHeaders) ) {}
     virtual ~StandardHeaderStrategy() {}
     
   public:
@@ -133,7 +139,7 @@ namespace KMail {
   protected:
     BriefHeaderStrategy()
       : HeaderStrategy(),
-	mHeadersToDisplay( stringList( headerTable, numBriefHeaders ) ) {}
+	mHeadersToDisplay( stringList( briefHeaders, numBriefHeaders ) ) {}
     virtual ~BriefHeaderStrategy() {}
     
   public:
@@ -185,7 +191,7 @@ namespace KMail {
       for ( QStringList::iterator it = mHeadersToDisplay.begin() ; it != mHeadersToDisplay.end() ; ++ it )
 	*it = (*it).lower();
     } else
-      mHeadersToDisplay = stringList( headerTable, numStandardHeaders );
+      mHeadersToDisplay = stringList( standardHeaders, numStandardHeaders );
 
     if ( customHeader.hasKey( "headers to hide" ) ) {
       mHeadersToHide = customHeader.readListEntry( "headers to hide" );
