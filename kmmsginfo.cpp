@@ -294,7 +294,7 @@ QString KMMsgInfo::strippedSubjectMD5() const
 //-----------------------------------------------------------------------------
 bool KMMsgInfo::subjectIsPrefixed() const
 {
-    return strippedSubjectMD5() != base64EncodedMD5( subject(), true /*utf8*/ );
+    return strippedSubjectMD5() != base64EncodedMD5( subject().stripWhiteSpace(), true /*utf8*/ );
 }
 
 //-----------------------------------------------------------------------------
