@@ -887,20 +887,6 @@ void ConfigureDialog::makeNetworkPage( void )
   btn_vlay->addWidget( mNetwork.removeAccountButton );
   btn_vlay->addStretch( 1 ); // spacer
 
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay, 10 );
-  hlay->addWidget( new QLabel( i18n("Default Mailbox Format:"), page ) );
-  mNetwork.mailboxPrefCombo = new QComboBox(false, page );
-  mNetwork.mailboxPrefCombo->insertItem("mbox");
-  mNetwork.mailboxPrefCombo->insertItem("maildir");
-  QWhatsThis::add(mNetwork.mailboxPrefCombo,
-                  i18n("<qt>This selects which mailbox format will be "
-                       "the default.<p><b>mbox:</b> Common but less "
-                       "reliable.<p><b>maildir:</b> More reliable, but "
-                       "less commonly used</qt>"));
-  hlay->addWidget(mNetwork.mailboxPrefCombo);
-  hlay->addStretch( 1 );
-
   // "New Mail Notification" group box: stretch 0
   group = new QVGroupBox( i18n("&New Mail Notification"), page );
   vlay->addWidget( group );
@@ -1741,6 +1727,20 @@ void ConfigureDialog::makeMiscPage( void )
     new QCheckBox(i18n("Conf&irm before emptying folders"), group );
   vlay->addWidget( mMisc.emptyFolderConfirmCheck );
 
+  QHBoxLayout *hlay = new QHBoxLayout();
+  vlay->addLayout( hlay, 10 );
+  hlay->addWidget( new QLabel( i18n("Default Mailbox Format:"), group ) );
+  mMisc.mailboxPrefCombo = new QComboBox( false, group );
+  mMisc.mailboxPrefCombo->insertItem( "mbox" );
+  mMisc.mailboxPrefCombo->insertItem( "maildir" );
+  QWhatsThis::add( mMisc.mailboxPrefCombo,
+                   i18n("<qt>This selects which mailbox format will be "
+                        "the default.<p><b>mbox:</b> Common but less "
+                        "reliable.<p><b>maildir:</b> More reliable, but "
+                        "less commonly used</qt>") );
+  hlay->addWidget( mMisc.mailboxPrefCombo );
+  hlay->addStretch( 1 );
+
   topLevel->addStretch( 10 );
 }
 
@@ -1824,8 +1824,6 @@ void ConfigureDialog::setupNetworkPage( void )
     mNetwork.accountList->setCurrentItem( listItem );
     mNetwork.accountList->setSelected( listItem, true );
   }
-
-  mNetwork.mailboxPrefCombo->setCurrentItem( config->readNumEntry("default-mailbox-format", 0 ) );
 
   mNetwork.beepNewMailCheck->setChecked( config->readBoolEntry("beep-on-mail", false ) );
   mNetwork.showMessageBoxCheck->setChecked( config->readBoolEntry("msgbox-on-mail", false) );
@@ -2161,6 +2159,8 @@ void ConfigureDialog::setupMiscPage( void )
   state = config->readBoolEntry("confirm-before-empty", true );
   mMisc.emptyFolderConfirmCheck->setChecked( state );
 
+  mMisc.mailboxPrefCombo->setCurrentItem( config->readNumEntry("default-mailbox-format", 0 ) );
+
   slotExternalEditorSelectionChanged();
 }
 
@@ -2400,9 +2400,6 @@ void ConfigureDialog::slotDoApply( bool everything )
     kernel->acctMgr()->writeConfig(FALSE);
     kernel->cleanupImapFolders();
 
-    config->writeEntry( "default-mailbox-format",
-                        mNetwork.mailboxPrefCombo->currentItem() );
-
     // Save Mail notification settings
     config->writeEntry( "beep-on-mail",
 			mNetwork.beepNewMailCheck->isChecked() );
@@ -2626,6 +2623,10 @@ void ConfigureDialog::slotDoApply( bool everything )
 			mMisc.compactOnExitCheck->isChecked() );
     config->writeEntry( "confirm-before-empty",
 			mMisc.emptyFolderConfirmCheck->isChecked() );
+
+    config->writeEntry( "default-mailbox-format",
+                        mMisc.mailboxPrefCombo->currentItem() );
+
 
     // There's got to be a better way to handle radio buttons...
     if (mMisc.manualExpiry->isChecked()) {

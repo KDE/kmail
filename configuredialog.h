@@ -302,7 +302,6 @@ private:
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
-      QComboBox    *mailboxPrefCombo;
       // "New Mail Notification" group box:
       QCheckBox   *beepNewMailCheck;
       QCheckBox   *showMessageBoxCheck;
@@ -413,6 +412,7 @@ private:
       QCheckBox   *emptyTrashCheck;
       QCheckBox   *compactOnExitCheck;
       QCheckBox   *emptyFolderConfirmCheck;
+      QComboBox   *mailboxPrefCombo;
       QButtonGroup *expBGroup;
       QRadioButton *manualExpiry;
       QRadioButton *expireAtExit;
