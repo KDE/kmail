@@ -310,14 +310,14 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
      TransactionItem *ti = mTransactionsToListviewItems[ item ];
      mTransactionsToListviewItems.remove( item );
      ti->setItemComplete();
-     QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
+     QTimer::singleShot( 3000, ti, SLOT( deleteLater() ) );
      // see the slot for comments as to why that works
      connect ( ti, SIGNAL( destroyed() ),
                mScrollView, SLOT( slotLayoutFirstItem() ) );
    }
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.empty() )
-     QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
+     QTimer::singleShot( 3000, this, SLOT( slotHide() ) );
 }
 
 void ProgressDialog::slotTransactionCanceled( ProgressItem* )
