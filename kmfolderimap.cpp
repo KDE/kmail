@@ -299,7 +299,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
               msg = msgParent->getMsg(idx);
             }
             imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
-            connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
+            connect(imapJob, SIGNAL(messageStored(KMMessage*)),
                 SLOT(addMsgQuiet(KMMessage*)));
             imapJob->start();
           }
