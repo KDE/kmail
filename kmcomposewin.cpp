@@ -145,7 +145,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAtmListBox->addColumn(i18n("Encoding"), 120);
   mAtmListBox->addColumn(i18n("Type"), 150);
   mAtmListBox->setAllColumnsShowFocus(true);
-  
+
   connect(mAtmListBox,
 	  SIGNAL(doubleClicked(QListViewItem *)),
 	  SLOT(slotAttachProperties()));
@@ -926,7 +926,7 @@ void KMComposeWin::setupStatusBar(void)
 {
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
-  
+
   statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
   statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
 }
@@ -1745,7 +1745,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   KConfigGroup composer(kapp->config(), "Composer");
   if (!composer.hasKey("showMessagePartDialogOnAttach"))
     // make it visible in the config file:
-    composer.writeEntry("showMessagePartDialogOnAttach", false); 
+    composer.writeEntry("showMessagePartDialogOnAttach", false);
   if (composer.readBoolEntry("showMessagePartDialogOnAttach", false)) {
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
@@ -2860,7 +2860,6 @@ void KMLineEdit::doCompletion(bool ctrlT)
     }
 
     KCompletionBox *box = completionBox();
-    box->clear();
 
     if ( s.isEmpty() )
     {
@@ -2882,7 +2881,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
           match = s_completion->makeCompletion( "\"" + s );
     }
 
-    // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
+    // kdDebug() << "** completion for: " << s << " : " << match << endl;
 
     if ( ctrlT )
     {
@@ -2897,7 +2896,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
 
         if (completions.count() > 1) {
             m_previousAddresses = prevAddr;
-            box->insertItems( completions );
+            box->setItems( completions );
             box->setCancelledText( text() );
             box->popup();
         }
@@ -2917,7 +2916,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
             if ( !match.isNull() )
             {
                 m_previousAddresses = prevAddr;
-                box->insertItems( s_completion->allMatches( s ));
+                box->setItems( s_completion->allMatches( s ));
                 box->insertItems( s_completion->allMatches( "\"" + s ));
                 box->setCancelledText( text() );
                 box->popup();
@@ -2976,8 +2975,9 @@ void KMLineEdit::loadAddresses()
     QStringList addresses;
     KabcBridge::addresses(&addresses);
     QStringList::Iterator it2 = addresses.begin();
-    for (; it2 != addresses.end(); ++it2)
-    	s_completion->addItem( *it2 );	    
+    for (; it2 != addresses.end(); ++it2) {
+    	s_completion->addItem( *it2 );	
+    }
 }
 
 
@@ -3002,7 +3002,7 @@ void KMLineEdit::dropEvent(QDropEvent *e)
        m_smartPaste = true;
     QLineEdit::dropEvent(e);
     m_smartPaste = false;
-  } 
+  }
 }
 
 
