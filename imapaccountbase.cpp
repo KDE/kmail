@@ -606,23 +606,24 @@ namespace KMail {
   {
     JobIterator it = findJob( job );
     bool quiet = false;
-    if (it != mapJobData.end())
-    {
+    if (it != mapJobData.end()) {
       quiet = (*it).quiet;
-      removeJob(it);
+      if ( !(job->error() && !quiet) ) // the error handler removes in that case
+        removeJob(it);
     }
-    if (job->error())
-    {
+    if (job->error()) {
       if (!quiet)
-        slotSlaveError(mSlave, job->error(), job->errorText() );
-      else if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
-        // make sure ERR_CONNECTION_BROKEN is properly handled and the slave
-        // disconnected even when quiet()
-        KIO::Scheduler::disconnectSlave( slave() );
-        mSlave = 0;
+        handleJobError(job, QString::null );
+      else {
+        if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
+          // make sure ERR_CONNECTION_BROKEN is properly handled and the slave
+          // disconnected even when quiet()
+          KIO::Scheduler::disconnectSlave( slave() );
+          mSlave = 0;
+        }
+        if (job->error() == KIO::ERR_SLAVE_DIED)
+          slaveDied();
       }
-      if (job->error() == KIO::ERR_SLAVE_DIED)
-        slaveDied();
     }
     displayProgress();
   }
