@@ -329,17 +329,16 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
 	  this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   folder->serverSync( interactive && isProgressDialogEnabled() );
-  checkDone(false, 0);
 }
 
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
   mSyncActive = false;
+  disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
+             this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   setCheckingMail( false );
   emit finishedCheck(false);
-  disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
-      this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  //postProcessNewMail(static_cast<KMFolder*>(folder));
+   //postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
 //
