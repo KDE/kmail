@@ -620,55 +620,60 @@ void KMFolderTree::nextUnreadFolder()
 
 void KMFolderTree::nextUnreadFolder(bool confirm)
 {
+  //Set iterator to the current folder
   QListViewItemIterator it( currentItem() );
 
-  while (it.current()) {
+  while (it.current()) { //loop down the folder list
     ++it;
+    //check if folder is one to stop on
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
-        if ( confirm ) {
-            if ( KMessageBox::questionYesNo( this,
-                  i18n( "Go to the next unread message in folder %1?" ).
-                                             arg( fti->folder->label() ) ,
-                                             i18n( "Go to the next unread message" ) )
-                 == KMessageBox::No ) return;
-        }
-	prepareItem( fti );
-        blockSignals( true );
-	doFolderSelected( fti );
-        blockSignals( false );
-        emit folderSelectedUnread( fti->folder );
-	return;
+    if (checkUnreadFolder(fti,confirm)) return;
+  }
+  //Now if confirm is true we are doing "ReadOn" 
+  //we have got to the bottom of the folder list
+  //so we have to start at the top
+  if (confirm) {
+    it = firstChild();
+    while (it.current()) { //loop down the folder list
+      ++it;
+      //check if folder is one to stop on
+      KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+      if (checkUnreadFolder(fti,confirm)) return;
     }
   }
-
-  if ( confirm ) // and still no new folder
-      firstUnreadFolder( true );
 }
 
-void KMFolderTree::firstUnreadFolder(bool confirm)
+bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
 {
-    QListViewItemIterator it( firstChild() );
-    while (it.current())
-    {
-        ++it;
-        KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-        if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
-            if ( confirm ) {
-                if ( KMessageBox::questionYesNo( this,
-                                                 i18n( "Go to the next unread message in folder %1?" ).
-                                                 arg( fti->folder->label() ) ,
-                                                 i18n( "Go to the next unread message" ) )
-                     == KMessageBox::No ) return;
-            }
-            prepareItem( fti );
-            blockSignals( true );
-            doFolderSelected( fti );
-            blockSignals( false );
-            emit folderSelectedUnread( fti->folder );
-            return;
-        }
+  if (fti && fti->folder  &&
+      (fti->folder->countUnread() > 0)) {
+    if ( confirm ) {
+      // If confirm is true then we are doing "ReadOn" and we want to miss
+      // Out the trash folder
+      if (fti->folder->label() == i18n("trash")) 
+	return false;
+      else {
+      //  warn user that going to next folder - but keep track of
+      //  whether he wishes to be notified again in "AskNextFolder"
+      //  parameter (kept in the config file for kmail)
+	if ( KMessageBox::warningContinueCancel( this,
+	   i18n( "Go to the next unread message in folder %1?" ).
+                                    arg( fti->folder->label() ) ,
+	   i18n( "Go to the next unread message" ),
+	   i18n("&Yes" ),
+           "AskNextFolder",
+           false)
+           == KMessageBox::Cancel ) return true;
+      }
     }
+    prepareItem( fti );
+    blockSignals( true );
+    doFolderSelected( fti );
+    blockSignals( false );
+    emit folderSelectedUnread( fti->folder );
+    return true;
+  }
+  return false;
 }
 
 void KMFolderTree::prevUnreadFolder()

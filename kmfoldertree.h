@@ -118,8 +118,8 @@ public:
   /* Select the next folder with unread messages */
   void nextUnreadFolder(bool confirm);
 
-  /* Select the first folder with unread messages */
-  void firstUnreadFolder(bool confirm);
+  /* Check folder for unread messages (which isn't trash)*/
+  bool checkUnreadFolder(KMFolderTreeItem* ftl, bool confirm);
 
   KMFolder *currentFolder() const;
 
