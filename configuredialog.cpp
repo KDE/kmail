@@ -2303,7 +2303,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
-  label = new QLabel( mAutoSave, 
+  label = new QLabel( mAutoSave,
            GlobalSettings::self()->autosaveIntervalItem()->label(), this );
   hlay->addWidget( label );
   hlay->addWidget( mAutoSave );
@@ -2404,7 +2404,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 }
 
 void ComposerPage::GeneralTab::save() {
-  GlobalSettings::setAutoTextSignature( 
+  GlobalSettings::setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
 }
 
@@ -2593,7 +2593,7 @@ void ComposerPage::PhrasesTab::load() {
   if ( currentNr >= numLang || currentNr < 0 )
     currentNr = 0;
 
-  if ( numLang == 0 ) { 
+  if ( numLang == 0 ) {
     slotAddNewLanguage( KGlobal::locale()->language() );
   }
 
@@ -3909,7 +3909,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 
   // "On startup..." option:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mOnStartupOpenFolder = new FolderRequester( this, 
+  mOnStartupOpenFolder = new FolderRequester( this,
       kmkernel->getKMMainWidget()->folderTree() );
   label = new QLabel( mOnStartupOpenFolder,
                       i18n("Open this folder on startup:"), this );
@@ -4081,7 +4081,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   // First possibility in the widgetstack: a combo showing the list of all folders
   // This is used with the ical/vcard storage
-  mFolderCombo = new FolderRequester( mBox, 
+  mFolderCombo = new FolderRequester( mBox,
       kmkernel->getKMMainWidget()->folderTree() );
   mFolderComboStack->addWidget( mFolderCombo, 0 );
   QToolTip::add( mFolderCombo, toolTip );
