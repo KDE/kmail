@@ -1355,6 +1355,9 @@ void KMCopyCommand::execute()
   bool isMessage;
   QPtrList<KMMessage> list;
 
+  if (mDestFolder && mDestFolder->open() != 0)
+    return;
+
   KCursorSaver busy(KBusyPtr::busy());
 
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
@@ -1406,6 +1409,7 @@ void KMCopyCommand::execute()
     }
 
   } // end for
+  mDestFolder->close();
 
 //TODO: Get rid of the other cases just use this one for all types of folder
 //TODO: requires adding copyMsg and getFolder methods to KMFolder.h
