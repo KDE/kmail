@@ -2478,7 +2478,7 @@ void KMReaderWin::parseMsg(void)
                  "border-bottom-color: black; "
                  "border-right-style: hidden; "
                  "border-right-width: 0px; "
-                 "padding: 2px; } \n" ) +
+                 "padding: 0px; } \n" ) +
         QString( "tr.rfc822H { font-weight: bold; }\n" ) +
         QString( "tr.rfc822B { font-weight: normal; }\n" ) +
 
@@ -3820,10 +3820,11 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
 
     QString htmlStr;
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    QString cellPadding("cellpadding=\"1\"");
 
     if( block.isEncapsulatedRfc822Message )
     {
-        htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"rfc822\">"
+        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
             "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
         htmlStr += i18n("Encapsulated message");
         htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
@@ -3831,7 +3832,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
 
     if( block.isEncrypted )
     {
-        htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
+        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
             "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
         if( block.isDecryptable )
             htmlStr += i18n("Encrypted message");
@@ -3982,8 +3983,8 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                     }
                     break;
             }
-
-            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+            
+            htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
             if( showKeyInfos ) {
@@ -4065,7 +4066,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
 
             if (block.signer.isEmpty()) {
                 block.signClass = "signWarn";
-                htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+                htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                     "class=\"" + block.signClass + "\">"
                     "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                 if( !block.keyId.isEmpty() ) {
@@ -4105,7 +4106,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                         block.signClass = "signOkKeyBad";
                     else
                         block.signClass = "signOkKeyOk";
-                    htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
@@ -4144,7 +4145,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 else
                 {
                     block.signClass = "signErr";
-                    htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
