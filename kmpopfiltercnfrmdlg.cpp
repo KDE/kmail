@@ -388,7 +388,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
   }
 
   if(rulesetCount)
-      lowerBox->setTitle(QString("Ruleset Filtered Messages: %1").arg(rulesetCount));
+      lowerBox->setTitle(i18n("Ruleset Filtered Messages: %1").arg(rulesetCount));
 
   // connect signals and slots
   connect(lv, SIGNAL(pressed(QListViewItem*, const QPoint&, int)),
