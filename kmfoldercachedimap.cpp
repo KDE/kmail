@@ -998,7 +998,8 @@ void KMFolderCachedImap::serverSyncInternal()
         //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
         mCurrentSubfolder->setAccount( account() );
-        mCurrentSubfolder->serverSync( mRecurse /*which is true*/ );
+        bool recurse = mCurrentSubfolder->noChildren() ? false : true;
+        mCurrentSubfolder->serverSync( recurse );
       }
     }
     break;
@@ -1423,6 +1424,10 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
     resetSyncState();
     emit folderComplete( this, false );
     return false;
+  }
+  if ( noChildren() ) {
+    emit folderComplete( this, true );
+    return true;
   }
   // reset
   if ( this == mAccount->rootFolder() )
