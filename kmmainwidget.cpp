@@ -470,7 +470,8 @@ void KMMainWidget::createWidgets(void)
   QHBox *search = new QHBox( mSearchAndHeaders );
   new QLabel(i18n("Quick Search: "), search );
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-  new KPIM::KListViewSearchLine( search, mHeaders, "headers quick search line" );
+  KPIM::KListViewSearchLine *quickSearchLine = 
+     new KPIM::KListViewSearchLine( search, mHeaders, "headers quick search line" );
   new QLabel(i18n(" Show only mails with status: "), search );
   // FIXME hook up to real status widget once that is back in
   QComboBox *cb = new QComboBox(search, "quick search status combo box");
@@ -537,6 +538,8 @@ void KMMainWidget::createWidgets(void)
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
+  connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
+           quickSearchLine, SLOT( clear() ) );
   connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
 	  this, SLOT(folderSelectedUnread(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
