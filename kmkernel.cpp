@@ -304,7 +304,8 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   msg->setCharset("utf-8");
   msg->setSubject( i18n( "Certificate Signature Request" ) );
   if (!to.isEmpty()) msg->setTo(to);
-  msg->setBody( i18n( "Please sign this certificate and return to sender." ).utf8() );
+  // ### Make this message customizable via KIOSK
+  msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).utf8() );
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
