@@ -7,6 +7,8 @@
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
+#include <qtextcodec.h>
+#include <qstringlist.h>
 #include <kmfolder.h>
 #include <kmheaders.h>
 #include <kmmsgdict.h>

@@ -20,6 +20,8 @@
 
 #include <klocale.h>
 
+#include <assert.h>
+
 ////////////////////////////////////////
 ///  view
 KMPopHeadersView::KMPopHeadersView(QWidget *aParent)

@@ -31,6 +31,7 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qregexp.h>
+#include <qtextcodec.h>
 
 #include <kaction.h>
 #include <kapplication.h>

@@ -9,6 +9,7 @@
 #include <qptrstack.h>
 #include <qptrqueue.h>
 #include <qpainter.h>
+#include <qtextcodec.h>
 
 #include <kaction.h>
 #include <kapplication.h>

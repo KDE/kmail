@@ -1,6 +1,10 @@
 // kmfoldermaildir.cpp
 // Author: Kurt Granroth <granroth@kde.org>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <qdir.h>
 #include <qregexp.h>
 
@@ -20,11 +24,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
+#include <assert.h>
 
 #ifndef isblank
 #  define isblank(x) ((x)==' '||(x)=='\t')

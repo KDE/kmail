@@ -12,6 +12,7 @@
 
 #include <qregexp.h>
 
+#include <assert.h>
 
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",

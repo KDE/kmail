@@ -11,6 +11,7 @@
 
 #include <kapplication.h>
 #include <klocale.h>
+#include <knuminput.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 

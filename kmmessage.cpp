@@ -24,7 +24,11 @@
 #undef protected
 #include <mimelib/field.h>
 
+#include <qtextcodec.h>
+#include <qstrlist.h>
+
 #include <mimelib/mimepp.h>
+#include <mimelib/string.h>
 #include <assert.h>
 #include <sys/time.h>
 #include <unistd.h>

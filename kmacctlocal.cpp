@@ -4,7 +4,6 @@
 #include <config.h>
 #endif
 
-#include <qfileinfo.h>
 #include "kmacctlocal.h"
 #include "kmfoldermbox.h"
 #include "kmmessage.h"
@@ -13,13 +12,16 @@
 #include "kmfoldermgr.h"
 
 #include <kapplication.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
+
+#include <qfileinfo.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
+#include <assert.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>	/* defines _PATH_MAILDIR */

@@ -10,7 +10,9 @@
 #undef Unsorted // X headers...
 #include <qaccel.h>
 #include <qregexp.h>
-
+#include <qmap.h>
+#include <qvaluelist.h>
+#include <qtextcodec.h>
 
 #include <kopenwith.h>
 

@@ -40,7 +40,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <netinet/in.h>
-
+#include <assert.h>
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):

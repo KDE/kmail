@@ -6,6 +6,8 @@
 #include "kmfiltermgr.h"
 #include "kmfilterdlg.h"
 
+#include <assert.h>
+
 //todo
 
 
