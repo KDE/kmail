@@ -615,6 +615,11 @@ KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
 //-----------------------------------------------------------------------------
 void KMImapJob::slotGetNextMessage()
 {
+  if (mMsgList.current()->headerField("X-UID").isEmpty())
+  {
+    emit messageRetrieved(mMsgList.current());
+    return;
+  }
   KMAcctImap *account = mMsgList.current()->parent()->account();
   KURL url = account->getUrl();
   url.setPath(mMsgList.current()->parent()->imapPath() + ";UID="
@@ -719,13 +724,14 @@ void KMImapJob::killJobsForMessage(KMMessage *msg)
   {
     if ((*it).mMsgList.containsRef(msg))
     {
-      account->killAllJobs();
+/*      account->killAllJobs();
       break;
-/*      (*it).mJob->kill( TRUE );
+      (*it).mJob->kill( TRUE ); */
       account->mapJobData.remove( (*it).mJob );
       account->mJobList.remove( it );
       delete it;
-      account->slaveDied(); */
+      break;
+//      account->slaveDied();
     }
   }
 }
