@@ -912,7 +912,6 @@ KMMessage* KMMessage::createBounce( bool withUI )
 KMMessage* KMMessage::createBounce( bool )
 #endif
 {
-  KMMessage bounceMsg;
   QString fromStr, bodyStr, senderStr;
   int atIdx, i;
 
@@ -936,48 +935,48 @@ KMMessage* KMMessage::createBounce( bool )
     return 0;
   }
 
+  QString receiver = headerField("Received");
+  int a = -1, b = -1;
+  a = receiver.find("from");
+  if (a != -1) a = receiver.find("by", a);
+  if (a != -1) a = receiver.find("for", a);
+  if (a != -1) a = receiver.find('<', a);
+  if (a != -1) b = receiver.find('>', a);
+  if (a != -1 && b != -1) receiver = receiver.mid(a+1, b-a-1);
+  else receiver = to();
+
 #if ALLOW_GUI
   if ( withUI )
     // No composer appears. So better ask before sending.
     if (KMessageBox::warningContinueCancel(0 /*app-global modal*/,
         i18n("Return the message to the sender as undeliverable?\n"
 	     "This will only work if the email address of the sender,\n"
-	     "%1, is valid.").arg(senderStr),
+	     "%1, is valid.\n"
+             "The failing address will be reported to be\n%2.")
+        .arg(senderStr).arg(receiver),
 	i18n("Bounce Message"), i18n("Continue")) == KMessageBox::Cancel)
     {
       return 0;
     }
 #endif
 
-  // Copy the original message, so that we can remove some of the
-  // header fields that shall not get bounced back
-  bounceMsg.fromString( asString() );
-  bounceMsg.removeHeaderField( "Status" );
-  bounceMsg.removeHeaderField( "X-Status" );
-  bounceMsg.removeHeaderField( "X-KMail-Mark" );
-  bounceMsg.removeHeaderField( "X-KMail-Identity" );
-  bounceMsg.removeHeaderField( "X-KMail-Transport" );
-  bounceMsg.removeHeaderField( "X-KMail-Fcc" );
-  //FIXME If you know other KMail-specific headers, please add them.
-
   KMMessage *msg = new KMMessage;
   msg->setTo( senderStr );
   msg->setDateToday();
   msg->setSubject( "mail failed, returning to sender" );
 
-  fromStr = msg->from();
+  fromStr = receiver;
   atIdx = fromStr.find('@');
   msg->setFrom( fromStr.replace( 0, atIdx, "MAILER-DAEMON" ) );
-  msg->setReferences( bounceMsg.id() );
+  msg->setReferences( id() );
 
   bodyStr = "|------------------------- Message log follows: -------------------------|\n"
         "no valid recipients were found for this message\n"
 	"|------------------------- Failed addresses follow: ---------------------|\n";
-  bodyStr += bounceMsg.to();
+  bodyStr += receiver;
   bodyStr += "\n|------------------------- Message text follows: ------------------------|\n";
-  bodyStr += bounceMsg.asString();
+  bodyStr += asSendableString();
 
-  //FIXME Maybe we should use a charset from the original message???
   msg->setBody( bodyStr.latin1() );
 
   return msg;
