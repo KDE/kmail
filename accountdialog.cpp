@@ -130,9 +130,11 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( label, 8, 0 );
   mLocal.identityCombo = new QComboBox( false, page );
   topLayout->addWidget( mLocal.identityCombo, 8, 1 );
+  // GS - this was moved inside the commented block 9/30/2000
+  //      (I think Don missed it?)
+  label->setEnabled(false);
   */
 
-  label->setEnabled(false);
   //mLocal.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("Precommand:"), page );
