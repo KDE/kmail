@@ -720,7 +720,7 @@ void KMFolderTree::doFolderListChanged()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotAccountRemoved(KMAccount *aAccount)
+void KMFolderTree::slotAccountRemoved(KMAccount *)
 {
     doFolderSelected( firstChild() );
 }
