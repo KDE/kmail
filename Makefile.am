@@ -1,5 +1,5 @@
 
-SUBDIRS = pics doc
+SUBDIRS = pics 
 INCLUDES = $(all_includes)
 LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
 
