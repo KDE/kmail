@@ -51,7 +51,7 @@ public:
   virtual ~KMAccount();
 
   /** The default check interval */
-  const int DefaultCheckInterval = 5;
+  static const int DefaultCheckInterval = 5;
 
   /**
    * Returns type of the account
