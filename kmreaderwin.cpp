@@ -107,7 +107,10 @@ void KMReaderWin::insertAndParseNewChildNode( partNode& node,
                                               const char* content,
                                               const char* cntDesc )
 {
-  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
+//  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
+  DwString cntStr( content );
+  DwBodyPart* myBody = new DwBodyPart( cntStr, 0 );
+
   myBody->Parse();
 
   if( myBody->hasHeaders() ) {
@@ -118,7 +121,10 @@ void KMReaderWin::insertAndParseNewChildNode( partNode& node,
     myBody->Headers().Parse();
   }
 
-  node.setFirstChild(new partNode(false, myBody))->buildObjectTree( false );
+//  node.setFirstChild(new partNode(false, myBody))->buildObjectTree( false );
+  partNode* newNode = new partNode(false, myBody);
+  newNode = node.setFirstChild( newNode );
+  newNode->buildObjectTree( false );
 
   if( node.mimePartTreeItem() ) {
 kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
@@ -2084,9 +2090,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   aMsg->setEncryptionState( mRootNode->overallEncryptionState() );
   aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
 
-  // remove temp. Body Part that was created for a single part mail
-  if( mainBody )
-    delete mainBody;
   // remove temp. CryptPlugList
   if( tmpPlugList )
     delete mCryptPlugList;
