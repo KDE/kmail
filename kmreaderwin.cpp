@@ -1631,6 +1631,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       pos--;
       while (pos >= 0 && aStr[pos].unicode() < 128
 	     && (aStr[pos].isLetterOrNumber()
+                 || aStr[pos] == '@' // allow @ to find invalid email addresses
                  || allowedSpecialChars.find(aStr[pos]) != -1)
 	     && (atpos - pos) < 255)
       {
@@ -1652,6 +1653,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       pos = atpos + 1;
       while (pos < (int)aStr.length() && aStr[pos].unicode() < 128
              && (aStr[pos].isLetterOrNumber()
+                 || aStr[pos] == '@' // allow @ to find invalid email addresses
                  || allowedSpecialChars.find(aStr[pos]) != -1)
 	     && (pos - atpos + len) < 255)
       {
@@ -1665,7 +1667,8 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       }
       iStr += aStr.mid( atpos + 1, pos - atpos );
 
-      if (len > 0 && iStr[iStr.length() - 1] != '@')
+      if (len > 0 && iStr[iStr.length() - 1] != '@'
+          && iStr.contains('@') == 1 )
       {
         iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
       }
