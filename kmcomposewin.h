@@ -363,8 +363,6 @@ public slots:
   /**
    * XML-GUI stuff
    */
-  void slotToggleToolBar();
-  void slotToggleStatusBar();
   void slotStatusMessage(const QString &message);
   void slotEditToolbars();
   void slotUpdateToolbars();
@@ -716,7 +714,6 @@ protected:
   KToggleAction *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
-  KToggleAction *toolbarAction, *statusbarAction;
   KToggleAction *wordWrapAction, *fixedFontAction;
 
   KSelectAction *encodingAction;

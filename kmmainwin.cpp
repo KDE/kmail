@@ -21,18 +21,14 @@ KMMainWin::KMMainWin(QWidget *)
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
 
+  createStandardStatusBarAction();
+  setStandardToolBarMenuEnabled(true);
+    
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
 				actionCollection(), "kmail_configure_toolbars" );
-  mToolbarAction = KStdAction::showToolbar(this,
-					   SLOT(slotToggleToolBar()),
-					   actionCollection());
-  mStatusbarAction = KStdAction::showStatusbar(this,
-					       SLOT(slotToggleStatusBar()),
-					       actionCollection());
+  
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc", false );
-  mToolbarAction->setChecked(!toolBar()->isHidden());
-  mStatusbarAction->setChecked(!statusBar()->isHidden());
 
   connect( guiFactory()->container("folder", this),
 	   SIGNAL( aboutToShow() ), mKMMainWidget,
@@ -99,22 +95,6 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   statusBar()->changeItem(text, mMessageStatusId);
 }
 
-void KMMainWin::slotToggleToolBar()
-{
-  if(toolBar("mainToolBar")->isVisible())
-    toolBar("mainToolBar")->hide();
-  else
-    toolBar("mainToolBar")->show();
-}
-
-void KMMainWin::slotToggleStatusBar()
-{
-  if (statusBar()->isVisible())
-    statusBar()->hide();
-  else
-    statusBar()->show();
-}
-
 void KMMainWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config(), "MainWindow");
@@ -130,7 +110,6 @@ void KMMainWin::slotUpdateToolbars()
 {
   createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config(), "MainWindow");
-  mToolbarAction->setChecked(!toolBar()->isHidden());
 }
 
 void KMMainWin::setupStatusBar()

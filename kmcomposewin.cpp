@@ -202,8 +202,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupEditor();
   setupActions();
   applyMainWindowSettings(KMKernel::config(), "Composer");
-  toolbarAction->setChecked(!toolBar()->isHidden());
-  statusbarAction->setChecked(!statusBar()->isHidden());
 
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
@@ -950,10 +948,9 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-  toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
-    actionCollection());
-  statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
-    actionCollection());
+  createStandardStatusBarAction();
+  setStandardToolBarMenuEnabled(true);
+    
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(kernel, SLOT(slotShowConfigurationDialog()), actionCollection());
@@ -5024,21 +5021,6 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleToolBar()
-{
-  if(toolBar("mainToolBar")->isVisible())
-    toolBar("mainToolBar")->hide();
-  else
-    toolBar("mainToolBar")->show();
-}
-
-void KMComposeWin::slotToggleStatusBar()
-{
-  if (statusBar()->isVisible())
-    statusBar()->hide();
-  else
-    statusBar()->show();
-}
 
 void KMComposeWin::slotStatusMessage(const QString &message)
 {
@@ -5060,7 +5042,6 @@ void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
   applyMainWindowSettings(KMKernel::config(), "Composer");
-  toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
 void KMComposeWin::slotEditKeys()

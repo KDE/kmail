@@ -10,7 +10,6 @@
 
 class KMMainWidget;
 class KMLittleProgressDlg;
-class KToggleAction;
 
 class KMMainWin : public KMTopLevelWidget
 {
@@ -35,8 +34,6 @@ public slots:
   void statusMsg(const QString&);
   void htmlStatusMsg(const QString&);
   void displayStatusMsg(const QString&);
-  void slotToggleToolBar();
-  void slotToggleStatusBar();
   void slotEditToolbars();
   void slotUpdateToolbars();
   void setupStatusBar();
@@ -45,8 +42,6 @@ protected slots:
   void slotQuit();
 
 private:
-  KToggleAction *mToolbarAction;
-  KToggleAction *mStatusbarAction;
   KMMainWidget *mKMMainWidget;
   QString      mLastStatusMsg;
   KMLittleProgressDlg *littleProgress;
