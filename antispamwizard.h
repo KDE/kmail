@@ -204,8 +204,8 @@ namespace KMail {
         public:
           ConfigReader( WizardMode mode,
                         QValueList<SpamToolConfig> & configList );
+          ~ConfigReader( );
 
-	~ConfigReader( );
           QValueList<SpamToolConfig> & getToolList() { return mToolList; }
 
           void readAndMergeConfig();
@@ -238,7 +238,7 @@ namespace KMail {
       /* generic checks if any option in a page is checked */
       bool anySpamOptionChecked();
       bool anyVirusOptionChecked();
-      
+
       /* convenience function calling the appropriate filter manager method */
       const QString uniqueNameFor( const QString & name );
 

@@ -582,7 +582,8 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   for (int i = 1; i <= user_registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    mergeToolConfig( readToolConfig( toolConfig ) );
+    if( !toolConfig.readBoolEntry( "HeadersOnly", false ) )
+      mergeToolConfig( readToolConfig( toolConfig ) );
   }
   // Make sure to have add least one tool listed even when the
   // config file was not found or whatever went wrong
