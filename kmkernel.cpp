@@ -31,6 +31,7 @@
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
 #include "kfileio.h"
+#include "kmpgpwrap.h"
 #include <kabapi.h>
 #include <kwin.h>
 
@@ -46,6 +47,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 {
   //kdDebug() << "KMKernel::KMKernel" << endl;
   mySelf = this;
+  new KMpgpWrap();
 }
 
 KMKernel::~KMKernel ()

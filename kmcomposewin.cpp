@@ -20,7 +20,7 @@
 #include "kfileio.h"
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
-#include "kpgp.h"
+#include <kpgp.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmidentity.h"

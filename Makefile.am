@@ -1,12 +1,12 @@
 KDE_CXXFLAGS = $(USE_RTTI) -UQT_NO_ASCII_CAST -UQT_NO_COMPAT
 
 SUBDIRS = about pics
-INCLUDES = $(all_includes)
-LDADD	= $(LIB_KHTML) -lkspell -lmimelib -lkab $(LIB_KFILE)
+INCLUDES = -I$(top_srcdir)/libkdenetwork $(all_includes)
+LDADD	= $(LIB_KHTML) -lkdenetwork -lkspell -lmimelib -lkab $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
-kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kmail_LDFLAGS = -L../libkdenetwork $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp \
 		kmaccount.cpp kmheaders.cpp \
@@ -19,7 +19,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp\
+		kmmsgbase.cpp kmmsglist.cpp kmpgpwrap.cpp \
 		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \

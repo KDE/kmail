@@ -8,7 +8,7 @@
 #include "kmmsgpart.h"
 #include "kmmsginfo.h"
 #include "kmreaderwin.h"
-#include "kpgp.h"
+#include <kpgp.h>
 
 #include "kmfolder.h"
 #include "kmundostack.h"

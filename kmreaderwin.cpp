@@ -44,7 +44,7 @@
 #include "kfileio.h"
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
-#include "kpgp.h"
+#include <kpgp.h>
 #include "kurl.h"
 
 // for selection
