@@ -53,8 +53,8 @@
 using namespace KMail;
 
 NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
-    : KDialogBase( parent, "new_folder_dialog", false, i18n( "New Folder" ), 
-                   KDialogBase::Ok|KDialogBase::Cancel, 
+    : KDialogBase( parent, "new_folder_dialog", false, i18n( "New Folder" ),
+                   KDialogBase::Ok|KDialogBase::Cancel,
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
@@ -65,9 +65,9 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
   setMainWidget( privateLayoutWidget );
-  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 11, 6, "mTopLevelLayout"); 
+  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 11, 6, "mTopLevelLayout");
 
-  mNameHBox = new QHBoxLayout( 0, 0, 6, "mNameHBox"); 
+  mNameHBox = new QHBoxLayout( 0, 0, 6, "mNameHBox");
 
   mNameLabel = new QLabel( privateLayoutWidget, "mNameLabel" );
   mNameLabel->setText( i18n( "&Name:" ) );
@@ -79,11 +79,12 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   mNameLineEdit->setFocus();
   mNameHBox->addWidget( mNameLineEdit );
   mTopLevelLayout->addLayout( mNameHBox );
+  connect( mNameLineEdit, SIGNAL( textChanged ( const QString & ) ), this, SLOT( slotFolderNameChanged( const QString & ) ) );
 
-  if ( !mFolder || 
+  if ( !mFolder ||
       ( mFolder->folderType() != KMFolderTypeImap &&
         mFolder->folderType() != KMFolderTypeCachedImap ) ) {
-    mFormatHBox = new QHBoxLayout( 0, 0, 6, "mFormatHBox"); 
+    mFormatHBox = new QHBoxLayout( 0, 0, 6, "mFormatHBox");
     mMailboxFormatLabel = new QLabel( privateLayoutWidget, "mMailboxFormatLabel" );
     mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
@@ -109,7 +110,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   // --- contents -----
   if ( kmkernel->iCalIface().isEnabled() ) {
-    mContentsHBox = new QHBoxLayout( 0, 0, 6, "mContentsHBox"); 
+    mContentsHBox = new QHBoxLayout( 0, 0, 6, "mContentsHBox");
 
     mContentsLabel = new QLabel( privateLayoutWidget, "mContentsLabel" );
     mContentsLabel->setText( i18n( "Folder &contains:" ) );
@@ -132,6 +133,12 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   resize( QSize(282, 108).expandedTo(minimumSizeHint()) );
   clearWState( WState_Polished );
+  slotFolderNameChanged( mNameLineEdit->text());
+}
+
+void NewFolderDialog::slotFolderNameChanged( const QString & _text)
+{
+  enableButtonOK( !_text.isEmpty() );
 }
 
 void NewFolderDialog::slotOk()
@@ -142,9 +149,9 @@ void NewFolderDialog::slotOk()
         i18n( "No Name Specified" ) );
      return;
   }
-  if ( fldName.find( '/' ) != -1 && 
-    ( !mFolder 
-      || mFolder->folderType() == KMFolderTypeImap 
+  if ( fldName.find( '/' ) != -1 &&
+    ( !mFolder
+      || mFolder->folderType() == KMFolderTypeImap
       || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot contain the / (slash) character; please choose another folder name." ) );
     return;
@@ -154,8 +161,8 @@ void NewFolderDialog::slotOk()
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
   } else if ( fldName.find( '.' ) != -1 &&
-    ( !mFolder 
-      || mFolder->folderType() == KMFolderTypeImap 
+    ( !mFolder
+      || mFolder->folderType() == KMFolderTypeImap
       || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
     if ( KMessageBox::warningContinueCancel( this, i18n( "Some mailservers do not support folder names which contain a . (dot) character; do you want to continue?" ), QString::null, KStdGuiItem::cont(), "warn_create_folders_with_dot_in_middle" ) == KMessageBox::Cancel ) {
       return;
@@ -192,7 +199,7 @@ void NewFolderDialog::slotOk()
       selectedStorage->createFolder(fldName); // create it on the server
       static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
       success = true;
-    } 
+    }
   } else if ( mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
     newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
     if ( newFolder ) {

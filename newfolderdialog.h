@@ -66,6 +66,7 @@ class NewFolderDialog : public KDialogBase
     QHBoxLayout* mContentsHBox;
   protected slots:
     void slotOk();
+  void slotFolderNameChanged( const QString & _text);
 
   private:
     KMFolder* mFolder;
