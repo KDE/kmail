@@ -1153,6 +1153,7 @@ KMMessage* KMMessage::createForward()
 
   msg->setSubject( forwardSubject() );
   msg->removePrivateHeaderFields();
+  msg->removeHeaderField( "Sender" );
  
 #ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
   QCString str = codecForName(encoding)->fromUnicode(st);
