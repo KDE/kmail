@@ -159,6 +159,11 @@ bool RecipientLine::isActive()
   return mEdit->hasFocus();
 }
 
+bool RecipientLine::isEmpty()
+{
+  return mEdit->text().isEmpty();
+}
+
 void RecipientLine::slotReturnPressed()
 {
   emit returnPressed( this );
@@ -185,6 +190,16 @@ RecipientsView::RecipientsView( QWidget *parent )
 RecipientLine *RecipientsView::activeLine()
 {
   return mLines.last();
+}
+
+RecipientLine *RecipientsView::emptyLine()
+{
+  RecipientLine *line;
+  for( line = mLines.first(); line; line = mLines.next() ) {
+    if ( line->isEmpty() ) return line;
+  }
+  
+  return 0;
 }
 
 RecipientLine *RecipientsView::addLine()
@@ -400,7 +415,8 @@ void RecipientsEditor::setRecipientString( const QString &str,
   QStringList r = QStringList::split( ",", str );
   QStringList::ConstIterator it;
   for( it = r.begin(); it != r.end(); ++it ) {
-    RecipientLine *line = mRecipientsView->addLine();
+    RecipientLine *line = mRecipientsView->emptyLine();
+    if ( !line ) line = mRecipientsView->addLine();
     line->setRecipient( Recipient( *it, type ) );
   }
 }

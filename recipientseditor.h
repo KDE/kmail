@@ -76,6 +76,8 @@ class RecipientLine : public QWidget
     void activate();
     bool isActive();
 
+    bool isEmpty();
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
@@ -102,6 +104,8 @@ class RecipientsView : public QScrollView
     QSize sizeHint() const;
 
     RecipientLine *activeLine();
+
+    RecipientLine *emptyLine();
 
     Recipient::List recipients() const;
 
