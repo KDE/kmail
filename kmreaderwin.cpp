@@ -1400,6 +1400,8 @@ void KMReaderWin::updateReaderWin()
     mViewer->view()->viewport()->setUpdatesEnabled( true );
     mViewer->view()->setUpdatesEnabled( true );
     mViewer->view()->viewport()->repaint( false );
+    if( mMimePartTree )
+      mMimePartTree->clear();
   }
 }
 
