@@ -197,6 +197,8 @@ private slots:
 
 private:
     KMComposeWin* mComposer;
+    void dropEvent( QDropEvent *event );
+    void insertEmails( QStringList emails );
 };
 
 

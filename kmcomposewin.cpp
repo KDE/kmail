@@ -58,6 +58,11 @@ using KRecentAddress::RecentAddresses;
 #include <gpgmepp/context.h>
 #include <gpgmepp/key.h>
 
+#include <kabc/vcardconverter.h>
+#include <libkdepim/kvcarddrag.h>
+#include <kio/netaccess.h>
+
+
 #include "klistboxdialog.h"
 
 #include "messagecomposer.h"
@@ -4176,6 +4181,73 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
         // ---sven's Return is same Tab and arrow key navigation end ---
     }
     AddresseeLineEdit::keyPressEvent(e);
+}
+
+
+void KMLineEdit::insertEmails( QStringList emails )
+{
+  if ( !emails.isEmpty() ) {
+    QStringList::Iterator it;
+    it = emails.begin();
+    QString contents = text();
+    if ( !contents.isEmpty() )
+      contents.append(",");
+    // only one address, don't need kpopup to choose
+    if ( emails.count() == 1 ) {
+      contents.append( *it );
+    } else { 
+      //multiple emails, let the user choose one
+      KPopupMenu *menu = new KPopupMenu( this,"Addresschooser" );
+      for ( it = emails.begin(); it != emails.end(); ++it ) 
+        menu->insertItem( *it );
+      int result = menu->exec( QCursor::pos() );
+      contents.append( menu->text( result) );
+    }
+  setText( contents );
+  }
+}
+
+void KMLineEdit::dropEvent(QDropEvent *event)
+{
+  QString vcards;
+  KVCardDrag::decode( event, vcards );
+  if ( !vcards.isEmpty() ) {
+    KABC::VCardConverter converter;
+    KABC::Addressee::List list = converter.parseVCards( vcards );
+    KABC::Addressee::List::Iterator ait;
+    for ( ait = list.begin(); ait != list.end(); ++ait ){
+      insertEmails( (*ait).emails() );
+    }
+  } else {
+    KURL::List urls;
+    if ( KURLDrag::decode( event, urls) ) {
+      //kdDebug(5006) << "urlList" << endl; 
+      KURL::List::Iterator it = urls.begin();
+      KABC::VCardConverter converter;
+      KABC::Addressee::List list;
+      QString fileName;
+      QString caption( i18n( "vCard Import Failed" ) );
+      for ( it = urls.begin(); it != urls.end(); ++it ) {
+        if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
+          QFile file( fileName );
+          file.open( IO_ReadOnly );
+          QByteArray rawData = file.readAll();
+          file.close();
+          QString data = QString::fromUtf8( rawData.data(), rawData.size() + 1 );
+          list += converter.parseVCards( data );
+          KIO::NetAccess::removeTempFile( fileName );
+        } else {
+          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" );
+          KMessageBox::error( parentWidget(), text.arg( (*it).url() ), caption );
+        }
+        KABC::Addressee::List::Iterator ait;
+        for ( ait = list.begin(); ait != list.end(); ++ait )
+          insertEmails((*ait).emails());
+      }
+    } else {
+      KPIM::AddresseeLineEdit::dropEvent( event );
+    }
+  }
 }
 
 QPopupMenu *KMLineEdit::createPopupMenu()
