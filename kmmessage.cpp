@@ -1131,6 +1131,11 @@ void KMMessage::initHeader( const QString & id )
   else
     setHeaderField("Organization", ident.organization());
 
+  if (identStr == i18n("Default"))
+    removeHeaderField("X-KMail-Identity");
+  else
+    setHeaderField("X-KMail-Identity", identStr);
+
   if (ident.transport().isEmpty())
     removeHeaderField("X-KMail-Transport");
   else
