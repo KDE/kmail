@@ -19,8 +19,7 @@
 #define __SUBSCRIPTIONDIALOG
 
 #include <ksubscription.h>
-
-#include "kmacctimap.h"
+#include "imapaccountbase.h"
 
 class KMMessage;
 
@@ -33,23 +32,23 @@ namespace KMail {
     public:
       SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct );
 
-      public slots:
-        /**
-         * get the listing from the imap-server
-         */ 
-        void slotListDirectory(QStringList, QStringList,
-            QStringList, KMAcctImap::jobData);
+    public slots:
+      /**
+       * get the listing from the imap-server
+       */ 
+      void slotListDirectory(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &);
 
       /** 
        * called by Ok-button, saves the changes
        */ 
       void slotSave();
 
-      protected slots:
-        /**
-         * Loads the folders
-         */ 
-        void slotLoadFolders();
+    protected slots:
+      /**
+       * Loads the folders
+       */ 
+      void slotLoadFolders();
 
   };
 

@@ -1,5 +1,5 @@
 /*
-    subscription.cpp
+    subscriptiondialog.cpp
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
   hideNewOnlyCheckbox();
 
   // connect to folderlisting
-  KMAcctImap* ai = static_cast<KMAcctImap*>(acct);
-  connect(ai, SIGNAL(receivedFolders(QStringList,QStringList,
-          QStringList,KMAcctImap::jobData)),
-      this, SLOT(slotListDirectory(QStringList,QStringList,
-          QStringList,KMAcctImap::jobData)));
+  ImapAccountBase* iaccount = static_cast<ImapAccountBase*>(acct);
+  connect(iaccount, SIGNAL(receivedFolders(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)),
+      this, SLOT(slotListDirectory(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)));
 
   // ok-button
   connect(this, SIGNAL(okClicked()), SLOT(slotSave()));
@@ -47,9 +47,9 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames, 
-                                        QStringList mSubfolderPaths, 
-                                        QStringList mSubfolderMimeTypes,
-                                        KMAcctImap::jobData jobData )
+                                            QStringList mSubfolderPaths, 
+                                            QStringList mSubfolderMimeTypes,
+                                            const ImapAccountBase::jobData & jobData )
 {
   if (mSubfolderPaths.size() <= 0) return;
   bool onlySubscribed = jobData.onlySubscribed;
@@ -133,9 +133,15 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         mSubfolderMimeTypes[i] == "inode/directory")
     {
       // descend
-      static_cast<KMAcctImap*>(mAcct)->listDirectory(mSubfolderPaths[i], 
+      static_cast<ImapAccountBase*>(mAcct)->listDirectory(mSubfolderPaths[i], 
           onlySubscribed);
     }
+  }
+  if (jobData.inboxOnly)
+  {
+    ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
+    ai->listDirectory(ai->prefix(), false, true);
+    ai->listDirectory(ai->prefix(), true, true);
   }
   slotLoadingComplete();
 }
@@ -147,7 +153,7 @@ void SubscriptionDialog::slotSave()
   QListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
   {
-    static_cast<KMAcctImap*>(account())->changeSubscription(true, 
+    static_cast<ImapAccountBase*>(account())->changeSubscription(true, 
         static_cast<GroupItem*>(it.current())->info().path);
   }
 
@@ -155,7 +161,7 @@ void SubscriptionDialog::slotSave()
   QListViewItemIterator it2(unsubView);
   for ( ; it2.current(); ++it2)
   {
-    static_cast<KMAcctImap*>(account())->changeSubscription(false, 
+    static_cast<ImapAccountBase*>(account())->changeSubscription(false, 
         static_cast<GroupItem*>(it2.current())->info().path);
   }
 }
@@ -163,8 +169,8 @@ void SubscriptionDialog::slotSave()
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotLoadFolders()
 {
-  folderTree()->clear();
-  KMAcctImap* ai = static_cast<KMAcctImap*>(account());
+  KSubscription::slotLoadFolders();
+  ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
   // get folders
   ai->listDirectory(ai->prefix(), false);
   ai->listDirectory(ai->prefix(), true);
