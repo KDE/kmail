@@ -410,8 +410,8 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mCbxFunc->insertItem(i18n("doesn't contain"));
   mCbxFunc->insertItem(i18n("equals"));
   mCbxFunc->insertItem(i18n("not equal"));
-  mCbxFunc->insertItem(i18n("matches RegExp"));
-  mCbxFunc->insertItem(i18n("doesn't match RegExp"));
+  mCbxFunc->insertItem(i18n("matches regular expr."));
+  mCbxFunc->insertItem(i18n("doesn't match regular expr."));
   mCbxFunc->setMinimumSize(mCbxFunc->sizeHint());
   mCbxFunc->setMaximumSize(1024, mCbxFunc->sizeHint().height());
 
