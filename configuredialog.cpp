@@ -847,6 +847,10 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page3, i18n("&Layout") );
   vlay = new QVBoxLayout( page3, spacingHint() );
 
+  mAppearance.longFolderCheck =
+    new QCheckBox( i18n("&Show long folder list"), page3 );
+  vlay->addWidget( mAppearance.longFolderCheck );
+
   mAppearance.messageSizeCheck =
     new QCheckBox( i18n("&Display message sizes"), page3 );
   vlay->addWidget( mAppearance.messageSizeCheck );
@@ -1750,6 +1754,9 @@ void ConfigureDialog::setupAppearancePage( void )
 
   {
     KConfigGroupSaver saver(config, "Geometry");
+    state = config->readBoolEntry( "longFolderList", true );
+    mAppearance.longFolderCheck->setChecked( state );
+
     state = config->readBoolEntry( "nestedMessages", false );
     mAppearance.nestedMessagesCheck->setChecked( state );
 
@@ -2045,6 +2052,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2071,6 +2079,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2096,6 +2105,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateLocalized->setChecked( true );
@@ -2107,6 +2117,7 @@ void ConfigureDialog::installProfile( void )
 
     mAppearance.customColorCheck->setChecked( false );
 
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.rdDateCtime->setChecked( true );
@@ -2281,6 +2292,9 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     {
       KConfigGroupSaver saver(config, "Geometry");
+      bool longFolderList = mAppearance.longFolderCheck->isChecked();
+      config->writeEntry( "longFolderList", longFolderList );
+
       bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
       config->writeEntry( "nestedMessages", nestedMessages );
 

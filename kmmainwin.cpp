@@ -72,7 +72,6 @@
 #include <assert.h>
 #include <klocale.h>
 
-#include "kmmainwin.h"
 #include "kmmainwin.moc"
 
 //-----------------------------------------------------------------------------
@@ -88,6 +87,10 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mFolder = NULL;
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
+  mHorizPannerSep = new QValueList<int>;
+  mVertPannerSep = new QValueList<int>;
+  *mHorizPannerSep << 1 << 1;
+  *mVertPannerSep << 1 << 1;
 
   setMinimumSize(400, 300);
 
@@ -104,6 +107,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   statusbarAction->setChecked(!statusBar()->isHidden());
 
   readConfig();
+  activatePanners();
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
     idx = mFolderTree->firstChild();
@@ -137,12 +141,9 @@ KMMainWin::~KMMainWin()
   saveMainWindowSettings(kapp->config(), "Main Window");
   kapp->config()->sync();
 
-  delete mMsgDock;
   delete mHeaders;
-  delete mHeaderDock;
   delete mStatusBar;
   delete mFolderTree;
-  delete mFolderDock;
 }
 
 
@@ -151,6 +152,11 @@ void KMMainWin::readPreConfig(void)
 {
   KConfig *config = kapp->config();
   QString str;
+
+  { // area for config group "Geometry"
+    KConfigGroupSaver saver(config, "Geometry");
+    mLongFolderList = config->readBoolEntry("longFolderList", true);
+  }
 
   KConfigGroupSaver saver(config, "General");
   mEncodingStr = config->readEntry("encoding", "").latin1();
@@ -187,15 +193,24 @@ void KMMainWin::writeFolderConfig(void)
 void KMMainWin::readConfig(void)
 {
   KConfig *config = kapp->config();
+  bool oldLongFolderList=false;
   QString str;
   QSize siz;
 
   if (mStartupDone)
   {
     writeConfig();
+    oldLongFolderList = mLongFolderList;
     readPreConfig();
     mHeaders->refreshNestedState();
+    if (oldLongFolderList != mLongFolderList)
+    {
+      hide();
+      if (mHorizPanner->parent()==this) delete mHorizPanner;
+      else delete mVertPanner;
+      createWidgets();
     }
+  }
 
   { // area for config group "Reader"
     KConfigGroupSaver saver(config, "Reader");
@@ -209,7 +224,26 @@ void KMMainWin::readConfig(void)
     siz = config->readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
+
+    // the default value for the FolderPaneWidth should be about 160 but the
+    // default is set to 0 to enable the workaround (see below)
+    (*mVertPannerSep)[0] = config->readNumEntry("FolderPaneWidth", 0);
+    (*mVertPannerSep)[1] = config->readNumEntry("HeaderPaneWidth", 600-160);
+    (*mHorizPannerSep)[0] = config->readNumEntry("HeaderPaneHeight", 300);
+    (*mHorizPannerSep)[1] = config->readNumEntry("MessagePaneHeight", 300);
+
+    // workaround to support the old buggy way of saving the dimensions of the panes
+    if ((*mVertPannerSep)[0] == 0) {
+      defaultSize = QSize(300,130);
+      siz = config->readSizeEntry("Panners", &defaultSize);
+      if (siz.isEmpty())
+        siz = QSize(100,100); // why not defaultSize?
+      (*mHorizPannerSep)[0] = siz.width();
+      (*mVertPannerSep)[0] = siz.height();
+      (*mHorizPannerSep)[1] = height() - siz.width();
+      (*mVertPannerSep)[1] = width() - siz.height();
     }
+  }
 
   mMsgView->readConfig();
   slotSetEncoding();
@@ -226,8 +260,11 @@ void KMMainWin::readConfig(void)
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
   }
 
+  // Re-activate panners
   if (mStartupDone)
   {
+    if (oldLongFolderList != mLongFolderList)
+      activatePanners();
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
@@ -253,8 +290,6 @@ void KMMainWin::readConfig(void)
     //    kernel->kbp()->idle(); //For symmetry
     show();
     */
-  } else {
-    manager()->readConfig(KGlobal::config(), "dock_configuration");
   }
 }
 
@@ -273,42 +308,51 @@ void KMMainWin::writeConfig(void)
     KConfigGroupSaver saver(config, "Geometry");
 
     config->writeEntry("MainWin", r.size());
+
+    // save the dimensions of the folder, header and message pane
+    config->writeEntry("FolderPaneWidth", mVertPanner->sizes()[0]);
+    config->writeEntry("HeaderPaneWidth", mVertPanner->sizes()[1]);
+    config->writeEntry("HeaderPaneHeight", mHorizPanner->sizes()[0]);
+    config->writeEntry("MessagePaneHeight", mHorizPanner->sizes()[1]);
   }
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", QString(mEncodingStr));
-
-  manager()->writeConfig(KGlobal::config(), "dock_configuration");
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::createWidgets(void)
 {
+  QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   QAccel *accel = new QAccel(this);
-  KDockWidgetHeader *header;
+
+  // create panners
+  if (mLongFolderList)
+  {
+    mVertPanner  = new QSplitter(Qt::Horizontal, this, "vertPanner" );
+    mHorizPanner = new QSplitter(Qt::Vertical, mVertPanner, "horizPanner" );
+    pnrFldList = mHorizPanner;
+    pnrMsgView = mVertPanner;
+    pnrMsgList = mVertPanner;
+  }
+  else
+  {
+    mHorizPanner = new QSplitter( Qt::Vertical, this, "horizPanner" );
+    mVertPanner  = new QSplitter( Qt::Horizontal, mHorizPanner, "vertPanner" );
+    pnrMsgView = mVertPanner;
+    pnrMsgList = mHorizPanner;
+    pnrFldList = mHorizPanner;
+  }
+  mVertPanner->setOpaqueResize(true);
+  mHorizPanner->setOpaqueResize(true);
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
   // Probably need to disconnect them first.
 
-  // setup splitter behaviour
-  manager()->setSplitterHighResolution(true);
-  manager()->setSplitterOpaqueResize(true);
-  manager()->setSplitterKeepSize(true);
-
   // create list of messages
-  mHeaderDock = createDockWidget("header_view", 0, 0,
-                                 kapp->makeStdCaption(i18n("Headers")), i18n("Headers"));
-  header = new KDockWidgetHeader(mHeaderDock, "headerDock");
-  mHeaderDock->setHeader(header);
-  mHeaders = new KMHeaders(this, mHeaderDock, "headers");
-  header->setDragPanel(new KDockWidgetHeaderDrag(header, mHeaderDock));
-  mHeaderDock->setWidget(mHeaders);
-  setView(mHeaderDock);
-  setMainDockWidget(mHeaderDock);
-  connect(mHeaderDock, SIGNAL(iMBeingClosed()), SLOT(slotHeaderDockHidden()));
-  connect(mHeaderDock, SIGNAL(hasUndocked()), SLOT(slotHeaderDockHidden()));
+  mHeaders = new KMHeaders(this, pnrMsgList, "headers");
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
@@ -325,16 +369,7 @@ void KMMainWin::createWidgets(void)
   else mCodec = 0;
 
   // create HTML reader widget
-  mMsgDock = createDockWidget("msg_view", 0, 0,
-                              kapp->makeStdCaption(i18n("Message View")), i18n("Message View"));
-  header = new KDockWidgetHeader(mMsgDock, "msgDock");
-  mMsgDock->setHeader(header);
-  mMsgView = new KMReaderWin(mMsgDock);
-  header->setDragPanel(new KDockWidgetHeaderDrag(header, mMsgDock));
-  mMsgDock->setWidget(mMsgView);
-  mMsgDock->manualDock(mHeaderDock, KDockWidget::DockBottom, 25);
-  connect(mMsgDock, SIGNAL(iMBeingClosed()), SLOT(slotMsgDockHidden()));
-  connect(mMsgDock, SIGNAL(hasUndocked()), SLOT(slotMsgDockHidden()));
+  mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(statusMsg(const QString&)));
   connect(mMsgView, SIGNAL(popupMenu(const KURL&,const QPoint&)),
@@ -363,16 +398,7 @@ void KMMainWin::createWidgets(void)
 		     this, SLOT(slotDeleteMsg()));
 
   // create list of folders
-  mFolderDock = createDockWidget("folder_view", 0, 0,
-                                 kapp->makeStdCaption(i18n("Folders")), i18n("Folders"));
-  header = new KDockWidgetHeader(mFolderDock, "folderDock");
-  mFolderDock->setHeader(header);
-  mFolderTree  = new KMFolderTree(mFolderDock, "folderTree");
-  header->setDragPanel(new KDockWidgetHeaderDrag(header, mFolderDock));
-  mFolderDock->setWidget(mFolderTree);
-  mFolderDock->manualDock(mHeaderDock, KDockWidget::DockLeft, 50);
-  connect(mFolderDock, SIGNAL(iMBeingClosed()), SLOT(slotFolderDockHidden()));
-  connect(mFolderDock, SIGNAL(hasUndocked()), SLOT(slotFolderDockHidden()));
+  mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
@@ -432,6 +458,40 @@ void KMMainWin::createWidgets(void)
            SLOT( startUpdateMessageActionsTimer() ) );
 }
 
+
+//-----------------------------------------------------------------------------
+void KMMainWin::activatePanners(void)
+{
+  // glue everything together
+  if (mLongFolderList)
+  {
+    mHeaders->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
+    mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
+    mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
+    mVertPanner->moveToFirst( mFolderTree );
+    setCentralWidget(mVertPanner);
+  }
+  else
+  {
+    mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
+    mHeaders->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
+    mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
+    setCentralWidget(mHorizPanner);
+  }
+  mHorizPanner->setSizes( *mHorizPannerSep );
+  mVertPanner->setSizes( *mVertPannerSep );
+
+  mVertPanner->setResizeMode( mFolderTree, QSplitter::KeepSize);
+  if( mLongFolderList )
+  {
+    mHorizPanner->setResizeMode( mHeaders, QSplitter::KeepSize);
+  }
+  else
+  {
+    mHorizPanner->setResizeMode( mVertPanner, QSplitter::KeepSize);
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetEncoding()
 {
@@ -478,12 +538,9 @@ void KMMainWin::hide()
 //-----------------------------------------------------------------------------
 void KMMainWin::show()
 {
+  mHorizPanner->setSizes( *mHorizPannerSep );
+  mVertPanner->setSizes( *mVertPannerSep );
   KMMainWinInherited::show();
-}
-
-void KMMainWin::showEvent(QShowEvent *)
-{
-  slotCheckDockWidgetStatus();
 }
 
 
@@ -1123,6 +1180,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   if (!aFolder && mFolderTree->currentItem() == mFolderTree->firstChild())
   {
     mMsgView->setMsg(0,TRUE);
+    if (mLongFolderList) mHeaders->hide();
     mMsgView->displayAboutPage();
   }
   else if (!mFolder)
@@ -1848,15 +1906,6 @@ void KMMainWin::setupMenuBar()
     actionCollection());
   statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
     actionCollection());
-  actionToggleFolderView = new KToggleAction(i18n("Show Folder View"),
-    CTRL+Key_G, this, SLOT(slotToggleFolderView()), actionCollection(),
-    "settings_show_folderView");
-  actionToggleHeaderView = new KToggleAction(i18n("Show Header View"),
-    CTRL+Key_H, this, SLOT(slotToggleHeaderView()), actionCollection(),
-    "settings_show_headerView");
-  actionToggleMsgView = new KToggleAction(i18n("Show Message View"),
-    CTRL+Key_J, this, SLOT(slotToggleMsgView()), actionCollection(),
-    "settings_show_msgView");
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
@@ -1899,46 +1948,6 @@ void KMMainWin::slotToggleStatusBar()
     statusBar()->hide();
   else
     statusBar()->show();
-}
-
-void KMMainWin::slotToggleMsgView()
-{
-  mMsgDock->changeHideShowState();
-  slotCheckDockWidgetStatus();
-}
-
-void KMMainWin::slotToggleHeaderView()
-{
-  mHeaderDock->changeHideShowState();
-  slotCheckDockWidgetStatus();
-}
-
-void KMMainWin::slotToggleFolderView()
-{
-  mFolderDock->changeHideShowState();
-  slotCheckDockWidgetStatus();
-}
-
-void KMMainWin::slotCheckDockWidgetStatus()
-{
-  actionToggleFolderView->setChecked(mFolderDock->isVisible());
-  actionToggleHeaderView->setChecked(mHeaderDock->isVisible());
-  actionToggleMsgView->setChecked(mMsgDock->isVisible());
-}
-
-void KMMainWin::slotMsgDockHidden()
-{
-  actionToggleMsgView->setChecked(false);
-}
-
-void KMMainWin::slotHeaderDockHidden()
-{
-  actionToggleHeaderView->setChecked(false);
-}
-
-void KMMainWin::slotFolderDockHidden()
-{
-  actionToggleFolderView->setChecked(false);
 }
 
 void KMMainWin::slotEditToolbars()

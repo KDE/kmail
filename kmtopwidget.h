@@ -19,7 +19,7 @@
 #ifndef kmtopwidget_h
 #define kmtopwidget_h
 
-#include <kdockwidget.h>
+#include <kmainwindow.h>
 
 class KMTopLevelWidget;
 
@@ -27,8 +27,8 @@ class KMTopLevelWidget;
 /** Top level window that offers methods to be called on every
  * existing top level window.
  */
-#define KMTopLevelWidgetInherited KDockMainWindow
-class KMTopLevelWidget: public KDockMainWindow
+#define KMTopLevelWidgetInherited KMainWindow
+class KMTopLevelWidget: public KMainWindow
 {
   Q_OBJECT
 

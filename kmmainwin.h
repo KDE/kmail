@@ -86,7 +86,6 @@ public:
 
 public slots:
   virtual void show();
-  virtual void showEvent(QShowEvent *);
   virtual void hide();
   /** sven: moved here as public */
   void slotCheckMail();
@@ -115,7 +114,7 @@ protected:
   void setupMenuBar();
   void setupStatusBar();
   void createWidgets();
-  void showMsg(KMReaderWin *win, KMMessage *msg);
+  void activatePanners();  void showMsg(KMReaderWin *win, KMMessage *msg);
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -218,24 +217,15 @@ protected slots:
   /** XML-GUI stuff */
   void slotToggleToolBar();
   void slotToggleStatusBar();
-  void slotToggleMsgView();
-  void slotToggleHeaderView();
-  void slotToggleFolderView();
-  void slotCheckDockWidgetStatus();
-  void slotMsgDockHidden();
-  void slotHeaderDockHidden();
-  void slotFolderDockHidden();
   void slotEditToolbars();
   void slotEditKeys();
 
 protected:
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
-  KDockWidget  *mFolderDock;
   KMReaderWin  *mMsgView;
-  KDockWidget  *mMsgDock;
+  QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
-  KDockWidget  *mHeaderDock;
   KMFolder     *mFolder;
   QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
@@ -248,9 +238,11 @@ protected:
   bool          mConfirmEmpty;
   QString       mNewMailCmd;
   int		mMessageStatusId;
+  QValueList<int> *mHorizPannerSep, *mVertPannerSep;
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
+  bool		mLongFolderList;
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
@@ -264,9 +256,6 @@ protected:
   KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
-  KToggleAction *actionToggleMsgView;
-  KToggleAction *actionToggleHeaderView;
-  KToggleAction *actionToggleFolderView;
 
   QTimer *menutimer;
 };

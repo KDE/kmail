@@ -299,6 +299,7 @@ private:
       QCheckBox     *customColorCheck;
       ColorListBox  *colorList;
       QCheckBox     *recycleColorCheck;
+      QCheckBox     *longFolderCheck;
       QCheckBox     *messageSizeCheck;
       QCheckBox     *nestedMessagesCheck;
       QRadioButton  *rdAlwaysOpen;
