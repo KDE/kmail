@@ -1959,6 +1959,8 @@ void KMComposeWin::slotAppendSignature()
   mOldSigText = sigText;
   if( !sigText.isEmpty() )
   {
+    /* actually "\n-- \n" (note the space) is a convention for attaching
+    signatures and we should respect it: */
     mEditor->insertLine("-- ", -1);
     mEditor->insertLine(sigText, -1);
     mEditor->setModified(mod);
