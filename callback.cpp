@@ -33,7 +33,7 @@
 #include "callback.h"
 #include "kmkernel.h"
 #include "kmmessage.h"
-#include <libemailfunctions/email.h>
+#include <libkdepim/email.h>
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include "kmmainwin.h"
@@ -57,6 +57,10 @@ bool Callback::mailICal( const QString& to, const QString iCal,
 {
   kdDebug(5006) << "Mailing message:\n" << iCal << endl;
 
+  if ( receiver().isEmpty() )
+    // This can't work
+    return false;
+
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setHeaderField( "Content-Type",
@@ -76,12 +80,15 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
-    if( identity != KPIM::Identity::null )
+    if( identity != KPIM::Identity::null ) {
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
-      msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
-      // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
+      msg->setHeaderField( "X-KMail-Identity",
+                           QString::number( identity.uoid() ) );
+
+      // Remove BCC from all replies on ical invitations
       msg->setBcc( "" );
+    }
   }
 
   KMComposeWin *cWin = new KMComposeWin();
@@ -91,7 +98,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->setSigningAndEncryptionDisabled( true );
 
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
-    cWin->setAutoDeleteWindow(  true );
+    cWin->setAutoDeleteWindow( true );
     cWin->slotSendNow();
   } else {
     cWin->show();
@@ -106,36 +113,62 @@ QString Callback::receiver() const
     // Already figured this out
     return mReceiver;
 
+  // Don't ask again
   mReceiverSet = true;
 
   QStringList addrs = KPIM::splitEmailAddrList( mMsg->to() );
-  if( addrs.count() < 2 )
-    // Only one receiver, so that has to be us
-    mReceiver = mMsg->to();
-  else {
-    int found = 0;
-    for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
-      if( kmkernel->identityManager()->identityForAddress( *it ) !=
-          KPIM::Identity::null ) {
-	// Ok, this could be us
-        ++found;
-        mReceiver = *it;
-      }
+  int found = 0;
+  for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it )
+    if( kmkernel->identityManager()->identityForAddress( *it )
+        != KPIM::Identity::null ) {
+      // Ok, this could be us
+      ++found;
+      mReceiver = *it;
     }
 
-    if( found != 1 ) {
-      bool ok;
-      mReceiver =
-        KInputDialog::getItem( i18n( "Select Address" ),
-                               i18n( "<qt>None of your identities match the "
-                                     "receiver of this message,<br>please "
-                                     "choose which of the following addresses "
-                                     "is yours:" ),
-                               addrs, 0, FALSE, &ok, kmkernel->mainWin() );
-      if( !ok )
-        mReceiver = QString::null;
+  if( found != 1 ) {
+    bool ok;
+    const QString message =
+      i18n( "<qt>If you received this personally, please choose which of<br>"
+            "the following addresses is yours.<br><br>"
+            "If you received this from a distribution list, then choose<br>"
+            "which of your own identities to reply with." );
+
+    // Make the list of addresses
+    QStringList toShow = addrs;
+
+    // Remember how many original receivers we had
+    const int receivers = addrs.count();
+
+    // Add identities to the list
+    KPIM::IdentityManager::ConstIterator it =
+      kmkernel->identityManager()->begin();
+    for ( ; it != kmkernel->identityManager()->end(); ++it ) {
+      const QString addr = (*it).fullEmailAddr();
+      addrs << addr;
+      toShow << i18n( "Identity: %1" ).arg( addr );
+    }
+
+    // Choose
+    mReceiver =
+      KInputDialog::getItem( i18n( "Select Address" ), message,
+                             toShow, 0, false, &ok, kmkernel->mainWin() );
+    if( !ok ) {
+      mReceiver = QString::null;
+
+      // Since the user cancelled the dialog, we do want to ask again
+      mReceiverSet = false;
+    } else {
+      // If this is an identity, we need to set it to the right address
+      const int i = toShow.findIndex( mReceiver );
+      if ( i >= receivers )
+        // Do the correction
+        mReceiver = addrs[ i ];
     }
   }
 
+  kdDebug(5006) << "Receiver: " << mReceiver << endl;
+
   return mReceiver;
 }
+
