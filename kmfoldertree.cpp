@@ -1083,8 +1083,8 @@ static bool folderHasCreateRights( const KMFolder *folder )
       ( imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create ) );
   } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
-    createRights =
-      dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
+    createRights = dimapFolder->userRights() == 0 ||
+      ( dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create ) );
   }
   return createRights;
 }
@@ -1102,10 +1102,11 @@ void KMFolderTree::addChildFolder()
     if (!aFolder->createChildFolder())
       return;
     if ( !folderHasCreateRights( aFolder ) ) {
+      // FIXME: change this message to "Cannot create folder under ..." or similar
       const QString message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
                                     "permissions on the server. If you think you should be able to create "
                                     "subfolders here, ask your administrator to grant you rights to do so."
-                                    "</qt> " ).arg(aFolder->name());
+                                    "</qt> " ).arg(aFolder->label());
       KMessageBox::error( this, message );
       return;
     }
