@@ -986,6 +986,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
                     if ( e.tagName() == "uid" ) {
                         uid = e.text();
                         ok = true;
+                        break;
                     }
                 }
             }
