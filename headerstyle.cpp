@@ -391,11 +391,11 @@ namespace KMail {
         meterBar.setPixel( i, 0, i+1 );
       }
     }
-    QString altTag = i18n("%1% probability of being spam.<br><br>Full report:<br>%2")
+    QString titleText = i18n("%1% probability of being spam.<br><br>Full report:<br>%2")
                      .arg( QString::number( percent ), filterHeader );
-    return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" alt=\"%4\"> &nbsp;")
+    return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
-            QString::number( 5 ), altTag );
+            QString::number( 5 ), titleText );
   }
 
 
