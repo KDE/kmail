@@ -2711,6 +2711,7 @@ void ComposerPage::PhrasesTab::setLanguageItemInformation( int index ) {
 
 void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
   int index = mActiveLanguageItem;
+  if (index == -1) return;
   assert( 0 <= index && index < (int)mLanguageList.count() );
   
   LanguageItem &l = *mLanguageList.at( index );
@@ -2777,6 +2778,7 @@ void ComposerPage::PhrasesTab::setup() {
 
   mLanguageList.clear();
   mPhraseLanguageCombo->clear();
+  mActiveLanguageItem = -1;
 
   int num = general.readNumEntry( "reply-languages", 0 );
   int currentNr = general.readNumEntry( "reply-current-language" ,0 );
