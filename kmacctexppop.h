@@ -118,7 +118,7 @@ protected:
   QTimer processMsgsTimer;
   QTimer *ss;
   int processingDelay;
-  int numMsgs;
+  int numMsgs, numBytes, numBytesRead;
   bool interactive;
 
 protected slots:

@@ -68,7 +68,7 @@ KMAcctExpPop::~KMAcctExpPop()
 //-----------------------------------------------------------------------------
 const char* KMAcctExpPop::type(void) const
 {
-  return "experimental pop";
+  return "advanced pop";
 }
 
 
@@ -352,6 +352,7 @@ void KMAcctExpPop::slotCancel()
 
 void KMAcctExpPop::slotProcessPendingMsgs()
 {
+  KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
   QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
     + ":" + QString("%1").arg(mPort);
   bool addedOk;
@@ -399,6 +400,8 @@ void KMAcctExpPop::startJob() {
   KMBroadcastStatus::instance()->setStatusMsg( 
                      i18n( "Preparing transmission..." ));
 
+  numBytes = 0;
+  numBytesRead = 0;
   stage = List;  
   job = KIO::get( text, false, false );
   connectJob();
@@ -446,7 +449,7 @@ void KMAcctExpPop::slotJobFinished() {
     job = 0L;
     stage = Idle;
     if( idsOfMsgs.count() > 0 ) {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 mails)...").arg(idsOfMsgs.count()));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 mails) (%2/%3 KB)...").arg(idsOfMsgs.count()).arg(numBytesRead/1024).arg(numBytes/1024));
     } else {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("No new mails."));
     }
@@ -497,8 +500,7 @@ void KMAcctExpPop::slotGetNextMsg()
   else {
     curMsgData = "";
     ++indexOfCurrentMsg;
-    KMBroadcastStatus::instance()->setStatusMsg( 
-      i18n("Message ") + QString("%1/%2").arg(indexOfCurrentMsg+1).arg(numMsgs) );
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
     KMBroadcastStatus::instance()->setStatusProgressPercent( 
       ((indexOfCurrentMsg + 1)*100) / numMsgs );
 
@@ -518,6 +520,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   if (stage == Retr) {
     curMsgData += data;
     curMsgData += '\n';
+    numBytesRead += data.size() + 1;
     return;
   }
 
@@ -528,6 +531,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     QString text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
       mHost + ":" + QString("%1/download/").arg(mPort);
     if (stage == List) {
+      QString length = qdata.mid(spc+1);
+      numBytes += length.toInt();
       QString id = qdata.left(spc);
       idsOfMsgs.append( id );
       idsOfMsgsPendingDownload.append( text + id );
