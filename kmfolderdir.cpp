@@ -177,11 +177,14 @@ bool KMFolderDir::reload(void)
   for (fileInfo=fiList->first(); fileInfo; fileInfo=fiList->next())
   {
     fname = fileInfo->fileName();
-    if ((fname[0]=='.') &&
-        !(fname.right(10)==".directory"))
+    if( ( fname[0] == '.' ) && !fname.endsWith( ".directory" ) ) {
+      // ignore all hidden files except our subfolder containers
       continue;
-    else if (fname == ".directory")
+    }
+    else if( fname == ".directory" ) {
+      // ignore .directory files (not created by us)
       continue;
+    }
     else if (fileInfo->isDir()) // a directory
     {
       QString maildir(fname + "/new");
@@ -196,7 +199,9 @@ bool KMFolderDir::reload(void)
 	folder = new KMFolderCachedImap(this, fname);
         append(folder);
         folderList.append(folder);
-      } else if ((mDirType != KMImapDir) && dir.exists(maildir)) {
+      } else if( ( mDirType != KMImapDir )
+                 && !( ( fname[0] == '.' ) && fname.endsWith( ".directory" ) )
+                 && dir.exists( maildir ) ) {
 	// see if this is a maildir before assuming a subdir
         folder = new KMFolderMaildir(this, fname);
         append(folder);
