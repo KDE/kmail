@@ -27,12 +27,10 @@
 #include <kpgpblock.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
-#include "kmmsgdict.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
-#include "kmcommands.h"
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -49,7 +47,6 @@
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
-#include "kmreadermainwin.h"
 
 #include <assert.h>
 #include <mimelib/mimepp.h>
@@ -95,8 +92,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mId( id )
 
 {
-  if (kernel->xmlGuiInstance())
-    setInstance( kernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
 
   // Initialize the plugin selection according to 'active' flag that
@@ -145,7 +140,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   fixedFontAction = 0;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
-  mEditor->setAcceptDrops( true );
   disableBreaking = false;
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
@@ -173,9 +167,17 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mAtmListBox->addColumn(i18n("Encoding"), 120);
   int atmColType = mAtmListBox->addColumn(i18n("Type"), 120);
   mAtmListBox->header()->setStretchEnabled(true, atmColType); // Stretch "Type".
-  mAtmCryptoColWidth = 80;
-  mAtmColEncrypt= mAtmListBox->addColumn(i18n("Encrypt"),mAtmCryptoColWidth);
-  mAtmColSign   = mAtmListBox->addColumn(i18n("Sign"),   mAtmCryptoColWidth);
+  mAtmEncryptColWidth = 80;
+  mAtmSignColWidth = 80;
+  mAtmColEncrypt= mAtmListBox->addColumn(i18n("Encrypt"),mAtmEncryptColWidth);
+  mAtmColSign   = mAtmListBox->addColumn(i18n("Sign"),   mAtmSignColWidth);
+  if( mSelectedCryptPlug ) {
+    mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
+    mAtmListBox->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
+  } else {
+    mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
+    mAtmListBox->setColumnWidth( mAtmColSign,    0 );
+  }
   mAtmListBox->setAllColumnsShowFocus(true);
 
   connect(mAtmListBox,
@@ -190,7 +192,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupStatusBar();
   setupEditor();
   setupActions();
-  applyMainWindowSettings(KMKernel::config(), "Composer");
+  applyMainWindowSettings(kapp->config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
   statusbarAction->setChecked(!statusBar()->isHidden());
 
@@ -214,9 +216,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
   connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-	connect(kernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+	connect(kernel->folderMgr(),SIGNAL(removed(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
-	connect(kernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+	connect(kernel->imapFolderMgr(),SIGNAL(removed(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
@@ -353,7 +355,7 @@ bool KMComposeWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readColorConfig(void)
 {
-  KConfig *config = KMKernel::config();
+  KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
   QColor c4=QColor(kapp->palette().active().base());
@@ -390,7 +392,7 @@ void KMComposeWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  KConfig *config = KMKernel::config();
+  KConfig *config = kapp->config();
   QCString str;
   //  int w, h,
   int maxTransportItems;
@@ -518,7 +520,7 @@ void KMComposeWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
 {
-  KConfig *config = KMKernel::config();
+  KConfig *config = kapp->config();
   QString str;
 
   {
@@ -558,7 +560,7 @@ void KMComposeWin::deadLetter(void)
   applyChanges();
   QCString msgStr = mMsg->asString();
   QCString fname = getenv("HOME");
-  fname += "/dead.letter.tmp";
+  fname += "/dead.letter";
   // Security: the file is created in the user's home directory, which
   // might be readable by other users. So the file only gets read/write
   // permissions for the user himself. Note that we create the file with
@@ -572,11 +574,9 @@ void KMComposeWin::deadLetter(void)
     ::write(fd, msgStr, msgStr.length());
     ::write(fd, "\n", 1);
     ::close(fd);
-    fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
-  } else {
-    perror("cannot open ~/dead.letter.tmp for saving the current message");
-    kernel->emergencyExit( i18n("Not enough free disk space." ));
+    fprintf(stderr,"appending message to ~/dead.letter\n");
   }
+  else perror("cannot open ~/dead.letter for saving the current message");
 }
 
 
@@ -861,9 +861,11 @@ void KMComposeWin::setupActions(void)
   urgentAction = new KToggleAction (i18n("&Urgent"), 0,
                                     actionCollection(),
                                     "urgent");
-  requestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
-					 actionCollection(),
-					 "options_request_mdn");
+  confirmDeliveryAction =  new KToggleAction (i18n("&Confirm Delivery"), 0,
+                                              actionCollection(),
+                                              "confirm_delivery");
+  requestMDNAction = new KToggleAction (i18n("Confirm &Read"), 0,
+                                         actionCollection(), "confirm_read");
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
@@ -1009,8 +1011,8 @@ void KMComposeWin::setupActions(void)
         ++it;
         ++i;
     }
-
-    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto module" ),
+    
+    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
                              0, // no accel
                              this, SLOT( slotSelectCryptoModule() ),
                              actionCollection(),
@@ -1299,7 +1301,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
   setCharset(mCharset);
 
-  if( mAutoSign && mayAutoSign ) {
+  if( mAutoSign && mayAutoSign )
+  {
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
@@ -1307,8 +1310,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     // composer.
     //
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
-  } else {
-    kernel->dumpDeadLetters();
   }
   mEditor->setModified(FALSE);
 }
@@ -1324,7 +1325,13 @@ void KMComposeWin::setFcc( const QString &idString )
   if ( folder )
     mFcc->setFolder( idString );
   else
+  {
+    KMessageBox::sorry( this,
+                        i18n("The sent-mail folder of the current identity "
+                             "doesn't exist. Therefore the default sent-mail "
+                             "folder will be used.") );
     mFcc->setFolder( kernel->sentFolder() );
+  }
 }
 
 
@@ -1409,6 +1416,11 @@ bool KMComposeWin::applyChanges(void)
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
 
+  if (confirmDeliveryAction->isChecked())
+    mMsg->setHeaderField("Return-Receipt-To", replyAddr);
+  else
+    mMsg->removeHeaderField("Return-Receipt-To");
+
   if (requestMDNAction->isChecked())
     mMsg->setHeaderField("Disposition-Notification-To", replyAddr);
   else
@@ -1479,7 +1491,7 @@ bool KMComposeWin::applyChanges(void)
             + "</b></qt>" ),
           i18n("Signature Warning"),
           KGuiItem( i18n("&Sign All Parts") ),
-          KGuiItem( i18n("Send &as Is") ) );
+          KGuiItem( i18n("Send &as is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1494,7 +1506,7 @@ bool KMComposeWin::applyChanges(void)
   }
 
   if( bOk ) {
-    // check whether all encrypted message should be encrypted to self
+    // check whether all encrypted messages should be encrypted to self
     bool bEncryptToSelf = mSelectedCryptPlug
                         ? mSelectedCryptPlug->alwaysEncryptToSelf()
                         : Kpgp::Module::getKpgp()->encryptToSelf();
@@ -1527,10 +1539,13 @@ bool KMComposeWin::applyChanges(void)
       // now check if encrypting to these recipients is possible and desired
       Kpgp::Module *pgp = Kpgp::Module::getKpgp();
       int status = pgp->encryptionPossible( allRecipients );
-      if( 1 == status )
+      if( 1 == status ) {
+        // encrypt all message parts
         doEncrypt = true;
-      else if( 2 == status )
-      { // the user wants to be asked or has to be asked
+        doEncryptCompletely = true;
+      }
+      else if( 2 == status ) {
+        // the user wants to be asked or has to be asked
         kernel->kbp()->idle();
         int ret;
         if( doSign )
@@ -1541,7 +1556,7 @@ bool KMComposeWin::applyChanges(void)
                              "<p>Should this message also be "
                              "encrypted?</p></qt>"),
                         i18n("Encrypt Message?"),
-                        KGuiItem( i18n("Sign && &Encrypt") ),
+                        KGuiItem( i18n("Sign and &Encrypt") ),
                         KGuiItem( i18n("&Sign Only") ) );
         else
           ret = KMessageBox::questionYesNoCancel( this,
@@ -1554,7 +1569,8 @@ bool KMComposeWin::applyChanges(void)
         kernel->kbp()->busy();
         if( KMessageBox::Cancel == ret )
           return false;
-        else if( ret == KMessageBox::Yes ) {
+        else if( KMessageBox::Yes == ret ) {
+          // encrypt all message parts
           doEncrypt = true;
           doEncryptCompletely = true;
         }
@@ -1569,9 +1585,13 @@ bool KMComposeWin::applyChanges(void)
                         i18n("Encrypt Message?"),
                         KGuiItem( i18n("&Encrypt") ),
                         KGuiItem( i18n("&Don't Encrypt") ) );
-        if( ret == KMessageBox::Cancel )
+        if( KMessageBox::Cancel == ret )
           bOk = false;
-        doEncrypt = ( ret == KMessageBox::Yes );
+        else if( KMessageBox::Yes == ret ) {
+          // encrypt all message parts
+          doEncrypt = true;
+          doEncryptCompletely = true;
+        }
       }
     }
     else if( !doEncryptCompletely && mSelectedCryptPlug ) {
@@ -1592,7 +1612,7 @@ bool KMComposeWin::applyChanges(void)
             + "</b></qt>" ),
           i18n("Encryption Warning"),
           KGuiItem( i18n("&Encrypt All Parts") ),
-          KGuiItem( i18n("Send &as Is") ) );
+          KGuiItem( i18n("Send &as is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1746,7 +1766,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
   theMessage.setAutomaticFields(TRUE); // == multipart/mixed
-
+  
   // this is our *final* body part
   KMMessagePart newBodyPart;
 
@@ -1807,10 +1827,21 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     innerBodyPart.setSubtypeStr("plain");
     innerBodyPart.setContentDescription( "body text" );
     innerBodyPart.setContentDisposition( "inline" );
-    // innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
+    // if the signed body is 7bit and contains trailing spaces or a line begins
+    // with "From " it must be quoted-printable encoded (RFC 3156)
+    if( doSign &&
+        DwMime::kCte7bit == innerBodyPart.cte() &&
+        ( 0 <= body.find( " \n" ) ||              // trailing space
+          0 <= body.find( "\t\n" ) ||             // trailing tab
+          !qstrncmp( "From ", body.data(), 5 ) || // body begins with "From "
+          0 <= body.find( "\nFrom ") ) )  {       // a line begins with "From "
+      innerBodyPart.setCteStr( "quoted-printable" );
+      kdDebug(5006) << "Changed encoding of message body from 7 bit to "
+                    << "quoted-printable as required by RFC 3156." << endl;
+    }
     innerBodyPart.setCharset(mCharset);
     innerBodyPart.setBodyEncoded( body );
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
@@ -1862,10 +1893,21 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   }
   else
   {
-    // oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
+    // if the signed body is 7bit and contains trailing spaces or a line begins
+    // with "From " it must be quoted-printable encoded (RFC 3156)
+    if( doSign &&
+        DwMime::kCte7bit == oldBodyPart.cte() &&
+        ( 0 <= body.find( " \n" ) ||              // trailing space
+          0 <= body.find( "\t\n" ) ||             // trailing tab
+          !qstrncmp( "From ", body.data(), 5 ) || // body begins with "From "
+          0 <= body.find( "\nFrom ") ) )  {       // a line begins with "From "
+      oldBodyPart.setCteStr( "quoted-printable" );
+      kdDebug(5006) << "Changed encoding of message body from 7 bit to "
+                    << "quoted-printable as required by RFC 3156." << endl;
+    }
     oldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
@@ -3701,14 +3743,10 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
   if( mSelectedCryptPlug ) {
-    mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmCryptoColWidth );
-    mAtmListBox->setColumnWidth( mAtmColSign,    mAtmCryptoColWidth );
     lvi->enableCryptoCBs( true );
     lvi->setEncrypt( encryptAction->isChecked() );
     lvi->setSign(    signAction->isChecked() );
   } else {
-    mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
-    mAtmListBox->setColumnWidth( mAtmColSign,    0 );
     lvi->enableCryptoCBs( false );
   }
 }
@@ -3955,7 +3993,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setCharset(mCharset);
 
   // show message part dialog, if not configured away (default):
-  KConfigGroup composer(KMKernel::config(), "Composer");
+  KConfigGroup composer(kapp->config(), "Composer");
   if (!composer.hasKey("showMessagePartDialogOnAttach"))
     // make it visible in the config file:
     composer.writeEntry("showMessagePartDialogOnAttach", false);
@@ -4048,6 +4086,70 @@ void KMComposeWin::slotSelectCryptoModule()
       mSelectedCryptPlug = it.current();
       break;
     }
+  if( mSelectedCryptPlug ) {
+    // if the encrypt/sign columns are hidden then show them
+    if( 0 == mAtmListBox->columnWidth( mAtmColEncrypt ) ) {
+      int totalWidth = 0;
+      // determine the total width of the columns
+      for( int col=0; col < mAtmColEncrypt; col++ )
+        totalWidth += mAtmListBox->columnWidth( col );
+      int reducedTotalWidth = totalWidth - mAtmEncryptColWidth
+                                         - mAtmSignColWidth;
+      // reduce the width of all columns so that the encrypt and sign column
+      // fit
+      int usedWidth = 0;
+      for( int col=0; col < mAtmColEncrypt-1; col++ ) {
+        int newWidth = mAtmListBox->columnWidth( col ) * reducedTotalWidth
+                                                       / totalWidth;
+        mAtmListBox->setColumnWidth( col, newWidth );
+        usedWidth += newWidth;
+      }
+      // the last column before the encrypt column gets the remaining space
+      // (because of rounding errors the width of this column isn't calculated
+      // the same way as the width of the other columns)
+      mAtmListBox->setColumnWidth( mAtmColEncrypt-1,
+                                   reducedTotalWidth - usedWidth );
+      mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
+      mAtmListBox->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
+      for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
+           lvi;
+           lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
+        lvi->enableCryptoCBs( true );
+      }
+    }
+  } else {
+    // if the encrypt/sign columns are visible then hide them
+    if( 0 != mAtmListBox->columnWidth( mAtmColEncrypt ) ) {
+      mAtmEncryptColWidth = mAtmListBox->columnWidth( mAtmColEncrypt );
+      mAtmSignColWidth = mAtmListBox->columnWidth( mAtmColSign );
+      int totalWidth = 0;
+      // determine the total width of the columns
+      for( int col=0; col < mAtmListBox->columns(); col++ )
+        totalWidth += mAtmListBox->columnWidth( col );
+      int reducedTotalWidth = totalWidth - mAtmEncryptColWidth
+                                         - mAtmSignColWidth;
+      // increase the width of all columns so that the visible columns take
+      // up the whole space
+      int usedWidth = 0;
+      for( int col=0; col < mAtmColEncrypt-1; col++ ) {
+        int newWidth = mAtmListBox->columnWidth( col ) * totalWidth
+                                                       / reducedTotalWidth;
+        mAtmListBox->setColumnWidth( col, newWidth );
+        usedWidth += newWidth;
+      }
+      // the last column before the encrypt column gets the remaining space
+      // (because of rounding errors the width of this column isn't calculated
+      // the same way as the width of the other columns)
+      mAtmListBox->setColumnWidth( mAtmColEncrypt-1, totalWidth - usedWidth );
+      mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
+      mAtmListBox->setColumnWidth( mAtmColSign,    0 );
+      for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
+           lvi;
+           lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
+        lvi->enableCryptoCBs( false );
+      }
+    }
+  }
 }
 
 
@@ -4217,9 +4319,8 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
-    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
-  win->show();
+  KMReaderWin::atmView(0, msgPart, false, atmTempFile->name(), pname,
+    KMMsgBase::codecForName(mCharset));
 }
 
 
@@ -4486,9 +4587,10 @@ void KMComposeWin::slotPrint()
                                mEdtSubject->edited() || mAtmModified ||
                                ( mTransport->lineEdit() &&
                                  mTransport->lineEdit()->edited() ) );
+  KMReaderWin rw;
   applyChanges();
-  KMCommand *command = new KMPrintCommand( this, mMsg );
-  command->start();
+  rw.setMsg(mMsg, true);
+  rw.printMsg();
   mEditor->setModified( bMessageWasModified );
 }
 
@@ -4717,7 +4819,6 @@ void KMComposeWin::slotAppendSignature()
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
   }
-  kernel->dumpDeadLetters();
 }
 
 
@@ -4936,7 +5037,7 @@ void KMComposeWin::slotToggleStatusBar()
 
 void KMComposeWin::slotEditToolbars()
 {
-  saveMainWindowSettings(KMKernel::config(), "Composer");
+  saveMainWindowSettings(kapp->config(), "Composer");
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -4948,7 +5049,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
-  applyMainWindowSettings(KMKernel::config(), "Composer");
+  applyMainWindowSettings(kapp->config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
@@ -4970,7 +5071,7 @@ void KMComposeWin::setReplyFocus( bool hasMessage )
 
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
-    KConfig *config = KMKernel::config();
+    KConfig *config = KGlobal::config();
     KConfigGroupSaver cs( config, "Composer" );
     config->writeEntry( "Completion Mode", (int) mode );
     config->sync(); // maybe not?
@@ -5004,55 +5105,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
     bAlwaysSend = bAlways;
 }
 
-void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
-{
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
-	e->accept(true);
-    else
-	return KMEditInherited::dragEnterEvent(e);
-}
 
-void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
-{
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
-	e->accept();
-    else
-	return KMEditInherited::dragMoveEvent(e);
-}
-
-void KMEdit::contentsDropEvent(QDropEvent *e)
-{
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message"))) {
-	// Decode the list of serial numbers stored as the drag data
-	QByteArray serNums = e->encodedData("x-kmail-drag/message");
-	QBuffer serNumBuffer(serNums);
-	serNumBuffer.open(IO_ReadOnly);
-	QDataStream serNumStream(&serNumBuffer);
-	unsigned long serNum;
-	KMFolder *folder = 0;
-	int idx;
-	QPtrList<KMMsgBase> messageList;
-	while (!serNumStream.atEnd()) {
-	    KMMsgBase *msgBase = 0;
-	    serNumStream >> serNum;
-	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
-	    if (folder)
-		msgBase = folder->getMsgBase(idx);
-	    if (msgBase)
-		messageList.append( msgBase );
-	}
-	serNumBuffer.close();
-        /*
-	uint identity = folder ? folder->identity() : 0;
-	KMCommand *command =
-	    new KMForwardAttachedCommand(mComposer, messageList,
-					 identity, mComposer);
-	command->start();
-        */
-    } else {
-	return KMEditInherited::dropEvent(e);
-    }
-}
 
 //=============================================================================
 //
@@ -5077,6 +5130,9 @@ KMAtmListViewItem::~KMAtmListViewItem()
 void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
                                   int column, int width, int align )
 {
+  // this is also called for the encrypt/sign columns to assure that the
+  // background is cleared
+  QListViewItem::paintCell( p, cg, column, width, align );
   if( 4 == column || 5 == column ) {
     QRect r = mListview->itemRect( this );
     if ( !r.size().isValid() ) {
@@ -5096,8 +5152,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     QCheckBox* cb = (4 == column) ? mCBEncrypt : mCBSign;
     cb->resize( r.size() );
     mListview->moveChild( cb, r.x(), r.y() );
-  } else
-    QListViewItem::paintCell( p, cg, column, width, align );
+  }
 }
 
 void KMAtmListViewItem::enableCryptoCBs(bool on)
@@ -5154,57 +5209,302 @@ bool KMAtmListViewItem::isSign()
 //
 //=============================================================================
 
+KCompletion * KMLineEdit::s_completion = 0;
+bool KMLineEdit::s_addressesDirty = false;
+
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
                        QWidget *parent, const char *name)
-    : KMLineEditInherited(parent,useCompletion,name), mComposer(composer)
+    : KMLineEditInherited(parent,name)
 {
+  mComposer = composer;
+  m_useCompletion = useCompletion;
+  m_smartPaste = false;
+
+  if ( !s_completion ) {
+      s_completion = new KCompletion();
+      s_completion->setOrder( KCompletion::Sorted );
+      s_completion->setIgnoreCase( true );
+  }
+
+  installEventFilter(this);
+
+  if ( m_useCompletion )
+  {
+      setCompletionObject( s_completion, false ); // we handle it ourself
+      connect( this, SIGNAL( completion(const QString&)),
+               this, SLOT(slotCompletion() ));
+
+      KCompletionBox *box = completionBox();
+      connect( box, SIGNAL( highlighted( const QString& )),
+               this, SLOT( slotPopupCompletion( const QString& ) ));
+      connect( completionBox(), SIGNAL( userCancelled( const QString& )),
+               SLOT( setText( const QString& )));
+
+
+      // Whenever a new KMLineEdit is created (== a new composer is created),
+      // we set a dirty flag to reload the addresses upon the first completion.
+      // The address completions are shared between all KMLineEdits.
+      // Is there a signal that tells us about addressbook updates?
+      s_addressesDirty = true;
+  }
 }
 
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::keyPressEvent(QKeyEvent *e)
+KMLineEdit::~KMLineEdit()
 {
+  removeEventFilter(this);
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::setFont( const QFont& font )
+{
+    KMLineEditInherited::setFont( font );
+    if ( m_useCompletion )
+        completionBox()->setFont( font );
+}
+
+//-----------------------------------------------------------------------------
+bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
+{
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+  if (e->type() == QEvent::KeyPress)
+  {
+    QKeyEvent* k = (QKeyEvent*)e;
+
+    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).contains(KKey(k)))
+    {
+      doCompletion(true);
+      return TRUE;
+    }
     // ---sven's Return is same Tab and arrow key navigation start ---
-    if ((e->key() == Key_Enter || e->key() == Key_Return) &&
+    if ((k->key() == Key_Enter || k->key() == Key_Return) &&
         !completionBox()->isVisible())
     {
       mComposer->focusNextPrevEdit(this,TRUE);
-      return;
+      return TRUE;
     }
-    if (e->key() == Key_Up)
+    if (k->state()==ControlButton && k->key() == Key_Right)
+    {
+      if ((int)text().length() == cursorPosition()) // at End?
+      {
+        doCompletion(true);
+        return TRUE;
+      }
+      return FALSE;
+    }
+    if (k->state()==ControlButton && k->key() == Key_V)
+    {
+      if (m_useCompletion)
+         m_smartPaste = true;
+      paste();
+      m_smartPaste = false;
+      return TRUE;
+    }
+    if (k->key() == Key_Up)
     {
       mComposer->focusNextPrevEdit(this,FALSE); // Go up
-      return;
+      return TRUE;
     }
-    if (e->key() == Key_Down)
+    if (k->key() == Key_Down)
     {
       mComposer->focusNextPrevEdit(this,TRUE); // Go down
-      return;
+      return TRUE;
     }
     // ---sven's Return is same Tab and arrow key navigation end ---
-  KMLineEditInherited::keyPressEvent(e);
+
+  }
+  return KMLineEditInherited::eventFilter(o, e);
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-void KMLineEdit::dropEvent(QDropEvent *e)
+void KMLineEdit::mouseReleaseEvent( QMouseEvent * e )
 {
-  QStrList uriList;
-  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
-  {
-    for (QStrListIterator it(uriList); it; ++it)
+   if (m_useCompletion && (e->button() == MidButton))
+   {
+      m_smartPaste = true;
+      KMLineEditInherited::mouseReleaseEvent(e);
+      m_smartPaste = false;
+      return;
+   }
+   KMLineEditInherited::mouseReleaseEvent(e);
+}
+
+void KMLineEdit::insert(const QString &t)
+{
+    if (!m_smartPaste)
     {
-      smartInsert( QString::fromUtf8(*it) );
+       KMLineEditInherited::insert(t);
+       return;
     }
-  }
-  else {
+    smartInsert( t, cursorPosition() );
+}
+
+void KMLineEdit::paste()
+{
     if (m_useCompletion)
        m_smartPaste = true;
-    QLineEdit::dropEvent(e);
+    KMLineEditInherited::paste();
     m_smartPaste = false;
-  }
 }
 
+//-----------------------------------------------------------------------------
+void KMLineEdit::cursorAtEnd()
+{
+    setCursorPosition( text().length() );
+}
+
+
+void KMLineEdit::undo()
+{
+    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z
+    keyPressEvent( &k );
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::doCompletion(bool ctrlT)
+{
+    if ( !m_useCompletion )
+        return;
+
+    QString s(text());
+    QString prevAddr;
+    int n = s.findRev(',');
+    if (n>= 0)
+    {
+        prevAddr = s.left(n+1) + ' ';
+        s = s.mid(n+1,255).stripWhiteSpace();
+    }
+
+    KCompletionBox *box = completionBox();
+
+    if ( s.isEmpty() )
+    {
+        box->hide();
+        return;
+    }
+
+    KGlobalSettings::Completion  mode = completionMode();
+
+    if ( s_addressesDirty )
+        loadAddresses();
+
+    QString match;
+    int curPos = cursorPosition();
+    if ( mode != KGlobalSettings::CompletionNone )
+    {
+        match = s_completion->makeCompletion( s );
+        if (match.isNull() && mode == KGlobalSettings::CompletionPopup)
+          match = s_completion->makeCompletion( "\"" + s );
+    }
+
+    // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
+
+    if ( ctrlT )
+    {
+        QStringList addresses = s_completion->items();
+        QStringList::Iterator it = addresses.begin();
+        QStringList completions;
+        for (; it != addresses.end(); ++it)
+        {
+            if ((*it).find(s,0,false) >= 0)
+                completions.append( *it );
+        }
+
+        if (completions.count() > 1) {
+            m_previousAddresses = prevAddr;
+            box->setItems( completions );
+            box->setCancelledText( text() );
+            box->popup();
+        }
+        else if (completions.count() == 1) {
+            setText(prevAddr + completions.first());
+            setEdited( true );
+        }
+        else
+            box->hide();
+
+        cursorAtEnd();
+        return;
+    }
+
+    switch ( mode )
+    {
+        case KGlobalSettings::CompletionPopup:
+        {
+            if ( !match.isNull() )
+            {
+                m_previousAddresses = prevAddr;
+                box->setItems( s_completion->allMatches( s ));
+                box->insertItems( s_completion->allMatches( "\"" + s ));
+                box->setCancelledText( text() );
+                box->popup();
+            }
+            else
+                box->hide();
+
+            break;
+        }
+
+        case KGlobalSettings::CompletionShell:
+        {
+            if ( !match.isNull() && match != s )
+            {
+                setText( prevAddr + match );
+                setEdited( true );
+                cursorAtEnd();
+            }
+            break;
+        }
+
+        case KGlobalSettings::CompletionMan: // Short-Auto in fact
+        case KGlobalSettings::CompletionAuto:
+        {
+            if ( !match.isNull() && match != s )
+            {
+                QString adds = prevAddr + match;
+                validateAndSet( adds, curPos, curPos, adds.length() );
+            }
+            break;
+        }
+
+        default: // fall through
+        case KGlobalSettings::CompletionNone:
+            break;
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::slotPopupCompletion( const QString& completion )
+{
+    setText( m_previousAddresses + completion );
+    setEdited( true );
+    cursorAtEnd();
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::loadAddresses()
+{
+    s_completion->clear();
+    s_addressesDirty = false;
+
+    QStringList recent = KMRecentAddresses::self()->addresses();
+    QStringList::Iterator it = recent.begin();
+    for ( ; it != recent.end(); ++it )
+        s_completion->addItem( *it );
+
+    QStringList addresses;
+    KabcBridge::addresses(&addresses);
+    QStringList::Iterator it2 = addresses.begin();
+    for (; it2 != addresses.end(); ++it2) {
+    	s_completion->addItem( *it2 );
+    }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
 {
     QString newText = str.stripWhiteSpace();
@@ -5271,18 +5571,26 @@ void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
     setEdited( true );
     setCursorPosition(pos+newText.length());
 }
-#endif
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::loadAddresses()
+void KMLineEdit::dropEvent(QDropEvent *e)
 {
-    KMLineEditInherited::loadAddresses();
-
-    QStringList recent = KMRecentAddresses::self()->addresses();
-    QStringList::Iterator it = recent.begin();
-    for ( ; it != recent.end(); ++it )
-        addAddress( *it );
+  QStrList uriList;
+  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
+  {
+    for (QStrListIterator it(uriList); it; ++it)
+    {
+      smartInsert( QString::fromUtf8(*it) );
+    }
+  }
+  else {
+    if (m_useCompletion)
+       m_smartPaste = true;
+    QLineEdit::dropEvent(e);
+    m_smartPaste = false;
+  }
 }
+
 
 //=============================================================================
 //
@@ -5314,7 +5622,7 @@ KMEdit::~KMEdit()
   removeEventFilter(this);
 
   delete mKSpell;
-
+  mKSpell = 0;
 }
 
 
@@ -5480,7 +5788,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
   if(mComposer && mComposer->msg())
   {
     // read the quote indicator from the preferences
-    KConfig *config=KMKernel::config();
+    KConfig *config=kapp->config();
     KConfigGroupSaver saver(config, "General");
 
     int languageNr = config->readNumEntry("reply-current-language",0);

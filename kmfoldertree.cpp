@@ -49,7 +49,7 @@ void KMFolderTreeItem::init()
 
   if (mFolder->protocol() == "imap")
     setProtocol(Imap);
-  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir" || mFolder->protocol() == "cachedimap")
+  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir")
     setProtocol(Local);
   else
     setProtocol(NONE);
@@ -228,7 +228,7 @@ void KMFolderTree::createImapFolderList(KMFolderImap *aFolder, QStringList *name
 //-----------------------------------------------------------------------------
 void KMFolderTree::readColorConfig (void)
 {
-  KConfig* conf = KMKernel::config();
+  KConfig* conf = kapp->config();
   // Custom/System color support
   KConfigGroupSaver saver(conf, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
@@ -254,7 +254,7 @@ void KMFolderTree::readColorConfig (void)
 //-----------------------------------------------------------------------------
 void KMFolderTree::readConfig (void)
 {
-  KConfig* conf = KMKernel::config();
+  KConfig* conf = kapp->config();
   QString fntStr;
 
   // Backing pixmap support
@@ -282,7 +282,7 @@ void KMFolderTree::readConfig (void)
   }
 
   // read D'n'D behaviour setting
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
+  KConfigGroup behaviour( kapp->config(), "Behaviour" );
   mShowPopupAfterDnD = behaviour.readBoolEntry( "ShowPopupAfterDnD", true );
 
   // restore the layout
@@ -303,7 +303,7 @@ void KMFolderTree::writeConfig()
   }
 
   // save the current layout
-  saveLayout(KMKernel::config(), "Geometry");
+  saveLayout(kapp->config(), "Geometry");
 }
 
 //-----------------------------------------------------------------------------
@@ -796,7 +796,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 //-----------------------------------------------------------------------------
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
-  KConfig* conf = KMKernel::config();
+  KConfig* conf = kapp->config();
 
   KConfigGroupSaver saver(conf, "Geometry");
   conf->writeEntry(name(), size().width());
@@ -947,13 +947,7 @@ void KMFolderTree::addChildFolder()
     if (!fti->folder()->createChildFolder())
       return;
 
-  KMFolderDir *dir;
-  if( fti->folder() && fti->folder()->protocol() == "cachedimap" ) {
-    dir = &(kernel->imapFolderMgr()->dir());
-  } else {
-    dir = &(kernel->folderMgr()->dir());
-  }
-
+  KMFolderDir *dir = &(kernel->folderMgr()->dir());
   if (fti->folder())
     dir = fti->folder()->child();
 
@@ -982,7 +976,7 @@ void KMFolderTree::addChildFolder()
 // config file. The root is always open
 bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KMFolder *folder = fti->folder();
   QString name;
   if (folder)
@@ -1003,7 +997,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 // Saves open/closed state of a folder directory into the config file
 void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KMFolder *folder = fti->folder();
   QString name;
   if (folder)
@@ -1023,7 +1017,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 //-----------------------------------------------------------------------------
 void KMFolderTree::cleanupConfigFile()
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   QStringList existingFolders;
   QListViewItemIterator fldIt(this);
   QMap<QString,bool> folderMap;

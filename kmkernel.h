@@ -9,15 +9,14 @@
 #include <kconfig.h>
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
+
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
-#define kmconfig KMKernel::config()
-    
+
 namespace KIO {
   class Job;
 }
-class KMMsgIndex;
 class QLabel;
 class KMFolder;
 class KBusyPtr;
@@ -33,14 +32,9 @@ class KMKernel;
 class KMMsgDict;
 class IdentityManager;
 class KProcess;
-class KMSystemTray;
-class KProgressDialog;
-class CryptPlugWrapperList;
-class ConfigureDialog;
-class KInstance;
-class QTimer;
 class KProgress;
 class KPassivePopup;
+class ConfigureDialog;
 class KMMainWin;
 
 class KMKernel : public QObject, virtual public KMailIface
@@ -102,7 +96,6 @@ public:
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
-  static KConfig *config();
 
   void init ();
   void cleanupImapFolders();
@@ -114,6 +107,7 @@ public:
   void transferMail(void);
   void ungrabPtrKb(void);
   void kmailMsgHandler(QtMsgType aType, const char* aMsg);
+  void dumpDeadLetters();
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
@@ -125,9 +119,6 @@ public:
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsTrash(KMFolder *);
 
-  KInstance *xmlGuiInstance() { return mXmlGuiInstance; }
-  void setXmlGuiInstance( KInstance *instance ) { mXmlGuiInstance = instance; }
-
   KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
   KMFolder *sentFolder() { return the_sentFolder; }
@@ -137,15 +128,13 @@ public:
   KBusyPtr *kbp() { return the_kbp; }
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
-  KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   KMUndoStack *undoStack() { return the_undoStack; }
   KMAcctMgr *acctMgr() { return the_acctMgr; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMSender *msgSender() { return the_msgSender; }
-  KMMsgDict *msgDict();
-  KMMsgIndex *msgIndex();
+  KMMsgDict *msgDict() { return the_msgDict; }
 
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
@@ -172,15 +161,10 @@ public:
   /** See @ref slotCollectStdErr */
   QByteArray getCollectedStdErr(KProcess*);
 
-  void toggleSystray(bool, int);
-
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMMainWin* mainWin();
 
 public slots:
-  //Save contents of all open composer widnows to ~/dead.letter
-  void dumpDeadLetters();
-
   /** Connect the received* signals of K(Shell)Process to these slots
       to let the kernel collect the output for you.
 
@@ -205,9 +189,6 @@ public slots:
       sync, which is more efficient. */
   void slotRequestConfigSync();
 
-  /** empty all the trash bins */
-  void slotEmptyTrash();
-
   void slotShowConfigurationDialog();
 
 protected slots:
@@ -215,7 +196,7 @@ protected slots:
   void slotResult(KIO::Job*);
   void cleanupLoop();
   void cleanupProgress();
-
+  
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
@@ -223,9 +204,8 @@ private:
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
 
-  KMSystemTray  *mSystemTray;
   KBusyPtr *the_kbp;
-  KMFolderMgr *the_folderMgr, *the_imapFolderMgr, *the_searchFolderMgr;
+  KMFolderMgr *the_folderMgr, *the_imapFolderMgr;
   KMUndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;
@@ -234,7 +214,6 @@ private:
   mutable IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
   KMMsgDict *the_msgDict;
-  KMMsgIndex *the_msgIndex;
   struct putData
   {
     KURL url;
@@ -262,16 +241,14 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
-  static KConfig *myConfig;
   QTextCodec *netCodec;
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;
   QLabel *mCleanupLabel;
-  CryptPlugWrapperList mCryptPlugList;
-  KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
-  QTimer *mDeadLetterTimer;
-  int mDeadLetterInterval;
+
+  CryptPlugWrapperList mCryptPlugList;
+
   // temporary mainwin
   KMMainWin *mWin;
 };

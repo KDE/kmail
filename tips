@@ -9,7 +9,7 @@ the previous/next message?</p>
 <html>
 
 <p>...that you can rapidly create filters on sender, recipient,
-subject and mailing lists with <em>Tools-&gt;Create&nbsp;Filter</em>?</p>
+subject and mailing lists with <em>Tools->Create&nbsp;Filter</em>?</p>
 </html>
 </tip>
 
@@ -28,16 +28,16 @@ header</em> filter action? Just use
 <tip category="KMail|General">
 <html>
 <p>...that you can associate mailing lists with folders in the
-<em>Folder-&gt;Properties...</em> dialog? You can then use
-<em>Message-&gt;Post&nbsp;to&nbsp;Mailing&nbsp;List...</em> to open the
-composer with the mailing list address preset.</p>
+<em>Folder->Properties...</em> dialog? You can then use
+<em>Message->Post to Mailing List...</em> to open the composer with
+the mailing list address preset.</p>
 </html>
 </tip>
 
 <tip category="KMail|General">
 <html>
 <p>...that you can assign custom icons to each folder individually?
-See <em>Folder-&gt;Properties...</em></p>
+See <em>Folder->Properties...</em></p>
 </html>
 </tip>
 
@@ -62,17 +62,5 @@ in the first edit field of a search rule?</p>
 <p>...that you can filter out HTML only messages with the rule
 <pre>&quot;Content-type&quot; contains &quot;text/html&quot;?</pre>
 </p>
-</html>
-</tip>
-
-<tip category="KMail|General">
-<html>
-<p>...that when replying, only the selected part of the message is quoted?</p>
-<p>If nothing is selected, the full message is quoted.</p>
-<p>This even works with text of attachments when you selected
-<em>View-&gt;Attachmens-&gt;Inline</em>.</p>
-<p>This feature is available with all reply commands except
-<em>Message-&gt;Reply Without Quote</em>.</p>
-<p align="right"><em>contributed by David F. Newman</em></p>
 </html>
 </tip>

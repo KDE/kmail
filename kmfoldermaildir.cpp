@@ -15,8 +15,6 @@
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
-#include "maildirjob.h"
-using KMail::MaildirJob;
 #include <kio/netaccess.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -304,26 +302,6 @@ int KMFolderMaildir::compact()
   return 0;
 }
 
-//-------------------------------------------------------------
-FolderJob*
-KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                              KMFolder *folder ) const
-{
-  KMail::MaildirJob *job = new KMail::MaildirJob( msg, jt, folder );
-  job->setParentFolder( this );
-  return job;
-}
-
-//-------------------------------------------------------------
-FolderJob*
-KMFolderMaildir::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                              FolderJob::JobType jt, KMFolder *folder ) const
-{
-  KMail::MaildirJob *job = new KMail::MaildirJob( msgList, sets, jt, folder );
-  job->setParentFolder( this );
-  return job;
-}
-
 int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
 /*
@@ -591,7 +569,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       KMMsgInfo *mi = new KMMsgInfo(this);
       mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr,
 	       msgIdStr, file.local8Bit(), KMMsgEncryptionStateUnknown,
-	       KMMsgSignatureStateUnknown, KMMsgMDNStateUnknown, f.size());
+	       KMMsgSignatureStateUnknown, f.size());
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
       mi->setDirty(false);

@@ -140,7 +140,7 @@ public:
   /** Called when the installation of a profile is
       requested. Reimplemenations of this method should do the
       equivalent of a @ref setup(), but with the given @ref KConfig
-      object instead of KMKernel::config() and only for those entries that
+      object instead of kapp->config() and only for those entries that
       really have keys defined in the profile.
 
       The default implementation does nothing.
@@ -324,9 +324,6 @@ protected:
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
-  QCheckBox     *mSystrayCheck;
-  QRadioButton  *mBlinkingSystray;
-  QRadioButton  *mSystrayOnNew;
   QPushButton   *mOtherNewMailActionsButton;
 
   QValueList< QGuardedPtr<KMAccount> > mAccountsToDelete;
@@ -733,11 +730,9 @@ public:
   void installProfile( KConfig * profile );
 
 protected:
-  QCheckBox    *mExternalReferences;
-  QCheckBox    *mHtmlMailCheck;
-  QCheckBox    *mSendReceivedReceiptCheck;
-  QButtonGroup *mMDNGroup;
-  QButtonGroup *mOrigQuoteGroup;
+  QCheckBox *mExternalReferences;
+  QCheckBox *mHtmlMailCheck;
+  QCheckBox *mSendReceiptCheck;
 };
 
 

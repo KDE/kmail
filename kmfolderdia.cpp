@@ -123,6 +123,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     mUnreadIconButton->setEnabled( false );
     ilabel->setEnabled( false );
     ilabel2->setEnabled( false );
+    
   }
 
   connect( mIconsCheckBox, SIGNAL(toggled(bool)),
@@ -154,7 +155,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mailboxType->insertItem("mbox", 0);
   mailboxType->insertItem("maildir", 1);
   {
-    KConfig *config = KMKernel::config();
+    KConfig *config = kapp->config();
     KConfigGroupSaver saver(config, "General");
     int type = config->readNumEntry("default-mailbox-format", 1);
     if ( type < 0 || type > 1 ) type = 1;
@@ -173,9 +174,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   int i = 1;
   while (mFolders.at(i - 1) != mFolders.end()) {
     curFolder = *mFolders.at(i - 1);
-    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap" &&
-	curFolder->protocol() != "cachedimap")
-    {
+    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap") {
       mFolders.remove(mFolders.at(i-1));
       str.remove(str.at(i));
     } else
@@ -432,8 +431,7 @@ void KMFolderDialog::slotUpdateItems ( int current )
   KMFolder* selectedFolder = 0;
   // check if the index is valid (the top level has no entrance in the mFolders)
   if (current > 0) selectedFolder = *mFolders.at(current - 1);
-  if (selectedFolder && (selectedFolder->protocol() == "imap" ||
-			 selectedFolder->protocol() == "cachedimap"))
+  if (selectedFolder && selectedFolder->protocol() == "imap")
   {
     // deactivate stuff that is not available for imap
     mtGroup->setEnabled( false );
@@ -516,8 +514,6 @@ void KMFolderDialog::slotOk()
          */
         folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
-      } else if (selectedFolder && selectedFolder->protocol() == "cachedimap"){
-	folder = (KMAcctFolder*)kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mailboxType->currentItem() == 1) {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
@@ -526,13 +522,9 @@ void KMFolderDialog::slotOk()
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
-      if (folder->parent() != selectedFolderDir) {
-	if (folder->protocol() == "cachedimap") {
-	  QString message = i18n("Moving IMAP folders is not supported");
-	  KMessageBox::error( this, message );
-	} else
-	  folder->rename(fldName, selectedFolderDir );
-      } else
+      if (folder->parent() != selectedFolderDir)
+        folder->rename(fldName, selectedFolderDir );
+      else
         folder->rename(fldName);
 
       kernel->folderMgr()->contentsChanged();

@@ -18,7 +18,6 @@
 
 #include <ctype.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include <config.h>
 
@@ -123,10 +122,8 @@ bool KMMsgBase::isMessage(void) const
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 {
-  if ((idx < 0) && (mParent))
-    idx = mParent->find( this );
   if (mParent)
-      mParent->msgStatusChanged( status(), aStatus /* , idx */);
+    mParent->msgStatusChanged( status(), aStatus );
   mDirty = TRUE;
   if (mParent)
     mParent->headerOfMsgChanged(this, idx);
@@ -174,17 +171,17 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
     kdDebug() << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
-
+    
     if( status.latin1() == (char)KMMsgEncryptionStateUnknown )
-        setEncryptionState( KMMsgEncryptionStateUnknown, idx );
+            setEncryptionState( KMMsgEncryptionStateUnknown, idx );
     else if( status.latin1() == (char)KMMsgNotEncrypted )
-        setEncryptionState( KMMsgNotEncrypted, idx );
+            setEncryptionState( KMMsgNotEncrypted, idx );
     else if( status.latin1() == (char)KMMsgPartiallyEncrypted )
-        setEncryptionState( KMMsgPartiallyEncrypted, idx );
+            setEncryptionState( KMMsgPartiallyEncrypted, idx );
     else if( status.latin1() == (char)KMMsgFullyEncrypted )
-        setEncryptionState( KMMsgFullyEncrypted, idx );
-    else
-        setEncryptionState( KMMsgEncryptionStateUnknown, idx );
+            setEncryptionState( KMMsgFullyEncrypted, idx );
+        else
+            setEncryptionState( KMMsgEncryptionStateUnknown, idx );
 }
 
 
@@ -196,24 +193,20 @@ void KMMsgBase::setSignatureState( const KMMsgSignatureState status, int idx )
          mParent->headerOfMsgChanged(this, idx);
 }
 
-void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
-  mDirty = true;
-  if ( mParent )
-    mParent->headerOfMsgChanged(this, idx);
-}
+
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
     kdDebug() << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
-
+    
     if( status.latin1() == (char)KMMsgSignatureStateUnknown )
-        setSignatureState( KMMsgSignatureStateUnknown, idx );
+            setSignatureState( KMMsgSignatureStateUnknown, idx );
     else if( status.latin1() == (char)KMMsgNotSigned )
-        setSignatureState( KMMsgNotSigned, idx );
+            setSignatureState( KMMsgNotSigned, idx );
     else if( status.latin1() == (char)KMMsgPartiallySigned )
-        setSignatureState( KMMsgPartiallySigned,idx );
+            setSignatureState( KMMsgPartiallySigned,idx );
     else if( status.latin1() == (char)KMMsgFullySigned )
-        setSignatureState( KMMsgFullySigned, idx );
+            setSignatureState( KMMsgFullySigned, idx );
     else
         setSignatureState( KMMsgSignatureStateUnknown, idx );
 }
@@ -231,6 +224,7 @@ bool KMMsgBase::isNew(void) const
   KMMsgStatus st = status();
   return (st==KMMsgStatusNew);
 }
+
 
 //-----------------------------------------------------------------------------
 const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
@@ -995,50 +989,52 @@ const uchar *KMMsgBase::asIndexString(int &length) const
     ret = (uchar *)malloc(csize);
   length = 0;
 
-#ifndef WORDS_BIGENDIAN
-// We need to use swab to swap bytes to network byte order
-#define memcpy_networkorder(to, from, len)  swab(from, to, len)
-#else
-// We're already in network byte order
-#define memcpy_networkorder(to, from, len)  memcpy(to, from, len)
-#endif
-
-#define STORE_DATA_LEN(type, x, len, network_order) do { \
+#define STORE_DATA_LEN(type, x, len) do { \
 	int len2 = (len > 256) ? 256 : len; \
 	if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
     	   ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
         Q_UINT32 t = (Q_UINT32) type; memcpy(ret+length, &t, sizeof(t)); \
         Q_UINT16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
-        if (network_order) \
-           memcpy_networkorder(ret+length+sizeof(t)+sizeof(l), x, len2); \
-        else \
-           memcpy(ret+length+sizeof(t)+sizeof(l), x, len2); \
+        memcpy(ret+length+sizeof(t)+sizeof(l), x, len2); \
         length += len2+sizeof(t)+sizeof(l); \
     } while(0)
-#define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x), false)
-
+#define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x))
+#ifndef WORDS_BIGENDIAN
+  // #warning Byte order is little endian (call swapEndian)
+#define SWAP_TO_NETWORK_ORDER(x) swapEndian(x)
+#else
+  // #warning Byte order is big endian
+#define SWAP_TO_NETWORK_ORDER(x)
+#endif
   unsigned long tmp;
   QString tmp_str;
 
   //these is at the beginning because it is queried quite often
   tmp_str = msgIdMD5().stripWhiteSpace();
-  STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = status();
   STORE_DATA(MsgStatusPart, tmp);
 
   //these are completely arbitrary order
   tmp_str = fromStrip().stripWhiteSpace();
-  STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = subject().stripWhiteSpace();
-  STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = toStrip().stripWhiteSpace();
-  STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = replyToIdMD5().stripWhiteSpace();
-  STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = xmark().stripWhiteSpace();
-  STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = fileName().stripWhiteSpace();
-  STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
+  STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = msgSize();
   STORE_DATA(MsgSizePart, tmp);
   tmp = folderOffset();
@@ -1047,8 +1043,6 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   STORE_DATA(MsgDatePart, tmp);
   tmp = (signatureState() << 16) | encryptionState();
   STORE_DATA(MsgCryptoStatePart, tmp);
-  tmp = mdnSentState();
-  STORE_DATA(MsgMDNSentPart, tmp);
 #undef STORE_DATA_LEN
   return ret;
 }

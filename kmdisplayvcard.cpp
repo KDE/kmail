@@ -39,7 +39,7 @@ KMDisplayVCard::~KMDisplayVCard() {
  
 
 void KMDisplayVCard::setVCard(VCard *vc) {
-  delete _vc;
+  if (_vc) delete _vc;
   _vc = vc;
 }
   
@@ -123,6 +123,8 @@ QValueList<QString> values;
   //
   // Display the Email: field
   tmpstr = _vc->getValue(VCARD_EMAIL, VCARD_EMAIL_INTERNET);
+  if( tmpstr.isEmpty() )
+    tmpstr = _vc->getValue(VCARD_EMAIL);
   name = new QLabel(i18n("Email:"), page);
   urlvalue = new KURLLabel(tmpstr, tmpstr, page);
   grid->addWidget(name, 3, 0);
@@ -266,6 +268,15 @@ QValueList<QString> values;
   DO_PHONENUMBER(VCARD_TEL_ISDN, I18N_NOOP("ISDN"));
   DO_PHONENUMBER(VCARD_TEL_VIDEO, I18N_NOOP("Video"));
   DO_PHONENUMBER(VCARD_TEL_PCS, I18N_NOOP("PCS"));
+  // unqualified phone number
+  thisnum = _vc->getValue(VCARD_TEL, "");
+  if (!thisnum.isEmpty()) {
+    // ### FIXME-KDE-3.2: Add i18n("Unknown")
+    name = new QLabel("", page);
+    grid->addWidget(name, row, 0);
+    value = new QLabel(thisnum, page);
+    grid->addWidget(value, row++, 1);
+  }
   
 return page;
 }

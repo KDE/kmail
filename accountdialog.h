@@ -34,9 +34,6 @@ class KMAccount;
 class KMFolder;
 class KMServerTest;
 class QButtonGroup;
-namespace KMail {
-  class SieveConfigEditor;
-};
 
 class AccountDialog : public KDialogBase
 {
@@ -129,7 +126,6 @@ class AccountDialog : public KDialogBase
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
-      QCheckBox    *progressDialogCheck;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -170,7 +166,7 @@ class AccountDialog : public KDialogBase
     void makeLocalAccountPage();
     void makeMaildirAccountPage();
     void makePopAccountPage();
-    void makeImapAccountPage(bool cached = false);
+    void makeImapAccountPage();
     void setupSettings();
     void saveSettings();
     void checkHighest(QButtonGroup *);
@@ -184,7 +180,6 @@ class AccountDialog : public KDialogBase
     QValueList<QGuardedPtr<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
-    KMail::SieveConfigEditor *mSieveConfigEditor;
 };
 
 

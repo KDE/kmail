@@ -7,6 +7,7 @@
 #include <qpopupmenu.h>
 #include <qcursor.h>
 
+#include <qheader.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
 #include <qpainter.h>
@@ -35,8 +36,6 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
-#include "folderjob.h"
-using KMail::FolderJob;
 #include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
@@ -508,7 +507,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortDescending = FALSE;
 
   readConfig();
-  restoreLayout(KMKernel::config(), "Header-Geometry");
+  restoreLayout(kapp->config(), "Header-Geometry");
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
 
@@ -593,7 +592,7 @@ void KMHeaders::slotToggleSizeColumn ()
 
   // we need to write it back so that
   // the configure-dialog knows the correct status
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("showMessageSize", mPaintInfo.showSize);
 
@@ -627,7 +626,7 @@ bool KMHeaders::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMHeaders::readColorConfig (void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   // Custom/System colors
   KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
@@ -666,7 +665,7 @@ void KMHeaders::readColorConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readConfig (void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
 
   // Backing pixmap support
   { // area for config group "Pixmaps"
@@ -736,7 +735,7 @@ void KMHeaders::refreshNestedState(void)
 {
   bool oldState = mNested != mNestedOverride;
   int oldNestPolicy = nestingPolicy;
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
 
@@ -753,7 +752,7 @@ void KMHeaders::refreshNestedState(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
@@ -781,7 +780,7 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   int mSortColAdj = mSortCol + 1;
 
   assert(mFolder!=0);
@@ -797,7 +796,7 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeConfig (void)
 {
-  saveLayout(KMKernel::config(), "Header-Geometry");
+  saveLayout(kapp->config(), "Header-Geometry");
 }
 
 //-----------------------------------------------------------------------------
@@ -1056,7 +1055,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
   QListViewItem *threadRoot = myParent;
   while (threadRoot->parent())
       threadRoot = threadRoot->parent();
-
+	
   QString key = static_cast<KMHeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
 
   while (myChild) {
@@ -1250,17 +1249,16 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   clearSelection();
 
   for (msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-    int idx = msgBase->parent()->find(msgBase);
+    int idx = mFolder->find(msgBase);
     assert(idx != -1);
     msg = mFolder->getMsg(idx);
-    if (msg->transferInProgress()) continue;
-    msg->setTransferInProgress(true);
-    if ( !msg->isComplete() )
+    if ((mFolder->protocol() == "imap") && !msg->isComplete())
     {
-      FolderJob *job = mFolder->createJob( msg );
-      connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-              SLOT(slotFilterMsg(KMMessage*)));
-      job->start();
+      if (msg->transferInProgress()) continue;
+      msg->setTransferInProgress(TRUE);
+      KMImapJob *imapJob = new KMImapJob(msg);
+      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+        SLOT(slotFilterMsg(KMMessage*)));
     } else {
       if (slotFilterMsg(msg) == 2) break;
     }
@@ -1821,7 +1819,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
       if (prevMsg)
       {
-        mFolder->ignoreJobsForMessage(prevMsg);
+        if (mFolder->protocol() == "imap") KMImapJob::ignoreJobsForMessage(prevMsg);
         if (!prevMsg->transferInProgress())
           mFolder->unGetMsg(mPrevCurrent->msgId());
       }
@@ -2887,7 +2885,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		if (mJumpToUnread) // search unread messages
 		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread)
 			isUnread = true;
-
+		
 		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew || isUnread) {
 		    first_unread = item->msgId();
 		    break;
@@ -2905,12 +2903,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );
 	}
     } else {
-	  // only reset the selection if we have no current item
-	  if (mCurrentItem <= 0)
-	  {
-		setTopItemByIndex(mTopItem);
-		setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
-	  }
+      // only reset the selection if we have no current item
+      if (mCurrentItem <= 0)
+      {
+        setTopItemByIndex(mTopItem);
+        setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
+      }
     }
     END_TIMER(selection);
     SHOW_TIMER(selection);

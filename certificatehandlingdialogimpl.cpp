@@ -2,7 +2,6 @@
 #include "certificatewizardimpl.h"
 
 #include <qlistview.h>
-#include <qpopupmenu.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 
@@ -35,7 +34,9 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 
     QListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
-    delete item;
+    if( item ) {
+        delete item;
+    }
 }
 
 /*
@@ -44,8 +45,8 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewItem* item )
 {
     if( item ) {
-        requestPopup->setItemEnabled(1, true);
-        requestPopup->setItemEnabled(2, true);
+        requestExtensionPB->setEnabled( true );
+        requestChangePB->setEnabled( true );
         deletePB->setEnabled( true );
         if( item->text( 2 ) == i18n( "Sign/Encrypt" ) ) {
             useForSigningPB->setEnabled( true );
@@ -64,8 +65,8 @@ void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewIt
     } else {
         useForSigningPB->setEnabled( false );
         useForEncryptingPB->setEnabled( false );
-        requestPopup->setItemEnabled(1, false);
-        requestPopup->setItemEnabled(2, true);
+        requestExtensionPB->setEnabled( false );
+        requestChangePB->setEnabled( false );
         deletePB->setEnabled( false );
     }
 }

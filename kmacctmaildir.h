@@ -7,6 +7,8 @@
 #include "kmaccount.h"
 #include "kmglobal.h"
 
+#define KMAcctMaildirInherited KMAccount
+
 class KMAcctMaildir: public KMAccount
 {
 protected:
@@ -15,11 +17,8 @@ protected:
   KMAcctMaildir(KMAcctMgr* owner, const QString& accountName);
 
 public:
-  typedef KMAccount base;
-
   virtual ~KMAcctMaildir();
   virtual void init(void);
-  virtual void pseudoAssign( const KMAccount * a );
 
   /** Access to location of maildir mail file (usually something like
    "/home/joe/Maildir"). */
@@ -30,6 +29,7 @@ public:
   virtual void processNewMail(bool);
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
+  virtual void pseudoAssign(KMAccount*);
 
 protected:
   QString mLocation;

@@ -10,15 +10,12 @@
 
 #include <qptrlist.h>
 #include <qguardedptr.h>
-#include <qobject.h>
 
 class KMFilterDlg;
 class KMFilter;
 
-class KMFilterMgr: public QObject, public QPtrList<KMFilter>
+class KMFilterMgr: public QPtrList<KMFilter>
 {
-  Q_OBJECT
-
   typedef QPtrList<KMFilter> base;
 public:
   KMFilterMgr(bool popFilter = false);
@@ -46,13 +43,12 @@ public:
 
       @param msg The message to process.
       @param aSet Select the filter set to use.
-      @param id If set the id of an individual filter to apply
       @return 2 if a critical error occurred (eg out of disk space)
       1 if the caller is still owner of the message and
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process(KMMessage* msg, FilterSet aSet=Inbound, KMFilter *filter=0);
+  int process(KMMessage* msg, FilterSet aSet=Inbound);
 
   /** Call this method after processing messages with process().
     Shall be called after all messages are processed. This method
@@ -70,8 +66,8 @@ public:
       no-op */
   void beginUpdate() {}
 
-  /** Called at the end of an filter list update. */
-  void endUpdate();
+  /** Called at the end of an filter list update. Currently a no-op */
+  void endUpdate() {}
 
   /** Output all rules to stdout */
   void dump();
@@ -95,9 +91,6 @@ public:
   bool showLaterMsgs() const {
     return mShowLater;
   }
-
-signals:
-  void filterListUpdated();
 
 private:
   QGuardedPtr<KMFilterDlg> mEditDialog;

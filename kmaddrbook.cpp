@@ -107,7 +107,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
     if (!expRecipients.isEmpty())
       expRecipients += ", ";
     receiver = (*it).stripWhiteSpace();
-    for ( jt = names.begin(); jt != names.end(); ++jt) {
+    for ( jt = names.begin(); jt != names.end(); ++jt)
       if (receiver.lower() == (*jt).lower()) {
 	QStringList el = manager.list( receiver )->emails();
 	for ( QStringList::Iterator kt = el.begin(); kt != el.end(); ++kt ) {
@@ -117,12 +117,11 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 	}
 	break;
       }
-    }
     if ( jt == names.end() )
     {
       if (receiver.find('@') == -1)
       {
-        KConfigGroup general( KMKernel::config(), "General" );
+        KConfigGroup general( kapp->config(), "General" );
         QString defaultdomain = general.readEntry( "Default domain", "" );
         if( !defaultdomain.isEmpty() )
         {
@@ -139,15 +138,15 @@ QString KabcBridge::expandDistributionLists(QString recipients)
           passwd *pw = getpwnam(username.local8Bit());
           if (pw)
           {
-            QString fn = QString::fromLocal8Bit(pw->pw_gecos);
-            int first_comma = fn.find(',');
-            if (first_comma > 0) {
-              fn = fn.left(first_comma);
-            }
-            if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-              receiver = "\"" + fn + "\" <" + receiver + ">";
-            else
-              receiver = fn + " <" + receiver + ">";
+              QString fn = QString::fromLocal8Bit(pw->pw_gecos);
+	      int first_comma = fn.find(',');
+	      if (first_comma > 0) {
+		fn = fn.left(first_comma);
+	      }
+              if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
+                receiver = "\"" + fn + "\" <" + receiver + ">";
+              else
+                receiver = fn + " <" + receiver + ">";
           }
         }
         expRecipients += receiver;
@@ -233,7 +232,7 @@ void KMAddrBookExternal::launch(QWidget *) {
 
 bool KMAddrBookExternal::useKab()
 {
-  KConfig *config = KMKernel::config();
+  KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   return (ab == 0);
@@ -241,7 +240,7 @@ bool KMAddrBookExternal::useKab()
 
 bool KMAddrBookExternal::useKAddressbook()
 {
-  KConfig *config = KMKernel::config();
+  KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   return (ab == 1);

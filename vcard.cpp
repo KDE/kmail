@@ -24,13 +24,13 @@
 //
 
 // FIXME: do proper CRLF/CR handling
-// FIXME: handle TYPE=x,y,z qualifiers
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 #include "vcard.h"
 #include <klocale.h>
+#include <kdebug.h>
 #include <qregexp.h>
 
 /*
@@ -158,6 +158,8 @@ QValueList<QString> lines;
                                    j != lines.end(); ++j) {
     VCardLine _vcl;
 
+    //kdDebug(5006) << "parseVCard: parsing line '" << QString(*j) << "'" << endl;
+
     // take spaces off the end - ugly but necessary hack
     for (int g = (*j).length()-1; g > 0 && (*j)[g].isSpace(); g++)
       (*j)[g] = 0;
@@ -183,6 +185,8 @@ QValueList<QString> lines;
       unsigned int tail = (*j).find(':', 0);
       if (tail > (*j).length()) {  // invalid line - no ':'
         _err = VC_ERR_INVALID_LINE;
+        kdDebug(5006) << "parseVCard: " << getError(_err)
+                      << "(no ':')\nLine: '" << QString(*j) << "'" << endl;
         break;
       }
 
@@ -209,18 +213,47 @@ QValueList<QString> lines;
                                          z != nametokens.end();
                                          ++z) {
           QString zz = (*z).lower();
-          if (zz == VCARD_QUOTED_PRINTABLE || zz == VCARD_ENCODING_QUOTED_PRINTABLE) {
+          //kdDebug(5006) << "parseVCard: parsing name token '" << zz << "'\n";
+          if (zz == VCARD_QUOTED_PRINTABLE) {
             qp = true;
           } else if (zz == VCARD_BASE64) {
             b64 = true;
 	  } else if (!first_pass) {
-            _vcl.qualified = true;
-            _vcl.qualifiers.append(zz);
+            if (zz.startsWith(VCARD_ENCODING_BEGIN)) {
+              // strip off the leading 'encoding='
+              zz = zz.mid(QString(VCARD_ENCODING_BEGIN).length());
+              //kdDebug(5006) << "parseVCard: parsing encoding token '" << zz << "'\n";
+              if (zz == VCARD_QUOTED_PRINTABLE) {
+                qp = true;
+              } else if (zz == VCARD_B) {
+                b64 = true;
+              }
+            }
+            else if (zz.startsWith(VCARD_QUALIFIER_BEGIN)) {
+              // strip off the leading 'type='
+              zz = zz.mid(QString(VCARD_QUALIFIER_BEGIN).length());
+              QValueList<QString> qualifiertokens = tokenizeBy(zz, QRegExp(","));
+              if (qualifiertokens.count() > 0) {
+                _vcl.qualified = true;
+                for (QValueListIterator<QString> qit = qualifiertokens.begin();
+                                                 qit != qualifiertokens.end();
+                                               ++qit) {
+                  //kdDebug(5006) << "parseVCard: parsing qualifier token '" << (*qit) << "'\n";
+                  _vcl.qualifiers.append((*qit).lower());
+                }
+              }
+            }
+            else {
+              _vcl.qualified = true;
+              _vcl.qualifiers.append(zz);
+            }
           }
           first_pass = false;
 	}
       } else {
         _err = VC_ERR_INVALID_LINE;
+        kdDebug(5006) << "parseVCard: " << getError(_err)
+                      << "(nametokens.count() == 0)\nLine: '" << QString(*j) << "'" << endl;
       }
 
       if (_err != 0) break;
@@ -232,21 +265,27 @@ QValueList<QString> lines;
         _state |= VC_STATE_HAVE_N;
 
       // second token:
-      //    split into tokens by ;
-      //    add to parameters vector
-      //_vcl.parameters = tokenizeBy(linetokens[1], ';');
-      if (b64) {
-        if (linetokens[1][linetokens[1].length()-1] != '=')
-          do {
-            linetokens[1] += *(++j);
-          } while ((*j)[(*j).length()-1] != '=');
-      } else {
-        if (qp) {        // join any split lines
-          while (linetokens[1][linetokens[1].length()-1] == '=') {
-            linetokens[1].remove(linetokens[1].length()-1, 1);
-            linetokens[1].append(*(++j));
-          }
+      // unfold the token (i.e. join any split lines)
+      if (!qp) {
+        QValueListIterator<QString> nextLine = j;
+        ++nextLine;
+        for (; ( nextLine != lines.end() ) && ( (*nextLine)[0] == ' ' );
+            ++nextLine, ++j) {
+          linetokens[1] += (*nextLine).stripWhiteSpace();
         }
+      } else {
+        while (linetokens[1].endsWith("=")) {
+          linetokens[1].truncate(linetokens[1].length()-1);
+          linetokens[1].append(*(++j));
+        }
+      }
+      if (b64) {
+        //linetokens[1] = linetokens[1];
+      }
+      else {
+        //    split into tokens by ;
+        //    add to parameters vector
+        //_vcl.parameters = tokenizeBy(linetokens[1], ';');
         _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"), true);
         if (qp) {        // decode the quoted printable
           for (QValueListIterator<QString> z = _vcl.parameters.begin();
@@ -264,6 +303,8 @@ QValueList<QString> lines;
     // validate VCardLine
     if (!_vcl.isValid()) {
       _err = VC_ERR_INVALID_LINE;
+      kdDebug(5006) << "parseVCard: " << getError(_err)
+                    << "(_vcl.isValid() == false)\nLine: '" << QString(*j) << "'" << endl;
       break;
     }
 
@@ -418,10 +459,14 @@ const QString lowqualifier = qualifier.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier)) {
-      if ((*i).parameters.count() > 0)
-        return (*i).parameters[0];
-      else return failed;
+    if ((*i).name == lowname) {
+      if (    ( !lowqualifier.isEmpty() && (*i).qualified
+                && (*i).qualifiers.contains(lowqualifier) ) 
+           || ( lowqualifier.isEmpty() && !(*i).qualified ) ) {
+        if ((*i).parameters.count() > 0)
+          return (*i).parameters[0];
+        else return failed;
+      }
     }
   }
 return failed;
@@ -609,21 +654,20 @@ bool VCardLine::isValid() const {
   case 'c':
     if (name == VCARD_CATEGORIES)
       return true;
-    if (name == VCARD_CLASS && qualified &&
-                              (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
-                               qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
-                               qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
-                              ))
+    // This causes false alerts with v3.0 vCards
+    //if (name == VCARD_CLASS && qualified &&
+    //                          (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
+    //                           qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
+    //                           qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
+    //                          ))
+    if (name == VCARD_CLASS)
       return true;
    break;
   case 'd':
    break;
   case 'e':
-    if (name == VCARD_EMAIL && qualified &&
-                              (qualifiers.contains(VCARD_EMAIL_INTERNET) ||
-                               qualifiers.contains(VCARD_EMAIL_PREF)     ||
-                               qualifiers.contains(VCARD_EMAIL_X400)
-                              ))
+    // Email doesn't need to be qualified.
+    if (name == VCARD_EMAIL)
       return true;
    break;
   case 'f':
@@ -641,10 +685,12 @@ bool VCardLine::isValid() const {
   case 'j':
    break;
   case 'k':
-    if (name == VCARD_KEY && qualified &&
-                            (qualifiers.contains(VCARD_KEY_X509) ||
-                             qualifiers.contains(VCARD_KEY_PGP)
-                            ))
+    // This causes false alerts with v3.0 vCards
+    //if (name == VCARD_KEY && qualified &&
+    //                        (qualifiers.contains(VCARD_KEY_X509) ||
+    //                         qualifiers.contains(VCARD_KEY_PGP)
+    //                        ))
+    if (name == VCARD_KEY)
       return true;
    break;
   case 'l':
@@ -694,22 +740,7 @@ bool VCardLine::isValid() const {
       return true;
    break;
   case 't':
-    if (name == VCARD_TEL && qualified &&
-                            (qualifiers.contains(VCARD_TEL_HOME)  ||
-                             qualifiers.contains(VCARD_TEL_WORK)  ||
-                             qualifiers.contains(VCARD_TEL_PREF)  ||
-                             qualifiers.contains(VCARD_TEL_VOICE) ||
-                             qualifiers.contains(VCARD_TEL_FAX)   ||
-                             qualifiers.contains(VCARD_TEL_MSG)   ||
-                             qualifiers.contains(VCARD_TEL_CELL)  ||
-                             qualifiers.contains(VCARD_TEL_PAGER) ||
-                             qualifiers.contains(VCARD_TEL_BBS)   ||
-                             qualifiers.contains(VCARD_TEL_MODEM) ||
-                             qualifiers.contains(VCARD_TEL_CAR)   ||
-                             qualifiers.contains(VCARD_TEL_ISDN)  ||
-                             qualifiers.contains(VCARD_TEL_VIDEO) ||
-                             qualifiers.contains(VCARD_TEL_PCS)
-                            ))
+    if (name == VCARD_TEL)
       return true;
     if (name == VCARD_TZ)
       return true;

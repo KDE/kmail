@@ -56,7 +56,7 @@ void KMFolderMgr::compactAll()
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::expireAll() {
-  KConfig             *config = KMKernel::config();
+  KConfig             *config = kapp->config();
   KConfigGroupSaver   saver(config, "General");
   int                 ret = KMessageBox::Continue;
 
@@ -218,7 +218,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
     if (know_type == false)
     {
       know_type = true;
-      KConfig *config = KMKernel::config();
+      KConfig *config = kapp->config();
       KConfigGroupSaver saver(config, "General");
       if (config->hasKey("default-mailbox-format"))
       {

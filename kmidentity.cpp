@@ -220,19 +220,19 @@ QDataStream & operator<<( QDataStream & stream, const Signature & sig ) {
 }
 
 QDataStream & operator>>( QDataStream & stream, Signature & sig ) {
-    Q_UINT8 s;
-    stream >> s
-           >> sig.mUrl
-           >> sig.mText;
-    sig.mType = static_cast<Signature::Type>(s);
-    return stream;
+  Q_UINT8 s;
+  stream >> s
+         >> sig.mUrl
+         >> sig.mText;
+  sig.mType = static_cast<Signature::Type>(s);
+  return stream;
 }
 
 KMIdentity KMIdentity::null;
 
 bool KMIdentity::isNull() const {
   return mIdentity.isNull() && mFullName.isNull() && mEmailAddr.isNull() &&
-    mOrganization.isNull() && mReplyToAddr.isNull() && mBcc.isNull() &&
+    mOrganization.isNull() && mReplyToAddr.isNull() && mBcc.isNull() && 
     mVCardFile.isNull() &&
     mPgpIdentity.isNull() && mFcc.isNull() && mDrafts.isNull() &&
     mTransport.isNull() && mSignature.type() == Signature::Disabled;

@@ -1,8 +1,19 @@
-/* Virtual base class for mail folder
+/* Local Mail folder
  *
  * Author: Stefan Taferner <taferner@kde.org>
  * This code is under GPL
  *
+ * Major changes:
+ *
+ * 23-10-97:  Stefan Taferner <taferner@kde.org>
+ *   Source incompatible change! Index of messages now starts at zero
+ *   instead of one.
+ *   msgSubject(), msgFrom(), msgDate(), and msgStatus() are gone. Use
+ *   getMsgBase()->subject() etc. instead.
+ *   Use find() instead of indexOfMsg().
+ *   Use count() instead of numMsgs().
+ *   Use take(int) instead of detachMsg(int).
+ *   Use take(find(KMMessage*)) instead of detachMsg(KMMessage*).
  */
 #ifndef kmfolder_h
 #define kmfolder_h
@@ -14,14 +25,9 @@
 #include "kmmsginfo.h"
 #include "kmmsglist.h"
 #include "kmglobal.h"
-#include "mimelib/string.h"
-#include "kmfoldertype.h"
-#include "folderjob.h"
-using KMail::FolderJob;
 
 #include <stdio.h>
 #include <qptrvector.h>
-#include <qobjectlist.h>
 
 class KMMessage;
 class KMFolderDir;
@@ -46,7 +52,7 @@ class KMFolder: public KMFolderNode
   Q_OBJECT
   friend class KMMsgBase;
   friend class KMMessage;
-  friend class FolderJob;
+
 public:
 
   /** This enum indicates the status of the index file. It's returned by
@@ -106,20 +112,6 @@ public:
 
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
-
-  /**
-   * These methods create respective FolderJob (You should derive FolderJob
-   * for each derived KMFolder).
-   */
-  virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0 ) const;
-  virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0 ) const;
-  /**
-   * Removes and deletes all jobs associated with the particular message
-   */
-  virtual void ignoreJobsForMessage( KMMessage* );
 
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
@@ -311,22 +303,22 @@ public:
   bool useCustomIcons() const { return mUseCustomIcons; }
   void setUseCustomIcons( bool yes ) { mUseCustomIcons = yes; }
   void setIconPaths(const QString &normal, const QString &unread)
-  { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath();
+  { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath(); 
     writeConfig(); if (mUseCustomIcons) mNeedsRepainting = true; }
-  QString normalIconPath() const
+  QString normalIconPath() const 
   { return mNormalIconPath; }
   QString unreadIconPath() const
   { return mUnreadIconPath; }
-  QPixmap* normalIcon() const
+  QPixmap* normalIcon() const 
   { if ( mUseCustomIcons ) return mNormalIcon; else return 0; }
   QPixmap* unreadIcon() const
   { if ( mUseCustomIcons ) return mUnreadIcon; else return 0; }
-
+  
   /** Tell the folder tree if repainting is required */
-  bool needsRepainting() const
+  bool needsRepainting() const 
   { return mNeedsRepainting; }
   /** repaint has been scheduled so stop demanding it */
-  void repaintScheduled()
+  void repaintScheduled() 
   { mNeedsRepainting = false; }
 
   /** Tell the folder that a header field that is usually used for
@@ -349,7 +341,7 @@ public:
   virtual QString idString() const;
 
   uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
-
+  
   bool indexSwapByteOrder() { return mIndexSwapByteOrder; }
   int  indexSizeOfLong() { return mIndexSizeOfLong; }
 
@@ -448,25 +440,25 @@ public:
   /** Inserts messages into the message dictionary.  Might be called
     during kernel initialization. */
   void fillMsgDict(KMMsgDict *dict);
-
+  
   /** Writes the message serial number file. */
   int writeMsgDict(KMMsgDict *dict = 0);
-
+  
   /** Touches the message serial number file. */
   int touchMsgDict();
-
+  
   /** Append message to end of message serial number file. */
   int appendtoMsgDict(int idx = -1);
-
+  
   /** Sets the reverse-dictionary for this folder. */
   void setRDict(KMMsgDictREntry *rentry);
-
+  
   /** Returns the reverse-dictionary for this folder. */
   KMMsgDictREntry *rDict() const { return mRDict; }
-
+  
   /** Set the status of the message at index @p idx to @p status. */
   virtual void setStatus(int idx, KMMsgStatus status);
-
+  
   /** Set the status of the message @p msg to @p status.  The message
    * should be in the current folder. */
   void setStatus(KMMsgBase *msg, KMMsgStatus status);
@@ -505,23 +497,9 @@ public slots:
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
 
-protected slots:
-  virtual void removeJob( QObject* );
-
 protected:
-  /**
-   * These two methods actually create the jobs. They have to be implemented
-   * in all folders.
-   * @see createJob
-   */
-  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const = 0;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                  FolderJob::JobType jt, KMFolder *folder ) const = 0;
   /** Escape a leading dot */
   virtual QString dotEscape(const QString&) const;
-
-  /** Adds a job to the folder*/
-  virtual void addJob( FolderJob* ) const;
 
   /** Load message from file and store it at given index. Returns 0
     on failure. */
@@ -531,7 +509,7 @@ protected:
   virtual bool readIndex();
 
   /** Read index header. Called from within readIndex(). */
-  virtual bool readIndexHeader(int *gv=0);
+    virtual bool readIndexHeader(int *gv=0);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on
@@ -552,12 +530,12 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents() = 0;
-
+  
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-
+  
   /** Write the config file */
   virtual void writeConfig();
 
@@ -566,7 +544,7 @@ protected:
 
   /** tries to create icons from paths */
   virtual void iconsFromPath();
-
+  
   /** table of contents file */
   FILE* mIndexStream;
   /** list of index entries or messages */
@@ -600,7 +578,7 @@ protected:
   QString mUnreadIconPath;
   bool    mUseCustomIcons;
   bool    mNeedsRepainting;
-
+  
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
@@ -625,14 +603,9 @@ protected:
   ExpireUnits  readExpireUnits;
 
   int          daysToExpire(int num, ExpireUnits units);
-
+  
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
-  /** List of jobs created by this folder.
-   *  REMEBER to add jobs created via createJob
-   *  to this list.
-   */
-  mutable QPtrList<FolderJob> mJobList;
 };
 
 #endif /*kmfolder_h*/

@@ -6,10 +6,12 @@
 #define kmacctmgr_h
 
 #include <qobject.h>
+#include <qptrlist.h>
+#include <qstring.h>
+#include <qdir.h>
+#include <qfile.h>
+#include <qstringlist.h>
 #include "kmaccount.h"
-
-class QString;
-class QStringList;
 
 #define KMAcctMgrInherited QObject
 
@@ -54,14 +56,10 @@ public:
   /** Processes all accounts looking for new mail */
   virtual void checkMail(bool _interactive = true);
 
-  /** Delete all IMAP folders and resync them */
-  void invalidateIMAPFolders();
-
   QStringList getAccounts(bool noImap = false);
 
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
-  virtual void singleInvalidateIMAPFolders(KMAccount *);
 
   virtual void intCheckMail(int, bool _interactive = true);
   virtual void processNextCheck(bool _newMail);
@@ -71,14 +69,12 @@ public slots:
   the total (for example, to show an error in the status bar) by
   calling it with numNewMails = -1  */
   virtual void addToTotalNewMailCount(int numNewMails);
-
+  
 signals:
   /** emitted if new mail has been collected */
   void checkedMail(bool, bool);
 
 private:
-  void sorryCheckAlreadyInProgress(bool aInteractive);
-
   KMAcctList   mAcctList;
   KMAcctList   mAcctChecking;
   KMAccount *lastAccountChecked;

@@ -55,7 +55,7 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     warnRootCertificateExpiresSB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) );
     warnAddressNotInCertificateCB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) );
     pinEntryBG->setEnabled( cryptPlug->hasFeature( Feature_PinEntrySettings ) );
-    saveSentSigsCB->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesWithSigs ) );
+    saveMessagesBG->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesWithSigs ) );
     
     if( ! FULLTEST ){
         askEachPartRB                ->hide(); // We won't implement that.
@@ -64,7 +64,7 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
         
         pinEntryBG                   ->hide(); // Will implement that later
         
-        saveSentSigsCB->hide(); // We won't implement that.
+        saveMessagesBG               ->hide(); // We won't implement that.
         
         dontSendCertificatesRB       ->hide(); // Will implement that later.
         sendChainWithoutRootRB       ->hide(); // Will implement that later.

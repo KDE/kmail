@@ -22,7 +22,6 @@
 
 #include "linklocator.h"
 
-
 LinkLocator::LinkLocator(const QString& text, int pos)
   : mText(text), mPos(pos), mMaxUrlLen(4096), mMaxAddressLen(255)
 {
@@ -67,7 +66,7 @@ QString LinkLocator::getUrl()
     }
     /* some URLs really end with:  # / &     */
     const QString allowedSpecialChars = QString("#/&");
-    while(mPos > start && mText[mPos-1].isPunct() &&
+    while(mPos > start && mText[mPos-1].isPunct() && 
 		    allowedSpecialChars.find(mText[mPos-1]) == -1 )
     {
       --mPos;

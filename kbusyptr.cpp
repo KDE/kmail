@@ -116,7 +116,7 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
   {
     f = filename;
   }
-  else
+  else 
   {
     f = locate("data", "kmail/pics/" + filename);
   }
@@ -142,7 +142,7 @@ void KBusyPtr :: loadCursor (const char* cursorName,const char* maskName)
   numY = map.height() >> 4;
   numCursors = numX * numY;
 
-  delete[] cursorList;
+  if (cursorList) delete[] cursorList;
   cursorList = new QCursor[numCursors];
 
   for (i=0,iy=0,y=0; iy<numY; iy++, y+=16)

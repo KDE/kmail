@@ -1,4 +1,6 @@
 /*
+  $Id$
+
   a node in a MIME tree.
 
   Copyright (C) 2002 by Klarälvdalens Datakonsult AB
@@ -138,9 +140,9 @@ public:
         // 0. delete the DwBodyPart if flag is set
         if( mDeleteDwBodyPart && mDwPart ) delete( mDwPart );
         // 1. delete our children
-        delete( mChild );
+        if( mChild ) delete( mChild );
         // 2. delete our siblings
-        delete( mNext );
+        if( mNext )  delete( mNext );
     }
 
     void buildObjectTree( bool processSiblings=true );

@@ -44,7 +44,7 @@ public:
   /** Constructor. You can give a @ref KMSearchRule as parameter, which will
       be used to initialize the widget. */
   KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false );
-
+  
   /** Set the rule. The rule is accepted regardless of the return
       value of @ref KMSearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
@@ -62,11 +62,11 @@ signals:
      pseudo-headers <...> are returned in their i18n form, but stored
      in their english form in the rule. */
   void fieldChanged( const QString & );
-
+ 
   /** This signal is emitted whenever the user alters the
      contents/value of the rule. */
   void contentsChanged( const QString & );
-
+  
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english */
@@ -82,7 +82,7 @@ protected slots:
 private:
   void initWidget();
   void initLists(bool headersOnly) const;
-
+  
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
   QLineEdit* mRuleValue;
@@ -119,7 +119,7 @@ private:
 
 
 /** This widget is intended to be used in the filter configuration as
-    well as in the message search dialogs. It consists of a frame,
+    well as in the message search dialogues. It consists of a frame,
     inside which there are placed two radio buttons entitled "Match
     {all,any} of the following", followed by a vertical stack of @ref
     KMSearchRuleWidgets (initially two) and two buttons to add and
@@ -145,14 +145,14 @@ private:
     directly, although this widget in itself doesn't let the user
     change it. This is because it auto-names the pattern to
     "<$field>:$contents" iff the pattern begins with "<".
-
+ 
     @short A widget which allows editing a set of KMSearchRule's.
     @author Marc Mutz <Marc@Mutz.com>
 */
 
 class KMSearchPatternEdit : public QGroupBox  {
   Q_OBJECT
-public:
+public: 
   /** Constructor. The parent and name parameters are passed to the underlying
       @ref QGroupBox, as usual. */
   KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false);
@@ -160,15 +160,12 @@ public:
       i18n("Search Criteria"). */
   KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0, bool headersOnly = false);
   ~KMSearchPatternEdit();
-
+  
   /** Set the search pattern. Rules are inserted regardless of the
       return value of each rules' @ref KMSearchRule::isEmpty. This
       widget makes a shallow copy of @p aPattern and operates directly
       on it. */
   void setSearchPattern( KMSearchPattern* aPattern );
-
-  /** Updates the search pattern according to the current widget values */
-  void updateSearchPattern() { mRuleLister->regenerateRuleListFromWidgets(); }
 
 public slots:
   /** Called when the widget should let go of the currently referenced
@@ -178,11 +175,11 @@ public slots:
 signals:
     /** This signal is emitted whenever the name of the processed
         search pattern may have changed. */
-  void maybeNameChanged();
+  void maybeNameChanged(); 
 
 private slots:
   void slotRadioClicked(int aIdx);
-  void slotAutoNameHack();
+  void slotAutoNameHack(); 
 
 private:
   void initLayout( bool headersOnly );

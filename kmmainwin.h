@@ -21,30 +21,22 @@ class QListViewItem;
 class KMenuBar;
 class KToolBar;
 class KStatusBar;
-class KMCommand;
-class KMMetaFilterActionCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMLittleProgressDlg;
 class KMFldSearch;
-class KAction;
 class KToggleAction;
 class KActionMenu;
 class KSelectAction;
 class KRadioAction;
 class KProgressDialog;
-class KMReaderMainWin;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
-template <typename T> class QGuardedPtr;
 
-namespace KIO {
+namespace KIO
+{
   class Job;
-};
-
-namespace KMail {
-  class Vacation;
 }
 
 #define KMMainWinInherited KMTopLevelWidget
@@ -91,10 +83,10 @@ public:
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *forwardAttachedAction, *redirectAction,
     *trashAction, *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *viewSourceAction, *printAction, *sendAgainAction, *applyFiltersAction;
+    *viewSourceAction, *printAction, *sendAgainAction;
   KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
-    *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
+    *moveActionMenu, *copyActionMenu;
 
   /** we need to access those KToggleActions from the foldertree-popup */
   KToggleAction* unreadColumnToggle;
@@ -107,8 +99,8 @@ public:
       is then returned. */
   KMMessage *jumpToMessage(KMMessage *aMsg);
 
-  /** transfers the currently selected (imap)-messages
-   *  this is a necessary preparation for e.g. forwarding */
+  /** transfers the currently selected (imap)-messages 
+   *  this is a necessary preparation for e.g. forwarding */ 
   void transferSelectedMsgs();
 
 public slots:
@@ -116,6 +108,8 @@ public slots:
   virtual void hide();
   /** sven: moved here as public */
   void slotCheckMail();
+  /** sven: called from reader */
+  void slotAtmMsg(KMMessage *msg);
 
   /** Output given message in the statusbar message field. */
   void statusMsg(const QString&);
@@ -128,7 +122,7 @@ public slots:
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
-
+  
   void slotReplaceMsgByUnencryptedVersion();
 
   /** Update message menu */
@@ -146,7 +140,7 @@ protected:
   void setupStatusBar();
   void createWidgets();
   void activatePanners();
-  void showMsg(KMReaderMainWin *win, KMMessage *msg);
+  void showMsg(KMReaderWin *win, KMMessage *msg);
   virtual bool queryClose();
 
 protected slots:
@@ -189,7 +183,7 @@ protected slots:
   void slotForwardMsg();
   void slotForwardAttachedMsg();
 
-  /** redirect and bounce */
+  /** redirect and bounce */ 
   void slotRedirectMsg();
   void slotBounceMsg();
 
@@ -206,7 +200,6 @@ protected slots:
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
-  void slotEditVacation();
   void slotApplyFilters();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -329,11 +322,6 @@ protected slots:
 
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
-  void removeDuplicates();
-  /** Create actions for marked filters */
-  void initializeFilterActions();
-  /** Plug filter actions into a popup menu */
-  void plugFilterActions(QPopupMenu*);
 
 protected:
   KRadioAction * actionForHeaderStyle(int);
@@ -354,8 +342,7 @@ protected:
   QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mSendOnCheck;
-  bool          mBeepOnNew, mSystemTrayOnNew;
-  int           mSystemTrayMode;
+  bool          mBeepOnNew;
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
@@ -393,10 +380,6 @@ protected:
   int mCountJobs, mCountMsgs;
 
   QPtrList<KMMessage> mSelectedMsgs;
-
-  QGuardedPtr<KMail::Vacation> mVacation;
-  QPtrList<KAction> mFilterActions;
-  QPtrList<KMMetaFilterActionCommand> mFilterCommands;
 
 signals:
   void messagesTransfered(bool);

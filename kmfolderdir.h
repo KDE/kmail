@@ -3,9 +3,14 @@
 
 #include <qstring.h>
 #include "kmfoldernode.h"
-#include "kmfoldertype.h"
 
 class KMFolder;
+
+typedef enum
+{
+  KMFolderTypeMbox = 0,
+  KMFolderTypeMaildir
+} KMFolderType;
 
 /** KMail list that manages the contents of one directory that may
  * contain folders and/or other directories.

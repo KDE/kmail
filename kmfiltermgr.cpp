@@ -10,7 +10,6 @@
 // other KDE headers
 #include <kapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
 
 // other Qt headers
 #include <qregexp.h>
@@ -46,7 +45,7 @@ KMFilterMgr::~KMFilterMgr()
 //-----------------------------------------------------------------------------
 void KMFilterMgr::readConfig(void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   int numFilters;
   QString grpName;
 
@@ -79,7 +78,7 @@ void KMFilterMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
 
   // first, delete all groups:
   QStringList filterGroups =
@@ -103,7 +102,7 @@ void KMFilterMgr::writeConfig(bool withSync)
     }
 
   KConfigGroupSaver saver(config, "General");
-  if (bPopFilter) {
+  if (bPopFilter) { 
     config->writeEntry("popfilters", i);
     config->writeEntry("popshowDLmsgs", mShowLater);
   } else
@@ -114,7 +113,7 @@ void KMFilterMgr::writeConfig(bool withSync)
 
 
 //-----------------------------------------------------------------------------
-int KMFilterMgr::process(KMMessage* msg, FilterSet aSet, KMFilter *filter)
+int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 {
 /*
 QFile fileD0( "testdat_xx-kmfiltermngr-0" );
@@ -152,16 +151,15 @@ if( fileD0.open( IO_WriteOnly ) ) {
 	   ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
 	// filter is applicable
 
-      if ( (filter && (*it == filter)) ||
-	   (!filter && (*it)->pattern()->matches( msg ) )) {
+        if ( (*it)->pattern()->matches( msg ) ) {
 	  // filter matches
 
 	  // remove msg from parent in case we want to move it; make
 	  // sure we only do these things once:
 	  if ( !msgTaken ) {
 	    parent = msg->parent();
-	    if (msg->parent())
-		msg->parent()->removeMsg( msg->parent()->find( msg ) );
+	    if ( parent )
+	      parent->removeMsg( msg );
 	    msg->setParent( 0 );
 	    msgTaken = true;
 	  }
@@ -183,12 +181,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
     }
 
     // readd the message if it wasn't moved:
-    int rc = 0;
-    if ( msgTaken && parent && !msg->parent() ) {
-      rc = parent->addMsg( msg );
-    if (rc)
-      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
-    }
+    if ( msgTaken && parent && !msg->parent() )
+      parent->addMsg( msg );
 /*
 QFile fileD1( "testdat_xx-kmfiltermngr-1" );
 if( fileD1.open( IO_WriteOnly ) ) {
@@ -274,12 +268,3 @@ void KMFilterMgr::dump(void)
     kdDebug(5006) << (*it)->asString() << endl;
   }
 }
-
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::endUpdate(void)
-{
-  emit filterListUpdated();
-}
-
-#include "kmfiltermgr.moc"

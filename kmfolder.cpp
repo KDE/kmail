@@ -71,6 +71,12 @@
 // Current version of the table of contents (index) files
 #define INDEX_VERSION 1506
 
+static int _rename(const char* oldname, const char* newname)
+{
+  return rename(oldname, newname);
+}
+
+
 //-----------------------------------------------------------------------------
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
@@ -118,9 +124,6 @@ KMFolder :: ~KMFolder()
   delete mNormalIcon;
   delete mUnreadIcon;
   delete mAcctList;
-  mJobList.setAutoDelete( true );
-  QObject::disconnect( SIGNAL(destroyed(QObject*)), this, 0 );
-  mJobList.clear();
   KMMsgDict::deleteRentry(mRDict);
 }
 
@@ -130,18 +133,6 @@ QString KMFolder::dotEscape(const QString& aStr) const
 {
   if (aStr[0] != '.') return aStr;
   return aStr.left(aStr.find(QRegExp("[^\\.]"))) + aStr;
-}
-
-void KMFolder::addJob( FolderJob* job ) const
-{
-  QObject::connect( job, SIGNAL(destroyed(QObject*)),
-                    SLOT(removeJob(QObject*)) );
-  mJobList.append( job );
-}
-
-void KMFolder::removeJob( QObject* job )
-{
-  mJobList.remove( static_cast<FolderJob*>( job ) );
 }
 
 
@@ -207,7 +198,7 @@ KMFolderDir* KMFolder::createChildFolder()
   }
 
   KMFolderDir* folderDir = new KMFolderDir(parent(), childName,
-                                           protocol() == "imap");
+    protocol() == "imap");
   if (!folderDir)
     return 0;
   folderDir->reload();
@@ -290,7 +281,7 @@ int KMFolder::writeIndex()
   if (fsync(fileno(tmpIndexStream)) != 0) return errno;
   if (fclose(tmpIndexStream) != 0) return errno;
 
-  ::rename(tempName.local8Bit(), indexLocation().local8Bit());
+  _rename(tempName.local8Bit(), indexLocation().local8Bit());
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
@@ -690,26 +681,72 @@ KMFolder::daysToExpire(int number, ExpireUnits units) {
  * mean no-expiry. Also check the general 'expire' flag as well.
  */
 void KMFolder::expireOldMessages() {
-  FolderJob *job = createJob( 0, FolderJob::tExpireMessages );
-  job->start();
+  int             days = 0;
+  int             maxUnreadTime = 0;
+  int             maxReadTime = 0;
+  const KMMsgBase       *mb = 0;
+  QValueList<int> rmvMsgList;
+  int             i = 0;
+  time_t          msgTime, maxTime = 0;
+
+  kdDebug(5006) << "expireOldMessages " << name() << endl;
+
+  if (protocol() == "imap") {
+    return;
+  }
+
+  days = daysToExpire(getUnreadExpireAge(), getUnreadExpireUnits());
+  if (days > 0) {
+    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
+    maxUnreadTime = time(0) - days * 3600 * 24;
+  }
+
+  days = daysToExpire(getReadExpireAge(), getReadExpireUnits());
+  if (days > 0) {
+    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
+    maxReadTime = time(0) - days * 3600 * 24;
+  }
+
+  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
+    return;
+  }
+  open();
+  for (i=mMsgList.count()-1; i>=0; i--) {
+    mb = getMsgBase(i);
+    if (mb == 0) {
+	  continue;
+    }
+    msgTime = mb->date();
+
+	if (mb->isUnread()) {
+	  maxTime = maxUnreadTime;
+	} else {
+	  maxTime = maxReadTime;
+	}
+
+    if (msgTime < maxTime) {
+      removeMsg( i );
+    }
+  }
+  close();
+
+  return;
 }
+
+
+
 
 //-----------------------------------------------------------------------------
 bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
 {
   if (aIndex_ret) *aIndex_ret = -1;
   KMFolder *msgParent = aMsg->parent();
-  if (aMsg->transferInProgress())
-    return false;
-#warning "FIXME : extract tempOpenFolder to some base class"
-  if (msgParent   && msgParent->protocol() == "imap" && !aMsg->isComplete())
+  if (msgParent && msgParent->protocol() == "imap" && !aMsg->isComplete())
   {
-    FolderJob *job = msgParent->createJob(aMsg);
-    connect( job, SIGNAL(messageRetrieved(KMMessage*)),
-             SLOT(reallyAddMsg(KMMessage*)) );
-    job->start();
+    KMImapJob *imapJob = new KMImapJob(aMsg);
+    connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+      SLOT(reallyAddMsg(KMMessage*)));
     aMsg->setTransferInProgress(TRUE);
-    //FIXME: remove that. Maybe extract tempOpenFolder to some base class
     static_cast<KMFolderImap*>(msgParent)->account()->tempOpenFolder(this);
     return FALSE;
   }
@@ -917,26 +954,6 @@ bool KMFolder::isMessage(int idx)
   return (mb && mb->isMessage());
 }
 
-//-----------------------------------------------------------------------------
-FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder ) const
-{
-  FolderJob * job = doCreateJob( msg, jt, folder );
-  if ( job )
-    addJob( job );
-  return job;
-}
-
-//-----------------------------------------------------------------------------
-FolderJob* KMFolder::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                FolderJob::JobType jt, KMFolder *folder ) const
-{
-  FolderJob * job = doCreateJob( msgList, sets, jt, folder );
-  if ( job )
-    addJob( job );
-  return job;
-}
-
 
 //-----------------------------------------------------------------------------
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
@@ -974,7 +991,6 @@ int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
     msgParent->open();
 
   open();
-  //FIXME : is it always imap ?
   rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret);
   close();
 
@@ -1024,14 +1040,14 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
 
-  if (::rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
+  if (_rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
     setName(oldName);
     setParent(oldParent);
     rc = errno;
   }
   else if (!oldIndexLoc.isEmpty()) {
-    ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
-    if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
+    _rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+    if (!_rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
       KMFolderDir* fdir = parent();
       KMFolderNode* fN;
 
@@ -1272,7 +1288,7 @@ void KMFolder::iconsFromPath()
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
@@ -1302,7 +1318,7 @@ void KMFolder::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("TotalMsgs", mTotalMsgs);
@@ -1488,25 +1504,6 @@ void KMFolder::setUserWhoField(const QString &whoField)
   }
 
   writeConfig();
-}
-
-//-----------------------------------------------------------------------------
-void KMFolder::ignoreJobsForMessage( KMMessage *msg )
-{
-  if ( !msg || msg->transferInProgress() )
-    return;
-
-  for( FolderJob *it = mJobList.first(); it; it = mJobList.next() ) {
-    //FIXME: the questions is : should we iterate through all
-    //messages in jobs? I don't think so, because it would
-    //mean canceling the jobs that work with other messages.
-    //Just remove the message from the jobs list.
-    if ((*it).msgList().first() == msg) {
-      mJobList.remove( it );
-      delete it;
-      break;
-    }
-  }
 }
 
 //-----------------------------------------------------------------------------

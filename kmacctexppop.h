@@ -1,48 +1,106 @@
-// -*- c++ -*-
 #ifndef KMAcctExpPop_h
 #define KMAcctExpPop_h
 
-#include "networkaccount.h"
-
+#include "kmaccount.h"
+#include "kmpopheaders.h"
+#include "kmfiltermgr.h"
+#include <qdialog.h>
+#include "kio/job.h"
+#include "kio/global.h"
 #include <qvaluelist.h>
 #include <qstringlist.h>
+#include <qcstring.h>
 #include <qtimer.h>
 
-class KMPopHeaders;
+#include <kdebug.h>
+
+class QLineEdit;
+class QPushButton;
+class DwPopClient;
+class KApplication;
+class DwPopClient;
 class KMMessage;
+class QTimer;
+class KURL::List;
 class QDataStream;
-namespace KIO {
-  class MetaData;
-  class Slave;
-  class SimpleJob;
-  class Job;
-};
+
+#define KMAcctExpPopInherited KMAccount
 
 /** KMail account for experimental pop mail account
  *
  */
-class KMAcctExpPop: public KMail::NetworkAccount {
+class KMAcctExpPop: public KMAccount
+{
   Q_OBJECT
 
 public:
-  typedef KMail::NetworkAccount base;
-
   virtual ~KMAcctExpPop();
   virtual void init(void);
 
-  virtual KIO::MetaData slaveConfig() const;
+  /**
+   * Pop user login name
+   */
+  QString login(void) const { return mLogin; }
+  virtual void setLogin(const QString&);
 
-  /** A weak assignment operator */
-  virtual void pseudoAssign( const KMAccount * a );
+  /**
+   * Pop user password
+   */
+  QString passwd(void) const;
+  virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
-  virtual QString protocol() const;
-  virtual unsigned short int defaultPort() const;
+  /**
+   * Set the password to "" (empty string)
+   */
+  virtual void clearPasswd();
+
+  /**
+   * Use SSL?
+   */
+  bool useSSL(void) const { return mUseSSL; }
+  virtual void setUseSSL(bool);
+
+  /**
+   * Use TLS?
+   */
+  bool useTLS(void) const { return mUseTLS; }
+  virtual void setUseTLS(bool);
+
+  /**
+   * Authentification method
+   */
+  QString auth(void) const { return mAuth; }
+  virtual void setAuth(const QString &);
 
   /**
    * Sending of several commands at once
    */
   bool usePipelining(void) const { return mUsePipelining; }
   virtual void setUsePipelining(bool);
+
+  /**
+   * Will the password be stored in the config file ?
+   */
+  bool storePasswd(void) const { return mStorePasswd; }
+  virtual void setStorePasswd(bool);
+
+  /**
+   * Pop host
+   */
+  const QString& host(void) const { return mHost; }
+  virtual void setHost(const QString&);
+
+  /**
+   * Port on pop host
+   */
+  unsigned short int port(void) { return mPort; }
+  virtual void setPort(unsigned short int);
+
+  /**
+   * Pop protocol: shall be 2 or 3
+   */
+  short protocol(void) { return mProtocol; }
+  virtual bool setProtocol(short);
 
   /**
    * Shall messages be left on the server upon retreival (TRUE)
@@ -72,8 +130,7 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool _interactive);
-
-  virtual void killAllJobs( bool disconnectSlave=false ); // NOOP currently
+  virtual void pseudoAssign(KMAccount*);
 
 protected:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
@@ -92,18 +149,34 @@ protected:
   void connectJob();
 
   /**
+   * Get an URL for the account
+   */
+  KURL getUrl();
+
+  /**
    * Process any queued messages and save the list of seen uids
    * for this user/server
    */
   void processRemainingQueuedMessagesAndSaveUidList();
 
+  QString mLogin, mPasswd;
+  QString mHost;
+  unsigned short int mPort;
+  short   mProtocol;
+  bool    mUseSSL;
+  bool    mUseTLS;
+  QString mAuth;
   bool    mUsePipelining;
+  bool    mStorePasswd;
+  bool    mAskAgain;
   bool    mLeaveOnServer;
   bool    gotMsgs;
   bool    mFilterOnServer;
   unsigned int mFilterOnServerCheckSize;
 
   KIO::SimpleJob *job;
+  KIO::Slave *slave;
+  KIO::MetaData mSlaveConfig;
   QStringList idsOfMsgsPendingDownload; //ID of messages which should be downloaded
   QValueList<int> lensOfMsgsPendingDownload; //length of messages which should be downloaded
 

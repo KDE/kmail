@@ -33,7 +33,6 @@
 
 #include <kfiledialog.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kseparator.h>
@@ -43,19 +42,13 @@
 #include <netinet/in.h>
 
 #include "accountdialog.h"
-#include "sieveconfig.h"
-using KMail::SieveConfig;
-using KMail::SieveConfigEditor;
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
-#include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
-
-#include <cassert>
 
 #include "accountdialog.moc"
 #undef None
@@ -234,11 +227,10 @@ ProcmailRCParser::expandVars(const QString &s)
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 			      QWidget *parent, const char *name, bool modal )
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
-    mAccount(account), mSieveConfigEditor( 0 )
+    mAccount(account)
 {
   mServerTest = 0;
   setHelp("receiving-mail");
-    kdDebug() << "setting progress dialog" << endl;
 
   QString accountType = mAccount->type();
 
@@ -258,10 +250,6 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   {
     makeImapAccountPage();
   }
-  else if( accountType == "cachedimap" )
-  {
-    makeImapAccountPage(true);
-  }
   else
   {
     QString msg = i18n( "Account type is not supported" );
@@ -274,7 +262,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
-    delete mServerTest;
+  delete mServerTest;
 }
 
 void AccountDialog::makeLocalAccountPage()
@@ -635,14 +623,13 @@ void AccountDialog::makePopAccountPage()
 }
 
 
-void AccountDialog::makeImapAccountPage(bool cached)
+void AccountDialog::makeImapAccountPage()
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
 
   mImap.titleLabel = new QLabel( page );
-  if( cached ) mImap.titleLabel->setText( i18n("Account type: Cached Imap Account") );
-  else mImap.titleLabel->setText( i18n("Account type: Imap Account") );
+  mImap.titleLabel->setText( i18n("Account type: Imap Account") );
   QFont titleFont( mImap.titleLabel->font() );
   titleFont.setBold( true );
   mImap.titleLabel->setFont( titleFont );
@@ -656,7 +643,7 @@ void AccountDialog::makeImapAccountPage(bool cached)
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 14, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
@@ -723,28 +710,24 @@ void AccountDialog::makeImapAccountPage(bool cached)
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mImap.excludeCheck, 10, 10, 0, 1 );
 
-  mImap.progressDialogCheck = 
-    new QCheckBox( i18n("Show progressdialog"), page1);
-  grid->addMultiCellWidget( mImap.progressDialogCheck, 11, 11, 0, 2 );
-
   mImap.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mImap.intervalCheck, 12, 12, 0, 2 );
+  grid->addMultiCellWidget( mImap.intervalCheck, 11, 11, 0, 2 );
   connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableImapInterval(bool)) );
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
-  grid->addWidget( mImap.intervalLabel, 13, 0 );
+  grid->addWidget( mImap.intervalLabel, 12, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
   mImap.intervalSpin->setRange( 1, 60, 1, FALSE );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
-  grid->addWidget( mImap.intervalSpin, 13, 1 );
+  grid->addWidget( mImap.intervalSpin, 12, 1 );
 
   mImap.trashCombo = new KMFolderComboBox( page1 );
   mImap.trashCombo->showOutboxFolder( FALSE );
-  grid->addWidget( mImap.trashCombo, 14, 1 );
-  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), 14, 0 );
+  grid->addWidget( mImap.trashCombo, 13, 1 );
+  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), 13, 0 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -787,10 +770,6 @@ void AccountDialog::makeImapAccountPage(bool cached)
     SLOT(slotCheckImapCapabilities()));
   buttonLay->addStretch();
   buttonLay->addWidget( mImap.checkCapabilities );
-
-  mSieveConfigEditor = new SieveConfigEditor( tabWidget );
-  mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
-  tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -911,66 +890,6 @@ void AccountDialog::setupSettings()
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
     else mImap.authUser->setChecked( TRUE );
-    assert( mSieveConfigEditor );
-    mSieveConfigEditor->setConfig( ai.sieveConfig() );
-  }
-  else if( accountType == "cachedimap" )
-  {
-    kdDebug() << "account type is " << mAccount->className() << endl;
-    assert( mAccount->isA("KMAcctCachedImap") );
-    KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
-    mImap.nameEdit->setText( mAccount->name() );
-    mImap.nameEdit->setFocus();
-    mImap.loginEdit->setText( ai.login() );
-    mImap.passwordEdit->setText( ai.passwd());
-    mImap.hostEdit->setText( ai.host() );
-    mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    QString prefix = ai.prefix();
-    if (!prefix.isEmpty() && prefix[0] == '/') prefix = prefix.mid(1);
-    if (!prefix.isEmpty() && prefix[prefix.length() - 1] == '/')
-      prefix = prefix.left(prefix.length() - 1);
-    mImap.prefixEdit->setText( prefix );
-    mImap.progressDialogCheck->setChecked( ai.isProgressDialogEnabled() );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.storePasswordCheck->setChecked( ai.storePasswd() );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.excludeCheck->setChecked( ai.checkExclude() );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.intervalCheck->setChecked( interval >= 1 );
-    kdDebug() << "setting progress dialog done" << endl;
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
-    kdDebug() << "setting progress dialog done" << endl;
-    QString trashfolder = ai.trash();
-    if (trashfolder.isEmpty())
-      trashfolder = kernel->trashFolder()->idString();
-    mImap.trashCombo->setFolder( trashfolder );
-    slotEnableImapInterval( interval >= 1 );
-    if (ai.useSSL())
-      mImap.encryptionSSL->setChecked( TRUE );
-    else if (ai.useTLS())
-      mImap.encryptionTLS->setChecked( TRUE );
-    else mImap.encryptionNone->setChecked( TRUE );
-    if (ai.auth() == "CRAM-MD5")
-      mImap.authCramMd5->setChecked( TRUE );
-    else if (ai.auth() == "DIGEST-MD5")
-      mImap.authDigestMd5->setChecked( TRUE );
-    else if (ai.auth() == "ANONYMOUS")
-      mImap.authAnonymous->setChecked( TRUE );
-    else if (ai.auth() == "PLAIN")
-      mImap.authPlain->setChecked( TRUE );
-    else if (ai.auth() == "LOGIN")
-      mImap.authLogin->setChecked( TRUE );
-    else mImap.authUser->setChecked( TRUE );
-    assert( mSieveConfigEditor );
-    mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
   else if( accountType == "maildir" )
   {
@@ -1251,50 +1170,6 @@ void AccountDialog::saveSettings()
     else if (mImap.authLogin->isChecked())
       epa.setAuth("LOGIN");
     else epa.setAuth("*");
-    assert( mSieveConfigEditor );
-    epa.setSieveConfig( mSieveConfigEditor->config() );
-  }
-  else if( accountType == "cachedimap" )
-  {
-    mAccount->setName( mImap.nameEdit->text() );
-    mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
-                                mImap.intervalSpin->value() : 0 );
-    // mAccount->setResource( mImap.resourceCheck->isChecked() );
-    mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
-    //mAccount->setFolder( NULL );
-    mAccount->setFolder( kernel->imapFolderMgr()->find(mAccount->name() ) );
-    kdDebug() << mAccount->name() << endl;
-    //kdDebug() << "account for folder " << mAccount->folder()->name() << endl;
-
-    KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;
-    epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
-    epa.setPort( mImap.portEdit->text().toInt() );
-    QString prefix = "/" + mImap.prefixEdit->text();
-    if (prefix[prefix.length() - 1] != '/') prefix += "/";
-    epa.setPrefix( prefix );
-    epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
-    epa.setProgressDialogEnabled( mImap.progressDialogCheck->isChecked() );
-    epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
-    epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
-    epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
-    epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
-    epa.setTrash( mImap.trashCombo->getFolder()->idString() );
-    epa.setCheckExclude( mImap.excludeCheck->isChecked() );
-    epa.setUseSSL( mImap.encryptionSSL->isChecked() );
-    epa.setUseTLS( mImap.encryptionTLS->isChecked() );
-    if (mImap.authCramMd5->isChecked())
-      epa.setAuth("CRAM-MD5");
-    else if (mImap.authDigestMd5->isChecked())
-      epa.setAuth("DIGEST-MD5");
-    else if (mImap.authAnonymous->isChecked())
-      epa.setAuth("ANONYMOUS");
-    else if (mImap.authPlain->isChecked())
-      epa.setAuth("PLAIN");
-    else if (mImap.authLogin->isChecked())
-      epa.setAuth("LOGIN");
-    else epa.setAuth("*");
-    assert( mSieveConfigEditor );
-    epa.setSieveConfig( mSieveConfigEditor->config() );
   }
   else if( accountType == "maildir" )
   {

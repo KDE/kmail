@@ -7,8 +7,6 @@
 #ifndef kmfilteraction_h
 #define kmfilteraction_h
 
-#include <kmime_mdn.h>
-
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdict.h>
@@ -118,11 +116,6 @@ public:
   /** Temporarily open folder. Will be closed by the next @ref
     KMFilterMgr::cleanup() call.  */
   static int tempOpenFolder(KMFolder* aFolder);
-
-  /** Automates the sending of MDNs from filter actions. */
-  static void sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
-		       const QValueList<KMime::MDN::DispositionModifier> & m
-		       =QValueList<KMime::MDN::DispositionModifier>() );
 
 private:
   QString mName;

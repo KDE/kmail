@@ -1,7 +1,5 @@
 // KMail Account
 
-#include "kmaccount.h"
-
 #include <config.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -20,8 +18,6 @@
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
 #include "kmmessage.h"
-#include "folderjob.h"
-using KMail::FolderJob;
 
 //----------------------
 #include "kmaccount.moc"
@@ -41,6 +37,7 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),
           SLOT(precommandExited(KProcess *)));
 }
+
 
 //-----------------------------------------------------------------------------
 KMPrecommand::~KMPrecommand()
@@ -72,7 +69,6 @@ void KMPrecommand::precommandExited(KProcess *p)
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
   : mName(aName),
-    mTrash(KMKernel::self()->trashFolder()->idString()),
     mOwner(aOwner),
     mFolder(0),
     mTimer(0),
@@ -86,11 +82,6 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
   connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
-void KMAccount::init() {
-  mTrash = kernel->trashFolder()->idString();
-  mExclude = false;
-  mInterval = 0;
-}
 
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
@@ -135,7 +126,6 @@ void KMAccount::readConfig(KConfig& config)
   mFolder = 0;
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
-  setTrash(config.readEntry("trash", kernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readEntry("precommand"));
 
@@ -155,14 +145,13 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
-  config.writeEntry("trash", mTrash);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipt(KMMessage* aMsg)
 {
-  KConfig* cfg = KMKernel::config();
+  KConfig* cfg = kapp->config();
   bool sendReceipts;
 
   KConfigGroupSaver saver(cfg, "General");
@@ -249,28 +238,6 @@ void KMAccount::setCheckInterval(int aInterval)
   {
     mInterval = aInterval;
     installTimer();
-  }
-}
-
-//----------------------------------------------------------------------------
-void KMAccount::deleteFolderJobs()
-{
-  mJobList.setAutoDelete(true);
-  mJobList.clear();
-  mJobList.setAutoDelete(false);
-}
-
-//----------------------------------------------------------------------------
-void KMAccount::ignoreJobsForMessage( KMMessage* msg )
-{
-  //FIXME: remove, make folders handle those
-  for( QPtrListIterator<FolderJob> it(mJobList); it.current(); ++it ) {
-    if ( it.current()->msgList().first() == msg) {
-      FolderJob *job = it.current();
-      mJobList.remove( job );
-      delete job;
-      break;
-    }
   }
 }
 
@@ -385,20 +352,4 @@ QString KMAccount::importPassword(const QString &aStr)
   result[i] = '\0';
 
   return encryptStr(result);
-}
-
-void KMAccount::invalidateIMAPFolders()
-{
-  // Default: Don't do anything. The IMAP account will handle it
-}
-
-void KMAccount::pseudoAssign( const KMAccount * a ) {
-  if ( !a ) return;
-
-  setName( a->name() );
-  setCheckInterval( a->checkInterval() );
-  setCheckExclude( a->checkExclude() );
-  setFolder( a->folder() );
-  setPrecommand( a->precommand() );
-  setTrash( a->trash() );
 }

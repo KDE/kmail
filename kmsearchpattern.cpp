@@ -3,7 +3,6 @@
 // This code is under GPL!
 
 #include <config.h>
-#include <mimelib/boyermor.h>
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
 
@@ -62,13 +61,6 @@ void KMSearchRule::init(const QCString aField, Function aFunction,
   mField    = aField;
   mFunction = aFunction;
   mContents = aContents;
-  if (mField.isEmpty())
-      mBmHeaderField = 0;
-  else //TODO handle the unrealistic case of the message starting with mField
-      mBmHeaderField = new DwBoyerMoore(("\n" + mField + ": ").data()); 	
-  mBmEndHeaders1 = new DwBoyerMoore("\n\n");
-  mBmEndHeaders2 = new DwBoyerMoore("\n\r\n");
-  mBmEndHeader = new DwBoyerMoore("\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -87,57 +79,6 @@ void KMSearchRule::init(const QCString aField, const char* aStrFunction,
   int intFunc = findInStrList( funcConfigNames, aStrFunction );
   Function func = Function( ( intFunc >= 0 ) ? (Function)intFunc : FuncContains );
   init ( aField, func, aContents );
-}
-
-//-----------------------------------------------------------------------------
-bool KMSearchRule::matches(const DwString &aStr, KMMessage &msg,
-			   DwBoyerMoore *aHeaderField, int aHeaderLen) const
-{
-    DwBoyerMoore *headerField = mBmHeaderField;
-    int headerLen = mField.length() + 2; // +1 for ': '
-    if (aHeaderLen > -1)
-	headerLen = aHeaderLen + 2;
-    if (aHeaderField)
-	headerField = aHeaderField;
-    if (!headerField)
-	return false;
-    if (mField.length() && mField[0] != '<') {
-	QString msgContents;
-	int start, stop, len;
-	char ch = '\0';
-	int endOfHeader = mBmEndHeaders1->FindIn(aStr, 0);
-	if (endOfHeader == -1)
-	    endOfHeader = mBmEndHeaders2->FindIn(aStr, 0);
-	DwString headers = (endOfHeader < 0) ? aStr : aStr.substr(0, endOfHeader);
-	start = headerField->FindIn(headers, 0);
-	if (start == -1)
-	    return false;
-	start += headerLen;
-	stop = mBmEndHeader->FindIn(aStr, start);
-	while (stop != -1 && (ch = aStr.at(stop + 1)) == ' ' || ch == '\t')
-	    stop = mBmEndHeader->FindIn(aStr, stop + 1);
-	if (stop == -1)
-	    len = aStr.length() - start;
-	else
-	    len = stop - start;
-	QCString codedValue(aStr.data() + start, len + 1);
-	msgContents = KMMsgBase::decodeRFC2047String(codedValue);
-	return matches( false, 0, 0, msgContents );
-    } else if (mField == "<recipients>") {
-	bool res;
-	DwBoyerMoore to("To: ");
-	DwBoyerMoore cc("Cc: ");
-	res = matches(aStr, msg, &to, 2);
-	if (!res)
-	    res = matches(aStr, msg, &cc, 2);
-	return res;
-    } else {
-	if (!msg.isComplete()) {
-	    msg.fromDwString(aStr);
-	    msg.setComplete(true);
-	}
-	return matches(&msg);
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -185,6 +126,7 @@ bool KMSearchRule::matches(const KMMessage* msg) const
   } else {
     msgContents = msg->headerField(mField);
   }
+
   return matches( numerical, numericalValue, numericalMsgContents, msgContents );
 }
 
@@ -340,26 +282,6 @@ bool KMSearchPattern::matches( const KMMessage *msg ) const
     case OpOr:  // at least one rule must match
       for ( it.toFirst() ; it.current() ; ++it )
 	if ( (*it)->matches(msg) )
-	  return TRUE;
-      // fall through
-    default:
-      return FALSE;
-  }
-}
-
-bool KMSearchPattern::matches( const DwString &aStr ) const
-{
-  KMMessage msg;
-  QPtrListIterator<KMSearchRule> it(*this);
-  switch (mOperator ) {
-    case OpAnd: // all rules must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( !(*it)->matches(aStr, msg) )
-	  return FALSE;
-      return TRUE;
-    case OpOr:  // at least one rule must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( (*it)->matches(aStr, msg) )
 	  return TRUE;
       // fall through
     default:

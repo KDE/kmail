@@ -19,9 +19,7 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMMessage;
-class KMFolderChachedImap;
-namespace  KMail { class FolderJob; }
-using KMail::FolderJob;
+
 
 class KMPrecommand : public QObject
 {
@@ -52,8 +50,6 @@ class KMAccount: public QObject
 {
   Q_OBJECT
   friend class KMAcctMgr;
-  friend class FolderJob;
-  friend class KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
   virtual ~KMAccount();
@@ -80,24 +76,18 @@ public:
   /**
    * Set intelligent default values to the fields of the account.
    */
-  virtual void init();
+  virtual void init(void) = 0;
 
   /**
    * A weak assignment operator
    */
-  virtual void pseudoAssign(const KMAccount * a );
+  virtual void pseudoAssign(KMAccount*) = 0;
 
   /**
    * There can be exactly one folder that is fed by messages from an
    * account. */
   KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*, bool addAccount = false);
-
-  /**
-   * the id of the trash folder (if any) for this account
-   */
-  QString trash() const { return mTrash; }
-  virtual void setTrash(const QString& aTrash) { mTrash = aTrash; }
 
   /**
    * Process new mail for this account if one arrived. Returns TRUE if new
@@ -132,20 +122,11 @@ public:
   inline int defaultCheckInterval(void) const { return DefaultCheckInterval; }
 
   /**
-   * Deletes the set of FolderJob associated with this folder.
-   */
-  void deleteFolderJobs();
-
-  /**
-   * delete jobs associated with this message
-   */
-  virtual void ignoreJobsForMessage( KMMessage* );
-  /**
    * Set/get whether account should be part of the accounts checked
    * with "Check Mail".
    */
   virtual void setCheckExclude(bool aExclude);
-  bool checkExclude(void) const { return mExclude; }
+  int checkExclude(void) const { return mExclude; }
 
    /**
     * Pre command
@@ -169,11 +150,6 @@ public:
   static QString decryptStr(const QString& inStr) { return  encryptStr(inStr); }
 
   static QString importPassword(const QString &);
-
-  /**
-   * If this account is a disconnected IMAP account, invalidate it.
-   */
-  virtual void invalidateIMAPFolders();
 
 signals:
   virtual void finishedCheck(bool newMail);
@@ -211,7 +187,6 @@ protected:
 protected:
   QString       mName;
   QString       mPrecommand;
-  QString       mTrash;
   KMAcctMgr*    mOwner;
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
@@ -220,7 +195,6 @@ protected:
   bool mCheckingMail;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
-  QPtrList<FolderJob>  mJobList;
 
 private:
     /**

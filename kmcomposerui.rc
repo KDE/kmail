@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="13" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="12" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -21,7 +21,8 @@
   <Menu noMerge="1" name="options" >
    <text>&amp;Options</text>
    <Action name="urgent" />
-   <Action name="options_request_mdn" />
+   <Action name="confirm_delivery" />
+   <Action name="confirm_read" />
    <Separator/>
    <Action name="sign_message" />
    <Action name="encrypt_message" />

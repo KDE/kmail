@@ -22,39 +22,117 @@
 #ifndef KMAcctImap_h
 #define KMAcctImap_h
 
-#include "imapaccountbase.h"
+#include "kmaccount.h"
+#include <qdialog.h>
+#include <kio/global.h>
+#include <kio/job.h>
 
+class QLineEdit;
+class QPushButton;
 class KMFolderImap;
 class KMFolderTreeItem;
-namespace KMail {
-  class ImapJob;
-}
-namespace KIO {
-  class Job;
-};
+class KMImapJob;
+
+#define KMAcctImapInherited KMAccount
 
 //-----------------------------------------------------------------------------
-class KMAcctImap: public KMail::ImapAccountBase
+class KMAcctImap: public KMAccount
 {
   Q_OBJECT
-  friend class KMail::ImapJob;
-
-protected: // ### Hacks
-  void setPrefixHook();
+  friend class KMImapJob;
 
 public:
-  typedef KMail::ImapAccountBase base;
-
   virtual ~KMAcctImap();
+  virtual void init(void);
 
-  /** A weak assignment operator */
-  virtual void pseudoAssign( const KMAccount * a );
+  /**
+   * Initialize the slave configuration
+   */
+  virtual void initSlaveConfig();
+
+  /**
+   * Imap user login name
+   */
+  const QString& login(void) const { return mLogin; }
+  virtual void setLogin(const QString&);
+
+  /**
+   * Imap user password
+   */
+  QString passwd(void) const;
+  virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
+
+  /**
+   * Imap authentication method
+   */
+  QString auth(void) const { return mAuth; }
+  virtual void setAuth(const QString&);
+
+  /**
+   * Will the password be stored in the config file ?
+   */
+  bool storePasswd(void) const { return mStorePasswd; }
+  virtual void setStorePasswd(bool);
+
+  /**
+   * Imap host
+   */
+  const QString& host(void) const { return mHost; }
+  virtual void setHost(const QString&);
+
+  /**
+   * Port on Imap host
+   */
+  unsigned short int port(void) { return mPort; }
+  virtual void setPort(unsigned short int);
+
+  /**
+   * Prefix to the Imap folders
+   */
+  const QString& prefix(void) const { return mPrefix; }
+  virtual void setPrefix(const QString&);
+
+  const QString& trash(void) const { return mTrash; }
+  virtual void setTrash(const QString&);
+
+  /**
+   * Automatically expunge deleted messages when leaving the folder
+   */
+  bool autoExpunge() { return mAutoExpunge; }
+  virtual void setAutoExpunge(bool);
+
+  /**
+   * Show hidden files on the server
+   */
+  bool hiddenFolders() { return mHiddenFolders; }
+  virtual void setHiddenFolders(bool);
+
+  /**
+   * Show only subscribed folders
+   */
+  bool onlySubscribedFolders() { return mOnlySubscribedFolders; }
+  virtual void setOnlySubscribedFolders(bool);
+
+  /**
+   * Use SSL or not
+   */
+  bool useSSL() { return mUseSSL; }
+  virtual void setUseSSL(bool);
+
+  /**
+   * Use TLS or not
+   */
+  bool useTLS() { return mUseTLS; }
+  virtual void setUseTLS(bool);
 
   /**
    * Inherited methods.
    */
   virtual QString type(void) const;
+  virtual void readConfig(KConfig&);
+  virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool);
+  virtual void pseudoAssign(KMAccount*);
 
   struct jobData
   {
@@ -67,29 +145,41 @@ public:
     QPtrList<KMMessage> msgList;
   };
   QMap<KIO::Job *, jobData> mapJobData;
+ 
+  /**
+   * Get the URL for the account
+   */
+  KURL getUrl();
+
+  /**
+   * Connect to the IMAP server, if no connection is active
+   */
+  bool makeConnection();
 
   /**
    * Update the progress bar
    */
   void displayProgress();
-
+ 
   /**
    * Kill all jobs related the the specified folder
    */
   void killJobsForItem(KMFolderTreeItem * fti);
 
-  virtual void ignoreJobsForMessage( KMMessage * msg );
-
   /**
    * Kill the slave if any jobs are active
    */
-  void killAllJobs( bool disconnectSlave=false );
+  void killAllJobs();
 
   /**
    * Set the account idle or busy
    */
   void setIdle(bool aIdle) { mIdle = aIdle; }
 
+  /**
+   * Get the Slave used for the account
+   */
+  KIO::Slave * slave() { return mSlave; }
   void slaveDied() { mSlave = 0; killAllJobs(); }
 
   /**
@@ -115,13 +205,39 @@ public slots:
    */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
+signals:
+  /**
+   * Emitted, when the account is deleted
+   */
+  void deleted(KMAcctImap*);
+
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const QString& accountName);
 
-  QPtrList<KMail::ImapJob> mJobList;
+  QString mLogin, mPasswd;
+  QString mHost, mAuth;
+  QString mPrefix;
+  QString mTrash;
+  unsigned short int mPort;
+  bool    mStorePasswd;
+  bool    mAskAgain;
+  bool    mAutoExpunge;
+  bool    mUseSSL;
+  bool    mUseTLS;
+  bool    mHiddenFolders;
+  bool    mOnlySubscribedFolders;
+  bool    mProgressEnabled;
+  int     mTotal;
+  bool    mIdle;
+  QTimer  mIdleTimer;
+  KIO::Slave *mSlave;
+  KIO::MetaData mSlaveConfig;
+  QPtrList<KMImapJob> mJobList;
   KMFolderImap *mFolder;
+  int mCountUnread, mCountLastUnread;
+  int mCountRemainChecks;
   QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
 
 protected slots:
@@ -129,7 +245,7 @@ protected slots:
    * Send a NOOP command or log out when idle
    */
   void slotIdleTimeout();
-
+ 
   /**
    * Kills all jobs
    */
@@ -142,8 +258,12 @@ protected slots:
 
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
-  void postProcessNewMail( KMFolder * f ) { base::postProcessNewMail( f ); }
 
+  /** new-mail-notification for not-selected folders (is called via numUnreadMsgsChanged) */
+  void postProcessNewMail(KMFolder*);
+
+private:
+  bool errorDialogIsActive;
 };
 
 #endif /*KMAcctImap_h*/

@@ -29,7 +29,7 @@
 
 //-----------------------------------------------------------------------------
 KMAcctMaildir::KMAcctMaildir(KMAcctMgr* aOwner, const QString& aAccountName):
-  base(aOwner, aAccountName)
+  KMAcctMaildirInherited(aOwner, aAccountName)
 {
 }
 
@@ -49,9 +49,8 @@ QString KMAcctMaildir::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::init() {
-  base::init();
-
+void KMAcctMaildir::init(void)
+{
   mLocation = getenv("MAIL");
   if (mLocation.isNull()) {
     mLocation = getenv("HOME");
@@ -61,14 +60,16 @@ void KMAcctMaildir::init() {
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::pseudoAssign( const KMAccount * a )
+void KMAcctMaildir::pseudoAssign(KMAccount *account)
 {
-  base::pseudoAssign( a );
-
-  const KMAcctMaildir * m = dynamic_cast<const KMAcctMaildir*>( a );
-  if ( !m ) return;
-
-  setLocation( m->location() );
+  assert(account->type() == "maildir");
+  KMAcctMaildir *acct = static_cast<KMAcctMaildir*>(account);
+  setName(acct->name());
+  setLocation(acct->location());
+  setCheckInterval(acct->checkInterval());
+  setCheckExclude(acct->checkExclude());
+  setFolder(acct->folder());
+  setPrecommand(acct->precommand());
 }
 
 //-----------------------------------------------------------------------------
@@ -217,7 +218,7 @@ void KMAcctMaildir::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::readConfig(KConfig& config)
 {
-  base::readConfig(config);
+  KMAcctMaildirInherited::readConfig(config);
   mLocation = config.readEntry("Location", mLocation);
 }
 
@@ -225,7 +226,8 @@ void KMAcctMaildir::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::writeConfig(KConfig& config)
 {
-  base::writeConfig(config);
+  KMAcctMaildirInherited::writeConfig(config);
+
   config.writeEntry("Location", mLocation);
 }
 

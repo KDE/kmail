@@ -1,24 +1,24 @@
 // KMail Account Manager
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
-
 #include "kmacctmgr.h"
-
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
-#include "kmacctcachedimap.h"
 #include "kmbroadcaststatus.h"
-#include "kmkernel.h"
-#include "kmfiltermgr.h"
+
+
+#include <assert.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <kapplication.h>
 
 #include <qstringlist.h>
 #include <qregexp.h>
@@ -44,7 +44,7 @@ KMAcctMgr::~KMAcctMgr()
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   QString groupName;
 
   KConfigGroupSaver saver(config, "General");
@@ -72,7 +72,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  KConfig* config = KMKernel::config();
+  KConfig* config = kapp->config();
   KMAccount* acct;
   QString acctType, acctName;
   QCString groupName;
@@ -111,7 +111,6 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   if (checking) {
     if (mAcctChecking.count() > 1) moreThanOneAccount = true;
-//    sorryCheckAlreadyInProgress(_interactive);
     return;
   }
 
@@ -137,14 +136,14 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
 void KMAcctMgr::processNextCheck(bool _newMail)
 {
-  KMAccount *curAccount = 0;
+  KMAccount *curAccount = 0; 
   newMailArrived |= _newMail;
 
   if (lastAccountChecked)
     disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
 		this, SLOT(processNextCheck(bool)) );
 
-  if (mAcctChecking.isEmpty() ||
+  if (mAcctChecking.isEmpty() || 
       (((curAccount = mAcctChecking.take(0)) == lastAccountChecked))) {
     kernel->filterMgr()->cleanup();
     kdDebug(5006) << "checked mail, server ready" << endl;
@@ -165,7 +164,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   lastAccountChecked = curAccount;
 
-  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && curAccount->folder() == 0)
+  if (curAccount->type() != "imap" && curAccount->folder() == 0)
     {
       QString tmp; //Unsafe
       tmp = i18n("Account %1 has no mailbox defined!\n"
@@ -179,11 +178,6 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   kdDebug(5006) << "processing next mail check, server busy" << endl;
 
   curAccount->processNewMail(interactive);
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctMgr::singleInvalidateIMAPFolders(KMAccount *account) {
-  account->invalidateIMAPFolders();
 }
 
 //-----------------------------------------------------------------------------
@@ -202,9 +196,6 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 
   else if (aType == "imap")
     act = new KMAcctImap(this, aName);
-
-  else if (aType == "cachedimap")
-    act = new KMAcctCachedImap(this, aName);
 
   if (act)
   {
@@ -270,17 +261,8 @@ void KMAcctMgr::checkMail(bool _interactive)
 {
   newMailArrived = false;
 
-  if (checking) {
-      kdDebug(5006) << "already checking mail" << endl;
-      if (lastAccountChecked)
-	  kdDebug(5006) << "currently checking " << lastAccountChecked->name() << endl;
-
-      KMAccount* cur;
-      for (cur=mAcctList.first(); cur; cur=mAcctList.next())
-	  kdDebug(5006) << "queued " << cur->name() << endl;
-//      sorryCheckAlreadyInProgress(_interactive);
-      return;
-  }
+  if (checking)
+    return;
 
   if (mAcctList.isEmpty())
   {
@@ -293,25 +275,11 @@ void KMAcctMgr::checkMail(bool _interactive)
   mTotalNewMailsArrived=0;
 
   for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-	it.current() ; ++it )
+	it.current() ; ++it ) 
   {
     if (!it.current()->checkExclude())
       singleCheckMail(it.current(), _interactive);
   }
-}
-
-
-void KMAcctMgr::invalidateIMAPFolders()
-{
-  if (mAcctList.isEmpty()) {
-    KMessageBox::information(0,i18n("You need to add an account in the network"
-                                   "section of the settings in order to "
-                                   "receive mail."));
-    return;
-  }
-
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
-    singleInvalidateIMAPFolders(it.current());
 }
 
 
@@ -354,7 +322,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
     cur=mAcctList.next();
   }
 
-  if (cur->type() != "imap" && cur->type() != "cachedimap" && cur->folder() == 0)
+  if (cur->type() != "imap" && cur->folder() == 0)
   {
     QString tmp;
     tmp = i18n("Account %1 has no mailbox defined!\n"
@@ -376,17 +344,5 @@ void KMAcctMgr::addToTotalNewMailCount(int newmails)
   if ( mTotalNewMailsArrived==-1 ) return;
   mTotalNewMailsArrived+=newmails;
 }
-
-
-//-----------------------------------------------------------------------------
-void KMAcctMgr::sorryCheckAlreadyInProgress(bool aInteractive)
-{
-  if (aInteractive && lastAccountChecked)
-    KMessageBox::sorry(
-      0,
-      i18n( "Mail checking of the %1 account is already in progress."
-	  ).arg( lastAccountChecked->name() ));
-}
-
 //-----------------------------------------------------------------------------
 #include "kmacctmgr.moc"

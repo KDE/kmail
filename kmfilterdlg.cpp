@@ -137,7 +137,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 				    i18n("Advanced Options"), w);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
-      QGridLayout *gl = new QGridLayout( adv_w, 3 /*rows*/, 4 /*cols*/,
+      QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 4 /*cols*/,
 				         0 /*border*/, spacingHint() );
       gl->setColStretch( 0, 1 );
       QLabel *l = new QLabel( i18n("Apply this filter"), adv_w );
@@ -152,8 +152,6 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
 			      1, 1, /*from to row*/
   			      0, 3 /*from to col*/ );
-      mConfigureShortcut = new QCheckBox( i18n("Show Message menu Apply Filter Actions menu item for this filter"), adv_w );
-      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
     }
     vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
@@ -186,9 +184,6 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
     // check box to the filter
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
 	     this, SLOT(slotStopProcessingButtonToggled(bool)) );
-
-    connect( mConfigureShortcut, SIGNAL(toggled(bool)),
-	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
   }
 
   // reset all widgets here
@@ -215,7 +210,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   connect( this, SIGNAL(finished()),
 	   this, SLOT(slotFinished()) );
 
-  KConfigGroup geometry( KMKernel::config(), "Geometry");
+  KConfigGroup geometry( kapp->config(), "Geometry");
   const char * configKey
     = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
   if ( geometry.hasKey( configKey ) )
@@ -232,7 +227,7 @@ void KMFilterDlg::slotFinished() {
 }
 
 void KMFilterDlg::slotSaveSize() {
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
   geometry.writeEntry( bPopFilter ? "popFilterDialogSize" : "filterDialogSize", size() );
 }
 
@@ -274,13 +269,11 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     bool applyOnOut = aFilter->applyOnOutbound();
     bool applyOnExplicit = aFilter->applyOnExplicit();
     bool stopHere = aFilter->stopProcessingHere();
-    bool configureShortcut = aFilter->configureShortcut();
 
     mApplyOnIn->setChecked( applyOnIn );
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
-    mConfigureShortcut->setChecked( configureShortcut );
   }
 }
 
@@ -319,14 +312,6 @@ void KMFilterDlg::slotStopProcessingButtonToggled( bool aChecked )
     return;
 
   mFilter->setStopProcessingHere( aChecked );
-}
-
-void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
-{
-  if ( !mFilter )
-    return;
-
-  mFilter->setConfigureShortcut( aChecked );
 }
 
 //=============================================================================

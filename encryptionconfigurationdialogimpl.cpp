@@ -48,7 +48,7 @@ void EncryptionConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPl
     warnChainCertificateExpiresCB->setEnabled( cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) );
     warnChainCertificateExpiresSB->setEnabled( cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) );
     warnReceiverNotInCertificateCB->setEnabled( cryptPlug->hasFeature( Feature_WarnEncryptEmailNotInCertificate ) );
-    storeEncryptedCB->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesEncrypted ) );
+    saveMessagesBG->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesEncrypted ) );
     certificatePathCheckBG->setEnabled( cryptPlug->hasFeature( Feature_CheckCertificatePath ) );
     
     if( ! FULLTEST ) {
@@ -56,8 +56,10 @@ void EncryptionConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPl
         
 //        encryptionSettingsBG          ->hide(); // Will implement that later.
         
-        certBG                         ->hide(); // Will implement that later.
-
+        certificatePathCheckBG        ->hide(); // Will implement that later.
+        
+        crlBG                         ->hide(); // Will implement that later.
+        
         warnCRLExpireCB               ->hide(); // Will implement that later.
         warnCRLExpireSB               ->hide(); // Will implement that later.
         

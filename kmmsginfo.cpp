@@ -17,7 +17,7 @@ public:
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
 	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
 	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
-	SIGNATURE_SET=0x1000, MDN_SET=0x2000,
+	SIGNATURE_SET=0x1000,
 
 	ALL_SET = 0xFFFF, NONE_SET = 0x0000
     };
@@ -28,7 +28,6 @@ public:
     time_t date;
     KMMsgEncryptionState encryptionState;
     KMMsgSignatureState signatureState;
-    KMMsgMDNSentState mdnSentState;
 
     KMMsgInfoPrivate() : modifiers(NONE_SET) { }
     KMMsgInfoPrivate& operator=(const KMMsgInfoPrivate& other) {
@@ -80,10 +79,6 @@ public:
 	if(other.modifiers & SIGNATURE_SET) {
 	    modifiers |= SIGNATURE_SET;
 	    signatureState = other.signatureState;
-	}
-	if(other.modifiers & MDN_SET) {
-	    modifiers |= MDN_SET;
-	    mdnSentState = other.mdnSentState;
 	}
 	return *this;
     }
@@ -144,10 +139,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->file = msg.fileName();
     kd->encryptionState = msg.encryptionState();
     kd->signatureState = msg.signatureState();
-    kd->mdnSentState = msg.mdnSentState();
     return *this;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
@@ -156,8 +149,7 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     const QCString& replyToId, const QCString& msgId,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
-		     KMMsgMDNSentState mdnSentState,
-                     off_t aFolderOffset, size_t aMsgSize)
+                     off_t aFolderOffset, size_t aMsgSize )
 {
     mIndexOffset = 0;
     mIndexLength = 0;
@@ -177,7 +169,6 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->file = "";
     kd->encryptionState = encryptionState;
     kd->signatureState = signatureState;
-    kd->mdnSentState = mdnSentState;
     mDirty     = FALSE;
 }
 
@@ -188,12 +179,11 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     const QCString& aFileName,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
-		     KMMsgMDNSentState mdnSentState,
 		     unsigned long aMsgSize)
 {
   // use the "normal" init for most stuff
   init(aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, msgId,
-       encryptionState, signatureState, mdnSentState, (unsigned long)0, aMsgSize);
+       encryptionState, signatureState, (unsigned long)0, aMsgSize);
   kd->file = aFileName;
 }
 
@@ -343,20 +333,6 @@ void KMMsgInfo::setSignatureState( const KMMsgSignatureState s, int idx )
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
-{
-    if (s == mdnSentState())
-	return;
-
-    if (!kd)
-	kd = new KMMsgInfoPrivate;
-    kd->modifiers |= KMMsgInfoPrivate::MDN_SET;
-    kd->mdnSentState = s;
-    KMMsgBase::setMDNSentState(s, idx); //base does more "stuff"
-    mDirty = TRUE;
-}
-
-//-----------------------------------------------------------------------------
 KMMsgStatus KMMsgInfo::status(void) const
 {
     if (mStatus == KMMsgStatusUnknown)
@@ -369,7 +345,7 @@ KMMsgStatus KMMsgInfo::status(void) const
 KMMsgEncryptionState KMMsgInfo::encryptionState() const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::ENCRYPTION_SET)
-      return kd->encryptionState;
+	return kd->encryptionState;
     unsigned long encState = getLongPart(MsgCryptoStatePart) & 0x0000FFFF;
     return encState ? (KMMsgEncryptionState)encState : KMMsgEncryptionStateUnknown;
 }
@@ -378,18 +354,10 @@ KMMsgEncryptionState KMMsgInfo::encryptionState() const
 KMMsgSignatureState KMMsgInfo::signatureState() const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::SIGNATURE_SET)
-      return kd->signatureState;
+	return kd->signatureState;
     unsigned long sigState = getLongPart(MsgCryptoStatePart) >> 16;
     return sigState ? (KMMsgSignatureState)sigState : KMMsgSignatureStateUnknown;
 }
-
-KMMsgMDNSentState KMMsgInfo::mdnSentState() const {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::MDN_SET)
-      return kd->mdnSentState;
-    unsigned long mdnState = getLongPart(MsgMDNSentPart);
-    return mdnState ? (KMMsgMDNSentState)mdnState : KMMsgMDNStateUnknown;
-}
-
 
 //-----------------------------------------------------------------------------
 off_t KMMsgInfo::folderOffset(void) const

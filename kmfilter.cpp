@@ -32,7 +32,6 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bApplyOnOutbound = FALSE;
     bApplyOnExplicit = TRUE;
     bStopProcessingHere = TRUE;
-    bConfigureShortcut = FALSE;
   }
 }
 
@@ -45,7 +44,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     mActions.setAutoDelete( true );
 
   mPattern = aFilter.mPattern;
-
+    
   if ( bPopFilter ){
     mAction = aFilter.mAction;
   } else {
@@ -53,8 +52,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bApplyOnOutbound = aFilter.applyOnOutbound();
     bApplyOnExplicit = aFilter.applyOnExplicit();
     bStopProcessingHere = aFilter.stopProcessingHere();
-    bConfigureShortcut = aFilter.configureShortcut();
-
+    
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
@@ -137,7 +135,7 @@ void KMFilter::readConfig(KConfig* config)
   // MKSearchPattern::readConfig ensures
   // that the pattern is purified.
   mPattern.readConfig(config);
-
+ 
   if (bPopFilter)
     // get the action description...
     mAction = (KMPopFilterAction) config->readNumEntry( "action" );
@@ -154,19 +152,18 @@ void KMFilter::readConfig(KConfig* config)
     }
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", TRUE);
-    bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", FALSE);
-
+  
     int i, numActions;
     QString actName, argsName;
-
+  
     mActions.clear();
-
+  
     numActions = config->readNumEntry("actions",0);
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
       KMessageBox::information( 0, i18n("Too many filter actions in filter rule `%1'").arg( mPattern.name() ) );
     }
-
+  
     for ( i=0 ; i < numActions ; i++ ) {
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
@@ -212,11 +209,10 @@ void KMFilter::writeConfig(KConfig* config) const
     config->writeEntry( "apply-on", sets );
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
-    config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
-
+ 
     QString key;
     int i;
-
+ 
     QPtrListIterator<KMFilterAction> it( mActions );
     for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
       config->writeEntry( key.sprintf("action-name-%d", i),
@@ -232,7 +228,7 @@ void KMFilter::purify()
 {
   mPattern.purify();
 
-  if (!bPopFilter) {
+  if (!bPopFilter) { 
     QPtrListIterator<KMFilterAction> it( mActions );
     it.toLast();
     while ( it.current() )
@@ -244,11 +240,11 @@ void KMFilter::purify()
 }
 
 bool KMFilter::isEmpty() const
-{
+{ 
   if (bPopFilter)
-    return mPattern.isEmpty();
+    return mPattern.isEmpty(); 
   else
-    return mPattern.isEmpty() || mActions.isEmpty();
+    return mPattern.isEmpty() || mActions.isEmpty(); 
 }
 
 const QString KMFilter::asString() const

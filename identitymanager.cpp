@@ -134,7 +134,7 @@ void IdentityManager::sort() {
 
 void IdentityManager::writeConfig() const {
   QStringList identities = groupList();
-  KConfig * config = KMKernel::config();
+  KConfig * config = kapp->config();
   for ( QStringList::Iterator group = identities.begin() ;
 	group != identities.end() ; ++group )
     config->deleteGroup( *group );
@@ -162,13 +162,13 @@ void IdentityManager::readConfig() {
   QStringList identities = groupList();
   if ( identities.isEmpty() ) return; // nothing to be done...
 
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( kapp->config(), "General" );
   uint defaultIdentity = general.readUnsignedNumEntry( configKeyDefaultIdentity );
   bool haveDefault = false;
 
   for ( QStringList::Iterator group = identities.begin() ;
 	group != identities.end() ; ++group ) {
-    KConfigGroup config( KMKernel::config(), *group );
+    KConfigGroup config( kapp->config(), *group );
     mIdentities << KMIdentity();
     mIdentities.last().readConfig( &config );
     if ( !haveDefault && mIdentities.last().uoid() == defaultIdentity ) {
@@ -184,7 +184,7 @@ void IdentityManager::readConfig() {
 }
 
 QStringList IdentityManager::groupList() const {
-  return KMKernel::config()->groupList().grep( QRegExp("^Identity #\\d+$") );
+  return kapp->config()->groupList().grep( QRegExp("^Identity #\\d+$") );
 }
 
 IdentityManager::ConstIterator IdentityManager::begin() const {
