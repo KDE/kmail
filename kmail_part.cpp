@@ -71,8 +71,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kdDebug(5006) << "KMailPart()..." << endl;
   kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
-  // import i18n data from libraries:
-  KMail::insertLibraryCatalogues();
+  // import i18n data and icons from libraries:
+  KMail::insertLibraryCataloguesAndIcons();
 
   // Make sure that the KNotify Daemon is running (this is necessary for people
   // using KMail without KDE)

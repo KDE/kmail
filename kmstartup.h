@@ -16,7 +16,7 @@ namespace KMail
 {
     void checkConfigUpdates();
     void lockOrDie();
-    void insertLibraryCatalogues();
+    void insertLibraryCataloguesAndIcons();
     void cleanup();
 }
 

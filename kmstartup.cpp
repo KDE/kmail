@@ -190,18 +190,21 @@ void lockOrDie() {
   config.sync();
 }
 
-void insertLibraryCatalogues() {
+void insertLibraryCataloguesAndIcons() {
   static const char * const catalogues[] = {
     "libkdenetwork",
     "libkdepim",
-    "libktnef",
-    "libkcal",
     "libksieve",
+    "libkleopatra",
   };
 
   KLocale * l = KGlobal::locale();
-  for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i )
+  KIconLoader * il = KGlobal::iconLoader();
+  for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i ) {
     l->insertCatalogue( catalogues[i] );
+    il->addAppDir( catalogues[i] );
+  }
+
 }
 
 void cleanup()
