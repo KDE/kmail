@@ -780,6 +780,9 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
+    if (!mMsg->headerField("Organization").isEmpty())
+      mViewer->write("&nbsp;&nbsp;(" +
+      strToHtml(mMsg->headerField("Organization")) + ")");
     mViewer->write("<br>\n");
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
@@ -800,6 +803,9 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
+    if (!mMsg->headerField("Organization").isEmpty())
+      mViewer->write("&nbsp;&nbsp;(" +
+      strToHtml(mMsg->headerField("Organization")) + ")");
     mViewer->write("<br>\n");
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
