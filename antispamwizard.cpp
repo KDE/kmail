@@ -109,11 +109,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   if ( mMode == AntiSpam ) {
     mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
+    addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkSpamRulesSelections( void ) ) );
   }
   else {
     mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
+    addPage( mVirusRulesPage, i18n( "Please select the virus filters to be created inside KMail." ));
     connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkVirusRulesSelections( void ) ) );
   }
@@ -390,20 +392,11 @@ void AntiSpamWizard::checkProgramsSelections()
   if ( mSpamRulesPage )
     mSpamRulesPage->allowClassification( canClassify );
 
-  if ( mSpamRulesPage )
-    removePage( mSpamRulesPage );
-  if ( mVirusRulesPage )
-    removePage( mVirusRulesPage );
   if ( ( mMode == AntiSpam ) && mSpamToolsUsed )
-  {
-    addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
     checkSpamRulesSelections();
-  }
+  
   if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
-  {
-    addPage( mVirusRulesPage, i18n( "Please select the virus filters to be created inside KMail." ));
     checkVirusRulesSelections();
-  }
 
   setNextEnabled( mProgramsPage, status );
 }
