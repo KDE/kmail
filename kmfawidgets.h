@@ -13,6 +13,7 @@
 */
 
 class QPushButton;
+class KURLRequester;
 
 class KMFilterActionWithAddressWidget : public QWidget
 {
@@ -32,5 +33,25 @@ private:
   QLineEdit*   mLineEdit;
 };
 
+class KMSoundTestWidget : public QWidget
+{
+  Q_OBJECT
+public:
+  KMSoundTestWidget( QWidget * parent, const char * name=0 );
+  ~KMSoundTestWidget();
+  QString url() const;
+  void setUrl( const QString & url );
+  void clear();
+signals:
+  void testPressed();
+protected slots:
+  void playSound();
+  void openSoundDialog( KURLRequester * );
+  void slotUrlChanged( const QString & );
+
+private:
+  KURLRequester *m_urlRequester;
+  QPushButton *m_playButton;
+};
 
 #endif /*_kmfawidget_h_*/

@@ -20,20 +20,14 @@
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 #include "kmmessage.h"
-#include <kiconloader.h>
-#include <kicontheme.h>
 
 #include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
-#include <kdeversion.h>
 #include <kaudioplayer.h>
 #include <kurlrequester.h>
-#include <qpushbutton.h>
-#include <kfiledialog.h>
-#include <kstandarddirs.h>
 
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
@@ -1483,100 +1477,6 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
 // KMFilterActionExecSound - execute command
 // Execute a sound
 //=============================================================================
-KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
-    : QWidget( parent, name)
-{
-    QHBoxLayout *lay1 = new QHBoxLayout( this );
-    m_playButton = new QPushButton( this, "m_playButton" );
-    m_playButton->setPixmap( SmallIcon( "1rightarrow" ) );
-    connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
-    lay1->addWidget( m_playButton );
-
-    m_urlRequester = new KURLRequester( this );
-    lay1->addWidget( m_urlRequester );
-    connect( m_urlRequester, SIGNAL( openFileDialog( KURLRequester * )),
-             SLOT( openSoundDialog( KURLRequester * )));
-    connect( m_urlRequester->lineEdit(), SIGNAL( textChanged ( const QString & )), SLOT( slotUrlChanged(const QString & )));
-    slotUrlChanged(m_urlRequester->lineEdit()->text() );
-}
-
-KMSoundTestWidget::~KMSoundTestWidget()
-{
-}
-
-void KMSoundTestWidget::slotUrlChanged(const QString &_text )
-{
-    m_playButton->setEnabled( !_text.isEmpty());
-}
-
-void KMSoundTestWidget::openSoundDialog( KURLRequester * )
-{
-    static bool init = true;
-    if ( !init )
-        return;
-
-    init = false;
-
-    KFileDialog *fileDialog = m_urlRequester->fileDialog();
-    fileDialog->setCaption( i18n("Select Sound File") );
-    QStringList filters;
-    filters << "audio/x-wav" << "audio/x-mp3" << "application/x-ogg"
-            << "audio/x-adpcm";
-    fileDialog->setMimeFilter( filters );
-
-   QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
-
-    if ( !soundDirs.isEmpty() ) {
-        KURL soundURL;
-        QDir dir;
-        dir.setFilter( QDir::Files | QDir::Readable );
-        QStringList::ConstIterator it = soundDirs.begin();
-        while ( it != soundDirs.end() ) {
-            dir = *it;
-            if ( dir.isReadable() && dir.count() > 2 ) {
-                soundURL.setPath( *it );
-                fileDialog->setURL( soundURL );
-                break;
-            }
-            ++it;
-        }
-    }
-
-}
-
-void KMSoundTestWidget::playSound()
-{
-    QString parameter= m_urlRequester->lineEdit()->text();
-    if ( parameter.isEmpty() )
-        return ;
-    QString play = parameter;
-    QString file = QString::fromLatin1("file:");
-    if (parameter.startsWith(file))
-        play = parameter.mid(file.length());
-    KAudioPlayer::play(QFile::encodeName(play));
-}
-
-
-QString KMSoundTestWidget::url() const
-{
-    return m_urlRequester->lineEdit()->text();
-}
-
-void KMSoundTestWidget::setUrl(const QString & url)
-{
-    m_urlRequester->lineEdit()->setText(url);
-}
-
-void KMSoundTestWidget::clear()
-{
-    m_urlRequester->lineEdit()->clear();
-}
-
-//=============================================================================
-//
-// KMFilterActionExecSound
-//
-//=============================================================================
 class KMFilterActionExecSound : public KMFilterActionWithTest
 {
 public:
@@ -1717,8 +1617,8 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionRemoveHeader::newAction );
   insert( KMFilterActionAddHeader::newAction );
   insert( KMFilterActionRewriteHeader::newAction );
-  // Register custom filter actions below this line.
   insert( KMFilterActionExecSound::newAction );
+  // Register custom filter actions below this line.
 }
 // The int in the QDict constructor (23) must be a prime
 // and should be greater than the double number of KMFilterAction types
@@ -1742,4 +1642,3 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   delete action;
 }
 
-#include "kmfilteraction.moc"

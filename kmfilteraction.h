@@ -22,28 +22,6 @@ class KMMessage;
 class QWidget;
 class KMFolder;
 class KTempFile;
-class KURLRequester;
-class QPushButton;
-
-class KMSoundTestWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    KMSoundTestWidget(QWidget *parent, const char *name=0L);
-    ~KMSoundTestWidget();
-    QString url() const;
-    void setUrl(const QString & url);
-    void clear();
-signals:
-    void testPressed();
-protected slots:
-    void playSound();
-    void openSoundDialog( KURLRequester * );
-    void slotUrlChanged(const QString & );
-private:
-    KURLRequester *m_urlRequester;
-    QPushButton *m_playButton;
-};
 
 //=========================================================
 //
