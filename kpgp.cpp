@@ -23,8 +23,6 @@
 #include <kapp.h>
 #include <kiconloader.h>
 
-#include <config.h>
-
 /* TODO :
   --  When there is no output from PGP, a warning dialog should
       appear (when there's a problem now, the MESSAGE IS SENT
@@ -723,11 +721,7 @@ Kpgp::runPGP(int action, const char* args)
   wait(NULL);
   alarm(0);
   signal(SIGALRM,oldsig);
-#ifdef HAVE_FUNC_SETENV
   unsetenv("PGPPASSFD");
-#else
-  putenv("PGPPASSFD=");
-#endif
   debug("Okay !");
 
   return parseInfo(action);
