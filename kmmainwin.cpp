@@ -76,6 +76,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   // must be the first line of the constructor:
   searchWin = 0;
   mStartupDone = FALSE;
+  mbNewMBVisible = false;
   QListViewItem* idx;
   mIntegrated  = TRUE;
   mFolder = NULL;
@@ -609,14 +610,17 @@ void KMMainWin::slotMailChecked(bool newMail) {
     KApplication::beep();
   }
 
+  // FIXME: change system() to a KProcess
   if (mExecOnNew) {
     if (mNewMailCmd.length() > 0)
       system((const char *)mNewMailCmd);
   }
 
-  if (mBoxOnNew) {
+  if (mBoxOnNew && !mbNewMBVisible) {
+    mbNewMBVisible = true;
     KMessageBox::information(this, QString(i18n("You have new mail!")),
                                    QString(i18n("New Mail")));
+    mbNewMBVisible = false;
   }
 
   // Todo:

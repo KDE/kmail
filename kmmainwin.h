@@ -211,6 +211,7 @@ protected:
   KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
   ConfigureDialog *mConfigureDialog;
+  bool mbNewMBVisible;
 
   KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
