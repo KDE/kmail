@@ -79,7 +79,6 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
   private:
     KMKernel *kmailKernel;
     KMMainWidget *mainWidget;
-    QWidget *widget;
     ActionManager *mActionManager;
     KMailBrowserExtension *m_extension;
 #if KDE_IS_VERSION( 3, 1, 90 )

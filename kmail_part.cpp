@@ -178,7 +178,7 @@ bool KMailPart::openFile()
 {
   kdDebug(5006) << "KMailPart:openFile()" << endl;
 
-  widget->show();
+  mainWidget->show();
   return true;
 }
 
