@@ -157,8 +157,10 @@ QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disc
     it.current()->setPassiveDestructor( true );
   KMAccount::deleteFolderJobs();
 
-  if ( disconnectSlave && slave() ) {
-    KIO::Scheduler::disconnectSlave( slave() );
+  if ( disconnectSlave && mSlave ) {
+    KIO::Scheduler::disconnectSlave( mSlave );
+    if ( !mSlaveConnected )
+      slotSchedulerSlaveError( mSlave, KIO::ERR_USER_CANCELED, QString::null );
     mSlave = 0;
   }
   return folderList;
@@ -412,7 +414,8 @@ void KMAcctCachedImap::removeRenamedFolder( const QString& subFolderPath )
 
 void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
 {
-  killAllJobs( false );
+  bool abortConnection = !mSlaveConnected;
+  killAllJobs( abortConnection );
 }
 
 FolderStorage* const KMAcctCachedImap::rootFolder() const
