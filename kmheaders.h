@@ -40,6 +40,7 @@ struct KMPaintInfo {
   QColor colBack;
   QColor colNew;
   QColor colUnread;
+  bool showSize;      // Do we display the message size?
   bool orderOfArrival;
   bool status;
   int flagCol;
@@ -240,7 +241,6 @@ private:
   bool mNested, mNestedOverride;
 
   static bool mTrue, mFalse;    // These must replaced by something better!
-  bool mShowSize;               // Do we display the message size?
 
   int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
   bool getMsgMulti;             // ditto

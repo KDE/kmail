@@ -87,7 +87,6 @@ public:
   KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId, 
 		KMPaintInfo *aPaintInfo )
     : QListViewItem( parent ), 
-
       mFolder( folder ),
       mMsgId( msgId ),
       mPaintInfo( aPaintInfo )
@@ -138,8 +137,7 @@ public:
     time_t mDate = mMsgBase->date();
     setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
 
-    kapp->config()->setGroup("General");
-    if (kapp->config()->readBoolEntry("showMessageSize", false)) {
+    if (mPaintInfo->showSize) {
       QString msz;
       QString blanks = " ";
       long lmsz = mMsgBase->msgSize();
@@ -286,9 +284,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
   addColumn( i18n("Date"), 170 );
-  if (mShowSize) {
+  if (mPaintInfo.showSize)
     addColumn( i18n("Size"), 80 );
-  }
 
   if (!pixmapsLoaded)
   {
@@ -356,7 +353,7 @@ void KMHeaders::readConfig (void)
   }
 
   config->setGroup("General");
-  mShowSize = config->readBoolEntry("showMessageSize");
+  mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
 
   // Custom/System colors
   config->setGroup("Reader");
@@ -433,7 +430,7 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
-  if (mShowSize)
+  if (mPaintInfo.showSize)
     setColumnWidth(mPaintInfo.sizeCol, config->readNumEntry("SizeWidth", 80));
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
@@ -603,7 +600,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.subCol, colText);
 
-  if (mShowSize) {
+  if (mPaintInfo.showSize) {
     colText = i18n( "Size" );
     setColumnText( mPaintInfo.sizeCol, colText);
   }
