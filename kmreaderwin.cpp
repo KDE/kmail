@@ -630,7 +630,7 @@ void KMReaderWin::updateReaderWin()
     mColorBar->hide();
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<html><body" +
-		   QString(" bgcolor=\"#%1\"").arg(colorToString(c4)));
+		   QString(" bgcolor=\"%1\"").arg(c4.name()));
 
     if (mBackingPixmapOn)
       mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
@@ -641,17 +641,6 @@ void KMReaderWin::updateReaderWin()
   mViewer->view()->setUpdatesEnabled( true );
   mViewer->view()->viewport()->repaint( false );
 }
-
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::colorToString(const QColor& c)
-{
-  return QString::number(0x1000000 +
-			 (c.red() << 16) +
-			 (c.green() << 8) +
-			 c.blue(), 16 ).mid(1);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
@@ -688,57 +677,75 @@ void KMReaderWin::parseMsg(void)
     mCodec = QTextCodec::codecForName("iso8859-1");
   mMsg->setCodec(mCodec);
 
+  QColorGroup cg = kapp->palette().active();
   mViewer->write("<html><head><style type=\"text/css\">" +
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; }\n")
         .arg( mBodyFamily ).arg( fntSize )
       : QString("body { font-family: \"%1\"; font-size: %2pt; "
-        "color: #%3; background-color: #%4; }\n")
-        .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1))
-        .arg(colorToString(c4))) +
+        "color: %3; background-color: %4; }\n")
+        .arg( mBodyFamily ).arg( fntSize ).arg(c1.name())
+        .arg(c4.name())) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
-      : QString("a { color: #%1; ").arg(colorToString(c2)) +
+      : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing
-        QString( "table.encr { width: 100%; background-color: #%1; "
+        QString( "table.encr { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
-        .arg( colorToString( cPgpEncrF ) ) +
-        QString( "tr.encrH { background-color: #%1; "
+        .arg( cPgpEncrF.name() ) +
+        QString( "tr.encrH { background-color: %1; "
                  "font-weight: bold; }\n" )
-        .arg( colorToString( cPgpEncrH ) ) +
-        QString( "tr.encrB { background-color: #%1; }\n" )
-        .arg( colorToString( cPgpEncrB ) ) +
-        QString( "table.signOkKeyOk { width: 100%; background-color: #%1; "
+        .arg( cPgpEncrH.name() ) +
+        QString( "tr.encrB { background-color: %1; }\n" )
+        .arg( cPgpEncrB.name() ) +
+        QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
-        .arg( colorToString( cPgpOk1F ) ) +
-        QString( "tr.signOkKeyOkH { background-color: #%1; "
+        .arg( cPgpOk1F.name() ) +
+        QString( "tr.signOkKeyOkH { background-color: %1; "
                  "font-weight: bold; }\n" )
-        .arg( colorToString( cPgpOk1H ) ) +
-        QString( "tr.signOkKeyOkB { background-color: #%1; }\n" )
-        .arg( colorToString( cPgpOk1B ) ) +
-        QString( "table.signOkKeyBad { width: 100%; background-color: #%1; "
+        .arg( cPgpOk1H.name() ) +
+        QString( "tr.signOkKeyOkB { background-color: %1; }\n" )
+        .arg( cPgpOk1B.name() ) +
+        QString( "table.signOkKeyBad { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
-        .arg( colorToString( cPgpOk0F ) ) +
-        QString( "tr.signOkKeyBadH { background-color: #%1; "
+        .arg( cPgpOk0F.name() ) +
+        QString( "tr.signOkKeyBadH { background-color: %1; "
                  "font-weight: bold; }\n" )
-        .arg( colorToString( cPgpOk0H ) ) +
-        QString( "tr.signOkKeyBadB { background-color: #%1; }\n" )
-        .arg( colorToString( cPgpOk0B ) ) +
-        QString( "table.signWarn { width: 100%; background-color: #%1; "
+        .arg( cPgpOk0H.name() ) +
+        QString( "tr.signOkKeyBadB { background-color: %1; }\n" )
+        .arg( cPgpOk0B.name() ) +
+        QString( "table.signWarn { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
-        .arg( colorToString( cPgpWarnF ) ) +
-        QString( "tr.signWarnH { background-color: #%1; "
+        .arg( cPgpWarnF.name() ) +
+        QString( "tr.signWarnH { background-color: %1; "
                  "font-weight: bold; }\n" )
-        .arg( colorToString( cPgpWarnH ) ) +
-        QString( "tr.signWarnB { background-color: #%1; }\n" )
-        .arg( colorToString( cPgpWarnB ) ) +
-        QString( "table.signErr { width: 100%; background-color: #%1; "
+        .arg( cPgpWarnH.name() ) +
+        QString( "tr.signWarnB { background-color: %1; }\n" )
+        .arg( cPgpWarnB.name() ) +
+        QString( "table.signErr { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
-        .arg( colorToString( cPgpErrF ) ) +
-        QString( "tr.signErrH { background-color: #%1; "
+        .arg( cPgpErrF.name() ) +
+        QString( "tr.signErrH { background-color: %1; "
                  "font-weight: bold; }\n" )
-        .arg( colorToString( cPgpErrH ) ) +
-        QString( "tr.signErrB { background-color: #%1; }\n" )
-        .arg( colorToString( cPgpErrB ) )) +
-		 "</style></head>" +
+        .arg( cPgpErrH.name() ) +
+        QString( "tr.signErrB { background-color: %1; }\n" )
+        .arg( cPgpErrB.name() )) +
+        QString( "div.fancyHeaderSubj { background-color: %1; "
+                                       "color: %2; padding: 4px; "
+                                       "border: solid %3 1px; }\n" )
+        .arg((mPrinting) ? cg.background().name() : cg.highlight().name())
+        .arg((mPrinting) ? cg.foreground().name() : cg.highlightedText().name())
+        .arg(cg.foreground().name()) +
+        QString( "div.fancyHeaderDtls { background-color: %1; color: %2; "
+                                       "border-bottom: solid %3 1px; "
+                                       "border-left: solid %4 1px; "
+                                       "border-right: solid %5 1px; "
+                                       "margin-bottom: 1em; "
+                                       "padding: 2px; }\n" )
+         .arg(cg.background().name())
+         .arg(cg.foreground().name())
+         .arg(cg.foreground().name())
+         .arg(cg.foreground().name())
+         .arg(cg.foreground().name()) + 
+         "</style></head>" +
 		 // TODO: move these to stylesheet, too:
     ((mPrinting) ? QString("<body>") : QString("<body ") + bkgrdStr + ">" ));
 
@@ -750,7 +757,6 @@ void KMReaderWin::parseMsg(void)
   mViewer->write("</body></html>");
   mViewer->end();
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
@@ -964,49 +970,14 @@ QString KMReaderWin::writeMsgHeader()
 
   case HdrFancy:
   {
-    // prep our colours as rgb tripletts for use in the CSS
-    QColorGroup cg = kapp->palette().active();
-    QString foreground = QString("rgb(%1,%2,%3)")
-                                .arg(cg.foreground().red())
-                                .arg(cg.foreground().green())
-                                .arg(cg.foreground().blue());
-    QString highlight = QString("rgb(%1,%2,%3)")
-                                .arg(cg.highlight().red())
-                                .arg(cg.highlight().green())
-                                .arg(cg.highlight().blue());
-    QString highlightedText = QString("rgb(%1,%2,%3)")
-                                .arg(cg.highlightedText().red())
-                                .arg(cg.highlightedText().green())
-                                .arg(cg.highlightedText().blue());
-    QString background = QString("rgb(%1,%2,%3)")
-                                .arg(cg.background().red())
-                                .arg(cg.background().green())
-                                .arg(cg.background().blue());
-
-
-    // the subject line
-    headerStr = QString("<div id=\"foo\" style=\"background: %1; "
-                        "color: %2; padding: 4px; "
-                        "border: solid %3 1px;\">"
-                        "<b>%5</b></div>")
-                       .arg((mPrinting) ? background : highlight)
-                       .arg((mPrinting) ? foreground : highlightedText)
-                       .arg(foreground)
-                       .arg(strToHtml(mMsg->subject()));
-
-    // the box with details below the subject
-    headerStr.append(QString("<div style=\"background: %1; color: %2; "
-                             "border-bottom: solid %3 1px; "
-                             "border-left: solid %4 1px; "
-                             "border-right: solid %5 1px; "
-		                         "margin-bottom: 1em; "
-                             "padding: 2px;\">"
-                             "<table cellspacing=\"0\" cellpadding=\"4\">" )
-                            .arg(background)
-                            .arg(foreground)
-                            .arg(foreground)
-                            .arg(foreground)
-                            .arg(foreground));
+    // the subject line and box below for details
+    headerStr = QString("<div class=\"fancyHeaderSubj\">"
+                        "<b>%5</b></div>"
+                        "<div class=\"fancyHeaderDtls\">"
+                        "<table cellspacing=\"0\" cellpadding=\"4\">")
+                       .arg(mMsg->subject().isEmpty()?
+                            i18n("No Subject") :
+                            strToHtml(mMsg->subject()));
 
     // from line
     headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2%3%4</td></tr>")
@@ -1769,11 +1740,11 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 	win->setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("a { color: #%1;").arg(win->colorToString(win->c2)) +
+		 QString("a { color: %1;").arg(win->c2.name()) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
-                 QString(" text=\"#%1\"").arg(win->colorToString(win->c1)) +
-  		 QString(" bgcolor=\"#%1\"").arg(win->colorToString(win->c4)) +
+                 QString(" text=\"%1\"").arg(win->c1.name()) +
+  		 QString(" bgcolor=\"%1\"").arg(win->c4.name()) +
 		 ">" );
 
       QCString str = aMsgPart->bodyDecoded();

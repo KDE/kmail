@@ -234,8 +234,6 @@ protected:
   virtual void removeTempFiles();
 
 protected:
-  QString colorToString(const QColor&);
-
   bool mHtmlMail, mHtmlOverride;
   int mAtmInline;
   int mAtmCurrent;
