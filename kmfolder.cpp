@@ -940,7 +940,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       return error;
     }
       
-  fprintf(mStream, "From %s %s\n", (const char *)aMsg->from(),
+  fprintf(mStream, "From %s %s\n", (const char *)aMsg->fromEmail(),
           (const char *)aMsg->dateShortStr());
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
