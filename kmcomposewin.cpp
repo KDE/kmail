@@ -2812,7 +2812,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         dialog.resize( 700, 200 );
 
         QCString signer = from().utf8();
-        signer.replace(QRegExp("\\x0001"), " ");
+        signer.replace("\x0001", " ");
 
         kdDebug(5006) << "\n\nRetrieving keys for: " << from() << endl;
         char* certificatePtr = 0;
@@ -3292,7 +3292,7 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
   bool bEncrypt = true;
 
   QCString addressee = recipient.utf8();
-  addressee.replace(QRegExp("\\x0001"), " ");
+  addressee.replace("\x0001", " ");
   kdDebug(5006) << "\n\n1st try:  Retrieving keys for: " << recipient << endl;
 
 
@@ -5345,8 +5345,8 @@ void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
     else if (-1 != newText.find(" at "))
     {
         // Anti-spam stuff
-        newText.replace( QRegExp(" at "), "@" );
-        newText.replace( QRegExp(" dot "), "." );
+        newText.replace( " at ", "@" );
+        newText.replace( " dot ", "." );
     }
     else if (newText.contains("(at)"))
     {

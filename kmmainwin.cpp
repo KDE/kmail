@@ -92,9 +92,9 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
   // but this code would double the size of the satus bar if the user hovers
   // over an <foo@bar.com>-style email address :-(
-//  text.replace(QRegExp("&"), "&amp;");
-//  text.replace(QRegExp("<"), "&lt;");
-//  text.replace(QRegExp(">"), "&gt;");
+//  text.replace("&", "&amp;");
+//  text.replace("<", "&lt;");
+//  text.replace(">", "&gt;");
 
   statusBar()->changeItem(text, mMessageStatusId);
 }

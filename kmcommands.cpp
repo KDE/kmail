@@ -517,7 +517,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   QString subject = msgBase->subject();
   while (subject.find(':') != -1)
     subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
-  subject.replace(QRegExp(QChar(QDir::separator())), "_");
+  subject.replace(QChar(QDir::separator()), "_");
   mUrl = KFileDialog::getSaveURL(subject, QString::null);
 }
 
@@ -1021,7 +1021,7 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
       continue;
     KMFolder *child = static_cast<KMFolder*>(it);
     QString label = child->label();
-    label.replace(QRegExp("&"),QString("&&"));
+    label.replace("&","&&");
     if (child->child() && child->child()->first()) {
       // descend
       QPopupMenu *subMenu = makeFolderMenu(child, move, receiver,

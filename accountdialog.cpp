@@ -220,9 +220,7 @@ ProcmailRCParser::expandVars(const QString &s)
   QAsciiDictIterator<QString> it( mVars ); // iterator for dict
 
   while ( it.current() ) {
-    QString var = "\\$"; var += it.currentKey();
-
-    expS.replace(QRegExp(var), *it.current());
+    expS.replace(QString::fromLatin1("$")+it.currentKey(), *it.current());
 
     ++it;
   }

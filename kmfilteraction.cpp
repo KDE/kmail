@@ -410,7 +410,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
     // QString( "%0 and %1 and %1" ).arg( 0 ).arg( 1 )
     // returns "0 and 1 and %1", so we must call .arg as
     // many times as there are %n's, regardless of their multiplicity.
-    if ((*it) == -1) result.replace( QRegExp("%-1"), tempFileName );
+    if ((*it) == -1) result.replace( "%-1", tempFileName );
     else result = result.arg( tempFileName );
   }
 

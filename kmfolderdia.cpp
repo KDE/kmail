@@ -489,7 +489,7 @@ void KMFolderDialog::slotOk()
     if (folder) oldFldName = folder->name();
     if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
     else fldName = oldFldName;
-    fldName.replace(QRegExp("/"), "");
+    fldName.replace("/", "");
     fldName.replace(QRegExp("^\\.*"), "");
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 

@@ -1418,7 +1418,7 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
   else
 	  fldName = oldFldName;
 
-  fldName.replace(QRegExp("/"), "");
+  fldName.replace("/", "");
   fldName.replace(QRegExp("^\\."), "");
 
   if (fldName.isEmpty())

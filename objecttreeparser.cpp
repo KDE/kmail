@@ -1579,7 +1579,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  
 	    DwHeaders& headers( curNode->dwPart()->Headers() );
 	    QCString ctypStr( headers.ContentType().AsString().c_str() );
-	    ctypStr.replace( QRegExp("\""), "" );
+	    ctypStr.replace( "\"", "" );
 	    bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
 	    bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 

@@ -847,7 +847,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
   msgText = aMsg->asString();
-  msgText.replace(QRegExp("\nFrom "),"\n>From ");
+  msgText.replace("\nFrom ", "\n>From ");
   size_t len = msgText.length();
 
   assert(mStream != 0);

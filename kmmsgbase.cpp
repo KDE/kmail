@@ -472,7 +472,7 @@ const QString dontQuote = "\"()<>,@";
 QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
 {
   if (base64)
-      return encodeBase64(aStr).replace(QRegExp("\n"),"");
+      return encodeBase64(aStr).replace("\n","");
   QCString result;
   unsigned char ch, hex;
   for (unsigned int i = 0; i < aStr.length(); i++)

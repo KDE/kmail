@@ -1856,7 +1856,7 @@ void KMMainWidget::getAccountMenu()
   QStringList::Iterator it;
   int id = 0;
   for(it = actList.begin(); it != actList.end() ; ++it, id++)
-    actMenu->insertItem((*it).replace(QRegExp("&"),"&&"), id);
+    actMenu->insertItem((*it).replace("&", "&&"), id);
 }
 
 // little helper function
