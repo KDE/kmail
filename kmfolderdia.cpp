@@ -417,12 +417,12 @@ void KMFolderDialog::slotOk()
 
     if (!folder) {
       if (selectedFolder && selectedFolder->protocol() == "imap")
-			{
-				/* create a temporary folder to save the settings in the config-file
-				 * when the folder is created successfully the settings are read
-				 * otherwise the entry is automatically deleted at the next startup
-				*/
-				folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
+      {
+        /* create a temporary folder to save the settings in the config-file
+         * when the folder is created successfully the settings are read
+         * otherwise the entry is automatically deleted at the next startup
+         */
+        folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (mailboxType->currentItem() == 1) {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
@@ -459,16 +459,17 @@ void KMFolderDialog::slotOk()
     folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
 
-		// set whoField
-		if (senderType->currentItem() == 1)
-			folder->setUserWhoField("From");
-		else if (senderType->currentItem() == 2)
-			folder->setUserWhoField("To");
-		else
-			folder->setUserWhoField(QString());
+    // set whoField
+    if (senderType->currentItem() == 1)
+      folder->setUserWhoField("From");
+    else if (senderType->currentItem() == 2)
+      folder->setUserWhoField("To");
+    else
+      folder->setUserWhoField(QString());
+    folder->close();
   }
-	// reload the headers to show the changes if the folder was modified
-	if (mFolder) static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
+// reload the headers to show the changes if the folder was modified
+  if (mFolder) static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
 
   KDialogBase::slotOk();
 }
