@@ -50,99 +50,101 @@ ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
 }
 
 //-----------------------------------------------------------------------------
-ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt, KMFolderImap* folder )
+ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
+                  KMFolderImap* folder )
   : FolderJob( msgList, sets, jt, folder )
 {
 }
 
-void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<KMMessage>& msgList )
+void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
+                    QPtrList<KMMessage>& msgList )
 {
   mJob = 0;
   assert(jt == tGetMessage || folder);
   KMMessage* msg = msgList.first();
   mType = jt;
   mDestFolder = folder;
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
+  KMFolderImap *msg_parent = static_cast<KMFolderImap*>( msg->parent() );
   KMAcctImap *account = (folder) ? folder->account() : msg_parent->account();
-  account->mJobList.append(this);
-  if (jt == tPutMessage)
+  account->mJobList.append( this );
+  if ( jt == tPutMessage )
   {
     // transfers the complete message to the server
     KURL url = account->getUrl();
-    url.setPath(folder->imapPath() + ";SECTION="
-      + QString::fromLatin1(KMFolderImap::statusToFlags(msg->status())));
+    url.setPath( folder->imapPath() + ";SECTION="
+      + QString::fromLatin1( KMFolderImap::statusToFlags( msg->status() ) ) );
     ImapAccountBase::jobData jd;
     jd.parent = 0; jd.offset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList.append(msg);
-    QCString cstr(msg->asString());
-    int a = cstr.find("\nX-UID: ");
-    int b = cstr.find("\n", a);
-    if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-    mData.resize(cstr.length() + cstr.contains("\n") - cstr.contains("\r\n"));
+    QCString cstr( msg->asString() );
+    int a = cstr.find( "\nX-UID: " );
+    int b = cstr.find( "\n", a );
+    if ( a != -1 && b != -1 && cstr.find( "\n\n" ) > a ) cstr.remove( a, b-a );
+    mData.resize( cstr.length() + cstr.contains( "\n" ) - cstr.contains( "\r\n" ) );
     unsigned int i = 0;
     char prevChar = '\0';
     // according to RFC 2060 we need CRLF
-    for (char *ch = cstr.data(); *ch; ch++)
+    for ( char *ch = cstr.data(); *ch; ch++ )
     {
-      if (*ch == '\n' && (prevChar != '\r')) {
-        mData.at(i) = '\r'; 
-        i++; 
+      if ( *ch == '\n' && (prevChar != '\r') ) {
+        mData.at( i ) = '\r';
+        i++;
       }
-      mData.at(i) = *ch;
+      mData.at( i ) = *ch;
       prevChar = *ch;
       i++;
     }
     jd.data = mData;
-    if (!account->makeConnection())
+    if ( !account->makeConnection() )
     {
-      account->mJobList.remove(this);
+      account->mJobList.remove( this );
       deleteLater();
       return;
     }
-    KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
-    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+    KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
+    KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
-    account->insertJob(mJob, jd);
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        SLOT(slotPutMessageResult(KIO::Job *)));
-    connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
-        SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)));
-    connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-        SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)));
+    account->insertJob( mJob, jd );
+    connect( mJob, SIGNAL(result(KIO::Job *)),
+             SLOT(slotPutMessageResult(KIO::Job *)) );
+    connect( mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
+             SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)) );
+    connect( mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
+             SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)) );
   }
-  else if (jt == tCopyMessage || jt == tMoveMessage )
+  else if ( jt == tCopyMessage || jt == tMoveMessage )
   {
     KURL url = account->getUrl();
     KURL destUrl = account->getUrl();
     destUrl.setPath(folder->imapPath());
-    url.setPath(msg_parent->imapPath() + ";UID=" + sets);
+    url.setPath( msg_parent->imapPath() + ";UID=" + sets );
     ImapAccountBase::jobData jd;
     jd.parent = 0; mOffset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList = msgList;
 
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
+    QDataStream stream( packedArgs, IO_WriteOnly );
 
     stream << (int) 'C' << url << destUrl;
 
-    if (!account->makeConnection())
+    if ( !account->makeConnection() )
     {
-      account->mJobList.remove(this);
+      account->mJobList.remove( this );
       deleteLater();
       return;
     }
-    KIO::SimpleJob *simpleJob = KIO::special(url, packedArgs, FALSE);
-    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+    KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
+    KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
-    account->insertJob(mJob, jd);
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        SLOT(slotCopyMessageResult(KIO::Job *)));
-    if (jt == tMoveMessage)
+    account->insertJob( mJob, jd );
+    connect( mJob, SIGNAL(result(KIO::Job *)),
+             SLOT(slotCopyMessageResult(KIO::Job *)) );
+    if ( jt == tMoveMessage )
     {
-      connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-              SLOT(slotCopyMessageInfoData(KIO::Job *, const QString &)));
+      connect( mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
+               SLOT(slotCopyMessageInfoData(KIO::Job *, const QString &)) );
     }
   } else {
     slotGetNextMessage();
@@ -153,7 +155,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<KMM
 //-----------------------------------------------------------------------------
 ImapJob::~ImapJob()
 {
-  if (mDestFolder)
+  if ( mDestFolder )
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
     if ( account ) // just to be sure this job is removed from the list
@@ -177,51 +179,51 @@ void ImapJob::slotGetNextMessage()
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->parent());
   KMAcctImap *account = msgParent->account();
-  if (msg->headerField("X-UID").isEmpty())
+  if ( msg->headerField("X-UID").isEmpty() )
   {
-    emit messageRetrieved(msg);
-    account->mJobList.remove(this);
+    emit messageRetrieved( msg );
+    account->mJobList.remove( this );
     deleteLater();
     return;
   }
   KURL url = account->getUrl();
   QString path = msgParent->imapPath() + ";UID=" + msg->headerField("X-UID");
-  if (!mPartSpecifier.isEmpty())
+  if ( !mPartSpecifier.isEmpty() )
   {
-    if (mPartSpecifier.find ("STRUCTURE", 0, false) != -1) {
+    if ( mPartSpecifier.find ("STRUCTURE", 0, false) != -1 ) {
       path += ";SECTION=STRUCTURE";
-    } else if (mPartSpecifier == "HEADER") {
+    } else if ( mPartSpecifier == "HEADER" ) {
       path += ";SECTION=HEADER";
     } else {
       path += ";SECTION=" + mPartSpecifier;
     }
   }
-  url.setPath(path);
+  url.setPath( path );
   ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
-  if (!account->makeConnection())
+  if ( !account->makeConnection() )
   {
-    account->mJobList.remove(this);
+    account->mJobList.remove( this );
     deleteLater();
     return;
   }
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
-  KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
-  KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+  KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );
+  KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
   mJob = simpleJob;
-  account->insertJob(mJob, jd);
-  if (mPartSpecifier.find ("STRUCTURE", 0, false) != -1)
+  account->insertJob( mJob, jd );
+  if ( mPartSpecifier.find( "STRUCTURE", 0, false ) != -1 )
   {
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        this, SLOT(slotGetBodyStructureResult(KIO::Job *)));
+    connect( mJob, SIGNAL(result(KIO::Job *)),
+             this, SLOT(slotGetBodyStructureResult(KIO::Job *)) );
   } else {
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        this, SLOT(slotGetMessageResult(KIO::Job *)));
+    connect( mJob, SIGNAL(result(KIO::Job *)),
+             this, SLOT(slotGetMessageResult(KIO::Job *)) );
   }
-  connect(mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
+  connect( mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
+           msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)) );
 }
 
 
@@ -253,7 +255,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     if ((*it).data.size() > 0)
     {
       kdDebug(5006) << "ImapJob::slotGetMessageResult - retrieved part " << mPartSpecifier << endl;
-      if ( mPartSpecifier.isEmpty() || 
+      if ( mPartSpecifier.isEmpty() ||
            mPartSpecifier == "HEADER" )
       {
         QString uid = msg->headerField("X-UID");
@@ -265,7 +267,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
       }
-    } 
+    }
   }
   if (account->slave()) {
       account->removeJob(it);
@@ -274,7 +276,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   account->displayProgress();
   /* This needs to be emitted last, so the slots that are hooked to it
    * don't unGetMsg the msg before we have finished. */
-  if ( mPartSpecifier.isEmpty() || 
+  if ( mPartSpecifier.isEmpty() ||
        mPartSpecifier == "HEADER" )
   {
     emit messageRetrieved(msg);

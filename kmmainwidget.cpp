@@ -242,8 +242,8 @@ void KMMainWidget::readConfig(void)
     // default width of the foldertree
     static const int folderpanewidth = 250;
 
-    const int folderW = config->readNumEntry( "FolderPaneWidth", folderpanewidth ); 
-    const int headerW = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth ); 
+    const int folderW = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+    const int headerW = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
     const int headerH = config->readNumEntry( "HeaderPaneHeight", 180 );
     const int readerH = config->readNumEntry( "ReaderPaneHeight", 280 );
 
@@ -878,7 +878,7 @@ void KMMainWidget::slotRemoveFolder()
                      "<b>%1</b> and all its subfolders, discarding their "
                      "contents?</qt>") .arg(mFolder->label());
       }
-  } 
+  }
 
   if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
                                          i18n("&Delete"))
@@ -1346,7 +1346,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
     if ( msg->transferInProgress() )
       return;
     mMsgView->clear();
-    if ( mJob ) 
+    if ( mJob )
       disconnect( mJob, 0, this, 0 );
     mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "STRUCTURE");
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
@@ -2497,16 +2497,16 @@ void KMMainWidget::updateMessageActions()
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
     if ( count == 1 ) {
-        KMMessage *msg;
-        int aIdx;
-        if((aIdx = mHeaders->currentItemIndex()) <= -1)
-           return;
-        if(!(msg = mFolder->getMsg(aIdx)))
-            return;
+      KMMessage *msg;
+      int aIdx;
+      if((aIdx = mHeaders->currentItemIndex()) <= -1)
+        return;
+      if(!(msg = mFolder->getMsg(aIdx)))
+        return;
 
-        if (mFolder == kernel->outboxFolder())
-          editAction->setEnabled( !msg->transferInProgress() );
-        }
+      if (mFolder == kernel->outboxFolder())
+        editAction->setEnabled( !msg->transferInProgress() );
+    }
 
     applyFiltersAction->setEnabled(count);
     applyFilterActionsMenu->setEnabled(count && (applyFilterActionsMenu->popupMenu()->count()>0));
@@ -2518,11 +2518,11 @@ void KMMainWidget::statusMsg(const QString& message)
 {
   KMMainWin *mainKMWin = dynamic_cast<KMMainWin*>(topLevelWidget());
   if (mainKMWin)
-      return mainKMWin->statusMsg( message );
+    return mainKMWin->statusMsg( message );
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   if (mainWin && mainWin->statusBar())
-      mainWin->statusBar()->message( message );
+    mainWin->statusBar()->message( message );
 }
 
 
@@ -2641,12 +2641,12 @@ void KMMainWidget::slotIntro()
 void KMMainWidget::slotShowStartupFolder()
 {
   if (mFolderTree) {
-      // add the folders
-      mFolderTree->reload();
-      // read the config
-      mFolderTree->readConfig();
-      // get rid of old-folders
-      mFolderTree->cleanupConfigFile();
+    // add the folders
+    mFolderTree->reload();
+    // read the config
+    mFolderTree->readConfig();
+    // get rid of old-folders
+    mFolderTree->cleanupConfigFile();
   }
 
   connect( kernel->filterMgr(), SIGNAL( filterListUpdated() ),
@@ -2695,49 +2695,49 @@ void KMMainWidget::slotChangeCaption(QListViewItem * i)
 //-----------------------------------------------------------------------------
 void KMMainWidget::removeDuplicates()
 {
-    if (!mFolder)
-       return;
-    KMFolder *oFolder = mFolder;
-    mHeaders->setFolder(0);
-    QMap< QString, QValueList<int> > idMD5s;
-    QValueList<int> redundantIds;
-    QValueList<int>::Iterator kt;
-    mFolder->open();
-    for (int i = mFolder->count() - 1; i >= 0; --i) {
-       QString id = (*mFolder)[i]->msgIdMD5();
-       idMD5s[id].append( i );
-    }
-    QMap< QString, QValueList<int> >::Iterator it;
-    for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
-       QValueList<int>::Iterator jt;
-       bool finished = false;
-       for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
-           if (!((*mFolder)[*jt]->isUnread())) {
-               (*it).remove( jt );
-               (*it).prepend( *jt );
-               finished = true;
-           }
-       for ( jt = (*it).begin(), ++jt; jt != (*it).end(); ++jt )
-           redundantIds.append( *jt );
-    }
-    qHeapSort( redundantIds );
-    kt = redundantIds.end();
-    int numDuplicates = 0;
-    if (kt != redundantIds.begin()) do {
-       mFolder->removeMsg( *(--kt) );
-       ++numDuplicates;
-    }
-    while (kt != redundantIds.begin());
+  if (!mFolder)
+    return;
+  KMFolder *oFolder = mFolder;
+  mHeaders->setFolder(0);
+  QMap< QString, QValueList<int> > idMD5s;
+  QValueList<int> redundantIds;
+  QValueList<int>::Iterator kt;
+  mFolder->open();
+  for (int i = mFolder->count() - 1; i >= 0; --i) {
+    QString id = (*mFolder)[i]->msgIdMD5();
+    idMD5s[id].append( i );
+  }
+  QMap< QString, QValueList<int> >::Iterator it;
+  for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
+    QValueList<int>::Iterator jt;
+    bool finished = false;
+    for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
+      if (!((*mFolder)[*jt]->isUnread())) {
+        (*it).remove( jt );
+        (*it).prepend( *jt );
+        finished = true;
+      }
+    for ( jt = (*it).begin(), ++jt; jt != (*it).end(); ++jt )
+      redundantIds.append( *jt );
+  }
+  qHeapSort( redundantIds );
+  kt = redundantIds.end();
+  int numDuplicates = 0;
+  if (kt != redundantIds.begin()) do {
+    mFolder->removeMsg( *(--kt) );
+    ++numDuplicates;
+  }
+  while (kt != redundantIds.begin());
 
-    mFolder->close();
-    mHeaders->setFolder(oFolder);
-    QString msg;
-    if ( numDuplicates )
-        msg = i18n("Removed %n duplicate message.",
-                  "Removed %n duplicate messages.", numDuplicates );
+  mFolder->close();
+  mHeaders->setFolder(oFolder);
+  QString msg;
+  if ( numDuplicates )
+    msg = i18n("Removed %n duplicate message.",
+               "Removed %n duplicate messages.", numDuplicates );
     else
-        msg = i18n("No duplicate messages found.");
-    KMBroadcastStatus::instance()->setStatusMsg( msg );
+      msg = i18n("No duplicate messages found.");
+  KMBroadcastStatus::instance()->setStatusMsg( msg );
 }
 
 
@@ -2752,29 +2752,29 @@ void KMMainWidget::slotUpdateUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
-    QString filterName, normalizedName;
-    KMMetaFilterActionCommand *filterCommand;
-    KAction *filterAction;
-    mFilterActions.clear();
-    mFilterCommands.clear();
-    for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
-	  it.current() ; ++it )
-	if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-	    filterName = QString("Filter Action %1").arg((*it)->name());
-	    normalizedName = filterName.replace(" ", "_");
-	    if (action(normalizedName.utf8()))
-		continue;
-	    filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
-	    mFilterCommands.append(filterCommand);
-	    QString as = i18n("Filter Action %1").arg((*it)->name());
-	    filterAction = new KAction(as, 0, filterCommand,
-				       SLOT(start()), actionCollection(),
-				       normalizedName.local8Bit());
-	    mFilterActions.append(filterAction);
-	}
+  QString filterName, normalizedName;
+  KMMetaFilterActionCommand *filterCommand;
+  KAction *filterAction;
+  mFilterActions.clear();
+  mFilterCommands.clear();
+  for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
+        it.current() ; ++it )
+    if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
+      filterName = QString("Filter Action %1").arg((*it)->name());
+      normalizedName = filterName.replace(" ", "_");
+      if (action(normalizedName.utf8()))
+        continue;
+      filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
+      mFilterCommands.append(filterCommand);
+      QString as = i18n("Filter Action %1").arg((*it)->name());
+      filterAction = new KAction(as, 0, filterCommand,
+                                 SLOT(start()), actionCollection(),
+                                 normalizedName.local8Bit());
+      mFilterActions.append(filterAction);
+    }
 
-    applyFilterActionsMenu->popupMenu()->clear();
-    plugFilterActions(applyFilterActionsMenu->popupMenu());
+  applyFilterActionsMenu->popupMenu()->clear();
+  plugFilterActions(applyFilterActionsMenu->popupMenu());
 }
 
 
