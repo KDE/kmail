@@ -38,6 +38,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
+#include <kkeydialog.h>
 #include <kcharsets.h>
 
 #include "configuredialog.h"
@@ -1271,17 +1272,11 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Send Queued"), 0, this,
 		      SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
-  (void) new KAction( i18n("Configuration..."), 0, this,
-		      SLOT(slotSettings()), actionCollection(), "settings" );
-
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
 
-  (void) new KAction( i18n("F&ilter Rules..."), 0, this,
-		      SLOT(slotFilter()), actionCollection(), "filter" );
-
   KStdAction::close( this, SLOT(slotClose()), actionCollection());
-  KStdAction::quit( this, SLOT(quit()), actionCollection());
+  //KStdAction::quit( this, SLOT(quit()), actionCollection());
 
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection());
@@ -1416,9 +1411,18 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
-  //  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-  (void) new KAction( i18n("Configure Tool&bars..."), 0, this,
-		      SLOT(slotEditToolbars()), actionCollection(), "config_toolbars" );
+  //----- Settings Menu
+  KStdAction::showToolbar(this, SLOT(slotToggleToolBar()), actionCollection());
+  KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()), actionCollection());
+  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  //  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
+ (void) new KAction( i18n("Configuration..."), 0, this,
+		     SLOT(slotSettings()), actionCollection(), "settings" );
+
+
+  (void) new KAction( i18n("F&ilter Rules..."), 0, this,
+ 		      SLOT(slotFilter()), actionCollection(), "filter" );
 
   createGUI( "kmmainwin.rc", false );
 
@@ -1434,7 +1438,25 @@ void KMMainWin::setupMenuBar()
   conserveMemory();
 }
 
+
 //-----------------------------------------------------------------------------
+
+void KMMainWin::slotToggleToolBar()
+{
+  if(toolBar("mainToolBar")->isVisible())
+    toolBar("mainToolBar")->hide();
+  else
+    toolBar("mainToolBar")->show();
+}
+
+void KMMainWin::slotToggleStatusBar()
+{
+  if (statusBar()->isVisible())
+    statusBar()->hide();
+  else
+    statusBar()->show();
+}
+
 void KMMainWin::slotEditToolbars()
 {
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
@@ -1444,6 +1466,12 @@ void KMMainWin::slotEditToolbars()
     createGUI("kmmainwin.rc");
   }
 }
+
+void KMMainWin::slotEditKeys()
+{
+  KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()

@@ -90,8 +90,7 @@ public slots:
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
-  void slotEditToolbars();
-
+  
 protected:
   void setupMenuBar();
   void setupStatusBar();
@@ -173,7 +172,13 @@ protected slots:
   virtual void updateMessageMenu();
   // Update html and threaded messages preferences in Folder menu.
   virtual void updateFolderMenu();
-  
+
+  // XML-GUI stuff
+  void slotToggleToolBar();
+  void slotToggleStatusBar();
+  void slotEditToolbars();
+  void slotEditKeys();
+
 protected:
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
