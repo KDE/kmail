@@ -2586,7 +2586,7 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
   {
     QKeyEvent* k = (QKeyEvent*)e;
 
-    if (KStdAccel::isEqual( e, KStdAccel::SubstringCompletion ))
+    if (KStdAccel::isEqual( k, KStdAccel::SubstringCompletion ))
     {
       doCompletion(true);
       return TRUE;
