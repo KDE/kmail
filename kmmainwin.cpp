@@ -2007,8 +2007,11 @@ void KMMainWin::updateMessageMenu()
     action( "view_source" )->setEnabled( single_actions );
 
     if ( count == 1 ) {
-        KMMessage* msg = mMsgView->msg();
-        if ( !msg )
+        KMMessage *msg;
+        int aIdx;
+        if((aIdx = mHeaders->currentItemIndex()) <= -1)
+           return;
+        if(!(msg = mHeaders->getMsg(aIdx)))
             return;
 
         QString name, value;
