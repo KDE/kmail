@@ -15,7 +15,6 @@
 #include <qfont.h>
 #include <keditcl.h>
 #include <qlineedit.h>
-#include <ktempfile.h>
 #include <kio/job.h>
 #include <kurl.h>
 
@@ -32,25 +31,27 @@ class _StringPair {
 
 
 
-class QLineEdit;
+class QCloseEvent;
 class QComboBox;
-class QGridLayout;
 class QFrame;
-class QPopupMenu;
-class KEdit;
+class QGridLayout;
+class QLineEdit;
 class QListView;
 class QListViewItem;
-class KMMessage;
-class KDNDDropZone;
-class KToolBar;
-class KStatusBar;
+class QPopupMenu;
 class QPushButton;
-class QCloseEvent;
+class KDNDDropZone;
+class KEdit;
+class KMComposeWin;
+class KMMessage;
+class KProcess;
+class KSelectAction;
 class KSpell;
 class KSpellConfig;
-class KMComposeWin;
+class KStatusBar;
+class KTempFile;
+class KToolBar;
 class KToggleAction;
-class KSelectAction;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
@@ -85,6 +86,7 @@ public slots:
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString &newtext);
   void slotSpellDone();
+  void slotExternalEditorDone(KProcess*);
 
 protected:
   /** Event filter that does Tab-key handling. */
@@ -93,10 +95,10 @@ protected:
   KMComposeWin* mComposer;
 private:
   KSpell *mKSpell;
-#ifndef KRN
-  bool extEditor;
-  QString mExtEditor;
-#endif
+  KTempFile *mTempFile;
+  KProcess  *mExtEditorProcess;
+  bool      extEditor;
+  QString   mExtEditor;
 };
 
 

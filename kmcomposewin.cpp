@@ -2509,6 +2509,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 #endif
 
   mKSpell = NULL;
+  mTempFile = NULL;
+  mExtEditorProcess = NULL;
 }
 
 
@@ -2555,38 +2557,36 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         return TRUE;
       }
 
+      if (mTempFile) return TRUE;
       QRegExp repFn("\\%f");
       QString sysLine = mExtEditor;
-      KTempFile tmpFile;
-      QString tmpName = tmpFile.name();
+      mTempFile = new KTempFile();
 
-      tmpFile.setAutoDelete(true);
+      mTempFile->setAutoDelete(true);
 
-      fprintf(tmpFile.fstream(), "%s", (const char *)text());
+      fprintf(mTempFile->fstream(), "%s", (const char *)text().local8Bit());
 
-      tmpFile.close();
+      mTempFile->close();
       // replace %f in the system line
-      sysLine.replace(repFn, tmpName);
-      system((const char *)sysLine);
+      sysLine.replace(repFn, mTempFile->name());
+      mExtEditorProcess = new KProcess();
+      sysLine += " ";
+      while (!sysLine.isEmpty())
+      {
+        *mExtEditorProcess << sysLine.left(sysLine.find(" ")).local8Bit();
+        sysLine.remove(0, sysLine.find(" ") + 1);
+      }
+      connect(mExtEditorProcess, SIGNAL(processExited(KProcess*)),
+              SLOT(slotExternalEditorDone(KProcess*)));
+      if (!mExtEditorProcess->start())
+      {
+        KMessageBox::error(NULL, i18n("Unable to start external editor."));
+        delete mExtEditorProcess;
+        delete mTempFile;
+        mExtEditorProcess = NULL;
+        mTempFile = NULL;
+      }
 
-      setAutoUpdate(false);
-      clear();
-
-      // read data back in from file
-      insertLine(kFileToString(tmpName, TRUE, FALSE), -1);
-//       QFile mailFile(tmpName);
-
-//       while (!mailFile.atEnd()) {
-//          QString oneLine;
-//          mailFile.readLine(oneLine, 1024);
-//          insertLine(oneLine, -1);
-//       }
-
-//       setModified(true);
-//       mailFile.close();
-
-      setAutoUpdate(true);
-      repaint();
       return TRUE;
     } else {
 #endif
@@ -2612,6 +2612,27 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   }
   return FALSE;
 }
+
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotExternalEditorDone(KProcess* proc)
+{
+  assert(proc == mExtEditorProcess);
+  setAutoUpdate(false);
+  clear();
+
+  // read data back in from file
+  insertLine(QString::fromLocal8Bit(kFileToString(mTempFile->name(),
+    TRUE, FALSE)), -1);
+
+  setAutoUpdate(true);
+  repaint();
+  delete proc;
+  delete mTempFile;
+  mTempFile = NULL;
+  mExtEditorProcess = NULL;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMEdit::spellcheck()
