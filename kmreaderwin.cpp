@@ -461,7 +461,7 @@ void KMReaderWin::createWidgets() {
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
   mViewer = new KHTMLPart( mBox, "mViewer" );
-  mSplitter->setOpaqueResize( true );
+  mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   mSplitter->setResizeMode( mMimePartTree, QSplitter::KeepSize );
 }
 

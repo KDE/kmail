@@ -14,7 +14,7 @@
 
 #include <kmessagebox.h>
 
-
+#include <kglobalsettings.h>
 #include <kstdaccel.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
@@ -407,19 +407,19 @@ void KMMainWidget::createWidgets(void)
     // superior splitter: folder tree vs. rest
     // inferior splitter: headers vs. message vs. mime tree
     mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
-    mPanner1->setOpaqueResize( true );
+    mPanner1->setOpaqueResize( KGlobalSettings::opaqueResize() );
     Qt::Orientation orientation = mReaderWindowBelow ? Qt::Vertical : Qt::Horizontal;
     mPanner2 = new QSplitter( orientation, mPanner1, "panner 2" );
-    mPanner2->setOpaqueResize( true );
+    mPanner2->setOpaqueResize( KGlobalSettings::opaqueResize() );
     folderParent = mPanner1;
     headerParent = mimeParent = messageParent = mPanner2;
   } else /* !mLongFolderList */ {
     // superior splitter: ( folder tree + headers ) vs. message vs. mime
     // inferior splitter: folder tree vs. headers
     mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
-    mPanner1->setOpaqueResize( true );
+    mPanner1->setOpaqueResize( KGlobalSettings::opaqueResize() );
     mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
-    mPanner2->setOpaqueResize( true );
+    mPanner2->setOpaqueResize( KGlobalSettings::opaqueResize() );
     headerParent = folderParent = mPanner2;
     mimeParent = messageParent = mPanner1;
   }
