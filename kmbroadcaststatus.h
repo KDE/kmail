@@ -13,6 +13,10 @@
 
 #undef None
 
+namespace KMail {
+  class ProgressItem;
+}
+
 /** When KMail is running it is possible to have multiple KMMainWin open
     at the same time. We want certain messages/information to be displayed
     in all active KMMainWins. KMBroadcastStatus make this possible, it
@@ -38,13 +42,15 @@ public:
                                           int numBytes = -1,
                                           int numBytesRead = -1,
                                           int numBytesToRead = -1,
-                                          bool mLeaveOnServer = false );
+                                          bool mLeaveOnServer = false,
+                                          KMail::ProgressItem* progressItem = 0 ); // set the same status in this progress item
   void setStatusMsgTransmissionCompleted( const QString& account,
                                           int numMessages,
                                           int numBytes = -1,
                                           int numBytesRead = -1,
                                           int numBytesToRead = -1,
-                                          bool mLeaveOnServer = false );
+                                          bool mLeaveOnServer = false,
+                                          KMail::ProgressItem* progressItem = 0 ); // set the same status in this progress item
   /** Emit an enable progress widget(s) in status bar(s) signal */
   void setStatusProgressEnable( const QString& id, bool enable );
   /** Emit an update progress widget(s) percent completed signal */

@@ -16,7 +16,7 @@
 #include <kglobal.h>
 
 #include "kmbroadcaststatus.h"
-
+#include "progressmanager.h"
 
 
 //-----------------------------------------------------------------------------
@@ -57,7 +57,8 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( int numMessages,
                                                            int numBytes,
                                                            int numBytesRead,
                                                            int numBytesToRead,
-                                                           bool mLeaveOnServer )
+                                                           bool mLeaveOnServer,
+                                                           KMail::ProgressItem* item )
 {
   QString statusMsg;
   if( numMessages > 0 ) {
@@ -85,6 +86,8 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( int numMessages,
     statusMsg = i18n( "Transmission complete. No new messages." );
 
   setStatusMsgWithTimestamp( statusMsg );
+  if ( item )
+    item->setStatus( statusMsg );
 }
 
 void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& account,
@@ -92,7 +95,8 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& accoun
                                                            int numBytes,
                                                            int numBytesRead,
                                                            int numBytesToRead,
-                                                           bool mLeaveOnServer )
+                                                           bool mLeaveOnServer,
+                                                           KMail::ProgressItem* item )
 {
   QString statusMsg;
   if( numMessages > 0 ) {
@@ -130,6 +134,8 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& accoun
                 .arg( account );
 
   setStatusMsgWithTimestamp( statusMsg );
+  if ( item )
+    item->setStatus( statusMsg );
 }
 
 void KMBroadcastStatus::setStatusProgressEnable( const QString &id,

@@ -616,7 +616,7 @@ void KMAcctExpPop::slotJobFinished() {
       bool canceled = KMBroadcastStatus::instance()->abortRequested() || mMailCheckProgressItem->canceled();
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
       KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer );
+        numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
       checkDone( ( numMessages > 0 ), canceled ? CheckAborted : CheckOK );
