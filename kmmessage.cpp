@@ -2311,7 +2311,6 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
     case ',' :
       if (!insidequote && (commentlevel == 0)) {
         addr = aStr.mid(addrstart, index-addrstart);
-        kdDebug(5006) << "Found address: " << addr << endl;
         if (!addr.isEmpty())
           list += addr.simplifyWhiteSpace();
         addrstart = index+1;
@@ -2322,7 +2321,6 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
   // append the last address to the list
   if (!insidequote && (commentlevel == 0)) {
     addr = aStr.mid(addrstart, aStr.length()-addrstart);
-    kdDebug(5006) << "Found address: " << addr << endl;
     if (!addr.isEmpty())
       list += addr.simplifyWhiteSpace();
   }
