@@ -384,6 +384,12 @@ public:
   /** Write the config file */
   virtual void writeConfig();
 
+  /**
+   * If this folder has a special trash folder set, return it. Otherwise
+   * return 0.
+   */
+  virtual KMFolder* trashFolder() const { return 0; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

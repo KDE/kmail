@@ -599,6 +599,11 @@ void KMFolder::expireOldMessages()
   job->start();
 }
 
+KMFolder* KMFolder::trashFolder() const
+{
+  return mStorage->trashFolder();
+}
+
 int KMFolder::writeIndex( bool createEmptyIndex )
 {
   return mStorage->writeIndex( createEmptyIndex );

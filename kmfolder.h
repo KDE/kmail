@@ -444,6 +444,12 @@ public:
 
   void daysToExpire( int& unreadDays, int& readDays );
 
+  /**
+   * If this folder has a special trash folder set, return it. Otherwise
+   * return 0.
+   */
+  KMFolder* trashFolder() const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
