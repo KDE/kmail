@@ -1297,7 +1297,7 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotDeleteMsg()), Key_D);
   // GS - should we put menu items to copy, cut & paste emails?
   editMenu->insertSeparator();
-  editMenu->insertItem(i18n("&Search"), this,
+  editMenu->insertItem(i18n("&Search..."), this,
                        SLOT(slotSearch()), Key_S);
   editMenu->insertSeparator();
   editMenu->insertItem(i18n("Mar&k all messages"), this,
@@ -1365,18 +1365,17 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotRedirectMsg()), Key_E);
   messageMenu->insertItem(i18n("&Bounce..."), this,
 			  SLOT(slotBounceMsg()));
+  messageMenu->insertItem(i18n("Send again..."), this,
+			  SLOT(slotResendMsg()));
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Edi&t..."),this,
 			  SLOT(slotEditMsg()), Key_T);
-  messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
   moveId = messageMenu->insertItem(i18n("&Move..."), this,
 			  SLOT(slotMoveMsg()));
   copyId = messageMenu->insertItem(i18n("&Copy..."), this,
 			  SLOT(slotCopyMsg()));
   messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Send again..."), this,
-			  SLOT(slotResendMsg()));
   messageMenu->insertItem(i18n("Apply filters"), this,
 			  SLOT(slotApplyFilters()), CTRL+Key_J);
   messageMenu->insertSeparator();
