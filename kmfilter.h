@@ -49,7 +49,7 @@ public:
   KMFilter( KConfig* aConfig=0 , bool popFilter = false);
 
   /** Copy constructor. Constructs a deep copy of @p aFilter. */
-  KMFilter( KMFilter* aFilter );
+  KMFilter( const KMFilter & other );
 
   /** Cleanup. */
   virtual ~KMFilter() {};
@@ -100,6 +100,9 @@ public:
       the @p setAction() and @p action() functions before, please
       convert to using myFilter->actions()->at() and friends now. */
   QPtrList<KMFilterAction>* actions() { return &mActions; }
+
+  /** Provides a reference to the internal action list. Const version. */
+  const QPtrList<KMFilterAction>* actions() const { return &mActions; }
 
   /** Provides a reference to the internal pattern. If you used the
       @p matches() function before, please convert to using
@@ -168,7 +171,9 @@ public:
       in the future... */
   const QString asString() const;
   /** No descriptions */
-  bool isPopFilter();
+  bool isPopFilter() const {
+    return bPopFilter;
+  }
 
 private:
   KMSearchPattern mPattern;

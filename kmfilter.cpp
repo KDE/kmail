@@ -36,44 +36,33 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
 }
 
 
-KMFilter::KMFilter( KMFilter * aFilter )
+KMFilter::KMFilter( const KMFilter & aFilter )
 {
-  bPopFilter = aFilter->isPopFilter();
+  bPopFilter = aFilter.isPopFilter();
 
   if ( !bPopFilter )
-    mActions.setAutoDelete( TRUE );
+    mActions.setAutoDelete( true );
 
-  if ( aFilter ) {
-    mPattern = *aFilter->pattern();
+  mPattern = aFilter.mPattern;
     
-    if ( bPopFilter ){
-      mAction = aFilter->action();
-    } else {
-      bApplyOnInbound = aFilter->applyOnInbound();
-      bApplyOnOutbound = aFilter->applyOnOutbound();
-      bApplyOnExplicit = aFilter->applyOnExplicit();
-      bStopProcessingHere = aFilter->stopProcessingHere();
-    
-      QPtrListIterator<KMFilterAction> it( *aFilter->actions() );
-      for ( it.toFirst() ; it.current() ; ++it ) {
-        KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
-        if ( desc ) {
-	  KMFilterAction *f = desc->create();
-          if ( f ) {
-	    f->argsFromString( (*it)->argsAsString() );
-	    mActions.append( f );
-	  }
-        }
-      }
-    }
+  if ( bPopFilter ){
+    mAction = aFilter.mAction;
   } else {
-    if (bPopFilter) {
-      mAction = Down;
-    } else {
-      bApplyOnInbound = TRUE;
-      bApplyOnOutbound = FALSE;
-      bApplyOnExplicit = TRUE;
-      bStopProcessingHere = TRUE;
+    bApplyOnInbound = aFilter.applyOnInbound();
+    bApplyOnOutbound = aFilter.applyOnOutbound();
+    bApplyOnExplicit = aFilter.applyOnExplicit();
+    bStopProcessingHere = aFilter.stopProcessingHere();
+    
+    QPtrListIterator<KMFilterAction> it( aFilter.mActions );
+    for ( it.toFirst() ; it.current() ; ++it ) {
+      KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
+      if ( desc ) {
+	KMFilterAction *f = desc->create();
+	if ( f ) {
+	  f->argsFromString( (*it)->argsAsString() );
+	  mActions.append( f );
+	}
+      }
     }
   }
 }
@@ -304,6 +293,3 @@ const QString KMFilter::asString() const
   return result;
 }
 
-bool KMFilter::isPopFilter(void){
-	return bPopFilter;
-}

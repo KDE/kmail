@@ -460,7 +460,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   QStringList emptyFilters;
   QPtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {
-    KMFilter *f = new KMFilter( (*it) ); // deep copy
+    KMFilter *f = new KMFilter( **it ); // deep copy
     f->purify();
     if ( !f->isEmpty() )
       // the filter is valid:
@@ -657,7 +657,7 @@ void KMFilterListBox::loadFilterList()
 
   QPtrListIterator<KMFilter> it( *manager );
   for ( it.toFirst() ; it.current() ; ++it ) {
-    mFilterList.append( new KMFilter( *it ) ); // deep copy
+    mFilterList.append( new KMFilter( **it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
   }
 
