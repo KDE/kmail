@@ -670,7 +670,8 @@ void KMFolderImap::getAndCheckFolder(bool force)
   if (mNoContent)
     return getFolder(force);
 
-  mAccount->processNewMailSingleFolder(this);
+  if ( mAccount )
+    mAccount->processNewMailSingleFolder(this);
   if (force) {
     // force an update
     mCheckFlags = TRUE;
