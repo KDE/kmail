@@ -105,8 +105,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       ++i;
   }
   fileInFolder->insertStringList( str );
-	// we want to know if the activated changes
-	connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
+  // we want to know if the activated changes
+  connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
   if (aFolder && (aFolder->protocol() == "imap")) {
     label->setEnabled( false );
@@ -224,11 +224,11 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   senderType->insertItem(i18n("Sender"), 1);
   senderType->insertItem(i18n("Receiver"), 2);
 
-	QString whoField;
-	if (aFolder) whoField = aFolder->userWhoField();
-	if (whoField.isEmpty()) senderType->setCurrentItem(0);
-	if (whoField == "From") senderType->setCurrentItem(1);
-	if (whoField == "To") senderType->setCurrentItem(2);
+  QString whoField;
+  if (aFolder) whoField = aFolder->userWhoField();
+  if (whoField.isEmpty()) senderType->setCurrentItem(0);
+  if (whoField == "From") senderType->setCurrentItem(1);
+  if (whoField == "To") senderType->setCurrentItem(2);
   
   sl->addWidget( senderType );
   sl->addStretch( 1 );
@@ -237,8 +237,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     curFolder = *mFolders.at(i - 1);
     if (curFolder->child() == aFolderDir) {
       fileInFolder->setCurrentItem( i );
-			slotUpdateItems( i );
-		}	
+      slotUpdateItems( i );
+    }	
   }
 
 //   hl = new QHBoxLayout();
@@ -280,26 +280,26 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       unreadExpiryTime->setEnabled(false);
       unreadExpiryUnits->setEnabled(false);
     }
-		// Legal values for units are 1=days, 2=weeks, 3=months.
-		// Should really do something better than hardcoding this everywhere.
-		if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
-	      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
-		}
-		if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
-	      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
-		}
-		int age = folder->getReadExpireAge();
-		if (age >= 1 && age <= 500) {
-	      readExpiryTime->setValue(age);
-		} else {
-		  readExpiryTime->setValue(7);
-	    }
-		age = folder->getUnreadExpireAge();
-		if (age >= 1 && age <= 500) {
-	      unreadExpiryTime->setValue(age);
-		} else {
-		  unreadExpiryTime->setValue(28);
-		}
+    // Legal values for units are 1=days, 2=weeks, 3=months.
+    // Should really do something better than hardcoding this everywhere.
+    if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
+      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
+    }
+    if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
+      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
+    }
+    int age = folder->getReadExpireAge();
+    if (age >= 1 && age <= 500) {
+      readExpiryTime->setValue(age);
+    } else {
+      readExpiryTime->setValue(7);
+    }
+    age = folder->getUnreadExpireAge();
+    if (age >= 1 && age <= 500) {
+      unreadExpiryTime->setValue(age);
+    } else {
+      unreadExpiryTime->setValue(28);
+  }
 
   } else {
     // Default values for everything if there isn't a folder
@@ -329,7 +329,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     mlGroup->hide();
     idGroup->hide();
     mcGroup->hide();
-		senderGroup->hide();
+    senderGroup->hide();
   }
 
   kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
@@ -339,27 +339,27 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotUpdateItems ( int current )
 {
-	KMFolder* selectedFolder = NULL;
-	// check if the index is valid (the top level has no entrance in the mFolders)
-	if (current > 0) selectedFolder = *mFolders.at(current - 1);
-	if (selectedFolder && selectedFolder->protocol() == "imap")
-	{
-		// deactivate stuff that is not available for imap
-		mtGroup->setEnabled( false );
-		expGroup->setEnabled( false );
-	} else {
-		// activate it
-		mtGroup->setEnabled( true );
-		expGroup->setEnabled( true );
-	}
+  KMFolder* selectedFolder = NULL;
+  // check if the index is valid (the top level has no entrance in the mFolders)
+  if (current > 0) selectedFolder = *mFolders.at(current - 1);
+  if (selectedFolder && selectedFolder->protocol() == "imap")
+  {
+    // deactivate stuff that is not available for imap
+    mtGroup->setEnabled( false );
+    expGroup->setEnabled( false );
+  } else {
+    // activate it
+    mtGroup->setEnabled( true );
+    expGroup->setEnabled( true );
+  }
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
-  if (!mFolder)
+  // Renaming/moving of IMAP folders is not yet supported
+  if (!mFolder || (mFolder->protocol() != "imap" && !mFolder->isSystemFolder()))
   {
-		// we got no folder so create one
     QString acctName;
     QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
@@ -382,8 +382,9 @@ void KMFolderDialog::slotOk()
     if ((selectedFolderDir->hasNamedFolder(fldName)) &&
       (!((folder) &&
       (selectedFolderDir == folder->parent()) &&
-      (folder->name() == fldName)))) {
-        KMessageBox::error( this, message );
+      (folder->name() == fldName))))
+    {
+      KMessageBox::error( this, message );
       return;
     }
 
@@ -428,14 +429,20 @@ void KMFolderDialog::slotOk()
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-			}	
+      }	
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
       if (folder->parent() != selectedFolderDir)
-				folder->rename(fldName, selectedFolderDir );
+{
+kdDebug() << "moving... " << endl;
+        folder->rename(fldName, selectedFolderDir );
+}
       else
-				folder->rename(fldName);
+{
+kdDebug() << "renaming... " << endl;
+        folder->rename(fldName);
+}
 
       kernel->folderMgr()->contentsChanged();
     }
