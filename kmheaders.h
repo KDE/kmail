@@ -21,7 +21,7 @@ class QPixmap;
 class QIconSet;
 class KMScoringManager;
 
-typedef QList<KMMsgBase> KMMessageList;
+typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 /** A special drag class for header list to folder tree DnD operations */
@@ -295,7 +295,7 @@ private:
   /** Current item */
   int mCurrentItem;
   /** Map messages ids into KMHeaderItems */
-  QArray<KMHeaderItem*> mItems;
+  QMemArray<KMHeaderItem*> mItems;
   QDict< KMHeaderItem > mIdTree;
   QDict< KMHeaderItem > mPhantomIdTree;
   QDict< QValueList< int > > mTree;

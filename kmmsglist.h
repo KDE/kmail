@@ -9,8 +9,8 @@
 #include "kmmsgbase.h"
 
 
-#define KMMsgListInherited QArray<KMMsgBasePtr>
-class KMMsgList: public QArray<KMMsgBasePtr>
+#define KMMsgListInherited QMemArray<KMMsgBasePtr>
+class KMMsgList: public QMemArray<KMMsgBasePtr>
 {
 public:
   /** Valid parameters for sort() */

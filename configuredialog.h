@@ -171,7 +171,7 @@ class IdentityList
     void remove( const QString &identity );
 
   private:
-    QList<IdentityEntry> mList;
+    QPtrList<IdentityEntry> mList;
 };
 
 class LanguageItem
@@ -530,7 +530,7 @@ private:
       QGuardedPtr<KMAccount> newAccount;
     };
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
-    QList<KMTransportInfo> mTransportList;
+    QPtrList<KMTransportInfo> mTransportList;
     bool secondIdentity;
 };
 

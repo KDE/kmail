@@ -222,7 +222,7 @@ protected:
   QTimer  mIdleTimer;
   KIO::Slave *mSlave;
   KIO::MetaData mSlaveConfig;
-  QList<KMImapJob> mJobList;
+  QPtrList<KMImapJob> mJobList;
   KMFolderImap *mFolder;
 
 protected slots:

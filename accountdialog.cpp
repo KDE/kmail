@@ -108,9 +108,9 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
         s = s.stripWhiteSpace();
       }
 
-      if(  lockFileGlobal.match(s) != -1 ) {
+      if(  lockFileGlobal.search(s) != -1 ) {
         processGlobalLock(s);
-      } else if( lockFileLocal.match(s) != -1 ) {
+      } else if( lockFileLocal.search(s) != -1 ) {
         processLocalLock(s);
       } else if( int i = s.find('=') ) {
         processVariableSetting(s,i);

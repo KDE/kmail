@@ -1704,23 +1704,23 @@ void ConfigureDialog::setupAppearancePage( void )
   {
     KConfigGroupSaver saver(config, "Reader");
 
-    QColor defaultColor = QColor(kapp->palette().normal().base());
+    QColor defaultColor = QColor(kapp->palette().active().base());
     mAppearance.colorList->setColor(
       0, config->readColorEntry("BackgroundColor",&defaultColor ) );
 
-    defaultColor = QColor(kapp->palette().normal().text());
+    defaultColor = QColor(kapp->palette().active().text());
     mAppearance.colorList->setColor(
       1, config->readColorEntry("ForegroundColor",&defaultColor ) );
 
-    defaultColor = QColor(kapp->palette().normal().text());
+    defaultColor = QColor(kapp->palette().active().text());
     mAppearance.colorList->setColor(
       2, config->readColorEntry("QuoutedText1",&defaultColor ) );
 
-    defaultColor = QColor(kapp->palette().normal().text());
+    defaultColor = QColor(kapp->palette().active().text());
     mAppearance.colorList->setColor(
       3, config->readColorEntry("QuoutedText2",&defaultColor ) );
 
-    defaultColor = QColor(kapp->palette().normal().text());
+    defaultColor = QColor(kapp->palette().active().text());
     mAppearance.colorList->setColor(
       4, config->readColorEntry("QuoutedText3",&defaultColor ) );
 
@@ -2041,8 +2041,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
 
-    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
-    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 0, kapp->palette().active().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().active().text() );
     mAppearance.colorList->setColor( 2, red );
     mAppearance.colorList->setColor( 3, darkGreen );
     mAppearance.colorList->setColor( 4, darkMagenta );
@@ -2068,8 +2068,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
 
-    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
-    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 0, kapp->palette().active().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().active().text() );
     mAppearance.colorList->setColor( 2, red );
     mAppearance.colorList->setColor( 3, darkGreen );
     mAppearance.colorList->setColor( 4, darkMagenta );

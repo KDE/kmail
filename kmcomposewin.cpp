@@ -320,8 +320,8 @@ void KMComposeWin::readColorConfig(void)
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
-  QColor c4=QColor(kapp->palette().normal().base());
+  QColor c1=QColor(kapp->palette().active().text());
+  QColor c4=QColor(kapp->palette().active().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     foreColor = config->readColorEntry("ForegroundColor",&c1);
@@ -334,10 +334,9 @@ void KMComposeWin::readColorConfig(void)
 
   // Color setup
   mPalette = kapp->palette();
-  QColorGroup cgrp  = mPalette.normal();
+  QColorGroup cgrp  = mPalette.active();
   cgrp.setColor( QColorGroup::Base, backColor);
   cgrp.setColor( QColorGroup::Text, foreColor);
-  mPalette.setNormal(cgrp);
   mPalette.setDisabled(cgrp);
   mPalette.setActive(cgrp);
   mPalette.setInactive(cgrp);

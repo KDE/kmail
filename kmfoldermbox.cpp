@@ -476,7 +476,7 @@ int KMFolderMbox::createIndexFromContents()
 
     if (atEof ||
 	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 &&
-	 regexp.match(line) >= 0))
+	 regexp.search(line) >= 0))
     {
       size = pos - offs;
       pos = ftell(mStream);
@@ -681,7 +681,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   int idx = -1, rc;
   KMFolder* msgParent;
   bool editing = false;
-  int growth = 0, oldlength = 0;
+  int growth = 0;
 
   if (isIndexOutdated()) {
       kdDebug(5006) << "Critical error: " << location() <<
@@ -811,7 +811,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   // change the length of the previous message to encompass white space added
   if ((idx > 0) && (growth > 0)) {
     // don't grow if a deleted message claims space at the end of the file
-    if (revert ==  mMsgList[idx - 1]->folderOffset()  + mMsgList[idx - 1]->msgSize() )
+    if ((ulong)revert == mMsgList[idx - 1]->folderOffset() + mMsgList[idx - 1]->msgSize() )
       mMsgList[idx - 1]->setMsgSize( mMsgList[idx - 1]->msgSize() + growth );
   }
 
@@ -903,7 +903,8 @@ int KMFolderMbox::compact()
   open();
 
   KMMsgInfo* mi;
-  int msize, offs=0, msgs=0, folder_offset;
+  uint msize, folder_offset;
+  int offs=0, msgs=0;
   QCString mtext;
   for(int idx = 0; idx < mMsgList.count(); idx++) {
     if(!(msgs++ % 10)) {

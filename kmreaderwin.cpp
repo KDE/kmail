@@ -156,10 +156,10 @@ void KMReaderWin::readColorConfig(void)
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "Reader");
 
-  c1 = QColor(kapp->palette().normal().text());
+  c1 = QColor(kapp->palette().active().text());
   c2 = KGlobalSettings::linkColor();
   c3 = KGlobalSettings::visitedLinkColor();
-  c4 = QColor(kapp->palette().normal().base());
+  c4 = QColor(kapp->palette().active().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c1 = config->readColorEntry("ForegroundColor",&c1);
@@ -254,11 +254,11 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     KConfigGroupSaver saver(config, "Reader");
     if( config->readBoolEntry( "defaultColors", true ) == true )
     {
-      color = QColor(kapp->palette().normal().text());
+      color = QColor(kapp->palette().active().text());
     }
     else
     {
-      QColor defaultColor = QColor(kapp->palette().normal().text());
+      QColor defaultColor = QColor(kapp->palette().active().text());
       if( quoteLevel == 0 )
 	color = config->readColorEntry( "QuoutedText1", &defaultColor );
       else if( quoteLevel == 1 )
@@ -266,7 +266,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
       else if( quoteLevel == 2 )
 	color = config->readColorEntry( "QuoutedText3", &defaultColor );
       else
-	color = QColor(kapp->palette().normal().base());
+	color = QColor(kapp->palette().active().base());
     }
   }
 

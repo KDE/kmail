@@ -8,8 +8,8 @@
 #include <qdatetime.h>
 #include <qheader.h>
 #include <qdragobject.h>
-#include <qstack.h>
-#include <qqueue.h>
+#include <qptrstack.h>
+#include <qptrqueue.h>
 #include <qheader.h>
 #include <qpainter.h>
 
@@ -522,10 +522,10 @@ void KMHeaders::readColorConfig (void)
   KConfig* config = kapp->config();
   // Custom/System colors
   KConfigGroupSaver saver(config, "Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c1=QColor(kapp->palette().active().text());
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
-  QColor c4=QColor(kapp->palette().normal().base());
+  QColor c4=QColor(kapp->palette().active().base());
   QColor c5=QColor(0,0x7F,0);
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
@@ -2617,9 +2617,9 @@ bool KMHeaders::writeSortOrder()
     fwrite(&discovered_count, sizeof(discovered_count), 1, sortStream);
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
 	
-    QStack<KMHeaderItem> items;
+    QPtrStack<KMHeaderItem> items;
     {
-      QStack<QListViewItem> s;
+      QPtrStack<QListViewItem> s;
       for (QListViewItem * i = firstChild(); i; ) {
 	items.push((KMHeaderItem *)i);
 	if ( i->firstChild() ) {
@@ -2818,7 +2818,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     //all cases
     int column, ascending, threaded, discovered_count, sorted_count, appended;
     bool unread_exists = false;
-    QArray<KMSortCacheItem *> sortCache(mFolder->count());
+    QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
     root.setId(-666); //mark of the root!
 
@@ -3029,7 +3029,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     START_TIMER(header_creation);
     KMHeaderItem *khi;
     KMSortCacheItem *i, *new_kci;
-    QQueue<KMSortCacheItem> s;
+    QPtrQueue<KMSortCacheItem> s;
     s.enqueue(&root);
     do {
 	i = s.dequeue();

@@ -276,9 +276,9 @@ void KMFolderTree::readColorConfig (void)
   KConfig* conf = kapp->config();
   // Custom/System color support
   KConfigGroupSaver saver(conf, "Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c1=QColor(kapp->palette().active().text());
   QColor c2=QColor("blue");
-  QColor c4=QColor(kapp->palette().normal().base());
+  QColor c4=QColor(kapp->palette().active().base());
 
   if (!conf->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);

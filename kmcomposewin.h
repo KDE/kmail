@@ -53,7 +53,7 @@ class KToolBar;
 class KToggleAction;
 class KURL;
 
-typedef QList<KMMessagePart> KMMsgPartList;
+typedef QPtrList<KMMessagePart> KMMsgPartList;
 
 
 //-----------------------------------------------------------------------------
@@ -498,14 +498,14 @@ protected:
   QGridLayout* mGrid;
   KMMessage *mMsg;
   QListView *mAtmListBox;
-  QList<QListViewItem> mAtmItemList;
+  QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
   bool useExtEditor;
-  QList<_StringPair> mCustHeaders;
+  QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
   bool disableBreaking;
   int mNumHeaders;
@@ -515,8 +515,8 @@ protected:
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QFont mBodyFont;
   //  QList<QLineEdit> mEdtList;
-  QList<QWidget> mEdtList;
-  QList<KTempFile> mAtmTempList;
+  QPtrList<QWidget> mEdtList;
+  QPtrList<KTempFile> mAtmTempList;
   QPalette mPalette;
   QString mId, mOldSigText;
   QStringList mTransportHistory;
