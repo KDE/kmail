@@ -31,6 +31,7 @@ public:
 
 protected slots:
   virtual void done(int);
+  virtual void mimetypeChanged(const QString & name);
 
 protected:
   /** Applies changes from the dialog to the message part. Called

@@ -60,6 +60,8 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   mEdtMimetype->setMinimumSize(100, h);
   mEdtMimetype->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mEdtMimetype, 0, 0, 1, 3);
+  connect(mEdtMimetype, SIGNAL(textChanged(const QString &)),
+    SLOT(mimetypeChanged(const QString &)));
   
   //-----
   mLblSize = new QLabel(this);
@@ -148,6 +150,18 @@ KMMsgPartDlg::~KMMsgPartDlg()
 
 
 //-----------------------------------------------------------------------------
+void KMMsgPartDlg::mimetypeChanged(const QString & name)
+{
+  if (name == "message/rfc822")
+  {
+    mCbxEncoding->setCurrentItem(0);
+    mCbxEncoding->setEnabled(false);
+  } else {
+    mCbxEncoding->setEnabled(true);
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 {
   unsigned int len, idx;
@@ -155,6 +169,12 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 
   mMsgPart = aMsgPart;
   assert(mMsgPart!=NULL);
+
+  enc = mMsgPart->cteStr();
+  if (enc=="base64") idx = 1;
+  else if (enc=="quoted-printable") idx = 2;
+  else idx = 0;
+  mCbxEncoding->setCurrentItem(idx);
 
   mEdtComment->setText(mMsgPart->contentDescription());
   mEdtName->setText(mMsgPart->name());
@@ -171,12 +191,6 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   mIconPixmap.load(iconName);
   mLblIcon->setPixmap(mIconPixmap);
   mLblIcon->resize(mIconPixmap.size());
-
-  enc = mMsgPart->cteStr();
-  if (enc=="base64") idx = 1;
-  else if (enc=="quoted-printable") idx = 2;
-  else idx = 0;
-  mCbxEncoding->setCurrentItem(idx);
 }
 
 
@@ -198,11 +212,15 @@ void KMMsgPartDlg::applyChanges(void)
   if (!str.isEmpty() || !mMsgPart->contentDescription().isEmpty())
     mMsgPart->setContentDescription(str);
 
-  idx = mCbxEncoding->currentItem();
-  if (idx==1) str = "base64";
-  else if (idx==2) str = "quoted-printable";
-  else str = "8bit";
-
+  if (mEdtMimetype->currentText() == "message/rfc822")
+  { 
+    str = "7bit";
+  } else {
+    idx = mCbxEncoding->currentItem();
+    if (idx==1) str = "base64";
+    else if (idx==2) str = "quoted-printable";
+    else str = "8bit";
+  }
   type = mEdtMimetype->currentText();
   idx = type.find('/');
   if (idx < 0) subtype = "";
