@@ -496,12 +496,8 @@ void KMHeaders::readFolderConfig (void)
 {
   KConfig* config = kapp->config();
   assert(mFolder!=NULL);
-  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = mFolder->path().right( pathLen );
 
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + mFolder->name());
+  config->setGroup("Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
@@ -540,12 +536,8 @@ void KMHeaders::writeFolderConfig (void)
   int mSortColAdj = mSortCol + 1;
 
   assert(mFolder!=NULL);
-  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = mFolder->path().right( pathLen );
 
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + mFolder->name());
+  config->setGroup("Folder-" + mFolder->idString());
   config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
   config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
   config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
@@ -684,13 +676,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   setColumnText( mPaintInfo.subCol, colText);
 
   if (mFolder) {
-    int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-    QString path = mFolder->path().right( pathLen );
-
-    if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
     KConfig *config = kapp->config();
-    config->setGroup("Folder-" + path + mFolder->name());
+    config->setGroup("Folder-" + mFolder->idString());
 
     if (mPaintInfo.showSize) {
       colText = i18n( "Size" );

@@ -213,6 +213,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   }
   setUpdatesEnabled(TRUE);
   reload();
+  cleanupConfigFile();
 
   setAcceptDrops( TRUE );
   viewport()->setAcceptDrops( TRUE );
@@ -784,12 +785,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   KMFolder *folder = fti->folder;
   if (!folder)
     return TRUE;
-  int pathLen = folder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = folder->path().right( pathLen );
-
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + folder->name());
+  config->setGroup("Folder-" + folder->idString());
 
   return config->readBoolEntry("isOpen", false);
 }
@@ -802,12 +798,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   KMFolder *folder = fti->folder;
   if (!folder)
     return;
-  int pathLen = folder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = folder->path().right( pathLen );
-
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + folder->name());
+  config->setGroup("Folder-" + folder->idString());
   config->writeEntry("isOpen", fti->isOpen());
 }
 
@@ -825,7 +816,7 @@ void KMFolderTree::cleanupConfigFile()
   for (QListViewItemIterator fldIt(this); fldIt.current(); fldIt++)
   {
     fti = static_cast<KMFolderTreeItem*>(fldIt.current());
-    if (fti && fti->folder) 
+    if (fti && fti->folder)
       folderMap.insert(fti->folder->idString(), fti->isExpandable());
   }
   QStringList groupList = config.groupList();

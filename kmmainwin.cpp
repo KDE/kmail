@@ -118,8 +118,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   setCaption( i18n("KDE Mail Client") );
 
-  mFolderTree->cleanupConfigFile();
-
   // must be the last line of the constructor:
   mStartupDone = TRUE;
 }
@@ -163,12 +161,7 @@ void KMMainWin::readFolderConfig(void)
     return;
 
   KConfig *config = kapp->config();
-  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = mFolder->path().right( pathLen );
-
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + mFolder->name());
+  config->setGroup("Folder-" + mFolder->idString());
   mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
   mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
 }
@@ -181,12 +174,7 @@ void KMMainWin::writeFolderConfig(void)
     return;
 
   KConfig *config = kapp->config();
-  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = mFolder->path().right( pathLen );
-
-  if (!path.isEmpty())
-    path = path.right( path.length() - 1 ) + "/";
-  config->setGroup("Folder-" + path + mFolder->name());
+  config->setGroup("Folder-" + mFolder->idString());
   config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
   config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
 }
