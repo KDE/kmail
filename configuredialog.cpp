@@ -1412,7 +1412,8 @@ void NetworkPage::ReceivingTab::save() {
 
   // Sync new IMAP accounts ASAP:
   for (it = newCachedImapAccounts.begin(); it != newCachedImapAccounts.end(); ++it ) {
-    (*it)->processNewMail(false);
+    if ( !(*it)->checkingMail() )
+      (*it)->processNewMail(false);
   }
 }
 

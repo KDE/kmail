@@ -60,7 +60,7 @@ using KMail::IMAPProgressDialog;
 KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
-    mProgressDialogEnabled( true ), mSyncActive( false )
+    mProgressDialogEnabled( true )
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
@@ -180,7 +180,6 @@ void KMAcctCachedImap::handleJobError( int errorCode, const QString &errorMsg, K
 
   if ( job && !jobsKilled )
     removeJob( job );
-  mSyncActive = false;
 }
 
 
@@ -270,8 +269,6 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     checkDone(false, 0);
     mCountRemainChecks = 0;
   }
-  // Finally allow new syncs to proceed
-  mSyncActive = false;
 }
 
 
@@ -306,7 +303,6 @@ void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
     if (!quiet) slotSlaveError(mSlave, job->error(),
         job->errorText() );
     if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
-    mSyncActive = false;
   }
   displayProgress();
 }
@@ -318,13 +314,6 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 {
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
-
-  // Guard against parallel runs
-  if( mSyncActive ) {
-    kdDebug(5006) << "Already processing new mail, won't start again\n";
-    return;
-  }
-  mSyncActive = true;
 
   emit newMailsProcessed(-1);
   if( interactive && isProgressDialogEnabled() ) {
@@ -341,7 +330,6 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
-  mSyncActive = false;
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   setCheckingMail( false );
@@ -390,16 +378,17 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
     for( it = folderList.begin(); it != folderList.end(); ++it ) {
       KMFolder *folder = *it;
       if( folder && folder->folderType() == KMFolderTypeCachedImap ) {
-	KMFolderCachedImap *cfolder = static_cast<KMFolderCachedImap*>(folder->storage());
-	// This invalidates the folder completely
-	cfolder->setUidValidity("INVALID");
-	cfolder->writeUidCache();
+        KMFolderCachedImap *cfolder = static_cast<KMFolderCachedImap*>(folder->storage());
+        // This invalidates the folder completely
+        cfolder->setUidValidity("INVALID");
+        cfolder->writeUidCache();
       }
     }
   folder->setUidValidity("INVALID");
   folder->writeUidCache();
 
-  processNewMail(false);
+  if ( !checkingMail() )
+    processNewMail(false);
 }
 
 //-----------------------------------------------------------------------------

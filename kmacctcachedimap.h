@@ -156,7 +156,6 @@ private:
   KMFolderCachedImap *mFolder;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
-  bool mSyncActive;
 };
 
 #endif /*KMAcctCachedImap_h*/

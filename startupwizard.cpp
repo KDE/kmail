@@ -236,7 +236,8 @@ void WizardKolabPage::apply()
       createFolder( "INBOX", false, KMFolderTypeCachedImap, child );
     static_cast<KMFolderCachedImap*>(mFolder)->setSilentUpload( true );
   }
-  mAccount->processNewMail(false);
+  if ( !mAccount->checkingMail() )
+    mAccount->processNewMail(false);
 
   // Handle SMTP transport
   if( mTransport == 0 ) {
