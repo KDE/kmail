@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
@@ -39,6 +40,7 @@ protected slots:
    * then we update the other items to reflect the capabilities
    */
   void slotUpdateItems( int );
+  void slotFolderNameChanged( const QString& );
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );

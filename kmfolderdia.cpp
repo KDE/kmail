@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfolderdia.cpp
 #include <config.h>
 
@@ -61,10 +62,12 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     mNameEdit->setFocus();
   mNameEdit->setText( mFolder ? mFolder->label() : i18n("unnamed") );
   if (!aName.isEmpty())
-      mNameEdit->setText(aName);
+    mNameEdit->setText(aName);
   mNameEdit->setMinimumSize(mNameEdit->sizeHint());
   label->setBuddy( mNameEdit );
   hl->addWidget( mNameEdit );
+  connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
+           this, SLOT( slotFolderNameChanged( const QString & ) ) );
 
   QLabel* belongsToLabel = new QLabel( i18n("&Belongs to:" ), fpGroup );
   hl->addWidget( belongsToLabel );
@@ -447,7 +450,7 @@ void KMFolderDialog::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !iconPath.isEmpty() )
     mUnreadIconButton->setIcon( iconPath );
 
-  
+
   // mailing-list related settings
   mMailingListPostAddressEdit->setText( folder->mailingListPostAddress() );
   mMailingListPostAddressEdit->setEnabled( folder->isMailingList() );
@@ -491,6 +494,12 @@ void KMFolderDialog::initializeWithValuesFromFolder( KMFolder* folder ) {
     mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
     mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderDialog::slotFolderNameChanged( const QString& str )
+{
+  enableButtonOK( !str.isEmpty() );
 }
 
 //-----------------------------------------------------------------------------
