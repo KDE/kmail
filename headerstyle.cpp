@@ -418,7 +418,6 @@ namespace KMail {
         QImage photo = addresses[0].photo().data();
         if ( !photo.isNull() )
         {
-          photoURL = imgToDataUrl( photo );
           photoWidth = photo.width();
           photoHeight = photo.height();
           // scale below 60, otherwise it can get way too large
@@ -426,7 +425,9 @@ namespace KMail {
             double ratio = ( double )photoHeight / ( double )photoWidth;
             photoHeight = 60;
             photoWidth = (int)( 60 / ratio );
+            photo = photo.smoothScale( photoWidth, photoHeight );
           }
+          photoURL = imgToDataUrl( photo );
         }
       }
       else
