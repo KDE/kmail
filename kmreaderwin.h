@@ -438,6 +438,7 @@ protected:
   int fntSize;
   bool mUseFixedFont;
   bool mPrinting;
+  bool mIsFirstTextPart;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
   QColor cPgpOk1F, cPgpOk1H, cPgpOk1B, // colors for PGP (Frame, Header, Body)

@@ -426,9 +426,14 @@ kdDebug(5006) << "* text *" << endl;
             resultString = cstr;
             if( !reader ) {
               bDone = true;
-            } else if( ( reader->mAttachmentStyle != IconicAttmnt &&
-                         reader->mAttachmentStyle != HideAttmnt ) ||
-                        showOneMimePart || !curNode->isAttachment() ) {
+            } else if( reader->mAttachmentStyle == InlineAttmnt ||
+                       (reader->mAttachmentStyle == SmartAttmnt &&
+                        !curNode->isAttachment()) ||
+                       (reader->mAttachmentStyle == IconicAttmnt &&
+                        reader->mIsFirstTextPart) ||
+                       showOneMimePart )
+            {
+              reader->mIsFirstTextPart = false;
               if( reader->htmlMail() ) {
                 // ---Sven's strip </BODY> and </HTML> from end of attachment start-
                 // We must fo this, or else we will see only 1st inlined html
@@ -482,10 +487,13 @@ kdDebug(5006) << "plain " << endl;
 kdDebug(5006) << "default " << endl;
               QCString cstr( curNode->msgPart().bodyDecoded() );
 //              resultingRawData += cstr;
-              if( !reader ||
-                  ( ( reader->mAttachmentStyle != IconicAttmnt &&
-                      reader->mAttachmentStyle != HideAttmnt ) ||
-                    showOneMimePart || !curNode->isAttachment() ) ) {
+              if( !reader || reader->mAttachmentStyle == InlineAttmnt ||
+                 (reader->mAttachmentStyle == SmartAttmnt &&
+                  !curNode->isAttachment()) ||
+                  (reader->mAttachmentStyle == IconicAttmnt &&
+                   reader->mIsFirstTextPart) || showOneMimePart )
+              {
+                reader->mIsFirstTextPart = false;
                 if( reader && curNode->isAttachment() && !showOneMimePart )
                   reader->queueHtml("<br><hr><br>");
                 if( reader )
@@ -856,6 +864,7 @@ kdDebug(5006) << "* application *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypePostscript: {
 kdDebug(5006) << "postscript" << endl;
+              isImage = true;
             }
             break;
           case DwMime::kSubtypeOctetStream: {
@@ -1501,6 +1510,7 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
   mPrinting = false;
   mShowColorbar = false;
   mInlineImage = false;
+  mIsFirstTextPart = true;
 
   if (!aParent)
      mStandaloneWindows.append(this);
@@ -3011,6 +3021,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
           + "</div><div><br></div>");
 
 
+  mIsFirstTextPart = true;
   // show message content
   if( !onlyProcessHeaders )
     parseObjectTree( this,
@@ -4587,7 +4598,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
-    else if (qstricmp(aMsgPart->typeStr(), "image")==0)
+    else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
+             (qstricmp(aMsgPart->typeStr(), "application")==0 &&
+              qstricmp(aMsgPart->subtypeStr(), "postscript")))
     {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
