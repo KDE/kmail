@@ -708,7 +708,7 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
         i18n("File %1 exists.\nDo you want to replace it?")
         .arg(mUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         == KMessageBox::Continue) {
-        mMsgListIndex = 0;
+        mOffset = 0;
 
         mJob = KIO::put( mUrl, -1, true, false );
         mJob->slotTotalSize( mTotalSize );
