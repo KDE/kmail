@@ -148,7 +148,8 @@ void KMFolderImap::removeOnServer()
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath());
-  if (!mAccount->makeConnection()) return;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+    return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url());
@@ -481,7 +482,7 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 bool KMFolderImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
-  if (!mAccount->makeConnection())
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
     return FALSE;
 
   // connect to folderlisting
@@ -594,10 +595,10 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity()
 {
-  kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
-  if (!mAccount->makeConnection())
+  kdDebug(5006) << "KMFolderImap::checkValidity of: " << url.url() << endl;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
     kdWarning(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
@@ -717,7 +718,7 @@ void KMFolderImap::getFolder(bool force)
 void KMFolderImap::reallyGetFolder(const QString &startUid)
 {
   KURL url = mAccount->getUrl();
-  if (!mAccount->makeConnection())
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
     emit folderComplete(this, FALSE);
     mAccount->displayProgress();
@@ -823,7 +824,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     KURL url = mAccount->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
-    if (!mAccount->makeConnection())
+    if ( mAccount->makeConnection() != ImapAccountBase::Connected )
     {
       quiet(false);
       emit folderComplete(this, FALSE);
@@ -1082,7 +1083,8 @@ void KMFolderImap::createFolder(const QString &name)
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + name);
-  if (!mAccount->makeConnection()) return;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+    return;
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), this );
@@ -1161,7 +1163,8 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
   url.setPath(msg_parent->imapPath() + ";UID=" + msg->headerField("X-UID"));
-  if (!mAccount->makeConnection()) return;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+    return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
@@ -1181,7 +1184,8 @@ void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
     url.setPath(msg_parent->imapPath() + ";UID=" + *it);
-    if (!mAccount->makeConnection()) return;
+    if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+      return;
     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
@@ -1322,7 +1326,8 @@ void KMFolderImap::setImapStatus(QString path, QCString flags)
 
   stream << (int) 'S' << url << flags;
 
-  if (!mAccount->makeConnection()) return;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+    return;
   KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
@@ -1338,7 +1343,8 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
   aFolder->setNeedsCompacting(FALSE);
   KURL url = mAccount->getUrl();
   url.setPath(aFolder->imapPath() + ";UID=*");
-  if (!mAccount->makeConnection()) return;
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+    return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), 0 );
@@ -1382,7 +1388,7 @@ bool KMFolderImap::processNewMail(bool)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
   else
     url.setPath(imapPath() + ";SECTION=UNSEEN");
-  if (!mAccount->makeConnection()) {
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
     return false;
   }
