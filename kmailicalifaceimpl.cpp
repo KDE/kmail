@@ -196,7 +196,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart.setName( fileName );
       msgPart.setType(DwMime::kTypeText);
       msgPart.setSubtype(DwMime::kSubtypePlain);
-      msgPart.setContentDisposition( QString("attachment;\n\tfilename=\"%1\"")
+      msgPart.setContentDisposition( QString("attachment;\n  filename=\"%1\"")
           .arg( fileName ).latin1() );
       QValueList<int> dummy;
       msgPart.setBodyAndGuessCte( rawData, dummy );
@@ -285,6 +285,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
+                                           const QCString& subject,
                                            const QStringList& attachments )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << attachments << " )" << endl;
@@ -299,12 +300,9 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   msg->initHeader();
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
-  msg->setSubject( "[kolab data]" );
-  msg->setCharset( "utf-8" );
-  msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
-    msg->setNeedsAssembly();
-    msg->setAutomaticFields( true );
-    msg->cleanupHeader();
+  msg->setSubject( subject ); // e.g.: "internal kolab data: Do not delete this mail."
+  msg->setCharset( "US-ASCII" );
+  msg->setAutomaticFields( true );
 
   // Add all attachments by reading them from their temp. files
   for( QStringList::ConstIterator it = attachments.begin();
@@ -318,8 +316,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
 
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
-    msg->setNeedsAssembly();
-    msg->setAutomaticFields( true );
+    //msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
     msg->cleanupHeader();
     msg->touch();
     if ( folder.addMsg( msg ) == 0 )
@@ -649,13 +646,14 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
+                                     const QCString& subject,
                                      const QStringList& attachments,
                                      const QStringList& deletedAttachments )
 {
   Q_UINT32 rc = 0;
 
   // This finds the message with serial number "id", sets the
-  // xml attachment to hold the contents of "xml", and updates all
+  // xml attachments to hold the contents of "xml", and updates all
   // attachments.
   // The mail can have additional attachments, and these are not
   // touched!  They belong to other clients - like Outlook
@@ -711,7 +709,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
   }else{
     // Message not found - store it newly
-    rc = addIncidence( *f, attachments );
+    rc = addIncidence( *f, subject, attachments );
   }
 
   mResourceQuiet = quiet;

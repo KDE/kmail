@@ -72,9 +72,14 @@ public:
   bool update( const QString& type, const QString& folder,
                const QString& uid, const QString& entry );
 
-  /// Update a kolab storage entry. Returns the new mail serial number,
-  /// or 0 if something went wrong
-  Q_UINT32 update( const QString& resource, Q_UINT32 sernum,
+  /// Update a kolab storage entry.
+  /// If message is not there, it is added and
+  /// given the subject as Subject: header.
+  /// Returns the new mail serial number,
+  /// or 0 if something went wrong,
+  Q_UINT32 update( const QString& resource,
+                   Q_UINT32 sernum,
+                   const QCString& subject,
                    const QStringList& attachments,
                    const QStringList& deletedAttachments );
 
@@ -187,7 +192,9 @@ private:
   bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
   bool updateAttachment( KMMessage& msg, const QString& attachmentURL );
   bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
-  Q_UINT32 addIncidence( KMFolder& folder, const QStringList& attachments );
+  Q_UINT32 addIncidence( KMFolder& folder,
+                         const QCString& subject,
+                         const QStringList& attachments );
 
   void loadPixmaps() const;
 

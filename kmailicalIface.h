@@ -68,6 +68,7 @@ k_dcop:
   /// or 0 if something went wrong
   virtual Q_UINT32 update( const QString& resource,
                            Q_UINT32 sernum,
+                           const QCString& subject,
                            const QStringList& attachments,
                            const QStringList& deletedAttachments ) = 0;
 
