@@ -898,7 +898,7 @@ void KMHeaders::msgAdded(int id)
   appendUnsortedItem(hi); //inserted into sorted list
   if (mSortInfo.fakeSort) {
       QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-      setSorting(mSortCol, !mSortDescending );
+      KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
       mSortInfo.fakeSort = 0;
   }
 
@@ -924,7 +924,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
   mSortInfo.dirty = TRUE;
   if (mSortInfo.fakeSort) {
       QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-      setSorting(mSortCol, !mSortDescending );
+      KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
       mSortInfo.fakeSort = 0;
   }
 
@@ -2911,7 +2911,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mSortInfo.ascending = ascending = !mSortDescending;
 	threaded = ((mNested && !mNestedOverride) || (!mNested && mNestedOverride));
 	sorted_count = discovered_count = appended = 0;
-	setSorting( mSortCol, !mSortDescending );
+	KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
     }
 
     //fill in empty holes
