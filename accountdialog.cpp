@@ -229,6 +229,8 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 		Ok|Cancel|Help, Ok, true ), mAccount(account),
   mIdentityList( identity )
 {
+  setHelp("receiving-mail");
+
   QString accountType = mAccount->type();
 
   if( accountType == "local" )
