@@ -1483,7 +1483,7 @@ void KMCopyCommand::execute()
       newMsg = new KMMessage;
       newMsg->setComplete(msg->isComplete());
       // make sure the attachment state is only calculated when it's complete
-      if (!newMsg->isComplete()) 
+      if (!newMsg->isComplete())
         newMsg->setReadyToShow(false);
       newMsg->fromString(msg->asString());
       newMsg->setStatus(msg->status());
@@ -2068,6 +2068,7 @@ void KMResendMessageCommand::execute()
   newMsg->setCharset(msg->codec()->mimeName());
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
+  newMsg->setParent( 0 );
 
   win = new KMComposeWin();
   win->setMsg(newMsg, false, true);
