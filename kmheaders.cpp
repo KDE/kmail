@@ -1391,7 +1391,7 @@ void KMHeaders::updateMessageList(void)
 
   if (mNested) {
     for (i=0; i<mFolder->count(); i++)
-      mItems[i] = 0;
+      mItems.operator[](i) = 0;
 
     clear();
     mTree.setAutoDelete( true );
@@ -1463,7 +1463,7 @@ void KMHeaders::updateMessageList(void)
     }
 
     for (i=0; i<mFolder->count(); i++)
-      assert(mItems[i] != 0);
+      assert(mItems.operator[](i) != 0);
 
     mTree.clear();
     mTreeSeen.clear();
