@@ -786,6 +786,11 @@ kdDebug(5006) << "* message *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
+              if( reader->mAttachmentStyle != InlineAttmnt &&
+                  (reader->mAttachmentStyle != SmartAttmnt ||
+                   curNode->isAttachment()) )
+                 break;
+
               if( curNode->mChild ) {
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
                 parseObjectTree( reader,
