@@ -72,11 +72,17 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   if ( jt == tExpireMessages )
   {
      expireMessages();
+     deleteLater();
      return;
   }
 
   assert(jt == tGetMessage || folder);
   KMMessage* msg = msgList.first();
+   // guard against empty list
+  if ( !msg ) {
+    deleteLater();
+    return;
+  }
   mType = jt;
   mDestFolder = folder? folder->folder() : 0;
   // refcount++
@@ -97,7 +103,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   KMAcctImap *account;
   if (folder) {
     account = folder->account();
-  } else { 
+  } else {
     account = static_cast<KMFolderImap*>(msg_parent->storage())->account();
   }
   if ( !account ||
@@ -110,11 +116,11 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   {
     // transfers the complete message to the server
     KURL url = account->getUrl();
-    QString flags = KMFolderImap::statusToFlags( msg->status() ); 
+    QString flags = KMFolderImap::statusToFlags( msg->status() );
     url.setPath( folder->imapPath() + ";SECTION=" + flags );
     ImapAccountBase::jobData jd;
     jd.parent = 0; jd.offset = 0; jd.done = 0;
-    jd.total = msg->msgSizeServer(); 
+    jd.total = msg->msgSizeServer();
     jd.msgList.append(msg);
     QCString cstr( msg->asString() );
     int a = cstr.find("\nX-UID: ");
@@ -201,7 +207,7 @@ ImapJob::~ImapJob()
           mit.current()->setTransferInProgress(false);
       }
     }
-      
+
     mDestFolder->close();
   }
 
@@ -221,7 +227,7 @@ ImapJob::~ImapJob()
         }
       }
     }
-      
+
     mSrcFolder->close();
   }
 }
@@ -256,13 +262,13 @@ void ImapJob::slotGetNextMessage()
       path += ";SECTION=BODY.PEEK[" + mPartSpecifier + "]";
       DwBodyPart * part = msg->findDwBodyPart( msg->getFirstDwBodyPart(), mPartSpecifier );
       if (part)
-        jd.total = part->BodySize();      
+        jd.total = part->BodySize();
     }
   } else {
       path += ";SECTION=BODY.PEEK[]";
-      if (msg->msgSizeServer() > 0) 
-        jd.total = msg->msgSizeServer();      
-  }  
+      if (msg->msgSizeServer() > 0)
+        jd.total = msg->msgSizeServer();
+  }
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
@@ -325,7 +331,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
           (*it).done = size;
         ulong uid = msg->UID();
         // must set this first so that msg->fromByteArray sets the attachment status
-        if ( mPartSpecifier.isEmpty() ) 
+        if ( mPartSpecifier.isEmpty() )
           msg->setComplete( true );
         else
           msg->setReadyToShow( false );
@@ -333,7 +339,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         msg->fromByteArray( (*it).data );
         // reconstruct as it may be overwritten above
         msg->setUID(uid);
-        if ( size > 0 && msg->msgSizeServer() == 0 ) 
+        if ( size > 0 && msg->msgSizeServer() == 0 )
           msg->setMsgSizeServer(size);
 
       } else {
@@ -395,7 +401,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
   }
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
-  
+
 
   if (job->error())
   {
@@ -568,7 +574,7 @@ void ImapJob::slotCopyMessageResult( KIO::Job *job )
 //-----------------------------------------------------------------------------
 void ImapJob::execute()
 {
-  init( mType, mSets, mDestFolder? 
+  init( mType, mSets, mDestFolder?
         dynamic_cast<KMFolderImap*>( mDestFolder->storage() ):0, mMsgList );
 }
 
@@ -603,7 +609,7 @@ void ImapJob::expireMessages()
   }
 
   mParentFolder->open();
-  QPtrList<KMMessage> list; 
+  QPtrList<KMMessage> list;
   for( i=mParentFolder->count()-1; i>=0; i-- ) {
     mb = mParentFolder->getMsgBase(i);
     if (mb == 0) {
