@@ -42,8 +42,6 @@
 #include <qmultilineedit.h>
 #endif
 
-
-
 static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
@@ -81,9 +79,9 @@ QString KMMessage::id(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
-      return header.MessageId().AsString().c_str();
+    return header.MessageId().AsString().c_str();
   else
-      return "";
+    return "";
 }
 
 
@@ -95,6 +93,14 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mCodec = NULL;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
+  mMsgSize = 0;
+  mFolderOffset = 0;
+  mStatus  = KMMsgStatusNew;
+  mDate    = 0;
+  mMsgSize = 0;
+  mFolderOffset = 0;
+  mStatus  = KMMsgStatusNew;
+  mDate    = 0;
 }
 
 
@@ -106,7 +112,10 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
   mCodec = NULL;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
-
+  mMsgSize = msgInfo.msgSize();
+  mFolderOffset = msgInfo.folderOffset();
+  mStatus = msgInfo.status();
+  mDate = msgInfo.date();
   assign(&msgInfo);
 }
 
@@ -195,7 +204,7 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
     setStatus(headerField("Status"), headerField("X-Status"));
 
   mNeedsAssembly = FALSE;
-  KMMessageInherited::setDate(date());
+    mDate = date();
 
   // Convert messages with a binary body into a message with attachment.
   QString ct = QString(mMsg->Headers().ContentType().TypeStr().c_str()).lower();
@@ -1202,7 +1211,7 @@ void KMMessage::setDateToday(void)
 //-----------------------------------------------------------------------------
 void KMMessage::setDate(time_t aDate)
 {
-  KMMessageInherited::setDate(aDate);
+    mDate = aDate;
   mMsg->Headers().Date().FromCalendarTime(aDate);
   mMsg->Headers().Date().Assemble();
   mNeedsAssembly = TRUE;
@@ -1221,7 +1230,7 @@ void KMMessage::setDate(const QString& aStr)
   mDirty = TRUE;
 
   if (header.HasDate())
-    KMMessageInherited::setDate(header.Date().AsUnixTime());
+	mDate = header.Date().AsUnixTime();
 }
 
 
@@ -2159,6 +2168,8 @@ void KMMessage::readConfig(void)
   KConfig *config=kapp->config();
   KConfigGroupSaver saver(config, "General");
 
+  config->setGroup("General");
+
   sCreateOwnMessageIdHeaders = config->readBoolEntry( "createOwnMessageIdHeaders",
 						      false );
   sMessageIdSuffix = config->readEntry( "myMessageIdSuffix", "" );
@@ -2238,3 +2249,14 @@ void KMMessage::setCharset(const QString& bStr)
    param->SetValue((const char *)aStr);
    mType.Assemble();
 }
+
+//-----------------------------------------------------------------------------
+void KMMessage::setStatus(const KMMsgStatus aStatus)
+{
+    if (mStatus == aStatus)
+	return;
+    KMMsgBase::setStatus(aStatus);
+    mStatus = aStatus;
+    mDirty = TRUE;
+}
+

@@ -45,14 +45,14 @@ public:
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
 
-  /** Status of the message. */
-  virtual KMMsgStatus status(void) const;
-
   /** Returns TRUE if status is new or unread. */
   virtual bool isUnread(void) const;
 
   /** Returns TRUE if status is new. */
   virtual bool isNew(void) const;
+
+    /** Status of the message. */
+    virtual KMMsgStatus status(void) const = 0;
 
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
@@ -64,38 +64,42 @@ public:
   virtual QString toStrip(void) const = 0;
   virtual QString replyToIdMD5(void) const = 0;
   virtual QString msgIdMD5(void) const = 0;
-  virtual time_t date(void) const;
+  virtual time_t date(void) const = 0;
   virtual QString dateStr(void) const;
   virtual QString xmark(void) const = 0;
 
   /** Set date. */
   virtual void setDate(const QString &aStrDate);
-  virtual void setDate(time_t aUnixTime);
+  virtual void setDate(time_t aUnixTime) = 0;
 
   /** Returns TRUE if changed since last folder-sync. */
-  bool dirty(void) const { return mDirty; }
+  virtual bool dirty(void) const { return mDirty; }
 
   /** Change dirty flag. */
-  void setDirty(bool d) { mDirty=d; }
+  void setDirty(bool b) { mDirty = b; }
 
   /** Set subject/from/date and xmark. */
   virtual void setSubject(const QString&) = 0;
   virtual void setXMark(const QString&) = 0;
 
-  /** Return contents as index string. This string is of fixed size
-    that can be read with indexStringLength(). */
-  virtual QCString asIndexString(void) const;
-
-  /** Returns fixed length of index strings returned by asIndexString(). */
-  static int indexStringLength(void);
+  /** Return contents as index string. This string is of indexStringLength() size */
+  const uchar *asIndexString(int &len) const;
 
   /** Get/set offset in mail folder. */
-  unsigned long folderOffset(void) const { return mFolderOffset; }
-  void setFolderOffset(unsigned long offs) { mFolderOffset=offs; }
+  virtual unsigned long folderOffset(void) const = 0;
+  virtual void setFolderOffset(unsigned long offs) = 0;
 
   /** Get/set size of message including the whole header in bytes. */
-  unsigned long msgSize(void) const { return mMsgSize; }
-  void setMsgSize(unsigned long sz) { mMsgSize = sz; }
+  virtual unsigned long msgSize(void) const = 0;
+  virtual void setMsgSize(unsigned long sz) = 0;
+
+  //offset into index file
+  virtual void setIndexOffset(long off) { mIndexOffset = off; }
+  virtual long indexOffset() const { return mIndexOffset; }
+
+  //size in index file
+  virtual void setIndexLength(short len) { mIndexLength = len; }
+  virtual short indexLength() const { return mIndexLength; }
 
   /** Skip leading keyword if keyword has given character at it's end
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
@@ -154,10 +158,32 @@ public:
 
 protected:
   KMFolder* mParent;
-  unsigned long mFolderOffset, mMsgSize;
-  time_t mDate;
-  KMMsgStatus mStatus;
   bool mDirty;
+    long mIndexOffset;
+    short mIndexLength;
+
+public:
+    enum MsgPartType
+    {
+	MsgNoPart = 0,
+	//unicode strings
+	MsgFromPart = 1,
+	MsgSubjectPart = 2,
+	MsgToPart = 3,
+	MsgReplyToIdMD5Part = 4,
+	MsgIdMD5Part = 5,
+	MsgXMarkPart = 6,
+	//unsigned long
+	MsgOffsetPart = 7,
+	MsgStatusPart = 8,
+	MsgSizePart = 9,
+	MsgDatePart = 10
+    };
+    unsigned long getLongPart(MsgPartType) const; //access to long msgparts
+    QString getStringPart(MsgPartType) const; //access to string msgparts
+    //sync'ing just one KMMsgBase
+    bool syncIndexString() const;
+
 };
 
 typedef KMMsgBase* KMMsgBasePtr;

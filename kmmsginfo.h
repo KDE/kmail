@@ -14,11 +14,12 @@ class KMMessage;
 class KMMsgInfo: public KMMsgBase
 {
 public:
-  KMMsgInfo(KMFolder* parent=NULL);
+  KMMsgInfo(KMFolder* parent, long off=0, short len=0);
   virtual ~KMMsgInfo();
 
-  /** Initialize from index string and set dirty flag to FALSE. */
-  virtual void fromIndexString(const QCString& str, bool toUtf8);
+  /* left for old style index files */
+  void compat_fromOldIndexString(const QCString& str, bool toUtf8);
+
 
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const QString& subject, const QString& from,
@@ -34,17 +35,33 @@ public:
   virtual QString xmark(void) const;
   virtual QString replyToIdMD5(void) const;
   virtual QString msgIdMD5(void) const;
+  virtual KMMsgStatus status(void) const;
+  virtual unsigned long folderOffset(void) const;
+  virtual unsigned long msgSize(void) const;
+  virtual time_t date(void) const;
+  void setMsgSize(unsigned long sz);
+  void setFolderOffset(unsigned long offs);
+  virtual void setStatus(const KMMsgStatus status);
+  virtual void setDate(time_t aUnixTime);
   virtual void setSubject(const QString&);
   virtual void setXMark(const QString&);
   virtual void setReplyToIdMD5(const QString&);
   virtual void setMsgIdMD5(const QString&);
 
+  //Grr.. c++!
+  virtual void setStatus(const char* s1, const char* s2=0) { return KMMsgBase::setStatus(s1, s2); }
+  virtual void setDate(const char* s1) { return KMMsgBase::setDate(s1); }
+
+  virtual bool dirty(void) const;
+
   /** Copy operators. */
   KMMsgInfo& operator=(const KMMessage&);
   KMMsgInfo& operator=(const KMMsgInfo&);
 
-protected:
-  QString mSubject, mFromStrip, mToStrip, mXMark, mReplyToIdMD5, mMsgIdMD5;
+private:
+  KMMsgStatus mStatus;
+  class KMMsgInfoPrivate;
+  KMMsgInfoPrivate *kd;
 };
 
 typedef KMMsgInfo* KMMsgInfoPtr;

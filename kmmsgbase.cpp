@@ -31,10 +31,7 @@ KMMsgBase::KMMsgBase(KMFolder* aParent)
 {
   mParent  = aParent;
   mDirty   = FALSE;
-  mMsgSize = 0;
-  mFolderOffset = 0;
-  mStatus  = KMMsgStatusNew;
-  mDate    = 0;
+  mIndexOffset = mIndexLength = 0;
 }
 
 
@@ -49,10 +46,8 @@ void KMMsgBase::assign(const KMMsgBase* other)
 {
   mParent = other->mParent;
   mDirty  = other->mDirty;
-  mMsgSize = other->mMsgSize;
-  mFolderOffset = other->mFolderOffset;
-  mStatus = other->mStatus;
-  mDate = other->mDate;
+  mIndexOffset = other->mIndexOffset;
+  mIndexLength = other->mIndexLength;
 }
 
 
@@ -70,56 +65,45 @@ bool KMMsgBase::isMessage(void) const
   return FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus)
 {
-  if (mStatus == aStatus) return;
-  if (mParent) mParent->msgStatusChanged( mStatus, aStatus );
-  mStatus = aStatus;
+  if (mParent)
+    mParent->msgStatusChanged( status(), aStatus );
   mDirty = TRUE;
-  if (mParent) mParent->headerOfMsgChanged(this);
+  if (mParent)
+    mParent->headerOfMsgChanged(this);
 }
+
 
 
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 {
-  int i;
-
-  mStatus = KMMsgStatusUnknown;
-
+  setStatus(KMMsgStatusUnknown);
   // first try to find status from "X-Status" field if given
-  if (aXStatusStr) for (i=0; i<NUM_STATUSLIST-1; i++)
-  {
-    if (strchr(aXStatusStr, (char)sStatusList[i]))
-    {
-      mStatus = sStatusList[i];
-      break;
+  if (aXStatusStr) {
+    for (int i=0; i<NUM_STATUSLIST-1; i++) {
+      if (strchr(aXStatusStr, (char)sStatusList[i])) {
+	  setStatus(sStatusList[i]);
+	  break;
+      }
     }
   }
 
   // if not successful then use the "Status" field
-  if (mStatus == KMMsgStatusUnknown)
+  if (status() == KMMsgStatusUnknown)
   {
-    if (aStatusStr &&
-        ((aStatusStr[0]=='R' && aStatusStr[1]=='O') ||
-	 (aStatusStr[0]=='O' && aStatusStr[1]=='R')))
-	mStatus=KMMsgStatusOld;
-    else if (aStatusStr && aStatusStr[0]=='R') mStatus=KMMsgStatusRead;
-    else if (aStatusStr && aStatusStr[0]=='D') mStatus=KMMsgStatusDeleted;
-    else mStatus=KMMsgStatusNew;
+    if (aStatusStr && ((aStatusStr[0]==(char)KMMsgStatusRead && aStatusStr[1]==(char)KMMsgStatusOld) ||
+		       (aStatusStr[0]==(char)KMMsgStatusOld && aStatusStr[1]==(char)KMMsgStatusRead)))
+	setStatus(KMMsgStatusOld);
+    else if (aStatusStr && aStatusStr[0]==(char)KMMsgStatusRead)
+	setStatus(KMMsgStatusRead);
+    else if (aStatusStr && aStatusStr[0]==(char)KMMsgStatusDeleted)
+	setStatus(KMMsgStatusDeleted);
+    else
+	setStatus(KMMsgStatusNew);
   }
-
-  mDirty = TRUE;
-  if (mParent) mParent->headerOfMsgChanged(this);
-}
-
-
-//-----------------------------------------------------------------------------
-KMMsgStatus KMMsgBase::status(void) const
-{
-  return mStatus;
 }
 
 
@@ -149,107 +133,27 @@ const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
   return sstr;
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMsgBase::setDate(time_t aUnixTime)
-{
-  if (mDate == aUnixTime) return;
-  mDate  = aUnixTime;
-  mDirty = TRUE;
-}
-
-
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(const QString& aDateStr)
 {
   DwDateTime dwDate;
-
   dwDate.FromString(aDateStr);
   dwDate.Parse();
-  mDate  = dwDate.AsUnixTime();
-  mDirty = TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
-time_t KMMsgBase::date(void) const
-{
-  return mDate;
+  setDate(dwDate.AsUnixTime());
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::dateStr(void) const
 {
-  return KMHeaders::fancyDate(mDate);
-}
-
-
-//-----------------------------------------------------------------------------
-QCString KMMsgBase::asIndexString(void) const
-{
-  int i, len;
-  QCString str;
-  unsigned long dateTen = date();
-//  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
-//  This is nonsense because 10000000000 is bigger than the highest unsigned
-//  long. (Or is there any compiler that defines unsigned long as something
-//  really huge?? )
-
-  QCString a(subject().utf8());
-  a.truncate(100);
-  QCString b(fromStrip().utf8());
-  b.truncate(50);
-  QCString c(toStrip().utf8());
-  c.truncate(47);
-  QCString d((const char*)replyToIdMD5());
-  d.truncate(22);
-  QCString e((const char*)msgIdMD5());
-  e.truncate(22);
-
-  // don't forget to change indexStringLength() below !!
-  str.sprintf("%c %-.9lu %-.9lu %-.10lu %-3.3s ",
-	      (char)status(), folderOffset(), msgSize(), dateTen,
-	      (const char*)xmark() );
-  if (str.length() != 37)
-    kdDebug() << "Invalid length " << endl;
-  str += a.rightJustify( 100, ' ' );
-  str += " ";
-  str += b.rightJustify( 50, ' ' );
-  str += " ";
-  str += c.rightJustify( 50, ' ' );
-  str += " ";
-  str += d.rightJustify( 22, ' ' );
-  str += " ";
-  str += e.rightJustify( 22, ' ' );
-
-  len = str.length();
-  for (i=0; i<len; i++)
-    if (str[i] < ' ' && str[i] >= 0)
-      str[i] = ' ';
-
-  if (str.length() != 285) {
-    kdDebug() << QString( "Error invalid index entry %1").arg(str.length()) << endl;
-    kdDebug() << str << endl;
-  }
-  return str;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgBase::indexStringLength(void)
-{
-  //return 237;
-  //  return 338; //sven (+ 100 chars to + one space, right?
-  //  return 339; //sanders (use 10 digits for the date we need this in 2001!)
-  //  return 541; //sanders include Reply-To and Message-Id for threading
-  return 285; // sanders strip from and to and use MD5 on Ids
+  time_t d = date();
+  return KMHeaders::fancyDate(d);
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
-				   bool* hasKeyword)
+			       bool* hasKeyword)
 {
   int i, maxChars=3;
   const char *pos, *str = aStr.data();
@@ -700,3 +604,178 @@ QString KMMsgBase::encodeBase64(const QString& aStr)
   result = dwdest.c_str();
   return result;
 }
+
+//-----------------------------------------------------------------------------
+static int g_chunk_length = 0, g_chunk_offset=0;
+static uchar *g_chunk = NULL;
+
+#define COPY_DATA(x, length) do { \
+     if(g_chunk_offset + ((int)length) > g_chunk_length) {\
+        g_chunk_offset = g_chunk_length; \
+        qDebug("This should never happen.. %s:%d", __FILE__, __LINE__); \
+        memset(x, length, '\0'); \
+     } else { \
+        memcpy(x, g_chunk+g_chunk_offset, length); \
+	g_chunk_offset += length; \
+     } } while(0)
+#define COPY_HEADER_TYPE(x) ASSERT(sizeof(x) == sizeof(MsgPartType)); COPY_DATA(&x, sizeof(x))
+#define COPY_HEADER_LEN(x)  ASSERT(sizeof(x) == sizeof(short)); COPY_DATA(&x, sizeof(x));
+//-----------------------------------------------------------------------------
+QString KMMsgBase::getStringPart(MsgPartType t) const
+{
+  QString ret("");
+
+  g_chunk_offset = 0;
+  bool using_mmap = FALSE;
+  if (mParent->indexStreamBasePtr()) {
+    if (g_chunk)
+	free(g_chunk);
+    using_mmap = TRUE;
+    g_chunk = mParent->indexStreamBasePtr() + mIndexOffset;
+    g_chunk_length = mIndexLength;
+  } else {
+    if(!mParent->mIndexStream)
+      return ret;
+    if (g_chunk_length < mIndexLength)
+	g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
+    int first_off=ftell(mParent->mIndexStream);
+    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
+    fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
+    fseek(mParent->mIndexStream, first_off, SEEK_SET);
+  }
+
+  MsgPartType type;
+  short l;
+  while(g_chunk_offset < mIndexLength) {
+    COPY_HEADER_TYPE(type);
+    COPY_HEADER_LEN(l);
+    if(g_chunk_offset + l > mIndexLength) {
+	qDebug("This should never happen.. %s:%d", __FILE__, __LINE__);
+	break;
+    }
+    if(type == t) {
+	if(l)
+	    ret = QString((QChar *)(g_chunk + g_chunk_offset), l/2);
+	break;
+    }
+    g_chunk_offset += l;
+  }
+  if(using_mmap) {
+      g_chunk_length = 0;
+      g_chunk = NULL;
+  }
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+unsigned long KMMsgBase::getLongPart(MsgPartType t) const
+{
+  unsigned long ret = 0;
+
+  g_chunk_offset = 0;
+  bool using_mmap = FALSE;
+  if (mParent->indexStreamBasePtr()) {
+    if (g_chunk)
+      free(g_chunk);
+    using_mmap = TRUE;
+    g_chunk = mParent->indexStreamBasePtr() + mIndexOffset;
+    g_chunk_length = mIndexLength;
+  } else {
+    if (!mParent->mIndexStream)
+      return ret;
+    if (g_chunk_length < mIndexLength)
+      g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
+    int first_off=ftell(mParent->mIndexStream);
+    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
+    fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
+    fseek(mParent->mIndexStream, first_off, SEEK_SET);
+  }
+
+  MsgPartType type;
+  short l;
+  while (g_chunk_offset < mIndexLength) {
+    COPY_HEADER_TYPE(type);
+    COPY_HEADER_LEN(l);
+
+    if (g_chunk_offset + l > mIndexLength) {
+      qDebug("This should never happen.. %s:%d", __FILE__, __LINE__);
+      break;
+    }
+    if(type == t) {
+      ASSERT(l == sizeof(unsigned long));
+      COPY_DATA(&ret, sizeof(ret));
+      break;
+    }
+    g_chunk_offset += l;
+  }
+  if(using_mmap) {
+    g_chunk_length = 0;
+    g_chunk = NULL;
+  }
+  return ret;
+}
+#undef COPY_DATA
+
+//-----------------------------------------------------------------------------
+const uchar *KMMsgBase::asIndexString(int &length) const
+{
+  unsigned int csize = 256;
+  static uchar *ret = NULL; //different static buffer here for we may use the other buffer in the functions below
+  if(!ret)
+    ret = (uchar *)malloc(csize);
+  length = 0;
+
+#define STORE_DATA_LEN(type, x, len) do { \
+	if(csize < (length + (len + sizeof(short) + sizeof(MsgPartType)))) \
+    	   ret = (uchar *)realloc(ret, csize += QMAX(256, (len+sizeof(short)+sizeof(MsgPartType)))); \
+        MsgPartType t = type; memcpy(ret+length, &t, sizeof(MsgPartType)); \
+        short l = len; memcpy(ret+length+sizeof(MsgPartType), &l, sizeof(short)); \
+        memcpy(ret+length+sizeof(short)+sizeof(MsgPartType), x, len); \
+        length += len + sizeof(short) + sizeof(MsgPartType); \
+    } while(0)
+#define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x))
+  unsigned long tmp;
+  QString tmp_str;
+
+  //these is at the beginning because it is queried quite often
+  tmp_str = msgIdMD5().stripWhiteSpace();
+  STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp = status();
+  STORE_DATA(MsgStatusPart, tmp);
+
+  //these are completely arbitrary order
+  tmp_str = fromStrip().stripWhiteSpace();
+  STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp_str = subject().stripWhiteSpace();
+  STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp_str = toStrip().stripWhiteSpace();
+  STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp_str = replyToIdMD5().stripWhiteSpace();
+  STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp_str = xmark().stripWhiteSpace();
+  STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp = msgSize();
+  STORE_DATA(MsgSizePart, tmp);
+  tmp = folderOffset();
+  STORE_DATA(MsgOffsetPart, tmp);
+  tmp = date();
+  STORE_DATA(MsgDatePart, tmp);
+#undef STORE_DATA_LEN
+  return ret;
+}
+
+bool KMMsgBase::syncIndexString() const
+{
+  if(!dirty())
+    return TRUE;
+  int len;
+  const uchar *buffer = asIndexString(len);
+  if (len == mIndexLength) {
+    ASSERT(mParent->mIndexStream);
+    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
+    fwrite( buffer, len, 1, mParent->mIndexStream);
+    return TRUE;
+  }
+  return FALSE;
+}
+	

@@ -18,12 +18,12 @@
 #include <qregexp.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kcursor.h>
 
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
 #include <unistd.h>
-
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -31,6 +31,12 @@
 
 #if HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+
+//#define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
+#ifdef HAVE_MMAP
+#include <unistd.h>
+#include <sys/mman.h>
 #endif
 
 #include <stdlib.h>
@@ -47,7 +53,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1504
+#define INDEX_VERSION 1506
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -88,6 +94,9 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mConvertToUtf8  = FALSE;
   mAccount        = NULL;
   mMailingListEnabled = FALSE;
+  mIndexId        = -1;
+  mIndexStreamPtr = NULL;
+  mIndexStreamPtrLength = 0;
 }
 
 
@@ -204,11 +213,15 @@ int KMFolder::open()
       str = i18n("Folder `%1' changed. Recreating index.")
 		  .arg(name());
       emit statusMsg(str);
-    }
-    else mIndexStream = fopen(indexLocation(), "r+"); // index file
+    } else {
+      mIndexStream = fopen(indexLocation(), "r+"); // index file
+      updateIndexStreamPtr();
+    }	
 
-    if (!mIndexStream) rc = createIndexFromContents();
-    else readIndex();
+    if (!mIndexStream)
+      rc = createIndexFromContents();
+    else
+      readIndex();
   }
   else
   {
@@ -250,6 +263,7 @@ int KMFolder::create()
   {
     old_umask = umask(077);
     mIndexStream = fopen(indexLocation(), "w+"); //sven; open RW
+	updateIndexStreamPtr(TRUE);
     umask(old_umask);
 
     if (!mIndexStream) return errno;
@@ -278,16 +292,23 @@ void KMFolder::close(bool aForced)
 
   if (mAutoCreateIndex)
   {
-    if (mDirty) writeIndex();
-    else sync();
-    writeConfig();
+      bool dirty = mDirty;
+      for (int i=0; !dirty && i<mMsgList.high(); i++)
+	  if (mMsgList[i])
+	      dirty = !mMsgList[i]->syncIndexString();
+      if(dirty)
+	  writeIndex();
+      writeConfig();
   }
 
   unlock();
   mMsgList.clear(TRUE);
 
   if (mStream) fclose(mStream);
-  if (mIndexStream) fclose(mIndexStream);
+    if (mIndexStream) {
+	fclose(mIndexStream);
+	updateIndexStreamPtr(TRUE);
+    }
 
   mOpenCount   = 0;
   mStream      = NULL;
@@ -318,40 +339,40 @@ int KMFolder::lock()
     case FCNTL:
       rc = fcntl(fileno(mStream), F_SETLKW, &fl);
 
-  if (rc < 0)
-  {
-        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
-                  << strerror(errno) << " (" << errno << ")" << endl;
-    return errno;
-  }
+      if (rc < 0)
+      {
+	kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+		  << strerror(errno) << " (" << errno << ")" << endl;
+	return errno;
+      }
 
-  if (mIndexStream)
-  {
-    rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
+      if (mIndexStream)
+      {
+	rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
 
-    if (rc < 0)
-    {
+	if (rc < 0)
+	{
           kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
                     << strerror(errno) << " (" << errno << ")" << endl;
-      rc = errno;
-      fl.l_type = F_UNLCK;
-      rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
-      return rc;
-    }
-  }
+	  rc = errno;
+	  fl.l_type = F_UNLCK;
+	  rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
+	  return rc;
+	}
+      }
       break;
 
     case procmail_lockfile:
       cmd_str = "lockfile ";
       if (mProcmailLockFileName && !mProcmailLockFileName.isEmpty())
-        cmd_str += mProcmailLockFileName;
+	cmd_str += mProcmailLockFileName;
       else
         cmd_str += location() + ".lock";
 
       rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
-        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+	kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
@@ -440,7 +461,7 @@ int KMFolder::unlock()
   switch( mLockType )
   {
     case FCNTL:
-  if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
+      if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
       fcntl(fileno(mStream), F_SETLK, F_UNLCK);
       rc = errno;
       break;
@@ -457,7 +478,7 @@ int KMFolder::unlock()
       {
         cmd_str = "rm -f " + indexLocation() + ".lock";
         rc = system( cmd_str.latin1() );
-}
+      }
       break;
 
     case mutt_dotlock:
@@ -703,31 +724,50 @@ int KMFolder::writeIndex()
   QString tempName;
   KMMsgBase* msgBase;
   int old_umask;
-  int i=0;
-
-  if (mIndexStream) fclose(mIndexStream);
+  int i=0, len;
+  long tmp;
+  const uchar *buffer = NULL;
   old_umask = umask(077);
 
+  //the sorted file must be removed, BIG kludge, don made me do it!
+  unlink(indexLocation() + ".sorted");
   tempName = indexLocation() + ".temp";
   unlink(tempName);
 
-  mIndexStream = fopen(tempName, "w");
+  FILE *tmpIndexStream = fopen(tempName, "w");
   umask(old_umask);
-  if (!mIndexStream) return errno;
+  if (!tmpIndexStream)
+    return errno;
 
-  fprintf(mIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
+  fprintf(tmpIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
+  char pad_char = '\0';
+  int header_length = 0; // Reserved for future expansion
+  fwrite(&pad_char, sizeof(pad_char), 1, tmpIndexStream);
+  fwrite(&header_length, sizeof(header_length), 1, tmpIndexStream);
 
-  mHeaderOffset = ftell(mIndexStream);
+  long nho = ftell(tmpIndexStream);
   for (i=0; i<mMsgList.high(); i++)
   {
     if (!(msgBase = mMsgList[i])) continue;
-    fprintf(mIndexStream, "%s\n", (const char*)msgBase->asIndexString());
+    buffer = msgBase->asIndexString(len);
+    fwrite(&len,sizeof(len), 1, tmpIndexStream);
+	
+    tmp = ftell(tmpIndexStream);
+    msgBase->setIndexOffset(tmp);
+    msgBase->setIndexLength(len);
+    if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
+	qDebug("Whoa! %s:%d", __FILE__, __LINE__);
   }
-  if (fflush(mIndexStream) != 0) return errno;
-  if (fclose(mIndexStream) != 0) return errno;
+  if (ferror(tmpIndexStream)) return ferror(tmpIndexStream);
+  if (fflush(tmpIndexStream) != 0) return errno;
+  if (fclose(tmpIndexStream) != 0) return errno;
 
   _rename(tempName, indexLocation());
+  if (mIndexStream)
+      fclose(mIndexStream);
+  mHeaderOffset = nho;
   mIndexStream = fopen(indexLocation(), "r+"); // index file
+  updateIndexStreamPtr();
 
   mDirty = FALSE;
   return 0;
@@ -742,25 +782,45 @@ void KMFolder::setAutoCreateIndex(bool autoIndex)
 
 
 //-----------------------------------------------------------------------------
-bool KMFolder::readIndexHeader()
+bool KMFolder::readIndexHeader(int *gv)
 {
   int indexVersion;
-
   assert(mIndexStream != NULL);
 
   fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
-  if (indexVersion == 1503 && INDEX_VERSION == 1504)
-  {
-    kdDebug() << "Converting index file " << (const char*)indexLocation() << " to utf-8" << endl;
-    mConvertToUtf8 = TRUE;
+  if(gv)
+      *gv = indexVersion;
+  if (indexVersion < 1505 ) {
+      if(indexVersion == 1503) {
+	  kdDebug() << "Converting old index file " << (const char*)indexLocation() << " to utf-8" << endl;
+	  mConvertToUtf8 = TRUE;
+      }
+      return TRUE;
+  } else if (indexVersion == 1505) {
+      fseek(mIndexStream, sizeof(char), SEEK_CUR );
+  } else if (indexVersion < INDEX_VERSION) {
+      kdDebug() << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
+      createIndexFromContents();
+      return FALSE;
+  } else if(indexVersion > INDEX_VERSION) {
+      kapp->setOverrideCursor(KCursor::arrowCursor());
+      int r = KMessageBox::questionYesNo(0,
+					 i18n(
+					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
+					    "This index can be regenerated from your mail folder, but some\n"
+					    "information, including status flags, may be lost. Do you wish\n"
+					    "to downgrade your index file ?") .arg(name()) .arg(indexVersion) );
+      kapp->restoreOverrideCursor();
+      if (r == KMessageBox::Yes)
+	  createIndexFromContents();
+      return FALSE;
   }
-  else if (indexVersion < INDEX_VERSION)
-  {
-    kdDebug() << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
-    createIndexFromContents();
-    return FALSE;
+  else {
+      int header_length = 0;
+      fseek(mIndexStream, sizeof(char), SEEK_CUR );
+      fread(&header_length, sizeof(header_length), 1, mIndexStream);
+      fseek(mIndexStream, header_length, SEEK_CUR );
   }
-
   return TRUE;
 }
 
@@ -768,14 +828,14 @@ bool KMFolder::readIndexHeader()
 //-----------------------------------------------------------------------------
 void KMFolder::readIndex()
 {
-  QCString line(MAX_LINE);
+  int len, offs;
   KMMsgInfo* mi;
-
   assert(mIndexStream != NULL);
   rewind(mIndexStream);
 
   mMsgList.clear();
-  if (!readIndexHeader()) return;
+  int version;
+  if (!readIndexHeader(&version)) return;
 
   mUnreadMsgs = 0;
   mDirty = FALSE;
@@ -784,11 +844,25 @@ void KMFolder::readIndex()
   mMsgList.clear();
   while (!feof(mIndexStream))
   {
-    fgets(line.data(), MAX_LINE, mIndexStream);
-    if (feof(mIndexStream)) break;
+    mi = NULL;
+    if(version >= 1505) {
+      if(!fread(&len, sizeof(len), 1, mIndexStream))
+	break;
+      offs = ftell(mIndexStream);
+      if(fseek(mIndexStream, len, SEEK_CUR))
+	break;
+      mi = new KMMsgInfo(this, offs, len);
+    } else {
+      QCString line(MAX_LINE);
+      fgets(line.data(), MAX_LINE, mIndexStream);
+      if (feof(mIndexStream)) break;
 
-    mi = new KMMsgInfo(this);
-    mi->fromIndexString(line, mConvertToUtf8);
+      mi = new KMMsgInfo(this);
+      mi->compat_fromOldIndexString(line, mConvertToUtf8);
+    }	
+    if(!mi)
+      break;
+
     if (mi->status() == KMMsgStatusDeleted)
     {
       delete mi;  // skip messages that are marked as deleted
@@ -811,7 +885,7 @@ void KMFolder::readIndex()
     }
     mMsgList.append(mi);
   }
-  if (mConvertToUtf8)
+  if( version < 1505)
   {
     mConvertToUtf8 = FALSE;
     mDirty = TRUE;
@@ -915,9 +989,9 @@ int KMFolder::reduceSize( int aSize )
     if (msgSize < firstSliceSize) {
       sliceIndex = 0;
     } else if (msgSize >= lastSliceSize) {
-        sliceIndex = 11;
+      sliceIndex = 11;
     } else {
-        sliceIndex = 1 + (int) (msgSize / sliceSize); //  1 <= n < 10
+      sliceIndex = 1 + (int) (msgSize / sliceSize); //  1 <= n < 10
     }
 
     sliceArr.at(sliceIndex)->append( mb );
@@ -967,13 +1041,13 @@ int KMFolder::expungeOldMsg(int days)
   for (i=count()-1; i>=0; i--) {
     mb = getMsgBase(i);
     assert(mb);
-	msgTime = mb->date();
+    msgTime = mb->date();
 
-	if (msgTime < maxTime) {
-		//kdDebug() << "deleting msg " << i << " : " << mb->subject() << " - " << mb->dateStr(); // << endl;
-        removeMsg( i );
-		msgnb++;
-	}
+    if (msgTime < maxTime) {
+      //kdDebug() << "deleting msg " << i << " : " << mb->subject() << " - " << mb->dateStr(); // << endl;
+      removeMsg( i );
+      msgnb++;
+    }
   }
   return msgnb;
 }
@@ -1074,8 +1148,19 @@ KMMessage* KMFolder::getMsg(int idx)
   mb = mMsgList[idx];
   if (!mb) return NULL;
 
+#if 0
   if (mb->isMessage()) return ((KMMessage*)mb);
   return readMsg(idx);
+#else
+  KMMessage *msg = 0;
+  if (mb->isMessage())
+      msg = ((KMMessage*)mb);
+  else
+      msg = readMsg(idx);
+  return msg;
+#endif
+
+
 }
 
 
@@ -1233,6 +1318,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   int idx = -1, rc;
   KMFolder* msgParent;
   bool editing = false;
+  int growth = 0;
 
   if (!mStream)
   {
@@ -1312,29 +1398,28 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   // Make sure the file is large enough to check for an end
   // character
   fseek(mStream, 0, SEEK_END);
-  if (ftell(mStream) >= 2)
-    {
+  if (ftell(mStream) >= 2) {
       // write message to folder file
       fseek(mStream, -2, SEEK_END);
       fread(endStr, 1, 2, mStream); // ensure separating empty line
-      if (ftell(mStream) > 0 && endStr[0]!='\n')
-	{
-	  if (endStr[1]!='\n')
-	    {
+      if (ftell(mStream) > 0 && endStr[0]!='\n') {
+	  ++growth;
+	  if (endStr[1]!='\n') {
 	      //printf ("****endStr[1]=%c\n", endStr[1]);
 	      fwrite("\n\n", 1, 2, mStream);
-	    }
+	      ++growth;
+	  }
 	  else fwrite("\n", 1, 1, mStream);
-	}
-    }
+      }
+  }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   revert = ftell(mStream);
   int error = ferror(mStream);
   if (error)
-    {
-      if (opened) close();
-      return error;
-    }
+  {
+    if (opened) close();
+    return error;
+  }
 
   fprintf(mStream, "From %s %s\n", (const char *)aMsg->fromEmail(),
           (const char *)aMsg->dateShortStr());
@@ -1385,6 +1470,10 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   aMsg->setMsgSize(size);
   idx = mMsgList.append(aMsg);
 
+  // change the length of the previous message to encompass white space added
+  if ((idx > 0) && (growth > 0))
+      mMsgList[idx - 1]->setMsgSize( mMsgList[idx - 1]->msgSize() + growth );
+
   // write index entry if desired
   if (mAutoCreateIndex)
   {
@@ -1392,7 +1481,15 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     revert = ftell(mIndexStream);
-    fprintf(mIndexStream, "%s\n", (const char*)aMsg->asIndexString());
+	
+	int len;
+	const uchar *buffer = aMsg->asIndexString(len);
+	fwrite(&len,sizeof(len), 1, mIndexStream);
+	aMsg->setIndexOffset( ftell(mIndexStream) );
+	aMsg->setIndexLength( len );
+	if(fwrite(buffer, len, 1, mIndexStream) != 1)
+	    qDebug("Whoa! %s:%d", __FILE__, __LINE__);
+
     fflush(mIndexStream);
     error = ferror(mIndexStream);
     if (error) {
@@ -1556,65 +1653,101 @@ int KMFolder::expunge()
 //-----------------------------------------------------------------------------
 int KMFolder::compact()
 {
-  KMFolder* tempFolder;
-  KMMessage* msg;
   QCString tempName;
   QString msgStr;
-  int openCount = mOpenCount;
-  int num, numStatus;
   int rc = 0;
+  int openCount = mOpenCount;
 
   if (!needsCompact)
     return 0;
   kdDebug() << "Compacting " << endl;
-  tempName = "." + name().local8Bit();
 
-  tempName += ".compacted";
-  unlink(path().local8Bit() + "/" + tempName);
-  tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
-  if(tempFolder->create()) {
-    kdDebug() << "KMFolder::compact() Creating tempFolder failed!\n" << endl;
-    delete tempFolder;                             //sven: and we delete it
-    return 0;
-  }
-
-  quiet(TRUE);
-  tempFolder->open();
+  tempName = path() + "/." + name() + ".compacted";
+  mode_t old_umask = umask(077);
+  FILE *tmpfile = fopen(tempName, "w");
+  umask(old_umask);
+  if (!tmpfile)
+    return errno;
   open();
 
-  for(num=1,numStatus=9; count() > 0; num++, numStatus--)
-  {
-    if (numStatus <= 0)
-    {
-      msgStr = i18n("Compacting folder: %1 messages done").arg(num);
+  KMMsgInfo* mi;
+  int msize, offs=0, msgs=0, folder_offset;
+  QCString mtext;
+  for(int idx = 0; idx < mMsgList.count(); idx++) {
+    if(!(msgs++ % 10)) {
+      msgStr = i18n("Compacting folder: %1 messages done").arg(msgs);
       emit statusMsg(msgStr);
-      numStatus = 10;
     }
+    mi = (KMMsgInfo*)mMsgList[idx];
+    msize = mi->msgSize();
+    mtext.resize(msize+2);
+    folder_offset = mi->folderOffset();
 
-    msg = getMsg(0);
-    if(msg)
-      rc = tempFolder->moveMsg(msg);
+    //now we need to find the separator! grr...
+    for(int i = folder_offset-25; TRUE; i -= 20) {
+      int chunk_offset = i <= 0 ? 0 : i;
+      if(fseek(mStream, chunk_offset, SEEK_SET) == -1) {
+        rc = errno;
+	break;
+      }
+      fread(mtext.data(), 20, 1, mStream);
+      if(i <= 0) { //woops we've reached the top of the file, last try..
+	if(!strncasecmp(mtext.data(), "from ", 5)) {
+	  if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
+	     !fread(mtext.data(), folder_offset, 1, mStream) ||
+	     !fwrite(mtext.data(), folder_offset, 1, tmpfile)) {
+	      rc = errno;
+	      break;
+	  }
+	  offs += folder_offset;
+	} else {
+	    rc = 666;
+	}
+	break;
+      } else {
+	int last_crlf = -1;
+	for(int i2 = 0; i2 < 20; i2++) {
+	  if(*(mtext.data()+i2) == '\n')
+	    last_crlf = i2;
+	}
+	if(last_crlf != -1) {
+	  int size = folder_offset - (i + last_crlf+1);
+	  if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
+	     !fread(mtext.data(), size, 1, mStream) ||
+	     !fwrite(mtext.data(), size, 1, tmpfile)) {
+	      rc = errno;
+	      break;
+	  }
+	  offs += size;
+	  break;
+	}
+      }
+    }
     if (rc)
       break;
-    tempFolder->unGetMsg(tempFolder->count() - 1);
+	
+    //now actually write the message
+    if(fseek(mStream, folder_offset, SEEK_SET) == -1 ||
+       !fread(mtext.data(), msize, 1, mStream) || !fwrite(mtext.data(), msize, 1, tmpfile)) {
+	rc = errno;
+	break;
+    }
+    mi->setFolderOffset(offs);
+    offs += msize;
   }
-  tempName = tempFolder->location();
-  tempFolder->close(TRUE);
-  close(TRUE);
-  mMsgList.clear(TRUE);
+  fclose(tmpfile);
 
   if (!rc) {
+    writeIndex();
+    close(TRUE);
     _rename(tempName, location());
-    _rename(tempFolder->indexLocation(), indexLocation());
   }
   else
   {
+    close();
     kdDebug() << "Error occurred while compacting" << endl;
     kdDebug() << "Compaction aborted." << endl;
   }
-
-  // Now really free all memory
-  delete tempFolder;                //sven: we delete it, not the manager
 
   if (openCount > 0)
   {
@@ -1622,43 +1755,12 @@ int KMFolder::compact()
     mOpenCount = openCount;
   }
   quiet(FALSE);
-
   if (!mQuiet)
     emit changed();
   else
     mChanged = TRUE;
   needsCompact = false;             // We are clean now
   return 0;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMFolder::sync()
-{
-  KMMsgBasePtr mb;
-  unsigned long offset = mHeaderOffset;
-  int i, rc, recSize = KMMsgBase::indexStringLength()+1;
-  int high = mMsgList.high();
-
-  if (!mIndexStream) return 0;
-
-  for (rc=0,i=0; i<high; i++)
-  {
-    mb = mMsgList[i];
-    if (mb->dirty())
-    {
-      fseek(mIndexStream, offset, SEEK_SET);
-      fprintf(mIndexStream, "%s\n", (const char*)mb->asIndexString());
-      rc = errno;
-      if (rc) break;
-      mb->setDirty(FALSE);
-    }
-    offset += recSize;
-  }
-  fflush(mIndexStream);
-
-  mDirty = FALSE;
-  return rc;
 }
 
 
@@ -1702,14 +1804,14 @@ int KMFolder::countUnreadRecursive()
   int count = countUnread();
   KMFolderDir *dir = child();
   if (!dir)
-      return count;
+    return count;
 
   QListIterator<KMFolderNode> it(*dir);
   for ( ; it.current(); ++it )
-      if (!it.current()->isDir()) {
-	  folder = static_cast<KMFolder*>(it.current());
-	  count += folder->countUnreadRecursive();
-      }
+    if (!it.current()->isDir()) {
+      folder = static_cast<KMFolder*>(it.current());
+      count += folder->countUnreadRecursive();
+    }
 
   return count;
 }
@@ -1728,7 +1830,6 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   int deltaUnread = newUnread - oldUnread;
 
   if (deltaUnread != 0) {
-    mDirty = TRUE;
     if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;
     emit numUnreadMsgsChanged( this );
@@ -1820,4 +1921,41 @@ void KMFolder::setProcmailLockFileName( const QString &fname )
   mProcmailLockFileName = fname;
 }
 
+bool
+KMFolder::updateIndexStreamPtr(bool just_close)
+{
+#ifdef HAVE_MMAP
+    if(just_close) {
+	if(mIndexStreamPtr)
+	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+	mIndexStreamPtr = NULL;
+	mIndexStreamPtrLength = 0;
+	return TRUE;
+    }
+
+    assert(mIndexStream);
+    struct stat stat_buf;
+    if(fstat(fileno(mIndexStream), &stat_buf) == -1) {
+	if(mIndexStreamPtr)
+	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+	mIndexStreamPtr = NULL;
+	mIndexStreamPtrLength = 0;
+	return FALSE;
+    }
+    if(mIndexStreamPtr)
+	munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+    mIndexStreamPtrLength = stat_buf.st_size;
+    mIndexStreamPtr = (uchar *)mmap(0, mIndexStreamPtrLength, PROT_READ, MAP_SHARED,
+				    fileno(mIndexStream), 0);
+    if(mIndexStreamPtr == MAP_FAILED) {
+	mIndexStreamPtr = NULL;
+	mIndexStreamPtrLength = 0;
+	return FALSE;
+    }
+#endif
+    return TRUE;
+}
+
 #include "kmfolder.moc"
+
+

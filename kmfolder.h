@@ -46,6 +46,7 @@ class KMAcctImap;
 class KMFolder: public KMFolderNode
 {
   Q_OBJECT
+    friend class KMMsgBase;
   friend class KMMessage;
 
 public:
@@ -187,10 +188,6 @@ public:
     success. */
   virtual int expunge();
 
-  /** Sync all Index-changes to file. Returns zero on success and an errno
-    on failure. */
-  virtual int sync();
-
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
   virtual int compact();
@@ -217,6 +214,9 @@ public:
   /** Returns TRUE if the folder contains deleted messages */
   bool needsCompacting() const { return needsCompact; }
   virtual void setNeedsCompacting(bool f) { needsCompact = f; }
+
+  /* Registered unique serial number for the index file */
+  int serialIndexId() const { return mIndexId; }
 
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
@@ -295,6 +295,8 @@ public:
 
   void setProcmailLockFileName( const QString& );
 
+    uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -336,7 +338,7 @@ protected:
   virtual void readIndex();
 
   /** Read index header. Called from within readIndex(). */
-  virtual bool readIndexHeader();
+    virtual bool readIndexHeader(int *gv=NULL);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on
@@ -346,6 +348,7 @@ protected:
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
   virtual int writeIndex();
+    bool updateIndexStreamPtr(bool just_close=FALSE);
 
   /** Lock mail folder files. Called by ::open(). Returns 0 on success and
     an errno error code on failure. */
@@ -397,6 +400,8 @@ protected:
   LockType mLockType;
   QString mProcmailLockFileName;
   bool mConvertToUtf8;
+  uchar *mIndexStreamPtr;
+  int mIndexStreamPtrLength, mIndexId;
 };
 
 #endif /*kmfolder_h*/

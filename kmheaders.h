@@ -65,7 +65,7 @@ struct KMPaintInfo {
 class KMHeaders : public QListView
 {
   Q_OBJECT
-    friend class KMHeaderItem; // For easy access to the pixmaps
+  friend class KMHeaderItem; // For easy access to the pixmaps
 
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
@@ -273,11 +273,13 @@ protected slots:
   virtual void copySelectedToFolder( int menuId );
   // Apply the filter Rules to a single message
   virtual int slotFilterMsg( KMMessage * );
+  //dirties the sort order
+  void dirtySortOrder(int);
 
 private:
   // Is equivalent to clearing the list and inserting an item for
   // each message in the current folder
-  virtual void updateMessageList(void);
+  virtual void updateMessageList(bool set_selection=FALSE);
   virtual int  messageScore(int msgId);
 
   KMFolder* mFolder;            // Currently associated folder
@@ -312,11 +314,23 @@ private:
 
   int mSortCol;
   bool mSortDescending;
+
   static QIconSet *up, *down;   // Icons shown in header
   KMMenuToFolder mMenuToFolder; // Map menu id into a folder
 
   bool mousePressed;             // Drag and drop support
   QPoint presspos;              // ditto
+
+  struct {
+      uint ascending : 1;
+      uint dirty : 1;
+      short column;
+      uint fakeSort : 1;
+      uint removed : 1;
+  } mSortInfo;
+  void appendUnsortedItem(KMHeaderItem *);
+  bool writeSortOrder();
+  bool readSortOrder(bool set_selection=FALSE);
 
   // cached values for fancyDate
   static QDateTime *now;

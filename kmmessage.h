@@ -17,8 +17,8 @@ class KMMsgInfo;
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
 {
- friend class KMFolder;
- friend class KMHeaders;    // needed for MIME Digest forward
+  friend class KMFolder;
+  friend class KMHeaders;    // needed for MIME Digest forward
 
 public:
   /** Straight forward initialization. */
@@ -323,16 +323,34 @@ public:
    */
   QString getRefStr();
 
-protected:
-  /** Convert wildcards into normal string */
-  QString formatString(const QString&) const;
+    /** Get/set offset in mail folder. */
+    virtual unsigned long folderOffset(void) const { return mFolderOffset; }
+    void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+
+    /** Get/set size of message including the whole header in bytes. */
+    virtual unsigned long msgSize(void) const { return mMsgSize; }
+    void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
+
+    /** Status of the message. */
+    virtual KMMsgStatus status(void) const { return mStatus; }
+    /** Set status and mark dirty. */
+    virtual void setStatus(const KMMsgStatus status);
+    virtual void setStatus(const char* s1, const char* s2=0) { return KMMsgBase::setStatus(s1, s2); }
 
 protected:
-  DwMessage* mMsg;
-  bool       mNeedsAssembly, mIsComplete, mTransferInProgress;
-  static int sHdrStyle;
-  static QString sForwardStr;
-  QTextCodec* mCodec;
+    /** Convert wildcards into normal string */
+    QString formatString(const QString&) const;
+
+protected:
+    DwMessage* mMsg;
+    bool       mNeedsAssembly, mIsComplete, mTransferInProgress;
+    static int sHdrStyle;
+    static QString sForwardStr;
+    QTextCodec* mCodec;
+
+    unsigned long mFolderOffset, mMsgSize;
+    time_t mDate;
+    KMMsgStatus mStatus;
 };
 
 typedef KMMessage* KMMessagePtr;
