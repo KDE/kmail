@@ -104,6 +104,11 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
 void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 {
   mBodyDecodedSize = aStr.size();
+  if (aStr.isEmpty())
+  {
+    mBody.resize(0);
+    return;
+  }
 
   switch (cte())
   {
@@ -134,6 +139,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 //-----------------------------------------------------------------------------
 QByteArray KMMessagePart::bodyDecodedBinary(void) const
 {
+  if (mBody.isEmpty()) return QByteArray();
   QByteArray result;
 
   switch (cte())
@@ -170,6 +176,7 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
 
 QCString KMMessagePart::bodyDecoded(void) const
 {
+  if (mBody.isEmpty()) return QCString("");
   QCString result;
   int len;
 
