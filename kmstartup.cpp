@@ -18,6 +18,7 @@
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
+#include <kiconloader.h>
 
 #include <errno.h>
 #include <sys/types.h>
