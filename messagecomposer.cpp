@@ -460,12 +460,12 @@ void MessageComposer::adjustCryptFlags()
       // first determine the complete list of recipients
       QString _to = mComposeWin->to().simplifyWhiteSpace();
       if( !mComposeWin->cc().isEmpty() ) {
-        if( !_to.endsWith(",") )
+        if( !_to.isEmpty() && !_to.endsWith(",") )
           _to += ",";
         _to += mComposeWin->cc().simplifyWhiteSpace();
       }
       if( !mBcc.isEmpty() ) {
-        if( !_to.endsWith(",") )
+        if( !_to.isEmpty() && !_to.endsWith(",") )
           _to += ",";
         _to += mBcc.simplifyWhiteSpace();
       }
@@ -1094,7 +1094,7 @@ void MessageComposer::continueComposeMessage( KMMessage& theMessage,
   // determine the list of public recipients
   QString _to = mComposeWin->to().simplifyWhiteSpace();
   if( !mComposeWin->cc().isEmpty() ) {
-    if( !_to.endsWith(",") )
+    if( !_to.isEmpty() && !_to.endsWith(",") )
       _to += ",";
     _to += mComposeWin->cc().simplifyWhiteSpace();
   }

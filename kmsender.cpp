@@ -125,8 +125,26 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     // RFC822 says:
     // Note that the "Bcc" field may be empty, while the "To" field is required to
     // have at least one address.
-    return FALSE;
+    //
+    // however:
+    //
+    // The following string is accepted according to RFC 2822,
+    // section 3.4 "Address Specification" where they say:
+    //
+    //     "An address may either be an individual mailbox,
+    //      or a group of mailboxes."
+    // and:
+    //     "group   +   display-name ":" [mailbox-list / CFWS] ";"
+    //      [CFWS]"
+    //
+    // In this syntax our "undisclosed-recipients: ;"
+    // just specifies an empty group.
+    //
+    // In further explanations RFC 2822 states that it *is*
+    // allowed to have a ZERO number of mailboxes in the "mailbox-list".
+    aMsg->setTo("Undisclosed.Recipients: ;");
   }
+  
 
   QString msgId = KMMessage::generateMessageId( aMsg->sender() );
   //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";

@@ -2858,17 +2858,17 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!saveInDrafts)
   {
-     if (to().isEmpty())
-     {
-        mEdtTo->setFocus();
-        KMessageBox::information( this,
-                                  i18n("You must specify at least one "
-                                       "receiver in the To: field.") );
-        return;
-     }
+    if (to().isEmpty() && cc().isEmpty() && bcc().isEmpty())
+    {
+      mEdtTo->setFocus();
+      KMessageBox::information( this,
+                                i18n("You must specify at least one receiver,"
+                                     "either in the To: field or as CC or as BCC.") );
+      return;
+    }
 
-     if (subject().isEmpty())
-     {
+    if (subject().isEmpty())
+    {
         mEdtSubject->setFocus();
         int rc =
           KMessageBox::questionYesNo( this,
@@ -2882,10 +2882,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
         {
            return;
         }
-     }
+    }
 
-     if ( userForgotAttachment() )
-       return;
+    if ( userForgotAttachment() )
+      return;
   }
 
   KCursorSaver busy(KBusyPtr::busy());
