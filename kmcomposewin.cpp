@@ -37,6 +37,8 @@
 using KMail::AttachmentListView;
 #include "addressesdialog.h"
 using KPIM::AddressesDialog;
+#include <maillistdrag.h>
+using KPIM::MailListDrag;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
@@ -5356,7 +5358,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
+    if (e->provides(MailListDrag::format()))
 	e->accept(true);
     else
 	return KEdit::dragEnterEvent(e);
@@ -5364,7 +5366,7 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 {
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
+    if (e->provides(MailListDrag::format()))
 	e->accept();
     else
 	return KEdit::dragMoveEvent(e);
@@ -5431,9 +5433,10 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
 
 void KMEdit::contentsDropEvent(QDropEvent *e)
 {
-    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message"))) {
+    if (e->provides(MailListDrag::format())) {
 	// Decode the list of serial numbers stored as the drag data
-	QByteArray serNums = e->encodedData("x-kmail-drag/message");
+	QByteArray serNums;
+	MailListDrag::decode( e, serNums );
 	QBuffer serNumBuffer(serNums);
 	serNumBuffer.open(IO_ReadOnly);
 	QDataStream serNumStream(&serNumBuffer);

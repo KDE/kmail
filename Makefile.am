@@ -15,7 +15,7 @@ libkmailprivate_la_LDFLAGS = $(all_libraries) -version-info 0:0:0 -no-undefined
 libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 			../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
 			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la \
-			../libksieve/libksieve.la ../libkcal/libkcal.la 
+			../libksieve/libksieve.la ../libkcal/libkcal.la
 
 kde_module_LTLIBRARIES = libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
@@ -23,7 +23,7 @@ libkmailpart_la_LIBADD	= libkmailprivate.la
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_LDADD   = libkmailprivate.la 
+kmail_LDADD   = libkmailprivate.la
 
 libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
@@ -92,6 +92,8 @@ check_PROGRAMS = dcoptest
 METASOURCES = AUTO
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
+
+kmailIface_DCOPIDLNG = true
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 

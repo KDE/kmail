@@ -16,6 +16,8 @@
 #include "kmkernel.h"
 using KMail::FolderJob;
 #include "kmbroadcaststatus.h"
+#include <maillistdrag.h>
+using namespace KPIM;
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -459,7 +461,7 @@ public:
       return ret + tmp.lower() + ' ' + sortArrival;
     } else if (column == paintInfo->subCol) {
       QString tmp;
-      tmp = ret; 
+      tmp = ret;
       if (paintInfo->status) {
         tmp += msg->statusToSortRank() + ' ';
       }
@@ -2345,24 +2347,19 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
     mousePressed = FALSE;
     QListViewItem *item = itemAt( contentsToViewport(presspos) );
     if ( item ) {
-      QStoredDrag *d = new QStoredDrag("x-kmail-drag/message", viewport());
-
-      // Set the drag data to be list of serial numbers selected
-      QByteArray serNumArray;
-      QBuffer serNumBuffer( serNumArray );
-      serNumBuffer.open( IO_WriteOnly );
-      QDataStream serNumStream( &serNumBuffer );
+      MailList mailList;
       unsigned int count = 0;
       for( QListViewItemIterator it(this); it.current(); it++ )
         if( it.current()->isSelected() ) {
           KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
-          KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-          KMFolder *pFolder = msgBase->parent();
-          serNumStream << kmkernel->msgDict()->getMsgSerNum(pFolder, pFolder->find( msgBase ) );
-          count++;
+ 	  KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
+ 	  MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
+ 				   msg->subject(), msg->fromStrip(),
+ 				   msg->toStrip(), msg->date() );
+ 	  mailList.append( mailSummary );
+ 	  ++count;
         }
-      serNumBuffer.close();
-      d->setEncodedData( serNumArray );
+      MailListDrag *d = new MailListDrag( mailList, viewport() );
 
       // Set pixmap
       QPixmap pixmap;

@@ -10,6 +10,9 @@
 #include "kmacctmgr.h"
 #include "kmkernel.h"
 
+#include <maillistdrag.h>
+using namespace KPIM;
+
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
@@ -234,7 +237,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mLastItem = 0;
   mMainWidget = mainWidget;
 
-  addAcceptableDropMimetype("x-kmail-drag/message", false);
+  addAcceptableDropMimetype(MailListDrag::format(), false);
 
   int namecol = addColumn( i18n("Folder"), 250 );
   header()->setStretchEnabled( true, namecol );

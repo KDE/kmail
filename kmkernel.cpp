@@ -50,6 +50,7 @@ using KMail::FolderIface;
 #include <qutf7codec.h>
 #include <qvbox.h>
 #include <qdir.h>
+#include <qobjectlist.h>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -452,6 +453,49 @@ DCOPRef KMKernel::getFolder( const QString& vpath )
   else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   return DCOPRef();
+}
+
+bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
+{
+  KMMainWidget *mainWidget = 0;
+  if (KMainWindow::memberList) {
+    KMainWindow *win = 0;
+    QObjectList *l;
+
+    // First look for a KMainWindow.
+    for (win = KMainWindow::memberList->first(); win;
+         win = KMainWindow::memberList->next()) {
+      // Then look for a KMMainWidget.
+      l	= win->queryList("KMMainWidget");
+      if (l && l->first()) {
+	mainWidget = dynamic_cast<KMMainWidget *>(l->first());
+	if (win->isActiveWindow())
+	  break;
+      }
+    }
+  }
+
+  if (mainWidget) {
+    int idx = -1;
+    KMFolder *folder = 0;
+    msgDict()->getLocation(serialNumber, &folder, &idx);
+    if (!folder || (idx == -1))
+      return false;
+    folder->open();
+    KMMsgBase *msgBase = folder->getMsgBase(idx);
+    if (!msgBase)
+      return false;
+    bool unGet = !msgBase->isMessage();
+    KMMessage *msg = folder->getMsg(idx);
+    mainWidget->slotSelectFolder(folder);
+    mainWidget->slotSelectMessage(msg);
+    if (unGet)
+      folder->unGetMsg(idx);
+    folder->close();
+    return true;
+  }
+  
+  return false;
 }
 
 /********************************************************************/

@@ -26,7 +26,9 @@
 #include "kmmsgdict.h"
 #include "kmcomposewin.h"
 
-// other module headers (none)
+// other module headers
+#include <maillistdrag.h>
+using KPIM::MailListDrag;
 
 // other KDE headers
 #include <kurldrag.h>
@@ -63,8 +65,7 @@ AttachmentListView::~AttachmentListView()
 
 void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 {
-  if( e->format( 0 )
-      && ( e->format( 0 ) == QString( "x-kmail-drag/message" ) ) )
+  if( e->provides( MailListDrag::format() ) )
     e->accept( true );
   else
     KListView::dragEnterEvent( e );
@@ -74,8 +75,7 @@ void AttachmentListView::contentsDragEnterEvent( QDragEnterEvent* e )
 
 void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 {
-  if( e->format( 0 )
-      && ( e->format( 0 ) == QString( "x-kmail-drag/message" ) ) )
+  if( e->provides( MailListDrag::format() ) )
     e->accept( true );
   else
     KListView::dragMoveEvent( e );
@@ -85,10 +85,10 @@ void AttachmentListView::contentsDragMoveEvent( QDragMoveEvent* e )
 
 void AttachmentListView::contentsDropEvent( QDropEvent* e )
 {
-  if( e->format( 0 )
-      && ( e->format( 0 ) == QString( "x-kmail-drag/message" ) ) ) {
+  if( e->provides( MailListDrag::format() ) ) {
     // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums = e->encodedData( "x-kmail-drag/message" );
+    QByteArray serNums;
+    MailListDrag::decode( e, serNums );
     QBuffer serNumBuffer( serNums );
     serNumBuffer.open( IO_ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
