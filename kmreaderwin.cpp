@@ -1496,6 +1496,7 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
+  mInlineImage = false;
 
   if (!aParent)
      mStandaloneWindows.append(this);
