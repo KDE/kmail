@@ -349,10 +349,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   }
   else if (updateReaderWinTimer.isActive())
     updateReaderWinTimer.changeInterval( delay );
-  else {
-    //    updateReaderWin();
-    updateReaderWinTimer.start( delay, TRUE );
-  }
+  else
+    updateReaderWinTimer.start( 0, TRUE );
 }
 
 
@@ -361,6 +359,9 @@ void KMReaderWin::updateReaderWin()
 {
   if (mMsgBuf == mMsg)
     return;
+
+    updateReaderWinTimer.start( delay, TRUE );
+    //  updateReaderWinTimer.changeInterval( delay );
 
   if (mMsg) parseMsg();
   else
