@@ -4199,10 +4199,9 @@ void MiscPage::GroupwareTab::load() {
   }
 
   // Iterate over accounts to select folderId if found (as an inbox folder)
-  int selectedAccount = -1;
-  i = 0;
+  KMAccount* selectedAccount = 0;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
-       a = kmkernel->acctMgr()->next(), ++i ) {
+       a = kmkernel->acctMgr()->next() ) {
     if( a->folder() && a->folder()->child() ) {
       // Look inside that folder for an INBOX
       KMFolderNode *node;
@@ -4210,13 +4209,13 @@ void MiscPage::GroupwareTab::load() {
         if (!node->isDir() && node->name() == "INBOX") break;
 
       if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
-        selectedAccount = i;
+        selectedAccount = a;
         break;
       }
     }
   }
-  if ( selectedAccount > -1 )
-    mAccountCombo->setCurrentItem( selectedAccount );
+  if ( selectedAccount )
+    mAccountCombo->setCurrentAccount( selectedAccount );
   else if ( GlobalSettings::theIMAPResourceStorageFormat() == 1 )
     kdDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
 }

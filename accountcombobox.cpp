@@ -64,9 +64,10 @@ void AccountComboBox::slotRefreshAccounts()
 void AccountComboBox::setCurrentAccount( KMAccount* account )
 {
   int i = 0;
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a;
-       a = kmkernel->acctMgr()->next(), ++i ) {
-    if ( a == account ) {
+  QValueList<KMAccount *> lst = applicableAccounts();
+  QValueList<KMAccount *>::ConstIterator it = lst.begin();
+  for ( ; it != lst.end() ; ++it, ++i ) {
+    if ( (*it) == account ) {
       setCurrentItem( i );
       return;
     }
@@ -94,6 +95,8 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
        a = kmkernel->acctMgr()->next() ) {
     Q_ASSERT( a->folder() );
     if ( a && a->folder() ) {
+      disconnect( a, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                  this, SLOT( slotRefreshAccounts() ) );
       bool ok = false;
       if ( mNeedsInbox ) {
         KMFolderDir* child = a->folder()->child();
@@ -105,6 +108,10 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
               break;
             }
           }
+        }
+        if ( !ok ) { // no inbox? maybe there'll be one on the next sync
+          connect( a, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                   this, SLOT( slotRefreshAccounts() ) );
         }
       } else
         ok = true;
