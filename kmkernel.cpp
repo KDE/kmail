@@ -879,8 +879,8 @@ void KMKernel::initFolders(KConfig* cfg)
    * the leniency period for index invalidation. Since the number of mails in
    * this folder is expected to be very small, we can live with regenerating
    * the index on each start to be on the save side. */
-  if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
-    unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
+  //if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
+  //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
   the_outboxFolder->open();
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
