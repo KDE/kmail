@@ -623,31 +623,6 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   return lst;
 }
 
-static QString subResourceLabel( KMFolder* folder )
-{
-  // Let's show account name + imap path of folder
-  // Showing the folder label isn't enough, one could have several folders
-  // called "Notes", e.g. some coming from other people sharing theirs.
-  QString accountName;
-  QString imapPath;
-  FolderStorage* storage = folder->storage();
-  if ( storage->folderType() == KMFolderTypeCachedImap ) {
-    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap*>( storage );
-    accountName = dimap->account()->name();
-    imapPath = dimap->imapPath();
-  } else if ( storage->folderType() == KMFolderTypeImap ) {
-    KMFolderImap* imap = static_cast<KMFolderImap*>( storage );
-    accountName = imap->account()->name();
-    imapPath = imap->imapPath();
-  } else {
-    accountName = QString::null;
-    imapPath = folder->label();
-  }
-  if ( !accountName.isEmpty() )
-    accountName += ' ';
-  return accountName + imapPath;
-}
-
 QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
   QValueList<SubResource> subResources;
@@ -655,7 +630,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
-    subResources.append( SubResource( f->location(), subResourceLabel( f ), !f->isReadOnly() ) );
+    subResources.append( SubResource( f->location(),  f->prettyURL(), !f->isReadOnly() ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
@@ -667,7 +642,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
-      subResources.append( SubResource( f->location(), subResourceLabel( f ), !f->isReadOnly() ) );
+      subResources.append( SubResource( f->location(), f->prettyURL(), !f->isReadOnly() ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
