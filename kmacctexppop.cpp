@@ -474,6 +474,17 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Uidl) {
     kdDebug(5006) << "stage == Uidl" << endl;
     mUidlFinished = TRUE;
+
+    if (mLeaveOnServer && uidsOfMsgs.isEmpty() && uidsOfNextSeenMsgs.isEmpty()
+      && !idsOfMsgs.isEmpty())
+    {
+      KMessageBox::sorry(0, i18n("Your POP3 server doesn't support the UIDL "
+      "command.\nThis command is required to determine in a reliable way,\n"
+      "which of the mails on the server KMail has already seen before.\n"
+      "The feature to leave the mails on the server will therefore not\n"
+      "work properly."));
+    }
+
     stage = Retr;
     numMsgs = idsOfMsgsPendingDownload.count();
     numBytesToRead = 0;
