@@ -212,6 +212,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   if (mFolder)
   {
+    if (stricmp(mFolder->whoField(), "To")==0)
+      colList[1]->setName(i18n("Receiver"));
+    else colList[1]->setName(i18n("Sender"));
+
     str.sprintf(i18n("%d Messages, %d unread."),
 		mFolder->count(), mFolder->countUnread());
     if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");

@@ -38,7 +38,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
   KMMsgInfoInherited::assign(&msg);
   mSubject = msg.subject().copy();
-  mFrom = msg.from().copy();
+  mFrom = msg.who().copy();
   return *this;
 }
 

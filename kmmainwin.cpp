@@ -47,62 +47,20 @@
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
-  QAccel *accel = new QAccel(this);
   int idx;
 
-  mIntegrated = TRUE;
-  mFolder     = NULL;
+  // must be the first line of the constructor:
+  mStartupDone = FALSE;
+
+  mIntegrated  = TRUE;
+  mFolder = NULL;
 
   setMinimumSize(400, 300);
 
-  mVertPanner  = new KNewPanner(this, "vertPanner", KNewPanner::Horizontal,
-				KNewPanner::Absolute);
-  mVertPanner->resize(size());
-  setView(mVertPanner);
-
-  mHorizPanner = new KNewPanner(mVertPanner,"horizPanner",KNewPanner::Vertical,
-				KNewPanner::Absolute);
-
-  mFolderTree  = new KMFolderTree(mHorizPanner, "folderTree");
-  connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
-	  this, SLOT(folderSelected(KMFolder*)));
-
-  mHeaders = new KMHeaders(this, mHorizPanner, "headers");
-  connect(mHeaders, SIGNAL(selected(KMMessage*)),
-	  this, SLOT(slotMsgSelected(KMMessage*)));
-  connect(mHeaders, SIGNAL(activated(KMMessage*)),
-	  this, SLOT(slotMsgActivated(KMMessage*)));
-  accel->connectItem(accel->insertItem(Key_Left),
-		     mHeaders, SLOT(prevMessage()));
-  accel->connectItem(accel->insertItem(Key_Right), 
-		     mHeaders, SLOT(nextMessage()));
-
-  mMsgView = new KMReaderWin(mVertPanner);
-  connect(mMsgView, SIGNAL(statusMsg(const char*)),
-	  this, SLOT(statusMsg(const char*)));
-  connect(mMsgView, SIGNAL(popupMenu(const char*,const QPoint&)),
-	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
-  connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
-	  this, SLOT(slotUrlClicked(const char*,int)));
-  accel->connectItem(accel->insertItem(Key_Up),
-		     mMsgView, SLOT(slotScrollUp()));
-  accel->connectItem(accel->insertItem(Key_Down), 
-		     mMsgView, SLOT(slotScrollDown()));
-  accel->connectItem(accel->insertItem(Key_Prior),
-		     mMsgView, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Key_Next), 
-		     mMsgView, SLOT(slotScrollNext()));
-  accel->connectItem(accel->insertItem(Key_Delete),
-		     this, SLOT(slotDeleteMsg()));
-
+  readPreConfig();
+  createWidgets();
   readConfig();
-
-  mVertPanner->activate(mHorizPanner, mMsgView);
-  mHorizPanner->activate(mFolderTree, mHeaders);
-
-  // now adjust panner positions
-  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
-  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
+  activatePanners();
 
   setupMenuBar();
   setupToolBar();
@@ -114,6 +72,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   connect(msgSender, SIGNAL(statusMsg(const char*)),
 	  SLOT(statusMsg(const char*)));
+
+  // must be the last line of the constructor:
+  mStartupDone = TRUE;
 }
 
 
@@ -132,11 +93,39 @@ KMMainWin::~KMMainWin()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::readPreConfig(void)
+{
+  KConfig *config = app->getConfig();
+  QString str;
+
+  config->setGroup("Geometry");
+  mLongFolderList = config->readBoolEntry("longFolderList", false);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::readConfig(void)
 {
   KConfig *config = app->getConfig();
-  int w, h;
+  int w, h, folderIdx;
   QString str;
+  bool oldLongFolderList;
+
+  if (mStartupDone)
+  {
+    folderIdx = mFolderTree->currentItem();
+    writeConfig();
+    hide();
+    oldLongFolderList = mLongFolderList;
+    readPreConfig();
+    if (oldLongFolderList != mLongFolderList)
+    {
+      if (mHorizPanner->parent()==this) delete mHorizPanner;
+      else delete mVertPanner;
+      readPreConfig();
+      createWidgets();
+    }
+  }
 
   config->setGroup("Geometry");
   str = config->readEntry("MainWin", "300,600");
@@ -153,10 +142,17 @@ void KMMainWin::readConfig(void)
   
   config->setGroup("General");
   mSendOnCheck = config->readBoolEntry("SendOnCheck",false);
-  
 
   mMsgView->readConfig();
   mHeaders->readConfig();
+
+  // Re-activate panners
+  if (mStartupDone && oldLongFolderList != mLongFolderList)
+  {
+    activatePanners();
+    show();
+    mFolderTree->setCurrentItem(folderIdx);
+  }
 }
 
 
@@ -174,9 +170,95 @@ void KMMainWin::writeConfig(void)
   s.sprintf("%i,%i", r.width(), r.height());
   config->writeEntry("MainWin", s);
 
-  s.sprintf("%i,%i", mVertPanner->separatorPos(), 
-	    mHorizPanner->separatorPos());
+  s.sprintf("%i,%i", mVertPanner->absSeparatorPos(), 
+	    mHorizPanner->absSeparatorPos());
   config->writeEntry("Panners", s);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::createWidgets(void)
+{
+  KNewPanner *pnrMsgView, *pnrMsgList, *pnrFldList;
+  QAccel *accel = new QAccel(this);
+
+  // create panners
+  if (mLongFolderList)
+  {
+    mHorizPanner = new KNewPanner(this, "horizPanner",
+				  KNewPanner::Vertical, KNewPanner::Absolute);
+    mHorizPanner->resize(size());
+    setView(mHorizPanner);
+    mVertPanner  = new KNewPanner(mHorizPanner, "vertPanner", 
+				  KNewPanner::Horizontal,KNewPanner::Absolute);
+    pnrFldList = mHorizPanner;
+    pnrMsgView = mVertPanner;
+    pnrMsgList = mVertPanner;
+  }
+  else
+  {
+    mVertPanner  = new KNewPanner(this, "vertPanner", KNewPanner::Horizontal,
+				  KNewPanner::Absolute);
+    mVertPanner->resize(size());
+    setView(mVertPanner);
+    mHorizPanner = new KNewPanner(mVertPanner,"horizPanner",
+				  KNewPanner::Vertical, KNewPanner::Absolute);
+    pnrMsgView = mVertPanner;
+    pnrMsgList = mHorizPanner;
+    pnrFldList = mHorizPanner;
+  }
+
+  // create list of messages
+  mHeaders = new KMHeaders(this, pnrMsgList, "headers");
+  connect(mHeaders, SIGNAL(selected(KMMessage*)),
+	  this, SLOT(slotMsgSelected(KMMessage*)));
+  connect(mHeaders, SIGNAL(activated(KMMessage*)),
+	  this, SLOT(slotMsgActivated(KMMessage*)));
+  accel->connectItem(accel->insertItem(Key_Left),
+		     mHeaders, SLOT(prevMessage()));
+  accel->connectItem(accel->insertItem(Key_Right), 
+		     mHeaders, SLOT(nextMessage()));
+
+  // create HTML reader widget
+  mMsgView = new KMReaderWin(pnrMsgView);
+  connect(mMsgView, SIGNAL(statusMsg(const char*)),
+	  this, SLOT(statusMsg(const char*)));
+  connect(mMsgView, SIGNAL(popupMenu(const char*,const QPoint&)),
+	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
+  connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
+	  this, SLOT(slotUrlClicked(const char*,int)));
+  accel->connectItem(accel->insertItem(Key_Up),
+		     mMsgView, SLOT(slotScrollUp()));
+  accel->connectItem(accel->insertItem(Key_Down), 
+		     mMsgView, SLOT(slotScrollDown()));
+  accel->connectItem(accel->insertItem(Key_Prior),
+		     mMsgView, SLOT(slotScrollPrior()));
+  accel->connectItem(accel->insertItem(Key_Next), 
+		     mMsgView, SLOT(slotScrollNext()));
+  accel->connectItem(accel->insertItem(Key_Delete),
+		     this, SLOT(slotDeleteMsg()));
+
+  // create list of folders
+  mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
+  connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
+	  this, SLOT(folderSelected(KMFolder*)));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::activatePanners(void)
+{
+  // glue everything together
+  if (mLongFolderList)
+  {
+    mVertPanner->activate(mHeaders, mMsgView);
+    mHorizPanner->activate(mFolderTree, mVertPanner);
+  }
+  else
+  {    
+    mVertPanner->activate(mHorizPanner, mMsgView);
+    mHorizPanner->activate(mFolderTree, mHeaders);
+  }
 }
 
 
@@ -200,6 +282,24 @@ void KMMainWin::statusMsg(const char* aText)
   mStatusBar->changeItem(aText, mMessageStatusId);
   kapp->flushX();
   kapp->processEvents(100);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::hide()
+{
+  mVertPannerSep = mVertPanner->absSeparatorPos();
+  mHorizPannerSep = mHorizPanner->absSeparatorPos();
+  KMMainWinInherited::hide();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::show()
+{
+  KMMainWinInherited::show();
+  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
 }
 
 

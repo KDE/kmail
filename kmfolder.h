@@ -196,6 +196,13 @@ public:
     This method is usually called from within KMMessage::setSubject/set... */
   virtual void headerOfMsgChanged(const KMMsgBase*);
 
+  /** Name of the field that is used for the "From" column in index
+    and listbox. */
+  const char* whoField(void) const;
+
+  /** Set contents of whoField. */
+  void setWhoField(const QString&);
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -261,6 +268,7 @@ protected:
   bool mDirty; // if the index is dirty it will be recreated upon close()
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
   QString mLabel; // nationalized label or NULL (then name() should be used)
+  QString mWhoField; // name of the field that is used for "From" in listbox
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
 };

@@ -73,6 +73,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
   mType           = "plain";
   mAcctList       = NULL;
   mDirty          = FALSE;
+  mWhoField       = 0;
 }
 
 
@@ -334,13 +335,14 @@ int KMFolder::createIndexFromContents(void)
   char line[MAX_LINE];
   char status[8], xstatus[8];
   QString subjStr, dateStr, fromStr, xmarkStr, *lastStr=NULL;
+  QString whoFieldName;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
   bool inHeader = TRUE;
   KMMsgInfo* mi;
   QString msgStr(256);
   QRegExp regexp(MSG_SEPERATOR_REGEX);
-  int i, num, numStatus;
+  int i, num, numStatus, whoFieldLen;
   short needStatus;
 
   assert(mStream != NULL);
@@ -359,6 +361,11 @@ int KMFolder::createIndexFromContents(void)
   *xstatus = '\0';
   xmarkStr = "";
   needStatus = 3;
+  whoFieldName = QString(whoField()) + ':';
+  whoFieldLen = whoFieldName.length();
+
+  debug("%s: whoField: %s (%d)", (const char*)mLabel,
+	(const char*)whoFieldName, whoFieldLen);
 
   while (!atEof)
   {
@@ -444,9 +451,10 @@ int KMFolder::createIndexFromContents(void)
       dateStr = QString(line+6).copy();
       lastStr = &dateStr;
     }
-    else if (strncasecmp(line,"From:",5)==0 && isblank(line[5]))
+    else if (strncasecmp(line,whoFieldName,whoFieldLen)==0 && 
+	     isblank(line[whoFieldLen]))
     {
-      fromStr = QString(line+6).copy();
+      fromStr = QString(line+whoFieldLen+1).copy();
       lastStr = &fromStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0 && isblank(line[8]))
@@ -1009,6 +1017,20 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
 {
   int idx = mMsgList.find((KMMsgBasePtr)aMsg);
   if (idx >= 0 && !mQuiet) emit msgHeaderChanged(idx);
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMFolder::whoField(void) const
+{
+  return (mWhoField.isEmpty() ? "From" : (const char*)mWhoField);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::setWhoField(const QString& aWhoField)
+{
+  mWhoField = aWhoField.copy();
 }
 
 

@@ -331,16 +331,12 @@ void KMSettings::createTabAppearance(QWidget* parent)
 		   3, 0, &btn);
   connect(btn,SIGNAL(clicked()),this,SLOT(slotListFontSelect()));
 
-  lbl = new QLabel(i18n("Changing fonts currently only occurs when a new\n"
-			"window is opened or kmail is restarted"), grp);
-  lbl->setMinimumSize(lbl->sizeHint());
-  grid->addMultiCellWidget(lbl, 4, 4, 0, 2);
-
   grid->setColStretch(0,1);
   grid->setColStretch(1,10);
   grid->setColStretch(2,0);
+  grid->activate();
 
-  //----- set values
+  // set values
   config->setGroup("Fonts");
 
   fnt = kstrToFont(config->readEntry("body-font", "helvetica-medium-r-12"));
@@ -353,10 +349,25 @@ void KMSettings::createTabAppearance(QWidget* parent)
   listFontLabel->setText(kfontToStr(fnt));
   listFontLabel->setFont(fnt);
 
+  //----- group: layout
+  grp = new QGroupBox(i18n("Layout"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 2, 2, 20, 4);
+
+  longFolderList = new QCheckBox(
+	      i18n("Long folder list"), grp);
+  longFolderList->adjustSize();
+  longFolderList->setMinimumSize(longFolderList->sizeHint());
+  grid->addMultiCellWidget(longFolderList, 0, 0, 0, 1);
+  grid->activate();
+
+  // set values
+  config->setGroup("Geometry");
+  longFolderList->setChecked(config->readBoolEntry("longFolderList", false));
+
   //----- activation
   box->addStretch(100);
   addTab(tab, i18n("Appearance"));
-  grid->activate();
 }
 
 
@@ -488,7 +499,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   grid->addWidget(quotedPrintable, 1, 2);
   grid->activate();
 
-  //---------- set values
+  // set values
   config->setGroup("Composer");
   autoAppSignFile->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
   wordWrap->setChecked(config->readNumEntry("word-wrap",1));
@@ -797,6 +808,10 @@ void KMSettings::doApply()
   config->setGroup("Fonts");
   config->writeEntry("body-font", bodyFontLabel->text());
   config->writeEntry("list-font", listFontLabel->text());
+
+  //----- layout
+  config->setGroup("Geometry");
+  config->writeEntry("longFolderList", longFolderList->isChecked());
 
   //----- composer phrases
   config->setGroup("KMMessage");

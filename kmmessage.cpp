@@ -710,6 +710,18 @@ void KMMessage::setBcc(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
+const QString KMMessage::who(void) const
+{
+  const char* whoField;
+
+  if (mParent) whoField = mParent->whoField();
+  else whoField = "From";
+
+  return headerField(whoField);
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMessage::from(void) const
 {
   return headerField("From");

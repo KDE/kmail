@@ -122,6 +122,11 @@ public:
   virtual const QString from(void) const;
   virtual void setFrom(const QString aStr);
 
+  /** Get or set the 'Who' header field. The actual field that is
+    returned depends on the contents of the owning folders whoField().
+    Usually this is 'From', but it can also contain 'To'. */
+  virtual const QString who(void) const;
+
   /** Get or set the 'Subject' header field */
   virtual const QString subject(void) const;
   virtual void setSubject(const QString aStr);

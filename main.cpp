@@ -262,10 +262,12 @@ static void initFolders(KConfig* cfg)
 
   outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   outboxFolder->setType("Out");
+  outboxFolder->setWhoField("To");
   outboxFolder->open();
 
   sentFolder = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
   sentFolder->setType("St");
+  sentFolder->setWhoField("To");
   sentFolder->open();
 
   trashFolder  = folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));

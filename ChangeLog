@@ -1,3 +1,16 @@
+1999-01-23  Stefan Taferner  <taferner@kde.org> (KMail-1.0.14)
+
+	* New feature: layout can now be switched between
+	"long folder list" and "short folder list". Option
+	setable in settings->appearance.
+	
+	* New feature: the "From" column now contains the
+	receiver for the folders outbox and sent-mail. Column
+	"Sender" automatically switches it's title to "Receiver"
+	for these folders.
+	
+	* Incorporated new documentation.
+
 1999-01-21  Stefan Taferner  <taferner@kde.org> (KMail-1.0.13)
 
 	* Fixed broken placement of contents in settings dialog.

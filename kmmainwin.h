@@ -28,7 +28,10 @@ public:
   KMMainWin(QWidget *parent = 0, char *name = 0);
   virtual ~KMMainWin();
 
-  /** Read configuration options. */
+  /** Read configuration options before widgets are created. */
+  virtual void readPreConfig(void);
+
+  /** Read configuration options after widgets are created. */
   virtual void readConfig(void);
 
   /** Write configuration options. */
@@ -47,6 +50,9 @@ public:
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
 public slots:
+  virtual void show();
+  virtual void hide();
+
   /** Output given message in the statusbar message field. */
   void statusMsg(const char* text);
 
@@ -54,6 +60,8 @@ protected:
   void setupMenuBar();
   void setupToolBar();
   void setupStatusBar();
+  void createWidgets();
+  void activatePanners();
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -132,8 +140,10 @@ protected:
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;
   QString       mUrlCurrent;
-  QPopupMenu *actMenu;
-  QPopupMenu *fileMenu;
+  QPopupMenu	*actMenu;
+  QPopupMenu	*fileMenu;
+  bool		mLongFolderList;
+  bool		mStartupDone;
 };
 
 #endif
