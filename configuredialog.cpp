@@ -3760,17 +3760,18 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 			"folder"), this );
   vlay->addWidget( mJumpToUnread );
 
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
   mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
-  mDelayedMarkTime = new KIntSpinBox( 0, 9999, 1, 0, 10, this);
+  hlay->addWidget( mDelayedMarkAsRead );
+  mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
+				      0 /*init*/, 10 /*base*/, this);
   mDelayedMarkTime->setSuffix( i18n(" sec") );
-  mDelayedMarkTime->setEnabled( false );
+  mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
+  hlay->addWidget( mDelayedMarkTime );
+  hlay->addStretch( 1 );
 
   connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
   	SLOT(setEnabled(bool)));
-
-  hlay = new QHBoxLayout( vlay );
-  hlay->addWidget( mDelayedMarkAsRead );
-  hlay->addWidget( mDelayedMarkTime );
 
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
