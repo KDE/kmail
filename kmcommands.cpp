@@ -881,9 +881,11 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 
 //-----------------------------------------------------------------------------
 
-KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url )
+KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url,
+                                    const QTextCodec *codec )
   : KMCommand( parent ),
-    mUrl( url )
+    mUrl( url ),
+    mCodec( codec )
 {
   setDeletesItself( true );
 }
@@ -972,7 +974,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
     KMMessage *msg = new KMMessage( dwMsg );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
-    win->showMsg( kmkernel->networkCodec(), msg );
+    win->showMsg( mCodec, msg );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
