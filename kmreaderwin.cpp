@@ -304,6 +304,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer = new KHTMLPart(this, "khtml");
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
+
   //  mViewer->setDefaultBGColor(QColor("#ffffff"));
   //  mViewer->setFollowsLinks( FALSE );
 
@@ -509,14 +510,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
         subtype = msgPart.subtypeStr();     // get subtype...
         if (htmlMail() && stricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
-          str = QCString(msgPart.bodyDecoded());      // decode it...
+          str = QString(msgPart.bodyDecoded());      // decode it...
           mViewer->write(str);              // write it...
           return;                           // return, finshed.
         }
 	else if (!htmlMail() && (stricmp(subtype, "plain")==0))    
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
-          str = QCString(msgPart.bodyDecoded());      // decode it...
+          str = QString(msgPart.bodyDecoded());      // decode it...
           writeBodyStr(str);
           return;
 	}
@@ -557,7 +558,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 //	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
-	  str = QCString(msgPart.bodyDecoded());
+	  str = QString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<br><hr><br>");
 
 	  if (htmlMail() && (stricmp(subtype, "html")==0))
