@@ -821,8 +821,8 @@ void KMHeaders::bounceMsg (int msgId)
   KMMessage bounceMsg;
   QString str, fromStr;
   int i;
-  const char* fromFields[] = { "Return-Path", "Resent-From", "Resent-Sender",
-			       "From", "Sender", 0 };
+  const char* fromFields[] = { "Errors-To", "Return-Path", "Resent-From",
+			       "Resent-Sender", "From", "Sender", 0 };
 
   msg = getMsg(msgId);
   if (!msg) return;
