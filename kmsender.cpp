@@ -443,6 +443,9 @@ void KMSender::doSendMsg()
     mSendProc = createSendProcFromString(msgTransport);
     mMethodStr = msgTransport;
 
+    if( mTransportInfo->encryption == "TLS" || mTransportInfo->encryption == "SSL" )
+      mProgressItem->setUsesCrypto( true );
+
     if (!mSendProc)
       sendProcStarted(false);
     else {
