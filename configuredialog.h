@@ -338,8 +338,9 @@ class ConfigureDialog : public KDialogBase
       QFont         font[6];
       ListView      *profileList;
       QListViewItem *mListItemDefault;
-      QListViewItem *mListItemNewFeature;
+      QListViewItem *mListItemDefaultHtml;
       QListViewItem *mListItemContrast;
+      QListViewItem *mListItemPurist;
       QPushButton  *profileDeleteButton;
       QComboBox     *addressbookCombo;
       QLabel        *addressbookLabel;

@@ -910,7 +910,7 @@ void ConfigureDialog::makeAppearancePage( void )
   vlay = new QVBoxLayout( page4, spacingHint() );
 
   label = new QLabel( page4 );
-  label->setText(i18n("Define or use a GUI profile"));
+  label->setText(i18n("Select a GUI profile"));
   vlay->addWidget( label );
 
   mAppearance.profileList = new ListView( page4, "tagList" );
@@ -933,14 +933,29 @@ void ConfigureDialog::makeAppearancePage( void )
 
   mAppearance.mListItemDefault =
     new QListViewItem( mAppearance.profileList,
-    i18n("KMail Classic - KMail as you know it") );
-  mAppearance.mListItemNewFeature =
+    i18n("KMail - default") );
+  mAppearance.mListItemDefaultHtml =
     new QListViewItem( mAppearance.profileList, mAppearance.mListItemDefault,
-    i18n("New Features - Extended functionality in KDE-2") );
+    i18n("KMail - with HTML preview enabled - less secure !") );
   mAppearance.mListItemContrast =
-    new QListViewItem(mAppearance.profileList, mAppearance.mListItemNewFeature,
-    i18n("High Contrast - For the visually impaired user"));
+    new QListViewItem(mAppearance.profileList, mAppearance.mListItemDefaultHtml,
+    i18n("High Contrast - Bigger fonts for the visually impaired user"));
+  mAppearance.mListItemPurist=
+    new QListViewItem(mAppearance.profileList, mAppearance.mListItemPurist,
+    i18n("Purist - most features turned off, KDE global settings are used"));
+
+  /* this would be my (ferdinand)  preferred sorting
+  QString defaultIdentity = list.first();
+      list.remove( defaultIdentity );
+      list += identityText;
+      list.sort();
+      list.prepend( defaultIdentity );
+  */
+
+  /* this suggests that the default profile is the selected one
+     which is not always the case
   mAppearance.profileList->setSelected( mAppearance.mListItemDefault, true );
+  */
 
   QWidget *page5 = new QWidget( tabWidget );
   tabWidget->addTab( page5, i18n("Addressbook") );
@@ -1810,11 +1825,12 @@ void ConfigureDialog::installProfile( void )
     mAppearance.font[4] = QFont("helvetica");
     mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
+
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
-    mAppearance.colorList->setColor( 2, kapp->palette().normal().text() );
-    mAppearance.colorList->setColor( 3, kapp->palette().normal().text() );
-    mAppearance.colorList->setColor( 4, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#009000") );
+    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
     mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );
     mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );
     mAppearance.colorList->setColor( 7, blue );
@@ -1822,11 +1838,11 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( false );
-    mAppearance.nestedMessagesCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( true );
+    mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( false );
   }
-  else if( item == mAppearance.mListItemNewFeature )
+  else if( item == mAppearance.mListItemDefaultHtml )
   {
     mAppearance.font[0] = QFont("helvetica");
     mAppearance.font[1] = QFont("helvetica");
@@ -1835,11 +1851,12 @@ void ConfigureDialog::installProfile( void )
     mAppearance.font[4] = QFont("helvetica");
     mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
+
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, QColor("#006400") );
-    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 3, QColor("#009000") );
+    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
     mAppearance.colorList->setColor( 7, blue );
@@ -1847,7 +1864,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( true );
   }
@@ -1872,8 +1889,39 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( false );
+  }
+  else if( item == mAppearance.mListItemPurist)
+  {
+    /* 
+    Do we need the font and color settings here ?
+    They are not used anyway
+    */
+
+    mAppearance.font[0] = QFont("helvetica");
+    mAppearance.font[1] = QFont("helvetica");
+    mAppearance.font[2] = QFont("helvetica");
+    mAppearance.font[3] = QFont("helvetica");
+    mAppearance.font[4] = QFont("helvetica");
+    mAppearance.font[5] = QFont("helvetica");
+    mAppearance.customFontCheck->setChecked( false );
+
+    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#009000") );
+    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
+    mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );
+    mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );
+    mAppearance.colorList->setColor( 7, blue );
+    mAppearance.colorList->setColor( 8, red );
+    mAppearance.customColorCheck->setChecked( false );
+
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.htmlMailCheck->setChecked( false );
   }
   else
@@ -3735,8 +3783,8 @@ void ConfigureDialog::slotIdentityTransport(void)
   if (ctd.exec() == QDialog::Accepted) {
     id->setTransport(ctd.getTransport());
     if (ctd.getTransport().isEmpty())
-      mIdentity.transportButton->setText(i18n("Add Transport..."));
+      mIdentity.transportButton->setText("Add Transport...");
     else
-      mIdentity.transportButton->setText(i18n("Edit Transport..."));
+      mIdentity.transportButton->setText("Edit Transport...");
   }
 }
