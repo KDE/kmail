@@ -290,7 +290,7 @@ void KMAcctExpPop::startJob() {
     {
       KMessageBox::sorry(0,
                          i18n("Couldn't execute precommand: %1").arg(precommand()),
-                         i18n("Kmail Error Message"));
+                         i18n("KMail Error Message"));
       emit finishedCheck(idsOfMsgs.count() > 0);
       emit newMailsProcessed(-1);
       return;
