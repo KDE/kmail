@@ -711,6 +711,7 @@ protected:
   uint mId;
   QString mOldSigText;
   QStringList mTransportHistory;
+  QString mBcc;
 
   KAction *attachPK, *attachMPK,
           *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;

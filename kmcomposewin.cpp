@@ -1456,6 +1456,12 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
   }
 
+  // we have to remember the Bcc because it might have been overwritten
+  // by a custom header (therefore we can't use bcc() later) and because
+  // mimelib removes addresses without domain part (therefore we can't use
+  // mMsg->bcc() later)
+  mBcc = mMsg->bcc();
+
   bool doSign    = signAction->isChecked()    && !mNeverSign;;
   bool doEncrypt = encryptAction->isChecked() && !mNeverEncrypt;
 
@@ -1548,10 +1554,10 @@ bool KMComposeWin::applyChanges(void)
 	    _to += ",";
 	  _to += cc().simplifyWhiteSpace();
 	}
-	if( !mMsg->bcc().isEmpty() ) {
+	if( !mBcc.isEmpty() ) {
 	  if( !_to.endsWith(",") )
 	    _to += ",";
-	  _to += mMsg->bcc().simplifyWhiteSpace();
+	  _to += mBcc.simplifyWhiteSpace();
 	}
 	QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
 	// now check if encrypting to these recipients is possible and desired
@@ -4690,8 +4696,8 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   } else {
     mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
     mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
-    if( !mMsg->bcc().isEmpty() )
-      mMsg->setBcc( KabcBridge::expandDistributionLists( mMsg->bcc() ));
+    if( !mBcc.isEmpty() )
+      mMsg->setBcc( KabcBridge::expandDistributionLists( mBcc ));
     QString recips = mMsg->headerField( "X-KMail-Recipients" );
     if( !recips.isEmpty() ) {
       mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
