@@ -2,6 +2,7 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
+#include <qprinter.h>
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -33,7 +34,6 @@
 #include <qlist.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <qprinter.h>
 #include <qregexp.h>
 #include <qcursor.h>
 
