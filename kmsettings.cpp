@@ -950,7 +950,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   for (i=1, folder=(KMFolder*)fdir->first(); folder; 
        folder=(KMFolder*)fdir->next())
   {
-    if (folder->isDir()) continue;
+    if (folder->isDir() || folder->isSystemFolder()) continue;
     mFolders->insertItem(folder->name());
     if (folder == acctFolder) mFolders->setCurrentItem(i);
     i++;

@@ -30,6 +30,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
 {
   KMAccount* acct;
   QLabel *label;
+  QString type;
 
   folder = (KMAcctFolder*)aFolder;
 
@@ -42,6 +43,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   nameEdit->setGeometry(70,20,340,25);
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name().data() : i18n("unnamed"));
+
+  type = aFolder->type();
+  if (!type.isEmpty() && type!="plain")
+    nameEdit->setEnabled(false);
 
   label = new QLabel(this);
   label->setText(i18n("Associated with"));
@@ -79,6 +84,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   button->setGeometry(190,260,100,30);
   button->setText(i18n("OK"));
   connect(button,SIGNAL(clicked()),this,SLOT(doAccept()));
+
+  if (type=="Out" || type=="St")
+    button->setEnabled(false);
 
   button = new QPushButton(this);
   button->setGeometry(310,260,100,30);

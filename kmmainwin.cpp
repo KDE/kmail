@@ -453,12 +453,6 @@ void KMMainWin::slotModifyFolder()
   KMFolderDialog *d;
 
   if (!mFolder) return;
-  if (mFolder->isSystemFolder())
-  {
-    warning(i18n("Cannot modify a\nsystem folder."));
-    return;
-  }
-
   d = new KMFolderDialog((KMFolder*)mFolder, this);
   d->setCaption(i18n("Modify Folder"));
   if (d->exec()) mFolderTree->reload();

@@ -1,5 +1,8 @@
 1999-01-29  Stefan Taferner  <taferner@kde.org> (KMail-1.0.15)
 
+	* Bugfix: disabled renaming of system folders (inbox, outbox,
+	sent-mails, trash).
+
 	* Fix: improved performance when displaying messages (Bug #148).
 	
 	* Bugfix: fixed crash when dropping message on directory
