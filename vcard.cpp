@@ -16,6 +16,7 @@
 // Requires QT.
 //
 
+// FIXME: do proper CRLF/CR handling
 
 // required
 #define VCARD_BEGIN          "begin:vcard"
@@ -117,7 +118,8 @@ value :=
 
 // This code is screaming "come do me in PERL!"
 // This STRIPS OUT EMPTY TOKENS
-static QValueList<QString> tokenizeBy(const QString& str, char tok) {
+//static QValueList<QString> tokenizeBy(const QString& str, char tok) {
+static QValueList<QString> tokenizeBy(const QString& str, const QRegExp& tok) {
 QValueList<QString> tokens;
 unsigned int head, tail;
 const char *chstr = str.ascii();
@@ -217,12 +219,17 @@ QValueList<QString> lines;
 
   _vcdata = new QValueList<VCardLine>;
 
-  lines = tokenizeBy(vc, '\n');
+  // lines = tokenizeBy(vc, '\n');
+  lines = tokenizeBy(vc, QRegExp("[\x0d\x0a]"));
 
   // for each line in the vCard
   for (QValueListIterator<QString> j = lines.begin();
                                    j != lines.end(); ++j) {
     VCardLine _vcl;
+
+    // take spaces off the end
+    for (int g = (*j).length()-1; g > 0 && (*j)[g].isSpace(); g++)
+      (*j)[g] = 0;
 
     //        first token:
     //              verify state, update if necessary
@@ -241,7 +248,8 @@ QValueList<QString> lines;
       }
 
       // split into two tokens
-      QValueList<QString> linetokens = tokenizeBy(*j, ':');
+      //QValueList<QString> linetokens = tokenizeBy(*j, ':');
+      QValueList<QString> linetokens = tokenizeBy(*j, QRegExp(":"));
 
       if (linetokens.count() < 2) {  // invalid line - no ':'
         _err = VC_ERR_INVALID_LINE;
@@ -250,7 +258,8 @@ QValueList<QString> lines;
 
       // check for qualifier and
       // set name, qualified, qualifier
-      QValueList<QString> nametokens = tokenizeBy(linetokens[0], ';');
+      //QValueList<QString> nametokens = tokenizeBy(linetokens[0], ';');
+      QValueList<QString> nametokens = tokenizeBy(linetokens[0], QRegExp(";"));
       bool qp = false, first_pass = true;
 
       if (nametokens.count() > 0) {
@@ -282,7 +291,8 @@ QValueList<QString> lines;
       // second token:
       //    split into tokens by ;
       //    add to parameters vector
-      _vcl.parameters = tokenizeBy(linetokens[1], ';');
+      //_vcl.parameters = tokenizeBy(linetokens[1], ';');
+      _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"));
       if (qp) {
         for (QValueListIterator<QString> z = _vcl.parameters.begin();
                                          z != _vcl.parameters.end();

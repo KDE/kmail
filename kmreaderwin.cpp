@@ -67,6 +67,9 @@
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
 
+#include "vcard.h"
+#include "kmdisplayvcard.h"
+
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
@@ -1241,6 +1244,28 @@ void KMReaderWin::slotAtmOpen()
     atmViewMsg(&msgPart);
     return;
   }
+
+  if (stricmp(msgPart.typeStr(), "text") == 0)
+  {
+    if (stricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
+      KMDisplayVCard *vcdlg;
+      int vcerr;
+      VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);
+
+      if (!vc) {
+        QString errstring = i18n("Error reading in vCard:\n");
+        errstring += VCard::getError(vcerr);
+        KMessageBox::error(this, i18n(errstring), i18n("vCard error"));
+        return;
+      }
+
+      vcdlg = new KMDisplayVCard;
+      vcdlg->setVCard(vc);
+      vcdlg->show();
+      return;
+    }
+  }
+
   fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
 
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
