@@ -1251,9 +1251,6 @@ void KMHeaders::msgAdded(int id)
   if ((childCount() == 1) && hi) {
     setSelected( hi, true );
     setCurrentItem( firstChild() );
-    // ### workaround the fact that Qt 3.0.1's QListView doesn't emit
-    // currentChanged() on setCurrentItem():
-    /*own slot*/highlightMessage( firstChild() );
   }
 
   END_TIMER(msgAdded);
@@ -2656,6 +2653,7 @@ void KMHeaders::folderCleared()
     mSortCacheItems.clear(); //autoDelete is true
     mSubjectLists.clear();
     mImperfectlyThreadedList.clear();
+    mPrevCurrent = 0;
 }
 
 bool KMHeaders::writeSortOrder()
