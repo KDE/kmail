@@ -260,7 +260,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
     if (!mRules[i]->isHeaderField()) fastMode = false;
 
   num = aFld->count();
-  for (i=0, upd=0; i<num && mSearching; i++, upd++)
+  for (i=num-1, upd=0; i>=0 && mSearching; i--, upd++)
   {
     if (fastMode)
     {
