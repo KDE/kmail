@@ -514,7 +514,7 @@ KpgpBaseG::decrypt(const char *passphrase)
   {
     //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
-    if( info.find("bad passphrase") != -1)
+    if((index = info.find("bad passphrase")) != -1)
     {
       if(passphrase != 0)
       {
@@ -522,6 +522,15 @@ KpgpBaseG::decrypt(const char *passphrase)
 	kdDebug() << "KpgpBase: passphrase is bad" << endl;
 	status |= BADPHRASE;
 	status |= ERROR;
+      }
+      else {
+	// Search backwards the user ID of the needed key
+	index2 = info.findRev("\"", index) - 1;
+	index = info.findRev("      \"", index2) + 7;
+	// The conversion from UTF8 is necessary because gpg stores and
+	// prints user IDs in UTF8
+	requiredID = QString::fromUtf8(info.mid(index, index2 - index + 1));
+	kdDebug() << "KpgpBase: key needed is \"" << requiredID << "\"!" << endl;
       }
     } 
     else
