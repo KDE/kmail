@@ -38,6 +38,7 @@
 #include "kmmainwin.h"
 #include "kmailIface.h"
 #include "kmail_part.h"
+#include "kmversion.h"
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
@@ -141,7 +142,7 @@ KMailPart::~KMailPart()
 KAboutData *KMailPart::createAboutData()
 {
   KAboutData *about = new KAboutData("kmail", I18N_NOOP("KMail"),
-                                     "3.1beta1", I18N_NOOP("A KDE Email Client"),
+                                     KMAIL_VERSION, I18N_NOOP("A KDE Email Client"),
                                      KAboutData::License_GPL,
                                      I18N_NOOP("(c) 1997-2002, The KMail Team"));
   about->addAuthor("The KMail Team",I18N_NOOP("Original author and maintainer"));
