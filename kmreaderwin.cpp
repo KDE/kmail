@@ -706,8 +706,15 @@ void KMReaderWin::readColorConfig(void)
   // also set to the background color (-> old style PGP message viewing)
   // else
   // the brightness of the frame is set to 4/5 of the brightness of the header
+  // and in case of a light background color
   // the saturation of the body is set to 1/8 of the saturation of the header
-  int h,s,v;
+  // while in case of a dark background color
+  // the value of the body is set to the value of the background color
+
+  // Check whether the user uses a light color scheme
+  int h, s, v, vBackground;
+  c4.hsv( &h, &s, &vBackground );
+  bool bLightBackground = ( vBackground >= 128 );
   if ( cPgpOk1H == c4 )
   { // header color == background color?
     cPgpOk1F = c4;
@@ -717,7 +724,12 @@ void KMReaderWin::readColorConfig(void)
   {
     cPgpOk1H.hsv( &h, &s, &v );
     cPgpOk1F.setHsv( h, s, v*4/5 );
-    cPgpOk1B.setHsv( h, s/8, v );
+    if( bLightBackground ) {
+      cPgpOk1B.setHsv( h, s/8, v );
+    }
+    else {
+      cPgpOk1B.setHsv( h, s, vBackground );
+    }
   }
   if ( cPgpOk0H == c4 )
   { // header color == background color?
@@ -728,7 +740,12 @@ void KMReaderWin::readColorConfig(void)
   {
     cPgpOk0H.hsv( &h, &s, &v );
     cPgpOk0F.setHsv( h, s, v*4/5 );
-    cPgpOk0B.setHsv( h, s/8, v );
+    if( bLightBackground ) {
+      cPgpOk0B.setHsv( h, s/8, v );
+    }
+    else {
+      cPgpOk0B.setHsv( h, s, vBackground );
+    }
   }
   if ( cPgpWarnH == c4 )
   { // header color == background color?
@@ -739,7 +756,12 @@ void KMReaderWin::readColorConfig(void)
   {
     cPgpWarnH.hsv( &h, &s, &v );
     cPgpWarnF.setHsv( h, s, v*4/5 );
-    cPgpWarnB.setHsv( h, s/8, v );
+    if( bLightBackground ) {
+      cPgpWarnB.setHsv( h, s/8, v );
+    }
+    else {
+      cPgpWarnB.setHsv( h, s, vBackground );
+    }
   }
   if ( cPgpErrH == c4 )
   { // header color == background color?
@@ -750,7 +772,12 @@ void KMReaderWin::readColorConfig(void)
   {
     cPgpErrH.hsv( &h, &s, &v );
     cPgpErrF.setHsv( h, s, v*4/5 );
-    cPgpErrB.setHsv( h, s/8, v );
+    if( bLightBackground ) {
+      cPgpErrB.setHsv( h, s/8, v );
+    }
+    else {
+      cPgpErrB.setHsv( h, s, vBackground );
+    }
   }
 
   if ( cPgpEncrH == c4 )
@@ -762,7 +789,12 @@ void KMReaderWin::readColorConfig(void)
   {
     cPgpEncrH.hsv( &h, &s, &v );
     cPgpEncrF.setHsv( h, s, v*4/5 );
-    cPgpEncrB.setHsv( h, s/8, v );
+    if( bLightBackground ) {
+      cPgpEncrB.setHsv( h, s/8, v );
+    }
+    else {
+      cPgpEncrB.setHsv( h, s, vBackground );
+    }
   }
 
   //
