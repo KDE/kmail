@@ -798,7 +798,7 @@ void KMReaderWin::slotMessageArrived( KMMessage *msg )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::update( KMail::Interface::Observable * observable ) 
+void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
@@ -1144,9 +1144,6 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
-  I18N_NOOP("Support for 3rd-party CryptPlugs has been discontinued. "
-	    "Support for the GnuPG cryptographic backend is now included "
-	    "directly in KMail.")
 };
 static const int numKMailChanges =
   sizeof kmailChanges / sizeof *kmailChanges;
@@ -1156,8 +1153,23 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
+  I18N_NOOP("Optional columns in the message list: status, attachment, important, etc."),
+  I18N_NOOP("Load external references for certain folders and on request"),
+  I18N_NOOP("Replace smileys by emoticons"),
+  I18N_NOOP("Show the sender's picture if it is in the address book"),
+  I18N_NOOP("Support for X-Face (b/w pictures in messages)"),
+  I18N_NOOP("Optional spam probability meter"),
+  I18N_NOOP("Configurable default character encoding"),
   I18N_NOOP("Searching in IMAP messages fully supported"),
-  I18N_NOOP("Optional columns in the message list: status, attachment, important, etc.")
+  I18N_NOOP("Move IMAP folders"),
+  I18N_NOOP("KWallet support"),
+  I18N_NOOP("New authentication methods for IMAP, POP3, SMTP: NTLM (Microsoft Windows) and GSSAPI (Kerberos)"),
+  I18N_NOOP("Optional compression of attachments"),
+  I18N_NOOP("Attach images from the clipboard"),
+  I18N_NOOP("New recipient editor and picker in the composer"),
+  I18N_NOOP("Quick folder switching via configurable shortcuts"),
+  I18N_NOOP("Anti-Spam Wizard supports additional tools"),
+  I18N_NOOP("Import mail from Evolution 2.x, Opera and Thunderbird")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1201,9 +1213,7 @@ void KMReaderWin::displayAboutPage()
 	 "<a href=\"%2\">documentation</a></li>\n"
 	 "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
 	 "new versions of KMail</li></ul>\n"
-         "<p><span style='font-size:125%; font-weight:bold;'>"
-         "Important changes</span> (compared to KMail %8):</p>\n"
-	 "<ul>\n%9</ul>\n"
+         "%8\n" // important changes
 	 "<p>Some of the new features in this release of KMail include "
 	 "(compared to KMail %4, which is part of KDE %5):</p>\n"
 	 "<ul>\n%6</ul>\n"
@@ -1233,11 +1243,19 @@ void KMReaderWin::displayAboutPage()
     info = info.arg( QString::null );
   }
 
-  QString changesItems;
-  for ( int i = 0 ; i < numKMailChanges ; i++ )
-    changesItems += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
-
-  info = info.arg("1.6").arg( changesItems );
+  if ( numKMailChanges > 0 ) {
+    QString changesText =
+      i18n("<p><span style='font-size:125%; font-weight:bold;'>"
+           "Important changes</span> (compared to KMail %1):</p>\n")
+      .arg("1.7");
+    changesText += "<ul>\n";
+    for ( int i = 0 ; i < numKMailChanges ; i++ )
+      changesText += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
+    changesText += "</ul>\n";
+    info = info.arg( changesText );
+  }
+  else
+    info = info.arg(""); // remove the %8
 
   QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
   QString appTitle = i18n("KMail");
@@ -1738,7 +1756,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p ) 
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p )
 {
   mAtmCurrent = id;
   mAtmCurrentName = name;
@@ -1783,7 +1801,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-      message(), mAtmCurrent, mAtmCurrentName, 
+      message(), mAtmCurrent, mAtmCurrentName,
       KMHandleAttachmentCommand::AttachmentAction( choice ), 0 );
   connect( command, SIGNAL( showAttachment( int, const QString& ) ),
       this, SLOT( slotAtmView( int, const QString& ) ) );
@@ -1975,7 +1993,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::openAttachment( int id, const QString & name ) 
+void KMReaderWin::openAttachment( int id, const QString & name )
 {
   mAtmCurrentName = name;
   mAtmCurrent = id;
@@ -2041,7 +2059,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   if( choice == KMessageBox::Yes ) {		// Save
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save, 
+        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save,
         offer );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
@@ -2050,7 +2068,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   else if( choice == KMessageBox::No ) {	// Open
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Open, 
+        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Open,
         offer );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
