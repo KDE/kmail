@@ -231,6 +231,8 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
   for (i=0; i<FILTER_MAX_ACTIONS; i++)
   {
   }
+
+  mFilter = aFilter;
 }
 
 
@@ -287,7 +289,10 @@ QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
 void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
 {
   KMFilterAction* action;
+  QWidget* widg;
   int i;
+
+  if (!mFilter) return;
 
   for (i=FILTER_MAX_ACTIONS-1; i>0; i--)
     if (cbx == mFaType[i]) break;
@@ -303,7 +308,9 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   if (mFilter->action(idx)) delete mFilter->action(idx);
   mFilter->setAction(idx, action);
 
-  action->createParamWidget(this);
+  widg = action->createParamWidget(this);
+  if (!widg) return;
+  
 }
 
 

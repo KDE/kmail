@@ -611,6 +611,20 @@ const QString KMMessage::headerField(const QString aName) const
 
 
 //-----------------------------------------------------------------------------
+void KMMessage::removeHeaderField(const QString aName)
+{
+  DwHeaders& header = mMsg->Headers();
+  DwField* field;
+
+  field = header.FindField(aName);
+  if (!field) return;
+
+  header.RemoveField(field);
+  mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMessage::setHeaderField(const QString aName, const QString aValue)
 {
   DwHeaders& header = mMsg->Headers();
@@ -846,7 +860,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       aPart->setSubtypeStr("Plain");
     }
     // Modification by Markus
-    if(headers->ContentType().Name().c_str() != "" )
+    if (!headers->ContentType().Name().empty())
       aPart->setName(headers->ContentType().Name().c_str());
     else
       aPart->setName("unnamed");

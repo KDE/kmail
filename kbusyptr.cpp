@@ -17,7 +17,8 @@ KBusyPtr :: KBusyPtr ()
   frameDelay = 500;
   cursorList = NULL;
   bitmapList = NULL;
-  animated   = TRUE;
+  //animated   = TRUE;
+  animated   = FALSE;
 
   loadCursor("stopwatch.xbm","stopwatchMask.xbm");
 

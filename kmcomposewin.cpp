@@ -986,14 +986,19 @@ void KMComposeWin::slotDropAction()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSend()
 {
+  bool sentOk;
+
   kbp->busy();
   applyChanges();
-  if(msgSender->send(mMsg))
+  sentOk = msgSender->send(mMsg);
+  kbp->idle();
+
+  if (sentOk)
   {
     mAutoDeleteMsg = FALSE;
     close();
   }
-  kbp->idle();
+  else warning("Failed to send message.");
 }
 
 

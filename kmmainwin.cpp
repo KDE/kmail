@@ -96,8 +96,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   readConfig();
 
-  mVertPanner->setAbsSeperatorPos(mVertPannerSep);
-  mHorizPanner->setAbsSeperatorPos(mHorizPannerSep);
+  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
 
   mVertPanner->activate(mHorizPanner, mMsgView);
   mHorizPanner->activate(mFolderTree, mHeaders);

@@ -4,6 +4,7 @@
 #include <klocale.h>
 #include <kapp.h>
 #include <kmsgbox.h>
+#include <qmsgbox.h>
 #include <qstring.h>
 #include <unistd.h>
 #include <string.h>
@@ -103,12 +104,46 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 		   bool aAskIfExists, bool aBackup=TRUE, bool aVerbose)
 {
   QFile file(aFileName);
-  int writeLen, len;
+  QFileInfo info(aFileName);
+  int writeLen, len, rc;
 
   assert(aFileName!=NULL);
 
   debug("WARNING: kStringToFile currently makes no backups and silently"
 	"replaces existing files!");
+
+  if (info.exists())
+  {
+    if (aAskIfExists)
+    {
+      QString str(256);
+      str.sprintf(klocale->translate(
+		  "File %s exists.\nDo you want to replace it ?"),
+		  aFileName);
+      rc = QMessageBox::information(NULL, klocale->translate("Information"),
+	   str, klocale->translate("&Ok"), klocale->translate("&Cancel"),
+	   0, 1);
+      if (rc != 0) return FALSE;
+    }
+    if (aBackup)
+    {
+      // make a backup copy
+      QString bakName = aFileName;
+      bakName += '~';
+      unlink(bakName);
+      rc = rename(aFileName, bakName);
+      if (rc)
+      {
+	// failed to rename file
+	if (!aVerbose) return FALSE;
+	rc = QMessageBox::warning(NULL, klocale->translate("Warning"),
+	     klocale->translate(
+             "Failed to make a backup copy of %s.\nContinue anyway ?"),
+	     klocale->translate("&Ok"), klocale->translate("&Cancel"), 0, 1);
+	if (rc != 0) return FALSE;
+      }
+    }
+  }
 
   if (!file.open(IO_Raw|IO_WriteOnly))
   {
@@ -118,10 +153,11 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
       msgDialog(klocale->translate("Could not write to file:\n%s"), aFileName);
       break;
     case IO_OpenError:
-      msgDialog(klocale->translate("Could not open file:\n%s"), aFileName);
+      msgDialog(klocale->translate("Could not open file for writing:\n%s"),
+		aFileName);
       break;
     default:
-      msgDialog(klocale->translate("Error while reading file:\n%s"),aFileName);
+      msgDialog(klocale->translate("Error while writing file:\n%s"),aFileName);
     }
     return FALSE;
   }

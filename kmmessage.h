@@ -144,6 +144,9 @@ public:
   virtual const QString headerField(const QString name) const;
   virtual void setHeaderField(const QString name, const QString value);
 
+  /** Remove header field with given name */
+  virtual void removeHeaderField(const QString name);
+  
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
