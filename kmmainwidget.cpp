@@ -2744,15 +2744,15 @@ void KMMainWidget::slotChangeCaption(QListViewItem * i)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::removeDuplicates(void)
+void KMMainWidget::removeDuplicates()
 {
+    if (!mFolder)
+       return;
     KMFolder *oFolder = mFolder;
     mHeaders->setFolder(0);
     QMap< QString, QValueList<int> > idMD5s;
     QValueList<int> redundantIds;
     QValueList<int>::Iterator kt;
-    if (!mFolder)
-       return;
     mFolder->open();
     for (int i = mFolder->count() - 1; i >= 0; --i) {
        QString id = (*mFolder)[i]->msgIdMD5();
