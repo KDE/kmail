@@ -34,11 +34,8 @@
 
 #include <mimelib/mimepp.h>
 
-#ifndef KRN
 #include "kmglobal.h"
 #include "kmmainwin.h"
-#else
-#endif
 
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -77,11 +74,6 @@
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
-#endif
-
-#ifdef KRN
-extern KApplication *app;
-extern KBusyPtr *kbp;
 #endif
 
 QString KMReaderWin::mAttachDir;
@@ -161,11 +153,7 @@ bool KMReaderWin::event(QEvent *e)
 void KMReaderWin::readColorConfig(void)
 {
   KConfig *config = kapp->config();
-#ifdef KRN
-  config->setGroup("ArticleListOptions");
-#else
   config->setGroup("Reader");
-#endif
   c1 = QColor(kapp->palette().normal().text());
   c2 = KGlobalSettings::linkColor();
   c3 = KGlobalSettings::visitedLinkColor();
@@ -212,7 +200,6 @@ void KMReaderWin::readConfig(void)
   mCodec = KMMsgBase::codecForName(encoding);
   mAutoDetectEncoding = config->readBoolEntry("autodetect-encoding", true );
 
-#ifndef KRN
   int i, diff;
   fntSize = 0;
 
@@ -246,12 +233,6 @@ void KMReaderWin::readConfig(void)
       fontsizes << mViewer->fontSizes()[i] + diff;
     mViewer->setFontSizes(fontsizes);
   }
-
-#else
-  mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
-  mViewer->setStandardFont(config->readEntry("StandardFont","helvetica"));
-  mViewer->setFixedFont(config->readEntry("FixedFont","courier"));
-#endif
 
   readColorConfig();
 
@@ -801,11 +782,6 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
-#ifdef KRN
-    if (!mMsg->references().isEmpty())
-        mViewer->write(i18n("References: ") +
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<br>");
-#endif
     mViewer->write("<br>");
     break;
 
@@ -827,11 +803,6 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
     mViewer->write(i18n("Date: ")+
                    strToHtml(mMsg->dateStr()) + "<br>\n");
-#ifdef KRN
-    if (!mMsg->references().isEmpty())
-        mViewer->write(i18n("References: ") +
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<br><br>\n");
-#endif
     mViewer->write("</b></td></tr></table><br>\n");
     break;
 
@@ -856,13 +827,6 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (!mMsg->replyTo().isEmpty())
       mViewer->write(i18n("Reply to: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<br>");
-#ifdef KRN
-    if (!mMsg->references().isEmpty())
-        mViewer->write(i18n("References: ")+
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<br>\n");
-    if (!mMsg->groups().isEmpty())
-        mViewer->write(i18n("Groups: ") + mMsg->groups()+"<br>\n");
-#endif
     mViewer->write("<br>\n");
     break;
 

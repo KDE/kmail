@@ -38,11 +38,7 @@ typedef enum
 #define HDR_TRANSPORT 0x200
 #define HDR_ALL      0x3ff
 
-#ifdef KRN
-#define HDR_STANDARD (HDR_SUBJECT|HDR_NEWSGROUPS)
-#else
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
-#endif
 
 
 /** The "about KMail" text. */

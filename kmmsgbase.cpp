@@ -8,9 +8,7 @@
 #include <mimelib/mimepp.h>
 #include <qtextcodec.h>
 #include <qregexp.h>
-#ifndef KRN
 #include <kmfolder.h>
-#endif
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -78,9 +76,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus)
   if (mParent) mParent->msgStatusChanged( mStatus, aStatus );
   mStatus = aStatus;
   mDirty = TRUE;
-#ifndef KRN
   if (mParent) mParent->headerOfMsgChanged(this);
-#endif
 }
 
 
@@ -114,9 +110,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
   }
 
   mDirty = TRUE;
-#ifndef KRN
   if (mParent) mParent->headerOfMsgChanged(this);
-#endif
 }
 
 

@@ -4,15 +4,7 @@
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 
-#ifndef KRN
 #include "kmglobal.h"
-#endif
-
-#ifdef KRN
-#include <kapp.h>
-#include "kbusyptr.h"
-extern KBusyPtr *kbp;
-#endif
 
 #include "kbusyptr.h"
 #include <kapp.h>

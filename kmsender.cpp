@@ -1,11 +1,9 @@
 // kmsender.cpp
 
 
-#ifndef KRN
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
 #include "kmfolder.h"
-#endif
 
 #include "kmsender.h"
 #include "kmmessage.h"
@@ -21,10 +19,6 @@
 #include <kmessagebox.h>
 #include <qregexp.h>
 #include <qdialog.h>
-
-#ifdef KRN
-#include <kapp.h>
-#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -150,7 +144,6 @@ bool KMSender::settingsOk(void) const
 //-----------------------------------------------------------------------------
 bool KMSender::send(KMMessage* aMsg, short sendNow)
 {
-#ifndef KRN
   int rc;
 
   //assert(aMsg != NULL);
@@ -206,9 +199,6 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   kernel->outboxFolder()->close();
 
   return rc;
-#else
-  return true;
-#endif
 }
 
 
@@ -223,7 +213,6 @@ bool KMSender::sendSingleMail( KMMessage*)
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
 {
-#ifndef KRN
   if (!settingsOk()) return FALSE;
 
   if (mSendInProgress)
@@ -251,16 +240,12 @@ bool KMSender::sendQueued(void)
   // start sending the messages
   doSendMsg();
   return TRUE;
-#else
-  return TRUE;
-#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
-#ifndef KRN
   assert(mSendProc != NULL);
   bool someSent = mCurrentMsg;
 
@@ -381,14 +366,12 @@ void KMSender::doSendMsg()
   }
   // Do *not* add code here, after send(). It can happen that this method
   // is called recursively if send() emits the idle signal directly.
-#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMSender::cleanup(void)
 {
-#ifndef KRN
   assert(mSendProc!=NULL);
 
   if (mSendProcStarted) mSendProc->finish();
@@ -408,7 +391,6 @@ void KMSender::cleanup(void)
     kdDebug() << "Done sending messages." << endl;
     kapp->quit();
   }
-#endif
 }
 
 

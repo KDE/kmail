@@ -24,7 +24,7 @@ public:
   /** Straight forward initialization. */
   KMMessage(KMFolder* parent=NULL);
 
-  /** Constructor from a DwMessage. Handy for KRN*/
+  /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);
   
   /** Copy constructor. Does *not* automatically load the message. */
@@ -163,22 +163,7 @@ public:
   virtual void setMsgId(const QString& aStr);
   virtual const QString msgIdMD5(void) const;
 
-  /** Get the groups it should be posted to (Added for krn)*/
-  virtual const QString groups(void) const;
-
-  /** Set the groups to be posted to (Added for krn)*/
-  virtual void setGroups(const QString& aStr);
-
-  /** Get the groups it should followup to (Added for krn)*/
-  virtual const QString followup(void) const;
-
-  /** Set the groups to followup to (Added for krn)*/
-  virtual void setFollowup(const QString& aStr);
-
-  /** Get the references for this message (Added for krn)*/
-  virtual const QString references(void) const;
-
-  /** Set the references for this message (Added for krn)*/
+  /** Set the references for this message */
   virtual void setReferences(const QString& aStr);
 
   /** Returns the message ID, useful for followups (Added for krn)*/
@@ -302,12 +287,6 @@ public:
   virtual void setCodec(QTextCodec* aCodec)
   { mCodec = aCodec; }
    				       
-#ifdef KRN
-  /** Convert a normal References: header into a list of anchors
-   to news URLs for the referred articles. Right now, only for KRN. */
-  static const QString refsAsAnchor(const QString& references);
-#endif
-
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);

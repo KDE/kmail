@@ -10,11 +10,9 @@
 #include "kmreaderwin.h"
 #include "kpgp.h"
 
-#ifndef KRN
 #include "kmfolder.h"
 #include "kmundostack.h"
 #include "kmversion.h"
-#endif
 #include "kmidentity.h"
 
 #include <kapp.h>
@@ -56,7 +54,6 @@ static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
-/* Start functions added for KRN */
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
@@ -66,54 +63,6 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mCodec = NULL;
 }
 
-//-----------------------------------------------------------------------------
-const QString KMMessage::followup(void) const
-{
-  DwHeaders& header = mMsg->Headers();
-  if (header.HasFollowupTo())
-    return decodeRFC2047String(header.FollowupTo().AsString().c_str());
-  else
-  {
-    if (header.HasNewsgroups())
-      return decodeRFC2047String(header.Newsgroups().AsString().c_str());
-    else return "";
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMMessage::setFollowup(const QString& aStr)
-{
-  if (!aStr) return;
-  mMsg->Headers().FollowupTo().FromString(aStr);
-  mNeedsAssembly = TRUE;
-}
-
-//-----------------------------------------------------------------------------
-const QString KMMessage::groups(void) const
-{
-  DwHeaders& header = mMsg->Headers();
-  if (header.HasNewsgroups())
-      return header.Newsgroups().AsString().c_str();
-  else
-      return "";
-}
-
-//-----------------------------------------------------------------------------
-void KMMessage::setGroups(const QString& aStr)
-{
-  if (!aStr) return;
-  mMsg->Headers().Newsgroups().FromString(aStr);
-  mNeedsAssembly = TRUE;
-}
-
-//-----------------------------------------------------------------------------
-const QString KMMessage::references(void) const
-{
-  DwHeaders& header = mMsg->Headers();
-  if (header.HasReferences())
-      return header.References().AsString().c_str();
-  else return "";
-}
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReferences(const QString& aStr)
@@ -122,6 +71,7 @@ void KMMessage::setReferences(const QString& aStr)
   mMsg->Headers().References().FromString(aStr);
   mNeedsAssembly = TRUE;
 }
+
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::id(void) const
@@ -132,41 +82,6 @@ const QString KMMessage::id(void) const
   else
       return "";
 }
-
-//-----------------------------------------------------------------------------
-#ifdef KRN
-const QString KMMessage::refsAsAnchor(const QString& references)
-{
-    QString refsdata=references;
-    QString t,t2,result;
-    int count=1;
-
-    while (1)
-    {
-        int index=refsdata.find('>');
-        if (index==-1)
-        {
-            break;
-            refsdata=refsdata.stripWhiteSpace();
-            refsdata=refsdata.mid(1,refsdata.length()-2);
-            t.setNum(count++);
-            t="<a href=\"news:/"+refsdata+"\">"+t+"</a> ";
-            result+=t;
-        }
-        else
-        {
-            t.setNum(count++);
-            t2=refsdata.left(index+1).stripWhiteSpace();
-            t2=t2.mid(1,t2.length()-2);
-            t="<a href=\"news:/"+t2+"\">"+t+"</a> ";
-            refsdata=refsdata.right(refsdata.length()-index-1);
-            result+=t;
-        }
-    }
-    return result.data();
-}
-#endif
-/* End of functions added by KRN */
 
 
 //-----------------------------------------------------------------------------
@@ -215,6 +130,7 @@ const QString KMMessage::asString(void)
   return mMsg->AsString().c_str();
 }
 
+
 //-----------------------------------------------------------------------------
 void KMMessage::setStatusFields(void)
 {
@@ -227,6 +143,7 @@ void KMMessage::setStatusFields(void)
   setHeaderField("X-Status", str);
 }
 
+
 //----------------------------------------------------------------------------
 const QString KMMessage::headerAsString(void) const
 {
@@ -235,6 +152,7 @@ const QString KMMessage::headerAsString(void) const
     return header.AsString().c_str();
   return "";
 }
+
 
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString& aStr, bool aSetStatus)
@@ -1031,11 +949,7 @@ void KMMessage::initHeader( QString id )
   setSubject("");
   setDateToday();
 
-#ifdef KRN
-  setHeaderField("X-NewsReader", "KRN http://ultra7.unl.edu.ar");
-#else
   setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
-#endif
 // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");
 }
@@ -2102,26 +2016,17 @@ void KMMessage::readConfig(void)
 
   config->setGroup("General");
   int languageNr = config->readNumEntry("reply-current-language",0);
-//  int replyLanguages = config->readNumEntry("reply-languages",1);
 
-  /* Default values added for KRN otherwise createReply() segfaults*/
-  /* They are taken from kmail's dialog */
-
-//  for (int i=0; i<replyLanguages; i++)
+  config->setGroup(QString("KMMessage #%1").arg(languageNr));
   {
-    config->setGroup(QString("KMMessage #%1").arg(languageNr));
-//    if (i == replyLanguages - 1 || config->readEntry("language") == sLanguage)
-    {
-      sReplyLanguage = config->readEntry("language",KGlobal::locale()->language());
-      sReplyStr = config->readEntry("phrase-reply",
-        i18n("On %D, you wrote:"));
-      sReplyAllStr = config->readEntry("phrase-reply-all",
-        i18n("On %D, %F wrote:"));
-      sForwardStr = config->readEntry("phrase-forward",
-        i18n("Forwarded Message"));
-      sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
-//      break;
-    }
+    sReplyLanguage = config->readEntry("language",KGlobal::locale()->language());
+    sReplyStr = config->readEntry("phrase-reply",
+      i18n("On %D, you wrote:"));
+    sReplyAllStr = config->readEntry("phrase-reply-all",
+      i18n("On %D, %F wrote:"));
+    sForwardStr = config->readEntry("phrase-forward",
+      i18n("Forwarded Message"));
+    sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
   }
   config->setGroup("Composer");
   sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');

@@ -30,7 +30,6 @@
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include "kmmessage.h"
-#include "kmwelcomemsg.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath):
@@ -181,39 +180,6 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
       exit(-1);
     }
-
-/*  if (aFolderName == "inbox") {
-      KMMessage *welcomeMessage;
-
-      welcomeMessage = new KMMessage;
-      welcomeMessage->setAutomaticFields();
-      welcomeMessage->setDate(time(NULL));
-      welcomeMessage->setTo(getenv("USER"));
-      welcomeMessage->setReplyTo(i18n("kmail@kde.org"));
-      welcomeMessage->setFrom(i18n("KMail"));
-      welcomeMessage->setSubject(i18n("Welcome to KMail!"));
-      welcomeMessage->setHeaderField("Content-Type","text/plain");
-      welcomeMessage->setCharset( KGlobal::locale()->charset() );
-      QTextCodec *codec = QTextCodec::codecForName( KGlobal::locale()
-        ->charset() );
-      welcomeMessage->setContentTransferEncodingStr("8-bit");
-      welcomeMessage->setBody(codec->fromUnicode(i18n(KM_WelcomeMsg)));
-      welcomeMessage->setStatus(KMMsgStatusNew);
-
-      switch(kernel->filterMgr()->process(welcomeMessage)) {
-      case 2:
-        KMessageBox::error(0,(i18n("Error: Unable to create welcome mail.")));
-        break;
-      case 1:
-        if (folder->addMsg(welcomeMessage)) {
-          KMessageBox::error(0,(i18n("Error: Unable to create welcome mail.")));
-        }
-        break;
-      case 0:
-      default:
-        break;
-      }
-    } */
   }
   return folder;
 }
