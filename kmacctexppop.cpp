@@ -558,6 +558,9 @@ void KMAcctExpPop::startJob() {
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
   if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
+  url.setPath(QString("/index"));
+  job = KIO::get( url.url(), false, false );
+  connectJob();
 }
 
 void KMAcctExpPop::slotJobFinished() {
@@ -615,6 +618,8 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Quit) {
     kdDebug() << "stage == Quit" << endl;
     job = 0L;
+    if (slave) KIO::Scheduler::disconnectSlave(slave);
+    slave = NULL;
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
@@ -765,8 +770,9 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   }
   else {
     stage = Idle;
-    job->kill();
+    if (job) job->kill();
     job = 0L;
+    slave = 0L;
     KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
                           i18n("Invalid response from server"));
     return;
@@ -775,6 +781,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 
 void KMAcctExpPop::slotResult( KIO::Job* )
 {
+  if (!job) return;
   if ( job->error() )
   {
     if (interactive) {
@@ -806,9 +813,9 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
 
 void KMAcctExpPop::slotSlaveConnected(KIO::Slave *aSlave)
 {
-  if (aSlave != slave) return;
+/*  if (aSlave != slave) return;
   KURL url = getUrl();
   url.setPath(QString("/index"));
   job = KIO::get( url.url(), false, false );
-  connectJob();
+  connectJob(); */
 }
