@@ -1241,6 +1241,7 @@ void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
   KMFolderTreeInherited::contentsMousePressEvent( f );
   // Force current item to be selected for some reason in certain weird
   // circumstances this is not always the case
+  delete f;
 
   if (currentItem())
     setSelected( currentItem(), true );
@@ -1255,6 +1256,7 @@ void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
                                    e->button(),
                                    b );
   KMFolderTreeInherited::contentsMouseReleaseEvent( f );
+  delete f;
 }
 
 void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
