@@ -3999,6 +3999,14 @@ void MiscPage::AddressbookTab::apply() {
 
 
 
+QString pluginNameToNumberedItem( QString name, int number )
+{
+    QString item = QString("   %1. ").arg( number );
+    item += name;
+    item += "    ";
+    return item;
+}
+
 QString PluginPage::iconLabel() {
   return i18n("Plugins");
 }
@@ -4035,7 +4043,10 @@ PluginPage::PluginPage( CryptPlugWrapperList* cryptPlugList,
     _dirservicesPage = new DirServicesPage( this );
     addTab( _dirservicesPage, i18n("&Directory Services") );
 
-    slotPlugSelectionChanged();
+    connect( mTabWidget, SIGNAL(currentChanged( QWidget * )),
+             this, SLOT(slotCurrentPlugInTabPageChanged( QWidget * )) );
+    
+    //slotPlugSelectionChanged();
 }
 
 
@@ -4066,6 +4077,66 @@ void PluginPage::apply()
 }
 
 
+void PluginPage::slotCurrentPlugInTabPageChanged( QWidget * page )
+{
+    // Find the combo box of the tab page we are going to enter
+    QComboBox* pCBox = 0;
+    if( _certificatesPage == page )
+        pCBox = _certificatesPage->plugListBoxCertConf;
+    else if( _signaturePage == page )
+        pCBox = _signaturePage->plugListBoxSignConf;
+    else if( _encryptionPage == page )
+        pCBox = _encryptionPage->plugListBoxEncryptConf;
+    else if( _dirservicesPage == page )
+        pCBox = _dirservicesPage->plugListBoxDirServConf;
+    // adjust or insert the plug in names in this tab page's combo box
+    if( pCBox ) {
+        pCBox->clear();
+        if( _generalPage->currentPlugItem ) {
+            // adjust or insert the plug in names in this tab page's combo box
+            int numEntry = _generalPage->plugList->childCount();
+            QListViewItem *item = _generalPage->plugList->firstChild();
+            int i = 0;
+            int curI = -1;
+            for (i = 0; i < numEntry; ++i) {
+                QString itemTxt( pluginNameToNumberedItem( item->text(0), 1+i ) );
+                if( i < pCBox->count() )
+                    pCBox->changeItem( itemTxt, i );
+                else
+                    pCBox->insertItem( itemTxt );
+                if( item == _generalPage->currentPlugItem )
+                    curI = i;
+                item = item->nextSibling();
+            }
+            if( -1 < curI ) {
+                pCBox->setCurrentItem( curI );
+                // Changes made?
+                CryptPlugWrapper* wrapper = mCryptPlugList->at( curI );
+                if( ! ( wrapper &&
+                        (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
+                        (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
+                        (wrapper->updateURL()   == _generalPage->currentPlugItem->text(2)) &&
+                        isPluginConfigEqual( curI ) ) ) {
+                    if( KMessageBox::questionYesNo( this, i18n( "Do you want to save\nany changes you might have made\nto the previous plugin configuration?" ),
+                                                    i18n( "Save Plugin Configuration" ) ) == KMessageBox::Yes ) {
+                        _generalPage->savePluginsConfig( false );
+                        savePluginConfig( curI );
+                        // Enable/disable the fields in the dialog pages
+                        // according to the plugin capabilities.
+                        if( _signaturePage && _signaturePage->sigDialog )
+                            _signaturePage->sigDialog->enableDisable( wrapper );
+                        if( _encryptionPage && _encryptionPage->encDialog )
+                            _encryptionPage->encDialog->enableDisable( wrapper );
+                        if( _dirservicesPage && _dirservicesPage->dirservDialog )
+                            _dirservicesPage->dirservDialog->enableDisable( wrapper );
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 void PluginPage::slotPlugSelectionChanged()
 {
     if( _generalPage->plugList->selectedItem() != _generalPage->currentPlugItem ) {
@@ -4081,13 +4152,19 @@ void PluginPage::slotPlugSelectionChanged()
                 ++lvit;
                 if( current == _generalPage->currentPlugItem )
                     break;
-                pos++;
+                ++pos;
             }
 
             // Changes made?
-            if( !isPluginConfigEqual( pos ) ) {
+            CryptPlugWrapper* wrapper = mCryptPlugList->at( pos );
+            if( ! ( wrapper &&
+                    (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
+                    (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
+                    (wrapper->updateURL()   == _generalPage->currentPlugItem->text(2)) &&
+                    isPluginConfigEqual( pos ) ) ) {
                 if( KMessageBox::questionYesNo( this, i18n( "Do you want to save\nany changes you might have made\nto the previous plugin configuration?" ),
                                                 i18n( "Save Plugin Configuration" ) ) == KMessageBox::Yes ) {
+                    _generalPage->savePluginsConfig( false );
                     savePluginConfig( pos );
                 }
             } else
@@ -4628,7 +4705,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     return ret;
 }
 
-
+  
 void PluginPage::savePluginConfig( int pluginno )
 {
     if ( mCryptPlugList->isEmpty() )
@@ -4644,6 +4721,26 @@ void PluginPage::savePluginConfig( int pluginno )
     // Set the right config group
     config->setGroup( QString( "CryptPlug #%1" ).arg( pluginno ) );
 
+    
+/*    
+            int numEntry = _generalPage->plugList->childCount();
+            QListViewItem *item = _generalPage->plugList->firstChild();
+            int i = 0;
+            int curI = -1;
+            for (i = 0; i < numEntry; ++i) {
+                QString itemTxt( pluginNameToNumberedItem( item->text(0), 1+i ) );
+         wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
+        if( ! wrapper->displayName().isEmpty() ) {
+            QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
+            _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
+            _pluginPage->_signaturePage->plugListBoxSignConf->insertItem(    item );
+            _pluginPage->_encryptionPage->plugListBoxEncryptConf->insertItem( item );
+            _pluginPage->_dirservicesPage->plugListBoxDirServConf->insertItem( item );
+
+*/
+    
+    
+    
     // The signature tab - everything here needs to be written both
     // into config and into the crypt plug wrapper.
 
@@ -4975,7 +5072,6 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
     this, SLOT(slotPlugUpdateURLChanged(const QString&)) );
 }
 
-
 void GeneralPage::setup()
 {
     KConfig *config = kapp->config();
@@ -4991,9 +5087,7 @@ void GeneralPage::setup()
     for( CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->first(); wrapper;
          wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
         if( ! wrapper->displayName().isEmpty() ) {
-            QString item = QString("   %1. ").arg(1+i);
-            item += wrapper->displayName();
-            item += "    ";
+            QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
             _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
             _pluginPage->_signaturePage->plugListBoxSignConf->insertItem(    item );
             _pluginPage->_encryptionPage->plugListBoxEncryptConf->insertItem( item );
@@ -5023,33 +5117,63 @@ void GeneralPage::setup()
 
 void GeneralPage::apply()
 {
-      // The "General" tab (lists the plugins)
-      int numValidEntry = 0;
-      int numEntry = plugList->childCount();
-      QListViewItem *item = plugList->firstChild();
-      KConfig* config = kapp->config();
-      for (int i = 0; i < numEntry; ++i) {
-          KConfigGroupSaver saver(config, QString("CryptPlug #%1").arg(i));
-          if( ! item->text(0).isEmpty() ) {
-              config->writeEntry( "name",     item->text(0) );
-              config->writeEntry( "location", item->text(1) );
-              config->writeEntry( "updates",  item->text(2) );
-              config->writeEntry( "active",
-                                  0 < item->text(3).length() ? "1" : "0" );
-              numValidEntry++;
-          }
-          item = item->nextSibling();
-      }
-      config->setGroup( "General" );
-      config->writeEntry("crypt-plug-count", numValidEntry );
+    // Save the "General" tab
+    savePluginsConfig( true );
+      
+    // Find the number of the current plugin.
+    int currentPlugin = _pluginPage->_signaturePage->plugListBoxSignConf->currentItem();
+    Q_ASSERT( currentPlugin == _pluginPage->_certificatesPage->plugListBoxCertConf->currentItem() );
+    Q_ASSERT( currentPlugin == _pluginPage->_encryptionPage->plugListBoxEncryptConf->currentItem() );
+    Q_ASSERT( currentPlugin == _pluginPage->_dirservicesPage->plugListBoxDirServConf->currentItem() );
 
-      // Find the number of the current plugin.
-      int currentPlugin = _pluginPage->_signaturePage->plugListBoxSignConf->currentItem();
-      Q_ASSERT( currentPlugin == _pluginPage->_certificatesPage->plugListBoxCertConf->currentItem() );
-      Q_ASSERT( currentPlugin == _pluginPage->_encryptionPage->plugListBoxEncryptConf->currentItem() );
-      Q_ASSERT( currentPlugin == _pluginPage->_dirservicesPage->plugListBoxDirServConf->currentItem() );
+    _pluginPage->savePluginConfig( currentPlugin );
+}
 
-      _pluginPage->savePluginConfig( currentPlugin );
+
+void GeneralPage::savePluginsConfig( bool silent )
+{
+    // The "General" tab (lists the plugins)
+    int numValidEntry = 0;
+    int numEntry = plugList->childCount();
+    QListViewItem *item = plugList->firstChild();
+    KConfig* config = kapp->config();
+    for (int i = 0; i < numEntry; ++i) {
+        KConfigGroupSaver saver(config,
+                                QString("CryptPlug #%1").arg( numValidEntry ));
+        if( ! item->text(0).isEmpty() ) {
+            bool isActive = 0 < item->text(3).length();
+            config->writeEntry( "name",     item->text(0) );
+            config->writeEntry( "location", item->text(1) );
+            config->writeEntry( "updates",  item->text(2) );
+            config->writeEntry( "active",   isActive ? "1" : "0" );
+            if( _pluginPage && _pluginPage->mCryptPlugList ) {
+                CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->at( numValidEntry );
+                if( wrapper ) {
+                    wrapper->setDisplayName( item->text(0) );
+                    if( wrapper->libName() != item->text(1) ) {
+                        wrapper->deinitialize();
+                        wrapper->setLibName( item->text(1) );
+                        CryptPlugWrapper::InitStatus status;
+                        QString errorMsg;
+                        wrapper->initialize(&status, &errorMsg);
+                        if( CryptPlugWrapper::InitStatus_Ok != status ) {
+                            if( !silent )
+                                _pluginPage->mCryptPlugList->showPluginInitError( wrapper, status, errorMsg );
+                            currentPlugItem->setText(4, "");
+                        } else {
+                            currentPlugItem->setText(4, "*");
+                        }
+                    }
+                    wrapper->setUpdateURL( item->text(2) );
+                    wrapper->setActive( isActive ? true : false );
+                }
+            }
+            numValidEntry++;
+        }
+        item = item->nextSibling();
+    }
+    config->setGroup( "General" );
+    config->writeEntry("crypt-plug-count", numValidEntry );
 }
 
 
@@ -5062,19 +5186,25 @@ void GeneralPage::installProfile( KConfig* /*profile*/ )
 
 void GeneralPage::slotPlugNameChanged( const QString &text )
 {
-  if( currentPlugItem != 0 )
+  if( !currentPlugItem )
+    currentPlugItem = plugList->lastItem();
+  if( currentPlugItem )
     currentPlugItem->setText(0, text );
 }
 
 void GeneralPage::slotPlugLocationChanged( const QString &text )
 {
-  if( currentPlugItem != 0 )
+  if( !currentPlugItem )
+    currentPlugItem = plugList->lastItem();
+  if( currentPlugItem )
     currentPlugItem->setText(1, text );
 }
 
 void GeneralPage::slotPlugUpdateURLChanged( const QString &text )
 {
-  if( currentPlugItem != 0 )
+  if( !currentPlugItem )
+    currentPlugItem = plugList->lastItem();
+  if( currentPlugItem )
     currentPlugItem->setText(2, text );
 }
 

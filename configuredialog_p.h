@@ -864,7 +864,6 @@ public:
 
 private slots:
     void slotStartCertManager();
-
 private:
     PluginPage* _pluginPage;
     QComboBox* plugListBoxCertConf;
@@ -925,6 +924,7 @@ public:
     GeneralPage( PluginPage* parent = 0, const char* name = 0 );
     void setup();
     void apply();
+    void savePluginsConfig( bool silent );
     void installProfile( KConfig* profile );
 
 public slots:
@@ -934,7 +934,7 @@ public slots:
     void slotPlugNameChanged( const QString& );
     void slotPlugLocationChanged( const QString& );
     void slotPlugUpdateURLChanged( const QString& );
-
+    
 private:
     PluginPage* _pluginPage;
     QListView* plugList;
@@ -965,10 +965,11 @@ public:
 
   void savePluginConfig( int pluginno );
   bool isPluginConfigEqual( int pluginno ) const;
-
+  
 public slots:
   void slotPlugListBoxConfigurationChanged( int );
   void slotPlugSelectionChanged();
+  void slotCurrentPlugInTabPageChanged( QWidget * );
 
 private:
   GeneralPage* _generalPage;
