@@ -4,7 +4,7 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
-#define DEFAULT_EDITOR_STR "kwrite %f"
+#define DEFAULT_EDITOR_STR "kate %f"
 
 
 #include "kmheaders.h"

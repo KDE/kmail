@@ -3,7 +3,7 @@
 // This code is published under the GPL.
 
 // keep this in sync with the define in configuredialog.h
-#define DEFAULT_EDITOR_STR "kwrite %f"
+#define DEFAULT_EDITOR_STR "kate %f"
 
 #undef GrayScale
 #undef Color
