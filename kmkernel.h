@@ -45,7 +45,6 @@ class KMMainWin;
 class KMainWindow;
 class KMGroupware;
 class KMailICalIfaceImpl;
-class CryptPlugWrapperList;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
