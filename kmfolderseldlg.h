@@ -19,9 +19,9 @@ namespace KMail {
   class SimpleFolderTree : public KListView
   {
     public:
-      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree, 
-                        const QString & preSelection );
-      
+      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree,
+                        const QString & preSelection, bool mustBeReadWrite );
+
       const KMFolder * folder() const;
   };
 
@@ -34,8 +34,10 @@ class KMFolderSelDlg: public KDialogBase
 
 public:
   /** Constructor. @p parent @em must be a @ref KMMainWin, because we
-      need it's foldertree. */
-  KMFolderSelDlg( KMMainWidget * parent, const QString& caption );
+      need its foldertree.
+   * @param mustBeReadWrite if true, readonly folders are disabled
+   */
+  KMFolderSelDlg( KMMainWidget * parent, const QString& caption, bool mustBeReadWrite );
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */

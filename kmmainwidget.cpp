@@ -1376,7 +1376,7 @@ void KMMainWidget::slotToggleTotalColumn()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMoveMsg()
 {
-  KMFolderSelDlg dlg(this,i18n("Move Message to Folder"));
+  KMFolderSelDlg dlg( this, i18n("Move Message to Folder"), true );
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -1457,7 +1457,7 @@ void KMMainWidget::slotStartWatchGnuPG()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCopyMsg()
 {
-  KMFolderSelDlg dlg(this,i18n("Copy Message to Folder"));
+  KMFolderSelDlg dlg( this, i18n("Copy Message to Folder"), true );
   KMFolder* dest;
 
   if (!dlg.exec()) return;

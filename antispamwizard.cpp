@@ -126,7 +126,7 @@ void AntiSpamWizard::accept()
                   << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
-  
+
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
   QValueListIterator<SpamToolConfig> it = mToolList.begin();
@@ -170,7 +170,7 @@ void AntiSpamWizard::accept()
       KMFilterAction* virusFilterAction2 = dict["set status"]->create();
       virusFilterAction2->argsFromString( "R" ); // Read
       virusFilterActions->append( virusFilterAction2 );
-    }   
+    }
     KMSearchPattern* virusFilterPattern = virusFilter->pattern();
     virusFilterPattern->setName( i18n( "Virus handling" ) );
     virusFilterPattern->setOp( KMSearchPattern::OpOr );
@@ -460,7 +460,7 @@ void AntiSpamWizard::checkProgramsSelections()
   }
 
   mSpamRulesPage->allowClassification( canClassify );
-  
+
   removePage( mSpamRulesPage );
   removePage( mVirusRulesPage );
   if ( mSpamToolsUsed )
@@ -501,7 +501,7 @@ void AntiSpamWizard::checkVirusRulesSelections()
   if ( anyVirusOptionChecked() )
     setFinishEnabled( mVirusRulesPage, true );
   else
-    setFinishEnabled( mVirusRulesPage, 
+    setFinishEnabled( mVirusRulesPage,
                       anySpamOptionChecked() && mSpamToolsUsed );
 }
 
@@ -825,7 +825,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             "default folder is the trash folder, but you may change that "
             "in the folder view.") );
   grid->addWidget( mMoveRules, 2, 0 );
-  
+
   mMarkRules = new QCheckBox( i18n("Additionally, mark detected spam messages as read"), this );
   mMarkRules->setEnabled( false );
   QWhatsThis::add( mMarkRules,
@@ -833,9 +833,9 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             "spam as read, as well as moving them to the selected "
             "folder.") );
   grid->addWidget( mMarkRules, 3, 0 );
-  
+
   QString s = "trash";
-  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
+  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s, true );
   grid->addWidget( mFolderTree, 4, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
@@ -921,7 +921,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "default folder is the trash folder, but you may change that "
             "in the folder view.") );
   grid->addWidget( mMoveRules, 1, 0 );
-  
+
   mMarkRules = new QCheckBox( i18n("Additionally, mark detected viral messages as read"), this );
   mMarkRules->setEnabled( false );
   QWhatsThis::add( mMarkRules,
@@ -929,9 +929,9 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "virus-infected as read, as well as moving them "
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
-  
+
   QString s = "trash";
-  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
+  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s, true );
   grid->addWidget( mFolderTree, 3, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),

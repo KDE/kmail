@@ -56,7 +56,8 @@ FolderItem::FolderItem( QListViewItem * listViewItem, QListViewItem * afterListV
 //-----------------------------------------------------------------------------
 SimpleFolderTree::SimpleFolderTree( QWidget * parent,
                                     KMFolderTree * folderTree,
-                                    const QString & preSelection )
+                                    const QString & preSelection,
+                                    bool mustBeReadWrite )
   : KListView( parent )
 {
   assert( folderTree );
@@ -121,9 +122,9 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
     item->setText( columnIdx, fti->text( 0 ) );
     // Make items without folders and top level items unselectable
     // (i.e. root item Local Folders and IMAP accounts)
-    if ( !fti->folder() || depth == 0 )
+    if ( !fti->folder() || depth == 0 || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
       item->setSelectable( false );
-    else {
+    } else {
       item->setFolder( fti->folder() );
       if ( preSelection == item->folder()->idString() )
         selectedItem = item;
@@ -153,7 +154,7 @@ const KMFolder * SimpleFolderTree::folder() const
 
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
+KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, bool mustBeReadWrite )
   : KDialogBase( parent, "folder dialog", true, caption,
                  Ok|Cancel, Ok, true ) // mainwin as parent, modal
 {
@@ -161,7 +162,8 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
   assert( ft );
 
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
-                                           GlobalSettings::lastSelectedFolder() );
+                                           GlobalSettings::lastSelectedFolder(),
+                                           mustBeReadWrite );
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
