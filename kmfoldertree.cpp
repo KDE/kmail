@@ -119,7 +119,8 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
 
   addAcceptableDropMimetype("x-kmail-drag/message", false);
 
-  addColumn( i18n("Folder"), 160 );
+  int namecol = addColumn( i18n("Folder"), 160 );
+  header()->setStretchEnabled( true, namecol );
 
   if (!pixmapsLoaded)
   {
