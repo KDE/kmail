@@ -3006,8 +3006,8 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 	  const KPIM::Identity & id = kmkernel->identityManager()
 	    ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
 	  KMessageBox::information(0, i18n("The custom drafts folder for identity "
-					   "\"%1\" doesn't exist (anymore). "
-					   "Therefore the default drafts folder "
+					   "\"%1\" does not exist (anymore); "
+					   "therefore, the default drafts folder "
 					   "will be used.")
 				   .arg( id.identityName() ) );
 	}

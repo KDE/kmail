@@ -180,9 +180,9 @@ namespace KMail {
 
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to digitally sign messages. You can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail won't be able "
-               "to digitally sign emails using OpenPGP. "
-	       "Normal mail functions won't be affected.</p>"
+               "<p>You can leave this blank, but KMail will not be able "
+               "to digitally sign emails using OpenPGP; "
+	       "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
     label = new QLabel( mPGPSigningKeyRequester, i18n("OpenPGP signing key:"), tab );
@@ -206,9 +206,9 @@ namespace KMail {
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Public Key\" "
 	       "feature in the composer. You can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail won't be able "
-               "to encrypt copies of outgoing messages to you using OpenPGP. "
-	       "Normal mail functions won't be affected.</p>"
+               "<p>You can leave this blank, but KMail will not be able "
+               "to encrypt copies of outgoing messages to you using OpenPGP; "
+	       "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
     label = new QLabel( mPGPEncryptionKeyRequester, i18n("OpenPGP encryption key:"), tab );
     QWhatsThis::add( mPGPEncryptionKeyRequester, msg );
@@ -229,9 +229,9 @@ namespace KMail {
 
     msg = i18n("<qt><p>The S/MIME (X.509) certificate you choose here will be used "
                "to digitally sign messages.</p>"
-               "<p>You can leave this blank, but KMail won't be able "
-               "to digitally sign emails using S/MIME. "
-	       "Normal mail functions won't be affected.</p></qt>");
+               "<p>You can leave this blank, but KMail will not be able "
+               "to digitally sign emails using S/MIME; "
+	       "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( mSMIMESigningKeyRequester, i18n("S/MIME signing certificate:"), tab );
     QWhatsThis::add( mSMIMESigningKeyRequester, msg );
     QWhatsThis::add( label, msg );
@@ -257,9 +257,9 @@ namespace KMail {
     msg = i18n("<qt><p>The S/MIME certificate you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Certificate\" "
 	       "feature in the composer.</p>"
-               "<p>You can leave this blank, but KMail won't be able "
-               "to encrypt copies of outgoing messages to you using S/MIME. "
-	       "Normal mail functions won't be affected.</p></qt>");
+               "<p>You can leave this blank, but KMail will not be able "
+               "to encrypt copies of outgoing messages to you using S/MIME; "
+	       "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( mSMIMEEncryptionKeyRequester, i18n("S/MIME encryption certificate:"), tab );
     QWhatsThis::add( mSMIMEEncryptionKeyRequester, msg );
     QWhatsThis::add( label, msg );

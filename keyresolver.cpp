@@ -915,11 +915,11 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     if ( d->mOpenPGPEncryptToSelfKeys.empty() ) {
       const QString msg = i18n("Examination of recipient's encryption preferences "
 			       "yielded that the message should be encrypted using "
-			       "OpenPGP, at least for some recipients.\n"
-			       "However, you have not configured valid trusted "
+			       "OpenPGP, at least for some recipients;\n"
+			       "however, you have not configured valid trusted "
 			       "OpenPGP encryption keys for this identity.\n"
 			       "You may continue without encrypting to yourself, "
-			       "but be aware that you won't be able to read your "
+			       "but be aware that you will not be able to read your "
 			       "own messages if you do so.");
       if ( KMessageBox::warningContinueCancel( 0, msg,
 					       i18n("Unusable Encryption Keys"),
@@ -942,11 +942,11 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
       // don't have one
       const QString msg = i18n("Examination of recipient's encryption preferences "
 			       "yielded that the message should be encrypted using "
-			       "S/MIME, at least for some recipients.\n"
-			       "However, you have not configured valid "
+			       "S/MIME, at least for some recipients;\n"
+			       "however, you have not configured valid "
 			       "S/MIME encryption certificates for this identity.\n"
 			       "You may continue without encrypting to yourself, "
-			       "but be aware that you won't be able to read your "
+			       "but be aware that you will not be able to read your "
 			       "own messages if you do so.");
       if ( KMessageBox::warningContinueCancel( 0, msg,
 					       i18n("Unusable Encryption Keys"),
@@ -972,8 +972,8 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
        && d->mOpenPGPSigningKeys.empty() ) {
     const QString msg = i18n("Examination of recipient's signing preferences "
 			     "yielded that the message should be signed using "
-			     "OpenPGP, at least for some recipients.\n"
-			     "However, you have not configured valid "
+			     "OpenPGP, at least for some recipients;\n"
+			     "however, you have not configured valid "
 			     "OpenPGP signing certificates for this identity.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
@@ -988,8 +988,8 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForEncryption() {
        && d->mSMIMESigningKeys.empty() ) {
     const QString msg = i18n("Examination of recipient's signing preferences "
 			     "yielded that the message should be signed using "
-			     "S/MIME, at least for some recipients.\n"
-			     "However, you have not configured valid "
+			     "S/MIME, at least for some recipients;\n"
+			     "however, you have not configured valid "
 			     "S/MIME signing certificates for this identity.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Unusable Signing Keys"),
@@ -1178,7 +1178,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
   // show a warning if the user didn't select an encryption key for
   // herself:
   if ( encryptToSelf() && senderKeys.empty() ) {
-    const QString msg = i18n("You didn't select an encryption key for yourself "
+    const QString msg = i18n("You did not select an encryption key for yourself "
 			     "(encrypt to self). You will not be able to decrypt "
 			     "your own message if you encrypt it.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
@@ -1199,11 +1199,11 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
   if ( items.size() == emptyListCount  ) {
     const QString msg = ( d->mPrimaryEncryptionKeys.size() +
 			  d->mSecondaryEncryptionKeys.size() == 1 )
-                  ? i18n("You didn't select an encryption key for the "
-                         "recipient of this message. Therefore the message "
+                  ? i18n("You did not select an encryption key for the "
+                         "recipient of this message; therefore, the message "
                          "will not be encrypted.")
-                  : i18n("You didn't select an encryption key for any of the "
-                         "recipients of this message. Therefore the message "
+                  : i18n("You did not select an encryption key for any of the "
+                         "recipients of this message; therefore, the message "
                          "will not be encrypted.");
     if ( KMessageBox::warningContinueCancel( 0, msg,
 					     i18n("Missing Key Warning"),
@@ -1212,11 +1212,11 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
       return Kpgp::Canceled;
   } else if ( emptyListCount > 0 ) {
     const QString msg = ( emptyListCount == 1 )
-                  ? i18n("You didn't select an encryption key for one of "
-                         "the recipients. This person will not be able to "
+                  ? i18n("You did not select an encryption key for one of "
+                         "the recipients: this person will not be able to "
                          "decrypt the message if you encrypt it.")
-                  : i18n("You didn't select encryption keys for some of "
-                         "the recipients. These persons will not be able to "
+                  : i18n("You did not select encryption keys for some of "
+                         "the recipients: these persons will not be able to "
                          "decrypt the message if you encrypt it." );
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
