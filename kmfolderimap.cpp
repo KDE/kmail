@@ -176,7 +176,7 @@ void KMFolderImap::writeConfig()
 //-----------------------------------------------------------------------------
 void KMFolderImap::remove()
 {
-  if (mAlreadyRemoved) {
+  if (mAlreadyRemoved || !mAccount) {
     // override
     FolderStorage::remove();
     return;
@@ -566,16 +566,16 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 //  kdDebug(5006) << name() << ": " << mSubfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
 //    << ", createinbox:" << mAccount->createInbox() << ", hasinbox:" << mAccount->hasInbox() << endl;
   // don't react on changes
-  kmkernel->imapFolderMgr()->quiet(TRUE);
+  kmkernel->imapFolderMgr()->quiet(true);
   if (it_inboxOnly) {
     // list again only for the INBOX
-    listDirectory(TRUE);
+    listDirectory(true);
   } else {
     if ( folder()->isSystemFolder() && mImapPath == "/INBOX/"
         && mAccount->prefix() == "/INBOX/" )
     {
       // do not create folders under INBOX
-      mAccount->setCreateInbox(FALSE);
+      mAccount->setCreateInbox(false);
       mSubfolderNames.clear();
     }
     folder()->createChildFolder();
@@ -604,7 +604,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
         if (!node->isDir() && node->name() == "INBOX") break;
       if (node) f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
       else f = static_cast<KMFolderImap*>
-        (folder()->child()->createFolder("INBOX", TRUE)->storage());
+        (folder()->child()->createFolder("INBOX", true)->storage());
       f->setAccount(mAccount);
       f->setImapPath("/INBOX/");
       f->setLabel(i18n("inbox"));
@@ -612,7 +612,6 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       // so we have an INBOX
       mAccount->setCreateInbox( false );
       mAccount->setHasInbox( true );
-      f->listDirectory();
       kmkernel->imapFolderMgr()->contentsChanged();
     }
     for (uint i = 0; i < mSubfolderNames.count(); i++)
@@ -624,7 +623,8 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       for (node = folder()->child()->first(); node;
            node = folder()->child()->next())
         if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
-      if (node) f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+      if (node) 
+        f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
       else {
         f = static_cast<KMFolderImap*>
           (folder()->child()->createFolder(mSubfolderNames[i])->storage());
@@ -649,7 +649,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     }
   }
   // now others should react on the changes
-  kmkernel->imapFolderMgr()->quiet(FALSE);
+  kmkernel->imapFolderMgr()->quiet(false);
 }
 
 //-----------------------------------------------------------------------------
