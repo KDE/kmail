@@ -781,10 +781,10 @@ QString KpgpBase5::getAsciiPublicKey(QString _person) {
   QString toexec;
   toexec.sprintf("pgpk -xa \"%s\"", _person.data());
 
-  debug("running %s", toexec.data());
+  //debug("running %s", toexec.data());
   status = run(toexec.data());
   if(status == RUN_ERR) return 0;
-  debug("okay");
+  //debug("okay");
 
   return output;
 }
