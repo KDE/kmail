@@ -312,9 +312,10 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( int id, KMMsgBase *msg, const KMPaintInfo *paintInfo, int column)
+  static QString generate_key( int id, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
   {
-    QString ret = QString("%1") .arg( (char)column );
+    int column = sortOrder & ((1 << 5) - 1);
+    QString ret = QString("%1") .arg( (char)sortOrder );
     QString sortArrival = QString( "%1" ).arg( id, 8, 36 );
     if (column == paintInfo->dateCol) {
       if (paintInfo->orderOfArrival)
@@ -348,13 +349,19 @@ public:
 
   virtual QString key( int column, bool /*ascending*/ ) const
   {
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    int sortOrder = column |= (1 << 5);
+    if (headers->mPaintInfo.orderOfArrival)
+      sortOrder |= (1 << 7);
+    if (headers->mPaintInfo.status)
+      sortOrder |= (1 << 6);
     //This code should stay pretty much like this, if you are adding new
     //columns put them in generate_key
-    if(mKey.isEmpty() || mKey[0] != (char)column) {
+    if(mKey.isEmpty() || mKey[0] != (char)sortOrder) {
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
       return ((KMHeaderItem *)this)->mKey =
 	generate_key(mMsgId, headers->folder()->getMsgBase( mMsgId ),
-		     headers->paintInfo(), column);
+		     headers->paintInfo(), sortOrder);
     }	
     return mKey;
   }
@@ -2650,7 +2657,7 @@ bool KMHeaders::writeSortOrder()
 void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {
+  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {      
     KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
     int parent_id = -2; //no parent, top level
     if(khi->parent())
