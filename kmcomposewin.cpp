@@ -615,13 +615,13 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
   if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-Mail Folder:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sent-Mail Fol&der:"),
 		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
 		    mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) fromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
-  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("Fro&m:"),
+  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
 		    mLblFrom, mEdtFrom, mBtnFrom);
   if (!fromSlot) replyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
@@ -766,7 +766,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
-  (void) new KAction (i18n("&Addressbook..."), "contents",0,
+  (void) new KAction (i18n("Address &Book..."), "contents",0,
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addresbook");
   (void) new KAction (i18n("&New Composer..."), "filenew",
@@ -792,7 +792,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
-  fixedFontAction = new KToggleAction( i18n("Fixed Font Widths"), 0, this,
+  fixedFontAction = new KToggleAction( i18n("Fixed Font &Widths"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
 
   //these are checkable!!!
@@ -804,12 +804,6 @@ void KMComposeWin::setupActions(void)
                                               "confirm_delivery");
   confirmReadAction = new KToggleAction (i18n("Confirm &Read"), 0,
                                          actionCollection(), "confirm_read");
-//this is obsolete now, we use a pulldown menu
-#if defined CHARSETS
-  (void) new KAction (i18n("&Charsets..."), 0, this, SLOT(slotConfigureCharsets()),
-                      actionCollection(), "charsets");
-#endif
-
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Set &Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
@@ -831,7 +825,7 @@ void KMComposeWin::setupActions(void)
   identityAction = new KToggleAction (i18n("&Identity"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_identity");
-  fccAction = new KToggleAction (i18n("Sen&t-Mail Folder"), 0, this,
+  fccAction = new KToggleAction (i18n("Sent-Mail F&older"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
   transportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
@@ -863,7 +857,7 @@ void KMComposeWin::setupActions(void)
   attachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()),
                            actionCollection(), "attach_public_key");
-  attachMPK = new KAction (i18n("Attach My &Public Key"), 0, this,
+  attachMPK = new KAction (i18n("Attach &My Public Key"), 0, this,
                            SLOT(slotInsertMyPublicKey()),
                            actionCollection(), "attach_my_public_key");
   (void) new KAction (i18n("&Attach File..."), "attach",
@@ -888,10 +882,10 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
 
-  encryptAction = new KToggleAction (i18n("Encrypt Message"),
+  encryptAction = new KToggleAction (i18n("&Encrypt Message"),
                                      "decrypted", 0,
                                      actionCollection(), "encrypt_message");
-  signAction = new KToggleAction (i18n("Sign Message"),
+  signAction = new KToggleAction (i18n("&Sign Message"),
                                   "signature", 0,
                                   actionCollection(), "sign_message");
 

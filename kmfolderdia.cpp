@@ -75,9 +75,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QHBoxLayout *ml = new QHBoxLayout( mtGroup->layout() );
   ml->setSpacing( 6 );
 
-  QLabel *label_type = new QLabel( i18n("Mailbox Format:" ), mtGroup );
+  QLabel *label_type = new QLabel( i18n("&Mailbox format:" ), mtGroup );
   ml->addWidget( label_type );
   mailboxType = new QComboBox(mtGroup);
+  label_type->setBuddy( mailboxType );
   mailboxType->insertItem("mbox", 0);
   mailboxType->insertItem("maildir", 1);
   {
@@ -132,7 +133,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mlLayout->setColStretch(0, 1);
   mlLayout->setColStretch(1, 100);
 
-  label = new QLabel( i18n("&Post Address:"), mlGroup );
+  label = new QLabel( i18n("&Post address:"), mlGroup );
+  label->setEnabled(false);
+  QObject::connect( holdsMailingList, SIGNAL(toggled(bool)),
+		    label, SLOT(setEnabled(bool)) );
   mlLayout->addWidget( label, 1, 0 );
   mailingListPostAddress = new QLineEdit( mlGroup );
   label->setBuddy( mailingListPostAddress );
@@ -148,13 +152,16 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   expLayout->setSpacing(6);
 
   // Checkbox for setting whether expiry is enabled on this folder.
-  expireFolder = new QCheckBox(i18n("Expire old messages in this folder"), expGroup);
+  expireFolder = new QCheckBox(i18n("E&xpire old messages in this folder"), expGroup);
   QObject::connect(expireFolder, SIGNAL(toggled(bool)), SLOT(slotExpireFolder(bool)));
   topLayout->addWidget(expGroup);
   expLayout->addMultiCellWidget(expireFolder, 0, 0, 0, 1);
 
   // Expiry time for read documents.
-  label = new QLabel(i18n("Expire read email after"), expGroup);
+  label = new QLabel(i18n("Expire &read email after"), expGroup);
+  label->setEnabled(false);
+  QObject::connect( expireFolder, SIGNAL(toggled(bool)),
+		    label, SLOT(setEnabled(bool)) );
   expLayout->addWidget(label, 1, 0);
   readExpiryTime = new KIntNumInput(expGroup);
   readExpiryTime->setRange(1, 500, 1, false);
@@ -170,7 +177,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
 
   // Expiry time for unread documents.
-  label = new QLabel(i18n("Expire unread email after"), expGroup);
+  label = new QLabel(i18n("Expire &unread email after"), expGroup);
+  label->setEnabled(false);
+  QObject::connect( expireFolder, SIGNAL(toggled(bool)),
+		    label, SLOT(setEnabled(bool)) );
   expLayout->addWidget(label, 2, 0);
   unreadExpiryTime = new KIntNumInput(expGroup);
   unreadExpiryTime->setRange(1, 500, 1, false);
@@ -219,9 +229,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QHBoxLayout *sl = new QHBoxLayout( senderGroup->layout() );
   sl->setSpacing( 6 );
 
-  QLabel *sender_label = new QLabel( i18n("Show:" ), senderGroup );
+  QLabel *sender_label = new QLabel( i18n("Sho&w:" ), senderGroup );
   sl->addWidget( sender_label );
   senderType = new QComboBox(senderGroup);
+  sender_label->setBuddy(senderType);
   senderType->insertItem(i18n("Default"), 0);
   senderType->insertItem(i18n("Sender"), 1);
   senderType->insertItem(i18n("Receiver"), 2);

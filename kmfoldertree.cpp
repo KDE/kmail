@@ -842,7 +842,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     if (!fti->folder->noContent() && fti->folder->isMailingList())
     {
       folderMenu->insertSeparator();
-      folderMenu->insertItem(i18n("&Post to Mailing-List"),
+      folderMenu->insertItem(i18n("Post to &Mailing-List"),
                              topLevelWidget(), SLOT(slotCompose()));
     }
   }

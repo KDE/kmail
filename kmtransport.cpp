@@ -213,7 +213,7 @@ void KMTransportDialog::makeSendmailPage()
   label->setBuddy(mSendmail.locationEdit);
   grid->addWidget( mSendmail.locationEdit, 1, 1 );
   mSendmail.chooseButton =
-    new QPushButton( i18n("&Choose..."), page );
+    new QPushButton( i18n("Choos&e..."), page );
   connect( mSendmail.chooseButton, SIGNAL(clicked()),
            this, SLOT(slotSendmailChooser()) );
   mSendmail.chooseButton->setAutoDefault( false );
@@ -288,7 +288,7 @@ void KMTransportDialog::makeSmtpPage()
     new QCheckBox( i18n("&Store SMTP password in configuration file"), page1 );
   grid->addMultiCellWidget( mSmtp.storePasswordCheck, 8, 8, 0, 1 );
  
-  label = new QLabel( i18n("Pre&command:"), page1 );
+  label = new QLabel( i18n("Preco&mmand:"), page1 );
   grid->addWidget( label, 9, 0 );
   mSmtp.precommand = new QLineEdit( page1 );
   label->setBuddy(mSmtp.precommand);
@@ -312,23 +312,24 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
   mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentication method only if you have a good reason", "PLAIN"),
+    "authentication method only if you have a good reason", "&PLAIN"),
     mSmtp.authGroup  );
   mSmtp.authLogin = new QRadioButton( i18n("Please translate this "
-    "authentication method only if you have a good reason", "LOGIN"),
+    "authentication method only if you have a good reason", "&LOGIN"),
     mSmtp.authGroup );
-  mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), mSmtp.authGroup );
-  mSmtp.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mSmtp.authGroup );
+  mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mSmtp.authGroup );
+  mSmtp.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mSmtp.authGroup );
   vlay->addWidget( mSmtp.authGroup );
  
+  vlay->addStretch();
+
   QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
   mSmtp.checkCapabilities =
-    new QPushButton( i18n("Check what the server supports"), page2 );
+    new QPushButton( i18n("Check &what the server supports"), page2 );
   connect(mSmtp.checkCapabilities, SIGNAL(clicked()),
     SLOT(slotCheckSmtpCapabilities()));
-  buttonLay->addWidget( mSmtp.checkCapabilities );
   buttonLay->addStretch();
-  vlay->addStretch();
+  buttonLay->addWidget( mSmtp.checkCapabilities );
 }
 
 
