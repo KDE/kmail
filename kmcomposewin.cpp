@@ -1268,7 +1268,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       lastindex = index;
     }
     while (lastindex > 0);
-    
+
     if(pgp->encryptFor(persons, pgpUserId, doSign))
       return pgp->message();
   }
@@ -2556,10 +2556,9 @@ void KMLineEdit::slotCompletion()
 
             if (pop.count() > 1)
             {
-                int id;
                 pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
-                pop.setActiveItem(pop.idAt(0));
-                id = pop.exec();
+                pop.setActiveItem(0);
+                int id = pop.exec();
 
                 if (id > -1)
                     setText(prevAddr + pop.text(id));
