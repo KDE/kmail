@@ -153,6 +153,8 @@ public slots:
   void selectCurrentFolder();
   /** Executes delayed update of folder tree */
   void delayedUpdate();
+  /** Remove all items associated with the given IMAP account */
+  void slotAccountDeleted(KMAcctImap*);
 
 protected slots:
   void doFolderSelected(QListViewItem*);

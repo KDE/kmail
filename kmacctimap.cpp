@@ -76,6 +76,7 @@ KMAcctImap::~KMAcctImap()
 {
   killAllJobs();
   if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+  emit deleted(this);
 }
 
 

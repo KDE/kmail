@@ -178,6 +178,9 @@ public:
 signals:
   void folderComplete(KMFolderTreeItem * fti, bool success);
 
+  /** Emitted, when the account is deleted */
+  void deleted(KMAcctImap*);
+
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;

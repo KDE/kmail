@@ -465,6 +465,8 @@ void KMFolderTree::reload(void)
         setOpen( fti, TRUE );  // Does only emit a signal, when visible
         slotFolderExpanded( fti );
       }
+      connect(static_cast<KMAcctImap*>(a), SIGNAL(deleted(KMAcctImap*)),
+        SLOT(slotAccountDeleted(KMAcctImap*)));
     }
 
   QListViewItemIterator jt( this );
@@ -1270,6 +1272,24 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
     }
     fti->folder->account()->displayProgress();
     fti->mImapState = KMFolderTreeItem::imapNoInformation;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotAccountDeleted(KMAcctImap *account)
+{
+  QListViewItemIterator it(this);
+  while (it.current())
+  {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    it++;
+    if (fti && fti->folder && fti->folder->account() == account)
+    {
+      if (fti == currentItem()) doFolderSelected(0);
+      writeIsListViewItemOpen(fti);
+      delete fti;
+    }
   }
 }
 
