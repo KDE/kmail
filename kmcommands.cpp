@@ -1572,7 +1572,7 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList )
-  :mDestFolder( destFolder ), mMsgList( msgList )
+:mDestFolder( destFolder ), mMsgList( msgList )
 {
 }
 
@@ -1688,6 +1688,12 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
 {
   setDeletesItself( true );
   mMsgList.append( msgBase );
+}
+
+KMMoveCommand::KMMoveCommand( Q_UINT32 )
+:mProgressItem( 0 )
+{
+  setDeletesItself( true );
 }
 
 KMCommand::Result KMMoveCommand::execute()
@@ -1879,15 +1885,25 @@ void KMMoveCommand::slotMoveCanceled()
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList )
-:KMMoveCommand(findTrashFolder( srcFolder ), msgList)
+:KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
-:KMMoveCommand(findTrashFolder( srcFolder ), msg)
+:KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
 }
 
+KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
+:KMMoveCommand( sernum )
+{
+  KMFolder *srcFolder;
+  int idx;
+  kmkernel->msgDict()->getLocation( sernum, &srcFolder, &idx );
+  KMMsgBase *msg = srcFolder->getMsgBase( idx );
+  addMsg( msg );
+  setDestFolder( findTrashFolder( srcFolder ) );
+}
 
 KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 {
@@ -1898,6 +1914,7 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
     return trash;
   return 0;
 }
+
 
 KMUrlClickedCommand::KMUrlClickedCommand( const KURL &url, uint identity,
   KMReaderWin *readerWin, bool htmlPref, KMMainWidget *mainWidget )

@@ -652,6 +652,12 @@ public slots:
   void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
   void slotMoveCanceled();
 
+protected:
+  // Needed for KMDeleteCommand for "move to trash"
+  KMMoveCommand( Q_UINT32 sernum );
+  void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
+  void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
+
 private:
   virtual Result execute();
   void completeMove( Result result );
@@ -671,9 +677,11 @@ class KMDeleteMsgCommand : public KMMoveCommand
 public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList );
   KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
+  KMDeleteMsgCommand( Q_UINT32 sernum );
 
 private:
   static KMFolder * findTrashFolder( KMFolder * srcFolder );
+
 };
 
 class KMUrlClickedCommand : public KMCommand
