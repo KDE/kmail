@@ -13,6 +13,7 @@
 #include "kmidentity.h"
 #include "kfileio.h"
 #include <kapp.h>
+#include <kstddirs.h>
 #include <kconfig.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
@@ -364,8 +365,8 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   char buf[8192];
   FILE *fh;
   bool ok = TRUE;
-  KTempFile inFile("/tmp/kmail-filter", "in");
-  KTempFile outFile("/tmp/kmail-filter", "out");
+  KTempFile inFile(locateLocal("tmp", "kmail-filter"), "in");
+  KTempFile outFile(locateLocal("tmp", "kmail-filter"), "out");
 
   if (mCmd.isEmpty()) return 1;
 
