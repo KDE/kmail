@@ -18,7 +18,7 @@ public:
     /**
      * @returns the only possible instance of this class.
      */
-    static KMRecentAddresses * KMRecentAddresses::self();
+    static KMRecentAddresses * self();
 
     /**
      * @returns the list of recent addresses.
