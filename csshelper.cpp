@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     csshelper.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -342,9 +342,7 @@ namespace KMail {
   }
 
   QString CSSHelper::Private::printCssDefinitions() const {
-    const QString headerFont = QString( "  font-family: \"%1\" ! important;\n"
-					"  font-size: %2pt ! important;\n" )
-                           .arg( mPrintFont.family() )
+    const QString headerFont = QString( "  font-size: %1pt ! important;\n" )
                            .arg( mPrintFont.pointSize() );
     const QColorGroup & cg = QApplication::palette().active();
 
@@ -358,13 +356,11 @@ namespace KMail {
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\" ! important;\n"
-	       "  font-size: %2pt ! important;\n"
+	       "  font-size: %1pt ! important;\n"
 	       "  color: #000000 ! important;\n"
 	       "  background-color: #ffffff ! important\n"
 	       "}\n\n" )
-      .arg( mPrintFont.family(),
-	    QString::number( mPrintFont.pointSize() ) )
+      .arg( QString::number( mPrintFont.pointSize() ) )
       +
       QString( "tr.textAtmH,\n"
 	       "tr.rfc822H,\n"
@@ -407,9 +403,7 @@ namespace KMail {
     const QString fgColor = c1.name();
     const QString bgColor = c4.name();
     const QString linkColor = c2.name();
-    const QString headerFont = QString("  font-family: \"%1\" ! important;\n"
-				       "  font-size: %2px ! important;\n")
-      .arg( mBodyFont.family() )
+    const QString headerFont = QString("  font-size: %1px ! important;\n")
       .arg( pointsToPixel( helper->mMetrics, mBodyFont.pointSize() ) );
     const QString background = ( mBackingPixmapOn
                          ? QString( "  background-image:url(file://%1) ! important;\n" )
@@ -440,13 +434,11 @@ namespace KMail {
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\" ! important;\n"
-	       "  font-size: %2 ! important;\n"
-	       "  color: %3 ! important;\n"
-	       "%4"
+	       "  font-size: %1 ! important;\n"
+	       "  color: %2 ! important;\n"
+	       "%3"
 	       "}\n\n" )
-      .arg( bodyFont( fixed ).family(),
-	    bodyFontSize,
+      .arg( bodyFontSize,
 	    fgColor,
 	    background )
       +
