@@ -952,24 +952,24 @@ QString KMReaderWin::writeMsgHeader()
       headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
 
-    headerStr.append("<br>\n");
+    headerStr.append("<br>");
     break;
 
   case HdrStandard:
     headerStr.append("<b style=\"font-size:130%\">" +
-                     strToHtml(mMsg->subject()) + "</b><br>\n");
+                     strToHtml(mMsg->subject()) + "</b><br>");
     headerStr.append(i18n("From: ") +
                      KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (mVcnum >= 0) 
     {
       headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    headerStr.append("<br>\n");
+    headerStr.append("<br>");
     headerStr.append(i18n("To: ") +
-                     KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
+                     KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
     if (!mMsg->cc().isEmpty())
       headerStr.append(i18n("Cc: ")+
-                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>");
     break;
 
   case HdrFancy:
@@ -1035,7 +1035,7 @@ QString KMReaderWin::writeMsgHeader()
                        strToHtml(mMsg->headerField("Organization")) + ")");
     }
 
-    headerStr.append("<br>\n");
+    headerStr.append("<br>");
     headerStr.append(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
     if (!mMsg->cc().isEmpty())
@@ -1059,10 +1059,9 @@ QString KMReaderWin::writeMsgHeader()
 
   case HdrAll:
     headerStr = strToHtml(mMsg->headerAsString(), true);
-    headerStr.append("\n");
     if (mVcnum >= 0) 
     {
-      headerStr.append("\n<br>\n<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+      headerStr.append("<br><a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
     break;
 
@@ -1117,15 +1116,15 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
           isEncrypted = block->isEncrypted();
           if( isEncrypted )
           {
-            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">\n"
-                       "<tr class=\"encrH\"><td>\n";
+            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
+                       "<tr class=\"encrH\"><td>";
             if( couldDecrypt )
               htmlStr += i18n("Encrypted message");
             else
               htmlStr += QString("%1<br />%2")
                 .arg(i18n("Cannot decrypt message:"))
                 .arg(pgp->lastErrorMsg());
-            htmlStr += "</td></tr>\n<tr class=\"encrB\"><td>\n";
+            htmlStr += "</td></tr><tr class=\"encrB\"><td>";
           }
         }
         else
@@ -1142,14 +1141,14 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
           {
             signClass = "signWarn";
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                       "class=\"" + signClass + "\">\n"
-                       "<tr class=\"" + signClass + "H\"><td>\n";
+                       "class=\"" + signClass + "\">"
+                       "<tr class=\"" + signClass + "H\"><td>";
             htmlStr += i18n( "Message was signed with unknown key 0x%1." )
                        .arg( block->signatureKeyId() );
             htmlStr += "<br />";
             htmlStr += i18n( "The validity of the signature can't be "
                              "verified." );
-            htmlStr += "\n</td></tr>\n<tr class=\"" + signClass + "B\"><td>\n";
+            htmlStr += "</td></tr><tr class=\"" + signClass + "B\"><td>";
           }
           else
           {
@@ -1178,8 +1177,8 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
               else
                 signClass = "signOkKeyOk";
               htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                         "class=\"" + signClass + "\">\n"
-                         "<tr class=\"" + signClass + "H\"><td>\n";
+                         "class=\"" + signClass + "\">"
+                         "<tr class=\"" + signClass + "H\"><td>";
               if( !keyId.isEmpty() )
                 htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
                            .arg( signer )
@@ -1209,15 +1208,15 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
                 htmlStr += i18n( "The signature is valid, but the key is "
                                  "untrusted." );
               }
-              htmlStr += "\n</td></tr>\n"
-                         "<tr class=\"" + signClass + "B\"><td>\n";
+              htmlStr += "</td></tr>"
+                         "<tr class=\"" + signClass + "B\"><td>";
             }
             else
             {
               signClass = "signErr";
               htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                         "class=\"" + signClass + "\">\n"
-                         "<tr class=\"" + signClass + "H\"><td>\n";
+                         "class=\"" + signClass + "\">"
+                         "<tr class=\"" + signClass + "H\"><td>";
               if( !keyId.isEmpty() )
                 htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
                            .arg( signer )
@@ -1226,8 +1225,8 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
                 htmlStr += i18n( "Message was signed by %1." ).arg( signer );
               htmlStr += "<br />";
               htmlStr += i18n("Warning: The signature is bad.");
-              htmlStr += "\n</td></tr>\n"
-                         "<tr class=\"" + signClass + "B\"><td>\n";
+              htmlStr += "</td></tr>"
+                         "<tr class=\"" + signClass + "B\"><td>";
             }
           }
         }
@@ -1235,11 +1234,11 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
         htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 
         if( isSigned )
-          htmlStr += "</td></tr>\n<tr class=\"" + signClass + "H\"><td>" +
+          htmlStr += "</td></tr><tr class=\"" + signClass + "H\"><td>" +
                      i18n( "End of signed message" ) +
                      "</td></tr></table>";
         if( isEncrypted )
-          htmlStr += "</td></tr>\n<tr class=\"encrH\"><td>" +
+          htmlStr += "</td></tr><tr class=\"encrH\"><td>" +
                      i18n( "End of encrypted message" ) +
                      "</td></tr></table>";
       }
@@ -1328,7 +1327,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
     line = strToHtml(line, TRUE);
     p = line.length();
-    line.append("<br>\n");
+    line.append("<br>");
 
     /* continue with current quotelevel if it didn't changed */
     if (actQuoteLevel == currQuoteLevel || p == 0) {
