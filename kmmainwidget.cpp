@@ -1253,7 +1253,7 @@ void KMMainWidget::slotUndo()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotToggleUnreadColumn()
+void KMMainWidget::slotToggleUnread()
 {
   mFolderTree->toggleColumn(KMFolderTree::unread);
 }
@@ -2249,13 +2249,27 @@ void KMMainWidget::setupActions()
   if ( raction )
     raction->setChecked( true );
 
-  unreadColumnToggle = new KToggleAction( i18n("View->", "&Unread Column"), 0, this,
-			       SLOT(slotToggleUnreadColumn()),
-			       actionCollection(), "view_columns_unread" );
-  unreadColumnToggle->setToolTip( i18n("Toggle display of column showing the "
-                                       "number of unread messages in folders.") );
-  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  // Unread Submenu
+  KActionMenu * unreadMenu =
+    new KActionMenu( i18n("View->", "&Unread Count"),
+		     actionCollection(), "view_unread" );
+  unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
 
+  unreadColumnToggle = new KRadioAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
+			       SLOT(slotToggleUnread()),
+			       actionCollection(), "view_unread_column" );
+  unreadColumnToggle->setExclusiveGroup( "view_unread_group" );
+  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  unreadMenu->insert( unreadColumnToggle );
+
+  unreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View after &Folder Name"), 0, this,
+			       SLOT(slotToggleUnread()),
+			       actionCollection(), "view_unread_text" );
+  unreadTextToggle->setExclusiveGroup( "view_unread_group" );
+  unreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
+  unreadMenu->insert( unreadTextToggle );
+
+  // toggle for total column
   totalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
 			       SLOT(slotToggleTotalColumn()),
 			       actionCollection(), "view_columns_total" );

@@ -110,7 +110,8 @@ public:
     *applyFilterActionsMenu;
 
   /** we need to access those KToggleActions from the foldertree-popup */
-  KToggleAction* unreadColumnToggle;
+  KRadioAction* unreadColumnToggle;
+  KRadioAction* unreadTextToggle;
   KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
@@ -222,7 +223,7 @@ protected slots:
   void slotSetThreadStatusQueued();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();
-  void slotToggleUnreadColumn();
+  void slotToggleUnread();
   void slotToggleTotalColumn();
   void slotBriefHeaders();
   void slotFancyHeaders();
