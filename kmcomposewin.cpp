@@ -208,12 +208,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 #endif
 
   mMsg = NULL;
-  if (aMsg) {
-    QString transport = aMsg->headerField("X-KMail-Transport");
+  if (aMsg)
     setMsg(aMsg);
-    if (!mBtnTransport.isChecked() && !transport.isEmpty())
-      mTransport.insertItem( transport, 0 );
-  }
 
   mEdtTo.setFocus();
   mDone = true;
@@ -940,6 +936,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     mEdtFrom.setText( ident.fullEmailAddr() );
     mEdtReplyTo.setText( ident.replyToAddr() );
   }  
+
+  QString transport = newMsg->headerField("X-KMail-Transport");
+  if (!mBtnTransport.isChecked() && !transport.isEmpty())
+    mTransport.insertItem( transport, 0 );
 
   num = mMsg->numBodyParts();
   if (num > 0)
