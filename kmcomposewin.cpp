@@ -152,7 +152,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 
   mSpellCheckInProgress=FALSE;
 
-  //setCaption(i18n("KMail Composer"));
+  setCaption( i18n("Composer") );
   setMinimumSize(200,200);
   
   mBtnIdentity.setFocusPolicy(QWidget::NoFocus);
@@ -991,7 +991,16 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   }
 #endif
 
-  if (mAutoSign && mayAutoSign) slotAppendSignature();
+  if( mAutoSign && mayAutoSign )
+  {
+    //
+    // Espen 2000-05-16
+    // Delay the signature appending. It may start a fileseletor.
+    // Not user friendy if this modal fileseletor opens before the 
+    // composer.
+    //
+    QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) ); 
+  }
   mEditor->setModified(FALSE);
 
 #if defined CHARSETS
@@ -1905,51 +1914,50 @@ void KMComposeWin::slotSendNow()
 }
 
 
-//-----------------------------------------------------------------------------
+
+
+
 void KMComposeWin::slotAppendSignature()
 {
   QString identStr = "unknown";
-  if (!mId.isEmpty() && KMIdentity::identities().contains( mId ))
+  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) )
+  {
     identStr = mId;
+  }
+
+  bool mod = mEditor->isModified();
 
   KMIdentity ident( identStr );
   ident.readConfig();
-  QString sigFileName = ident.signatureFile();
-  QString sigText;
-  bool mod = mEditor->isModified();
-
-  if (sigFileName.isEmpty() && ident.useSignatureFile())
+  QString sigText = ident.signature();
+  if( sigText.isEmpty() && ident.useSignatureFile() )
   {
     // open a file dialog and let the user choose manually
 #warning KFileDialog misses localfiles only flag.
-//    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
-    KFileDialog dlg(getenv("HOME"),QString::null,this,0, TRUE);
-
+    KFileDialog dlg( QDir::homeDirPath(), QString::null, this, 0, TRUE );
     dlg.setCaption(i18n("Choose Signature File"));
-
     if( !dlg.exec() )
+    {
       return;
-
+    }
     KURL url = dlg.selectedURL();
-
     if( url.isEmpty() )
+    {
       return;
-
+    }
     if( !url.isLocalFile() )
     {
       KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
       return;
     }
-
-    sigFileName = url.path();
+    QString sigFileName = url.path();
     sigText = kFileToString(sigFileName, TRUE);
     ident.setSignatureFile(sigFileName);
     ident.writeConfig(true);
   }
-  else sigText = ident.signature();
 
   mOldSigText = sigText;
-  if (!sigText.isEmpty())
+  if( !sigText.isEmpty() )
   {
     mEditor->insertLine("-- ", -1);
     mEditor->insertLine(sigText, -1);
