@@ -153,7 +153,7 @@ private:
 
 KMail::URLHandlerManager::BodyPartURLHandlerManager::~BodyPartURLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    DeleteAndSetToZero<Interface::BodyPartURLHandler> );
+	    DeleteAndSetToZero<Interface::BodyPartURLHandler>() );
 }
 
 void KMail::URLHandlerManager::BodyPartURLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
@@ -253,7 +253,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
 
 KMail::URLHandlerManager::~URLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    DeleteAndSetToZero<URLHandler> );
+	    DeleteAndSetToZero<URLHandler>() );
 }
 
 void KMail::URLHandlerManager::registerHandler( const URLHandler * handler ) {
