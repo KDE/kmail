@@ -635,9 +635,6 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       if (!isInline && aIncludeAttach) {
         result += QString("\n----------------------------------------") +
                   "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
-        if (!msgPart.charset().isEmpty())
-          result += "; charset=\"" + msgPart.charset() + '"';
-
         if (!msgPart.name().isEmpty())
           result += "; name=\"" + msgPart.name() + '"';
 
