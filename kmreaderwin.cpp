@@ -418,14 +418,14 @@ kdDebug(5006) << "Multipart processing children - DONE" << endl;
 kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (if inline encrypted):" << endl;
         // Problem: body text may be inline PGP encrypted, so we can not just dump it.
         // resultingData += part->Body().AsString().c_str();
-        
+
         // Note: parseObjectTree() does no inline PGP decrypting anymore.
         ObjectTreeParser otp( 0, 0, false, false, true );
         dataNode->setProcessed( false, true );
         otp.setKeepEncryptions( false );
         otp.parseObjectTree( curNode );
         //resultingData += otp.rawReplyString();  // re-enable this, once ObjectTreeParser is updated.
-        
+
 
         // Temporary solution, to be replaced by a Kleo::CryptoBackend job inside ObjectTreeParser:
         bool bDecryptedInlinePGP = false;
@@ -447,8 +447,8 @@ kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (i
         if( !bDecryptedInlinePGP )
           resultingData += otp.rawReplyString();
         // end of temporary solution.
-        
-        
+
+
 kdDebug(5006) << "decrypting of single body - DONE" << endl;
       }
     } else {
@@ -1226,7 +1226,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   bool emitReplaceMsgByUnencryptedVersion = false;
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   if ( reader.readBoolEntry( "store-displayed-messages-unencrypted", false ) ) {
-  
+
     // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
     // of german government:
     // --> All received encrypted messages *must* be stored in unencrypted form
@@ -1238,7 +1238,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     //       This could be changed in the objectTreeToDecryptedMsg() function
     //       by deciding when (or when not, resp.) to set the 'dataNode' to
     //       something different than 'curNode'.
-  
+
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
 /*
 kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
@@ -1270,7 +1270,7 @@ kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
       decryptedData.appendNULL();
       QCString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
-  
+
       if( !resultString.isEmpty() ) {
 kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
         // try this:
@@ -1674,7 +1674,6 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideCodec(), msg );
-  win->resize(550,600);
   win->show();
 }
 
@@ -1911,7 +1910,7 @@ void KMReaderWin::slotDoAtmOpen()
   KURL::List lst;
   KURL url;
   bool autoDelete = true;
-  QString fname = createAtmFileLink(); 
+  QString fname = createAtmFileLink();
 
   if ( fname == QString::null ) {
     autoDelete = false;
@@ -1934,7 +1933,7 @@ void KMReaderWin::slotAtmOpenWith()
     KURL::List lst;
     KURL url;
     bool autoDelete = true;
-    QString fname = createAtmFileLink(); 
+    QString fname = createAtmFileLink();
 
     if ( fname == QString::null ) {
       autoDelete = false;

@@ -39,6 +39,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
   mReaderWin->setHtmlOverride( htmlOverride );
   setCentralWidget( mReaderWin );
   setupAccel();
+  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -52,6 +53,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
   mReaderWin->setAutoDelete( true );
   setCentralWidget( mReaderWin );
   setupAccel();
+  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -63,12 +65,12 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     const QTextCodec *codec, char *name )
   : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
-  resize( 550, 600 );
   mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
   mReaderWin->setOverrideCodec( codec );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   setCentralWidget( mReaderWin );
   setupAccel();
+  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );

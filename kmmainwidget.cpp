@@ -101,7 +101,7 @@ QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
 static KStaticDeleter<QPtrList<KMMainWidget> > mwlsd;
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget(QWidget *parent, const char *name, 
+KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
                            KXMLGUIClient *aGUIClient,
                            KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name),
@@ -1470,7 +1470,7 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  KMCommand *command = 
+  KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, mCodec );
   command->start();
@@ -2010,7 +2010,6 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
   win->showMsg( mCodec, newMessage );
-  win->resize( 550, 600 );
   win->show();
 }
 
@@ -3150,7 +3149,7 @@ void KMMainWidget::slotShowStartupFolder()
 
   // plug shortcut filter actions now
   initializeFilterActions();
-  
+
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
@@ -3166,7 +3165,7 @@ void KMMainWidget::slotShowStartupFolder()
   if ( !startup )
     startup = kmkernel->inboxFolder();
 
-  if ( mFolderTree ) 
+  if ( mFolderTree )
   {
     mFolderTree->reload();
     mFolderTree->showFolder( startup );
@@ -3271,7 +3270,7 @@ void KMMainWidget::initializeFilterActions()
   QString filterName, normalizedName;
   KMMetaFilterActionCommand *filterCommand;
   KAction *filterAction = 0;
-  
+
   if ( !mFilterTBarActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
@@ -3304,7 +3303,7 @@ void KMMainWidget::initializeFilterActions()
       mFilterMenuActions.append(filterAction);
       // FIXME
       // uncomment the next if statement after the filter dialog supports
-      // separate activation of filters for the toolbar - currently 
+      // separate activation of filters for the toolbar - currently
       // we better depend on whether an icon is defined, so the current
       // IF statement is intermediate
       // if ( (*it)->configureToolbar() )
