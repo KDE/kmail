@@ -279,6 +279,15 @@ QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
+QTextCodec* KMMsgBase::codecForName(const QString& _str)
+{
+  if (_str.isEmpty()) return NULL;
+  return QTextCodec::codecForName(_str.lower().replace(
+    QRegExp("windows"), "cp") );
+}
+
+
+//-----------------------------------------------------------------------------
 const QCString KMMsgBase::toUsAscii(const QString& _str)
 {
   QString result = _str.copy();
@@ -361,9 +370,8 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 	// decode base64 text
 	cstr = decodeBase64(str);
       }
-      QTextCodec *codec = QTextCodec::codecForName(charset);
-      if (!codec) codec = QTextCodec::codecForName(KGlobal::locale()
-        ->charset());
+      QTextCodec *codec = codecForName(charset);
+      if (!codec) codec = codecForName(KGlobal::locale()->charset());
       if (codec) str = codec->toUnicode(cstr);
       else str = QString::fromLocal8Bit(cstr);
 
@@ -401,7 +409,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
   QString cset;
   if (charset.isEmpty()) cset = KGlobal::locale()->charset();
     else cset = charset;
-  QTextCodec *codec = QTextCodec::codecForName(cset);
+  QTextCodec *codec = codecForName(cset);
   QCString latin;
   if (charset == "us-ascii") latin = toUsAscii(_str);
   else if (codec) latin = codec->fromUnicode(_str);
@@ -479,7 +487,7 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
   QString cset;
   if (charset.isEmpty()) cset = KGlobal::locale()->charset();
     else cset = charset;
-  QTextCodec *codec = QTextCodec::codecForName(cset);
+  QTextCodec *codec = codecForName(cset);
   QCString latin;
   if (charset == "us-ascii") latin = toUsAscii(_str);
   else if (codec) latin = codec->fromUnicode(_str);
@@ -545,9 +553,8 @@ const QString KMMsgBase::decodeRFC2231String(const QString& _str)
     p++;
   }
   QString result;
-  QTextCodec *codec = QTextCodec::codecForName(charset);
-  if (!codec) codec = QTextCodec::codecForName(KGlobal::locale()
-    ->charset());
+  QTextCodec *codec = codecForName(charset);
+  if (!codec) codec = codecForName(KGlobal::locale()->charset());
   if (codec) result = codec->toUnicode(st);
   else result = QString::fromLocal8Bit(st);
 

@@ -7,6 +7,7 @@
 
 #include <qstring.h>
 #include <time.h>
+#include <qtextcodec.h>
 
 typedef enum
 {
@@ -101,6 +102,10 @@ public:
    * and FALSE otherwise. */
   static QString skipKeyword(const QString& str, char sepChar=':',
 				 bool* keywordFound=NULL);
+
+  /** Return a QTextCodec for the specified charset.
+   * This function is a bit more tolerant, than QTextCodec::codecForName */
+  static QTextCodec* codecForName(const QString& _str);
 
   /** Convert all non-ascii characters to question marks */
   static const QCString toUsAscii(const QString& _str);

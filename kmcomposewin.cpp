@@ -962,7 +962,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 if (mCharset == "utf-8") mEditor->setText(QString::fromUtf8(bodyDecoded));
 else
 {
-    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     mEditor->setText(codec->toUnicode(bodyDecoded));
     mEditor->insertLine("\n", -1);
 }
@@ -985,7 +985,7 @@ if (mCharset == "utf-8")
   mEditor->setText(QString::fromUtf8(mMsg->bodyDecoded()));
 else
 {
-    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
 }
   }
@@ -1171,7 +1171,7 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
       text = mEditor->brokenText();
 
   text.truncate(text.length()); // to ensure text.size()==text.length()+1
-  QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+  QTextCodec *codec = KMMsgBase::codecForName(mCharset);
 
   if (codec == NULL) {
     kdDebug() << "Something is wrong and I can not get a codec." << endl;
@@ -1363,7 +1363,7 @@ void KMComposeWin::setCharset(const QString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if (QTextCodec::codecForName(*it) == QTextCodec::codecForName(mCharset))
+    if (KMMsgBase::codecForName(*it) == KMMsgBase::codecForName(mCharset))
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();

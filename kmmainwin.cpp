@@ -345,7 +345,7 @@ void KMMainWin::createWidgets(void)
 
   if (!mEncodingStr.isEmpty())
     if (mEncodingStr != i18n("Auto"))
-      mCodec = KGlobal::charsets()->codecForName(mEncodingStr);
+      mCodec = KMMsgBase::codecForName(mEncodingStr);
     else
       mCodec = 0;
   else
@@ -441,7 +441,7 @@ void KMMainWin::slotSetEncoding()
      if (mEncoding->currentItem() == 0) // Auto
        mCodec = 0;
      else
-       mCodec = KGlobal::charsets()->codecForName( mEncodingStr );
+       mCodec = KMMsgBase::codecForName( mEncodingStr );
      mMsgView->setCodec(mCodec);
      return;
 }
@@ -927,7 +927,7 @@ void KMMainWin::slotShowMsgSrc()
     {
        QString cset = msg->charset();
        if (!cset.isEmpty())
-         codec = KGlobal::charsets()->codecForName(cset);
+         codec = KMMsgBase::codecForName(cset);
     }
     msg->viewSource(i18n("Message as Plain Text"), codec);
   }

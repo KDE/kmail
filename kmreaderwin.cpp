@@ -212,7 +212,7 @@ void KMReaderWin::readConfig(void)
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							   SmartAttmnt);
   encoding = config->readEntry("encoding", "iso8859-1" );
-  mCodec = QTextCodec::codecForName(encoding);
+  mCodec = KMMsgBase::codecForName(encoding);
   mAutoDetectEncoding = config->readBoolEntry("autodetect-encoding", true );
 
 #ifndef KRN
@@ -510,7 +510,7 @@ void KMReaderWin::parseMsg(void)
     }
     if (encoding.isEmpty())
       encoding = "iso8859-1";
-    mCodec = QTextCodec::codecForName(encoding);
+    mCodec = KMMsgBase::codecForName(encoding);
   }
 
   if (!mCodec)

@@ -583,7 +583,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   {
     QString cset = charset();
     if (!cset.isEmpty())
-      codec = QTextCodec::codecForName(cset);
+      codec = KMMsgBase::codecForName(cset);
     if (!codec) codec = QTextCodec::codecForLocale();
   }
 

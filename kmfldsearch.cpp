@@ -482,7 +482,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
       || charset == "iso-8859-1")         // Speedup
         value += aMsg->bodyDecoded();  
     else {
-      QTextCodec *codec = QTextCodec::codecForName(aMsg->charset());
+      QTextCodec *codec = KMMsgBase::codecForName(aMsg->charset());
       if (codec) value += codec->toUnicode(aMsg->bodyDecoded());
         else value += aMsg->bodyDecoded();
     }
