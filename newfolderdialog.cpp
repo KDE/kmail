@@ -85,7 +85,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
         mFolder->folderType() != KMFolderTypeCachedImap ) ) {
     mFormatHBox = new QHBoxLayout( 0, 0, 6, "mFormatHBox"); 
     mMailboxFormatLabel = new QLabel( privateLayoutWidget, "mMailboxFormatLabel" );
-    mMailboxFormatLabel->setText( i18n( "Mailbox &Format:" ) );
+    mMailboxFormatLabel->setText( i18n( "Mailbox &format:" ) );
     mFormatHBox->addWidget( mMailboxFormatLabel );
 
     mFormatComboBox = new QComboBox( FALSE, privateLayoutWidget, "mFormatComboBox" );
@@ -139,7 +139,7 @@ void NewFolderDialog::slotOk()
   const QString &fldName = mNameLineEdit->text();
   if ( fldName.isEmpty() ) {
      KMessageBox::error( this, i18n("Please specify a name for the new folder."),
-        i18n( "No name specified" ) );
+        i18n( "No Name Specified" ) );
      return;
   }
   if ( fldName.find( '/' ) != -1 && 
