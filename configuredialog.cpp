@@ -1799,6 +1799,42 @@ QString AppearancePage::LayoutTab::helpAnchor() const {
 
 static const int numWindowLayouts = 5;
 
+static const char * windowLayoutToolTips[numWindowLayouts] = {
+  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
+	    "<ul>"
+	    "<li>Long folder list</li>"
+	    "<li>MIME tree (if visible) between message list and reader pane</li>"
+	    "</ul>"
+	    "</qt>"),
+  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
+	    "<ul>"
+	    "<li>Long folder list</li>"
+	    "<li>MIME tree (if visible) below reader pane</li>"
+	    "</ul>"
+	    "</qt>"),
+  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
+	    "<ul>"
+	    "<li>Basically long folder list</li>"
+	    "<li>MIME tree (if visible) below folder list</li>"
+	    "</ul>"
+	    "</qt>"),
+  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
+	    "<ul>"
+	    "<li>Medium folder list</li>"
+	    "<li>MIME tree (if visible) between message list and reader pane</li>"
+	    "<li>Full width reader pane</li>"
+	    "</ul>"
+	    "</qt>"),
+  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
+	    "<ul>"
+	    "<li>Short folder list</li>"
+	    "<li>MIME tree (if visible) between message list / folder tree "
+	    "    and reader pane</li>"
+	    "<li>Full width reader pane and MIME tree</li>"
+	    "</ul>"
+	    "</qt>")
+};
+
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigurationPage( parent, name ),
     mShowMIMETreeModeLastValue( -1 )
@@ -1813,6 +1849,12 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), this );
   vlay->addWidget( mShowColorbarCheck );
 
+  vlay->addWidget( new QLabel( i18n("<qt><p>Below, you can change the "
+				    "arrangement of KMail's window components "
+				    "(folder list, message list, reader pane "
+				    "and the optional MIME tree).</p></qt>"),
+			       this ) );
+
   // The window layout
   mWindowLayoutBG = new QHButtonGroup( i18n("&Window Layout"), this );
   mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
@@ -1825,6 +1867,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
     button->setFixedSize( button->sizeHint() );
     button->setAutoDefault( false );
     button->setToggleButton( true );
+    QToolTip::add( button, i18n( windowLayoutToolTips[i] ) );
   }
 
   vlay->addWidget( mWindowLayoutBG );
