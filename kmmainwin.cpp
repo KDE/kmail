@@ -2013,7 +2013,7 @@ void KMMainWin::updateMessageMenu()
     redirectAction->setEnabled( single_actions );
     sendAgainAction->setEnabled( single_actions );
     printAction->setEnabled( single_actions );
-    saveAsAction->setEnabled( single_actions );
+    saveAsAction->setEnabled( mass_actions );
     action( "view_source" )->setEnabled( single_actions );
 
     if ( count == 1 ) {
