@@ -1204,9 +1204,14 @@ void KMHeaders::msgAdded(int id)
         // this one. If so, thread it below our message, unless it is already
         // correctly threaded by replyToId.
         bool perfectParent = true;
-        QString otherId = mFolder->getMsgBase(tryMe)->replyToIdMD5();
+        KMMsgBase *otherMsg = mFolder->getMsgBase(tryMe);
+        if ( !otherMsg ) {
+          kdDebug(5006) << "otherMsg is NULL !!! tryMe: " << tryMe << endl;
+          continue;
+        }
+        QString otherId = otherMsg->replyToIdMD5();
         if (msgId != otherId) {
-          if (msgId != mFolder->getMsgBase(tryMe)->replyToAuxIdMD5())
+          if (msgId != otherMsg->replyToAuxIdMD5())
             continue;
           else {
             if (!otherId.isEmpty() && mSortCacheItems.find(otherId))
