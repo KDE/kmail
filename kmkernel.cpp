@@ -601,8 +601,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
 
   if (the_inboxFolder->canAccess() != 0) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your inbox folder.") );
-    ::exit(1);
+    emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
   }
 
   the_inboxFolder->setSystemFolder(TRUE);
@@ -610,8 +609,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   if (the_outboxFolder->canAccess() != 0) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your outbox folder.") );
-    ::exit(1);
+    emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
 
   the_outboxFolder->setType("Out");
@@ -620,8 +618,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
   if (the_sentFolder->canAccess() != 0) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your sent-mail folder.") );
-    ::exit(1);
+    emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
   the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
@@ -629,8 +626,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
   if (the_trashFolder->canAccess() != 0) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your trash folder.") );
-    ::exit(1);
+    emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
   the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
@@ -638,8 +634,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
   if (the_draftsFolder->canAccess() != 0) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your drafts folder.") );
-    ::exit(1);
+    emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
