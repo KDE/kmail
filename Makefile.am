@@ -120,6 +120,9 @@ update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
 
+servicetypedir = $(kde_servicetypesdir)
+servicetype_DATA = dcopmail.desktop
+
 messages: rc.cpp
 	rm -f tips.cpp
 	$(PREPARETIPS) > tips.cpp
