@@ -1989,7 +1989,7 @@ void KMMainWidget::setupActions()
 			SLOT(slotAddrBook()), actionCollection(), "addressbook" );
   }
 
-  (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
+  (void) new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
 		      SLOT(slotImport()), actionCollection(), "import" );
 
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
