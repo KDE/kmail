@@ -1407,7 +1407,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mAccountList->setAllColumnsShowFocus( true );
   mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mAccountList->setSorting( -1 );
-  connect( mAccountList, SIGNAL(selectionChanged ()),
+  connect( mAccountList, SIGNAL(selectionChanged()),
 	   this, SLOT(slotAccountSelected()) );
   connect( mAccountList, SIGNAL(doubleClicked( QListViewItem *)),
 	   this, SLOT(slotModifySelectedAccount()) );
@@ -1432,7 +1432,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   btn_vlay->addWidget( mModifyAccountButton );
 
   // "remove..." button: stretch 0
-  mRemoveAccountButton = new QPushButton( i18n("R&emove..."), this );
+  mRemoveAccountButton = new QPushButton( i18n("R&emove"), this );
   mRemoveAccountButton->setAutoDefault( false );
   mRemoveAccountButton->setEnabled( false ); // b/c no item is selected yet
   connect( mRemoveAccountButton, SIGNAL(clicked()),
@@ -1477,8 +1477,9 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 
 void NetworkPage::ReceivingTab::slotAccountSelected()
 {
-  mModifyAccountButton->setEnabled( true );
-  mRemoveAccountButton->setEnabled( true );
+  QListViewItem * item = mAccountList->selectedItem();
+  mModifyAccountButton->setEnabled( item );
+  mRemoveAccountButton->setEnabled( item );
 }
 
 QStringList NetworkPage::ReceivingTab::occupiedNames()
@@ -1637,8 +1638,8 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
       mModifiedAccounts.remove( j );
       break;
     }
-  QValueList< QGuardedPtr<KMAccount> >::Iterator it;
   if ( !acct ) {
+    QValueList< QGuardedPtr<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
 	acct = *it;
@@ -1658,13 +1659,12 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
     return;
   }
 
+  QListViewItem * item = listItem->itemBelow();
+  if ( !item ) item = listItem->itemAbove();
   mAccountList->takeItem( listItem );
-  if( mAccountList->childCount() == 0 ) {
-    mModifyAccountButton->setEnabled( false );
-    mRemoveAccountButton->setEnabled( false );
-  } else {
-    mAccountList->setSelected( mAccountList->firstChild(), true );
-  }
+
+  if ( item )
+    mAccountList->setSelected( item, true );
 }
 
 
