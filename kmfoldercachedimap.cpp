@@ -1122,7 +1122,6 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
   mAccount->removeJob(it);
 
   if (!job->error()) {
-    kmkernel->dimapFolderMgr()->quiet(TRUE);
     folder()->createChildFolder();
 
     // Find all subfolders present on disk but not on the server
@@ -1206,7 +1205,6 @@ void KMFolderCachedImap::listDirectory2() {
     }
   }
 
-  kmkernel->dimapFolderMgr()->quiet(FALSE);
   emit listComplete(this);
   serverSyncInternal();
 }
