@@ -870,7 +870,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 
   if ( !changedIdents.isEmpty() ) {
     QString information = i18n( "This identity has been changed to use the default transport:",
-                          "These %n identitites have been changed to use the default transport:",
+                          "These %n identities have been changed to use the default transport:",
                           changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );
   }
