@@ -16,17 +16,21 @@ print "# DELETE Smtp Port\n";
 print "# DELETE Smtp Username\n";
 
 # Write entries to the [Transport 1] section
-print "precommand=$data{'Precommand'}\n";
-print "port=$data{'Smtp Port'}\n";
-if ($data{'Method'} eq "smtp") {
-  print "type=smtp\n";
-  print "host=$data{'Smtp Host'}\n";
-  print "name=$data{'Smtp Host'}\n";
+print "precommand=$data{'Precommand'}\n" if (defined $data{'Precommand'});
+print "port=$data{'Smtp Port'}\n" if (defined $data{'Smtp Port'});
+
+if (defined $data{'Method'}) {
+  if ($data{'Method'} eq "smtp") {
+    print "type=smtp\n";
+    print "host=$data{'Smtp Host'}\n";
+    print "name=$data{'Smtp Host'}\n";
+  }
+  else {
+    print "type=sendmail\n";
+    print "host=$data{'Mailer'}\n";
+    print "name=Sendmail\n";
+  }
+  print "\n[General]\n";
+  print "transports=1\n";
 }
-else {
-  print "type=sendmail\n";
-  print "host=$data{'Mailer'}\n";
-  print "name=Sendmail\n";
-}
-print "\n[General]\n";
-print "transports=1\n";
+
