@@ -5570,37 +5570,6 @@ bool KMAtmListViewItem::isSign()
     return false;
 }
 
-//=============================================================================
-//
-//   Class  KMRecentAddressDialog
-//
-//=============================================================================
-class KMRecentAddressDialog : public KDialogBase
-{
-  public:
-    KMRecentAddressDialog( QWidget *parent, const char *name = 0 )
-      : KDialogBase( Plain, i18n( "Edit recent addresses" ), Ok | Cancel, Ok,
-                     parent, name, true, true )
-    {
-      QWidget *page = plainPage();
-      QVBoxLayout *layout = new QVBoxLayout( page, marginHint(), spacingHint() );
-
-      mEditor = new KEditListBox( i18n( "Recent Addresses" ), page, "", false,
-                                  KEditListBox::Add | KEditListBox::Remove );
-      layout->addWidget( mEditor );
-    }
-
-    void setAddresses( const QStringList &addrs )
-    {
-      mEditor->clear();
-      mEditor->insertStringList( addrs );
-    }
-
-    QStringList addresses() const { return mEditor->items(); }
-
-  private:
-    KEditListBox *mEditor;
-};
 
 //=============================================================================
 //
@@ -5654,7 +5623,7 @@ QPopupMenu *KMLineEdit::createPopupMenu()
 
 void KMLineEdit::editRecentAddresses()
 {
-  KMRecentAddressDialog dlg( this );
+  KRecentAddress::RecentAddressDialog dlg( this );
   dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
   if ( dlg.exec() ) {
     RecentAddresses::self( KMKernel::config() )->clear();
