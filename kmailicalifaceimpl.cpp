@@ -1167,25 +1167,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     FolderInfo info = readFolderInfo( folder );
     mFolderInfoMap.insert( folder, info );
 
-    // avoid multiple connections
-    disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-                this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-                this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
-                this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-    disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
-                this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
-
-    // Listen to changes from the folder
-    connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-             this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-             this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    connect( folder, SIGNAL( expunged( KMFolder* ) ),
-             this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-    connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
-             this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+    connectFolder( folder );
   }
   // Tell about the new resource
   subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL() );
@@ -1329,6 +1311,13 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
                       !folder->isReadOnly() , folderIsAlarmRelevant( folder ) TODO */ );
 
   }
+}
+
+// Must only be connected to a signal from KMFolder!
+void KMailICalIfaceImpl::slotFolderRenamed()
+{
+  const KMFolder* folder = static_cast<const KMFolder *>( sender() );
+  slotFolderPropertiesChanged( const_cast<KMFolder*>( folder ) );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1609,6 +1598,12 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
   folder->open();
+  connectFolder( folder );
+  return folder;
+}
+
+void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
+{
   // avoid multiple connections
   disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
               this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1616,6 +1611,11 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
               this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
               this, SLOT( slotRefreshFolder( KMFolder* ) ) );
+  disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+              this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+  disconnect( folder, SIGNAL( nameChanged() ),
+              this, SLOT( slotFolderRenamed() ) );
+
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1623,8 +1623,10 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
            this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   connect( folder, SIGNAL( expunged( KMFolder* ) ),
            this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-
-  return folder;
+  connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+           this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+  connect( folder, SIGNAL( nameChanged() ),
+           this, SLOT( slotFolderRenamed() ) );
 }
 
 static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )

@@ -393,6 +393,7 @@ int KMFolderCachedImap::rename( const QString& aName,
   // on the server during the next sync.
   mAccount->addRenamedFolder( imapPath(), folder()->label(), aName );
   folder()->setLabel( aName );
+  emit nameChanged(); // for kmailicalifaceimpl
 
   return 0;
 }
