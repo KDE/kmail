@@ -16,7 +16,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmacctseldlg.cpp kmimemagic.cpp kmfiltermgr.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp \
+		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
 		kfileio.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
@@ -26,7 +26,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		kmfolderseldlg.moc kmfilterdlg.moc
+		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -139,3 +139,7 @@ kmfoldermgr.moc: kmfoldermgr.h
 kmmsgpartdlg.cpp:kmmsgpartdlg.moc
 kmmsgpartdlg.moc: kmmsgpartdlg.h
 	$(MOC) kmmsgpartdlg.h -o kmmsgpartdlg.moc
+
+kpgp.cpp:kpgp.moc
+kpgp.moc: kpgp.h
+	$(MOC) kpgp.h -o kpgp.moc

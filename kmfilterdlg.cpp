@@ -428,22 +428,22 @@ void KMFilterDlg::initLists(void)
   }
 
   //---------- initialize list of filter functions
-  if (sFilterFuncList.count() <= 0)
+  if (sFilterOpList.count() <= 0)
   {
-    sFilterFuncList.append(nls->translate("ignore"));
-    sFilterFuncList.append(nls->translate("and"));
-    sFilterFuncList.append(nls->translate("unless"));
-    sFilterFuncList.append(nls->translate("or"));
+    sFilterOpList.append(nls->translate("ignore"));
+    sFilterOpList.append(nls->translate("and"));
+    sFilterOpList.append(nls->translate("unless"));
+    sFilterOpList.append(nls->translate("or"));
   }
 
   //---------- initialize list of filter operators
-  if (sFilterOpList.count() <= 0)
+  if (sFilterFuncList.count() <= 0)
   {
-    sFilterOpList.append(nls->translate("equals"));
-    sFilterOpList.append(nls->translate("not equal"));
-    sFilterOpList.append(nls->translate("contains"));
-    sFilterOpList.append(nls->translate("doesn't contain"));
-    sFilterOpList.append(nls->translate("regular expression"));
+    sFilterFuncList.append(nls->translate("equals"));
+    sFilterFuncList.append(nls->translate("not equal"));
+    sFilterFuncList.append(nls->translate("contains"));
+    sFilterFuncList.append(nls->translate("doesn't contain"));
+    sFilterFuncList.append(nls->translate("regular expression"));
   }
 
   //---------- initialize list of filter operators
