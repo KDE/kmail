@@ -121,7 +121,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
-    mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
+    mSuppressDialog( false ), mHoldSyncs( false )
 {
   setUidValidity("");
   mLastUid=0;
@@ -146,6 +146,15 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
+void KMFolderCachedImap::initializeFrom( KMFolderCachedImap* parent )
+{
+  setAccount( parent->account() );
+  // Now that we have an account, tell it that this folder was created:
+  // if this folder was just removed, then we don't really want to remove it from the server.
+  mAccount->removeDeletedFolder( imapPath() );
+  setUserRights( parent->userRights() );
+}
+
 void KMFolderCachedImap::readConfig()
 {
   KConfig* config = KMKernel::config();
@@ -167,20 +176,17 @@ void KMFolderCachedImap::remove()
 {
   mFolderRemoved = true;
 
-  if( mRemoveRightAway ) {
-    // This is the account folder of an account that was just removed
-    // When this happens, be sure to delete all traces of the cache
-    QString part1 = folder()->path() + "/." + dotEscape(name());
-    QString uidCacheFile = part1 + ".uidcache";
-    if( QFile::exists(uidCacheFile) )
-      unlink( QFile::encodeName( uidCacheFile ) );
-    KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
-  } else {
-    // Don't remove the uidcache file here, since presence of that is how
-    // we figure out if a directory present on the server have been deleted
-    // from the cache or if it's new on the server. The file is removed
-    // during the sync
-  }
+  QString part1 = folder()->path() + "/." + dotEscape(name());
+  QString uidCacheFile = part1 + ".uidcache";
+  // This is the account folder of an account that was just removed
+  // When this happens, be sure to delete all traces of the cache
+  if( QFile::exists(uidCacheFile) )
+    unlink( QFile::encodeName( uidCacheFile ) );
+  KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
+
+  // Tell the account (see listDirectory2)
+  mAccount->addDeletedFolder( imapPath() );
+
   FolderStorage::remove();
 }
 
@@ -1346,21 +1352,20 @@ void KMFolderCachedImap::listDirectory2() {
 
     if (!node) {
       // This folder is not present here
-      QString part1 = path + "/." + dotEscape(name()) + ".directory/."
-        + dotEscape(mSubfolderNames[i]);
-      QString uidCacheFile = part1 + ".uidcache";
-      if( QFile::exists(uidCacheFile) ) {
-        // This is an old folder that is deleted locally - delete it on the server
-        kdDebug(5006) << uidCacheFile << "exists, so it looks like an old folder deleted locally." << endl;
-        int ret = KMessageBox::warningYesNo( 0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ) );
-        if ( ret == KMessageBox::Yes ) {
-          unlink( QFile::encodeName( uidCacheFile ) );
-          foldersForDeletionOnServer << mSubfolderPaths[i];
-          // Make sure all trace of the dir is gone
-          KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
-        }
+      // Either it's new on the server, or we just deleted it.
+      // The code used to look at the uidcache to know if it was "just deleted".
+      // But this breaks with noContent folders.
+      // So instead we keep a list in the account. But this gets forgotten if you restart
+      // KMail before syncing. Ah well.
+      if( mAccount->isDeletedFolder( mSubfolderPaths[i] ) ) {
+        kdDebug(5006) << mSubfolderPaths[i] << " was just deleted locally => delete on server." << endl;
+        foldersForDeletionOnServer << mSubfolderPaths[i];
+        // We immediately remove it from the deleted folders list.
+        // If removing the folder from the server fails (no permission), then on the next sync
+        // the server will reappear, instead of the user being stuck with "can't delete" every time.
+        mAccount->removeDeletedFolder( mSubfolderPaths[i] );
       } else {
-        // This is a new folder, create the local cache
+        kdDebug(5006) << mSubfolderPaths[i] << " is a new folder on the server => create local cache" << endl;
         f = static_cast<KMFolderCachedImap*>
           (folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
         if (f) {
@@ -1371,14 +1376,14 @@ void KMFolderCachedImap::listDirectory2() {
           kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
         }
       }
-    } else {
+    } else { // Folder found locally
       if( static_cast<KMFolder*>(node)->folderType() == KMFolderTypeCachedImap )
         f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     }
 
     if( f && f->imapPath().isEmpty() ) {
       // kdDebug(5006) << "folder("<<f->name()<<")->imapPath()=" << f->imapPath()
-      // << "\nAssigning new imapPath " << mSubfolderPaths[i] << endl;
+      //               << "\nAssigning new imapPath " << mSubfolderPaths[i] << endl;
       // Write folder settings
       f->setAccount(mAccount);
       f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");

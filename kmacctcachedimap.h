@@ -132,6 +132,21 @@ public:
    */
   virtual void listDirectory();
 
+  /**
+   * Remember that a folder got explicitely deleted
+   */
+  void addDeletedFolder( const QString& subFolderPath );
+
+  /**
+   * Ask if a folder was explicitely deleted
+   */
+  bool isDeletedFolder( const QString& subFolderPath ) const;
+
+  /**
+   * Remove folder from the "deleted folders" list
+   */
+  void removeDeletedFolder( const QString& subFolderPath );
+
 public slots:
   void processNewMail() { processNewMail( mFolder, true ); }
 
@@ -149,6 +164,7 @@ private:
   KMFolderCachedImap *mFolder;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
+  QStringList mDeletedFolders;
 };
 
 #endif /*KMAcctCachedImap_h*/

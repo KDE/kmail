@@ -727,8 +727,7 @@ bool FolderDiaGeneralTab::save()
         mDlg->setFolder( kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir ) );
         KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>(selectedFolder->storage());
         KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mDlg->folder()->storage());
-        newStorage->setAccount( selectedStorage->account() );
-        newStorage->setUserRights( selectedStorage->userRights() );
+        newStorage->initializeFrom( selectedStorage );
       } else if (mMailboxTypeComboBox->currentItem() == 2) {
         mDlg->setFolder( kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() ) );
       } else if (mMailboxTypeComboBox->currentItem() == 1) {

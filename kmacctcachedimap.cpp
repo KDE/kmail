@@ -349,4 +349,19 @@ IMAPProgressDialog* KMAcctCachedImap::imapProgressDialog() const
   return mProgressDlg;
 }
 
+void KMAcctCachedImap::addDeletedFolder( const QString& subFolderPath )
+{
+  mDeletedFolders.append( subFolderPath );
+}
+
+bool KMAcctCachedImap::isDeletedFolder( const QString& subFolderPath ) const
+{
+  return mDeletedFolders.find( subFolderPath ) != mDeletedFolders.end();
+}
+
+void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )
+{
+  mDeletedFolders.remove( subFolderPath );
+}
+
 #include "kmacctcachedimap.moc"

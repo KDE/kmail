@@ -86,6 +86,9 @@ public:
   KMFolderCachedImap(KMFolder* folder, const char* name=0);
   virtual ~KMFolderCachedImap();
 
+  /** Initialize this storage from another one. Used when creating a child folder */
+  void initializeFrom( KMFolderCachedImap* parent );
+
   virtual void readConfig();
 
   /** Returns the type of this folder */
@@ -181,8 +184,6 @@ public:
   void resync() { mResync = true; }
 
   virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
-
-  void removeRightAway() { mRemoveRightAway = true; }
 
   /**
    * List a directory and add the contents to kmfoldermgr
@@ -364,7 +365,6 @@ private:
   bool mResync;
   bool mSuppressDialog;
   bool mHoldSyncs;
-  bool mRemoveRightAway;
 };
 
 #endif /*kmfoldercachedimap_h*/
