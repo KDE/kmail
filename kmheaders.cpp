@@ -1222,7 +1222,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     mItems[i]->sortCacheItem()->setId( i );
   }
   mItems.resize( mItems.size() - 1 );
-  kdDebug(5006) << "@@@ Count: "<< mFolder->count() << endl;
   if (mNested != mNestedOverride && mFolder->count()) {
     if (mSortCacheItems[msgId] == removedItem->sortCacheItem())
       mSortCacheItems.remove(msgId);
