@@ -46,6 +46,9 @@
 
 
 #include <assert.h>
+#include <kstatusbar.h>
+#include <qpopupmenu.h>
+#include <kpopupmenu.h>
 
 #include "kmmainwin.moc"
 

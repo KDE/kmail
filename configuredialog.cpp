@@ -68,6 +68,7 @@
 #include "configuredialog.moc"
 
 #include <stdlib.h>
+#include <kiconloader.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"

@@ -13,6 +13,9 @@
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/utility.h>
+#include <kglobal.h>
+#include <kinstance.h>
+#include <kiconloader.h>
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart() :

@@ -19,6 +19,7 @@
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
+#include <qpopupmenu.h>
 
 QPixmap* KMFolderTree::pixDir = 0;
 QPixmap* KMFolderTree::pixNode = 0;

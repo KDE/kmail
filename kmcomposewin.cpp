@@ -53,6 +53,10 @@
 #include <fcntl.h>
 
 #include "kmrecentaddr.h"
+#include <klocale.h>
+#include <kapplication.h>
+#include <kstatusbar.h>
+#include <qpopupmenu.h>
 
 #include "kmcomposewin.moc"
 

@@ -54,6 +54,8 @@
 
 #include "vcard.h"
 #include "kmdisplayvcard.h"
+#include <kpopupmenu.h>
+#include <qimage.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

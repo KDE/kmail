@@ -10,6 +10,7 @@
 
 #include <qcheckbox.h>
 #include <qvbox.h>
+#include <qpushbutton.h>
 
 #include <kglobal.h>
 #include <klineedit.h>

@@ -10,6 +10,7 @@
 #include <kbuttonbox.h>
 
 #include <assert.h>
+#include <qpushbutton.h>
 
 QString KMFolderSelDlg::oldSelection;
 

@@ -34,6 +34,8 @@
 
 #include "kmmainwin.h"
 #include "addtoaddressbook.h"
+#include <qpushbutton.h>
+#include <qlabel.h>
 
 AddToKabDialog::AddToKabDialog(QString url_, KabAPI * api_, QWidget *parent)
   : KDialogBase(parent, "AddToKabDialog", true,

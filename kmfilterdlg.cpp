@@ -21,6 +21,7 @@
 #include <qcheckbox.h>
 
 #include <assert.h>
+#include <qpushbutton.h>
 
 // What's this help texts
 const char * _wt_filterlist =

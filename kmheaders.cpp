@@ -1,6 +1,8 @@
 // kmheaders.cpp
 
 #include <stdlib.h>
+#include <kiconloader.h>
+#include <qpopupmenu.h>
 
 #include <qheader.h>
 #include <qptrstack.h>

@@ -36,6 +36,7 @@
 #include <kwin.h>
 
 #include <X11/Xlib.h>
+#include <kapplication.h>
 
 KMKernel *KMKernel::mySelf = 0;
 

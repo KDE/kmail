@@ -39,6 +39,7 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <klocale.h>
+#include <kapplication.h>
 
 #ifndef MAX_LINE
 #define MAX_LINE 4096

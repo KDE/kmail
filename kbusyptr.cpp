@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <kapplication.h>
 
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
