@@ -1057,12 +1057,11 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
         htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" "
                    "class=\"" + signClass + "\">\n"
                    "<tr class=\"" + signClass + "H\"><td>\n";
-        htmlStr += i18n("Message was signed with unknown key %1.")
+        htmlStr += i18n("Message was signed with unknown key 0x%1.")
                    .arg(pgp->signedByKey());
         htmlStr += "<br />";
         htmlStr += i18n("The validity of the signature can't be verified.");
         htmlStr += "\n</td></tr>\n<tr class=\"" + signClass + "B\"><td>\n";
-;
       }
       else
       {
@@ -1092,7 +1091,11 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
           htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" "
                      "class=\"" + signClass + "\">\n"
                      "<tr class=\"" + signClass + "H\"><td>\n";
-          htmlStr += i18n("Message was signed by %1.").arg(signer);
+          if( !keyId.isEmpty() )
+            htmlStr += i18n("Message was signed by %1 (ID: 0x%2).").arg(signer)
+                                                                 .arg(keyId);
+          else
+            htmlStr += i18n("Message was signed by %1.").arg(signer);
           htmlStr += "<br />";
           switch( keyTrust )
           {
