@@ -54,6 +54,86 @@ void partNode::buildObjectTree( bool processSiblings )
 }
 
 
+KMMsgEncryptionState partNode::overallEncryptionState() const
+{
+    KMMsgEncryptionState otherState;
+    KMMsgEncryptionState myState;
+    if( mIsEncrypted )
+        myState = KMMsgFullyEncrypted;
+    else {
+        // NOTE: children are tested ONLY when parent is not encrypted
+        if( mChild )
+            myState = mChild->overallEncryptionState();
+        else
+            myState = KMMsgNotEncrypted;
+    }
+    // siblings are tested allways
+    if( mNext )
+        otherState = mNext->overallEncryptionState();
+    switch( otherState ) {
+    case KMMsgEncryptionStateUnknown:
+        break;
+    case KMMsgNotEncrypted:
+        if( myState == KMMsgFullyEncrypted )
+            myState = KMMsgPartiallyEncrypted;
+        else if( myState != KMMsgPartiallyEncrypted )
+            myState = KMMsgNotEncrypted;
+        break;
+    case KMMsgPartiallyEncrypted:
+        myState = KMMsgPartiallyEncrypted;
+        break;
+    case KMMsgFullyEncrypted:
+        if( myState != KMMsgFullyEncrypted )
+            myState = KMMsgPartiallyEncrypted;
+        break;
+    }
+
+kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
+
+    return myState;
+}
+
+
+KMMsgSignatureState  partNode::overallSignatureState() const
+{
+    KMMsgSignatureState otherState;
+    KMMsgSignatureState myState;
+    if( mIsSigned )
+        myState = KMMsgFullySigned;
+    else {
+        // children are tested ONLY when parent is not signed
+        if( mChild )
+            myState = mChild->overallSignatureState();
+        else
+            myState = KMMsgNotSigned;
+    }
+    // siblings are tested allways
+    if( mNext )
+        otherState = mNext->overallSignatureState();
+    switch( otherState ) {
+    case KMMsgSignatureStateUnknown:
+        break;
+    case KMMsgNotSigned:
+        if( myState == KMMsgFullySigned )
+            myState = KMMsgPartiallySigned;
+        else if( myState != KMMsgPartiallySigned )
+            myState = KMMsgNotSigned;
+        break;
+    case KMMsgPartiallySigned:
+        myState = KMMsgPartiallySigned;
+        break;
+    case KMMsgFullySigned:
+        if( myState != KMMsgFullySigned )
+            myState = KMMsgPartiallySigned;
+        break;
+    }
+
+kdDebug(5006) << "\n\n  KMMsgSignatureState: " << myState << endl;
+
+    return myState;
+}
+
+
 int partNode::nodeId()
 {
     partNode* rootNode = this;

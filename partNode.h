@@ -19,6 +19,7 @@
 #include <mimelib/utility.h>
 
 #include "kmmsgpart.h"
+#include "kmmsgbase.h"
 #include "kmmessage.h"
 
 class KMMimePartTreeItem;
@@ -179,6 +180,12 @@ public:
     bool isEncrypted() const {
         return mIsEncrypted;
     }
+
+    // look at the encryption states uf all children and return result
+    KMMsgEncryptionState overallEncryptionState() const ;
+
+    // look at the signature states uf all children and return result
+    KMMsgSignatureState  overallSignatureState() const ;
 
     void setSigned( bool isSigned ) {
         mIsSigned = isSigned;

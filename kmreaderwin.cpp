@@ -372,6 +372,11 @@ kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could b
                   ---------------------------------------------------------------------------------------------------------------
                 */
 
+                if( sign && data ) {
+kdDebug(5006) << "       signed has data + signature" << endl;
+                  curNode->setSigned( true );
+                }
+
                 if( !includeSignatures ) {
                   if( !data )
                     data = curNode->mChild;
@@ -379,8 +384,6 @@ kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could b
                   writeBodyStr(cstr, mCodec);
                   bDone = true;
                 } else if( sign && data ) {
-kdDebug(5006) << "       signed has data + signature" << endl;
-                  curNode->setSigned( true );
                   sign->mWasProcessed = true; // Set the signature node to done to prevent it from being processed
                   writeSignedMIME( *data, *sign ); //   by parseObjectTree( data )  called from  writeSignedMIME().
                   bDone = true;
@@ -393,6 +396,7 @@ kdDebug(5006) << "       signed has data + signature" << endl;
 kdDebug(5006) << "encrypted" << endl;
               CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
               if( keepEncryptions ) {
+                curNode->setEncrypted( true );
                 QCString cstr( curNode->msgPart().bodyDecoded() );
                 writeBodyStr(cstr, mCodec);
                 bDone = true;
@@ -517,6 +521,7 @@ kdDebug(5006) << "octet stream" << endl;
               if(    curNode->mRoot
                   && DwMime::kTypeMultipart    == curNode->mRoot->type()
                   && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
+                curNode->setEncrypted( true );
                 if( keepEncryptions ) {
                   QCString cstr( curNode->msgPart().bodyDecoded() );
                   writeBodyStr(cstr, mCodec);
@@ -596,6 +601,7 @@ while( ( current = it.current() ) ) {
 
 
               if( true ){// && (0 <= find( "smime-type=enveloped-data",     0, false ) ) ) {
+                curNode->setEncrypted( true );
 kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: encrypted-data" << endl;
                 if( curNode->mChild ) {
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
@@ -643,7 +649,12 @@ kdDebug(5006) << "\n     ------  Sorry, curNode->mimePartTreeItem() returns ZERO
 kdDebug(5006) << "\n<-----  Returning from initially processing encrypted data\n" << endl;
                 }
               } else {//if( 0 <= find( "smime-type=signed-data", 0, false ) ) {
+                curNode->setSigned( true );
 kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: signed-data" << endl;
+                /*
+
+                not implemented yet:     S/MIME TYPE: signed-data
+
                 QCString decryptedData;
                 if( okDecryptMIME( *curNode, decryptedData ) ) {
                   DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), curNode->dwPart());
@@ -658,6 +669,7 @@ kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: signed-data" << endl;
                 {
                   writeHTMLStr(mCodec->toUnicode( decryptedData ));
                 }
+                */
               }
               bDone = true;
 
@@ -981,7 +993,7 @@ void KMReaderWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   QString encoding;
-  
+
   { // block defines the lifetime of KConfigGroupSaver
   KConfigGroupSaver saver(config, "Pixmaps");
   mBackingPixmapOn = FALSE;
@@ -1948,6 +1960,11 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   //  are called by double-click on message list entry for displaying
   //  the mail content in a separate mail viewer window)
   parseObjectTree( mRootNode, !mMimePartTree );
+
+  // store encrypted/signed status information in the KMMessage
+  //  - this can only be done *after* calling parseObjectTree()
+  aMsg->setEncryptionState( mRootNode->overallEncryptionState() );
+  aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
 
   // remove temp. Body Part that was created for a single part mail
   if( mainBody )
