@@ -1741,13 +1741,8 @@ void KMFolderCachedImap::updateAnnotationFolderType()
     newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
     if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) )
       newSubType = "default";
-    else if ( oldSubType != "default" )
-      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc.
-    else { // it was event.default, but it's not a standard resource folder anymore
-      // There are two cases: we haven't set up groupware yet, or we have set it up somewhere else
-      if ( !GlobalSettings::theIMAPResourceEnabled() )
-        newSubType = oldSubType;
-    }
+    else
+      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc. And preserve ".default" too.
   }
 
   //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << newType << " " << newSubType << endl;
