@@ -1222,9 +1222,11 @@ void KMHeaders::slotExpandOrCollapseAllThreads( bool expand )
     static_cast<KMHeaderItem*>(item)->setOpenRecursive( expand );
   if ( !expand ) { // collapse can hide the current item:
     QListViewItem * item = currentItem();
-    while ( item->parent() )
-      item = item->parent();
-    setCurrentMsg( static_cast<KMHeaderItem*>(item)->msgId() );
+    if( item ) {
+      while ( item->parent() )
+        item = item->parent();
+      setCurrentMsg( static_cast<KMHeaderItem*>(item)->msgId() );
+    }
   }
   ensureItemVisible( currentItem() );
 }
@@ -1554,19 +1556,21 @@ void KMHeaders::nextMessage()
 void KMHeaders::selectNextMessage()
 {
   QListViewItem *lvi = currentItem();
-  QListViewItem *below = lvi->itemBelow();
-  QListViewItem *temp = lvi;
-  if (lvi && below ) {
-    while (temp) {
-      temp->firstChild();
-      temp = temp->parent();
+  if( lvi ) {
+    QListViewItem *below = lvi->itemBelow();
+    QListViewItem *temp = lvi;
+    if (lvi && below ) {
+      while (temp) {
+        temp->firstChild();
+        temp = temp->parent();
+      }
+      lvi->repaint();
+      /* test to see if we need to unselect messages on back track */
+      (below->isSelected() ? setSelected(lvi, FALSE) : setSelected(below, TRUE));
+      setCurrentItem(below);
+      makeHeaderVisible();
+      setFolderInfoStatus();
     }
-    lvi->repaint();
-    /* test to see if we need to unselect messages on back track */
-    (below->isSelected() ? setSelected(lvi, FALSE) : setSelected(below, TRUE));
-    setCurrentItem(below);
-    makeHeaderVisible();
-    setFolderInfoStatus();
   }
 }
 
@@ -1584,20 +1588,22 @@ void KMHeaders::prevMessage()
 void KMHeaders::selectPrevMessage()
 {
   QListViewItem *lvi = currentItem();
-  QListViewItem *above = lvi->itemAbove();
-  QListViewItem *temp = lvi;
+  if( lvi ) {
+    QListViewItem *above = lvi->itemAbove();
+    QListViewItem *temp = lvi;
 
-  if (lvi && above) {
-    while (temp) {
-      temp->firstChild();
-      temp = temp->parent();
+    if (lvi && above) {
+      while (temp) {
+        temp->firstChild();
+        temp = temp->parent();
+      }
+      lvi->repaint();
+      /* test to see if we need to unselect messages on back track */
+      (above->isSelected() ? setSelected(lvi, FALSE) : setSelected(above, TRUE));
+      setCurrentItem(above);
+      makeHeaderVisible();
+      setFolderInfoStatus();
     }
-    lvi->repaint();
-    /* test to see if we need to unselect messages on back track */
-    (above->isSelected() ? setSelected(lvi, FALSE) : setSelected(above, TRUE));
-    setCurrentItem(above);
-    makeHeaderVisible();
-    setFolderInfoStatus();
   }
 }
 
