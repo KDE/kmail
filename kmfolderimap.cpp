@@ -1142,15 +1142,15 @@ void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::setStatus(int idx, KMMsgStatus status)
+void KMFolderImap::setStatus(int idx, KMMsgStatus status, bool toggle)
 {
   QValueList<int> ids; ids.append(idx);
-  setStatus(ids, status);
+  setStatus(ids, status, toggle);
 }
 
-void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status)
+void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
-  KMFolder::setStatus(ids, status);
+  KMFolder::setStatus(ids, status, toggle);
   if (mReadOnly) return;
 
   // get the uids
@@ -1168,7 +1168,6 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status)
     setImapStatus(imapPath() + ";UID=" + *it, flags);
   }
   mAccount->displayProgress();
-
 }
 
 //-----------------------------------------------------------------------------

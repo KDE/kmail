@@ -155,12 +155,12 @@ public:
    * Change the status of the message indicated by @p index
    * Overloaded function for the following one
    */
-  virtual void setStatus(int idx, KMMsgStatus status);
+  virtual void setStatus(int idx, KMMsgStatus status, bool toggle);
 
   /**
    * Change the status of several messages indicated by @p ids
    */
-  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status);
+  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
 
   /** Helper method to set the status on the server */
   void setImapStatus(QString path, QCString flags);
