@@ -75,9 +75,9 @@ KMFolderImap::~KMFolderImap()
 {
   if (mAccount) {
     mAccount->removeSlaveJobsForFolder( folder() );
-    /* Now that we've removed ourselves from the accounts jobs map, kill all 
+    /* Now that we've removed ourselves from the accounts jobs map, kill all
        ongoing operations and reset mailcheck if we were deleted during an
-       ongoing mailcheck of our account. Not very gracefull, but safe, and the 
+       ongoing mailcheck of our account. Not very gracefull, but safe, and the
        only way I can see to reset the account state cleanly. */
     if ( mAccount->checkingMail( folder() ) ) {
        mAccount->killAllJobs();
@@ -97,7 +97,7 @@ void KMFolderImap::close(bool aForced)
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
   // FIXME is this still needed?
-  if (mAccount) 
+  if (mAccount)
     mAccount->ignoreJobsForFolder( folder() );
   int idx = count();
   while (--idx >= 0) {
@@ -126,7 +126,7 @@ KMMessage* KMFolderImap::getMsg(int idx)
 
   KMMsgBase* mb = getMsgBase(idx);
   if (!mb) return 0;
-  if (mb->isMessage()) 
+  if (mb->isMessage())
   {
     return ((KMMessage*)mb);
   } else {
@@ -389,7 +389,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
           {
             // we need the messages that belong to the current set to pass them to the ImapJob
             QPtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
-
+            if ( temp_msgs.isEmpty() ) kdDebug(5006) << "Wow! KMFolderImap::splitMessageList() returned an empty list!" << endl;
             imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QPtrList<KMMessage>)),
                 SLOT(addMsgQuiet(QPtrList<KMMessage>)));
@@ -460,7 +460,7 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 }
 
 //-----------------------------------------------------------------------------
-QPtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set, 
+QPtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set,
                                                    QPtrList<KMMessage>& msgList)
 {
   int lastcomma = set.findRev(",");
@@ -533,7 +533,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
           QStringList, const ImapAccountBase::jobData &)));
 
   // start a new listing for the root-folder
-  bool reset = ( mImapPath == mAccount->prefix() && 
+  bool reset = ( mImapPath == mAccount->prefix() &&
                 !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
@@ -683,7 +683,7 @@ void KMFolderImap::checkValidity()
           SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   // Only check once at a time.
   mCheckingValidity = true;
-  
+
 }
 
 
@@ -927,7 +927,7 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
       else if ((*eIt).m_uds == KIO::UDS_ACCESS)
         flags = (*eIt).m_long;
     }
-    if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") && 
+    if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") &&
         !(flags & 8))
       (*it).items.append(name + "," + QString::number(flags));
   }
@@ -937,7 +937,7 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 //-----------------------------------------------------------------------------
 void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  if (flags & 4) 
+  if (flags & 4)
     msg->setStatus( KMMsgStatusFlag );
   if (flags & 2)
     msg->setStatus( KMMsgStatusReplied );
@@ -960,17 +960,17 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 QString KMFolderImap::statusToFlags(KMMsgStatus status)
 {
   QString flags;
-  if (status & KMMsgStatusDeleted) 
+  if (status & KMMsgStatusDeleted)
     flags = "\\DELETED";
   else {
-    if (status & KMMsgStatusOld || status & KMMsgStatusRead) 
+    if (status & KMMsgStatusOld || status & KMMsgStatusRead)
       flags = "\\SEEN ";
-    if (status & KMMsgStatusReplied) 
+    if (status & KMMsgStatusReplied)
       flags += "\\ANSWERED ";
-    if (status & KMMsgStatusFlag) 
+    if (status & KMMsgStatusFlag)
       flags += "\\FLAGGED";
   }
-  
+
   return flags.simplifyWhiteSpace();
 }
 
@@ -978,7 +978,7 @@ QString KMFolderImap::statusToFlags(KMMsgStatus status)
 void
 KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
 {
-  if ( !msg || msg->transferInProgress() || 
+  if ( !msg || msg->transferInProgress() ||
        !msg->parent() || msg->parent()->folderType() != KMFolderTypeImap )
     return;
   KMAcctImap *account;
@@ -1005,11 +1005,11 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     if ( c != -1 )
     {
       bool ok;
-      int exists = (*it).cdata.mid( c+10, 
+      int exists = (*it).cdata.mid( c+10,
           (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
       if ( ok && exists < count() )
       {
-        kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" << 
+        kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
         mAccount->displayProgress();
         reallyGetFolder( QString::null );
@@ -1079,9 +1079,9 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
        ( msg->msgSizeServer() > 5000 || msg->msgSizeServer() == 0 ) &&
-       ( msg->signatureState() == KMMsgNotSigned || 
+       ( msg->signatureState() == KMMsgNotSigned ||
          msg->signatureState() == KMMsgSignatureStateUnknown ) &&
-       ( msg->encryptionState() == KMMsgNotEncrypted || 
+       ( msg->encryptionState() == KMMsgNotEncrypted ||
          msg->encryptionState() == KMMsgEncryptionStateUnknown ) )
   {
     // load-on-demand: retrieve the BODYSTRUCTURE and to speed things up also the headers
@@ -1244,7 +1244,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
   ulong uid = msg->UID();
-  /* If the uid is empty the delete job below will nuke all mail in the 
+  /* If the uid is empty the delete job below will nuke all mail in the
      folder, so we better safeguard against that. See ::expungeFolder, as
      to why. :( */
   if ( uid == 0 ) {
@@ -1276,7 +1276,7 @@ void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
     QString uid = *it;
     // Don't delete with no uid, that nukes the folder. Should not happen, but
     // better safe than sorry.
-    if ( uid.isEmpty() ) continue; 
+    if ( uid.isEmpty() ) continue;
     url.setPath(msg_parent->imapPath() + ";UID=" + uid);
     if ( mAccount->makeConnection() != ImapAccountBase::Connected )
       return;
@@ -1306,7 +1306,7 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
    * by the status string they will be assigned and make sets for each of those
    * groups of mails. This is necessary because the imap kio_slave status job
    * does not append flags but overwrites them. Example:
-   * 
+   *
    * 2 important mails and 3 unimportant mail, all unread. Mark all as read calls
    * this method with a list of uids. The 2 important mails need to get the string
    * \SEEN \FLAGGED while the others need to get just \SEEN. Build sets for each
