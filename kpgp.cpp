@@ -990,12 +990,20 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
 {
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
   
-  QGroupBox *group = new QGroupBox( i18n("Identity"), this );
+  QGroupBox *group = new QGroupBox( i18n("Warning"), this );
   topLayout->addWidget( group );
-  QGridLayout *glay = new QGridLayout( group, 2, 2,  KDialog::spacingHint() );
+  QGridLayout *glay = new QGridLayout( group, 1, 1,  KDialog::spacingHint() );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  QLabel *label = new QLabel( i18n("Please check if encryption really "
+  	"works before you start using it seriously."), group );
+  glay->addWidget ( label, 1, 0 );
+
+  group = new QGroupBox( i18n("Identity"), this );
+  topLayout->addWidget( group );
+  glay = new QGridLayout( group, 2, 2,  KDialog::spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
 
-  QLabel *label = new QLabel( i18n("PGP User Identity:"), group );
+  label = new QLabel( i18n("PGP User Identity:"), group );
   pgpUserEdit = new QLineEdit( group );
   pgpUserEdit->setText( pgp->user() );
   glay->addWidget( label, 1, 0 );
