@@ -178,7 +178,7 @@ void ExpiryPropertiesDialog::slotOk()
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-  close();
+  KDialogBase::slotOk();
 }
 
 void ExpiryPropertiesDialog::slotUpdateControls()

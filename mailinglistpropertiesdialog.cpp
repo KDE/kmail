@@ -159,7 +159,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 void MailingListFolderPropertiesDialog::slotOk()
 {
   save();
-  close();
+  KDialogBase::slotOk();
 }
 
 void MailingListFolderPropertiesDialog::load()
