@@ -897,12 +897,14 @@ void KMFolderCachedImap::serverSyncInternal()
           node = folder()->child()->next();
         }
       }
-    }
 
-    // All done for this folder.
-    mProgress = 100; // all done
-    newState( mProgress, i18n("Synchronization done"));
-    kmkernel->iCalIface().folderSynced( folder() );
+      // All done for this folder.
+      mProgress = 100; // all done
+      newState( mProgress, i18n("Synchronization done"));
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      kmkernel->iCalIface().folderSynced( folder(), url );
+    }
 
     if ( !mRecurse ) // "check mail for this folder" only
       mSubfoldersForSync.clear();

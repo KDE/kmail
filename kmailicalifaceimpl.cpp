@@ -1292,15 +1292,64 @@ void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges change
   configGroup.writeEntry( folder->idString() + "-changes", (*it).mChanges );
 }
 
-void KMailICalIfaceImpl::folderSynced( KMFolder* folder )
+void KMailICalIfaceImpl::folderSynced( KMFolder* folder, const KURL& folderURL )
 {
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() && (*it).mChanges ) {
-    // emit dcop signal
-    kdDebug(5006) << "emitting signalFolderSynced(" << folder->prettyURL() << " " << (*it).mChanges << endl;
-    signalFolderSynced( folder->location(), (*it).mChanges );
+    handleFolderSynced( folder, folderURL, (*it).mChanges );
     (*it).mChanges = NoChange;
   }
+}
+
+void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
+                                             const KURL& folderURL,
+                                             int _changes )
+{
+  // This is done here instead of in the resource, because
+  // there could be 0, 1, or N kolab resources at this point.
+  // We can hack the N case, but not the 0 case.
+  // So the idea of a DCOP signal for this wouldn't work.
+  if ( ( _changes & KMailICalIface::Contents ) ||
+       ( _changes & KMailICalIface::ACL ) ) {
+    if ( storageFormat( folder ) == StorageXML )
+      triggerKolabFreeBusy( folderURL );
+  }
+}
+
+void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
+{
+  /* Steffen said: you must issue an authenticated HTTP GET request to
+     https://kolabserver/freebusy/trigger/user@domain/Folder/NestedFolder.pfb
+     (replace .pfb with .xpfb for extended fb lists). */
+  KURL httpURL( folderURL );
+  // Keep username ("user@domain"), pass, and host from the imap url
+  httpURL.setProtocol( "https" );
+  httpURL.setPort( 0 ); // remove imap port
+
+  // IMAP path is either /INBOX/<path> or /user/someone/<path>
+  QString path = folderURL.path( -1 );
+  Q_ASSERT( path.startsWith( "/" ) );
+  int secondSlash = path.find( '/', 1 );
+  if ( secondSlash == -1 ) {
+    kdWarning() << "KCal::ResourceKolab::fromKMailFolderSynced path is too short: " << path << endl;
+    return;
+  }
+  if ( path.startsWith( "/INBOX/", false ) ) {
+    // If INBOX, replace it with the username (which is user@domain)
+    path = path.mid( secondSlash );
+    path.prepend( folderURL.user() );
+  } else {
+    // If user, just remove it. So we keep the IMAP-returned username.
+    // This assumes it's a known user on the same domain.
+    path = path.mid( secondSlash );
+  }
+
+  httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
+  httpURL.setQuery( QString::null );
+  kdDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
+  // "Fire and forget". No need for error handling, nor for explicit deletion.
+  // Maybe we should try to prevent launching it if it's already running (for this URL) though.
+  /*KIO::Job* job =*/ KIO::get( httpURL, false, false /*no progress info*/ );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )

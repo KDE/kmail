@@ -166,7 +166,7 @@ public:
   static const char* annotationForContentsType( KMail::FolderContentsType type );
 
   // Called after a folder was synced with the server
-  void folderSynced( KMFolder* folder );
+  void folderSynced( KMFolder* folder, const KURL& folderURL );
   void addFolderChange( KMFolder* folder, FolderChanges changes );
 
 public slots:
@@ -211,6 +211,12 @@ private:
   static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
   void loadPixmaps() const;
 
+  void handleFolderSynced( KMFolder* folder,
+                           const KURL& folderURL,
+                           int _changes );
+  void triggerKolabFreeBusy( const KURL& folderURL );
+
+private:
   QGuardedPtr<KMFolder> mContacts;
   QGuardedPtr<KMFolder> mCalendar;
   QGuardedPtr<KMFolder> mNotes;

@@ -137,10 +137,6 @@ k_dcop_signals:
   void subresourceAdded( const QString& type, const QString& resource,
                          const QString& label );
   void subresourceDeleted( const QString& type, const QString& resource );
-
-  /// Emitted when a folder has been successfully synced to the server.
-  /// @param changes is in fact using the FolderChanges enum (bitfield)
-  void signalFolderSynced( const QString& folder, int changes );
 };
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
@@ -148,7 +144,6 @@ inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResou
   str << subResource.location << subResource.label << subResource.writable;
   return str;
 }
-
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& subResource )
 {
   str >> subResource.location >> subResource.label >> subResource.writable;
