@@ -324,21 +324,30 @@ void KMMainWin::slotModifyFolder()
 void KMMainWin::slotEmptyFolder()
 {
   QString str(256);
+  KMMessage* msg;
 
   if (!mFolder) return;
 
+#ifdef NOT_REQUIRED_ANYMORE
   str.sprintf(i18n("Are you sure you want to discard the\n"
 		   "contents of the folder \"%s\" ?"),
 	      (const char*)mFolder->label());
   if ((KMsgBox::yesNo(this,i18n("Confirmation"),str))==1)
   {
+#endif
     kbp->busy();
+    mFolder->open();
     mHeaders->setFolder(NULL);
     mMsgView->clear();
+    while ((msg = mFolder->take(0)) != NULL)
+      trashFolder->addMsg(msg);
+
+    mFolder->close();
     mFolder->expunge();
     mHeaders->setFolder(mFolder);
     kbp->idle();
-  }
+    statusMsg(i18n("Moved all messages into trash"));
+//}
 }
 
 

@@ -1,3 +1,13 @@
+1998-04-04  Stefan Taferner  <taferner@kde.org>
+
+	* Filters: Removed warning dialog. Filters are working ok for
+	me for several weeks now.
+
+	* Folders: After I finally also deleted lots of important messages
+	by mistake I now changed the behaviour of Folder->Empty to
+	move the messages into trash instead of deleting them ;-)
+	This made the "Are you sure" dialog now obsolete, IMO.
+
 1998-03-31  Stefan Taferner  <taferner@kde.org> (KMail-0.6.5)
 
 	* Folders: fixed bug introduced on 1998-03-26: open failed on

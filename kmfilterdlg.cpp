@@ -56,8 +56,6 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 
   initMetaObject();
 
-  warning("Mail filters are still broken and unusable.");
-
   grid  = new QGridLayout(this, 3, 2, 4, 4);
   mFilter = NULL;
 
