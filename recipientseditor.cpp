@@ -600,7 +600,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   QToolTip::add( mDistributionListButton,
     i18n("Save recipients as distribution list") );
 
-  mSelectButton = new QPushButton( "Se&lect...", this );
+  mSelectButton = new QPushButton( i18n("Se&lect..."), this );
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
   QToolTip::add( mSelectButton, i18n("Select recipients from address book") );
