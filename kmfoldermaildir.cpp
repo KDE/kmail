@@ -495,12 +495,14 @@ DwString KMFolderMaildir::getDwString(int idx)
   abs_file += mi->fileName();
   QFileInfo fi( abs_file );
 
-  if (fi.exists() && fi.isFile() && fi.isWritable())
+  if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
   {
     FILE* stream = fopen(QFile::encodeName(abs_file), "r+");
-    DwString str( stream, mi->msgSize() );
-    fclose( stream );
-    return str;
+	if (stream) {
+	  DwString str( stream, mi->msgSize() );
+	  fclose( stream );
+	  return str;
+	}
   }
   kdDebug(5006) << "Could not open file r+" << abs_file << endl;
   return DwString();
