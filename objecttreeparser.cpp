@@ -461,7 +461,7 @@ namespace KMail {
                   cleartext.data(), cleartext.length() );
 
       signaturetext = sign.msgPart().bodyDecodedBinary();
-      QCString signatureStr( signaturetext );
+      QCString signatureStr( signaturetext, signaturetext.size() + 1 );
       signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
                           (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
                           (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
