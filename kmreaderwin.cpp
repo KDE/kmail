@@ -1124,7 +1124,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   kdDebug( 5006 )
     << "parseMsg(KMMessage* aMsg "
     << ( aMsg == message() ? "==" : "!=" )
-    << " aMsg )";
+    << " aMsg )" << endl;
 #endif
 
   KMMessagePart msgPart;
