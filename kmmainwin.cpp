@@ -2633,7 +2633,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
   //----- Create filter submenu
-  filterMenu = new KActionMenu( i18n("Create F&ilter"), actionCollection(), "create_filter" );
+  filterMenu = new KActionMenu( i18n("&Create Filter"), actionCollection(), "create_filter" );
 
   KAction *subjectFilterAction = new KAction( i18n("Filter on &Subject..."), 0, this,
                                               SLOT(slotSubjectFilter()),
