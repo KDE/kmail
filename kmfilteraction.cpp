@@ -338,6 +338,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
     if ( (*it) != lastSeen ) {
       KTempFile *tf = new KTempFile();
       if ( tf->status() != 0 ) {
+	tf->close();
 	delete tf;
 	kdDebug() << "KMFilterActionWithCommand: Could not create temp file!" << endl;
 	return QString::null;
@@ -725,20 +726,16 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, boo
   commandLine = QString( "(%1) <%2 >%3" ).arg( commandLine ).arg( inFile->name() ).arg( outFile->name() );
 
   // write message to file
-  QString msgText;
+  QString msgText, tempFileName;
   FILE *fh;
   bool ok = TRUE;
 
-  fh = inFile->fstream();
-  if (fh) {
-    msgText = aMsg->asString();
-    if (!fwrite(msgText, msgText.length(), 1, fh)) ok = FALSE;
-    inFile->close();
-  } else ok = FALSE;
+  tempFileName = inFile->name();
+  kCStringToFile( aMsg->asString().data(), tempFileName,
+		  false, false, false );
+  inFile->close();
 
-  if ( !ok )
-    return ErrorButGoOn;
-
+  // run process
   KShellProcess shProc;
   shProc << commandLine;
 
@@ -749,23 +746,13 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, boo
     return ErrorButGoOn;
 
   // read altered message
-  int len;
-  char buf[8192];
+  msgText = kFileToString( outFile->name(), false, false );
 
-  fh = fopen(outFile->name(), "r");
-  if (fh) {
-    msgText = "";
-    while (1) {
-      len = fread(buf, 1, 1023, fh);
-      if (len <= 0) break;
-      buf[len] = 0;
-      msgText += buf;
-    }
-    outFile->close();
-    if ( !msgText.isEmpty() )
-      aMsg->fromString( msgText );
-  } else
+  if ( !msgText.isEmpty() )
+    aMsg->fromString( msgText );
+  else
     return ErrorButGoOn;
+  outFile->close();
   
   return GoOn;
 }
