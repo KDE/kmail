@@ -140,7 +140,7 @@ public:
   /** Called when the installation of a profile is
       requested. Reimplemenations of this method should do the
       equivalent of a @ref setup(), but with the given @ref KConfig
-      object instead of kapp->config() and only for those entries that
+      object instead of KMKernel::config() and only for those entries that
       really have keys defined in the profile.
 
       The default implementation does nothing.
