@@ -2925,12 +2925,20 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   else
     mMsg->removeHeaderField( "X-KMail-Markup" );
   if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
+    QString keepBtnText = mEncryptAction->isChecked() ?
+      mSignAction->isChecked() ? i18n( "&Keep markup, do not sign/encrypt" )
+                               : i18n( "&Keep markup, do not encrypt" )
+      : i18n( "&Keep markup, do not sign" );
+    QString yesBtnText = mEncryptAction->isChecked() ?
+      mSignAction->isChecked() ? i18n("Sign/Encrypt (delete markup)")
+      : i18n( "Encrypt (delete markup)" )
+      : i18n( "Sign (delete markup)" );
     int ret = KMessageBox::warningYesNoCancel(this,
                                       i18n("<qt><p>Inline signing/encrypting of HTML messages is not possible;</p>"
                                            "<p>do you want to delete your markup?</p></qt>"),
                                            i18n("Sign/Encrypt Message?"),
-                                           KGuiItem( i18n("&Delete markup") ),
-                                           KGuiItem( i18n("&Keep markup") ) );
+                                           KGuiItem( yesBtnText ),
+                                           KGuiItem( keepBtnText ) );
     if ( KMessageBox::Cancel == ret )
       return;
     if ( KMessageBox::No == ret ) {
