@@ -757,6 +757,8 @@ private:
 
 public:
   bool mDebugComposerCrypto;
+  bool mNeverSign;     // use this to completely disable signing and warnings
+  bool mNeverEncrypt;  // use this to completely disable encrypting and warnings
 };
 #endif
 
