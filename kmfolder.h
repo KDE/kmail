@@ -260,11 +260,14 @@ public:
     success.  @see KMFolder::expungeContents */
   int expunge();
 
+  enum CompactOptions { CompactLater, CompactNow, CompactSilentlyNow };
   /**
-   * Compact this folder.
-   * If immediate is true, do it immediately; otherwise schedule it for later
+   * Compact this folder. Options:
+   * CompactLater: schedule it as a background task
+   * CompactNow: do it now, and inform the user of the result (manual compaction)
+   * CompactSilentlyNow: do it now, and keep silent about it (e.g. for outbox)
    */
-  void compact( bool immediate = true );
+  void compact( CompactOptions options );
 
   /** Physically rename the folder. Returns zero on success and an errno
     on failure. */

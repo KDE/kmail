@@ -530,13 +530,15 @@ void KMSender::cleanup(void)
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg = 0;
   }
-  disconnect(kmkernel->outboxFolder(), SIGNAL(msgAdded(int)),
+  KMFolder* outboxFolder = kmkernel->outboxFolder();
+  disconnect(outboxFolder, SIGNAL(msgAdded(int)),
              this, SLOT(outboxMsgAdded(int)));
   kmkernel->sentFolder()->close();
-  kmkernel->outboxFolder()->close();
-  if (kmkernel->outboxFolder()->count()<0)
-    kmkernel->outboxFolder()->expunge();
-  else kmkernel->outboxFolder()->compact();
+  outboxFolder->close();
+  if ( outboxFolder->count() == 0 )
+    outboxFolder->expunge();
+  else if ( outboxFolder->needsCompacting() )
+    outboxFolder->compact( KMFolder::CompactSilentlyNow );
 
   mSendAborted = false;
   mSentMessages = 0;

@@ -34,6 +34,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
+#include "kmbroadcaststatus.h"
 
 #ifndef MAX_LINE
 #define MAX_LINE 4096
@@ -1202,19 +1203,14 @@ int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE* tmpfil
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::compact()
+int KMFolderMbox::compact( bool silent )
 {
-  if (!needsCompact)
-    return 0;
-
-  if (!mCompactable) {
-    kdDebug(5006) << location() << " compaction skipped." << endl;
-    return 0;
-  }
+  // This is called only when the user explicitely requests compaction,
+  // so we don't check needsCompact.
   int openCount = mOpenCount;
 
   KMail::MboxCompactionJob* job = new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
-  int rc = job->executeNow();
+  int rc = job->executeNow( silent );
   // Note that job autodeletes itself.
 
   if (openCount > 0)
@@ -1222,7 +1218,11 @@ int KMFolderMbox::compact()
     open();
     mOpenCount = openCount;
   }
+  // If this is the current folder, the changed signal will ultimately call
+  // KMHeaders::setFolderInfoStatus which will override the message, so save/restore it
+  QString statusMsg = KMBroadcastStatus::instance()->statusMsg();
   emit changed();
+  KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
   return rc;
 }
 

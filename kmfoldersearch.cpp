@@ -644,7 +644,7 @@ int KMFolderSearch::create(bool)
     return rc;
 }
 
-int KMFolderSearch::compact()
+int KMFolderSearch::compact( bool )
 {
     needsCompact = false;
     return 0;

@@ -718,13 +718,13 @@ void KMFolder::expireOldMessages( bool immediate )
     kmkernel->jobScheduler()->registerTask( task );
 }
 
-void KMFolder::compact( bool immediate )
+void KMFolder::compact( CompactOptions options )
 {
-  if ( immediate )
-    mStorage->compact();
-  else {
-    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, immediate);
+  if ( options == CompactLater ) {
+    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, false);
     kmkernel->jobScheduler()->registerTask( task );
+  } else {
+    mStorage->compact( options == CompactSilentlyNow );
   }
 }
 

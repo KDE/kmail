@@ -51,7 +51,7 @@ using namespace KMail;
 
 MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
  : FolderJob( 0, tOther, folder ), mTimer( this ), mTmpFile( 0 ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false )
+   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
 {
   mCancellable = true;
   mSrcFolder = folder;
@@ -89,12 +89,17 @@ QString MboxCompactionJob::realLocation() const
   return location;
 }
 
-int MboxCompactionJob::executeNow()
+int MboxCompactionJob::executeNow( bool silent )
 {
+  mSilent = silent;
   FolderStorage* storage = mSrcFolder->storage();
   KMFolderMbox* mbox = static_cast<KMFolderMbox *>( storage );
   if (!storage->compactable()) {
     kdDebug(5006) << storage->location() << " compaction skipped." << endl;
+    if ( !mSilent ) {
+      QString str = i18n( "For safety reasons, compaction has been disabled for %1" ).arg( mbox->label() );
+      KMBroadcastStatus::instance()->setStatusMsg( str );
+    }
     return 0;
   }
   kdDebug(5006) << "Compacting " << mSrcFolder->idString() << endl;
@@ -165,6 +170,7 @@ void MboxCompactionJob::done( int rc )
     mbox->setAutoCreateIndex( autoCreate );
     mbox->setNeedsCompacting( false );            // We are clean now
     str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
+    kdDebug(5006) << str << endl;
   } else {
     mbox->close();
     str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
@@ -173,7 +179,8 @@ void MboxCompactionJob::done( int rc )
   }
   mErrorCode = rc;
 
-  KMBroadcastStatus::instance()->setStatusMsg( str );
+  if ( !mSilent )
+    KMBroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"
@@ -183,7 +190,7 @@ void MboxCompactionJob::done( int rc )
 
 MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
  : FolderJob( 0, tOther, folder ), mTimer( this ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false )
+   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
 {
   mCancellable = true;
   mSrcFolder = folder;
@@ -203,8 +210,9 @@ void MaildirCompactionJob::kill()
   FolderJob::kill();
 }
 
-int MaildirCompactionJob::executeNow()
+int MaildirCompactionJob::executeNow( bool silent )
 {
+  mSilent = silent;
   KMFolderMaildir* storage = static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
   kdDebug(5006) << "Compacting " << mSrcFolder->idString() << endl;
 
@@ -250,7 +258,8 @@ void MaildirCompactionJob::done( int rc )
   mErrorCode = rc;
   storage->setNeedsCompacting( false );
   storage->close();
-  KMBroadcastStatus::instance()->setStatusMsg( str );
+  if ( !mSilent )
+    KMBroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"

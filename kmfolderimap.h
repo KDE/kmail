@@ -192,7 +192,7 @@ public:
    */
   void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
-  int compact() { expungeFolder(this, false); return 0; };
+  virtual int compact( bool ) { expungeFolder(this, false); return 0; };
 
   /**
    * Emit the folderComplete signal
@@ -405,7 +405,7 @@ protected slots:
 
   /**
    * Is called when the slave is connected and triggers a newmail check
-   */ 
+   */
   void slotProcessNewMail( int errorCode, const QString& errorMsg );
 
 protected:

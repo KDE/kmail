@@ -35,6 +35,7 @@ KMBroadcastStatus::KMBroadcastStatus()
 
 void KMBroadcastStatus::setStatusMsg( const QString& message )
 {
+  mStatusMsg = message;
   emit statusMsg( message );
 }
 

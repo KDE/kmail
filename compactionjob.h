@@ -45,8 +45,8 @@ public:
   MboxCompactionJob( KMFolder* folder, bool immediate );
   virtual ~MboxCompactionJob();
 
-  int executeNow();
-  virtual void execute() { executeNow(); }
+  int executeNow( bool silent );
+  virtual void execute() { executeNow( false ); }
   virtual void kill();
 
 private slots:
@@ -65,6 +65,7 @@ private:
   int mCurrentIndex;
   bool mImmediate;
   bool mFolderOpen;
+  bool mSilent;
 };
 
 /**
@@ -78,8 +79,8 @@ public:
   MaildirCompactionJob( KMFolder* folder, bool immediate );
   virtual ~MaildirCompactionJob();
 
-  int executeNow();
-  virtual void execute() { executeNow(); }
+  int executeNow( bool silent );
+  virtual void execute() { executeNow( false ); }
   virtual void kill();
 
 private slots:
@@ -94,6 +95,7 @@ private:
   int mCurrentIndex;
   bool mImmediate;
   bool mFolderOpen;
+  bool mSilent;
 };
 
 /// A scheduled "compact mails in this folder" task.

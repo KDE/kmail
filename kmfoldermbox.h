@@ -85,7 +85,7 @@ public:
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
-  virtual int compact();
+  virtual int compact( bool silent );
 
   /** Remove some deleted messages from the folder. Returns zero on success
     and an errno on failure. This is only for use from MboxCompactionJob. */

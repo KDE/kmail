@@ -1053,13 +1053,15 @@ void KMMainWidget::slotMarkAllAsRead()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompactFolder()
 {
-  int idx = mHeaders->currentItemIndex();
-  if (mFolder)
-  {
-      KCursorSaver busy(KBusyPtr::busy());
-      mFolder->compact();
+  if (mFolder) {
+    int idx = mHeaders->currentItemIndex();
+    KCursorSaver busy(KBusyPtr::busy());
+    mFolder->compact( KMFolder::CompactNow );
+    // setCurrentItemByIndex will override the statusbar message, so save/restore it
+    QString statusMsg = KMBroadcastStatus::instance()->statusMsg();
+    mHeaders->setCurrentItemByIndex(idx);
+    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
   }
-  mHeaders->setCurrentItemByIndex(idx);
 }
 
 

@@ -315,13 +315,10 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::compact()
+int KMFolderMaildir::compact( bool silent )
 {
-  if (!needsCompact)
-    return 0;
-
   KMail::MaildirCompactionJob* job = new KMail::MaildirCompactionJob( folder(), true /*immediate*/ );
-  int rc = job->executeNow();
+  int rc = job->executeNow( silent );
   // Note that job autodeletes itself.
   return rc;
 }

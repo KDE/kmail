@@ -35,6 +35,8 @@ public:
   static KMBroadcastStatus *instance();
   /** Emit an update status bar signal */
   void setStatusMsg( const QString& message );
+  /** Return the last status message from setStatusMsg() */
+  QString statusMsg() const { return mStatusMsg; }
   /** Sets a status bar message with timestamp */
   void setStatusMsgWithTimestamp( const QString& message );
   /** Sets a transmission completed status bar message */
@@ -60,6 +62,7 @@ signals:
 protected:
 
   KMBroadcastStatus();
+  QString mStatusMsg;
   static KMBroadcastStatus* instance_;
 };
 

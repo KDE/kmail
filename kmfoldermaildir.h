@@ -84,7 +84,7 @@ public:
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
-  virtual int compact();
+  virtual int compact( bool silent );
 
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return false; }

@@ -287,8 +287,10 @@ public:
   virtual int expunge();
 
   /** Remove deleted messages from the folder. Returns zero on success
-    and an errno on failure. */
-  virtual int compact() = 0;
+    and an errno on failure.
+    A statusbar message will inform the user that the compaction worked,
+    unless @p silent is set. */
+  virtual int compact( bool silent ) = 0;
 
   /** Physically rename the folder. Returns zero on success and an errno
     on failure. */
