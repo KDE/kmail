@@ -549,6 +549,36 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
   return encodings;
 }
 
+namespace {
+  // don't rely on isblank(), which is a GNU extension in
+  // <cctype>. But if someone wants to write a configure test for
+  // isblank(), we can then rename this function to isblank and #ifdef
+  // it's definition...
+  inline bool isBlank( char ch ) { return ch == ' ' || ch == '\t' ; }
+
+  QCString unfold( const QCString & header ) {
+    if ( header.isEmpty() )
+      return QCString();
+
+    QCString result( header.size() ); // size() >= length()+1 and size() is O(1)
+    char * d = result.data();
+
+    for ( const char * s = header.data() ; *s ; )
+      if ( *s == '\r' ) // ignore
+	continue;
+      else if ( *s == '\n' ) { // unfold
+	while ( isBlank( *++s ) );
+	*d++ = ' ';
+      } else
+	*d++ = *s++;
+
+    *d++ = '\0';
+
+    result.truncate( d - result.data() );
+    return result;
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
@@ -556,43 +586,24 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   if ( aStr.isEmpty() )
     return QString::null;
 
-  if (aStr.find("=?") < 0)
-  {
-    QString str = kmkernel->networkCodec()->toUnicode(aStr);
-    if (str.find('\n') == -1) return str;
-    QString str2((QChar*)0, str.length());
-    uint i = 0;
-    while (i < str.length())
-    {
-      if (str[i] == '\n')
-      {
-        str2 += ' ';
-        i += 2;
-      } else {
-        str2 += str[i];
-        i++;
-      }
-    }
-    return str2;
-  }
+  const QCString str = unfold( aStr );
+
+  if ( str.isEmpty() )
+    return QString::null;
+
+  if ( str.find( "=?" ) < 0 )
+    return kmkernel->networkCodec()->toUnicode( str );
 
   QString result;
   QCString LWSP_buffer;
   bool lastWasEncodedWord = false;
   static const int maxLen = 200;
 
-  for ( const char * pos= aStr.data() ; *pos ; ++pos ) {
-    // line unfolding
-    if ( pos[0] == '\r' && pos[1] == '\n' ) {
-      pos++;
-      continue;
-    }
-    if ( pos[0] == '\n' )
-      continue;
+  for ( const char * pos = str.data() ; *pos ; ++pos ) {
     // collect LWSP after encoded-words,
     // because we might need to throw it out
     // (when the next word is an encoded-word)
-    if ( lastWasEncodedWord && ( pos[0] == ' ' || pos[0] == '\t' ) ) {
+    if ( lastWasEncodedWord && isBlank( pos[0] ) ) {
       LWSP_buffer += pos[0];
       continue;
     }
