@@ -83,8 +83,9 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *precommand;
-      QCheckBox    *useSSLCheck;
-      QCheckBox    *useTLSCheck;
+      QRadioButton *encryptionNone;
+      QRadioButton *encryptionSSL;
+      QRadioButton *encryptionTLS;
       QRadioButton *authAuto;
       QRadioButton *authUser;
       QRadioButton *authPlain;
@@ -115,8 +116,9 @@ class AccountDialog : public KDialogBase
       QCheckBox    *autoExpungeCheck;
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *storePasswordCheck;
-      QCheckBox    *useSSLCheck;
-      QCheckBox    *useTLSCheck;
+      QRadioButton *encryptionNone;
+      QRadioButton *encryptionSSL;
+      QRadioButton *encryptionTLS;
       QRadioButton *authAuto;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -132,10 +134,8 @@ class AccountDialog : public KDialogBase
     void slotEnableLocalInterval( bool state );
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
-    void slotSSLChanged();
-    void slotTLSChanged();
-    void slotImapSSLChanged();
-    void slotImapTLSChanged();
+    void slotPopEncryptionChanged(int);
+    void slotImapEncryptionChanged(int);
     
   private:
     void makeLocalAccountPage();
