@@ -36,6 +36,7 @@
 //#include <khtml.h>
 #include <kfiledialog.h>
 #include <kwm.h>
+#include <kglobal.h>
 #include <qtabdialog.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -558,7 +559,7 @@ void KMComposeWin::setupMenuBar(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupToolBar(void)
 {
-  KIconLoader* loader = kapp->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
 
   mToolBar = new KToolBar(this);
 

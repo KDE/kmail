@@ -25,6 +25,7 @@
 #include <kapp.h>
 #include <ksimpleconfig.h>
 #include <kiconloader.h>
+#include <kglobal.h>
 #include <kmsgbox.h>
 #include <klocale.h>
 
@@ -706,7 +707,7 @@ Kpgp::canonicalAdress(QString _adress)
 KpgpPass::KpgpPass(QWidget *parent, const char *name)
   : QDialog(parent, 0, TRUE)
 {
-  KIconLoader* loader = kapp->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
   QPixmap pixm;
 
   setCaption(name);
@@ -758,7 +759,7 @@ KpgpPass::getPhrase()
 KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
   : QDialog(parent, 0, TRUE)
 {
-  KIconLoader* loader = kapp->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
   QPixmap pixm;
 
   setCaption(name);

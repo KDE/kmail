@@ -9,6 +9,8 @@
 #include <qcolor.h>
 
 #include <kapp.h>
+#include <kglobal.h>
+#include <klocale.h>
 #include <kiconloader.h>
 
 #include "kmfolder.h"
@@ -21,7 +23,6 @@
 #include "kfileio.h"
 #include "kmfiltermgr.h"
 #include "kfontutils.h"
-#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------
@@ -29,7 +30,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
   KMHeadersInherited(parent, name, 4)
 {
-  KIconLoader* loader = app->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
   static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep, pixSent, pixQueued,
                  pixFwd;
 

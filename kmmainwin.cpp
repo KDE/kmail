@@ -31,7 +31,7 @@
 #include <kmsgbox.h>
 #include <kconfig.h>
 #include <kapp.h>
-#include <kapp.h>
+#include <kglobal.h>
 #include <kiconloader.h>
 #include <kstdaccel.h>
 #include <knewpanner.h>
@@ -1099,7 +1099,7 @@ void KMMainWin::setupMenuBar()
 //-----------------------------------------------------------------------------
 void KMMainWin::setupToolBar()
 {
-  KIconLoader* loader = kapp->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
 
   mToolBar = new KToolBar(this);
 

@@ -6,14 +6,15 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <kiconloader.h>
+#include <drag.h>
+#include <klocale.h>
+#include <kglobal.h>
 
 #include "kmglobal.h"
 #include "kmdragdata.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
 #include "kmfolder.h"
-#include <drag.h>
-#include <klocale.h>
 
 #include "kmfoldertree.moc"
 
@@ -22,7 +23,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KMFolderTreeInherited(parent, name, 1), mList()
 {
   KConfig* conf = app->getConfig();
-  KIconLoader* loader = app->getIconLoader();
+  KIconLoader* loader = KGlobal::iconLoader();
   static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr,
 		 pixSent;
   static bool pixmapsLoaded = FALSE;
