@@ -466,7 +466,18 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   type = aMsg->typeStr();
   numParts = aMsg->numBodyParts();
 
+  // Hrm we have to iterate this twice with the current design.  This
+  // should really be fixed.  (FIXME)
+  for (int j = 0; j < aMsg->numBodyParts(); j++) {
+    aMsg->bodyPart(j, &msgPart);
+    if (!stricmp(msgPart.typeStr(), "text")
+       && !stricmp(msgPart.subtypeStr(), "x-vcard")) {
+      debug("FOUND A VCARD");
+    }
+  }
+
   writeMsgHeader();
+
   if (numParts > 0)
   {
     // ---sven: handle multipart/alternative start ---
@@ -1206,6 +1217,22 @@ void KMReaderWin::slotAtmView()
     KMReaderWin* win = new KMReaderWin; //new reader
     if (stricmp(msgPart.typeStr(), "text")==0)
     {
+      if (stricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
+        KMDisplayVCard *vcdlg;
+        int vcerr;
+        VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);
+ 
+        if (!vc) {
+          QString errstring = i18n("Error reading in vCard:\n");
+          errstring += VCard::getError(vcerr);
+          KMessageBox::error(this, i18n(errstring), i18n("vCard error"));
+          return;
+        }
+ 
+        vcdlg = new KMDisplayVCard(vc);
+        vcdlg->show();
+        return;
+      }
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
       QString str = msgPart.bodyDecoded();
