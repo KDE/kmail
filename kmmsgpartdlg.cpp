@@ -142,7 +142,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   // row 4: "Encoding" combobox and label:
   mEncoding = new QComboBox( false, plainPage() );
   mEncoding->insertStringList( mI18nizedEncodings );
-  label = new QLabel( mEncoding, i18n("&Encoding"), plainPage() );
+  label = new QLabel( mEncoding, i18n("&Encoding:"), plainPage() );
   glay->addWidget( label, 4, 0 );
   glay->addWidget( mEncoding, 4, 1 );
 
@@ -153,7 +153,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "resulting message, e.g. if a PostScript file doesn't contain "
 	     "binary data, but consists of pure text. In this case, choosing "
 	     "\"quoted-printable\" over the default \"base64\" will save up "
-	     "to 25% in resulting message size.</p></qt>");
+	     "to 25% in resulting message size.</p></qt>")
+    .arg( kapp->aboutData()->programName() );
   QWhatsThis::add( label, msg );
   QWhatsThis::add( mEncoding, msg );
 
