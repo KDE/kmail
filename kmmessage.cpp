@@ -1023,21 +1023,24 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
                                                   recipients );
     }
 
-    // add From address to the list of recipients (or to the list of CC
-    // recipients in case of a mailing list message ) if it's not already there
+    // add From address if appropriate
     if ( !from().isEmpty() ) {
-      if ( !addressIsInAddressList( from(), recipients ) ) {
-        if ( !mailingListPostAddress.isEmpty() ) {
+      if ( !mailingListPostAddress.isEmpty() ) {
+        // in case of replying to a mailing list message add the From address
+        // to the list of CC recipients if it's not already there
+        if ( !addressIsInAddressList( from(), recipients ) ) {
           ccRecipients += from();
           kdDebug(5006) << "Added " << from()
                         << " to the list of CC recipients"
                         << endl;
         }
-        else {
-          recipients += from();
-          kdDebug(5006) << "Added " << from() << " to the list of recipients"
-                        << endl;
-        }
+      }
+      else if ( recipients.isEmpty() ) {
+        // in case of replying to a normal message only then add the From
+        // address to the list of recipients if there was no Reply-to address
+        recipients += from();
+        kdDebug(5006) << "Added " << from() << " to the list of recipients"
+                      << endl;
       }
     }
 
