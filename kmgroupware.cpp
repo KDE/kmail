@@ -375,14 +375,14 @@ void KMGroupware::initFolders()
     connect( mNotes, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
 	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
 
-    connect( mContacts, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
-    connect( mCalendar, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
-    connect( mTasks, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
-    connect( mNotes, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
+    connect( mContacts, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    connect( mCalendar, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    connect( mTasks, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    connect( mNotes, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
 
     if( mMainWin && mMainWin->mainKMWidget()->folderTree() ) {
       mMainWin->mainKMWidget()->folderTree()->reload();
@@ -1152,8 +1152,36 @@ void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
   if( unget ) folder->unGetMsg(i);
 }
 
-void KMGroupware::slotIncidenceDeleted( KMFolder* folder, int idx )
+void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
 {
+  QString type;
+  if( folder == mContacts ) {
+    type = "Contact";
+  } else if( folder == mCalendar ) {
+    type = "Calendar";
+  } else if( folder == mTasks ) {
+    type = "Task";
+  } else if( folder == mNotes ) {
+    type = "Note";
+  } else {
+    kdError() << "Not a groupware folder" << endl;
+    return;
+  }
+
+  int i = 0;
+  KMFolder* aFolder = 0;
+  KMKernel::self()->msgDict()->getLocation( sernum, &aFolder, &i );
+  assert( folder == aFolder );
+
+  bool unget = !folder->isMessage( i );
+  int iDummy;
+  QString s;
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) ) {
+    QString uid( "UID" );
+    vPartMicroParser( s.utf8(), uid );
+    emit incidenceDeleted( type, uid );
+  }
+  if( unget ) folder->unGetMsg(i);
 }
 
 void KMGroupware::slotNewOrUpdatedIncident( const QString& type,

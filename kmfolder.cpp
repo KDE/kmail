@@ -416,8 +416,6 @@ void KMFolder::removeMsg(int idx, bool)
     return;
   }
 
-  emit aboutToRemoveMsg( this, idx );
-
   KMMsgBase* mb = getMsgBase(idx);
   QString msgIdMD5 = mb->msgIdMD5();
   Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
@@ -450,8 +448,6 @@ KMMessage* KMFolder::take(int idx)
   KMMessage* msg;
 
   assert(idx>=0 && idx<=count());
-
-  emit aboutToRemoveMsg( this, idx );
 
   mb = getMsgBase(idx);
   if (!mb) return 0;

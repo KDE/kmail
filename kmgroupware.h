@@ -52,7 +52,7 @@ signals:
 private slots:
   // internal slots for new interface
   void slotIncidenceAdded( KMFolder*, Q_UINT32 );
-  void slotIncidenceDeleted( KMFolder*, int );
+  void slotIncidenceDeleted( KMFolder*, Q_UINT32 );
   
   //////////////////////////////////
 public:

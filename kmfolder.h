@@ -479,20 +479,18 @@ signals:
   /** Emitted when the icon paths are set. */
   void iconsChanged();
 
-  /** Emitted when a message is about to be removed from a folder
-   */
-  void aboutToRemoveMsg( KMFolder* fld, int idx );
+  /** Emitted before a message is removed from the folder. */  
+  void msgRemoved(KMFolder*, Q_UINT32 sernum);
 
   /** Emitted when a message is removed from the folder. */
-  void msgRemoved(int,QString);
-  void msgRemoved(KMFolder*, Q_UINT32);
+  void msgRemoved(int idx,QString msgIdMD5);
 
   /** Emitted when a message is added from the folder. */
-  void msgAdded(int);
-  void msgAdded(KMFolder*, Q_UINT32);
+  void msgAdded(int idx);
+  void msgAdded(KMFolder*, Q_UINT32 sernum);
 
   /** Emitted, when the status of a message is changed */
-  void msgChanged(KMFolder*, Q_UINT32, int delta);
+  void msgChanged(KMFolder*, Q_UINT32 sernum, int delta);
 
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(int);
