@@ -3284,6 +3284,7 @@ void KMMainWidget::initializeFilterActions()
     mFilterTBarActions.clear();
   }
   if ( !mFilterMenuActions.isEmpty() ) {
+    mApplyFilterActionsMenu->popupMenu()->clear();
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
     mFilterMenuActions.clear();
@@ -3305,6 +3306,7 @@ void KMMainWidget::initializeFilterActions()
       filterAction = new KAction(as, icon, 0, filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
+      filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
       // FIXME
       // uncomment the next if statement after the filter dialog supports
