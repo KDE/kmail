@@ -53,6 +53,7 @@
 #include <kabc/stdaddressbook.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 
 #include <qstringlist.h>
@@ -1483,18 +1484,33 @@ Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferenc
 
 void Kleo::KeyResolver::saveContactPreference( const QString& email, const ContactPreferences& pref ) const
 {
-  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
   KABC::Addressee::List res = ab->findByEmail( email );
-  if ( !res.isEmpty() ) {
-    KABC::Addressee addr = res.first();
-    addr.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
-    addr.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
-    addr.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
-    addr.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
-    addr.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
-    ab->insertAddressee( addr );
-    // Assumption: 'pref' comes from d->mContactPreferencesMap already, no need to update that
-  }
+
+  KABC::Addressee addr;
+  if ( res.isEmpty() ) {
+     bool ok = true;
+     QString fullName = KInputDialog::getText( i18n( "Name Selection" ), i18n( "Which name shall the contact '%1' have in your addressbook?" ).arg( email ), QString::null, &ok );
+    if ( ok ) {
+      addr.setNameFromString( fullName );
+      addr.insertEmail( email, true );
+    } else
+      return;
+  } else
+    addr = res.first();
+
+  addr.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
+  addr.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
+  addr.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
+  addr.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
+  addr.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
+
+  ab->insertAddressee( addr );
+  KABC::Ticket *ticket = ab->requestSaveTicket( addr.resource() );
+  if ( ticket )
+    ab->save( ticket );
+
+  // Assumption: 'pref' comes from d->mContactPreferencesMap already, no need to update that
 }
 
 Kleo::KeyResolver::ContactPreferences::ContactPreferences()
