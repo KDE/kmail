@@ -355,6 +355,11 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
         ->charset());
       if (codec) str = codec->toUnicode(cstr);
       else str = QString::fromLocal8Bit(cstr);
+
+      // Workaround for bug in QT-2.2.2
+      // the utf-8 QTextCodec adds a 0x0000 at the end of the string
+      if (str.at(str.length() - 1).isNull()) str = str.left(str.length() - 1);
+
       *pos = ch;
       result += str;
 //      for (i=0; i < (int)str.length(); i++)
