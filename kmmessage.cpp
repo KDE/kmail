@@ -199,6 +199,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 
   // copy string and throw out obsolete control characters
   len = aStr.length();
+  setMsgSize(len);
   result.resize(len+1);
   strPos = aStr.data();
   resultPos = (char*)result.data();
