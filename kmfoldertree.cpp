@@ -864,10 +864,13 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
 //-----------------------------------------------------------------------------
 QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
-    if ( static_cast<KMFolderTreeItem*>(it.current())->folder() == folder )
-      return it.current();
-  return 0;
+   QListViewItem *i  = firstChild();
+   while ( i ) {
+      if ( static_cast<KMFolderTreeItem*>(i)->folder() == folder )
+         return i;
+      i = i->itemBelow();
+   }
+   return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1454,7 +1457,6 @@ void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
   QListViewItem * current;
-
   if (folder)
     current = indexOfFolder(folder);
   else
@@ -1478,7 +1480,6 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
      fti->adjustUnreadCount( count );
      repaint = true;
   }
-
   if (isTotalActive())
   {
     // get the total-count
