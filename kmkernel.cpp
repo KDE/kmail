@@ -320,14 +320,16 @@ void KMKernel::openReader( bool onlyCheck )
   if (ktmw) {
     mWin = (KMMainWin *) ktmw;
     activate = !onlyCheck; // existing window: only activate if not --check
+    if ( activate )
+       mWin->show();
   }
   else {
     mWin = new KMMainWin;
-    activate = true; // new window: always activate
+    mWin->show();
+    activate = false; // new window: no explicit activation (#73591)
   }
 
   if ( activate ) {
-    mWin->show();
     // Activate window - doing this instead of KWin::activateWindow(mWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
