@@ -1,3 +1,4 @@
+// -*- c++ -*-
 // configuredialog_p.h: classes internal to ConfigureDialog
 // see configuredialog.h for details.
 
@@ -51,6 +52,8 @@ namespace Kpgp {
 };
 namespace KMail {
   class SignatureConfigurator;
+  class IdentityDialog;
+  class IdentityListView;
 };
 
 class NewIdentityDialog : public KDialogBase
@@ -208,43 +211,24 @@ public slots:
 
 protected slots:
   void slotNewIdentity();
-  void slotRenameIdentity();
+  void slotModifyIdentity();
   void slotRemoveIdentity();
+  void slotRenameIdentity( QListViewItem *, const QString &, int );
   void slotSetAsDefault();
-  void slotIdentitySelectorChanged();
+  void slotIdentitySelectionChanged( QListViewItem * );
 
 protected: // methods
-  void updateCombo( uint newCurrentItem=0 );
-  void saveActiveIdentity();
-  void setIdentityInformation( const QString & identityName );
+  void refreshList();
 
 protected: // data members
-  QString        mActiveIdentity;
+  KMail::IdentityDialog   * mIdentityDialog;
   int            mOldNumberOfIdentities;
 
-  // Widgets:
-  // outside tabwidget:
-  QComboBox        *mIdentityCombo;
-  QPushButton      *mRenameButton;
-  QPushButton      *mRemoveButton;
-  QPushButton      *mSetAsDefaultButton;
+  KMail::IdentityListView * mIdentityList;
+  QPushButton             * mModifyButton;
+  QPushButton             * mRemoveButton;
+  QPushButton             * mSetAsDefaultButton;
 
-  // "general" tab:
-  QLineEdit        *mNameEdit;
-  QLineEdit        *mOrganizationEdit;
-  QLineEdit        *mEmailEdit;
-  // "advanced" tab:
-  QLineEdit        *mReplyToEdit;
-  QLineEdit        *mBccEdit;
-  Kpgp::SecretKeyRequester
-                   *mPgpKeyRequester;
-  KMFolderComboBox *mFccCombo;
-  KMFolderComboBox *mDraftsCombo;
-  QCheckBox        *mTransportCheck;
-  QComboBox        *mTransportCombo; // should be a KMTransportCombo...
-  // "signature" tab:
-  KMail::SignatureConfigurator
-                   *mSignatureConfigurator;
 };
 
 

@@ -48,6 +48,11 @@
 #include "certificatehandlingdialogimpl.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
+#include "identitylistview.h"
+using KMail::IdentityListView;
+using KMail::IdentityListViewItem;
+#include "identitydialog.h"
+using KMail::IdentityDialog;
 #include "kmkernel.h"
 #include "signatureconfigurator.h"
 using KMail::SignatureConfigurator;
@@ -329,11 +334,11 @@ void ConfigureDialog::apply( bool everything ) {
 // *************************************************************
 
 QString IdentityPage::iconLabel() {
-  return i18n("Identity");
+  return i18n("Identities");
 }
 
 QString IdentityPage::title() {
-  return i18n("Personal Information");
+  return i18n("Manage Identities");
 }
 
 const char * IdentityPage::iconName() {
@@ -345,192 +350,68 @@ QString IdentityPage::helpAnchor() {
 }
 
 IdentityPage::IdentityPage( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigurationPage( parent, name ),
+    mIdentityDialog( 0 )
 {
-  // temp. vars:
-  QGridLayout *glay;
-  QHBoxLayout *hlay;
-  QPushButton *button;
-  QWidget     *tab;
-  QLabel      *label;
-  QString      msg;
-  int row;
+  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
-  //
-  // the identity selector:
-  //
-  glay = new QGridLayout( this, 3, 2, KDialog::spacingHint() );
-  glay->setColStretch( 1, 1 );
-  glay->setRowStretch( 2, 1 );
+  mIdentityList = new IdentityListView( this );
+  connect( mIdentityList, SIGNAL(selectionChanged(QListViewItem*)),
+	   SLOT(slotIdentitySelectionChanged(QListViewItem*)) );
+  connect( mIdentityList, SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
+	   SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
+  // ### connect dragged(...), doubleClicked(...)
 
-  // "Identity" combobox with label:
-  mIdentityCombo = new QComboBox( false, this );
-  glay->addWidget( new QLabel( mIdentityCombo, i18n("&Identity:"), this ),
-		   0, 0 );
-  glay->addWidget( mIdentityCombo, 0, 1 );
-  connect( mIdentityCombo, SIGNAL(activated(int)),
-	   this, SLOT(slotIdentitySelectorChanged()) );
+  hlay->addWidget( mIdentityList, 1 );
 
-  // "new...", "rename...", "remove...", "set as default" buttons:
-  hlay = new QHBoxLayout(); // inherits spacing from parent layout
-  glay->addLayout( hlay, 1, 1 );
+  QVBoxLayout * vlay = new QVBoxLayout( hlay ); // inherits spacing
 
-  button = new QPushButton( i18n("&New..."), this );
-  mRenameButton = new QPushButton( i18n("&Rename..."), this );
-  mRemoveButton = new QPushButton( i18n("Re&move..."), this );
+  QPushButton * button = new QPushButton( i18n("&New..."), this );
+  mModifyButton = new QPushButton( i18n("&Modify..."), this );
+  mRemoveButton = new QPushButton( i18n("&Remove..."), this );
   mSetAsDefaultButton = new QPushButton( i18n("Set as &Default"), this );
   button->setAutoDefault( false );
-  mRenameButton->setAutoDefault( false );
+  mModifyButton->setAutoDefault( false );
+  mModifyButton->setEnabled( false );
   mRemoveButton->setAutoDefault( false );
+  mRemoveButton->setEnabled( false );
   mSetAsDefaultButton->setAutoDefault( false );
   mSetAsDefaultButton->setEnabled( false );
   connect( button, SIGNAL(clicked()),
 	   this, SLOT(slotNewIdentity()) );
-  connect( mRenameButton, SIGNAL(clicked()),
-	   this, SLOT(slotRenameIdentity()) );
+  connect( mModifyButton, SIGNAL(clicked()),
+	   this, SLOT(slotModifyIdentity()) );
   connect( mRemoveButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveIdentity()) );
   connect( mSetAsDefaultButton, SIGNAL(clicked()),
 	   this, SLOT(slotSetAsDefault()) );
-  hlay->addWidget( button );
-  hlay->addWidget( mRenameButton );
-  hlay->addWidget( mRemoveButton );
-  hlay->addWidget( mSetAsDefaultButton );
-
-  //
-  // Tab Widget: General
-  //
-  QTabWidget *tabWidget = new QTabWidget( this, "config-identity-tab" );
-  glay->addMultiCellWidget( tabWidget, 2, 2, 0, 1 );
-  tab = new QWidget( tabWidget );
-  tabWidget->addTab( tab, i18n("&General") );
-  glay = new QGridLayout( tab, 4, 2, KDialog::spacingHint() );
-  glay->setMargin( KDialog::marginHint() );
-  glay->setRowStretch( 3, 1 );
-  glay->setColStretch( 1, 1 );
-
-  // row 0: "Name" line edit and label:
-  mNameEdit = new QLineEdit( tab );
-  glay->addWidget( mNameEdit, 0, 1 );
-  glay->addWidget( new QLabel( mNameEdit, i18n("Name:"), tab ), 0, 0 );
-
-  // row 1: "Organization" line edit and label:
-  mOrganizationEdit = new QLineEdit( tab );
-  glay->addWidget( mOrganizationEdit, 1, 1 );
-  glay->addWidget( new QLabel( mOrganizationEdit,
-			       i18n("Organi&zation:"), tab ), 1, 0 );
-
-  // row 2: "Email Address" line edit and label:
-  // (row 3: spacer)
-  mEmailEdit = new QLineEdit( tab );
-  glay->addWidget( mEmailEdit, 2, 1 );
-  glay->addWidget( new QLabel( mEmailEdit, i18n("&Email address:"), tab ),
-		   2, 0 );
-
-  //
-  // Tab Widget: Advanced
-  //
-  row = -1;
-  tab = new QWidget( tabWidget );
-  tabWidget->addTab( tab, i18n("Ad&vanced") );
-  glay = new QGridLayout( tab, 7, 2, KDialog::marginHint(), KDialog::spacingHint() );
-  // the last (empty) row takes all the remaining space
-  glay->setRowStretch( 7-1, 1 );
-  glay->setColStretch( 1, 1 );
-
-  // "Reply-To Address" line edit and label:
-  ++row;
-  mReplyToEdit = new QLineEdit( tab );
-  glay->addWidget( mReplyToEdit, row, 1 );
-  glay->addWidget( new QLabel( mReplyToEdit,
-			       i18n("Re&ply-To address:"), tab ), row, 0 );
-
-  // "BCC addresses" line edit and label:
-  ++row;
-  mBccEdit = new QLineEdit( tab );
-  glay->addWidget( mBccEdit, row, 1 );
-  label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
-  glay->addWidget( label, row, 0 );
-  msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
-	     "<p>The addresses that you enter here will be added to each"
-	     "   outgoing mail that is sent with this identity. They will not"
-	     "   be visible to other recipients.</p>"
-	     "<p>This is commonly used to send a copy of each sent message to"
-	     "   another account of yours.</p>"
-	     "<p>If in doubt, leave this field blank.</p></qt>");
-  QWhatsThis::add( label, msg );
-  QWhatsThis::add( mBccEdit, msg );
-
-  // "OpenPGP Key" requester and label:
-  ++row;
-  mPgpKeyRequester = new Kpgp::SecretKeyRequester( tab );
-  mPgpKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
-  mPgpKeyRequester->setDialogCaption( i18n("Your OpenPGP Key") );
-  mPgpKeyRequester->setDialogMessage( i18n("Select the OpenPGP key which "
-					   "should be used to sign your "
-					   "messages and when encrypting to "
-					   "yourself.") );
-  msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
-	     "to sign messages and to encrypt messages to "
-	     "yourself.</p></qt>");
-
-  label = new QLabel( mPgpKeyRequester, i18n("OpenPGP &key:"), tab );
-  QWhatsThis::add( mPgpKeyRequester, msg );
-  QWhatsThis::add( label, msg );
-
-  glay->addWidget( label, row, 0 );
-  glay->addWidget( mPgpKeyRequester, row, 1 );
-  
-  // "Sent-mail Folder" combo box and label:
-  ++row;
-  mFccCombo = new KMFolderComboBox( tab );
-  mFccCombo->showOutboxFolder( false );
-  glay->addWidget( mFccCombo, row, 1 );
-  glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
-		   row, 0 );
-
-  // "Drafts Folder" combo box and label:
-  ++row;
-  mDraftsCombo = new KMFolderComboBox( tab );
-  mDraftsCombo->showOutboxFolder( false );
-  glay->addWidget( mDraftsCombo, row, 1 );
-  glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts fo&lder:"), tab ),
-		   row, 0 );
-
-  // "Special transport" combobox and label:
-  ++row;
-  mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
-  glay->addWidget( mTransportCheck, row, 0 );
-  mTransportCombo = new QComboBox( true, tab );
-  mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-  glay->addWidget( mTransportCombo, row, 1 );
-  connect( mTransportCheck, SIGNAL(toggled(bool)),
-	   mTransportCombo, SLOT(setEnabled(bool)) );
-
-  // the last row is a spacer
-
-  //
-  // Tab Widget: Signature
-  //
-  mSignatureConfigurator = new SignatureConfigurator( tabWidget );
-  mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
-  tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
+  vlay->addWidget( button );
+  vlay->addWidget( mModifyButton );
+  vlay->addWidget( mRemoveButton );
+  vlay->addWidget( mSetAsDefaultButton );
+  vlay->addStretch( 1 );
 }
 
 void IdentityPage::setup()
 {
   kdDebug() << "IdentityPage::setup()" << endl;
-  mOldNumberOfIdentities =
-    kernel->identityManager()->shadowIdentities().count();
-  mActiveIdentity = QString::null;
-  updateCombo();
+  IdentityManager * im = kernel->identityManager();
+  mOldNumberOfIdentities = im->shadowIdentities().count();
+  // Fill the list:
+  mIdentityList->clear();
+  // Don't use ConstIterator here - it iterates over the wrong list!
+  QListViewItem * item = 0;
+  for ( IdentityManager::Iterator it = im->begin() ; it != im->end() ; ++it )
+    item = new IdentityListViewItem( mIdentityList, item, *it  );
+  mIdentityList->setSelected( mIdentityList->currentItem(), true );
 }
 
 void IdentityPage::apply() {
-  saveActiveIdentity(); // Copy from textfields into manager
+  assert( !mIdentityDialog );
+
   kernel->identityManager()->commit();
 
-  if( mOldNumberOfIdentities < 2 && mIdentityCombo->count() > 1 ) {
+  if( mOldNumberOfIdentities < 2 && mIdentityList->childCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
     KConfigGroup composer( kapp->config(), "Composer" );
@@ -541,118 +422,14 @@ void IdentityPage::apply() {
 }
 
 void IdentityPage::dismiss() {
+  assert( !mIdentityDialog );
   kernel->identityManager()->rollback();
 }
 
-void IdentityPage::saveActiveIdentity()
-{
-  if ( mActiveIdentity.isEmpty() ) return;
-
-  KMIdentity & ident = kernel->identityManager()->identityForName( mActiveIdentity );
-  assert( !ident.isNull() );
-
-  // "General" tab:
-  ident.setFullName( mNameEdit->text() );
-  ident.setOrganization( mOrganizationEdit->text() );
-  ident.setEmailAddr( mEmailEdit->text() );
-  // "Advanced" tab:
-  ident.setPgpIdentity( mPgpKeyRequester->keyIDs().first() );
-  ident.setReplyToAddr( mReplyToEdit->text() );
-  ident.setBcc( mBccEdit->text() );
-  ident.setTransport( ( mTransportCheck->isChecked() ) ?
-		      mTransportCombo->currentText() : QString::null );
-  ident.setFcc( mFccCombo->getFolder() ?
-                mFccCombo->getFolder()->idString() : QString::null );
-  ident.setDrafts( mDraftsCombo->getFolder() ?
-                   mDraftsCombo->getFolder()->idString() : QString::null );
-
-  // "Signature" tab:
-  ident.setSignature( mSignatureConfigurator->signature() );
-}
-
-
-void IdentityPage::setIdentityInformation( const QString &identity )
-{
-  kdDebug() << "IdentityPage::setIdentityInformation( \""
-	    << identity << "\" )" << endl;
-  if( mActiveIdentity == identity ) return;
-
-  //
-  // 1. Save current settings to the list
-  //
-  saveActiveIdentity();
-
-  mActiveIdentity = identity;
-
-  KMIdentity & ident = kernel->identityManager()->identityForName( identity );
-
-  //
-  // 2. Display the new settings
-  //
-
-  // "General" tab:
-  mNameEdit->setText( ident.fullName() );
-  mOrganizationEdit->setText( ident.organization() );
-  mEmailEdit->setText( ident.emailAddr() );
-  // "Advanced" tab:
-  mPgpKeyRequester->setKeyIDs( Kpgp::KeyIDList() << ident.pgpIdentity() );
-  mReplyToEdit->setText( ident.replyToAddr() );
-  mBccEdit->setText( ident.bcc() );
-  mTransportCheck->setChecked( !ident.transport().isEmpty() );
-  mTransportCombo->setEditText( ident.transport() );
-  mTransportCombo->setEnabled( !ident.transport().isEmpty() );
-  if ( ident.fcc().isEmpty() )
-    mFccCombo->setFolder( kernel->sentFolder() );
-  else {
-    // check if the sent-mail folder still exists
-    KMFolder *folder = kernel->folderMgr()->findIdString( ident.fcc() );
-    if ( !folder )
-      folder = kernel->imapFolderMgr()->findIdString( ident.fcc() );
-    if ( folder )
-      mFccCombo->setFolder( ident.fcc() );
-    else {
-      KMessageBox::sorry( this, i18n("The custom sent-mail folder for identity "
-				     "\"%1\" doesn't exist (anymore). "
-				     "Therefore the default sent-mail folder "
-				     "will be used.")
-                                .arg( ident.identityName() ) );
-      mFccCombo->setFolder( kernel->sentFolder() );
-    }
-  }
-  if ( ident.drafts().isEmpty() )
-    mDraftsCombo->setFolder( kernel->draftsFolder() );
-  else {
-    // check if the drafts folder still exists
-    KMFolder *folder = kernel->folderMgr()->findIdString( ident.drafts() );
-    if ( !folder )
-      folder = kernel->imapFolderMgr()->findIdString( ident.drafts() );
-    if ( folder )
-      mDraftsCombo->setFolder( ident.drafts() );
-    else {
-      KMessageBox::sorry( this, i18n("The custom drafts folder for identity "
-				     "\"%1\" doesn't exist (anymore). "
-				     "Therefore the default drafts folder "
-				     "will be used.")
-                                .arg( ident.identityName() ) );
-      mDraftsCombo->setFolder( kernel->draftsFolder() );
-    }
-  }
-  // "Signature" tab:
-  mSignatureConfigurator->setSignature( ident.signature() );
-}
-
-
 void IdentityPage::slotNewIdentity()
 {
-  //
-  // First: Save current setting to the list. In the dialog box we
-  // can choose to copy from the list so it must be synced.
-  //
-  saveActiveIdentity();
+  assert( !mIdentityDialog );
 
-  //
-  // Make and open the dialog
-  //
   IdentityManager * im = kernel->identityManager();
   NewIdentityDialog dialog( im->shadowIdentities(), this, "new", true );
 
@@ -661,13 +438,15 @@ void IdentityPage::slotNewIdentity()
     assert( !identityName.isEmpty() );
 
     //
-    // Construct a new IdentityEntry:
+    // Construct a new Identity:
     //
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
-      im->newFromExisting( im->identityForName( dialog.duplicateIdentity() ),
-			   identityName );
-      break;
+      {
+	KMIdentity & dupThis = im->identityForName( dialog.duplicateIdentity() );
+	im->newFromExisting( dupThis, identityName );
+	break;
+      }
     case NewIdentityDialog::ControlCenter:
       im->newFromControlCenter( identityName );
       break;
@@ -677,112 +456,113 @@ void IdentityPage::slotNewIdentity()
     }
     // re-sort the list:
     im->sort();
-
+    
     //
-    // Set the modified identity list as the valid list in the
-    // identity combo and make the new identity the current item.
+    // Insert into listview:
     //
-    updateCombo( im->shadowIdentities().findIndex( identityName ) );
+    KMIdentity & newIdent = im->identityForName( identityName );
+    QListViewItem * item = mIdentityList->selectedItem();
+    if ( item )
+      item = item->itemAbove();
+    mIdentityList->setSelected( new IdentityListViewItem( mIdentityList,
+							  /*after*/ item,
+							  newIdent ), true );
   }
 }
 
+void IdentityPage::slotModifyIdentity() {
+  assert( !mIdentityDialog );
 
-void IdentityPage::slotRenameIdentity()
-{
-  bool ok;
-  IdentityManager * im = kernel->identityManager();
-  QStringList identities = im->shadowIdentities();
+  IdentityListViewItem * item =
+    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  if ( !item ) return;
 
-  QString oldName = identities[ mIdentityCombo->currentItem() ];
-  QString message = i18n("Rename identity \"%1\" to:").arg( oldName );
+  mIdentityDialog = new IdentityDialog( this );
+  mIdentityDialog->setIdentity( item->identity() );
 
-  KStringListValidator validator( identities, true /*rejecting*/ );
-  QString newName = KLineEditDlg::getText( i18n("Rename Identity"),
-		 message, oldName, &ok, this, &validator ).stripWhiteSpace();
-
-  if ( ok ) {
-    // these cases should be prevented by the validator we used above:
-    assert( newName != oldName );
-    assert( !newName.isEmpty() );
-    assert( !identities.contains( newName ) );
-
-    // change the name
-    KMIdentity & ident = im->identityForName( oldName );
-    ident.setIdentityName( newName );
-
-    // resort the list:
-    im->sort();
-
-    // and update the view:
-    mActiveIdentity = newName;
-    updateCombo( im->shadowIdentities().findIndex( newName ) );
+  // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
+  if ( mIdentityDialog->exec() == QDialog::Accepted ) {
+    mIdentityDialog->updateIdentity( item->identity() );
+    item->redisplay();
   }
-}
 
+  delete mIdentityDialog;
+  mIdentityDialog = 0;
+}
 
 void IdentityPage::slotRemoveIdentity()
 {
+  assert( !mIdentityDialog );
+  
   IdentityManager * im = kernel->identityManager();
   kdFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
-  QString msg = i18n("<qt>Do you really want to remove the identity named\n"
-		     "<b>%1</b>?</qt>").arg( mIdentityCombo->currentText() );
-  if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes ) {
-    // OK, permission to remove:
-    int currentItem = mIdentityCombo->currentItem();
-    if ( im->removeIdentity( im->shadowIdentities()[currentItem] ) ) {
-      // prevent attempt to save removed identity:
-      mActiveIdentity = QString::null;
-      updateCombo( 0 ); // hmm, maybe we should be more intelligent?
+  
+  IdentityListViewItem * item =
+    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  if ( !item ) return;
+  
+  QString msg = i18n("<qt>Do you really want to remove the identity named "
+		     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
+  if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes )
+    if ( im->removeIdentity( item->identity().identityName() ) ) {
+      delete item;
+      mIdentityList->setSelected( mIdentityList->currentItem(), true );
+      refreshList();
     }
+}
+
+void IdentityPage::slotRenameIdentity( QListViewItem * i,
+				       const QString & s, int col ) {
+  assert( col == 0 );
+
+  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
+  if ( !item ) return;
+
+  QString newName = s.stripWhiteSpace();
+  if ( !newName.isEmpty() &&
+       !kernel->identityManager()->shadowIdentities().contains( newName ) ) {
+    KMIdentity & ident = item->identity();
+    ident.setIdentityName( newName );
+  }
+  item->redisplay();
+}
+  
+
+void IdentityPage::slotSetAsDefault() {
+  assert( !mIdentityDialog );
+  
+  IdentityListViewItem * item =
+    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
+  if ( !item ) return;
+  
+  IdentityManager * im = kernel->identityManager();
+  im->setAsDefault( item->identity().identityName() );
+  refreshList();
+}
+
+void IdentityPage::refreshList() {
+  for ( QListViewItemIterator it( mIdentityList ) ; it.current() ; ++it ) {
+    IdentityListViewItem * item =
+      dynamic_cast<IdentityListViewItem*>(it.current());
+    if ( item )
+      item->redisplay();
   }
 }
 
-void IdentityPage::slotSetAsDefault() {
-  IdentityManager * im = kernel->identityManager();
-  im->setAsDefault( im->shadowIdentities()[ mIdentityCombo->currentItem() ] );
-  updateCombo( 0 );
-}
+void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
+  kdDebug() << "IdentityPage::slotIdentitySelectionChanged( " << i << " )" << endl;
 
-void IdentityPage::updateCombo( uint idx ) {
-  kdDebug() << "IdentityPage::updateCombo( " << idx << " )" << endl;
-  QStringList identities = kernel->identityManager()->shadowIdentities();
-  assert( idx < identities.count() );
-  QString newIdentityName = identities[idx];
-  // add "(Default)" to the end of the default identity's name:
-  identities.first() = i18n("%1: identity name. Used in the config "
-			    "dialog, section Identity, to indicate the "
-			    "default identity", "%1 (Default)")
-    .arg( identities.first() );
-  mIdentityCombo->clear();
-  mIdentityCombo->insertStringList( identities );
-  mIdentityCombo->setCurrentItem( idx );
-  // disable "set as default" for default identity:
-  mSetAsDefaultButton->setEnabled( idx != 0 );
-  // disable "remove" when only one identity is left:
-  mRemoveButton->setEnabled( identities.count() > 1 );
-  // do the same that slotIdentitySelectorChanged would do, but more
-  // effiently:
-  setIdentityInformation( newIdentityName );
-}
+  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
-void IdentityPage::slotIdentitySelectorChanged()
-{
-  int idx = mIdentityCombo->currentItem();
-  setIdentityInformation( kernel->identityManager()->shadowIdentities()[ idx ] );
-  // disable "set as default" for default identity:
-  mSetAsDefaultButton->setEnabled( idx != 0 );
+  mRemoveButton->setEnabled( item && mIdentityList->childCount() > 1 );
+  mModifyButton->setEnabled( item );
+  mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
 void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
 {
-  // save old setting:
-  QString content = mTransportCombo->currentText();
-  // update combo box:
-  mTransportCombo->clear();
-  mTransportCombo->insertStringList( sl );
-  // restore saved setting:
-  mTransportCombo->setEditText( content );
+  if ( mIdentityDialog ) mIdentityDialog->slotUpdateTransportCombo( sl );
 }
 
 
