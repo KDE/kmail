@@ -729,7 +729,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 	       "Encrypt all parts instead?") // oh, I hate this...
 	: i18n("This message will not be encrypted.\n"
 	       "Sending unencrypted messages might violate site policy and/or "
-	       "leak senditive information.\n"
+	       "leak sensitive information.\n"
 	       "Encrypt messages instead?") ; // oh, I hate this...
       const QString buttonText = !doEncryptCompletely
 	? i18n("&Encrypt All Parts") : i18n("&Encrypt") ;

@@ -697,7 +697,7 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
     "case.</p>"
     "<p><b>WARNING:</b> As KMail is blocked during the scan of the "
     "messages for spam or viruses, you may encounter problems with "
-    "the responsivness of KMail because anti-spam/virus tool "
+    "the responsiveness of KMail because anti-spam/virus tool "
     "operations are usually time consuming. Please consider "
     "deleting the filter rules created by the wizard to get "
     "back to the former behavior."

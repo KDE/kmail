@@ -3113,7 +3113,7 @@ void ComposerPage::AttachmentsTab::save() {
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
   if (mOutlookCompatibleCheck->isChecked()) {
-    KMessageBox::information(0,i18n("You have choosen to "
+    KMessageBox::information(0,i18n("You have chosen to "
     "encode attachment names containing non-English characters in a way that "
     "is understood by Outlook(tm) and other mail clients that do not "
     "support standard-compliant encoded attachment names.\n"
@@ -4068,13 +4068,13 @@ void MiscPageGroupwareTab::slotLegaceBodyInvitesToggled( bool on )
   if ( on ) {
     QString txt = i18n( "<qt>Invitations are normally sent as attachments to "
                         "a mail. This switch changes the invitation mails to "
-                        "be sent in the text of the mail instead. This is "
-                        "necesssary to send invitations and replies to "
-                        "Microsoft Outlook.<br>But when you do this, you no "
-                        "longer get a descriptive text that mail programs "
-                        "can read. So to people who have email programs "
-                        "that do not understand the invitations, this "
-                        "message looks very odd.<br>People that have email "
+                        "be sent in the text of the mail instead; this is "
+                        "necessary to send invitations and replies to "
+                        "Microsoft Outlook.<br>But, when you do this, you no "
+                        "longer get descriptive text that mail programs "
+                        "can read; so, to people who have email programs "
+                        "that do not understand the invitations, the "
+                        "resulting messages look very odd.<br>People that have email "
                         "programs that do understand invitations will still "
                         "be able to work with this.</qt>" );
     KMessageBox::information( this, txt, QString::null,
