@@ -424,7 +424,6 @@ void KMReaderWin::displayAboutPage()
   mMsgDisplay = FALSE;
   QString location = locate("data", "kmail/about/main.html");
   QString content = kFileToString(location);
-  mViewer->closeURL();
   mViewer->begin(location);
   QString info =
     i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
@@ -491,7 +490,6 @@ void KMReaderWin::updateReaderWin()
   if (mMsg) parseMsg();
   else
   {
-    mViewer->closeURL();
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<html><body" +
 		   QString(" bgcolor=\"#%1\"").arg(colorToString(c4)));
@@ -527,7 +525,6 @@ void KMReaderWin::parseMsg(void)
   if (mBackingPixmapOn)
     bkgrdStr = " background=\"file://" + mBackingPixmapStr + "\"";
 
-  mViewer->closeURL();
   mViewer->begin( KURL( "file:/" ) );
 
   QString type = mMsg->typeStr().lower();

@@ -34,8 +34,6 @@
 #include "kmfolderdir.h"
 #include "kmfoldermgr.h"
 
-#include <mimelib/mimepp.h>
-
 #include <kapp.h>
 #include <kdebug.h>
 #include <kio/global.h>
