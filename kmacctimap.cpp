@@ -53,6 +53,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   mFolder = 0;
   mCountUnread = 0;
   mCountLastUnread = 0;
+  errorDialogIsActive = false;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -365,7 +366,18 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if (aSlave != mSlave) return;
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
-  KMessageBox::error(0, KIO::buildErrorString(errorCode, errorMsg));
+  // check if we still display an error
+  if ( !errorDialogIsActive )
+  {
+    errorDialogIsActive = true;
+    if ( KMessageBox::messageBox(0, KMessageBox::Error, 
+          KIO::buildErrorString(errorCode, errorMsg),
+          i18n("Error")) == KMessageBox::Ok )
+    {
+      errorDialogIsActive = false;
+    }
+  } else 
+    kdDebug() << "suppressing error:" << errorMsg << endl;
   killAllJobs();
 }
 

@@ -133,7 +133,7 @@ public:
   /**
    * Retrieve all mails in a folder
    */
-  void getFolder();
+  void getFolder(bool force = FALSE);
 
   /**
    * Get the whole message

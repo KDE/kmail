@@ -195,6 +195,11 @@ public:
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 
+  /**
+   * Display an error message
+   */
+  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
+
 signals:
   /**
    * Emitted, when the account is deleted
@@ -245,16 +250,14 @@ protected slots:
    */
   void slotSimpleResult(KIO::Job * job);
 
-  /**
-   * Display an error message, that connecting failed
-   */
-  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
-
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
 
   /** new-mail-notification for not-selected folders (is called via numUnreadMsgsChanged) */
   void postProcessNewMail(KMFolder*);
+
+private:
+  bool errorDialogIsActive;
 };
 
 #endif /*KMAcctImap_h*/

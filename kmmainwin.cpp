@@ -1875,7 +1875,10 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
 {
-  if (((KMMsgBase*)msg)->isMessage()) mMsgView->setMsg(msg, TRUE);
+  if (msg && ((KMMsgBase*)msg)->isMessage()) 
+    mMsgView->setMsg(msg, TRUE);
+  else // force an update of the folder
+    static_cast<KMFolderImap*>(mFolder)->getFolder(true);
 }
 
 //-----------------------------------------------------------------------------

@@ -122,7 +122,8 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
   if (mAccount->slave()) mAccount->mapJobData.remove(it);
@@ -396,7 +397,8 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   assert(it != mAccount->mapJobData.end());
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
   mSubfolderState = imapFinished;
@@ -574,7 +576,8 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
     if (mAccount->slave()) mAccount->mapJobData.remove(it);
@@ -606,7 +609,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::getFolder()
+void KMFolderImap::getFolder(bool force)
 {
   mGuessedUnreadMsgs = -1;
   if (mNoContent)
@@ -616,6 +619,10 @@ void KMFolderImap::getFolder()
     return;
   }
   mContentState = imapInProgress;
+  if (force) {
+    // force an update
+    mCheckFlags = TRUE;
+  }
   checkValidity();
 }
 
@@ -672,7 +679,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   jd.done = 0;
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
     if (mAccount->slave()) mAccount->mapJobData.remove(it);
@@ -871,7 +879,8 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
   assert(it != mAccount->mapJobData.end());
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
@@ -924,7 +933,8 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else {
     listDirectory(NULL);
@@ -1121,20 +1131,26 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
   if (it == account->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    account->slotSlaveError( account->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) 
     {
        account->slaveDied(); // This deletes us.
        return;
     }
   } else {
-    QString uid = mMsg->headerField("X-UID");
-    (*it).data.resize((*it).data.size() + 1);
-    (*it).data[(*it).data.size() - 1] = '\0';
-    mMsg->fromString(QCString((*it).data));
-    mMsg->setHeaderField("X-UID",uid);
-    mMsg->setComplete( TRUE );
-    emit messageRetrieved(mMsg);
+    if ((*it).data.size() > 0)
+    {
+      QString uid = mMsg->headerField("X-UID");
+      (*it).data.resize((*it).data.size() + 1);
+      (*it).data[(*it).data.size() - 1] = '\0';
+      mMsg->fromString(QCString((*it).data));
+      mMsg->setHeaderField("X-UID",uid);
+      mMsg->setComplete( TRUE );
+      emit messageRetrieved(mMsg);
+    } else {
+      emit messageRetrieved(NULL);
+    }
     mMsg = NULL;
   }
   if (account->slave()) account->mapJobData.remove(it);
@@ -1174,7 +1190,8 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
   if (it == account->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    account->slotSlaveError( account->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) 
     { 
       account->slaveDied(); // This deletes us
@@ -1207,7 +1224,8 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
   if (it == account->mapJobData.end()) return;
   if (job->error())
   {
-    job->showErrorDialog();
+    account->slotSlaveError( account->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) 
     {
       account->slaveDied(); // This deletes us
@@ -1478,7 +1496,8 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
   mAccount->mapJobData.remove(it);
   if (job->error() && job->error() != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
   mAccount->displayProgress();
@@ -1514,7 +1533,8 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
   mAccount->mapJobData.remove(it);
   if (job->error())
   {
-    job->showErrorDialog();
+    mAccount->slotSlaveError( mAccount->slave(), job->error(),
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else {
     KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
