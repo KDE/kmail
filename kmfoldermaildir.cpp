@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfoldermaildir.cpp
 // Author: Kurt Granroth <granroth@kde.org>
 
@@ -498,11 +499,18 @@ DwString KMFolderMaildir::getDwString(int idx)
   if (fi.exists() && fi.isFile() && fi.isWritable() && fi.size() > 0)
   {
     FILE* stream = fopen(QFile::encodeName(abs_file), "r+");
-	if (stream) {
-	  DwString str( stream, mi->msgSize() );
-	  fclose( stream );
-	  return str;
-	}
+    if (stream) {
+      size_t msgSize = mi->msgSize();
+      char* msgText = new char[ msgSize + 1 ];
+      fread(msgText, msgSize, 1, stream);
+      fclose( stream );
+      msgText[msgSize] = '\0';
+      size_t newMsgSize = crlf2lf( msgText, msgSize );
+      DwString str;
+      // the DwString takes possession of msgText, so we must not delete it
+      str.TakeBuffer( msgText, msgSize + 1, 0, newMsgSize );
+      return str;
+    }
   }
   kdDebug(5006) << "Could not open file r+" << abs_file << endl;
   return DwString();
@@ -526,6 +534,8 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
 
   mDest.resize(mi->msgSize()+2);
   mDest = kFileToString(abs_file, false, false);
+  size_t newMsgSize = crlf2lf( mDest.data(), mi->msgSize() );
+  mDest[newMsgSize] = '\0';
   return mDest;
 }
 
