@@ -141,6 +141,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAtmListBox->addColumn(i18n("Encoding"), 120);
   mAtmListBox->addColumn(i18n("Type"), 150);
   connect(mAtmListBox,
+	  SIGNAL(doubleClicked(QListViewItem *)),
+	  SLOT(slotAttachProperties()));
+  connect(mAtmListBox,
 	  SIGNAL(rightButtonPressed(QListViewItem *, const QPoint &, int)),
 	  SLOT(slotAttachPopupMenu(QListViewItem *, const QPoint &, int)));
   mAttachMenu = 0;
@@ -1685,7 +1688,6 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   QString name;
   QString urlStr = (*it).url.prettyURL();
   KMMessagePart* msgPart;
-  KMMsgPartDlg dlg;
   int i;
 
   kernel->kbp()->busy();
@@ -1712,21 +1714,13 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   mapAtmLoadData.remove(it);
 
-  // show properties dialog
   kernel->kbp()->idle();
   msgPart->setCharset(mCharset);
-  dlg.setMsgPart(msgPart);
-  if (!dlg.exec())
-  {
-    delete msgPart;
-    return;
-  }
   mAtmModified = TRUE;
   if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
   // add the new attachment to the list
   addAttach(msgPart);
-  rethinkFields(); //work around initial-size bug in Qt-1.32
 }
 
 
