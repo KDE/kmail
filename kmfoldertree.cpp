@@ -21,7 +21,9 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KConfig* conf = app->getConfig();
   QString  kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
-  static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr;
+  static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr,
+		 pixSent;
+  static bool pixmapsLoaded = FALSE;
   int width;
 
   initMetaObject();
@@ -38,13 +40,19 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
 
-  pixDir   = loader->loadIcon("closed.xpm");
-  pixNode  = loader->loadIcon("green-bullet.xpm");
-  pixPlain = loader->loadIcon("kmfolder.xpm");
-  pixFld   = loader->loadIcon("kmfolder.xpm");
-  pixIn    = loader->loadIcon("kmfldin.xpm");
-  pixOut   = loader->loadIcon("kmfldout.xpm");
-  pixTr    = loader->loadIcon("kmtrash.xpm");
+  if (!pixmapsLoaded)
+  {
+    pixmapsLoaded = TRUE;
+
+    pixDir   = loader->loadIcon("closed.xpm");
+    pixNode  = loader->loadIcon("green-bullet.xpm");
+    pixPlain = loader->loadIcon("kmfolder.xpm");
+    pixFld   = loader->loadIcon("kmfolder.xpm");
+    pixIn    = loader->loadIcon("kmfldin.xpm");
+    pixOut   = loader->loadIcon("kmfldout.xpm");
+    pixSent  = loader->loadIcon("kmfldsent.xpm");
+    pixTr    = loader->loadIcon("kmtrash.xpm");
+  }
 
   dict().insert("dir", &pixDir);
   dict().insert("node", &pixNode);
@@ -52,6 +60,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   dict().insert("fld", &pixFld);
   dict().insert("in", &pixIn);
   dict().insert("out", &pixOut);
+  dict().insert("st", &pixSent);
   dict().insert("tr", &pixTr);
 
   setAutoUpdate(TRUE);
@@ -97,10 +106,9 @@ void KMFolderTree::reload(void)
     {
       if (folder->name()=="trash") str += "{tr} ";
       else if (folder->name()=="outbox") str += "{out} ";
-      else str += "{fld} ";
+      else str += QString("{") + folder->type() + "} ";
     }
     str += folder->name();
-    str.detach();
     insertItem(str);
 
     mList.append(folder);
@@ -120,7 +128,8 @@ void KMFolderTree::doFolderSelected(int index, int)
   if (index < 0) return;
 
   folder = (KMFolder*)mList.at(index);
-  if (!folder->isDir()) emit folderSelected(folder);
+  if (folder->isDir()) emit folderSelected(NULL);
+  else emit folderSelected(folder);
 }
 
 

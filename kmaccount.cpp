@@ -8,22 +8,24 @@
 #include <qtstream.h>
 #include <qfile.h>
 #include <assert.h>
+#include <kconfig.h>
+#include <qobject.h>
 
-#include "kmaccount.moc"
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
+#include "kmaccount.h"
+#include "kmaccount.moc"
 
 
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 {
+  initMetaObject();
   assert(aOwner != NULL);
 
   mOwner   = aOwner;
   mName    = aName;
   mFolder  = NULL;
-  mCFile   = NULL;
-  mCStream = NULL;
   mConfig  = NULL;
 }
 
@@ -32,8 +34,6 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 KMAccount::~KMAccount() 
 {
   if (mConfig)  delete mConfig;
-  if (mCStream) delete mCStream;
-  if (mCFile)   delete mCFile;
   if (mFolder) mFolder->removeAccount(this);
 }
 
@@ -58,26 +58,18 @@ void KMAccount::openConfig(void)
 {
   QString acctPath;
 
-  if (mCFile) return;
+  if (mConfig) return;
 
   acctPath = mOwner->basePath() + "/" + mName;
-  mCFile   = new QFile(acctPath);
-  // kalle  mCFile->open(IO_ReadWrite);
-  // kalle  mCStream = new QTextStream(mCFile);
   mConfig  = new KConfig(acctPath);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::takeConfig(KConfig* aConfig, QFile* aCFile, 
-			   QTextStream*  aCStream)
+void KMAccount::takeConfig(KConfig* aConfig)
 {
   assert(aConfig != NULL);
-  assert(aCFile != NULL);
-  assert(aCStream != NULL);
 
   mConfig  = aConfig;
-  mCFile   = aCFile;
-  mCStream = aCStream;
   readConfig();
 }

@@ -261,12 +261,15 @@ void KMSettings::createTabNetwork(QWidget* parent)
 }
 
 
+//-----------------------------------------------------------------------------
 void KMSettings::createTabGeneral(QWidget *parent)
 {
+#ifdef MISSING
   QWidget *tab = new QWidget(parent);
   addTab(tab,"General");
-
+#endif
 }
+
 
 //-----------------------------------------------------------------------------
 void KMSettings::tabNetworkAddAcct(KTabListBox* actList, KMAccount* act, 
@@ -416,7 +419,9 @@ void KMSettings::setDefaults()
 void KMSettings::done(int r)
 {
   QTabDialog::done(r);
-  if (r) {
+
+  if (r)
+  {
     config->setGroup("Identity");
     config->writeEntry("Name",nameEdit->text());
     config->writeEntry("Organization",orgEdit->text());
@@ -424,15 +429,20 @@ void KMSettings::done(int r)
     config->writeEntry("Reply-To Address",replytoEdit->text());
     config->writeEntry("Signature File",sigEdit->text());
 
-    if (sendmailRadio->isChecked()) 
+    msgSender->setEmailAddr(emailEdit->text());
+    msgSender->setUserName(nameEdit->text());
+
+    config->setGroup("Network");
+    if (sendmailRadio->isChecked())
       msgSender->setMethod(KMSender::smMail);
-    else if (smtpRadio->isChecked()) 
+
+    else if (smtpRadio->isChecked())
       msgSender->setMethod(KMSender::smSMTP);
 
-    msgSender->setMailer(sendmailLocationEdit->text());
-    msgSender->setSmtpHost(smtpServerEdit->text());
-    QString t = smtpPortEdit->text();
-    msgSender->setSmtpPort(t.toUInt());
+    config->writeEntry("Method", (int)msgSender->method());
+    config->writeEntry("Mailer",sendmailLocationEdit->text());
+    config->writeEntry("Smtp Host",smtpServerEdit->text());
+    config->writeEntry("Smtp Port",smtpPortEdit->text());
   }
 }
 

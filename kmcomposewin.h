@@ -24,7 +24,7 @@
 #include <ktoolbar.h>
 #include <kapp.h>
 #include <kmsgbox.h>
-#include "ktablistbox.h"
+#include <ktablistbox.h>
 #include <kstatusbar.h>
 #include "kmmsgpart.h"
 #include "kmimemagic.h"

@@ -4,19 +4,17 @@
 #ifndef kmacctpop_h
 #define kmacctpop_h
 
-#include <qobject.h>
-#include <qdialog.h>
-#include <qpushbt.h>
-#include <qlined.h>
-#include <qlabel.h>
-#include <setjmp.h>
 #include "kmaccount.h"
+
+class QLineEdit;
+class QPushButton;
 
 #define KMAcctPopInherited KMAccount
 
 class KMAcctPop: public KMAccount
 {
-Q_OBJECT
+  Q_OBJECT
+
 public:
   virtual ~KMAcctPop();
   virtual void init(void);
@@ -62,9 +60,11 @@ protected:
   bool    mStorePasswd;
 };
 
+
 class KMPasswdDialog : public QDialog
 {
-Q_OBJECT
+  Q_OBJECT
+
 public:
   KMPasswdDialog(QWidget *p=0, const char *n=0, const char *m="",
 		 const char *login="", const char *pass = "");
@@ -79,6 +79,6 @@ private slots:
   void slotCancelPressed();
 
 protected:
-
 };
+
 #endif /*kmacctpop_h*/

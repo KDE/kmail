@@ -241,8 +241,7 @@ const char* KMMessage::subject(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubject(const char* aStr)
 {
-  if (!aStr) 
-      return;
+  if (!aStr) return;
   mMsg->Headers().Subject().FromString(aStr);
 
 }
@@ -440,7 +439,6 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
     aPart->setTypeStr("");
     aPart->setSubtypeStr("");
     aPart->setCteStr("");
-    // Modification by Markus
     aPart->setName("");
     aPart->setContentDescription("");
     aPart->setContentDisposition("");
@@ -514,7 +512,6 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   const DwString contDesc = aPart->contentDescription();
   const DwString contDisp = aPart->contentDisposition();
   const DwString bodyStr  = aPart->body();
-  // Modification by Markus
   const DwString name     = aPart->name();
 
   DwHeaders& headers = part->Headers();
@@ -523,7 +520,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
   }
-  // Modification by Markus
+
   if(name != "")
     headers.ContentType().SetName(name);
 

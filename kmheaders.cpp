@@ -7,6 +7,7 @@
 #include "kbusyptr.h"
 #include "kmdragdata.h"
 #include "kmglobal.h"
+#include "kmmainwin.h"
 
 #include <drag.h>
 #include <qstrlist.h>
@@ -15,14 +16,15 @@
 
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : 
+KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0, const char *name=0) : 
   KTabListBox(parent, name, 4)
 {
   QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
   static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep;
 
-  folder = NULL;
+  mOwner  = aOwner;
+  mFolder = NULL;
   getMsgIndex = -1;
 
   //setNumCols(4);
@@ -54,32 +56,36 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) :
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (KMFolder *f)
+void KMHeaders::setFolder (KMFolder *aFolder)
 {
-  if (folder) 
+  if (mFolder) 
   {
-    disconnect(folder, SIGNAL(msgHeaderChanged(int)),
+    disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
 	       this, SLOT(msgHeaderChanged(int)));
-    disconnect(folder, SIGNAL(msgAdded(int)),
+    disconnect(mFolder, SIGNAL(msgAdded(int)),
 	       this, SLOT(msgAdded(int)));
-    disconnect(folder, SIGNAL(msgRemoved(int)),
+    disconnect(mFolder, SIGNAL(msgRemoved(int)),
 	       this, SLOT(msgRemoved(int)));
-    disconnect(folder, SIGNAL(changed()),
+    disconnect(mFolder, SIGNAL(changed()),
 	       this, SLOT(msgChanged()));
+    disconnect(mFolder, SIGNAL(statusMsg(const char*)), 
+	       mOwner, SLOT(statusMsg(const char*)));
   }
 
-  folder=f;
+  mFolder = aFolder;
 
-  if (folder)
+  if (mFolder)
   {
-    connect(folder, SIGNAL(msgHeaderChanged(int)), 
+    connect(mFolder, SIGNAL(msgHeaderChanged(int)), 
 	    this, SLOT(msgHeaderChanged(int)));
-    connect(folder, SIGNAL(msgAdded(int)),
+    connect(mFolder, SIGNAL(msgAdded(int)),
 	    this, SLOT(msgAdded(int)));
-    connect(folder, SIGNAL(msgRemoved(int)),
+    connect(mFolder, SIGNAL(msgRemoved(int)),
 	    this, SLOT(msgRemoved(int)));
-    connect(folder, SIGNAL(changed()),
+    connect(mFolder, SIGNAL(changed()),
 	    this, SLOT(msgChanged()));
+    connect(mFolder, SIGNAL(statusMsg(const char*)),
+	    mOwner, SLOT(statusMsg(const char*)));
   }
 
   updateMessageList();
@@ -114,9 +120,9 @@ void KMHeaders::msgHeaderChanged(int msgId)
   char hdr[256];
   KMMessage::Status flag;
 
-  flag = folder->msgStatus(msgId);
-  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, folder->msgFrom(msgId), 
-	  folder->msgSubject(msgId), folder->msgDate(msgId));
+  flag = mFolder->msgStatus(msgId);
+  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(msgId), 
+	  mFolder->msgSubject(msgId), mFolder->msgDate(msgId));
   changeItem(hdr, msgId-1);
 
   if (flag==KMMessage::stNew) changeItemColor(darkRed, msgId-1);
@@ -135,7 +141,7 @@ void KMHeaders::headerClicked(int column)
   else return;
 
   kbp->busy();
-  folder->sort(sortField);
+  mFolder->sort(sortField);
   kbp->idle();
 }
 
@@ -174,7 +180,7 @@ void KMHeaders::deleteMsg (int msgId)
 
   if (num > 3)
   {
-    folder->quiet(TRUE);
+    mFolder->quiet(TRUE);
     setAutoUpdate(FALSE);
   }
 
@@ -187,14 +193,14 @@ void KMHeaders::deleteMsg (int msgId)
   if (num > 3)
   {
     setAutoUpdate(TRUE);
-    folder->quiet(FALSE);
+    mFolder->quiet(FALSE);
     // repaint();
   }
 
   // display proper message if current message was deleted.
   if (curDeleted)
   {
-    if (cur >= folder->numMsgs()) cur = folder->numMsgs() - 1;
+    if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
     setCurrentItem(cur, -1);
   }
 
@@ -296,7 +302,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
 {
   int i, high;
 
-  if (!folder || msgId < -2)
+  if (!mFolder || msgId < -2)
   {
     getMsgIndex = -1;
     return NULL;
@@ -305,7 +311,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
   {
     getMsgIndex = msgId;
     getMsgMulti = FALSE;
-    return folder->getMsg(msgId+1);
+    return mFolder->getMsg(msgId+1);
   }
 
   if (msgId == -1)
@@ -321,7 +327,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
       }
     }
  
-    return (getMsgIndex>=0 ? folder->getMsg(getMsgIndex+1) : (KMMessage*)NULL);
+    return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex+1) : (KMMessage*)NULL);
   }
 
   if (getMsgIndex < 0) return NULL;
@@ -329,7 +335,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
   if (getMsgMulti) for (getMsgIndex++; getMsgIndex < numRows(); getMsgIndex++)
   {
     if (itemList[getMsgIndex].isMarked()) 
-      return folder->getMsg(getMsgIndex+1);
+      return mFolder->getMsg(getMsgIndex+1);
   }
 
   getMsgIndex = -1;
@@ -337,31 +343,36 @@ KMMessage* KMHeaders::getMsg (int msgId)
 }
 
 
+//-----------------------------------------------------------------------------
 void KMHeaders::nextMsg()
 {
-  kbp->busy();
   int idx;
-  long numMsg;
-  KMFolder *cF = new KMFolder();
-  cF = currentFolder();
-  numMsg = cF->numMsgs();
-  if((idx = indexOfGetMsg()) == numMsg-1)
-    return;
-  emit messageSelected(folder->getMsg(idx+2));
-  if (idx >= 0) setMsgRead(idx+1);
+
+  kbp->busy();
+  idx = indexOfGetMsg();
+  if(idx < mFolder->numMsgs()-1)
+  {
+    emit messageSelected(mFolder->getMsg(idx+2));
+    if (idx >= 0) setMsgRead(idx+1);
+  }
   kbp->idle();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMHeaders::previousMsg()
 {
-  kbp->busy();
   int idx; 
-  if((idx = indexOfGetMsg()) == 0)
-    return;
-  emit messageSelected(folder->getMsg(idx));
-  if (idx >= 0) setMsgRead(idx);
+
+  kbp->busy();
+  if((idx = indexOfGetMsg()) != 0)
+  {
+    emit messageSelected(mFolder->getMsg(idx));
+    if (idx >= 0) setMsgRead(idx);
+  }
   kbp->idle();
 }  
+
 
 //-----------------------------------------------------------------------------
 void KMHeaders::changeItemPart (char c, int itemIndex, int column)
@@ -379,7 +390,8 @@ void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 void KMHeaders::highlightMessage(int idx, int/*colId*/)
 {
   kbp->busy();
-  emit messageSelected(folder->getMsg(idx+1));
+  mOwner->statusMsg("");
+  emit messageSelected(mFolder->getMsg(idx+1));
   if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
@@ -405,19 +417,18 @@ void KMHeaders::updateMessageList(void)
   long i;
   char hdr[256];
   KMMessage::Status flag;
-  //  KMMessage* msg; // I hate compiler warnings ;-)
  
   clear();
-  if (!folder) return;
+  if (!mFolder) return;
 
   kbp->busy();
   setAutoUpdate(FALSE);
 
-  for (i = 1; i <= folder->numMsgs(); i++)
+  for (i=1; i<=mFolder->numMsgs(); i++)
   {
-    flag = folder->msgStatus(i);
-    sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, folder->msgFrom(i),
-	    folder->msgSubject(i), folder->msgDate(i));
+    flag = mFolder->msgStatus(i);
+    sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(i),
+	    mFolder->msgSubject(i), mFolder->msgDate(i));
     insertItem(hdr);
 
     if (flag==KMMessage::stNew) changeItemColor(darkRed);
@@ -426,6 +437,9 @@ void KMHeaders::updateMessageList(void)
 
   setAutoUpdate(TRUE);
   repaint();
+  sprintf(hdr, nls->translate("%d Messages, %d unread."),
+	  mFolder->numMsgs(), mFolder->numUnreadMsgs());
+  mOwner->statusMsg(hdr);
   kbp->idle();
 }
 
@@ -456,7 +470,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   }
   if (from < 0 || to < 0) return FALSE;
 
-  dd.init(folder, from, to);
+  dd.init(mFolder, from, to);
   *data = (char*)&dd;
   *size = sizeof(dd);
   *type = DndRawData;

@@ -167,6 +167,9 @@ signals:
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(int);
 
+  /** Status messages. */
+  void statusMsg(const char*);
+
 protected:
   friend class KMMessage;
   friend int msgSortCompFunc(const void* a, const void* b);

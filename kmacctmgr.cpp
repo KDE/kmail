@@ -65,8 +65,6 @@ bool KMAcctMgr::reload(void)
                       // I understand why, but that does not make it better.
   QString      acctName, acctPath;
   KConfig*     config;
-  QFile*       cFile;
-  QTextStream* cStream;
   KMAccount*   act;
 
   mAcctList.clear();
@@ -102,14 +100,11 @@ bool KMAcctMgr::reload(void)
   for (acctName=list->first(); acctName; acctName=list->next())
   {
     acctPath = mBasePath+"/"+acctName;
-    cFile   = new QFile(acctPath);
-	// kalle    cFile->open(IO_ReadWrite);
-	// kalle    cStream = new QTextStream(cFile);
-    config  = new KConfig(acctPath); // kalle
+    config  = new KConfig(acctPath);
 
     config->setGroup("Account");
     act = create(config->readEntry("type"), acctName);
-    if (act) act->takeConfig(config, cFile, cStream);
+    if (act) act->takeConfig(config);
     else
     {
       warning(nls->translate("Cannot read configuration of account '%s'\n"
@@ -118,9 +113,6 @@ bool KMAcctMgr::reload(void)
 	      (const char*)config->readEntry("type"));
 
       delete config;
-      delete cStream;
-      delete cFile;
-
       unlink(mBasePath+"/"+acctName);
     }
   }

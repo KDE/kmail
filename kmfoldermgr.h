@@ -30,6 +30,10 @@ public:
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
   KMAcctFolder* find(const char* folderName, bool foldersOnly=TRUE);
 
+  /** Uses find() to find given folder. If not found the folder is
+    created. Directories are skipped. */
+  KMAcctFolder* findOrCreate(const char* folderName);
+
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
   KMAcctFolder* createFolder(const char* fName, bool sysFldr=FALSE) 

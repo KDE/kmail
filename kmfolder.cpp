@@ -95,6 +95,8 @@ const QString KMFolder::tocLocation(void) const
 //-----------------------------------------------------------------------------
 int KMFolder::open(void)
 {
+  int rc = 0;
+
   assert(name() != NULL);
 
   mOpenCount++;
@@ -105,26 +107,21 @@ int KMFolder::open(void)
 
   if (!path().isEmpty())
   {
-    //#define TOC_DEBUG
-#ifdef TOC_DEBUG
-    createTocFromContents();
-#else
     mTocStream = fopen(tocLocation(), "r+"); // index file
-    if (!mTocStream) return createTocFromContents();
-    readToc();
-#endif
+    if (!mTocStream) rc = createTocFromContents();
+    else readToc();
   }
   else
   {
-    debug("No path specified for folder " + name() +
-	  " -- Turning autoCreateToc off");
+    debug("No path specified for folder `" + name() +
+	  "' -- Turning autoCreateToc off");
     mAutoCreateToc = FALSE;
-    createTocFromContents();
+    rc = createTocFromContents();
   }
 
   mQuiet = 0;
 
-  return 0;
+  return rc;
 }
 
 
@@ -144,8 +141,8 @@ int KMFolder::create(void)
   }
   else
   {
-    debug("folder " + name() +
-	  " has no path specified -- turning autoCreateToc off");
+    debug("Folder `" + name() +
+	  "' has no path specified -- turning autoCreateToc off");
     mAutoCreateToc = FALSE;
   }
 
@@ -180,6 +177,8 @@ void KMFolder::close(bool aForced)
   {
     if (mMsgInfo[i].msg()) mMsgInfo[i].deleteMsg();
   }
+
+  mMsgInfo.resize(INIT_MSGS);
 }
 
 
@@ -193,6 +192,7 @@ int KMFolder::createTocFromContents(void)
   int i, msgArrNum;
   bool atEof = FALSE;
   KMMsgInfo* mi;
+  QString msgStr;
 
   assert(name() != NULL);
   assert(path() != NULL);
@@ -224,6 +224,13 @@ int KMFolder::createTocFromContents(void)
 
   while (!atEof)
   {
+    if ((mMsgs & 127) == 0)
+    {
+      msgStr.sprintf(nls->translate("Creating index file: %d messages done"), 
+		     mMsgs);
+      emit statusMsg(msgStr);
+    }
+
     pos = ftell(mStream);
     if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
 
@@ -288,9 +295,7 @@ int KMFolder::createTocFromContents(void)
 //-----------------------------------------------------------------------------
 int KMFolder::writeToc(void)
 {
-  int rc = 0 ;
-  int i =0 ;
-  //  int tocRecSize = KMMsgInfo::recSize();
+  int rc=0, i=0;
 
   if (mTocStream) fclose(mTocStream);
   mTocStream = fopen(tocLocation(), "w");
@@ -549,7 +554,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   int msgArrNum = mMsgInfo.size();
 
   assert(mStream != NULL);
-  len = aMsg->msgStr().length() - 2;
+  len = strlen(aMsg->asString());
 
   if (len <= 0)
   {

@@ -11,10 +11,11 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmcomposewin.cpp kmfolder.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
-		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
+		kmacctmgr.cpp main.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
-		kmacctseldlg.cpp kshortcut.cpp kmimemagic.cpp
+		kmacctseldlg.cpp kshortcut.cpp kmimemagic.cpp \
+		knewpanner.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -22,7 +23,8 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
 		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc \
-		kmimemagic.moc kmacctpop.moc kmaccount.moc
+		kmimemagic.moc kmacctpop.moc kmaccount.moc \
+		knewpanner.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -55,9 +57,9 @@ kmfoldernode.cpp:kmfoldernode.moc
 kmfoldernode.moc: kmfoldernode.h
 	$(MOC) kmfoldernode.h -o kmfoldernode.moc
 
-kmmainview.cpp:kmmainview.moc
-kmmainview.moc: kmmainview.h
-	$(MOC) kmmainview.h -o kmmainview.moc
+#kmmainview.cpp:kmmainview.moc
+#kmmainview.moc: kmmainview.h
+#	$(MOC) kmmainview.h -o kmmainview.moc
 
 kmacctmgr.cpp:kmacctmgr.moc
 kmacctmgr.moc: kmacctmgr.h
@@ -118,3 +120,7 @@ kmacctpop.moc: kmacctpop.h
 kmaccount.cpp: kmaccount.moc
 kmaccount.moc: kmaccount.h
 	$(MOC) kmaccount.h -o kmaccount.moc
+
+knewpanner.cpp: knewpanner.moc
+knewpanner.moc: knewpanner.h
+	$(MOC) knewpanner.h -o knewpanner.moc

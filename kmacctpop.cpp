@@ -1,22 +1,32 @@
 // kmacctpop.cpp
-// Author: Stefan Taferner Modification by Markus Wuebben
+// Authors: Stefan Taferner and Markus Wuebben
 
 #include "kmacctpop.moc"
+
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
 #include <mimelib/mimepp.h>
 #include <kmfolder.h>
+#include <qtstream.h>
+#include <kconfig.h>
+#include <qlined.h>
+#include <qbutton.h>
+
+#include "kmacctpop.h"
 #include "kalarmtimer.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
 #include "kmacctfolder.h"
 
+
 //-----------------------------------------------------------------------------
 KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctPopInherited(aOwner, aAccountName)
 {
+  initMetaObject();
+
   mStorePasswd = FALSE;
   mProtocol = 3;
   mPort = 110;
@@ -40,15 +50,12 @@ const char* KMAcctPop::type(void) const
 //-----------------------------------------------------------------------------
 void KMAcctPop::init(void)
 {
-  mStorePasswd = FALSE;
-  mPort = 110;
-  mHost = "";
-  mHost.detach();
-
-  mLogin.detach();
-  mProtocol = 3;
+  mHost   = "";
+  mPort   = 110;
+  mLogin  = "";
   mPasswd = "";
-  mPasswd.detach();
+  mProtocol = 3;
+  mStorePasswd = FALSE;
 }
 
 

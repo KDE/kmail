@@ -7,14 +7,15 @@
 
 class KMFolder;
 class KMMessage;
+class KMMainWin;
 
 class KMHeaders : public KTabListBox {
   Q_OBJECT
 public:
-  KMHeaders(QWidget *parent=0, const char *name=0);
+  KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
   
   virtual void setFolder(KMFolder *);
-  KMFolder* currentFolder(void) { return folder; }
+  KMFolder* folder(void) { return mFolder; }
 
   /** Change part of the contents of a line */
   virtual void changeItemPart (char c, int itemIndex, int column);
@@ -45,6 +46,9 @@ public:
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
 
+  /** Returns pointer to owning main window. */
+  KMMainWin* owner(void) const { return mOwner; }
+
 signals:
   virtual void messageSelected(KMMessage *);
 
@@ -64,7 +68,8 @@ protected:
 
 private:
   virtual void updateMessageList(void);
-  KMFolder *folder;
+  KMFolder* mFolder;
+  KMMainWin* mOwner;
   int getMsgIndex;
   bool getMsgMulti;
 };

@@ -81,8 +81,7 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 void  KMReaderView::parseConfiguration()
 {
   QString o;
-  KConfig *config = new KConfig();
-  config = KApplication::getKApplication()->getConfig();
+  KConfig *config = KApplication::getKApplication()->getConfig();
   config->setGroup("Settings");
   MAX_LINES = config->readNumEntry("Lines");
 }
@@ -242,141 +241,78 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
   subType = subType.remove(0,pos+1); 
   cout << "Type:" << type << endl << "SubType:" << subType <<endl;
 
-
   // ************* MimeMagic stuff end *****************//
 
   printf("Debug :%i\n",isInline());
-  if(isInline() == false) // If we do not want 
-                          //the attachments to be displayed inline
-    {QString icon;
-     QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-			     + type + "/"+ subType + ".kdelnk"); // Search for mimetype.
-     cout << type  << "/" << subType << ".kdelnk" << endl;
-     if(file->open(IO_ReadOnly)) // if mimetype exists                        
-	   {// kalleQTextStream pstream(file);         
-		 file->close(); // kalle
-	KConfig config(KApplication::kdedir()+"/share/mimelnk/" 
-				   + type + "/"+ subType + ".kdelnk"); // kalle
-	config.setGroup("KDE Desktop Entry");
-	icon = config.readEntry("Icon");
-	if(icon.isEmpty()) // If no icon specified.
-	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-	else
-	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-	file->close();
-
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
-	  + "\"><IMG SRC=" + icon + "><P>" + comment 
-	  + "</A></TD></TR></TABLE>";
-
-	text += "<br><hr><br>";
-	return text;
-	}
-     else
-       {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-	printf("Not a registered mimetype\n");
-
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
-	  + "\"><IMG SRC=" + icon + "><P>" + comment 
-	  + "</A></TD></TR></TABLE>";
-
-	text += "<br><hr><br>";
-	return text;	
-       }
-    }
+  if(isInline()) // If we do not want the attachments to be displayed inline
+    return bodyPartIcon(type, subType, pnumstring);
 
   if(type == "text")  // If content type is text.
-    {cout << "isText\n";
-    if(text.length()/80 > MAX_LINES) // Check for max_lines.
-      {temp.sprintf("The text attachment has more than %i lines.\n",MAX_LINES); 
-       temp += "Do you wish the attachment to be displayed inline?";
-	if(KMsgBox::yesNo(0,"?",temp) == 1)
-	  {text += "<br><hr><br>";  // Return text.
-	  return text;}
-	else // We want the icon to be displayed 
-	  {QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-				   + type + "/" + subType + ".kdelnk"); // Search for mimetype.
-	cout << type << subType  << +".kdelnk" << endl;
-	  if(!file->open(IO_ReadOnly)) // if does not exist 
-	    {file = new QFile(KApplication::kdedir()+"/share/mimelnk" 
-			      + "/text/plain.kdelnk" ); // use text/plain  
-	    assert(file->open(IO_ReadOnly));
-	    printf("Not a  registered mimetype\n");
-	    }
-	  
-	  file->close(); // kalle
-	  // kalle	  QTextStream pstream(file);
-	  KConfig config(KApplication::kdedir()+"/share/mimelnk" 
-					 + "/text/plain.kdelnk"); // kalle
-	  config.setGroup("KDE Desktop Entry");
-	  QString icon = config.readEntry("Icon");
-	  if(icon.isEmpty())
-	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-	  else
-	    icon.prepend(KApplication::kdedir()+ "/share/icons/");
-	  file->close();
-	  text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
-	    + "\"><IMG SRC=" + icon + "><P>" + comment 
-	    + "</A></TD></TR></TABLE>";
-	  text += "<br><hr><br>";
-	  return text;
-	  }
-      }
-    else
-      {text += "<br><hr><br>";
-      return text;}
-    
+  {
+    cout << "isText\n";
+    if (text.length()/80 > MAX_LINES) // Check for max_lines.
+    {
+      temp.sprintf("The text attachment has more than %i lines.\n",MAX_LINES); 
+      temp += "Do you wish the attachment to be displayed inline?";
+      if(KMsgBox::yesNo(0,"?",temp) == 0)
+	// We want the icon to be displayed 
+	return bodyPartIcon(type, subType, pnumstring);
     }
-  else if(type == "message")// If content type is message just display the text.
-    {text += "<br><hr><br>";
+
+    text += "<BR><HR><BR>";
     return text;
-    }
+  }
 
-  else
-    {QString icon;
-     QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-			     + type + "/" + subType + ".kdelnk"); // Search for mimetype.
-	cout << type << subType + ".kdelnk" << endl;
-     if(file->open(IO_ReadOnly)) // if mimetype exists                        
-	   {// kalle QTextStream pstream(file);         
-		 file->close(); // kalle
-	KConfig config(KApplication::kdedir()+"/share/mimelnk/" 
-			     + type + "/" + subType + ".kdelnk");
-	config.setGroup("KDE Desktop Entry");
-	icon = config.readEntry("Icon");
-	if(icon.isEmpty()) // If no icon specified.
-	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-	else
-	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-	file->close();
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
-	  + "\"><IMG SRC=" + icon + "><P>" + comment 
-	  + "</A></TD></TR></TABLE>";
+  else if(type == "message")// If content type is message just display the text.
+  {
+    text += "<br><hr><br>";
+    return text;
+  }
 
-	text += "<br><hr><br>";
-	return text;
-	}
-     else
-       {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-	printf("Not a registered mimetype\n");
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
-	  + "\"><IMG SRC=" + icon + "><P>" + comment 
-	  + "</A></TD></TR></TABLE>";
-
-	text += "<br><hr><br>";
-	return text;
-       }
-    }
-
-  return "";
-    
+  return bodyPartIcon(type, subType, pnumstring);
 }
+
+
+QString KMReaderView::bodyPartIcon(QString type, QString subType,
+				   QString pnumstring)
+{
+  QString text, icon, fileName, path, comment;
+  QDir dir;
+  
+  path = KApplication::kdedir() + "/share/mimelnk/";
+  fileName = path + type + "/" + subType + ".kdelnk";
+
+  if (!dir.exists(fileName) && type == "text")
+    fileName = path + type + "/plain.kdelnk";
+
+  if (dir.exists(fileName))
+  {
+    KConfig config(fileName);
+    config.setGroup("KDE Desktop Entry");
+    icon = config.readEntry("Icon");
+    if(icon.isEmpty()) // If no icon specified.
+      icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+    else icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
+    comment = config.readEntry("Comment");
+  }
+  else
+  {
+    icon = KApplication::kdedir() + "/share/icons/unknown.xpm";
+    comment = type + "/" + subType;
+  }
+
+  text = "<TABLE><TR><TD><A HREF=\"" + pnumstring + "\"><IMG SRC=" + 
+         icon + ">" + comment + "</A></TD></TR></TABLE>" + "<BR><HR><BR>";
+
+  return text;
+}
+
 
 void KMReaderView::initKMimeMagic()
 {
   // Magic file detection init
   QString mimefile = kapp->kdedir();
-  mimefile += "/share/mimelnk/magic";
+  mimefile += "/share/magic";
   magic = new KMimeMagic( mimefile );
   magic->setFollowLinks( TRUE );
 }

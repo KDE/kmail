@@ -4,6 +4,8 @@
 #include <assert.h>
 #include "kmfoldermgr.h"
 #include "kmacctfolder.h"
+#include "kmglobal.h"
+#include <klocale.h>
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath)
@@ -80,4 +82,21 @@ KMAcctFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
     if (node->name()==folderName) return (KMAcctFolder*)node;
   }
   return NULL;
+}
+
+
+//-----------------------------------------------------------------------------
+KMAcctFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
+{
+  KMAcctFolder* folder = find(aFolderName);
+
+  if (!folder)
+  {
+    warning(nls->translate("Creating missing folder\n`%s'"), aFolderName);
+
+    folder = createFolder(aFolderName, TRUE);
+    if (!folder) fatal(nls->translate("Cannot create folder `%s'."),
+		       aFolderName);
+  }
+  return folder;
 }

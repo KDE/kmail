@@ -7,21 +7,15 @@
 
 #include <qstring.h>
 #include <qlist.h>
-#include <qpushbt.h>
-#include <qlined.h>
-#include <qwidget.h>
-#include <qobject.h>
-#include <kconfig.h>
 #include <kmsgbox.h>
 
-class QFile;
-class QTextStream;
 class KMAcctMgr;
 class KMAcctFolder;
+class KConfig;
 
-class KMAccount : public QObject
+class KMAccount: public QObject
 {
-Q_OBJECT
+  Q_OBJECT
   friend class KMAcctMgr;
 
 public:
@@ -68,14 +62,12 @@ protected:
   /** Takes ownership of given, already opened, config object and calls
     readConfig() which sets the field necessary for the specific type of
     account. There is usually no need to inherit this method. */
-  virtual void takeConfig(KConfig*, QFile*, QTextStream*);
+  virtual void takeConfig(KConfig*);
 
   QString       mName;
   KMAcctMgr*    mOwner;
   KMAcctFolder* mFolder;
   KConfig*      mConfig;
-  QFile*        mCFile;
-  QTextStream*  mCStream;
 };
 
 typedef QList<KMAccount> KMAcctList;

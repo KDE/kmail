@@ -7,6 +7,7 @@
 #include "kmglobal.h"
 
 #include <klocale.h>
+#include <kconfig.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,6 +18,7 @@
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
+  initMetaObject();
 }
 
 
@@ -69,11 +71,11 @@ bool KMAcctLocal::processNewMail(void)
   mFolder->open();
 
   num = mailFolder.numMsgs();
-  debug("%d messages in %s", num, (const char*)location());
+  debug("%ld messages in %s", num, (const char*)location());
 
   for (i=num; i>=1; i--)
   {
-    debug("processing message %d", i);
+    debug("processing message %ld", i);
     msg = mailFolder.getMsg(i);
     mailFolder.detachMsg(i);
     if (msg) 

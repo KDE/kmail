@@ -14,6 +14,7 @@ class KMAcctFolder;
 class KMFolderMgr;
 class KConfig;
 class KProcess;
+class DwSmtpClient;
 
 class KMSender
 {
@@ -37,7 +38,11 @@ public:
 
   /** Provides direct access to the folder where the messages
     are queued. */
-  KMAcctFolder* messageQueue(void) const { return mQueue; }
+  KMAcctFolder* outboxQueue(void) const { return mQueue; }
+
+  /** Provides direct access to the folder where sent messages
+    are stored. */
+  KMAcctFolder* sentFolder(void) const { return mSent; }
 
   /** Method the sender shall use: either SMTP or local mail program */
   Method method(void) const { return mMethod; }
@@ -50,23 +55,33 @@ public:
 
   /** Name of the mail client (usually "/usr/bin/mail") that
     is used for mailing if the method is smMail */
-  const QString& mailer(void) const { return mMailer; }
+  const QString mailer(void) const { return mMailer; }
   virtual void setMailer(const QString&);
 
   /** Name of the host that is contacted via SMTP if the mailing
     method is smSMTP. */
-  const QString& smtpHost(void) const { return mSmtpHost; }
+  const QString smtpHost(void) const { return mSmtpHost; }
   virtual void setSmtpHost(const QString&);
 
   /** Port of the SMTP host, usually 110. */
   int smtpPort(void) const { return mSmtpPort; }
   virtual void setSmtpPort(int);
 
-protected:
-  // send given message via SMTP.
-  virtual bool sendSMTP(KMMessage*);
+  /** Email address of the user. */
+  const QString emailAddr(void) const { return mEmailAddr; }
+  virtual void setEmailAddr(const QString&);
 
-  // send given message via local mailer
+  /** Full name of the user. */
+  const QString userName(void) const { return mUserName; }
+  virtual void setUserName(const QString&);
+
+protected:
+  // Send given message via SMTP.
+  virtual bool sendSMTP(KMMessage*);
+  virtual bool smtpFailed(DwSmtpClient& cl, const char* op, int rc);
+  virtual void smtpClose(DwSmtpClient& cl);
+
+  // Send given message via local mailer
   virtual bool sendMail(KMMessage*);
 
 private:
@@ -74,10 +89,12 @@ private:
   bool mSendImmediate;
   KConfig* mCfg;
   KMFolderMgr* mFolderMgr;
-  KMAcctFolder* mQueue;
+  KMAcctFolder* mQueue;    // folder where outgoing mail is queued
+  KMAcctFolder* mSent;     // folder where sent mail is kept
   KProcess* mMailerProc;
   QString mMailer;
   QString mSmtpHost;
+  QString mEmailAddr, mUserName;
   int mSmtpPort;
 };
 

@@ -62,6 +62,7 @@ public slots:
 	void copy();
 	void markAll();
 	void viewSource();
+	void updateDisplay();
 
 private slots:
 	void replyMessage();
@@ -84,9 +85,9 @@ private slots:
         void popupHeaderMenu(const char *, const QPoint &);
         void popupMenu(const char *, const QPoint &);
         void saveURL(int);
-	void updateDisplay();
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *,int);
+        QString bodyPartIcon(QString type, QString subtype, QString partNumStr);
 	QString decodeString(KMMessagePart*, QString); 
 	QString scanURL(QString);
                                                 
