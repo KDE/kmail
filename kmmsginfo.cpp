@@ -17,12 +17,13 @@ public:
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
 	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
 	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
-	SIGNATURE_SET=0x1000, MDN_SET=0x2000,
+       SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
+       STRIPPEDSUBJECT_SET = 0x8000,
 
 	ALL_SET = 0xFFFF, NONE_SET = 0x0000
     };
-    ushort modifiers;
-    QString subject, from, to, replyToIdMD5, msgIdMD5, xmark, file;
+    uint modifiers;
+    QString subject, from, to, replyToIdMD5, replyToAuxIdMD5, strippedSubjectMD5, msgIdMD5, xmark, file;
     off_t folderOffset;
     size_t msgSize;
     time_t date;
@@ -37,6 +38,10 @@ public:
 	    modifiers |= SUBJECT_SET;
 	    subject = other.subject;
 	}
+       if (other.modifiers & STRIPPEDSUBJECT_SET) {
+           modifiers |= STRIPPEDSUBJECT_SET;
+           strippedSubjectMD5 = other.strippedSubjectMD5;
+       }
 	if (other.modifiers & FROM_SET) {
 	    modifiers |= FROM_SET;
 	    from = other.from;
@@ -53,6 +58,11 @@ public:
 	    modifiers |= REPLYTO_SET;
 	    replyToIdMD5 = other.replyToIdMD5;
 	}
+       if (other.modifiers & REPLYTOAUX_SET) {
+           modifiers |= REPLYTOAUX_SET;
+           replyToAuxIdMD5 = other.replyToAuxIdMD5;
+       }
+
 	if(other.modifiers & MSGID_SET) {
 	    modifiers |= MSGID_SET;
 	    msgIdMD5 = other.msgIdMD5;
@@ -143,6 +153,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->from = msg.fromStrip();
     kd->to = msg.toStrip();
     kd->replyToIdMD5 = msg.replyToIdMD5();
+    kd->replyToAuxIdMD5 = msg.replyToAuxIdMD5();
+    kd->strippedSubjectMD5 = msg.strippedSubjectMD5();
     kd->msgIdMD5 = msg.msgIdMD5();
     kd->xmark = msg.xmark();
     mStatus = msg.status();
@@ -161,7 +173,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
 		     KMMsgStatus aStatus, const QCString& aXMark,
-		     const QCString& replyToId, const QCString& msgId,
+                    const QCString& replyToId, const QCString& replyToAuxId,
+                    const QCString& msgId,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
 		     KMMsgMDNSentState mdnSentState,
@@ -176,6 +189,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->from = KMMessage::stripEmailAddr( decodeRFC2047String(aFrom) );
     kd->to = KMMessage::stripEmailAddr( decodeRFC2047String(aTo) );
     kd->replyToIdMD5 = KMMessagePart::encodeBase64( replyToId );
+    kd->replyToAuxIdMD5 = KMMessagePart::encodeBase64( replyToAuxId );
+    kd->strippedSubjectMD5 = KMMessagePart::encodeBase64( KMMessage::stripOffPrefixes( kd->subject ) );
     kd->msgIdMD5 = KMMessagePart::encodeBase64( msgId );
     kd->xmark = aXMark;
     kd->folderOffset = aFolderOffset;
@@ -192,7 +207,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
 		     KMMsgStatus aStatus, const QCString& aXMark,
-		     const QCString& replyToId, const QCString& msgId,
+                    const QCString& replyToId, const QCString& replyToAuxId,
+                    const QCString& msgId,
 		     const QCString& aFileName,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
@@ -200,8 +216,9 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     unsigned long aMsgSize)
 {
   // use the "normal" init for most stuff
-  init(aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, msgId,
-       encryptionState, signatureState, mdnSentState, (unsigned long)0, aMsgSize);
+  init(aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, replyToAuxId,
+                 msgId, encryptionState, signatureState, mdnSentState,
+                 (unsigned long)0, aMsgSize);
   kd->file = aFileName;
 }
 
@@ -257,6 +274,28 @@ QString KMMsgInfo::replyToIdMD5(void) const
     return getStringPart(MsgReplyToIdMD5Part);
 }
 
+//-----------------------------------------------------------------------------
+QString KMMsgInfo::replyToAuxIdMD5(void) const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::REPLYTOAUX_SET)
+       return kd->replyToAuxIdMD5;
+    return getStringPart(MsgReplyToAuxIdMD5Part);
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgInfo::strippedSubjectMD5(void) const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET)
+       return kd->strippedSubjectMD5;
+    return getStringPart(MsgStrippedSubjectMD5Part);
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMMsgInfo::subjectIsPrefixed(void) const
+{
+    return !(strippedSubjectMD5() == KMMessagePart::encodeBase64(subject()));
+}
 
 //-----------------------------------------------------------------------------
 QString KMMsgInfo::msgIdMD5(void) const
@@ -307,6 +346,36 @@ void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
     kd->replyToIdMD5 = aReplyToIdMD5;
     mDirty = TRUE;
 }
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setReplyToAuxIdMD5(const QString& aReplyToAuxIdMD5)
+{
+    if (aReplyToAuxIdMD5 == replyToAuxIdMD5())
+       return;
+
+    if (!kd)
+       kd = new KMMsgInfoPrivate;
+    kd->modifiers |= KMMsgInfoPrivate::REPLYTOAUX_SET;
+    kd->replyToAuxIdMD5 = aReplyToAuxIdMD5;
+    mDirty = TRUE;
+}
+
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::initStrippedSubjectMD5()
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET)
+       return;
+    QString rawSubject = KMMessage::stripOffPrefixes(subject());
+    QString subjectMD5 = KMMessagePart::encodeBase64(rawSubject);
+    if (!kd)
+       kd = new KMMsgInfoPrivate;
+    kd->modifiers |= KMMsgInfoPrivate::STRIPPEDSUBJECT_SET;
+    kd->strippedSubjectMD5 = subjectMD5;
+    mDirty = TRUE;
+}
+
 
 
 //-----------------------------------------------------------------------------

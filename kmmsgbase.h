@@ -148,6 +148,9 @@ public:
   virtual QString toStrip(void) const = 0;
   virtual QString replyToIdMD5(void) const = 0;
   virtual QString msgIdMD5(void) const = 0;
+  virtual QString replyToAuxIdMD5(void) const = 0;
+  virtual QString strippedSubjectMD5(void) const = 0;
+  virtual bool subjectIsPrefixed(void) const = 0;
   virtual time_t date(void) const = 0;
   virtual QString dateStr(void) const;
   virtual QString xmark(void) const = 0;
@@ -165,6 +168,9 @@ public:
   /** Set subject/from/date and xmark. */
   virtual void setSubject(const QString&) = 0;
   virtual void setXMark(const QString&) = 0;
+
+  /** Calculate strippedSubject */
+  virtual void initStrippedSubjectMD5() = 0;
 
   /** Return contents as index string. This string is of indexStringLength() size */
   const uchar *asIndexString(int &len) const;
@@ -284,7 +290,10 @@ public:
     MsgDatePart = 10,
     MsgFilePart = 11,
     MsgCryptoStatePart = 12,
-    MsgMDNSentPart = 13
+    MsgMDNSentPart = 13,
+    //another two unicode strings
+    MsgReplyToAuxIdMD5Part = 14,
+    MsgStrippedSubjectMD5Part = 15
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;

@@ -27,7 +27,9 @@ public:
   virtual void init(const QCString& subject, const QCString& from,
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
-		    const QCString& replyToId, const QCString& msgId,
+                   const QCString& replyToId,
+                   const QCString& replyToAuxId,
+                   const QCString& msgId,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
@@ -37,7 +39,9 @@ public:
   virtual void init(const QCString& subject, const QCString& from,
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
-		    const QCString& replyToId, const QCString& msgId,
+                   const QCString& replyToId,
+                   const QCString& replyToAuxId,
+                   const QCString& msgId,
 		    const QCString& fileName,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
@@ -50,6 +54,9 @@ public:
   virtual QString toStrip(void) const;
   virtual QString xmark(void) const;
   virtual QString replyToIdMD5(void) const;
+  virtual QString replyToAuxIdMD5(void) const;
+  virtual QString strippedSubjectMD5(void) const;
+  virtual bool subjectIsPrefixed(void) const;
   virtual QString msgIdMD5(void) const;
   virtual QString fileName(void) const;
   virtual KMMsgStatus status(void) const;
@@ -67,6 +74,8 @@ public:
   virtual void setSubject(const QString&);
   virtual void setXMark(const QString&);
   virtual void setReplyToIdMD5(const QString&);
+  virtual void setReplyToAuxIdMD5(const QString&);
+  virtual void initStrippedSubjectMD5();
   virtual void setMsgIdMD5(const QString&);
   virtual void setEncryptionState( const KMMsgEncryptionState, int idx = -1 );
   virtual void setSignatureState( const KMMsgSignatureState, int idx = -1 );
