@@ -1013,6 +1013,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
 
   // set the main headers
   theMessage.deleteBodyParts();
+  QString oldContentType = theMessage.headerField( "Content-Type" );
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
 
@@ -1055,6 +1056,9 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
         mOldBodyPart.setBodyEncoded( body );
       }
     }
+    mOldBodyPart.setContentDisposition( "inline" );
+    mOldBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
+    mOldBodyPart.setCharset(mCharset);
     addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
     mMessageList.push_back( msg );
     if ( it == splitInfos.begin() ) {
