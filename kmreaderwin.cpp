@@ -523,9 +523,12 @@ int KMReaderWin::msgPartFromUrl(const char* aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent(QResizeEvent *)
 {
-  mViewer->setGeometry(0, 0, width()-16, height());
+  mViewer->setGeometry(0, 0, width()-16, height()-16);
   mSbHorz->setGeometry(0, height()-16, width()-16, 16);
-  mSbVert->setGeometry(width()-16, 0, 16, height());
+  mSbVert->setGeometry(width()-16, 0, 16, height()-16);
+
+  mSbHorz->setSteps( 12, mViewer->width() - 12 );
+  mSbVert->setSteps( 12, mViewer->height() - 12 );
 }
 
 
