@@ -142,6 +142,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     uidsOfNextSeenMsgs.clear();
 
     interactive = _interactive;
+    mUidlFinished = FALSE;
     startJob();
   }
   else {
@@ -552,6 +553,7 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Uidl) {
     kdDebug() << "stage == Uidl" << endl;
+    mUidlFinished = TRUE;
     stage = Retr;
     numMsgs = idsOfMsgsPendingDownload.count();
     slotGetNextMsg();
@@ -609,16 +611,13 @@ void KMAcctExpPop::slotJobFinished() {
 
 void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 {
-  int oldStage = stage;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
   processMsgsTimer.stop();
 
   stage = Quit;
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
-  if ((oldStage == List) || (oldStage == Uidl)
-    || (KMBroadcastStatus::instance()->abortRequested()
-    && uidsOfNextSeenMsgs.isEmpty())) return;
+  if (!mUidlFinished) return;
   QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
 				       ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
