@@ -53,6 +53,9 @@ public:
   KMFolderMbox(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolderMbox();
 
+  /** Returns the type of this folder */
+  virtual KMFolderType folderType() const { return KMFolderTypeMbox; }
+
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest);
   DwString getDwString(int idx);

@@ -85,6 +85,9 @@ public:
   KMFolderSearch(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolderSearch();
 
+  /** Returns the type of this folder */
+  virtual KMFolderType folderType() const { return KMFolderTypeSearch; }
+
   // Sets and runs the search used by the folder
   void setSearch(KMSearch *search);
   // Returns the current search used by the folder

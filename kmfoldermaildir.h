@@ -37,6 +37,9 @@ public:
   KMFolderMaildir(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolderMaildir();
 
+  /** Returns the type of this folder */
+  virtual KMFolderType folderType() const { return KMFolderTypeMaildir; }
+
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest);
   virtual DwString getDwString(int idx);
