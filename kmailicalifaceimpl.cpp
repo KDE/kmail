@@ -177,7 +177,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 // attachments must be local files, they are identified by their names.
 // return value: wrong if attachment could not be added/updated
 bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
-                                           const QString& attachmentURL )
+                                           const QString& attachmentURL,
+                                           const QString& mimetype )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::updateAttachment( " << attachmentURL << " )" << endl;
 
@@ -193,14 +194,17 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 
       // create the new message part with data read from temp file
       KMMessagePart msgPart;
-      msgPart.setName( fileName );
-      msgPart.setType(DwMime::kTypeText);
-      msgPart.setSubtype(DwMime::kSubtypePlain);
-      msgPart.setContentDisposition( QString("attachment;\n  filename=\"%1\"")
-          .arg( fileName ).latin1() );
+      msgPart.setName( "kolab.xml" );
+
+      const int iSlash = mimetype.find('/');
+      const QCString sType    = mimetype.left( iSlash   ).latin1();
+      const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+      msgPart.setTypeStr( sType );
+      msgPart.setSubtypeStr( sSubtype );
+      msgPart.setContentDisposition( "attachment;\n  filename=\"kolab.xml\"" );
       QValueList<int> dummy;
       msgPart.setBodyAndGuessCte( rawData, dummy );
-      if( !url.fileEncoding().isEmpty() )
+      if( !url.fileEncoding().isEmpty() ) // the charset can be passed with the url
         msgPart.setCharset( url.fileEncoding().latin1() );
       msgPart.setPartSpecifier( fileName );
 
@@ -284,11 +288,12 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 
 
 // Store a new entry that was received from the resource
-Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
-                                           const QString& subject,
-                                           const QStringList& attachments )
+Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
+                                                const QString& subject,
+                                                const QStringList& attachments,
+                                                const QStringList& mimetypes )
 {
-  kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << attachments << " )" << endl;
+  kdDebug(5006) << "KMailICalIfaceImpl::addIncidenceKolab( " << attachments << " )" << endl;
 
   Q_UINT32 sernum = 0;
   bool bAttachOK = true;
@@ -300,14 +305,16 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   msg->initHeader();
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
-  msg->setSubject( subject ); // e.g.: "internal kolab data: Do not delete this mail."
+  msg->setSubject( subject );
   msg->setCharset( "US-ASCII" );
   msg->setAutomaticFields( true );
 
   // Add all attachments by reading them from their temp. files
+  QStringList::ConstIterator itmime = mimetypes.begin();
   for( QStringList::ConstIterator it = attachments.begin();
-       it != attachments.end(); ++it ){
-    if( !updateAttachment( *msg, *it ) ){
+       it != attachments.end() && itmime != mimetypes.end();
+       ++it, ++itmime ){
+    if( !updateAttachment( *msg, *it, *itmime ) ){
       kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
@@ -322,10 +329,10 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();
-    kdDebug(5006) << "addIncidence(): Message done and saved. Sernum: "
+    kdDebug(5006) << "addIncidenceKolab(): Message done and saved. Sernum: "
                   << sernum << endl;
   } else
-    kdError(5006) << "addIncidence: Message *NOT* saved!\n";
+    kdError(5006) << "addIncidenceKolab(): Message *NOT* saved!\n";
 
   mResourceQuiet = quiet;
   return sernum;
@@ -648,6 +655,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
                                      const QStringList& attachments,
+                                     const QStringList& mimetypes,
                                      const QStringList& deletedAttachments )
 {
   Q_UINT32 rc = 0;
@@ -699,17 +707,18 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     // Add all attachments by reading them from their temp. files
+    QStringList::ConstIterator itmime = mimetypes.begin();
     for( QStringList::ConstIterator it2 = attachments.begin();
-         it2 != attachments.end();
-         ++it2 ){
-      if( !updateAttachment( *msg, *it2 ) ){
+         it2 != attachments.end() && itmime != attachments.end();
+         ++it2, ++itmime ){
+      if( !updateAttachment( *msg, *it2, *itmime ) ){
         kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
         break;
       }
     }
   }else{
     // Message not found - store it newly
-    rc = addIncidence( *f, subject, attachments );
+    rc = addIncidenceKolab( *f, subject, attachments, mimetypes );
   }
 
   mResourceQuiet = quiet;

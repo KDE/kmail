@@ -70,6 +70,7 @@ k_dcop:
                            Q_UINT32 sernum,
                            const QString& subject,
                            const QStringList& attachments,
+                           const QStringList& mimetypes,
                            const QStringList& deletedAttachments ) = 0;
 
   virtual bool deleteIncidenceKolab( const QString& resource,
