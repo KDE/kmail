@@ -3,6 +3,7 @@
 
 #include <qfiledlg.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #ifndef KRN
 #include "kmglobal.h"
@@ -697,6 +698,7 @@ void KMReaderWin::slotAtmOpen()
   QString str, pname, cmd, fileName;
   KMMessagePart msgPart;
   char* tmpName;
+  int old_umask;
   int c;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
@@ -731,9 +733,11 @@ void KMReaderWin::slotAtmOpen()
 
   kbp->busy();
   str = msgPart.bodyDecoded();
+  old_umask = umask(077);
   if (!kStringToFile(str, fileName, TRUE))
     warning(i18n("Could not save temporary file %s"),
 	    (const char*)fileName);
+  umask(old_umask);
   kbp->idle();
   cmd = "kfmclient openURL \'";
   cmd += fileName;

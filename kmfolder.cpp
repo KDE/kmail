@@ -167,16 +167,23 @@ int KMFolder::open(void)
 int KMFolder::create(void)
 {
   int rc;
+  int old_umask;
 
   assert(name() != NULL);
   assert(mOpenCount == 0);
 
+  old_umask = umask(077);
   mStream = fopen(location(), "w");
+  umask(old_umask);
+
   if (!mStream) return errno;
 
   if (!path().isEmpty())
   {
+    old_umask = umask(077);
     mIndexStream = fopen(indexLocation(), "w");
+    umask(old_umask);
+
     if (!mIndexStream) return errno;
   }
   else
@@ -443,10 +450,13 @@ int KMFolder::createIndexFromContents(void)
 int KMFolder::writeIndex(void)
 {
   KMMsgBase* msgBase;
+  int old_umask;
   int i=0;
 
   if (mIndexStream) fclose(mIndexStream);
+  old_umask = umask(077);
   mIndexStream = fopen(indexLocation(), "w");
+  umask(old_umask);
   if (!mIndexStream) return errno;
 
   fprintf(mIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);

@@ -402,6 +402,8 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->setFocusPolicy(QWidget::NoFocus);
     if (aBtn) aBtn->hide();
   }
+
+  mMnuView->setItemEnabled(aMask, (aValue!=HDR_ALL));
 }
 
 

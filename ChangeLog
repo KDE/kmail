@@ -1,10 +1,23 @@
-1998-03-15  Stefan Taferner  <taferner@kde.org>
+1998-03-17  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.3)
+
+	* Composer: in menu view, when "all headers" view is 
+	activated, then the individual header line menu entries are 
+	disabled now.
+
+	* Folders: changed creation of folders to -rw-------
+	instead of the default -rw-r--r--. Same for the initial
+	creation of ~/Mail.
+
+	* Attachments: temporary files (when viewing attachments)
+	are now also created with permissions -rw-------.
+	
+1998-03-15  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.2)
 
 	* Startup: added option -check which does mail checking
 	upon startup. Also options that start with a '-' but which
 	are unknown are now skipped.
 
-1998-03-09  Stefan Taferner  <taferner@kde.org>
+1998-03-09  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.1)
 
 	* Reader: '_' was not considered part of a smart-detected email
 	address (auto detection of @).
@@ -16,7 +29,7 @@
 	* Composer: finally got insertion of tabs into message
 	working.
 
-(some changes are missing here)
+(many changes are missing here, sorry)
 	
 1998-02-14  Stefan Taferner  <taferner@kde.org>
 
