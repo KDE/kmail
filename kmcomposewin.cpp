@@ -3842,7 +3842,7 @@ QPopupMenu *KMLineEdit::createPopupMenu()
         return 0;
 
     menu->insertSeparator();
-    menu->insertItem( i18n( "Edit recent addresses..." ),
+    menu->insertItem( i18n( "Edit Recent Addresses..." ),
                       this, SLOT( editRecentAddresses() ) );
 
     return menu;
