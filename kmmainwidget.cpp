@@ -3381,10 +3381,11 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
   mFolderShortcutCommands.insert( folder->idString(), c );
 
+  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyURL() );
   QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
   KAction* action = 
-    new KAction(actionname, folder->shortcut(), c, SLOT(start()), 
+    new KAction(actionlabel, folder->shortcut(), c, SLOT(start()), 
                 actionCollection(), normalizedName.local8Bit());
   c->setAction( action ); // will be deleted along with the command
 }
