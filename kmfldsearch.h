@@ -62,6 +62,7 @@ protected:
   QListView* mLbxMatches;
   QLabel* mLblStatus;
   int mNumRules, mNumMatches;
+  int count;
   QString mSearchFolder;
   bool mSearching, mStopped;
   KMMainWin* mMainWin;

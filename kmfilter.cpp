@@ -319,6 +319,7 @@ bool KMFilterRule::matches(const KMMessage* msg)
     msgContents = msg->headerField(mField);
   }
 
+  // also see KMFldSearchRule::matches() for a similar function:
   switch (mFunction)
   {
   case KMFilterRule::FuncEquals:
@@ -328,10 +329,10 @@ bool KMFilterRule::matches(const KMMessage* msg)
     return (stricmp(mContents, msgContents) != 0);
 
   case KMFilterRule::FuncContains:
-    return (msgContents.find(mContents, 0, FALSE) >= 0);
+    return msgContents.contains(mContents, FALSE);
 
   case KMFilterRule::FuncContainsNot:
-    return (msgContents.find(mContents, 0, FALSE) < 0);
+    return ( ! msgContents.find(mContents, FALSE) );
 
   case KMFilterRule::FuncRegExp:
     return (msgContents.find(QRegExp(mContents, FALSE)) >= 0);

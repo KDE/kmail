@@ -1,6 +1,5 @@
 // kmfldsearch.cpp
 // TODO: Add search in subfolder checkbox
-// TODO: Allow searching in bodies
 // TODO: Use msgIdMD5 in MSGID_COLUMN
 
 #include "kmfldsearch.h"
@@ -155,13 +154,14 @@ void KMFldSearch::updStatus(void)
 
   if (!mSearching) {
     if(!mStopped)
-      str = i18n("Done, %1 matches").arg(mNumMatches);
+      str = i18n("Done, %1 matches (%2 messages processed)").arg(mNumMatches).arg(count);
     else
-      str = i18n("Search cancelled, %1 matches so far").arg(mNumMatches);    
+      str = i18n("Search cancelled, %1 matches so far (%3 messages processed)").arg(mNumMatches).arg(count);
   } else
-    str = i18n("%1 matches, searching in %2")
+    str = i18n("%1 matches, searching in %2 (message %3)")
 		.arg(mNumMatches)
-		.arg(mSearchFolder);
+		.arg(mSearchFolder)
+		.arg(count);
   mLblStatus->setText(str);
 }
 
@@ -174,6 +174,8 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
 
   assert(aMsg!=NULL);
 
+  count++;
+  updStatus();
   for(i=0; matches && i<mNumRules; i++)
     if (!mRules[i]->matches(aMsg)) 
       matches = false;
@@ -266,6 +268,7 @@ void KMFldSearch::slotSearch()
     return;
   }
   
+  count = 0;
   mStopped = false;
   mNumMatches = 0;
   mSearching  = true;
@@ -373,10 +376,8 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mCbxField->insertItem("From");
   mCbxField->insertItem("To");
   mCbxField->insertItem("Cc");
-  mCbxField->insertItem("Reply-To");
   mCbxField->insertItem("Organization");
-  mCbxField->insertItem("Resent-From");
-  mCbxField->insertItem("X-Loop");
+  mCbxField->insertItem(i18n("<complete message>"));
   mCbxField->setMinimumSize(mCbxField->sizeHint());
   mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
 
@@ -424,8 +425,13 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   QString value;
 
   if (mField.isEmpty() || !aMsg) return true;
-  value = aMsg->headerField(mField);
-
+  if( mField == i18n("<complete message>") ) {
+    value = aMsg->headerField(mField);
+    value =+ aMsg->bodyDecoded();
+  } else {
+    value = aMsg->headerField(mField);
+  }
+  // also see KMFilterRule::matches() for a similar function:
   switch(mFunc)
   {
   case Equal: 
@@ -433,9 +439,9 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   case NotEqual:
     return (stricmp(value, mValue) != 0);
   case Contains:
-    return (value.find(mValue) >= 0);
+    return value.contains(mValue, FALSE);
   case NotContains:
-    return (value.find(mValue) <= 0);
+    return ( ! value.contains(mValue, FALSE) );
   case GreaterEqual: 
     return (stricmp(value, mValue) >= 0);
   case LessEqual: 
