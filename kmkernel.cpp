@@ -46,6 +46,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
   closed_by_user = true;
+  the_firstInstance = true;
   the_msgDict = 0;
   new KMpgpWrap();
   // register our own (libkdenetwork) utf-7 codec as long as Qt
@@ -815,7 +816,18 @@ KabAPI* KMKernel::KABaddrBook()
 
 void KMKernel::notClosedByUser()
 {
-    closed_by_user = false;
+  closed_by_user = false;
+
+  QStringList strList;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  KMFolder *folder;
+  the_folderMgr->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    if (folder->isOpened() && folder->dirty()) folder->writeIndex();
+  }
 }
 
 void KMKernel::emergencyExit( const QString& reason )

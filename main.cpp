@@ -183,8 +183,9 @@ int KMailApplication::newInstance()
 
   args->clear();
 
-  if (!kapp->isRestored())
+  if (!kernel->firstInstance() || !kapp->isRestored())
     kernel->action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
+  kernel->setFirstInstance(FALSE);
   return 0;
 }
 

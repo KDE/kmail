@@ -91,7 +91,9 @@ public:
   void ungrabPtrKb(void);
   void kmailMsgHandler(QtMsgType aType, const char* aMsg);
   void dumpDeadLetters();
-  bool doSessionManagement ();
+  bool doSessionManagement();
+  bool firstInstance() { return the_firstInstance; }
+  void setFirstInstance(bool value) { the_firstInstance = value; }
   void action (bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body, const KURL &messageFile,
                const KURL::List &attach);
@@ -170,6 +172,7 @@ private:
   /** true unles kmail is closed by session management */
   bool closed_by_user;
   bool allowedToExpire;
+  bool the_firstInstance;
   static KMKernel *mySelf;
 };
 

@@ -386,6 +386,10 @@ public:
 
   void expireOldMessages();
 
+  /** Write index to index-file. Returns 0 on success and errno error on
+    failure. */
+  virtual int writeIndex();
+
   /** Inserts messages into the message dictionary.  Might be called
     during kernel initialization. */
   void fillMsgDict(KMMsgDict *dict);
@@ -457,10 +461,7 @@ protected:
       failure. */
   virtual int createIndexFromContents() = 0;
 
-  /** Write index to index-file. Returns 0 on success and errno error on
-    failure. */
-  virtual int writeIndex();
-    bool updateIndexStreamPtr(bool just_close=FALSE);
+  bool updateIndexStreamPtr(bool just_close=FALSE);
 
   /** Tests whether the contents (file) is newer than the index. Returns
     TRUE if the contents has changed (and the index should be recreated),

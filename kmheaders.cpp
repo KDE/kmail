@@ -743,6 +743,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 		 mOwner, SLOT(statusMsg(const QString&)));
 	    writeSortOrder();
       mFolder->close();
+      // System folders remain open but we also should write the index from
+      // time to time
+      if (mFolder->dirty()) mFolder->writeIndex();
     }
 
     mSortInfo.removed = 0;
