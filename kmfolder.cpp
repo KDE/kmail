@@ -1143,6 +1143,8 @@ int KMFolder::expunge()
 
   unreadMsgs = 0;
   emit numUnreadMsgsChanged( this );
+  if (mAutoCreateIndex) 
+    writeConfig();
   if (!mQuiet) 
     emit changed();
   else
