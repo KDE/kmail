@@ -204,7 +204,7 @@ protected:
   virtual void failed(const QString &msg);
 
   /** Prepare message for sending. */
-  virtual QString prepareStr(const QString &str, bool toCRLF=FALSE,
+  virtual QCString prepareStr(const QCString &str, bool toCRLF=FALSE,
    bool noSingleDot=TRUE);
 
   /** Informs the user about what is going on. */

@@ -33,7 +33,7 @@
 #undef None
 
 //-----------------------------------------------------------------------------
-KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
+KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
   mLock = procmail_lockfile;

@@ -1,5 +1,3 @@
-#undef QT_NO_ASCII_CAST
-#undef QT_NO_COMPAT
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
@@ -433,7 +431,8 @@ void KMReaderWin::displayAboutPage()
   QString content = kFileToString(location);
   mViewer->closeURL();
   mViewer->begin(location);
-  QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset());
+  QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset()
+    .latin1());
   if (codec) mViewer->setCharset(codec->name(), true);
     else mViewer->setCharset(KGlobal::locale()->charset(), true);
   QString info =
@@ -604,7 +603,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
   KMMessagePart msgPart;
   int i, numParts;
-  QString type, subtype, contDisp;
+  QCString type, subtype, contDisp;
   QByteArray str;
   bool asIcon = false;
   inlineImage = false;
@@ -643,7 +642,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     // text/html
     if (type.find("multipart/alternative") != -1 && numParts == 2)
     {
-      kdDebug(5006) << "Alternative message, type: " << type.data() << endl;
+      kdDebug(5006) << "Alternative message, type: " << type << endl;
       //Now: Only two attachments one of them is html
       for (i=0; i<2; i++)                   // count parts...
       {
@@ -873,7 +872,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 {
-  QString line, sig, htmlStr = "";
+  QString line, sig, htmlStr;
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
   // assert(!aStr.isNull());
@@ -881,8 +880,8 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
   if (pgp->setMessage(aStr))
   {
-    QString str = pgp->frontmatter();
-    if(!str.isEmpty()) htmlStr += aCodec->toUnicode(quotedHTML(str));
+    QCString str = pgp->frontmatter();
+    if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
     htmlStr += "<br>";
     if (pgp->isEncrypted())
     {
@@ -926,21 +925,15 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
     }
     if (pgpMessage)
     {
-      htmlStr += aCodec->toUnicode(quotedHTML(pgp->message()));
+      htmlStr += quotedHTML(aCodec->toUnicode(pgp->message()));
       htmlStr += QString("<br><b>%1</b><br><br>")
         .arg(i18n("End of pgp message"));
       str = pgp->backmatter();
-      if(!str.isEmpty()) htmlStr += aCodec->toUnicode(quotedHTML(str));
+      if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
     } // if (!pgpMessage) then the message only looked similar to a pgp message
-    else htmlStr = aCodec->toUnicode(quotedHTML(aStr));
+    else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
   }
-//  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
-//  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
-//  used from '!' character to  '~' character.
-//  JIS7 is header charset of iso-2022-jp.  toyo
-  else if( QString(aCodec->name()) == "JIS7" )
-    htmlStr += quotedHTML(aCodec->toUnicode(aStr));
-  else htmlStr += aCodec->toUnicode(quotedHTML(aStr));
+  else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
   mViewer->write(htmlStr);
 }
 
@@ -1068,9 +1061,10 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   bool ok = true;
 
   QString fname = QString("%1part%2").arg(mAttachDir).arg(aPartNum+1);
-  if (access(fname.data(), W_OK) != 0) // Not there or not writable
-    if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
-      ok = false; //failed create
+  if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
+    if (mkdir(QFile::encodeName(fname), 0) != 0
+      || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
+        ok = false; //failed create
 
   if (ok)
   {
@@ -1447,7 +1441,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
 	  errstring += VCard::getError(vcerr);
-	  KMessageBox::error(NULL, i18n(errstring), i18n("vCard error"));
+	  KMessageBox::error(NULL, errstring, i18n("vCard error"));
 	  return;
 	}
 
@@ -1498,7 +1492,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
       QString linkName = QString("<img src=\"file:%1\" border=0>").arg(aFileName);
-      win->mViewer->write(linkName.data());
+      win->mViewer->write(linkName);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
@@ -1563,7 +1557,7 @@ void KMReaderWin::slotAtmOpen()
       if (!vc) {
         QString errstring = i18n("Error reading in vCard:\n");
         errstring += VCard::getError(vcerr);
-        KMessageBox::error(this, i18n(errstring), i18n("vCard error"));
+        KMessageBox::error(this, errstring, i18n("vCard error"));
         return;
       }
 

@@ -63,7 +63,7 @@ public:
       instead call @ref KMFilterMgr::createFilter.
       @see KMFilterMgr::createFilter KMFilterDlg::createFilter
   */
-  void createFilter( const QString field, const QString value );
+  void createFilter( const QCString field, const QString value );
 
   /** Loads the filter list and selects the first filter. Should be
       called when all signals are connected properly. */
@@ -275,7 +275,7 @@ public:
       the first rule with "field equals value". Internally forwarded
       to @ref KMFilterListBox::createFilter. You should instead call
       @ref KMFilterMgr::createFilter. */
-  void createFilter( const QString field, const QString value )
+  void createFilter( const QCString field, const QString value )
     { mFilterList->createFilter( field, value ); }
 
 public slots:

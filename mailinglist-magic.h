@@ -6,7 +6,7 @@
 class KMMessage;
 
 QString detect_list(const KMMessage  *message,
-                    QString &header_name,
+                    QCString &header_name,
                     QString &header_value );
 
 #endif

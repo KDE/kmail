@@ -356,9 +356,6 @@ private:
   /** Get message including signing and encrypting it */
   QCString pgpProcessedMsg(void);
 
-  /** Test if string has any 8-bit characters */
-  bool is8Bit(const QString &str);
-
   /** Set edit widget charset */
   void setEditCharset();
 

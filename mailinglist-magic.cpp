@@ -2,11 +2,11 @@
 #include <kmmessage.h>
 #include <qregexp.h>
 
-typedef QString (*MagicDetectorFunc) (const KMMessage *, QString &, QString &);
+typedef QString (*MagicDetectorFunc) (const KMMessage *, QCString &, QString &);
 
 /* Sender: (owner-([^@]+)|([^@+]-owner)@ */
 static QString check_sender(const KMMessage  *message,
-                     QString &header_name,
+                     QCString &header_name,
                      QString &header_value )
 {
     QString header = message->headerField( "Sender" );
@@ -35,7 +35,7 @@ static QString check_sender(const KMMessage  *message,
 
 /* X-BeenThere: ([^@]+) */
 static QString check_x_beenthere(const KMMessage  *message,
-                                 QString &header_name,
+                                 QCString &header_name,
                                  QString &header_value )
 {
     QString header = message->headerField( "X-BeenThere" );
@@ -50,7 +50,7 @@ static QString check_x_beenthere(const KMMessage  *message,
 
 /* Delivered-To:: <([^@]+) */
 static QString check_delivered_to(const KMMessage  *message,
-                                  QString &header_name,
+                                  QCString &header_name,
                                   QString &header_value )
 {
     QString header = message->headerField( "Delivered-To" );
@@ -66,7 +66,7 @@ static QString check_delivered_to(const KMMessage  *message,
 
 /* X-Mailing-List: <?([^@]+) */
 static QString check_x_mailing_list(const KMMessage  *message,
-                                    QString &header_name,
+                                    QCString &header_name,
                                     QString &header_value )
 {
     QString header = message->headerField( "X-Mailing-List");
@@ -87,7 +87,7 @@ static QString check_x_mailing_list(const KMMessage  *message,
 
 /* List-Id: [^<]* <([^.]+) */
 static QString check_list_id(const KMMessage  *message,
-			     QString &header_name,
+			     QCString &header_name,
 			     QString &header_value )
 {
     int lAnglePos, firstDotPos;
@@ -111,7 +111,7 @@ static QString check_list_id(const KMMessage  *message,
 
 /* Mailing-List: list ([^@]+) */
 static QString check_mailing_list(const KMMessage  *message,
-                                    QString &header_name,
+                                    QCString &header_name,
                                     QString &header_value )
 {
     QString header = message->headerField( "Mailing-List");
@@ -130,7 +130,7 @@ static QString check_mailing_list(const KMMessage  *message,
 
 /* X-Loop: ([^@]+) */
 static QString check_x_loop(const KMMessage  *message,
-                                    QString &header_name,
+                                    QCString &header_name,
                                     QString &header_value ){
     QString header = message->headerField( "X-Loop");
     if ( header.isEmpty() )
@@ -159,10 +159,10 @@ MagicDetectorFunc magic_detector[] =
 static const int num_detectors = sizeof (magic_detector) / sizeof (magic_detector[0]);
 
 QString detect_list(const KMMessage  *message,
-                    QString &header_name,
+                    QCString &header_name,
                     QString &header_value )
 {
-    header_name = QString::null;
+    header_name = QCString();
     header_value = QString::null;
 
     if ( !message )

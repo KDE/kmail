@@ -55,10 +55,9 @@
 #include <kbuttonbox.h>
 
 //-----------------------------------------------------------------------------
-KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
+KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctImapInherited(aOwner, aAccountName)
 {
-
   init();
   mSlave = NULL;
   mTotal = 0;
@@ -754,7 +753,9 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
     if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
   } else {
     QString uid = mMsg->headerField("X-UID");
-    mMsg->fromString((*it).data);
+    (*it).data.resize((*it).data.size() + 1);
+    (*it).data[(*it).data.size() - 1] = '\0';
+    mMsg->fromString(QCString((*it).data));
     mMsg->setHeaderField("X-UID",uid);
     mMsg->setComplete( TRUE );
     emit messageRetrieved(mMsg);

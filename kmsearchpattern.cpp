@@ -63,7 +63,7 @@ KMSearchRule::KMSearchRule()
 
 
 //-----------------------------------------------------------------------------
-void KMSearchRule::init(const QString aField, Function aFunction,
+void KMSearchRule::init(const QCString aField, Function aFunction,
 			const QString aContents)
 {
   mField    = aField;
@@ -81,7 +81,7 @@ void KMSearchRule::init(const KMSearchRule* aRule)
 }
 
 //-----------------------------------------------------------------------------
-void KMSearchRule::init(const QString aField, const char* aStrFunction,
+void KMSearchRule::init(const QCString aField, const char* aStrFunction,
 			const QString aContents)
 {
   int intFunc = findInStrList( funcConfigNames, aStrFunction );
@@ -195,7 +195,7 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
   static const QString& func = KGlobal::staticQString( "func" );
   static const QString& contents = KGlobal::staticQString( "contents" );
 
-  init( config->readEntry( field + cIdx  ),
+  init( config->readEntry( field + cIdx  ).latin1(),
 	config->readEntry( func + cIdx ).latin1(),
 	config->readEntry( contents + cIdx ) );
 }
@@ -209,7 +209,7 @@ void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
   static const QString& func = KGlobal::staticQString( "func" );
   static const QString& contents = KGlobal::staticQString( "contents" );
 
-  config->writeEntry( field + cIdx, mField );
+  config->writeEntry( field + cIdx, QString(mField) );
   config->writeEntry( func + cIdx, funcConfigNames[(int)mFunction] );
   config->writeEntry( contents + cIdx, mContents );
 }
@@ -218,10 +218,8 @@ void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
 bool KMSearchRule::isEmpty() const
 {
   bool ok;
-  static const QString& size = KGlobal::staticQString( "<size>" );
-  static const QString& ageInDays = KGlobal::staticQString( "<age in days>" );
 
-  if ( mField == size|| mField == ageInDays ) {
+  if ( mField == "<size>" || mField == "<age in days>" ) {
     ok = FALSE;
     mContents.toULong(&ok);
   } else
@@ -322,7 +320,7 @@ void KMSearchPattern::readConfig( KConfig *config )
 void KMSearchPattern::importLegacyConfig( KConfig *config )
 {
   KMSearchRule *rule = new KMSearchRule();
-  rule->init( config->readEntry("fieldA"),
+  rule->init( config->readEntry("fieldA").latin1(),
 	      config->readEntry("funcA").latin1(),
 	      config->readEntry("contentsA") );
   if ( rule->isEmpty() ) {
@@ -337,7 +335,7 @@ void KMSearchPattern::importLegacyConfig( KConfig *config )
   if ( sOperator == "ignore" ) return;
 
   rule = new KMSearchRule();
-  rule->init( config->readEntry("fieldB"),
+  rule->init( config->readEntry("fieldB").latin1(),
 	      config->readEntry("funcB").latin1(), // or is local8Bit better?
 	      config->readEntry("contentsB") );
   if ( rule->isEmpty() ) {

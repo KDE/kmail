@@ -31,7 +31,7 @@
 #include "kmaccount.moc"
 
 //-----------------------------------------------------------------------------
-KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
+KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
 {
   assert(aOwner != NULL);
 

@@ -166,7 +166,7 @@ void KMFilterMgr::openDialog( QWidget *parent )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::createFilter( const QString field, const QString value )
+void KMFilterMgr::createFilter( const QCString field, const QString value )
 {
   openDialog( 0 );
   mEditDialog->createFilter( field, value );

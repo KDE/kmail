@@ -377,9 +377,9 @@ void KMMessagePart::setContentDisposition(const QCString &aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::body(void) const
+QCString KMMessagePart::body(void) const
 {
-  return mBody;
+  return QCString(mBody, mBody.size() + 1);
 }
 
 

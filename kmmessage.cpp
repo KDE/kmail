@@ -1,5 +1,3 @@
-#undef QT_NO_ASCII_CAST
-#undef QT_NO_COMPAT
 // kmmessage.cpp
 
 
@@ -69,7 +67,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setReferences(const QString& aStr)
+void KMMessage::setReferences(const QCString& aStr)
 {
   if (!aStr) return;
   mMsg->Headers().References().FromString(aStr);
@@ -78,7 +76,7 @@ void KMMessage::setReferences(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::id(void) const
+QCString KMMessage::id(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
@@ -174,7 +172,7 @@ QString KMMessage::headerAsString(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::fromString(const QString& aStr, bool aSetStatus)
+void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 {
   int len;
   const char* strPos;
@@ -204,7 +202,7 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
   mMsg->Parse();
 
   if (aSetStatus)
-    setStatus(headerField("Status"), headerField("X-Status"));
+    setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
 
   mNeedsAssembly = FALSE;
     mDate = date();
@@ -661,7 +659,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   QString selection, bool noQuote, bool allowDecryption)
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
+  QString str, replyStr, mailingListStr, replyToStr, toStr;
+  QCString refStr;
   QString id;
 
   id = headerField("X-KMail-Identity");
@@ -812,15 +811,15 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::getRefStr()
+QCString KMMessage::getRefStr()
 {
-  QString firstRef, lastRef, refStr, retRefStr;
+  QCString firstRef, lastRef, refStr, retRefStr;
   int i, j;
 
-  refStr = headerField("References").stripWhiteSpace ();
+  refStr = headerField("References").stripWhiteSpace().latin1();
 
   if (refStr.isEmpty())
-    return headerField("Message-Id");
+    return headerField("Message-Id").latin1();
 
   i = refStr.find("<");
   j = refStr.find(">");
@@ -835,7 +834,7 @@ QString KMMessage::getRefStr()
   if (!lastRef.isEmpty() && lastRef != firstRef)
     retRefStr += lastRef + " ";
 
-  retRefStr += headerField("Message-Id");
+  retRefStr += headerField("Message-Id").latin1();
   return retRefStr;
 }
 
@@ -1252,7 +1251,7 @@ void KMMessage::setDate(time_t aDate)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setDate(const QString& aStr)
+void KMMessage::setDate(const QCString& aStr)
 {
   DwHeaders& header = mMsg->Headers();
 
@@ -1482,12 +1481,12 @@ void KMMessage::setMsgId(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QStrList KMMessage::headerAddrField(const QString& aName) const
+QStrList KMMessage::headerAddrField(const QCString& aName) const
 {
   QStrList resultList;
   DwHeaders& header = mMsg->Headers();
 
-  QCString content = header.FieldBody((const char*)aName).AsString().c_str();
+  QCString content = header.FieldBody(aName.data()).AsString().c_str();
   if (content.isEmpty()) return resultList;
 
   bool insideQuote1 = FALSE, insideQuote2 = FALSE;
@@ -1512,23 +1511,23 @@ QStrList KMMessage::headerAddrField(const QString& aName) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::headerField(const QString& aName) const
+QString KMMessage::headerField(const QCString& aName) const
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field;
   QString result;
 
-  if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
+  if (aName.isEmpty() || !(field = header.FindField(aName)))
     result = "";
   else
-    result = decodeRFC2047String(header.FieldBody((const char*)aName).
+    result = decodeRFC2047String(header.FieldBody(aName.data()).
                     AsString().c_str());
   return result;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::removeHeaderField(const QString& aName)
+void KMMessage::removeHeaderField(const QCString& aName)
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field;
@@ -1542,12 +1541,12 @@ void KMMessage::removeHeaderField(const QString& aName)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
+void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
 {
   DwHeaders& header = mMsg->Headers();
   DwString str;
   DwField* field;
-  QString aValue = "";
+  QCString aValue = "";
   if (!bValue.isEmpty())
     aValue = encodeRFC2047String(bValue, charset());
 
@@ -1922,77 +1921,6 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
-{
-  DwBody&     body = mMsg->Body();
-  DwBodyPart* part = 0;
-  int         numParts = numBodyParts();
-
-  assert(aIdx >= 0);
-  assert(aPart != NULL);
-
-  // If indexed part exists already, just replace its values
-  if (aIdx < numParts)
-  {
-    part = body.FirstBodyPart();
-    for (int curIdx=0; curIdx < aIdx; ++curIdx)
-      part = part->Next();
-  }
-  // Otherwise, add as many new parts as necessary.
-  else if (numParts <= aIdx)
-  {
-    while (numParts <= aIdx)
-    {
-      part = DwBodyPart::NewBodyPart(emptyString, 0);
-      body.AddBodyPart(part);
-      ++numParts;
-    }
-  }
-
-  const DwString type     = (const char*)aPart->typeStr();
-  const DwString subtype  = (const char*)aPart->subtypeStr();
-  const DwString cte      = (const char*)aPart->cteStr();
-  const DwString contDesc = (const char*)aPart->contentDescription();
-  const DwString contDisp = (const char*)aPart->contentDisposition();
-  const DwString bodyStr  = (const char*)aPart->body();
-  const DwString charset  = (const char*)aPart->charset();
-  DwHeaders& headers = part->Headers();
-  if (type != "" && subtype != "")
-  {
-    headers.ContentType().SetTypeStr(type);
-    headers.ContentType().SetSubtypeStr(subtype);
-    if (!charset.empty())
-    {
-      DwParameter *param=headers.ContentType().FirstParameter();
-      while(param)
-      {
-	if (QString(param->Attribute().c_str()).lower()=="charset") break;
-	else param=param->Next();
-      }
-      if (!param)
-      {
-	param=new DwParameter;
-	param->SetAttribute("charset");
-	headers.ContentType().AddParameter(param);
-      }
-      param->SetValue(charset);
-    }
-  }
-  if (cte != "")
-    headers.Cte().FromString(cte);
-
-  if (contDesc != "")
-    headers.ContentDescription().FromString(contDesc);
-
-  if (contDisp != "")
-    headers.ContentDisposition().FromString(contDisp);
-
-  part->Body().FromString(bodyStr);
-  mNeedsAssembly = TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMessage::deleteBodyParts(void)
 {
   mMsg->Body().DeleteBodyParts();
@@ -2058,17 +1986,16 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec) const
+void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec)
 {
-  QString str = ((KMMessage*)this)->asString();
-  if (codec) str=codec->toUnicode(str);
+  QString str = (codec) ? codec->toUnicode(asString()) : asString();
 
 #if ALLOW_GUI
   QMultiLineEdit* edt;
 
   edt = new QMultiLineEdit;
   KWin::setIcons(edt->winId(), kapp->icon(), kapp->miniIcon());
-  if (aCaption) edt->setCaption(aCaption);
+  if (!aCaption.isEmpty()) edt->setCaption(aCaption);
 
   edt->insertLine(str);
   edt->setReadOnly(TRUE);
@@ -2176,7 +2103,7 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
       result += addr;
       result = result.replace(QRegExp("\n"),"");
       result += "'>";
-      if (stripped) result += KMMessage::stripEmailAddr(tmp2);
+      if (stripped) result += KMMessage::stripEmailAddr(tmp2).latin1();
       else result += addr;
       tmp2 = "";
       result += "</a>";

@@ -181,7 +181,7 @@ int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlSt
 int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
 int retval;
-QString bericht;
+QCString bericht;
 static QStringList *msgIds=NULL;
 static QString      lastFolder="";
 bool readFolderMsgIds=false;

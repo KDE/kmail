@@ -591,7 +591,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
           else value += content;
       }
     } else {
-      value = aMsg->headerField(mField);
+      value = aMsg->headerField(mField.latin1());
     }
   } else {
     int start, stop;

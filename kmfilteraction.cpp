@@ -676,8 +676,8 @@ KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) c
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  while ( !msg->headerField( mParameter ).isEmpty() )
-    msg->removeHeaderField( mParameter );
+  while ( !msg->headerField( mParameter.latin1() ).isEmpty() )
+    msg->removeHeaderField( mParameter.latin1() );
   return GoOn;
 }
 
@@ -740,7 +740,7 @@ KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMMessage* msg) cons
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  msg->setHeaderField( mParameter, mValue );
+  msg->setHeaderField( mParameter.latin1(), mValue );
   return GoOn;
 }
 
@@ -871,10 +871,10 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
 
   KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
 
-  QString newValue = rx.replace( msg->headerField( mParameter ),
+  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
 				     mReplacementString );
 
-  msg->setHeaderField( mParameter, newValue );
+  msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
 }
 
@@ -1206,7 +1206,8 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
   commandLine = QString( "(%1) <%2 >%3" ).arg( commandLine ).arg( inFile->name() ).arg( outFile->name() );
 
   // write message to file
-  QString msgText, tempFileName;
+  QString tempFileName;
+  QCString msgText;
 
   tempFileName = inFile->name();
   kCStringToFile( aMsg->asString(), tempFileName, //###

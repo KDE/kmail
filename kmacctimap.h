@@ -197,7 +197,7 @@ signals:
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
-  KMAcctImap(KMAcctMgr* owner, const char* accountName);
+  KMAcctImap(KMAcctMgr* owner, const QString& accountName);
 
   /** Very primitive en/de-cryption so that the password is not
       readable in the config file. But still very easy breakable. */

@@ -69,7 +69,7 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   int i = indexOfRuleField( aRule->field() );
 
   if ( i<0 ) { // not found -> user defined field
-    mRuleField->changeItem( aRule->field(), 0 );
+    mRuleField->changeItem( QString(aRule->field()), 0 );
     i=0;
   } else // found in the list of predefined fields
     mRuleField->changeItem( "", 0 );
@@ -87,7 +87,7 @@ KMSearchRule* KMSearchRuleWidget::rule() const
 {
   KMSearchRule *r = new KMSearchRule;
 
-  r->init( ruleFieldToEnglish( mRuleField->currentText() ),
+  r->init( ruleFieldToEnglish( mRuleField->currentText() ).latin1(),
 	   (KMSearchRule::Function)mRuleFunc->currentItem(),
 	   mRuleValue->text() );
 

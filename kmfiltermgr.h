@@ -34,7 +34,7 @@ public:
 
   /** Open an edit dialog, create a new filter and preset the first
       rule with "field equals value" */
-  virtual void createFilter( const QString field, const QString value );
+  virtual void createFilter( const QCString field, const QString value );
 
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)

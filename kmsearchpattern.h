@@ -51,7 +51,7 @@ public:
       @param contents
       The value to use, see @ref value.
   */
-  void init(const QString aField, Function aFunction, const QString aContents);
+  void init(const QCString aField, Function aFunction, const QString aContents);
 
   /** This is an overloaded member funcion, provided for convenience.
       It differs from the above only in what arguments it takes. */
@@ -61,7 +61,7 @@ public:
       It differs from the above only in what arguments it takes,
       namely the stringified version of the function, as used in the
       config file. */
-  void init(const QString aField, const char* aStrFunction, const QString aContents);
+  void init(const QCString aField, const char* aStrFunction, const QString aContents);
 
   /** Tries to match the rule against the given @ref KMMessage.
       @return TRUE if the rule matched, FALSE otherwise.
@@ -103,10 +103,10 @@ public:
       @li <size>: Try to match against size of message (numerical).
       @li <age in days>: Try to match against age of message (numerical).
   */
-  const QString field() const { return mField; }
+  const QCString field() const { return mField; }
   /** Set message header field name (make sure there's no trailing
       colon ':') */
-  void setField( const QString aField ) { mField = aField; }
+  void setField( const QCString aField ) { mField = aField; }
 
   /** Return the value. This can be either a substring to search for in
       or a regexp pattern to match against the header. */
@@ -118,7 +118,7 @@ public:
   const QString asString() const;
 
 protected:
-  QString  mField;
+  QCString  mField;
   Function mFunction;
   QString  mContents;
 };

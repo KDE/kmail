@@ -96,7 +96,7 @@ protected slots:
   virtual void sendReceipts();
 
 protected:
-  KMAccount(KMAcctMgr* owner, const char* accountName);
+  KMAccount(KMAcctMgr* owner, const QString& accountName);
 
   /** Does filtering and storing in a folder for the given message.
     Shall be called from within processNewMail() to process the new

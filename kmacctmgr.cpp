@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // KMail Account Manager
 
 #include "kmacctmgr.h"
@@ -180,13 +179,13 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 {
   KMAccount* act = NULL;
 
-  if (qstricmp(aType,"local")==0)
+  if (aType == "local")
     act = new KMAcctLocal(this, aName);
 
-  else if (qstricmp(aType,"pop")==0)
+  else if (aType == "pop")
     act = new KMAcctExpPop(this, aName);
 
-  else if (stricmp(aType,"imap")==0)
+  else if (aType == "imap")
     act = new KMAcctImap(this, aName);
 
   if (act)

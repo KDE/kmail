@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmsender.cpp
 
 
@@ -633,13 +632,13 @@ bool KMSendProc::finish(bool destructive)
 }
 
 //-----------------------------------------------------------------------------
-QString KMSendProc::prepareStr(const QString &aStr, bool toCRLF,
+QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
  bool noSingleDot)
 {
   QString str;
   int pos=0;
 
-  if (aStr.isEmpty()) return str;
+  if (aStr.isEmpty()) return QCString();
 
   // Convert LF to CR+LF and handle dots at beginning of line.
   for (pos=0; pos<(int)aStr.length(); pos++)
@@ -659,7 +658,7 @@ QString KMSendProc::prepareStr(const QString &aStr, bool toCRLF,
     else str += c;
   }
 
-  return str;
+  return str.latin1();
 }
 
 //-----------------------------------------------------------------------------

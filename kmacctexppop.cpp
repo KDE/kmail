@@ -38,10 +38,9 @@
 #include <kbuttonbox.h>
 
 //-----------------------------------------------------------------------------
-KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
+KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctExpPopInherited(aOwner, aAccountName)
 {
-
   mUseSSL = FALSE;
   mUseTLS = FALSE;
   mStorePasswd = FALSE;
@@ -596,7 +595,9 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Retr) {
     kdDebug(5006) << "stage == Retr" << endl;
     KMMessage *msg = new KMMessage;
-    msg->fromString(curMsgData,TRUE);
+    curMsgData.resize(curMsgData.size() + 1);
+    curMsgData[curMsgData.size() - 1] = '\0';
+    msg->fromString(QCString(curMsgData),TRUE);
     kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
 
     msgsAwaitingProcessing.append(msg);

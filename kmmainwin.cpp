@@ -1228,7 +1228,8 @@ void KMMainWin::slotMailingListFilter()
 {
     KMMessage* msg = mHeaders->getMsg(-1);
     if (msg) {
-        QString name, value;
+        QCString name;
+        QString value;
         if ( !detect_list( msg, name, value ).isNull() )
             kernel->filterMgr()->createFilter( name, value );
     }
@@ -2115,7 +2116,8 @@ void KMMainWin::updateMessageMenu()
         if(!(msg = mHeaders->getMsg(aIdx)))
             return;
 
-        QString name, value;
+        QCString name;
+        QString value;
         QString lname = detect_list( msg, name, value );
         if ( lname.isNull() )
             mlistFilterAction->setEnabled( false );

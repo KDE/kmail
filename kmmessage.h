@@ -78,7 +78,7 @@ public:
   virtual KMMessage* createDeliveryReceipt(void) const;
 
   /** Parse the string and create this message from it. */
-  virtual void fromString(const QString& str, bool setStatus=FALSE);
+  virtual void fromString(const QCString& str, bool setStatus=FALSE);
 
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
@@ -134,7 +134,7 @@ public:
   virtual QCString dateShortStr(void) const;
   virtual QString dateIsoStr(void) const;
   virtual time_t date(void) const;
-  virtual void setDate(const QString& str);
+  virtual void setDate(const QCString& str);
   virtual void setDate(time_t aUnixTime);
 
   /** Set the 'Date' header field to the current date. */
@@ -188,23 +188,23 @@ public:
   virtual QString msgIdMD5(void) const;
 
   /** Set the references for this message */
-  virtual void setReferences(const QString& aStr);
+  virtual void setReferences(const QCString& aStr);
 
-  /** Returns the message ID, useful for followups (Added for krn)*/
-  virtual QString id(void) const;
+  /** Returns the message ID, useful for followups */
+  virtual QCString id(void) const;
 
   /** Get or set header field with given name */
-  virtual QString headerField(const QString& name) const;
-  virtual void setHeaderField(const QString& name, const QString& value);
+  virtual QString headerField(const QCString& name) const;
+  virtual void setHeaderField(const QCString& name, const QString& value);
 
   /** Returns header address list as string list. Warning: returns
     a temporary object !
     Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
     ResentCc, ResentReplyTo, ResentTo */
-  virtual QStrList headerAddrField(const QString& name) const;
+  virtual QStrList headerAddrField(const QCString& name) const;
 
   /** Remove header field with given name */
-  virtual void removeHeaderField(const QString& name);
+  virtual void removeHeaderField(const QCString& name);
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
@@ -261,13 +261,6 @@ public:
     attributes set to empty values. */
   virtual void bodyPart(int aIdx, KMMessagePart* aPart) const;
 
-  /** Set the body part at position in aIdx.  Indexing starts at 0.
-    If you have aIdx = 10 and there are only 2 body parts, 7 empty
-    body parts will be created to fill slots 2 through 8.  If you
-    just want to add a body part at the end, use AddBodyPart().
-    */
-  virtual void setBodyPart(int aIdx, const KMMessagePart* aPart);
-
   /** Append a body part to the message. */
   virtual void addBodyPart(const KMMessagePart* aPart);
 
@@ -275,7 +268,7 @@ public:
   virtual void deleteBodyParts(void);
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const QString& windowCaption, QTextCodec *codec) const;
+  virtual void viewSource(const QString& windowCaption, QTextCodec *codec);
 
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
@@ -334,7 +327,7 @@ public:
   /** Creates rference string for reply to messages.
    *  reference = original first reference + original last reference + original msg-id
    */
-  QString getRefStr();
+  QCString getRefStr();
 
     /** Get/set offset in mail folder. */
     virtual unsigned long folderOffset(void) const { return mFolderOffset; }

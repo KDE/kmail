@@ -17,7 +17,7 @@ public:
   virtual ~KMMessagePart();
 
   /** Get or set the message body */
-  QString body(void) const;
+  QCString body(void) const;
   void setBody(const QString &aStr);
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding

@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
@@ -288,14 +287,14 @@ void KMComposeWin::readColorConfig(void)
 void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->config();
-  QString str;
+  QCString str;
   //  int w, h,
   int maxTransportItems;
 
   KConfigGroupSaver saver(config, "Composer");
 
-  str = config->readEntry("charset", "");
-  if (str.isNull() || str.isEmpty() || str=="default")
+  str = config->readEntry("charset", "").latin1();
+  if (str.isEmpty() || str=="default")
     mDefCharset = defaultCharset();
   else
   {
@@ -309,7 +308,7 @@ void KMComposeWin::readConfig(void)
 
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
-  mDefEncoding = config->readEntry("encoding", "base64");
+  mDefEncoding = config->readEntry("encoding", "base64").latin1();
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 78);
@@ -442,8 +441,8 @@ void KMComposeWin::deadLetter(void)
   // This method is called when KMail crashed, so we better use as
   // basic functions as possible here.
   applyChanges();
-  QString msgStr = mMsg->asString();
-  QString fname = getenv("HOME");
+  QCString msgStr = mMsg->asString();
+  QCString fname = getenv("HOME");
   fname += "/dead.letter";
   // Security: the file is created in the user's home directory, which
   // might be readable by other users. So the file only gets read/write
@@ -453,9 +452,9 @@ void KMComposeWin::deadLetter(void)
   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
   if (fd != -1)
   {
-    QString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
-    ::write(fd, startStr.latin1(), startStr.length());
-    ::write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
+    QCString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
+    ::write(fd, startStr, startStr.length());
+    ::write(fd, msgStr, msgStr.length());
     ::write(fd, "\n", 1);
     ::close(fd);
     fprintf(stderr,"appending message to ~/dead.letter\n");
@@ -999,14 +998,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     if ((mCharset=="") || (mCharset == "default"))
       mCharset = defaultCharset();
 
-    QString bodyDecoded = mMsg->bodyDecoded();
+    QCString bodyDecoded = mMsg->bodyDecoded();
 
       Kpgp* pgp = Kpgp::getKpgp();
       assert(pgp != NULL);
 
-      if (allowDecryption && pgp->setMessage(QCString(bodyDecoded)))
+      if (allowDecryption && pgp->setMessage(bodyDecoded))
       {
-        QString str = pgp->frontmatter();
+        QCString str = pgp->frontmatter();
         if ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())
         {
           str += pgp->message();
@@ -1087,7 +1086,7 @@ bool KMComposeWin::applyChanges(void)
   for (pCH  = mCustHeaders.first();
        pCH != NULL;
        pCH  = mCustHeaders.next()) {
-    mMsg->setHeaderField(pCH->name, pCH->value);
+    mMsg->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
   }
 
   bool isQP = kernel->msgSender()->sendQuotedPrintable();
@@ -1177,7 +1176,7 @@ bool KMComposeWin::queryClose ()
     rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or save message"),
-           i18n("Discard"), i18n("Save as draft"), i18n("Cancel"));
+           i18n("Discard"), i18n("Save as draft"));
     if (rc == KMessageBox::Cancel)
       return false;
     else if (rc == KMessageBox::No)
@@ -1257,7 +1256,8 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       receiver = _to.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
       if (!receiver.isEmpty())
       {
-	persons.append(receiver);
+// FIXME: Kpgp::encryptFor() has to support unicode
+	persons.append(receiver.latin1());
       }
       lastindex = index;
     }
@@ -1497,7 +1497,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   {
     int col, line;
     mEditor->getCursorPosition(&line, &col);
-    mEditor->insertAt(QString::fromLocal8Bit((*it).data + '\0'), line, col);
+    (*it).data.resize((*it).data.size() + 1);
+    (*it).data[(*it).data.size() - 1] = '\0';
+    mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
     mapAtmLoadData.remove(it);
     return;
   }
@@ -1567,7 +1569,7 @@ void KMComposeWin::slotInsertFile()
 void KMComposeWin::slotSetCharset()
 {
   mCharset = KGlobal::charsets()->encodingForName( encodingAction->
-    currentText() );
+    currentText() ).latin1();
   mMsg->setCharset(mCharset);
   setEditCharset();
 }
@@ -1618,7 +1620,7 @@ void KMComposeWin::slotInsertPublicKey()
   str=pgp->getAsciiPublicKey(
          KpgpKey::getKeyName(this, pgp->keys()));
 
-  if( str && str.length() > 0 ) {
+  if (!str.isEmpty()) {
     // create message part
     msgPart = new KMMessagePart;
     msgPart->setName(i18n("pgp key"));
@@ -1631,7 +1633,7 @@ void KMComposeWin::slotInsertPublicKey()
     // add the new attachment to the list
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
-  } else if( str ) {
+  } else {
     KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid\n"
     	"(e.g. key contains umlaut with wrong encoding)." ) );
   }
@@ -2110,6 +2112,8 @@ void KMComposeWin::slotSpellcheck()
     mEditor->spellcheck();
   }
 }
+
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone()
 {
@@ -2119,23 +2123,6 @@ void KMComposeWin::slotSpellcheckDone()
 
 }
 
-
-//-----------------------------------------------------------------------------
-bool KMComposeWin::is8Bit(const QString &str)
-{
-  const char *ptr=str;
-  while(*ptr)
-  {
-    if ( (*ptr)&0x80 ) return TRUE;
-    else if ( (*ptr)=='&' && ptr[1]=='#' )
-    {
-      int code=atoi(ptr+2);
-      if (code>0x7f) return TRUE;
-    }
-    ptr++;
-  }
-  return FALSE;
-}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEditCharset()
@@ -2170,7 +2157,7 @@ QCString KMComposeWin::defaultCharset(void) const
     if (globalConfig)
     {
       KConfigGroupSaver saver(globalConfig, "Locale");
-      retval = globalConfig->readEntry("Charset");
+      retval = globalConfig->readEntry("Charset").latin1();
       if (retval.isNull())  //this means iso-8859-1 was a fallback, make your own guess
       {
         //we basicly use LANG envvar here
@@ -2179,7 +2166,8 @@ QCString KMComposeWin::defaultCharset(void) const
         for (int i = 0; i < (int)aStr.length(); i++)
            if (aStr[i] != spaceChar)
              bStr += QChar(aStr[i]).lower();
-         retval = KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr));
+         retval = KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr))
+           .latin1();
       }
     }
     //we should be pretty safe: still if sth goes wrong we return iso-8859-1
@@ -2629,7 +2617,7 @@ void KMLineEdit::dropEvent(QDropEvent *e)
     {
       if (!ct.isEmpty()) ct.append(", ");
       KURL u(*it);
-      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path()));
+      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path().latin1()));
       else ct.append(QString::fromUtf8(*it));
     }
     setText(ct);

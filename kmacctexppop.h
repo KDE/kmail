@@ -89,7 +89,7 @@ protected:
   enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
-  KMAcctExpPop(KMAcctMgr* owner, const char* accountName);
+  KMAcctExpPop(KMAcctMgr* owner, const QString& accountName);
 
   /** Very primitive en/de-cryption so that the password is not
       readable in the config file. But still very easy breakable. */
