@@ -2532,6 +2532,7 @@ void KMComposeWin::slotEditToolbars()
   if (dlg.exec() == true)
   {
     createGUI("kmcomposerui.rc");
+    toolbarAction->setChecked(!toolBar()->isHidden());
   }
 }
 

@@ -1639,6 +1639,7 @@ void KMMainWin::slotEditToolbars()
   if (dlg.exec() == true)
   {
     createGUI("kmmainwin.rc");
+    toolbarAction->setChecked(!toolBar()->isHidden());
   }
 }
 
