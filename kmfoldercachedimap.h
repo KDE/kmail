@@ -237,8 +237,9 @@ protected slots:
   // Connected to the imap account
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
-  void slotCheckUidValidityResult(  KMail::FolderJob* job );
-
+  void slotCheckUidValidityResult( KMail::FolderJob* job );
+  void slotGetAnnotationResult( KIO::Job* );
+  void slotSetAnnotationResult(KIO::Job *job);
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
 
@@ -323,6 +324,8 @@ private:
     SYNC_STATE_GET_MESSAGES,
     SYNC_STATE_HANDLE_INBOX,
     SYNC_STATE_GET_USERRIGHTS,
+    SYNC_STATE_GET_ANNOTATIONS,
+    SYNC_STATE_SET_ANNOTATIONS,
     SYNC_STATE_GET_ACLS,
     SYNC_STATE_SET_ACLS,
     SYNC_STATE_FIND_SUBFOLDERS,
@@ -339,6 +342,7 @@ private:
   imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
+  QString     mAnnotationFolderType;
 
   bool        mHasInbox;
   bool        mIsSelected;

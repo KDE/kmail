@@ -34,17 +34,40 @@
 
 #include <dcopobject.h>
 #include <qstringlist.h>
+#include <kurl.h>
+
+// yes, this is this very header - but it tells dcopidl to include it
+// in _stub.cpp and _skel.cpp files, to get the definition of the structs.
+// ### dcopidlng bug: "" is copied verbatim...
+// The kmail/ is so that it can be found by the resources easily
+#include <kmail/kmailicalIface.h>
 
 class KMailICalIface : virtual public DCOPObject
 {
   K_DCOP
+
+public:
 k_dcop:
+  struct SubResource {
+    //dcopidl barfs on those constructors, but dcopidlng works
+    SubResource() {} // for QValueList
+    SubResource( const QString& loc, const QString& lab, bool rw )
+      : location( loc ), label( lab ), writable( rw ) {}
+    QString location; // unique
+    QString label;    // shown to the user
+    bool writable;
+  };
+
   virtual bool addIncidence( const QString& type, const QString& folder,
                              const QString& uid, const QString& ical ) = 0;
   virtual bool deleteIncidence( const QString& type, const QString& folder,
                                 const QString& uid ) = 0;
   virtual QStringList incidences( const QString& type,
                                   const QString& folder ) = 0;
+  /**
+   * Return list of subresources. @p type is
+   * Mail, Calendar, Contact, Note, Task or Journal
+   */
   virtual QStringList subresources( const QString& type ) = 0;
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
@@ -57,6 +80,16 @@ k_dcop:
   // Update a single entry in the storage layer
   virtual bool update( const QString& type, const QString& folder,
                        const QString& uid, const QString& entry ) = 0;
+
+  /// The format of the mails containing other contents than actual mail
+  /// (like contacts, calendar etc.)
+  /// This is currently either ical/vcard, or XML.
+  /// The imap resource uses this folder if ical/vcard storage,
+  /// the kolab resource uses this folder if xml storage.
+  /// For actual mail folders this simply to know which resource handles it
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
+
 
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,

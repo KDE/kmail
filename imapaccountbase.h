@@ -241,6 +241,17 @@ namespace KMail {
     bool hasACLSupport() const { return mACLSupport; }
 
     /**
+     * Returns false if the IMAP server for this account doesn't support annotations.
+     * (and true if it does, or if we didn't try yet).
+     */
+    bool hasAnnotationSupport() const { return mAnnotationSupport; }
+
+    /**
+     * Called if the annotation command failed due to 'unsupported'
+     */
+    void setHasNoAnnotationSupport() { mAnnotationSupport = false; }
+
+    /**
      * React to an error from the job. Uses job->error and job->errorString and calls
      * the protected virtual handleJobError with them. See handleError below for details.
      */
@@ -363,6 +374,7 @@ namespace KMail {
     bool mErrorDialogIsActive : 1;
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;
+    bool mAnnotationSupport : 1;
     bool mSlaveConnected : 1;
 
 	// folders that should be checked for new mails

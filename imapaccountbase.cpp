@@ -92,6 +92,7 @@ namespace KMail {
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
+      mAnnotationSupport( true ),
       mSlaveConnected( false ),
       mListDirProgressItem( 0 )
   {

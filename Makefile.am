@@ -119,6 +119,7 @@ METASOURCES = AUTO
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 
 kmailIface_DCOPIDLNG = true
+kmailicalIface_DCOPIDLNG = true
 
 korganizeriface_DIR = $(top_srcdir)/korganizer
 
