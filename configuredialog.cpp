@@ -1623,8 +1623,8 @@ void ConfigureDialog::setupAppearancePage( void )
   state = config.readBoolEntry( "showMessageSize", false );
   mAppearance.messageSizeCheck->setChecked( state );
 
-  mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 0 )) ;
-  mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 0 )) );
+  mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 1 )) ;
+  mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 1 )) );
 }
 
 

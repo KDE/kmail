@@ -205,7 +205,7 @@ void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
     if (AddressBook::NoError !=
 	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
       continue;
-    int emails_count;
+    unsigned int emails_count;
     for( emails_count = 0; emails_count < entry.emails.count(); emails_count++ ) {
       if (!entry.emails[emails_count].isEmpty()) {
 	if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
@@ -314,7 +314,7 @@ bool KabBridge::replace(QString address, KabKey kabKey)
 void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
   KConfig *config = kapp->config();
   config->setGroup("General");
-  int ab = config->readNumEntry("addressbook", -1);
+  int ab = config->readNumEntry("addressbook", 1);
   if (ab == 3) {
     KRun::runCommand( "abbrowser -a \"" + addr.replace(QRegExp("\""), "")
       + "\"" );
@@ -334,7 +334,7 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
 void KMAddrBookExternal::launch(QWidget *parent) {
   KConfig *config = kapp->config();
   config->setGroup("General");
-  int ab = config->readNumEntry("addressbook", -1);
+  int ab = config->readNumEntry("addressbook", 1);
   switch (ab)
   {
   case -1:
@@ -360,7 +360,7 @@ bool KMAddrBookExternal::useKAB()
 {
   KConfig *config = kapp->config();
   config->setGroup("General");
-  int ab = config->readNumEntry("addressbook", -1);
+  int ab = config->readNumEntry("addressbook", 1);
   if (ab <= 0)
     return false;
   return true;
