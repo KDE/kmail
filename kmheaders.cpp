@@ -1206,7 +1206,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(cleared()),
                  this, SLOT(folderCleared()));
-      disconnect(mFolder, SIGNAL(expunged()),
+      disconnect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
       disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
@@ -1236,7 +1236,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(cleared()),
               this, SLOT(folderCleared()));
-      connect(mFolder, SIGNAL(expunged()),
+      connect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
               BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );

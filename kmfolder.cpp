@@ -63,7 +63,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   // Resend all mStorage signals
   connect( mStorage, SIGNAL( changed() ), SIGNAL( changed() ) );
   connect( mStorage, SIGNAL( cleared() ), SIGNAL( cleared() ) );
-  connect( mStorage, SIGNAL( expunged() ), SIGNAL( expunged() ) );
+  connect( mStorage, SIGNAL( expunged( KMFolder* ) ),
+           SIGNAL( expunged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( nameChanged() ), SIGNAL( nameChanged() ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
            SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ) );
@@ -119,7 +120,7 @@ void KMFolder::readConfig( KConfig* config )
   mIdentity = config->readUnsignedNumEntry("Identity",0);
 
   setUserWhoField( config->readEntry("WhoField"), false );
-  uint savedId = config->readUnsignedNumEntry("Id", 0); 
+  uint savedId = config->readUnsignedNumEntry("Id", 0);
   // make sure that we don't overwrite a valid id
   if ( savedId != 0 && mId == 0 )
     mId = savedId;
