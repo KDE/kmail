@@ -691,7 +691,7 @@ void KMFolderImap::checkValidity()
               account()->mailCheckProgressItem(),
               "MailCheck" + folder()->prettyURL(),
               folder()->prettyURL(),
-              "checking", false);
+              i18n("checking"), false);
   } else {
     mMailCheckProgressItem->setProgress(0);
   }
