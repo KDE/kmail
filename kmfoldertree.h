@@ -193,7 +193,7 @@ protected:
   void writeIsListViewItemOpen(KMFolderTreeItem *fti);
 
   QTimer mUpdateTimer;
-  static QPixmap *pixPlain, *pixFld, *pixFull, *pixIn,
+  static QPixmap *pixPlain, *pixFull, *pixIn,
     *pixOut, *pixTr, *pixSent, *pixCopy, *pixCancel;
 
   /** We need out own root, otherwise the @ref QListView will create

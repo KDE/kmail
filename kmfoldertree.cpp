@@ -20,7 +20,6 @@
 #include <X11/Xlib.h>
 
 QPixmap* KMFolderTree::pixPlain = 0;
-QPixmap* KMFolderTree::pixFld = 0;
 QPixmap* KMFolderTree::pixFull = 0;
 QPixmap* KMFolderTree::pixIn = 0;
 QPixmap* KMFolderTree::pixOut = 0;
@@ -125,7 +124,6 @@ KMFolderTree::KMFolderTree( QWidget *parent,
     pixmapsLoaded = true;
 
     pixPlain = new QPixmap( SmallIcon("folder"));
-    pixFld   = new QPixmap( SmallIcon("folder"));
     pixFull  = new QPixmap( SmallIcon("folder_open"));
     pixIn    = new QPixmap( SmallIcon("folder_inbox"));
     pixOut   = new QPixmap( SmallIcon("folder_outbox"));
