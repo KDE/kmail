@@ -25,7 +25,11 @@ kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
 libkmailpart_la_LIBADD	= libkmailprivate.la
 
-kcm_kmail_la_SOURCES = configuredialog.cpp
+configuredialog_kcm.cpp: $(srcdir)/configuredialog.cpp
+	-rm -f configuredialog.cpp
+	$(LN_S) $(srcdir)/configuredialog.cpp configuredialog_kcm.cpp
+
+kcm_kmail_la_SOURCES = configuredialog_kcm.cpp
 kcm_kmail_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
 kcm_kmail_la_LIBADD = libkmailprivate.la $(LIB_KDECORE)
 
@@ -104,6 +108,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		listjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui
+
+libkmailprivate_la_PCH = kmail_pch.h
 
 kmail_SOURCES = main.cpp
 
