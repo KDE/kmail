@@ -45,6 +45,7 @@
 #include "imapprogressdialog.h"
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
+#include "kmdict.h"
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
@@ -889,7 +890,7 @@ bool KMFolderCachedImap::deleteMessages()
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
   for( ; it != uidMap.end(); it++ ) {
     ulong uid ( it.key() );
-    if( uid!=0 && !uidsOnServer.contains( uid ) )
+    if( uid!=0 && !uidsOnServer.find( uid ) )
       msgsForDeletion.append( getMsg( *it ) );
   }
 
@@ -954,6 +955,7 @@ void KMFolderCachedImap::listMessages() {
     return;
   }
   uidsOnServer.clear();
+  uidsOnServer.resize( count() * 2 );
   uidsForDeletionOnServer.clear();
   mMsgsForDownload.clear();
   mUidsForDownload.clear();
@@ -1001,15 +1003,23 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     (*it).cdata.remove(0, pos);
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
-
+  // Start with something largish when rebuilding the cache
+  if ( uidsOnServer.size() == 0 )
+    uidsOnServer.resize( KMail::nextPrime( 2000 ) );
   int flags;
+  const int v = 42;
   while (pos >= 0) {
     KMMessage *msg = new KMMessage;
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
     ulong uid = msg->UID();
-    if( uid != 0 )
-       uidsOnServer.append( uid );
+    if( uid != 0 ) {
+      if ( uidsOnServer.count() == uidsOnServer.size() ) {
+        uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
+        kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
+      }
+      uidsOnServer.insert( uid, &v );
+    }
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
       /* 
        * If this message UID is not present locally, then it must

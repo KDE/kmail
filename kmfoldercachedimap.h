@@ -300,7 +300,7 @@ private:
   bool        mReadOnly;
   mutable QGuardedPtr<KMAcctCachedImap> mAccount;
 
-  QValueList<ulong> uidsOnServer;
+  QIntDict<int> uidsOnServer;
   QValueList<ulong> uidsForDeletionOnServer;
   QValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
   QValueList<ulong> mUidsForDownload;
