@@ -941,7 +941,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
   // skip leading empty lines
   for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
-  while (pos > 0 && s[pos-1] == ' ') pos--;
+  while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 
   atStartOfLine = TRUE;
