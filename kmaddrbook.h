@@ -22,10 +22,10 @@ public:
   virtual void remove(const QString address);
 
   /** Returns first address in addressbook or NULL if addressbook is empty. */
-  virtual const char* first(void) { return KMAddrBookInherited::first(); }
+  virtual QString first(void) { return KMAddrBookInherited::first(); }
 
   /** Returns next address in addressbook or NULL. */
-  virtual const char* next(void) { return KMAddrBookInherited::next(); }
+  virtual QString next(void) { return KMAddrBookInherited::next(); }
 
   /** Clear addressbook (remove the contents). */
   virtual void clear(void);
@@ -34,12 +34,12 @@ public:
     file is used if no filename is given.
     Returns IO_Ok on success and an IO device status on failure -- see
     QIODevice::status(). */
-  virtual int load(const char* fileName=NULL);
+  virtual int load(const QString &fileName=QString::null);
 
   /** Store addressbook in file or in same file of last load() call
     if no filename is given. Returns IO_Ok on success and an IO device
     status on failure -- see QIODevice::status(). */
-  virtual int store(const char* fileName=NULL);
+  virtual int store(const QString &fileName=QString::null);
 
   /** Read/write configuration options. Uses the group "Addressbook"
     in the app's config file. */

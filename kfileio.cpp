@@ -15,19 +15,14 @@
 
 
 //-----------------------------------------------------------------------------
-static void msgDialog(const char* msg, const char* arg=NULL)
+static void msgDialog(const QString &msg)
 {
-  QString str;
-
-  if (arg) str.sprintf(msg, arg);
-  else str = msg;
-
-  KMessageBox::sorry(0, str, i18n("File I/O Error"));
+  KMessageBox::sorry(0, msg, i18n("File I/O Error"));
 }
 
 
 //-----------------------------------------------------------------------------
-QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
+QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
 {
   QCString result;
   QFileInfo info(aFileName);
@@ -42,22 +37,20 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
   if (!info.exists())
   {
     if (aVerbose)
-      msgDialog(i18n("The specified file does not exist:\n%s"),
-		aFileName);
+      msgDialog(i18n("The specified file does not exist:\n%1").arg(aFileName));
     return QString::null;
   }
   if (info.isDir())
   {
     if (aVerbose)
-      msgDialog(i18n("This is a directory and not a file:\n%s"),
-		aFileName);
+      msgDialog(i18n("This is a directory and not a file:\n%1").arg(aFileName));
     return QString::null;
   }
   if (!info.isReadable())
   {
     if (aVerbose)
       msgDialog(i18n("You do not have read permissions "
-				   "to the file:\n%s"), aFileName);
+				   "to the file:\n%1").arg(aFileName));
     return QString::null;
   }
   if (len <= 0) return QString::null;
@@ -67,13 +60,13 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     if (aVerbose) switch(file.status())
     {
     case IO_ReadError:
-      msgDialog(i18n("Could not read file:\n%s"), aFileName);
+      msgDialog(i18n("Could not read file:\n%1").arg(aFileName));
       break;
     case IO_OpenError:
-      msgDialog(i18n("Could not open file:\n%s"), aFileName);
+      msgDialog(i18n("Could not open file:\n%1").arg(aFileName));
       break;
     default:
-      msgDialog(i18n("Error while reading file:\n%s"),aFileName);
+      msgDialog(i18n("Error while reading file:\n%1").arg(aFileName));
     }
     return QString::null;
   }
@@ -89,8 +82,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 
   if (readLen < len)
   {
-    QString msg;
-    msg = i18n("Could only read %1 bytes of %2.")
+    QString msg = i18n("Could only read %1 bytes of %2.")
 		.arg(readLen).arg(len);
     msgDialog(msg);
     return QString::null;
@@ -100,7 +92,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 }
 
 //-----------------------------------------------------------------------------
-QByteArray kFileToBytes(const char* aFileName, bool aVerbose)
+QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
 {
   QByteArray result;
   QFileInfo info(aFileName);
@@ -115,22 +107,22 @@ QByteArray kFileToBytes(const char* aFileName, bool aVerbose)
   if (!info.exists())
   {
     if (aVerbose)
-      msgDialog(i18n("The specified file does not exist:\n%s"),
-		aFileName);
+      msgDialog(i18n("The specified file does not exist:\n%1")
+		.arg(aFileName));
     return result;
   }
   if (info.isDir())
   {
     if (aVerbose)
-      msgDialog(i18n("This is a directory and not a file:\n%s"),
-		aFileName);
+      msgDialog(i18n("This is a directory and not a file:\n%1")
+		.arg(aFileName));
     return result;
   }
   if (!info.isReadable())
   {
     if (aVerbose)
       msgDialog(i18n("You do not have read permissions "
-				   "to the file:\n%s"), aFileName);
+				   "to the file:\n%1").arg(aFileName));
     return result;
   }
   if (len <= 0) return result;
@@ -140,13 +132,13 @@ QByteArray kFileToBytes(const char* aFileName, bool aVerbose)
     if (aVerbose) switch(file.status())
     {
     case IO_ReadError:
-      msgDialog(i18n("Could not read file:\n%s"), aFileName);
+      msgDialog(i18n("Could not read file:\n%1").arg(aFileName));
       break;
     case IO_OpenError:
-      msgDialog(i18n("Could not open file:\n%s"), aFileName);
+      msgDialog(i18n("Could not open file:\n%1").arg(aFileName));
       break;
     default:
-      msgDialog(i18n("Error while reading file:\n%s"),aFileName);
+      msgDialog(i18n("Error while reading file:\n%1").arg(aFileName));
     }
     return result;
   }
@@ -174,7 +166,7 @@ QByteArray kFileToBytes(const char* aFileName, bool aVerbose)
 //-----------------------------------------------------------------------------
 static
 bool kBytesToFile(const char* aBuffer, int len,
-		   const char* aFileName, 
+		   const QString &aFileName, 
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
   QFile file(aFileName);
@@ -208,7 +200,8 @@ bool kBytesToFile(const char* aBuffer, int len,
 	// failed to rename file
 	if (!aVerbose) return FALSE;
 	rc = KMessageBox::warningContinueCancel(0,
-	     i18n("Failed to make a backup copy of %s.\nContinue anyway ?"),
+	     i18n("Failed to make a backup copy of %1.\nContinue anyway ?")
+	     .arg(aFileName),
              i18n("Save to file"), i18n("&Save"));
 	if (rc != KMessageBox::Continue) return FALSE;
       }
@@ -220,14 +213,14 @@ bool kBytesToFile(const char* aBuffer, int len,
     if (aVerbose) switch(file.status())
     {
     case IO_WriteError:
-      msgDialog(i18n("Could not write to file:\n%s"), aFileName);
+      msgDialog(i18n("Could not write to file:\n%1").arg(aFileName));
       break;
     case IO_OpenError:
-      msgDialog(i18n("Could not open file for writing:\n%s"),
-		aFileName);
+      msgDialog(i18n("Could not open file for writing:\n%1")
+		.arg(aFileName));
       break;
     default:
-      msgDialog(i18n("Error while writing file:\n%s"),aFileName);
+      msgDialog(i18n("Error while writing file:\n%1").arg(aFileName));
     }
     return FALSE;
   }
@@ -236,13 +229,12 @@ bool kBytesToFile(const char* aBuffer, int len,
 
   if (writeLen < 0) 
   {
-    msgDialog(i18n("Could not write to file:\n%s"), aFileName);
+    msgDialog(i18n("Could not write to file:\n%1").arg(aFileName));
     return FALSE;
   }
   else if (writeLen < len)
   {
-    QString msg;
-    msg = i18n("Could only write %1 bytes of %2.")
+    QString msg = i18n("Could only write %1 bytes of %2.")
 		.arg(writeLen).arg(len);
     msgDialog(msg);
     return FALSE;
@@ -251,14 +243,14 @@ bool kBytesToFile(const char* aBuffer, int len,
   return TRUE;
 }
 
-bool kCStringToFile(const QCString& aBuffer, const char* aFileName, 
+bool kCStringToFile(const QCString& aBuffer, const QString &aFileName, 
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
     return kBytesToFile(aBuffer, aBuffer.length(), aFileName, aAskIfExists,
 	aBackup, aVerbose);
 }
 
-bool kByteArrayToFile(const QByteArray& aBuffer, const char* aFileName, 
+bool kByteArrayToFile(const QByteArray& aBuffer, const QString &aFileName, 
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
     return kBytesToFile(aBuffer, aBuffer.size(), aFileName, aAskIfExists,

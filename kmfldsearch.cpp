@@ -138,10 +138,11 @@ void KMFldSearch::updStatus(void)
   QString str;
 
   if (!mSearching)
-    str.sprintf(i18n("Done, %d matches"), mNumMatches);
+    str = i18n("Done, %1 matches").arg(mNumMatches);
   else
-    str.sprintf(i18n("%d matches, searching in %s"), mNumMatches,
-		(const char*)mSearchFolder);
+    str = i18n("%1 matches, searching in %2")
+		.arg(mNumMatches)
+		.arg(mSearchFolder);
   mLblStatus->setText(str);
 }
 

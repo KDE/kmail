@@ -84,10 +84,10 @@ void KMAddrBook::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-int KMAddrBook::load(const char* aFileName)
+int KMAddrBook::load(const QString &aFileName)
 {
   char line[256];
-  const char* fname = (aFileName ? aFileName : (const char*)mDefaultFileName);
+  QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
   QFile file(fname);
   int rc;
 
@@ -115,15 +115,14 @@ int KMAddrBook::load(const char* aFileName)
 
 
 //-----------------------------------------------------------------------------
-int KMAddrBook::store(const char* aFileName)
+int KMAddrBook::store(const QString &aFileName)
 {
   const char* addr;
-  const char* fname = (aFileName ? aFileName : (const char*)mDefaultFileName);
+  QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
   QFile file(fname);
 
-
   //assert(fname != NULL);
-  if(!fname)
+  if(fname.isNull())
     return IO_FatalError;
 
   if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
@@ -146,21 +145,21 @@ int KMAddrBook::store(const char* aFileName)
 //-----------------------------------------------------------------------------
 int KMAddrBook::fileError(int status) const
 {
-  QString msg, str;
+  QString msg;
 
   switch(status)
   {
   case IO_ReadError:
-    msg = i18n("Could not read file:\n%s");
+    msg = i18n("Could not read file:\n%1");
     break;
   case IO_OpenError:
-    msg = i18n("Could not open file:\n%s");
+    msg = i18n("Could not open file:\n%1");
     break;
   default:
-    msg = i18n("Error while writing file:\n%s");
+    msg = i18n("Error while writing file:\n%1");
   }
 
-  str.sprintf(msg, mDefaultFileName.data());
+  QString str = msg.arg(mDefaultFileName);
   KMessageBox::sorry(0, str, i18n("File I/O Error"));
 
   return status;
