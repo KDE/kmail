@@ -132,6 +132,8 @@ public:
   void initializeAutoSpellChecking( KSpellConfig* autoSpellConfig );
   void deleteAutoSpellChecking();
 
+  unsigned int lineBreakColumn() const;
+
 signals:
   void spellcheck_done(int result);
   void pasteImage();

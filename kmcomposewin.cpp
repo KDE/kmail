@@ -1824,11 +1824,12 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
   connect( mComposer, SIGNAL( done( bool ) ),
            this, SLOT( slotComposerDone( bool ) ) );
 
-  // TODO: Add a cancel button for this operation
-  if ( !dontDisable )
-    setEnabled( false );
-
-  mComposer->setDisableBreaking( mDisableBreaking );
+  // TODO: Add a cancel button for the following operations?
+  // Disable any input to the window, so that we have a snapshot of the 
+  // composed stuff
+  if ( !dontDisable ) setEnabled( false );
+  // apply the current state to the composer and let it do it's thing
+  mComposer->setDisableBreaking( mDisableBreaking ); // FIXME
   mComposer->applyChanges( dontSignNorEncrypt );
 }
 
@@ -1839,6 +1840,9 @@ void KMComposeWin::slotComposerDone( bool rc )
   emit applyChangesDone( rc );
   delete mComposer;
   mComposer = 0;
+
+  // re-enable the composewin, the messsage composition is now done
+  setEnabled( true );
 }
 
 const KPIM::Identity & KMComposeWin::identity() const {
@@ -3443,22 +3447,22 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
       KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
       // get the draftsFolder
       if ( !(*it)->drafts().isEmpty() ) {
-	draftsFolder = kmkernel->folderMgr()->findIdString( (*it)->drafts() );
-	if ( draftsFolder == 0 )
-	  // This is *NOT* supposed to be "imapDraftsFolder", because a
-	  // dIMAP folder works like a normal folder
-	  draftsFolder = kmkernel->dimapFolderMgr()->findIdString( (*it)->drafts() );
-	if ( draftsFolder == 0 )
-	  imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
-	if ( !draftsFolder && !imapDraftsFolder ) {
-	  const KPIM::Identity & id = kmkernel->identityManager()
-	    ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
-	  KMessageBox::information(0, i18n("The custom drafts folder for identity "
-					   "\"%1\" does not exist (anymore); "
-					   "therefore, the default drafts folder "
-					   "will be used.")
-				   .arg( id.identityName() ) );
-	}
+        draftsFolder = kmkernel->folderMgr()->findIdString( (*it)->drafts() );
+        if ( draftsFolder == 0 )
+          // This is *NOT* supposed to be "imapDraftsFolder", because a
+          // dIMAP folder works like a normal folder
+          draftsFolder = kmkernel->dimapFolderMgr()->findIdString( (*it)->drafts() );
+        if ( draftsFolder == 0 )
+          imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
+        if ( !draftsFolder && !imapDraftsFolder ) {
+          const KPIM::Identity & id = kmkernel->identityManager()
+            ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+          KMessageBox::information(0, i18n("The custom drafts folder for identity "
+                                           "\"%1\" does not exist (anymore); "
+                                           "therefore, the default drafts folder "
+                                           "will be used.")
+                                   .arg( id.identityName() ) );
+        }
       }
       if (imapDraftsFolder && imapDraftsFolder->noContent())
 	imapDraftsFolder = 0;
@@ -4758,6 +4762,18 @@ QString KMEdit::brokenText()
 
   return temp;
 }
+
+//-----------------------------------------------------------------------------
+unsigned int KMEdit::lineBreakColumn() const
+{
+  unsigned int lineBreakColumn = 0;
+  unsigned int numlines = numLines(); 
+  while ( numlines-- ) {
+    lineBreakColumn = QMAX( lineBreakColumn, textLine( numlines ).length() );
+  }
+  return lineBreakColumn;
+}
+
 
 //-----------------------------------------------------------------------------
 bool KMEdit::eventFilter(QObject*o, QEvent* e)

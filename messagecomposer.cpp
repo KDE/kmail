@@ -73,6 +73,7 @@
 #include <kaction.h>
 #include <qfile.h>
 #include <qtextcodec.h>
+#include <qtextedit.h>
 #include <qtimer.h>
 
 #include <gpgmepp/key.h>
@@ -242,7 +243,7 @@ public:
 
 MessageComposer::MessageComposer( KMComposeWin* win, const char* name )
   : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 ),
-    mKeyResolver( 0 )
+    mKeyResolver( 0 ), mIdentity( KPIM::Identity::null )
 {
 }
 
@@ -273,8 +274,6 @@ void MessageComposer::applyChanges( bool disableCrypto )
   readFromComposeWin();
 
   // From now on, we're not supposed to read from the composer win
-  // TODO: Make it so ;-)
-
   // 2: Set encryption/signing options and resolve keys
   mJobs.push_back( new AdjustCryptFlagsJob( this ) );
 
@@ -290,10 +289,6 @@ void MessageComposer::doNextJob()
   delete mCurrentJob; mCurrentJob = 0;
 
   if( mJobs.isEmpty() ) {
-    // Unlock the GUI again
-    // TODO: This should be back in the KMComposeWin
-    mComposeWin->setEnabled( true );
-
     // No more jobs. Signal that we're done
     emit done( mRc );
     return;
@@ -305,11 +300,6 @@ void MessageComposer::doNextJob()
       delete mJobs.front();
       mJobs.pop_front();
     }
-
-    // Unlock the GUI again
-    // TODO: This should be back in the KMComposeWin
-    mComposeWin->setEnabled( true );
-
     emit done( false );
     return;
   }
@@ -442,6 +432,14 @@ void MessageComposer::readFromComposeWin()
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),
 					mComposeWin->signFlagOfAttachment( i ),
 					mComposeWin->encryptFlagOfAttachment( i ) ) );
+
+  mIsRichText = mComposeWin->mEditor->textFormat() == Qt::RichText;
+  mIdentity = mComposeWin->identity();
+  mText = breakLinesAndApplyCodec();
+  // Hopefully we can get rid of this eventually, it's needed to be able
+  // to break the plain/text version of a multipart/alternative (html) mail
+  // according to the line breaks of the richtext version.
+  mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
 
 void MessageComposer::adjustCryptFlags()
@@ -499,7 +497,7 @@ void MessageComposer::adjustCryptFlags()
 			   signingChainCertNearExpiryWarningThresholdInDays() );
 
   if ( !mDisableCrypto ) {
-    const KPIM::Identity & id = mComposeWin->identity();
+    const KPIM::Identity & id = mIdentity; 
 
     QStringList encryptToSelfKeys;
     if ( !id.pgpEncryptionKey().isEmpty() )
@@ -1010,7 +1008,7 @@ public:
 
 QCString MessageComposer::bodyText()
 {
-  QCString body = breakLinesAndApplyCodec();
+  QCString body = mText; 
 
   if (body.isNull()) return body;
 
@@ -1165,7 +1163,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   // if an html message is to be generated, make a text/plain and text/html part
-  if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) {
+  if ( mIsRichText ) {
     mOldBodyPart.setTypeStr(   "multipart");
     mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "alternative");
   }
@@ -1178,7 +1176,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   mOldBodyPart.setContentDisposition( "inline" );
 
   QCString boundaryCStr;
-  if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) { // create a multipart body
+  if ( mIsRichText ) { // create a multipart body
     // calculate a boundary string
     QCString boundaryCStr;  // storing boundary string data
     QCString newbody;
@@ -1190,9 +1188,9 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     KMMessagePart textBodyPart;
     textBodyPart.setTypeStr("text");
     textBodyPart.setSubtypeStr("plain");
-    mComposeWin->mEditor->setTextFormat(Qt::PlainText);
-    QCString textbody = breakLinesAndApplyCodec();
-    mComposeWin->mEditor->setTextFormat(Qt::RichText);
+
+    QCString textbody = plainTextFromMarkup( mText );
+
     // the signed body must not be 8bit encoded
     textBodyPart.setBodyAndGuessCte( textbody, allowedCTEs,
                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -1211,7 +1209,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     KMMessagePart htmlBodyPart;
     htmlBodyPart.setTypeStr("text");
     htmlBodyPart.setSubtypeStr("html");
-    QCString htmlbody = breakLinesAndApplyCodec();
+    QCString htmlbody = mText;
     // the signed body must not be 8bit encoded
     htmlBodyPart.setBodyAndGuessCte( htmlbody, allowedCTEs,
                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -1244,7 +1242,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     boundaryCStr = tmpCT.Boundary().c_str();
     // add the normal body text
     KMMessagePart innerBodyPart;
-    if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) {
+    if ( mIsRichText ) {
       innerBodyPart.setTypeStr(   "multipart");//text" );
       innerBodyPart.setSubtypeStr("alternative");//html");
     }
@@ -1257,12 +1255,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
                                       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                       doSign );
-    if ( mComposeWin->mEditor->textFormat() != Qt::RichText )
+    if ( !mIsRichText )
       innerBodyPart.setCharset( mCharset );
     innerBodyPart.setBodyEncoded( body ); // do we need this, since setBodyAndGuessCte does this already?
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
     innerDwPart->Assemble();
-    if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) { // and add our mp/a boundary
+    if ( mIsRichText ) { // and add our mp/a boundary
         QCString tmpbody = innerDwPart->AsString().c_str();
         int boundPos = tmpbody.find( '\n' );
         if( -1 < boundPos ) {
@@ -1314,7 +1312,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                    doSign);
-    if ( mComposeWin->mEditor->textFormat() != Qt::RichText )
+    if ( !mIsRichText )
       mOldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
@@ -1324,7 +1322,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // get string representation of body part (including the attachments)
 
     DwBodyPart* dwPart;
-    if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !mEarlyAddAttachments ) {
+    if ( mIsRichText && !mEarlyAddAttachments ) {
       // if we are using richtext and not already have a mp/a body
       // make the body a mp/a body
       dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
@@ -1430,7 +1428,8 @@ void MessageComposer::encryptMessage( KMMessage* msg,
 {
   if ( doEncrypt && splitInfo.keys.empty() ) {
     // the user wants to send the message unencrypted
-    mComposeWin->setEncryption( false, false );
+    //mComposeWin->setEncryption( false, false ); 
+    //FIXME why is this talkback needed? Till
     doEncrypt = false;
   }
 
@@ -1639,7 +1638,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : top level headers and body adjusted" << endl;
 
     // set body content
-    if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !(doSign || doEncrypt) ) { // add the boundary to the header
+    if ( mIsRichText && !(doSign || doEncrypt) ) { // add the boundary to the header
       msg->headers().ContentType().SetBoundary( mSaveBoundary );
       msg->headers().ContentType().Assemble();
     }
@@ -1823,12 +1822,39 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 }
 
 //-----------------------------------------------------------------------------
+QCString MessageComposer::plainTextFromMarkup( const QString& markupText )
+{
+  QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
+  hackConspiratorTextEdit->setTextFormat(Qt::PlainText);
+  if ( !mDisableBreaking ) {
+    hackConspiratorTextEdit->setWordWrap( QTextEdit::FixedColumnWidth );
+    hackConspiratorTextEdit->setWrapColumnOrWidth( mLineBreakColumn );
+  }
+  QString text = hackConspiratorTextEdit->text();
+  QCString textbody;
+
+  const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
+  if( mCharset == "us-ascii" ) {
+    textbody = KMMsgBase::toUsAscii( text );
+  } else if( codec == 0 ) {
+    kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
+    textbody = text.local8Bit();
+  } else {
+    textbody = codec->fromUnicode( text );
+  }
+  if (textbody.isNull()) textbody = "";
+
+  delete hackConspiratorTextEdit;
+  return textbody;
+}
+
+//-----------------------------------------------------------------------------
 QCString MessageComposer::breakLinesAndApplyCodec()
 {
   QString text;
   QCString cText;
 
-  if( mDisableBreaking || mComposeWin->mEditor->textFormat() == Qt::RichText)
+  if( mDisableBreaking || mIsRichText )
     text = mComposeWin->mEditor->text();
   else
     text = mComposeWin->mEditor->brokenText();

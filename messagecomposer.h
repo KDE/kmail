@@ -56,6 +56,10 @@ namespace GpgME {
   class Key;
 }
 
+namespace KPIM {
+  class Identity;
+}
+
 class MessageComposer : public QObject {
   Q_OBJECT
   friend class MessageComposerJob;
@@ -126,6 +130,12 @@ private:
   /// Same as above but ensure \n termination
   QCString bodyText();
 
+  /**
+   * Create a plain text version of a marked up mail for use as the plain
+   * part in a multipart/alternative mail.
+   */
+  QCString plainTextFromMarkup( const QString& markupText );
+  
   /**
    * Get signature for a message (into mMessage).
    * To build nice S/MIME objects signing and encoding must be separated.
@@ -231,8 +241,13 @@ private:
   bool mDebugComposerCrypto;
   bool mAutoCharset;
   QCString mCharset;
+  bool mIsRichText;
+  KPIM::Identity &mIdentity;
   bool mRc; // Set this to false, if something fails during the processes
   bool mHoldJobs; // Don't run the next job yet
+
+  QCString mText; // textual representation of the message text, encoded
+  unsigned int mLineBreakColumn; // used for line breaking
 
   // These are the variables of the big composeMessage(X,Y,Z) message
   KMMessagePart* mNewBodyPart;
