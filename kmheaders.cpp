@@ -2662,9 +2662,7 @@ void KMHeaders::slotRMB()
   else {
      mOwner->replyAction->plug(menu);
      mOwner->replyAllAction->plug(menu);
-     mOwner->forwardAction->plug(menu);
-     mOwner->forwardAttachedAction->plug(menu);
-     mOwner->redirectAction->plug(menu);
+     mOwner->action("message_forward")->plug(menu);
      mOwner->bounceAction->plug(menu);
        }
   menu->insertSeparator();

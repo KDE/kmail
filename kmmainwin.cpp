@@ -2358,9 +2358,7 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
      else {
          replyAction->plug(menu);
          replyAllAction->plug(menu);
-         forwardAction->plug(menu);
-         forwardAttachedAction->plug(menu);
-         redirectAction->plug(menu);
+	 action("message_forward")->plug(menu);
          bounceAction->plug(menu);
      }
      menu->insertSeparator();
@@ -2564,13 +2562,13 @@ void KMMainWin::setupMenuBar()
 		     actionCollection(), "message_forward" );
   connect( forwardMenu, SIGNAL(activated()), this, SLOT(slotForward()) );
 
-  forwardAction = new KAction( i18n("&Inline..."), "mail_forward", Key_F, this,
+  forwardAction = new KAction( i18n("&Inline..."), "mail_forward", SHIFT+Key_F, this,
 			       SLOT(slotForwardMsg()),
 			       actionCollection(), "message_forward_inline" );
   forwardMenu->insert( forwardAction );
 
   forwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", SHIFT+Key_F, this,
+				       "mail_forward", Key_F, this,
 				       SLOT(slotForwardAttachedMsg()),
 				       actionCollection(), "message_forward_as_attachment" );
   forwardMenu->insert( forwardAttachedAction );
