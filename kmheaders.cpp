@@ -1104,7 +1104,8 @@ void KMHeaders::forwardMsg ()
         if (KMMessage::sHdrStyle == KMReaderWin::HdrAll) {
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
           msgText += thisMsg->asString();
-          msgText = thisMsg->asQuotedString(msgText, "", FALSE, false);
+          msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
+            "", FALSE, false));
           msgText += "\n-------------------------------------------------------\n";
         } else {
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
@@ -1114,17 +1115,19 @@ void KMHeaders::forwardMsg ()
           msgText += "To: " + thisMsg->to() + "\n";
 	  if (!thisMsg->cc().isEmpty()) msgText += "Cc: " + thisMsg->cc() + "\n";
           msgText += "\n";
-          msgText = thisMsg->asQuotedString(msgText, "", FALSE, false);
+          msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
+            "", FALSE, false));
           msgText += "\n-------------------------------------------------------\n";
         }
       }
       KMMessage *fwdMsg = new KMMessage;
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
-      //FIXME Should use forwarded message charset
-      fwdMsg->setBody(msgText.latin1());
+      fwdMsg->setCharset("utf-8");
+      fwdMsg->setBody(msgText.utf8());
       kernel->kbp()->busy();
       win = new KMComposeWin(fwdMsg, id);
+      win->setCharset("");
       win->show();
       kernel->kbp()->idle();
       return;
