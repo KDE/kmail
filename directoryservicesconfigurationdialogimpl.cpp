@@ -81,10 +81,10 @@ void DirectoryServicesConfigurationDialogImpl::slotAddService()
 {
     AddDirectoryServiceDialogImpl* dlg = new AddDirectoryServiceDialogImpl( this );
     if( dlg->exec() == QDialog::Accepted ) {
-        new QListViewItem( x500LV, x500LV->lastItem(),
-			   dlg->serverNameED->text(),
-			   dlg->portED->text(),
-			   dlg->descriptionED->text() );
+        (void)new QListViewItem( x500LV, x500LV->lastItem(),
+                                 dlg->serverNameED->text(),
+                                 dlg->portED->text(),
+                                 dlg->descriptionED->text() );
     }
 }
 
