@@ -335,9 +335,6 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
   KMFolder *msgParent = aMsg->parent();
   if (aMsg->transferInProgress())
       return false;
-#ifdef __GNUC__
-#warning FIXME : extract tempOpenFolder to some base class
-#endif
   if (!aMsg->isComplete() && msgParent && msgParent->folderType() == KMFolderTypeImap)
   {
     FolderJob *job = msgParent->createJob(aMsg);
