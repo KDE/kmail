@@ -137,9 +137,6 @@ public:
   /** Get the folder that holds *type* entries */
   KMFolder* folderFromType( const QString& type, const QString& folder );
 
-  /** Return the ical type of a folder */
-  QString icalFolderType( KMFolder* folder ) const;
-
   /** Find message matching a given UID. */
   static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
 
@@ -190,14 +187,13 @@ private:
 
   KMFolder* findResourceFolder( const QString& resource );
 
-  bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
   bool updateAttachment( KMMessage& msg, const QString& attachmentURL, const QString& mimetype );
   bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
   Q_UINT32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
                               const QStringList& attachments,
                               const QStringList& mimetypes );
-
+  static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
   void loadPixmaps() const;
 
   QGuardedPtr<KMFolder> mContacts;

@@ -61,11 +61,11 @@
 #include <qmap.h>
 #include <ktempfile.h>
 #include <qfile.h>
+#include <qdom.h>
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
-
 // Local helper class
 class KMailICalIfaceImpl::ExtraFolder {
 public:
@@ -76,18 +76,24 @@ public:
 // The index in this array is the KMail::FolderContentsType enum
 static const struct {
   const char* contentsTypeStr; // the string used in the DCOP interface
+  const char* mimetype;
 } s_folderContentsType[] = {
-  { "Mail" },
-  { "Calendar" },
-  { "Contact" },
-  { "Note" },
-  { "Task" },
-  { "Journal" }
+  { "Mail", "application/x-vnd.kolab.mail" },
+  { "Calendar", "application/x-vnd.kolab.event" },
+  { "Contact", "application/x-vnd.kolab.contact" },
+  { "Note", "application/x-vnd.kolab.note" },
+  { "Task", "application/x-vnd.kolab.task" },
+  { "Journal", "application/x-vnd.kolab.journal" }
 };
 
 static QString folderContentsType( KMail::FolderContentsType type )
 {
   return s_folderContentsType[type].contentsTypeStr;
+}
+
+static QString folderKolabMimeType( KMail::FolderContentsType type )
+{
+  return s_folderContentsType[type].mimetype;
 }
 
 static KMail::FolderContentsType folderContentsType( const QString& type )
@@ -172,6 +178,25 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
   return rc;
 }
 
+// Helper function to find an attachment of a given mimetype
+// Can't use KMMessage::findDwBodyPart since it only works with known mimetypes.
+static DwBodyPart* findBodyPart( const KMMessage& msg, const char* sType, const char* sSubtype )
+{
+  // quickly searching for our message part: since Kolab parts are
+  // top-level parts we do *not* have to travel into embedded multiparts
+  DwBodyPart* part = msg.getFirstDwBodyPart();
+  while( part ){
+    //  kdDebug() << part->Headers().ContentType().TypeStr().c_str() << " "
+    //          << part->Headers().ContentType().SubtypeStr().c_str() << endl;
+    if ( part->hasHeaders()
+         && part->Headers().HasContentType()
+         && part->Headers().ContentType().TypeStr() == sType
+         && part->Headers().ContentType().SubtypeStr() == sSubtype)
+      return part;
+    part = part->Next();
+  }
+  return 0;
+}
 
 // Add (or overwrite, resp.) an attachment in an existing mail,
 // attachments must be local files, they are identified by their names.
@@ -204,43 +229,25 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart.setContentDisposition( "attachment;\n  filename=\"kolab.xml\"" );
       QValueList<int> dummy;
       msgPart.setBodyAndGuessCte( rawData, dummy );
-      if( !url.fileEncoding().isEmpty() ) // the charset can be passed with the url
-        msgPart.setCharset( url.fileEncoding().latin1() );
       msgPart.setPartSpecifier( fileName );
 
-      // quickly searching for our message part: since Kolab parts are
-      // top-level parts we do *not* have to travel into embedded multiparts
-      DwBodyPart* part = msg.getFirstDwBodyPart();
-      while( part ){
-        //  kdDebug() << part->Headers().ContentType().TypeStr().c_str() << " "
-        //          << part->Headers().ContentType().SubtypeStr().c_str() << endl;
-        if ( part->hasHeaders()
-             && part->Headers().HasContentType()
-             && part->Headers().ContentType().TypeStr() == sType
-             && part->Headers().ContentType().SubtypeStr() == sSubtype) {
-          DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
-          // Make sure the replacing body part is pointing
-          // to the same next part as the original body part.
-          newPart->SetNext( part->Next() );
-          // call DwBodyPart::operator =
-          // which calls DwEntity::operator =
-          *part = *newPart;
-          delete newPart;
-          msg.setNeedsAssembly();
-          kdDebug(5006) << "Attachment updated." << endl;
-          bOK = true;
-          break;
-        }
-        part = part->Next();
-      }
-
-      if( !bOK ){
-        kdDebug(5006) << "num: " << msg.numBodyParts() << endl;
+      DwBodyPart* part = findBodyPart( msg, sType, sSubtype );
+      if ( part ) {
+        DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
+        // Make sure the replacing body part is pointing
+        // to the same next part as the original body part.
+        newPart->SetNext( part->Next() );
+        // call DwBodyPart::operator =
+        // which calls DwEntity::operator =
+        *part = *newPart;
+        delete newPart;
+        msg.setNeedsAssembly();
+        kdDebug(5006) << "Attachment updated." << endl;
+      } else {
         msg.addBodyPart( &msgPart );
-        kdDebug(5006) << "num: " << msg.numBodyParts() << endl;
         kdDebug(5006) << "Attachment added." << endl;
-        bOK = true;
       }
+      bOK = true;
     }else{
       kdDebug(5006) << "Attachment " << attachmentURL << " can not be read." << endl;
     }
@@ -251,6 +258,21 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
   return bOK;
 }
 
+// Look for the attachment with the right mimetype
+bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s )
+{
+  const int iSlash = mimetype.find('/');
+  const QCString sType    = mimetype.left( iSlash   ).latin1();
+  const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+  DwBodyPart* part = findBodyPart( msg, sType, sSubtype );
+  if ( part ) {
+    KMMessagePart msgPart;
+    KMMessage::bodyPart(part, &msgPart);
+    s = msgPart.body();
+    return true;
+  }
+  return false;
+}
 
 // Delete an attachment in an existing mail.
 // return value: wrong if attachment could not be deleted
@@ -343,38 +365,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   return sernum;
 }
 
-
-// The resource orders a deletion
-bool KMailICalIfaceImpl::deleteIncidence( KMFolder& folder,
-                                          const QString& uid,
-                                          Q_UINT32 serNum )
-{
-  if( !mUseResourceIMAP )
-    return false;
-
-  bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
-
-  const bool bIsImap = isResourceImapFolder( &folder );
-  KMMessage* msg = bIsImap
-                 ? findMessageBySerNum( serNum, &folder )
-                 : findMessageByUID(    uid,    &folder );
-  if( msg ) {
-    // Message found - delete it and return happy
-    deleteMsg( msg );
-    rc = true;
-  }else{
-    if( bIsImap )
-      kdDebug(5006) << "Message not found, cannot remove serNum " << serNum << endl;
-    else
-      kdDebug(5006) << "Message not found, cannot remove id " << uid << endl;
-  }
-
-  mResourceQuiet = quiet;
-  return rc;
-}
-
 // The resource orders a deletion
 bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
                                           const QString& folder,
@@ -402,7 +392,14 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  rc = deleteIncidence( folder, uid, 0 );
+  KMMessage* msg = findMessageByUID( uid, f );
+  if( msg ) {
+    // Message found - delete it and return happy
+    deleteMsg( msg );
+    rc = true;
+  } else {
+    kdDebug(5006) << "Message not found, cannot remove id " << uid << endl;
+  }
 
   mResourceQuiet = quiet;
   return rc;
@@ -433,7 +430,14 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  rc = deleteIncidence( *f, "", sernum );
+  KMMessage* msg = findMessageBySerNum( sernum, f );
+  if( msg ) {
+    // Message found - delete it and return happy
+    deleteMsg( msg );
+    rc = true;
+  } else {
+    kdDebug(5006) << "Message not found, cannot remove serNum " << sernum << endl;
+  }
 
   mResourceQuiet = quiet;
   return rc;
@@ -505,18 +509,15 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
       const int iSlash = mimetype.find('/');
       const QCString sType    = mimetype.left( iSlash   ).latin1();
       const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
-      if( sType.isEmpty() || sSubtype.isEmpty() ){
+      if ( sType.isEmpty() || sSubtype.isEmpty() ) {
         kdError(5006) << mimetype << " not an type/subtype combination" << endl;
-      }else{
-        const int msgType    = DwTypeStrToEnum(   DwString(sType));
-        const int msgSubtype = DwSubtypeStrToEnum(DwString(sSubtype));
-        DwBodyPart* dwPart = msg->findDwBodyPart( msgType,
-                                                  msgSubtype );
-        if( dwPart ){
+      } else {
+        DwBodyPart* dwPart = findBodyPart( *msg, sType, sSubtype );
+        if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
           aMap.insert(msg->getMsgSerNum(), msgPart.body());
-        }else{
+        } else {
           // This is *not* an error: it may be that not all of the messages
           // have a message part that is matching the wanted MIME type
         }
@@ -819,7 +820,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
-  QString type = icalFolderType( folder );
+  QString type = folderContentsType( folder->storage()->contentsType() );
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -827,15 +828,26 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
     assert( folder == aFolder );
 
-    // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-        kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
+    bool ok = false;
+    KMMessage* msg = folder->getMsg( i );
+    switch( storageFormat( folder ) ) {
+    case StorageIcalVcard:
+      // Read the iCal or vCard
+      ok = KMGroupware::vPartFoundAndDecoded( msg, s );
+      break;
+    case StorageXML:
+      // Read the XML from the attachment with the given mimetype
+      ok = kolabXMLFoundAndDecoded( *msg, folderKolabMimeType( folder->storage()->contentsType() ), s );
+      break;
+    }
+    if ( ok ) {
+      kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                       << ", " << folder->location() << ", " << s << " )" << endl;
-        incidenceAdded( type, folder->location(), s );
-        incidenceAdded( type, folder->location(), sernum, s );
-      }
+      incidenceAdded( type, folder->location(), s );
+      incidenceAdded( type, folder->location(), sernum, s );
+    }
     if( unget ) folder->unGetMsg(i);
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
@@ -848,7 +860,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
-  QString type = icalFolderType( folder );
+  QString type = folderContentsType( folder->storage()->contentsType() );
+  kdDebug() << k_funcinfo << folder << " " << type << " " << sernum << endl;
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -859,13 +872,37 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-      QString uid( "UID" );
-      vPartMicroParser( s, uid );
-      kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
-                    << type << ", " << folder->location() << ", " << uid
-                    << " )" << endl;
-      incidenceDeleted( type, folder->location(), uid );
+    bool ok = false;
+    KMMessage* msg = folder->getMsg( i );
+    QString uid( "UID" );
+    switch( storageFormat( folder ) ) {
+    case StorageIcalVcard:
+        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+            vPartMicroParser( s, uid );
+            ok = true;
+        }
+        break;
+    case StorageXML:
+        if ( kolabXMLFoundAndDecoded( *msg, folderKolabMimeType( folder->storage()->contentsType() ), s ) ) {
+            QDomDocument doc;
+            if ( doc.setContent( s ) ) {
+                QDomElement top = doc.documentElement();
+                for ( QDomNode n = top.firstChild(); !n.isNull(); n = n.nextSibling() ) {
+                    QDomElement e = n.toElement();
+                    if ( e.tagName() == "uid" ) {
+                        uid = e.text();
+                        ok = true;
+                    }
+                }
+            }
+        }
+        break;
+    }
+    if ( ok ) {
+        kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
+                      << type << ", " << folder->location() << ", " << uid
+                      << " )" << endl;
+        incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -920,6 +957,7 @@ bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
   return mUseResourceIMAP && folder &&
     ( folder == mCalendar || folder == mTasks || folder == mJournals ||
       folder == mNotes || folder == mContacts );
+  // ######## aren't extra folders missing here?
 }
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
@@ -944,31 +982,6 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 
   return KFolderTreeItem::Other;
 }
-
-
-QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
-{
-  if( mUseResourceIMAP && folder ) {
-    if( folder == mCalendar )
-      return "Calendar";
-    else if( folder == mContacts )
-      return "Contact";
-    else if( folder == mNotes )
-      return "Note";
-    else if( folder == mTasks )
-      return "Task";
-    else if( folder == mJournals )
-      return "Journal";
-    else {
-      ExtraFolder* ef = mExtraFolders.find( folder->location() );
-      if ( ef != 0 )
-        return folderContentsType( folder->storage()->contentsType() );
-    }
-  }
-
-  return QString::null;
-}
-
 
 // Global tables of foldernames is different languages
 // For now: 0->English, 1->German, 2->French, 3->Dutch
@@ -1081,14 +1094,16 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
                                                     KMail::FolderContentsType contentsType )
 {
+  if ( !mUseResourceIMAP )
+    return;
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
 
-  // Check if already know that folder
-  ExtraFolder* ef = mExtraFolders.find( folder->location() );
-  if ( !ef && contentsType == 0 ) // mail -> don't care
+  if ( isResourceImapFolder( folder ) )
     return;
 
+  // Check if already know that 'extra folder'
+  ExtraFolder* ef = mExtraFolders.find( folder->location() );
   if ( ef ) {
     // Notify that the old folder resource is no longer available
     subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), folder->location() );
@@ -1102,6 +1117,10 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
     // So the type changed to another groupware type, ok.
   } else {
+    if ( contentsType == 0 )
+        return;
+
+    kdDebug(5006) << "registering " << folder->location() << " as extra folder" << endl;
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( folder->location(), ef );
@@ -1288,6 +1307,7 @@ void KMailICalIfaceImpl::readConfig()
 
   // Bad hack
   connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
+  kdDebug() << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
   // Make KOrganizer re-read everything
   slotRefresh( "Calendar" );
@@ -1456,6 +1476,5 @@ static void vPartMicroParser( const QString& str, QString& s )
   // Not found. Clear it
   s.truncate(0);
 }
-
 
 #include "kmailicalifaceimpl.moc"
