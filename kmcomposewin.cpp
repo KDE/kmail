@@ -551,6 +551,8 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("previous-identity", mIdentity->currentIdentity() );
     config->writeEntry("current-transport", mTransport->currentText());
     config->writeEntry("previous-fcc", mFcc->getFolder()->idString() );
+    config->writeEntry( "autoSpellChecking",
+                        mAutoSpellCheckingAction->isChecked() );
     mTransportHistory.remove(mTransport->currentText());
     if (KMTransportInfo::availableTransports().findIndex(mTransport
       ->currentText()) == -1)
@@ -908,6 +910,18 @@ void KMComposeWin::setupActions(void)
 		      actionCollection(), "wordwrap");
   mWordWrapAction->setChecked(mWordWrap);
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
+
+  mAutoSpellCheckingAction =
+    new KToggleAction( i18n( "&Automatic Spellchecking" ), "spellcheck", 0,
+                       actionCollection(), "options_auto_spellchecking" );
+  KConfigGroup composerConfig( KMKernel::config(), "Composer" );
+  const bool spellChecking =
+    composerConfig.readBoolEntry( "autoSpellChecking", true );
+  mAutoSpellCheckingAction->setEnabled( !mUseExtEditor );
+  mAutoSpellCheckingAction->setChecked( !mUseExtEditor && spellChecking );
+  mEditor->slotAutoSpellCheckingToggled( !mUseExtEditor && spellChecking );
+  connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
+           mEditor, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
 
   QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
   encodings.prepend( i18n("Auto-Detect"));
@@ -5644,26 +5658,36 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
 
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Reader");
+  initializeAutoSpellChecking();
+}
+
+//-----------------------------------------------------------------------------
+void KMEdit::initializeAutoSpellChecking()
+{
+  KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
   QColor defaultForeground( kapp->palette().active().text() );
-  QColor col1 = config->readColorEntry( "ForegroundColor", &defaultForeground );
-  QColor col2 = config->readColorEntry( "QuotedText3", &defaultColor3 );
-  QColor col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
-  QColor col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
+  QColor col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );
+  QColor col2 = readerConfig.readColorEntry( "QuotedText3", &defaultColor3 );
+  QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
+  QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
   QColor c = Qt::red;
-  mSpellChecker = new KDictSpellingHighlighter(this, /*active*/ true, /*autoEnabled*/ true,
-    /*spellColor*/ config->readColorEntry("NewMessage", &c),
-    /*colorQuoting*/ true, col1, col2, col3, col4);
+  QColor misspelled = readerConfig.readColorEntry( "MisspelledColor", &c );
+
+  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ true,
+                                                /*autoEnabled*/ false,
+                                                /*spellColor*/ misspelled,
+                                                /*colorQuoting*/ true,
+                                                col1, col2, col3, col4 );
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
-	   composer, SLOT(slotStatusMessage(const QString &)));
+	   mComposer, SLOT(slotStatusMessage(const QString &)));
   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
-           SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
+           this, SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
 }
 
+//-----------------------------------------------------------------------------
 void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned int )
 {
   mReplacements[text] = lst;
@@ -5672,7 +5696,6 @@ void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned
 //-----------------------------------------------------------------------------
 KMEdit::~KMEdit()
 {
-
   removeEventFilter(this);
 
   delete mKSpell;
@@ -5845,6 +5868,12 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   return KEdit::eventFilter(o, e);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotAutoSpellCheckingToggled( bool on )
+{
+  mSpellChecker->setActive( on );
+}
 
 //-----------------------------------------------------------------------------
 void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {

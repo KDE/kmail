@@ -118,6 +118,7 @@ public:
 signals:
   void spellcheck_done(int result);
 public slots:
+  void slotAutoSpellCheckingToggled( bool );
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString&);
   void slotSpellDone();
@@ -142,6 +143,7 @@ private slots:
 
 private:
   void killExternalEditor();
+  void initializeAutoSpellChecking();
 
 private:
   KSpell *mKSpell;
@@ -793,7 +795,7 @@ protected:
   KToggleAction *mReplyToAction, *mToAction, *mCcAction, *mBccAction;
   KToggleAction *mSubjectAction;
   KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
-  KToggleAction *mWordWrapAction, *mFixedFontAction;
+  KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
 
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;
