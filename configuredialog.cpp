@@ -698,6 +698,7 @@ void ConfigureDialog::makeIdentityPage( void )
   // page 3: input field for direct entering:
   mIdentity.signatureTextEdit = new QMultiLineEdit( widgetStack );
   widgetStack->addWidget( mIdentity.signatureTextEdit, 2 );
+  widgetStack->raiseWidget( 0 );
 }
 
 
