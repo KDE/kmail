@@ -3,9 +3,9 @@
 // License: GNU Genaral Public License
 
 #include "kmfawidgets.h"
-#include "kmaddrbookdlg.h" // for the button in KMFilterActionWithAddress
 #include "kmkernel.h"
 
+#include <kabc/addresseedialog.h> // for the button in KMFilterActionWithAddress
 #include <kiconloader.h>
 //#include <klocale.h>
 
@@ -36,10 +36,18 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
 
 void KMFilterActionWithAddressWidget::slotAddrBook()
 {
-  KMAddrBookSelDlg dlg( this );
   QString txt;
 
-  if ( dlg.exec() == QDialog::Rejected ) return;
+  KABC::Addressee::List lst = KABC::AddresseeDialog::getAddressees( this );
+
+  if ( lst.empty() )
+    return;
+
+  QStringList addrList;
+
+  for( KABC::Addressee::List::iterator itr = lst.begin(); itr != lst.end(); ++itr ) {
+    addrList << (*itr).fullEmail();
+  }
 
   txt = mLineEdit->text().stripWhiteSpace();
 
@@ -50,7 +58,7 @@ void KMFilterActionWithAddressWidget::slotAddrBook()
       txt += ' ';
   }
 
-  mLineEdit->setText( txt + dlg.address() );
+  mLineEdit->setText( txt + addrList.join(",") );
 }
 
 //--------------------------------------------
