@@ -884,6 +884,7 @@ void KMMainWidget::slotCheckOneAccount(int item)
   kernel->setCheckingMail(false);
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
 {
   if(mSendOnCheck && sendOnCheck)
@@ -2684,11 +2685,7 @@ bool KMMainWidget::queryClose() {
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotIntro()
 {
-  if ( !mFolderTree || !mMsgView ) return;
-
-  if ( !mFolderTree->firstChild() ) return;
-  if ( mFolderTree->currentItem() != mFolderTree->firstChild() ) // don't loop
-    mFolderTree->doFolderSelected( mFolderTree->firstChild() );
+  if ( !mMsgView ) return;
 
   mMsgView->clear( true );
   // hide widgets that are in the way:
@@ -2699,6 +2696,8 @@ void KMMainWidget::slotIntro()
     mMimePartTree->hide();
 
   mMsgView->displayAboutPage();
+
+  mFolder = 0;
 }
 
 void KMMainWidget::slotShowStartupFolder()
