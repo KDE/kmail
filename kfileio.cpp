@@ -196,7 +196,7 @@ bool kBytesToFile(const char* aBuffer, int len,
 	rc = KMessageBox::warningContinueCancel(0,
 	     i18n("Failed to make a backup copy of %1.\nContinue anyway?")
 	     .arg(aFileName),
-             i18n("Save to File"), KStdGuiItem::save().text() );
+             i18n("Save to File"), KStdGuiItem::save() );
 	if (rc != KMessageBox::Continue) return FALSE;
       }
     }
