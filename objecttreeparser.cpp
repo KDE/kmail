@@ -1078,7 +1078,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      }
 	    }
 	    if( !bDone )
-	      writeBodyString( cstr.data(), curNode->trueFromAddress(), result );
+	      writeBodyString( cstr, curNode->trueFromAddress(), result );
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1165,7 +1165,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	}
 	else {
 	  ObjectTreeParser otp( *this );
-	  otp.setShowOnlyOneMimePart( true );
+	  otp.setShowOnlyOneMimePart( false );
 	  otp.parseObjectTree( curNode->mChild );
 	  mResultString += otp.resultString();
 	}
