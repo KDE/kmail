@@ -11,6 +11,7 @@
 #include "partNode.h"
 #include <klocale.h>
 #include <kdebug.h>
+#include <kservicetype.h>
 #include "kmmimeparttree.h"
 
 /*
@@ -290,6 +291,12 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         cntEnc  = labelEncoding;
         cntSize = labelSize;
     }
+
+    cntType = cntType.lower();
+    KServiceType::Ptr type = KServiceType::serviceType( cntType );
+    if ( type )
+        cntType = type->comment();
+
     cntDesc += "  ";
     cntType += "  ";
     cntEnc  += "  ";
