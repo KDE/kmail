@@ -310,7 +310,17 @@
         <label>Use smart &amp;quoting</label>
         <default>true</default>
       </entry>
-      
+
+      <entry name="AddresseeSelectorType" type="Enum">
+        <label>Type of addressee selector</label>
+        <whatsthis>Sets the type of the dialog for selecting recipients for To,
+        CC and BCC.</whatsthis>
+        <choices>
+          <choice name="New"/>
+          <choice name="Old"/>
+        </choices>
+        <default>Old</default>
+      </entry>      
     </group>
 <!-- Composer -->
 

@@ -119,13 +119,17 @@ kmail_SOURCES = main.cpp
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel 	kmail_part.cpp
 
-check_PROGRAMS = dcoptest
+check_PROGRAMS = dcoptest recipienteditortest
 
 METASOURCES = AUTO
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel kmailIface.stub mailcomposerIface.skel mailcomposerIface.stub
 dcoptest_LDADD = $(LIB_KIO)
 dcoptest_LDFLAGS = $(all_libraries)
+
+recipienteditortest_SOURCES = recipientseditortest.cpp recipientseditor.cpp
+recipienteditortest_LDADD = $(LIB_KIO)
+recipienteditortest_LDFLAGS = $(all_libraries)
 
 kmailIface_DCOPIDLNG = true
 kmailicalIface_DCOPIDLNG = true

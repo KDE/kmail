@@ -714,6 +714,9 @@ protected:
    */
   void addrBookSelInto();
 
+  void addrBookSelIntoOld();
+  void addrBookSelIntoNew();
+
 private:
   /**
    * Turn encryption on/off. If setByUser is true then a message box is shown

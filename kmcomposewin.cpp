@@ -35,6 +35,9 @@ using KMail::AttachmentListView;
 using KMail::DictionaryComboBox;
 #include "addressesdialog.h"
 using KPIM::AddressesDialog;
+#include "addresseeemailselection.h"
+using KPIM::AddresseeEmailSelection;
+using KPIM::AddresseeSelectorDialog;
 #include <maillistdrag.h>
 using KPIM::MailListDrag;
 #include "recentaddresses.h"
@@ -2018,6 +2021,16 @@ bool KMComposeWin::signFlagOfAttachment(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto()
 {
+  if ( GlobalSettings::addresseeSelectorType() ==
+       GlobalSettings::EnumAddresseeSelectorType::New ) {
+    addrBookSelIntoNew();
+  } else {
+    addrBookSelIntoOld();
+  }
+}
+
+void KMComposeWin::addrBookSelIntoOld()
+{
   AddressesDialog dlg( this );
   QString txt;
   QStringList lst;
@@ -2051,6 +2064,54 @@ void KMComposeWin::addrBookSelInto()
   mEdtCc->setEdited( true );
 
   mEdtBcc->setText( dlg.bcc().join(", ") );
+  mEdtBcc->setEdited( true );
+
+  //Make sure BCC field is shown if needed
+  if ( !mEdtBcc->text().isEmpty() ) {
+    mShowHeaders |= HDR_BCC;
+    rethinkFields( false );
+  }
+}
+
+void KMComposeWin::addrBookSelIntoNew()
+{
+  AddresseeEmailSelection selection;
+
+  AddresseeSelectorDialog dlg( &selection );
+
+  QString txt;
+  QStringList lst;
+
+  txt = to();
+  if ( !txt.isEmpty() ) {
+      lst = KPIM::splitEmailAddrList( txt );
+      selection.setSelectedTo( lst );
+  }
+
+  txt = mEdtCc->text();
+  if ( !txt.isEmpty() ) {
+      lst = KPIM::splitEmailAddrList( txt );
+      selection.setSelectedCC( lst );
+  }
+
+  txt = mEdtBcc->text();
+  if ( !txt.isEmpty() ) {
+      lst = KPIM::splitEmailAddrList( txt );
+      selection.setSelectedBCC( lst );
+  }
+
+  if (dlg.exec()==QDialog::Rejected) return;
+
+  QStringList list = selection.to() + selection.toDistributionLists();
+  mEdtTo->setText( list.join(", ") );
+  mEdtTo->setEdited( true );
+
+  list = selection.cc() + selection.ccDistributionLists();
+  mEdtCc->setText( list.join(", ") );
+  mEdtCc->setEdited( true );
+
+  list = selection.bcc() + selection.bccDistributionLists();
+  mEdtBcc->setText( list.join(", ") );
   mEdtBcc->setEdited( true );
 
   //Make sure BCC field is shown if needed
