@@ -62,7 +62,8 @@ int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 KMMessage::KMMessage(DwMessage* aMsg)
 {
     mNeedsAssembly = TRUE;
-    mMsg=aMsg;
+    mMsg = aMsg;
+    mCodec = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -173,6 +174,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
+  mCodec = NULL;
 }
 
 
