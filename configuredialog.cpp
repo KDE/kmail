@@ -3445,7 +3445,7 @@ void SecurityPage::GeneralTab::save() {
 
 
 QString SecurityPage::ComposerCryptoTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // change...
+  return QString::fromLatin1("configure-security-composing");
 }
 
 SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent, const char * name )
