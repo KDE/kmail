@@ -511,7 +511,6 @@ void KMAcctExpPop::slotAbortRequested()
   stage = Quit;
   if (job) job->kill();
   job = 0L;
-  if (slave) KIO::Scheduler::disconnectSlave(slave);
   slave = 0L;
   slotCancel();
 }
@@ -616,8 +615,6 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Quit) {
     kdDebug() << "stage == Quit" << endl;
     job = 0L;
-    if (slave) KIO::Scheduler::disconnectSlave(slave);
-    slave = 0L;
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
@@ -770,8 +767,6 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     stage = Idle;
     job->kill();
     job = 0L;
-    if (slave) KIO::Scheduler::disconnectSlave(slave);
-    slave = 0L;
     KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
                           i18n("Invalid response from server"));
     return;
