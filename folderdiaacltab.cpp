@@ -506,6 +506,9 @@ void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
 void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
 {
   if ( !item ) return;
+  bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  if ( !canAdmin ) return;
+
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
   ACLEntryDialog dlg( mUserIdFormat, i18n( "Modify Permissions" ), this );
   dlg.setValues( ACLitem->userId(), ACLitem->permissions() );
