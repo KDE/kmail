@@ -1599,8 +1599,8 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	     (ch=='h' && aStr.mid(pos, 8) == "https://") ||
 	     (ch=='f' && aStr.mid(pos, 6) == "ftp://") ||
 	     (ch=='m' && aStr.mid(pos, 7) == "mailto:") ||
-	     (aStr.mid(pos, 4) == "www.") ||
-	     (aStr.mid(pos, 4) == "ftp."))
+	     (ch=='w' && aStr.mid(pos, 4) == "www.") ||
+	     (ch=='f' && aStr.mid(pos, 4) == "ftp."))
 	     // note: no "file:" for security reasons
     {
       // handle cases like this: <link>http://foobar.org/</link>
