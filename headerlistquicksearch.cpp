@@ -96,22 +96,18 @@ HeaderListQuickSearch::~HeaderListQuickSearch()
 
 bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 {
-  if ( watched == mStatusCombo )
-  {
-    KMMainWidget *mainWidget = 0L;
+  if ( watched == mStatusCombo ) {
+    KMMainWidget *mainWidget = 0;
 
     // Travel up the parents list until we find the main widget
-    for ( QWidget *curWidget = parentWidget(); curWidget != NULL; curWidget = curWidget->parentWidget() )
-    {
+    for ( QWidget *curWidget = parentWidget(); curWidget; curWidget = curWidget->parentWidget() ) {
       mainWidget = ::qt_cast<KMMainWidget *>( curWidget );
       if ( mainWidget )
         break;
     }
 
-    if ( mainWidget )
-    {
-      switch ( event->type() )
-      {
+    if ( mainWidget ) {
+      switch ( event->type() ) {
       case QEvent::FocusIn:
         mainWidget->setAccelsEnabled( false );
         break;
