@@ -345,6 +345,7 @@ QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
 
   for (i=0,cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
   {
+    printf("Name: %s\n",cur->name().data());
     cbx->insertItem(cur->name());
     if (cur->name() == curFolder) idx=i;
   }

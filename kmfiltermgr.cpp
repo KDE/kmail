@@ -128,16 +128,18 @@ void KMFilterMgr::dialogClosed(void)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::openDialog(void)
 {
-  if (mEditDialog)
+
+  // This only makes problems.....has to be changed later on
+/*  if (mEditDialog)
   {
     mEditDialog->show();
     mEditDialog->raise();
   }
   else
-  {
+  {*/
     mEditDialog = new KMFilterDlg;
     mEditDialog->show();
-  }
+  //}
 }
 
 
