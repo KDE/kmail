@@ -47,7 +47,7 @@ JobScheduler::JobScheduler( QObject* parent, const char* name )
 JobScheduler::~JobScheduler()
 {
   // delete tasks in tasklist (no autodelete for QValueList)
-  for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+  for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
     delete (*it);
   }
   delete mCurrentTask;
@@ -61,7 +61,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
   if ( typeId ) {
     KMFolder* folder = task->folder();
     // Search for an identical task already scheduled
-    for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+    for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       if ( (*it)->taskTypeId() == typeId && (*it)->folder() == folder ) {
 #ifdef DEBUG_SCHEDULER
         kdDebug(5006) << "JobScheduler: already having task type " << typeId << " for folder " << folder->label() << endl;
