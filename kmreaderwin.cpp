@@ -1097,7 +1097,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
     iconName = href;
   else
     iconName = aMsgPart->iconName();
-  if (iconName.left(11)=="unknown")
+  if (iconName.right(14)=="mime_empty.png")
   {
     aMsgPart->magicSetType();
     iconName = aMsgPart->iconName();
