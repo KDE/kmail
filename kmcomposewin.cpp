@@ -1073,7 +1073,6 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 
 //-----------------------------------------------------------------------------
 const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) {
-const
   unsigned int len;
   QString lenStr;
 
@@ -2153,9 +2152,8 @@ void KMEdit::slotSpellDone()
   mKSpell = 0;
   if (status == KSpell::Error)
   {
-     KMessageBox::sorry(this, i18n("ISpell could not be started.\n"
-     "Please make sure you have ISpell properly configured and in your   }
-PATH."));
+     KMessageBox::sorry(this, i18n("ISpell could not be started.\n Please make sure you have ISpell properly configured and in your PATH."));
+  }
   else if (status == KSpell::Crashed)
   {
      spellcheck_stop();
@@ -2166,6 +2164,7 @@ PATH."));
      emit spellcheck_done();
   }
 }
+
 
 
 
