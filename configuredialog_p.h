@@ -506,10 +506,10 @@ public:
   typedef AppearancePageSystemTrayTab SystemTrayTab;
 
 protected:
-  FontsTab   *mFontsTab;
-  ColorsTab  *mColorsTab;
-  LayoutTab  *mLayoutTab;
-  HeadersTab *mHeadersTab;
+  FontsTab      *mFontsTab;
+  ColorsTab     *mColorsTab;
+  LayoutTab     *mLayoutTab;
+  HeadersTab    *mHeadersTab;
   SystemTrayTab *mSystemTrayTab;
 };
 
@@ -857,11 +857,9 @@ public:
   void save();
   void defaults() {}
   QString helpAnchor() const;
-
 private slots:
   void slotStorageFormatChanged( int );
   void slotLegaceBodyInvitesToggled( bool on );
-
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;

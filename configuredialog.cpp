@@ -427,7 +427,8 @@ void IdentityPage::slotRemoveIdentity()
 
   QString msg = i18n("<qt>Do you really want to remove the identity named "
 		     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
-  if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes )
+  if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
+   KGuiItem(i18n("&Remove"),"editdelete") ) == KMessageBox::Continue )
     if ( im->removeIdentity( item->identity().identityName() ) ) {
       delete item;
       mIdentityList->setSelected( mIdentityList->currentItem(), true );
@@ -2120,6 +2121,10 @@ void AppearancePage::HeadersTab::save() {
 }
 
 
+QString AppearancePage::SystemTrayTab::helpAnchor() const {
+  return QString::fromLatin1("configure-appearance-systemtray");
+}
+
 AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
                                                           const char * name )
   : ConfigModuleTab( parent, name )
@@ -2282,7 +2287,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this );
-  label = new QLabel( mAutoSave, i18n("Autosave every:"), this );
+  label = new QLabel( mAutoSave, i18n("Autosave interval:"), this );
   hlay->addWidget( label );
   hlay->addWidget( mAutoSave );
   mAutoSave->setSpecialValueText( i18n("No autosave") );
@@ -3141,7 +3146,7 @@ void ComposerPage::AttachmentsTab::save() {
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
   if (mOutlookCompatibleCheck->isChecked()) {
-    KMessageBox::information(0,i18n("You have choosen to "
+    KMessageBox::information(0,i18n("You have chosen to "
     "encode attachment names containing non-English characters in a way that "
     "is understood by Outlook(tm) and other mail clients that do not "
     "support standard-compliant encoded attachment names.\n"
@@ -3205,7 +3210,7 @@ void SecurityPage::installProfile( KConfig * profile ) {
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-general");
+  return QString::fromLatin1("configure-security-reading");
 }
 
 SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * name )
@@ -3472,7 +3477,7 @@ void SecurityPage::GeneralTab::save() {
 
 
 QString SecurityPage::ComposerCryptoTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // change...
+  return QString::fromLatin1("configure-security-composing");
 }
 
 SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent, const char * name )
@@ -3540,7 +3545,7 @@ void SecurityPage::ComposerCryptoTab::save() {
 }
 
 QString SecurityPage::WarningTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // to be updated
+  return QString::fromLatin1("configure-security-warnings");
 }
 
 SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * name )
@@ -3640,7 +3645,7 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked() {
 ////
 
 QString SecurityPage::SMimeTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // to be updated
+  return QString::fromLatin1("configure-security-smime-validation");
 }
 
 SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name )
@@ -3771,7 +3776,7 @@ Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* compon
 }
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {
-  return QString::null;
+  return QString::fromLatin1("configure-security-crypto-backends");
 }
 
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
@@ -3924,16 +3929,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   connect( mOnStartupOpenFolder, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "On exit..." groupbox:
-  group = new QVGroupBox( i18n("On Program Exit, "
-			       "Perform Following Tasks"), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
-
+  // "Empty &trash on program exit" option:
+  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash on program exit"),
+                                    this );
+  vlay->addWidget( mEmptyTrashCheck );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  vlay->addWidget( group );
   vlay->addStretch( 1 );
 
   // and now: add QWhatsThis:
@@ -4155,13 +4157,13 @@ void MiscPageGroupwareTab::slotLegaceBodyInvitesToggled( bool on )
   if ( on ) {
     QString txt = i18n( "<qt>Invitations are normally sent as attachments to "
                         "a mail. This switch changes the invitation mails to "
-                        "be sent in the text of the mail instead. This is "
-                        "necesssary to send invitations and replies to "
-                        "Microsoft Outlook.<br>But when you do this, you no "
-                        "longer get a descriptive text that mail programs "
-                        "can read. So to people who have email programs "
-                        "that do not understand the invitations, this "
-                        "message looks very odd.<br>People that have email "
+                        "be sent in the text of the mail instead; this is "
+                        "necessary to send invitations and replies to "
+                        "Microsoft Outlook.<br>But, when you do this, you no "
+                        "longer get descriptive text that mail programs "
+                        "can read; so, to people who have email programs "
+                        "that do not understand the invitations, the "
+                        "resulting messages look very odd.<br>People that have email "
                         "programs that do understand invitations will still "
                         "be able to work with this.</qt>" );
     KMessageBox::information( this, txt, QString::null,
