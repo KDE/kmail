@@ -1211,6 +1211,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
       if (slotFilterMsg(msg) == 2) break;
     }
   }
+  kernel->filterMgr()->cleanup();
 
   setContentsPos( topX, topY );
   emit selected( 0 );
