@@ -129,13 +129,13 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 4 /*cols*/,
 				         0 /*border*/, spacingHint() );
       gl->setColStretch( 0, 1 );
-      QLabel *l = new QLabel( i18n("Apply this filter on:"), adv_w );
+      QLabel *l = new QLabel( i18n("Apply this filter"), adv_w );
       gl->addWidget( l, 0, 0, AlignLeft );
-      mApplyOnIn = new QCheckBox( i18n("&Incoming messages"), adv_w );
+      mApplyOnIn = new QCheckBox( i18n("to &incoming messages"), adv_w );
       gl->addWidget( mApplyOnIn, 0, 1 );
-      mApplyOnOut = new QCheckBox( i18n("&Sent messages"), adv_w );
+      mApplyOnOut = new QCheckBox( i18n("to &sent messages"), adv_w );
       gl->addWidget( mApplyOnOut, 0, 2 );
-      mApplyOnCtrlJ = new QCheckBox( i18n("&Explicit \"Apply Filters\""), adv_w );
+      mApplyOnCtrlJ = new QCheckBox( i18n("on &explicit \"Apply Filters\""), adv_w );
       gl->addWidget( mApplyOnCtrlJ, 0, 3 );
       mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), adv_w );
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
