@@ -439,7 +439,7 @@ namespace KMail {
 
 void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().stripWhiteSpace();
-    emailParseResult errorCode = isValidEmailAddress( email );
+    EmailParseResult errorCode = isValidEmailAddress( email );
     if ( errorCode != AddressOk ) {
       QString errorMsg( emailParseResultToString( errorCode ));
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
