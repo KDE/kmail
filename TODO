@@ -3,6 +3,10 @@ DS: Consider Carstens unintegrated patch
 DS: Implement Folder ids
 DS: Apply chosen filter, high wish, 44429
 DS: Remove obsolete files
+DS: Every time a serial number lookup or inverse lookup is made
+    perform a sanity check and if the sanity check fails fix the
+    corrupted 
+    files.
 
 Level 2: High priority (this month)
 DS: XML GUI context menus to support KMail plugins
