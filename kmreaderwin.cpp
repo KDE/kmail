@@ -598,7 +598,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
         if (htmlMail() && stricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
           str = msgPart.bodyDecoded();      // decode it...
-          mViewer->write(str.data());              // write it...
+          mViewer->write(mCodec->toUnicode(str.data()));    // write it...
           return;                           // return, finshed.
         }
 	else if (!htmlMail() && (stricmp(subtype, "plain")==0))
@@ -664,7 +664,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
               if (i>0) cstr.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            mViewer->write(cstr.data());
+            mViewer->write(mCodec->toUnicode(cstr.data()));
 	  }
           else writeBodyStr(cstr);
 	}
@@ -687,7 +687,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   else // if numBodyParts <= 0
   {
     if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
-      mViewer->write(aMsg->bodyDecoded().data());
+      mViewer->write(mCodec->toUnicode(aMsg->bodyDecoded().data()));
     else
       writeBodyStr(aMsg->bodyDecoded());
   }
