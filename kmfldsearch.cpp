@@ -363,7 +363,7 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   QString fldName = item->text(LOCATION_COLUMN);
   QValueList<QGuardedPtr<KMFolder> > folders;
   QStringList str;
-  int idx = atoi(item->text(FOLDERID_COLUMN));
+  int idx = item->text(FOLDERID_COLUMN).toInt();
   kernel->folderMgr()->createFolderList( &str, &folders );
   if (folders.at(idx) == folders.end())
     return;
@@ -371,13 +371,13 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   if (!fld) 
     return;
   // This could goto the wrong folder if the folder list has been modified
+  debug( "fld " + item->text(LOCATION_COLUMN) + " msgid " + item->text(MSGID_COLUMN) );
 
   mMainWin->slotSelectFolder(fld);
-  msg = fld->getMsg(atoi(item->text(MSGID_COLUMN)));
+  msg = fld->getMsg(item->text(MSGID_COLUMN).toInt());
   if (!msg) 
     return;
 
-  //  mMainWin->slotMsgSelected(msg);
   mMainWin->slotSelectMessage(msg);
 }
 
