@@ -128,29 +128,27 @@ void KMReaderMainWin::slotReplyListToMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardMsg()
 {
-   KMCommand *command = NULL;
+   KMCommand *command = 0;
    if ( mReaderWin->message()->parent() ) {
     command = new KMForwardCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
    } else {
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
-   if ( command )
-     command->start();
+   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
-   KMCommand *command = NULL;
+   KMCommand *command = 0;
    if ( mReaderWin->message()->parent() ) {
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
-   if ( command )
-     command->start();
+   command->start();
 }
 
 //-----------------------------------------------------------------------------
