@@ -349,6 +349,7 @@ namespace KMail {
     bool mErrorDialogIsActive : 1;
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;
+    bool mSlaveConnected : 1;
 
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;

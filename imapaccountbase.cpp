@@ -91,6 +91,7 @@ namespace KMail {
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
+      mSlaveConnected( false ),
       mProgressItem( 0 )
   {
     mPort = imapDefaultPort;
@@ -224,7 +225,7 @@ namespace KMail {
   }
 
   ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() {
-    if ( mSlave ) return Connected;
+    if ( mSlave && mSlaveConnected ) return Connected;
 
     if ( mPasswordDialogIsActive ) return Connecting;
     if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
@@ -246,6 +247,7 @@ namespace KMail {
           != QDialog::Accepted ) {
         checkDone( false, CheckCanceled );
         mPasswordDialogIsActive = false;
+        mAskAgain = false;
         return Error;
       }
       mPasswordDialogIsActive = false;
@@ -253,9 +255,10 @@ namespace KMail {
       // password, so copy both from the dialog:
       setPasswd( pass, store );
       setLogin( log );
-      mAskAgain = false; // ### taken from kmacctexppop
+      mAskAgain = false;
     }
 
+    mSlaveConnected = false;
     mSlave = KIO::Scheduler::getConnectedSlave( getUrl(), slaveConfig() );
     if ( !mSlave ) {
       KMessageBox::error(0, i18n("Could not start process for %1.")
@@ -456,13 +459,17 @@ namespace KMail {
   {
       if (aSlave != mSlave) return;
       handleError( errorCode, errorMsg, 0, QString::null, true );
-      emit connectionResult( errorCode, errorMsg );
+      if ( mAskAgain )
+        makeConnection();
+      else
+        emit connectionResult( errorCode, errorMsg );
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
   {
       if (aSlave != mSlave) return;
+      mSlaveConnected = true;
       emit connectionResult( 0, QString::null ); // success
   }
 
@@ -523,8 +530,12 @@ namespace KMail {
     switch( errorCode ) {
     case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
     case KIO::ERR_COULD_NOT_LOGIN:
-      if ( !mStorePasswd )
+      if ( !mStorePasswd ) {
         mAskAgain = true;
+        jobsKilled = false;
+      }
+      else
+        killAllJobs( true );
       break;
     case KIO::ERR_CONNECTION_BROKEN:
     case KIO::ERR_COULD_NOT_CONNECT:
@@ -556,7 +567,7 @@ namespace KMail {
         caption = i18n("Error");
       }
 
-      if ( jobsKilled )
+      if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN )
         KMessageBox::error( kapp->activeWindow(), msg, caption );
       else // i.e. we have a chance to continue, ask the user about it
       {
