@@ -197,9 +197,9 @@ bool KMAcctPop::doProcessNewMail(bool interactive)
 
   if (mHost.isEmpty() || mPort==0)
   {
-    warning(i18n("Please specify Host, Port  and\n"
-		 "destination folder in the settings\n"
-		 "and try again."));
+    KMessageBox::information(0,i18n("Please specify Host, Port  and\n"
+				    "destination folder in the settings\n"
+				    "and try again."));
     return FALSE;
   }
 

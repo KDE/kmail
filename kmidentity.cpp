@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <ktempfile.h>
+#include <kmessagebox.h>
 
 
 //-----------------------------------------------------------------------------
@@ -156,8 +157,9 @@ const QString KMIdentity::signature(void) const
     tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
     if (tmpf.status() != 0) {
-      warning(i18n("Failed to create temporary file\n%s\n%s"),
-	      (const char *)tmpf.name(), strerror(errno));
+      QString wmsg = QString("%1\n%2").arg(tmpf.name()).arg(strerror(errno));
+      KMessageBox::information(0, i18n("Failed to create temporary file\n") +
+			       wmsg);
       return QString::null;
     }
     tmpf.close();
@@ -169,8 +171,9 @@ const QString KMIdentity::signature(void) const
 
     if (rc != 0)
     {
-      warning(i18n("Failed to execute signature script\n%s\n%s"),
-	      sigcmd.data(), strerror(errno));
+      QString wmsg = QString("%1\n%2").arg(sigcmd.data()).arg(strerror(errno));
+      KMessageBox::information(0, i18n("Failed to execute signature script\n") +
+			       wmsg );
       return QString::null;
     }
     result = kFileToString(tmpf.name(), TRUE, FALSE);

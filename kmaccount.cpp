@@ -21,6 +21,7 @@
 #include "kmsender.h"
 #include "kmmessage.h"
 #include <klocale.h>
+#include <kmessagebox.h>
 
 //----------------------
 #include "kmaccount.moc"
@@ -158,7 +159,8 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   processResult = filterMgr->process(aMsg);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
-    warning(i18n("Critical error: Unable to collect mail (out of space?)"));
+    KMessageBox::information(0,(i18n("Critical error: "
+      "Unable to collect mail (out of space?)")));
     return false;
   }
   else if (processResult == 1)
@@ -166,8 +168,8 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
     rc = mFolder->addMsg(aMsg);
     if (rc) {
       perror("failed to add message");
-      warning(i18n("Failed to add message:")+
-	      '\n' + QString(strerror(rc)));
+      KMessageBox::information(0, i18n("Failed to add message:\n") +
+			       QString(strerror(rc)));
       return false;
     }
     else return true;

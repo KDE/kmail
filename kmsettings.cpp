@@ -1518,7 +1518,8 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   }
   else 
   {
-    warning("KMAccountSettings: unsupported account type");
+    KMessageBox::information(0,i18n("KMAccountSettings: "
+				    "unsupported account type"));
     return;
   }
 

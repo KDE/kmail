@@ -15,6 +15,7 @@
 #include <kconfig.h>
 #include <kprocess.h>
 #include <kapp.h>
+#include <kmessagebox.h>
 #include <qregexp.h>
 
 #ifdef KRN
@@ -124,15 +125,16 @@ bool KMSender::settingsOk(void) const
 {
   if (mMethod!=smSMTP && mMethod!=smMail)
   {
-    warning(i18n("Please specify a send\nmethod in the settings\n"
-			   "and try again."));
+    KMessageBox::information(0,i18n("Please specify a send\n"
+				    "method in the settings\n"
+				    "and try again."));
     return FALSE;
   }
   if (!identity->mailingAllowed())
   {
-    warning(i18n("Please set the required fields in the\n"
-			   "identity settings:\n"
-			   "user-name and email-address"));
+    KMessageBox::information(0,i18n("Please set the required fields in the\n"
+				    "identity settings:\n"
+				    "user-name and email-address"));
     return FALSE;
   }
   return TRUE;
@@ -155,7 +157,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (aMsg->to().isEmpty())
   {
-    warning(i18n("You must specify a receiver"));
+    KMessageBox::information(0,i18n("You must specify a receiver"));
     return FALSE;
   }
 
@@ -166,7 +168,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   rc = outboxFolder->addMsg(aMsg);
   if (rc)
   {
-    warning(i18n("Cannot add message to outbox folder"));
+    KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
     return FALSE;
   }
 
@@ -197,7 +199,7 @@ bool KMSender::sendQueued(void)
 
   if (mSendInProgress)
   {
-    warning(i18n("Sending still in progress"));
+    KMessageBox::information(0,i18n("Sending still in progress"));
     return FALSE;
   }
 
@@ -338,7 +340,7 @@ void KMSender::slotIdle()
     msg = i18n("Sending failed:");
     msg += '\n';
     msg += mSendProc->message();
-    warning(msg);
+    KMessageBox::information(0,msg);
     cleanup();
   }
 }
@@ -524,8 +526,8 @@ bool KMSendSendmail::start(void)
 {
   if (mSender->mailer().isEmpty())
   {
-    warning(i18n("Please specify a mailer program\n"
-			   "in the settings."));
+    KMessageBox::information(0,i18n("Please specify a mailer program\n"
+				    "in the settings."));
     return FALSE;
   }
 
@@ -574,8 +576,8 @@ bool KMSendSendmail::send(KMMessage* aMsg)
 
   if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
   {
-    warning(i18n("Failed to execute mailer program %s"),
-	    (const char*)mSender->mailer());
+    KMessageBox::information(0,i18n("Failed to execute mailer program") +
+				    mSender->mailer());
     return FALSE;
   }
   mMsgPos  = mMsgStr.data();
@@ -671,7 +673,7 @@ bool KMSendSMTP::start(void)
 			       "host %1 for sending:\n%2") 
 		.arg(mSender->smtpHost())
 		.arg((const char*)mClient->Response().c_str());
-    warning((const char*)str);
+    KMessageBox::information(0,str);
     return FALSE;
   }
   app->processEvents(1000);
@@ -696,7 +698,7 @@ bool KMSendSMTP::finish(void)
   }
 
   if (mClient->Close() != 0)
-    warning(i18n("Cannot close SMTP connection."));
+    KMessageBox::information(0,i18n("Cannot close SMTP connection."));
 
   signal(SIGALRM, mOldHandler);
   delete mClient;

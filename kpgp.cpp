@@ -575,7 +575,7 @@ Kpgp::changePassPhrase(const QString /*oldPass*/,
 		       const QString /*newPass*/)
 {
   //FIXME...
-  warning(i18n("Sorry, but this feature\nis still missing"));
+  KMessageBox::information(0,i18n("Sorry, but this feature\nis still missing"));
   return FALSE;
 }
 

@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 #include <iostream.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 extern KBusyPtr *kbp;
 //-----------------------------------------------------------------------------
@@ -120,7 +121,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
  	        "Mail checking aborted\n"
 	        "Check your account settings!")
 		.arg(account->name());
-    warning(tmp);
+    KMessageBox::information(0,tmp);
     return;
   }
 
@@ -214,9 +215,9 @@ void KMAcctMgr::checkMail(bool _interactive)
 
   if (mAcctList.isEmpty())
   {
-    warning(i18n("You need to add an account in the network\n"
-		 "section of the settings in order to\n"
-		 "receive mail."));
+    KMessageBox::information(0,i18n("You need to add an account in the network\n"
+				    "section of the settings in order to\n"
+				    "receive mail."));
     return;
   }
 
@@ -260,7 +261,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 		 "Mail checking aborted\n"
 		 "Check your account settings!")
 	.arg(cur->name());
-      warning(tmp);
+      KMessageBox::information(0,tmp);
       processNextAccount(false);
     }
   else   if (cur->checkExclude())
@@ -297,9 +298,10 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   if (mAcctList.isEmpty())
   {
-    warning(i18n("You need to add an account in the network\n"
-		 "section of the settings in order to\n"
-		 "receive mail."));
+    KMessageBox::information(0,i18n("You need to add an account in the network"
+				    "\n"
+				    "section of the settings in order to\n"
+				    "receive mail."));
     return;
   }
 
@@ -317,7 +319,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
                      "Mail checking aborted\n"
                      "Check your account settings!")
 		.arg(cur->name());
-    warning(tmp);
+    KMessageBox::information(0,tmp);
     return;
   }
 

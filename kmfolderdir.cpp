@@ -11,6 +11,7 @@
 #include <qfileinfo.h>
 #include <errno.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 
 //=============================================================================
@@ -83,8 +84,8 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr)
   rc = fld->create();
   if (rc)
   {
-    warning(i18n("Error while creating folder `%s':\n%s"),
-	    (const char*)aFolderName, strerror(rc));
+    QString wmsg = QString(" `%1':\n%2").arg(aFolderName).arg(strerror(rc));
+    KMessageBox::information(0,i18n("Error while creating folder") + wmsg );
     delete fld;
     return NULL;
   }
@@ -144,13 +145,14 @@ bool KMFolderDir::reload(void)
   
   if (!dir.cd(fldPath, TRUE))
   {
-    warning(i18n("Cannot enter directory '") + fldPath + "'.\n");
+    KMessageBox::information(0,i18n("Cannot enter directory '") + 
+			     fldPath + "'.\n");
     return FALSE;
   }
 
   if (!(fiList=(QFileInfoList*)dir.entryInfoList()))
   {
-    warning(i18n("Directory '") + fldPath + i18n("' is unreadable.\n"));
+    KMessageBox::information(0,i18n("Directory '") + fldPath + i18n("' is unreadable.\n"));
     return FALSE;
   }
 

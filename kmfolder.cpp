@@ -162,8 +162,8 @@ KMFolderDir* KMFolder::createChildFolder()
   }
 
   if (!ok) {
-    warning(i18n("Failed to create directory '%s': %s"), 
-	    (const char*)childDir, strerror(errno));
+    QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno)); 
+    KMessageBox::information(0,i18n("Failed to create directory") + wmsg);
     return 0;
   }
 

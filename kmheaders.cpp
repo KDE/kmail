@@ -715,7 +715,8 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     if (filterMgr->process(msg) == 2) {
       // something went horribly wrong (out of space?)
       perror("Critical error: Unable to process messages (out of space?)");
-      warning(i18n("Critical error: Unable to process messages (out of space?)"));
+      KMessageBox::information(0,
+	i18n("Critical error: Unable to process messages (out of space?)"));
       break;
     }
   

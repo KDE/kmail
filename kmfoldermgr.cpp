@@ -29,7 +29,7 @@
 #include "kmglobal.h"
 #include <kapp.h>
 #include <klocale.h>
-
+#include <kmessagebox.h>
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath):
@@ -86,8 +86,9 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   {
     KMFolder fld(&mDir);
 
-    warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
-	    "KMail will create it now.");
+    KMessageBox::information(0, i18n("Directory\n") + mBasePath + 
+			     i18n("\ndoes not exist.\n\n"
+				  "KMail will create it now."));
     // dir.mkdir(mBasePath, TRUE);
     mkdir(mBasePath.data(), 0700);
     mDir.setPath(mBasePath.local8Bit());
