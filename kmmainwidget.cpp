@@ -474,8 +474,6 @@ void KMMainWidget::createWidgets(void)
   KPIM::KListViewSearchLine *quickSearchLine = 
     new KPIM::KListViewSearchLine(searchToolBar, mHeaders, "headers quick search line");
   searchToolBar->setStretchableWidget(quickSearchLine);
-  connect( mHeaders, SIGNAL( msgAdded( int ) ),
-           quickSearchLine, SLOT( updateSearch() ) );
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            quickSearchLine, SLOT( updateSearch() ) );
  
