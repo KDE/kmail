@@ -521,7 +521,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  url.setPath(mFolder->imapPath() + folder->name());
+  url.setPath(mFolder->imapPath() + folder->folder()->name());
 
   // Associate the jobData with the parent folder, not with the child
   // This is necessary in case of an error while creating the subfolder,
