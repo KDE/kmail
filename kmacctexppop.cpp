@@ -397,7 +397,7 @@ void KMAcctExpPop::startJob() {
                      i18n( "Preparing transmission..." ));
 
   stage = List;  
-  job = KIO::get( text );
+  job = KIO::get( text, false, false );
   connectJob();
 }
 
@@ -407,7 +407,7 @@ void KMAcctExpPop::slotJobFinished() {
     debug( "stage == List" );
     QString command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
       + ":" + QString("%1/uidl").arg(mPort);
-    job = KIO::get( command );
+    job = KIO::get( command, false, false );
     connectJob();
     stage = Uidl;
   }
@@ -434,7 +434,7 @@ void KMAcctExpPop::slotJobFinished() {
     debug( "stage == Dele" );
     QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
       mHost + ":" + QString("%1").arg(mPort);
-    job = KIO::get(  prefix + "/commit" );
+    job = KIO::get(  prefix + "/commit", false, false );
     connectJob();
     stage = Quit;
   }
@@ -482,10 +482,10 @@ void KMAcctExpPop::slotGetNextMsg()
       mHost + ":" + QString("%1").arg(mPort);
 
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty())
-      job = KIO::get(  prefix + "/commit" );
+      job = KIO::get(  prefix + "/commit", false, false );
     else {
       stage = Dele;
-      job = KIO::del( idsOfMsgsToDelete );
+      job = KIO::del( idsOfMsgsToDelete, false, false );
     }
   }
   else {
@@ -496,7 +496,7 @@ void KMAcctExpPop::slotGetNextMsg()
     KMBroadcastStatus::instance()->setStatusProgressPercent( 
       ((indexOfCurrentMsg + 1)*100) / numMsgs );
 
-    job = KIO::get( *next );
+    job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
   }
   connectJob();
