@@ -257,7 +257,7 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ShowHtmlSwitchURLHandler() );
   registerHandler( new SMimeURLHandler() );
-  registerHandler( new GroupwareURLHandler() );
+//  registerHandler( new GroupwareURLHandler() );
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
