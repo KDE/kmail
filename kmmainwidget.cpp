@@ -1006,10 +1006,10 @@ void KMMainWidget::slotEmptyFolder()
   KMMessage* msg;
 
   if (!mFolder) return;
+  bool isTrash = kernel->folderIsTrash(mFolder);
 
   if (mConfirmEmpty)
   {
-    bool isTrash = kernel->folderIsTrash(mFolder);
     QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
@@ -1023,7 +1023,10 @@ void KMMainWidget::slotEmptyFolder()
   if (mFolder->protocol() == "imap")
   {
     slotMarkAll();
-    slotTrashMsg();
+    if (isTrash)
+      slotDeleteMsg();
+    else
+      slotTrashMsg();
     return;
   }
 
