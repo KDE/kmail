@@ -21,6 +21,7 @@
 #include "kmfoldercombobox.h"
 #include "kmkernel.h"
 #include "kmfoldermgr.h"
+#include "transportmanager.h"
 
 
 // other kdenetwork headers:
@@ -169,6 +170,7 @@ namespace KMail {
     glay->addWidget( mTransportCheck, row, 0 );
     mTransportCombo = new QComboBox( true, tab );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
+    mTransportCombo->insertStringList( KMail::TransportManager::transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );
     connect( mTransportCheck, SIGNAL(toggled(bool)),
 	     mTransportCombo, SLOT(setEnabled(bool)) );
