@@ -118,10 +118,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 
   client.SetReceiveTimeout(20);
 
+  passwd = mPasswd; 
 
-
-
-  passwd = decryptStr(mPasswd); // passwd encrypted
 
   if(passwd.isEmpty() || mLogin.isEmpty())
   {
@@ -132,9 +130,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       return FALSE;
     else
     {
-      //mPasswd = encryptStr(mPasswd); 
-      passwd = decryptStr(mPasswd); // encrypted
-      //passwd = decryptStr(passwd);
+      passwd = mPasswd; 
     }
   }
   
@@ -159,9 +155,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 	return FALSE;
       else
       {
-	//mPasswd = encryptStr(mPasswd);
-	passwd = decryptStr(mPasswd);
-	//passwd = decryptStr(passwd);
+	passwd = mPasswd;
       }
     }
     else
@@ -179,9 +173,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       if(!d->exec())
 	return FALSE;
       else {
-	//mPasswd = encryptStr(mPasswd);
-	passwd = decryptStr(mPasswd);
-	//passwd = decryptStr(passwd);
+	passwd = mPasswd;
       }
     }
     else
@@ -322,7 +314,7 @@ void KMAcctPop::readConfig(KConfig& config)
   mLogin = config.readEntry("login", "");
   mStorePasswd = config.readNumEntry("store-passwd", TRUE);
   if (mStorePasswd) 
-    mPasswd = decryptStr(config.readEntry("passwd"));
+    mPasswd = config.readEntry("passwd");
   else 
     mPasswd = "";
   mHost = config.readEntry("host");
@@ -346,7 +338,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   if (mStorePasswd)
   {
     // very primitive password encryption
-    config.writeEntry("passwd", encryptStr(mPasswd));
+    config.writeEntry("passwd", mPasswd);
   }
   else config.writeEntry("passwd", "");
 
@@ -408,7 +400,7 @@ void KMAcctPop::setLogin(const QString& aLogin)
 //-----------------------------------------------------------------------------
 void KMAcctPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)
 {
-  mPasswd = aPasswd;
+  mPasswd = encryptStr(aPasswd);
   mStorePasswd = aStoreInConfig;
 }
 

@@ -1,3 +1,7 @@
+Sun Sep  6 19:20:34 1998  Markus Wuebben  <mason@HoneyBunny.uni-dortmund.de>
+
+	* kmacctpop.cpp (setPasswd): Fixed password problem.
+
 Sun Sep  6 18:28:45 1998  Markus Wuebben  <markus@kde.org>
 
 	* kmreaderwin.cpp :  Finally fixed attachment problem
