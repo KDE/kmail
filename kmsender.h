@@ -21,7 +21,7 @@ class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
 
-class KMSender: public QObject
+class KMSender: public QWidget
 {
   Q_OBJECT
   friend class KMSendProc;
