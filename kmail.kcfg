@@ -325,7 +325,7 @@
           <choice name="Classic"/>
           <choice name="MultiLine"/>
         </choices>
-        <default>Classic</default>
+        <default>MultiLine</default>
       </entry>
     </group>
 <!-- Composer -->
