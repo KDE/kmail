@@ -281,6 +281,10 @@ void KMMainWin::createWidgets(void)
     pnrFldList = mHorizPanner;
   }
 
+  // BUG -sanders these accelerators stop working after switching
+  // between long/short folder layout
+  // Probably need to disconnect them first.
+
   // create list of messages
   mHeaders = new KMHeaders(this, pnrMsgList, "headers");
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
@@ -310,6 +314,10 @@ void KMMainWin::createWidgets(void)
 		     mMsgView, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Key_Next),
 		     mMsgView, SLOT(slotScrollNext()));
+  accel->connectItem(accel->insertItem(Key_M),
+                     this, SLOT(slotMoveMsg()));
+  accel->connectItem(accel->insertItem(Key_C),
+                     this, SLOT(slotCopyMsg()));
   accel->connectItem(accel->insertItem(Key_Delete),
 		     this, SLOT(slotDeleteMsg()));
 
@@ -776,7 +784,7 @@ void KMMainWin::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMoveMsg()
 {
-  KMFolderSelDlg dlg(i18n("Select Folder"));
+  KMFolderSelDlg dlg(i18n("Move Message - Select Folder"));
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -801,7 +809,7 @@ void KMMainWin::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCopyMsg()
 {
-  KMFolderSelDlg dlg(i18n("Select Folder"));
+  KMFolderSelDlg dlg(i18n("Copy Message - Select Folder"));
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -943,8 +951,8 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
                      win, SLOT(slotScrollDown()));
   accel->connectItem(accel->insertItem(Key_Prior),
                      win, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Key_Next),
-                     win, SLOT(slotScrollNext()));
+  accel->connectItem(accel->insertItem(Key_S),
+                     win, SLOT(slotCopyMessage()));
   win->show();
 }
 
@@ -1123,7 +1131,8 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
     menu->insertItem(i18n("&Move..."), this,
 		     SLOT(slotMoveMsg()), Key_M);
     menu->insertItem(i18n("&Copy..."), this,
-		     SLOT(slotCopyText()), Key_S);
+		     SLOT(slotCopyMsg()), Key_C);
+    menu->insertSeparator();
     menu->insertItem(i18n("&Delete"), this,
 		     SLOT(slotDeleteMsg()), Key_D);
     menu->popup(aPoint, 0);
@@ -1264,9 +1273,9 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(i18n("Mar&k all"), this,
 			  SLOT(slotMarkAll()), Key_K);
   moveId = messageMenu->insertItem(i18n("&Move..."), this,
-			  SLOT(slotMoveMsg()), Key_M);
+			  SLOT(slotMoveMsg()));
   copyId = messageMenu->insertItem(i18n("&Copy..."), this,
-			  SLOT(slotCopyMsg()), Key_S);
+			  SLOT(slotCopyMsg()));
   messageMenu->insertItem(i18n("&Delete"), this,
 			  SLOT(slotDeleteMsg()), Key_D);
   messageMenu->insertSeparator();
