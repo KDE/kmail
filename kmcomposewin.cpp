@@ -723,6 +723,7 @@ void KMComposeWin::setupActions(void)
   // availableCharsetNames seems more reasonable than availableEncodingNames
   QStringList encodings = KGlobal::charsets()->availableCharsetNames();
   encodings.remove(QString("*-*"));  //this doesn't make sense
+  encodings.prepend( "utf-8" );
   encodings.prepend( "us-ascii" );
   encodingAction->setItems( encodings );
   //default is given by mDefCharset
@@ -1512,7 +1513,7 @@ void KMComposeWin::slotSetCharset()
   if (encodingAction->currentItem() != 0)  //i.e. <none>
   {
     QFont::CharSet c = KGlobal::charsets()->nameToID(mCharset);
-    mCharset = KGlobal::charsets()->name(c);
+    if (mCharset != "utf-8") mCharset = KGlobal::charsets()->name(c);
   }
   if (mAtmList.count() <= 0)
     mMsg->setCharset(mCharset);
