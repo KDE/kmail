@@ -287,83 +287,97 @@ When this box is checked, sent messages are stored together with the signatures 
                     <property name="title">
                         <string></string>
                     </property>
-                    <grid>
+                    <widget class="QLabel">
                         <property name="name">
-                            <cstring>unnamed</cstring>
+                            <cstring>TextLabel4</cstring>
                         </property>
-                        <property name="margin">
-                            <number>0</number>
+                        <property name="geometry">
+                            <rect>
+                                <x>1</x>
+                                <y>1</y>
+                                <width>564</width>
+                                <height>16</height>
+                            </rect>
                         </property>
-                        <widget class="QLayoutWidget" row="1" column="1">
-                            <property name="name">
-                                <cstring>Layout18</cstring>
-                            </property>
-                            <vbox>
-                                <property name="name">
-                                    <cstring>unnamed</cstring>
-                                </property>
-                                <widget class="QRadioButton">
-                                    <property name="name">
-                                        <cstring>sendSigMultiPartRB</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>Standa&amp;rd MIME</string>
-                                    </property>
-                                    <property name="toolTip" stdset="0">
-                                        <string>A Multipart/Signed holding Signature and signed data.</string>
-                                    </property>
-                                    <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt;
+                        <property name="text">
+                            <string>Compound mode:</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>sendSigMultiPartRB</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>28</x>
+                                <y>23</y>
+                                <width>536</width>
+                                <height>20</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>Standa&amp;rd MIME</string>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>A Multipart/Signed holding Signature and signed data.</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;
 &lt;h1&gt;Multipart detached signature&lt;/h1&gt;
 When this option is selected, the signature and the signed data will be separate parts of a Multipart/Signed message part. Signed message data will be readable even by Mail User Agents not supporting the signaturing algorithm and not supporting ASN.1 decoding.
 &lt;/qt&gt;</string>
-                                    </property>
-                                </widget>
-                                <widget class="QRadioButton">
-                                    <property name="name">
-                                        <cstring>sendSigOpaqueRB</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>Opa&amp;que (only recommended for SPHINX)</string>
-                                    </property>
-                                    <property name="toolTip" stdset="0">
-                                        <string>Signature and signed data encoded in one ASN.1 block.</string>
-                                    </property>
-                                    <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt;
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton">
+                        <property name="name">
+                            <cstring>sendSigOpaqueRB</cstring>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>28</x>
+                                <y>49</y>
+                                <width>536</width>
+                                <height>20</height>
+                            </rect>
+                        </property>
+                        <property name="text">
+                            <string>Opa&amp;que (only recommended for SPHINX)</string>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Signature and signed data encoded in one ASN.1 block.</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;
 &lt;h1&gt;Opaque signed messages&lt;/h1&gt;
 When this option is selected, both the signature and the signed data will be encoded into one ASN.1 block. Messages will be readable only by Mail User Agents supporting ASN.1 decoding.
 &lt;/qt&gt;</string>
-                                    </property>
-                                </widget>
-                            </vbox>
-                        </widget>
-                        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
-                            <property name="name">
-                                <cstring>TextLabel4</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Compound mode:</string>
-                            </property>
-                        </widget>
-                        <spacer row="1" column="0">
-                            <property name="name">
-                                <cstring>Spacer1_2_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Fixed</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </grid>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>Spacer1_2_2</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Fixed</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                        <property name="geometry">
+                            <rect>
+                                <x>0</x>
+                                <y>20</y>
+                                <width>20</width>
+                                <height>20</height>
+                            </rect>
+                        </property>
+                    </spacer>
                 </widget>
                 <widget class="QButtonGroup" row="7" column="0" rowspan="1" colspan="3">
                     <property name="name">
@@ -722,7 +736,7 @@ It is recommended to leave this option turned on for maximum integrity.
                 </widget>
             </grid>
         </widget>
-        <spacer row="2" column="0" rowspan="1" colspan="2">
+        <spacer row="2" column="0">
             <property name="name">
                 <cstring>Spacer19</cstring>
             </property>

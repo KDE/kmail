@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>DirectoryServicesConfigurationDialog</class>
 <widget class="QWidget">
     <property name="name">
@@ -15,7 +15,7 @@
     <property name="caption">
         <string>Directory Services Configuration</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
@@ -25,7 +25,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>x500LA</cstring>
             </property>
@@ -42,7 +42,7 @@
                 <cstring>x500LV</cstring>
             </property>
         </widget>
-        <widget class="QListView">
+        <widget class="QListView" row="1" column="0" rowspan="1" colspan="5">
             <column>
                 <property name="text">
                     <string>Server Name</string>
@@ -50,7 +50,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -61,7 +61,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -72,7 +72,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -91,93 +91,7 @@ If you do not use a directory service, you can still use local certificates.
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>Layout15</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer10</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>addServicePB</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Add Service...</string>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Click to add a service</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;
-&lt;h1&gt;Add a Directory Service&lt;/h1&gt;
-By clicking this button, you can select a new directory service to be used for retrieving certificates and CRLs. You will be asked for the server name and an optional description.
-&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer11</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>removeServicePB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Remove Service</string>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Click to remove the currently selected service</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;
-&lt;h1&gt;Remove Directory Service&lt;/h1&gt;
-By clicking this button, you can remove the currently selected directory service in the list above. You will have a chance to rethink your decision before the entry is deleted from the list.
-&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer12</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                </spacer>
-            </hbox>
-        </widget>
-        <spacer>
+        <spacer row="3" column="2">
             <property name="name">
                 <cstring>Spacer9</cstring>
             </property>
@@ -187,8 +101,14 @@ By clicking this button, you can remove the currently selected directory service
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>16</height>
+                </size>
+            </property>
         </spacer>
-        <widget class="QButtonGroup">
+        <widget class="QButtonGroup" row="4" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>localRemoteCertBG</cstring>
             </property>
@@ -261,7 +181,7 @@ When this option is selected, the email client will not use the certificates on 
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="QButtonGroup" row="5" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>localRemoteCRLBG</cstring>
             </property>
@@ -334,7 +254,95 @@ When this option is selected, the email client will not use the certificate revo
                 </widget>
             </vbox>
         </widget>
-    </vbox>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>Spacer10</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>47</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="2" column="1">
+            <property name="name">
+                <cstring>addServicePB</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Add Service...</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Click to add a service</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>&lt;qt&gt;
+&lt;h1&gt;Add a Directory Service&lt;/h1&gt;
+By clicking this button, you can select a new directory service to be used for retrieving certificates and CRLs. You will be asked for the server name and an optional description.
+&lt;/qt&gt;</string>
+            </property>
+        </widget>
+        <spacer row="2" column="2">
+            <property name="name">
+                <cstring>Spacer11</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>47</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="2" column="3">
+            <property name="name">
+                <cstring>removeServicePB</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>&amp;Remove Service</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Click to remove the currently selected service</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>&lt;qt&gt;
+&lt;h1&gt;Remove Directory Service&lt;/h1&gt;
+By clicking this button, you can remove the currently selected directory service in the list above. You will have a chance to rethink your decision before the entry is deleted from the list.
+&lt;/qt&gt;</string>
+            </property>
+        </widget>
+        <spacer row="2" column="4">
+            <property name="name">
+                <cstring>Spacer12</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>47</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
 </widget>
 <connections>
     <connection>

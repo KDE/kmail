@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>AddDirectoryServiceDialog</class>
 <widget class="QDialog">
     <property name="name">
@@ -8,14 +8,14 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>218</width>
-            <height>140</height>
+            <width>279</width>
+            <height>163</height>
         </rect>
     </property>
     <property name="caption">
         <string>Add or Change Directory Service</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
@@ -25,109 +25,125 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLineEdit" row="1" column="1" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>Layout2</cstring>
+                <cstring>portED</cstring>
             </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <widget class="QLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>portED</cstring>
-                    </property>
-                    <property name="text">
-                        <string>389</string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="0" column="1">
-                    <property name="name">
-                        <cstring>serverNameED</cstring>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="2" column="1">
-                    <property name="name">
-                        <cstring>descriptionED</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="0">
-                    <property name="name">
-                        <cstring>descriptionLA</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Description:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>descriptionED</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>portLA</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Port:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>portED</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>serverNameLA</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Server name:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>serverNameED</cstring>
-                    </property>
-                </widget>
-            </grid>
+            <property name="text">
+                <string>389</string>
+            </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLineEdit" row="0" column="1" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>Layout3</cstring>
+                <cstring>serverNameED</cstring>
             </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>PushButton3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;OK</string>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>PushButton4</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Cancel</string>
-                    </property>
-                </widget>
-            </hbox>
         </widget>
-    </vbox>
+        <widget class="QLineEdit" row="2" column="1" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>descriptionED</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="2" column="0">
+            <property name="name">
+                <cstring>descriptionLA</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Description:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>descriptionED</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>portLA</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Port:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>portED</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>serverNameLA</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Server name:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>serverNameED</cstring>
+            </property>
+        </widget>
+        <spacer row="3" column="3">
+            <property name="name">
+                <cstring>spacer23</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QPushButton" row="5" column="3">
+            <property name="name">
+                <cstring>PushButton4</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Cancel</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="5" column="2">
+            <property name="name">
+                <cstring>PushButton3</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;OK</string>
+            </property>
+            <property name="default">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <spacer row="5" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>spacer21</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>110</width>
+                    <height>21</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="Line" row="4" column="0" rowspan="1" colspan="4">
+            <property name="name">
+                <cstring>line1</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>HLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <connections>
     <connection>
