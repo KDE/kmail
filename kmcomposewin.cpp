@@ -792,7 +792,7 @@ void KMComposeWin::setupActions(void)
                         actionCollection(), "send_alternative");
   }
 
-  (void) new KAction (i18n("Save in &Drafts Folder"), 0,
+  (void) new KAction (i18n("Save in &Drafts Folder"), "filesave", 0,
 		      this, SLOT(slotSaveDraft()),
 		      actionCollection(), "save_in_drafts");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
@@ -801,7 +801,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Address &Book..."), "contents",0,
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addresbook");
-  (void) new KAction (i18n("&New Composer..."), "filenew",
+  (void) new KAction (i18n("&New Composer..."), "mail_new",
                       KStdAccel::shortcut(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
@@ -911,6 +911,7 @@ void KMComposeWin::setupActions(void)
     actionCollection());
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
 
