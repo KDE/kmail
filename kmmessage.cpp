@@ -535,47 +535,35 @@ static bool flushPart(QString &msg, QStringList &part,
    return appendEmptyLine;
 }
 
+static void stripSignature(QString& msg, bool clearSigned)
+{
+  if (clearSigned)
+  {
+    msg = msg.left(msg.findRev(QRegExp("\\n--\\s?\\n")));
+  }
+  else
+  {
+    msg = msg.left(msg.findRev("\n-- \n"));
+  }
+}
 
-static void smartQuote( QString &msg, const QString &ownIndent,
-                        int maxLength, bool aStripSignature )
+static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
 {
   QStringList part;
-  QString startOfSig1;
-  QString startOfSig2 = ownIndent+"--";
   QString oldIndent;
   bool firstPart = true;
-  int i = 0;
-  int l = 0;
 
 //printf("Smart Quoting.\n");
 
-  while( startOfSig2.left(1) == "\n")
-     startOfSig2 = startOfSig2.mid(1);
-  startOfSig1 = startOfSig2 + ' ';
 
-  QStringList lines;
-  while ((i = msg.find('\n', l)) != -1)
-  {
-     if (i == l)
-        lines.append(QString::null);
-     else
-        lines.append(msg.mid(l, i-l));
-     l = i+1;
-  }
-  if (l <= (int)msg.length())
-    lines.append(msg.mid(l));
+  QStringList lines = QStringList::split('\n', msg);
+
   msg = QString::null;
   for(QStringList::Iterator it = lines.begin();
       it != lines.end();
       it++)
   {
      QString line = *it;
-
-     if (aStripSignature)
-     {
-        if (line == startOfSig1) break; // Start of signature
-        if (line == startOfSig2) break; // Start of malformed signature
-     }
 
      QString indent = splitLine( line );
 
@@ -643,6 +631,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   QRegExp reNL("\\n");
   QString indentStr;
   int i;
+  bool clearSigned = false;
 
   QTextCodec *codec = mCodec;
   if (!codec)
@@ -685,8 +674,11 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
               // try to decrypt this OpenPGP block
               block->decrypt();
             else
+            {
               // strip off the signature
               block->verify();
+              clearSigned = true;
+            }
 
             result = codec->toUnicode( nonPgpBlocks.first() )
                    + codec->toUnicode( block->text() )
@@ -717,17 +709,14 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     while (i > 0 && result[i-1] == ' ') i--;
     result.remove(0,i);
 
-    QString result2((QChar*)NULL, result.length()
-      + result.contains('\n') * indentStr.length());
-    for (i = 0; i < (int)result.length(); i++)
-    {
-      result2 += result[i];
-      if (result[i] == '\n') result2 += indentStr;
-    }
-    result = indentStr + result2 + '\n';
+    if (aStripSignature)
+        stripSignature(result, clearSigned);
+
+    result.replace(reNL, '\n' + indentStr);
+    result = indentStr + result + '\n';
 
     if (sSmartQuote)
-      smartQuote(result, '\n' + indentStr, sWrapCol, aStripSignature);
+      smartQuote(result, indentStr, sWrapCol);
   } else {
     result = "";
     bodyPart(0, &msgPart);
@@ -757,8 +746,11 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
               // try to decrypt this OpenPGP block
               block->decrypt();
             else
+            {
               // strip off the signature
               block->verify();
+              clearSigned = true;
+            }
 
             part = codec->toUnicode( nonPgpBlocks.first() )
                  + codec->toUnicode( block->text() )
@@ -771,10 +763,14 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         part = codec->toUnicode( msgPart.bodyDecoded() );
         //	    debug ("part\n" + part ); inexplicably crashes -sanders
       }
+
+      if (aStripSignature)
+        stripSignature(part, clearSigned);
+
       part.replace(reNL, '\n' + indentStr);
       part = indentStr + part + '\n';
       if (sSmartQuote)
-        smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
+        smartQuote(part, indentStr, sWrapCol);
       result += part;
     }
   }
