@@ -12,6 +12,7 @@
 #include <kconfig.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
+#include <ktempfile.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h> //for alarm (sven)
@@ -334,27 +335,25 @@ KMFilterActionExtFilter::KMFilterActionExtFilter(const char* aName)
 int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
 {
   int rc=0, len;
-  QString infileName, outfileName;
   QString msgText, origCmd;
   char buf[8192];
-  int old_umask;
   FILE *fh;
   bool ok = TRUE;
+  KTempFile inFile("kmail-filter", "in");
+  KTempFile outFile("kmail-filter", "out");
 
   if (mCmd.isEmpty()) return 1;
 
-  old_umask = umask(077);
-
-  infileName = tempnam("/tmp/kmail-ext-filter-in", "");
-  outfileName = tempnam("/tmp/kmail-ext-filter-out", "");
+  inFile.setAutoDelete(true);
+  outFile.setAutoDelete(true);
 
   // write message to file
-  fh = fopen(infileName, "w");
+  fh = inFile.fstream();
   if (fh)
   {
     msgText = aMsg->asString();
     if (!fwrite(msgText, msgText.length(), 1, fh)) ok = FALSE;
-    fclose(fh);
+    inFile.close();
   }
   else ok = FALSE;
 
@@ -362,12 +361,12 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   {
     // execute filter
     origCmd = mCmd;
-    mCmd = mCmd + " <" + infileName + " >" + outfileName;
+    mCmd = mCmd + " <" + inFile.name() + " >" + outFile.name();
     rc = KMFilterActionExec::process(aMsg, stop);
     mCmd = origCmd;
 
     // read altered message
-    fh = fopen(outfileName, "r");
+    fh = outFile.fstream();
     if (fh)
     {
       msgText = "";
@@ -378,16 +377,11 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
 	buf[len] = 0;
 	msgText += buf;
       }
-      fclose(fh);
+      outFile.close();
       if (!msgText.isEmpty()) aMsg->fromString(msgText);
     }
     else ok = FALSE;
   }
-
-  // cleanup
-  unlink(infileName);
-  unlink(outfileName);
-  umask(old_umask);
 
   return rc;
 }
