@@ -548,6 +548,9 @@ kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter foun
                           nextDelim = cstr.find(delimZ2, thisDelim+1, false);
                         if( -1 < nextDelim ){
 kdDebug(5006) << "        processing old style Mailman digest" << endl;
+                          //if( curNode->mRoot )
+                          //  curNode = curNode->mRoot;
+                          
                           // at least one message found: build a mime tree
                           digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
                           digestHeaderStr += cstr.mid( 0, thisDelim );
@@ -557,9 +560,12 @@ kdDebug(5006) << "        processing old style Mailman digest" << endl;
                                                       *curNode,
                                                       &*digestHeaderStr,
                                                       "Digest Header", true );
-                          reader->queueHtml("<br><hr><br>");
+                          //reader->queueHtml("<br><hr><br>");
+                          // temporarily change curent node's Content-Type
+                          // to get our embedded RfC822 messages properly inserted
+                          curNode->setType(    DwMime::kTypeMultipart );
+                          curNode->setSubType( DwMime::kSubtypeDigest );
                           while( -1 < nextDelim ){
-kdDebug(5006) << "        embedded message found" << endl;
                             int thisEoL = cstr.find("\nMessage:", thisDelim, false);
                             if( -1 < thisEoL )
                               thisDelim = thisEoL+1;
@@ -575,16 +581,26 @@ kdDebug(5006) << "        embedded message found" << endl;
                               thisDelim = thisDelim+1;
                             //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
                             //  ++thisDelim;
+                            
                             partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
                             partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
-kdDebug(5006) << "\nEMBEDDED MESSAGE:  thisDelim=" << thisDelim << "nextDelim=" << nextDelim << "  END OF EMBEDDED MESSAGE." << endl;                            
+                            QCString subject("embedded message");
+                            QCString subSearch("\nSubject:");
+                            int subPos = partStr.find(subSearch, 0, false);
+                            if( -1 < subPos ){
+                              subject = partStr.mid(subPos+subSearch.length());
+                              thisEoL = subject.find('\n');
+                              if( -1 < thisEoL )
+                                subject.truncate( thisEoL );
+                            }
+kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
                             insertAndParseNewChildNode( reader,
                                                         &resultString,
                                                         useThisCryptPlug,
                                                         *curNode,
                                                         &*partStr,
-                                                        "embedded message", true );
-                            reader->queueHtml("<br><hr><br>");
+                                                        subject, true );
+                            //reader->queueHtml("<br><hr><br>");
                             thisDelim = nextDelim+1;
                             nextDelim = cstr.find(delim1, thisDelim, false);
                             if( -1 == nextDelim )
@@ -594,6 +610,9 @@ kdDebug(5006) << "\nEMBEDDED MESSAGE:  thisDelim=" << thisDelim << "nextDelim=" 
                             if( -1 == nextDelim )
                               nextDelim = cstr.find(delimZ2, thisDelim, false);
                           }
+                          // reset curent node's Content-Type
+                          curNode->setType(    DwMime::kTypeText );
+                          curNode->setSubType( DwMime::kSubtypePlain );
                           int thisEoL = cstr.find("_____________", thisDelim);
                           if( -1 < thisEoL ){
                             thisDelim = thisEoL;
