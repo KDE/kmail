@@ -1037,8 +1037,6 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForSigningOnly() {
   CryptoMessageFormat commonFormat = AutoFormat;
 
   for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
-    if ( !( concreteCryptoMessageFormats[i] & mCryptoMessageFormats ) )
-      continue;
     if ( signingKeysFor( concreteCryptoMessageFormats[i] ).empty() )
       continue; // skip;
     if ( count.numOf( concreteCryptoMessageFormats[i] ) == count.numTotal() ) {
@@ -1424,17 +1422,18 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
   for ( std::vector<Item>::const_iterator it = items.begin() ; it != items.end() ; ++it ) {
     SplitInfo si( it->address );
     CryptoMessageFormat f = AutoFormat;
-    for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i )
-      if ( mCryptoMessageFormats & concreteCryptoMessageFormats[i] & it->format ) {
-	f = concreteCryptoMessageFormats[i];
-	break;
+    for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
+      if ( concreteCryptoMessageFormats[i] & it->format ) {
+        f = concreteCryptoMessageFormats[i];
+        break;
       }
+    }
     if ( f == AutoFormat )
       kdWarning() << "Kleo::KeyResolver::addKeys(): Something went wrong. Didn't find a format for \""
-		  << it->address << "\"" << endl;
+                  << it->address << "\"" << endl;
     else
       std::remove_copy_if( it->keys.begin(), it->keys.end(),
-			   std::back_inserter( si.keys ), IsNotForFormat( f ) );
+                           std::back_inserter( si.keys ), IsNotForFormat( f ) );
     d->mFormatInfoMap[ f ].splitInfos.push_back( si );
   }
   dump();
@@ -1462,6 +1461,7 @@ Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferenc
     // insert into map and grab resulting iterator
     pos = d->mContactPreferencesMap.insert(
       Private::ContactPreferencesMap::value_type( address, pref ) ).first;
+    
   }
   return (*pos).second;
 }
