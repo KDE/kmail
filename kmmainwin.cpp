@@ -1453,7 +1453,7 @@ void KMMainWin::setupToolBar()
   mToolBar->insertButton(UserIcon("checkmail"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
-			i18n("Get new mail"));
+			i18n("Get new messages"));
   mToolBar->insertSeparator();
 
   mToolBar->insertButton(UserIcon("filereply"), 0,
@@ -1642,4 +1642,5 @@ void KMMainWin::slotMemInfo() {
   QMessageBox::information(0, "Malloc information", s);
 #endif
 }
+
 
