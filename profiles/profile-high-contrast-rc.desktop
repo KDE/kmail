@@ -124,3 +124,7 @@ longFolderList=true
 dateDisplay=fancyDate
 showMessageSize=true
 showCryptoIcons=false
+
+[MDN]
+quote-message=0
+default-policy=0

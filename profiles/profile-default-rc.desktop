@@ -145,3 +145,7 @@ showCryptoIcons=false
 
 [Behaviour]
 LoopOnGotoUnread=true
+
+[MDN]
+quote-message=0
+default-policy=0

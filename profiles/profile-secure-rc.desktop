@@ -95,3 +95,7 @@ htmlLoadExternal=false
 [General]
 send-receipts=false
 showCryptoIcons=true
+
+[MDN]
+quote-message=0
+default-policy=0

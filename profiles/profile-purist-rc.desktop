@@ -94,3 +94,7 @@ longFolderList=true
 dateDisplay=ctime
 showMessageSize=false
 showCryptoIcons=false
+
+[MDN]
+quote-message=0
+default-policy=0
