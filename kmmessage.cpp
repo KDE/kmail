@@ -305,6 +305,9 @@ QString KMMessage::formatString(const QString& aStr) const
           result += locale.formatDateTime(datetime, false);
         }
         break;
+      case 'e':
+        result += from();
+        break;
       case 'F':
         result += stripEmailAddr(from());
         break;
@@ -321,6 +324,12 @@ QString KMMessage::formatString(const QString& aStr) const
         else
           if (str[1]>' ')
             result += str[1];
+        break;
+      case 'T':
+        result += stripEmailAddr(to());
+        break;
+      case 't':
+        result += to();
         break;
       case 'S':
         result += subject();
