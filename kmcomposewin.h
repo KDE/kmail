@@ -651,9 +651,10 @@ private:
    * To build nice S/MIME objects signing and encrypting must be separat.
    *
    */
-  QByteArray pgpEncryptedMsg( QCString cText, const QStringList& recipients,
-                              StructuringInfoWrapper& structuring,
-                              QCString& encryptCertFingerprints );
+  Kpgp::Result pgpEncryptedMsg( QByteArray & rEncryptedBody,
+				QCString cText, const QStringList& recipients,
+				StructuringInfoWrapper& structuring,
+				QCString& encryptCertFingerprints );
 
   /**
    * Get encryption certificate for a recipient (the Aegypten way).

@@ -2221,12 +2221,10 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
 
         StructuringInfoWrapper structuring( mSelectedCryptPlug );
 
-        QByteArray encryptedBody = pgpEncryptedMsg( innerContent,
-                                                    recipients,
-                                                    structuring,
-                                                    encryptCertFingerprints );
-
-        result = encryptedBody.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
+	QByteArray encryptedBody;
+        result = pgpEncryptedMsg( encryptedBody, innerContent,
+				  recipients, structuring,
+				  encryptCertFingerprints );
 
         if( Kpgp::Ok == result ) {
           result = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
@@ -2244,9 +2242,9 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
           if( Kpgp::Ok == result ) {
             if( newBodyPart.name().isEmpty() )
               newBodyPart.setName("encrypted message part");
-          } else
+          } else if ( Kpgp::Failure == result )
             KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
-        } else
+        } else if ( Kpgp::Failure == result )
           KMessageBox::sorry(this,
             i18n("<qt><p><b>This message could not be encrypted!</b></p>"
                  "<p>The Crypto Plug-in '%1' did not return an encoded text "
@@ -2389,12 +2387,10 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
             if( encryptThisNow ) {
 kdDebug(5006) << "                                 encrypt " << idx << ". attachment separately" << endl;
               StructuringInfoWrapper structuring( mSelectedCryptPlug );
-              QByteArray encryptedBody = pgpEncryptedMsg( encodedAttachment,
-                                                          recipients,
-                                                          structuring,
-                                                          encryptCertFingerprints );
-
-              result = encryptedBody.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
+	      QByteArray encryptedBody;
+              result = pgpEncryptedMsg( encryptedBody, encodedAttachment,
+					recipients, structuring,
+					encryptCertFingerprints );
 
               if( Kpgp::Ok == result ) {
                 result = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
@@ -2413,7 +2409,7 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
                   if( newAttachPart.name().isEmpty() ) {
                     newAttachPart.setName("encrypted attachment");
                   }
-                } else
+                } else if ( Kpgp::Failure == result )
                   KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
               }
             }
@@ -3237,11 +3233,12 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
 
 //-----------------------------------------------------------------------------
-QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& recipients,
-                                          StructuringInfoWrapper& structuring,
-                                          QCString& encryptCertFingerprints )
+Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
+					    QCString cText, const QStringList& recipients,
+					    StructuringInfoWrapper& structuring,
+					    QCString& encryptCertFingerprints )
 {
-  QByteArray encoding;
+  Kpgp::Result result = Kpgp::Ok;
 
   // we call the cryptplug
   if( mSelectedCryptPlug ) {
@@ -3249,7 +3246,6 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                   << mSelectedCryptPlug->libName() << endl;
 
 
-    bool bEncrypt = true;
 #if 0
     // ### This has been removed since according to the Sphinx specs the CRLs
     // have to be refreshed every day. This means warning that the CRL will
@@ -3278,21 +3274,18 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                         KGuiItem( i18n( "&Encrypt" ) ),
                         KGuiItem( i18n( "&Don't Encrypt" ) ) );
             if( ret == KMessageBox::No )
-                bEncrypt = false;
+	      return Kpgp::Canceled;
         }
     }
 #endif
 
     // PENDING(khz,kalle) Warn if no encryption?
 
-    if( !bEncrypt ) return encoding;
-
-
-
     const char* cleartext  = cText;
     const char* ciphertext = 0;
 
 
+    bool bEncrypt = true;
     if( encryptCertFingerprints.isEmpty() ){
       // find out whether we are dealing with the OpenPGP or the S/MIME plugin
       if( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) {
@@ -3310,8 +3303,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         // function which determines the encryption keys.
         bool bEncryptToSelf_Old = pgp->encryptToSelf();
         pgp->setEncryptToSelf( mSelectedCryptPlug->alwaysEncryptToSelf() );
-        Kpgp::Result result =
-          pgp->getEncryptionKeys( encryptionKeyIds, recipients, userKeyId );
+        result = pgp->getEncryptionKeys( encryptionKeyIds, recipients, userKeyId );
         // reset encrypt_to_self to the old value
         pgp->setEncryptToSelf( bEncryptToSelf_Old );
 
@@ -3380,7 +3372,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                                      &errId,
                                      &errTxt )
           && ciphertext )
-        encoding.assign( ciphertext, cipherLen );
+        encryptedBody.assign( ciphertext, cipherLen );
       else {
         bEncrypt = false;
         QString error("#");
@@ -3416,7 +3408,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         i18n("<qt>No active Crypto Plug-In could be found.<br><br>"
              "Please activate a Plug-In in the configuration dialog.</qt>"));
 
-  return encoding;
+  return result;
 }
 
 
