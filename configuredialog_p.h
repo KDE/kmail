@@ -143,7 +143,7 @@ signals:
   void profileSelected( KConfig * profile );
 
 private slots:
-  void slotSelectionChanged( QListViewItem * );
+  void slotSelectionChanged();
   void slotOk();
 
 private:
@@ -258,7 +258,7 @@ protected slots:
   void slotRenameIdentity( QListViewItem *, const QString &, int );
   void slotContextMenu( KListView*, QListViewItem *, const QPoint & );
   void slotSetAsDefault();
-  void slotIdentitySelectionChanged( QListViewItem * );
+  void slotIdentitySelectionChanged();
 
 protected: // methods
   void refreshList();

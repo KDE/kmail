@@ -304,8 +304,8 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
 
   setup();
 
-  connect( mListView, SIGNAL(selectionChanged(QListViewItem*)),
-	   SLOT(slotSelectionChanged(QListViewItem*)) );
+  connect( mListView, SIGNAL(selectionChanged()),
+	   SLOT(slotSelectionChanged()) );
   connect( mListView, SIGNAL(doubleClicked ( QListViewItem *, const QPoint &, int ) ),
 	   SLOT(slotOk()) );
 
@@ -314,8 +314,9 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   enableButtonOK( false );
 }
 
-void ProfileDialog::slotSelectionChanged( QListViewItem * item ) {
-  enableButtonOK( item );
+void ProfileDialog::slotSelectionChanged()
+{
+  enableButtonOK( mListView->selectedItem() );
 }
 
 void ProfileDialog::setup() {

@@ -263,8 +263,8 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
   mIdentityList = new IdentityListView( this );
-  connect( mIdentityList, SIGNAL(selectionChanged(QListViewItem*)),
-	   SLOT(slotIdentitySelectionChanged(QListViewItem*)) );
+  connect( mIdentityList, SIGNAL(selectionChanged()),
+	   SLOT(slotIdentitySelectionChanged()) );
   connect( mIdentityList, SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
 	   SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
   connect( mIdentityList, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
@@ -500,12 +500,10 @@ void IdentityPage::refreshList() {
   emit changed(true);
 }
 
-void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
-  kdDebug(5006) << "IdentityPage::slotIdentitySelectionChanged( " << i << " )" << endl;
-
-  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
-
-  if ( !item ) return;
+void IdentityPage::slotIdentitySelectionChanged()
+{
+  IdentityListViewItem *item =
+    dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
 
   mRemoveButton->setEnabled( item && mIdentityList->childCount() > 1 );
   mModifyButton->setEnabled( item );
@@ -707,7 +705,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 
 void NetworkPage::SendingTab::slotTransportSelected()
 {
-  QListViewItem *cur = mTransportList->currentItem();
+  QListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
   mTransportDownButton->setEnabled( cur && cur->itemBelow() );
@@ -799,7 +797,7 @@ void NetworkPage::SendingTab::slotAddTransport()
 
 void NetworkPage::SendingTab::slotModifySelectedTransport()
 {
-  QListViewItem *item = mTransportList->currentItem();
+  QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
   QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
@@ -837,7 +835,7 @@ void NetworkPage::SendingTab::slotModifySelectedTransport()
 
 void NetworkPage::SendingTab::slotRemoveSelectedTransport()
 {
-  QListViewItem *item = mTransportList->currentItem();
+  QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
   QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
@@ -1605,7 +1603,6 @@ void AppearancePage::FontsTab::load() {
 
   mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentItem( 0 );
-  // ### FIXME: possible Qt bug: setCurrentItem doesn't emit activated(int).
   slotFontSelectorChanged( 0 );
 }
 
