@@ -95,6 +95,12 @@ public:
   /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
 
+  /** Get a list of all items in the current thread */
+  QPtrList<QListViewItem> currentThread() const;
+
+  /** Set all messages in the current thread to status @p status */
+  virtual void setThreadStatus(KMMsgStatus status);
+
   /** The following methods process the message in the folder with
     the given msgId, or if no msgId is given all selected
     messages are processed. */

@@ -1036,6 +1036,40 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 }
 
 
+QPtrList<QListViewItem> KMHeaders::currentThread() const
+{
+  if (!mFolder) return QPtrList<QListViewItem>();
+
+  // starting with the current item...
+  QListViewItem *curItem = currentItem();
+  if (!curItem) return QPtrList<QListViewItem>();
+
+  // ...find the top-level item:
+  QListViewItem *topOfThread = curItem;
+  while ( topOfThread->parent() )
+    topOfThread = topOfThread->parent();
+
+  // collect the items in this thread:
+  QPtrList<QListViewItem> list;
+  QListViewItem *topOfNextThread = topOfThread->nextSibling();
+  for ( QListViewItemIterator it( topOfThread ) ;
+	it.current() && it.current() != topOfNextThread ; ++it )
+    list.append( it.current() );
+  return list;
+}
+
+void KMHeaders::setThreadStatus(KMMsgStatus status)
+{
+  QPtrList<QListViewItem> curThread = currentThread();
+  QPtrListIterator<QListViewItem> it( curThread );
+
+  QValueList<int> ids;
+  for ( it.toFirst() ; it.current() ; ++it )
+    ids << static_cast<KMHeaderItem*>(*it)->msgId();
+  if ( !ids.isEmpty() )
+    mFolder->setStatus( ids, status );
+}
+
 //-----------------------------------------------------------------------------
 int KMHeaders::slotFilterMsg(KMMessage *msg)
 {
@@ -2539,8 +2573,11 @@ void KMHeaders::slotRMB()
 
   menu->insertItem(i18n("&Move To"), msgMoveMenu);
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
-  if ( !out_folder )
+  if ( !out_folder ) {
       mOwner->statusMenu->plug( menu );
+      if ( mOwner->threadStatusMenu->isEnabled() )
+	mOwner->threadStatusMenu->plug( menu );
+  }
 
   menu->insertSeparator();
   mOwner->printAction->plug(menu);

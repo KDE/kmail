@@ -86,7 +86,8 @@ public:
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
     *viewSourceAction, *printAction, *sendAgainAction;
   KToggleAction *toggleFixFontAction;
-  KActionMenu *filterMenu, *statusMenu, *moveActionMenu, *copyActionMenu;
+  KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
+    *moveActionMenu, *copyActionMenu;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
 
@@ -193,6 +194,13 @@ protected slots:
   void slotSetMsgStatusQueued();
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
+  void slotSetThreadStatusNew();
+  void slotSetThreadStatusUnread();
+  void slotSetThreadStatusRead();
+  void slotSetThreadStatusReplied();
+  void slotSetThreadStatusQueued();
+  void slotSetThreadStatusSent();
+  void slotSetThreadStatusFlag();
   void slotShowMsgSrc();
   void slotToggleFixedFont();
   void slotSetHeaderStyle(int);

@@ -1487,6 +1487,49 @@ void KMMainWin::slotSetMsgStatusSent()
   mHeaders->setMsgStatus(KMMsgStatusSent);
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusNew()
+{
+  mHeaders->setThreadStatus(KMMsgStatusNew);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusUnread()
+{
+  mHeaders->setThreadStatus(KMMsgStatusUnread);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusFlag()
+{
+  mHeaders->setThreadStatus(KMMsgStatusFlag);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusRead()
+{
+  mHeaders->setThreadStatus(KMMsgStatusRead);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusReplied()
+{
+  mHeaders->setThreadStatus(KMMsgStatusReplied);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusQueued()
+{
+  mHeaders->setThreadStatus(KMMsgStatusQueued);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetThreadStatusSent()
+{
+  mHeaders->setThreadStatus(KMMsgStatusSent);
+}
+
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNextMessage()       { mHeaders->nextMessage(); }
@@ -1831,6 +1874,7 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
      if ( !out_folder ) {
          filterMenu->plug( menu );
          statusMenu->plug( menu );
+	 threadStatusMenu->plug( menu );
      }
 
      moveActionMenu->plug( menu );
@@ -2051,43 +2095,111 @@ void KMMainWin::setupMenuBar()
                                    "mlist_filter");
   filterMenu->insert( mlistFilterAction );
 
-  statusMenu = new KActionMenu ( i18n( "Mark As" ), actionCollection(), "set_status" );
+  KAction *action;
+  QString msg;
+  //----- "Mark Message" submenu
+  statusMenu = new KActionMenu ( i18n( "Mark Message" ),
+				 actionCollection(), "set_status" );
+  action = new KAction( i18n("&New"), "kmmsgnew", 0, this,
+			SLOT(slotSetMsgStatusNew()),
+			actionCollection(), "status_new" );
+  msg = i18n("Mark current message as new");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  //----- Set status submenu
-  KAction *newAction= new KAction( i18n("&New"), "kmmsgnew", 0, this,
-                                   SLOT(slotSetMsgStatusNew()),
-                                   actionCollection(), "status_new");
-  statusMenu->insert( newAction );
+  action = new KAction( i18n("&Unread"), "kmmsgunseen", 0, this,
+			SLOT(slotSetMsgStatusUnread()),
+			actionCollection(), "status_unread");
+  msg = i18n("Mark current message as unread");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  KAction *unreadAction=new KAction( i18n("&Unread"), "kmmsgunseen", 0, this,
-                                     SLOT(slotSetMsgStatusUnread()),
-                                     actionCollection(), "status_unread");
-  statusMenu->insert( unreadAction );
+  action = new KAction( i18n("&Read"), "kmmsgold", 0, this,
+			SLOT(slotSetMsgStatusRead()),
+			actionCollection(), "status_read");
+  msg = i18n("Mark current message as read");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  KAction *readAction=new KAction( i18n("&Read"), "kmmsgold", 0, this,
-                                   SLOT(slotSetMsgStatusRead()), actionCollection(),
-                                   "status_read");
-  statusMenu->insert( readAction );
+  action = new KAction( i18n("R&eplied"), "kmmsgreplied", 0, this,
+			SLOT(slotSetMsgStatusReplied()),
+			actionCollection(), "status_replied");
+  msg = i18n("Mark current message as replied");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  KAction *repliedAction= new KAction( i18n("R&eplied"), "kmmsgreplied", 0, this,
-                              SLOT(slotSetMsgStatusReplied()),
-                              actionCollection(), "status_replied");
-  statusMenu->insert( repliedAction );
+  action = new KAction( i18n("&Queued"), "kmmsgqueued", 0, this,
+			SLOT(slotSetMsgStatusQueued()),
+			actionCollection(), "status_queued");
+  action->setToolTip( i18n("Mark current message as queued") );
+  statusMenu->insert( action );
 
-  KAction *queueAction=new KAction( i18n("&Queued"), "kmmsgqueued", 0, this,
-                                    SLOT(slotSetMsgStatusQueued()),
-                                    actionCollection(), "status_queued");
-  statusMenu->insert( queueAction );
+  action = new KAction( i18n("&Sent"), "kmmsgsent", 0, this,
+			SLOT(slotSetMsgStatusSent()),
+			actionCollection(), "status_sent");
+  msg = i18n("Mark current message as sent");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  KAction *sentAction=new KAction( i18n("&Sent"), "kmmsgsent", 0, this,
-                                   SLOT(slotSetMsgStatusSent()),
-                                   actionCollection(), "status_sent");
-  statusMenu->insert( sentAction );
+  action = new KAction( i18n("&Important"), "kmmsgflag", 0, this,
+			SLOT(slotSetMsgStatusFlag()),
+			actionCollection(), "status_flag");
+  msg = i18n("Mark current message as important");
+  action->setToolTip( msg );
+  statusMenu->insert( action );
 
-  KAction *flagAction=new KAction( i18n("&Important"), "kmmsgflag", 0, this,
-                                   SLOT(slotSetMsgStatusFlag()),
-                                   actionCollection(), "status_flag");
-  statusMenu->insert( flagAction );
+  //----- "Mark Thread" submenu
+  threadStatusMenu = new KActionMenu ( i18n( "Mark Thread" ),
+				       actionCollection(), "thread_status" );
+  action = new KAction( i18n("&New"), "kmmsgnew", 0, this,
+			SLOT(slotSetThreadStatusNew()),
+			actionCollection(), "thread_new");
+  msg = i18n("Mark current thread as new");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("&Unread"), "kmmsgunseen", 0, this,
+			SLOT(slotSetThreadStatusUnread()),
+			actionCollection(), "thread_unread");
+  msg = i18n("Mark current thread as unread");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("&Read"), "kmmsgold", 0, this,
+			SLOT(slotSetThreadStatusRead()),
+			actionCollection(), "thread_read");
+  msg = i18n("Mark current thread as read");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("R&eplied"), "kmmsgreplied", 0, this,
+			SLOT(slotSetThreadStatusReplied()),
+			actionCollection(), "thread_replied");
+  msg = i18n("Mark current thread as replied");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("&Queued"), "kmmsgqueued", 0, this,
+			SLOT(slotSetThreadStatusQueued()),
+			actionCollection(), "thread_queued");
+  msg = i18n("Mark current thread as queued");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("&Sent"), "kmmsgsent", 0, this,
+			SLOT(slotSetThreadStatusSent()),
+			actionCollection(), "thread_sent");
+  msg = i18n("Mark current thread as sent");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
+  action = new KAction( i18n("&Important"), "kmmsgflag", 0, this,
+			SLOT(slotSetThreadStatusFlag()),
+			actionCollection(), "thread_flag");
+  msg = i18n("Mark current thread as important");
+  action->setToolTip( msg );
+  threadStatusMenu->insert( action );
+
 
   moveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
@@ -2369,19 +2481,41 @@ void KMMainWin::startUpdateMessageActionsTimer()
 void KMMainWin::updateMessageActions()
 {
     int count = 0;
+    QPtrList<QListViewItem> selectedItems;
 
     if ( mFolder ) {
         for (QListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
             if (item->isSelected() )
-                count++;
-        if ( !count && mFolder->count() ) // there will always be one in mMsgView
+	        selectedItems.append(item);
+        if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
             count = 1;
+	else count = selectedItems.count();
     }
 
     mlistFilterAction->setText( i18n("Filter on Mailing-List...") );
 
+    bool allSelectedInCommonThread = true;
+    if ( count > 1 && mHeaders->isThreaded() ) {
+      QListViewItem * curItemParent = mHeaders->currentItem();
+      while ( curItemParent->parent() )
+	curItemParent = curItemParent->parent();
+      for ( QPtrListIterator<QListViewItem> it( selectedItems ) ;
+	    it.current() ; ++ it ) {
+	QListViewItem * item = *it;
+	while ( item->parent() )
+	  item = item->parent();
+	if ( item != curItemParent ) {
+	  allSelectedInCommonThread = false;
+	  break;
+	}
+      }
+    }
+
     bool mass_actions = count >= 1;
     statusMenu->setEnabled( mass_actions );
+    threadStatusMenu->setEnabled( mass_actions &&
+				  allSelectedInCommonThread &&
+				  mHeaders->isThreaded() );
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
