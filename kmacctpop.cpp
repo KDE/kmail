@@ -3,6 +3,7 @@
 #include "kmacctpop.h"
 #include <assert.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <mimelib/mimepp.h>
 #include <kmfolder.h>
 
@@ -52,18 +53,29 @@ bool KMAcctPop::processNewMail(void)
   DwPopClient client;
   cout << mHost << endl;
   cout << mPort << endl;
-  if(!client.Open(mHost, mPort))
-    {KMsgBox::message(0,"Network Error!","Could not open connection to Pop Server");
-    return;}
+  cout << mLogin << endl;
+  cout << mPasswd << endl;
+  client.Open(mHost, mPort); 
+  if(!client.IsOpen())
+    {KMsgBox::message(0,"Network error!","Could not open connection to " +
+		      mHost +"!");
+    return false;
+    }
+
+
+  cout << client.SingleLineResponse().c_str() << endl;
   if(!client.User(mLogin))
      {KMsgBox::message(0,"Username Error!",
 		       client.SingleLineResponse().c_str());
-    return;}
-  
-  if(!client.Pass(mPasswd))
+    return false;}
+  cout << client.SingleLineResponse().c_str() << endl;
+
+  if(!client.Pass(mLogin))
      {KMsgBox::message(0,"Password Error!",
 		       client.SingleLineResponse().c_str());
-     return;}
+     return false;}
+
+  cout << client.SingleLineResponse().c_str() << endl;
 
   client.Stat();
   int num, size;
@@ -71,6 +83,10 @@ bool KMAcctPop::processNewMail(void)
   QTextStream str(response, IO_ReadOnly);
   str >> status >> num >> size;
   debug("GOT POP %s %d %d",status.data(), num, size);
+  if(num == 0)
+    {KMsgBox::message(0,"checking Mail...","No new messages on " + mHost);
+    return false;
+    }
   for (int i=1; i<=num; i++)
   {
     debug("processing message %d", i);
@@ -112,11 +128,15 @@ void KMAcctPop::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctPop::writeConfig(void)
 {
+  //char *buf;
   mConfig->setGroup("Account");
   mConfig->writeEntry("type", "pop");
   mConfig->writeEntry("login", mLogin);
   if (mStorePasswd) 
-    mConfig->writeEntry("password", mPasswd);
+    {/*buf = crypt(mPasswd.data(),"AA");
+    mPasswd.sprintf("%s",buf);*/
+    mConfig->writeEntry("password", mPasswd);}
+    
   else 
     mConfig->writeEntry("passwd", "");
   mConfig->writeEntry("store-passwd", mStorePasswd);

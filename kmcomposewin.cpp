@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <mimelib/string.h>
+#include <mimelib/utility.h>
 #include <kiconloader.h>
 
 //-----------------------------------------------------------------------------
@@ -93,6 +94,16 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   grid->activate();
 
   parseConfiguration();	
+  initKMimeMagic();
+}
+
+void KMComposeView::initKMimeMagic()
+{
+  // Magic file detection init
+  QString mimefile = kapp->kdedir();
+  mimefile += "/share/magic";
+  magic = new KMimeMagic( mimefile );
+  magic->setFollowLinks( TRUE );
 }
 
 
@@ -256,12 +267,7 @@ KMMessage * KMComposeView::prepareMessage()
     msg = 0;
     return msg;}
 
-  // Now, I have a problems with the CRLF. Everything works fine under 
-  // Unix (of course ;-) ) but under MS-Windowz the CRLF is not inter-
-  // preted. Why??
-
   temp = editor->text();
-  temp.replace(QRegExp("\r"),"\r\n");
 	
   // The the necessary Message() stuff
 
@@ -290,13 +296,15 @@ KMMessage * KMComposeView::prepareMessage()
 	
      // As long as there are more attachments in the queue let's add bodyParts
      while((atmntStr = urlList->next()) != 0)
-       {part = new KMMessagePart();
+       {part = new KMMessagePart;
        if((part = createKMMsgPart(part,atmntStr)) != 0)
 	 {msg->addBodyPart(part);
-	 part = new KMMessagePart();}
+	 part = new KMMessagePart;
+	 }
        else
 	 {printf("no msgPart\n"); // Probably could not open file
-	 part = new KMMessagePart();}
+	 part = new KMMessagePart;
+	 }
        }
     }
 
@@ -307,8 +315,14 @@ KMMessage * KMComposeView::prepareMessage()
 KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString s)
 {
   printf("Creating MessagePart\n");
+  DwString DwSrc;
+  DwString DwDest;
+  int pos;
   QFile *file = new QFile(s);
   QString str;
+  QString temp;
+  QString type;
+  QString subType;
   char buf[255];
 
   p->setCteStr(((KMComposeWin*)parentWidget())->encoding);
@@ -322,6 +336,32 @@ KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString s)
     str.append(buf);
   file->close();
 
+  KMimeMagicResult *result = new KMimeMagicResult();
+  result = magic->findBufferType(str,str.length()-1);	
+  temp =  result->getContent(); // Determine Content Type
+  pos = temp.find("/",0,0);
+  type = temp.copy();
+  subType = temp.copy();
+  type.truncate(pos);
+  subType = subType.remove(0,pos+1); 
+  cout << "Type:" << type << endl << "SubType:" << subType <<endl;
+  p->setTypeStr(type);
+  p->setSubtypeStr(subType);
+  if(((KMComposeWin *)parentWidget())->encoding.find("base64",0,0) > -1)
+    {debug("found base64\n");
+    DwSrc.append(str);
+     DwEncodeBase64(DwSrc,DwDest);
+     str = DwDest.c_str();
+     p->setCteStr("base64");
+    }
+  else
+    {debug("encoding qtp\n");
+    DwSrc.append(str);
+    DwEncodeQuotedPrintable(DwSrc,DwDest);
+    str = DwDest.c_str();
+    p->setCteStr("quoted-printable");
+    }
+    
   p->setBody(str);
   printf("Leaving MessagePart....\n");
   return p;
@@ -337,8 +377,8 @@ void KMComposeView::sendNow()
   KMMessage *msg = new KMMessage();
   if((msg = prepareMessage()) == 0)
     return;
-  msgSender->send(msg);
-  ((KMComposeWin *)parentWidget())->close();
+  if(msgSender->send(msg))
+    ((KMComposeWin *)parentWidget())->close();
 }
 
 //----------------------------------------------------------------------------
@@ -347,8 +387,8 @@ void KMComposeView::sendLater()
   KMMessage *msg = new KMMessage();
   if((msg =prepareMessage()) == 0)
     return;
-  msgSender->send(msg,FALSE);
-  ((KMComposeWin *)parentWidget())->close();
+  if(msgSender->send(msg,FALSE))
+    ((KMComposeWin *)parentWidget())->close();
 }
 
   
@@ -793,7 +833,7 @@ void KMComposeWin::setupToolBar()
 			SLOT(newComposer()),TRUE,"Compose new message");
   toolBar->insertSeparator();
 
-  toolBar->insertButton(loader->loadIcon("toolbar/send.xpm"),0,
+  toolBar->insertButton(loader->loadIcon("send.xpm"),0,
 			SIGNAL(clicked()),this,
 			SLOT(send()),TRUE,"Send message");
   toolBar->insertSeparator();

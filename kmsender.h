@@ -4,7 +4,9 @@
  */
 #ifndef kmsender_h
 #define kmsender_h
-
+#include <mimelib/smtp.h>
+#include <mimelib/string.h>
+#include <mimelib/utility.h>
 #include <qstring.h>
 
 class KMMessage;

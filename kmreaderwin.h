@@ -20,6 +20,7 @@
 #include <kmsgbox.h>
 #include "kmcomposewin.h"
 #include "kmimemagic.h"
+#include "kmmsgpart.h"
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
 
@@ -85,8 +86,8 @@ private slots:
         void popupMenu(const char *, const QPoint &);
         void saveURL(int);
 	QString parseEAddress(QString);
-	QString parseBodyPart(KMMessagePart *);
-	QString decodeString(const char *, QString); 
+	QString parseBodyPart(KMMessagePart *,int);
+	QString decodeString(KMMessagePart*, QString); 
 	QString scanURL(QString);
                                                 
 protected:

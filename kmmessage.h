@@ -14,7 +14,7 @@ class KMMessagePart;
 
 class KMMessage
 {
-  friend class KMFolder;
+ friend class KMFolder;
 
 protected:
   KMMessage(KMFolder*, DwMessage* = NULL);

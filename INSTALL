@@ -1,6 +1,10 @@
-1.	you need the latest kdesupport package with the mimelib
+make -f Makefile.cvs
+./configure
+make
 
-2.	in the base directory do "./configure; cd kmail ; make depend ; make"
+copy the approriate pics to either $KDEDIR/lib/pics or 
+$KDEDIR/lib/pics/toolbar 
 
-3.	copy all .xpm files to $(KDEDIR)/lib/pics/toolbar
- 
+You need to have IconPath set correctly in your .kderc
+[KDE Setup]
+IconPath=/usr/local/kde/lib/pics:/usr/local/kde/lib/pics/toolbar

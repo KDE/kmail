@@ -27,6 +27,7 @@
 #include "ktablistbox.h"
 #include <kstatusbar.h>
 #include "kmmsgpart.h"
+#include "kmimemagic.h"
 #include <qpainter.h>
 #include <drag.h>
 #include <html.h>
@@ -68,6 +69,8 @@ private:
   KTabListBox *attachmentWidget;
   KMMessage * prepareMessage();
   QFrame *frame;
+  void initKMimeMagic();
+  KMimeMagic *magic;
 
 public slots:
   void printIt();

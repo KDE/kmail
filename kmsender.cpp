@@ -31,7 +31,7 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mSendImmediate = (bool)mCfg->readNumEntry("immediate", TRUE);
   mMailer = mCfg->readEntry("mailer", QString("/usr/sbin/sendmail"));
   mSmtpHost = mCfg->readEntry("smtphost", QString("localhost"));
-  mSmtpPort = mCfg->readNumEntry("smtpport", 110);
+  mSmtpPort = mCfg->readNumEntry("smptport", 25);
 
   mCfg->setGroup("General");
   outboxName = mCfg->readEntry("outbox", QString("outbox"));
@@ -88,12 +88,204 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::sendSMTP(KMMessage*)
+bool KMSender::sendSMTP(KMMessage* msg)
 {
-  warning(nls->translate("Sending via SMTP is not\nimplemented at the moment.\n"
-			 "Please stay tuned."));
+  // $markus: I just could not resist implementing smtp suppport
+  // This code just must be stable. I checked every darn return code!
+  // Date: 24. Sept. 97
+  
+  QString str;
+  int replyCode;
+  DwSmtpClient client;
+  DwString dwString;
+  DwString dwSrc;
 
-  return FALSE;
+
+  debug("Msg has %i parts\n",msg->numBodyParts());
+  // Now we check if message is multipart.
+  if(msg->numBodyParts() != 0) // If message is not a simple text message
+    {
+    }
+  else
+    {dwSrc = msg->body();
+     DwToCrLfEol(dwSrc,dwString); // Convert to CRLF 
+    }
+
+  cout << mSmtpHost << endl;
+  cout << mSmtpPort << endl;
+  client.Open(mSmtpHost,mSmtpPort); // Open connection
+  cout << client.Response().c_str();
+  if(!client.IsOpen) // Check if connection succeded
+    {KMsgBox::message(0,"Network Error!","Could not open connection to " +
+		      mSmtpHost +"!");
+    return false;
+    }
+  
+  replyCode = client.Helo(); // Send HELO command
+  if(replyCode != 250 && replyCode != 0)
+    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }  
+    return false;
+    }
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }
+  else  
+    cout << client.Response().c_str();
+
+  str = msg->from(); // Check if from is set.
+  if(str.isEmpty())
+    {KMsgBox::message(0,"?","How could you get this far without a from Field");
+    if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }
+
+  replyCode = client.Mail(msg->from());
+  if(replyCode != 250 && replyCode != 0) // Send MAIL command
+     {KMsgBox::message(0,"Error",client.LastErrorStr());
+     if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+     return false;
+     }
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }    
+  else
+    cout << client.Response().c_str();
+
+  str = msg->to(); // Check if to is set.
+  if(str.isEmpty())
+    {KMsgBox::message(0,"?","How could you get this far without a to Field");
+    if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }
+  replyCode = client.Rcpt(msg->to()); // Send RCPT command
+  if(replyCode != 250 && replyCode != 251 && replyCode != 0)
+    {KMsgBox::message(0,"Error",client.LastErrorStr());
+    if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }  
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }    
+  else
+    cout << client.Response().c_str();
+
+  str = msg->cc();
+  if(!str.isEmpty())  // Check if cc is set.
+    {replyCode = client.Rcpt(msg->cc()); // Send RCPT command
+    if(replyCode != 250 && replyCode != 251 && replyCode != 0)
+      {KMsgBox::message(0,"Error",client.LastErrorStr());
+      if(client.Close() !=0)
+	{KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+	return false;
+	}
+      return false;
+      }
+    else if(replyCode == 0 )
+      {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+      return false;
+      }    
+    else
+      cout << client.Response().c_str();
+    }
+
+  str = msg->bcc(); // Check if bcc ist set.
+  if(!str.isEmpty())
+    {replyCode = client.Rcpt(msg->bcc()); // Send RCPT command
+    if(replyCode != 250 && replyCode != 251 && replyCode != 0)
+      {KMsgBox::message(0,"Error",client.LastErrorStr());
+      if(client.Close() != 0)
+	{KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+	return false;
+	}
+      return false;
+      }
+    else if(replyCode == 0 )
+      {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+      return false;
+      }    
+    else
+      cout << client.Response().c_str();
+    }
+
+  replyCode = client.Data();
+  if(replyCode != 354 && replyCode != 0) // Send DATA command
+    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    if(client.Close() != 0)
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }    
+  else
+    cout << client.Response().c_str();
+
+  replyCode = client.SendData(dwString);
+  if(replyCode != 250 && replyCode != 0) // Send data.
+    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    if(client.Close() != 0 )
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }    
+  else
+    cout << client.Response().c_str();
+
+  replyCode = client.Quit(); // Send QUIT command
+  if(replyCode != 221 && replyCode != 0)
+    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    if(client.Close() != 0 )
+      {KMsgBox::message(0,"Network Error!","Could not close connection to " +
+		       mSmtpHost + "!");
+      return false;
+      }
+    return false;
+    }
+  else if(replyCode == 0 )
+    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    return false;
+    }    
+  else
+    cout << client.Response().c_str();
+
+  return true;
+
 }
 
 

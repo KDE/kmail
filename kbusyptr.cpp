@@ -18,7 +18,7 @@ KBusyPtr :: KBusyPtr ()
   cursorList = NULL;
   bitmapList = NULL;
 
-  loadCursor("./pics/stopwatch.xbm","./pics/stopwatchMask.xbm");
+  loadCursor("stopwatch.xbm","stopwatchMask.xbm");
 
   //connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
 }

@@ -143,91 +143,90 @@ void KMReaderView::parseMessage(KMMessage *message)
   currentMessage = message; // To make sure currentMessage is set.
 
 
-	printf("Debug numBodyparts=%i\n", numParts);
-	dateStr.sprintf("Date: %s<br>",message->dateStr());
+  dateStr.sprintf("Date: %s<br>",message->dateStr());
 
-	strTemp.sprintf("%s",message->from());
-	if((pos=strTemp.find("<",0,0)) != -1)
-		{strTemp.remove(0,pos+1);
-		strTemp.replace(QRegExp(">",0,0),"");}
-	fromStr.sprintf("From: <A HREF=\"mailto:");
-	fromStr.append(strTemp + "\">");
-	if(pos != -1)
-		{strTemp.sprintf("%s",message->from());
-		strTemp.truncate(pos);
-		}
-	strTemp = strTemp.stripWhiteSpace();
-	fromStr.append(strTemp + "</A>"+"<br>");
+  strTemp.sprintf("%s",message->from());
+  if((pos=strTemp.find("<",0,0)) != -1)
+    {strTemp.remove(0,pos+1);
+    strTemp.replace(QRegExp(">",0,0),"");
+    }
+  fromStr.sprintf("From: <A HREF=\"mailto:");
+  fromStr.append(strTemp + "\">");
+  if(pos != -1)
+    {strTemp.sprintf("%s",message->from());
+    strTemp.truncate(pos);
+    }
+  strTemp = strTemp.stripWhiteSpace();
+  fromStr.append(strTemp + "</A>"+"<br>");
 
-	ccStr.sprintf("%s",message->cc());
-	if(ccStr.isEmpty())
-	  ccStr = "";
-	else
-	  ccStr.sprintf("Cc: %s",message->cc());
-	
+  ccStr.sprintf("%s",message->cc());
+  if(ccStr.isEmpty())
+    ccStr = "";
+  else
+    ccStr.sprintf("Cc: %s",message->cc());
 			 
-        subjStr.sprintf("Subject: %s<br><P>",message->subject());	
-	toStr.sprintf("To: %s<br>", message->to());
+  subjStr.sprintf("Subject: %s<br><P>",message->subject());	
+  toStr.sprintf("To: %s<br>", message->to());
 
-	// Init messageCanvas
-        messageCanvas->begin(picsDir);
+  // Init messageCanvas
+  messageCanvas->begin(picsDir);
 
-	// header
-	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + 
-			     picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
-	messageCanvas->write(subjStr);
-	messageCanvas->write(fromStr);
-	messageCanvas->write(toStr);
-	messageCanvas->write(ccStr);
-	messageCanvas->write(dateStr);
-	messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
+  // header
+  messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + 
+		       picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
+  messageCanvas->write(subjStr);
+  messageCanvas->write(fromStr);
+  messageCanvas->write(toStr);
+  messageCanvas->write(ccStr);
+  messageCanvas->write(dateStr);
+  messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
 
+  // Prepare text
+  if((numParts = message->numBodyParts()) == 0)
+    {text = message->body(&length);
+    text.truncate(length);
+    }
+  //text = scanURL(text);}
+  else
+    {KMMessagePart *part = new KMMessagePart();
+    for(multi=0;multi < numParts;multi++)
+      {printf("in body part loop\n");
+      message->bodyPart(multi,part);
+      text += parseBodyPart(part,multi);
+      delete part;
+      part= new KMMessagePart();
+      }
+    }			
 
+    // Convert text to html
 
-	// Prepare text
-	if((numParts = message->numBodyParts()) == 0)
-		{text = message->body(&length);
-		text.truncate(length);}
-		//text = scanURL(text);}
-	else
-		{KMMessagePart *part = new KMMessagePart();
-		for(multi=0;multi < numParts;multi++)
-			{printf("in body part loop\n");
-			message->bodyPart(multi,part);
-			text += parseBodyPart(part);
-			delete part;
-			part= new KMMessagePart();}
-		}			
-
-	// Convert text to html
-
-		text.replace(QRegExp("\n"),"<BR>");
-		text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
-		
-		messageCanvas->write("<HTML><HEAD><TITLE>\"+ message->subject() + \"</TITLE></HEAD>");
-		messageCanvas->write("<BODY BGCOLOR=WHITE>");
-
-
-	// Okay! Let's write it to the canvas
-	 messageCanvas->write(text);
-
+  text.replace(QRegExp("\n"),"<BR>");
+  text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
+    	
+  messageCanvas->write("<HTML><HEAD><TITLE> </TITLE></HEAD>");
+  messageCanvas->write("<BODY BGCOLOR=WHITE>");
+  // Okay! Let's write it to the canvas
+  messageCanvas->write(text);
   messageCanvas->write("</BODY></HTML>");
   messageCanvas->end();
   messageCanvas->parse();
 }
 
 
-QString KMReaderView::parseBodyPart(KMMessagePart *p)
+QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 {
   QString text;
   QString type;
   QString subType;
-       
+
+  QString pnumstring;
   QString temp;
   int pos;
 
+  pnumstring.sprintf("file:/%i",pnumber);
+
   KMimeMagicResult *result = new KMimeMagicResult();
-  text = decodeString(p->body(),p->cteStr());
+  text = decodeString(p,p->cteStr());
   result = magic->findBufferType(text,text.length()-1);	
   temp =  result->getContent(); // Determine Content Type
   pos = temp.find("/",0,0);
@@ -255,14 +254,16 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
 	QString comment = config.readEntry("Comment");
 	file->close();
-	text = "<A HREF=""><IMG SRC=" + icon + ">" + comment + "</A>";
+	text = "<A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + ">" + comment + "</A>";
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<A HREF=""><IMG SRC=" + icon + ">Unknown content</A>";
+	text = "<A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + ">Unknown content</A>";
 	text += "<br><hr><br>";
 	return text;	
        }
@@ -296,7 +297,8 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 	    icon.prepend(KApplication::kdedir()+ "/share/icons/");
 	  QString comment = config.readEntry("Comment");
 	  file->close();
-	  text = "<A HREF=""><IMG SRC=" + icon + ">"+ comment +"</A>";
+	  text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon 
+	    + ">"+ comment +"</A>";
 	  text += "<br><hr><br>";
 	  return text;
 	  }
@@ -326,14 +328,15 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
 	QString comment = config.readEntry("Comment");
 	file->close();
-	text = "<A HREF=""><IMG SRC=" + icon + ">" + comment + "</A>";
+	text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon 
+	  + ">" + comment + "</A>";
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<A HREF=""><IMG SRC=" + icon + ">Unknown</A>";
+	text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon + ">Unknown</A>";
 	text += "<br><hr><br>";
 	return text;
        }
@@ -345,33 +348,38 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 
 void KMReaderView::initKMimeMagic()
 {
-    // Magic file detection init
-    QString mimefile = kapp->kdedir();
-    mimefile += "/share/magic";
-    magic = new KMimeMagic( mimefile );
-    magic->setFollowLinks( TRUE );
+  // Magic file detection init
+  QString mimefile = kapp->kdedir();
+  mimefile += "/share/magic";
+  magic = new KMimeMagic( mimefile );
+  magic->setFollowLinks( TRUE );
 }
 
 
-QString KMReaderView::decodeString(const char* data, QString type)
+QString KMReaderView::decodeString(KMMessagePart *part, QString type)
 {
-    DwString dwstr(data);
+  //    DwString dwstr(data);
+  DwString dwDest;
   
-    type=type.lower();
-    debug("decoding %s",type.data());
-    if(type=="base64") 
-	{printf("->base64\n");
-	DwDecodeBase64(dwstr,dwstr);}
-    else if(type=="quoted-printable")
-	{printf("->quotedp\n");
-	DwDecodeQuotedPrintable(dwstr,dwstr);}
-    else if(type=="8bit") 
-	printf("Raw 8 bit data read. Thins may look strange");
-    else if(type != "7bit")
-	dwstr="Encoding of this attachment is currently not supported!";
+  type=type.lower();
+  debug("decoding %s",type.data());
+  if(type=="base64") 
+    {printf("->base64\n");
+    DwDecodeBase64(part->body(),dwDest);}
+  else if(type=="quoted-printable")
+    {printf("->quotedp\n");
+    DwDecodeQuotedPrintable(part->body(),dwDest);}
+  else if(type=="8bit") 
+    {printf("Raw 8 bit data read. Things may look strange");
+    dwDest = part->body();
+    }
+  else if(type == "7bit")
+    dwDest = part->body();
+  else if(type != "7bit")
+    dwDest="Encoding of this attachment is currently not supported!";
 
-    printf("decoded data: %s",dwstr.c_str());
-    return dwstr.c_str();
+  printf("decoded data: %s",dwDest.c_str());
+  return dwDest.c_str();
 }
 
 //---------------------------------------------------------------------------
@@ -481,7 +489,7 @@ void KMReaderView::saveMail()
 	if(file->exists())
 		{int i = KMsgBox::yesNoCancel(0,"Question?","The file you selected already exists! Overwrite?");
 		printf("i = %i\n",i);
-		if(i==1); // How do I remove a file with QT??
+		if(i==1);
 		else if(i==2)
 			{delete file;
 			saveMail();}
@@ -552,12 +560,35 @@ void KMReaderView::slotDocumentDone()
 
 void KMReaderView::slotOpenAtmnt()
 {
-  ((KMReaderWin*)parentWidget())->toDo();
+  printf("CurrentAtmnt :%i\n",currentAtmnt);
 }
 
 void KMReaderView::slotSaveAtmnt()
 {
-  ((KMReaderWin*)parentWidget())->toDo();
+  //((KMReaderWin*)parentWidget())->toDo();
+  QString fileName;
+  QString text;
+  fileName = QFileDialog::getSaveFileName();
+  if(fileName.isEmpty())
+    return;
+  KMMessagePart *p = new KMMessagePart();
+  currentMessage->bodyPart(currentAtmnt,p);
+  printf("before save decoding\n");
+  text = decodeString(p,p->cteStr());
+  printf("after save decoding\n");
+  QFile *file = new QFile(fileName);
+  if(file->exists())
+    {KMsgBox::message(0,"Save Body Part","File already exists");
+    slotSaveAtmnt();
+    }
+
+  if(!file->open(IO_ReadWrite))
+    {KMsgBox::message(0,"Save Body Part","Error opening saving File");
+    slotSaveAtmnt();
+    }
+
+  file->writeBlock(text,text.length());
+  file->close();
 }
 
 void KMReaderView::slotPrintAtmnt()
@@ -643,7 +674,7 @@ void KMReaderView::popupMenu(const char *_url, const QPoint &cords)
 	       	temp.replace(QRegExp("file:/"),"");
 	       	cout << temp << "\n";
         	number = temp.toUInt();
-	       	printf("Attachment : %i",number);
+	       	printf("BodyPart : %i\n",number);
         	currentAtmnt = number;
 	       	QPopupMenu *p = new QPopupMenu();
         	p->insertItem("Open...",this,SLOT(slotOpenAtmnt()));
@@ -932,7 +963,8 @@ void KMGeneral::paintEvent(QPaintEvent *)
 	QString temp;
 	p.begin(this);
 	QPoint point(20,30);
-	QPixmap pix("/usr/local/kde/lib/pics/kmsend.xpm");
+	temp = KApplication::kdedir() + "/share/apps/kmail/send.xpm";	
+	QPixmap pix(temp);
 	p.drawPixmap(point,pix);
 	p.setPen(black);
 	temp.sprintf("Subject: %s", tempMes->subject());

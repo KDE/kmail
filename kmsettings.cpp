@@ -426,11 +426,11 @@ void KMSettings::done(int r)
 
     config->setGroup("Network");
     if (sendmailRadio->isChecked()) 
-      config->writeEntry("Outgoing Type","Sendmail");
+      config->writeEntry("Outgoing Type","2");
     else if (smtpRadio->isChecked()) 
-      config->writeEntry("Outgoing Type","SMTP");
+      config->writeEntry("Outgoing Type","1");
     config->writeEntry("Sendmail Location",sendmailLocationEdit->text());
-    config->writeEntry("SMTP Server",smtpServerEdit->text());
+    config->writeEntry("SMTP Host",smtpServerEdit->text());
     config->writeEntry("SMTP Port",smtpPortEdit->text());
   }
 }
