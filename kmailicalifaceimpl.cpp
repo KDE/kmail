@@ -618,7 +618,6 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
 {
   QMap<QString, bool> map;
 
-  kdDebug(5006) << k_funcinfo << contentsType << endl;
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
@@ -638,6 +637,8 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
     }
   }
 
+  if ( map.isEmpty() )
+    kdDebug(5006) << "subresourcesKolab: No folder found for " << contentsType << endl;
   return map;
 }
 
@@ -745,6 +746,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   // the deletedAttachments can be forgotten.
   if( !mUseResourceIMAP )
     return rc;
+
+  Q_ASSERT( !resource.isEmpty() );
 
   kdDebug(5006) << "KMailICalIfaceImpl::update( " << resource << ", " << sernum << " )\n";
   kdDebug(5006) << attachmentURLs << "\n";

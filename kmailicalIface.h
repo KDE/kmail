@@ -47,6 +47,10 @@ k_dcop:
                                 const QString& uid ) = 0;
   virtual QStringList incidences( const QString& type,
                                   const QString& folder ) = 0;
+  /**
+   * Return list of subresources. @p type is
+   * Mail, Calendar, Contact, Note, Task or Journal
+   */
   virtual QStringList subresources( const QString& type ) = 0;
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
@@ -78,6 +82,10 @@ k_dcop:
                                      Q_UINT32 sernum ) = 0;
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
                                                   const QString& resource ) = 0;
+  /**
+   * Return list of subresources. @p contentsType is
+   * Mail, Calendar, Contact, Note, Task or Journal
+   */
   virtual QMap<QString, bool> subresourcesKolab( const QString& contentsType ) = 0;
 
 k_dcop_signals:
