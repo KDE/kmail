@@ -128,7 +128,7 @@ void KMFilter::readConfig(KConfig* config)
   QString fieldA, fieldB;
   QString contA, contB;
   int idx, i, num;
-  QString actName, argsName;
+  QString actName(64), argsName(64);
 
   mName = config->readEntry("name").copy();
 
@@ -183,7 +183,7 @@ void KMFilter::readConfig(KConfig* config)
 //-----------------------------------------------------------------------------
 void KMFilter::writeConfig(KConfig* config)
 {
-  QString key;
+  QString key(64);
   int i;
 
   config->writeEntry("name", mName);

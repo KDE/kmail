@@ -35,6 +35,7 @@ public:
     the given msgId, or if no msgId is given all selected
     messages are processed. */
   virtual void setMsgStatus(KMMsgStatus status, int msgId=-1);
+  virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void forwardMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);

@@ -613,7 +613,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mEdtHost = createLabeledEntry(this, grid, nls->translate("Host:"),
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
 
-    QString tmpStr(10);
+    QString tmpStr(32);
     tmpStr.sprintf("%d",((KMAcctPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, nls->translate("Port:"),
 				  tmpStr, 5, 0);

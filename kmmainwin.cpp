@@ -147,7 +147,7 @@ void KMMainWin::readConfig()
 //-----------------------------------------------------------------------------
 void KMMainWin::writeConfig(bool aWithSync)
 {
-  QString s;
+  QString s(32);
   KConfig *config = app->getConfig();
   QRect r = geometry();
 
@@ -311,7 +311,7 @@ void KMMainWin::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotRemoveFolder()
 {
-  QString str;
+  QString str(256);
   QDir dir;
 
   if (!mFolder) return;

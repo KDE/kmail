@@ -374,7 +374,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
-  QString iconName, href, label, comment;
+  QString iconName, href(255), label, comment;
 
   assert(aMsgPart!=NULL);
 

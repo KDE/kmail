@@ -123,7 +123,7 @@ KMMsgPartDlg::~KMMsgPartDlg()
 void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 {
   unsigned int len, idx;
-  QString lenStr, iconName, enc;
+  QString lenStr(32), iconName, enc;
 
   mMsgPart = aMsgPart;
   assert(mMsgPart!=NULL);

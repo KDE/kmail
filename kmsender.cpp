@@ -160,7 +160,7 @@ bool KMSender::doSendSMTP(KMMessage* msg)
   client.Open(mSmtpHost,mSmtpPort); // Open connection
   if(!client.IsOpen) // Check if connection succeded
   {
-    QString str;
+    QString str(256);
     str.sprintf(nls->translate("Cannot open SMTP connection to\n"
 			       "host %s for sending:\n%s"), 
 		(const char*)mSmtpHost,(const char*)client.Response().c_str());
@@ -215,7 +215,7 @@ bool KMSender::doSendSMTP(KMMessage* msg)
 bool KMSender::smtpFailed(DwSmtpClient& client, const char* inCommand,
 			  int replyCode)
 {
-  QString str;
+  QString str(256);
   const char* errorStr = client.Response().c_str();
 
   str.sprintf(nls->translate("Failed to send mail message\n"

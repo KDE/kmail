@@ -281,7 +281,7 @@ int KMFolder::createIndexFromContents(void)
   unsigned long offs, size, pos;
   bool atEof = FALSE;
   KMMsgInfo* mi;
-  QString msgStr;
+  QString msgStr(256);
   QRegExp regexp(MSG_SEPERATOR_REGEX);
   int i, num;
 
@@ -606,7 +606,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   // write message to folder file
   fseek(mStream, 0, SEEK_END);
-  fwrite("From ???@??? Mon Jan 1 00:00:00 1997\n", 37, 1, mStream);
+  fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
   if (msgText[len-1]!='\n') fwrite("\n", 1, 1, mStream);

@@ -178,7 +178,7 @@ void KMComposeWin::readConfig(void)
 void KMComposeWin::writeConfig(bool aWithSync)
 {
   KConfig *config = kapp->getConfig();
-  QString str;
+  QString str(32);
 
   config->setGroup("Composer");
   config->writeEntry("signature", mAutoSign?"auto":"manual");
@@ -186,14 +186,9 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("send-immediate", mSendImmediate);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
-  str = "";
-  str.sprintf("#%02x%02x%02x", foreColor.red(), foreColor.green(),
-	      foreColor.blue());
-  config->writeEntry("Fore-Color",str);
-  str = "";
-  str.sprintf("#%02x%02x%02x", backColor.red(), backColor.green(),
-	      backColor.blue());
-  config->writeEntry("Back-Color",str);
+
+  config->writeEntry("Fore-Color",foreColor);
+  config->writeEntry("Back-Color",backColor);
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
@@ -700,7 +695,7 @@ void KMComposeWin::addAttach(KMMessagePart* msgPart)
 const QString KMComposeWin::msgPartLbxString(KMMessagePart* msgPart) const
 {
   unsigned int len;
-  QString lenStr;
+  QString lenStr(32);
 
   assert(msgPart != NULL);
 

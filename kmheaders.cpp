@@ -185,6 +185,21 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::setMsgRead (int msgId)
+{
+  KMMessage* msg;
+  KMMsgStatus st;
+
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    st = msg->status();
+    if (st==KMMsgStatusNew || st==KMMsgStatusUnread)
+      msg->setStatus(KMMsgStatusOld);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
   if (mFolder != trashFolder)
@@ -420,7 +435,7 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
   kbp->busy();
   mOwner->statusMsg("");
   emit selected(mFolder->getMsg(idx));
-  if (idx >= 0) setMsgStatus(KMMsgStatusOld, idx);
+  if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
 
@@ -433,7 +448,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
   kbp->busy();
   mOwner->statusMsg("");
   emit activated(mFolder->getMsg(idx));
-  if (idx >= 0) setMsgStatus(KMMsgStatusOld, idx);
+  if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
 
@@ -442,7 +457,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
 void KMHeaders::updateMessageList(void)
 {
   long i;
-  QString hdr;
+  QString hdr(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
  

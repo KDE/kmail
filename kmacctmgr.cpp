@@ -53,7 +53,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 {
   KConfig* config = app->getConfig();
   KMAccount* acct;
-  QString groupName;
+  QString groupName(256);
   int i;
 
   config->setGroup("General");
@@ -74,7 +74,7 @@ void KMAcctMgr::readConfig(void)
 {
   KConfig* config = app->getConfig();
   KMAccount* acct;
-  QString groupName, acctType, acctName;
+  QString groupName(256), acctType, acctName;
   int i, num;
 
   mAcctList.clear();

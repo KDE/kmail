@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 static void msgDialog(const char* msg, const char* arg=NULL)
 {
-  QString str;
+  QString str(256);
 
   if (arg) str.sprintf(msg, arg);
   else str = msg;
@@ -87,7 +87,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 
   if (readLen < len)
   {
-    QString msg;
+    QString msg(256);
     msg.sprintf(klocale->translate("Could only read %u bytes of %u."),
 		readLen, len);
     msgDialog(msg);
@@ -136,7 +136,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   }
   else if (writeLen < len)
   {
-    QString msg;
+    QString msg(256);
     msg.sprintf(klocale->translate("Could only write %d bytes of %d."),
 		writeLen, len);
     msgDialog(msg);
