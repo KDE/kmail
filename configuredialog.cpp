@@ -4177,7 +4177,7 @@ void MiscPage::GroupwareTab::load() {
   i = 0;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next(), ++i ) {
-    if( a->folder() ) {
+    if( a->folder() && a->folder()->child() ) {
       // Look inside that folder for an INBOX
       KMFolderNode *node;
       for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
