@@ -3398,11 +3398,11 @@ void IdentityList::exportData()
     ident.setUseSignatureFile( e->useSignatureFile() );
     ident.setSignatureFile( e->signatureFileName(true) );
     ident.setSignatureInlineText( e->signatureInlineText() );
-    ident.writeConfig();
+    ident.writeConfig(false);
     ids.append( e->identity() );
   }
 
-  KMIdentity::saveIdentities( ids, true );
+  KMIdentity::saveIdentities( ids, false );
 }
 
 
