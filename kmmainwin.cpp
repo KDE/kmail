@@ -29,6 +29,9 @@ KMMainWin::KMMainWin(QWidget *)
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
 				actionCollection(), "kmail_configure_toolbars" );
 
+  KStdAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
+                          actionCollection());
+
 #if !KDE_IS_VERSION( 3, 1, 90 )
   mToolbarAction = KStdAction::showToolbar(this,
 					   SLOT(slotToggleToolBar()),

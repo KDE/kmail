@@ -122,7 +122,7 @@
    <Action name="filter" append="save_merge"/>
    <Action name="popFilter" append="save_merge"/>
    <Separator/>
-   <Action name="kmail_configure_shortcuts" />
+   <Action name="options_configure_keybinding"/>
    <Action name="kmail_configure_notifications" />
    <Action name="kmail_configure_toolbars" />
    <Action name="kmail_configure_kmail" />

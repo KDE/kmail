@@ -2596,12 +2596,6 @@ void KMMainWidget::setupActions()
 		      actionCollection(), "help_kmail_welcomepage" );
 
   // ----- Standard Actions
-//  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
-  (void) new KAction( i18n("Configure S&hortcuts..."),
-		      "configure_shortcuts", 0, this,
- 		      SLOT(slotEditKeys()), actionCollection(),
-		      "kmail_configure_shortcuts" );
-
 //  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
   (void) new KAction( i18n("Configure &Notifications..."),
 		      "knotify", 0, this,
