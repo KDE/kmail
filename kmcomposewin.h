@@ -17,6 +17,7 @@
 #include <kmsgbox.h>
 #include "kmmsgpart.h"
 #include <keditcl.h>
+#include <klined.h>
 #ifdef HAS_KSPELL
 #include <kspell.h>
 #endif
@@ -55,8 +56,8 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-#define KMLineEditInherited QLineEdit
-class KMLineEdit : public QLineEdit
+#define KMLineEditInherited KLined
+class KMLineEdit : public KLined
 {
   Q_OBJECT
 
@@ -69,6 +70,7 @@ public slots:
   void cut();
   void paste();
   void markAll();
+  void complete();
 
 protected:
   virtual void mousePressEvent(QMouseEvent *);
