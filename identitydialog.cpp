@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- c-basic-offset: 2 -*-
     identitydialog.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -59,7 +59,7 @@ namespace KMail {
 
   IdentityDialog::IdentityDialog( QWidget * parent, const char * name )
     : KDialogBase( Plain, i18n("Edit Identity"), Ok|Cancel|Help, Ok,
-		   parent, name )
+                   parent, name )
   {
     // tmp. vars:
     QWidget * tab;
@@ -89,10 +89,10 @@ namespace KMail {
     label = new QLabel( mNameEdit, i18n("&Your name:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Your name</h3>"
-	       "<p>This field should have your name, as you'd like "
-	       "it to appear in the email header that is sent out.</p>"
-	       "<p>If you leave this blank, your real name won't "
-	       "appear, only the email address.</p></qt>");
+               "<p>This field should have your name, as you'd like "
+               "it to appear in the email header that is sent out.</p>"
+               "<p>If you leave this blank, your real name won't "
+               "appear, only the email address.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mNameEdit, msg );
 
@@ -103,10 +103,10 @@ namespace KMail {
     label =  new QLabel( mOrganizationEdit, i18n("Organi&zation:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Organization</h3>"
-	       "<p>This field should have the name of your organization "
-	       "if you'd like it to be shown in the email header that "
-	       "is sent out.</p>"
-	       "<p>It is safe (and normal) to leave this blank.</p></qt>");
+               "<p>This field should have the name of your organization "
+               "if you'd like it to be shown in the email header that "
+               "is sent out.</p>"
+               "<p>It is safe (and normal) to leave this blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mOrganizationEdit, msg );
 
@@ -118,9 +118,9 @@ namespace KMail {
     label = new QLabel( mEmailEdit, i18n("&Email address:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Email address</h3>"
-	       "<p>This field should have your full email address.</p>"
-	       "<p>If you leave this blank, or get it wrong, people "
-	       "will have trouble replying to you.</p></qt>");
+               "<p>This field should have your full email address.</p>"
+               "<p>If you leave this blank, or get it wrong, people "
+               "will have trouble replying to you.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mEmailEdit, msg );
 
@@ -142,15 +142,15 @@ namespace KMail {
     label = new QLabel ( mReplyToEdit, i18n("&Reply-To address:"), tab);
     glay->addWidget( label , row, 0 );
     msg = i18n("<qt><h3>Reply-To addresses</h3>"
-	       "<p>This sets the <tt>Reply-to:</tt> header to contain a "
-	       "different email address to the normal <tt>From:</tt> "
-	       "address.</p>"
-	       "<p>This can be useful when you have a group of people "
-	       "working together in similar roles. For example, you "
-	       "might want any emails sent to have your email in the "
-	       "<tt>From:</tt> field, but any responses to go to "
-	       "a group address.</p>"
-	       "</p>If in doubt, leave this field blank.</p></qt>");
+               "<p>This sets the <tt>Reply-to:</tt> header to contain a "
+               "different email address to the normal <tt>From:</tt> "
+               "address.</p>"
+               "<p>This can be useful when you have a group of people "
+               "working together in similar roles. For example, you "
+               "might want any emails sent to have your email in the "
+               "<tt>From:</tt> field, but any responses to go to "
+               "a group address.</p>"
+               "</p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mReplyToEdit, msg );
 
@@ -161,12 +161,12 @@ namespace KMail {
     label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
-	       "<p>The addresses that you enter here will be added to each "
-	       "outgoing mail that is sent with this identity. They will not "
-	       "be visible to other recipients.</p>"
-	       "<p>This is commonly used to send a copy of each sent message to "
-	       "another account of yours.</p>"
-	       "<p>If in doubt, leave this field blank.</p></qt>");
+               "<p>The addresses that you enter here will be added to each "
+               "outgoing mail that is sent with this identity. They will not "
+               "be visible to other recipients.</p>"
+               "<p>This is commonly used to send a copy of each sent message to "
+               "another account of yours.</p>"
+               "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );
 
@@ -176,16 +176,16 @@ namespace KMail {
     mPgpKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
     mPgpKeyRequester->setDialogCaption( i18n("Your OpenPGP Key") );
     mPgpKeyRequester->setDialogMessage( i18n("Select the OpenPGP key which "
-					     "should be used to sign your "
-					     "messages and when encrypting to "
-					     "yourself.") );
+                                             "should be used to sign your "
+                                             "messages and when encrypting to "
+                                             "yourself.") );
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
-	       "to sign messages and to encrypt messages to "
-	       "yourself. You can also use GnuPG keys.</p>"
-	       "You can leave this blank, but KMail won't be able "
-	       "to cryptographically sign emails. Normal mail functions won't "
-	       "be affected.</p>"
-	       "You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
+               "to sign messages and to encrypt messages to "
+               "yourself. You can also use GnuPG keys.</p>"
+               "You can leave this blank, but KMail won't be able "
+               "to cryptographically sign emails. Normal mail functions won't "
+               "be affected.</p>"
+               "You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
 
     label = new QLabel( mPgpKeyRequester, i18n("OpenPGP key:"), tab );
     QWhatsThis::add( mPgpKeyRequester, msg );
@@ -200,7 +200,7 @@ namespace KMail {
     mFccCombo->showOutboxFolder( false );
     glay->addWidget( mFccCombo, row, 1 );
     glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
-		     row, 0 );
+                     row, 0 );
 
     // "Drafts Folder" combo box and label:
     ++row;
@@ -208,7 +208,7 @@ namespace KMail {
     mDraftsCombo->showOutboxFolder( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts folder:"), tab ),
-		     row, 0 );
+                     row, 0 );
 
     // "Special transport" combobox and label:
     ++row;
@@ -219,7 +219,7 @@ namespace KMail {
     mTransportCombo->insertStringList( KMail::TransportManager::transportNames() );
     glay->addWidget( mTransportCombo, row, 1 );
     connect( mTransportCheck, SIGNAL(toggled(bool)),
-	     mTransportCombo, SLOT(setEnabled(bool)) );
+             mTransportCombo, SLOT(setEnabled(bool)) );
 
     // the last row is a spacer
 
@@ -242,7 +242,7 @@ namespace KMail {
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
-					  const QString & msg ) {
+                                          const QString & msg ) {
     KMFolder * folder = kmkernel->folderMgr()->findIdString( folderID );
     if ( !folder )
       folder = kmkernel->imapFolderMgr()->findIdString( folderID );
@@ -271,23 +271,23 @@ namespace KMail {
     mTransportCombo->setEnabled( !ident.transport().isEmpty() );
 
     if ( ident.fcc().isEmpty() ||
-	 !checkFolderExists( ident.fcc(),
-			     i18n("The custom sent-mail folder for identity "
-				  "\"%1\" doesn't exist (anymore). "
-				  "Therefore the default sent-mail folder "
-				  "will be used.")
-			     .arg( ident.identityName() ) ) )
+         !checkFolderExists( ident.fcc(),
+                             i18n("The custom sent-mail folder for identity "
+                                  "\"%1\" doesn't exist (anymore). "
+                                  "Therefore the default sent-mail folder "
+                                  "will be used.")
+                             .arg( ident.identityName() ) ) )
       mFccCombo->setFolder( kmkernel->sentFolder() );
     else
       mFccCombo->setFolder( ident.fcc() );
 
     if ( ident.drafts().isEmpty() ||
-	 !checkFolderExists( ident.drafts(),
-			     i18n("The custom drafts folder for identity "
-				  "\"%1\" doesn't exist (anymore). "
-				  "Therefore the default drafts folder "
-				  "will be used.")
-			     .arg( ident.identityName() ) ) )
+         !checkFolderExists( ident.drafts(),
+                             i18n("The custom drafts folder for identity "
+                                  "\"%1\" doesn't exist (anymore). "
+                                  "Therefore the default drafts folder "
+                                  "will be used.")
+                             .arg( ident.identityName() ) ) )
       mDraftsCombo->setFolder( kmkernel->draftsFolder() );
     else
       mDraftsCombo->setFolder( ident.drafts() );
@@ -300,30 +300,34 @@ namespace KMail {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
-	QString email = mEmailEdit->text();
-	if ( email.isEmpty() || email.contains('@') == 0)
-	  KMessageBox::sorry(this,
-						 i18n("You didn't specify a valid email address."
-							  "You won't create valid emails without such an address."),
-						 i18n("No Email Adress"));
-	if (email.contains('@') > 1) {
-	  KMessageBox::sorry(this,
-						 i18n("Your email address contains more than one @ character,"
-							  "which most email servers do not accept."
-							  "You won't create valid emails without changing your address."),
-						 i18n("No Email Adress"));
-	}
+    QString email = mEmailEdit->text();
+    int atCount = email.contains('@');
+    if ( email.isEmpty() || atCount == 0 )
+      KMessageBox::sorry( this,
+                          i18n("Your email address is not valid because it "
+                               "doesn't contain a <emph>@</emph>. "
+                               "You won't create valid messages if you don't "
+                               "change your address."),
+                          i18n("Invalid Email Address") );
+    else if ( atCount > 1 ) {
+      KMessageBox::sorry( this,
+                          i18n("Your email address is not valid because it "
+                               "contains more than one <emph>@</emph>. "
+                               "You won't create valid messages if you don't "
+                               "change your address."),
+                          i18n("Invalid Email Address") );
+    }
     ident.setEmailAddr( email );
     // "Advanced" tab:
     ident.setPgpIdentity( mPgpKeyRequester->keyIDs().first() );
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
-			mTransportCombo->currentText() : QString::null );
+                        mTransportCombo->currentText() : QString::null );
     ident.setFcc( mFccCombo->getFolder() ?
-		  mFccCombo->getFolder()->idString() : QString::null );
+                  mFccCombo->getFolder()->idString() : QString::null );
     ident.setDrafts( mDraftsCombo->getFolder() ?
-		     mDraftsCombo->getFolder()->idString() : QString::null );
+                     mDraftsCombo->getFolder()->idString() : QString::null );
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
   }
