@@ -31,15 +31,17 @@
 #include "kmfolder.h"
 #include "kmfolderdir.h"
 #include "kmacctmgr.h"
+#include <kdebug.h>
 
 using namespace KMail;
 
 AccountComboBox::AccountComboBox( bool needsInbox, QWidget* parent, const char* name )
   : QComboBox( parent, name ), mNeedsInbox( needsInbox )
 {
-  // Currently there's no auto-refresh of the account list,
-  // since this combo is only used within the configuration dialog itself
-  // OK it could be useful when using Apply - TODO: signal from kmacctmgr
+  connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
+           this, SLOT( slotRefreshAccounts() ) );
+  connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
+           this, SLOT( slotRefreshAccounts() ) );
   slotRefreshAccounts();
 }
 
@@ -90,16 +92,19 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
   QValueList<KMAccount *> lst;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
        a = kmkernel->acctMgr()->next() ) {
+    Q_ASSERT( a->folder() );
     if ( a && a->folder() ) {
       bool ok = false;
       if ( mNeedsInbox ) {
         KMFolderDir* child = a->folder()->child();
+        Q_ASSERT( child );
         if ( child ) {
-          for (KMFolderNode* node = child->first(); node; node = child->next())
+          for (KMFolderNode* node = child->first(); node; node = child->next()) {
             if (!node->isDir() && node->name() == "INBOX") {
               ok = true;
               break;
             }
+          }
         }
       } else
         ok = true;

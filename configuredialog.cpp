@@ -3833,7 +3833,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   // temp. vars:
   QVBoxLayout *vlay;
   QHBoxLayout *hlay;
-  QGroupBox   *group;
   QLabel      *label;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
