@@ -982,6 +982,8 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
       if( imapPath() == "/INBOX/" )
          mUidsForDownload << uid;
+
+      delete msg;
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
