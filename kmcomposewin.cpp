@@ -188,8 +188,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   if (aMsg)
     setMsg(aMsg);
 
-  if (mEdtTo.isVisible())
-    mEdtTo.setFocus();
+  mEdtTo.setFocus();
 }
 
 
