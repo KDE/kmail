@@ -608,8 +608,9 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   stage = Quit;
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
-  if ((oldStage == List) || (oldStage == Uidl))
-    return;
+  if ((oldStage == List) || (oldStage == Uidl)
+    || (KMBroadcastStatus::instance()->abortRequested()
+    && uidsOfNextSeenMsgs.isEmpty())) return;
   QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
 				       ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
