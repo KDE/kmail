@@ -208,12 +208,14 @@ void KMFolderTreeItem::slotRepaint() {
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
 {
-  if ( !mFolder ||
+  if ( !mFolder || mFolder->isReadOnly() ||
       (mFolder->noContent() && childCount() == 0) ||
-      (mFolder->noContent() && isOpen()) )
+       (mFolder->noContent() && isOpen()) ) {
     return false;
-  else
+  }
+  else {
     return true;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1169,9 +1171,7 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
     dropItem = i;
     autoopen_timer.start( autoopenTime );
   }
-  if ( !acceptDrag(e) ) {
-    e->ignore();
-  }
+  e->accept( acceptDrag(e) );
 }
 
 static const int autoscroll_margin = 16;
@@ -1236,7 +1236,8 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
         ? autoscroll_margin*2 : 0));
     QListViewItem *i = itemAt( vp );
     if ( i ) {
-        if ( acceptDrag(e) ) {
+        bool dragAccepted = acceptDrag( e );
+        if ( dragAccepted ) {
             setCurrentItem( i );
         }
         if ( !inside_margin.contains(vp) ) {
@@ -1244,19 +1245,14 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
             e->accept(QRect(0,0,0,0)); // Keep sending move events
             autoopen_timer.stop();
         } else {
-            if ( acceptDrag(e) ) {
-                e->accept();
-            }
-            else {
-                e->ignore();
-            }
+            e->accept( dragAccepted );
             if ( i != dropItem ) {
                 autoopen_timer.stop();
                 dropItem = i;
                 autoopen_timer.start( autoopenTime );
             }
         }
-        if ( acceptDrag(e) ) {
+        if ( dragAccepted ) {
             switch ( e->action() ) {
                 case QDropEvent::Copy:
                 break;
@@ -1271,7 +1267,7 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
             }
         }
     } else {
-        e->ignore();
+        e->accept( false );
         autoopen_timer.stop();
         dropItem = 0;
     }
@@ -1298,20 +1294,13 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     stopAutoScroll();
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
-    if (! item ) e->ignore();
-
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-    if (fti && (fti != oldSelected) && (fti->folder()))
+    if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
     {
-      int root_x, root_y, win_x, win_y;
-      uint keybstate;
-      Window rootw, childw;
-      XQueryPointer( qt_xdisplay(), qt_xrootwin(), &rootw, &childw,
-          &root_x, &root_y, &win_x, &win_y, &keybstate );
-
-      if ( keybstate & ControlMask ) {
+      int keybstate = kapp->keyboardModifiers();
+      if ( keybstate & KApplication::ControlModifier ) {
         emit folderDropCopy(fti->folder());
-      } else if ( keybstate & ShiftMask ) {
+      } else if ( keybstate & KApplication::ShiftModifier ) {
         emit folderDrop(fti->folder());
       } else {
         if ( GlobalSettings::showPopupAfterDnD() ) {
@@ -1328,19 +1317,20 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
             case DRAG_MOVE:
               emit folderDrop(fti->folder());
               break;
-            case DRAG_CANCEL:
+            case DRAG_CANCEL: // cancelled by menuitem
+            case -1: // cancelled by Esc
               //just chill, doing nothing
               break;
             default:
-              kdDebug(5006) << "Unknown dnd-type!" << endl;
+              kdDebug(5006) << "Unknown dnd-type! " << id << endl;
           }
         }
         else
           emit folderDrop(fti->folder());
       }
-      e->accept();
+      e->accept( true );
     } else
-      e->ignore();
+      e->accept( false );
 
     dropItem = 0;
 
