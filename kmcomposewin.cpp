@@ -1740,8 +1740,6 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   // preprocess the body text
   QCString body = breakLinesAndApplyCodec();
 
-  kdDebug() << "***body = " << body << endl;
-
   if (body.isNull()) return Kpgp::Failure;
 
   if (body.isEmpty()) body = "\n"; // don't crash
@@ -3081,6 +3079,12 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
 
 
     bool bEncrypt = true;
+#if 0
+    // ### This has been removed since according to the Sphinx specs the CRLs
+    // have to be refreshed every day. This means warning that the CRL will
+    // expire in one day is pointless. Disabling this has been recommended
+    // by Karl-Heinz Zimmer.
+
     // Check for CRL expiry, but only if the plugin has this
     // feature.
     if( encryptCertFingerprints.isEmpty() &&
@@ -3106,6 +3110,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                 bEncrypt = false;
         }
     }
+#endif
 
     // PENDING(khz,kalle) Warn if no encryption?
 

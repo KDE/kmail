@@ -1048,7 +1048,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   replyStr += "\n";
 
   if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, allowDecryption));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, sSmartQuote, allowDecryption));
 
   msg->setSubject(cleanSubject(sReplySubjPrefixes, sReplaceSubjPrefix, "Re:"));
 
