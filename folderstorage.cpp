@@ -3,7 +3,7 @@
 
     This file is part of KMail.
 
-    Copyright (c) 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2004 Bo Thorsen <bo@sonofthor.dk>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -1006,7 +1006,7 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
 void FolderStorage::search( KMSearchPattern* pattern )
 {
   QValueList<Q_UINT32> serNums;
-  for ( int i = 0; i < count(); ++i ) 
+  for ( int i = 0; i < count(); ++i )
   {
     Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
     if ( pattern->matches( serNum ) )
