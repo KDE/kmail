@@ -1060,6 +1060,8 @@ void KMMainWidget::slotExpireAll() {
   }
 
   kmkernel->folderMgr()->expireAllFolders();
+  kmkernel->imapFolderMgr()->expireAllFolders();
+  kmkernel->dimapFolderMgr()->expireAllFolders();
 }
 
 //-----------------------------------------------------------------------------
