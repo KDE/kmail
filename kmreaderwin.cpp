@@ -2763,20 +2763,23 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   aMsg->setEncryptionState( encryptionState );
   aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
   
-// note: The following define is specified on top of this file, to compile
+// note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
   
   // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
   // of german government:
-  // --> Encrypted messages *must* be stored in unencrypted form
-  //     after they have been decrypted when the user has read them.
+  // --> All received encrypted messages *must* be stored in unencrypted form
+  //     after they have been decrypted once the user has read them.
   //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  //
+  // note: Since there is no configuration option for this, we do that for
+  //       all kinds of encryption now - *not* just for S/MIME.
+  //       This could be changed in the objectTreeToDecryptedMsg() function
+  //       by deciding when (or when not, resp.) to set the 'dataNode' to
+  //       something different than 'curNode'.
   if(    !onlyProcessHeaders
       && (aMsg == mMsg)
-      && cryptPlug 
-      && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
