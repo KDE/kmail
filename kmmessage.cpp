@@ -62,8 +62,8 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mNeedsAssembly(true),
     mIsComplete(false),
     mTransferInProgress(false),
-    mCodec(0),
-    mDecodeHTML(false)
+    mDecodeHTML(false),
+    mCodec(0)
 {
 }
 
