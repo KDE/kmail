@@ -547,9 +547,9 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
   introText->setText( i18n(
     "<p>Here you get some assistance in setting up KMail's filter "
     "rules to use some commonly known anti spam tools.</p>"
-    "The wizard can detect the anti spam tools as well as "
-    "create filter rules to pipe messages through these tools "
-    "and to separate messages classified as spam. "
+    "The wizard can detect the anti spam tools on your computer as "
+    "well as create filter rules to classify messages using these "
+    "tools and to separate messages classified as spam. "
     "The wizard will not take any existing filter rules into "
     "consideration but will append new rules in any case.</p>"
     ) );
@@ -598,8 +598,10 @@ ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
   introText->setText( i18n(
     "<p>For these tools it's possible to let the "
     "wizard create filter rules. KMail tried to find them "
-    "in the PATH of your system. The result of that search "
-    "is shown for each of the tools.</p>"
+    "in the PATH of your system. The wizard doesn't allow "
+    "to create rules for tools which were not found. "
+    "This is to keep your configuration consistent and "
+    "to minimize the risk of unpredicted behavior.</p>"
     ) );
   grid->addWidget( introText, row++, 0 );
 }
@@ -648,16 +650,31 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
   QGridLayout *grid = new QGridLayout( this, 2, 1, KDialog::marginHint(),
                                         KDialog::spacingHint() );
 
-  classifyRules = new QCheckBox( i18n("Classify messages manually as spam / not spam"), this );
-  QWhatsThis::add( classifyRules, i18n("Filters to classify messages will be created.") );
+  classifyRules = new QCheckBox( i18n("Classify messages manually as spam"), this );
+  QWhatsThis::add( classifyRules, 
+      i18n( "Sometimes messages are classified wrong or even not at all. "
+            "The latter might be by intention, because you perhaps filter "
+            "out messages from mailing lists before you let the anti spam "
+            "tools classify the rest of the messages. You can correct this "
+            "wrong or missing classification manually by using the "
+            "appropriate toolbar buttons which trigger special filters "
+            "created by this wizard." ) );
   grid->addWidget( classifyRules, 0, 0 );
 
-  pipeRules = new QCheckBox( i18n("Pipe messages through the anti spam tools"), this );
-  QWhatsThis::add( pipeRules, i18n("Appropriate filters will be created") );
+  pipeRules = new QCheckBox( i18n("Classify messages using the anti spam tools"), this );
+  QWhatsThis::add( pipeRules, 
+      i18n( "Let the anti spam tools classify your messages. The wizard "
+            "will create appropriate filters. The messages are usually "
+            "marked by the tools so that following filters can react "
+            "on this and e.g. move spam messages to a special folder.") );
   grid->addWidget( pipeRules, 1, 0 );
 
   moveRules = new QCheckBox( i18n("Move detected spam messages to the selected folder"), this );
-  QWhatsThis::add( moveRules, i18n("A filter to detect those messages and to move them will be created.") );
+  QWhatsThis::add( moveRules, 
+      i18n( "A filter to detect messages classified as spam and to move "
+            "those messages into a predefined folder is created. The "
+            "default folder is the trash folder, but you may change that "
+            "in the folder view.") );
   grid->addWidget( moveRules, 2, 0 );
 
   QString s = "trash";
