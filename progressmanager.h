@@ -263,7 +263,7 @@ class ProgressManager : public QObject
      * number as the id string for your progressItem to ensure it is unique.
      * @return
      */
-    static unsigned int getUniqueID() { return ++uID; };
+    static QString getUniqueID() { return QString::number( ++uID ); };
 
     /**
      * Creates a new progressItem with the given parent, id, label and initial
