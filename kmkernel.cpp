@@ -1770,9 +1770,9 @@ void KMKernel::expireAllFoldersNow() // called by the GUI
 
 void KMKernel::compactAllFolders() // called by the GUI
 {
-  the_folderMgr->expireAllFolders( true /*immediate*/ );
-  //the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
-  the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
+  the_folderMgr->compactAllFolders( true /*immediate*/ );
+  //the_imapFolderMgr->compactAllFolders( true /*immediate*/ );
+  the_dimapFolderMgr->compactAllFolders( true /*immediate*/ );
 }
 
 KMFolder* KMKernel::findFolderById( const QString& idString )
