@@ -1226,7 +1226,7 @@ int KMReaderWin::pointsToPixel(int pointSize) const
 void KMReaderWin::showHideMimeTree( bool showIt )
 {
   if( mMimePartTree && ( !mShowMIMETreeMode || (0 != *mShowMIMETreeMode) ) ){
-    if( showIt )
+    if( showIt || (mShowMIMETreeMode && (*mShowMIMETreeMode == 2)) )
       mMimePartTree->show();
     else
       mMimePartTree->hide();
