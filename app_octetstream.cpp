@@ -33,6 +33,8 @@
 #include "interfaces/bodypartformatter.h"
 #include <kdemacros.h>
 
+#include <kdepimmacros.h>
+
 namespace {
 
   class Formatter : public KMail::Interface::BodyPartFormatter {
