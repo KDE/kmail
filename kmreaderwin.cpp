@@ -129,8 +129,11 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
     // start the new viewer content
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<html><body" +
-      QString(" bgcolor=\"%1\"").arg(c4.name()));
-
+      (mPrinting ? " bgcolor=\"#FFFFFF\""
+                 : QString(" bgcolor=\"%1\"").arg(c4.name())));
+    if (mBackingPixmapOn && !mPrinting )
+      mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
+    mViewer->write(">");
   }
   if(node && (showOneMimePart || (mShowCompleteMessage && !node->mRoot ))) {
     if( showOneMimePart ) {
@@ -789,7 +792,7 @@ kdDebug(5006) << "* model *" << endl;
   }
 
   if( showOneMimePart ) {
-    mViewer->write("></body></html>");
+    mViewer->write("</body></html>");
     sendNextHtmlChunk();
     /*mViewer->view()->viewport()->setUpdatesEnabled( true );
     mViewer->view()->setUpdatesEnabled( true );
@@ -1168,7 +1171,7 @@ void KMReaderWin::initHtmlWidget(void)
 
   mColorBar = new QLabel(" ", mBox);
   mColorBar->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-  mColorBar->setEraseColor( c4 );
+  mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : c4 );
 
   if ( !mShowColorbar )
     mColorBar->hide();
@@ -1455,7 +1458,7 @@ void KMReaderWin::parseMsg(void)
 
   if( mMimePartTree )
     mMimePartTree->clear();
-                 
+
   QString type = mMsg->typeStr().lower();
 
   bool isMultipart = (type.find("multipart/") != -1);
@@ -1504,7 +1507,8 @@ void KMReaderWin::parseMsg(void)
       : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
         .arg( mBodyFamily ).arg( pointsToPixel(fntSize), 0, 'f', 5 )
-        .arg(c1.name()) .arg(c4.name())) +
+        .arg( mPrinting ? "#000000" : c1.name() )
+        .arg( mPrinting ? "#FFFFFF" : c4.name() ) ) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing
