@@ -1065,6 +1065,7 @@ namespace KMail {
     partNode * dataPlain = child->findType( DwMime::kTypeText,
                                             DwMime::kSubtypePlain, false, true );
 
+#if 0
     // special treatment of vCal attachment (might be invitation or similar)
     partNode * dataCal = child->findType( DwMime::kTypeText,
                                           DwMime::kSubtypeVCal, false, true );
@@ -1078,6 +1079,7 @@ namespace KMail {
         return true;
       }
     }
+#endif
 
     // special treatment of TNEF attachment (might be invitation or similar)
     partNode * dataTNEF = child->findType( DwMime::kTypeApplication,
