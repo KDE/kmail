@@ -263,8 +263,9 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
     // Negative response by the server e.g STAT responses '- ....'
   }
 
-  KMsgBox::message(0, caption, nls->translate("Account: ") + name() + "\n" + 
-		   nls->translate("In ")+aStage+":\n"+ msg);
+  QString tmp;
+  tmp.sprintf(nls->translate("Account: %s\nIn %s:\n%s"), name().data(), aStage.data(),msg.data());
+  KMsgBox::message(0, caption, tmp);
   kbp->busy();
   aClient.Quit();
   return FALSE;
