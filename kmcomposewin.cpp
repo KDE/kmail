@@ -720,7 +720,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
   mGrid->addMultiCellWidget(mAtmListView, mNumHeaders+1, mNumHeaders+1, 0, 2);
 
-  if (mAtmList.count() > 0)
+  if( !mAtmList.isEmpty() )
     mAtmListView->show();
   else
     mAtmListView->hide();
@@ -1485,7 +1485,7 @@ bool KMComposeWin::applyChanges(void)
   bool doSignCompletely    = doSign;
   bool doEncryptCompletely = doEncrypt;
   bool doEncryptPartially  = doEncrypt;
-  if( mSelectedCryptPlug && (0 < mAtmList.count() ) ) {
+  if( mSelectedCryptPlug && ( !mAtmList.isEmpty() ) ) {
     int idx=0;
     KMMessagePart *attachPart;
     for( attachPart = mAtmList.first();
@@ -1672,7 +1672,7 @@ bool KMComposeWin::applyChanges(void)
 
   if( bOk ) {
     // if necessary mark all attachments for signing/encryption
-    if( mSelectedCryptPlug && ( 0 < mAtmList.count() ) &&
+    if( mSelectedCryptPlug && ( !mAtmList.isEmpty() ) &&
         ( doSignCompletely || doEncryptCompletely ) ) {
       for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
            lvi;
@@ -1811,7 +1811,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   // create temporary bodyPart for editor text
   // (and for all attachments, if mail is to be singed and/or encrypted)
   bool earlyAddAttachments =
-    mSelectedCryptPlug && (0 < mAtmList.count()) && (doSign || doEncrypt);
+    mSelectedCryptPlug && ( !mAtmList.isEmpty() ) && (doSign || doEncrypt);
 
   bool allAttachmentsAreInBody = earlyAddAttachments ? true : false;
 
@@ -2189,7 +2189,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
     const KMMessagePart& ourFineBodyPart( (doSign || doEncrypt)
                                           ? newBodyPart
                                           : oldBodyPart );
-    if(    mAtmList.count()
+    if( !mAtmList.isEmpty()
         && ( !earlyAddAttachments || !allAttachmentsAreInBody ) ) {
       // set the content type header
       msg->headers().ContentType().FromString( "Multipart/Mixed" );
@@ -3731,7 +3731,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 //-----------------------------------------------------------------------------
 void KMComposeWin::enableAttachActions()
 {
-  bool enable = mAtmList.count() > 0;
+  bool enable = !mAtmList.isEmpty();
   attachRemoveAction->setEnabled(enable);
   attachSaveAction->setEnabled(enable);
   attachPropertiesAction->setEnabled(enable);
@@ -3791,7 +3791,7 @@ void KMComposeWin::removeAttach(int idx)
   mAtmList.remove(idx);
   delete mAtmItemList.take(idx);
 
-  if (mAtmList.count()<=0)
+  if( mAtmList.isEmpty() )
   {
     mAtmListView->hide();
     mGrid->setRowStretch(mNumHeaders+1, 0);
@@ -4108,7 +4108,7 @@ void KMComposeWin::slotSelectCryptoModule()
     if( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
       // set/unset signing/encryption for all attachments according to the
       // state of the global sign/encrypt action
-      if( 0 < mAtmList.count() ) {
+      if( !mAtmList.isEmpty() ) {
         for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
              lvi;
              lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
