@@ -30,9 +30,10 @@
 #include <kmkernel.h>
 #include <kapplication.h>
 
-static int dummy, dummy2;
+static int dummy, dummy2, dummy3;
 static int *Okay = &dummy;
 static int *NotOkay = &dummy2;
+static int *Ignore = &dummy3;
 
 namespace KMail {
 
@@ -90,22 +91,17 @@ SpellChecker::~SpellChecker()
 int SpellChecker::highlightParagraph( const QString& text,
 				      int endStateOfLastPara )
 {
-    // leave German, Norwegian, and Swedish alone
-    QRegExp norwegian( "[\xc4-\xc6\xd6\xd8\xdc\xdf\xe4-\xe6\xf6\xf8\xfc]" );
-
     // leave #includes, diffs, and quoted replies alone
     QString diffAndCo( ">|" );
 
     bool isCode = diffAndCo.find(text[0]) != -1;
-    bool isNorwegian = ( text.find(norwegian) != -1 );
-    isNorwegian = false; //DS: disable this, hopefully KSpell can handle these languages.
 
     if ( !text.endsWith(" ") )
 	alwaysEndsWithSpace = FALSE;
 
     MessageHighlighter::highlightParagraph( text, endStateOfLastPara );
 
-    if ( !isCode && !isNorwegian ) {
+    if ( !isCode ) {
         int para, index;
 	textEdit()->getCursorPosition( &para, &index );
 	QString paraText = textEdit()->text( para );
@@ -141,6 +137,7 @@ QStringList SpellChecker::personalWords()
     l.append( "KJS" );
     l.append( "Konqueror" );
     l.append( "KSpell" );
+    l.append( "Kontact" );
     return l;
 }
 
@@ -159,6 +156,7 @@ void SpellChecker::flushCurrentWord()
     if ( !currentWord.isEmpty() ) {
 	if ( isMisspelled(currentWord) )
 	    setFormat( currentPos, currentWord.length(), mColor );
+//	    setMisspelled( currentPos, currentWord.length(), true );
     }
     currentWord = "";
 }
@@ -169,6 +167,11 @@ QObject *DictSpellChecker::sDictionaryMonitor = 0;
 DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     : SpellChecker( textEdit )
 {
+    mAutoReady = false;
+    mWordCount = 0;
+    mErrorCount = 0;
+    mActive = true;
+    mAutomatic = true;
     textEdit->installEventFilter( this );
     mInitialMove = true;
     mRehighlightRequested = false;
@@ -208,14 +211,34 @@ bool DictSpellChecker::isMisspelled( const QString& word )
     // true or false, but kspell is asynchronous and slow so things
     // get tricky...
 
+    // For auto detection ignore signature and reply prefix
+    if (!mAutoReady)
+	mAutoIgnoreDict.replace( word, Ignore );
+
     // "dict" is used as a cache to store the results of KSpell
-    if (!dict.isEmpty() && dict[word] == NotOkay)
-	return true;
-    if (!dict.isEmpty() && dict[word] == Okay)
+    if (!dict.isEmpty() && dict[word] == NotOkay) {
+	if (mAutoReady && (mAutoDict[word] != NotOkay)) {
+	    if (!mAutoIgnoreDict[word]) {
+		++mErrorCount;
+		if (mAutoDict[word] != Okay)
+		    ++mWordCount;
+	    }
+	    mAutoDict.replace( word, NotOkay );
+	}
+	return true && mActive;
+    }
+    if (!dict.isEmpty() && dict[word] == Okay) {
+	if (mAutoReady && !mAutoDict[word]) {
+	    mAutoDict.replace( word, Okay );
+	    if (!mAutoIgnoreDict[word])
+		++mWordCount;
+	}
 	return false;
+    }
 
     // there is no 'spelt correctly' signal so default to Okay
     dict.replace( word, Okay );
+    
     // yes I tried checkWord, the docs lie and it didn't give useful signals :-(
     if (mSpell)
 	mSpell->check( word, false );
@@ -246,12 +269,16 @@ void DictSpellChecker::slotRehighlight()
 {
     mRehighlightRequested = false;
     rehighlight();
+    QTimer::singleShot(0, this, SLOT(slotAutoDetection()));
 }
 
 void DictSpellChecker::slotDictionaryChanged()
 {
     delete mSpell;
     mSpell = 0;
+    mWordCount = 0;
+    mErrorCount = 0;
+    mAutoDict.clear();
     new KSpell(0, i18n("Incremental Spellcheck - KMail"), this,
 			 SLOT(slotSpellReady(KSpell*)));
 }
@@ -279,6 +306,31 @@ QString DictSpellChecker::spellKey()
     return key;
 }
 
+
+// Automatic spell checking support
+// In auto spell checking mode disable as-you-type spell checking
+// iff more than one third of words are spelt incorrectly.
+//
+// Words in the signature and reply prefix are ignored.
+// Only unique words are counted.
+void DictSpellChecker::slotAutoDetection()
+{
+    if (!mAutoReady)
+	return;
+    bool savedActive = mActive;
+    if (mAutomatic) {
+	if (mActive && (mErrorCount * 3 >= mWordCount))
+	    mActive = false;
+	else if (!mActive && (mErrorCount * 3 < mWordCount))
+	    mActive = true;
+    }
+    if (mActive != savedActive && !mRehighlightRequested) {
+	emit activeChanged( mActive );
+	mRehighlightRequested = true;
+	QTimer::singleShot(100, this, SLOT(slotRehighlight()));
+    }
+}
+
 bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 {
     //TODO mouse moves, pgup, home ctrl etc.
@@ -291,6 +343,7 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
     
     if (o == textEdit() && (e->type() == QEvent::KeyPress)) {
 	QKeyEvent *k = (QKeyEvent*)e;
+	mAutoReady = true;
 	if (k->key() == Key_Enter ||
 	    k->key() == Key_Return || 
 	    k->key() == Key_Up || 
@@ -307,6 +360,10 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	} else {
 	    mInitialMove = true;
 	}
+	if (k->key() == Key_Space ||
+	    k->key() == Key_Enter ||
+	    k->key() == Key_Return)
+	    QTimer::singleShot(0, this, SLOT(slotAutoDetection()));
     }
     return false;
 }

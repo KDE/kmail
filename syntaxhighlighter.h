@@ -78,6 +78,9 @@ public:
     virtual bool isMisspelled( const QString& word );
     static void dictionaryChanged();
 
+signals:
+    activeChanged(bool);
+
 protected:
     QString spellKey();
     bool eventFilter(QObject* o, QEvent* e);
@@ -87,14 +90,19 @@ protected slots:
     void slotRehighlight();
     void slotDictionaryChanged();
     void slotSpellReady( KSpell *spell );
+    void slotAutoDetection();
 
 private:
     static QDict<int> dict;
+    QDict<int> mAutoDict;
+    QDict<int> mAutoIgnoreDict;
     static QObject *sDictionaryMonitor;
     KSpell *mSpell;
     bool mRehighlightRequested;
     QString mSpellKey;
     bool mInitialMove;
+    int mWordCount, mErrorCount;
+    bool mActive, mAutomatic, mAutoReady;
 };
 
 }; //namespace KMail
