@@ -253,7 +253,6 @@ public slots:
   void slotSendNow();
   void slotSendLater();
   void slotSaveDraft();
-  void slotDropAction(QDropEvent *e);
   void slotNewComposer();
   void slotNewMailReader();
   void slotClose();

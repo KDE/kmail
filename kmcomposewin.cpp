@@ -989,7 +989,6 @@ void KMComposeWin::setupEditor(void)
   mEditor->installRBPopup(menu);
   updateCursorPosition();
   connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
-  connect(mEditor,SIGNAL(gotUrlDrop(QDropEvent *)),SLOT(slotDropAction(QDropEvent *)));
 }
 
 //-----------------------------------------------------------------------------
@@ -2090,20 +2089,6 @@ void KMComposeWin::slotPrint()
 }
 
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotDropAction(QDropEvent *e)
-{
-  KURL::List urlList;
-  if(QUriDrag::canDecode(e) && KURLDrag::decode( e, urlList ))
-  {
-    for (KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it)
-      addAttach(*it);
-  }
-  else
-    KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
-}
-
-
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
@@ -2935,6 +2920,18 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     // ---sven's Arrow key navigation end ---
     }
   }
+  else if (e->type() == QEvent::Drop)
+  {
+    KURL::List urlList;
+    QDropEvent *de = static_cast<QDropEvent*>(e);
+    if(QUriDrag::canDecode(de) && KURLDrag::decode( de, urlList ))
+    {
+      for (KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it)
+        mComposer->addAttach(*it);
+      return TRUE;
+    }
+  }
+
   return KMEditInherited::eventFilter(o, e);
 }
 
