@@ -258,7 +258,7 @@ QString KMMessage::headerAsString(void) const
 //-----------------------------------------------------------------------------
 DwMediaType& KMMessage::dwContentType(void)
 {
-    return mMsg->Headers().ContentType();
+  return mMsg->Headers().ContentType();
 }
 
 
@@ -797,8 +797,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
   if (replyToList && parent()->isMailingList())
   {
-      // Reply to mailing-list posting address
-      toStr = parent()->mailingListPostAddress();
+    // Reply to mailing-list posting address
+    toStr = parent()->mailingListPostAddress();
   }
   else if (replyToAll)
   {
@@ -1379,7 +1379,7 @@ void KMMessage::setDateToday(void)
 //-----------------------------------------------------------------------------
 void KMMessage::setDate(time_t aDate)
 {
-    mDate = aDate;
+  mDate = aDate;
   mMsg->Headers().Date().FromCalendarTime(aDate);
   mMsg->Headers().Date().Assemble();
   mNeedsAssembly = TRUE;
@@ -1398,7 +1398,7 @@ void KMMessage::setDate(const QCString& aStr)
   mDirty = TRUE;
 
   if (header.HasDate())
-	mDate = header.Date().AsUnixTime();
+    mDate = header.Date().AsUnixTime();
 }
 
 
@@ -1513,7 +1513,7 @@ void KMMessage::setFrom(const QString& bStr)
 {
   QString aStr = bStr;
   if (aStr.isNull())
-      aStr = "";
+    aStr = "";
   setHeaderField("From", aStr);
   mDirty = TRUE;
 }
@@ -1822,15 +1822,15 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
   mType.Parse();
   DwParameter *param = mType.FirstParameter();
   while(param) {
-      if (!qstricmp(param->Attribute().c_str(), attr))
-        break;
-      else
-        param = param->Next();
+    if (!qstricmp(param->Attribute().c_str(), attr))
+      break;
+    else
+      param = param->Next();
   }
   if (!param){
-      param = new DwParameter;
-      param->SetAttribute(DwString( attr ));
-      mType.AddParameter( param );
+    param = new DwParameter;
+    param->SetAttribute(DwString( attr ));
+    mType.AddParameter( param );
   }
   else
     mType.SetModified();
@@ -2031,25 +2031,25 @@ int KMMessage::numBodyParts(void) const
 
   while (part)
   {
-     //dive into multipart messages
-     while ( part && part->Headers().HasContentType() &&
-             (mp == part->Headers().ContentType().TypeStr().c_str()) )
-     {
-	 parts.append( part );
-	 part = part->Body().FirstBodyPart();
-     }
-     // this is where currPart->msgPart contains a leaf message part
-     count++;
-     // go up in the tree until reaching a node with next
-     // (or the last top-level node)
-     while (part && !(part->Next()) && !(parts.isEmpty()))
-     {
-	part = parts.getLast();
-	parts.removeLast();
-     } ;
+    //dive into multipart messages
+    while ( part && part->Headers().HasContentType() &&
+	    (mp == part->Headers().ContentType().TypeStr().c_str()) )
+    {
+      parts.append( part );
+      part = part->Body().FirstBodyPart();
+    }
+    // this is where currPart->msgPart contains a leaf message part
+    count++;
+    // go up in the tree until reaching a node with next
+    // (or the last top-level node)
+    while (part && !(part->Next()) && !(parts.isEmpty()))
+    {
+      part = parts.getLast();
+      parts.removeLast();
+    };
 
-     if (part)
-	 part = part->Next();
+    if (part)
+      part = part->Next();
   }
 
   return count;
@@ -2075,13 +2075,13 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
   curpart = getFirstDwBodyPart();
 
   while (curpart && !idx) {
-     //dive into multipart messages
+    //dive into multipart messages
     while(    curpart
            && curpart->Headers().HasContentType()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
-        parts.append( curpart );
-        curpart = curpart->Body().FirstBodyPart();
+      parts.append( curpart );
+      curpart = curpart->Body().FirstBodyPart();
     }
     // this is where currPart->msgPart contains a leaf message part
     if (curpart == aDwBodyPart)
@@ -2091,11 +2091,11 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
     // (or the last top-level node)
     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
     {
-        curpart = parts.getLast();
-        parts.removeLast();
+      curpart = parts.getLast();
+      parts.removeLast();
     } ;
     if (curpart)
-        curpart = curpart->Next();
+      curpart = curpart->Next();
   }
   return idx;
 }
@@ -2113,13 +2113,13 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
   part = 0;
 
   while (curpart && !part) {
-     //dive into multipart messages
+    //dive into multipart messages
     while(    curpart
            && curpart->Headers().HasContentType()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
-        parts.append( curpart );
-        curpart = curpart->Body().FirstBodyPart();
+      parts.append( curpart );
+      curpart = curpart->Body().FirstBodyPart();
     }
     // this is where currPart->msgPart contains a leaf message part
     if (curIdx==aIdx)
@@ -2129,11 +2129,11 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
     // (or the last top-level node)
     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
     {
-        curpart = parts.getLast();
-        parts.removeLast();
+      curpart = parts.getLast();
+      parts.removeLast();
     } ;
     if (curpart)
-        curpart = curpart->Next();
+      curpart = curpart->Next();
   }
   return part;
 }
@@ -2145,9 +2145,9 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
 {
   if( aPart ) {
     if( aDwBodyPart ) {
-        // This must not be an empty string, because we'll get a
-        // spurious empty Subject: line in some of the parts.
-        aPart->setName(" ");
+      // This must not be an empty string, because we'll get a
+      // spurious empty Subject: line in some of the parts.
+      aPart->setName(" ");
       DwHeaders& headers = aDwBodyPart->Headers();
       // Content-type
       QCString additionalCTypeParams;
@@ -2181,13 +2181,13 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
       // Modification by Markus
       if (aPart->name().isEmpty())
       {
-          if (!headers.ContentType().Name().empty()) {
-              aPart->setName(KMMsgBase::decodeRFC2047String(headers.
-                                                            ContentType().Name().c_str()) );
-          } else if (!headers.Subject().AsString().empty()) {
-              aPart->setName( KMMsgBase::decodeRFC2047String(headers.
-                                                             Subject().AsString().c_str()) );
-          }
+	if (!headers.ContentType().Name().empty()) {
+	  aPart->setName(KMMsgBase::decodeRFC2047String(headers.
+							ContentType().Name().c_str()) );
+	} else if (!headers.Subject().AsString().empty()) {
+	  aPart->setName( KMMsgBase::decodeRFC2047String(headers.
+							 Subject().AsString().c_str()) );
+	}
       }
 
       // Content-transfer-encoding
@@ -2278,11 +2278,11 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
       ct.SetTypeStr(type.data());
       ct.SetSubtypeStr(subtype.data());
       if (!charset.isEmpty()){
-          DwParameter *param;
-          param=new DwParameter;
-          param->SetAttribute("charset");
-          param->SetValue(charset.data());
-          ct.AddParameter(param);
+	DwParameter *param;
+	param=new DwParameter;
+	param->SetAttribute("charset");
+	param->SetValue(charset.data());
+	ct.AddParameter(param);
       }
     }
 
@@ -2462,7 +2462,7 @@ QCString KMMessage::lf2crlf( const QCString & src )
       *d++ = '\r';
     *d++ = *s++;
   }
-  result.truncate( d - result.begin() );
+  result.truncate( d - result.begin() ); // adds trailing NUL
   return result;
 }
 
@@ -2710,10 +2710,10 @@ QCString KMMessage::defaultCharset()
   QCString retval;
 
   if (!sPrefCharsets.isEmpty())
-      retval = sPrefCharsets[0].latin1();
+    retval = sPrefCharsets[0].latin1();
 
   if (retval.isEmpty()  || (retval == "locale"))
-      retval = QCString(kernel->networkCodec()->mimeName()).lower();
+    retval = QCString(kernel->networkCodec()->mimeName()).lower();
 
   if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
   else if (retval == "ksc5601.1987-0") retval = "euc-kr";
@@ -2728,49 +2728,49 @@ const QStringList &KMMessage::preferredCharsets()
 //-----------------------------------------------------------------------------
 QCString KMMessage::charset(void) const
 {
-   DwMediaType &mType=mMsg->Headers().ContentType();
-   mType.Parse();
-   DwParameter *param=mType.FirstParameter();
-   while(param){
-      if (!qstricmp(param->Attribute().c_str(), "charset"))
-        return param->Value().c_str();
-      else param=param->Next();
-   }
-   return ""; // us-ascii, but we don't have to specify it
+  DwMediaType &mType=mMsg->Headers().ContentType();
+  mType.Parse();
+  DwParameter *param=mType.FirstParameter();
+  while(param){
+    if (!qstricmp(param->Attribute().c_str(), "charset"))
+      return param->Value().c_str();
+    else param=param->Next();
+  }
+  return ""; // us-ascii, but we don't have to specify it
 }
 
 //-----------------------------------------------------------------------------
 void KMMessage::setCharset(const QCString& bStr)
 {
-   QCString aStr = bStr.lower();
-   if (aStr.isNull())
-       aStr = "";
-   DwMediaType &mType = dwContentType();
-   mType.Parse();
-   DwParameter *param=mType.FirstParameter();
-   while(param)
-      // FIXME use the mimelib functions here for comparison.
-      if (!qstricmp(param->Attribute().c_str(), "charset")) break;
-      else param=param->Next();
-   if (!param){
-      param=new DwParameter;
-      param->SetAttribute("charset");
-      mType.AddParameter(param);
-   }
-   else
-     mType.SetModified();
-   param->SetValue(DwString(aStr));
-   mType.Assemble();
+  QCString aStr = bStr.lower();
+  if (aStr.isNull())
+    aStr = "";
+  DwMediaType &mType = dwContentType();
+  mType.Parse();
+  DwParameter *param=mType.FirstParameter();
+  while(param)
+    // FIXME use the mimelib functions here for comparison.
+    if (!qstricmp(param->Attribute().c_str(), "charset")) break;
+    else param=param->Next();
+  if (!param){
+    param=new DwParameter;
+    param->SetAttribute("charset");
+    mType.AddParameter(param);
+  }
+  else
+    mType.SetModified();
+  param->SetValue(DwString(aStr));
+  mType.Assemble();
 }
 
 //-----------------------------------------------------------------------------
 void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 {
-    if (mStatus == aStatus)
-	return;
-    KMMsgBase::setStatus(aStatus, idx);
-    mStatus = aStatus;
-    mDirty = TRUE;
+  if (mStatus == aStatus)
+    return;
+  KMMsgBase::setStatus(aStatus, idx);
+  mStatus = aStatus;
+  mDirty = TRUE;
 }
 /*
 //-----------------------------------------------------------------------------

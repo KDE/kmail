@@ -42,9 +42,10 @@ public:
   KMMessage( const KMMessage& other );
 
   /** assignment operator */
-  const KMMessage& operator=( const KMMessage& other ) {  if( &other == this )
+  const KMMessage& operator=( const KMMessage& other ) {
+    if( &other == this )
       return *this;
-  assign( other ); return *this;
+    assign( other ); return *this;
   }
 
   /** Destructor. */
@@ -63,11 +64,11 @@ public:
   void touch(void) { setStatus(KMMsgStatusOld); }
 
   /** Create a new message that is a reply to this message, filling all
-    required header fields with the proper values. The returned message
-    is not stored in any folder. Marks this message as replied. */
+      required header fields with the proper values. The returned message
+      is not stored in any folder. Marks this message as replied. */
   virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE,
-                                                 QString selection=QString::null, bool noQuote=FALSE,
-                                                 bool allowDecryption=TRUE);
+				 QString selection=QString::null, bool noQuote=FALSE,
+				 bool allowDecryption=TRUE);
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -213,8 +214,8 @@ public:
   virtual QCString fromEmail(void) const;
 
   /** Get or set the 'Who' header field. The actual field that is
-    returned depends on the contents of the owning folders whoField().
-    Usually this is 'From', but it can also contain 'To'. */
+      returned depends on the contents of the owning folders whoField().
+      Usually this is 'From', but it can also contain 'To'. */
   virtual QString who(void) const;
 
   /** Get or set the 'Subject' header field */
@@ -252,17 +253,17 @@ public:
   virtual void setHeaderField(const QCString& name, const QString& value);
 
   /** Returns header address list as string list. Warning: returns
-    a temporary object !
-    Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
-    ResentCc, ResentReplyTo, ResentTo */
+      a temporary object !
+      Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
+      ResentCc, ResentReplyTo, ResentTo */
   virtual QStrList headerAddrField(const QCString& name) const;
 
   /** Remove header field with given name */
   virtual void removeHeaderField(const QCString& name);
 
   /** Get or set the 'Content-Type' header field
-   The member functions that involve enumerated types (ints)
-   will work only for well-known types or subtypes. */
+      The member functions that involve enumerated types (ints)
+      will work only for well-known types or subtypes. */
   virtual QCString typeStr(void) const;
   virtual int type(void) const;
   virtual void setTypeStr(const QCString& aStr);
@@ -283,8 +284,8 @@ public:
   virtual DwHeaders& headers(void);
 
   /** Get or set the 'Content-Transfer-Encoding' header field
-    The member functions that involve enumerated types (ints)
-    will work only for well-known encodings. */
+      The member functions that involve enumerated types (ints)
+      will work only for well-known encodings. */
   virtual QCString contentTransferEncodingStr(void) const;
   virtual int  contentTransferEncoding(void) const;
   virtual void setContentTransferEncodingStr(const QCString& aStr);
@@ -304,14 +305,14 @@ public:
   virtual void setBody(const QCString& aStr);
 
   /** Set the message body, encoding it according to the current content
-    transfer encoding. The first method for null terminated strings,
-    the second for binary data */
+      transfer encoding. The first method for null terminated strings,
+      the second for binary data */
   virtual void setBodyEncoded(const QCString& aStr);
   virtual void setBodyEncodedBinary(const QByteArray& aStr);
 
   /** Returns a decoded version of the body from the current content transfer
-    encoding. The first method returns a null terminated string, the second
-    method is meant for binary data, not null is appended */
+      encoding. The first method returns a null terminated string, the second
+      method is meant for binary data, not null is appended */
   virtual QCString bodyDecoded(void) const;
   virtual QByteArray bodyDecodedBinary(void) const;
 
@@ -335,8 +336,8 @@ public:
   static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart);
 
   /** Get the body part at position in aIdx.  Indexing starts at 0.
-    If there is no body part at that index, aPart will have its
-    attributes set to empty values. */
+      If there is no body part at that index, aPart will have its
+      attributes set to empty values. */
   virtual void bodyPart(int aIdx, KMMessagePart* aPart) const;
 
   /** Compose a DwBodyPart (needed for adding a part to the message). */
@@ -440,58 +441,58 @@ public:
    */
   QCString getRefStr();
 
-    /** Get/set offset in mail folder. */
-    virtual unsigned long folderOffset(void) const { return mFolderOffset; }
-    void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+  /** Get/set offset in mail folder. */
+  virtual unsigned long folderOffset(void) const { return mFolderOffset; }
+  void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+  
+  /** Get/set filename in mail folder. */
+  virtual QString fileName(void) const { return mFileName; }
+  void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
+  
+  /** Get/set size of message in the folder including the whole header in
+      bytes. Can be 0, if the message is not is a folder
+      the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
+  virtual unsigned long msgSize(void) const { return mMsgSize; }
+  void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
-    /** Get/set filename in mail folder. */
-    virtual QString fileName(void) const { return mFileName; }
-    void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
-
-    /** Get/set size of message in the folder including the whole header in
-        bytes. Can be 0, if the message is not is a folder
-        the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
-    virtual unsigned long msgSize(void) const { return mMsgSize; }
-    void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
-
-    /** Unlike the above funtion this works also, if the message is not in a
-        folder */
-    virtual unsigned long msgLength(void) const
+  /** Unlike the above funtion this works also, if the message is not in a
+      folder */
+  virtual unsigned long msgLength(void) const
     { return (mMsgLength) ? mMsgLength : mMsgSize; }
-    void setMsgLength(unsigned long sz) { mMsgLength = sz; }
+  void setMsgLength(unsigned long sz) { mMsgLength = sz; }
 
-    /** Status of the message. */
-    virtual KMMsgStatus status(void) const { return mStatus; }
-    /** Set status and mark dirty. */
-    virtual void setStatus(const KMMsgStatus status, int idx = -1);
-    virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
+  /** Status of the message. */
+  virtual KMMsgStatus status(void) const { return mStatus; }
+  /** Set status and mark dirty. */
+  virtual void setStatus(const KMMsgStatus status, int idx = -1);
+  virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
-    /** Links this message to @p aMsg, setting link type to @p aStatus. */
-    void link(const KMMessage *aMsg, KMMsgStatus aStatus);
-    /** Returns the information for the Nth link into @p retMsg
-     * and @p retStatus. */
-    void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
-
-protected:
-    void assign( const KMMessage& other );
-
-    /** Convert wildcards into normal string */
-    QString formatString(const QString&) const;
-
-    QString mDrafts;
+  /** Links this message to @p aMsg, setting link type to @p aStatus. */
+  void link(const KMMessage *aMsg, KMMsgStatus aStatus);
+  /** Returns the information for the Nth link into @p retMsg
+   * and @p retStatus. */
+  void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
 
 protected:
-    DwMessage* mMsg;
-    bool       mNeedsAssembly, mIsComplete, mTransferInProgress, mDecodeHTML;
-    static int sHdrStyle;
-    static QString sForwardStr;
-    QTextCodec* mCodec;
+  void assign( const KMMessage& other );
 
-    QString mFileName;
-    unsigned long mFolderOffset, mMsgSize, mMsgLength;
-    time_t mDate;
-    KMMsgStatus mStatus;
-    unsigned long mMsgSerNum;
+  /** Convert wildcards into normal string */
+  QString formatString(const QString&) const;
+
+  QString mDrafts;
+
+protected:
+  DwMessage* mMsg;
+  bool       mNeedsAssembly, mIsComplete, mTransferInProgress, mDecodeHTML;
+  static int sHdrStyle;
+  static QString sForwardStr;
+  QTextCodec* mCodec;
+
+  QString mFileName;
+  unsigned long mFolderOffset, mMsgSize, mMsgLength;
+  time_t mDate;
+  KMMsgStatus mStatus;
+  unsigned long mMsgSerNum;
 };
 
 typedef KMMessage* KMMessagePtr;
