@@ -24,15 +24,15 @@ public:
 
   /** Access to location of local mail file (usually something like
    "/var/spool/mail/joe"). */
-  const QString& location(void) const { return mLocation; }
+  QString location(void) const { return mLocation; }
   virtual void setLocation(const QString&);
 
   /** Acceso to Locking method */
   LockType lockType(void) const { return mLock; }
   void setLockType(LockType lt) { mLock = lt; }
 
-  const QString& procmailLockFileName(void) const { return mProcmailLockFileName; }
-  void setProcmailLockFileName(QString s);
+  QString procmailLockFileName(void) const { return mProcmailLockFileName; }
+  void setProcmailLockFileName(const QString& s);
 
   virtual QString type(void) const;
   virtual void processNewMail(bool);

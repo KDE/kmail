@@ -23,15 +23,6 @@
 #include <errno.h>
 #include <assert.h>
 
-#ifdef HAVE_PATHS_H
-#include <paths.h>	/* defines _PATH_MAILDIR */
-#endif
-
-#ifndef _PATH_MAILDIR
-#define _PATH_MAILDIR "/var/spool/mail"
-#endif
-#undef None
-
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
   base(aOwner, aAccountName)
@@ -43,7 +34,6 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctLocal::~KMAcctLocal()
 {
-  mLocation = "";
 }
 
 
@@ -57,14 +47,6 @@ QString KMAcctLocal::type(void) const
 //-----------------------------------------------------------------------------
 void KMAcctLocal::init() {
   base::init();
-
-  mLocation = getenv("MAIL");
-  if (mLocation.isNull()) {
-    mLocation = _PATH_MAILDIR;
-    mLocation += '/';
-    mLocation += getenv("USER");
-  }
-  setProcmailLockFileName("");
 }
 
 
@@ -278,15 +260,10 @@ void KMAcctLocal::writeConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::setLocation(const QString& aLocation)
 {
-  mLocation = aLocation;
+    mLocation = aLocation;
 }
 
-void
-KMAcctLocal::setProcmailLockFileName(QString s)
+void KMAcctLocal::setProcmailLockFileName(const QString& s)
 {
-  if (!s.isEmpty())
     mProcmailLockFileName = s;
-  else
-    mProcmailLockFileName = mLocation + ".lock";
 }
-

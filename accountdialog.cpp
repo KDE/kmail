@@ -57,7 +57,13 @@ using KMail::SieveConfigEditor;
 
 #include <cassert>
 
-#include "accountdialog.moc"
+#ifdef HAVE_PATHS_H
+#include <paths.h>	/* defines _PATH_MAILDIR */
+#endif
+
+#ifndef _PATH_MAILDIR
+#define _PATH_MAILDIR "/var/spool/mail"
+#endif
 #undef None
 
 class ProcmailRCParser
@@ -66,8 +72,8 @@ public:
   ProcmailRCParser(QString fileName = QString::null);
   ~ProcmailRCParser();
 
-  QStringList getLockFilesList() { return mLockFiles; }
-  QStringList getSpoolFilesList() { return mSpoolFiles; }
+  QStringList getLockFilesList() const { return mLockFiles; }
+  QStringList getSpoolFilesList() const { return mSpoolFiles; }
 
 protected:
   void processGlobalLock(const QString&);
@@ -88,13 +94,16 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 {
   mVars.setAutoDelete(true);
 
+  // predefined
+  mVars.insert( "HOME", new QString( QDir::homeDirPath() ) );
+
   if( !fname || fname.isEmpty() ) {
     fname = QDir::homeDirPath() + "/.procmailrc";
     mProcmailrc.setName(fname);
   }
 
-  static QRegExp lockFileGlobal("LOCKFILE=", true),
-    lockFileLocal("^:0", true);
+  QRegExp lockFileGlobal("^LOCKFILE=", true);
+  QRegExp lockFileLocal("^:0", true);
 
   if(  mProcmailrc.open(IO_ReadOnly) ) {
 
@@ -124,6 +133,19 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
     }
 
   }
+  QString default_Location = getenv("MAIL");
+
+  if (default_Location.isNull()) {
+    default_Location = _PATH_MAILDIR;
+    default_Location += '/';
+    default_Location += getenv("USER");
+  }
+  if ( !mSpoolFiles.contains(default_Location) )
+    mSpoolFiles << default_Location;
+
+  default_Location = default_Location + ".lock";
+  if ( !mLockFiles.contains(default_Location) )
+    mLockFiles << default_Location;
 }
 
 ProcmailRCParser::~ProcmailRCParser()
@@ -192,8 +214,9 @@ ProcmailRCParser::processLocalLock(const QString &s)
         val += ".lock";
     }
 
-    if ( !val.isNull() && !mLockFiles.contains(val) )
+    if ( !val.isNull() && !mLockFiles.contains(val) ) {
       mLockFiles << val;
+    }
   }
 
 }
@@ -212,14 +235,14 @@ ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
 QString
 ProcmailRCParser::expandVars(const QString &s)
 {
-  QString expS = s;
+  if( s.isEmpty()) return s;
 
-  if( !expS || expS.isEmpty()) return expS;
+  QString expS = s;
 
   QAsciiDictIterator<QString> it( mVars ); // iterator for dict
 
   while ( it.current() ) {
-    expS.replace(QString::fromLatin1("$")+=it.currentKey(), *it.current());
+    expS.replace(QString::fromLatin1("$") + it.currentKey(), *it.current());
     ++it;
   }
 
@@ -280,7 +303,6 @@ AccountDialog::~AccountDialog()
 void AccountDialog::makeLocalAccountPage()
 {
   ProcmailRCParser procmailrcParser;
-
   QFrame *page = makeMainWidget();
   QGridLayout *topLayout = new QGridLayout( page, 12, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
@@ -928,7 +950,18 @@ void AccountDialog::setupSettings()
   QString accountType = mAccount->type();
   if( accountType == "local" )
   {
+    ProcmailRCParser procmailrcParser;
     KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
+
+    if ( acctLocal->location().isEmpty() )
+        acctLocal->setLocation( procmailrcParser.getSpoolFilesList().first() );
+    else
+        mLocal.locationEdit->insertItem( acctLocal->location() );
+
+    if ( acctLocal->procmailLockFileName().isEmpty() )
+        acctLocal->setProcmailLockFileName( procmailrcParser.getLockFilesList().first() );
+    else
+        mLocal.procmailLockFileName->insertItem( acctLocal->procmailLockFileName() );
 
     mLocal.nameEdit->setText( mAccount->name() );
     mLocal.nameEdit->setFocus();
@@ -1560,3 +1593,5 @@ void AccountDialog::slotClearPastResourceAllocations()
 {
     mAccount->clearOldIntervals();
 }
+
+#include "accountdialog.moc"
