@@ -93,8 +93,8 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
   if (readLen < len)
   {
     QString msg;
-    msg.sprintf(i18n("Could only read %u bytes of %u."),
-		readLen, len);
+    msg = i18n("Could only read %1 bytes of %2.")
+		.arg(readLen).arg(len);
     msgDialog(msg);
     return QString::null;
   }
@@ -123,9 +123,8 @@ bool kBytesToFile(const char* aBuffer, int len,
     if (aAskIfExists)
     {
       QString str;
-      str.sprintf(i18n(
-		  "File %s exists.\nDo you want to replace it ?"),
-		  aFileName);
+      str = i18n("File %1 exists.\nDo you want to replace it ?")
+		  .arg(aFileName);
       rc = QMessageBox::information(NULL, i18n("Information"),
 	   str, i18n("&OK"), i18n("&Cancel"),
 	   QString::null, 1);
@@ -178,8 +177,8 @@ bool kBytesToFile(const char* aBuffer, int len,
   else if (writeLen < len)
   {
     QString msg;
-    msg.sprintf(i18n("Could only write %d bytes of %d."),
-		writeLen, len);
+    msg = i18n("Could only write %1 bytes of %2.")
+		.arg(writeLen).arg(len);
     msgDialog(msg);
     return FALSE;
   } 

@@ -648,9 +648,9 @@ void KMComposeWin::updateCursorPosition()
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp.sprintf("%s: %i", i18n("Line").ascii(), (line+1));
+  temp = QString("%1: %2").arg(i18n("Line")).arg(line+1);
   mStatusBar->changeItem(temp,1);
-  temp.sprintf("%s: %i", i18n("Column").ascii(), (col+1));
+  temp = QString("%1: %2").arg(i18n("Column")).arg(col+1);
   mStatusBar->changeItem(temp,2);
 }
 

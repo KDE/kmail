@@ -310,8 +310,10 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   }
 
   QString tmp;
-  tmp.sprintf(i18n("Account: %s\nIn %s:\n%s"), name().data(), 
-	      aStage.data(),msg.data());
+  tmp = i18n("Account: %1\nIn %2:\n%3")
+		.arg(name())
+		.arg(aStage)
+		.arg(msg);
   KMsgBox::message(0, caption, tmp);
   //kbp->busy();
   aClient.Quit();

@@ -653,10 +653,10 @@ bool KMSendSMTP::start(void)
   if(!mClient->IsOpen()) // Check if connection succeded
   {
     QString str;
-    str.sprintf(i18n("Cannot open SMTP connection to\n"
-			       "host %s for sending:\n%s"), 
-		(const char*)mSender->smtpHost(),
-		(const char*)mClient->Response().c_str());
+    str = i18n("Cannot open SMTP connection to\n"
+			       "host %1 for sending:\n%2") 
+		.arg(mSender->smtpHost())
+		.arg((const char*)mClient->Response().c_str());
     warning((const char*)str);
     return FALSE;
   }
@@ -763,16 +763,18 @@ bool KMSendSMTP::smtpFailed(const char* inCommand,
 			  int replyCode)
 {
   QString str;
-  const char* errorStr = mClient->Response().c_str();
+  QString errorStr = mClient->Response().c_str();
 
   if (replyCode==0 && (!errorStr || !*errorStr))
     errorStr = i18n("network error");
 
-  str.sprintf(i18n("a SMTP error occured.\n"
-			     "Command: %s\n"
-			     "Response: %s\n" 
-			     "Return code: %d"),
-	      inCommand, errorStr ? errorStr : "(nothing)", replyCode);
+  str = i18n("a SMTP error occured.\n"
+			     "Command: %1\n"
+			     "Response: %2\n" 
+			     "Return code: %3")
+		.arg(inCommand)
+		.arg(!errorStr.isEmpty() ? errorStr : i18n("(nothing)"))
+		.arg(replyCode);
   mMsg = str;
 
   return FALSE;
@@ -782,8 +784,8 @@ bool KMSendSMTP::smtpFailed(const char* inCommand,
 //-----------------------------------------------------------------------------
 void KMSendSMTP::smtpInCmd(const char* inCommand)
 {
-  char str[80];
-  sprintf(str,i18n("Sending SMTP command: %s"), inCommand);
+  QString str;
+  str = i18n("Sending SMTP command: %1").arg(inCommand);
   statusMsg(str);
 }
 

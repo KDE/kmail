@@ -114,10 +114,11 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
   if (account->folder() == 0)
   {
     QString tmp; //Unsafe
-    tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+    tmp = i18n("Account %1 has no mailbox defined!\n"
  	        "Mail checking aborted\n"
-	        "Check your account settings!"), account->name().data());
-    warning(tmp.data());
+	        "Check your account settings!")
+		.arg(account->name());
+    warning(tmp);
   }
   else if (account->processNewMail(wid))
   {
@@ -221,10 +222,11 @@ bool KMAcctMgr::checkMail(void)
     if (cur->folder() == 0)
     {
       QString tmp; 
-      tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+      tmp = i18n("Account %1 has no mailbox defined!\n"
                        "Mail checking aborted\n"
-                       "Check your account settings!"), cur->name().data());
-      warning(tmp.data());
+                       "Check your account settings!")
+		.arg(cur->name());
+      warning(tmp);
       break;
     }
     else   if (cur->processNewMail(wid))
@@ -283,10 +285,11 @@ bool KMAcctMgr::intCheckMail(int item) {
   if (cur->folder() == 0)
   {
     QString tmp; 
-    tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+    tmp = i18n("Account %1 has no mailbox defined!\n"
                      "Mail checking aborted\n"
-                     "Check your account settings!"), cur->name().data());
-    warning(tmp.data());
+                     "Check your account settings!")
+		.arg(cur->name());
+    warning(tmp);
   }
   else if (cur->processNewMail(wid))
   {

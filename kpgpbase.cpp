@@ -617,9 +617,9 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
 	errMsg = i18n("The key(s) you wan't to encrypt your message\n"
 		      "to are not trusted. No encryption done.");
       else
-	errMsg.sprintf(i18n("The following key(s) are not trusted:\n%s\n"
-			    "They will not be able to decrypt the message"),
-		       aStr.data());
+	errMsg = i18n("The following key(s) are not trusted:\n%1\n"
+			    "They will not be able to decrypt the message")
+		       .arg(aStr);
       status |= ERROR;
       status |= BADKEYS;
     }
