@@ -54,7 +54,7 @@ struct KMPaintInfo {
 class KMHeaders : public QListView
 {
   Q_OBJECT
-    friend KMHeaderItem; // For easy access to the pixmaps
+    friend class KMHeaderItem; // For easy access to the pixmaps
 
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
