@@ -126,9 +126,10 @@ public:
   virtual void readConfig();
 
   /**
-   * List a directory and add the contents to a KMFolderTreeItem
+   * List a directory and add the contents to kmfoldermgr
+   * returns false if the connection failed
    */
-  void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
+  bool listDirectory(bool secondStep = FALSE);
 
   /**
    * Retrieve all mails in a folder

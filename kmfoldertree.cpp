@@ -1293,7 +1293,8 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
     if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
     {
       // the tree will be reloaded after that
-      folder->listDirectory( fti );
+      bool success = folder->listDirectory();
+      if (!success) fti->setOpen( false );
     }
   }
 }

@@ -357,7 +357,7 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
+bool KMFolderImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
   KMAcctImap::jobData jd;
@@ -369,10 +369,8 @@ void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
   url.setPath(((jd.inboxOnly) ? QString("/") : imapPath())
     + ";TYPE=" + ((mAccount->onlySubscribedFolders()) ? "LSUB" : "LIST"));
   if (!mAccount->makeConnection())
-  {
-    if (fti) fti->setOpen( FALSE );
-    return;
-  }
+    return FALSE;
+
   if (!secondStep) mHasInbox = FALSE;
   mSubfolderNames.clear();
   mSubfolderPaths.clear();
@@ -385,6 +383,8 @@ void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
   connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
           this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
   mAccount->displayProgress();
+  
+  return TRUE;
 }
 
 
@@ -407,7 +407,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   if (!job->error())
   {
     kernel->imapFolderMgr()->quiet(TRUE);
-    if (it_inboxOnly) listDirectory(NULL, TRUE);
+    if (it_inboxOnly) listDirectory(TRUE);
     else {
       if (mIsSystemFolder && mImapPath == "/INBOX/"
         && mAccount->prefix() == "/INBOX/")
@@ -423,7 +423,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
         if (!node->isDir() && (node->name() != "INBOX" || !mHasInbox)
             && mSubfolderNames.findIndex(node->name()) == -1)
         {
-kdDebug(5006) << node->name() << " disappeared." << endl;
+          kdDebug(5006) << node->name() << " disappeared." << endl;
           kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
           node = mChild->first();
         }
@@ -440,7 +440,7 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         folder->setImapPath("/INBOX/");
         folder->setLabel(i18n("inbox"));
         if (!node) folder->close();
-        folder->listDirectory(NULL);
+        folder->listDirectory();
         kernel->imapFolderMgr()->contentsChanged();
       }
       for (uint i = 0; i < mSubfolderNames.count(); i++)
@@ -466,7 +466,7 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
           folder->setImapPath(mSubfolderPaths[i]);
           if (mSubfolderMimeTypes[i] == "message/directory" ||
               mSubfolderMimeTypes[i] == "inode/directory")
-            folder->listDirectory(NULL);
+            folder->listDirectory();
         }
       }
     }
@@ -937,7 +937,7 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
         job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else {
-    listDirectory(NULL);
+    listDirectory();
   }
   if (mAccount->slave()) mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
