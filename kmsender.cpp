@@ -1,19 +1,10 @@
 // kmsender.cpp
 
 
-#include <kdebug.h>
-#include <kconfig.h>
-#include <kio/global.h>
-#include <kio/job.h>
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
-#include <kio/slave.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <kmessagebox.h>
-#include <kmainwindow.h>
-#include <kwin.h>
-#include <qregexp.h>
-#include <qdialog.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -23,16 +14,12 @@
 #include <sys/wait.h>
 #include <klocale.h>
 
-#include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
-#include "kmglobal.h"
-#include "kmfolder.h"
 
 #include "kmsender.h"
 #include "kmmessage.h"
 #include "kmidentity.h"
 #include "kmbroadcaststatus.h"
-#include "kbusyptr.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
 

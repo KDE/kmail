@@ -23,14 +23,9 @@
  * $Revision$
  */
 
-#include <qlabel.h>
-#include <qlistbox.h>
 #include <qlineedit.h>
 #include <qlayout.h>
-#include <qstring.h>
-#include <qstringlist.h>
 
-#include <kdialogbase.h>
 #include <klocale.h>
 #include <kabapi.h>
 #include <kmessagebox.h>
@@ -38,7 +33,6 @@
 #include <kdebug.h>
 
 #include "kmmainwin.h"
-#include "kmkernel.h"
 #include "addtoaddressbook.h"
 
 AddToKabDialog::AddToKabDialog(QString url_, KabAPI * api_, QWidget *parent)

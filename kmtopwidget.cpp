@@ -17,9 +17,6 @@
  * USA.
  */
 #include "kmtopwidget.h"
-#include <kapp.h>
-#include "kmsender.h"
-#include "kmglobal.h"
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):

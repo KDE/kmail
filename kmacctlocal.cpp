@@ -4,18 +4,15 @@
 #include <config.h>
 #endif
 
-#include <qdatetime.h>
 #include <qfileinfo.h>
 #include "kmacctlocal.h"
 #include "kmfoldermbox.h"
 #include "kmmessage.h"
 #include "kmacctfolder.h"
-#include "kmglobal.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 
-#include <kapp.h>
-#include <kconfig.h>
+#include <kapplication.h>
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -8,29 +8,11 @@
 #endif
 
 #undef Unsorted // X headers...
-#include <qdir.h>
-#include <qclipboard.h>
-#include <qaccel.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qsplitter.h>
-#include <qtimer.h>
 #include <qregexp.h>
 
-#include <kconfig.h>
-#include <kapp.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kstdaccel.h>
 
-#include <krun.h>
-#include <kprocess.h>
 #include <kopenwith.h>
-#include <kpopupmenu.h>
 
-#include <kmenubar.h>
 #include <kmessagebox.h>
 
 #include <kparts/browserextension.h>
@@ -48,20 +30,15 @@
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
-#include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmfoldertree.h"
-#include "kmheaders.h"
 #include "kmreaderwin.h"
 #include "kmfolderimap.h"
-#include "kmmessage.h"
 #include "kmcomposewin.h"
-#include "kmglobal.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
 #include "kmsender.h"
-#include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmversion.h"
 #include "kmfldsearch.h"
@@ -69,7 +46,6 @@
 
 
 #include <assert.h>
-#include <klocale.h>
 
 #include "kmmainwin.moc"
 

@@ -1,7 +1,4 @@
 // kmfoldertree.cpp
-#include <qdragobject.h>
-#include <qheader.h>
-#include <qbitmap.h>
 #include <qpainter.h>
 
 #include <unistd.h>
@@ -11,32 +8,17 @@
 #  define Q_ASSERT ASSERT
 #endif
 
-#include <kapp.h>
-#include <kconfig.h>
-#include <ksimpleconfig.h>
-#include <qpixmap.h>
+#include <kapplication.h>
 #include <kiconloader.h>
-#include <qtimer.h>
-#include <qpopupmenu.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstddirs.h>
-#include <kglobalsettings.h>
 #include <kmessagebox.h>
 
 #include <kdebug.h>
 
-#include "kmglobal.h"
 #include "kmfoldermgr.h"
-#include "kmfolderdir.h"
 #include "kmfolderimap.h"
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
-#include "kmkernel.h"
 #include "kmcomposewin.h"
-#include "kmacctmgr.h"
-#include "kmaccount.h"
-#include "kmacctimap.h"
 
 QPixmap* KMFolderTree::pixDir = 0;
 QPixmap* KMFolderTree::pixNode = 0;

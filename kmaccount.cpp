@@ -3,14 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <qdir.h>
-#include <qstrlist.h>
-#include <qtextstream.h>
-#include <qfile.h>
 #include <assert.h>
-#include <kconfig.h>
-#include <kapp.h>
-#include <qregexp.h>
+#include <kapplication.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -18,8 +12,6 @@
 
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
-#include "kmaccount.h"
-#include "kmglobal.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmsender.h"

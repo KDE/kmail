@@ -1,4 +1,3 @@
-#include <kpgp.h>
 #include "kmkernel.h"
 #include "kmpgpwrap.h"
 #include "kbusyptr.h"

@@ -6,7 +6,6 @@
 #include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmmsginfo.h"
 #include "kmreaderwin.h"
 #include <kpgp.h>
 #include <kdebug.h>
@@ -16,8 +15,7 @@
 #include "kmversion.h"
 #include "kmidentity.h"
 
-#include <kapp.h>
-#include <kconfig.h>
+#include <kapplication.h>
 #include <khtml_part.h>
 
 // we need access to the protected member DwBody::DeleteBodyParts()...
@@ -27,16 +25,13 @@
 #include <mimelib/field.h>
 
 #include <mimelib/mimepp.h>
-#include <qregexp.h>
 #include <assert.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <time.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kcharsets.h>
 #include <kwin.h>
-#include <qstringlist.h>
 
 
 #if ALLOW_GUI

@@ -6,18 +6,13 @@
 #endif
 
 #include "kmfilter.h"
-#include "kmmessage.h"
 #include "kmfilteraction.h"
-#include "kmfolder.h"
 #include "kmglobal.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
 #include <kdebug.h>
 
-#include <qregexp.h>
-#include <qstring.h>
 
 #include <assert.h>
 

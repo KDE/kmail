@@ -8,9 +8,7 @@
 #include <qfileinfo.h>
 #include <qregexp.h>
 
-#include "kmglobal.h"
 #include "kmfoldermbox.h"
-#include "kmkernel.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 

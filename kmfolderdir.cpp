@@ -4,13 +4,9 @@
 
 #include "kmfolderdir.h"
 #include "kmfoldermaildir.h"
-#include "kmfoldermbox.h"
 #include "kmfolderimap.h"
-#include <kapp.h>
 
 #include <assert.h>
-#include <qfile.h>
-#include <qfileinfo.h>
 #include <errno.h>
 #include <klocale.h>
 #include <kmessagebox.h>

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kuniqueapp.h>
+#include <kuniqueapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <dcopclient.h>
@@ -20,7 +20,6 @@
 #include "kmailIface_stub.h" // to call control center of master kmail
 
 #include <kaboutdata.h>
-#include <kdebug.h>
 
 #include "kmversion.h"
 

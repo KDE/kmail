@@ -3,30 +3,19 @@
 // TODO: Use msgIdMD5 in MSGID_COLUMN
 
 #include "kmfldsearch.h"
-#include "kmglobal.h"
-#include "kmfoldermgr.h"
-#include "kmfolder.h"
-#include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmainwin.h"
 #include "kmfoldertree.h"
 #include "kmfolderimap.h"
 
-#include <qmessagebox.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
 #include <qlineedit.h>
-#include <qstring.h>
 #include <qregexp.h>
 #include <qlayout.h>
-#include <qlabel.h>
 #include <assert.h>
 
-#include <klocale.h>
 #include <kdebug.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <kbuttonbox.h>
-#include <qlistview.h>
 #include <qheader.h>
 
 #include <stdlib.h>

@@ -5,15 +5,10 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
-#include "kmglobal.h"
-#include "kbusyptr.h"
 #include "kmfiltermgr.h"
 
-#include <qlabel.h>
 
 #include <assert.h>
-#include <kconfig.h>
-#include <kapp.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>

@@ -1,18 +1,11 @@
 // kmmsgpart.cpp
 
-#include <qdir.h>
 
 #include <kmimemagic.h>
-#include <kapp.h>
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kstddirs.h>
-#include <kiconloader.h>
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kmdcodec.h>
 
-#include "kmmsgbase.h"
 #include "kmmsgpart.h"
 #include "kmmessage.h"
 

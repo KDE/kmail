@@ -4,16 +4,14 @@
 
 #include <config.h>
 #include "kmaddrbook.h"
-#include <kapp.h>
-#include <kconfig.h>
+#include <kapplication.h>
 #include <kdebug.h>
 
 #include <qfile.h>
-#include <qtextstream.h>
 #include <qregexp.h>
 #include <assert.h>
 #include <klocale.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kmessagebox.h>
 
 #include "kmkernel.h" // for KabBridge

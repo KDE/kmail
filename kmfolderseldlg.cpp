@@ -1,21 +1,13 @@
 // kmfolderseldlg.cpp
 
 #include "kmfolderseldlg.h"
-#include "kmfolder.h"
-#include "kmfoldermgr.h"
-#include "kmglobal.h"
-#include "kmfolderdir.h"
 #include "kmfoldertree.h"
 #include "kmmainwin.h"
 
-#include <qpushbutton.h>
 #include <qlistbox.h>
 #include <qlayout.h>
-#include <kapp.h>
 #include <qaccel.h>
 #include <kbuttonbox.h>
-#include <klocale.h>
-#include <kdebug.h>
 
 #include <assert.h>
 

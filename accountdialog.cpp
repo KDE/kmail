@@ -21,16 +21,12 @@
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
-#include <qtextstream.h>
 #include <qradiobutton.h>
 #include <qvalidator.h>
 
-#include <kapp.h>
-#include <kconfig.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -48,7 +44,6 @@
 #include "kmacctimap.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
-#include "kmglobal.h"
 #include "kmservertest.h"
 
 #include "accountdialog.moc"

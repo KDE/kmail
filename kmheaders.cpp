@@ -2,12 +2,7 @@
 
 #include <stdlib.h>
 
-#include <qstrlist.h>
-#include <qpalette.h>
-#include <qcolor.h>
-#include <qdatetime.h>
 #include <qheader.h>
-#include <qdragobject.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
 #include <qpainter.h>
@@ -17,32 +12,22 @@
 #endif
 
 #include <kaction.h>
-#include <kapp.h>
-#include <kglobal.h>
+#include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
-#include <kiconloader.h>
-#include <kstdaccel.h>
 #include <kdebug.h>
 #include <kimageio.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
-#include <kglobalsettings.h>
 
 #include "kmfolderimap.h"
 #include "kmheaders.h"
-#include "kmkernel.h"
-#include "kmmessage.h"
 #include "kbusyptr.h"
-#include "kmglobal.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
-#include "kmfoldermgr.h"
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmreaderwin.h"
-#include "kmacctimap.h"
 #ifdef SCORING
 #include "kmscoring.h"
 #endif

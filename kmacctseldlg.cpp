@@ -26,7 +26,6 @@
 
 #include <klocale.h>
 
-#include "kmacctseldlg.h"
 #include "kmacctseldlg.moc"
 
 KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )

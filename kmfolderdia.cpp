@@ -3,17 +3,8 @@
 #include <assert.h>
 
 #include <qcheckbox.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qlabel.h>
 #include <qlayout.h>
 #include <qlineedit.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qstring.h>
-#include <qtextstream.h>
-#include <qvbox.h>
-#include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qregexp.h>
 
@@ -22,9 +13,6 @@
 #include <kdebug.h>
 
 #include "kmmainwin.h"
-#include "kmglobal.h"
-#include "kmaccount.h"
-#include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmidentity.h"

@@ -8,26 +8,14 @@
 #include <ctype.h>
 #include <string.h>
 
-#include <qstring.h>
-#include <qdir.h>
-#include <qbitmap.h>
 #include <qclipboard.h>
-#include <qcursor.h>
-#include <qmultilineedit.h>
-#include <qregexp.h>
-#include <qscrollbar.h>
-#include <qimage.h>
 #include <kaction.h>
 
 #include <kfiledialog.h>
 #include <khtml_part.h>
 #include <khtmlview.h> // So that we can get rid of the frames
-#include <kapp.h>
-#include <kconfig.h>
 #include <kcharsets.h>
 #include <kcursor.h>
-#include <krun.h>
-#include <kpopupmenu.h>
 #include <kopenwith.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
@@ -46,7 +34,6 @@
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include <kpgp.h>
-#include "kurl.h"
 
 // for selection
 #include <X11/X.h>
@@ -56,15 +43,11 @@
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
 #include <klocale.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <kstddirs.h>  // for access and getpid
+#include <kstandarddirs.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
 // for the click on attachment stuff (dnaber):
 #include <kuserprofile.h>
-#include <kmimemagic.h>
-#include <kmimetype.h>
 
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)

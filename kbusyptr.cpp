@@ -1,13 +1,10 @@
 // kbusyptr.cpp
 
 #include "kbusyptr.h"
-#include <kapp.h>
 #include <kcursor.h>
 #include <qbitmap.h>
-#include <qcursor.h>
-#include <qtimer.h>
 #include <assert.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kdebug.h>
 
 //-----------------------------------------------------------------------------

@@ -4,9 +4,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 
-#include "kmmsgbase.h"
 #include <mimelib/mimepp.h>
-#include <qtextcodec.h>
 #include <qregexp.h>
 #include <kmfolder.h>
 #include <kmheaders.h>

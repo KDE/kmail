@@ -7,12 +7,8 @@
 #include "kmglobal.h"
 
 #include "kbusyptr.h"
-#include <kapp.h>
-#include <kcombobox.h>
-#include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qlayout.h>
 #include <unistd.h>
 #include <assert.h>

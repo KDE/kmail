@@ -20,7 +20,6 @@
 
 #include <qpainter.h>
 
-#include <kapp.h>
 #include <kcolordlg.h>
 #include <kcolordrag.h>
 

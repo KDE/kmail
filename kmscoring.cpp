@@ -1,9 +1,7 @@
-#include <qguardedptr.h>
 
 #include <kdebug.h>
 
 #include "kmmainwin.h"
-#include "kmmessage.h"
 #include "kmfoldertree.h"
 #include "kmscoring.h"
 

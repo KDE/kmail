@@ -11,12 +11,10 @@
 #include <qcheckbox.h>
 #include <qvbox.h>
 
-#include <kapp.h>
 #include <kglobal.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kabapi.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, KMAddrBook* aAddrBook, const QString& aCap):

@@ -5,11 +5,7 @@
 
 #include "kmfilterdlg.h"
 #include "kmsearchpatternedit.h"
-#include "kmsearchpattern.h"
-#include "kmfilter.h"
-#include "kmfilteraction.h"
 #include "kmfiltermgr.h"
-#include "kmglobal.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -18,8 +14,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlistbox.h>
-#include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qwidgetstack.h>
 #include <qtooltip.h>

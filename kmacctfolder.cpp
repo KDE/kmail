@@ -1,9 +1,7 @@
 // kmacctfolder.cpp
 
 #include "kmacctfolder.h"
-#include "kmaccount.h"
 #include "kmacctmgr.h"
-#include "kmglobal.h"
 #include <stdlib.h>
 
 #define MAX_ACCOUNTS 16

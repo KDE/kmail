@@ -6,12 +6,8 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <kbuttonbox.h>
 
-#include <qstring.h>
-#include <qlayout.h>
 #include <qradiobutton.h>
-#include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>

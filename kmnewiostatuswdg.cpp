@@ -3,9 +3,6 @@
 // This code is published under the GPL
 
 #include <iostream.h>
-#include <kapp.h>
-#include <kwin.h>
-#include "kmnewiostatuswdg.h"
 #include <klocale.h>
 #include "kmnewiostatuswdg.moc"
 

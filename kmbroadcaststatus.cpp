@@ -9,7 +9,6 @@
 
 #include "kmbroadcaststatus.moc"
 
-#include "kmbroadcaststatus.h"
 #include <kprogress.h>
 #include <kdebug.h>
 

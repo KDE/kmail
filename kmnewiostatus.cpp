@@ -3,7 +3,6 @@
 // This code is published under the GPL.
 
 #include <iostream.h>
-#include "kmnewiostatus.h"
 #include "kmnewiostatus.moc"
 
 KMIOStatus::KMIOStatus(QWidget *parent, const char *name) 

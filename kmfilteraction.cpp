@@ -12,24 +12,19 @@
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
-#include "kmfolder.h"
 #include "kmsender.h"
 #include "kmidentity.h"
 #include "kfileio.h"
 #include "kmfawidgets.h"
 
 #include <qregexp.h>
-#include <kstddirs.h>
-#include <kconfig.h>
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
 
 #include <qcombobox.h>
-#include <qvaluelist.h>
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
-#include <qlineedit.h>
 #include <qlabel.h>
 #include <qlayout.h>
 

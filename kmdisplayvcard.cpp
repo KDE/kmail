@@ -21,12 +21,9 @@
 #include "kmdisplayvcard.moc"
 
 
-#include <qframe.h>
-#include <qlabel.h>
 #include <qlayout.h>
 #include <klocale.h>
 #include <qmultilineedit.h>
-#include <qbutton.h>
 #include <kurllabel.h>
 
 KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : KTabCtl(parent, name) {

@@ -2,18 +2,14 @@
 // Author: Kurt Granroth <granroth@kde.org>
 
 #include <qdir.h>
-#include <qfileinfo.h>
 #include <qregexp.h>
-#include <qtextstream.h>
 
-#include "kmglobal.h"
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
-#include "kmkernel.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

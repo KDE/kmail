@@ -1,6 +1,4 @@
-#include <kdebug.h>
 #include <kmmessage.h>
-#include <qregexp.h>
 
 typedef QString (*MagicDetectorFunc) (const KMMessage *, QCString &, QString &);
 

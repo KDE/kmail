@@ -1,13 +1,9 @@
 // kmfiltermgr.cpp
 
-#include <kapp.h>
-#include <kconfig.h>
+#include <kapplication.h>
 #include <kdebug.h>
 
-#include "kmglobal.h"
 #include "kmfiltermgr.h"
-#include "kmfoldermgr.h"
-#include "kmfilter.h"
 #include "kmfilterdlg.h"
 #include "kmmessage.h"
 

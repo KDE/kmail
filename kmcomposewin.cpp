@@ -2,19 +2,11 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
-#include <qdir.h>
 #undef GrayScale
 #undef Color
-#include <qprinter.h>
-#include <qcombobox.h>
-#include <qdragobject.h>
-#include <qlistview.h>
 #include <qtooltip.h>
 
-#include "kmcomposewin.h"
 #include "kmmessage.h"
-#include "kmmsgbase.h"
-#include "kmmsgpart.h"
 #include "kmsender.h"
 #include "kmidentity.h"
 #include "kfileio.h"
@@ -26,11 +18,8 @@
 #include "kmfolder.h"
 #include "kmtransport.h"
 
-#include <kabapi.h>
 #include <kaction.h>
-#include <kapp.h>
 #include <kcharsets.h>
-#include <kcompletion.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kstdaction.h>
@@ -43,29 +32,16 @@
 #include "kmreaderwin.h"
 
 #include <assert.h>
-#include <kconfig.h>
-#include <kiconloader.h>
-#include <kmenubar.h>
-#include <kstatusbar.h>
-#include <ktoolbar.h>
-#include <kstdaccel.h>
 #include <mimelib/mimepp.h>
 #include <kfiledialog.h>
 #include <kwin.h>
-#include <kglobal.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
 
 #include <kspell.h>
 
 #include <qtabdialog.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qptrlist.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 #include <qregexp.h>
-#include <qcursor.h>
 #include <qbuffer.h>
 
 #include <sys/stat.h>
@@ -73,11 +49,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <klocale.h>
 #include <ktempfile.h>
 #include <fcntl.h>
 
-#include "kmglobal.h"
 #include "kmrecentaddr.h"
 
 #include "kmcomposewin.moc"

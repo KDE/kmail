@@ -22,14 +22,12 @@
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
-#include <qlabel.h>
 #include <qlineedit.h>
 #include <qradiobutton.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
 
-#include <kapp.h>
-#include <kconfig.h>
+#include <kapplication.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>

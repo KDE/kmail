@@ -4,16 +4,11 @@
 #include <qfileinfo.h>
 #include <qsortedlist.h>
 
-#include "kmglobal.h"
-#include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmfolderdir.h"
-#include "kbusyptr.h"
 #include "kmfolderimap.h"
 #include "kmundostack.h"
 
-#include <kapp.h>
-#include <kconfig.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <kmessagebox.h>

@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <qdir.h>
-#include <qstring.h>
 
 #if QT_VERSION < 300
 #  define Q_CHECK_PTR CHECK_PTR
@@ -16,24 +14,18 @@
 #include <kmessagebox.h>
 #include <knotifyclient.h>
 #include <klocale.h>
-#include <kapp.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 
-#include <kmailIface.h>
 
-#include "kmkernel.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmfoldermgr.h"
-#include "kmfoldermbox.h"
 #include "kmfolderimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
-#include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"
-#include "kmidentity.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
@@ -41,7 +33,6 @@
 #include "kmpgpwrap.h"
 #include "kmversion.h"
 #include "kmrecentaddr.h"
-#include <kabapi.h>
 #include <kwin.h>
 
 #include <X11/Xlib.h>

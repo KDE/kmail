@@ -1,16 +1,12 @@
 // kfileio.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 
-#include <kapp.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-#include <qstring.h>
 #include <assert.h>
-#include <qfile.h>
 #include <qdir.h>
 
-#include "kfileio.h"
 #include <klocale.h>
 
 

@@ -9,7 +9,6 @@
 #include <kiconloader.h>
 //#include <klocale.h>
 
-#include <qpushbutton.h>
 #include <qlayout.h>
 
 //=============================================================================

@@ -19,17 +19,12 @@
 
 #include <qdir.h>
 
-#include <kapp.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmundostack.h"
-#include "kmfolder.h"
-#include "kmglobal.h"
-#include "kmmessage.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):

@@ -24,23 +24,14 @@
 #include <config.h>
 #endif
 
-#include "kbusyptr.h"
-#include "kmacctimap.h"
 #include "kmfolderimap.h"
 #include "kmfoldertree.h"
-#include "kmglobal.h"
-#include "kmmessage.h"
 #include "kmundostack.h"
-#include "kmfolderdir.h"
 #include "kmfoldermgr.h"
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <kdebug.h>
-#include <kio/global.h>
 #include <kio/scheduler.h>
-#include <kio/slave.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
 #include <qbuffer.h>
 #include <qregexp.h>

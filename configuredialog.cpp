@@ -31,60 +31,33 @@
 #include <unistd.h>
 #endif
 
-#include <qbuttongroup.h>
 #include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qheader.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qlistbox.h>
-#include <qmultilineedit.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qregexp.h>
 #include <qtabwidget.h>
-#include <qvalidator.h>
 #include <qvbox.h>
 #include <qwhatsthis.h>
 
-#include <kapp.h>
-#include <kcharsets.h>
-#include <kcolorbtn.h>
-#include <kconfig.h>
-#include <kdebug.h>
+#include <kapplication.h>
 #include <kemailsettings.h>
 #include <kfiledialog.h>
 #include <kfontdialog.h>
-#include <kiconloader.h>
-#include <klineedit.h>
 #include <klineeditdlg.h>
-#include <klistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <knuminput.h>
 #include <kpgp.h>
-#include <ksimpleconfig.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <kurlrequester.h>
-#include <kglobalsettings.h>
 #include <kscoring.h>
-#include <kscoringeditor.h>
 #include <kseparator.h>
 
 #include "accountdialog.h"
 #include "colorlistbox.h"
 #include "configuredialog.h"
 #include "kbusyptr.h"
-#include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
 #include "kmfolder.h"
-#include "kmglobal.h"
 #include "kmheaders.h"
 #include "kmidentity.h"
-#include "kmmessage.h"
 #include "kmsender.h"
 #include "kmtopwidget.h"
 #include "kmtransport.h"
@@ -1497,8 +1470,6 @@ void ConfigureDialog::makeSecurityPage( void )
     vlay->addStretch(10);
 }
 
-#include <kinstance.h>
-#include <kglobal.h>
 
 
 void ConfigureDialog::makeMiscPage( void )

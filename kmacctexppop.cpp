@@ -9,35 +9,18 @@
 #include <unistd.h>
 #include <signal.h>
 #include <mimelib/mimepp.h>
-#include <kmfolder.h>
 #include <kmmessage.h>
-#include <qtextstream.h>
-#include <kconfig.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
 #include <kdebug.h>
-#include <kapp.h>
-#include <kstddirs.h>
-#include <qlayout.h>
-#include <qdatastream.h>
+#include <kstandarddirs.h>
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
 
-#include "kmacctexppop.h"
-#include "kalarmtimer.h"
-#include "kmglobal.h"
-#include "kbusyptr.h"
-#include "kmacctfolder.h"
 #include "kmfiltermgr.h"
-#include <kprocess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qtooltip.h>
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 
-#include <kwin.h>
-#include <kbuttonbox.h>
 
 //-----------------------------------------------------------------------------
 KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):

@@ -1,6 +1,5 @@
 // kmfoldernode.cpp
 
-#include "kmfoldernode.h"
 #include "kmfolderdir.h"
 
 //-----------------------------------------------------------------------------

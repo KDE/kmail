@@ -10,10 +10,8 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
-#include <qdatetime.h>
 
 
-#include <qglobal.h>
 #if QT_VERSION > 290
 // new regexp
 #include <qregexp.h>

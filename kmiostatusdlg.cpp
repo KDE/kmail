@@ -7,7 +7,6 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <klocale.h>
-#include <kapp.h>
 
 //-----------------------------------------------------------------------------
 KMIOStatusDlg::KMIOStatusDlg(const char* aCap):
