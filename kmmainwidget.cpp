@@ -754,7 +754,6 @@ void KMMainWidget::show()
   QWidget::show();
 }
 
-#include <kapplication.h>
 #include <dcopclient.h>
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearch()

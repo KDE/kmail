@@ -13,7 +13,6 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 #include <qbitmap.h>
-#include <qheader.h>
 
 #include <kaction.h>
 #include <kapplication.h>

@@ -40,7 +40,6 @@
 #include <kparts/browserextension.h>
 #include <kprogress.h>
 #include <krun.h>
-#include <kdebug.h>
 
 #include "kbusyptr.h"
 #include "mailinglist-magic.h"

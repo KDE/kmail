@@ -38,7 +38,6 @@
 #include "kmmainwin.h"
 #include "kmailIface.h"
 #include "kmail_part.h"
-#include <klocale.h>
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>

@@ -82,7 +82,6 @@ using namespace KMime;
 
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
-#include <klocale.h>
 #include <kstandarddirs.h>  // for access and getpid
 #include <kglobalsettings.h>
 //--- Sven's save attachments to /tmp end ---
