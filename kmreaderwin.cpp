@@ -1030,6 +1030,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
   #warning Espen 2000-05-07. Using a delayed resize. Use direct resize
   #warning from time to time to see how the html widget behaves.
 
+  #if 0
   static QTimer *timer = 0;
   if( timer == 0 )
   {
@@ -1054,6 +1055,23 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
   mViewer->widget()->setGeometry(0, 0, width(), height());
   doDelayedResize = false;
   timer->start( 150, true );
+  #endif
+
+
+  static QTimer *timer = 0;
+  if( timer == 0 )
+  {
+    timer = new QTimer( this );
+    connect( timer, SIGNAL(timeout()), SLOT(slotDelayedResize()) );
+  }
+  if( timer->isActive() )
+  {
+    //puts("ignored");
+    return;
+  }
+
+  doDelayedResize = true;
+  timer->start( 100, true );
 
   //
   // Orig
