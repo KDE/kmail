@@ -697,7 +697,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos2 = toStr.find(", ", i);
       toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2);
     }
-    toStr.truncate(toStr.length()-2);
+    else
+      toStr.truncate(toStr.length()-2);
     // same for the cc field
     QString ccStr = cc().simplifyWhiteSpace() + ", ";
     if((i = ccStr.find(f)) != -1)
@@ -708,7 +709,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos2 = ccStr.find(", ", i);
       ccStr = ccStr.left(pos1) + ccStr.right(ccStr.length() - pos2 - 1); //Daniel
     }
-    ccStr.truncate(ccStr.length()-2);
+    else
+      ccStr.truncate(ccStr.length()-2);
 
     // remove leading or trailing "," and spaces - might confuse some MTAs
     if (!ccStr.isEmpty())
