@@ -271,7 +271,12 @@ QString KMPopHeadersViewItem::key(int col, bool) const
 {
   if (col == 3) return KMMsgBase::skipKeyword(text(col).lower());
   if (col == 5) return text(7);
-  if (col == 6) return QString("%1").arg(text(col), 10);
+  if (col == 6)
+  {
+    QString st = text(col);
+    while (st.length() < 10) st = "0" + st;
+    return st;
+  }
   return text(col);
 }
 

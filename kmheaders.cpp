@@ -323,7 +323,9 @@ public:
                        // readSortOrder()
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QString("%1") .arg( (char)sortOrder );
-    QString sortArrival = QString( "%1" ).arg( id, 8, 36 );
+    QString sortArrival = QString( "%1" ).arg( id, 0, 36 );
+    while (sortArrival.length() < 8) sortArrival = "0" + sortArrival;
+
     if (column == paintInfo->dateCol) {
       if (paintInfo->orderOfArrival)
         return ret + sortArrival;
@@ -348,15 +350,19 @@ public:
       return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + " " + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
+      QString len;
       if (headers->folder()->protocol() == "imap")
       {
         QCString cstr;
         headers->folder()->getMsgString(id, cstr);
         int a = cstr.find("\nX-Length: ");
         int b = cstr.find("\n", a+1);
-        return ret + QString( "%1" ).arg( cstr.mid(a+11, b-a-11), 9 );
+        len = QString( "%1" ).arg( cstr.mid(a+11, b-a-11) );
+      } else {
+        len = QString( "%1" ).arg( msg->msgSize() );
       }
-      return ret + QString( "%1" ).arg( msg->msgSize(), 9 );
+      while (len.length() < 9) len = "0" + len;
+      return ret + len;
     }
     return ret + "missing key"; //you forgot something!!
   }
