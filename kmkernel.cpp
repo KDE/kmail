@@ -35,8 +35,6 @@
 
 #include <X11/Xlib.h>
 
-#define DCOPADDMSG_BUF  16384
-
 KMKernel *KMKernel::mySelf = 0;
 
 /********************************************************************/
@@ -154,9 +152,6 @@ void KMKernel::compactAllFolders ()
 
 int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
-char buf[DCOPADDMSG_BUF+1];
-unsigned long len;
-FILE *msgFile;
 int retval;
 QString bericht;
 static QStringList *msgIds=NULL;
@@ -166,7 +161,6 @@ bool readFolderMsgIds=false;
   //kdDebug() << "KMKernel::dcopAddMessage called" << endl;
 
   if (foldername!=lastFolder) {
-    fprintf(stderr,"foldername!=lastfolder\n");
     if (msgIds!=NULL) { delete msgIds; }
     msgIds=new QStringList;
     readFolderMsgIds=true;
@@ -175,25 +169,15 @@ bool readFolderMsgIds=false;
 
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
 
-    msgFile=fopen(msgUrl.path(),"rb");
-    if (msgFile==NULL) { return -2; }
+    // This is a proposed change by Daniel Andor.
+    // He proposed to change from the fopen(blah)
+    // to a kFileToString(blah).
+    // Although it assigns a QString to a QString,
+    // because of the implicit sharing this poses
+    // no memory or performance penalty.
 
-    fseek(msgFile,0,SEEK_END);
-    len=ftell(msgFile);
-    fseek(msgFile,0,SEEK_SET);
-
-    while(len>DCOPADDMSG_BUF) {
-      fread(buf,DCOPADDMSG_BUF,1,msgFile);
-      len-=DCOPADDMSG_BUF;
-      buf[DCOPADDMSG_BUF]='\0';
-      {QString bf(buf); bericht+=bf; }
-    }
-
-    fread(buf,len,1,msgFile);
-    buf[len]='\0';
-    {QString bf(buf); bericht+=bf; }
-
-    fclose(msgFile);
+    bericht=kFileToString(msgUrl.path(),true,false);
+    if (bericht.isNull()) { return -2; }
 
     KMMessage *M=new KMMessage();
     M->fromString(bericht);
@@ -225,7 +209,7 @@ bool readFolderMsgIds=false;
 
           id+=dt;
 
-          fprintf(stderr,"%s\n",(const char *) id);
+          //fprintf(stderr,"%s\n",(const char *) id);
           if (id!="") { msgIds->append(id); }
         }
       }
@@ -240,7 +224,7 @@ bool readFolderMsgIds=false;
       msgId+=dt;
 
       int     k=msgIds->findIndex(msgId);
-      fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
+      //fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
 
       if (k==-1) {
         if (msgId!="") { msgIds->append(msgId); }
