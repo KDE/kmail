@@ -276,12 +276,11 @@ void KMSender::doSendMsg()
   // See if there is another queued message
   mCurrentMsg = kernel->outboxFolder()->getMsg(0);
   if (!mCurrentMsg)
-  {
-    if (someSent)
-      setStatusMsg(i18n("Queued messages successfully sent."));
-      
+  {      
     // no more message: cleanup and done
     cleanup();
+    if (someSent)
+      setStatusMsg(i18n("Queued messages successfully sent."));
     return;
   }
 
@@ -323,8 +322,8 @@ void KMSender::doSendMsg()
   setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
   if (!mSendProc->send(mCurrentMsg))
   {
-    setStatusMsg(i18n("Failed to send (some) queued messages."));
     cleanup();
+    setStatusMsg(i18n("Failed to send (some) queued messages."));
     return;
   }
   // Do *not* add code here, after send(). It can happen that this method
