@@ -54,6 +54,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   mOpenFolders.setAutoDelete(true);
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
+  connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
 }
 
 
@@ -412,6 +413,22 @@ void KMAcctImap::slotMailCheckCanceled()
 FolderStorage* const KMAcctImap::rootFolder() const
 {
   return mFolder;
+}
+
+ImapAccountBase::ConnectionState KMAcctImap::makeConnection() 
+{
+    if ( mSlaveConnectionError )
+    {
+       mErrorTimer.start(100, true); // Clear error flag
+       return Error;
+    }
+    return ImapAccountBase::makeConnection();
+}
+
+void KMAcctImap::slotResetConnectionError()
+{
+  mSlaveConnectionError = false;
+  kdDebug(5006) << k_funcinfo << endl;
 }
 
 #include "kmacctimap.moc"

@@ -54,6 +54,7 @@ public:
    */
   virtual QString type(void) const;
   virtual void processNewMail(bool);
+  ConnectionState makeConnection();
 
   /**
    * Kill all jobs related the the specified folder/msg
@@ -124,7 +125,14 @@ protected slots:
    */
   void slotMailCheckCanceled();
 
+  /**
+   * called to reset the connection error status
+   */
+  void slotResetConnectionError();
+
 private:
+  /** used to reset connection errors */
+  QTimer mErrorTimer;
   int mCountRemainChecks;
 };
 

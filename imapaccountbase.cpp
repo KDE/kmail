@@ -93,6 +93,7 @@ namespace KMail {
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
       mSlaveConnected( false ),
+      mSlaveConnectionError( false ),
       mListDirProgressItem( 0 )
   {
     mPort = imapDefaultPort;
@@ -481,8 +482,11 @@ namespace KMail {
       handleError( errorCode, errorMsg, 0, QString::null, true );
       if ( mAskAgain )
         makeConnection();
-      else
+      else {
+        if ( !mSlaveConnected )
+          mSlaveConnectionError = true;
         emit connectionResult( errorCode, errorMsg );
+  }
   }
 
   //-----------------------------------------------------------------------------
