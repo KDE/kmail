@@ -5,9 +5,6 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
-#include "kmheaders.h"
-#include "kmime_util.h"
-
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qguardedptr.h>
@@ -433,25 +430,42 @@ protected slots:
       or disabled */
   void showMIMETreeClicked( int id );
 
-protected:
+protected: // methods
+  QPixmap pixmapFor( int num, int type );
+
+protected: // data
   QCheckBox    *mShowColorbarCheck;
+  QButtonGroup *mShowMIMETreeMode;
+  QButtonGroup *mWindowLayoutBG;
+  int mShowMIMETreeModeLastValue;
+};
+
+class AppearancePageHeadersTab : public ConfigurationPage {
+  Q_OBJECT
+public:
+  AppearancePageHeadersTab( QWidget * parent=0, const char * name=0 );
+
+  // no icons:
+  static QString iconLabel() { return QString::null; }
+  static const char * iconName() { return 0; }
+
+  static QString title();
+  static QString helpAnchor();
+
+  void setup();
+  void apply();
+  void installProfile( KConfig * profile );
+
+protected: // methods
+  void setDateDisplay( int id, const QString & format );
+
+protected: // data
   QCheckBox    *mMessageSizeCheck;
   QCheckBox    *mNestedMessagesCheck;
   QCheckBox    *mCryptoIconsCheck;
   QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
-  QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB, *mLayout5PB;
-  QButtonGroup *mShowMIMETreeMode;
-  QButtonGroup *mWindowLayoutBG;
-
-  enum { numDateDisplayConfig = 4 };
-  static const struct dateDisplayConfigType {
-    const char *  displayName;
-    KMime::DateFormatter::FormatType dateDisplay;
-  } dateDisplayConfig[ numDateDisplayConfig ];
-
-private:
-  int mShowMIMETreeModeLastValue;
+  QLineEdit    *mCustomDateFormatEdit;
 };
 
 class AppearancePageProfileTab : public ConfigurationPage {
@@ -495,6 +509,7 @@ public:
   typedef AppearancePageFontsTab FontsTab;
   typedef AppearancePageColorsTab ColorsTab;
   typedef AppearancePageLayoutTab LayoutTab;
+  typedef AppearancePageHeadersTab HeadersTab;
   typedef AppearancePageProfileTab ProfileTab;
 
 signals:
@@ -506,6 +521,7 @@ protected:
   FontsTab   *mFontsTab;
   ColorsTab  *mColorsTab;
   LayoutTab  *mLayoutTab;
+  HeadersTab *mHeadersTab;
   ProfileTab *mProfileTab;
 };
 

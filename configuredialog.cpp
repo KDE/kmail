@@ -56,9 +56,12 @@ using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
 #include "kmkernel.h"
+#include "kmmessage.h"
 
 // other kdenetwork headers:
 #include <kpgpui.h>
+#include <kmime_util.h>
+using KMime::DateFormatter;
 
 
 // other KDE headers:
@@ -86,13 +89,13 @@ using KMail::IdentityDialog;
 #include <qvgroupbox.h>
 #include <qhgroupbox.h>
 #include <qvbuttongroup.h>
+#include <qhbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qlineedit.h>
-#include <qobjectlist.h>
 #include <qpopupmenu.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -1520,6 +1523,12 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   addTab( mLayoutTab, mLayoutTab->title() );
 
   //
+  // "Headers" tab:
+  //
+  mHeadersTab = new HeadersTab();
+  addTab( mHeadersTab, mHeadersTab->title() );
+
+  //
   // "Profile" tab:
   //
   mProfileTab = new ProfileTab();
@@ -1533,6 +1542,7 @@ void AppearancePage::setup() {
   mFontsTab->setup();
   mColorsTab->setup();
   mLayoutTab->setup();
+  mHeadersTab->setup();
   mProfileTab->setup();
 }
 
@@ -1540,6 +1550,7 @@ void AppearancePage::installProfile( KConfig * profile ) {
   mFontsTab->installProfile( profile );
   mColorsTab->installProfile( profile );
   mLayoutTab->installProfile( profile );
+  mHeadersTab->installProfile( profile );
   mProfileTab->installProfile( profile );
 }
 
@@ -1548,6 +1559,7 @@ void AppearancePage::apply() {
   mFontsTab->apply();
   mColorsTab->apply();
   mLayoutTab->apply();
+  mHeadersTab->apply();
 }
 
 
@@ -1847,94 +1859,40 @@ QString AppearancePage::LayoutTab::helpAnchor() {
   return QString::fromLatin1("configure-appearance-layout");
 }
 
-// hrmpf. Needed b/c I18N_NOOP can't take hints.
-const AppearancePage::LayoutTab::dateDisplayConfigType
-AppearancePage::LayoutTab::dateDisplayConfig[] = {
-  { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
-  { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
-  { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("&Custom (shift + F1 for help)"), KMime::DateFormatter::Custom }
-};
+static const int numWindowLayouts = 5;
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigurationPage( parent, name ),
     mShowMIMETreeModeLastValue( -1 )
 {
   // tmp. vars:
-  QVBoxLayout  *vlay;
+  QVBoxLayout * vlay;
+  QPushButton * button;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  // The general options (were previously standalone, without button group
-  QVButtonGroup* generalOptionsVBG = new QVButtonGroup( i18n( "&General Options" ), this );
-  vlay->addWidget( generalOptionsVBG );
-  generalOptionsVBG->layout()->setSpacing( KDialog::spacingHint() );
-
-  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"),
-                                      generalOptionsVBG );
-
-  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"),
-                                     generalOptionsVBG );
-
-  mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto icons" ),
-                                     generalOptionsVBG );
-
-  mNestedMessagesCheck =
-    new QCheckBox( i18n("&Thread list of message headers"),
-                   generalOptionsVBG );
-
-
-  // window layout and MIME tree viewer
-  QHBoxLayout* hlayWindowLayoutAndMIMETree = new QHBoxLayout();
-  vlay->addLayout( hlayWindowLayoutAndMIMETree );
-  hlayWindowLayoutAndMIMETree->setSpacing( KDialog::spacingHint() );
+  // "show colorbar" check box:
+  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), this );
+  vlay->addWidget( mShowColorbarCheck );
 
   // The window layout
-  QHGroupBox* visibleHGB = new QHGroupBox( i18n( "W&indow Layout" ), this );
-  hlayWindowLayoutAndMIMETree->addWidget( visibleHGB );
-  visibleHGB->layout()->setSpacing( KDialog::spacingHint() );
-
-  mWindowLayoutBG = new QButtonGroup( this );
-  mWindowLayoutBG->hide();
+  mWindowLayoutBG = new QHButtonGroup( i18n("Window Layout"), this );
+  mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
   mWindowLayoutBG->setExclusive( true );
 
-  QHBox* layoutHB = new QHBox( visibleHGB );
-  layoutHB->layout()->setSpacing( KDialog::spacingHint() );
+  for ( int i = 0 ; i < numWindowLayouts ; ++i ) {
+    button = new QPushButton( mWindowLayoutBG );
+    mWindowLayoutBG->insert( button, i );
+    button->setPixmap( pixmapFor( i, 2 /* never */ ) );
+    button->setFixedSize( button->sizeHint() );
+    button->setAutoDefault( false );
+    button->setToggleButton( true );
+  }
 
-  mLayout1PB = new QPushButton( layoutHB );
-  mWindowLayoutBG->insert( mLayout1PB, 0 );
-  mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1" ) );
-  mLayout1PB->setFixedSize( mLayout1PB->sizeHint() );
-  mLayout1PB->setToggleButton( true );
-
-  mLayout2PB = new QPushButton( layoutHB );
-  mWindowLayoutBG->insert( mLayout2PB, 1 );
-  mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2" ) );
-  mLayout2PB->setFixedSize( mLayout2PB->sizeHint() );
-  mLayout2PB->setToggleButton( true );
-
-  mLayout3PB = new QPushButton( layoutHB );
-  mWindowLayoutBG->insert( mLayout3PB, 2 );
-  mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3" ) );
-  mLayout3PB->setFixedSize( mLayout3PB->sizeHint() );
-  mLayout3PB->setToggleButton( true );
-
-  mLayout4PB = new QPushButton( layoutHB );
-  mWindowLayoutBG->insert( mLayout4PB, 3 );
-  mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
-  mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
-  mLayout4PB->setToggleButton( true );
-
-  mLayout5PB = new QPushButton( layoutHB );
-  mWindowLayoutBG->insert( mLayout5PB, 4 );
-  mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5" ) );
-  mLayout5PB->setFixedSize( mLayout5PB->sizeHint() );
-  mLayout5PB->setToggleButton( true );
+  vlay->addWidget( mWindowLayoutBG );
 
   // the MIME Tree Viewer
-  mShowMIMETreeMode =
-    new QVButtonGroup( i18n("Show &MIME Tree"), this );
-  hlayWindowLayoutAndMIMETree->addWidget( mShowMIMETreeMode );
+  mShowMIMETreeMode = new QVButtonGroup( i18n("Show MIME Tree"), this );
   mShowMIMETreeMode->layout()->setSpacing( KDialog::spacingHint() );
 
   mShowMIMETreeMode->insert(
@@ -1944,10 +1902,134 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mShowMIMETreeMode->insert(
     new QRadioButton( i18n("Always"), mShowMIMETreeMode ), 2 );
 
-  connect( mShowMIMETreeMode, SIGNAL( clicked( int )),
-          this, SLOT( showMIMETreeClicked( int )) );
+  vlay->addWidget( mShowMIMETreeMode );
 
-  // a button group for four radiobuttons (by default exclusive):
+  connect( mShowMIMETreeMode, SIGNAL(clicked(int)),
+	   this, SLOT(showMIMETreeClicked(int)) );
+
+  vlay->addStretch( 10 ); // spacer
+}
+
+QPixmap AppearancePage::LayoutTab::pixmapFor( int layout, int mode ) {
+  QString suffix;
+  switch( mode ) {
+  case 0: // Never
+    suffix = "_no_mime";
+    break;
+  case 1: // Smart
+    suffix = "_smart_mime";
+    break;
+  default: ;
+  }
+
+  // the icon files are numbered 1..5 !
+  return UserIcon( QString("kmailwindowlayout%1").arg( layout+1 ) + suffix );
+}
+
+void AppearancePage::LayoutTab::showMIMETreeClicked( int mode )
+{
+  if ( mShowMIMETreeModeLastValue == mode ) return;
+
+  mShowMIMETreeModeLastValue = mode;
+  for ( int i = 0 ; i < numWindowLayouts ; ++i )
+    mWindowLayoutBG->find( i )->setPixmap( pixmapFor( i, mode ) );
+}
+
+void AppearancePage::LayoutTab::setup() {
+  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
+
+  mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
+
+  int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
+  if( windowLayout < 0 || windowLayout > 4 )
+      windowLayout = 0;
+  mWindowLayoutBG->setButton( windowLayout );
+
+  int num = geometry.readNumEntry( "showMIME", 1 );
+  if ( num < 0 || num > 2 ) num = 1;
+  mShowMIMETreeMode->setButton( num );
+  showMIMETreeClicked( num );
+}
+
+void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
+  KConfigGroup reader( profile, "Reader" );
+  KConfigGroup geometry( profile, "Geometry" );
+
+  if ( reader.hasKey( "showColorbar" ) )
+    mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar" ) );
+
+  if( geometry.hasKey( "windowLayout" ) ) {
+      int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
+      if( windowLayout < 0 || windowLayout > 4 )
+          windowLayout = 0;
+      mWindowLayoutBG->setButton( windowLayout );
+  }
+
+  if( geometry.hasKey( "showMIME" ) ) {
+    int num = geometry.readNumEntry( "showMIME" );
+    if ( num < 0 || num > 2 ) num = 1;
+    mShowMIMETreeMode->setButton( num );
+  }
+}
+
+void AppearancePage::LayoutTab::apply() {
+  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
+
+  reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
+
+  geometry.writeEntry( "windowLayout",
+                       mWindowLayoutBG->id( mWindowLayoutBG->selected() ) );
+  geometry.writeEntry( "showMIME",
+                       mShowMIMETreeMode->id( mShowMIMETreeMode->selected()));
+}
+
+QString AppearancePage::HeadersTab::title() {
+  return i18n("H&eaders");
+}
+
+QString AppearancePage::HeadersTab::helpAnchor() {
+  return QString::fromLatin1("configure-appearance-headers");
+}
+
+static const struct {
+  const char * displayName;
+  DateFormatter::FormatType dateDisplay;
+} dateDisplayConfig[] = {
+  { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
+  { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
+  { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
+  { I18N_NOOP("&Custom (shift + F1 for help)"), KMime::DateFormatter::Custom }
+};
+static const int numDateDisplayConfig =
+  sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
+
+AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char * name )
+  : ConfigurationPage( parent, name ),
+    mCustomDateFormatEdit( 0 )
+{
+  // tmp. vars:
+  QButtonGroup * group;
+  QRadioButton * radio;
+  QString msg;
+
+  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "General Options" group:
+  group = new QVButtonGroup( i18n( "General Options" ), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+
+  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), group );
+
+  mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto icons" ), group );
+
+  mNestedMessagesCheck =
+    new QCheckBox( i18n("&Thread list of message headers"), group );
+
+  vlay->addWidget( group );
+
+  // "Message Header Threading Options" group:
   mNestingPolicy =
     new QVButtonGroup( i18n("Message Header Threading Options"), this );
   mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
@@ -1964,153 +2046,111 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain new, unread "
 			   "or important messages"), mNestingPolicy ), 3 );
+
   vlay->addWidget( mNestingPolicy );
 
-  // a button group for three radiobuttons:
-  mDateDisplay = new QVButtonGroup( i18n( "Displaying of the date", "Date Display" ), this );
+  // "Date Display" group:
+  mDateDisplay = new QVButtonGroup( i18n("Date Display"), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
-    if ( dateDisplayConfig[i].dateDisplay == KMime::DateFormatter::Custom ) {
-      QRadioButton *b = new QRadioButton( i18n(dateDisplayConfig[i].displayName),
-					  mDateDisplay );
-      mDateDisplay->insert(b);
-      QLineEdit *le = new QLineEdit( mDateDisplay );
-      QWhatsThis::add(le, i18n( "<B>These expressions may be used for the date:</B> <BR>"
-			        "<UL>"
-				"<LI>d - the day as a number without a leading zero (1-31) "
-				"<LI>dd - the day as a number with a leading zero (01-31) "
-				"<LI>ddd - the abbreviated day name (Mon - Sun) "
-				"<LI>dddd - the long day name (Monday - Sunday) "
-				"<LI>M - the month as a number without a leading zero (1-12) "
-				"<LI>MM - the month as a number with a leading zero (01-12) "
-				"<LI>MMM - the abbreviated month name (Jan - Dec) "
-				"<LI>MMMM - the long month name (January - December) "
-				"<LI>yy - the year as a two digit number (00-99) "
-				"<LI>yyyy - the year as a four digit number (0000-9999) "
-				"</UL>"
-				"<B>These expressions may be used for the time:</B> "
-				"<UL>"
-				"<LI>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display) "
-				"<LI>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display) "
-				"<LI>m - the minutes without a leading zero (0-59) "
-				"<LI>mm - the minutes with a leading zero (00-59) "
-				"<LI>s - the seconds without a leading zero (0-59) "
-				"<LI>ss - the seconds with a leading zero (00-59) "
-				"<LI>z - the milliseconds without leading zeroes (0-999) "
-	      			"<LI>zzz - the milliseconds with leading zeroes (000-999) "
-				"<LI>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\". "
-				"<LI>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\". "
-				"<LI>Z - time zone in numeric form (-0500) "
-				"</UL>"
-				"<B>All other input characters will be ignored.</B>") );
-      le->setEnabled( false );
-      QObject::connect( b, SIGNAL(toggled(bool)), le, SLOT(setEnabled(bool)) );
-    } else {
-      mDateDisplay->insert( new QRadioButton( i18n(dateDisplayConfig[i].displayName)
-					      .arg( KMime::DateFormatter::formatCurrentDate(
-                                                         dateDisplayConfig[i].dateDisplay ) ),
-					                 mDateDisplay ), i );
-      }
-  }
+    QString buttonLabel = i18n(dateDisplayConfig[i].displayName)
+      .arg( DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
+    radio = new QRadioButton( buttonLabel, mDateDisplay );
+    mDateDisplay->insert( radio, i );
+    if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
+      mCustomDateFormatEdit = new QLineEdit( mDateDisplay );
+      mCustomDateFormatEdit->setEnabled( false );
+      connect( radio, SIGNAL(toggled(bool)),
+	       mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
+      msg = i18n( "<qt><p><strong>These expressions may be used for the date:"
+		  "</strong></p>"
+		  "<ul>"
+		  "<li>d - the day as a number without a leading zero (1-31)</li>"
+		  "<li>dd - the day as a number with a leading zero (01-31)</li>"
+		  "<li>ddd - the abbreviated day name (Mon - Sun)</li>"
+		  "<li>dddd - the long day name (Monday - Sunday)</li>"
+		  "<li>M - the month as a number without a leading zero (1-12)</li>"
+		  "<li>MM - the month as a number with a leading zero (01-12)</li>"
+		  "<li>MMM - the abbreviated month name (Jan - Dec)</li>"
+		  "<li>MMMM - the long month name (January - December)</li>"
+		  "<li>yy - the year as a two digit number (00-99)</li>"
+		  "<li>yyyy - the year as a four digit number (0000-9999)</li>"
+		  "</ul>"
+		  "<p><strong>These expressions may be used for the time:"
+		  "</string></p> "
+		  "<ul>"
+		  "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
+		  "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
+		  "<li>m - the minutes without a leading zero (0-59)</li>"
+		  "<li>mm - the minutes with a leading zero (00-59)</li>"
+		  "<li>s - the seconds without a leading zero (0-59)</li>"
+		  "<li>ss - the seconds with a leading zero (00-59)</li>"
+		  "<li>z - the milliseconds without leading zeroes (0-999)</li>"
+		  "<li>zzz - the milliseconds with leading zeroes (000-999)</li>"
+		  "<li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".</li>"
+		  "<li>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\".</li>"
+		  "<li>Z - time zone in numeric form (-0500)</li>"
+		  "</ul>"
+		  "<p><strong>All other input characters will be ignored."
+		  "</strong></p></qt>");
+      QWhatsThis::add( mCustomDateFormatEdit, msg );
+      QWhatsThis::add( radio, msg );
+    }
+  } // end for loop populating mDateDisplay
 
   vlay->addWidget( mDateDisplay );
+
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePageLayoutTab::showMIMETreeClicked( int id )
-{
-  if ( mShowMIMETreeModeLastValue != id ) {
-    mShowMIMETreeModeLastValue = id;
-    QString postfix;
-    switch ( id ) {
-    case 0:
-      postfix = "_no_mime";
-      break;
-    case 1:
-      postfix = "_smart_mime";
-      break;
-    case 2:
-      postfix = "";
-      break;
-    }
-    mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1"+postfix ) );
-    mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2"+postfix ) );
-    mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3"+postfix ) );
-    mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4"+postfix ) );
-    mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5"+postfix ) );
-  }
-}
-
-void AppearancePage::LayoutTab::setup() {
-  KConfigGroup reader( kapp->config(), "Reader" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+void AppearancePage::HeadersTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
 
-  mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
+  // "General Options":
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
   mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", false ) );
 
-
-  int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
-  if( windowLayout < 0 || windowLayout > 4 )
-      windowLayout = 0;
-  mWindowLayoutBG->setButton( windowLayout );
-
-  int num = geometry.readNumEntry( "showMIME", 1 );
-  if ( num < 0 || num > 2 ) num = 1;
-  mShowMIMETreeMode->setButton( num );
-  showMIMETreeClicked( num );
-
-
-  num = geometry.readNumEntry( "nestingPolicy", 3 );
+  // "Message Header Threading Options":
+  int num = geometry.readNumEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
 
-  KMime::DateFormatter::FormatType dateDisplay = static_cast<KMime::DateFormatter::FormatType>( general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy ) );
-  int i;
-  for ( i = 0 ; i < numDateDisplayConfig ; i++ )
-    if ( dateDisplay == dateDisplayConfig[i].dateDisplay ) {
-      if ( dateDisplay == KMime::DateFormatter::Custom ) {
-	QObjectListIt it( *mDateDisplay->queryList( "QLineEdit" ) );
-	static_cast<QLineEdit*>(it.current())->setText( general.readEntry( "customDateFormat", QString::null) );
-      }
-      mDateDisplay->setButton( i );
-      break;
-    }
-  if ( i >= numDateDisplayConfig )
-    mDateDisplay->setButton( numDateDisplayConfig - 2 ); // default
+  // "Date Display":
+  setDateDisplay( general.readNumEntry( "dateFormat", DateFormatter::Fancy ),
+		  general.readEntry( "customDateFormat" ) );
 }
 
-void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
-  KConfigGroup reader( profile, "Reader" );
-  KConfigGroup geometry( profile, "Geometry" );
-  KConfigGroup general( profile, "General" );
+void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format ) {
+  DateFormatter::FormatType dateDisplay =
+    static_cast<DateFormatter::FormatType>( num );
 
-  if ( reader.hasKey( "showColorbar" ) )
-    mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar" ) );
+  // special case: needs text for the line edit:
+  if ( dateDisplay == DateFormatter::Custom )
+    mCustomDateFormatEdit->setText( format );
+
+  for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
+    if ( dateDisplay == dateDisplayConfig[i].dateDisplay ) {
+      mDateDisplay->setButton( i );
+      return;
+    }
+  // fell through since none found:
+  mDateDisplay->setButton( numDateDisplayConfig - 2 ); // default
+}
+
+void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
+  KConfigGroup general( profile, "General" );
+  KConfigGroup geometry( profile, "Geometry" );
+
   if ( geometry.hasKey( "nestedMessages" ) )
     mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages" ) );
   if ( general.hasKey( "showMessageSize" ) )
     mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize" ) );
 
   if( general.hasKey( "showCryptoIcons" ) )
-      mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons" ) );
-
-  if( geometry.hasKey( "windowLayout" ) ) {
-      int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
-      if( windowLayout < 0 || windowLayout > 4 )
-          windowLayout = 0;
-      mWindowLayoutBG->setButton( windowLayout );
-  }
-
-  if( geometry.hasKey( "showMIME" ) ) {
-    int num = geometry.readNumEntry( "showMIME" );
-    if ( num < 0 || num > 2 ) num = 1;
-    mShowMIMETreeMode->setButton( num );
-  }
-
+    mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons" ) );
 
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readNumEntry( "nestingPolicy" );
@@ -2118,55 +2158,32 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
     mNestingPolicy->setButton( num );
   }
 
-  if ( general.hasKey( "dateFormat" ) ) {
-    KMime::DateFormatter::FormatType dateFormat = static_cast<KMime::DateFormatter::FormatType>( general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy ) );
-    for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
-      if ( dateFormat
-	   == dateDisplayConfig[i].dateDisplay ) {
-	mDateDisplay->setButton( i );
-	break;
-      }
-  }
+  if ( general.hasKey( "dateFormat" ) )
+    setDateDisplay( general.readNumEntry( "dateFormat" ),
+		   general.readEntry( "customDateFormat" ) );
 }
 
-void AppearancePage::LayoutTab::apply() {
-  KConfigGroup reader( kapp->config(), "Reader" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+void AppearancePage::HeadersTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
 
-  reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
-
-  if (geometry.readBoolEntry( "nestedMessages", false )
-    != mNestedMessagesCheck->isChecked())
-  {
-    if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
-      "threading setting will override all folder specific values."),
-      QString::null, QString::null, "threadOverride")
-      == KMessageBox::Continue)
-    {
-      geometry.writeEntry( "nestedMessages",
-        mNestedMessagesCheck->isChecked() );
-      QStringList names;
-      QValueList<QGuardedPtr<KMFolder> > folders;
-      kernel->folderMgr()->createFolderList(&names, &folders);
-      kernel->imapFolderMgr()->createFolderList(&names, &folders);
-      for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
-        it != folders.end(); ++it)
-      {
-        if (*it)
-        {
-          KConfigGroupSaver saver(kapp->config(),
-            "Folder-" + (*it)->idString());
-          kapp->config()->writeEntry("threadMessagesOverride", false);
-        }
+  if ( geometry.readBoolEntry( "nestedMessages", false )
+       != mNestedMessagesCheck->isChecked() ) {
+    int result = KMessageBox::warningContinueCancel( this,
+		   i18n("Changing the global threading setting will override "
+			"all folder specific values."),
+		   QString::null, QString::null, "threadOverride" );
+    if ( result == KMessageBox::Continue ) {
+      geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
+      // remove all threadMessagesOverride keys from all [Folder-*] groups:
+      QStringList groups = kapp->config()->groupList().grep( QRegExp("^Folder-") );
+      kdDebug() << "groups.count() == " << groups.count() << endl;
+      for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
+	KConfigGroup group( kapp->config(), *it );
+	group.deleteEntry( "threadMessagesOverride" );
       }
     }
   }
-
-  geometry.writeEntry( "windowLayout",
-                       mWindowLayoutBG->id( mWindowLayoutBG->selected() ) );
-  geometry.writeEntry( "showMIME",
-                       mShowMIMETreeMode->id( mShowMIMETreeMode->selected()));
 
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
@@ -2175,15 +2192,10 @@ void AppearancePage::LayoutTab::apply() {
 
   int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
   // check bounds:
-  if ( dateDisplayID < 0 || dateDisplayID > numDateDisplayConfig - 1 )
-    dateDisplayID = numDateDisplayConfig - 2;//Fancy
+  assert( dateDisplayID >= 0 ); assert( dateDisplayID < numDateDisplayConfig );
   general.writeEntry( "dateFormat",
 		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
-  if ( dateDisplayID == numDateDisplayConfig - 1 ) {//custom
-    QObjectListIt it( *mDateDisplay->queryList( "QLineEdit" ) );
-    general.writeEntry( "customDateFormat",
-			static_cast<QLineEdit*>(it.current())->text() );
-  }
+  general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
 }
 
 
