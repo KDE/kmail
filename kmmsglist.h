@@ -58,10 +58,6 @@ public:
    deleted. */
   virtual void set(int idx, KMMsgBasePtr msg);
 
-  /** Sort messages by given field. */
-  virtual void sort(SortField byField=sfDate, bool descending=FALSE);
-  virtual void qsort(int from, int to, SortField byField=sfDate, bool descending=FALSE);
-
   /** Returns first unused index (index of last message plus one). */
   int high(void) const { return mHigh; }
 
@@ -72,13 +68,8 @@ public:
   int size(void) const { return ((int)KMMsgListInherited::size()); }
 
 protected:
-  friend int qsortCompFunc(const void* a, const void* b);
-
   /** Set mHigh to proper value */
   void rethinkHigh(void);
-
-  /** Function that does the compare in sort() method. */
-  static int msgSortCompFunc(KMMsgBasePtr, KMMsgBasePtr, KMMsgList::SortField, bool);
 
   int mHigh, mCount;
 };

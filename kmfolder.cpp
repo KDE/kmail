@@ -1213,20 +1213,6 @@ int KMFolder::sync()
 
 
 //-----------------------------------------------------------------------------
-// This method is now obsolete (QListView is used for sorting) -sanders
-void KMFolder::sort(KMMsgList::SortField aField, bool aDesc)
-{
-  debug( "KMFolder::sort redundant call" );
-  mMsgList.sort(aField, aDesc);
-  if (!mQuiet) 
-    emit changed();
-  else
-    mChanged = TRUE;
-  mDirty = TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
 const char* KMFolder::type() const
 {
   if (mAcctList) return "In";

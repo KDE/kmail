@@ -45,7 +45,6 @@ class KMFolder: public KMFolderNode
 {
   Q_OBJECT
   friend class KMMessage;
-  friend int msgSortCompFunc(const void* a, const void* b);
 
 public:
   /** Usually a parent is given. But in some cases there is no
@@ -186,9 +185,6 @@ public:
 
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
-
-  /** Sort folder by given field. Actually sorts the index. */
-  virtual void sort(KMMsgList::SortField field=KMMsgList::sfDate, bool descending=FALSE);
 
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return !mFilesLocked; }

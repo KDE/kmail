@@ -4,10 +4,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-static KMMsgList::SortField sSortField;
-static bool sSortDescending;
-
-
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
 {
@@ -183,108 +179,4 @@ void KMMsgList::rethinkHigh(void)
     while (mHigh>0 && !at(mHigh-1))
       mHigh--;
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgList::qsort(int left, int right, SortField aField, bool aDescending)
-{
-  // debug("KMmsgList::qsort()");
-
-  if(right <= left)
-    return;
-
-  KMMsgBasePtr mb;
-  int i = left;
-  int j = right;
-  
-  // $markus: Yes, I am paranoid ;-)
-  if((i + j / 2) < 0 || (i + j / 2) > (int)KMMsgListInherited::size())
-    return;
-  KMMsgBasePtr pivot = KMMsgListInherited::at((int)((i + j) / 2));
-
-  do {
-    while(msgSortCompFunc(KMMsgListInherited::at(i), pivot, aField, aDescending) < 0)
-      i++;
-    while(msgSortCompFunc(pivot, KMMsgListInherited::at(j), aField, aDescending) < 0)
-      j--;
-    if(i <= j) {
-      if(i != j) {
-	mb = KMMsgListInherited::at(i);
-	KMMsgListInherited::at(i) = KMMsgListInherited::at(j);
-	KMMsgListInherited::at(j) = mb;
-      }
-      i++;
-      j--;
-    }
-  } while(i <= j);
-
-  if(left < j) qsort(left, j, aField, aDescending);
-  if(i < right) qsort(i, right, aField, aDescending);
-
-  // debug("KMsgList::qsort() leaving");
-}
-
-
-//-----------------------------------------------------------------------------
-int qsortCompFunc(const void* a, const void* b)
-{
-  return KMMsgList::msgSortCompFunc(*(KMMsgBasePtr*)a, *(KMMsgBasePtr*)b,
-				    sSortField, sSortDescending);
-}
- 
-
-//-----------------------------------------------------------------------------
-void KMMsgList::sort(SortField aField, bool aDescending)
-{
-#define SLOW_SORT
-#ifndef SLOW_SORT
-  qsort(0, mHigh-1, aField, aDescending);
-#else /*SLOW_SORT*/
-
-  KMMsgBasePtr sortList[mHigh];
-  int i;
-
-  if (mHigh < 2) return;
-
-  sSortField = aField;
-  sSortDescending = aDescending;
- 
-  for (i=0; i<mHigh; i++)
-    sortList[i] = KMMsgListInherited::at(i);
-
-  ::qsort(sortList, mHigh, sizeof(KMMsgBasePtr), &qsortCompFunc);
-
-  for (i=0; i<mHigh; i++)
-    KMMsgListInherited::at(i) = sortList[i];
-
-#endif /*SLOW_SORT*/
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgList::msgSortCompFunc(KMMsgBasePtr mbA, KMMsgBasePtr mbB, 
-			       KMMsgList::SortField sortCriteria, bool desc)
-{
-  int res = 0;
-
-  if (sortCriteria==sfNone)
-    res = mbA->compareByIndex(mbB);
-  else
-  {
-    if (sortCriteria==sfStatus)
-      res = mbA->compareByStatus(mbB);
-
-    else if (sortCriteria==sfFrom)
-      res = mbA->compareByFrom(mbB);
-
-    else if (res==0 || sortCriteria==sfSubject)
-      res = mbA->compareBySubject(mbB);
-
-    if (res==0 || sortCriteria==sfDate)
-      res = mbA->compareByDate(mbB);
-  }
-
-  if (desc) return -res;
-  return res;
 }
