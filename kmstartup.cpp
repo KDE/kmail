@@ -105,8 +105,10 @@ void lockOrDie() {
   int oldPid = config.readNumEntry("pid", -1);
   const QString oldHostName = config.readEntry("hostname");
   const QString hostName = getMyHostName();
-  bool first_instance = (oldPid == -1);
-  if (hostName == oldHostName && oldPid != getpid()) {
+  bool first_instance = false;
+  if ( oldPid == -1 )
+      first_instance = true;
+  else if (hostName == oldHostName && oldPid != getpid()) {
       if ( kill(oldPid, 0) == -1 )
           first_instance |= ( errno == ESRCH );
   }
