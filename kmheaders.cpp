@@ -893,8 +893,6 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
   QString str;
 
   mSortInfo.fakeSort = 0;
-  // carsten: really needed?
-//  setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
   if ( mFolder && static_cast<KMFolder*>(mFolder) == aFolder ) {
     int top = topItemIndex();
     id = currentItemIndex();
@@ -3452,10 +3450,12 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
   for (int i = 0; i < (int)mItems.size() - 1; ++i) {
     KMMsgBase *mMsgBase = mFolder->getMsgBase( i );
     if ( mMsgBase->getMsgSerNum() == serialNum ) {
+      bool unchanged = (currentItem() == mItems[i]);
       setCurrentItem( mItems[i] );
       setSelected( mItems[i], true );
       setSelectionAnchor( currentItem() );
-      highlightMessage( currentItem() );
+      if ( unchanged )
+        highlightMessage( currentItem(), false );
       ensureCurrentItemVisible();
       return;
     }
