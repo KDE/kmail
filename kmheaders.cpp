@@ -85,7 +85,7 @@ KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent,
 {
 }
 
-bool KMHeaderToFolderDrag::canDecode( QDragMoveEvent* e )
+bool KMHeaderToFolderDrag::canDecode( QDropEvent* e )
 {
     return e->provides( "KMHeaderToFolderDrag/magic" );
 }
@@ -316,34 +316,34 @@ public:
   {
     QString ret = QString("%1") .arg( (char)column );
     QString sortArrival = QString( "%1" ).arg( id, 8, 36 );
-    time_t mDate = msg->date();
-    const int dateLength = 30;
-    char cDate[dateLength + 1];
-    strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
-    QString sortDate = cDate + sortArrival;
     if (column == paintInfo->dateCol) {
       if (paintInfo->orderOfArrival)
-	return ret + sortArrival;
-      else
-	return ret + sortDate;
+        return ret + sortArrival;
+      else {
+        static const int dateLength = 30;
+        char cDate[dateLength + 1];
+        const time_t date = msg->date();
+        strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &date ));
+        return ret + cDate + sortArrival;
+      }
     } else if (column == paintInfo->senderCol) {
       QString tmp;
       KMFolder *folder = msg->parent();
       if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
-	  || folder == kernel->draftsFolder())
-	tmp = msg->toStrip();
+          || folder == kernel->draftsFolder())
+        tmp = msg->toStrip();
       else
-	tmp = msg->fromStrip();
+        tmp = msg->fromStrip();
       return ret + tmp.lower() + " " + sortArrival;
     } else if (column == paintInfo->subCol) {
       if (paintInfo->status)
-	return ret + QString( QChar( (uint)msg->status() ));
+        return ret + QString( QChar( (uint)msg->status() ));
       return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + " " + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
       return ret + QString( "%1" ).arg( msg->msgSize(), 9 );
     }
-      return ret + "missing key"; //you forgot something!!
+    return ret + "missing key"; //you forgot something!!
   }
 
   virtual QString key( int column, bool /*ascending*/ ) const

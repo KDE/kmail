@@ -30,7 +30,7 @@ public:
     KMHeaderToFolderDrag( QWidget * parent = 0, const char * name = 0 );
     ~KMHeaderToFolderDrag() {};
 
-    static bool canDecode( QDragMoveEvent* e );
+    static bool canDecode( QDropEvent* e );
 };
 
 typedef enum  {
@@ -217,7 +217,7 @@ public slots:
   // timer function to set the current time regularly
   void resetCurrentTime();
 
-  virtual void ensureCurrentItemVisible();     
+  virtual void ensureCurrentItemVisible();
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
