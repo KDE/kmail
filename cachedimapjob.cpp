@@ -193,11 +193,13 @@ void CachedImapJob::slotDeleteResult( KIO::Job * job )
     delete this;
     return;
   }
-  mAccount->removeJob(it);
 
-  if (job->error())
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-                              job->errorText() );
+  if (job->error()) {
+    mErrorCode = job->error();
+    mAccount->handleJobError( mErrorCode, job->errorText(), job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+  }
+  else
+    mAccount->removeJob(it);
 
   delete this;
 }
@@ -212,9 +214,8 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
     }
 
     if (job->error()) {
-      mAccount->removeJob(it);
-      mAccount->slotSlaveError( mAccount->slave(), job->error(),
-                                job->errorText() );
+      mErrorCode = job->error();
+      mAccount->handleJobError( mErrorCode, job->errorText(), job, i18n( "Error while retrieving message on the server: " ) + '\n' );
       delete this;
       return;
     }
@@ -389,12 +390,10 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   if ( job->error() ) {
-    QStringList errors = job->detailedErrorStrings();
-    QString myError = "<qt><p><b>" + i18n("Error while uploading message")
+    QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->name()).arg((*it).htmlURL())
       + "</p><p>" + i18n("This could be because you do not have permission to do this; the error message from the server communication is here:") + "</p>";
-    KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2], errors[0] );
-    mAccount->removeJob(it);
+    mAccount->handleJobError( job->error(), job->errorText(), job, myError );
     delete this;
     return;
   }

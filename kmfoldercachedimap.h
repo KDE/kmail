@@ -98,7 +98,7 @@ public:
   virtual void serverSync( bool suppressDialog );
 
   /** Force the sync state to be done. */
-  void resetSyncState() { mSyncState = SYNC_STATE_INITIAL; }
+  void resetSyncState();
 
   virtual void checkUidValidity();
 
@@ -224,13 +224,6 @@ protected slots:
   void slotProgress(unsigned long done, unsigned long total);
 
   //virtual void slotCheckValidityResult(KIO::Job * job);
-  virtual void listMessages();
-  virtual void uploadNewMessages();
-  virtual void uploadFlags();
-  /* returns true if there were messages to delete
-     on the server */
-  virtual bool deleteMessages();
-  virtual void createNewFolders();
 
   // Connected to the imap account
   void slotConnectionResult( int errorCode );
@@ -240,8 +233,17 @@ protected slots:
 
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
+  void slotDeleteMessagesResult(KMail::FolderJob *);
 
 protected:
+  /* returns true if there were messages to delete
+     on the server */
+  bool deleteMessages();
+  void listMessages();
+  void uploadNewMessages();
+  void uploadFlags();
+  void createNewFolders();
+
   void listDirectory2();
 
 

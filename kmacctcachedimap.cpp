@@ -128,34 +128,70 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-  const QString &errorMsg)
+                                      const QString &errorMsg )
 {
   if (aSlave != mSlave) return;
-  if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
-  if (errorCode == KIO::ERR_COULD_NOT_LOGIN) mAskAgain = TRUE;
+  handleJobError( errorCode, errorMsg, 0, QString::null, true );
+}
 
+//-----------------------------------------------------------------------------
+void KMAcctCachedImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
+{
+  // Copy job's data before a possible killAllJobs
+  QStringList errors;
+  if ( job )
+    errors = job->detailedErrorStrings();
 
-  if (errorCode == KIO::ERR_CONNECTION_BROKEN ) {
+  bool jobsKilled = true;
+  switch( errorCode ) {
+  case KIO::ERR_SLAVE_DIED: slaveDied(); break;
+  case KIO::ERR_COULD_NOT_LOGIN: mAskAgain = TRUE; break;
+  case KIO::ERR_CONNECTION_BROKEN:
     if ( slave() ) {
       KIO::Scheduler::disconnectSlave( slave() );
       mSlave = 0;
-      // TODO reset all syncs, killall jobs?
+      // TODO reset all syncs?
     }
+    killAllJobs( true );
+    break;
+  default:
+    if ( abortSync )
+      killAllJobs( false );
+    else
+      jobsKilled = false;
+    break;
   }
-
-  killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
 
   // check if we still display an error
   if ( !mErrorDialogIsActive )
   {
     mErrorDialogIsActive = true;
-    KMessageBox::messageBox(kapp->activeWindow(), KMessageBox::Error,
-          KIO::buildErrorString(errorCode, errorMsg),
-          i18n("Error"));
+    QString msg;
+    QString caption;
+    if ( errors.count() >= 3 ) {
+      msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+      caption = errors[0];
+    } else {
+      msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
+      caption = i18n("Error");
+    }
+
+    if ( jobsKilled )
+      KMessageBox::error( kapp->activeWindow(), msg, caption );
+    else // i.e. we have a chance to continue, ask the user about it
+    {
+      int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
+      if ( ret == KMessageBox::Cancel ) {
+        jobsKilled = true;
+        killAllJobs( false );
+      }
+    }
     mErrorDialogIsActive = false;
   } else
     kdDebug(5006) << "suppressing error:" << errorMsg << endl;
 
+  if ( job && !jobsKilled )
+    removeJob( job );
   mSyncActive = false;
 }
 
@@ -251,11 +287,16 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
       fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
       fld->sendFolderComplete(FALSE);
     }
+#if 0
+  // Steffen Hansen doesn't remember why he wrote this.
+  // But we don't need to kill the slave upon the slightest error (e.g. permission denied)
+  // For big errors we have disconnectSlave anyway.
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {
     mSlave->kill();
     mSlave = 0;
   }
+#endif
   mapJobData.clear();
 
   // Clear the joblist. Make SURE to stop the job emitting "finished"

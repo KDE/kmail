@@ -514,7 +514,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  //kdDebug() << state2String( mSyncState ) << endl;
+  //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
@@ -972,10 +972,11 @@ bool KMFolderCachedImap::deleteMessages()
       // Rerun the sync until the messages are all deleted
       mResync = true;
     }
-    //kdDebug(5006) << "Deleting " << sets.front() << " from sever folder " << imapPath() << endl;
+    //kdDebug(5006) << "Deleting " << sets.front() << " from server folder " << imapPath() << endl;
     CachedImapJob *job = new CachedImapJob( sets.front(), CachedImapJob::tDeleteMessage,
                                                 this );
-    connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+    connect( job, SIGNAL( result(KMail::FolderJob *) ),
+             this, SLOT( slotDeleteMessagesResult(KMail::FolderJob *) ) );
     job->start();
     return true;
   } else {
@@ -1444,6 +1445,23 @@ KMFolderCachedImap::slotACLChanged( const QString& userId, int permissions )
       return;
     }
   }
+}
+
+void KMFolderCachedImap::slotDeleteMessagesResult( KMail::FolderJob* job )
+{
+  if ( job->error() ) {
+    // Skip the EXPUNGE state if deleting didn't work, no need to show two error messages
+    mSyncState = SYNC_STATE_GET_MESSAGES;
+  }
+  serverSyncInternal();
+}
+
+// called by KMAcctCachedImap::killAllJobs
+void KMFolderCachedImap::resetSyncState()
+{
+  mSyncState = SYNC_STATE_INITIAL;
+  emit newState( label(), mProgress, i18n("Aborted"));
+  emit statusMsg( i18n("%1: Aborted").arg(label()) );
 }
 
 #include "kmfoldercachedimap.moc"

@@ -75,6 +75,12 @@ public:
   QPtrList<KMMessage> msgList() const;
   void start();
 
+  /**
+   * @return the error code of the job. This must only be called from
+   * the slot connected to the finished() signal.
+   */
+  int error() const { return mErrorCode; }
+
 signals:
   /**
    * Emitted whenever a KMMessage has been completely
@@ -85,7 +91,7 @@ signals:
   /**
    * Emitted whenever a KMMessage was updated
    */
-  void messageUpdated( KMMessage *, QString ); 
+  void messageUpdated( KMMessage *, QString );
 
   /**
    * Emitted whenever a message has been stored in
@@ -113,6 +119,14 @@ signals:
   void finished();
 
   /**
+   * Emitted when the job finishes all processing.
+   * More convenient signal than finished(), since it provides a pointer to the job.
+   * This signal is emitted by the FolderJob destructor => do NOT downcast
+   * the job to a subclass!
+   */
+  void result( KMail::FolderJob* job );
+
+  /**
    * This progress signal contains the "done" and the "total" numbers so
    * that the caller can either make a % out of it, or combine it into
    * a higher-level progress info.
@@ -137,6 +151,7 @@ protected:
   KMFolder*           mSrcFolder;
   KMFolder*           mDestFolder;
   QString             mPartSpecifier;
+  int                 mErrorCode;
 
   //finished() won't be emitted when this is set
   bool                mPassiveDestructor;
