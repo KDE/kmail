@@ -745,9 +745,9 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       replyToIdStr = QCString(line+12);
       lastStr = &replyToIdStr;
     }
-    else if (strncasecmp(line, "X-UID:", 5) == 0)
+    else if (strncasecmp(line, "X-UID:", 6) == 0)
     {
-      uidStr = QCString(line+5);
+      uidStr = QCString(line+6);
       lastStr = &uidStr;
     }
 
