@@ -63,6 +63,7 @@ protected:
   void hideKMail();
   void switchIcon();
   void startAnimation();
+  void buildPopupMenu();
 
   QString prettyName(KMFolder *);
   KMMainWin * getKMMainWin();
@@ -77,6 +78,10 @@ private:
 
   int mMode;
   int mStep;
+
+  int mNewMessagePopupId;
+
+  KPopupMenu * mPopupMenu;
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
