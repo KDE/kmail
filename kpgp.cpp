@@ -174,7 +174,7 @@ Kpgp::prepare(bool needPassPhrase)
 void
 Kpgp::cleanupPass(void)
 {
-  if(!storePassPhrase)
+  if(!storePassPhrase())
   {
     passPhrase.replace(QRegExp(".")," ");
     passPhrase = 0;
@@ -199,7 +199,7 @@ Kpgp::decrypt(void)
 }
 
 bool 
-Kpgp::encryptFor(const QStrList& aPers, bool sign = TRUE)
+Kpgp::encryptFor(const QStrList& aPers, bool sign)
 {
   int action = ENCRYPT;
   QString persStr;
@@ -353,7 +353,7 @@ Kpgp::changePassPhrase(const QString /*oldPass*/,
 }
 
 void 
-Kpgp::clear(bool erasePassPhrase = FALSE)
+Kpgp::clear(bool erasePassPhrase)
 {
   if(erasePassPhrase && havePassPhrase && !passPhrase.isEmpty())
   {
