@@ -70,7 +70,7 @@ static const struct {
 } standardPermissions[] = {
   { 0, I18N_NOOP2( "Permissions", "None" ) },
   { ACLJobs::List | ACLJobs::Read, I18N_NOOP2( "Permissions", "Read" ) },
-  { ACLJobs::List | ACLJobs::Read | ACLJobs::Insert, I18N_NOOP2( "Permissions", "Append" ) },
+  { ACLJobs::List | ACLJobs::Read | ACLJobs::Insert | ACLJobs::Post, I18N_NOOP2( "Permissions", "Append" ) },
   { ACLJobs::AllWrite, I18N_NOOP2( "Permissions", "Write" ) },
   { ACLJobs::All, I18N_NOOP2( "Permissions", "All" ) }
 };
@@ -676,7 +676,7 @@ bool KMail::FolderDiaACLTab::save()
 
 void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
 {
-  if ( !f || 
+  if ( !f ||
        f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) ||
        !mDlg->folder() ||
        !mDlg->folder()->storage() ) {
