@@ -10,6 +10,7 @@
 
 #include "kmglobal.h"
 #include "kmfoldermbox.h"
+#include "kmkernel.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 
@@ -221,10 +222,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
 	!mIndexStream || fsync(fileno(mIndexStream))) {
-	kdDebug(5006) << "Error: Could not sync folder" << endl;
-	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-        KNotifyClient::event("fatalerror", i18n("Not enough free disk space."));
-	exit(1);
+    KMKernel::self()->emergencyExit( i18n("Not enough free disk space." ));
     }
 }
 
@@ -778,9 +776,8 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
       kdDebug(5006) << "Undoing changes" << endl;
       truncate( location().local8Bit(), revert );
     }
-    kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-    KNotifyClient::event("fatalerror", i18n("Not enough free disk space."));
-    exit(1);
+    KMKernel::self()->emergencyExit( i18n("Not enough free disk space.") );
+
     /* This code is not 100% reliable
     bool busy = kernel->kbp()->isBusy();
     if (busy) kernel->kbp()->idle();
@@ -839,13 +836,13 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
     fflush(mIndexStream);
     error = ferror(mIndexStream);
     if (error) {
-      kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
+      kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
-	kdDebug(5006) << "Undoing changes" << endl;
+	kdWarning(5006) << "Undoing changes" << endl;
 	truncate( indexLocation().local8Bit(), revert );
       }
-      kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-      exit(1);
+      KMKernel::self()->emergencyExit( i18n("Not enough free disk space.") );
+
       /* This code may not be 100% reliable
       bool busy = kernel->kbp()->isBusy();
       if (busy) kernel->kbp()->idle();

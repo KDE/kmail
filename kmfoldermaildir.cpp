@@ -9,6 +9,7 @@
 #include "kmglobal.h"
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
+#include "kmkernel.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 
@@ -193,9 +194,7 @@ void KMFolderMaildir::sync()
 {
   if (mOpenCount > 0)
     if (!mIndexStream || fsync(fileno(mIndexStream))) {
-	kdDebug(5006) << "Error: Could not sync folder" << endl;
-	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-	exit(1);
+    KMKernel::self()->emergencyExit( i18n("Couldn't sync maildir folder.") );
     }
 }
 
@@ -204,7 +203,7 @@ int KMFolderMaildir::expunge()
 {
   int openCount = mOpenCount;
 
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   close(TRUE);
 

@@ -32,6 +32,7 @@
 
 #include "kmfolderimap.h"
 #include "kmheaders.h"
+#include "kmkernel.h"
 #include "kmmessage.h"
 #include "kbusyptr.h"
 #include "kmglobal.h"
@@ -2703,10 +2704,9 @@ bool KMHeaders::writeSortOrder()
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile.local8Bit());
-	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
-	exit(1);
+	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
+	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
     ::rename(tempName.local8Bit(), sortFile.local8Bit());
@@ -2737,10 +2737,9 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile.local8Bit());
-	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
-	exit(1);
+	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
+	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
   } else {
@@ -3143,10 +3142,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile.local8Bit());
-	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
-	exit(1);
+	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
+	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     if(sortStream)
 	fclose(sortStream);

@@ -14,6 +14,7 @@
 
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <knotifyclient.h>
 #include <klocale.h>
 #include <kapp.h>
 #include <kstddirs.h>
@@ -838,5 +839,15 @@ void KMKernel::notClosedByUser()
     closed_by_user = false;
 }
 
+void KMKernel::emergencyExit( const QString& reason )
+{
+  QString mesg = i18n("KMail encountered a fatal error and will\n"
+                      "terminate now.\n\nThe error was:\n%1").arg( reason );
+
+  kdWarning() << mesg << endl;
+  KNotifyClient::userEvent( mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
+
+  ::exit(1);
+}
 
 #include "kmkernel.moc"

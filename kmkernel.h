@@ -112,6 +112,9 @@ public:
   inline void setCheckingMail(bool flag) { the_checkingMail = flag; }
   inline void serverReady (bool flag) { the_server_is_ready = flag; }
   void notClosedByUser();
+
+  void emergencyExit( const QString& reason );
+
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
