@@ -311,6 +311,8 @@ namespace KMail {
     jd.total = 1; jd.done = 0;
     jd.inboxOnly = !secondStep && prefix() != "/"
       && path == prefix();
+    if (jd.inboxOnly)
+      mHasInbox = false; // reset
     jd.onlySubscribed = onlySubscribed;
     if (parent) jd.parent = parent;
     if (!secondStep) mCreateInbox = FALSE;
