@@ -669,8 +669,8 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( mIncidencesForGroup ) {
     if ( !isImap )
       mIncidencesForGroup->hide();
-    else if ( mDlg->folder() ) {
-      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+    else {
+      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
       mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
     }
   }
