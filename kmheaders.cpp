@@ -259,7 +259,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mNested = false;
 
   readConfig();
-#ifdef sanders
+
   mPaintInfo.flagCol = -1;
   mPaintInfo.subCol = mPaintInfo.flagCol + 1;
   mPaintInfo.senderCol = mPaintInfo.subCol + 1;
@@ -269,17 +269,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Subject"), 270 );
   addColumn( i18n("Sender"), 200 );
   addColumn( i18n("Date"), 300 );
-#else
-  mPaintInfo.flagCol = -1;
-  mPaintInfo.senderCol = mPaintInfo.flagCol + 1;
-  mPaintInfo.subCol = mPaintInfo.senderCol + 1;
-  mPaintInfo.dateCol = mPaintInfo.subCol + 1;
-  mSortCol = KMMsgList::sfDate;
-  mSortDescending = FALSE;
-  addColumn( i18n("Sender"), 200 );
-  addColumn( i18n("Subject"), 270 );
-  addColumn( i18n("Date"), 300 );
-#endif
 
   if (!pixmapsLoaded)
   {
