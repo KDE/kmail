@@ -950,11 +950,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       }
       break;
     }
-    case DwMime::kSubtypeXVCard: {
+    case DwMime::kSubtypeXVCard:
       kdDebug(5006) << "v-card" << endl;
       // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
       //             _before_ calling parseObjectTree()
-    }
+      // It doesn't make sense to display raw vCards inline
+      result.setNeverDisplayInline( true );
       break;
     case DwMime::kSubtypeRtf:
       kdDebug(5006) << "rtf" << endl;
