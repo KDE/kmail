@@ -2463,11 +2463,11 @@ void KMMainWidget::setupActions()
   mStatusMenu->insert( mToggleSentAction );
 
 #if KDE_IS_VERSION(3,2,90)
-  mToggleFlagAction->setCheckedState( i18n("Unmark Message as &Important") );
-  mToggleRepliedAction->setCheckedState( i18n("Unmark Message as Re&plied") );
-  mToggleForwardedAction->setCheckedState( i18n("Unmark Message as &Forwarded") );
-  mToggleQueuedAction->setCheckedState( i18n("Unmark Message as &Queued") );
-  mToggleSentAction->setCheckedState( i18n("Unmark Message as &Sent") );
+  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
+  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
+  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
+  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
+  mToggleSentAction->setCheckedState( i18n("Mark Message as Un&sent") );
 #endif
 
   mStatusMenu->insert( new KActionSeparator( this ) );
@@ -2535,11 +2535,11 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
 #if KDE_IS_VERSION(3,2,90)
-  mToggleThreadFlagAction->setCheckedState( i18n("Unmark Thread as &Important") );
-  mToggleThreadRepliedAction->setCheckedState( i18n("Unmark Thread as R&eplied") );
-  mToggleThreadForwardedAction->setCheckedState( i18n("Unmark Thread as &Forwarded") );
-  mToggleThreadQueuedAction->setCheckedState( i18n("Unmark Thread as &Queued") );
-  mToggleThreadSentAction->setCheckedState( i18n("Unmark Thread as &Sent") );
+  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
+  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
+  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
+  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
+  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Un&sent") );
 #endif
 
   //------- "Watch and ignore thread" actions
