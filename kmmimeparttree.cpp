@@ -116,6 +116,8 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
                            SLOT( slotSaveAsEncoded() ) );
         popup->insertItem( i18n( "Save Selected Items..." ), this,
                            SLOT( slotSaveSelected() ) );
+        popup->insertItem( i18n( "Save All..." ), this,
+                           SLOT( slotSaveAll() ) );
         popup->exec( point );
         //mReaderWin->parseObjectTree( mCurrentContextMenuItem->node(), true );
         mCurrentContextMenuItem = 0;
@@ -219,6 +221,44 @@ void KMMimePartTree::slotSaveItem( KMMimePartTreeItem* item, const QString& file
         } else
             KMessageBox::error( this, i18n( "Could not write the file" ),
                                 i18n( "KMail Error" ) );
+    }
+}
+
+void KMMimePartTree::slotSaveAll()
+{
+    if( childCount() == 0)
+        return;
+
+    KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
+    fdlg.setMode( KFile::Directory );
+    if (!fdlg.exec())
+        return;
+
+    QString dir = fdlg.selectedURL().path();
+    QListViewItemIterator lit( firstChild() );
+    for ( ; lit.current();  ) {
+        KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( lit.current() );
+        QString s = item->text(0);
+        if( s.startsWith( "file: " ) )
+            s = s.mid(6).stripWhiteSpace();
+        else
+            s = s.stripWhiteSpace();
+
+        QString filename = dir + "/" + s;
+
+        if( !filename.isEmpty() ) {
+            if( QFile::exists( filename ) ) {
+                if( KMessageBox::warningYesNo( this,
+                                               i18n( "A file with this name already exists. Do you want to overwrite it?" ),
+                                               i18n( "KMail Warning" ) ) ==
+                    KMessageBox::No ) {
+                    ++lit;
+                    continue;
+                }
+            }
+            slotSaveItem( item, filename );
+        }
+        ++lit;
     }
 }
 

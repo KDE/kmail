@@ -26,6 +26,8 @@ protected slots:
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveSelected();
+    void slotSaveAll();
+
   void slotSaveItem( KMMimePartTreeItem* item, const QString& filename );
 
 protected:
