@@ -2515,6 +2515,7 @@ void KMHeaders::setSorting( int column, bool ascending )
     setColumnText( mPaintInfo.subCol, colText);
   }
   KMHeadersInherited::setSorting( column, ascending );
+  ensureCurrentItemVisible();
 }
 
 //Flatten the list and write it to disk
