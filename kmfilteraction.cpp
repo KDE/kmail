@@ -1496,11 +1496,17 @@ KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
     lay1->addWidget( m_urlRequester );
     connect( m_urlRequester, SIGNAL( openFileDialog( KURLRequester * )),
              SLOT( openSoundDialog( KURLRequester * )));
-
+    connect( m_urlRequester->lineEdit(), SIGNAL( textChanged ( const QString & )), SLOT( slotUrlChanged(const QString & )));
+    slotUrlChanged(m_urlRequester->lineEdit()->text() );
 }
 
 KMSoundTestWidget::~KMSoundTestWidget()
 {
+}
+
+void KMSoundTestWidget::slotUrlChanged(const QString &_text )
+{
+    m_playButton->setEnabled( !_text.isEmpty());
 }
 
 void KMSoundTestWidget::openSoundDialog( KURLRequester * )

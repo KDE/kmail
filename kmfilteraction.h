@@ -39,7 +39,7 @@ signals:
 protected slots:
     void playSound();
     void openSoundDialog( KURLRequester * );
-
+    void slotUrlChanged(const QString & );
 private:
     KURLRequester *m_urlRequester;
     QPushButton *m_playButton;
