@@ -1629,7 +1629,9 @@ void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
 {
   if (msg && ((KMMsgBase*)msg)->isMessage()) {
     // don't update if we have since left the folder
-    if ( mFolder == msg->parent() )
+    if ( mFolder && 
+       ( mFolder == msg->parent()  
+      || mFolder->folderType() == KMFolderTypeSearch ) )
       mMsgView->setMsg(msg, TRUE);
     else
       kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
