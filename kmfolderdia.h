@@ -38,6 +38,7 @@ protected:
 
   QCheckBox *holdsMailingList;
   QLineEdit *mailingListPostAddress;
+  QComboBox *mailingListIdentity;
 //   QLineEdit *mailingListAdminAddress;
 
 };

@@ -1328,13 +1328,16 @@ void KMHeaders::noQuoteReplyToMsg()
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
+  QString id;
 
   if (!msg)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),
-			 msg->headerField( "X-KMail-Identity" ));
+  id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus(false);
   win->show();
@@ -1346,13 +1349,16 @@ void KMHeaders::replyToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
+  QString id;
 
   if (!msg)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),
-			 msg->headerField( "X-KMail-Identity" ));
+  id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1365,12 +1371,15 @@ void KMHeaders::replyAllToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
+  QString id;
 
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),
-			 msg->headerField( "X-KMail-Identity" ));
+  id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
+  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1382,12 +1391,15 @@ void KMHeaders::replyListToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
+  QString id;
 
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(true, true, selection),
-			 msg->headerField( "X-KMail-Identity" ));
+  id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
+  win = new KMComposeWin(msg->createReply(true, true, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
   win->show();

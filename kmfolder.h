@@ -256,6 +256,11 @@ public:
   const QString& mailingListAdminAddress() const
   { return mMailingListAdminAddress; }
 
+  void setMailingListIdentity(const QString &identity)
+  { mMailingListIdentity = identity; writeConfig(); }
+  const QString& mailingListIdentity() const
+  { return mMailingListIdentity; }
+
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
@@ -379,6 +384,7 @@ protected:
   bool    mMailingListEnabled;
   QString mMailingListPostingAddress;
   QString mMailingListAdminAddress;
+  QString mMailingListIdentity;
 
   QString    mImapPath;
   QString    mUidValidity;

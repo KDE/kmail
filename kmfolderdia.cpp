@@ -13,6 +13,7 @@
 #include <qstring.h>
 #include <qtextstream.h>
 #include <qvbox.h>
+#include <qcombobox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -24,6 +25,7 @@
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
+#include "kmidentity.h"
 
 #include "kmfolderdia.moc"
 
@@ -103,7 +105,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   topLayout =  new QVBoxLayout( page, 0, spacingHint() );
 
-  hl = new QHBoxLayout();
+  //hl = new QHBoxLayout();
   topLayout->addSpacing( spacingHint()*2 );
 
   holdsMailingList = new QCheckBox( i18n("folder holds a mailing-list"), page);
@@ -112,16 +114,26 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   topLayout->addWidget(holdsMailingList);
 
+  QGridLayout *grid = new QGridLayout(page, 2, 2, 0, 8);
+  grid->setColStretch(0, 1);
+  grid->setColStretch(1, 100);
+
   topLayout->addSpacing( spacingHint()*2 );
-  topLayout->addLayout( hl );
+  topLayout->addLayout( grid );
   topLayout->addSpacing( spacingHint()*2 );
 
+  label = new QLabel( i18n("Identity:"), page );
+  grid->addWidget( label, 0, 0 );
+  mailingListIdentity = new QComboBox( page );
+  mailingListIdentity->insertStringList( KMIdentity::identities() );
+  mailingListIdentity->setMinimumSize(mailingListIdentity->sizeHint());
+  grid->addWidget( mailingListIdentity, 0, 1 );
 
   label = new QLabel( i18n("Post Address:"), page );
-  hl->addWidget( label );
+  grid->addWidget( label, 1, 0 );
   mailingListPostAddress = new QLineEdit( page );
   mailingListPostAddress->setMinimumSize(mailingListPostAddress->sizeHint());
-  hl->addWidget( mailingListPostAddress );
+  grid->addWidget( mailingListPostAddress, 1, 1 );
 
 //   hl = new QHBoxLayout();
 //   topLayout->addLayout( hl );
@@ -138,7 +150,14 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //     mailingListAdminAddress->setText(folder->mailingListAdminAddress());
     mailingListPostAddress->setEnabled(folder->isMailingList());
 //     mailingListAdminAddress->setEnabled(folder->isMailingList());
+    mailingListIdentity->setEnabled(folder->isMailingList());
     holdsMailingList->setChecked(folder->isMailingList());
+
+    for (int i=0; i < mailingListIdentity->count(); ++i)
+      if (mailingListIdentity->text(i) == folder->mailingListIdentity()) {
+        mailingListIdentity->setCurrentItem(i);
+        break;
+      }
   }
   kdDebug()<<"Exiting KMFolderDialog::KMFolderDialog()\n";
 }
@@ -216,6 +235,7 @@ void KMFolderDialog::slotOk()
   folder->setMailingListPostAddress( mailingListPostAddress->text() );
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
   folder->setMailingListAdminAddress( QString::null );
+  folder->setMailingListIdentity( mailingListIdentity->currentText() );
 
   KMFolderDialogInherited::slotOk();
 }
@@ -233,5 +253,7 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
     mailingListPostAddress->setEnabled(false);
 //     mailingListAdminAddress->setEnabled(false);
   }
+
+  mailingListIdentity->setEnabled(holdsML);
 }
 

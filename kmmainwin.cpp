@@ -685,9 +685,12 @@ void KMMainWin::slotCompose()
   if (mFolder && mFolder->isMailingList()) {
       kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
     msg->setTo(mFolder->mailingListPostAddress());
-  }
 
-  win = new KMComposeWin(msg);
+    win = new KMComposeWin(msg,mFolder->mailingListIdentity());
+  }
+  else
+    win = new KMComposeWin(msg);
+
   win->show();
 
 }
