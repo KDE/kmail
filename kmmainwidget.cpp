@@ -1628,9 +1628,16 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
 {
   if (msg && ((KMMsgBase*)msg)->isMessage()) {
-    mMsgView->setMsg(msg, TRUE);
-  }  else // force an update of the folder
-    static_cast<KMFolderImap*>(mFolder)->getFolder(true);
+    // don't update if we have since left the folder
+    if ( mFolder == msg->parent() )
+      mMsgView->setMsg(msg, TRUE);
+    else
+      kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
+  }  else { 
+    // force an update of the folder
+    if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
+      static_cast<KMFolderImap*>(mFolder)->getFolder(true);
+  }
 }
 
 //-----------------------------------------------------------------------------
