@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include <mimelib/mimepp.h>
 #include <kmfolder.h>
 #include "kalarmtimer.h"
