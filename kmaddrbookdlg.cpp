@@ -194,7 +194,10 @@ void KMAddrBookEditDlg::slotOk()
     if (kernel->useKAB()) {
       KabKey key;
       if (KabBridge::add( mEdtAddress->text(), key)) {
-	mKeys->insert( mKeys->at(mListBox->currentItem()), key );
+	int cur = mListBox->currentItem();
+	if (cur < 0)
+	  cur = 0;
+	mKeys->insert( mKeys->at(cur), key );
 	mListBox->insertItem(mEdtAddress->text(), mListBox->currentItem());
       }
     } else
