@@ -101,7 +101,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
-      default:
+      default: kernel->iCalIface().folderPixmap( mFolder, icon ); break;
       case Drafts: icon = "folder";break;
     }
   } else if ( protocol() == KMFolderTreeItem::Search) {

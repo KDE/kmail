@@ -231,6 +231,8 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
       return KFolderTreeItem::Notes;
     else if( folder == mTasks )
       return KFolderTreeItem::Tasks;
+    else if( folder == mJournals )
+      return KFolderTreeItem::Journals;
   }
 
   return KFolderTreeItem::Other;
@@ -503,18 +505,29 @@ void KMailICalIfaceImpl::loadPixmaps() const
 
 
 //-----------------------------------------------------------------------------
-bool KMailICalIfaceImpl::setFolderPixmap(const KMFolder& folder,
-					 KMFolderTreeItem& fti) const
+void KMailICalIfaceImpl::folderPixmap( KMFolder* folder, QString& icon ) const
 {
-  if( !mUseResourceIMAP )
-    return false;
+  if( !mUseResourceIMAP || !folder )
+    return;
 
+  if( folder->label() == folderName( KFolderTreeItem::Contacts ) )
+    icon = "kmgroupware_folder_contacts";
+  else if( folder->label() == folderName( KFolderTreeItem::Calendar ) )
+    icon = "kmgroupware_folder_calendar";
+  else if( folder->label() == folderName( KFolderTreeItem::Notes ) )
+    icon = "kmgroupware_folder_notes";
+  else if( folder->label() == folderName( KFolderTreeItem::Tasks ) )
+    icon = "kmgroupware_folder_tasks";
+  else if( folder->label() == folderName( KFolderTreeItem::Journals ) )
+    icon = "kmgroupware_folder_journals";
+
+#if 0
   // Make sure they are set
   loadPixmaps();
 
-  if( folder.label() == folderName( KFolderTreeItem::Contacts ) )
+  if( folder->label() == folderName( KFolderTreeItem::Contacts ) )
     fti.setPixmap( 0, *pixContacts );
-  else if( folder.label() == folderName( KFolderTreeItem::Calendar ) )
+  else if( folder->label() == folderName( KFolderTreeItem::Calendar ) )
     fti.setPixmap( 0, *pixCalendar );
   else if( folder.label() == folderName( KFolderTreeItem::Notes ) )
     fti.setPixmap( 0, *pixNotes );
@@ -524,6 +537,7 @@ bool KMailICalIfaceImpl::setFolderPixmap(const KMFolder& folder,
     return false;
 
   return true;
+#endif
 }
 
 

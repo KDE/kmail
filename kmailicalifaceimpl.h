@@ -66,7 +66,7 @@ public:
    */
   KFolderTreeItem::Type folderType( KMFolder* folder ) const;
 
-  bool setFolderPixmap(const KMFolder& folder, KMFolderTreeItem& fti) const;
+  void folderPixmap( KMFolder* folder, QString& iconName ) const;
 
   /** Return the localized hame of a folder type. */
   QString folderName( KFolderTreeItem::Type type, int language = -1 ) const;
