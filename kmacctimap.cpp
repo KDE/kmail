@@ -329,6 +329,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   QString uids;
   QStringList::ConstIterator uid = (*it).items.begin();
   // Force digest mode, even if there is only one message in the folder
+  if (jd.total == 0) uids = "0,0"; else
   if (jd.total == 1) uids = *uid + "," + *uid;
   else while (uid != (*it).items.end())
   {
@@ -589,7 +590,6 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
     else it++;
   }
   displayProgress();
-  mSlave = NULL;
 }
 
 
@@ -618,8 +618,8 @@ void KMAcctImap::nextStatusAction()
   if (data->Delete)
   {
     makeConnection();
-    KIO::Job *job = KIO::del(data->url, FALSE, FALSE);
-//    KIO::Scheduler::assignJobToSlave(mSlave, job);
+    KIO::SimpleJob *job = KIO::file_delete(data->url, FALSE);
+    KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd;
     jd.total = 0; jd.done = 0; jd.parent = NULL;
     mapJobData.insert(job, jd);
