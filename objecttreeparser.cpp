@@ -1636,7 +1636,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
     showKeyInfos = true;
     QString result;
     if( cryptPlug ) {
-        if( cryptPlug->protocol() == "openpgp" ) {
+        if( cryptPlug->protocol().lower() == "openpgp" ) {
             // process enum according to it's definition to be read in
             // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
             switch( status_code ) {
@@ -1674,7 +1674,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 break;
             }
         }
-        else if( cryptPlug->protocol() == "smime" ) {
+        else if ( cryptPlug->protocol().lower() == "smime" ) {
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
 
@@ -1807,7 +1807,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    bool isSMIME = cryptPlug && cryptPlug->protocol() == "smime";
+    bool isSMIME = cryptPlug && cryptPlug->protocol().lower() == "smime";
     QString signer = block.signer;
 
     QString htmlStr;
