@@ -121,12 +121,9 @@ void KMAcctMaildir::processNewMail(bool)
   rc = mailFolder.open();
   if (rc)
   {
-    QString aStr;
-    aStr = i18n("Cannot open folder:");
-    aStr += mailFolder.path()+"/"+mailFolder.name();
+    QString aStr = i18n("Cannot open folder %1.").arg( mailFolder.location() );
     KMessageBox::sorry(0, aStr);
-    kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
-      << mailFolder.name() << endl;
+    kdDebug(5006) << "cannot open folder " << mailFolder.location() << endl;
     emit finishedCheck(hasNewMail);
     emit newMailsProcessed(-1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
@@ -194,7 +191,9 @@ void KMAcctMaildir::processNewMail(bool)
   {
     rc = mailFolder.expunge();
     if (rc)
-      KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
+      KMessageBox::information( 0,
+                              i18n("Cannot remove mail from mailbox `%1':\n%2")
+                                .arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
     if ( num )
       statusMsg = i18n("Transmission completed, %n new message.",
