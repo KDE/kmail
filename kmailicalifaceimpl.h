@@ -124,7 +124,7 @@ public:
   bool isEnabled() const { return mUseResourceIMAP; }
 
   /** Called when a folders contents have changed */
-  void folderContentsTypeChanged( KMFolder*, int );
+  void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
 public slots:
   /* (Re-)Read configuration file */

@@ -62,31 +62,34 @@ static void reloadFolderTree();
 // Local helper class
 class KMailICalIfaceImpl::ExtraFolder {
 public:
-  ExtraFolder( KMFolder* f, int t ) : folder( f ), type( t ) {}
+  ExtraFolder( KMFolder* f, KMail::FolderContentsType t ) : folder( f ), type( t ) {}
   KMFolder* folder;
-  int type;
+  KMail::FolderContentsType type;
 };
 
-static QString folderContentsType( int type )
+// The index in this array is the KMail::FolderContentsType enum
+static const struct {
+  const char* contentsTypeStr; // the string used in the DCOP interface
+} s_folderContentsType[] = {
+  { "Mail" },
+  { "Calendar" },
+  { "Contact" },
+  { "Note" },
+  { "Task" },
+  { "Journal" }
+};
+
+static QString folderContentsType( KMail::FolderContentsType type )
 {
-  switch( type ) {
-  case 1: return "Calendar";
-  case 2: return "Contact";
-  case 3: return "Note";
-  case 4: return "Task";
-  case 5: return "Journal";
-  default: return "Mail";
-  }
+  return s_folderContentsType[type].contentsTypeStr;
 }
 
-static int folderContentsType( const QString& type )
+static KMail::FolderContentsType folderContentsType( const QString& type )
 {
-  if ( type == "Calendar" ) return 1;
-  if ( type == "Contact" ) return 2;
-  if ( type == "Note" ) return 3;
-  if ( type == "Task" ) return 4;
-  if ( type == "Journal" ) return 5;
-  return 0;
+  for ( uint i = 0 ; i < sizeof s_folderContentsType / sizeof *s_folderContentsType; ++i )
+    if ( type == s_folderContentsType[i].contentsTypeStr )
+      return static_cast<KMail::FolderContentsType>( i );
+  return KMail::ContentsTypeMail;
 }
 
 /*
@@ -226,7 +229,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
     lst << f->location();
 
   // Add the extra folders
-  int t = folderContentsType( type );
+  KMail::FolderContentsType t = folderContentsType( type );
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it )
     if ( it.current()->type == t )
@@ -544,7 +547,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 }
 
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
-                                                    int contentsType )
+                                                    KMail::FolderContentsType contentsType )
 {
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
