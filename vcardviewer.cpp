@@ -38,7 +38,7 @@ using KABC::Addressee;
 
 KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
   : KDialogBase( parent, name, false, i18n("VCard Viewer"), User1|User2|User3|Close, Close,
-		 true, i18n("&Import"), QString("&Next Card"), QString("&Previous Card") )
+		 true, i18n("&Import"), i18n("&Next Card"), i18n("&Previous Card") )
 {
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->setVScrollBarMode(QScrollView::Auto);
