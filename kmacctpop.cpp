@@ -39,6 +39,7 @@ KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
   initMetaObject();
 
   mStorePasswd = FALSE;
+  mUseSSL = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
   mProtocol = 3;
@@ -67,6 +68,7 @@ void KMAcctPop::init(void)
   mLogin  = "";
   mPasswd = "";
   mProtocol = 3;
+  mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
@@ -375,6 +377,7 @@ void KMAcctPop::readConfig(KConfig& config)
 
 
   mLogin = config.readEntry("login", "");
+  mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mStorePasswd = config.readNumEntry("store-passwd", TRUE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
@@ -393,6 +396,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   KMAcctPopInherited::writeConfig(config);
 
   config.writeEntry("login", mLogin);
+  config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
@@ -432,6 +436,12 @@ const QString KMAcctPop::decryptStr(const QString aStr) const
   return encryptStr(aStr);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctPop::setUseSSL(bool b)
+{
+  mUseSSL = b;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::setStorePasswd(bool b)

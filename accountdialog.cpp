@@ -32,6 +32,9 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <netdb.h>
+#include <netinet/in.h>
+
 #include "accountdialog.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
@@ -140,7 +143,7 @@ void AccountDialog::makeLocalAccountPage()
 void AccountDialog::makePopAccountPage()
 {
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 16, 2, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 17, 2, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 16, 10 );
   topLayout->setColStretch( 1, 10 );
@@ -189,51 +192,56 @@ void AccountDialog::makePopAccountPage()
   mPop.portEdit->setValidator( new QIntValidator(this) );
   topLayout->addWidget( mPop.portEdit, 6, 1 ); 
 
+  mPop.useSSLCheck =
+    new QCheckBox( i18n("Use SSL for secure mail download"), page);
+  topLayout->addMultiCellWidget( mPop.useSSLCheck, 7, 7, 0, 1);
+  connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
+
   mPop.storePasswordCheck = 
     new QCheckBox( i18n("Store POP password in configuration file"), page );
-  topLayout->addMultiCellWidget( mPop.storePasswordCheck, 7, 7, 0, 1 );
+  topLayout->addMultiCellWidget( mPop.storePasswordCheck, 8, 8, 0, 1 );
   
   mPop.deleteMailCheck = 
     new QCheckBox( i18n("Delete mail from server"), page );
-  topLayout->addMultiCellWidget( mPop.deleteMailCheck, 8, 8, 0, 1 );
+  topLayout->addMultiCellWidget( mPop.deleteMailCheck, 9, 9, 0, 1 );
 
   mPop.retriveAllCheck = 
     new QCheckBox( i18n("Retrieve all mail from server"), page );
-  topLayout->addMultiCellWidget( mPop.retriveAllCheck, 9, 9, 0, 1 );  
+  topLayout->addMultiCellWidget( mPop.retriveAllCheck, 10, 10, 0, 1 );  
 
   mPop.excludeCheck = 
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
-  topLayout->addMultiCellWidget( mPop.excludeCheck, 10, 10, 0, 1 );
+  topLayout->addMultiCellWidget( mPop.excludeCheck, 11, 11, 0, 1 );
 
   mPop.intervalCheck = 
     new QCheckBox( i18n("Enable interval mail checking"), page );
-  topLayout->addMultiCellWidget( mPop.intervalCheck, 11, 11, 0, 1 );
+  topLayout->addMultiCellWidget( mPop.intervalCheck, 12, 12, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
-  topLayout->addWidget( mPop.intervalLabel, 12, 0 );
+  topLayout->addWidget( mPop.intervalLabel, 13, 0 );
   mPop.intervalSpin = new QSpinBox( page );
   mPop.intervalSpin->setRange( 1, 10000 );
   mPop.intervalSpin->setValue( 1 );
-  topLayout->addWidget( mPop.intervalSpin, 12, 1 );
+  topLayout->addWidget( mPop.intervalSpin, 13, 1 );
 
   label = new QLabel( i18n("Destination folder:"), page );
-  topLayout->addWidget( label, 13, 0 );
+  topLayout->addWidget( label, 14, 0 );
   mPop.folderCombo = new QComboBox( false, page );
-  topLayout->addWidget( mPop.folderCombo, 13, 1 );
+  topLayout->addWidget( mPop.folderCombo, 14, 1 );
   /*
   label = new QLabel( i18n("Default identity:"), page );
-  topLayout->addWidget( label, 14, 0 );
+  topLayout->addWidget( label, 15, 0 );
   mPop.identityCombo = new QComboBox( false, page );
-  topLayout->addWidget( mPop.identityCombo, 14, 1 );
+  topLayout->addWidget( mPop.identityCombo, 15, 1 );
   */
   label->setEnabled(false);
   //  mPop.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("Precommand:"), page );
-  topLayout->addWidget( label, 15, 0 );
+  topLayout->addWidget( label, 16, 0 );
   mPop.precommand = new QLineEdit( page );
-  topLayout->addWidget( mPop.precommand, 15, 1 ); 
+  topLayout->addWidget( mPop.precommand, 16, 1 ); 
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -265,6 +273,7 @@ void AccountDialog::setupSettings()
     mPop.passwordEdit->setText( ap.passwd());
     mPop.hostEdit->setText( ap.host() );
     mPop.portEdit->setText( QString("%1").arg( ap.port() ) ); 
+    mPop.useSSLCheck->setChecked( ap.useSSL() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
     mPop.retriveAllCheck->setChecked( ap.retrieveAll() );
@@ -310,6 +319,30 @@ void AccountDialog::setupSettings()
     if (folderCombo->count() == 0)
       folderCombo->insertItem( "inbox" );
   }
+}
+
+
+void AccountDialog::slotSSLChanged()
+{
+  if (mPop.useSSLCheck->isChecked()) {
+    struct servent *serv = getservbyname("spop3", "tcp");
+    if (serv) {
+      QString x;
+      x.sprintf("%u", ntohs(serv->s_port));
+      mPop.portEdit->setText(x);
+    } else {
+      mPop.portEdit->setText("995");
+    }
+  } else {
+    struct servent *serv = getservbyname("pop-3", "tcp");
+    if (serv) {
+      QString x;
+      x.sprintf("%u", ntohs(serv->s_port));
+      mPop.portEdit->setText(x);
+    } else {
+      mPop.portEdit->setText("110");
+    }
+  } 
 }
 
 
@@ -367,6 +400,7 @@ void AccountDialog::saveSettings()
       epa.setPort( mPop.portEdit->text().toInt() );
       epa.setLogin( mPop.loginEdit->text() );
       epa.setPasswd( mPop.passwordEdit->text(), true );
+      epa.setUseSSL( mPop.useSSLCheck->isChecked() );
       epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
       epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
       epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );

@@ -60,6 +60,7 @@ class AccountDialog : public KDialogBase
       QLineEdit *hostEdit;
       QLineEdit *portEdit;
       QLineEdit *precommand;
+      QCheckBox *useSSLCheck;
       QCheckBox *storePasswordCheck;
       QCheckBox *deleteMailCheck;
       QCheckBox *retriveAllCheck;
@@ -77,6 +78,7 @@ class AccountDialog : public KDialogBase
     void slotEnablePopInterval( bool state );
     void slotEnableLocalInterval( bool state );
     void slotFontChanged();
+    void slotSSLChanged();
     
   private:
     void makeLocalAccountPage();

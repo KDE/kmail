@@ -4,6 +4,7 @@
 
 #include "kmacctexppop.moc"
 
+#include <netdb.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
@@ -39,11 +40,17 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
 {
   initMetaObject();
 
+  mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
   mProtocol = 3;
-  mPort = 110;
+  struct servent *serv = getservbyname("pop-3", "tcp");
+  if (serv) {
+    mPort = serv->s_port;
+  } else {
+    mPort = 110;
+  }
   job = 0L;
   stage = Idle;
   indexOfCurrentMsg = -1;
@@ -76,10 +83,16 @@ const char* KMAcctExpPop::type(void) const
 void KMAcctExpPop::init(void)
 {
   mHost   = "";
-  mPort   = 110;
+  struct servent *serv = getservbyname("pop-3", "tcp");
+  if (serv) {
+    mPort = serv->s_port;
+  } else {
+    mPort = 110;
+  }
   mLogin  = "";
   mPasswd = "";
   mProtocol = 3;
+  mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
@@ -130,6 +143,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
 
   mLogin = config.readEntry("login", "");
+  mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mStorePasswd = config.readNumEntry("store-passwd", TRUE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
@@ -147,6 +161,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   KMAcctExpPopInherited::writeConfig(config);
 
   config.writeEntry("login", mLogin);
+  config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
@@ -185,6 +200,12 @@ const QString KMAcctExpPop::decryptStr(const QString aStr) const
   return encryptStr(aStr);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setUseSSL(bool b)
+{
+  mUseSSL = b;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setStorePasswd(bool b)

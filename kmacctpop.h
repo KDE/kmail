@@ -35,6 +35,10 @@ public:
   const QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
+  /** Use SSL ? */
+  bool useSSL(void) const { return mUseSSL; }
+  virtual void setUseSSL(bool);
+
   /** Will the password be stored in the config file ? */
   bool storePasswd(void) const { return mStorePasswd; }
   virtual void setStorePasswd(bool);
@@ -92,6 +96,7 @@ protected:
   QString mHost, mPrecommand;
   unsigned short int mPort;
   short   mProtocol;
+  bool    mUseSSL;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
   bool    mRetrieveAll;
