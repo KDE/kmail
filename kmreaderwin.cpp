@@ -215,9 +215,9 @@ bool KMReaderWin::foundMatchingCryptPlug( QString libName,
   }
   if( parent )
     KMessageBox::information(parent,
-      i18n("Problem: %1 Plug-In was not specified.\n"
-           "Use the 'Settings/Configure KMail / Plugins' dialog to specify the"
-           " Plug-In or ask your system administrator to do that for you.")
+      i18n("Problem: %1 plug-in was not specified.\n"
+           "Use the 'Settings->Configure KMail->Security' dialog to specify the "
+           "plug-in or ask your system administrator to do that for you.")
            .arg(verboseName),
            QString::null,
            "cryptoPluginBox");
@@ -2482,8 +2482,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
         if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
             if( reader && !hideErrors )
-            KMessageBox::sorry(reader, i18n("Crypto Plug-In \"%1\" is not initialized.\n"
-                "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
+            KMessageBox::sorry(reader, i18n("Crypto plug-in \"%1\" is not initialized.\n"
+                "Please specify the plug-in using the 'Settings->Configure KMail->Security' dialog.").arg(cryptPlug->libName()));
             return false;
         }
     }
@@ -2583,8 +2583,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
     if( doCheck && !cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
       KMessageBox::information(reader,
-          i18n("Problem: This Crypto Plug-In cannot verify message signatures.\n"
-               "Please specify an appropriate Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+          i18n("Problem: This Crypto plug-in cannot verify message signatures.\n"
+               "Please specify an appropriate plug-in using the 'Settings->Configure KMail->Security' dialog."),
                QString::null,
                "cryptoPluginBox");
     } else {
@@ -2734,14 +2734,14 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
   } else {
     if( reader && !hideErrors ) {
       KMessageBox::information(reader,
-        i18n("problem: No Crypto Plug-Ins found.\n"
-             "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+        i18n("problem: No Crypto plug-ins found.\n"
+             "Please specify a plug-in using the 'Settings->Configure KMail->Security' dialog."),
              QString::null,
              "cryptoPluginBox");
-      reader->queueHtml(i18n("<hr><b><h2>Signature could *not* be verified !</h2></b><br>"
-                   "reason:<br><i>&nbsp; &nbsp; No Crypto Plug-Ins found.</i><br>"
-                   "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invoking<br>&nbsp; &nbsp; the "
-                   "'Settings/Configure KMail / Plug-In' dialog!</i>"));
+      reader->queueHtml(i18n("<hr><b><h2>Signature could <u>not</u> be verified!</h2></b><br>"
+                   "reason:<br><i>&nbsp; &nbsp; No Crypto plug-ins found.</i><br>"
+                   "proposal:<br><i>&nbsp; &nbsp; Please specify a plug-in from<br>&nbsp; &nbsp; the "
+                   "'Settings->Configure KMail->Security' dialog.</i>"));
     }
   }
   kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: done, returning "
@@ -2973,9 +2973,9 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
             .arg( aErrorText ),
           passphraseError
           ? ""
-          : i18n("Make sure the Plug-In is installed properly and check "
+          : i18n("Make sure the plug-in is installed properly and check "
                  "your specifications made in the "
-                 "'Settings/Configure KMail / Plug-In' dialog!"),
+                 "'Settings->Configure KMail->Security' dialog."),
           decryptedData );
       }
       delete errTxt;
@@ -2986,9 +2986,10 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
   } else {
       if( reader )
         reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
-          i18n("No Crypto Plug-In settings found."),
-          i18n("Please specify a Plug-In by invoking"),
-          i18n("the 'Settings/Configure KMail / Plug-In' dialog!"),
+          i18n("No Crypto plug-in settings found."),
+          i18n("Please split translation across this and the next message",
+	       "Please specify a plug-in from the"),
+          i18n("'Settings->Configure KMail->Security' dialog."),
           decryptedData );
   }
   if( reader && reader->mDebugReaderCrypto ){
