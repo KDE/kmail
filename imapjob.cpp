@@ -139,8 +139,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           mParentProgressItem,
                           "ImapJobUploading"+ProgressManager::getUniqueID(),
                           i18n("Uploading message data"),
-                          i18n("Destination folder: ") + folder->folder()->prettyURL(),
-                          true, // cannot be cannceled
+                          i18n("Destination folder: ") + mDestFolder->prettyURL(),
+                          true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
     connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
@@ -174,7 +174,15 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     QDataStream stream( packedArgs, IO_WriteOnly );
 
     stream << (int) 'C' << url << destUrl;
-
+    jd.progressItem = ProgressManager::createProgressItem(
+                          mParentProgressItem,
+                          "ImapJobCopyMove"+ProgressManager::getUniqueID(),
+                          i18n("Server operation"),
+                          i18n("Source folder: ") + msg_parent->prettyURL()
+                          + " - destination folder: " + mDestFolder->prettyURL(),
+                          true,
+                          account->useSSL() || account->useTLS() );
+    jd.progressItem->setTotalItems( jd.total );
     KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
