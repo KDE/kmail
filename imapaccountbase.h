@@ -323,7 +323,7 @@ class AttachmentStrategy;
     /**
      * Emitted when the subscription has changed
      */
-    void subscriptionChanged(QString imapPath, bool subscribed);
+    void subscriptionChanged(const QString& imapPath, bool subscribed);
 
   };
 
