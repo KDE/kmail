@@ -2102,6 +2102,7 @@ static const struct {
   const char * displayName;
 } colorNames[] = { // adjust setup() if you change this:
   { "BackgroundColor", I18N_NOOP("Composer background") },
+  { "AltBackgroundColor", I18N_NOOP("Alternative background color") },
   { "ForegroundColor", I18N_NOOP("Normal text") },
   { "QuotedText1", I18N_NOOP("Quoted text - first level") },
   { "QuotedText2", I18N_NOOP("Quoted text - second level") },
@@ -2162,6 +2163,7 @@ void AppearancePage::ColorsTab::setup() {
 
   static const QColor defaultColor[ numColorNames ] = {
     kapp->palette().active().base(), // bg
+    KGlobalSettings::alternateBackgroundColor(), // alt bg
     kapp->palette().active().text(), // fg
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2

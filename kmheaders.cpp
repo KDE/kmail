@@ -630,11 +630,12 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 
 bool KMHeaders::event(QEvent *e)
 {
+  bool result = KMHeadersInherited::event(e);
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
   }
-  return KMHeadersInherited::event(e);
+  return result;
 }
 
 
@@ -649,6 +650,7 @@ void KMHeaders::readColorConfig (void)
   QColor c3=QColor("blue");
   QColor c4=QColor(kapp->palette().active().base());
   QColor c5=QColor(0,0x7F,0);
+  QColor c6=KGlobalSettings::alternateBackgroundColor();
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
@@ -660,6 +662,7 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
     mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
     mPaintInfo.colFlag = config->readColorEntry("FlagMessage",&c5);
+    c6 = config->readColorEntry("AltBackgroundColor",&c6);
   }
   else {
     mPaintInfo.colFore = c1;
@@ -672,6 +675,7 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colUnread = c3;
     mPaintInfo.colFlag = c5;
   }
+  setAlternateBackground(c6);
 }
 
 //-----------------------------------------------------------------------------
