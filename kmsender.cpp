@@ -18,6 +18,7 @@
 #include <kprocess.h>
 #include <kapp.h>
 #include <kmessagebox.h>
+#include <kwin.h>
 #include <qregexp.h>
 #include <qdialog.h>
 
@@ -284,7 +285,7 @@ void KMSender::doSendMsg()
       labelDialog = new QDialog(0, "sendinglabel", false, WDestructiveClose );
       label = new QLabel(labelDialog);
       labelDialog->setCaption("KMail");
-      labelDialog->setIcon(kapp->miniIcon());
+      KWin::setIcons( labelDialog->winId(), kapp->icon(), kapp->miniIcon() );
       connect(labelDialog,SIGNAL(destroyed()),this,SLOT(slotAbortSend()));
       label->resize(400, label->sizeHint().height());
       label->setText(i18n("Initiating sender process..."));
