@@ -188,6 +188,7 @@ protected slots:
   virtual void slotCheckQueuedFolders();
 
 private:
+  QValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
   void processNewMail( KMFolderCachedImap* folder, bool interactive, bool recurse );
 
 private:
