@@ -1397,6 +1397,7 @@ void KMMainWin::setupMenuBar()
   KActionMenu *actActionMenu = new
     KActionMenu( i18n("Check Mail in"), "mail_get", actionCollection(),
 				   	"check_mail_in" );
+  actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
   connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
   
