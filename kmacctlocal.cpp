@@ -94,6 +94,7 @@ void KMAcctLocal::processNewMail(bool)
       QString statusMsg = i18n("Transmission completed, no new messages.");
       KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
       emit finishedCheck(hasNewMail);
+      emit newMailsProcessed(0);
       return;
     }
   }
@@ -111,6 +112,7 @@ void KMAcctLocal::processNewMail(bool)
 
   if (!mFolder) {
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -124,6 +126,7 @@ void KMAcctLocal::processNewMail(bool)
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
   }
 
   mailFolder.setAutoCreateIndex(FALSE);
@@ -138,6 +141,7 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
       << mailFolder.name() << endl;
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -146,6 +150,7 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mailFolder.location() );
     KMBroadcastStatus::instance()->setStatusMsg( errMsg );
@@ -218,6 +223,7 @@ void KMAcctLocal::processNewMail(bool)
   mFolder->quiet(FALSE);
 
   emit finishedCheck(hasNewMail);
+  emit newMailsProcessed(num);
 
   return;
 }

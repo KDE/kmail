@@ -64,6 +64,12 @@ public slots:
   virtual void intCheckMail(int, bool _interactive = true);
   virtual void processNextCheck(bool _newMail);
 
+  /** this slot increases the count of new mails to show a total number
+  after checking in multiple accounts. You can disable the display of
+  the total (for example, to show an error in the status bar) by
+  calling it with numNewMails = -1  */
+  virtual void addToTotalNewMailCount(int numNewMails);
+  
 signals:
   /** emitted if new mail has been collected */
   void checkedMail(bool, bool);
@@ -76,6 +82,7 @@ private:
   bool checking;
   bool newMailArrived;
   bool interactive;
+  int  mTotalNewMailsArrived;
 };
 
 #endif /*kmacctmgr_h*/

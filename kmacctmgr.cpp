@@ -5,6 +5,7 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
+#include "kmbroadcaststatus.h"
 
 
 #include <assert.h>
@@ -191,7 +192,11 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
     act = new KMAcctImap(this, aName);
 
   if (act)
+  {
     act->setFolder(kernel->inboxFolder());
+    connect( act, SIGNAL(newMailsProcessed(int)),
+	this, SLOT(addToTotalNewMailCount(int)) );
+  }
 
   return act;
 }
@@ -261,6 +266,8 @@ void KMAcctMgr::checkMail(bool _interactive)
     return;
   }
 
+  mTotalNewMailsArrived=0;
+
   mAccountIt->toFirst();
   while (TRUE)
   {
@@ -269,6 +276,12 @@ void KMAcctMgr::checkMail(bool _interactive)
     if (mAccountIt->atLast()) break;
     ++(*mAccountIt);
   }
+
+  if (mTotalNewMailsArrived!=-1)
+    KMBroadcastStatus::instance()->setStatusMsg(
+	i18n("Transmission completed, %n new message.",
+	  "Transmission completed, %n new messages.", mTotalNewMailsArrived) );
+
 }
 
 
@@ -326,5 +339,12 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 }
 
 
+//-----------------------------------------------------------------------------
+void KMAcctMgr::addToTotalNewMailCount(int newmails)
+{
+  if ( newmails==-1 ) mTotalNewMailsArrived=-1;
+  if ( mTotalNewMailsArrived==-1 ) return;
+  mTotalNewMailsArrived+=newmails;
+}
 //-----------------------------------------------------------------------------
 #include "kmacctmgr.moc"

@@ -491,6 +491,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
+  emit newMailsProcessed(-1);
   if (!mFolder || !mFolder->child())
   {
     emit finishedCheck(false);

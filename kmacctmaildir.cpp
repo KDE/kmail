@@ -82,6 +82,7 @@ void KMAcctMaildir::processNewMail(bool)
     QFileInfo fi( location() );
     if ( !fi.exists() ) {
       emit finishedCheck(hasNewMail);
+      emit newMailsProcessed(0);
       QString statusMsg = i18n("Transmission completed, no new messages");
       KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
       return;
@@ -98,6 +99,7 @@ void KMAcctMaildir::processNewMail(bool)
 
   if (!mFolder) {
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -111,6 +113,7 @@ void KMAcctMaildir::processNewMail(bool)
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
   }
 
   mailFolder.setAutoCreateIndex(FALSE);
@@ -125,6 +128,7 @@ void KMAcctMaildir::processNewMail(bool)
     kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
       << mailFolder.name() << endl;
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -132,6 +136,7 @@ void KMAcctMaildir::processNewMail(bool)
   if (mailFolder.isReadOnly()) { // mailFolder is locked
     mailFolder.close();
     emit finishedCheck(hasNewMail);
+    emit newMailsProcessed(-1);
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mailFolder.location() );
     KMBroadcastStatus::instance()->setStatusMsg( errMsg );
@@ -201,6 +206,7 @@ void KMAcctMaildir::processNewMail(bool)
   mFolder->quiet(FALSE);
 
   emit finishedCheck(hasNewMail);
+  emit newMailsProcessed(num);
 
   return;
 }

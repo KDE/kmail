@@ -148,6 +148,7 @@ public:
 
 signals:
   virtual void finishedCheck(bool newMail);
+  virtual void newMailsProcessed(int numberOfNewMails);
 
 protected slots:
   virtual void mailCheck();
