@@ -58,11 +58,6 @@
 #include <paths.h>
 #endif
 
-#ifndef KMAIL_TMP
-// a '&' as first char in _PATH_TMP will be replaced with kapp->localkdedir()
-#define KMAIL_TMP "&/share/apps/kmail/tmp"
-#endif
-
 #ifdef KRN
 extern KApplication *app;
 extern KBusyPtr *kbp;
@@ -96,25 +91,15 @@ KMReaderWin::~KMReaderWin()
 //-----------------------------------------------------------------------------
 void KMReaderWin::makeAttachDir(void)
 {
-  QString str;
   bool ok = true;
 
-  str = KMAIL_TMP;
-  if (str[0] == '&') str = app->localkdedir() + str.mid(1,1023);
-  mAttachDir.sprintf("%s/kmail%d", (const char*)str, getpid());
+  QString directory;
+  directory.sprintf("kmail/tmp/kmail%d/", getpid());
+  mAttachDir = locateLocal(directory, "");
 
-  if (access(mAttachDir, W_OK) != 0) // Not there or not writable
-  {
-    if (access(str, W_OK) != 0 &&
-        (mkdir(str, 0) != 0 || chmod(str, S_IRWXU) != 0))
-       ok=false; //failed create
-    else if (mkdir(mAttachDir, 0) != 0 || chmod(mAttachDir, S_IRWXU) != 0)
-       ok=false; //failed create
-  }
-
-  if (!ok) warning(i18n("Failed to create temporary "
-                        "attachment directory '%s': %s"), 
-                   (const char*)mAttachDir, strerror(errno));
+  if (mAttachDir.isNull()) warning(i18n("Failed to create temporary "
+					"attachment directory '%s': %s"), 
+				   directory.ascii(), strerror(errno));
 }
 
 

@@ -463,21 +463,7 @@ static void init(int& argc, char *argv[])
   //oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 
   QDir dir;
-  QString d = KApplication::localkdedir();
-
-  d += "/share/apps";
-  dir.setPath(d.data());
-  if(!dir.exists()){
-    dir.mkdir(d.data());
-    chmod(d.data(), S_IRWXU);
-  }
-
-  d += "/kmail";
-  dir.setPath(d.data());
-  if(!dir.exists()){
-    dir.mkdir(d.data());
-    chmod(d.data(), S_IRWXU);
-  }
+  QString d = locateLocal("data", "kmail/");
 
   identity = new KMIdentity;
 
