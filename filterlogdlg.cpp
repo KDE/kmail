@@ -43,6 +43,7 @@
 #include <qtextedit.h>
 #include <qvbox.h>
 #include <qwhatsthis.h>
+#include <qvgroupbox.h>
 
 #include <errno.h>
 #include <X11/Xlib.h>
@@ -70,11 +71,36 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
     mTextEdit->append( *it );
   }
 
-  mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation"), page );
+  mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
+  mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
+  connect( mLogActiveBox, SIGNAL(clicked()),
+           this, SLOT(slotSwitchLogState(void)) );
+  QWhatsThis::add( mLogActiveBox,
+      i18n( "You can turn logging of filter activities on and off here. "
+            "Of course, log data is collected and shown only when logging "
+            "is turned on. " ) );
+
+  mLogDetailsBox = new QVGroupBox( i18n( "Logging Details" ), page );
+  mLogDetailsBox->setEnabled( mLogActiveBox->isChecked() );
+  connect( mLogActiveBox, SIGNAL( toggled( bool ) ),
+           mLogDetailsBox, SLOT( setEnabled( bool ) ) );
+
+  mLogPatternDescBox = new QCheckBox( i18n("Log pattern description"),
+                                      mLogDetailsBox );
+  mLogPatternDescBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) );
+  connect( mLogPatternDescBox, SIGNAL(clicked()),
+           this, SLOT(slotChangeLogDetail(void)) );
+  // TODO
+  //QWhatsThis::add( mLogPatternDescBox,
+  //    i18n( "" ) );
+
+  mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation"),
+                                         mLogDetailsBox );
   mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
-            this, SLOT(slotSwitchLogRuleEvaluation(void)) );
+           this, SLOT(slotChangeLogDetail(void)) );
   QWhatsThis::add( mLogRuleEvaluationBox,
       i18n( "You can control the feedback in the log concerning the "
             "evaluation of the filter rules of applied filters: "
@@ -83,14 +109,25 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
             "feedback about the result of the evaluation of all rules "
             "of a single filter will be given." ) );
 
-  mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
-  mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
-  connect( mLogActiveBox, SIGNAL(clicked()),
-            this, SLOT(slotSwitchLogState(void)) );
-  QWhatsThis::add( mLogActiveBox,
-      i18n( "You can turn logging of filter activities on and off here. "
-            "Of course, log data is collected and shown only when logging "
-            "is turned on. " ) );
+  mLogPatternResultBox = new QCheckBox( i18n("Log filter pattern evaluation"),
+                                        mLogDetailsBox );
+  mLogPatternResultBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) );
+  connect( mLogPatternResultBox, SIGNAL(clicked()),
+           this, SLOT(slotChangeLogDetail(void)) );
+  // TODO
+  //QWhatsThis::add( mLogPatternResultBox,
+  //    i18n( "" ) );
+
+  mLogFilterActionBox = new QCheckBox( i18n("Log filter actions"),
+                                       mLogDetailsBox );
+  mLogFilterActionBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) );
+  connect( mLogFilterActionBox, SIGNAL(clicked()),
+           this, SLOT(slotChangeLogDetail(void)) );
+  // TODO
+  //QWhatsThis::add( mLogFilterActionBox,
+  //    i18n( "" ) );
 
   QHBox * hbox = new QHBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
@@ -102,7 +139,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogMemLimitSpin->setSuffix( " KB" );
   mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
-            this, SLOT(slotChangeLogMemLimit(int)) );
+           this, SLOT(slotChangeLogMemLimit(int)) );
   QWhatsThis::add( mLogMemLimitSpin,
       i18n( "Collecting log data uses memory to temporarily store the "
 	    "log data; here you can limit the maximum amount of memory "
@@ -117,7 +154,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   connect(FilterLog::instance(), SIGNAL(logStateChanged(void)),
           this, SLOT(slotLogStateChanged(void)));
 
-  setInitialSize( QSize( 500, 400 ) );
+  setInitialSize( QSize( 500, 500 ) );
 #if !KDE_IS_VERSION( 3, 2, 91 )
   // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
   // wrong (#76026), and should be done only for modals. CVS HEAD should get
@@ -145,21 +182,43 @@ void FilterLogDialog::slotLogShrinked()
 void FilterLogDialog::slotLogStateChanged()
 {
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
+  mLogPatternDescBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) );
   mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
+  mLogPatternResultBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) );
+  mLogFilterActionBox->setChecked(
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) );
 
+  // value in the QSpinBox is in KB while it's in Byte in the FilterLog
   int newLogSize = FilterLog::instance()->getMaxLogSize() / 1024;
   if ( mLogMemLimitSpin->value() != newLogSize )
     mLogMemLimitSpin->setValue( newLogSize );
 }
 
 
-void FilterLogDialog::slotSwitchLogRuleEvaluation()
+void FilterLogDialog::slotChangeLogDetail()
 {
-  if ( mLogRuleEvaluationBox->isChecked() )
-    FilterLog::instance()->enableContentType( FilterLog::ruleResult );
-  else
-    FilterLog::instance()->disableContentType( FilterLog::ruleResult );
+  if ( mLogPatternDescBox->isChecked() !=
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::patternDesc,
+                                                  mLogPatternDescBox->isChecked() );
+
+  if ( mLogRuleEvaluationBox->isChecked() !=
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::ruleResult,
+                                                  mLogRuleEvaluationBox->isChecked() );
+
+  if ( mLogPatternResultBox->isChecked() !=
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::patternResult,
+                                                  mLogPatternResultBox->isChecked() );
+
+  if ( mLogFilterActionBox->isChecked() !=
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::appliedAction,
+                                                  mLogFilterActionBox->isChecked() );
 }
 
 

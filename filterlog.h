@@ -83,18 +83,16 @@ namespace KMail {
       long getMaxLogSize() { return mMaxLogSize; };
       
       
-      /** add a content type to the set of logged ones */
-      void enableContentType( ContentType contentType )
+      /** add/remove a content type to the set of logged ones */
+      void setContentTypeEnabled( ContentType contentType, bool b )
       { 
-        mAllowedTypes |= contentType; 
+        if ( b )
+          mAllowedTypes |= contentType;
+        else
+          mAllowedTypes &= ~contentType;
         emit logStateChanged();
       };
-      /** remove a content type from the set of logged ones */
-      void disableContentType( ContentType contentType )
-      {
-        mAllowedTypes &= ~contentType;
-        emit logStateChanged();
-      };
+
       /** check a content type for inclusion in the set of logged ones */
       bool isContentTypeEnabled( ContentType contentType )
       { 
