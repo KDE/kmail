@@ -333,7 +333,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
   msg->setSubject( subject );
-  msg->setCharset( "US-ASCII" );
   msg->setAutomaticFields( true );
 
   // Add all attachments by reading them from their temp. files
