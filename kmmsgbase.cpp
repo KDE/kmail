@@ -77,8 +77,6 @@ KMMsgBase::KMMsgBase(KMFolder* aParent)
   mParent  = aParent;
   mDirty   = FALSE;
   mIndexOffset = mIndexLength = 0;
-  mEncryptionState = KMMsgEncryptionStateUnknown;
-  mSignatureState = KMMsgSignatureStateUnknown;
 }
 
 
@@ -161,33 +159,56 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 }
 
 
-void KMMsgBase::setEncryptionState( const char* status )
+void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status,
+                                    int idx ) 
+{ 
+    qDebug( "***setEncryptionState1( %c )", status );
+    mDirty = TRUE;
+    if (mParent)
+        mParent->headerOfMsgChanged(this, idx);
+}
+
+void KMMsgBase::setEncryptionState( const char* status, int idx )
 {
+    qDebug( "***setEncryptionState2( %c )", status[0] );
+    
     if( status[0] == (char)KMMsgEncryptionStateUnknown )
-        setEncryptionState( KMMsgEncryptionStateUnknown );
+        setEncryptionState( KMMsgEncryptionStateUnknown, idx );
     else if( status[0] == (char)KMMsgNotEncrypted )
-        setEncryptionState( KMMsgNotEncrypted );
+        setEncryptionState( KMMsgNotEncrypted, idx );
     else if( status[0] == (char)KMMsgPartiallyEncrypted )
-        setEncryptionState( KMMsgPartiallyEncrypted );
+        setEncryptionState( KMMsgPartiallyEncrypted, idx );
     else if( status[0] == (char)KMMsgFullyEncrypted )
-        setEncryptionState( KMMsgFullyEncrypted );
+        setEncryptionState( KMMsgFullyEncrypted, idx );
     else
-        setEncryptionState( KMMsgEncryptionStateUnknown );
+        setEncryptionState( KMMsgEncryptionStateUnknown, idx );
 }
 
 
-void KMMsgBase::setSignatureState( const char* status )
+void KMMsgBase::setSignatureState( const KMMsgSignatureState status,
+                                   int idx ) 
+{ 
+    qDebug( "***setSignatureState1( %c )", status );
+    mDirty = TRUE;
+    if (mParent)
+         mParent->headerOfMsgChanged(this, idx);
+}
+
+
+
+void KMMsgBase::setSignatureState( const char* status, int idx )
 {
+    qDebug( "***setSignatureState2( %c )", status[0] );
+    
     if( status[0] == (char)KMMsgSignatureStateUnknown )
-        setSignatureState( KMMsgSignatureStateUnknown );
+        setSignatureState( KMMsgSignatureStateUnknown, idx );
     else if( status[0] == (char)KMMsgNotSigned )
-        setSignatureState( KMMsgNotSigned );
+        setSignatureState( KMMsgNotSigned, idx );
     else if( status[0] == (char)KMMsgPartiallySigned )
-        setSignatureState( KMMsgPartiallySigned );
+        setSignatureState( KMMsgPartiallySigned,idx );
     else if( status[0] == (char)KMMsgFullySigned )
-        setSignatureState( KMMsgFullySigned );
-    else
-        setSignatureState( KMMsgSignatureStateUnknown );
+        setSignatureState( KMMsgFullySigned, idx );
+    else setSignatureState( KMMsgSignatureStateUnknown, idx );
 }
 
 

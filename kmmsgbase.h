@@ -87,18 +87,26 @@ public:
 
 
   /** Encryption status of the message. */
-  virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
+  virtual KMMsgEncryptionState encryptionState() const = 0;
 
   /** Signature status of the message. */
-  virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
+  virtual KMMsgSignatureState signatureState() const = 0;
 
-  /** Set encryption status of the message. */
-  virtual void setEncryptionState(const KMMsgEncryptionState status) { mEncryptionState = status; }
-    virtual void setEncryptionState( const char* status );
+  /** Set encryption status of the message and mark dirty. Optional
+   * optimization: @p idx may specify the index of this message within
+   * the parent folder. */
+  virtual void setEncryptionState(const KMMsgEncryptionState status, 
+                                  int idx = -1 );
+    virtual void setEncryptionState( const char* status, 
+                                     int idx = -1 );
     
-  /** Set signature status of the message. */
-  virtual void setSignatureState(const KMMsgSignatureState status) { mSignatureState = status; }
-    virtual void setSignatureState( const char* status );
+  /** Set signature status of the message and mark dirty. Optional
+   * optimization: @p idx may specify the index of this message within
+   * the parent folder. */
+  virtual void setSignatureState(const KMMsgSignatureState status,
+                                 int idx = -1 );
+    virtual void setSignatureState( const char* status,
+                                    int idx = -1 );
     
 
   /** Important header fields of the message that are also kept in the index. */
@@ -244,10 +252,6 @@ public:
   QString getStringPart(MsgPartType) const;
   /** sync'ing just one KMMsgBase */
   bool syncIndexString() const;
-
-private:
-  KMMsgEncryptionState mEncryptionState;
-  KMMsgSignatureState mSignatureState;
 };
 
 typedef KMMsgBase* KMMsgBasePtr;

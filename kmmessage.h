@@ -247,7 +247,7 @@ public:
   /** Sets the message serial number.  If defaulted to zero, the
     serial number will be assigned using the dictionary. */
   virtual void setMsgSerNum(unsigned long newMsgSerNum = 0);
-  
+
   /** Get or set header field with given name */
   virtual QString headerField(const QCString& name) const;
   virtual void setHeaderField(const QCString& name, const QString& value);
@@ -451,11 +451,11 @@ public:
   /** Get/set offset in mail folder. */
   virtual unsigned long folderOffset(void) const { return mFolderOffset; }
   void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
-  
+
   /** Get/set filename in mail folder. */
   virtual QString fileName(void) const { return mFileName; }
   void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
-  
+
   /** Get/set size of message in the folder including the whole header in
       bytes. Can be 0, if the message is not is a folder
       the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
@@ -473,6 +473,28 @@ public:
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
+
+    /** Set encryption status of the message and mark dirty. Optional
+   * optimization: @p idx may specify the index of this message within
+   * the parent folder. */
+  virtual void setEncryptionState(const KMMsgEncryptionState status, 
+                                  int idx = -1 );
+    virtual void setEncryptionState( const char* status, 
+        int idx = -1 ) { KMMsgBase::setEncryptionState( status, idx ); }
+    
+  /** Set signature status of the message and mark dirty. Optional
+   * optimization: @p idx may specify the index of this message within
+   * the parent folder. */
+  virtual void setSignatureState(const KMMsgSignatureState status,
+                                 int idx = -1 );
+    virtual void setSignatureState( const char* status,
+                                    int idx = -1 ) { KMMsgBase::setSignatureState( status, idx ); }
+
+    /** Encryption status of the message. */
+    virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
+
+  /** Signature status of the message. */
+    virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
 
   /** Links this message to @p aMsg, setting link type to @p aStatus. */
   void link(const KMMessage *aMsg, KMMsgStatus aStatus);
@@ -500,6 +522,8 @@ protected:
   time_t mDate;
   KMMsgStatus mStatus;
   unsigned long mMsgSerNum;
+  KMMsgEncryptionState mEncryptionState;
+  KMMsgSignatureState mSignatureState;
 };
 
 typedef KMMessage* KMMessagePtr;

@@ -237,7 +237,7 @@ QCString KMMessage::asSendableString()
 //-----------------------------------------------------------------------------
 void KMMessage::setStatusFields(void)
 {
-  char str[3];
+    char str[3];
 
   str[0] = (char)status();
   str[1] = '\0';
@@ -247,12 +247,13 @@ void KMMessage::setStatusFields(void)
   str[0] = (char)encryptionState();
   str[1] = '\0';
   setHeaderField("X-KMail-EncryptionState", str);
-  
+
   str[0] = (char)signatureState();
   str[1] = '\0';
+  qDebug( "Setting SignatureState header field to %c", str[0] );
   setHeaderField("X-KMail-SignatureState", str);
-  
-}       
+
+}
 
 
 //----------------------------------------------------------------------------
@@ -309,7 +310,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
     setEncryptionState(headerField("X-KMail-EncryptionState").latin1());
     setSignatureState(headerField("X-KMail-SignatureState").latin1());
   }
-    
+
   mNeedsAssembly = FALSE;
     mDate = date();
 
@@ -2832,36 +2833,30 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
   mStatus = aStatus;
   mDirty = TRUE;
 }
-/*
+
+
 //-----------------------------------------------------------------------------
-KMMsgEncryptionState KMMessage::encryptionState() const
+void KMMessage::setEncryptionState( const KMMsgEncryptionState aStatus,
+                                    int idx )
 {
-    // PENDING(khz) Implement this
-    // This is a dummy
-    int randomval = random();
-    if( ( randomval % 3 ) == 2 )
-        return KMMsgFullyEncrypted;
-    else if( ( randomval % 3 ) == 1 )
-        return KMMsgPartiallyEncrypted;
-    else
-        return KMMsgNotEncrypted;
+    if( mEncryptionState = aStatus )
+        return;
+    KMMsgBase::setEncryptionState( aStatus, idx );
+    mEncryptionState = aStatus;
+    mDirty = true;
 }
 
 
 //-----------------------------------------------------------------------------
-KMMsgSignatureState KMMessage::signatureState() const
+void KMMessage::setSignatureState( const KMMsgSignatureState aStatus,
+                                   int idx )
 {
-    // PENDING(khz) Implement this
-    // This is a dummy
-    int randomval = random();
-    if( ( randomval % 3 ) == 2 )
-        return KMMsgFullySigned;
-    else if( ( randomval % 3 ) == 1 )
-        return KMMsgPartiallySigned;
-    else
-        return KMMsgNotSigned;
+    if( mSignatureState = aStatus )
+        return;
+    KMMsgBase::setSignatureState( aStatus, idx );
+    mSignatureState = aStatus;
+    mDirty = true;
 }
-*/
 
 
 //-----------------------------------------------------------------------------

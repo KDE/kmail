@@ -74,7 +74,9 @@ public:
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolder* p, long off, short len) :
-    KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown), kd(NULL)
+    KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown), 
+    mEncryptionState( KMMsgEncryptionStateUnknown ),
+    mSignatureState( KMMsgSignatureStateUnknown ), kd(NULL)
 {
     setIndexOffset(off);
     setIndexLength(len);
@@ -101,6 +103,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 	kd = NULL;
     }
     mStatus = other.status();
+    mEncryptionState = other.encryptionState();
+    mSignatureState = other.signatureState();
     return *this;
 }
 
@@ -119,6 +123,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->msgIdMD5 = msg.msgIdMD5();
     kd->xmark = msg.xmark();
     mStatus = msg.status();
+    mEncryptionState = msg.encryptionState();
+    mSignatureState = msg.signatureState();
     kd->folderOffset = msg.folderOffset();
     kd->msgSize = msg.msgSize();
     kd->date = msg.date();
@@ -288,6 +294,24 @@ KMMsgStatus KMMsgInfo::status(void) const
 	((KMMsgInfo *)this)->mStatus = (KMMsgStatus)getLongPart(MsgStatusPart);
     return mStatus;
 }
+
+
+//-----------------------------------------------------------------------------
+KMMsgEncryptionState KMMsgInfo::encryptionState() const
+{
+    // no caching in index file yet
+    return mEncryptionState;
+}
+
+
+KMMsgSignatureState KMMsgInfo::signatureState() const
+{
+    // no caching in index file yet
+    return mSignatureState;
+}
+
+    
+
 
 //-----------------------------------------------------------------------------
 unsigned long KMMsgInfo::folderOffset(void) const

@@ -44,6 +44,8 @@ public:
   virtual QString msgIdMD5(void) const;
   virtual QString fileName(void) const;
   virtual KMMsgStatus status(void) const;
+  virtual KMMsgEncryptionState encryptionState() const;
+  virtual KMMsgSignatureState signatureState() const;
   virtual unsigned long folderOffset(void) const;
   virtual unsigned long msgSize(void) const;
   virtual time_t date(void) const;
@@ -70,6 +72,8 @@ public:
 
 private:
   KMMsgStatus mStatus;
+  KMMsgEncryptionState mEncryptionState;
+  KMMsgSignatureState mSignatureState;
   class KMMsgInfoPrivate;
   KMMsgInfoPrivate *kd;
 };
