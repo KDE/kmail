@@ -4204,6 +4204,10 @@ void KMLineEdit::insert(const QString &t)
        newText.replace( QRegExp(" at "), "@" );
        newText.replace( QRegExp(" dot "), "." );
     }
+    else if (newText.contains("(at)"))
+    {
+      newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
+    }
     contents = contents.left(pos)+newText+contents.mid(pos);
     setText(contents);
     setCursorPosition(pos+newText.length());
