@@ -746,7 +746,7 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
   if (!newMail)
     return;
 
-  KNotifyClient::event(winId(), "new-mail-arrived", i18n("New mail arrived"));
+  KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
