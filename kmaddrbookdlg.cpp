@@ -9,14 +9,44 @@
 #include <assert.h>
 
 #include <qcheckbox.h>
+#include <qlistview.h>
 #include <qvbox.h>
 #include <qpushbutton.h>
+#include <qheader.h>
 
 #include <kapplication.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <klistview.h>
 #include <kconfig.h>
+
+
+//-----------------------------------------------------------------------------
+class KMAddrListViewItem : public KListViewItem
+{
+public:
+  KMAddrListViewItem( KListView * parent )
+    : KListViewItem( parent ) {};
+  KMAddrListViewItem( KListView * parent, KListViewItem * after )
+    : KListViewItem( parent, after ) {};
+  KMAddrListViewItem( KListView * parent, QString str )
+    : KListViewItem( parent, str ) {};
+  KMAddrListViewItem( KListView * parent, KListViewItem * after, QString str )
+    : KListViewItem( parent, after, str ) {};
+
+  virtual QString key( int, bool ) const;
+};
+
+QString KMAddrListViewItem::key( int column, bool ) const
+{
+  // case insensitive sorting
+  QString s = text( column ).lower();
+  // ignore a leading " for sorting
+  if( s[0] == '"' )
+    s = s.mid(1);
+  return s;
+}
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, const QString& aCap):
@@ -26,19 +56,21 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, const QString& aCap):
 {
   QVBox *page = makeVBoxMainWidget();
 
-  mListBox = new QListBox(page);
+  mAddrListView = new KListView(page);
   mCheckBox = new QCheckBox(i18n("Show &recent addresses"), page);
 
   QString addr;
   mAddress  = QString::null;
 
-  mListBox->setSelectionMode(QListBox::Multi);
-  mListBox->setMinimumWidth(fontMetrics().maxWidth()*20);
-  mListBox->setMinimumHeight(fontMetrics().lineSpacing()*15);
+  mAddrListView->addColumn( "" );
+  mAddrListView->setSelectionMode(QListView::Multi);
+  mAddrListView->setMinimumWidth(fontMetrics().maxWidth()*20);
+  mAddrListView->setMinimumHeight(fontMetrics().lineSpacing()*15);
+  mAddrListView->header()->hide();
 
   readConfig();
 
-  connect(mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
+  connect(mAddrListView, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(mCheckBox, SIGNAL(toggled(bool)), SLOT(toggleShowRecent(bool)));
 
   showAddresses(AddressBookAddresses |
@@ -77,17 +109,32 @@ void KMAddrBookSelDlg::toggleShowRecent( bool on )
 
 void KMAddrBookSelDlg::showAddresses( int addressTypes )
 {
-  mListBox->clear();
+  mAddrListView->clear();
+  mAddrListView->setSorting( 0 );
 
   if ( addressTypes & AddressBookAddresses ) {
     QStringList addresses;
     KabcBridge::addresses(&addresses);
-    mListBox->insertStringList(addresses);
+    for( QStringList::Iterator it = addresses.begin();
+         it != addresses.end(); ++it )
+      new KMAddrListViewItem( mAddrListView, *it );
   }
-  mListBox->sort();
+  mAddrListView->sort();
+  mAddrListView->setSorting( -1 );
 
   if ( addressTypes & RecentAddresses )
-    mListBox->insertStringList( KMRecentAddresses::self()->addresses(), 0 );
+  {
+    KMAddrListViewItem* prevlvi = 0;
+    QStringList addresses = KMRecentAddresses::self()->addresses();
+    for( QStringList::Iterator it = addresses.begin();
+         it != addresses.end(); ++it )
+    {
+      if( prevlvi == 0 )
+        prevlvi = new KMAddrListViewItem( mAddrListView, *it );
+      else
+        prevlvi = new KMAddrListViewItem( mAddrListView, prevlvi, *it );
+    }
+  }
 }
 
 
@@ -95,15 +142,15 @@ void KMAddrBookSelDlg::showAddresses( int addressTypes )
 void KMAddrBookSelDlg::slotOk()
 {
   mAddress = QString::null;
-  unsigned int idx;
   unsigned int count = 0;
-  for (idx = 0; idx < mListBox->count(); idx++)
+  QListViewItemIterator it( mAddrListView );
+  for ( ; it.current(); ++it )
   {
-    if( mListBox->isSelected(idx) ) {
-      if( count > 0 ) {
+    if( it.current()->isSelected() )
+    {
+      if( count > 0 )
         mAddress += ", ";
-      }
-      mAddress += mListBox->text(idx);
+      mAddress += it.current()->text( 0 );
       count++;
     }
   }

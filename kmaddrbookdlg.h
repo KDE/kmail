@@ -7,7 +7,7 @@
 
 #include <kdialogbase.h>
 
-#include <qlistbox.h>
+//#include <qlistview.h>
 #include <qvaluelist.h> // for kab stuff
 
 class KMAddrBook;
@@ -16,6 +16,7 @@ class KLineEdit;
 class QCheckBox;
 class QStringList; // for kab stuff
 class KabKey; // for kab stuff
+class KListView;
 
 class KMAddrBookSelDlg: public KDialogBase
 {
@@ -43,7 +44,7 @@ protected slots:
 protected:
   void showAddresses( int addressTypes );
 
-  QListBox   *mListBox;
+  KListView  *mAddrListView;
   QCheckBox  *mCheckBox;
   QString     mAddress;
 };

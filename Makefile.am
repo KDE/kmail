@@ -77,7 +77,8 @@ rc_DATA = kmcomposerui.rc kmmainwin.rc eventsrc
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl \
-		kmail-3.1-use-UOID-for-identities.pl
+		kmail-3.1-use-UOID-for-identities.pl \
+		kmail-3.1-update-new-mail-notification-settings.pl
 
 tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
