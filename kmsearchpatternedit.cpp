@@ -103,8 +103,10 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
 
   //--------------set function and contents
   mRuleFunc->setCurrentItem( (int)aRule->function() );
-  functionChanged( (int)aRule->function() );
   mRuleValue->setText( aRule->contents() );
+
+  if (mRegExpEditDialog)
+    functionChanged( (int)aRule->function() );
 
   blockSignals(FALSE);
 }
