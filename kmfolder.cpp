@@ -31,6 +31,11 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifndef _BSD_COMPAT
+#define _BSD_COMPAT // flock is under BSD compliance oat least on IRIX
+#endif
+
 #include <sys/file.h>
 #include <klocale.h>
 
