@@ -1311,8 +1311,14 @@ KMMessage* KMMessage::createForward(void)
     for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
-        msg->addBodyPart(&msgPart);
+      QCString mimeType = msgPart.typeStr().lower() + '/'
+                        + msgPart.subtypeStr().lower();
+      // don't add the detached signature as attachment when forwarding a
+      // PGP/MIME signed message inline
+      if( mimeType != "application/pgp-signature" ) {
+        if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
+          msg->addBodyPart(&msgPart);
+      }
     }
   }
 
