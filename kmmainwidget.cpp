@@ -310,7 +310,7 @@ void KMMainWidget::readConfig(void)
     mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
     mSystemTrayOnNew = config->readBoolEntry("systray-on-mail", false);
-    mSystemTrayMode = config->readBoolEntry("systray-on-new", false) ?
+    mSystemTrayMode = config->readBoolEntry("systray-on-new", true) ?
       KMSystemTray::OnNewMail :
       KMSystemTray::AlwaysOn;
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
@@ -830,7 +830,7 @@ void KMMainWidget::slotExpireFolder()
   KConfig           *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
-  if (config->readBoolEntry("warn-before-expire")) {
+  if (config->readBoolEntry("warn-before-expire", true)) {
     str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(mFolder->label());
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
@@ -1017,7 +1017,7 @@ void KMMainWidget::slotExpireAll() {
 
   KConfigGroupSaver saver(config, "General");
 
-  if (config->readBoolEntry("warn-before-expire")) {
+  if (config->readBoolEntry("warn-before-expire", true)) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire all old messages?"),
 			 i18n("Expire old Messages?"), i18n("Expire"));

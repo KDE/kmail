@@ -1012,7 +1012,7 @@ void KMKernel::cleanupLoop()
     if (config->readNumEntry("when-to-expire")==expireAtExit) {
       expire = true;
 
-      if (config->readBoolEntry("warn-before-expire")) {
+      if (config->readBoolEntry("warn-before-expire", true)) {
 	expire = canExpire();
       }
     }

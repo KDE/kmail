@@ -59,7 +59,7 @@ void KMFolderMgr::expireAll() {
   KConfigGroupSaver   saver(config, "General");
   int                 ret = KMessageBox::Continue;
 
-  if (config->readBoolEntry("warn-before-expire")) {
+  if (config->readBoolEntry("warn-before-expire", true)) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire old messages?"),
 			 i18n("Expire old messages?"), i18n("Expire"));
