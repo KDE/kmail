@@ -419,7 +419,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   bool iCalAutoSend = false;
   bool noWordWrap = false;
-  KConfigGroup options( config(), "Groupware" );
   if ( !attachData.isEmpty() ) {
     bool isICalInvitation = attachName == "cal.ics" &&
       attachType == "text" &&
@@ -429,7 +428,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if ( isICalInvitation && bcc.isEmpty() )
       msg->setBcc( "" );
     if ( isICalInvitation &&
-        options.readBoolEntry( "LegacyBodyInvites", false ) ) {
+       GlobalSettings::legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       msg->setHeaderField( "Content-Type",
@@ -437,8 +436,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                                     "charset=\"utf-8\"" ).
                            arg( attachParamValue ) );
 
-      // Don't show the composer window, if the automatic sending is checked
-      iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
+      iCalAutoSend = true; // no point in editing raw ICAL
       noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
@@ -455,6 +453,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         // << attachCharset << endl;
         msgPart->setCharset( attachCharset );
       }
+      // Don't show the composer window, if the automatic sending is checked
+      iCalAutoSend = GlobalSettings::automaticSending();
     }
   }
 
