@@ -18,26 +18,25 @@
 #ifdef HAVE_CONFIG_H
   #include <config.h>
 #endif
-
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kiconloader.h>
-#include <kwin.h>
-
-#include <qtooltip.h>
-#include <qwidgetlist.h>
-
-#include <kglobalsettings.h>
-#include <kiconeffect.h>
-#include <qpainter.h>
-
-#include <math.h>
-
 #include "kmsystemtray.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
+
+#include <kapplication.h>
+#include <kglobalsettings.h>
+#include <kiconloader.h>
+#include <kiconeffect.h>
+#include <kwin.h>
+#include <kdebug.h>
+
+#include <qpainter.h>
+#include <qtooltip.h>
+#include <qwidgetlist.h>
+#include <qobjectlist.h>
+
+#include <math.h>
 
 /**
  * Construct a KSystemTray icon to be displayed when new mail

@@ -5,7 +5,6 @@
 // kmfldsearch.cpp
 
 #include <config.h>
-#include <mimelib/boyermor.h>
 #include "kmcommands.h"
 #include "kmfldsearch.h"
 #include "kmmainwidget.h"
@@ -19,23 +18,26 @@
 #include "kmfoldertree.h"
 #include "kmsearchpatternedit.h"
 
-#include <assert.h>
-#include <qcheckbox.h>
-#include <qcursor.h>
-#include <qlayout.h>
-#include <klineedit.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qbuttongroup.h>
-#include <qtextcodec.h>
-
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kstatusbar.h>
 #include <kwin.h>
 #include <kconfig.h>
-#include <mimelib/enum.h>
 
+#include <qcheckbox.h>
+#include <qlayout.h>
+#include <klineedit.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qbuttongroup.h>
+#include <qobjectlist.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
+#include <qcursor.h>
+#include <qtextcodec.h>
+
+#include <mimelib/enum.h>
+#include <mimelib/boyermor.h>
+
+#include <assert.h>
 #include <stdlib.h>
 
 const int KMFldSearch::MSGID_COLUMN = 4;

@@ -516,20 +516,21 @@ void KMKernel::
 /********************************************************************/
 void KMKernel::testDir(const char *_name)
 {
-  // FIXME: use Qt methods (QFile, QDir)
-  DIR *dp;
-  QCString c( getenv("HOME") );
-  if(c.isEmpty())
-  {
-      KMessageBox::sorry(0, i18n("$HOME is not set!\n"
-                                 "KMail cannot start without it.\n"));
+  QString foldersPath = QDir::homeDirPath() + QString( _name );
+  QFileInfo info( foldersPath );
+  if ( !info.exists() ) {
+    if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
+      KMessageBox::sorry(0, i18n("KMail couldn't create %1 directory !\n"
+                                 "Make sure you have write permissions in %2 directory.\n")
+                         .arg( foldersPath ).arg( QDir::homeDirPath() ) );
       ::exit(-1);
+    }
   }
-
-  c += _name;
-  dp = opendir(c);
-  if (dp == 0) ::mkdir(c, S_IRWXU);
-  else closedir(dp);
+  if ( !info.isDir() || !info.isReadable() || !info.isWritable() ) {
+    KMessageBox::sorry(0, i18n("Permissions on the %1 directory are incorrect!\n"
+                               "Please set them to 0700.\n").arg( foldersPath ) );
+    ::exit(-1);
+  }
 }
 
 

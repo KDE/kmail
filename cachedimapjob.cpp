@@ -32,11 +32,12 @@
 
 #include "cachedimapjob.h"
 
-#include <kio/scheduler.h>
-
 #include "kmfoldermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
+
+#include <kio/scheduler.h>
+#include <kio/job.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>

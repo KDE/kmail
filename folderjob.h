@@ -31,11 +31,11 @@
 #ifndef FOLDERJOB_H
 #define FOLDERJOB_H
 
-#include <qobject.h>
-#include <qobjectlist.h>
-#include <qstring.h>
-
 #include "kmmessage.h"
+
+#include <qobject.h>
+#include <qptrlist.h>
+#include <qstring.h>
 
 class KMFolder;
 

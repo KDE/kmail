@@ -34,6 +34,7 @@
 #include "folderjob.h"
 
 class KMFolderMbox;
+class KMMessage;
 
 namespace KMail {
 

@@ -30,11 +30,9 @@
  */
 
 #include "imapjob.h"
-
-#include <kio/scheduler.h>
-
 #include "kmfolderimap.h"
 
+#include <kio/scheduler.h>
 #include <kdebug.h>
 
 
