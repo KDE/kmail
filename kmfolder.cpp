@@ -1260,7 +1260,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
     msgParent->getMsg( idx );
     if (!imapQuiet && msgParent->account())
     {
-      if (account() && msgParent->account() == account())
+      if (msgParent->account() == account())
       {
         KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);
         connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
@@ -1273,7 +1273,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
       {
         KMImapJob *imapJob = new KMImapJob(aMsg);
         connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-          SLOT(addMsgQuiet(KMMessage*)));
+          SLOT(reallyAddMsg(KMMessage*)));
         aMsg->setTransferInProgress(TRUE);
         if (aIndex_ret) *aIndex_ret = -1;
         return 0;
@@ -1366,6 +1366,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   if (msgParent) {
     if (idx >= 0) msgParent->take(idx);
   }
+  if (mAccount) aMsg->removeHeaderField("X-UID");
 
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew) {

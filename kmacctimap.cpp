@@ -592,7 +592,13 @@ KMImapJob::KMImapJob(KMMessage *msg, JobType jt, KMFolder* folder)
     int a = cstr.find("\nX-UID: ");
     int b = cstr.find("\n", a);
     if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-    mData = cstr.replace(QRegExp("[^\r]\n"), "\r\n");
+    mData.resize(cstr.length() + cstr.contains("\n"));
+    unsigned int i = 0;
+    for (char *ch = cstr.data(); *ch; ch++)
+    {
+      if (*ch == '\n') { mData.at(i) = '\r'; i++; }
+      mData.at(i) = *ch; i++;
+    }
     account->makeConnection();
     KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);

@@ -1456,20 +1456,25 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       msg = mFolder->getMsg(idx);
     }
 
-    newMsg = new KMMessage;
-    newMsg->fromString(msg->asString());
-    newMsg->setComplete(msg->isComplete());
-
-    if (mFolder->account() && !newMsg->isComplete())
+    if (mFolder->account() && mFolder->account() == destFolder->account())
     {
-      newMsg->setParent(msg->parent());
-      KMImapJob *imapJob = new KMImapJob(newMsg);
-      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-        destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+      new KMImapJob(msg, KMImapJob::tCopyMessage, destFolder);
     } else {
-      rc = destFolder->addMsg(newMsg, &index);
-      if (rc == 0 && index != -1)
-        destFolder->unGetMsg( destFolder->count() - 1 );
+      newMsg = new KMMessage;
+      newMsg->fromString(msg->asString());
+      newMsg->setComplete(msg->isComplete());
+
+      if (mFolder->account() && !newMsg->isComplete())
+      {
+        newMsg->setParent(msg->parent());
+        KMImapJob *imapJob = new KMImapJob(newMsg);
+        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+          destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+      } else {
+        rc = destFolder->addMsg(newMsg, &index);
+        if (rc == 0 && index != -1)
+          destFolder->unGetMsg( destFolder->count() - 1 );
+      }
     }
     if (!isMessage)
     {
@@ -1761,10 +1766,13 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   if (lvi != mPrevCurrent) {
     if (mPrevCurrent)
     {
-      if (mFolder->account()) KMImapJob::ignoreJobsForMessage(
-        mFolder->getMsg(mPrevCurrent->msgId()));
-      if (!mFolder->getMsg(mPrevCurrent->msgId())->transferInProgress())
-        mFolder->unGetMsg(mPrevCurrent->msgId());
+      KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
+      if (prevMsg)
+      {
+        if (mFolder->account()) KMImapJob::ignoreJobsForMessage(prevMsg);
+        if (!prevMsg->transferInProgress())
+          mFolder->unGetMsg(mPrevCurrent->msgId());
+      }
     }
     mPrevCurrent = item;
   }
