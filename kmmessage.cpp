@@ -28,6 +28,8 @@ using KMail::HeaderStrategy;
 #include <libkpimidentities/identitymanager.h>
 #include <libemailfunctions/email.h>
 
+#include <kasciistringtools.h>
+
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
 #include <kaddrbook.h>
@@ -1161,18 +1163,18 @@ KMMessage* KMMessage::createForward()
     for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      QCString mimeType = msgPart.typeStr().lower() + '/'
-                        + msgPart.subtypeStr().lower();
-      if( mimeType != "message/rfc822" )
+      QCString mimeType( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
+      if ( kasciistricmp( mimeType, "message/rfc822" ) != 0 ) // != message/rfc822
         outsideRfc822 = true;
       // don't add the detached signature as attachment when forwarding a
       // PGP/MIME signed message inline
-      if( mimeType != "application/pgp-signature" && outsideRfc822 ) {
+      if( outsideRfc822 &&
+          kasciistricmp( mimeType, "application/pgp-signature" ) != 0 ) { // != application/pgp-signature
         if (i > 0 || kasciistricmp(msgPart.typeStr(),"text") != 0)
           msg->addBodyPart(&msgPart);
       }
       // avoid kind of recursive attaching of rfc822 parts
-      if( mimeType == "message/rfc822" )
+      if ( kasciistricmp( mimeType, "message/rfc822" ) == 0 ) // == message/rfc822
         outsideRfc822 = false;
     }
   }
@@ -2793,11 +2795,15 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
       DwParameter *param = ct.FirstParameter();
       while(param)
       {
-        if (!kasciistricmp(param->Attribute().c_str(), "charset"))
-          aPart->setCharset(QCString(param->Value().c_str()).lower());
-        else if (param->Attribute().c_str()=="name*")
+        if ( kasciistricmp( param->Attribute().c_str(), "charset" ) == 0 ) {
+          QCString charset( param->Value().c_str() );
+          KPIM::kAsciiToLower( charset.data() );
+          aPart->setCharset( charset );
+        }
+        else if ( kasciistricmp( param->Attribute().c_str(), "name*" ) == 0 ) {
           aPart->setName(KMMsgBase::decodeRFC2231String(
             param->Value().c_str()));
+        }
         else {
           additionalCTypeParams += ';';
           additionalCTypeParams += param->AsString().c_str();
@@ -3758,8 +3764,10 @@ QCString KMMessage::defaultCharset()
   if (!sPrefCharsets.isEmpty())
     retval = sPrefCharsets[0].latin1();
 
-  if (retval.isEmpty()  || (retval == "locale"))
-    retval = QCString(kmkernel->networkCodec()->mimeName()).lower();
+  if (retval.isEmpty()  || (retval == "locale")) {
+    retval = QCString(kmkernel->networkCodec()->mimeName());
+    KPIM::kAsciiToLower( retval.data() );
+  }
 
   if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
   else if (retval == "ksc5601.1987-0") retval = "euc-kr";
@@ -3794,9 +3802,8 @@ void KMMessage::setCharset(const QCString& bStr)
     << "====================================================================" << endl
     << kdBacktrace( 5 ) << endl
     << "====================================================================" << endl;
-  QCString aStr = bStr.lower();
-  if (aStr.isNull())
-    aStr = "";
+  QCString aStr = bStr;
+  KPIM::kAsciiToLower( aStr.data() );
   DwMediaType &mType = dwContentType();
   mType.Parse();
   DwParameter *param=mType.FirstParameter();
@@ -4024,12 +4031,12 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( part->hasHeaders() &&
        ( ( part->Headers().HasContentDisposition() &&
            !part->Headers().ContentDisposition().Filename().empty() ) ||
-         ( part->Headers().HasContentType() && 
+         ( part->Headers().HasContentType() &&
            !part->Headers().ContentType().Name().empty() ) ) )
   {
     // now blacklist certain ContentTypes
     if ( !part->Headers().HasContentType() ||
-         ( part->Headers().HasContentType() && 
+         ( part->Headers().HasContentType() &&
            part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
            part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) )
     {
