@@ -1,5 +1,20 @@
-// Author: Don Sanders <sanders@kde.org>
-// License GPL
+/*
+    This file is part of KMail, the KDE mail client.
+    Copyright (c) 2000 Don Sanders <sanders@kde.org>
+
+    KMail is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    KMail is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 //Factor byteswap stuff into one header file
 
@@ -150,13 +165,13 @@ void KMSearch::start()
     }
 
     mFolders.append( mRoot );
-    if ( recursive() ) 
-    { 
+    if ( recursive() )
+    {
         //Append all descendants to folders
         KMFolderNode* node;
         KMFolder* folder;
         QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-        for ( it = mFolders.begin(); it != mFolders.end(); ++it ) 
+        for ( it = mFolders.begin(); it != mFolders.end(); ++it )
         {
             folder = *it;
             KMFolderDir *dir = 0;
@@ -171,13 +186,13 @@ void KMSearch::start()
                 ++it;
                 if ( !node->isDir() ) {
                     KMFolder* kmf = dynamic_cast<KMFolder*>( node );
-                    if ( kmf ) 
+                    if ( kmf )
                         mFolders.append( kmf );
                 }
             }
         }
     }
-    
+
     mRemainingFolders = mFolders.count();
     mLastFolder = QString::null;
     mProcessNextBatchTimer->start( 0, true );
@@ -220,20 +235,20 @@ void KMSearch::slotProcessNextBatch()
     if ( !running() )
         return;
 
-    if ( mFolders.count() != 0 ) 
+    if ( mFolders.count() != 0 )
     {
         KMFolder *folder = *( mFolders.begin() );
         mFolders.erase( mFolders.begin() );
-        if ( folder ) 
+        if ( folder )
         {
             mLastFolder = folder->label();
             folder->open();
             mOpenedFolders.append( folder );
-            connect( folder->storage(), 
-                SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, 
+            connect( folder->storage(),
+                SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>,
                     KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, 
+                SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
                     KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
@@ -243,8 +258,8 @@ void KMSearch::slotProcessNextBatch()
     }
 }
 
-void KMSearch::slotSearchFolderResult( KMFolder* folder, 
-                                     QValueList<Q_UINT32> serNums, 
+void KMSearch::slotSearchFolderResult( KMFolder* folder,
+                                     QValueList<Q_UINT32> serNums,
                                      KMSearchPattern* pattern, bool complete )
 {
     if ( pattern != mSearchPattern ) return;
@@ -258,11 +273,11 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
     }
     if ( complete )
     {
-      disconnect( folder->storage(), 
-          SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, 
+      disconnect( folder->storage(),
+          SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>,
               KMSearchPattern*, bool ) ),
           this,
-          SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, 
+          SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
               KMSearchPattern*, bool ) ) );
       mSearchedCount += folder->count();
       --mRemainingFolders;
@@ -930,7 +945,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
-      connect( folder->storage(), 
+      connect( folder->storage(),
               SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
               this,
               SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
@@ -939,8 +954,8 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
-                                               Q_UINT32 serNum, 
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
+                                               Q_UINT32 serNum,
                                                KMSearchPattern* pattern )
 {
     if ( search()->searchPattern() != pattern ) return;
@@ -949,7 +964,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       if ( count == 1 ) {
-        disconnect( folder->storage(), 
+        disconnect( folder->storage(),
                 SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
                 this,
                 SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
