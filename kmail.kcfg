@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
 <kcfg>
-    <kcfgfile name="kmailrc"/>
+  <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
-    <entry name="DelayedMarkAsRead"  type="Bool">
+      <entry name="DelayedMarkAsRead"  type="Bool">
         <label> </label>
         <whatsthis> </whatsthis>
         <default>true</default>
-    </entry>
-    <entry name="DelayedMarkTime"  type="UInt">
+      </entry>
+      <entry name="DelayedMarkTime"  type="UInt">
         <label> </label>
         <whatsthis> </whatsthis>
         <default>0</default>
-    </entry>
-    <entry name="JumpToUnread"  type="Bool">
+      </entry>
+      <entry name="JumpToUnread"  type="Bool">
         <label> </label>
         <whatsthis> </whatsthis>
         <default>false</default>
-    </entry>
-    <entry name="LoopOnGotoUnread"  type="Enum">
+      </entry>
+      <entry name="LoopOnGotoUnread"  type="Enum">
         <label> </label>
         <whatsthis> </whatsthis>
         <choices>
-            <choice name="DontLoop"/>
-            <choice name="LoopInCurrentFolder"/>
-            <choice name="LoopInAllFolders"/>
+          <choice name="DontLoop"/>
+          <choice name="LoopInCurrentFolder"/>
+          <choice name="LoopInAllFolders"/>
         </choices>
         <default>DontLoop</default>
-    </entry>
-    <entry name="ShowPopupAfterDnD"  type="Bool">
+      </entry>
+      <entry name="ShowPopupAfterDnD"  type="Bool">
         <label> </label>
         <whatsthis> </whatsthis>
         <default>true</default>
-    </entry>
-    <entry name="ExcludeImportantMailFromExpiry"  type="Bool">
+      </entry>
+      <entry name="ExcludeImportantMailFromExpiry"  type="Bool">
         <label></label>
         <whatsthis></whatsthis>
         <default>true</default>
-    </entry>
+      </entry>
     </group>
 
-    <group name="UserInterface">
-      <entry name="QuickSearchActive" type="Bool">
-        <label>Show quick search line edit</label>
-        <whatsthis>This option enabled or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
-        <default>true</default>
+    <group name="FolderSelectionDialog">
+      <entry name="LastSelectedFolder" type="String">
+        <default>inbox</default>
+        <whatsthis>The most recently selected folder in the folder selection "
+          "dialog.</whatsthis>
       </entry>
     </group>
 
@@ -54,15 +54,33 @@
       </entry>
     </group>
 
+    <group name="Groupware">
+      <entry name="GroupwareEnabled" type="Bool">
+        <label>Enable groupware functionality</label>
+        <whatsthis></whatsthis>
+        <default>true</default>
+      </entry>
+
+      <entry name="GroupwareLegacyMangleFromToHeaders" type="Bool">
+        <label>Legacy mode: Mangle From:/To: headers in replies to invitations</label>
+        <whatsthis>Microsoft Outlook has a number of shortcomings "
+          "in its implementation of the iCalendar standard; "
+          "this option works around one of them. If you have "
+          "problems with Outlook users not being able to "
+          "get your replies, try setting this option.</whatsthis>
+        <default>false</default>
+      </entry>
+    </group>
+
     <group name="IMAP Resource">
       <entry name="TheIMAPResourceEnabled" type="Bool">
         <default>false</default>
         <whatsthis>&lt;p&gt;Enabling this makes it possible to store the "
-        "entries from the Kontact applications (KOrganizer, "
-        "KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set "
-        "this option you must also set the applications to use the "
-        "IMAP resource; this is done in the KDE Control "
-        "Center.&lt;/p&gt;</whatsthis>
+          "entries from the Kontact applications (KOrganizer, "
+          "KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set "
+          "this option you must also set the applications to use the "
+          "IMAP resource; this is done in the KDE Control "
+          "Center.&lt;/p&gt;</whatsthis>
       </entry>
 
       <entry name="HideGroupwareFolders" type="Bool">
@@ -92,21 +110,13 @@
       </entry>
     </group>
 
-    <group name="Groupware">
-      <entry name="GroupwareEnabled" type="Bool">
-        <label>Enable groupware functionality</label>
-        <whatsthis></whatsthis>
+    <group name="UserInterface">
+      <entry name="QuickSearchActive" type="Bool">
+        <label>Show quick search line edit</label>
+        <whatsthis>This option enabled or disables the search line edit "
+          "above the message list which can be used to quickly search the "
+          "information shown in the message list.</whatsthis>
         <default>true</default>
-      </entry>
-
-      <entry name="GroupwareLegacyMangleFromToHeaders" type="Bool">
-        <label>Legacy mode: Mangle From:/To: headers in replies to invitations</label>
-        <whatsthis>Microsoft Outlook has a number of shortcomings "
-                  "in its implementation of the iCalendar standard; "
-                  "this option works around one of them. If you have "
-                  "problems with Outlook users not being able to "
-                  "get your replies, try setting this option.</whatsthis>
-        <default>false</default>
       </entry>
     </group>
 

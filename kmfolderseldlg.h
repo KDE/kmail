@@ -19,7 +19,8 @@ namespace KMail {
   class SimpleFolderTree : public KListView
   {
     public:
-      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree, QString & preSelection );
+      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree, 
+                        const QString & preSelection );
       
       const KMFolder * folder() const;
   };
@@ -45,8 +46,6 @@ protected slots:
 
 protected:
   KMail::SimpleFolderTree * mTreeView;
-
-  static QString oldSelection;
 };
 
 #endif /*kmfolderseldlg_h*/

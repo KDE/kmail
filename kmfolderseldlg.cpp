@@ -4,6 +4,7 @@
 #include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
 #include "kmmainwidget.h"
+#include "globalsettings.h"
 
 #include <kdebug.h>
 #include <qvbox.h>
@@ -19,10 +20,10 @@ class FolderItem : public KListViewItem
     FolderItem( QListView * listView, QListViewItem * afterListViewItem );
     FolderItem( QListViewItem * listViewItem );
     FolderItem( QListViewItem * listViewItem, QListViewItem * afterListViewItem );
-  
+
     void setFolder( KMFolder * folder ) { mFolder = folder; };
     const KMFolder * folder() { return mFolder; };
-    
+
   private:
     KMFolder * mFolder;
 };
@@ -53,12 +54,13 @@ FolderItem::FolderItem( QListViewItem * listViewItem, QListViewItem * afterListV
 
 
 //-----------------------------------------------------------------------------
-SimpleFolderTree::SimpleFolderTree( QWidget * parent, 
-                  KMFolderTree * folderTree, QString & preSelection )
+SimpleFolderTree::SimpleFolderTree( QWidget * parent,
+                                    KMFolderTree * folderTree,
+                                    const QString & preSelection )
   : KListView( parent )
 {
   assert( folderTree );
-  
+
   int columnIdx = addColumn( i18n( "Folder" ) );
   setRootIsDecorated( true );
   setSorting( -1 );
@@ -67,20 +69,20 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
   FolderItem * lastTopItem = 0;
   FolderItem * selectedItem = 0;
   int lastDepth = 0;
-  
+
   for ( QListViewItemIterator it( folderTree ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( it.current() );
-    
+
     if ( !fti || fti->protocol() == KFolderTreeItem::Search )
       continue;
 
     int depth = fti->depth();// - 1;
-    //kdDebug( 5006 ) << "LastDepth=" << lastDepth << "\tdepth=" << depth 
+    //kdDebug( 5006 ) << "LastDepth=" << lastDepth << "\tdepth=" << depth
     //                << "\tname=" << fti->text( 0 ) << endl;
     FolderItem * item = 0;
     if ( depth <= 0 ) {
       // top level - first top level item or after last existing top level item
-      if ( lastTopItem ) 
+      if ( lastTopItem )
         item = new FolderItem( this, lastTopItem );
       else
         item = new FolderItem( this );
@@ -92,7 +94,7 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
         // next lower level - parent node will get opened
         item = new FolderItem( lastItem );
         lastItem->setOpen( true );
-      } 
+      }
       else {
         if ( depth == lastDepth )
           // same level - behind previous item
@@ -107,7 +109,7 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
             item = new FolderItem( lastItem->parent(), lastItem );
           else {
             // chain somehow broken - what does cause this ???
-            kdDebug( 5006 ) << "You shouldn't get here: depth=" << depth 
+            kdDebug( 5006 ) << "You shouldn't get here: depth=" << depth
                             << "folder name=" << fti->text( 0 ) << endl;
             item = new FolderItem( this );
             lastTopItem = item;
@@ -115,7 +117,7 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
         }
       }
     }
-    
+
     item->setText( columnIdx, fti->text( 0 ) );
     // Make items without folders and top level items unselectable
     // (i.e. root item Local Folders and IMAP accounts)
@@ -123,13 +125,13 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
       item->setSelectable( false );
     else {
       item->setFolder( fti->folder() );
-      if ( !preSelection.isNull() && preSelection == item->folder()->idString() )
+      if ( preSelection == item->folder()->idString() )
         selectedItem = item;
     }
     lastItem = item;
     lastDepth = depth;
   }
-  
+
   if ( selectedItem ) {
     setSelected( selectedItem, true );
     ensureItemVisible( selectedItem );
@@ -151,9 +153,6 @@ const KMFolder * SimpleFolderTree::folder() const
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderSelDlg::oldSelection;
-
-//-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
   : KDialogBase( parent, "folder dialog", true, caption,
                  Ok|Cancel, Ok, true ) // mainwin as parent, modal
@@ -161,9 +160,10 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
   KMFolderTree * ft = parent->folderTree();
   assert( ft );
 
-  mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft, oldSelection );
+  mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
+                                           GlobalSettings::lastSelectedFolder() );
   mTreeView->setFocus();
-  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), 
+  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
 
   resize(220, 300);
@@ -174,8 +174,9 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
 KMFolderSelDlg::~KMFolderSelDlg()
 {
   const KMFolder * cur = folder();
-  if( cur )
-    oldSelection = cur->idString();
+  if ( cur ) {
+    GlobalSettings::setLastSelectedFolder( cur->idString() );
+  }
 }
 
 
