@@ -1249,10 +1249,11 @@ void KMComposeWin::slotAttachFile()
   fdlg.setCaption(i18n("Attach File"));
   if (!fdlg.exec()) return;
 
-  // Fixme! Changes in kfiledialog broke me
-  //  mPathAttach = fdlg.dirPath().copy();
+  KURL u = fdlg.selectedURL();
 
-  fileName = fdlg.selectedFile();
+  mPathAttach = u.directory();
+
+  fileName = u.filename();
   if(fileName.isEmpty()) return;
   if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
     mPathAttach = fileName.left(fileName.findRev("/")); // KFileDialog::dirPath()
@@ -1274,10 +1275,11 @@ void KMComposeWin::slotInsertFile()
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
-  // Fixme! Changes in kfiledialog broke me.
-  //  mPathAttach = fdlg.dirPath().copy();
+  KURL u = fdlg.selectedURL();
 
-  fileName = fdlg.selectedFile();
+  mPathAttach = u.directory();
+
+  fileName = u.filename();
   if (fileName.isEmpty()) return;
 
   if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
@@ -1692,9 +1694,10 @@ void KMComposeWin::slotAppendSignature()
   if (sigFileName.isEmpty())
   {
     // open a file dialog and let the user choose manually
-    // Fixme! Changes to kfiledialog broke this
-    //    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
-    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE);
+#warning KFileDialog misses localfiles only flag.
+//    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
+    KFileDialog dlg(getenv("HOME"),QString::null,this,0, TRUE);
+
     dlg.setCaption(i18n("Choose Signature File"));
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();
