@@ -60,7 +60,10 @@ namespace KMail {
     // Tab Widget: General
     //
     row = -1;
+    QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
     QTabWidget *tabWidget = new QTabWidget( plainPage(), "config-identity-tab" );
+    vlay->addWidget( tabWidget );
+
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&General") );
     glay = new QGridLayout( tab, 4, 2, marginHint(), spacingHint() );
