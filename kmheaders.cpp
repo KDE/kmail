@@ -2189,6 +2189,9 @@ void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
 
+  if (currentMsg()->transferInProgress() && mFolder == kernel->outboxFolder())
+    return;
+
   QPopupMenu *menu = new QPopupMenu(this);
 
   mMenuToFolder.clear();

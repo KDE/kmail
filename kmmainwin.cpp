@@ -2891,6 +2891,9 @@ void KMMainWin::updateMessageActions()
         if(!(msg = mHeaders->getMsg(aIdx)))
             return;
 
+        editAction->setEnabled( !msg->transferInProgress() &&
+          (mFolder == kernel->outboxFolder()) );
+
         QCString name;
         QString value;
         QString lname = KMMLInfo::name( msg, name, value );
