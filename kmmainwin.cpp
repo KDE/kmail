@@ -227,6 +227,7 @@ void KMMainWin::readConfig(void)
   (*mVertPannerSep)[1] = w - (*mVertPannerSep)[0];
 
   mMsgView->readConfig();
+  slotSetEncoding();
   mHeaders->readConfig();
   mFolderTree->readConfig();
 
@@ -345,12 +346,8 @@ void KMMainWin::createWidgets(void)
 		     mHeaders, SLOT(nextMessage()));
 
   if (!mEncodingStr.isEmpty())
-    if (mEncodingStr != i18n("Auto"))
-      mCodec = KMMsgBase::codecForName(mEncodingStr);
-    else
-      mCodec = 0;
-  else
-    mCodec = KGlobal::charsets()->codecForName("iso8859-1");
+    mCodec = KMMsgBase::codecForName(mEncodingStr);
+  else mCodec = 0;
 
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
@@ -464,11 +461,14 @@ void KMMainWin::slotSetEncoding()
 {
     mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText());
     if (mEncoding->currentItem() == 0) // Auto
-       mCodec = 0;
-     else
-       mCodec = KMMsgBase::codecForName( mEncodingStr );
-     mMsgView->setCodec(mCodec);
-     return;
+    {
+      mCodec = 0;
+      mEncodingStr = "";
+    }
+    else
+      mCodec = KMMsgBase::codecForName( mEncodingStr );
+    mMsgView->setCodec(mCodec);
+    return;
 }
 
 //-----------------------------------------------------------------------------

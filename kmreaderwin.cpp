@@ -197,10 +197,6 @@ void KMReaderWin::readConfig(void)
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							   SmartAttmnt);
-  encoding = config->readEntry("encoding", "iso8859-1" );
-  mCodec = KMMsgBase::codecForName(encoding);
-  mAutoDetectEncoding = config->readBoolEntry("autodetect-encoding", true );
-
   fntSize = 0;
 
   config->setGroup("Fonts");
@@ -238,17 +234,10 @@ void KMReaderWin::readConfig(void)
 void KMReaderWin::writeConfig(bool aWithSync)
 {
   KConfig *config = kapp->config();
-  QString encoding = "";
-  if (mCodec)
-      encoding = mCodec->name();
-
   config->setGroup("Reader");
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
-  config->writeEntry("encoding", encoding);
-  config->writeEntry("autodetect-encoding", mAutoDetectEncoding);
-
   if (aWithSync) config->sync();
 }
 
