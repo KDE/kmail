@@ -103,10 +103,12 @@ public slots:
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
 
-  /** sets the timer for the message menu update */
+  /** Update message menu */
   void updateMessageMenu();
-  /** Update the "Move to" and "Copy to" popoutmenus in the Messages menu. */
-  void slotUpdateMessageMenu();
+  /** Start a timer to update message actions */
+  void startUpdateMessageActionsTimer();
+  /** Update message actions */
+  void updateMessageActions();
 
 protected:
   void setupMenuBar();

@@ -278,7 +278,7 @@ void KMMainWin::readConfig(void)
       mMsgView->setMsg( mFolder->getMsg(aIdx), true );
     else
       mMsgView->setMsg( 0, true );
-    updateMessageMenu();
+    updateMessageActions();
     show();
     // sanders - Maybe this fixes a bug?
 
@@ -356,7 +356,7 @@ void KMMainWin::createWidgets(void)
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
-           SLOT( slotUpdateMessageMenu() ) );
+           SLOT( startUpdateMessageActionsTimer() ) );
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
@@ -393,7 +393,7 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_C),
                      this, SLOT(slotCopyMsg()));
   accel->connectItem(accel->insertItem(Key_Delete),
-		     this, SLOT(slotDeleteMsg()));  
+		     this, SLOT(slotDeleteMsg()));
 
   // create list of folders
   mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
@@ -451,9 +451,9 @@ void KMMainWin::createWidgets(void)
                                        actionCollection(), "read_on" );
   readOnAction->plugAccel( this->accel() );
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
-           SLOT( slotUpdateMessageMenu() ) );
+           SLOT( startUpdateMessageActionsTimer() ) );
   connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
-           SLOT( slotUpdateMessageMenu() ) );
+           SLOT( startUpdateMessageActionsTimer() ) );
 }
 
 
@@ -805,7 +805,7 @@ void KMMainWin::slotEmptyFolder()
 
   mHeaders->setFolder(mFolder);
   kernel->kbp()->idle();
-  updateMessageMenu();
+  updateMessageActions();
 }
 
 
@@ -1034,7 +1034,7 @@ void KMMainWin::slotDeleteMsg()
 void KMMainWin::slotUndo()
 {
     mHeaders->undo();
-    updateMessageMenu();
+    updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
@@ -1199,7 +1199,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   readFolderConfig();
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder( mFolder, jumpToUnread );
-  updateMessageMenu();
+  updateMessageActions();
   kernel->kbp()->idle();
 }
 
@@ -1565,7 +1565,7 @@ void KMMainWin::slotUrlOpen()
 void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu* menu = new KPopupMenu;
-  updateMessageMenu();
+  updateMessageActions();
 
   mUrlCurrent = aUrl;
 
@@ -1923,9 +1923,9 @@ void KMMainWin::setupMenuBar()
   conserveMemory();
 
   menutimer = new QTimer( this, "menutimer" );
-  connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageMenu() ) );
+  connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
 
-  updateMessageMenu();
+  updateMessageActions();
 
 }
 
@@ -2095,20 +2095,22 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUpdateMessageMenu()
+void KMMainWin::updateMessageMenu()
+{
+    mMenuToFolder.clear();
+    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
+    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+    updateMessageActions();
+}
+    
+void KMMainWin::startUpdateMessageActionsTimer()
 {
     menutimer->stop();
     menutimer->start( 20, true );
 }
 
-void KMMainWin::updateMessageMenu()
+void KMMainWin::updateMessageActions()
 {
-    kdDebug(5006) << "updateMessageMenu\n";
-
-    mMenuToFolder.clear();
-    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
-
     int count = 0;
 
     if ( mFolder ) {
@@ -2180,7 +2182,7 @@ void KMMainWin::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
     : false );
-  removeFolderAction->setEnabled( (mFolder && mFolder->protocol() != "imap") 
+  removeFolderAction->setEnabled( (mFolder && mFolder->protocol() != "imap")
     ? !mFolder->isSystemFolder() : false );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
