@@ -2330,7 +2330,6 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
       if( ( block->type() == Kpgp::PgpMessageBlock ) ||
           ( block->type() == Kpgp::ClearsignedBlock ) )
       {
-        isPgpMessage = true;
         if( block->type() == Kpgp::PgpMessageBlock )
         {
           emit noDrag();
@@ -2339,6 +2338,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
           isEncrypted = block->isEncrypted();
           if( isEncrypted )
           {
+            isPgpMessage = true;
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
                        "<tr class=\"encrH\"><td>";
             if( couldDecrypt )
@@ -2359,6 +2359,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
         isSigned = block->isSigned();
         if( isSigned )
         {
+          isPgpMessage = true;
           signer = block->signatureUserId();
           if( signer.isEmpty() )
           {
