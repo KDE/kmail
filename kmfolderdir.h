@@ -3,23 +3,10 @@
 
 #include <qstring.h>
 #include "kmfoldernode.h"
+#include "kmfoldertype.h"
 
 class KMFolder;
 class KMFolderMgr;
-
-typedef enum
-{
-  KMFolderTypeMbox = 0,
-  KMFolderTypeMaildir,
-  KMFolderTypeSearch
-} KMFolderType;
-
-typedef enum
-{ 
-  KMStandardDir = 0, 
-  KMImapDir, 
-  KMSearchDir 
-} KMFolderDirType;
 
 
 /** KMail list that manages the contents of one directory that may
