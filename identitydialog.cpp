@@ -314,18 +314,18 @@ namespace KMail {
     QString email = mEmailEdit->text();
     int atCount = email.contains('@');
     if ( email.isEmpty() || atCount == 0 )
-      KMessageBox::sorry( this,
+      KMessageBox::sorry( this, "<qt>"+
                           i18n("Your email address is not valid because it "
                                "doesn't contain a <emph>@</emph>. "
                                "You won't create valid messages if you don't "
-                               "change your address."),
+                               "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
     else if ( atCount > 1 ) {
-      KMessageBox::sorry( this,
+      KMessageBox::sorry( this, "<qt>" +
                           i18n("Your email address is not valid because it "
                                "contains more than one <emph>@</emph>. "
                                "You won't create valid messages if you don't "
-                               "change your address."),
+                               "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
     }
     ident.setEmailAddr( email );
