@@ -630,8 +630,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         isInline = (stricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
-        if (stricmp(msgPart.typeStr(),"text") == 0 ||
-            stricmp(msgPart.typeStr(),"message") == 0) {
+        if (stricmp(msgPart.typeStr(),"text") == 0) {
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
@@ -648,6 +647,16 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           if (sSmartQuote)
             smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
           result += part;
+        } else
+        if (stricmp(msgPart.typeStr(),"message") == 0) {
+          KMMessage inlineMsg;
+          inlineMsg.fromString(msgPart.bodyDecoded());
+          QString inlineHeaderStr = inlineMsg.headerAsString();
+          inlineHeaderStr.replace(reNL, '\n' + indentStr);
+          result += "\n" + indentStr;
+          result += inlineHeaderStr;
+          result += QString::fromUtf8(inlineMsg.asQuotedString("", indentStr,
+            TRUE, FALSE));
         } else
           isInline = FALSE;
       }
