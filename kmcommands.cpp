@@ -668,9 +668,9 @@ void KMForwardCommand::execute()
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
+      QCString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
       msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
-                         " message is contained in the attachment(s).\n\n\n"
-                         "--\n");
+                         " message is contained in the attachment(s).\n\n\n");
       // iterate through all the messages to be forwarded
       for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
         // set the identity
@@ -678,7 +678,7 @@ void KMForwardCommand::execute()
           id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
         // set the part header
         msgPartText += "--";
-        msgPartText += fwdMsg->mMsg->Headers().ContentType().Boundary().c_str();
+        msgPartText += QString::fromLatin1( boundary );
         msgPartText += "\nContent-Type: MESSAGE/RFC822";
         msgPartText += QString("; CHARSET=%1").arg(msg->charset());
         msgPartText += "\n";
@@ -697,10 +697,12 @@ void KMForwardCommand::execute()
         msgCnt++;
         fwdMsg->link(msg, KMMsgStatusForwarded);
       }
+      msgPartText += "--";
+      msgPartText += QString::fromLatin1( boundary );
+      msgPartText += "--\n";
       QCString tmp;
       msgPart->setTypeStr("MULTIPART");
-      tmp.sprintf( "Digest; boundary=\"%s\"",
-		   fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+      tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
       msgPart->setSubtypeStr( tmp );
       msgPart->setName("unnamed");
       msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
