@@ -123,6 +123,7 @@ protected:
    * Event filter that does Tab-key handling.
    */
   virtual bool eventFilter(QObject*, QEvent*);
+  virtual void keyPressEvent( QKeyEvent* );
 
   KMComposeWin* mComposer;
 private:

@@ -5201,6 +5201,66 @@ void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 	return KMEditInherited::dragMoveEvent(e);
 }
 
+void KMEdit::keyPressEvent( QKeyEvent* e )
+{
+    if( e->key() == Key_Return ) {
+        int line, col;
+        getCursorPosition( &line, &col );
+        QString lineText = text( line );
+        // returns line with additional trailing space (bug in Qt?), cut it off
+        lineText.truncate( lineText.length() - 1 );
+        // special treatment of quoted lines only if the cursor is neither at
+        // the begin nor at the end of the line
+        if( ( col > 0 ) && ( col < int( lineText.length() ) ) ) {
+            bool isQuotedLine = false;
+            uint bot = 0; // bot = begin of text after quote indicators
+            while( bot < lineText.length() ) {
+                if( ( lineText[bot] == '>' ) || ( lineText[bot] == '|' ) ) {
+                    isQuotedLine = true;
+                    ++bot;
+                }
+                else if( lineText[bot].isSpace() ) {
+                    ++bot;
+                }
+                else {
+                    break;
+                }
+            }
+
+            KMEditInherited::keyPressEvent( e );
+
+            // duplicate quote indicators of the previous line before the new
+            // line if the line actually contained text (apart from the quote
+            // indicators) and the cursor is behind the quote indicators
+            if( isQuotedLine
+                && ( bot != lineText.length() )
+                && ( col >= int( bot ) ) ) {
+                QString newLine = text( line + 1 );
+                // remove leading white space from the new line and instead
+                // add the quote indicators of the previous line
+                unsigned int leadingWhiteSpaceCount = 0;
+                while( ( leadingWhiteSpaceCount < newLine.length() )
+                       && newLine[leadingWhiteSpaceCount].isSpace() ) {
+                    ++leadingWhiteSpaceCount;
+                }
+                newLine = newLine.replace( 0, leadingWhiteSpaceCount,
+                                           lineText.left( bot ) );
+                removeParagraph( line + 1 );
+                insertParagraph( newLine, line + 1 );
+                // place the cursor at the begin of the new line since
+                // we assume that the user split the quoted line in order
+                // to add a comment to the first part of the quoted line
+                setCursorPosition( line + 1 , 0 );
+            }
+        }
+        else
+            KMEditInherited::keyPressEvent( e );
+    }
+    else
+        KMEditInherited::keyPressEvent( e );
+}
+
+
 void KMEdit::contentsDropEvent(QDropEvent *e)
 {
     if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message"))) {
