@@ -685,6 +685,8 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   if (mFolder && mFolder==aFolder) {
     int top = topItemIndex();
     id = currentItemIndex();
+    writeFolderConfig();
+    readFolderConfig();
     updateMessageList();
     setCurrentMsg(id);
     setTopItemByIndex(top);
