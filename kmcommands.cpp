@@ -1689,18 +1689,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     // to make sure it's an actual attachment
     // we can't do the check earlier as we first need to load the mimeheader
     // for imap attachments to do this check
-    
-    /* Ask the user how to proceed, she could be wanting to save an html part,
-     * or somesuch. -till */
     if ( s.isEmpty() ) {
-      if ( KMessageBox::warningYesNo( mParent,
-            i18n( "One of the parts of the message that you want to save does "
-                  "not appear to be an attachment. Are you sure you want "
-                  "to save it anyway? (If it is an html part, for example.)" ) 
-            ) == KMessageBox::No ) {
-        ++itr;
-        continue;
-      }
+      ++itr;
+      continue;
     }
 
     QString filename;
