@@ -38,18 +38,13 @@ KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
     // but ignore them for now.
     if(!cur)
       mListBox->item(i)->setSelectable(false);
-    else if (!oldSelection.isNull() && oldSelection == cur->label())
+    else if (!oldSelection.isNull() && oldSelection == cur->idString())
       mListBox->setCurrentItem(i);
     ++i;
   }
 
-  // make sure item is visible
-  if(mListBox->currentItem() != -1)
-  {
-    unsigned idx = 0;
-    while(mListBox->numItemsVisible()-2 + mListBox->topItem() < mListBox->currentItem() && idx < mListBox->count())
-	  mListBox->setTopItem(idx++);
-  }
+  // make sure that the current item is visible
+  mListBox->centerCurrentItem();
 
   mListBox->setFocus();
 }
@@ -58,6 +53,11 @@ KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::~KMFolderSelDlg()
 {
+  if(mListBox->currentItem() != -1) {
+    QGuardedPtr<KMFolder> cur = *mFolder.at(mListBox->currentItem());
+    if( cur )
+      oldSelection = cur->idString();
+  }
 }
 
 
@@ -74,8 +74,6 @@ KMFolder* KMFolderSelDlg::folder(void)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotSelect(int)
 {
-  if(mListBox->currentItem() != -1)
-    oldSelection = mListBox->text(mListBox->currentItem());
   accept();
 }
 
@@ -84,8 +82,6 @@ void KMFolderSelDlg::slotSelect(int)
 void KMFolderSelDlg::slotCancel()
 {
   disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
-  if(mListBox->currentItem() != -1)
-    oldSelection = mListBox->text(mListBox->currentItem());
   reject();
 }
 
