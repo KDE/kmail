@@ -1909,7 +1909,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
 
     // run encrypting for public recipient(s)
     if( result == Kpgp::Ok ){
-      if( mSelectedCryptPlug->allwaysEncryptToSelf() )
+      if( mSelectedCryptPlug->alwaysEncryptToSelf() )
         recipientsWithoutBcc << from();
       result = encryptMessage( &theMessage,
                             recipientsWithoutBcc,
@@ -3058,7 +3058,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             dialog.entriesLB->clear();
             // show dialog even if only one entry to allow specifying of
             // another search string _instead_of_ the recipients address
-            bool bAllwaysShowDialog = true;
+            bool bAlwaysShowDialog = true;
 
             useDialog = false;
             int iA = 0;
@@ -3067,7 +3067,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
               if( (certificateList.at(iZ) == '\1') || (certificateList.at(iZ) == '\0') ) {
                 kdDebug(5006) << "iA=" << iA << " iZ=" << iZ << endl;
                 char c = certificateList.at(iZ);
-                if( (bAllwaysShowDialog || (c == '\1')) && !useDialog ) {
+                if( (bAlwaysShowDialog || (c == '\1')) && !useDialog ) {
                   // set up selection dialog
                   useDialog = true;
                   dialog.setCaption( i18n( "Select certificate for encryption "
