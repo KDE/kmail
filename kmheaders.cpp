@@ -89,8 +89,9 @@ public:
   // Constuction a new list view item with the given colors and pixmap
     KMHeaderItem( QListView* parent, int msgId, QString key = QString::null)
     : KListViewItem( parent ),
-	  mMsgId( msgId ),
-	  mKey(key)
+          mMsgId( msgId ),
+          mKey( key ),
+          mAboutToBeDeleted( false )
   {
     irefresh();
   }
@@ -98,8 +99,9 @@ public:
   // Constuction a new list view item with the given parent, colors, & pixmap
     KMHeaderItem( QListViewItem* parent, int msgId, QString key = QString::null)
     : KListViewItem( parent ),
-	  mMsgId( msgId ),
-	  mKey(key)
+          mMsgId( msgId ),
+          mKey( key ),
+          mAboutToBeDeleted( false )
   {
     irefresh();
   }
@@ -447,6 +449,10 @@ public:
     enforceSortOrder(); // Try not to rely on QListView implementation details
     return firstChild();
   }
+
+  bool mAboutToBeDeleted;
+  bool aboutToBeDeleted() const { return mAboutToBeDeleted; }
+  void setAboutToBeDeleted( bool val ) { mAboutToBeDeleted = val; }
 };
 
 //-----------------------------------------------------------------------------
@@ -1213,9 +1219,16 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     QPtrList<QListViewItem> childList;
     while (myChild) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(myChild);
-      childList.append(myChild);
-      item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
+      // Just keep the item at top level, if it will be deleted anyhow
+      if ( !item->aboutToBeDeleted() ) {
+        childList.append(myChild);
+      }
       myChild = myChild->nextSibling();
+      if ( item->aboutToBeDeleted() ) {
+        myParent->takeItem( item );
+        insertItem( item );
+      }
+      item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
       if (mSortInfo.fakeSort) {
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
         KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
@@ -1491,7 +1504,7 @@ void KMHeaders::deleteMsg ()
   if (!mFolder)
     return;
 
-  KMMessageList msgList = *selectedMsgs();
+  KMMessageList msgList = *selectedMsgs(true);
   KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList, this );
   command->start();
 
@@ -1582,7 +1595,7 @@ void KMHeaders::finalizeMove( int id, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
 {
-  KMMessageList msgList = *selectedMsgs();
+  KMMessageList msgList = *selectedMsgs(true);
   if ( !destFolder &&     // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          i18n("<qt>Do you really want to delete the selected message?<br>"
@@ -1684,12 +1697,13 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
 }
 
 //-----------------------------------------------------------------------------
-KMMessageList* KMHeaders::selectedMsgs()
+KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 {
   mSelMsgBaseList.clear();
   for (QListViewItemIterator it(this); it.current(); it++) {
     if (it.current()->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
+      if (toBeDeleted) item->setAboutToBeDeleted ( true );
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       mSelMsgBaseList.append(msgBase);
     }

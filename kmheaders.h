@@ -80,8 +80,9 @@ public:
   virtual void copyMsgToFolder(KMFolder* destination,
                                KMMessage* aMsg = 0);
 
-  /** Returns list of selected messages */
-  virtual KMMessageList* selectedMsgs();
+  /** Returns list of selected messages. Mark the corresponding
+      header items to be deleted, if specified. */
+  virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
