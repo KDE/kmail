@@ -350,11 +350,11 @@ public:
   virtual QString key( int column, bool /*ascending*/ ) const
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
-    int sortOrder = column |= (1 << 5);
+    int sortOrder = column;
     if (headers->mPaintInfo.orderOfArrival)
-      sortOrder |= (1 << 7);
-    if (headers->mPaintInfo.status)
       sortOrder |= (1 << 6);
+    if (headers->mPaintInfo.status)
+      sortOrder |= (1 << 5);
     //This code should stay pretty much like this, if you are adding new
     //columns put them in generate_key
     if(mKey.isEmpty() || mKey[0] != (char)sortOrder) {
@@ -2526,7 +2526,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1002
+#define KMAIL_SORT_VERSION 1004
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
@@ -3006,7 +3006,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||
 		(ascending && (*it)->key() >= unsorted[unsorted_off]->key()) ||
-		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {
+		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {		
 		new_kci = (*it);
 		++it;
 	    } else {
