@@ -395,7 +395,7 @@ void KMMsgPartDialogCompat::applyChanges()
     if ( encoding.isEmpty() ) encoding = "utf-8";
     QCString encName = KMMsgBase::encodeRFC2231String( name, encoding );
 
-    cDisp += " filename";
+    cDisp += "\n\tfilename";
     if ( name != QString( encName ) )
       cDisp += "*=" + encName;
     else
