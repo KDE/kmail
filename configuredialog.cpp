@@ -3883,8 +3883,12 @@ ConfigureTransportDialog::ConfigureTransportDialog(QWidget *parent, const char *
   sendmailLocationEdit->setText(kernel->msgSender()->mailer());
   // Reset the widgets based on passed in values.
   mTransport = transport;
-  if (!mTransport.isEmpty()) {
-    if (mTransport.left(5) == "smtp:") {
+  if (mTransport.isEmpty()) {
+    deleteRadio->hide();
+    sendmailRadio->setChecked(true);
+    this->slotSendmailType(0);
+  } else {
+    if (mTransport.startsWith("smtp:")) {
       int lastColon = mTransport.findRev(':');
       smtpRadio->setChecked(true);
       smtpServerEdit->setText(mTransport.mid(7,lastColon - 7));
