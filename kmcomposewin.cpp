@@ -3789,7 +3789,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const KURL aUrl)
 {
-  if ( aUrl.isMalformed() ) {
+  if ( !aUrl.isValid() ) {
     KMessageBox::sorry( 0, i18n( "<qt><p>KMail couldn't recognize the location of the attatchment (%1).</p>"
                                  "<p>You have to specify the full path if you wish to attach a file.</p></qt>" )
                         .arg( aUrl.prettyURL() ) );
