@@ -339,7 +339,7 @@ bool KMComposeWin::event(QEvent *e)
   {
      readColorConfig();
   }
-  return KMComposeWinInherited::event(e);
+  return KMTopLevelWidget::event(e);
 }
 
 
