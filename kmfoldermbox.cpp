@@ -76,7 +76,7 @@ int KMFolderMbox::open()
   mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
   if (!mStream)
   {
-    KNotifyClient::event("warning",
+    KNotifyClient::event( 0, "warning",
     i18n("Cannot open file \"%1\":\n%2").arg(location()).arg(strerror(errno)));
     kdDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;

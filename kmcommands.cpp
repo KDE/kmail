@@ -466,7 +466,7 @@ void KMUrlSaveCommand::execute()
   KURL saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString::null,
     mParent);
   if (saveUrl.isEmpty()) return;
-  if (KIO::NetAccess::exists(saveUrl))
+  if (KIO::NetAccess::exists(saveUrl, false, mParent))
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>")
@@ -1642,7 +1642,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   {
     // get the dir
     KFileDialog fdlg( QString::null, QString::null, mParent, 0, true );
-    fdlg.setMode( KFile::Directory );
+    fdlg.setMode( (unsigned int) KFile::Directory );
     if ( !fdlg.exec() ) return;
     dir = fdlg.selectedURL().path();
   } else

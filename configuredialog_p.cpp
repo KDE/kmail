@@ -292,7 +292,7 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   mListView = new KListView( page, "mListView" );
   mListView->addColumn( i18n("Available Profiles") );
   mListView->addColumn( i18n("Description") );
-  mListView->setFullWidth();
+  mListView->setFullWidth( true );
   mListView->setAllColumnsShowFocus( true );
   mListView->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mListView->setSorting( -1 );

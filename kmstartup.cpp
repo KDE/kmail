@@ -117,7 +117,7 @@ void lockOrDie() {
       "with PID %1 on host %2 according to the lock file located "
       "at %3.").arg(oldPid).arg(oldHostName).arg(lockLocation);
 
-    KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
+    KNotifyClient::userEvent( 0, msg,  KNotifyClient::Messagebox,
       KNotifyClient::Error );
     fprintf(stderr, "*** KMail is already running with PID %d on host %s\n",
             oldPid, oldHostName.local8Bit().data());
