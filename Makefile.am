@@ -128,3 +128,5 @@ messages: rc.cpp
 	$(PREPARETIPS) > tips.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
 	rm -f tips.cpp
+
+include ../admin/Doxyfile.am
