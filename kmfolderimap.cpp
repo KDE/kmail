@@ -591,6 +591,7 @@ void KMFolderImap::checkValidity()
   }
   // Only check once at a time.
   if (mCheckingValidity) return;
+  mAccount->tempOpenFolder(this);
   ImapAccountBase::jobData jd( url.url(), this );
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -628,8 +629,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   mCheckingValidity = false;
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
-  if (job->error())
-  {
+  if (job->error()) {
     mAccount->slotSlaveError(mAccount->slave(), job->error(), job->errorText());
     emit folderComplete(this, FALSE);
   } else {
