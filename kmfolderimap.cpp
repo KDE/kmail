@@ -613,6 +613,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       mAccount->setCreateInbox( false );
       mAccount->setHasInbox( true );
       kmkernel->imapFolderMgr()->contentsChanged();
+      f->listDirectory();
     }
     for (uint i = 0; i < mSubfolderNames.count(); i++)
     {
