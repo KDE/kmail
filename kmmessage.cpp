@@ -3111,8 +3111,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec,
 			   bool fixedfont)
 {
-  QString str = (codec) ? codec->toUnicode(asString()) :
-    kernel->networkCodec()->toUnicode(asString());
+  QString str = QString::fromLatin1( asString() );
 
 #if ALLOW_GUI
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
