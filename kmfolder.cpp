@@ -942,7 +942,7 @@ void KMFolder::writeConfig()
 {
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
-  config->writeEntry("UnreadMsgs", mUnreadMsgs);
+  config->writeEntry("UnreadMsgs", countUnread());
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
