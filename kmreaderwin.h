@@ -481,7 +481,6 @@ protected:
          cCBisHtmlB, cCBisHtmlF;
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
-  bool    mUnicodeFont;
   bool    mLoadExternal;
   bool mShowColorbar;
   bool mShowCompleteMessage;

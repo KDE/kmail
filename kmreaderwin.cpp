@@ -78,11 +78,6 @@ using KMail::AttachmentStrategy;
 #include "kmmimeparttree.h"
 
 
-// for selection
-//#include <X11/X.h>
-//#include <X11/Xlib.h>
-//#include <X11/Xatom.h>
-
 // X headers...
 #undef Never
 #undef Always
@@ -810,7 +805,6 @@ void KMReaderWin::readConfig(void)
 
   {
   KConfigGroupSaver saver(config, "Fonts");
-  mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   mBodyFont = KGlobalSettings::generalFont();
   mFixedFont = KGlobalSettings::fixedFont();
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
