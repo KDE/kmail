@@ -195,6 +195,8 @@ public:
 
   QFont dateFont;
 
+  bool noRepaint;
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */

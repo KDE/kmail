@@ -273,6 +273,7 @@ public:
 				int column, int width, int align )
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    if (headers->noRepaint) return;
     if (!headers->folder()) return;
     QColorGroup _cg( cg );
     QColor c = _cg.text();
@@ -397,6 +398,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   KImageIO::registerFormats();
   mOwner  = aOwner;
   mFolder = NULL;
+  noRepaint = FALSE;
   getMsgIndex = -1;
   mTopItem = 0;
   setMultiSelection( TRUE );
@@ -610,7 +612,9 @@ void KMHeaders::reset(void)
 {
   int top = topItemIndex();
   int id = currentItemIndex();
+  noRepaint = TRUE;
   clear();
+  noRepaint = FALSE;
   mItems.resize(0);
   updateMessageList();
   setCurrentMsg(id);
@@ -774,7 +778,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
       if (mNested != mNestedOverride) {
-	clear();
+        noRepaint = TRUE;
+        clear();
+        noRepaint = FALSE;
 	mItems.resize( 0 );
       }
 
@@ -793,7 +799,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       SHOW_TIMER(kmfolder_open);
 
       if (mNested != mNestedOverride) {
+        noRepaint = TRUE;
 	clear();
+        noRepaint = FALSE;
 	mItems.resize( 0 );
       }
     }
@@ -2312,7 +2320,9 @@ void KMHeaders::updateMessageList(bool set_selection)
   mPrevCurrent = 0;
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
+    noRepaint = TRUE;
     clear();
+    noRepaint = FALSE;
     mItems.resize(0);
     repaint();
     return;
@@ -2984,7 +2994,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mIdTree.resize( 2*mFolder->count() );
 
     //cleanup
+    noRepaint = TRUE;
     clear();
+    noRepaint = FALSE;
     mItems.resize( mFolder->count() );
     for (int i=0; i<mFolder->count(); i++) {
 	sortCache[i] = 0;
