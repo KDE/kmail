@@ -230,6 +230,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   KMMessage* msg;
   int i, num, upd;
   QString str;
+  bool unget;
 
   assert(!aFld.isNull());
 
@@ -245,6 +246,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   num = aFld->count();
   for (i=0, upd=0; i<num && mSearching; i++, upd++)
   {
+    unget = !aFld->isMessage(i);
     msg = aFld->getMsg(i);
     if (msg && searchInMessage(msg))
     {
@@ -266,7 +268,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
       if (!aFld) // Folder deleted while searching!
 	break;
     }
-    aFld->unGetMsg(i);
+    if (unget) aFld->unGetMsg(i);
   }
 
   if(!mSearching)

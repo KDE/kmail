@@ -940,6 +940,16 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
 
 
 //-----------------------------------------------------------------------------
+bool KMFolder::isMessage(int idx)
+{
+  KMMsgBase* mb;
+  if (!(idx >= 0 && idx <= mMsgList.high())) return FALSE;
+  mb = mMsgList[idx];
+  return (mb && mb->isMessage());
+}
+
+
+//-----------------------------------------------------------------------------
 KMMessage* KMFolder::readMsg(int idx)
 {
   KMMessage* msg;

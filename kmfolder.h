@@ -84,6 +84,9 @@ public:
   /** Replace KMMessage with KMMsgInfo and delete KMMessage  */
   virtual KMMsgInfo* unGetMsg(int idx);
 
+  /** Checks if the message is already "gotten" with getMsg */
+  virtual bool isMessage(int idx);
+
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
     you should use this method instead of getMsg() because getMsg()
