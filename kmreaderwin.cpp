@@ -2175,8 +2175,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   else if (updateReaderWinTimer.isActive())
     updateReaderWinTimer.changeInterval( delay );
   else
+{
     updateReaderWinTimer.start( 0, TRUE );
-
+kdDebug(5006)<<"Hallo Ingo" << endl;
+}
   if (mDelayedMarkAsRead) {
     if ( mDelayedMarkTimeout == 0 )
     	slotTouchMessage();
@@ -2277,6 +2279,7 @@ void KMReaderWin::displayAboutPage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
+kdDebug(5006)<<"updateReaderWin(): Hallo Ingo" << endl;
   if (!mMsgDisplay) return;
 
   mViewer->view()->setUpdatesEnabled( false );
@@ -2292,6 +2295,7 @@ void KMReaderWin::updateReaderWin()
 
   if (message())
   {
+kdDebug(5006)<<"updateReaderWin(): message() != 0" << endl;
     if ( mShowColorbar )
       mColorBar->show();
     else
@@ -2300,6 +2304,7 @@ void KMReaderWin::updateReaderWin()
   }
   else
   {
+kdDebug(5006)<<"updateReaderWin(): message() == 0" << endl;
     mColorBar->hide();
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
@@ -5177,6 +5182,7 @@ bool KMReaderWin::htmlMail()
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )
 {
+  kdDebug(5006) << "KMReaderWin::update" << endl;
     setMsg( message(), force );
 }
 

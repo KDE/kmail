@@ -1,6 +1,6 @@
 KDE_CXXFLAGS = $(USE_RTTI) -DQT_NO_COMPAT
 
-SUBDIRS = . about pics profiles
+SUBDIRS = . about pics profiles icons_everaldo
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
 LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la -lkabc
 
@@ -68,8 +68,6 @@ appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop
 
 EXTRA_DIST = KMail.desktop
-
-KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc eventsrc

@@ -88,48 +88,55 @@ int KMFolderMbox::open()
 
   if (!path().isEmpty())
   {
-    if (isIndexOutdated()) // test if contents file has changed
+    KMFolder::IndexStatus index_status = indexStatus();
+    // test if index file exists and is up-to-date
+    if (KMFolder::IndexOk != index_status)
     {
-      bool busy = kernel->kbp()->isBusy();
-      if (busy) kernel->kbp()->idle();
-      if( 0 ) {
-        // #### FIXME: Either make the link work or remove the following code.
-        //             It's only there to get translated.
-      KMessageBox::information( 0,
-                                i18n("<qt><p>The index of folder '%1' seems "
-                                     "to be out of date. To prevent message "
-                                     "corruption the index will be "
-                                     "regenerated. As a result deleted "
-                                     "messages might reappear and status "
-                                     "flags might be lost.</p>"
-                                     "<p>Please read the corresponding entry "
-                                     "in the <a href=\"%2\">FAQ section of the manual of "
-                                     "KMail</a> for "
-                                     "information about how to prevent this "
-                                     "problem from happening again.</p></qt>")
-                                .arg(name())
-                                .arg("help:/kmail/faq.html"),
-                                i18n("Index Out of Date"),
-                                "dontshowIndexRegenerationWarning");
+      // only show a warning if the index file exists, otherwise it can be
+      // silently regenerated
+      if (KMFolder::IndexTooOld == index_status)
+      {
+        bool busy = kernel->kbp()->isBusy();
+        if (busy) kernel->kbp()->idle();
+        if( 0 ) {
+          // #### FIXME: Either make the link work or remove the following code.
+          //             It's only there to get translated.
+        KMessageBox::information( 0,
+                                  i18n("<qt><p>The index of folder '%1' seems "
+                                       "to be out of date. To prevent message "
+                                       "corruption the index will be "
+                                       "regenerated. As a result deleted "
+                                       "messages might reappear and status "
+                                       "flags might be lost.</p>"
+                                       "<p>Please read the corresponding entry "
+                                       "in the <a href=\"%2\">FAQ section of the manual of "
+                                       "KMail</a> for "
+                                       "information about how to prevent this "
+                                       "problem from happening again.</p></qt>")
+                                  .arg(name())
+                                  .arg("help:/kmail/faq.html"),
+                                  i18n("Index Out of Date"),
+                                  "dontshowIndexRegenerationWarning");
+        }
+        else {
+        KMessageBox::information( 0,
+                                  i18n("<qt><p>The index of folder '%1' seems "
+                                       "to be out of date. To prevent message "
+                                       "corruption the index will be "
+                                       "regenerated. As a result deleted "
+                                       "messages might reappear and status "
+                                       "flags might be lost.</p>"
+                                       "<p>Please read the corresponding entry "
+                                       "in the FAQ section of the manual of "
+                                       "KMail for "
+                                       "information about how to prevent this "
+                                       "problem from happening again.</p></qt>")
+                                  .arg(name()),
+                                  i18n("Index Out of Date"),
+                                  "dontshowIndexRegenerationWarning");
+        }
+        if (busy) kernel->kbp()->busy();
       }
-      else {
-      KMessageBox::information( 0,
-                                i18n("<qt><p>The index of folder '%1' seems "
-                                     "to be out of date. To prevent message "
-                                     "corruption the index will be "
-                                     "regenerated. As a result deleted "
-                                     "messages might reappear and status "
-                                     "flags might be lost.</p>"
-                                     "<p>Please read the corresponding entry "
-                                     "in the FAQ section of the manual of "
-                                     "KMail for "
-                                     "information about how to prevent this "
-                                     "problem from happening again.</p></qt>")
-                                .arg(name()),
-                                i18n("Index Out of Date"),
-                                "dontshowIndexRegenerationWarning");
-      }
-      if (busy) kernel->kbp()->busy();
       QString str;
       mIndexStream = NULL;
       str = i18n("Folder `%1' changed. Recreating index.")
@@ -232,7 +239,7 @@ void KMFolderMbox::close(bool aForced)
 
   if (mAutoCreateIndex)
   {
-      if (isIndexOutdated()) {
+      if (KMFolder::IndexOk != indexStatus()) {
 	  kdDebug(5006) << "Critical error: " << location() <<
 	      " has been modified by an external application while KMail was running." << endl;
 	  //	  exit(1); backed out due to broken nfs
@@ -469,15 +476,17 @@ int KMFolderMbox::unlock()
 
 
 //-----------------------------------------------------------------------------
-bool KMFolderMbox::isIndexOutdated()
+KMFolder::IndexStatus KMFolderMbox::indexStatus()
 {
   QFileInfo contInfo(location());
   QFileInfo indInfo(indexLocation());
 
-  if (!contInfo.exists()) return FALSE;
-  if (!indInfo.exists()) return TRUE;
+  if (!contInfo.exists()) return KMFolder::IndexOk;
+  if (!indInfo.exists()) return KMFolder::IndexMissing;
 
-  return (contInfo.lastModified() > indInfo.lastModified());
+  return ( contInfo.lastModified() > indInfo.lastModified() )
+         ? KMFolder::IndexTooOld
+         : KMFolder::IndexOk;
 }
 
 
@@ -731,7 +740,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   int growth = 0;
 
 /* Then we can also disable it completely, this wastes time, at least for IMAP
-  if (isIndexOutdated()) {
+  if (KMFolder::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs
@@ -962,7 +971,7 @@ int KMFolderMbox::compact()
   }
   kdDebug(5006) << "Compacting " << idString() << endl;
 
-  if (isIndexOutdated()) {
+  if (KMFolder::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs

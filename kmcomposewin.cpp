@@ -993,7 +993,7 @@ void KMComposeWin::setupActions(void)
         ++i;
     }
     
-    cryptoModuleAction = new KSelectAction( i18n( "Select &crypto module" ),
+    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
                              0, // no accel
                              this, SLOT( slotSelectCryptoModule() ),
                              actionCollection(),
