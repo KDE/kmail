@@ -1678,8 +1678,8 @@ bool KMComposeWin::applyChanges(void)
     }
 
     if( bOk ) {
-      if( !bcc().isEmpty() && doEncrypt ) {
-        QStringList bccRecips = KMMessage::splitEmailAddrList( bcc() );
+      if( !mMsg->bcc().isEmpty() && doEncrypt ) {
+        QStringList bccRecips = KMMessage::splitEmailAddrList( mMsg->bcc() );
         for( QStringList::ConstIterator it = bccRecips.begin();
             it != bccRecips.end();
             ++it ) {
@@ -3843,9 +3843,8 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   } else {
     mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
     mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
-    if( !bcc().isEmpty() )
-      // don't overwrite a custom Bcc header if the Bcc field is empty
-      mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+    if( !mMsg->bcc().isEmpty() )
+      mMsg->setBcc( KabcBridge::expandDistributionLists( mMsg->bcc() ));
     QString recips = mMsg->headerField( "X-KMail-Recipients" );
     if( !recips.isEmpty() ) {
       mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
