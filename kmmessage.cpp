@@ -2449,8 +2449,8 @@ void KMMessage::readConfig(void)
     sWrapCol = config->readNumEntry("break-at", 78);
     if ((sWrapCol == 0) || (sWrapCol > 78))
       sWrapCol = 78;
-    if (sWrapCol < 60)
-      sWrapCol = 60;
+    if (sWrapCol < 30)
+      sWrapCol = 30;
 
     sPrefCharsets = config->readListEntry("pref-charsets");
   }
