@@ -44,7 +44,7 @@
 using namespace KMail;
 
 
-Callback::Callback( KMMessage* msg ) : mMsg( msg )
+Callback::Callback( KMMessage* msg ) : mMsg( msg ),  mReceiverSet( false )
 {
 }
 
@@ -56,25 +56,36 @@ bool Callback::mail() const
 
 QString Callback::receiver() const
 {
+  if ( mReceiverSet )
+    // Already figured this out
+    return mReceiver;
+
+  mReceiverSet = true;
+
   KMIdentity ident =
     kmkernel->identityManager()->identityForAddress( mMsg->to() );
 
-  if( ident != KMIdentity::null )
+  if( ident != KMIdentity::null ) {
     // That was easy
-    return ident.emailAddr();
+    mReceiver = ident.emailAddr();
+  } else {
+    QStringList addrs = KMMessage::splitEmailAddrList( mMsg->to() );
+    if( addrs.count() == 1 )
+      // Don't ask the user to choose between 1 items
+      mReceiver = addrs[0];
+    else {
+      bool ok;
+      mReceiver =
+        KInputDialog::getItem( i18n( "Select Address" ),
+                               i18n( "<qt>None of your identities match the "
+                                     "receiver of this message,<br>please "
+                                     "choose which of the following addresses "
+                                     "is yours:" ),
+                               addrs, 0, FALSE, &ok, kmkernel->mainWin() );
+      if( !ok )
+        mReceiver = QString::null;
+    }
+  }
 
-  QStringList addrs = KMMessage::splitEmailAddrList( mMsg->to() );
-  if( addrs.count() == 1 )
-    // Don't ask the user to choose between 1 items
-    return addrs[0];
-
-  bool ok;
-  QString receiver =
-    KInputDialog::getItem( i18n( "Select Address" ),
-                           i18n( "None of your identities match the receiver "
-                                 "of this message,<br> please choose which "
-                                 "of the following addresses is yours:" ),
-                           addrs, 0, FALSE, &ok, kmkernel->mainWin() );
-  if( !ok ) return QString::null;
-  return receiver;
+  return mReceiver;
 }

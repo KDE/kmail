@@ -57,6 +57,8 @@ public:
 
 private:
   KMMessage* mMsg;
+  mutable QString mReceiver;
+  mutable bool mReceiverSet;
 };
 
 }
