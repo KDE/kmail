@@ -3008,9 +3008,12 @@ void KMReaderWin::slotAtmView()
     const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
       KMMsgBase::codecForName(msgPart.charset()) : mCodec;
     if (!atmCodec) atmCodec = mCodec;
-    if (qstricmp(msgPart.typeStr(), "message")==0)
+    if (qstricmp(msgPart.typeStr(), "message")==0) {
       atmViewMsg(&msgPart);
-    else {
+    } else if ((qstricmp(msgPart.typeStr(), "text")==0) && 
+	       (qstricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
+      setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec );
+    } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
 	mAtmCurrentName, pname, atmCodec );
       win->show();
