@@ -1288,8 +1288,6 @@ void KMComposeWin::slotAttachFile()
   // Create File Dialog and return selected file
   // We will not care about any permissions, existence or whatsoever in
   // this function.
-  QString fileName;
-
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
 
   KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
@@ -1301,12 +1299,8 @@ void KMComposeWin::slotAttachFile()
 
   mPathAttach = u.directory();
 
-  fileName = u.filename();
-  if(fileName.isEmpty()) return;
-  if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
-    mPathAttach = fileName.left(fileName.findRev("/")); // KFileDialog::dirPath()
-
-  addAttach(fileName);
+  if(u.filename().isEmpty()) return;
+  addAttach(u.path());
   mEditor->setModified(TRUE);
 }
 
@@ -1314,7 +1308,7 @@ void KMComposeWin::slotAttachFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  QString fileName, str;
+  QString str;
   int col, line;
 
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
@@ -1327,13 +1321,15 @@ void KMComposeWin::slotInsertFile()
 
   mPathAttach = u.directory();
 
-  fileName = u.filename();
-  if (fileName.isEmpty()) return;
+  if (u.filename().isEmpty()) return;
 
-  if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
-    mPathAttach = fileName.left(fileName.findRev("/")); // KFileDialog::dirPath()
+  if( !u.isLocalFile() )
+  {
+    KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
+    return;
+  }
 
-  str = kFileToString(fileName, TRUE, TRUE);
+  str = kFileToString(u.path(), TRUE, TRUE);
   if (str.isEmpty()) return;
 
   mEditor->getCursorPosition(&line, &col);
@@ -1793,7 +1789,7 @@ void KMComposeWin::slotAppendSignature()
 
     if( !url.isLocalFile() )
     {
-      KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+      KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
       return;
     }
 
