@@ -61,7 +61,7 @@ private:
   int indexAttachment;
   QStrList *urlList;
   KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
-  KHTMLWidget *attachmentWidget;
+  KTabListBox *attachmentWidget;
   KMMessage * prepareMessage();
   QFrame *frame;
 

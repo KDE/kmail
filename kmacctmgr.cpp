@@ -76,18 +76,12 @@ bool KMAcctMgr::reload(void)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
-<<<<<<< kmacctmgr.cpp
-    warning(nls->translate("Directory\n%s\ndoes not exist.\n\n"
-	    "KMail will create it now."), (const char*)mBasePath);
-    dir.mkdir(mBasePath, TRUE);
-=======
     warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
 	    "KMail will create it now.");
     // dir.mkdir(mBasePath, TRUE);
     // Stephan: mkdir without right permissions is dangerous
     // and is for sure a port from Windows ;)
     mkdir(mBasePath.data(), 0700);
->>>>>>> 1.4
   }
 
   if (!dir.cd(mBasePath, TRUE))

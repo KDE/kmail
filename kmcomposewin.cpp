@@ -67,22 +67,16 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   subjLEdit->setMinimumSize(sz);
   grid->addWidget(subjLEdit,2,1);
   
-  frame = new QFrame(this);
-  frame->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-  frame->setLineWidth(2);
-  frame->hide();
-
   editor = new KEdit(0,this);
   grid->addMultiCellWidget(editor,3,8,0,1);
   grid->setRowStretch(3,100);
 
-  attachmentWidget = new KHTMLWidget(frame,0,"/usr/local/kde/lib/pics/");
-  grid->addMultiCellWidget(frame,9,9,0,1);
-  attachmentWidget->setURLCursor(upArrowCursor);
-  connect(attachmentWidget,SIGNAL(popupMenu(const char *, const QPoint &)),
-	  SLOT(slotPopupMenu(const char *, const QPoint &)));
-  attachmentWidget->move(2,2);
-  attachmentWidget->resize(parent->width()-4,parent->height()-4);
+  attachmentWidget = new KTabListBox(this,NULL,3);
+  attachmentWidget->setColumn(0,"F",20,KTabListBox::PixmapColumn);
+  attachmentWidget->setColumn(1,"Filename",parent->width()-120);
+  attachmentWidget->setColumn(2,"Size",60);
+  grid->addMultiCellWidget(attachmentWidget,9,9,0,1);
+  attachmentWidget->hide();  
 
   zone = new KDNDDropZone(editor,DndURL);
   connect(zone,SIGNAL(dropAction(KDNDDropZone *)),SLOT(getDNDAttachment()));
@@ -159,7 +153,10 @@ void KMComposeView::getDNDAttachment()
   QString element;
   QStrList *tempList = new QStrList(); 
   *tempList= zone->getURLList();
-  urlList->append(tempList->first());
+  element = tempList->first();
+  if(element.find("file:",0,0) >= 0)
+    element.replace("file:","");
+  urlList->append(element);
   element = urlList->first();
   cout << "Elements in the list: " << urlList->count() << "\n";
   while(element.isEmpty() == FALSE)
@@ -178,8 +175,8 @@ void KMComposeView::getDNDAttachment()
 void KMComposeView::createAttachmentWidget()
 {
   cout << "Making attachmentWidget visible\n" ;
-  frame->show();
-  grid->setRowStretch(3,4);
+  attachmentWidget->show();
+  grid->setRowStretch(3,3);
   grid->setRowStretch(9,1);  
   
 }
@@ -195,22 +192,15 @@ void KMComposeView::insertNewAttachment(QString File)
 {
   QString element;
   cout << "Inserting Attachment\"" + File << "\" into widget\n";
-  attachmentWidget->begin("/usr/local/kde/lib/pics/toolbar");
-  attachmentWidget->write("<HTML><BODY BGCOLOR=WHITE><TABLE><TR>");
   element = urlList->first();
   cout << "Elements to be inserted: " << urlList->count() << "\n";
-
+  attachmentWidget->clear();
   while(element.isEmpty() == FALSE)
     {cout << element << "\n";
-    attachmentWidget->write("<TD>");
-    attachmentWidget->write("<CENTER><A HREF=\"" + element + "\"><IMG SRC=\"/usr/local/kde/lib/pics/toolbar/kmattach.xpm\"></CENTER><br>" + element + "</A>");
-
-    attachmentWidget->write("</TD>");
+    element = " \n" + element + "\n ";
+    attachmentWidget->insertItem(element);
     element = urlList->next();}
 
-  attachmentWidget->write("</TR></TABLE></BODY></HTML>");
-  attachmentWidget->end();
-  attachmentWidget->parse();
   resize(this->size());
   
 }
@@ -745,7 +735,7 @@ void KMComposeWin::setupToolBar()
 			SLOT(newComposer()),TRUE,"Compose new message");
   toolBar->insertSeparator();
 
-  toolBar->insertButton(loader->loadIcon("send.xpm"),0,
+  toolBar->insertButton(loader->loadIcon("toolbar/send.xpm"),0,
 			SIGNAL(clicked()),this,
 			SLOT(send()),TRUE,"Send message");
   toolBar->insertSeparator();

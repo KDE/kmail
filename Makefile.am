@@ -21,7 +21,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
-		kmfoldernode.moc kmacctseldlg.moc
+		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -65,6 +65,10 @@ kmreaderwin.cpp:kmreaderwin.moc
 kmreaderwin.moc: kmreaderwin.h
 	$(MOC) kmreaderwin.h -o kmreaderwin.moc
 
+kmmessage.cpp:kmmessage.moc
+kmmessage.moc: kmmessage.h
+	$(MOC) kmmessage.h -o kmmessage.moc
+
 kmmainwin.cpp:kmmainwin.moc
 kmmainwin.moc: kmmainwin.h
 	$(MOC) kmmainwin.h -o kmmainwin.moc
@@ -93,5 +97,7 @@ kalarmtimer.cpp:kalarmtimer.moc
 kalarmtimer.moc: kalarmtimer.h
 	$(MOC) kalarmtimer.h -o kalarmtimer.moc
 
-
+kshortcut.cpp: kshortcut.moc
+kshortcut.moc: kshortcut.h
+	$(MOC) kshortcut.h -o kshortcut.moc
 

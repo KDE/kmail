@@ -24,8 +24,9 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
        	qApp->quit();}
 
  picsDir.append(kdeDir);
- picsDir +="/share/apps/kmail/pics";
- 
+ //picsDir +="/share/apps/kmail/pics"; // not yet!
+ picsDir +="/lib/pics/"; 
+
  currentFolder = new KMFolder();
  currentFolder = f;
 

@@ -485,6 +485,9 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
     mEdtPasswd = createLabeledEntry(this, grid, nls->translate("Password:"),
 				    ((KMAcctPop*)mAcct)->passwd(), 3, 0);
+    // markus: added this for security reasons.
+    mEdtPasswd->setEchoMode(QLineEdit::Password);
+
 
     mEdtHost = createLabeledEntry(this, grid, nls->translate("Host:"),
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
