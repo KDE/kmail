@@ -137,6 +137,7 @@ QStringList SpellChecker::personalWords()
     l.append( "KIO" );
     l.append( "KJS" );
     l.append( "Konqueror" );
+    l.append( "KSpell" );
     return l;
 }
 
@@ -154,7 +155,7 @@ void SpellChecker::flushCurrentWord()
 
     if ( !currentWord.isEmpty() ) {
 	if ( isMisspelled(currentWord) )
-            setFormat( currentPos, currentWord.length(), mColor );
+	    setFormat( currentPos, currentWord.length(), mColor );
     }
     currentWord = "";
 }
@@ -271,9 +272,9 @@ QString DictSpellChecker::spellKey()
     key += '/';
     key += QString::number(config->readNumEntry ("KSpell_Client", KS_CLIENT_ISPELL));
     return key;
-}       
+}
 
-void DictSpellChecker::timerEvent(QTimerEvent *e)
+void DictSpellChecker::timerEvent(QTimerEvent)
 {
     if (mSpell && mSpellKey != spellKey()) {
 	mSpellKey = spellKey();
