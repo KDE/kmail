@@ -564,6 +564,7 @@ namespace {
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
+    mOffset( 0 ),
     mTotalSize( msg ? msg->msgSize() : 0 )
 {
   if ( !msg ) return;
@@ -572,8 +573,11 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
-  const QPtrList<KMMsgBase> &msgList )
-  :KMCommand( parent ), mTotalSize( 0 )
+                                    const QPtrList<KMMsgBase> &msgList )
+  : KMCommand( parent ),
+    mMsgListIndex( 0 ),
+    mOffset( 0 ),
+    mTotalSize( 0 )
 {
   if (!msgList.getFirst())
     return;
@@ -622,7 +626,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
 
     QByteArray data;
     data.duplicate( mData.data() + mOffset, remainingBytes );
-    mJob->sendAsyncData( mData );
+    mJob->sendAsyncData( data );
     mOffset += remainingBytes;
     return;
   }
