@@ -353,11 +353,11 @@ void KMMsgInfo::setFileName(const QString& file)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setStatus(const KMMsgStatus aStatus)
+void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
 {
     if(aStatus == status())
 	return;
-    KMMsgBase::setStatus(aStatus); //base does more "stuff"
+    KMMsgBase::setStatus(aStatus, idx); //base does more "stuff"
     mStatus = aStatus;
     mDirty = TRUE;
 }

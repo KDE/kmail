@@ -544,8 +544,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
 
     if (folder) {
       folder->open();
-      KMMsgBase *link = folder->getMsgBase(index);
-      link->setStatus(status);
+      folder->setStatus(index, status);
       folder->close();
     }
   }

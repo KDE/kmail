@@ -1027,14 +1027,15 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
+void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx = -1)
 {
   if (mQuiet)
   {
     mChanged = TRUE;
     return;
   }
-  int idx = mMsgList.find((KMMsgBasePtr)aMsg);
+  if (idx < 0)
+    idx = mMsgList.find((KMMsgBasePtr)aMsg);
   if (idx >= 0)
     emit msgHeaderChanged(idx);
   else
@@ -1193,6 +1194,26 @@ int KMFolder::appendtoMsgDict(int idx)
   if (dict)
     ret = dict->appendtoFolderIds(this, idx);
   return ret;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::setStatus(int idx, KMMsgStatus status)
+{
+  KMMsgBase *msg = getMsgBase(idx);
+  msg->setStatus(status, idx);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::setStatus(KMMsgBase *msg, KMMsgStatus status)
+{
+  KMMsgDict *dict = kernel->msgDict();
+  if (dict) {
+    KMFolder *folder;
+    int index;
+    dict->getLocation(msg->getMsgSerNum(), &folder, &index);
+    if (folder == this && folder == msg->parent())
+      setStatus(index, status);
+  }
 }
 
 //-----------------------------------------------------------------------------

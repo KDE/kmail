@@ -279,7 +279,7 @@ public:
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
-  virtual void headerOfMsgChanged(const KMMsgBase*);
+  virtual void headerOfMsgChanged(const KMMsgBase*, int idx = -1);
 
   /** Name of the field that is used for the "From" column in index
     and listbox. */
@@ -396,6 +396,13 @@ public:
   
   /** Append message to end of message serial number file. */
   int appendtoMsgDict(int idx = -1);
+  
+  /** Set the status of the message at index @p idx to @p status. */
+  virtual void setStatus(int idx, KMMsgStatus status);
+  
+  /** Set the status of the message @p msg to @p status.  The message
+   * should be in the current folder. */
+  void setStatus(KMMsgBase *msg, KMMsgStatus status);
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

@@ -2471,11 +2471,11 @@ void KMMessage::setCharset(const QCString& bStr)
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setStatus(const KMMsgStatus aStatus)
+void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 {
     if (mStatus == aStatus)
 	return;
-    KMMsgBase::setStatus(aStatus);
+    KMMsgBase::setStatus(aStatus, idx);
     mStatus = aStatus;
     mDirty = TRUE;
 }

@@ -1011,18 +1011,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
     if (qitem->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      msgBase->setStatus(status);
-      if (mFolder->protocol() == "imap")
-      {
-        KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
-        if (!folder)
-          return;
-        unget = !mFolder->isMessage(item->msgId());
-        KMMessage *msg = mFolder->getMsg(item->msgId());
-        folder->setStatus(msg, status);
-        if (unget) mFolder->unGetMsg(item->msgId());
-      }
+      mFolder->setStatus(item->msgId(), status);
     }
 }
 
@@ -1137,15 +1126,7 @@ void KMHeaders::setMsgRead (int msgId)
       st = msg->status();
       if (st==KMMsgStatusNew || st==KMMsgStatusUnread ||
 	  st==KMMsgStatusRead)
-	{
-	  msg->setStatus(KMMsgStatusOld);
-          if (mFolder->protocol() == "imap")
-          {
-            KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
-            if (folder)
-              folder->setStatus(msg, KMMsgStatusOld);
-          }
-	}
+        mFolder->setStatus(msg, KMMsgStatusOld);
     }
 }
 

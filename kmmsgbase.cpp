@@ -71,13 +71,13 @@ bool KMMsgBase::isMessage(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgBase::setStatus(const KMMsgStatus aStatus)
+void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 {
   if (mParent)
     mParent->msgStatusChanged( status(), aStatus );
   mDirty = TRUE;
   if (mParent)
-    mParent->headerOfMsgChanged(this);
+    mParent->headerOfMsgChanged(this, idx);
 }
 
 

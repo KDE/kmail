@@ -142,10 +142,10 @@ public:
   void deleteMessage(KMMessage * msg);
 
   /**
-   * Change the status of a message
+   * Change the status of the message indicated by @p index
    */
-  void setStatus(KMMessage * msg, KMMsgStatus status);
-
+  virtual void setStatus(int idx, KMMsgStatus status);
+  
   /**
    * Expunge deleted messages from the folder
    */

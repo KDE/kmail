@@ -1004,8 +1004,20 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::setStatus(KMMessage * msg, KMMsgStatus status)
+void KMFolderImap::setStatus(int idx, KMMsgStatus status)
 {
+  KMFolder::setStatus(idx, status);
+  
+  KMMsgBase *msgbase = getMsgBase(idx);
+  if (!msgbase->parent())
+    return;
+  KMMessage *msg;
+  if (msgbase->isMessage()) {
+    msg = static_cast<KMMessage *>(msgbase);
+    msgbase = 0;
+  } else
+    msg = getMsg(idx);
+  
   QCString flags = "";
   switch (status)
   {
@@ -1025,7 +1037,6 @@ void KMFolderImap::setStatus(KMMessage * msg, KMMsgStatus status)
       flags = "\\SEEN";
   }
   KURL url = mAccount->getUrl();
-  if (!msg || !msg->parent()) return;
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
   url.setPath(msg_parent->imapPath() + ";UID=" + msg->headerField("X-UID"));
   QCString urlStr("S" + url.url().utf8());
@@ -1044,6 +1055,9 @@ void KMFolderImap::setStatus(KMMessage * msg, KMMsgStatus status)
   connect(job, SIGNAL(result(KIO::Job *)),
           SLOT(slotSetStatusResult(KIO::Job *)));
   mAccount->displayProgress();
+  
+  if (msgbase)
+    unGetMsg(idx);
 }
 
 

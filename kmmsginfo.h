@@ -50,7 +50,7 @@ public:
   void setMsgSize(unsigned long sz);
   void setFolderOffset(unsigned long offs);
   void setFileName(const QString& file);
-  virtual void setStatus(const KMMsgStatus status);
+  virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setDate(time_t aUnixTime);
   virtual void setSubject(const QString&);
   virtual void setXMark(const QString&);

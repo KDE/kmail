@@ -401,7 +401,7 @@ public:
     /** Status of the message. */
     virtual KMMsgStatus status(void) const { return mStatus; }
     /** Set status and mark dirty. */
-    virtual void setStatus(const KMMsgStatus status);
+    virtual void setStatus(const KMMsgStatus status, int idx = -1);
     virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
     /** Links this message to @p aMsg, setting link type to @p aStatus. */

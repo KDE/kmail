@@ -55,8 +55,9 @@ public:
     /** Status of the message. */
     virtual KMMsgStatus status(void) const = 0;
 
-  /** Set status and mark dirty. */
-  virtual void setStatus(const KMMsgStatus status);
+  /** Set status and mark dirty.  Optional optimization: @p idx may
+   * specify the index of this message within the parent folder. */
+  virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
   /** Important header fields of the message that are also kept in the index. */
