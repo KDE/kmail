@@ -1,7 +1,6 @@
-1.	fetch the c-client library and do a "make lnx" in its directory
+1.	you need the latest kdesupport package with the mimelib
 
-2.	set the CCLIENT variable in the Makefile accordingly
+2.	in the base directory do "./configure; cd kmail ; make depend ; make"
 
 3.	copy all .xpm files to $(KDEDIR)/lib/pics/toolbar
-
-4.	do a "make" in the kmail directory
+ 
