@@ -3207,6 +3207,9 @@ void KMMainWidget::slotShowStartupFolder()
   // plug shortcut filter actions now
   initializeFilterActions();
 
+  // plug folder shortcut actions
+  initializeFolderShortcutActions();
+
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
@@ -3335,6 +3338,19 @@ void KMMainWidget::clearFilterActions()
   mFilterCommands.clear();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::initializeFolderShortcutActions()
+{
+
+  QValueList< QGuardedPtr< KMFolder > > folders = kmkernel->allFolders();
+  QValueList< QGuardedPtr< KMFolder > >::Iterator it = folders.begin();
+  while ( it != folders.end() ) {
+    KMFolder *folder = (*it);
+    ++it;
+    slotShortcutChanged( folder ); // load the initial accel
+  }
+}
+ 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()

@@ -194,6 +194,9 @@ public slots:
   /** Clear and create actions for marked filters */
   void clearFilterActions();
   void initializeFilterActions();
+  
+  /** Create actions for the folder shortcuts. */
+  void initializeFolderShortcutActions();
  
   /** Add, remove or adjust the folder's shortcut. */
   void slotShortcutChanged( KMFolder *folder );

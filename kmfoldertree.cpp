@@ -642,7 +642,6 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
           this, SIGNAL(iconChanged(KMFolderTreeItem*)));
       connect (fti, SIGNAL(nameChanged(KMFolderTreeItem*)),
           this, SIGNAL(nameChanged(KMFolderTreeItem*)));
-      mMainWidget->slotShortcutChanged( folder ); // load the initial accel
 
     }
     // restore last open-state
