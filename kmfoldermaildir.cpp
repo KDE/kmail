@@ -31,10 +31,6 @@ using KMail::MaildirJob;
 #include <assert.h>
 #include <limits.h>
 
-#ifndef isblank
-#  define isblank(x) ((x)==' '||(x)=='\t')
-#endif
-
 #ifndef MAX_LINE
 #define MAX_LINE 4096
 #endif
@@ -567,15 +563,51 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     // it in a KMMsgInfo object
     if (atEof || !inHeader)
     {
-      if ((replyToIdStr.isEmpty() || (replyToIdStr[0] != '<'))  &&
-          !referencesStr.isEmpty() && referencesStr[0] == '<')
-      {
-        // use the last reference, instead of missing In-Reply-To
-        int leftAngle = referencesStr.findRev( '<' );
-        if (leftAngle != -1)
-          replyToIdStr = referencesStr.mid(leftAngle);
+      msgIdStr = msgIdStr.stripWhiteSpace();
+      if( !msgIdStr.isEmpty() ) {
+        int rightAngle;
+        rightAngle = msgIdStr.find( '>' );
+        if( rightAngle != -1 )
+          msgIdStr.truncate( rightAngle + 1 );
       }
 
+      replyToIdStr = replyToIdStr.stripWhiteSpace();
+      if( !replyToIdStr.isEmpty() ) {
+        int rightAngle;
+        rightAngle = replyToIdStr.find( '>' );
+        if( rightAngle != -1 )
+          replyToIdStr.truncate( rightAngle + 1 );
+      }
+
+      referencesStr = referencesStr.stripWhiteSpace();
+      if( !referencesStr.isEmpty() ) {
+        int leftAngle, rightAngle;
+        leftAngle = referencesStr.findRev( '<' );
+        if( ( leftAngle != -1 )
+            && ( replyToIdStr.isEmpty() || ( replyToIdStr[0] != '<' ) ) ) {
+          // use the last reference, instead of missing In-Reply-To
+          replyToIdStr = referencesStr.mid( leftAngle );
+        }
+
+        // find second last reference
+        leftAngle = referencesStr.findRev( '<', leftAngle - 1 );
+        if( leftAngle != -1 )
+          referencesStr = referencesStr.mid( leftAngle );
+        rightAngle = referencesStr.findRev( '>' );
+        if( rightAngle != -1 )
+          referencesStr.truncate( rightAngle + 1 );
+
+        // Store the second to last reference in the replyToAuxIdStr
+        // It is a good candidate for threading the message below if the
+        // message In-Reply-To points to is not kept in this folder,
+        // but e.g. in an Outbox
+        replyToAuxIdStr = referencesStr;
+        rightAngle = referencesStr.find( '>' );
+        if( rightAngle != -1 )
+          replyToAuxIdStr.truncate( rightAngle + 1 );
+      }
+
+      statusStr = statusStr.stripWhiteSpace();
       if (!statusStr.isEmpty())
       {
         // only handle those states not determined by the file suffix
@@ -592,10 +624,17 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
-      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr,
-               replyToAuxIdStr, msgIdStr, file.local8Bit(),
-               KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-               KMMsgMDNStateUnknown, f.size());
+      mi->init( subjStr.stripWhiteSpace(),
+                fromStr.stripWhiteSpace(),
+                toStr.stripWhiteSpace(),
+                0, status,
+                xmarkStr.stripWhiteSpace(),
+                replyToIdStr, replyToAuxIdStr, msgIdStr,
+                file.local8Bit(),
+                KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
+                KMMsgMDNStateUnknown, f.size() );
+
+      dateStr = dateStr.stripWhiteSpace();
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
       mi->setDirty(false);
@@ -632,73 +671,48 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     if (!inHeader)
       continue;
 
-    if (strncasecmp(line, "Date:", 5) == 0 && isblank(line[5]))
+    if (strncasecmp(line, "Date:", 5) == 0)
     {
-      dateStr = QCString(line+6);
+      dateStr = QCString(line+5);
       lastStr = &dateStr;
     }
-    else if (strncasecmp(line, "From:", 5) == 0 && isblank(line[5]))
+    else if (strncasecmp(line, "From:", 5) == 0)
     {
-      fromStr = QCString(line+6);
+      fromStr = QCString(line+5);
       lastStr = &fromStr;
     }
-    else if (strncasecmp(line, "To:", 3) == 0 && isblank(line[3]))
+    else if (strncasecmp(line, "To:", 3) == 0)
     {
-      toStr = QCString(line+4);
+      toStr = QCString(line+3);
       lastStr = &toStr;
     }
-    else if (strncasecmp(line, "Subject:", 8) == 0 && isblank(line[8]))
+    else if (strncasecmp(line, "Subject:", 8) == 0)
     {
-      subjStr = QCString(line+9);
+      subjStr = QCString(line+8);
       lastStr = &subjStr;
     }
-    else if (strncasecmp(line, "References:", 11) == 0 && isblank(line[11]))
+    else if (strncasecmp(line, "References:", 11) == 0)
     {
-      int leftAngle, rightAngle;
-      referencesStr = QCString(line+12);
-
-      leftAngle = referencesStr.findRev('<');
-      leftAngle = referencesStr.findRev( '<', leftAngle-1);
-      if (leftAngle != -1)
-        referencesStr = referencesStr.mid(leftAngle);
-      rightAngle = referencesStr.findRev( '>' );
-      if (rightAngle != -1)
-        referencesStr.truncate( rightAngle + 1 );
-
-      // Store the second to last reference in the replyToAuxIdStr
-      // It is a good candidate for threading the message below if the
-      // message In-Reply-To points to is not kept in this folder,
-      // but e.g. in an Outbox
-      replyToAuxIdStr = referencesStr;
-      rightAngle = referencesStr.find('>');
-      if (rightAngle != -1)
-        replyToAuxIdStr.truncate( rightAngle + 1 );
+      referencesStr = QCString(line+11);
+      lastStr = &referencesStr;
     }
-    else if (strncasecmp(line, "Message-Id:", 11) == 0 && isblank(line[11]))
+    else if (strncasecmp(line, "Message-Id:", 11) == 0)
     {
-      int rightAngle;
-      msgIdStr = QCString(line+12);
-
-      rightAngle = msgIdStr.find( '>' );
-      if (rightAngle != -1)
-        msgIdStr.truncate(rightAngle + 1);
+      msgIdStr = QCString(line+11);
+      lastStr = &msgIdStr;
     }
-    else if (strncasecmp(line, "X-KMail-Mark:", 13) == 0 && isblank(line[13]))
+    else if (strncasecmp(line, "X-KMail-Mark:", 13) == 0)
     {
-      xmarkStr = QCString(line+14);
+      xmarkStr = QCString(line+13);
     }
-    else if (strncasecmp(line, "X-Status:", 9) == 0 && isblank(line[9]))
+    else if (strncasecmp(line, "X-Status:", 9) == 0)
     {
-      statusStr = QCString(line+10);
+      statusStr = QCString(line+9);
     }
-    else if (strncasecmp(line, "In-Reply-To:", 12) == 0 && isblank(line[12]))
+    else if (strncasecmp(line, "In-Reply-To:", 12) == 0)
     {
-      int rightAngle;
-      replyToIdStr = QCString(line+13);
-
-      rightAngle = replyToIdStr.find( '>' );
-      if (rightAngle != -1)
-	replyToIdStr.truncate( rightAngle + 1 );
+      replyToIdStr = QCString(line+12);
+      lastStr = &replyToIdStr;
     }
   }
 
