@@ -126,6 +126,27 @@ namespace KMail {
 				 bool & isInlineSigned, bool & isInlineEncrypted,
 				 bool & bNeverDisplayInline, bool & isImage );
 
+    bool processImageType( int subtype, partNode * node, bool showOneMimePart,
+			   bool keepEncryptions, bool includeSignatures,
+			   bool & isInlineSigned, bool & isInlineEncrypted,
+			   bool & bNeverDisplayInline, bool & isImage );
+
+
+    bool processAudioType( int subtype, partNode * node, bool showOneMimePart,
+			   bool keepEncryptions, bool includeSignatures,
+			   bool & isInlineSigned, bool & isInlineEncrypted,
+			   bool & bNeverDisplayInline, bool & isImage );
+
+    bool processVideoType( int subtype, partNode * node, bool showOneMimePart,
+			   bool keepEncryptions, bool includeSignatures,
+			   bool & isInlineSigned, bool & isInlineEncrypted,
+			   bool & bNeverDisplayInline, bool & isImage );
+
+    bool processModelType( int subtype, partNode * node, bool showOneMimePart,
+			   bool keepEncryptions, bool includeSignatures,
+			   bool & isInlineSigned, bool & isInlineEncrypted,
+			   bool & bNeverDisplayInline, bool & isImage );
+
 
   private:
     KMReaderWin * mReader;
