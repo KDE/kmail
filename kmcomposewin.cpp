@@ -5427,7 +5427,20 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mTempFile = 0;
   mExtEditorProcess = 0;
   mWasModifiedBeforeSpellCheck = false;
-  mSpellChecker = new DictSpellChecker( this );
+  KConfig *config = KMKernel::config();
+  KConfigGroupSaver saver(config, "Reader");
+  QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
+  QColor defaultColor2( 0x00, 0x70, 0x00 );
+  QColor defaultColor3( 0x00, 0x60, 0x00 );
+  QColor defaultForeground( kapp->palette().active().text() );
+  QColor col1 = config->readColorEntry( "ForegroundColor", &defaultForeground );
+  QColor col2 = config->readColorEntry( "QuotedText3", &defaultColor3 );
+  QColor col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
+  QColor col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
+  QColor c = QColor("red");
+  mSpellChecker = new DictSpellChecker(this, /*active*/ true, /*autoEnabled*/ true, 
+    /*spellColor*/ config->readColorEntry("NewMessage", &c),
+    /*colorQuoting*/ true, col1, col2, col3, col4);
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
 	   composer, SLOT(slotStatusMessage(const QString &)));
 }

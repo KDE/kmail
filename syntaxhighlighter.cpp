@@ -37,22 +37,21 @@ static int *Ignore = &dummy3;
 
 namespace KMail {
 
-MessageHighlighter::MessageHighlighter( QTextEdit *textEdit, SyntaxMode mode )
+MessageHighlighter::MessageHighlighter( QTextEdit *textEdit,
+					bool colorQuoting, 
+					QColor depth0,
+					QColor depth1,
+					QColor depth2,
+					QColor depth3,
+					SyntaxMode mode )
     : QSyntaxHighlighter( textEdit ), sMode( mode )
 {
-  KConfig *config = KMKernel::config();
-
-  // block defines the lifetime of KConfigGroupSaver
-  KConfigGroupSaver saver(config, "Reader");
-  QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
-  QColor defaultColor2( 0x00, 0x70, 0x00 );
-  QColor defaultColor3( 0x00, 0x60, 0x00 );
-  QColor defaultForeground( kapp->palette().active().text() );
-  col1 = config->readColorEntry( "ForegroundColor", &defaultForeground );
-  col2 = config->readColorEntry( "QuotedText3", &defaultColor3 );
-  col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
-  col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
-  col5 = col1;
+    mEnabled = colorQuoting;
+    col1 = depth0;
+    col2 = depth1;
+    col3 = depth2;
+    col4 = depth3;
+    col5 = col1;
 }
 
 MessageHighlighter::~MessageHighlighter()
@@ -61,6 +60,8 @@ MessageHighlighter::~MessageHighlighter()
 
 int MessageHighlighter::highlightParagraph( const QString &text, int )
 {
+    if (!mEnabled)
+	return 0;
     QString simplified = text;
     simplified = simplified.replace( QRegExp( "\\s" ), "" ).replace( "|", ">" );
     while ( simplified.startsWith( ">>>>" ) )
@@ -76,13 +77,17 @@ int MessageHighlighter::highlightParagraph( const QString &text, int )
     return 0;
 }
 
-SpellChecker::SpellChecker( QTextEdit *textEdit )
-: MessageHighlighter( textEdit ), alwaysEndsWithSpace( TRUE )
+SpellChecker::SpellChecker( QTextEdit *textEdit,
+			    QColor spellColor, 
+			    bool colorQuoting, 
+			    QColor depth0,
+			    QColor depth1,
+			    QColor depth2,
+			    QColor depth3 )
+    : MessageHighlighter( textEdit, colorQuoting, depth0, depth1, depth2, depth3 ),
+      alwaysEndsWithSpace( TRUE )
 {
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Reader");
-  QColor c = QColor("red");
-  mColor = config->readColorEntry("NewMessage", &c);
+  mColor = spellColor;
   mIntraWordEditing = false;
 }
 
@@ -142,6 +147,7 @@ QStringList SpellChecker::personalWords()
     QStringList l;
     l.append( "KMail" );
     l.append( "KOrganizer" );
+    l.append( "KAddressBook" );
     l.append( "KHTML" );
     l.append( "KIO" );
     l.append( "KJS" );
@@ -175,14 +181,23 @@ void SpellChecker::flushCurrentWord()
 QDict<int> DictSpellChecker::dict( 50021 );
 QObject *DictSpellChecker::sDictionaryMonitor = 0;
 
-DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
-    : SpellChecker( textEdit )
+DictSpellChecker::DictSpellChecker( QTextEdit *textEdit,
+				    bool spellCheckingActive , 
+				    bool autoEnable, 
+				    QColor spellColor, 
+				    bool colorQuoting, 
+				    QColor depth0,
+				    QColor depth1,
+				    QColor depth2,
+				    QColor depth3 )
+    : SpellChecker( textEdit, spellColor,
+		    colorQuoting, depth0, depth1, depth2, depth3 )
 {
     mAutoReady = false;
     mWordCount = 0;
     mErrorCount = 0;
-    mActive = true;
-    mAutomatic = true;
+    mActive = spellCheckingActive;
+    mAutomatic = autoEnable;
     textEdit->installEventFilter( this );
     textEdit->viewport()->installEventFilter( this );
     rehighlightRequest = new QTimer();
@@ -330,10 +345,10 @@ void DictSpellChecker::slotAutoDetection()
     if (mActive != savedActive) {
 	if (mWordCount > 1)
 	    if (mActive)
-		emit activeChanged( i18n("Automatic spell checking enabled.") );
+		emit activeChanged( i18n("As-you-type spell checking enabled.") );
 	    else
-		emit activeChanged( i18n("Too many misspelled words: "
-                                         "automatic spell checking disabled.") );
+		emit activeChanged( i18n("Too many misspelled words. "
+                                         "As-you-type spell checking disabled.") );
 	rehighlightRequest->start(100, true);
     }
 }

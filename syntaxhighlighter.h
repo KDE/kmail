@@ -38,7 +38,13 @@ public:
 	PlainTextMode,
 	RichTextMode
     };
-    MessageHighlighter( QTextEdit *textEdit, SyntaxMode mode = PlainTextMode );
+    MessageHighlighter( QTextEdit *textEdit, 
+			bool colorQuoting = false, 
+			QColor QuoteColor0 = black,
+			QColor QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
+			QColor QuoteColor2 = QColor( 0x00, 0x80, 0x00 ),
+			QColor QuoteColor3 = QColor( 0x00, 0x80, 0x00 ),
+			SyntaxMode mode = PlainTextMode );
     ~MessageHighlighter();
 
     int highlightParagraph( const QString& text, int endStateOfLastPara );
@@ -46,12 +52,19 @@ public:
 private:
     QColor col1, col2, col3, col4, col5;
     SyntaxMode sMode;
+    bool mEnabled;
 };
 
 class SpellChecker : public MessageHighlighter
 {
 public:
-    SpellChecker( QTextEdit *textEdit );
+    SpellChecker( QTextEdit *textEdit,
+		  QColor spellColor = red, 
+		  bool colorQuoting = false, 
+		  QColor QuoteColor0 = black,
+		  QColor QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
+		  QColor QuoteColor2 = QColor( 0x00, 0x80, 0x00 ),
+		  QColor QuoteColor3 = QColor( 0x00, 0x80, 0x00 ) );
     ~SpellChecker();
 
     virtual int highlightParagraph( const QString& text,
@@ -76,7 +89,15 @@ class DictSpellChecker : public QObject, public SpellChecker
 Q_OBJECT
 
 public:
-    DictSpellChecker( QTextEdit *textEdit );
+    DictSpellChecker( QTextEdit *textEdit,
+		      bool spellCheckingActive = true, 
+		      bool autoEnable = true, 
+		      QColor spellColor = red, 
+		      bool colorQuoting = false, 
+		      QColor QuoteColor0 = black,
+		      QColor QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
+		      QColor QuoteColor2 = QColor( 0x00, 0x70, 0x00 ),
+		      QColor QuoteColor3 = QColor( 0x00, 0x60, 0x00 ) );
     ~DictSpellChecker();
 
     virtual bool isMisspelled( const QString& word );
