@@ -762,7 +762,10 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
 
   setCaption(name);
   setFixedSize(350,110);
-  this->setCursor(QCursor(ibeamCursor));
+  this->setCursor(QCursor(arrowCursor));
+  cursor = kapp->overrideCursor();
+  if(cursor != 0)
+    kapp->setOverrideCursor(QCursor(arrowCursor));
   QLabel *text = new QLabel(i18n("Please select the public key to insert"),this);
   text->move(56,4);
   text->setAutoResize(TRUE);
@@ -787,7 +790,8 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
 
 KpgpKey::~KpgpKey()
 {
- //nothing yet
+  if(cursor != 0)
+    kapp->restoreOverrideCursor();
 }
 
 QString 
