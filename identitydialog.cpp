@@ -446,6 +446,15 @@ void IdentityDialog::slotOk() {
       return;
     }
 
+    // check the reply-to address
+    const QString replyTo = mReplyToEdit->text().stripWhiteSpace();
+    errorCode = isValidEmailAddress( replyTo );
+    if (! ( errorCode == AddressOk || errorCode == AddressEmpty )) {
+      QString errorMsg( emailParseResultToString( errorCode ));
+      KMessageBox::sorry( this, errorMsg, i18n("Invalid Reply-To Address") );
+      return;
+    }
+
     const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
     const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
