@@ -1121,38 +1121,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   connect( mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // "Systray" notification check box
-  mSystrayCheck = new QCheckBox( i18n("System &tray notification"), group );
-  connect( mSystrayCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-
-  // System tray modes
-  QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray Modes"), group);
-  bgroup->setColumnLayout(0, Qt::Horizontal);
-  bgroup->layout()->setSpacing( 0 );
-  bgroup->layout()->setMargin( 0 );
-  QGridLayout *bgroupLayout = new QGridLayout( bgroup->layout() );
-  bgroupLayout->setAlignment( Qt::AlignTop );
-  bgroupLayout->setSpacing( 6 );
-  bgroupLayout->setMargin( 11 );
-
-  mBlinkingSystray = new QRadioButton( i18n("Alwa&ys show system tray"), bgroup);
-  bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
-  connect( mBlinkingSystray, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mSystrayOnNew = new QRadioButton( i18n("Sho&w system tray on new mail"), bgroup);
-  connect( mSystrayOnNew, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
-
-  bgroup->setEnabled( false ); // since !mSystrayCheck->isChecked()
-  connect( mSystrayCheck, SIGNAL(toggled(bool)),
-           bgroup, SLOT(setEnabled(bool)) );
-
-  // "display message box" check box:
+  // "Other Actions" button:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
                                                           QSizePolicy::Fixed ) );
@@ -1389,9 +1358,6 @@ void NetworkPage::ReceivingTab::load() {
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
   mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
-  mSystrayCheck->setChecked( general.readBoolEntry("systray-on-mail", false) );
-  mBlinkingSystray->setChecked( !general.readBoolEntry("systray-on-new", true) );
-  mSystrayOnNew->setChecked( general.readBoolEntry("systray-on-new", true) );
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
 }
 
@@ -1436,8 +1402,6 @@ void NetworkPage::ReceivingTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
   GlobalSettings::setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
-  general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
-  general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
 
   general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
 
@@ -1486,6 +1450,13 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   //
   mHeadersTab = new HeadersTab();
   addTab( mHeadersTab, i18n("H&eaders") );
+
+  //
+  // "System Tray" tab:
+  //
+  mSystemTrayTab = new SystemTrayTab();
+  addTab( mSystemTrayTab, i18n("System Tray") );
+
   load();
 }
 
@@ -2147,6 +2118,61 @@ void AppearancePage::HeadersTab::save() {
   general.writeEntry( "dateFormat",
 		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
+}
+
+
+AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
+                                                          const char * name )
+  : ConfigModuleTab( parent, name )
+{
+  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(),
+                                        KDialog::spacingHint() );
+
+  // "Enable system tray applet" check box
+  mSystemTrayCheck = new QCheckBox( i18n("Enable system tray icon"), this );
+  vlay->addWidget( mSystemTrayCheck );
+  connect( mSystemTrayCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  // System tray modes
+  mSystemTrayGroup = new QVButtonGroup( i18n("System Tray Mode"), this );
+  mSystemTrayGroup->layout()->setSpacing( KDialog::spacingHint() );
+  vlay->addWidget( mSystemTrayGroup );
+  connect( mSystemTrayGroup, SIGNAL( clicked( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mSystemTrayCheck, SIGNAL( toggled( bool ) ),
+           mSystemTrayGroup, SLOT( setEnabled( bool ) ) );
+
+  mSystemTrayGroup->insert( new QRadioButton( i18n("Always show KMail in system tray"), mSystemTrayGroup ),
+                            GlobalSettings::EnumSystemTrayPolicy::ShowAlways );
+
+  mSystemTrayGroup->insert( new QRadioButton( i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroup ),
+                            GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread );
+
+  vlay->addStretch( 10 ); // spacer
+}
+
+void AppearancePage::SystemTrayTab::load() {
+  mSystemTrayCheck->setChecked( GlobalSettings::systemTrayEnabled() );
+  mSystemTrayGroup->setButton( GlobalSettings::systemTrayPolicy() );
+  mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
+}
+
+void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
+  KConfigGroup general( profile, "General" );
+
+  if ( general.hasKey( "SystemTrayEnabled" ) ) {
+    mSystemTrayCheck->setChecked( general.readBoolEntry( "SystemTrayEnabled" ) );
+  }
+  if ( general.hasKey( "SystemTrayPolicy" ) ) {
+    mSystemTrayGroup->setButton( general.readNumEntry( "SystemTrayPolicy" ) );
+  }
+  mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
+}
+
+void AppearancePage::SystemTrayTab::save() {
+  GlobalSettings::setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
+  GlobalSettings::setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
 }
 
 

@@ -347,9 +347,6 @@ protected:
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
   QCheckBox     *mVerboseNotificationCheck;
-  QCheckBox     *mSystrayCheck;
-  QRadioButton  *mBlinkingSystray;
-  QRadioButton  *mSystrayOnNew;
   QCheckBox     *mCheckmailStartupCheck;
   QPushButton   *mOtherNewMailActionsButton;
 
@@ -477,6 +474,23 @@ protected: // data
   QLineEdit    *mCustomDateFormatEdit;
 };
 
+class AppearancePageSystemTrayTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  AppearancePageSystemTrayTab( QWidget * parent=0, const char * name=0 );
+
+  QString helpAnchor() const;
+
+  void load();
+  void save();
+  void defaults() {}
+  void installProfile( KConfig * profile );
+
+private: // data
+  QCheckBox    *mSystemTrayCheck;
+  QButtonGroup *mSystemTrayGroup;
+};
+
 class AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -489,12 +503,14 @@ public:
   typedef AppearancePageColorsTab ColorsTab;
   typedef AppearancePageLayoutTab LayoutTab;
   typedef AppearancePageHeadersTab HeadersTab;
+  typedef AppearancePageSystemTrayTab SystemTrayTab;
 
 protected:
   FontsTab   *mFontsTab;
   ColorsTab  *mColorsTab;
   LayoutTab  *mLayoutTab;
   HeadersTab *mHeadersTab;
+  SystemTrayTab *mSystemTrayTab;
 };
 
 //
