@@ -1266,6 +1266,8 @@ void KMReaderWin::clearCache()
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
+  I18N_NOOP("PGP/MIME (RFC 3156) support for GnuPG users"),
+  I18N_NOOP("S/MIME support"),
   I18N_NOOP("Custom folder icons"),
   I18N_NOOP("Custom date format"),
   I18N_NOOP("Default identity can now be renamed"),
