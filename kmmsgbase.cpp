@@ -1004,13 +1004,11 @@ void KMMsgBase::setTransferInProgress(bool value, bool force)
 static void swapEndian(QString &str)
 {
   uint len = str.length();
-  QChar *copy = new QChar[len];
-  const QChar *orig = str.unicode();
+  QChar *unicode = const_cast<QChar*>( str.unicode() );
+  str.setLength( len ); // detach
   for (uint i = 0; i < len; i++) {
-    copy[i] = kmail_swap_16(orig[i].unicode());
+    unicode[i] = kmail_swap_16(unicode[i].unicode());
   }
-  str.setUnicode( copy, len );
-  delete [] copy;
 }
 
 //-----------------------------------------------------------------------------
