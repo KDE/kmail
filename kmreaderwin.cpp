@@ -7,6 +7,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
+#include "kfileio.h"
 
 #include <html.h>
 #include <kapp.h>
@@ -20,6 +21,7 @@
 #include <string.h>
 #include <qbitmap.h>
 #include <qcursor.h>
+#include <qfiledlg.h>
 
 #define hand_width 16
 #define hand_height 16
@@ -162,7 +164,7 @@ void KMReaderWin::parseMsg(void)
 {
   KMMessagePart msgPart;
   int i, numParts;
-  QString type, subtype;
+  QString type, subtype, str;
 
   assert(mMsg!=NULL);
 
@@ -172,6 +174,7 @@ void KMReaderWin::parseMsg(void)
   writeMsgHeader();
 
   numParts = mMsg->numBodyParts();
+  debug("KMReaderWin::parseMsg(): %d body parts", numParts);
   if (numParts > 0)
   {
     for (i=0; i<numParts; i++)
@@ -181,15 +184,23 @@ void KMReaderWin::parseMsg(void)
       subtype = msgPart.subtypeStr();
       if (stricmp(type, "text")==0)
       {
-	mViewer->write("<HR>");
-	if (stricmp(subtype, "html")==0)
-	  mViewer->write(msgPart.bodyDecoded());
+	str = msgPart.bodyDecoded();
+	debug("body part %d: -----\n%s\n-----", i, (const char*)str);
+	if (str.size() > 100 && i>0) writePartIcon(&msgPart, i);
+	else if (stricmp(subtype, "html")==0)
+	{
+	  if (i>0) mViewer->write("<BR><HR><BR>");
+	  mViewer->write(str);
+	}
 	else
-	  writeBodyStr(msgPart.bodyDecoded());
+	{
+	  if (i>0) mViewer->write("<BR><HR><BR>");
+	  writeBodyStr(str);
+	}
       }
       else
       {
-	writePartIcon(&msgPart, i+1);
+	writePartIcon(&msgPart, i);
       }
     }
   }
@@ -198,7 +209,7 @@ void KMReaderWin::parseMsg(void)
     writeBodyStr(mMsg->body());
   }
 
-  mViewer->write("</BODY></HTML>");
+  mViewer->write("<BR></BODY></HTML>");
   mViewer->end();
   mViewer->parse();
 }
@@ -306,7 +317,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
   label = aMsgPart->name();
   comment = aMsgPart->contentDescription();
-  href.sprintf("part:%d", aPartNum);
+  href.sprintf("part:%d", aPartNum+1);
 
   iconName = aMsgPart->iconName();
   if (iconName.left(11)=="unknown.xpm")
@@ -384,7 +395,7 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   KMMessagePart msgPart;
 
   if (!mMsg) return;
-  id = aUrl ? atoi(aUrl) : 0;
+  id = aUrl ? atoi(aUrl+5) : 0;
 
   debug("slotUrlOn(%s) called", aUrl);
 
@@ -400,6 +411,22 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
 {
+  QString fileName, str;
+  int id;
+  KMMessagePart msgPart;
+
+  if (!mMsg) return;
+  id = aUrl ? atoi(aUrl+5)-1 : -1;
+  if (id < 0) return;
+  mMsg->bodyPart(id, &msgPart);
+
+  fileName = msgPart.name();
+  fileName = QFileDialog::getSaveFileName(NULL, "*", this);
+  if(fileName.isEmpty()) return;
+
+  str = msgPart.bodyDecoded();
+  if (!kStringToFile(str, fileName, TRUE))
+    warning(nls->translate("Could not save file"));
 }
 
 
@@ -720,50 +747,6 @@ void KMReaderWin::slotOpenAtmnt()
   ((KMReaderWin*)parentWidget())->toDo();
 }
 
-bool KMReaderWin::slotSaveAtmnt()
-{
-  QString fileName;
-  QString text;
-  QString err_str;
-
-  KMMessagePart *p = new KMMessagePart();
-  currentMessage->bodyPart(currentAtmnt,p);
-  debug("KMReaderWin::slotSaveAtmnt(): before save-decoding");
-  text = p->bodyDecoded();
-  debug("KMReaderWin::slotSaveAtmnt(): after save-decoding");
-  fileName = p->name();
-
-  // QFileDialog can't take p->name() as default savefilename yet.
-  fileName = QFileDialog::getSaveFileName(NULL, "*", NULL, (const char*)fileName);
-  if(fileName.isEmpty()) return false;
-
-  QFile *file = new QFile(fileName);
-  if(file->exists()) 
-    {if(!KMsgBox::yesNo(0,"Save Body Part",
-			"File already exists!\nOverwrite it?"))
-      if(slotSaveAtmnt() == false)
-	return false;
-    else
-      return false;
-    }
-
-  if(!file->open(IO_ReadWrite | IO_Truncate))
-    {err_str = "Error opening saving File!\n";
-    err_str.append(strerror(errno)) ;
-    KMsgBox::message(0,"Save Body Part",err_str);
-    if(slotSaveAtmnt() == false)
-      return false;
-    }
-
-  if(file->writeBlock(text,text.length()) == -1)
-    {KMsgBox::message(0,"QFile::writeBlock()",
-		      "Serious error occured! Returning...");
-    return false;
-    }
-
-  file->close();
-  return true;
-}
 
 bool KMReaderWin::slotPrintAtmnt()
 {

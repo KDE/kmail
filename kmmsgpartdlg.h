@@ -37,9 +37,9 @@ protected:
   virtual void applyChanges(void);
 
   KMMessagePart *mMsgPart;
-  QLineEdit *mEdtName, *mEdtComment;
+  QLineEdit *mEdtName, *mEdtComment, *mEdtMimetype;
   QComboBox *mCbxEncoding;
-  QLabel *mLblMimetype, *mLblIcon, *mLblSize;
+  QLabel *mLblIcon, *mLblSize;
   QPixmap mIconPixmap;
 };
 

@@ -75,6 +75,7 @@ const QString KMMessagePart::bodyDecoded(void) const
   DwString dwResult, dwSrc;
   QString result;
   int encoding = contentTransferEncoding();
+  int len;
 
   switch (encoding)
   {
@@ -87,8 +88,9 @@ const QString KMMessagePart::bodyDecoded(void) const
   case DwMime::kCteBase64:
     dwSrc = mBody;
     DwDecodeBase64(dwSrc, dwResult);
-    result = dwResult.c_str();
-    result.detach();
+    len = dwResult.size();
+    result.resize(len+1);
+    memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
     break;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:

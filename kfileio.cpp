@@ -102,7 +102,46 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 bool kStringToFile(const QString aBuffer, const char* aFileName, 
 		   bool aAskIfExists, bool aBackup=TRUE, bool aVerbose)
 {
+  QFile file(aFileName);
+  int writeLen, len;
+
   assert(aFileName!=NULL);
 
-  return FALSE;
+  debug("WARNING: kStringToFile currently makes no backups and silently"
+	"replaces existing files!");
+
+  if (!file.open(IO_Raw|IO_WriteOnly))
+  {
+    if (aVerbose) switch(file.status())
+    {
+    case IO_WriteError:
+      msgDialog(klocale->translate("Could not write to file:\n%s"), aFileName);
+      break;
+    case IO_OpenError:
+      msgDialog(klocale->translate("Could not open file:\n%s"), aFileName);
+      break;
+    default:
+      msgDialog(klocale->translate("Error while reading file:\n%s"),aFileName);
+    }
+    return FALSE;
+  }
+
+  len = aBuffer.size();
+  writeLen = file.writeBlock(aBuffer.data(), len);
+
+  if (writeLen < 0) 
+  {
+    msgDialog(klocale->translate("Could not write to file:\n%s"), aFileName);
+    return FALSE;
+  }
+  else if (writeLen < len)
+  {
+    QString msg;
+    msg.sprintf(klocale->translate("Could only write %d bytes of %d."),
+		writeLen, len);
+    msgDialog(msg);
+    return FALSE;
+  } 
+
+  return TRUE;
 }

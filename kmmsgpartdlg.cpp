@@ -32,8 +32,8 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption):
   mLblIcon->resize(32, 32);
   grid->addMultiCellWidget(mLblIcon, 0, 1, 0, 0);
 
-  mLblMimetype = new QLabel(this);
-  grid->addWidget(mLblMimetype, 0, 1);
+  mEdtMimetype = new QLineEdit(this);
+  grid->addWidget(mEdtMimetype, 0, 1);
 
   mLblSize = new QLabel(this);
   grid->addWidget(mLblSize, 1, 1);
@@ -89,7 +89,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 
   mEdtComment->setText(mMsgPart->contentDescription());
   mEdtName->setText(mMsgPart->name());
-  mLblMimetype->setText(mMsgPart->typeStr()+"/"+mMsgPart->subtypeStr());
+  mEdtMimetype->setText(mMsgPart->typeStr()+"/"+mMsgPart->subtypeStr());
 
   len = mMsgPart->body().size()-1;
   if (len > 9999) lenStr.sprintf("%u KB", len>>10);
@@ -112,7 +112,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 //-----------------------------------------------------------------------------
 void KMMsgPartDlg::applyChanges(void)
 {
-  QString str, body;
+  QString str, body, type, subtype;
   int idx;
 
   if (!mMsgPart) return;
@@ -130,6 +130,18 @@ void KMMsgPartDlg::applyChanges(void)
   if (idx==1) str = "base64";
   else if (idx==2) str = "quoted printable";
   else str = "8bit";
+
+  type = mEdtMimetype->text();
+  idx = type.find('/');
+  if (idx < 0) subtype = "";
+  else
+  {
+    subtype = type.mid(idx+1, 256);
+    type = type.left(idx);
+  }
+
+  mMsgPart->setTypeStr(type);
+  mMsgPart->setSubtypeStr(subtype);
 
   if (str != mMsgPart->cteStr())
   {
