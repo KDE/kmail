@@ -2900,8 +2900,9 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
-    if (k->key() == Key_Up && currentLine() == 0)
+    if (k->key() == Key_Up && k->state() != ShiftButton && currentLine() == 0)
     {
+      setSelection(0, 0, 0, 0);
       mComposer->focusNextPrevEdit(0, false); //take me up
       return TRUE;
     }
