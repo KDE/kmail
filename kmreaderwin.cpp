@@ -871,6 +871,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
   int maxLen = 30000;
   char htmlStr[maxLen+256];
   char* htmlPos;
+  bool startOfLine = true;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeRFC1522String(aStr);
   else qpstr = aStr;
@@ -892,10 +893,19 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     {
       if (ch==' ')
       {
+	if (startOfLine) {
+	  HTML_ADD("&nbsp;", 6);
+	  pos++, x++;
+	  startOfLine = false;
+	}
         while (*pos==' ')
         {
-          HTML_ADD("&nbsp;", 6);
+	  HTML_ADD(" ", 1);
           pos++, x++;
+	  if (*pos==' ') {
+	    HTML_ADD("&nbsp;", 6);
+	    pos++, x++;
+	  }
         }
         pos--, x--;
 
@@ -910,11 +920,13 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	}
 	while((x&7) != 0);
       }
-      else aPreserveBlanks = FALSE;
     }
     if (ch=='<') HTML_ADD("&lt;", 4);
     else if (ch=='>') HTML_ADD("&gt;", 4);
-    else if (ch=='\n') HTML_ADD("<BR>", 4);
+    else if (ch=='\n') {
+      HTML_ADD("<BR>", 4);
+      startOfLine = true;
+    }
     else if (ch=='&') HTML_ADD("&amp;", 5);
     else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
 	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
