@@ -293,6 +293,7 @@ protected slots:
   /** Show tip-of-the-day, forced */
   void slotShowTip();
   void slotAntiSpamWizard();
+  void slotFilterLogViewer();
 
   /** Message navigation */
   void slotNextMessage();

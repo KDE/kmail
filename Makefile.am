@@ -89,7 +89,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		attachmentlistview.cpp ssllabel.cpp \
 		iobserver.cpp isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
-		secondarywindow.cpp \
+		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
 		korganizeriface.stub
 
 kmail_SOURCES = main.cpp

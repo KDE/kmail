@@ -9,6 +9,8 @@
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
+#include "filterlog.h"
+using KMail::FilterLog;
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -79,9 +81,14 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   QPtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it ) {
 
-    kdDebug(5006) << "####### KMFilter::process: going to apply action "
-	      << (*it)->label() << " \"" << (*it)->argsAsString()
-	      << "\"" << endl;
+    if ( FilterLog::instance()->isLogging() ) {
+      QString logText( i18n( "Applying filter action: " ) );
+      logText.append( (*it)->label() );
+      logText.append( " \"" );
+      logText.append( (*it)->argsAsString() );
+      logText.append( "\"" );
+      FilterLog::instance()->add( logText );
+    }
 
     KMFilterAction::ReturnCode result = (*it)->process( msg );
 

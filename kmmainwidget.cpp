@@ -71,6 +71,8 @@ using KMail::FolderJob;
 #include "mailinglist-magic.h"
 #include "antispamwizard.h"
 using KMail::AntiSpamWizard;
+#include "filterlogdlg.h"
+using KMail::FilterLogDialog;
 #include <cryptplugwrapperlist.h>
 #include <cryptplugfactory.h>
 
@@ -2161,6 +2163,12 @@ void KMMainWidget::setupActions()
 		      actionCollection(), "tools_edit_vacation" );
 #endif
 
+  (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
+ 		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
+
+  (void) new KAction( i18n("&Anti Spam Wizard..."), 0, this,
+ 		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
+
   //----- Edit Menu
   mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
@@ -2678,9 +2686,6 @@ void KMMainWidget::setupActions()
  		      SLOT(slotFilter()), actionCollection(), "filter" );
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
  		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
-
-  (void) new KAction( i18n("&Anti Spam Wizard..."), 0, this,
- 		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
 
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
 				i18n("Display KMail's Welcome Page") ),
@@ -3290,4 +3295,11 @@ void KMMainWidget::slotAntiSpamWizard()
   AntiSpamWizard wiz( this, folderTree(), actionCollection() );
   wiz.exec();
   emit modifiedToolBarConfig();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotFilterLogViewer()
+{
+  FilterLogDialog * dlg = new FilterLogDialog( this );
+  dlg->show();
 }

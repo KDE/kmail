@@ -133,16 +133,14 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
   return matches( &msg );
 }
 
-#ifndef NDEBUG
 const QString KMSearchRule::asString() const
 {
-  QString result  = "\"" + mField + "\" <";
+  QString result  = "\t\"" + mField + "\" <";
   result += funcConfigNames[(int)mFunction];
   result += "> \"" + mContents + "\"";
 
   return result;
 }
-#endif
 
 
 
@@ -700,18 +698,16 @@ void KMSearchPattern::init() {
   mName = '<' + i18n("name used for a virgin filter","unknown") + '>';
 }
 
-#ifndef NDEBUG
 QString KMSearchPattern::asString() const {
-  QString result = "Match ";
+  QString result = "(match ";
   result += ( mOperator == OpOr ) ? "any" : "all";
-  result += " of the following:\n";
+  result += " of the following)\n";
 
   for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
     result += (*it)->asString() + '\n';
 
   return result;
 }
-#endif
 
 const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & other ) {
   if ( this == &other )

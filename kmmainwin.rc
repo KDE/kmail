@@ -122,6 +122,7 @@
    <Action name="tools_edit_vacation"/>
    <Separator/>
    <Action name="create_filter"/>
+   <Action name="filter_log_viewer"/>
    <Separator/>
    <Action name="antiSpamWizard"/>
   </Menu>

@@ -9,6 +9,8 @@
 #include "kmfiltermgr.h"
 
 // other kmail headers
+#include "filterlog.h"
+using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
 #include "messageproperty.h"
@@ -204,15 +206,15 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
 	 ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
 	// filter is applicable
 
-#ifndef NDEBUG
-      kdDebug(5006) << "####### KMFilterMgr::process: going to check for filter rule " 
-                    << (*it)->pattern()->asString() << endl;
-#endif
+      if ( FilterLog::instance()->isLogging() ) {
+        QString logText( i18n( "Evaluating filter rule: " ) );
+        logText.append( (*it)->pattern()->asString() );
+        FilterLog::instance()->add( logText );
+      }
       if ( (*it)->pattern()->matches( msg ) ) {
 	// filter matches
-#ifndef NDEBUG
-        kdDebug(5006) << "####### KMFilterMgr::process: filter rule did match" << endl;
-#endif
+        if ( FilterLog::instance()->isLogging() )
+          FilterLog::instance()->add( i18n( "Filter rule has matched." ) );
 	// execute actions:
 	if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
 	  return 2;
