@@ -1052,6 +1052,12 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
 
+  // replies to an encrypted message should be encrypted as well
+  if ( encryptionState() == KMMsgPartiallyEncrypted ||
+       encryptionState() == KMMsgFullyEncrypted ) {
+    msg->setEncryptionState( KMMsgFullyEncrypted );
+  }
+
   return msg;
 }
 
