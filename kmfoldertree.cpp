@@ -1088,14 +1088,21 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
   // get underlying folder
   KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(lvi);
 
-  if (!fti || !fti->folder())
+  if (!fti || !fti->folder()) {
+    KFolderTree::contentsMouseReleaseEvent(me);
     return;
+  }
 
   // react on middle-button only
-  if (btn != Qt::MidButton) return;
-
-  if (!fti->folder()->isMailingList())
+  if (btn != Qt::MidButton) {
+    KFolderTree::contentsMouseReleaseEvent(me);
     return;
+  }
+
+  if (!fti->folder()->isMailingList()) {
+    KFolderTree::contentsMouseReleaseEvent(me);
+    return;
+  }
 
   KMMessage *msg = new KMMessage;
   msg->initHeader(fti->folder()->identity());
