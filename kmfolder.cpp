@@ -898,7 +898,12 @@ QString KMFolder::idString() const
   QString relativePath = path().right( pathLen );
   if (!relativePath.isEmpty())
     relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
-  return relativePath + QString(name());
+  QString escapedName = QString( name() );
+  /* Escape [ and ] as they are disallowed for kconfig sections and that is
+     what the idString is primarily used for. */
+  escapedName.replace( "[", "%(" );
+  escapedName.replace( "]", "%)" );
+  return relativePath + escapedName;
 }
 
 //-----------------------------------------------------------------------------
