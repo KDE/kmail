@@ -72,8 +72,6 @@ void KMAddrBook::readConfig(void)
   mDefaultFileName = config->readEntry("default");
   if (mDefaultFileName.isEmpty())
     mDefaultFileName = kapp->localkdedir()+"/share/apps/kmail/addressbook";
-
-  debug("addressbook: %s", mDefaultFileName.data());
 }
 
 

@@ -41,6 +41,7 @@ protected:
 
   KMFolderNodeList mList;
   KDNDDropZone* mDropZone;
+  int mLastIdx;
 };
 
 #endif

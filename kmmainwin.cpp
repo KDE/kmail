@@ -284,18 +284,21 @@ void KMMainWin::slotCheckMail()
 }
 
 
-void KMMainWin::slotMenuActivated() {
-
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMenuActivated()
+{
   getAccountMenu();
-
 }
 
-void KMMainWin::slotCheckOneAccount(int item) {
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCheckOneAccount(int item)
+{
   bool rc = FALSE;
 
 
- if(checkingMail) {
+  if(checkingMail)
+  {
     KMsgBox::message(0,i18n("KMail error"),
 		     i18n("Already checking for mail!"));
     return;
@@ -309,8 +312,8 @@ void KMMainWin::slotCheckOneAccount(int item) {
   
   if (!rc) warning(i18n("No new mail available"));
   checkingMail = FALSE; 
-
 }
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompose()

@@ -1965,7 +1965,7 @@ void KMLineEdit::slotCompletion()
     return;
   }
   
-  QPopupMenu *pop = new QPopupMenu;
+  QPopupMenu pop;
   int n;
   
   KMAddrBook adb;
@@ -1973,6 +1973,13 @@ void KMLineEdit::slotCompletion()
   adb.load();
 
   QString s(text());
+  QString prevAddr;
+  n = s.findRev(',');
+  if (n>=0)
+  {
+    prevAddr = s.left(n+1) + ' ';
+    s = s.mid(n+1,255).stripWhiteSpace();
+  }
   s.append("*");
   QRegExp regexp(s.data(), FALSE, TRUE);
   
@@ -1983,37 +1990,32 @@ void KMLineEdit::slotCompletion()
     t.setStr(a);
     if (t.contains(regexp))
     {
-      pop->insertItem(a);
+      pop.insertItem(a);
       n++;
     }
   }
   
-  if (n>1)
+  if (n > 1)
   {
     int id;
-    pop->popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
-    pop->setActiveItem(pop->idAt(0));
-    id=pop->exec();
+    pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
+    pop.setActiveItem(pop.idAt(0));
+    id = pop.exec();
     
     if (id!=-1)
     {
-      setText(pop->text(id));
-      delete pop;
-      mComposer->focusNextPrevEdit(this,TRUE);
+      setText(prevAddr + pop.text(id));
+      //mComposer->focusNextPrevEdit(this,TRUE);
     }
   }
   else if (n==1)
   {
-    setText(pop->text(pop->idAt(0)));
-    delete pop;
-    mComposer->focusNextPrevEdit(this,TRUE);
+    setText(prevAddr + pop.text(pop.idAt(0)));
+    //mComposer->focusNextPrevEdit(this,TRUE);
   }
-  else
-  {
-    delete pop;
-    cursorAtEnd();
-    setFocus();
-  }
+
+  setFocus();
+  cursorAtEnd();
 }
 
 

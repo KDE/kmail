@@ -28,6 +28,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   initMetaObject();
 
+  mLastIdx = -1;
+
   mDropZone = new KDNDDropZone(this, DndRawData);
   connect(mDropZone, SIGNAL(dropAction(KDNDDropZone*)),
 	  this, SLOT(doDropAction(KDNDDropZone*)));
@@ -117,7 +119,9 @@ void KMFolderTree::reload(void)
 //-----------------------------------------------------------------------------
 void KMFolderTree::doFolderListChanged()
 {
+  int idx = currentItem();
   reload();
+  if (idx >= 0) setCurrentItem(idx);
 }
 
 
@@ -184,7 +188,8 @@ void KMFolderTree::doFolderSelected(int index, int)
 {
   KMFolder* folder;
 
-  if (index < 0) return;
+  if (index < 0 || index == mLastIdx) return;
+  mLastIdx = index;
 
   folder = (KMFolder*)mList.at(index);
   if (folder->isDir()) 
