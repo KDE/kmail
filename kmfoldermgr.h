@@ -43,6 +43,13 @@ public:
     created. Directories are skipped. */
   virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE);
 
+  virtual void        getFolderURLS( QStringList& flist,
+                                     const QString& prefix=QString::null,
+                                     KMFolderDir *adir=0 );
+  virtual KMFolder*   getFolderByURL( const QString& vpath,
+                                      const QString& prefix=QString::null,
+                                      KMFolderDir *adir=0 );
+
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& fName, bool sysFldr=FALSE,

@@ -204,6 +204,41 @@ KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
   return 0;
 }
 
+void KMFolderMgr::getFolderURLS( QStringList& flist, const QString& prefix,
+                                 KMFolderDir *adir )
+{
+  KMFolderDir* dir = adir ? adir : &mDir;
+
+  DO_FOR_ALL(
+             {
+               getFolderURLS( flist, prefix + "/" + folder->name(), child );
+             },
+             {
+               flist << prefix + "/" + folder->name();
+             }
+             )
+}
+
+KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
+                                       const QString& prefix,
+                                       KMFolderDir *adir )
+{
+  KMFolderDir* dir = adir ? adir : &mDir;
+  DO_FOR_ALL(
+        {
+          QString a = prefix + "/" + folder->name();
+          KMFolder * mfolder = getFolderByURL( vpath, a,child );
+          if ( mfolder )
+            return mfolder;
+        },
+        {
+          QString comp = prefix + "/" + folder->name();
+          if ( comp  == vpath )
+            return folder;
+        }
+  )
+  return 0;
+}
 
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
