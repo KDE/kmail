@@ -107,13 +107,6 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
                                                    bool keepEncryptions,
                                                    bool includeSignatures )
 {
-  if( showOneMimePart && mMsg && node && (mRootNode == node) ) {
-    kdDebug(5006) << "\n**\n** KMReaderWin::parseObjectTree( mRootNode, showOneMimePart: TRUE ) **\n**" << endl;
-    setMsg(mMsg, true); // Force update
-    return;
-  }
-
-
   kdDebug(5006) << "\n**\n** KMReaderWin::parseObjectTree( "
                 << (node ? "node OK, " : "no node, ")
                 << "showOneMimePart: " << (showOneMimePart ? "TRUE" : "FALSE")

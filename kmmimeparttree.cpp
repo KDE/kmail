@@ -41,7 +41,10 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
     }
     else {
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemClicked() **\n**" << endl;
-        mReaderWin->parseObjectTree( i->node(), true );
+        if( mReaderWin->mRootNode == i->node() )
+          mReaderWin->setMsg(mReaderWin->mMsg, true); // Force update
+        else
+          mReaderWin->parseObjectTree( i->node(), true );
     }
 }
 
@@ -55,7 +58,13 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
     }
     else {
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
+/*
+        if( mReaderWin->mRootNode == i->node() )
+          mReaderWin->setMsg(mReaderWin->mMsg, true); // Force update
+        else
+          mReaderWin->parseObjectTree( i->node(), true );
 //        mReaderWin->parseObjectTree( mCurrentContextMenuItem->node(), true );
+*/
         QPopupMenu* popup = new QPopupMenu;
         popup->insertItem( i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
         popup->insertItem( i18n( "Save As &Encoded..." ), this,
