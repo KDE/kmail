@@ -267,16 +267,18 @@ namespace KMail {
 
   // Called when we're really all done.
   void ImapAccountBase::postProcessNewMail() {
+    setCheckingMail(false);
     if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        name(), mCountUnread  - mCountLastUnread);
-      checkDone(true, mCountUnread - mCountLastUnread);
+      int newMails = mCountUnread  - mCountLastUnread;
       mCountLastUnread = mCountUnread;
+      mCountUnread = 0;
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+        name(), newMails);
+      checkDone(true, newMails);
     } else {
+      mCountUnread = 0;
       checkDone(false, 0);
     }
-    setCheckingMail(false);
-    mCountUnread = 0;
   }
 
   //-----------------------------------------------------------------------------

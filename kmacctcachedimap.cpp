@@ -241,12 +241,13 @@ void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
 // Reimplemented from ImapAccountBase because we only check one folder at a time
 void KMAcctCachedImap::slotCheckQueuedFolders()
 {
-    disconnect (this, SIGNAL(finishedCheck(bool)),
-          this, SLOT(slotCheckQueuedFolders()));
-
     mMailCheckFolders.clear();
     mMailCheckFolders.append( mFoldersQueuedForChecking.front() );
     mFoldersQueuedForChecking.pop_front();
+    if ( mFoldersQueuedForChecking.isEmpty() )
+      disconnect (this, SIGNAL(finishedCheck(bool)),
+                  this, SLOT(slotCheckQueuedFolders()));
+
     kmkernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders.clear();
 }
@@ -352,20 +353,20 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   mCountLastUnread = 0;
 
-  if( folderList.count() > 0 )
-    for( it = folderList.begin(); it != folderList.end(); ++it ) {
-      KMFolder *folder = *it;
-      if( folder && folder->folderType() == KMFolderTypeCachedImap ) {
-        KMFolderCachedImap *cfolder = static_cast<KMFolderCachedImap*>(folder->storage());
-        // This invalidates the folder completely
-        cfolder->setUidValidity("INVALID");
-        cfolder->writeUidCache();
-      }
+  for( it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolder *f = *it;
+    if( f && f->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap *cfolder = static_cast<KMFolderCachedImap*>(f->storage());
+      // This invalidates the folder completely
+      cfolder->setUidValidity("INVALID");
+      cfolder->writeUidCache();
+      processNewMailSingleFolder( f );
     }
+  }
   folder->setUidValidity("INVALID");
   folder->writeUidCache();
 
-  mailCheck();
+  processNewMailSingleFolder( folder->folder() );
 }
 
 //-----------------------------------------------------------------------------
