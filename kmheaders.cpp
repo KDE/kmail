@@ -1788,6 +1788,8 @@ void KMHeaders::slotRMB()
 		   SLOT(slotReplyAllToMsg()));
   menu->insertItem(i18n("&Forward..."), topLevelWidget(),
 		   SLOT(slotForwardMsg()), Key_F);
+  menu->insertItem(i18n("&Bounce"), topLevelWidget(),
+                   SLOT(slotBounceMsg()));
   menu->insertSeparator();
   menu->insertItem(i18n("&Save As..."), topLevelWidget(), 
                    SLOT(slotSaveMsg()), KStdAccel::key(KStdAccel::Save));
