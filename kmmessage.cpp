@@ -609,8 +609,14 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     while (i > 0 && result[i-1] == ' ') i--;
     result.remove(0,i);
 
-    result.replace(reNL, '\n' + indentStr);
-    result = indentStr + result + '\n';
+    QString result2((QChar*)NULL, result.length()
+      + result.contains('\n') * indentStr.length());
+    for (i = 0; i < (int)result.length(); i++)
+    {
+      result2 += result[i];
+      if (result[i] == '\n') result2 += indentStr;
+    }
+    result = indentStr + result2 + '\n';
 
     if (sSmartQuote)
       smartQuote(result, '\n' + indentStr, sWrapCol, aStripSignature);
