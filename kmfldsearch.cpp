@@ -164,7 +164,11 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mSearchFolderLbl = new QLabel(i18n("Search folder &name:"), searchWidget);
   hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
-  mSearchFolderEdt->setText("search");
+  if (searchFolder) 
+    mSearchFolderEdt->setText(searchFolder->name());
+  else
+    mSearchFolderEdt->setText("search");
+
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   hbl2->addWidget(mSearchFolderEdt);
   mSearchFolderBtn = new QPushButton(i18n("&Rename..."), searchWidget);
