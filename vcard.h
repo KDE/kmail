@@ -106,7 +106,7 @@ class VCardLine {
  protected:
   QString         name;
   bool            qualified;
-  QString         qualifier;
+  QValueList<QString> qualifiers;
   QValueList<QString> parameters;
   bool isValid() const;
   void qpEncode(QString& x);

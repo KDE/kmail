@@ -27,7 +27,8 @@ vcard := <begin><body><end> | <begin><end>
 body  := <line><body> | <line>
 begin := begin:vcard
 end   := end:vcard
-line  := <name>;<qualifier>:<value> | <name>:<value>
+line  := <name>;<qualifiers>:<value> | <name>:<value>
+qualifiers := <qualifier> | <qualifier>;<qualifiers>
 name  := 
 qualifier :=
 value := 
@@ -181,8 +182,8 @@ QValueList<QString> lines;
       tmplinetoken = &((*j).ascii()[tail+1]); 
       linetokens.append(tmplinetoken);
 
-      // check for qualifier and
-      // set name, qualified, qualifier
+      // check for qualifiers and
+      // set name, qualified, qualifier(s)
       //QValueList<QString> nametokens = tokenizeBy(linetokens[0], ';');
       QValueList<QString> nametokens = tokenizeBy(linetokens[0], QRegExp(";"));
       bool qp = false, first_pass = true;
@@ -196,10 +197,9 @@ QValueList<QString> lines;
                                          ++z) {
           if (*z == VCARD_QUOTED_PRINTABLE) {
             qp = true;
-	  } else if (!first_pass && !_vcl.qualified) {
+	  } else if (!first_pass) {
             _vcl.qualified = true;
-            _vcl.qualifier = *z;
-            _vcl.qualifier = _vcl.qualifier.lower();
+            _vcl.qualifiers.append((*z).lower());
           }
           first_pass = false;
 	}
@@ -287,11 +287,16 @@ return false;
 
 
 bool VCard::removeQualifiedLine(const QString& name, const QString& qualifier) {
+const QString lowqualifier = qualifier.lower();
+const QString lowname = name.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && (*i).qualifier == qualifier) {
-      _vcdata->remove(i);
+    if ((*i).name == lowname && (*i).qualifiers.contains(lowqualifier)) {
+      (*i).qualifiers.remove(lowqualifier);
+      if ((*i).qualifiers.isEmpty()) {
+        _vcdata->remove(i);
+      }
       return true;
     }
   }
@@ -304,10 +309,12 @@ QValueList<QString> values;
 
   values.append(value);
 
-return addLine(name, values);
+return addLine(name.lower(), values);
 }
 
 
+// FIXME: We should see if we can just add a new qualifier first
+//         - involves testing name and value.
 int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const QString& value) {
 QValueList<QString> values;
 
@@ -318,10 +325,11 @@ return addQualifiedLine(name, qualifier, values);
 
 
 int VCard::addLine(const QString& name, const QValueList<QString>& value) {
+const QString lowname = name.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && !(*i).qualified) {
+    if ((*i).name == lowname && !(*i).qualified) {
       (*i).parameters = value;
       if ((*i).isValid()) {
         return 0;
@@ -331,7 +339,7 @@ int VCard::addLine(const QString& name, const QValueList<QString>& value) {
     }
   }
 VCardLine vcl;
-  vcl.name = name;
+  vcl.name = lowname;
   vcl.qualified = false;
   vcl.parameters = value;
   _vcdata->append(vcl);
@@ -340,10 +348,18 @@ return false;
 
 
 int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const QValueList<QString>& value) {
+const QString lowname = name.lower();
+const QString lowqualifier = qualifier.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
+    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier)) {
+      if ((*i).parameters == value) return 0;     // it's already there
+      if ((*i).qualifiers.count() > 1) {   // there are others, remove and break
+        (*i).qualifiers.remove(lowqualifier);
+        break;
+      }
+
       (*i).parameters = value;
       if ((*i).isValid()) {
         return 0;
@@ -355,8 +371,8 @@ int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const
   }
 
 VCardLine vcl;
-  vcl.name = name;
-  vcl.qualifier = qualifier;
+  vcl.name = lowname;
+  vcl.qualifiers.append(lowqualifier);
   vcl.qualified = true;
   vcl.parameters = value;
   _vcdata->append(vcl);
@@ -366,11 +382,13 @@ return 0;
 
 QString VCard::getValue(const QString& name, const QString& qualifier) {
 QString failed = "";
+const QString lowname = name.lower();
+const QString lowqualifier = qualifier.lower();
 
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
+    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier)) {
       if ((*i).parameters.count() > 0)
         return (*i).parameters[0];
       else return failed;
@@ -382,11 +400,12 @@ return failed;
 
 QString VCard::getValue(const QString& name) {
 QString failed = "";
+const QString lowname = name.lower();
 
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && !(*i).qualified) {
+    if ((*i).name == lowname && !(*i).qualified) {
       if ((*i).parameters.count() > 0)
         return (*i).parameters[0];
       else return failed;
@@ -399,10 +418,12 @@ return failed;
 QValueList<QString> VCard::getValues(const QString& name, const QString& qualifier) {
 //QString failedstr = "";
 QValueList<QString> failed;
+const QString lowname = name.lower();
+const QString lowqualifier = qualifier.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
+    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier)) {
       return (*i).parameters;
     }
   }
@@ -414,10 +435,11 @@ return failed;
 QValueList<QString> VCard::getValues(const QString& name) {
 //QString failedstr = "";
 QValueList<QString> failed;
+const QString lowname = name.lower();
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
-    if ((*i).name == name && !(*i).qualified) {
+    if ((*i).name == lowname && !(*i).qualified) {
       return (*i).parameters;
     }
   }
@@ -439,8 +461,12 @@ int cnt, cur;
     QString parms = "";
     vct += (*i).name;
     if ((*i).qualified) {
-      vct += ";";
-      vct += (*i).qualifier;
+      for (QValueListIterator<QString> k = (*i).qualifiers.begin();
+                                       k != (*i).qualifiers.end();
+                                       ++k) {
+        vct += ";";
+        vct += *k;
+      }
     }
     cnt = (*i).parameters.count();
     cur = 0;
@@ -534,12 +560,12 @@ bool VCardLine::isValid() const {
   case 'a':
     // GS - this seems to not be necessary? - netscape doesn't do it
 //     if (name == VCARD_ADR && qualified &&
-//                             (qualifier == VCARD_ADR_DOM    ||
-//                              qualifier == VCARD_ADR_INTL   ||
-//                              qualifier == VCARD_ADR_POSTAL ||
-//                              qualifier == VCARD_ADR_HOME   ||
-//                              qualifier == VCARD_ADR_WORK   ||
-//                              qualifier == VCARD_ADR_PREF
+//                             (qualifiers.contains(VCARD_ADR_DOM)    ||
+//                              qualifiers.contains(VCARD_ADR_INTL)   ||
+//                              qualifiers.contains(VCARD_ADR_POSTAL) ||
+//                              qualifiers.contains(VCARD_ADR_HOME)   ||
+//                              qualifiers.contains(VCARD_ADR_WORK)   ||
+//                              qualifiers.contains(VCARD_ADR_PREF)
 //                             ))
     if (name == VCARD_ADR)
       return true;
@@ -554,9 +580,9 @@ bool VCardLine::isValid() const {
     if (name == VCARD_CATEGORIES)
       return true;
     if (name == VCARD_CLASS && qualified &&
-                              (qualifier == VCARD_CLASS_PUBLIC       ||
-                               qualifier == VCARD_CLASS_PRIVATE      ||
-                               qualifier == VCARD_CLASS_CONFIDENTIAL
+                              (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
+                               qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
+                               qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
                               ))
       return true;
    break;
@@ -564,9 +590,9 @@ bool VCardLine::isValid() const {
    break;
   case 'e':
     if (name == VCARD_EMAIL && qualified &&
-                              (qualifier == VCARD_EMAIL_INTERNET ||
-                               qualifier == VCARD_EMAIL_PREF     ||
-                               qualifier == VCARD_EMAIL_X400
+                              (qualifiers.contains(VCARD_EMAIL_INTERNET) ||
+                               qualifiers.contains(VCARD_EMAIL_PREF)     ||
+                               qualifiers.contains(VCARD_EMAIL_X400)
                               ))
       return true;
    break;
@@ -586,8 +612,8 @@ bool VCardLine::isValid() const {
    break;
   case 'k':
     if (name == VCARD_KEY && qualified &&
-                            (qualifier == VCARD_KEY_X509 ||
-                             qualifier == VCARD_KEY_PGP
+                            (qualifiers.contains(VCARD_KEY_X509) ||
+                             qualifiers.contains(VCARD_KEY_PGP)
                             ))
       return true;
    break;
@@ -639,20 +665,20 @@ bool VCardLine::isValid() const {
    break;
   case 't':
     if (name == VCARD_TEL && qualified && 
-                            (qualifier == VCARD_TEL_HOME  ||
-                             qualifier == VCARD_TEL_WORK  ||
-                             qualifier == VCARD_TEL_PREF  ||
-                             qualifier == VCARD_TEL_VOICE ||
-                             qualifier == VCARD_TEL_FAX   ||
-                             qualifier == VCARD_TEL_MSG   ||
-                             qualifier == VCARD_TEL_CELL  ||
-                             qualifier == VCARD_TEL_PAGER ||
-                             qualifier == VCARD_TEL_BBS   ||
-                             qualifier == VCARD_TEL_MODEM ||
-                             qualifier == VCARD_TEL_CAR   ||
-                             qualifier == VCARD_TEL_ISDN  ||
-                             qualifier == VCARD_TEL_VIDEO ||
-                             qualifier == VCARD_TEL_PCS
+                            (qualifiers.contains(VCARD_TEL_HOME)  ||
+                             qualifiers.contains(VCARD_TEL_WORK)  ||
+                             qualifiers.contains(VCARD_TEL_PREF)  ||
+                             qualifiers.contains(VCARD_TEL_VOICE) ||
+                             qualifiers.contains(VCARD_TEL_FAX)   ||
+                             qualifiers.contains(VCARD_TEL_MSG)   ||
+                             qualifiers.contains(VCARD_TEL_CELL)  ||
+                             qualifiers.contains(VCARD_TEL_PAGER) ||
+                             qualifiers.contains(VCARD_TEL_BBS)   ||
+                             qualifiers.contains(VCARD_TEL_MODEM) ||
+                             qualifiers.contains(VCARD_TEL_CAR)   ||
+                             qualifiers.contains(VCARD_TEL_ISDN)  ||
+                             qualifiers.contains(VCARD_TEL_VIDEO) ||
+                             qualifiers.contains(VCARD_TEL_PCS)
                             ))
       return true;
     if (name == VCARD_TZ)
