@@ -23,6 +23,7 @@
 #include <qlistbox.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
+#include <qmultilineedit.h>
 
 #include <kdialogbase.h>
 
@@ -142,6 +143,10 @@ public:
   // did we find a pgp executable?
   bool havePGP(void) const;
 
+  // show the result of encryption/signing?
+  void setShowCipherText(bool);
+  bool showCipherText(void) const;
+
   // FIXME: key management
 
   // static methods
@@ -191,6 +196,7 @@ private:
   bool haveGpg;
   bool havePassPhrase;
   bool needPublicKeys;
+  bool showEncryptionResult;
 };
 
 // -------------------------------------------------------------------------
@@ -255,6 +261,7 @@ class KpgpConfig : public QWidget
     QLineEdit *pgpUserEdit;
     QCheckBox *storePass;
     QCheckBox *encToSelf;
+    QCheckBox *showCipherText;
     QButtonGroup *radioGroup;
     QRadioButton *autoDetect;
     QRadioButton *useGPG;
@@ -284,6 +291,20 @@ class KpgpSelDlg: public KDialogBase
     QListBox *mListBox;
     QString  mkey;
     QStrList mKeyList;
+};
+
+// -------------------------------------------------------------------------
+class KpgpCipherTextDlg: public KDialogBase
+{
+  Q_OBJECT
+
+  public:
+    KpgpCipherTextDlg( const QCString &text, QWidget *parent=0,
+                       const char *name=0, bool modal=true );
+    virtual ~KpgpCipherTextDlg() {};
+
+  private:
+    QMultiLineEdit *mEditBox;
 };
 
 #endif

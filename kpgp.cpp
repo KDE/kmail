@@ -82,6 +82,7 @@ void
 Kpgp::readConfig()
 {
   storePass = config->readBoolEntry("storePass");
+  showEncryptionResult = config->readBoolEntry("showEncryptionResult");
   pgpType = ( Kpgp::PGPType) config->readNumEntry("pgpType",tAuto);
 }
 
@@ -89,6 +90,7 @@ void
 Kpgp::writeConfig(bool sync)
 {
   config->writeEntry("storePass",storePass);
+  config->writeEntry("showEncryptionResult", showEncryptionResult);
   config->writeEntry("pgpType",(int) pgpType);
 
   pgp->writeConfig();
@@ -396,7 +398,22 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     pgp->clearOutput();
     return true;
   }
-  if( !(status & KpgpBase::ERROR) ) return true;
+  if( !(status & KpgpBase::ERROR) )
+  {
+    if (showCipherText())
+    {
+        int n = 0;
+        while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
+
+        //kdDebug() << "kpgp: show cipher text window" << endl;
+        KpgpCipherTextDlg *cipherTextDlg = new KpgpCipherTextDlg( message() );
+        bool result = (cipherTextDlg->exec() == QDialog::Accepted);
+
+        for (int j = 0; j < n; j++) kernel->kbp()->busy();
+        return result;
+    }
+    return true;
+  }
 
   // in case of other errors we end up here.
   errMsg = pgp->lastErrorMessage();
@@ -621,6 +638,18 @@ bool
 Kpgp::havePGP(void) const
 {
   return havePgp;
+}
+
+void
+Kpgp::setShowCipherText(bool flag)
+{
+  showEncryptionResult = flag;
+}
+
+bool
+Kpgp::showCipherText(void) const
+{
+  return showEncryptionResult;
 }
 
 
@@ -1017,8 +1046,10 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
 
   storePass = new QCheckBox( i18n("Keep passphrase in memory"), group );
   encToSelf = new QCheckBox( i18n("Always encrypt to self"), group );
+  showCipherText = new QCheckBox( i18n("Show ciphered text after composing"), group );
   vlay->addWidget( storePass );
   vlay->addWidget( encToSelf );
+  vlay->addWidget( showCipherText );
 
   // Group for selecting the program for encryption/decryption
   radioGroup = new QButtonGroup( i18n("Encryption tool"), this );
@@ -1061,6 +1092,7 @@ KpgpConfig::setValues()
   pgpUserEdit->setText( pgp->user() );
   storePass->setChecked( pgp->storePassPhrase() );
   encToSelf->setChecked( pgp->encryptToSelf() );
+  showCipherText->setChecked( pgp->showCipherText() );
 
   switch (pgp->pgpType)
   {
@@ -1088,6 +1120,7 @@ KpgpConfig::applySettings()
   pgp->setUser(pgpUserEdit->text());
   pgp->setStorePassPhrase(storePass->isChecked());
   pgp->setEncryptToSelf(encToSelf->isChecked());
+  pgp->setShowCipherText(showCipherText->isChecked());
 
   if (autoDetect->isChecked())
     pgp->pgpType = Kpgp::tAuto;
@@ -1152,4 +1185,27 @@ void KpgpSelDlg::slotCancel()
 {
   mkey = "";
   reject();
+}
+
+
+
+// ------------------------------------------------------------------------
+KpgpCipherTextDlg::KpgpCipherTextDlg( const QCString &text, QWidget *parent,
+                                      const char *name, bool modal )
+  :KDialogBase( parent, name, modal, i18n("OpenPGP Information"), Ok|Cancel, Ok)
+{
+  QFrame *page = makeMainWidget();
+  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+
+  QLabel *label = new QLabel( page );
+  label->setText(i18n("Result of the last encryption / sign operation:"));
+  topLayout->addWidget( label );
+
+  mEditBox = new QMultiLineEdit( page );
+  mEditBox->setMinimumHeight( fontMetrics().lineSpacing() * 25 );
+  mEditBox->setMinimumWidth( fontMetrics().maxWidth() * 50 );
+  mEditBox->setReadOnly(true);
+  topLayout->addWidget( mEditBox, 10 );
+
+  mEditBox->setText(text);
 }
