@@ -142,6 +142,8 @@ public:
 
   KMSystemTray *systray() const;
 
+  void modifyFolder( KMFolderTreeItem* folderItem );
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash
@@ -188,7 +190,7 @@ public slots:
   /** Clear and create actions for marked filters */
   void clearFilterActions();
   void initializeFilterActions();
- 
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -472,7 +474,7 @@ private:
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
-  
+
   static QPtrList<KMMainWidget>* s_mainWidgetList;
 };
 

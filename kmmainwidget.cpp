@@ -890,7 +890,18 @@ void KMMainWidget::slotModifyFolder()
   if (!mFolderTree) return;
   KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( mFolderTree->currentItem() );
   if ( item )
-    item->properties();
+    modifyFolder( item );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::modifyFolder( KMFolderTreeItem* folderItem )
+{
+  KMFolder* folder = folderItem->folder();
+  KMFolderTree* folderTree = static_cast<KMFolderTree *>( folderItem->listView() );
+  KMFolderDialog props( folder, folder->parent(), folderTree,
+                        i18n("Properties of Folder %1").arg( folder->label() ) );
+  props.exec();
+  updateFolderMenu();
 }
 
 //-----------------------------------------------------------------------------
@@ -1802,7 +1813,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         newMsg->setMsgId( newMsgId );
         mMsgView->setIdOfLastViewedMessage( newMsgId );
       }
-      
+
 
       kdDebug(5006) << "KMMainWidget  -  adding unencrypted message to folder" << endl;
       mFolder->addMsg( newMsg );
@@ -1814,18 +1825,18 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       mFolder->unGetMsg( newMsgIdx );
       int idx = mFolder->find( oldMsg );
       Q_ASSERT( idx != -1 );
-      /* only select here, so the old one is not un-Gotten before, which would 
+      /* only select here, so the old one is not un-Gotten before, which would
        * render the pointer we hold invalid so that find would fail */
-      mHeaders->setCurrentItemByIndex( newMsgIdx ); 
+      mHeaders->setCurrentItemByIndex( newMsgIdx );
       // remove the old one
       if ( idx != -1 ) {
         kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
         mFolder->take( idx );
       }
- 
+
       kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
       updateMessageActions();
-      
+
 
       kdDebug(5006) << "KMMainWidget  -  done." << endl;
     } else
