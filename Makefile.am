@@ -14,14 +14,14 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
-		kmacctseldlg.cpp kshortcut.cpp
+		kmacctseldlg.cpp kshortcut.cpp kmimemagic.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
 		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
-		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc
+		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc kmimemagic.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -110,3 +110,6 @@ kshortcut.cpp: kshortcut.moc
 kshortcut.moc: kshortcut.h
 	$(MOC) kshortcut.h -o kshortcut.moc
 
+kmimemagic.cpp: kmimemagic.moc
+kmimemagic.moc: kmimemagic.h
+	$(MOC) kmimemagic.h -o kmimemagic.moc
