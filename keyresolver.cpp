@@ -500,7 +500,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
     : ( sign
 	? signingKeyNearExpiryWarningThresholdInDays()
 	: encryptKeyNearExpiryWarningThresholdInDays() );
-  if ( daysTillExpiry <= threshold ) {
+  if ( threshold > -1 && daysTillExpiry <= threshold ) {
     const QString msg =
       key.protocol() == GpgME::Context::OpenPGP
       ? ( mine ? sign
