@@ -331,7 +331,8 @@ class KDE_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL() );
+  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL(), 
+                    const QTextCodec *codec = 0 );
 
 private:
   virtual Result execute();
@@ -345,6 +346,7 @@ private:
   KURL mUrl;
   DwString mMsgString;
   KIO::TransferJob *mJob;
+  const QTextCodec *mCodec;
 };
 
 class KDE_EXPORT KMSaveAttachmentsCommand : public KMCommand
