@@ -197,6 +197,7 @@ int main(int argc, char *argv[])
      exit(0);
   
   KMailApplication app;
+  kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
   
   //local, do the init
   KMKernel kmailKernel;
@@ -209,7 +210,8 @@ int main(int argc, char *argv[])
   kmailKernel.recoverDeadLetters();
 
   setSignalHandler(signalHandler);
-  
+
+  kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   // Go!
   kapp->exec();
 
