@@ -2169,6 +2169,7 @@ void KMComposeWin::slotIdentityActivated(int)
     mMsg->removeHeaderField("Organization");
   else
     mMsg->setHeaderField("Organization", ident.organization());
+  Kpgp::getKpgp()->setUser(ident.pgpIdentity());
 
   QString edtText = mEditor->text();
   int pos = edtText.findRev( "\n-- \n" + mOldSigText);

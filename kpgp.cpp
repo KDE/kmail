@@ -1029,17 +1029,6 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
 	"are not encrypted by KMail."), group );
   glay->addWidget ( label, 1, 0 );
 
-  group = new QGroupBox( i18n("Identity"), this );
-  topLayout->addWidget( group );
-  glay = new QGridLayout( group, 2, 2,  KDialog::spacingHint() );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-
-  label = new QLabel( i18n("PGP User Identity:"), group );
-  pgpUserEdit = new QLineEdit( group );
-  pgpUserEdit->setText( pgp->user() );
-  glay->addWidget( label, 1, 0 );
-  glay->addWidget( pgpUserEdit, 1, 1 );
-
   group = new QGroupBox( i18n("Options"), this );
   topLayout->addWidget( group );
   QVBoxLayout *vlay = new QVBoxLayout( group, KDialog::spacingHint() );
@@ -1090,7 +1079,6 @@ void
 KpgpConfig::setValues()
 {
   // set default values
-  pgpUserEdit->setText( pgp->user() );
   storePass->setChecked( pgp->storePassPhrase() );
   encToSelf->setChecked( pgp->encryptToSelf() );
   showCipherText->setChecked( pgp->showCipherText() );
@@ -1118,7 +1106,6 @@ KpgpConfig::setValues()
 void
 KpgpConfig::applySettings()
 {
-  pgp->setUser(pgpUserEdit->text());
   pgp->setStorePassPhrase(storePass->isChecked());
   pgp->setEncryptToSelf(encToSelf->isChecked());
   pgp->setShowCipherText(showCipherText->isChecked());

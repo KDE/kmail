@@ -110,6 +110,7 @@ class IdentityEntry
     QString identity() const;
     QString fullName() const;
     QString organization() const;
+    QString pgpIdentity() const;
     QString emailAddress() const;
     QString replyToAddress() const;
     QString signatureFileName( bool exportIdentity = false ) const;
@@ -120,6 +121,7 @@ class IdentityEntry
     void setIdentity( const QString &identity );
     void setFullName( const QString &fullName );
     void setOrganization( const QString &organization );
+    void setPgpIdentity( const QString &pgpIdentity );
     void setEmailAddress( const QString &emailAddress );
     void setReplyToAddress( const QString &replytoAddress );
     void setSignatureFileName( const QString &signatureFileName,
@@ -132,6 +134,7 @@ class IdentityEntry
     QString mIdentity;
     QString mFullName;
     QString mOrganization;
+    QString mPgpIdentity;
     QString mEmailAddress;
     QString mReplytoAddress;
     QString mSignatureFileName;
@@ -244,6 +247,7 @@ class ConfigureDialog : public KDialogBase
       QPushButton    *renameIdentityButton;
       QLineEdit      *nameEdit;
       QLineEdit      *organizationEdit;
+      QLineEdit      *pgpIdentityEdit;
       QLineEdit      *emailEdit;
       QLineEdit      *replytoEdit;
       QLineEdit      *signatureFileEdit;

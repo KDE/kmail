@@ -100,6 +100,7 @@ void KMIdentity::readConfig(void)
 
   mVCardFile = config->readEntry("VCardFile");
   mOrganization = config->readEntry("Organization");
+  mPgpIdentity = config->readEntry("PGP Identity");
   mReplyToAddr = config->readEntry("Reply-To Address");
   mSignatureFile = config->readEntry("Signature File");
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
@@ -120,6 +121,7 @@ void KMIdentity::writeConfig(bool aWithSync)
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
   config->writeEntry("Organization", mOrganization);
+  config->writeEntry("PGP Identity", mPgpIdentity);
   config->writeEntry("Email Address", mEmailAddr);
   config->writeEntry("Reply-To Address", mReplyToAddr);
   config->writeEntry("Signature File", mSignatureFile);
@@ -149,6 +151,13 @@ void KMIdentity::setFullName(const QString str)
 void KMIdentity::setOrganization(const QString str)
 {
   mOrganization = str.copy();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setPgpIdentity(const QString str)
+{
+  mPgpIdentity = str.copy();
 }
 
 

@@ -43,6 +43,10 @@ public:
   /** The user's organization (optional) */
   const QString organization(void) const { return mOrganization; }
   virtual void setOrganization(const QString);
+ 
+  /** The user's PGP identity */
+  const QString pgpIdentity(void) const { return mPgpIdentity; }
+  virtual void setPgpIdentity(const QString);
 
   /** email address (without the user name - only name@host) */
   const QString emailAddr(void) const { return mEmailAddr; }
@@ -80,7 +84,7 @@ public:
   virtual const QString signature(void) const;
 
 protected:
-  QString mIdentity, mFullName, mOrganization, mEmailAddr;
+  QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;
   QString mReplyToAddr, mSignatureFile;
   QString mSignatureInlineText;
   QString mVCardFile;

@@ -258,7 +258,6 @@ class KpgpConfig : public QWidget
 
   protected:
     Kpgp *pgp;
-    QLineEdit *pgpUserEdit;
     QCheckBox *storePass;
     QCheckBox *encToSelf;
     QCheckBox *showCipherText;

@@ -577,6 +577,11 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.replytoEdit = new QLineEdit( page );
   glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
 
+  label = new QLabel( i18n("PGP User Identity:"),page );
+  glay->addWidget( label, 6, 0 );
+  mIdentity.pgpIdentityEdit = new QLineEdit( page );
+  glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 6, 6, 1, 2 );
+
   QButtonGroup *buttonGroup = new QButtonGroup( page );
   connect( buttonGroup, SIGNAL(clicked(int)),
 	   this, SLOT(slotSignatureType(int)) );
@@ -2217,6 +2222,7 @@ void ConfigureDialog::saveActiveIdentity( void )
   {
     entry->setFullName( mIdentity.nameEdit->text() );
     entry->setOrganization( mIdentity.organizationEdit->text() );
+    entry->setPgpIdentity( mIdentity.pgpIdentityEdit->text() );
     entry->setEmailAddress( mIdentity.emailEdit->text() );
     entry->setReplyToAddress( mIdentity.replytoEdit->text() );
     entry->setSignatureFileName( mIdentity.signatureFileEdit->text() );
@@ -2251,6 +2257,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   {
     mIdentity.nameEdit->setText("");
     mIdentity.organizationEdit->setText("");
+    mIdentity.pgpIdentityEdit->setText("");
     mIdentity.emailEdit->setText("");
     mIdentity.replytoEdit->setText("");
     mIdentity.signatureFileEdit->setText("");
@@ -2262,6 +2269,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   {
     mIdentity.nameEdit->setText( entry->fullName() );
     mIdentity.organizationEdit->setText( entry->organization() );
+    mIdentity.pgpIdentityEdit->setText( entry->pgpIdentity() );
     mIdentity.emailEdit->setText( entry->emailAddress() );
     mIdentity.replytoEdit->setText( entry->replyToAddress() );
     mIdentity.signatureFileEdit->setText( entry->signatureFileName() );
@@ -3233,6 +3241,11 @@ QString IdentityEntry::organization() const
   return( mOrganization );
 }
 
+QString IdentityEntry::pgpIdentity() const
+{
+  return( mPgpIdentity );
+}
+
 QString IdentityEntry::emailAddress() const
 {
   return( mEmailAddress );
@@ -3287,6 +3300,11 @@ void IdentityEntry::setFullName( const QString &fullName )
 void IdentityEntry::setOrganization( const QString &organization )
 {
   mOrganization = organization;
+}
+
+void IdentityEntry::setPgpIdentity( const QString &pgpIdentity )
+{
+  mPgpIdentity = pgpIdentity;
 }
 
 void IdentityEntry::setEmailAddress( const QString &emailAddress )
@@ -3400,6 +3418,7 @@ void IdentityList::importData()
     entry.setIdentity( ident.identity() );
     entry.setFullName( ident.fullName() );
     entry.setOrganization( ident.organization() );
+    entry.setPgpIdentity( ident.pgpIdentity() );
     entry.setEmailAddress( ident.emailAddr() );
     entry.setReplyToAddress( ident.replyToAddr() );
     entry.setSignatureFileName( ident.signatureFile(), true );
@@ -3418,6 +3437,7 @@ void IdentityList::exportData()
     KMIdentity ident( e->identity() );
     ident.setFullName( e->fullName() );
     ident.setOrganization( e->organization() );
+    ident.setPgpIdentity( e->pgpIdentity() );
     ident.setEmailAddr( e->emailAddress() );
     ident.setReplyToAddr( e->replyToAddress() );
     ident.setUseSignatureFile( e->useSignatureFile() );
