@@ -3,6 +3,7 @@
 Name=Mail client
 Name[ca]=Correu electrònic
 Name[cs]=Po¹tovní klient
+Name[da]=E-post program
 Name[de]=Email Programm
 Name[es]=Cliente de correo
 Name[fi]=Sähköposti
@@ -26,6 +27,7 @@ DocPath=kmail/index.html
 Comment=Mail Client
 Comment[ca]=Programari de correu electrònic
 Comment[cs]=Klient pro ètení elektronické po¹ty
+Comment[da]=Program til at læse og sende e-post
 Comment[de]=Programm zum Lesen und Verschicken von Emails
 Comment[es]=Envío y recepción de correo electrónico
 Comment[fi]=Ohjelma sähköpostien lukemiseen
