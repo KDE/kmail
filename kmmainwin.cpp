@@ -1718,21 +1718,22 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 
   kernel->kbp()->busy();
 
+  mMsgView->clear(true);
   if( !aFolder || aFolder->noContent() ||
       aFolder->count() == 0 )
   {
-    mMsgView->setMsg( 0, FALSE );
     if( mMimePartTree )
       mMimePartTree->hide();
-  } else if( !mFolder ) {
-    mMsgView->enableMsgDisplay();
-    mMsgView->clear( TRUE );
-    if( mHeaders )
-      mHeaders->show();
+  } else {
     if( mMimePartTree && (1 < mShowMIMETreeMode) )
       mMimePartTree->show();
-  } else
-    mMsgView->clear();
+  }
+  if( !mFolder ) {
+    mMsgView->enableMsgDisplay();
+    mMsgView->clear(true);
+    if( mHeaders )
+      mHeaders->show();
+  }
 
   if (mFolder && mFolder->needsCompacting() && (mFolder->protocol() == "imap"))
   {
