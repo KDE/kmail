@@ -445,6 +445,7 @@ void KMReaderWin::updateReaderWin()
   if (mMsg) parseMsg();
   else
   {
+    mViewer->closeURL();
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<html><body" +
 		   QString(" bgcolor=\"#%1\"").arg(colorToString(c4)));
@@ -477,6 +478,7 @@ void KMReaderWin::parseMsg(void)
   if (mBackingPixmapOn)
     bkgrdStr = " background=\"file://" + mBackingPixmapStr + "\"";
 
+  mViewer->closeURL();
   mViewer->begin( KURL( "file:/" ) );
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("a { color: #%1;").arg(colorToString(c2)) +
