@@ -44,6 +44,7 @@ private slots:
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
   void slotBounceMsg();
+  void slotShowMsgSrc();
 
   void slotConfigChanged();
 
@@ -57,7 +58,8 @@ private:
   // a few actions duplicated from kmmainwidget
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
           *mReplyListAction, *mForwardAction,
-          *mForwardAttachedAction, *mRedirectAction, *mBounceAction;
+          *mForwardAttachedAction, *mRedirectAction, *mBounceAction,
+          *mViewSourceAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
 

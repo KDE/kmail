@@ -2086,12 +2086,11 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 
     menu->insertSeparator();
 
-    // these two only make sense if there is a reader window.
-    // I guess. Not sure about view source ;). Till
+    // this one only make sense if there is a reader window.
     if (mMsgView) {
       toggleFixFontAction()->plug(menu);
-      viewSourceAction()->plug(menu);
     }
+    viewSourceAction()->plug(menu);
 
     menu->insertSeparator();
     mPrintAction->plug( menu );
@@ -2715,6 +2714,9 @@ void KMMainWidget::setupActions()
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
+  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
+                                   SLOT(slotShowMsgSrc()), actionCollection(),
+                                   "view_source" );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
@@ -2881,6 +2883,19 @@ void KMMainWidget::slotCollapseAllThreads()
   mHeaders->slotExpandOrCollapseAllThreads( false ); // collapse
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowMsgSrc()
+{
+  KMMessage *msg = mHeaders->currentMsg();
+  if ( !msg )
+    return;
+  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
+                                                mMsgView
+                                                ? mMsgView->isFixedFont()
+                                                : false );
+  command->start();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::moveSelectedToFolder( int menuId )
@@ -3007,9 +3022,7 @@ void KMMainWidget::updateMessageActions()
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
     printAction()->setEnabled( single_actions );
-    if (mMsgView) {
-      viewSourceAction()->setEnabled( single_actions );
-    }
+    viewSourceAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
@@ -3153,7 +3166,7 @@ void KMMainWidget::slotShowStartupFolder()
   if ( !startup )
     startup = kmkernel->inboxFolder();
 
-  if ( mFolderTree ) 
+  if ( mFolderTree )
   {
     mFolderTree->reload();
     mFolderTree->showFolder( startup );

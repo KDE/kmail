@@ -192,7 +192,6 @@ public:
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
-  KAction *viewSourceAction() { return mViewSourceAction; }
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -316,7 +315,6 @@ public slots:
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
-  void slotShowMsgSrc();
   void slotSaveMsg();
   void slotSaveAttachments();
 
@@ -430,7 +428,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
-  KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
 

@@ -173,6 +173,17 @@ void KMReaderMainWin::slotBounceMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderMainWin::slotShowMsgSrc()
+{
+  KMMessage *msg = mReaderWin->message();
+  if ( !msg )
+    return;
+  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
+                                                mReaderWin->isFixedFont() );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotConfigChanged()
 {
   //readConfig();
@@ -252,6 +263,11 @@ void KMReaderMainWin::setupAccel()
   mReplyActionMenu->insert( mReplyListAction );
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
+
+  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
+                                   SLOT(slotShowMsgSrc()), actionCollection(),
+                                   "view_source" );
+
   createGUI( "kmreadermainwin.rc" );
   menuBar()->hide();
   toolBar( "mainToolBar" )->hide();
@@ -306,7 +322,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
     mReaderWin->toggleFixFontAction()->plug( menu );
-    mReaderWin->viewSourceAction()->plug( menu );
+    mViewSourceAction->plug( menu );
 
     mPrintAction->plug( menu );
     menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );

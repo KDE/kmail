@@ -550,8 +550,6 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
                                      ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
 			     SLOT(slotUrlSave()), ac, "saveas_url" );
-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
-		      SLOT(slotShowMsgSrc()), ac, "view_source" );
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
  			Key_X, this, SLOT(slotToggleFixedFont()),
@@ -2142,20 +2140,6 @@ void KMReaderWin::slotMailtoReply()
   KMCommand *command = new KMMailtoReplyCommand( mMainWindow, mUrlClicked,
     message(), copyText() );
   command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotShowMsgSrc()
-{
-  KMMessage *msg = message();
-  if ( !msg )
-    return;
-  bool oldStatus = msg->isComplete();
-  msg->setComplete( true ); // otherwise imap messages are completely downloaded
-  KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, msg,
-                                                isFixedFont() );
-  command->start();
-  msg->setComplete( oldStatus );
 }
 
 //-----------------------------------------------------------------------------

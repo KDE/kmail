@@ -116,6 +116,7 @@ public:
   KAction *findInMessageAction() const { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
+  KAction *viewSourceAction() { return mViewSourceAction; }
 
   KActionMenu *statusMenu()  const{ return mStatusMenu; }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
@@ -128,7 +129,6 @@ public:
 
   // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
-  KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
   KMHeaders *headers() const { return mHeaders; }
   void toggleSystemTray();
@@ -257,6 +257,7 @@ protected slots:
   void slotExpandAllThreads();
   void slotCollapseThread();
   void slotCollapseAllThreads();
+  void slotShowMsgSrc();
   void slotSetMsgStatusNew();
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
@@ -373,7 +374,7 @@ private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
     *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction, *mOpenAction;
+    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
