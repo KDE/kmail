@@ -228,6 +228,7 @@ private:
   QListView* mListview;
   QCheckBox* mCBEncrypt;
   QCheckBox* mCBSign;
+  bool mCBSignEnabled, mCBEncryptEnabled;
 };
 
 

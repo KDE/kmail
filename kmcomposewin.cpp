@@ -5453,11 +5453,16 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 KMAtmListViewItem::KMAtmListViewItem(QListView *parent) :
   QObject(), QListViewItem( parent )
 {
+
+  mCBSignEnabled = false;
+  mCBEncryptEnabled = false;
+
   mListview = parent;
   mCBEncrypt = new QCheckBox(mListview->viewport());
-  mCBEncrypt->show();
   mCBSign = new QCheckBox(mListview->viewport());
-  mCBSign->show();
+
+  mCBEncrypt->hide();
+  mCBSign->hide();
 }
 
 KMAtmListViewItem::~KMAtmListViewItem()
@@ -5486,27 +5491,32 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     r.setWidth(  r.height() - 2 );
     r.setHeight( r.height() - 2 );
     r = QRect( mListview->viewportToContents( r.topLeft() ), r.size() );
+
     QCheckBox* cb = (4 == column) ? mCBEncrypt : mCBSign;
     cb->resize( r.size() );
     mListview->moveChild( cb, r.x(), r.y() );
+
+    QColor bg;
+    if (isSelected())
+      bg = cg.highlight();
+    else
+      bg = cg.base();
+
+    bool enabled = (4 == column) ? mCBEncryptEnabled : mCBSignEnabled;
+    cb->setPaletteBackgroundColor(bg);
+    if (enabled) cb->show();
   }
 }
 
 void KMAtmListViewItem::enableCryptoCBs(bool on)
 {
   if( mCBEncrypt ) {
+    mCBEncryptEnabled = on;
     mCBEncrypt->setEnabled( on );
-    if( on )
-      mCBEncrypt->show();
-    else
-      mCBEncrypt->hide();
   }
   if( mCBSign ) {
+    mCBSignEnabled = on;
     mCBSign->setEnabled( on );
-    if( on )
-      mCBSign->show();
-    else
-      mCBSign->hide();
   }
 }
 
