@@ -95,6 +95,7 @@ namespace KMail {
       mAnnotationSupport( true ),
       mSlaveConnected( false ),
       mSlaveConnectionError( false ),
+      mCheckingSingleFolder( false ),
       mListDirProgressItem( 0 )
   {
     mPort = imapDefaultPort;
@@ -295,7 +296,7 @@ namespace KMail {
   }
 
   // Called when we're really all done.
-  void ImapAccountBase::postProcessNewMail() {
+  void ImapAccountBase::postProcessNewMail( bool showStatusMsg ) {
     setCheckingMail(false);
     int newMails = 0;
     if ( mCountUnread > 0 && mCountUnread > mCountLastUnread ) {
@@ -307,8 +308,9 @@ namespace KMail {
       mCountUnread = 0;
       checkDone( false, CheckOK );
     }
-    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        name(), newMails);
+    if ( showStatusMsg )
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+          name(), newMails);
   }
 
   //-----------------------------------------------------------------------------
@@ -655,6 +657,7 @@ namespace KMail {
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
   {
     mFoldersQueuedForChecking.append(folder);
+    mCheckingSingleFolder = true;
     if ( checkingMail() )
     {
       disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),

@@ -209,8 +209,9 @@ namespace KMail {
 
     /**
      * Called when we're completely done checking mail for this account
+     * When @p setStatusMsg is true a status msg is shown
      */
-    void postProcessNewMail();
+    void postProcessNewMail( bool setStatusMsg = true );
 
     /**
      * Check whether we're checking for new mail
@@ -374,6 +375,7 @@ namespace KMail {
     bool mAnnotationSupport : 1;
     bool mSlaveConnected : 1;
     bool mSlaveConnectionError : 1;
+    bool mCheckingSingleFolder : 1;
 
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;

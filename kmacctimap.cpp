@@ -232,6 +232,7 @@ void KMAcctImap::processNewMail(bool interactive)
       makeConnection() == ImapAccountBase::Error)
   {
     mCountRemainChecks = 0;
+    mCheckingSingleFolder = false;
     checkDone( false, CheckError );
     return;
   }
@@ -243,6 +244,7 @@ void KMAcctImap::processNewMail(bool interactive)
     if( mMailCheckFolders.isEmpty() )
     {
       checkDone( false, CheckOK );
+      mCheckingSingleFolder = false;
       return;
     }
   }
@@ -318,6 +320,7 @@ void KMAcctImap::processNewMail(bool interactive)
     mCountLastUnread = 0; // => mCountUnread - mCountLastUnread == new count
     ImapAccountBase::postProcessNewMail();
     mUnreadBeforeCheck.clear();
+    mCheckingSingleFolder = false;
   }
 }
 
@@ -329,8 +332,8 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
   postProcessNewMail(static_cast<KMFolder*>(folder->folder()));
 }
 
-void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
-
+void KMAcctImap::postProcessNewMail( KMFolder * folder ) 
+{
   disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)) );
 
@@ -354,8 +357,11 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
   {
     // all checks are done
     mCountLastUnread = 0; // => mCountUnread - mCountLastUnread == new count
-    ImapAccountBase::postProcessNewMail();
+    // when we check only one folder (=selected) then do not display a summary
+    // as the normal status message is better
+    ImapAccountBase::postProcessNewMail( !mCheckingSingleFolder );
     mUnreadBeforeCheck.clear();
+    mCheckingSingleFolder = false;
   }
 }
 
@@ -417,12 +423,12 @@ FolderStorage* const KMAcctImap::rootFolder() const
 
 ImapAccountBase::ConnectionState KMAcctImap::makeConnection() 
 {
-    if ( mSlaveConnectionError )
-    {
-       mErrorTimer.start(100, true); // Clear error flag
-       return Error;
-    }
-    return ImapAccountBase::makeConnection();
+  if ( mSlaveConnectionError )
+  {
+    mErrorTimer.start(100, true); // Clear error flag
+    return Error;
+  }
+  return ImapAccountBase::makeConnection();
 }
 
 void KMAcctImap::slotResetConnectionError()
