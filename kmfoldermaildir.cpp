@@ -85,7 +85,7 @@ int KMFolderMaildir::canAccess()
                          .arg(sBadFolderName));
     else
       KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
-                                 "maildir folder, you do not have sufficient access permissions.")
+                                 "maildir folder, or you do not have sufficient access permissions.")
                          .arg(sBadFolderName));
     return nRetVal;
   }
