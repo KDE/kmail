@@ -9,6 +9,7 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstddirs.h>
+#include <kiconloader.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/body.h>
@@ -161,26 +162,11 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::iconName(void) const
 {
-  QString fileName, icon;
-  QDir dir;
-
-  fileName = locate("mime", mType.lower() + "/" + mSubtype.lower() + ".desktop");
-
-  if (!(fileName.isEmpty()) && dir.exists(fileName))
-  {
-    KConfig config(fileName);
-    config.setDesktopGroup();
-    icon = config.readEntry("Icon");
-    if(icon.isEmpty()) // If no icon specified.
-      icon = "mimetypes/unknown";
-  }
-  else
-  {
-    // not found, use default
-    icon = "mimetypes/unknown";
-  }
-
-  return locate( "icon", "large/hicolor/" + icon + ".png" );
+  QString fileName;
+  fileName = KGlobal::instance()->iconLoader()->iconPath( mType.lower(), KIcon::Desktop );
+  if (fileName.isEmpty())
+    fileName = KGlobal::instance()->iconLoader()->iconPath( "unknown", KIcon::Desktop );
+  return fileName;
 }
 
 
