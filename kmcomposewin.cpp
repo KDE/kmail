@@ -1920,7 +1920,15 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     close();
   }
 
-  if (!editSubject) mEdtSubject.setFocus();
+  // Warning this is an ugly hack but it covers all the changes needed
+  // with minimal code changes.  If you want to add more warning boxes
+  // (say if the From: field is empty), then you will need to modify this.
+  if (!editSubject) {
+    if (mEdtTo.text().stripWhiteSpace().isEmpty())
+      mEdtTo.setFocus();
+    else
+      mEdtSubject.setFocus();
+  }
 
   busy = false;
 }
