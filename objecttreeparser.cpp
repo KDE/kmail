@@ -231,24 +231,18 @@ namespace KMail {
     }
 
     for ( ; node ; node = node->nextSibling() ) {
-      ProcessResult processResult;
-
-      if ( node->processed() ) {
-        // ### (mmutz) I think this is a bug if node->processed() is
-        // true from the beginning (_can_ it?), then any crypto state is
-        // reset. I therefore believe that this code should be inside the
-        // corresponding conditional above:
-        processResult.adjustCryptoStatesOfNode( node );
-        continue;
-      }
+      if ( node->processed() )
+	continue;
 
       const BodyPartFormatter * bpf
-        = BodyPartFormatter::createFor( node->type(), node->subType() );
+	= BodyPartFormatter::createFor( node->type(), node->subType() );
       kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-                            << node->typeString() << '/' << node->subTypeString()
-                            << ')' << endl;
+			    << node->typeString() << '/' << node->subTypeString()
+			    << ')' << endl;
+
+      ProcessResult processResult;
       if ( !bpf->process( this, node, processResult ) )
-        defaultHandling( node, processResult );
+	defaultHandling( node, processResult );
 
       node->setProcessed( true, false );
 
@@ -2078,28 +2072,27 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     } else {
                         bool dateOK = ( 0 < block.creationTime.tm_year &&
                                         block.creationTime.tm_year < 3000 );
-                        QDate created;
+                        QDateTime created;
                         if ( dateOK )
-                          created = QDate( 1900 + block.creationTime.tm_year,
-                                           block.creationTime.tm_mon,
-                                           block.creationTime.tm_mday );
+                          created.setTime_t( mktime(&block.creationTime) );
                         if( dateOK && created.isValid() ) {
                             if( signer.isEmpty() ) {
                                 if( onlyShowKeyURL )
                                     htmlStr += i18n( "Message was signed with key %1." )
                                                 .arg( keyWithWithoutURL );
                                 else
-                                    htmlStr += i18n( "Message was signed with key %1, created %2." )
-                                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
+                                    htmlStr += i18n( "Message was signed on %1 with key %2." )
+                                                .arg( KGlobal::locale()->formatDateTime( created ) )
+                                                .arg( keyWithWithoutURL );
                             }
                             else {
                                 if( onlyShowKeyURL )
                                     htmlStr += i18n( "Message was signed with key %1." )
                                             .arg( keyWithWithoutURL );
                                 else
-                                    htmlStr += i18n( "Message was signed by %3 with key %1, created %2." )
+                                    htmlStr += i18n( "Message was signed by %3 on %1 with key %2" )
+                                            .arg( KGlobal::locale()->formatDateTime( created ) )
                                             .arg( keyWithWithoutURL )
-                                            .arg( created.toString( Qt::LocalDate ) )
                                             .arg( signer );
                             }
                         }
@@ -2141,14 +2134,13 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                   if( !block.keyId.isEmpty() ) {
                     bool dateOK = ( 0 < block.creationTime.tm_year &&
                                     block.creationTime.tm_year < 3000 );
-                    QDate created;
+                    QDateTime created;
                     if ( dateOK )
-                      created = QDate( 1900 + block.creationTime.tm_year,
-                                       block.creationTime.tm_mon,
-                                       block.creationTime.tm_mday );
+                      created.setTime_t( mktime(&block.creationTime) );
                     if( dateOK && created.isValid() )
-                        htmlStr += i18n( "Message was signed with unknown key %1, created %2." )
-                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
+                        htmlStr += i18n( "Message was signed on %1 with unknown key %2." )
+                                .arg( KGlobal::locale()->formatDateTime( created ) )
+                                .arg( keyWithWithoutURL );
                     else
                         htmlStr += i18n( "Message was signed with unknown key %1." )
                                 .arg( keyWithWithoutURL );
