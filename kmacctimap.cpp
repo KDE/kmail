@@ -134,7 +134,15 @@ void KMAcctImap::readConfig(KConfig& config)
 
   mLogin = config.readEntry("login", "");
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd) mPasswd = config.readEntry("pass");
+  if (mStorePasswd)
+  {
+    mPasswd = config.readEntry("pass");
+    if (mPasswd.isEmpty())
+    {
+      mPasswd = config.readEntry("passwd");
+      if (!mPasswd.isEmpty()) mPasswd = importPassword(mPasswd);
+    }
+  }
   else mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");

@@ -178,7 +178,15 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mAuth = config.readEntry("auth", "USER");
   mUsePipelining = config.readNumEntry("pipelining", FALSE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd) mPasswd = config.readEntry("pass");
+  if (mStorePasswd)
+  {
+    mPasswd = config.readEntry("pass");
+    if (mPasswd.isEmpty())
+    {
+      mPasswd = config.readEntry("passwd");
+      if (!mPasswd.isEmpty()) mPasswd = importPassword(mPasswd);
+    }
+  }
   else mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");

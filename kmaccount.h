@@ -144,6 +144,8 @@ public:
   static QString encryptStr(const QString& inStr);
   static QString decryptStr(const QString& inStr) { return  encryptStr(inStr); }
 
+  static QString importPassword(const QString &);
+
 signals:
   virtual void finishedCheck(bool newMail);
 
