@@ -2281,7 +2281,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this );
-  label = new QLabel( mAutoSave, i18n("Autosave every:"), this );
+  label = new QLabel( mAutoSave, i18n("Autosave interval:"), this );
   hlay->addWidget( label );
   hlay->addWidget( mAutoSave );
   mAutoSave->setSpecialValueText( i18n("No autosave") );
@@ -3923,16 +3923,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   connect( mOnStartupOpenFolder, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "On exit..." groupbox:
-  group = new QVGroupBox( i18n("On Program Exit, "
-			       "Perform Following Tasks"), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
-
+  // "Empty &trash on program exit" option:
+  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash on program exit"),
+                                    this );
+  vlay->addWidget( mEmptyTrashCheck );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  vlay->addWidget( group );
   vlay->addStretch( 1 );
 
   // and now: add QWhatsThis:
