@@ -1155,7 +1155,7 @@ int KMFolderMbox::compact()
         mtext.resize(20);
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
-        if(!strncasecmp(mtext.data(), "from ", 5)) {
+        if ( mtext.contains( "from ", false ) ) {
           if (mtext.size() < (size_t)folder_offset)
               mtext.resize(folder_offset);
           if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
@@ -1221,6 +1221,7 @@ int KMFolderMbox::compact()
     mAutoCreateIndex = false;
     close(true);
     mAutoCreateIndex = autoCreate;
+    needsCompact = false;             // We are clean now
   }
   else
   {
@@ -1236,7 +1237,6 @@ int KMFolderMbox::compact()
     mOpenCount = openCount;
   }
   emit changed();
-  needsCompact = false;             // We are clean now
   return 0;
 
 }
