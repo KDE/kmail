@@ -21,6 +21,7 @@
 #include <qspinbox.h>
 #include <qcombobox.h>
 #include <qvbox.h>
+#include <qlayout.h>
 #include <qpushbutton.h>
 
 #include <cassert>
@@ -30,14 +31,16 @@ CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 				       QWidget * parent,
 				       const char * name, bool modal )
   : KDialogBase( Tabbed, caption, Ok|Cancel|User1, Ok, parent, name, modal,
-		 false /* no <hr> */, i18n("Start Certificate Manager") ),
+		 false /* no <hr> */, i18n("Start Certificate &Manager") ),
   mWrapper( wrapper ), mPluginNumber( plugno )
 {
   //    addVBoxPage( i18n("Directory Services") )
   mDirServiceTab = new DirectoryServicesConfigurationDialogImpl( this );
   mDirServiceTab->hide();
-  mSignatureTab = new SignatureConfigurationDialogImpl( addVBoxPage( i18n("Signature Configuration") ) );
-  mEncryptionTab = new EncryptionConfigurationDialogImpl( addVBoxPage( i18n("Encryption Configuration") ) );
+  mSignatureTab = new SignatureConfigurationDialogImpl( addVBoxPage( i18n("&Signature Configuration") ) );
+  mSignatureTab->layout()->setMargin( 0 );
+  mEncryptionTab = new EncryptionConfigurationDialogImpl( addVBoxPage( i18n("&Encryption Configuration") ) );
+  mEncryptionTab->layout()->setMargin( 0 );
 
   connect( actionButton( User1 ), SIGNAL(clicked()),
 	   SLOT(slotStartCertManager()) );
