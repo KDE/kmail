@@ -144,7 +144,7 @@ void KMFolderDialog::slotOk()
   int curFolder = fileInFolder->currentItem();
 
   if (folder) oldFldName = folder->name();
-  if (*nameEdit->text()) fldName = nameEdit->text();
+  if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
   else fldName = oldFldName;
   if (fldName.isEmpty()) fldName = i18n("unnamed");
   if (curFolder != 0)
