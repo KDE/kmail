@@ -6,6 +6,7 @@
 #include <qguardedptr.h>
 #include <qptrlist.h>
 #include <qvaluelist.h>
+#include <qvaluevector.h>
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
@@ -683,6 +684,7 @@ protected:
   KMMoveCommand( Q_UINT32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
   void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
+  QValueVector<KMFolder*> mOpenedFolders;
 
 private:
   virtual Result execute();
