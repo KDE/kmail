@@ -23,7 +23,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
-#include <qspinbox.h>
 #include <qvalidator.h> 
 
 #include <kapp.h>
@@ -31,6 +30,7 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <knuminput.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -114,8 +114,8 @@ void AccountDialog::makeLocalAccountPage()
 	   this, SLOT(slotEnableLocalInterval(bool)) );
   mLocal.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
   topLayout->addWidget( mLocal.intervalLabel, 6, 0 );
-  mLocal.intervalSpin = new QSpinBox( page );
-  mLocal.intervalSpin->setRange( 1, 10000 );
+  mLocal.intervalSpin = new KIntNumInput( page );
+  mLocal.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mLocal.intervalSpin->setValue( 1 );
   topLayout->addWidget( mLocal.intervalSpin, 6, 1 );
 
@@ -222,8 +222,8 @@ void AccountDialog::makePopAccountPage()
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
   topLayout->addWidget( mPop.intervalLabel, 12, 0 );
-  mPop.intervalSpin = new QSpinBox( page );
-  mPop.intervalSpin->setRange( 1, 10000 );
+  mPop.intervalSpin = new KIntNumInput( page );
+  mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mPop.intervalSpin->setValue( 1 );
   topLayout->addWidget( mPop.intervalSpin, 12, 1 );
 
@@ -366,7 +366,7 @@ void AccountDialog::saveSettings()
     mAccount->setName( mLocal.nameEdit->text() );
     ((KMAcctLocal*)mAccount)->setLocation( mLocal.locationEdit->text() );
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ? 
-			     mLocal.intervalSpin->text().toInt() : 0 );
+			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
  
     mAccount->setPrecommand( mLocal.precommand->text() );
@@ -380,7 +380,7 @@ void AccountDialog::saveSettings()
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ? 
-			     mPop.intervalSpin->text().toInt() : 0 );
+			     mPop.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
     KMFolder *folder 

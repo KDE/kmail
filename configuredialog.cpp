@@ -41,7 +41,6 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qregexp.h>
-#include <qspinbox.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
 #include <qvbox.h>
@@ -55,6 +54,7 @@
 #include <klistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <knuminput.h>
 #include <kpgp.h>
 #include <ksimpleconfig.h>
 #include <kstddirs.h>
@@ -1017,8 +1017,8 @@ void ConfigureDialog::makeComposerPage( void )
   connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotWordWrapSelectionChanged()) );
   hlay->addWidget( mComposer.wordWrapCheck );
-  mComposer.wrapColumnSpin = new QSpinBox( page );
-  mComposer.wrapColumnSpin->setRange( 1, 10000 );
+  mComposer.wrapColumnSpin = new KIntNumInput( page );
+  mComposer.wrapColumnSpin->setRange( 1, 10000, 1, FALSE );
   hlay->addWidget( mComposer.wrapColumnSpin, 0, AlignLeft );
   hlay->addStretch(10);
 
@@ -1420,7 +1420,7 @@ void ConfigureDialog::setupComposerPage( void )
   mComposer.wordWrapCheck->setChecked( state );
 
   int value = config.readEntry("break-at","78" ).toInt();
-  mComposer.wrapColumnSpin->setValue( mComposer.wrapColumnSpin->bound(value) );
+  mComposer.wrapColumnSpin->setValue( value );
   slotWordWrapSelectionChanged();
 }
 
@@ -1790,7 +1790,7 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("pgp-auto-sign",
 		      mComposer.pgpAutoSignatureCheck->isChecked() );
     config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
-    config.writeEntry("break-at", mComposer.wrapColumnSpin->text().toInt() );
+    config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
   }
   if( activePage == mMime.pageIndex || everything )
   {

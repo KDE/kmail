@@ -30,7 +30,7 @@ class QListViewItem;
 class QMultiLineEdit;
 class QPushButton;
 class QRadioButton;
-class QSpinBox;
+class KIntNumInput;
 class KColorButton;
 class KFontChooser;
 class KpgpConfig;
@@ -317,7 +317,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox    *smartQuoteCheck;
       QCheckBox    *pgpAutoSignatureCheck;
       QCheckBox    *wordWrapCheck;
-      QSpinBox     *wrapColumnSpin;
+      KIntNumInput *wrapColumnSpin;
       LanguageItem *LanguageList;
       LanguageItem *CurrentLanguage;
     };

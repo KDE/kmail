@@ -27,7 +27,7 @@ class QCheckBox;
 class QComboBox;
 class QLabel;
 class QLineEdit;
-class QSpinBox;
+class KIntNumInput;
 class KMAccount;
 
 class AccountDialog : public KDialogBase
@@ -40,37 +40,37 @@ class AccountDialog : public KDialogBase
   private:
     struct LocalWidgets
     {
-      QLabel    *titleLabel;
-      QLineEdit *nameEdit;
-      QLineEdit *locationEdit;
-      QLineEdit *precommand;
-      QCheckBox *excludeCheck;
-      QCheckBox *intervalCheck;
-      QLabel    *intervalLabel;
-      QSpinBox  *intervalSpin;
-      QComboBox *folderCombo;
-      QComboBox *identityCombo;
+      QLabel       *titleLabel;
+      QLineEdit    *nameEdit;
+      QLineEdit    *locationEdit;
+      QLineEdit    *precommand;
+      QCheckBox    *excludeCheck;
+      QCheckBox    *intervalCheck;
+      QLabel       *intervalLabel;
+      KIntNumInput *intervalSpin;
+      QComboBox    *folderCombo;
+      QComboBox    *identityCombo;
     };
   
     struct PopWidgets
     {
-      QLabel    *titleLabel;
-      QLineEdit *nameEdit;
-      QLineEdit *loginEdit;
-      QLineEdit *passwordEdit;
-      QLineEdit *hostEdit;
-      QLineEdit *portEdit;
-      QLineEdit *precommand;
-      QCheckBox *useSSLCheck;
-      QCheckBox *storePasswordCheck;
-      QCheckBox *deleteMailCheck;
-      QCheckBox *retriveAllCheck;
-      QCheckBox *excludeCheck;
-      QCheckBox *intervalCheck;
-      QLabel    *intervalLabel;
-      QSpinBox  *intervalSpin;
-      QComboBox *folderCombo;
-      QComboBox *identityCombo;
+      QLabel       *titleLabel;
+      QLineEdit    *nameEdit;
+      QLineEdit    *loginEdit;
+      QLineEdit    *passwordEdit;
+      QLineEdit    *hostEdit;
+      QLineEdit    *portEdit;
+      QLineEdit    *precommand;
+      QCheckBox    *useSSLCheck;
+      QCheckBox    *storePasswordCheck;
+      QCheckBox    *deleteMailCheck;
+      QCheckBox    *retriveAllCheck;
+      QCheckBox    *excludeCheck;
+      QCheckBox    *intervalCheck;
+      QLabel       *intervalLabel;
+      KIntNumInput *intervalSpin;
+      QComboBox    *folderCombo;
+      QComboBox    *identityCombo;
     };
 
   private slots:
