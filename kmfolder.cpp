@@ -1107,6 +1107,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       kdDebug() << "Undoing changes" << endl;
       truncate( location(), revert );
     }
+    kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
+    exit(1);
+    /* This code is not 100% reliable
     bool busy = kernel->kbp()->isBusy();
     if (busy) kernel->kbp()->idle();
     KMessageBox::sorry(0,
@@ -1116,6 +1119,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     if (busy) kernel->kbp()->busy();
     if (opened) close();
     kernel->kbp()->idle();
+    */
     return error;
   }
 
@@ -1152,6 +1156,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 	kdDebug() << "Undoing changes" << endl;
 	truncate( indexLocation(), revert );
       }
+      kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
+      exit(1);
+      /* This code may not be 100% reliable
       bool busy = kernel->kbp()->isBusy();
       if (busy) kernel->kbp()->idle();
       KMessageBox::sorry(0,
@@ -1160,6 +1167,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 	     "Free space and sufficient quota are required to continue safely."));
       if (busy) kernel->kbp()->busy();
       if (opened) close();
+      */
       return error;
     }
   }
@@ -1451,14 +1459,14 @@ int KMFolder::countUnreadRecursive()
   KMFolderDir *dir = child();
   if (!dir)
       return count;
-  
+
   QListIterator<KMFolderNode> it(*dir);
   for ( ; it.current(); ++it )
       if (!it.current()->isDir()) {
 	  folder = static_cast<KMFolder*>(it.current());
 	  count += folder->countUnreadRecursive();
       }
-	       
+	
   return count;
 }
 
