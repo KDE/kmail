@@ -741,12 +741,17 @@ void KMFolderImap::checkValidity()
   url.setPath(imapPath() + ";UID=0:0");
   kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
 
-  if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
+  // Start with a clean slate
+  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+              this, SLOT( checkValidity() ) );
+
+  KMAcctImap::ConnectionState connectionState = mAccount->makeConnection();
+  if ( connectionState == ImapAccountBase::Error ) {
     kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     mContentState = imapNoInformation;
     return;
-  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting ) {
+  } else if ( connectionState == ImapAccountBase::Connecting ) {
     // We'll wait for the connectionResult signal from the account. If it
     // errors, the above will catch it.
     kdDebug(5006) << "CheckValidity - waiting for connection" << endl;
