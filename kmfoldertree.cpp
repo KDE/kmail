@@ -450,6 +450,9 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
       if (fti->folder && fti->folder->protocol() == "imap" && parent &&
           !parent->parent()) fti->setExpandable( TRUE );
       fti->setOpen( readIsListViewItemOpen(fti) );
+      // make sure that the folder-settings are correctly read on startup by calling listDirectory
+      if (readIsListViewItemOpen(fti) && fti->folder->protocol() == "imap")
+        slotFolderExpanded(fti);
     }
 }
 
