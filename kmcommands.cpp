@@ -1843,6 +1843,8 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
 
 void KMMoveCommand::completeMove( Result result )
 {
+  if ( mDestFolder )
+    mDestFolder->close();
   if ( mProgressItem )
     mProgressItem->setComplete();
   setResult( result );
