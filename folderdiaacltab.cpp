@@ -545,6 +545,12 @@ void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
       userIds.pop_front();
       addACLs( userIds, dlg.permissions() );
     }
+    if ( mImapAccount && mImapAccount->login() == ACLitem->userId()
+         && ( dlg.permissions() & ACLJobs::Administer ) == 0 ) {
+      if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel( topLevelWidget(),
+         i18n( "Do you really want to remove your own administration permissions for this folder? You will not be able to edit the permissions anymore afterwards." ), i18n( "Remove" ) ) )
+        return;
+    }
   }
 }
 
