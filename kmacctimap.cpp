@@ -19,43 +19,31 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
-#include "kmacctimap.moc"
+#endif
 
-#include "kmmainwin.h"
+#include "kmacctimap.h"
+using KMail::SieveConfig;
+
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
+#include "kmmainwin.h"
 
 #include <kmfolderimap.h>
-#include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-#include <qregexp.h>
-
-#include <netdb.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <netinet/in.h>
-#include <assert.h>
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAcctImapInherited(aOwner, aAccountName)
+  KMail::ImapAccountBase(aOwner, aAccountName)
 {
-  init();
-  mSlave = 0;
-  mTotal = 0;
   mFolder = 0;
-  mCountUnread = 0;
-  mCountLastUnread = 0;
-  mCountRemainChecks = 0;
-  errorDialogIsActive = false;
   mOpenFolders.setAutoDelete(true);
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
@@ -69,212 +57,30 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctImap::~KMAcctImap()
 {
-  killAllJobs();
-  if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-  emit deleted(this);
+  killAllJobs( true );
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctImap::type(void) const
+QString KMAcctImap::type() const
 {
   return "imap";
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::init(void)
-{
-  mHost   = "";
-  mPort   = 143;
-  mLogin  = "";
-  mPasswd = "";
-  mAuth = "*";
-  mStorePasswd = FALSE;
-  mAskAgain = FALSE;
-  mProgressEnabled = FALSE;
-  mPrefix = "/";
-  mAutoExpunge = TRUE;
-  mHiddenFolders = FALSE;
-  mOnlySubscribedFolders = FALSE;
-  mUseSSL = FALSE;
-  mUseTLS = FALSE;
-  mIdle = TRUE;
-  mSieveConfig = KMail::SieveConfig();
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::pseudoAssign(KMAccount* account)
-{
+void KMAcctImap::pseudoAssign( const KMAccount * a ) {
   mIdleTimer.stop();
-  killAllJobs();
-  if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-  mSlave = 0;
+  killAllJobs( true );
   if (mFolder)
   {
     mFolder->setContentState(KMFolderImap::imapNoInformation);
     mFolder->setSubfolderState(KMFolderImap::imapNoInformation);
   }
-  assert(account->type() == "imap");
-  KMAcctImap *acct = static_cast<KMAcctImap*>(account);
-  setName(acct->name());
-  setCheckInterval(acct->checkInterval());
-  setCheckExclude(acct->checkExclude());
-  setFolder(acct->folder());
-  setHost(acct->host());
-  setPort(acct->port());
-  setPrefix(acct->prefix());
-  setLogin(acct->login());
-  setTrash(acct->trash());
-  setAuth(acct->auth());
-  setAutoExpunge(acct->autoExpunge());
-  setHiddenFolders(acct->hiddenFolders());
-  setOnlySubscribedFolders(acct->onlySubscribedFolders());
-  setStorePasswd(acct->storePasswd());
-  setPasswd(acct->passwd(), acct->storePasswd());
-  setUseSSL(acct->useSSL());
-  setUseTLS(acct->useTLS());
-  setSieveConfig(acct->sieveConfig());
+  base::pseudoAssign( a );
 }
 
-//-----------------------------------------------------------------------------
-void KMAcctImap::readConfig(KConfig& config)
-{
-  KMAcctImapInherited::readConfig(config);
-
-  mLogin = config.readEntry("login", "");
-  mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd)
-  {
-    mPasswd = config.readEntry("pass");
-    if (mPasswd.isEmpty())
-    {
-      mPasswd = config.readEntry("passwd");
-      if (!mPasswd.isEmpty()) mPasswd = importPassword(mPasswd);
-    }
-  }
-  else mPasswd = "";
-  mHost = config.readEntry("host");
-  mPort = config.readNumEntry("port");
-  mAuth = config.readEntry("auth", "*");
-  mPrefix = config.readEntry("prefix", "/");
-  mTrash = config.readEntry("trash");
-  if (mFolder) mFolder->setImapPath(mPrefix);
-  mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
-  mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
-  mOnlySubscribedFolders = config.readBoolEntry("subscribed-folders", FALSE);
-  mUseSSL = config.readBoolEntry("use-ssl", FALSE);
-  mUseTLS = config.readBoolEntry("use-tls", FALSE);
-  mSieveConfig.readConfig( config );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::writeConfig(KConfig& config)
-{
-  KMAcctImapInherited::writeConfig(config);
-
-  config.writeEntry("login", mLogin);
-  config.writeEntry("store-passwd", mStorePasswd);
-  if (mStorePasswd) config.writeEntry("pass", mPasswd);
-  else config.writeEntry("passwd", "");
-
-  config.writeEntry("host", mHost);
-  config.writeEntry("port", static_cast<int>(mPort));
-  config.writeEntry("auth", mAuth);
-  config.writeEntry("prefix", mPrefix);
-  config.writeEntry("trash", mTrash);
-  config.writeEntry("auto-expunge", mAutoExpunge);
-  config.writeEntry("hidden-folders", mHiddenFolders);
-  config.writeEntry("subscribed-folders", mOnlySubscribedFolders);
-  config.writeEntry("use-ssl", mUseSSL);
-  config.writeEntry("use-tls", mUseTLS);
-
-  mSieveConfig.writeConfig( config );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setStorePasswd(bool b)
-{
-  mStorePasswd = b;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setUseSSL(bool b)
-{
-  mUseSSL = b;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setUseTLS(bool b)
-{
-  mUseTLS = b;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setLogin(const QString& aLogin)
-{
-  mLogin = aLogin;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMAcctImap::passwd(void) const
-{
-  return decryptStr(mPasswd);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setPasswd(const QString& aPasswd, bool aStoreInConfig)
-{
-  mPasswd = encryptStr(aPasswd);
-  mStorePasswd = aStoreInConfig;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setHost(const QString& aHost)
-{
-  mHost = aHost;
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
-{
-    /* TODO: doesn't yet compile because kmfolderimap.h needs to be merged (coolo)
-  KMImapJob *job;
-  for (KMFolderJob *it = mJobList.first(); it;
-       it = mJobList.next()) {
-    if ((*it).msgList().first() == msg) {
-      job = dynamic_cast<KMImapJob*>(it);
-      mapJobData.remove( job->mJob );
-      mJobList.remove( job );
-      delete job;
-      break;
-    }
-  }
-    */
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setPort(unsigned short int aPort)
-{
-  mPort = aPort;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setPrefix(const QString& aPrefix)
-{
-  mPrefix = aPrefix;
-  mPrefix.replace(QRegExp("[%*\"]"), "");
-  if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
-  if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
-  if (mFolder) mFolder->setImapPath(mPrefix);
+void KMAcctImap::setPrefixHook() {
+  if ( mFolder ) mFolder->setImapPath( prefix() );
 }
 
 //-----------------------------------------------------------------------------
@@ -282,17 +88,6 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 {
   mFolder = aFolder;
   mFolder->setImapPath(mPrefix);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::initJobData(jobData &jd)
-{
-  jd.total = 1;
-  jd.done = 0;
-  jd.parent = 0;
-  jd.quiet = FALSE;
-  jd.inboxOnly = FALSE;
 }
 
 
@@ -307,84 +102,13 @@ int KMAcctImap::tempOpenFolder(KMFolder *folder)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::setAutoExpunge(bool aAutoExpunge)
+void KMAcctImap::initJobData(jobData &jd)
 {
-  mAutoExpunge = aAutoExpunge;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setHiddenFolders(bool aHiddenFolders)
-{
-  mHiddenFolders = aHiddenFolders;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setOnlySubscribedFolders(bool aOnlySubscribedFolders)
-{
-  mOnlySubscribedFolders = aOnlySubscribedFolders;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setAuth(const QString& aAuth)
-{
-  mAuth = aAuth;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::initSlaveConfig()
-{
-  mSlaveConfig.clear();
-  mSlaveConfig.insert("auth", mAuth);
-  mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
-  if (mAutoExpunge) mSlaveConfig.insert("expunge", "auto");
-}
-
-
-//-----------------------------------------------------------------------------
-KURL KMAcctImap::getUrl()
-{
-  KURL url;
-  url.setProtocol(mUseSSL ? QString("imaps") : QString("imap"));
-  url.setUser(mLogin);
-  url.setPass(decryptStr(mPasswd));
-  url.setHost(mHost);
-  url.setPort(mPort);
-  return url;
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMAcctImap::makeConnection()
-{
-  if (mSlave) return TRUE;
-
-  if(mAskAgain || mPasswd.isEmpty() || mLogin.isEmpty())
-  {
-    QString passwd = decryptStr(mPasswd);
-    bool b = FALSE;
-    if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
-      i18n("You need to supply a username and a password to access this "
-      "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
-      != QDialog::Accepted)
-    {
-      emit finishedCheck(false);
-      return FALSE;
-    } else mPasswd = encryptStr(passwd);
-  }
-
-  initSlaveConfig();
-  mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
-  if (!mSlave)
-  {
-    KMessageBox::error(0, i18n("Could not start process for %1.")
-      .arg(getUrl().protocol()));
-    return FALSE;
-  }
-  return TRUE;
+  jd.total = 1;
+  jd.done = 0;
+  jd.parent = 0;
+  jd.quiet = FALSE;
+  jd.inboxOnly = FALSE;
 }
 
 
@@ -403,14 +127,14 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   }
   // check if we still display an error
   killAllJobs();
-  if ( !errorDialogIsActive )
+  if ( !mErrorDialogIsActive )
   {
-    errorDialogIsActive = true;
+    mErrorDialogIsActive = true;
     if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
           KIO::buildErrorString(errorCode, errorMsg),
           i18n("Error")) == KMessageBox::Ok )
     {
-      errorDialogIsActive = false;
+      mErrorDialogIsActive = false;
     }
   } else
     kdDebug(5006) << "suppressing error:" << errorMsg << endl;
@@ -440,7 +164,7 @@ void KMAcctImap::displayProgress()
     mIdleTimer.stop();
   int total = 0, done = 0;
   for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-    it != mapJobData.end(); it++)
+    it != mapJobData.end(); ++it)
   {
     total += (*it).total;
     done += (*it).done;
@@ -491,10 +215,10 @@ void KMAcctImap::slotAbortRequested()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::killAllJobs()
+void KMAcctImap::killAllJobs( bool disconnectSlave )
 {
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  for (it = mapJobData.begin(); it != mapJobData.end(); it++)
+  for (it = mapJobData.begin(); it != mapJobData.end(); ++it)
     if ((*it).parent)
     {
       // clear folder state
@@ -519,8 +243,30 @@ void KMAcctImap::killAllJobs()
     emit finishedCheck(false);
   }
   displayProgress();
+
+  if ( disconnectSlave && slave() ) {
+    KIO::Scheduler::disconnectSlave( slave() );
+    mSlave = 0;
+  }
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
+{
+    /* TODO: doesn't yet compile because kmfolderimap.h needs to be merged (coolo)
+  KMImapJob *job;
+  for (KMFolderJob *it = mJobList.first(); it;
+       it = mJobList.next()) {
+    if ((*it).msgList().first() == msg) {
+      job = dynamic_cast<KMImapJob*>(it);
+      mapJobData.remove( job->mJob );
+      mJobList.remove( job );
+      delete job;
+      break;
+    }
+  }
+    */
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
@@ -533,7 +279,7 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
       killAllJobs();
       break;
     }
-    else it++;
+    else ++it;
   }
 }
 
@@ -577,7 +323,7 @@ void KMAcctImap::processNewMail(bool interactive)
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
   mCountLastUnread = 0;
-  for (it = folderList.begin(); it != folderList.end(); it++)
+  for (it = folderList.begin(); it != folderList.end(); ++it)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -586,7 +332,7 @@ void KMAcctImap::processNewMail(bool interactive)
     }
   }
   // then check for new mails
-  for (it = folderList.begin(); it != folderList.end(); it++)
+  for (it = folderList.begin(); it != folderList.end(); ++it)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -619,27 +365,4 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
   postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
-//-----------------------------------------------------------------------------
-void KMAcctImap::postProcessNewMail(KMFolder* folder)
-{
-  disconnect(folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-      this, SLOT(postProcessNewMail(KMFolder*)));
-
-  mCountRemainChecks--;
-
-  // count the unread messages
-  mCountUnread += folder->countUnread();
-  if (mCountRemainChecks == 0)
-  {
-    // all checks are done
-    if (mCountUnread > 0 && mCountUnread > mCountLastUnread)
-    {
-      emit finishedCheck(true);
-      mCountLastUnread = mCountUnread;
-    } else {
-      emit finishedCheck(false);
-    }
-    mCountUnread = 0;
-  }
-}
-
+#include "kmacctimap.moc"

@@ -34,7 +34,7 @@
 
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAcctLocalInherited(aOwner, aAccountName)
+  base(aOwner, aAccountName)
 {
   mLock = procmail_lockfile;
 }
@@ -55,12 +55,13 @@ QString KMAcctLocal::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::init(void)
-{
+void KMAcctLocal::init() {
+  base::init();
+
   mLocation = getenv("MAIL");
   if (mLocation.isNull()) {
     mLocation = _PATH_MAILDIR;
-    mLocation += "/";
+    mLocation += '/';
     mLocation += getenv("USER");
   }
   setProcmailLockFileName("");
@@ -68,18 +69,16 @@ void KMAcctLocal::init(void)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::pseudoAssign(KMAccount *account)
+void KMAcctLocal::pseudoAssign( const KMAccount * a )
 {
-  assert(account->type() == "local");
-  KMAcctLocal *acct = static_cast<KMAcctLocal*>(account);
-  setName(acct->name());
-  setLocation(acct->location());
-  setCheckInterval(acct->checkInterval());
-  setCheckExclude(acct->checkExclude());
-  setLockType(acct->lockType());
-  setProcmailLockFileName(acct->procmailLockFileName());
-  setFolder(acct->folder());
-  setPrecommand(acct->precommand());
+  base::pseudoAssign( a );
+
+  const KMAcctLocal * l = dynamic_cast<const KMAcctLocal*>( a );
+  if ( !l ) return;
+
+  setLocation( l->location() );
+  setLockType( l->lockType() );
+  setProcmailLockFileName( l->procmailLockFileName() );
 }
 
 //-----------------------------------------------------------------------------
@@ -246,7 +245,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 //-----------------------------------------------------------------------------
 void KMAcctLocal::readConfig(KConfig& config)
 {
-  KMAcctLocalInherited::readConfig(config);
+  base::readConfig(config);
   mLocation = config.readEntry("Location", mLocation);
   QString locktype = config.readEntry("LockType", "procmail_lockfile" );
 
@@ -267,7 +266,7 @@ void KMAcctLocal::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::writeConfig(KConfig& config)
 {
-  KMAcctLocalInherited::writeConfig(config);
+  base::writeConfig(config);
 
   config.writeEntry("Location", mLocation);
 

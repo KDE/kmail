@@ -2,32 +2,42 @@
 // Authors: Don Sanders, (based on kmacctpop by)
 //          Stefan Taferner and Markus Wuebben
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
-#include "kmacctexppop.h"
-#include <netdb.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <mimelib/mimepp.h>
-#include <kdebug.h>
-#include <kstandarddirs.h>
-#include <kio/scheduler.h>
-#include <kio/passdlg.h>
+#endif
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include "kmacctexppop.h"
+
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
+#include "kmpopheaders.h"
 #include "kmpopfiltercnfrmdlg.h"
+#include "kmkernel.h"
+
+#include <kdebug.h>
+#include <kstandarddirs.h>
+#include <klocale.h>
+#include <kconfig.h>
+#include <kmessagebox.h>
+#include <kio/scheduler.h>
+#include <kio/passdlg.h>
+#include <kio/job.h>
+#include <kio/slave.h>
+#include <kio/global.h>
+using KIO::MetaData;
+
+static const unsigned short int pop3DefaultPort = 110;
 
 //-----------------------------------------------------------------------------
-KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAcctExpPopInherited(aOwner, aAccountName),
+KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName)
+  : base(aOwner, aAccountName),
     headerIt(headersOnServer)
 {
   init();
   job = 0;
-  slave = 0;
+  mSlave = 0;
+  mPort = defaultPort();
   stage = Idle;
   indexOfCurrentMsg = -1;
   curMsgStrm = 0;
@@ -68,20 +78,20 @@ QString KMAcctExpPop::type(void) const
   return "pop";
 }
 
+QString KMAcctExpPop::protocol() const {
+  return useSSL() ? "pop3s" : "pop3";
+}
+
+unsigned short int KMAcctExpPop::defaultPort() const {
+  return pop3DefaultPort;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::init(void)
 {
-  mHost   = "";
-  mPort   = 110;
-  mLogin  = "";
-  mPasswd = "";
-  mProtocol = 3;
-  mUseSSL = FALSE;
-  mUseTLS = FALSE;
+  base::init();
+
   mUsePipelining = FALSE;
-  mStorePasswd = FALSE;
-  mAskAgain = FALSE;
   mLeaveOnServer = FALSE;
   mFilterOnServer = FALSE;
   //tz todo
@@ -89,43 +99,17 @@ void KMAcctExpPop::init(void)
 }
 
 //-----------------------------------------------------------------------------
-KURL KMAcctExpPop::getUrl()
-{
-  KURL url;
-  if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-  else
-        url.setProtocol(QString("pop3"));
-  url.setUser(mLogin);
-  url.setPass(decryptStr(mPasswd));
-  url.setHost(mHost);
-  url.setPort(mPort);
-  return url;
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::pseudoAssign(KMAccount* account)
-{
-  assert(account->type() == "pop");
+void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
   slotAbortRequested();
-  KMAcctExpPop *acct = static_cast<KMAcctExpPop*>(account);
-  setName(acct->name());
-  setCheckInterval(acct->checkInterval());
-  setCheckExclude(acct->checkExclude());
-  setFolder(acct->folder());
-  setHost(acct->host());
-  setPort(acct->port());
-  setLogin(acct->login());
-  setUseSSL(acct->useSSL());
-  setUseTLS(acct->useTLS());
-  setAuth(acct->auth());
-  setUsePipelining(acct->usePipelining());
-  setStorePasswd(acct->storePasswd());
-  setPasswd(acct->passwd(), acct->storePasswd());
-  setLeaveOnServer(acct->leaveOnServer());
-  setFilterOnServer(acct->filterOnServer());
-  setFilterOnServerCheckSize(acct->filterOnServerCheckSize());
-  setPrecommand(acct->precommand());
+  base::pseudoAssign( a );
+
+  const KMAcctExpPop * p = dynamic_cast<const KMAcctExpPop*>( a );
+  if ( !p ) return;
+
+  setUsePipelining( p->usePipelining() );
+  setLeaveOnServer( p->leaveOnServer() );
+  setFilterOnServer( p->filterOnServer() );
+  setFilterOnServerCheckSize( p->filterOnServerCheckSize() );
 }
 
 //-----------------------------------------------------------------------------
@@ -172,28 +156,9 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::readConfig(KConfig& config)
 {
-  KMAcctExpPopInherited::readConfig(config);
+  base::readConfig(config);
 
-
-  mLogin = config.readEntry("login", "");
-  mUseSSL = config.readNumEntry("use-ssl", FALSE);
-  mUseTLS = config.readNumEntry("use-tls", FALSE);
-  mAuth = config.readEntry("auth", "USER");
   mUsePipelining = config.readNumEntry("pipelining", FALSE);
-  mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd)
-  {
-    mPasswd = config.readEntry("pass");
-    if (mPasswd.isEmpty())
-    {
-      mPasswd = config.readEntry("passwd");
-      if (!mPasswd.isEmpty()) mPasswd = importPassword(mPasswd);
-    }
-  }
-  else mPasswd = "";
-  mHost = config.readEntry("host");
-  mPort = config.readNumEntry("port");
-  mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mFilterOnServer = config.readNumEntry("filter-on-server", FALSE);
   mFilterOnServerCheckSize = config.readUnsignedNumEntry("filter-os-check-size", 50000);
@@ -203,20 +168,9 @@ void KMAcctExpPop::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::writeConfig(KConfig& config)
 {
-  KMAcctExpPopInherited::writeConfig(config);
+  base::writeConfig(config);
 
-  config.writeEntry("login", mLogin);
-  config.writeEntry("use-ssl", mUseSSL);
-  config.writeEntry("use-tls", mUseTLS);
-  config.writeEntry("auth", mAuth);
   config.writeEntry("pipelining", mUsePipelining);
-  config.writeEntry("store-passwd", mStorePasswd);
-  if (mStorePasswd) config.writeEntry("pass", mPasswd);
-  else config.writeEntry("passwd", "");
-
-  config.writeEntry("host", mHost);
-  config.writeEntry("port", static_cast<int>(mPort));
-  config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("filter-on-server", mFilterOnServer);
   config.writeEntry("filter-os-check-size", mFilterOnServerCheckSize);
@@ -224,37 +178,10 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setUseSSL(bool b)
-{
-  mUseSSL = b;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setUseTLS(bool b)
-{
-  mUseTLS = b;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setAuth(const QString &aAuth)
-{
-  mAuth = aAuth;
-}
-
-//-----------------------------------------------------------------------------
 void KMAcctExpPop::setUsePipelining(bool b)
 {
   mUsePipelining = b;
 }
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setStorePasswd(bool b)
-{
-  mStorePasswd = b;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setLeaveOnServer(bool b)
@@ -276,63 +203,8 @@ void KMAcctExpPop::setFilterOnServerCheckSize(unsigned int aSize)
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setLogin(const QString& aLogin)
-{
-  mLogin = aLogin;
-}
-
-
-//----------------------------------------------------------------------------
-QString KMAcctExpPop::passwd(void) const
-{
-  return decryptStr(mPasswd);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)
-{
-  mPasswd = encryptStr(aPasswd);
-  mStorePasswd = aStoreInConfig;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::clearPasswd()
-{
-  mPasswd = "";
-  mStorePasswd = FALSE;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setHost(const QString& aHost)
-{
-  mHost = aHost;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setPort(unsigned short int aPort)
-{
-  mPort = aPort;
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMAcctExpPop::setProtocol(short aProtocol)
-{
-  //assert(aProtocol==2 || aProtocol==3);
-  if(aProtocol != 2 || aProtocol != 3)
-    return false;
-  mProtocol = aProtocol;
-  return true;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctExpPop::connectJob() {
-  KIO::Scheduler::assignJobToSlave(slave, job);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
 	  SLOT( slotData( KIO::Job*, const QByteArray &)));
@@ -405,7 +277,7 @@ void KMAcctExpPop::slotAbortRequested()
   stage = Quit;
   if (job) job->kill();
   job = 0;
-  slave = 0;
+  mSlave = 0;
   slotCancel();
 }
 
@@ -452,19 +324,8 @@ void KMAcctExpPop::startJob() {
   numBytes = 0;
   numBytesRead = 0;
   stage = List;
-  mSlaveConfig.clear();
-  mSlaveConfig.insert("progress", "off");
-  mSlaveConfig.insert("pipelining", (mUsePipelining) ? "on" : "off");
-  mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
-  if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5" ||
-    mAuth == "DIGEST-MD5")
-  {
-    mSlaveConfig.insert("auth", "SASL");
-    mSlaveConfig.insert("sasl", mAuth);
-  }
-  else mSlaveConfig.insert("auth", mAuth);
-  slave = KIO::Scheduler::getConnectedSlave( url, mSlaveConfig );
-  if (!slave)
+  mSlave = KIO::Scheduler::getConnectedSlave( url, slaveConfig() );
+  if (!mSlave)
   {
     slotSlaveError(0, KIO::ERR_CANNOT_LAUNCH_PROCESS, url.protocol());
     return;
@@ -474,6 +335,22 @@ void KMAcctExpPop::startJob() {
   connectJob();
 }
 
+MetaData KMAcctExpPop::slaveConfig() const {
+  MetaData m = base::slaveConfig();
+
+  m.insert("progress", "off");
+  m.insert("pipelining", (mUsePipelining) ? "on" : "off");
+  if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5" ||
+      mAuth == "DIGEST-MD5") {
+    m.insert("auth", "SASL");
+    m.insert("sasl", mAuth);
+  } else if ( mAuth == "*" )
+    m.insert("auth", "USER");
+  else
+    m.insert("auth", mAuth);
+
+  return m;
+}
 
 //-----------------------------------------------------------------------------
 // one message is finished
@@ -727,8 +604,8 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Quit) {
     kdDebug(5006) << "stage == Quit" << endl;
     job = 0;
-    if (slave) KIO::Scheduler::disconnectSlave(slave);
-    slave = 0;
+    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+    mSlave = 0;
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( "P" + mName, 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
@@ -902,7 +779,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     stage = Idle;
     if (job) job->kill();
     job = 0;
-    slave = 0;
+    mSlave = 0;
     KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
                           i18n("Invalid Response From Server"));
     return;
@@ -943,8 +820,8 @@ void KMAcctExpPop::slotResult( KIO::Job* )
 void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
-  if (aSlave != slave) return;
-  if (error == KIO::ERR_SLAVE_DIED) slave = 0;
+  if (aSlave != mSlave) return;
+  if (error == KIO::ERR_SLAVE_DIED) mSlave = 0;
   if (interactive) {
     KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
   }
@@ -968,6 +845,10 @@ void KMAcctExpPop::slotGetNextHdr(){
   curMsgStrm = 0;
 
   curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
+}
+
+void KMAcctExpPop::killAllJobs( bool ) {
+  // must reimpl., but we don't use it yet
 }
 
 #include "kmacctexppop.moc"

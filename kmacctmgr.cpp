@@ -1,25 +1,23 @@
 // KMail Account Manager
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
 #include "kmacctmgr.h"
+
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
 #include "kmbroadcaststatus.h"
+#include "kmkernel.h"
 #include "kmfiltermgr.h"
-
-
-#include <assert.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <kconfig.h>
 
 #include <qstringlist.h>
 #include <qregexp.h>

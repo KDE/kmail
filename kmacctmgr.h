@@ -6,12 +6,10 @@
 #define kmacctmgr_h
 
 #include <qobject.h>
-#include <qptrlist.h>
-#include <qstring.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qstringlist.h>
 #include "kmaccount.h"
+
+class QString;
+class QStringList;
 
 #define KMAcctMgrInherited QObject
 

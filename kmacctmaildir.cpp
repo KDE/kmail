@@ -29,7 +29,7 @@
 
 //-----------------------------------------------------------------------------
 KMAcctMaildir::KMAcctMaildir(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAcctMaildirInherited(aOwner, aAccountName)
+  base(aOwner, aAccountName)
 {
 }
 
@@ -49,8 +49,9 @@ QString KMAcctMaildir::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::init(void)
-{
+void KMAcctMaildir::init() {
+  base::init();
+
   mLocation = getenv("MAIL");
   if (mLocation.isNull()) {
     mLocation = getenv("HOME");
@@ -60,16 +61,14 @@ void KMAcctMaildir::init(void)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMaildir::pseudoAssign(KMAccount *account)
+void KMAcctMaildir::pseudoAssign( const KMAccount * a )
 {
-  assert(account->type() == "maildir");
-  KMAcctMaildir *acct = static_cast<KMAcctMaildir*>(account);
-  setName(acct->name());
-  setLocation(acct->location());
-  setCheckInterval(acct->checkInterval());
-  setCheckExclude(acct->checkExclude());
-  setFolder(acct->folder());
-  setPrecommand(acct->precommand());
+  base::pseudoAssign( a );
+
+  const KMAcctMaildir * m = dynamic_cast<const KMAcctMaildir*>( a );
+  if ( !m ) return;
+
+  setLocation( m->location() );
 }
 
 //-----------------------------------------------------------------------------
@@ -218,7 +217,7 @@ void KMAcctMaildir::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::readConfig(KConfig& config)
 {
-  KMAcctMaildirInherited::readConfig(config);
+  base::readConfig(config);
   mLocation = config.readEntry("Location", mLocation);
 }
 
@@ -226,8 +225,7 @@ void KMAcctMaildir::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::writeConfig(KConfig& config)
 {
-  KMAcctMaildirInherited::writeConfig(config);
-
+  base::writeConfig(config);
   config.writeEntry("Location", mLocation);
 }
 

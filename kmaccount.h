@@ -77,12 +77,12 @@ public:
   /**
    * Set intelligent default values to the fields of the account.
    */
-  virtual void init(void) = 0;
+  virtual void init();
 
   /**
    * A weak assignment operator
    */
-  virtual void pseudoAssign(KMAccount*) = 0;
+  virtual void pseudoAssign(const KMAccount * a );
 
   /**
    * There can be exactly one folder that is fed by messages from an
@@ -93,7 +93,7 @@ public:
   /**
    * the id of the trash folder (if any) for this account
    */
-  const QString& trash(void) const { return mTrash; }
+  QString trash() const { return mTrash; }
   virtual void setTrash(const QString& aTrash) { mTrash = aTrash; }
 
   /**
@@ -142,7 +142,7 @@ public:
    * with "Check Mail".
    */
   virtual void setCheckExclude(bool aExclude);
-  int checkExclude(void) const { return mExclude; }
+  bool checkExclude(void) const { return mExclude; }
 
    /**
     * Pre command
