@@ -238,7 +238,7 @@ int KMFolderMaildir::expungeContents()
 {
   // nuke all messages in this folder now
   QDir d(location() + "/new");
-  d.setFilter(QDir::Files);
+  // d.setFilter(QDir::Files); coolo: QFile::remove returns false for non-files
   QStringList files(d.entryList());
   QStringList::ConstIterator it(files.begin());
   for ( ; it != files.end(); ++it)
@@ -263,6 +263,9 @@ int KMFolderMaildir::compact()
   QString subdirNew(location() + "/new/");
   QString subdirCur(location() + "/cur/");
 
+  QDir d(subdirNew);
+  QStringList newFiles(d.entryList());
+
   for (int i = 0; i < count(); i++)
   {
     KMMsgInfo *mi = (KMMsgInfo*)mMsgList[i];
@@ -274,8 +277,7 @@ int KMFolderMaildir::compact()
       continue;
 
     // first, make sure this isn't in the 'new' subdir
-    QString newFile(subdirNew + filename);
-    if (QFile::exists(newFile))
+    if ( newFiles.contains( filename ) )
       moveInternal(subdirNew + filename, subdirCur + filename, mi);
 
     // construct a valid filename.  if it's already valid, then
