@@ -481,7 +481,9 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
-  QString name, url, mimeType;
+  QString name;
+  KURL url;
+  QString mimeType;
   for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
     udsIt != uds.end(); udsIt++)
   {
@@ -492,7 +494,7 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
       if ((*eIt).m_uds == KIO::UDS_NAME)
         name = (*eIt).m_str;
       else if ((*eIt).m_uds == KIO::UDS_URL)
-        url = (*eIt).m_str;
+        url = KURL((*eIt).m_str, 106); // utf-8
       else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
         mimeType = (*eIt).m_str;
     }
@@ -501,19 +503,19 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
         && (!(*it).inboxOnly || name == "INBOX"))
     {
-      if (((*it).inboxOnly || KURL(url).path() == "/INBOX/") && name == "INBOX")
+      if (((*it).inboxOnly || url.path() == "/INBOX/") && name == "INBOX")
         mHasInbox = TRUE;
       else {
         // Some servers send _lots_ of duplicates
         if (mSubfolderNames.findIndex(name) == -1)
         {
           mSubfolderNames.append(name);
-          mSubfolderPaths.append(KURL(url).path());
+          mSubfolderPaths.append(url.path());
           mSubfolderMimeTypes.append(mimeType);
         }
       }
 /*      static_cast<KMFolderTree*>((*it).parent->listView())
-        ->addImapChildFolder((*it).parent, name, KURL(url).path(),
+        ->addImapChildFolder((*it).parent, name, url.path(),
         mimeType, (*it).inboxOnly); */
     }
   }
@@ -1029,21 +1031,19 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder, QPtrList<KM
     jd.parent = NULL; mOffset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList = msgList;
-    QCString urlStr("C" + url.url().utf8());
-    QByteArray data;
-    QBuffer buff(data);
-    buff.open(IO_WriteOnly | IO_Append);
-    buff.writeBlock(urlStr.data(), urlStr.size());
-    urlStr = destUrl.url().utf8();
-    buff.writeBlock(urlStr.data(), urlStr.size());
-    buff.close();
+
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly);
+    
+    stream << (int) 'C' << url << destUrl;    
+
     if (!account->makeConnection())
     {
       account->mJobList.remove(this);
       delete this;
       return;
     }
-    KIO::SimpleJob *simpleJob = KIO::special(url, data, FALSE);
+    KIO::SimpleJob *simpleJob = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
     mJob = simpleJob;
     account->mapJobData.insert(mJob, jd);
@@ -1122,7 +1122,11 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
   if (job->error())
   {
     job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
+    if (job->error() == KIO::ERR_SLAVE_DIED) 
+    {
+       account->slaveDied(); // This deletes us.
+       return;
+    }
   } else {
     QString uid = mMsg->headerField("X-UID");
     (*it).data.resize((*it).data.size() + 1);
@@ -1171,7 +1175,11 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
   if (job->error())
   {
     job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
+    if (job->error() == KIO::ERR_SLAVE_DIED) 
+    { 
+      account->slaveDied(); // This deletes us
+      return;
+    }
   } else {
     if ( !(*it).msgList.isEmpty() )
     {
@@ -1200,7 +1208,11 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
   if (job->error())
   {
     job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
+    if (job->error() == KIO::ERR_SLAVE_DIED) 
+    {
+      account->slaveDied(); // This deletes us
+      return; 
+    }
   } else {
     if ( !(*it).msgList.isEmpty() )
     {
@@ -1420,15 +1432,14 @@ void KMFolderImap::setImapStatus(QString path, QCString flags)
   kdDebug(5006) << "setImapStatus path=" << path << endl;
   KURL url = mAccount->getUrl();
   url.setPath(path);
-  QCString urlStr("S" + url.url().utf8());
-  QByteArray data;
-  QBuffer buff(data);
-  buff.open(IO_WriteOnly | IO_Append);
-  buff.writeBlock(urlStr.data(), urlStr.size());
-  buff.writeBlock(flags.data(), flags.size());
-  buff.close();
+
+  QByteArray packedArgs;
+  QDataStream stream( packedArgs, IO_WriteOnly);
+    
+  stream << (int) 'S' << url << flags;    
+
   if (!mAccount->makeConnection()) return;
-  KIO::SimpleJob *job = KIO::special(url, data, FALSE);
+  KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
   jd.total = 1; jd.done = 0; jd.parent = NULL;

@@ -415,7 +415,12 @@ void KMAcctImap::slotIdleTimeout()
   } else {
     if (mSlave)
     {
-      KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
+      QByteArray packedArgs;
+      QDataStream stream( packedArgs, IO_WriteOnly);
+    
+      stream << (int) 'N';
+    
+      KIO::SimpleJob *job = KIO::special(getUrl(), packedArgs, FALSE);
       KIO::Scheduler::assignJobToSlave(mSlave, job);
       connect(job, SIGNAL(result(KIO::Job *)),
         this, SLOT(slotSimpleResult(KIO::Job *)));

@@ -463,14 +463,14 @@ void KMAcctExpPop::startJob() {
     mSlaveConfig.insert("sasl", mAuth);
   }
   else mSlaveConfig.insert("auth", mAuth);
-  slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
+  slave = KIO::Scheduler::getConnectedSlave( url, mSlaveConfig );
   if (!slave)
   {
     slotSlaveError(0, KIO::ERR_CANNOT_LAUNCH_PROCESS, url.protocol());
     return;
   }
   url.setPath(QString("/index"));
-  job = KIO::get( url.url(), false, false );
+  job = KIO::get( url, false, false );
   connectJob();
 }
 
@@ -514,7 +514,7 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug(5006) << "stage == List" << endl;
     KURL url = getUrl();
     url.setPath(QString("/uidl"));
-    job = KIO::get( url.url(), false, false );
+    job = KIO::get( url, false, false );
     connectJob();
     stage = Uidl;
   }
@@ -577,7 +577,7 @@ void KMAcctExpPop::slotJobFinished() {
       }
       headerIt.toFirst();
       url.setPath(QString("/headers/") + headerIds);
-      job = KIO::get( url.url(), false, false );
+      job = KIO::get( url, false, false );
       connectJob();
       slotGetNextHdr();
       stage = Head;
@@ -706,7 +706,7 @@ void KMAcctExpPop::slotJobFinished() {
     KURL url = getUrl();
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
       url.setPath(QString("/commit"));
-      job = KIO::get(url.url(), false, false );
+      job = KIO::get(url, false, false );
     }
     else {
       stage = Dele;
@@ -720,7 +720,7 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug(5006) << "stage == Dele" << endl;
     KURL url = getUrl();
     url.setPath(QString("/commit"));
-    job = KIO::get( url.url(), false, false );
+    job = KIO::get( url, false, false );
     stage = Quit;
     connectJob();
   }

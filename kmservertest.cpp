@@ -43,7 +43,13 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
     slotSlaveResult(NULL, 1);
     return;
   }
-  mJob = KIO::special(mUrl, QCString("capa"), FALSE);
+  
+  QByteArray packedArgs;
+  QDataStream stream( packedArgs, IO_WriteOnly);
+    
+  stream << (int) 'c';
+
+  mJob = KIO::special(mUrl, packedArgs, FALSE);
   KIO::Scheduler::assignJobToSlave(mSlave, mJob);
   connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
           SLOT(slotData(KIO::Job *, const QString &)));
@@ -97,7 +103,13 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
       slotSlaveResult(NULL, 1);
       return;
     }
-    mJob = KIO::special(mUrl, QCString("capa"), FALSE);
+
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly);
+    
+    stream << (int) 'c';
+
+    mJob = KIO::special(mUrl, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, mJob);
     connect(mJob, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
     if (error)
