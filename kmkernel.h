@@ -56,7 +56,6 @@ class KProgress;
 class KPassivePopup;
 class KMMainWin;
 class KMainWindow;
-class KMGroupware;
 class KMailICalIfaceImpl;
 class KMReaderWin;
 class KSystemTray;
@@ -210,7 +209,6 @@ public:
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
-  KMGroupware& groupware();
   KMailICalIfaceImpl& iCalIface();
 
   bool firstStart() { return the_firstStart; }
@@ -363,7 +361,6 @@ private:
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
   QTimer *mBackgroundTasksTimer;
-  KMGroupware * mGroupware;
   KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;
   // temporary mainwin

@@ -3,7 +3,7 @@
 
     This file is part of KMail.
 
-    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@sonofthor.dk>
     Copyright (c) 2002 Karl-Heinz Zimmer <khz@klaralvdalens-datakonsult.se>
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
 
@@ -37,33 +37,10 @@
 #ifndef KMGROUPWARE_H
 #define KMGROUPWARE_H
 
-#include <qguardedptr.h>
+#include <qstring.h>
 
-class KMAccount;
 class KMMessage;
-class KMMainWidget;
-class KURL;
 
-
-class KMGroupware : public QObject
-{
-  Q_OBJECT
-
-public:
-  KMGroupware( QObject* parent = 0, const char* name = 0 );
-  ~KMGroupware();
-
-  /**
-     Retrieve matching body part (either text/vCal (or vCard) or
-     application/ms-tnef) and decode it.
-
-     If return value is true, s holds a readable vPart.
-  */
-  static bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
-
-private slots:
-  void unregisteredFromDCOP( const QCString& );
-};
-
+bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
 
 #endif /* KMGROUPWARE_H */

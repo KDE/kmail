@@ -36,7 +36,6 @@
 
 #include "kmailicalIface.h"
 #include "kmfoldertype.h"
-
 #include <kfoldertree.h>
 
 #include <qdict.h>

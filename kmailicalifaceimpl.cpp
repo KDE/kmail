@@ -47,6 +47,7 @@
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"
+#include "kmgroupware.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -524,7 +525,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
       KMMessage *msg = f->getMsg( i );
       Q_ASSERT( msg );
       if( msg->isComplete() ) {
-        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+        if( vPartFoundAndDecoded( msg, s ) ) {
           QString uid( "UID" );
           vPartMicroParser( s, uid );
           const Q_UINT32 sernum = msg->getMsgSerNum();
@@ -614,7 +615,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   Accumulator *ac = mAccumulators.find( parent->location() );
   if( ac ) {
     QString s;
-    if ( !KMGroupware::vPartFoundAndDecoded( msg, s ) ) return;
+    if ( !vPartFoundAndDecoded( msg, s ) ) return;
     QString uid( "UID" );
     vPartMicroParser( s, uid );
     const Q_UINT32 sernum = msg->getMsgSerNum();
@@ -659,7 +660,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
          && storageFormat( f ) == StorageIcalVcard )
       lst << f->location();
   }
-  
+
   return lst;
 }
 
@@ -976,7 +977,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       switch( format ) {
         case StorageIcalVcard:
           // Read the iCal or vCard
-          ok = KMGroupware::vPartFoundAndDecoded( msg, s );
+          ok = vPartFoundAndDecoded( msg, s );
           if ( ok )
             vPartMicroParser( s, uid );
           break;
@@ -998,7 +999,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
           break;
       }
       if ( !ok ) {
-        if ( unget ) 
+        if ( unget )
           folder->unGetMsg( i );
         return;
       }
@@ -1058,7 +1059,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     QString uid( "UID" );
     switch( storageFormat( folder ) ) {
     case StorageIcalVcard:
-        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+        if( vPartFoundAndDecoded( msg, s ) ) {
             vPartMicroParser( s, uid );
             ok = true;
         }
@@ -1153,7 +1154,7 @@ bool KMailICalIfaceImpl::hideResourceFolder( KMFolder* folder ) const
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
   if( mUseResourceIMAP && folder ) {
-    if( folder == mCalendar || folder == mContacts 
+    if( folder == mCalendar || folder == mContacts
         || folder == mNotes || folder == mTasks
         || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
       KMail::FolderContentsType ct = folder->storage()->contentsType();
@@ -1293,7 +1294,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     if (  contentsType == 0 )
       return;
 
-    
+
     kdDebug( 5006 ) << "registering " << location << " as extra folder" << endl;
     // Make a new entry for the list
     ef = new ExtraFolder( folder );

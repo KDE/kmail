@@ -37,7 +37,6 @@ using KRecentAddress::RecentAddresses;
 #include "kmsystemtray.h"
 
 #include <kwin.h>
-#include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
@@ -123,8 +122,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // so better do it here, than in some code where changing the group of config()
   // would be unexpected
   GlobalSettings::self();
-
-  mGroupware = new KMGroupware( this );
 
   // Set up DCOP interface
   mICalIface = new KMailICalIfaceImpl();
@@ -1641,12 +1638,6 @@ KConfig* KMKernel::config()
     KMail::checkConfigUpdates();
   }
   return mySelf->mConfig;
-}
-
-KMGroupware & KMKernel::groupware()
-{
-  assert( mGroupware );
-  return *mGroupware;
 }
 
 KMailICalIfaceImpl& KMKernel::iCalIface()
