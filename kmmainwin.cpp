@@ -27,6 +27,7 @@
 #include <kstdaccel.h>
 
 #include <krun.h>
+#include <kprocess.h>
 #include <kopenwith.h>
 #include <kpopupmenu.h>
 
@@ -67,8 +68,6 @@
 #include "kmversion.h"
 #include "kwin.h"
 
-#include <errno.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <klocale.h>
 
@@ -664,10 +663,12 @@ void KMMainWin::slotMailChecked(bool newMail) {
     KNotifyClient::beep();
   }
 
-  // FIXME: change system() to a KProcess
   if (mExecOnNew) {
-    if (mNewMailCmd.length() > 0)
-      system((const char *)mNewMailCmd);
+    if (!mNewMailCmd.isEmpty()) {
+      KShellProcess p;
+      p << mNewMailCmd;
+      p.start(KProcess::DontCare);
+    }
   }
 
   if (mBoxOnNew && !mbNewMBVisible) {
@@ -1627,7 +1628,7 @@ void KMMainWin::setupMenuBar()
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
-  (void) new KAction( i18n("&Send Queued"), 0, this,
+  (void) new KAction( i18n("&Send Queued"), "mail_send_queued", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
