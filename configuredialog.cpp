@@ -722,8 +722,7 @@ void IdentityPage::slotNewIdentity()
     QString identityName = dialog.identityName().stripWhiteSpace();
     assert( !identityName.isEmpty() );
 
-    if ( mIdentities.count() == 1 )
-      mSecondIdentity = true;
+    mSecondIdentity = ( mIdentities.count() == 1 );
     
     //
     // Construct a new IdentityEntry:
