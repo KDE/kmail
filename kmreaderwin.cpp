@@ -230,8 +230,8 @@ kdDebug(5006) << "html" << endl;
                 writeHTMLStr(     "<br>&nbsp;<br>");
                 writeHTMLStr(i18n("This is the default - and safe - behavior of KMail."));
                 writeHTMLStr(     "<br>&nbsp;<br><font size=-1>");
-                writeHTMLStr(i18n("To enable HTML rendering at your own risk<br>"
-                                  "use respective &quot;Folder&quot; menu option."));
+                writeHTMLStr(i18n("To enable HTML rendering, at your own risk,<br>"
+                                  "use the respective &quot;Folder&quot; menu option."));
                 writeHTMLStr(     " </font></td></tr></table>&nbsp;<br>&nbsp;<br>");
               }
               writeHTMLStr(mCodec->toUnicode( htmlMail() ? cstr : KMMessage::html2source( cstr )));

@@ -1556,7 +1556,7 @@ bool KMComposeWin::applyChanges(void)
         else
           KMessageBox::sorry(this,
             i18n("Signing not done: No active Crypto Plug-In was found\n"
-                "and the build-in OpenPGP code did not run successfully.\n\n"
+                "and the built-in OpenPGP code did not run successfully.\n\n"
                 "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog\n."
                 "(or specify the traditional OpenPGP settings, resp.)."));
       }
@@ -1674,7 +1674,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
           KMessageBox::sorry(this,
           i18n( "<b>This message could not be encrypted!</b><br>&nbsp;<br>"
                 "The Crypto Plug-in %1<br>"
-                "did not return an encoded text bloc.<br>&nbsp;<br>"
+                "did not return an encoded text block.<br>&nbsp;<br>"
                 "Recipient's public key was not found or is untrusted.").arg(cryptPlug->libName()));
     } else {
       // we try calling the *old* build-in code for OpenPGP encrypting
@@ -1697,7 +1697,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
       else
         KMessageBox::sorry(this,
           i18n("Encrypting not done: No active Crypto Plug-In was found\n"
-               "and the build-in OpenPGP code did not run successfully.\n\n"
+               "and the built-in OpenPGP code did not run successfully.\n\n"
                "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog\n."
                "(or specify the traditional OpenPGP settings, resp.)."));
     }
@@ -2367,7 +2367,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             crlDaysLeft <
             cryptPlug->encryptionCRLNearExpiryInterval() ) {
             int ret = KMessageBox::warningYesNo( this,
-                                                 i18n( "The certification revocation lists that are used for checking the validity of the certificate you want to use for encrypting expires in %1 days.\n\nDo you still want to encrypt this message?" ).arg( crlDaysLeft ),
+                                                 i18n( "The certification revocation lists that are used for checking the validity of the certificate you want to use for encrypting expire in %1 days.\n\nDo you still want to encrypt this message?" ).arg( crlDaysLeft ),
                                                  i18n( "Certificate Warning" ) );
             if( ret == KMessageBox::No )
                 bEncrypt = false;
@@ -3595,7 +3595,7 @@ void KMComposeWin::slotSelectCrypto()
   }
   if( 0 > idx )
     idx = i;
-  dialog.entriesLB->insertItem( i18n( "[ traditional build-in crypto module ]" ) );
+  dialog.entriesLB->insertItem( i18n( "[ traditional built-in crypto module ]" ) );
 
   dialog.entriesLB->setFocus();
 
