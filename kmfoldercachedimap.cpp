@@ -182,7 +182,8 @@ void KMFolderCachedImap::readConfig()
   if( mImapPath.isEmpty() ) mImapPath = config->readEntry( "ImapPath" );
   if( QString( name() ).upper() == "INBOX" && mImapPath == "/INBOX/" )
   {
-    folder()->setLabel( i18n( "inbox" ) );
+    if ( folder()->label() == "INBOX" )
+      folder()->setLabel( i18n( "inbox" ) );
     // for the icon
     folder()->setSystemFolder( true );
   }
@@ -653,7 +654,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
     // Returns the new name if the folder was renamed, empty otherwise.
     QString newName = mAccount->renamedFolder( imapPath() );
-    if ( !newName.isEmpty() ) {
+    if ( !newName.isEmpty() && !folder()->isSystemFolder() ) {
       newState( mProgress, i18n("Renaming folder") );
       CachedImapJob *job = new CachedImapJob( newName, CachedImapJob::tRenameFolder, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
@@ -1507,7 +1508,9 @@ void KMFolderCachedImap::listDirectory2() {
     }
     f->setAccount(mAccount);
     f->setImapPath("/INBOX/");
-    f->folder()->setLabel(i18n("inbox"));
+    if ( f->folder()->label() == "INBOX" ) {
+      f->folder()->setLabel(i18n("inbox"));
+    }
     if (!node) {
       f->close();
       kmkernel->dimapFolderMgr()->contentsChanged();

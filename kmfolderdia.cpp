@@ -721,24 +721,23 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 //-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
+  QString oldFldName;
+  if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
+  QString fldName = !mNameEdit->text().isEmpty() ? mNameEdit->text() : oldFldName;
+  if ( mDlg->parentFolder() &&
+       mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
+       mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
+    fldName.remove('/');
+  fldName.remove(QRegExp("^\\.*"));
+  if (fldName.isEmpty()) fldName = i18n("unnamed");
+
   // moving of IMAP folders is not yet supported
   if ( mDlg->isNewFolder() || !mDlg->folder()->isSystemFolder() )
   {
     QString acctName;
-    QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
     KMFolder *selectedFolder = 0;
     int curFolder = mBelongsToComboBox->currentItem();
-
-    if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
-    if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
-    else fldName = oldFldName;
-    if ( mDlg->parentFolder() &&
-         mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
-         mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
-      fldName.remove('/');
-    fldName.remove(QRegExp("^\\.*"));
-    if (fldName.isEmpty()) fldName = i18n("unnamed");
 
     if (mMailboxTypeComboBox->currentItem() == 2) {
       selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
@@ -849,20 +848,21 @@ bool FolderDiaGeneralTab::save()
 
       }
     }
-    else if( ( oldFldName != fldName )
-             || ( mDlg->folder()->parent() != selectedFolderDir ) )
+    else if( mDlg->folder()->parent() != selectedFolderDir )
     {
-      if( mDlg->folder()->parent() != selectedFolderDir ) {
-        if( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
-          QString message = i18n("Moving IMAP folders is not supported");
-          KMessageBox::error( this, message );
-        } else
-          mDlg->folder()->rename(fldName, selectedFolderDir );
-      } else
-        mDlg->folder()->rename(fldName);
-
-      kmkernel->folderMgr()->contentsChanged();
+      if( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+        QString message = i18n("Moving IMAP folders is not supported");
+        KMessageBox::error( this, message );
+      } else {
+        mDlg->folder()->rename(fldName, selectedFolderDir );
+        kmkernel->folderMgr()->contentsChanged();
+      }
     }
+  }
+  // Renamed an existing folder?
+  if ( !mDlg->isNewFolder() && oldFldName != fldName ) {
+    mDlg->folder()->rename(fldName);
+    kmkernel->folderMgr()->contentsChanged();
   }
 
   KMFolder* folder = mDlg->folder();
