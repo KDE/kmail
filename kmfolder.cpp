@@ -1143,7 +1143,7 @@ const char* KMFolder::type() const
 QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  if (mIsSystemFolder) return i18n(name().latin1());
+  if (mIsSystemFolder) return i18n(name().utf8());
   return name();
 }
 
