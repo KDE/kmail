@@ -155,7 +155,7 @@ void KMMainWin::readPreConfig(void)
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
-    mLongFolderList = config->readBoolEntry("longFolderList", false);
+    mLongFolderList = config->readBoolEntry("longFolderList", true);
   }
 
   KConfigGroupSaver saver(config, "General");
