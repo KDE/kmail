@@ -73,6 +73,9 @@ using KMail::ObjectTreeParser;
 using KMail::PartMetaData;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
+#include "khtmlparthtmlwriter.h"
+using KMail::HtmlWriter;
+using KMail::KHtmlPartHtmlWriter;
 
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
@@ -1178,6 +1181,10 @@ void KMReaderWin::updateReaderWin()
     if( mMimePartTree )
       mMimePartTree->clear();
   }
+}
+
+HtmlWriter * KMReaderWin::makeHtmlWriter() {
+  return new KHtmlPartHtmlWriter( this );
 }
 
 //-----------------------------------------------------------------------------

@@ -37,6 +37,8 @@ namespace KMail {
   class PartMetaData;
   class ObjectTreeParser;
   class AttachmentStrategy;
+  class HtmlWriter;
+  class KHtmlPartHtmlWriter;
 };
 
 class partNode; // might be removed when KMime is used instead of mimelib
@@ -58,6 +60,7 @@ class KMReaderWin: public QWidget
   friend void KMMimePartTree::slotSaveAs();
 
   friend class KMail::ObjectTreeParser;
+  friend class KMail::KHtmlPartHtmlWriter;
 
 public:
   KMReaderWin( QWidget *parent,
@@ -177,6 +180,9 @@ public:
 
   /** Queue HTML code to be sent later in chunks to khtml */
   void queueHtml(const QString &aStr);
+
+  /** Return a @ref HtmlWriter connected to the @ref KHTMLPart we use */
+  KMail::HtmlWriter * makeHtmlWriter();
 
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
