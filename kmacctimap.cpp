@@ -87,6 +87,15 @@ const char* KMAcctImap::type(void) const
 
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::initSlaveConfig()
+{
+  mSlaveConfig.clear();
+  mSlaveConfig.insert("auth", mAuth);
+  mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::init(void)
 {
   mHost   = "";
@@ -105,6 +114,7 @@ void KMAcctImap::init(void)
   mAutoExpunge = TRUE;
   mHiddenFolders = FALSE;
   mUseSSL = FALSE;
+  mUseTLS = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -126,6 +136,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setUseSSL(acct->useSSL());
+  setUseTLS(acct->useTLS());
 }
 
 
@@ -134,7 +145,7 @@ KURL KMAcctImap::getUrl()
 {
   KURL url;
   url.setProtocol(mUseSSL ? QString("imaps") : QString("imap"));
-  url.setUser(mLogin + ";AUTH=" + mAuth);
+  url.setUser(mLogin);
   url.setPass(decryptStr(mPasswd));
   url.setHost(mHost);
   url.setPort(mPort);
@@ -153,7 +164,8 @@ bool KMAcctImap::makeConnection()
     KMImapPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
     if (!dlg.exec()) return FALSE;
   }
-  mSlave = KIO::Scheduler::getConnectedSlave(getUrl());
+  initSlaveConfig();
+  mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
   if (!mSlave) return FALSE;
   return TRUE;
 }
@@ -976,6 +988,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
+  mUseTLS = config.readBoolEntry("use-tls", FALSE);
 }
 
 
@@ -996,6 +1009,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("auto-expunge", mAutoExpunge);
   config.writeEntry("hidden-folders", mHiddenFolders);
   config.writeEntry("use-ssl", mUseSSL);
+  config.writeEntry("use-tls", mUseTLS);
 }
 
 
@@ -1037,6 +1051,13 @@ void KMAcctImap::setStorePasswd(bool b)
 void KMAcctImap::setUseSSL(bool b)
 {
   mUseSSL = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setUseTLS(bool b)
+{
+  mUseTLS = b;
 }
 
 

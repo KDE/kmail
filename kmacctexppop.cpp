@@ -20,6 +20,7 @@
 #include <kstddirs.h>
 #include <qlayout.h>
 #include <qdatastream.h>
+#include <kio/scheduler.h>
 
 #include "kmacctexppop.h"
 #include "kalarmtimer.h"
@@ -42,6 +43,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
 {
 
   mUseSSL = FALSE;
+  mUseTLS = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mProtocol = 3;
@@ -52,6 +54,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
     mPort = 110;
   }
   job = 0L;
+  slave = 0L;
   stage = Idle;
   indexOfCurrentMsg = -1;
   curMsgStrm = 0;
@@ -61,6 +64,12 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
   ss = new QTimer();
   connect( ss, SIGNAL( timeout() ), this, SLOT( slotGetNextMsg() ));
+  KIO::Scheduler::connect(
+    SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+    this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
+  KIO::Scheduler::connect(
+    SIGNAL(slaveConnected(KIO::Slave *)),
+    this, SLOT(slotSlaveConnected(KIO::Slave *)));
 }
 
 
@@ -97,8 +106,24 @@ void KMAcctExpPop::init(void)
   mPasswd = "";
   mProtocol = 3;
   mUseSSL = FALSE;
+  mUseTLS = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
+}
+
+//-----------------------------------------------------------------------------
+KURL KMAcctExpPop::getUrl()
+{
+  KURL url;
+  if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+  else
+        url.setProtocol(QString("pop3"));
+  url.setUser(mLogin);
+  url.setPass(decryptStr(mPasswd));
+  url.setHost(mHost);
+  url.setPort(mPort);
+  return url;
 }
 
 //-----------------------------------------------------------------------------
@@ -114,6 +139,7 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
   setPort(acct->port());
   setLogin(acct->login());
   setUseSSL(acct->useSSL());
+  setUseTLS(acct->useTLS());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setLeaveOnServer(acct->leaveOnServer());
@@ -160,6 +186,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
   mLogin = config.readEntry("login", "");
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
+  mUseTLS = config.readNumEntry("use-tls", FALSE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
@@ -177,6 +204,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
   config.writeEntry("login", mLogin);
   config.writeEntry("use-ssl", mUseSSL);
+  config.writeEntry("use-tls", mUseTLS);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
@@ -219,6 +247,13 @@ QString KMAcctExpPop::decryptStr(const QString &aStr) const
 void KMAcctExpPop::setUseSSL(bool b)
 {
   mUseSSL = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setUseTLS(bool b)
+{
+  mUseTLS = b;
 }
 
 
@@ -394,6 +429,7 @@ void KMExpPasswdDialog::slotCancelPressed()
 }
 
 void KMAcctExpPop::connectJob() {
+  KIO::Scheduler::assignJobToSlave(slave, job);
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
 	  SLOT( slotData( KIO::Job*, const QByteArray &)));
@@ -420,15 +456,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
 
-  KURL url;
-  if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-  else
-        url.setProtocol(QString("pop3"));
-  url.setUser(mLogin);
-  url.setPass(decryptStr(mPasswd));
-  url.setHost(mHost);
-  url.setPort(mPort);
+  KURL url = getUrl();
 
   while (cur != msgsAwaitingProcessing.end()) {
     // note we can actually end up processing events in processNewMsg
@@ -472,8 +500,9 @@ void KMAcctExpPop::slotAbortRequested()
 {
   if (stage == Idle) return;
   stage = Quit;
-  job->kill();
+  if (job) job->kill();
   job = 0L;
+  slave = 0L;
   slotCancel();
 }
 
@@ -492,16 +521,7 @@ void KMAcctExpPop::startJob() {
     }
   // end precommand code
 
-  KURL url;
-  if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-  else
-        url.setProtocol(QString("pop3"));
-  url.setUser(mLogin);
-  url.setPass(decryptStr(mPasswd));
-  url.setHost(mHost);
-  url.setPort(mPort);
-  url.setPath(QString("/index"));
+  KURL url = getUrl();
 
   if ( url.isMalformed() ) {
     KMessageBox::error(0, i18n("Source URL is malformed"),
@@ -525,23 +545,16 @@ void KMAcctExpPop::startJob() {
   numBytes = 0;
   numBytesRead = 0;
   stage = List;
-  job = KIO::get( url.url(), false, false );
-  connectJob();
+  mSlaveConfig.clear();
+  mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
+  slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
 }
 
 void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
     kdDebug() << "stage == List" << endl;
-    KURL url;
-    if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-    else
-        url.setProtocol(QString("pop3"));
-    url.setUser(mLogin);
-    url.setPass(decryptStr(mPasswd));
-    url.setHost(mHost);
-    url.setPort(mPort);
+    KURL url = getUrl();
     url.setPath(QString("/uidl"));
     job = KIO::get( url.url(), false, false );
     connectJob();
@@ -576,19 +589,18 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Dele) {
     kdDebug() << "stage == Dele" << endl;
-    KURL url;
-    if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-    else
-        url.setProtocol(QString("pop3"));
-    url.setUser(mLogin);
-    url.setPass(decryptStr(mPasswd));
-    url.setHost(mHost);
-    url.setPort(mPort);
-    url.setPath(QString("/commit"));
-    job = KIO::get(  url.url(), false, false );
+    if (idsOfMsgsToDelete.isEmpty())
+    {
+      KURL url = getUrl();
+      url.setPath(QString("/commit"));
+      job = KIO::get(  url.url(), false, false );
+      stage = Quit;
+    } else {
+      KURL::List::Iterator it = idsOfMsgsToDelete.begin();
+      job = KIO::file_delete( *it, false );
+      idsOfMsgsToDelete.remove(it);
+    }
     connectJob();
-    stage = Quit;
   }
   else if (stage == Quit) {
     kdDebug() << "stage == Quit" << endl;
@@ -646,21 +658,15 @@ void KMAcctExpPop::slotGetNextMsg()
 
 
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
-      KURL url;
-      if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-      else
-        url.setProtocol(QString("pop3"));
-      url.setUser(mLogin);
-      url.setPass(decryptStr(mPasswd));
-      url.setHost(mHost);
-      url.setPort(mPort);
+      KURL url = getUrl();
       url.setPath(QString("/commit"));
       job = KIO::get(url.url(), false, false );
     }
     else {
       stage = Dele;
-      job = KIO::del( idsOfMsgsToDelete, false, false );
+      KURL::List::Iterator it = idsOfMsgsToDelete.begin();
+      job = KIO::file_delete( *it, false );
+      idsOfMsgsToDelete.remove(it);
     }
   }
   else {
@@ -711,15 +717,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   QString qdata = data;
   int spc = qdata.find( ' ' );
   if (spc > 0) {
-    KURL url;
-    if (mUseSSL)
-        url.setProtocol(QString("pop3s"));
-    else
-        url.setProtocol(QString("pop3"));
-    url.setUser(mLogin);
-    url.setPass(decryptStr(mPasswd));
-    url.setHost(mHost);
-    url.setPort(mPort);
+    KURL url = getUrl();
 
     if (stage == List) {
       QString length = qdata.mid(spc+1);
@@ -780,3 +778,27 @@ void KMAcctExpPop::slotResult( KIO::Job* )
     slotJobFinished();
 }
 
+void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
+  const QString &errorMsg)
+{
+  if (aSlave != slave) return;
+  if (error == KIO::ERR_SLAVE_DIED)
+  {
+    slave = NULL;
+    KMessageBox::error(0,
+    i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
+  } else
+    KMessageBox::error(0, i18n("Error connecting to %1:\n\n%2")
+      .arg(mHost).arg(errorMsg));
+  stage = Quit;
+  slotCancel();
+}
+
+void KMAcctExpPop::slotSlaveConnected(KIO::Slave *aSlave)
+{
+  if (aSlave != slave) return;
+  KURL url = getUrl();
+  url.setPath(QString("/index"));
+  job = KIO::get( url.url(), false, false );
+  connectJob();
+}

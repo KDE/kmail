@@ -421,10 +421,15 @@ void AccountDialog::makePopAccountPage()
   mPop.portEdit->setValidator( new QIntValidator(this) );
   topLayout->addWidget( mPop.portEdit, 6, 1 );
 
+  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+    i18n("Encryption"), page );
   mPop.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download"), page);
-  topLayout->addMultiCellWidget( mPop.useSSLCheck, 7, 7, 0, 1);
+    new QCheckBox( i18n("Use SSL for secure mail download"), group );
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
+  mPop.useTLSCheck =
+    new QCheckBox( i18n("Use TLS for secure mail download"), group );
+  connect(mPop.useTLSCheck, SIGNAL(clicked()), this, SLOT(slotTLSChanged()));
+  topLayout->addMultiCellWidget( group, 7, 7, 0, 1 );
 
   mPop.storePasswordCheck =
     new QCheckBox( i18n("Store POP password in configuration file"), page );
@@ -533,12 +538,17 @@ void AccountDialog::makeImapAccountPage()
     new QCheckBox( i18n("Store IMAP password in configuration file"), page );
   topLayout->addMultiCellWidget( mImap.storePasswordCheck, 10, 10, 0, 1 );
 
-  mImap.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download"), page );
-  topLayout->addMultiCellWidget( mImap.useSSLCheck, 11, 11, 0, 1 );
-  connect(mImap.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotImapSSLChanged()));
-
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+    i18n("Encryption"), page );
+  mImap.useSSLCheck =
+    new QCheckBox( i18n("Use SSL for secure mail download"), group );
+  connect(mImap.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotImapSSLChanged()));
+  mImap.useTLSCheck =
+    new QCheckBox( i18n("Use TLS for secure mail download"), group );
+  connect(mImap.useTLSCheck, SIGNAL(clicked()), this, SLOT(slotImapTLSChanged()));
+  topLayout->addMultiCellWidget( group, 11, 11, 0, 1 );
+
+  group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page );
   mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
@@ -595,6 +605,7 @@ void AccountDialog::setupSettings()
     mPop.hostEdit->setText( ap.host() );
     mPop.portEdit->setText( QString("%1").arg( ap.port() ) );
     mPop.useSSLCheck->setChecked( ap.useSSL() );
+    mPop.useTLSCheck->setChecked( ap.useTLS() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
     mPop.intervalCheck->setChecked( interval >= 1 );
@@ -620,6 +631,7 @@ void AccountDialog::setupSettings()
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.useSSLCheck->setChecked( ai.useSSL() );
+    mImap.useTLSCheck->setChecked( ai.useTLS() );
     if (ai.auth() == "CRAM-MD5")
       mImap.authCramMd5->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
@@ -684,6 +696,7 @@ void AccountDialog::slotImapSSLChanged()
     } else {
       mImap.portEdit->setText("995");
     }
+    mImap.useTLSCheck->setChecked( FALSE );
   } else {
     struct servent *serv = getservbyname("imap", "tcp");
     if (serv) {
@@ -694,6 +707,13 @@ void AccountDialog::slotImapSSLChanged()
       mImap.portEdit->setText("110");
     }
   }
+}
+
+
+void AccountDialog::slotImapTLSChanged()
+{
+  mImap.useSSLCheck->setChecked( FALSE );
+  slotImapSSLChanged();
 }
 
 
@@ -708,6 +728,7 @@ void AccountDialog::slotSSLChanged()
     } else {
       mPop.portEdit->setText("995");
     }
+    mPop.useTLSCheck->setChecked( FALSE );
   } else {
     struct servent *serv = getservbyname("pop-3", "tcp");
     if (serv) {
@@ -718,6 +739,13 @@ void AccountDialog::slotSSLChanged()
       mPop.portEdit->setText("110");
     }
   }
+}
+
+
+void AccountDialog::slotTLSChanged()
+{
+  mPop.useSSLCheck->setChecked( FALSE );
+  slotSSLChanged();
 }
 
 
@@ -775,6 +803,7 @@ void AccountDialog::saveSettings()
     epa.setLogin( mPop.loginEdit->text() );
     epa.setPasswd( mPop.passwordEdit->text(), true );
     epa.setUseSSL( mPop.useSSLCheck->isChecked() );
+    epa.setUseTLS( mPop.useTLSCheck->isChecked() );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
@@ -794,6 +823,7 @@ void AccountDialog::saveSettings()
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setUseSSL( mImap.useSSLCheck->isChecked() );
+    epa.setUseTLS( mImap.useTLSCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
 

@@ -84,6 +84,9 @@ public:
   virtual ~KMAcctImap();
   virtual void init(void);
 
+  /** Initialize the slave configuration */
+  virtual void initSlaveConfig();
+
   /** Imap user login name */
   const QString& login(void) const { return mLogin; }
   virtual void setLogin(const QString&);
@@ -123,6 +126,10 @@ public:
   /** Use SSL or not */
   bool useSSL() { return mUseSSL; }
   virtual void setUseSSL(bool);
+
+  /** Use TLS or not */
+  bool useTLS() { return mUseTLS; }
+  virtual void setUseTLS(bool);
 
   /** List a directory and add the contents to a KMFolderTreeItem */
   void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
@@ -205,12 +212,14 @@ protected:
   bool    mStorePasswd;
   bool    mAutoExpunge;
   bool    mUseSSL;
+  bool    mUseTLS;
   bool    mHiddenFolders;
   bool    gotMsgs;
   bool    mProgressEnabled;
   int     mTotal;
 
   KIO::Slave *mSlave;
+  KIO::MetaData mSlaveConfig;
 
   QList<KMImapJob> mJobList;
 

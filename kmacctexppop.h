@@ -49,6 +49,10 @@ public:
   bool useSSL(void) const { return mUseSSL; }
   virtual void setUseSSL(bool);
 
+  /** Use TLS? */
+  bool useTLS(void) const { return mUseTLS; }
+  virtual void setUseTLS(bool);
+
   /** Will the password be stored in the config file ? */
   bool storePasswd(void) const { return mStorePasswd; }
   virtual void setStorePasswd(bool);
@@ -94,6 +98,9 @@ protected:
   /** Connect up the standard signals/slots for the KIO Jobs */
   void connectJob();
 
+  /** Get an URL for the account */
+  KURL getUrl();
+
   /** Process any queued messages and save the list of seen uids
       for this user/server */
   void processRemainingQueuedMessagesAndSaveUidList();
@@ -103,11 +110,14 @@ protected:
   unsigned short int mPort;
   short   mProtocol;
   bool    mUseSSL;
+  bool    mUseTLS;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
   bool    gotMsgs;
 
-  KIO::Job *job;
+  KIO::SimpleJob *job;
+  KIO::Slave *slave;
+  KIO::MetaData mSlaveConfig;
   QStringList idsOfMsgsPendingDownload;
   QValueList<int> lensOfMsgsPendingDownload;
 
@@ -169,6 +179,12 @@ protected slots:
   /* Called when a job is finished. Basically a finite state machine for
    cycling through the Idle, List, Uidl, Retr, Quit stages */
   void slotJobFinished();
+
+  /** Slave error handling */
+  void slotSlaveError(KIO::Slave *, int, const QString &);
+
+  /** Start the transfer, when the connection is established */
+  void slotSlaveConnected(KIO::Slave *);
 };
 
 

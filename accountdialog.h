@@ -70,6 +70,7 @@ class AccountDialog : public KDialogBase
       QLineEdit    *portEdit;
       QLineEdit    *precommand;
       QCheckBox    *useSSLCheck;
+      QCheckBox    *useTLSCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;
@@ -94,6 +95,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *useSSLCheck;
+      QCheckBox    *useTLSCheck;
       QRadioButton *authAuto;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
@@ -107,7 +109,9 @@ class AccountDialog : public KDialogBase
     void slotEnableLocalInterval( bool state );
     void slotFontChanged();
     void slotSSLChanged();
+    void slotTLSChanged();
     void slotImapSSLChanged();
+    void slotImapTLSChanged();
     
   private:
     void makeLocalAccountPage();
