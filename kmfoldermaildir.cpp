@@ -134,7 +134,16 @@ int KMFolderMaildir::create(bool imap)
 
   assert(!name().isEmpty());
   assert(mOpenCount == 0);
-
+  
+  // Make sure that neither a new, cur or tmp subfolder exists already.
+  QFileInfo dirinfo;
+  dirinfo.setFile(location() + "/new");
+  if (dirinfo.exists()) return 1;
+  dirinfo.setFile(location() + "/cur");
+  if (dirinfo.exists()) return 1;
+  dirinfo.setFile(location() + "/tmp");
+  if (dirinfo.exists()) return 1;
+  
   // create the maildir directory structure
   if (::mkdir(QFile::encodeName(location()), S_IRWXU) > 0)
   {
