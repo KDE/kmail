@@ -1375,7 +1375,7 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
   if (!inserted)
     set += ":" + QString::number(uids.last());
 
-  sets.append(set);
+  if (!set.isEmpty()) sets.append(set);
 
   return sets;
 }
