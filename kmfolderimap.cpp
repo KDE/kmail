@@ -820,7 +820,12 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error()) {
-    mAccount->handleJobError( job, i18n("Error while querying the server status.") );
+    if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
+      // we suppress access denied messages because they are normally a result of
+      // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that 
+      // we notice when this changes
+      mAccount->handleJobError( job, i18n("Error while querying the server status.") );
+    }
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else {
