@@ -121,6 +121,8 @@ protected slots:
   /** Called when the user clicks the 'Rename' button. Pops up a
       dialog prompting to enter the new name. */
   void slotRename();
+    /** Called when the user clicks the 'Duplicate' button */
+    void slotDuplicate();
 
 protected:
   /** The deep copy of the filter list. */
@@ -128,7 +130,7 @@ protected:
   /** The listbox displaying the filter list. */
   QListBox *mListBox;
   /** The various action buttons. */
-  QPushButton *mBtnNew, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
+  QPushButton *mBtnNew, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename, *mBtnDuplicate;
   /** The index of the currently selected item. */
   int mIdxSelItem;
   bool mShowLater;

@@ -372,9 +372,15 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete = new QPushButton( QString::null, hb );
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
+
+  mBtnDuplicate = new QPushButton( QString::null, hb );
+  mBtnDuplicate->setPixmap( BarIcon( "tab_duplicate", KIcon::SizeSmall ) );
+  mBtnDuplicate->setMinimumSize( mBtnDuplicate->sizeHint() * 1.2 );
+
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
   QToolTip::add( mBtnNew, i18n("New") );
   QToolTip::add( mBtnDelete, i18n("Delete"));
+  QToolTip::add( mBtnDuplicate, i18n("Duplicate"));
   QWhatsThis::add( mBtnNew, i18n(_wt_filterlist_new) );
   QWhatsThis::add( mBtnDelete, i18n(_wt_filterlist_delete) );
   QWhatsThis::add( mBtnRename, i18n(_wt_filterlist_rename) );
@@ -395,7 +401,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 	   this, SLOT(slotDelete()) );
   connect( mBtnRename, SIGNAL(clicked()),
 	   this, SLOT(slotRename()) );
-
+  connect( mBtnDuplicate, SIGNAL(clicked()),
+           this, SLOT(slotDuplicate()));
   // the dialog should call loadFilterList()
   // when all signals are connected.
   enableControls();
@@ -526,11 +533,22 @@ void KMFilterListBox::slotSelected( int aIdx )
   enableControls();
 }
 
+void KMFilterListBox::slotDuplicate()
+{
+    // just insert a new filter.
+    KMFilter *f = mFilterList.at(mIdxSelItem);
+    if ( f )
+    {
+        insertFilter( new KMFilter(*f) );
+        enableControls();
+    }
+}
+
 void KMFilterListBox::slotNew()
 {
-  // just insert a new filter.
-  insertFilter( new KMFilter(0, bPopFilter) );
-  enableControls();
+    // just insert a new filter.
+    insertFilter( new KMFilter(0, bPopFilter) );
+    enableControls();
 }
 
 void KMFilterListBox::slotDelete()
@@ -640,7 +658,7 @@ void KMFilterListBox::enableControls()
   mBtnDown->setEnabled( aFilterIsSelected && !theLast );
   mBtnDelete->setEnabled( aFilterIsSelected );
   mBtnRename->setEnabled( aFilterIsSelected );
-
+  mBtnDuplicate->setEnabled( aFilterIsSelected );
   if ( aFilterIsSelected )
     mListBox->ensureCurrentVisible();
 }
