@@ -120,10 +120,10 @@ namespace KMail {
                   inboxOnly(false), quiet(false), cancellable(false), createInbox(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
-          int _total = 1, int _done = 0, bool _quiet = false, 
+          int _total = 1, int _done = 0, bool _quiet = false,
           bool _inboxOnly = false, bool _cancelable = false, bool _createInbox = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(_cancelable), 
+          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(_cancelable),
           createInbox(_createInbox) {}
 
       // Return "url" in a form that can be displayed in HTML (w/o password)
@@ -164,11 +164,6 @@ namespace KMail {
     void removeJob( KIO::Job* job ) {
       mapJobData.remove( job );
     }
-
-    /**
-     * Starts the folderlisting for the root folder
-     */
-    virtual void listDirectory() = 0;
 
     /**
      * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder

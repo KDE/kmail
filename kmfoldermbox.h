@@ -102,13 +102,6 @@ public:
 
   virtual IndexStatus indexStatus();
 
-  /**
-   * List a directory
-   * returns false if the connection failed
-   */
-  virtual bool listDirectory(bool secondStep = false) { 
-    Q_UNUSED(secondStep); return false; }
-
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;

@@ -111,11 +111,6 @@ public:
   virtual void invalidateIMAPFolders( KMFolderCachedImap* );
 
   /**
-   * Starts the folderlisting for the root folder
-   */
-  virtual void listDirectory();
-
-  /**
    * Remember that a folder got explicitely deleted
    */
   void addDeletedFolder( const QString& subFolderPath );
@@ -148,8 +143,8 @@ public:
 
   /**
    * Returns the root folder of this account
-   */ 
-  virtual FolderStorage* rootFolder();  
+   */
+  virtual FolderStorage* rootFolder();
 
 protected:
   friend class KMAcctMgr;

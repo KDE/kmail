@@ -357,11 +357,6 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::listDirectory()
-{
-  mFolder->listDirectory();
-}
-
 void KMAcctCachedImap::addDeletedFolder( const QString& subFolderPath )
 {
   mDeletedFolders.append( subFolderPath );
