@@ -844,8 +844,6 @@ KMFolder *KMFolderTree::currentFolder() const
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
   if (!qlvi) return;
-  disconnect(this, SIGNAL(currentChanged(QListViewItem*)),
-         this, SLOT(doFolderSelected(QListViewItem*)));
 
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
@@ -885,8 +883,6 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
       slotUpdateCounts(folder);
     }
   }
-  connect(this, SIGNAL(currentChanged(QListViewItem*)),
-         this, SLOT(doFolderSelected(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
