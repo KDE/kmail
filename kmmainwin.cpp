@@ -1099,10 +1099,10 @@ void KMMainWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoAddAddrBook()
 {
-#warning mario: had to disable this for compile
-//    if (mUrlCurrent.isEmpty()) return;
-//    kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
-//    statusMsg(i18n("Address added to addressbook."));
+
+    if (mUrlCurrent.isEmpty()) return;
+    kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
+    statusMsg(i18n("Address added to addressbook."));
 }
 
 
