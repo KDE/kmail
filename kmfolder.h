@@ -260,9 +260,11 @@ public:
     success.  @see KMFolder::expungeContents */
   int expunge();
 
-  /** Remove deleted messages from the folder. Returns zero on success
-    and an errno on failure. */
-  int compact();
+  /**
+   * Compact this folder.
+   * If immediate is true, do it immediately; otherwise schedule it for later
+   */
+  void compact( bool immediate = true );
 
   /** Physically rename the folder. Returns zero on success and an errno
     on failure. */

@@ -488,13 +488,6 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 }
 
 
-void KMKernel::compactAllFolders ()
-{
-  kdDebug(5006) << "KMKernel::compactAllFolders called" << endl;
-  the_folderMgr->compactAll();
-  kdDebug(5006) << "KMKernel::compactAllFolders finished" << endl;
-}
-
 int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlString)
 {
   return dcopAddMessage(foldername, KURL(msgUrlString));
@@ -696,15 +689,15 @@ void KMKernel::quit()
      - msgsender is nonblocking
        (our own, QSocketNotifier based. Pops up errors and sends signal
         senderFinished when done)
-     - compacting is non blocking (port to FolderJob & ScheduledTask)
 
    o If we are getting mail, stop it (but don´t lose something!)
+         [Done already, see mailCheckAborted]
    o If we are sending mail, go on UNLESS this was called by SM,
        in which case stop ASAP that too (can we warn? should we continue
        on next start?)
    o If we are compacting, or expunging, go on UNLESS this was SM call.
        In that case stop compacting ASAP and continue on next start, before
-       touching any folders.
+       touching any folders. [Not needed anymore with CompactionJob]
 
    KMKernel::quit ()
    {
@@ -719,7 +712,6 @@ void KMKernel::quit()
      No, normal quit call
        All windows are off. Anything to do, should compact or sender sends?
          Yes, maybe put an icon in panel as a sign of life
-         Folder manager, go compacting (*except* outbox and sent-mail!)
          if sender sending, connect us to his finished slot, declare us ready
                             for quit and wait for senderFinished
          if not, Folder manager, go compact sent-mail and outbox
@@ -732,9 +724,6 @@ void KMKernel::slotSenderFinished()
     -- another kmail may start now ---
   kapp->quit();
 }
-
-void KMKernel::
-void KMKernel::
 */
 
 
@@ -964,12 +953,12 @@ void KMKernel::init()
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SLOT( slotFolderRemoved(KMFolder*) ) );
 
-  mExpireFoldersTimer = new QTimer( this );
-  connect( mExpireFoldersTimer, SIGNAL( timeout() ), this, SLOT( slotExpireAllFolders() ) );
+  mBackgroundTasksTimer = new QTimer( this );
+  connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-  mExpireFoldersTimer->start( 10000, true ); // 10s minute, singleshot
+  mBackgroundTasksTimer->start( 10000, true ); // 10s minute, singleshot
 #else
-  mExpireFoldersTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
+  mBackgroundTasksTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
 #endif
 }
 
@@ -1182,24 +1171,16 @@ void KMKernel::cleanup(void)
   kapp->enter_loop();
 }
 
-void KMKernel::cleanupProgress()
-{
-  mProgress->advance( 1 );
-}
-
 void KMKernel::cleanupLoop()
 {
   QStringList cleanupMsgs;
   cleanupMsgs << i18n("Cleaning up...")
-              << i18n("Emptying trash...")
-              << i18n("Compacting folders...");
+              << i18n("Emptying trash...");
   enum { CleaningUpMsgNo = 0,
-         EmptyTrashMsgNo = 1,
-         CompactingFoldersMsgNo = 2 };
+         EmptyTrashMsgNo = 1 };
   mProgress = 0;
   mCleanupLabel = 0;
   mCleanupPopup = 0;
-  int nrFolders = the_folderMgr->folderCount();
   if (closed_by_user)
   {
     mCleanupPopup = new KPassivePopup();
@@ -1221,13 +1202,13 @@ void KMKernel::cleanupLoop()
     mProgress->setMinimumWidth( maxTextWidth+20 );
     mCleanupPopup->setView( box );
 
-    mProgress->setTotalSteps(nrFolders*2+2);
-    mProgress->setProgress(1);
+    mProgress->setTotalSteps(2);
+    mProgress->setProgress(0);
     QApplication::syncX();
     mCleanupPopup->adjustSize();
     mCleanupPopup->show();
     kapp->processEvents();
-    connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
+    //connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
   }
 
 
@@ -1255,27 +1236,9 @@ void KMKernel::cleanupLoop()
     }
   }
 
-  if (mProgress)
-    mProgress->setProgress(2);
-
-  if (mProgress)
-     mProgress->setProgress(2+nrFolders);
-
-  if (closed_by_user && the_folderMgr) {
-    if (config->readBoolEntry("compact-all-on-exit", true))
-    {
-      if (mCleanupLabel)
-      {
-        mCleanupLabel->setText( cleanupMsgs[CompactingFoldersMsgNo] );
-        QApplication::syncX();
-        kapp->processEvents();
-      }
-      the_folderMgr->compactAll(); // I can compact for ages in peace now!
-    }
-  }
   if (mProgress) {
     mCleanupLabel->setText( cleanupMsgs[CleaningUpMsgNo] );
-    mProgress->setProgress(2+2*nrFolders);
+    mProgress->setProgress(2);
     QApplication::syncX();
     kapp->processEvents();
   }
@@ -1762,23 +1725,45 @@ void KMKernel::slotFolderRemoved( KMFolder * aFolder )
   if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
 }
 
-void KMKernel::slotExpireAllFolders() // the timer-based one
+void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 {
-  the_folderMgr->expireAllFolders( false /*scheduled*/ );
-  the_imapFolderMgr->expireAllFolders( false /*scheduled*/ );
-  the_dimapFolderMgr->expireAllFolders( false /*scheduled*/ );
-  // the_searchFolderMgr: no expiry there
+  // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
+  // a stable kmail release goes out with a nasty bug in CompactionJob...
+  KConfigGroup generalGroup( config(), "General" );
+
+  if ( generalGroup.readBoolEntry( "auto-expiring", true ) ) {
+    the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
+    // the_searchFolderMgr: no expiry there
+  }
+
+  if ( generalGroup.readBoolEntry( "auto-compaction", true ) ) {
+    the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
+    // the_imapFolderMgr: no compaction
+    the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
+    // the_searchFolderMgr: no compaction
+  }
+
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-  mExpireFoldersTimer->start( 60 * 1000, true ); // check again in 1 minute
+  mBackgroundTasksTimer->start( 60 * 1000, true ); // check again in 1 minute
 #else
-  mExpireFoldersTimer->start( 4 * 60 * 60 * 1000, true ); // check again in 4 hours
+  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true ); // check again in 4 hours
 #endif
+
 }
 
-void KMKernel::expireAllFoldersNow() // the GUI one
+void KMKernel::expireAllFoldersNow() // called by the GUI
 {
   the_folderMgr->expireAllFolders( true /*immediate*/ );
   the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
+  the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
+}
+
+void KMKernel::compactAllFolders() // called by the GUI
+{
+  the_folderMgr->expireAllFolders( true /*immediate*/ );
+  //the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
   the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
 }
 

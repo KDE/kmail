@@ -87,6 +87,10 @@ public:
     and an errno on failure. */
   virtual int compact();
 
+  /** Remove some deleted messages from the folder. Returns zero on success
+    and an errno on failure. This is only for use from MboxCompactionJob. */
+  int compact( unsigned int startIndex, int nbMessages, FILE* tmpFile, off_t& offs, bool& done );
+
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return !mFilesLocked; }
 
@@ -95,6 +99,8 @@ public:
   void setProcmailLockFileName( const QString& );
 
   static QCString escapeFrom( const QCString & str );
+
+  virtual IndexStatus indexStatus();
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
@@ -117,8 +123,6 @@ protected:
   /** Unlock mail folder files. Called by ::close().  Returns 0 on success
     and an errno error code on failure. */
   virtual int unlock();
-
-  virtual IndexStatus indexStatus();
 
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and

@@ -393,6 +393,9 @@ public:
    */
   void addJob( FolderJob* ) const;
 
+  /** false if index file is out of sync with mbox file */
+  bool compactable() const { return mCompactable; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

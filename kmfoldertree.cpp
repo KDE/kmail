@@ -877,7 +877,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if (!fti->folder()) {
       folderMenu->insertItem(i18n("&Compact All Folders"),
-                     kmkernel->folderMgr(), SLOT(compactAll()));
+                             kmkernel->folderMgr(), SLOT(compactAll()));
       folderMenu->insertItem(i18n("&Expire All Folders"),
                              kmkernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {

@@ -37,7 +37,7 @@ public:
   virtual KMMessage* take(int idx);
   virtual void take(QPtrList<KMMessage> msgList)
   { return KMFolderIndex::take(msgList); }
-  
+
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
     an errno error code on failure. The index of the new message
@@ -77,6 +77,10 @@ public:
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
   virtual int create(bool imap = FALSE);
+
+  /** Remove some deleted messages from the folder. Returns zero on success
+    and an errno on failure. This is only for use from MaildirCompactionJob. */
+  int compact( unsigned int startIndex, int nbMessages, const QStringList& entryList, bool& done );
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */

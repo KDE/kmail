@@ -54,12 +54,6 @@ KMFolderMgr::~KMFolderMgr()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::compactAll()
-{
-  compactAllAux( &mDir );
-}
-
-//-----------------------------------------------------------------------------
 void KMFolderMgr::expireAll() {
   KConfig             *config = KMKernel::config();
   KConfigGroupSaver   saver(config, "General");
@@ -110,15 +104,16 @@ int KMFolderMgr::folderCount(KMFolderDir *dir)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::compactAllAux(KMFolderDir* dir)
+void KMFolderMgr::compactAllFolders(bool immediate, KMFolderDir* dir)
 {
+  if (dir == 0)
+    dir = &mDir;
   DO_FOR_ALL(
         {
-          compactAllAux(child);
+          compactAllFolders( immediate, child );
         },
         {
-          folder->compact(); // compact now if it's needed
-          emit progress();
+          folder->compact( immediate );
         }
   )
 }
@@ -216,7 +211,7 @@ KMFolder* KMFolderMgr::findById(const uint id)
 
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findIdString( const QString& folderId,
-                                     const uint id, 
+                                     const uint id,
                                      KMFolderDir *dir )
 {
   if (!dir)
@@ -478,7 +473,6 @@ void KMFolderMgr::expireAllFolders(bool immediate, KMFolderDir *adir) {
                if (folder->isAutoExpire()) {
                  folder->expireOldMessages( immediate );
                }
-               emit progress();
              }
   )
 }

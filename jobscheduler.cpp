@@ -71,7 +71,8 @@ void JobScheduler::registerTask( ScheduledTask* task )
     // Note that scheduling an identical task as the one currently running is allowed.
   }
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: adding task " << task << " for folder " << task->folder() << " " << task->folder()->label() << endl;
+  kdDebug(5006) << "JobScheduler: adding task " << task << " (type " << task->taskTypeId()
+                << ") for folder " << task->folder() << " " << task->folder()->label() << endl;
 #endif
   mTaskList.append( task );
   if ( !mTimer.isActive() )
@@ -156,7 +157,7 @@ void JobScheduler::slotRunNextJob()
 void JobScheduler::restartTimer()
 {
 #ifdef DEBUG_SCHEDULER
-  mTimer.start( 1000 ); // 1 second
+  mTimer.start( 10000 ); // 10 seconds
 #else
   mTimer.start( 1 * 60000 ); // 1 minute
 #endif
@@ -171,11 +172,16 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   mTimer.stop();
   mCurrentJob = mCurrentTask->run();
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: task " << mCurrentTask << " for folder " << mCurrentTask->folder()->label() << " returned job " << mCurrentJob << endl;
+  kdDebug(5006) << "JobScheduler: task " << mCurrentTask
+                << " for folder " << mCurrentTask->folder()->label()
+                << " returned job " << mCurrentJob << " "
+                << ( mCurrentJob?mCurrentJob->className():0 ) << endl;
 #endif
   if ( !mCurrentJob ) { // nothing to do, e.g. folder deleted
     delete mCurrentTask;
     mCurrentTask = 0;
+    if ( !mTaskList.isEmpty() )
+      restartTimer();
     return;
   }
   // Register the job in the folder. This makes it autodeleted if the folder is deleted.

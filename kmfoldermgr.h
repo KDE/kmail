@@ -40,7 +40,7 @@ public:
      const uint id = 0, KMFolderDir *dir = 0);
 
   /** Uses find() to find given folder. If not found the folder is
-   * created. Directories are skipped. 
+   * created. Directories are skipped.
    * If an id is passed this searches for it
    */
   virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE,
@@ -93,6 +93,9 @@ public:
   /** fsync all open folders to disk */
   void syncAllFolders( KMFolderDir *adir = 0 );
 
+  /** Compact all folders that need to be, either immediately or scheduled as a background task */
+  void compactAllFolders( bool immediate, KMFolderDir *adir = 0 );
+
   /** Expire old messages in all folders, either immediately or scheduled as a background task */
   void expireAllFolders( bool immediate, KMFolderDir *adir = 0 );
 
@@ -122,8 +125,10 @@ public:
   uint createId();
 
 public slots:
-  /** Compacts all folders (they know is it needed) */
-  void compactAll();
+  /** GUI action: compact all folders that need to be compacted */
+  void compactAll() { compactAllFolders( true ); }
+
+  /** GUI action: expire all folders configured as such */
   void expireAll();
 
   /** Called from KMFolder::remove when the folderstorage was removed */
@@ -157,13 +162,7 @@ signals:
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int idx);
 
-  /** Emitted once for each folder during compactAll() */
-  void progress();
-
 protected:
-
-  /** Auxillary function to faciliate compaction of folders */
-  void compactAllAux(KMFolderDir* dir);
 
   /** Auxillary function to facilitate removal of a folder */
   void removeFolder(KMFolder* aFolder);

@@ -1110,16 +1110,7 @@ void KMMainWidget::slotExpireAll() {
 void KMMainWidget::slotCompactAll()
 {
   KCursorSaver busy(KBusyPtr::busy());
-  QStringList strList;
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  KMFolder *folder;
-  mFolderTree->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
-  {
-    folder = *folders.at(i);
-    if (!folder || folder->isDir()) continue;
-    folder->compact();
-  }
+  kmkernel->compactAllFolders();
 }
 
 

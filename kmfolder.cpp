@@ -16,6 +16,7 @@
 #include <libkdepim/identity.h>
 #include "kmailicalifaceimpl.h"
 #include "expirejob.h"
+#include "compactionjob.h"
 #include "kmfoldertree.h"
 
 #include <errno.h>
@@ -35,7 +36,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
-    mUseCustomIcons( false ), mMailingListEnabled( false ), 
+    mUseCustomIcons( false ), mMailingListEnabled( false ),
     mContentsType( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
@@ -455,11 +456,6 @@ int KMFolder::expunge()
   return mStorage->expunge();
 }
 
-int KMFolder::compact()
-{
-  return mStorage->compact();
-}
-
 int KMFolder::rename( const QString& newName, KMFolderDir *aParent )
 {
   return mStorage->rename( newName, aParent );
@@ -720,6 +716,16 @@ void KMFolder::expireOldMessages( bool immediate )
     kmkernel->jobScheduler()->runTaskNow( task );
   else
     kmkernel->jobScheduler()->registerTask( task );
+}
+
+void KMFolder::compact( bool immediate )
+{
+  if ( immediate )
+    mStorage->compact();
+  else {
+    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(this, immediate);
+    kmkernel->jobScheduler()->registerTask( task );
+  }
 }
 
 KMFolder* KMFolder::trashFolder() const

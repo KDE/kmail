@@ -12,6 +12,7 @@
 #include "undostack.h"
 #include "kcursorsaver.h"
 #include "jobscheduler.h"
+#include "compactionjob.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -1124,56 +1125,19 @@ if( fileD1.open( IO_WriteOnly ) ) {
   return 0;
 }
 
-
-//-----------------------------------------------------------------------------
-int KMFolderMbox::compact()
+int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
 {
-  QString tempName;
-  QString msgStr;
   int rc = 0;
-  int openCount = mOpenCount;
-
-  if (!needsCompact)
-    return 0;
-
-  if (!mCompactable) {
-    kdDebug(5006) << location() << " compaction skipped." << endl;
-    return 0;
-  }
-  kdDebug(5006) << "Compacting " << folder()->idString() << endl;
-
-  if (KMFolderIndex::IndexOk != indexStatus()) {
-      kdDebug(5006) << "Critical error: " << location() <<
-          " has been modified by an external application while KMail was running." << endl;
-      //      exit(1); backed out due to broken nfs
-  }
-
-  tempName = folder()->path() + "/." + folder()->name() + ".compacted";
-  mode_t old_umask = umask(077);
-  FILE *tmpfile = fopen(QFile::encodeName(tempName), "w");
-  umask(old_umask);
-  if (!tmpfile)
-    return errno;
-  open();
-
-  KMMsgInfo* mi;
-  size_t msize;
-  off_t folder_offset;
-  off_t offs=0;
-  int msgs=0;
   QCString mtext;
-  for(unsigned int idx = 0; idx < mMsgList.count(); idx++) {
-    if(!(msgs++ % 10)) {
-      msgStr = i18n("Compacting folder: one message done",
-                                "Compacting folder: %n messages done", msgs);
-      if (!kmkernel->shuttingDown())
-          emit statusMsg(msgStr);
-    }
-    mi = (KMMsgInfo*)mMsgList.at(idx);
-    msize = mi->msgSize();
+  unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
+                           QMIN( mMsgList.count(), startIndex + nbMessages );
+  //kdDebug(5006) << "KMFolderMbox: compacting from " << startIndex << " to " << stopIndex << endl;
+  for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
+    KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
+    size_t msize = mi->msgSize();
     if (mtext.size() < msize + 2)
       mtext.resize(msize+2);
-    folder_offset = mi->folderOffset();
+    off_t folder_offset = mi->folderOffset();
 
     //now we need to find the separator! grr...
     for(off_t i = folder_offset-25; true; i -= 20) {
@@ -1197,7 +1161,7 @@ int KMFolderMbox::compact()
           }
           offs += folder_offset;
         } else {
-            rc = 666;
+          rc = 666;
         }
         break;
       } else {
@@ -1233,34 +1197,25 @@ int KMFolderMbox::compact()
     mi->setFolderOffset(offs);
     offs += msize;
   }
-  if (!rc)
-      rc = fflush(tmpfile);
-  if (!rc)
-      rc = fsync(fileno(tmpfile));
-  rc |= fclose(tmpfile);
-  if (!rc) {
-    bool autoCreate = mAutoCreateIndex;
-    QFileInfo inf(location());
-    QString box;
-    if (inf.isSymLink())
-      box = inf.readLink();
-    if (!box)
-      box = location();
-    ::rename(QFile::encodeName(tempName), QFile::encodeName(box));
-    writeIndex();
-    writeConfig();
-    mAutoCreateIndex = false;
-    close(true);
-    mAutoCreateIndex = autoCreate;
-    needsCompact = false;             // We are clean now
+  done = ( !rc && stopIndex == mMsgList.count() ); // finished without errors
+  return rc;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolderMbox::compact()
+{
+  if (!needsCompact)
+    return 0;
+
+  if (!mCompactable) {
+    kdDebug(5006) << location() << " compaction skipped." << endl;
+    return 0;
   }
-  else
-  {
-    close();
-    kdDebug(5006) << "Error occurred while compacting" << endl;
-    kdDebug(5006) << location() << endl;
-    kdDebug(5006) << "Compaction aborted." << endl;
-  }
+  int openCount = mOpenCount;
+
+  KMail::MboxCompactionJob* job = new KMail::MboxCompactionJob( folder(), true /*immediate*/ );
+  int rc = job->executeNow();
+  // Note that job autodeletes itself.
 
   if (openCount > 0)
   {
@@ -1268,8 +1223,7 @@ int KMFolderMbox::compact()
     mOpenCount = openCount;
   }
   emit changed();
-  return 0;
-
+  return rc;
 }
 
 

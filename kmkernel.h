@@ -108,7 +108,6 @@ public:
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }
-  void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
   QStringList folderList() const;
@@ -180,6 +179,8 @@ public:
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
+  /** Compact all folders, used for the gui action (and from DCOP) */
+  void compactAllFolders();
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
@@ -264,9 +265,8 @@ protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
   void cleanupLoop();
-  void cleanupProgress();
   void slotFolderRemoved(KMFolder*);
-  void slotExpireAllFolders();
+  void slotRunBackgroundTasks();
 
 signals:
   void configChanged();
@@ -326,7 +326,7 @@ private:
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
-  QTimer *mExpireFoldersTimer;
+  QTimer *mBackgroundTasksTimer;
   KMGroupware * mGroupware;
   KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;

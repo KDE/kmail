@@ -18,6 +18,7 @@
 #include "kcursorsaver.h"
 #include "jobscheduler.h"
 using KMail::MaildirJob;
+#include "compactionjob.h"
 
 #include <kio/netaccess.h>
 #include <kapplication.h>
@@ -267,23 +268,16 @@ int KMFolderMaildir::expungeContents()
   return 0;
 }
 
-//-----------------------------------------------------------------------------
-int KMFolderMaildir::compact()
+int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QStringList& entryList, bool& done )
 {
-  if (needsCompact == false)
-    return 0;
-
-  open();
-
   QString subdirNew(location() + "/new/");
   QString subdirCur(location() + "/cur/");
 
-  QDir d(subdirNew);
-  QStringList newFiles(d.entryList());
-
-  for (int i = 0; i < count(); i++)
-  {
-    KMMsgInfo *mi = (KMMsgInfo*)mMsgList[i];
+  unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
+                           QMIN( mMsgList.count(), startIndex + nbMessages );
+  //kdDebug(5006) << "KMFolderMaildir: compacting from " << startIndex << " to " << stopIndex << endl;
+  for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
+    KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     if (!mi)
       continue;
 
@@ -292,7 +286,7 @@ int KMFolderMaildir::compact()
       continue;
 
     // first, make sure this isn't in the 'new' subdir
-    if ( newFiles.contains( filename ) )
+    if ( entryList.contains( filename ) )
       moveInternal(subdirNew + filename, subdirCur + filename, mi);
 
     // construct a valid filename.  if it's already valid, then
@@ -314,11 +308,20 @@ int KMFolderMaildir::compact()
       setDirty( true );
     }
   }
-  close();
-
-  needsCompact = false;
-
+  done = ( stopIndex == mMsgList.count() );
   return 0;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolderMaildir::compact()
+{
+  if (!needsCompact)
+    return 0;
+
+  KMail::MaildirCompactionJob* job = new KMail::MaildirCompactionJob( folder(), true /*immediate*/ );
+  int rc = job->executeNow();
+  // Note that job autodeletes itself.
+  return rc;
 }
 
 //-------------------------------------------------------------
