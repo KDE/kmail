@@ -85,6 +85,8 @@ public:
   /** Write the uidValitidy and lastUid values to disk */
   int writeUidCache();
 
+  /** Current progress status (in percents) */
+  int progress() const { return mProgress; }
 
   /* Reimplemented from KMFolder. Moving is not supported, so aParent must be 0 */
   virtual int rename(const QString& aName, KMFolderDir *aParent=0);
@@ -118,8 +120,6 @@ public:
   void setSilentUpload( bool silent ) { mSilentUpload = silent; }
   bool silentUpload() { return mSilentUpload; }
 
-  int prog;
-
 protected slots:
   /**
    * Add the imap folders to the folder tree
@@ -143,6 +143,7 @@ protected slots:
   virtual bool deleteMessages();
   virtual void createNewFolders();
 
+protected:
   /**
    * List a directory and add the contents to kmfoldermgr
    * returns false if the connection failed
@@ -208,6 +209,8 @@ private:
     SYNC_STATE_SYNC_SUBFOLDERS,
     SYNC_STATE_CHECK_UIDVALIDITY
   } mSyncState;
+
+  int mProgress;
 
   QString mUidValidity;
   QString     mImapPath;

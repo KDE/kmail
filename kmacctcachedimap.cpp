@@ -132,22 +132,27 @@ void KMAcctCachedImap::displayProgress()
     mIdleTimer.start(0);
   else
     mIdleTimer.stop();
-  int total = 0, done = 0;
-  for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-    it != mapJobData.end(); ++it)
-  {
-    total += (*it).total;
-    done += (*it).done;
-  }
-  if (total == 0)
-  {
-    mTotal = 0;
-    return;
-  }
-  if (total > mTotal) mTotal = total;
-  done += mTotal - total;
+  //int total = 0, done = 0;
+  // This is a loop, but it seems that we can currently have only one job at a time in this map.
+  //for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  //  it != mapJobData.end(); ++it)
+  //{
+  //  total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
+  //  done += (*it).done;
+  //}
+  //if (total == 0)
+  //{
+  //  mTotal = 0;
+  //  return;
+  //}
+  //if (total > mTotal) mTotal = total;
+  //done += mTotal - total;
+
+  // We display the same progress information as the one calculated in the IMAP folder
+  int done = mFolder->progress();
   KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
-    100*done / mTotal );
+     done );
+     //  100*done / mTotal );
 }
 
 

@@ -120,7 +120,7 @@ void CachedImapJob::deleteMessages( const QString& uids )
 
   KIO::SimpleJob *job = KIO::file_delete( url, FALSE );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  ImapAccountBase::jobData jd;
+  ImapAccountBase::jobData jd( url.url() );
   mAccount->mapJobData.insert( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ), this, SLOT( slotDeleteResult(KIO::Job *) ) );
   mAccount->displayProgress();
@@ -210,7 +210,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1").arg(mUid));
 
-  ImapAccountBase::jobData jd;
+  ImapAccountBase::jobData jd( url.url() );
   mMsg->setTransferInProgress(TRUE);
   KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
@@ -387,7 +387,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   QString folderPath = mFolderPathList.front(); mFolderPathList.pop_front();
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
-  ImapAccountBase::jobData jd;
+  ImapAccountBase::jobData jd( url.url() );
   KIO::SimpleJob *simpleJob = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mJob = simpleJob;
