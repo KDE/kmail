@@ -7,6 +7,8 @@
 #include <kmimemagic.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <kstddirs.h>
+#include <kglobal.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/body.h>
@@ -180,7 +182,7 @@ const QString KMMessagePart::iconName(void) const
     icon = "unknown.xpm";
   }
 
-  return KApplication::kde_icondir() + "/" + icon;
+  return locate("icon", icon);
 }
 
 
