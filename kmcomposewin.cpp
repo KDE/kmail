@@ -792,7 +792,9 @@ void KMComposeWin::setupActions(void)
 #endif
 
   //----- Message-Encoding Submenu
-  encodingAction = new KSelectAction( i18n( "Set &Encoding" ), 0, this, SLOT(slotSetCharset() ), actionCollection(), "charsets" );
+  encodingAction = new KSelectAction( i18n( "Set &Encoding" ), "charset",
+				      0, this, SLOT(slotSetCharset() ),
+				      actionCollection(), "charsets" );
   wordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
 		      actionCollection(), "wordwrap");
   wordWrapAction->setChecked(mWordWrap);
