@@ -149,7 +149,7 @@ void KMAcctImap::readConfig(KConfig& config)
 
   mLogin = config.readEntry("login", "");
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd) mPasswd = config.readEntry("passwd");
+  if (mStorePasswd) mPasswd = config.readEntry("pass");
   else mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
@@ -171,7 +171,7 @@ void KMAcctImap::writeConfig(KConfig& config)
 
   config.writeEntry("login", mLogin);
   config.writeEntry("store-passwd", mStorePasswd);
-  if (mStorePasswd) config.writeEntry("passwd", mPasswd);
+  if (mStorePasswd) config.writeEntry("pass", mPasswd);
   else config.writeEntry("passwd", "");
 
   config.writeEntry("host", mHost);

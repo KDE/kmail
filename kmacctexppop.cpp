@@ -189,7 +189,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mAuth = config.readEntry("auth", "USER");
   mUsePipelining = config.readNumEntry("pipelining", TRUE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
-  if (mStorePasswd) mPasswd = config.readEntry("passwd");
+  if (mStorePasswd) mPasswd = config.readEntry("pass");
   else mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
@@ -209,7 +209,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("auth", mAuth);
   config.writeEntry("pipelining", mUsePipelining);
   config.writeEntry("store-passwd", mStorePasswd);
-  if (mStorePasswd) config.writeEntry("passwd", mPasswd);
+  if (mStorePasswd) config.writeEntry("pass", mPasswd);
   else config.writeEntry("passwd", "");
 
   config.writeEntry("host", mHost);

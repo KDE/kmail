@@ -4,7 +4,8 @@ File=kmailrc,kmailrc
 Group=sending mail,Transport 1
 Key=Smtp Host,host
 Key=Smtp Port,port
-Id=2
+# Remove passwords in the old format
+Id=3
 File=kmailrc
 Group=Account 1
 RemoveKey=passwd
