@@ -28,6 +28,7 @@
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
+#include <kstdaccel.h>
 #include <kstdaction.h>
 #include <kstdaccel.h>
 #include <kedittoolbar.h>

@@ -8,6 +8,7 @@
 #endif
 
 #undef Unsorted // X headers...
+#include <qaccel.h>
 #include <qregexp.h>
 #include <qaccel.h>
 
@@ -19,6 +20,7 @@
 #include <kparts/browserextension.h>
 
 #include <kaction.h>
+#include <kstdaccel.h>
 #include <kstdaction.h>
 #include <kstdaccel.h>
 #include <kedittoolbar.h>
