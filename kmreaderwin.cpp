@@ -682,7 +682,8 @@ void KMReaderWin::parseMsg(void)
 
   QColorGroup cg = kapp->palette().active();
   mViewer->write("<html><head><style type=\"text/css\">" +
-    ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; }\n")
+    ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
+                           "color: #000000; background-color: #FFFFFF; }\n")
         .arg( mBodyFamily ).arg( fntSize )
       : QString("body { font-family: \"%1\"; font-size: %2pt; "
         "color: %3; background-color: %4; }\n")
