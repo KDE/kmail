@@ -1811,7 +1811,12 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
         QDataStream ds( &file );
         if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
           QByteArray cstr = node->msgPart().bodyDecodedBinary();
-          ds.writeRawBytes( cstr, cstr.size() );
+          size_t size = cstr.size();
+          if ( node->msgPart().type() == DwMime::kTypeText ) {
+            // convert CRLF to LF before writing text attachments to disk
+            size = KMFolder::crlf2lf( cstr.data(), size );
+          }
+          ds.writeRawBytes( cstr.data(), size );
         }
       }
       file.close();
