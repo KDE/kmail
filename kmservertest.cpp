@@ -48,7 +48,7 @@
 KMServerTest::KMServerTest( const QString & protocol, const QString & host, int port )
   : QObject(),
     mProtocol( protocol ), mHost( host ),
-    mSSL( false ), mJob( 0 ), mSlave( 0 )
+    mSSL( false ), mJob( 0 ), mSlave( 0 ), mConnectionErrorCount( 0 )
 {
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
@@ -146,15 +146,22 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
+  if ( error == KIO::ERR_COULD_NOT_CONNECT )
+  {
+    // if one of the two connection tests fails we ignore the error
+    // if both fail the host is probably not correct so we display the error
+    if ( mConnectionErrorCount == 0 )
+    {
+      error = 0;
+    }
+    ++mConnectionErrorCount;
+  }
   if ( error )
   {
     mJob = 0;
-    if ( error != KIO::ERR_COULD_NOT_CONNECT && !mSSL )
-    {
-      // if host does not support SSL, don't display an error
-      KMessageBox::error( kapp->activeWindow(), KIO::buildErrorString( error, errorText ),
-          i18n("Error") );
-    }
+    KMessageBox::error( kapp->activeWindow(), 
+        KIO::buildErrorString( error, errorText ),
+        i18n("Error") );
     emit capabilities( mListNormal, mListSSL );
     emit capabilities( mListNormal, mListSSL, mAuthNone, mAuthSSL, mAuthTLS );
     return;
