@@ -850,7 +850,8 @@ bool KMKernel::folderIsDraftOrOutbox(KMFolder * folder)
 {
 	bool test = false;
 	
-	if (folder == the_outboxFolder || folder == the_draftsFolder) 
+	if (folder == the_outboxFolder || folder == the_draftsFolder
+            || folder == the_sentFolder) 
 	{
 		test = true;
 		return test;
