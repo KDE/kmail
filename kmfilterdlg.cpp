@@ -64,7 +64,7 @@ I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "determines the order in which they are tried on messages: "
 	   "The topmost filter gets tried first.</p>"
 	   "<p>If you have hit this button accidently, you can undo this "
-	   "by clicking on the <em>down</em> button (to the right)</p></qt>" );
+	   "by clicking on the <em>up</em> button (to the left)</p></qt>" );
 const char * _wt_filterlist_rename =
 I18N_NOOP( "<qt><p>Click this button to rename the currently selected filter.</p>"
 	   "<p>Filters are named automatically, as long as they start with "
