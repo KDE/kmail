@@ -2349,6 +2349,11 @@ void KMMainWidget::setupActions()
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
                                  actionCollection(), "set_status" );
 
+  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
+                                          i18n("Mark selected messages as read")),
+                                 0, this, SLOT(slotSetMsgStatusRead()),
+                                 actionCollection(), "status_read"));
+
   mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
                                           i18n("Mark selected messages as new")),
                                  0, this, SLOT(slotSetMsgStatusNew()),
@@ -2359,12 +2364,14 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
-                                          i18n("Mark selected messages as read")),
-                                 0, this, SLOT(slotSetMsgStatusRead()),
-                                 actionCollection(), "status_read"));
+  mStatusMenu->insert( new KActionSeparator( this ) );
 
   // -------- Toggle Actions
+  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
+                                 0, this, SLOT(slotSetMsgStatusFlag()),
+                                 actionCollection(), "status_flag");
+  mStatusMenu->insert( mToggleFlagAction );
+
   mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
@@ -2385,10 +2392,7 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_sent");
   mStatusMenu->insert( mToggleSentAction );
 
-  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
-                                 0, this, SLOT(slotSetMsgStatusFlag()),
-                                 actionCollection(), "status_flag");
-  mStatusMenu->insert( mToggleFlagAction );
+  mStatusMenu->insert( new KActionSeparator( this ) );
 
   mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mark_as_spam",
                                  0, this, SLOT(slotSetMsgStatusSpam()),
@@ -2404,6 +2408,12 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
 
+  mMarkThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
+                                                i18n("Mark all messages in the selected thread as read")),
+                                                0, this, SLOT(slotSetThreadStatusRead()),
+                                                actionCollection(), "thread_read");
+  mThreadStatusMenu->insert( mMarkThreadAsReadAction );
+
   mMarkThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
                                                i18n("Mark all messages in the selected thread as new")),
                                                0, this, SLOT(slotSetThreadStatusNew()),
@@ -2416,33 +2426,36 @@ void KMMainWidget::setupActions()
                                                 actionCollection(), "thread_unread");
   mThreadStatusMenu->insert( mMarkThreadAsUnreadAction );
 
-  mMarkThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
-                                                i18n("Mark all messages in the selected thread as read")),
-                                                0, this, SLOT(slotSetThreadStatusRead()),
-                                                actionCollection(), "thread_read");
-  mThreadStatusMenu->insert( mMarkThreadAsReadAction );
+  mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
-                                       0, this, SLOT(slotSetThreadStatusReplied()),
-                                       actionCollection(), "thread_replied");
-  mThreadStatusMenu->insert( mToggleThreadRepliedAction );
-  mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
-                                       0, this, SLOT(slotSetThreadStatusForwarded()),
-                                       actionCollection(), "thread_forwarded");
-  mThreadStatusMenu->insert( mToggleThreadForwardedAction );
-  mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
-                                       0, this, SLOT(slotSetThreadStatusQueued()),
-                                       actionCollection(), "thread_queued");
-  mThreadStatusMenu->insert( mToggleThreadQueuedAction );
-  mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
-                                       0, this, SLOT(slotSetThreadStatusSent()),
-                                       actionCollection(), "thread_sent");
-  mThreadStatusMenu->insert( mToggleThreadSentAction );
   mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
+  
+  mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
+                                       0, this, SLOT(slotSetThreadStatusReplied()),
+                                       actionCollection(), "thread_replied");
+  mThreadStatusMenu->insert( mToggleThreadRepliedAction );
+  
+  mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
+                                       0, this, SLOT(slotSetThreadStatusForwarded()),
+                                       actionCollection(), "thread_forwarded");
+  mThreadStatusMenu->insert( mToggleThreadForwardedAction );
+  
+  mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
+                                       0, this, SLOT(slotSetThreadStatusQueued()),
+                                       actionCollection(), "thread_queued");
+  mThreadStatusMenu->insert( mToggleThreadQueuedAction );
+  
+  mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
+                                       0, this, SLOT(slotSetThreadStatusSent()),
+                                       actionCollection(), "thread_sent");
+  mThreadStatusMenu->insert( mToggleThreadSentAction );
+  
+  mThreadStatusMenu->insert( new KActionSeparator( this ) );
+
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
                                        0, this, SLOT(slotSetThreadStatusWatched()),
