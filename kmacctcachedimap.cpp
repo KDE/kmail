@@ -143,7 +143,7 @@ void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
     }
   }
 
-  // Note: HEAD has a killAllJobs() call here
+  killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
 
   // check if we still display an error
   if ( !mErrorDialogIsActive )
@@ -261,16 +261,19 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   // Clear the joblist. Make SURE to stop the job emitting "finished"
   for( QPtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
     it.current()->setPassiveDestructor( true );
-  mJobList.setAutoDelete(true);
-  mJobList.clear();
-  mJobList.setAutoDelete(false);
+  KMAccount::deleteFolderJobs();
   displayProgress();
 
   if ( disconnectSlave && slave() ) {
     KIO::Scheduler::disconnectSlave( slave() );
     mSlave = 0;
   }
-
+  // make sure that no new-mail-check is blocked
+  if (mCountRemainChecks > 0)
+  {
+    checkDone(false, 0);
+    mCountRemainChecks = 0;
+  }
   // Finally allow new syncs to proceed
   mSyncActive = false;
 }
