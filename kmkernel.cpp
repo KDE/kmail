@@ -152,7 +152,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   mMailService =  new MailServiceImpl();
 
-  mKIMProxy = new KIMProxy( kapp->dcopClient() );
+  mKIMProxy = KIMProxy::instance( kapp->dcopClient() );
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );
