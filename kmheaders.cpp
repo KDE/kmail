@@ -1276,7 +1276,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   }
 
   mItems.resize( mItems.size() - 1 );
-  if (mSortCacheItems[msgId]) {
+  if ( !msgId.isEmpty() && mSortCacheItems[msgId] ) {
     if (mSortCacheItems[msgId] == removedItem->sortCacheItem()) 
       mSortCacheItems.remove(msgId);
   }
