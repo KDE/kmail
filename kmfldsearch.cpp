@@ -189,7 +189,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   if (searchFolder)
     mSearchFolderEdt->setText(searchFolder->name());
   else
-    mSearchFolderEdt->setText("search");
+    mSearchFolderEdt->setText(i18n("Last Search"));
 
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   hbl2->addWidget(mSearchFolderEdt);
@@ -386,7 +386,7 @@ void KMFldSearch::slotSearch()
     if (!mFolder) {
       KMFolderMgr *mgr = kmkernel->searchFolderMgr();
       if (mSearchFolderEdt->text().isEmpty())
-	  mSearchFolderEdt->setText("search");
+	  mSearchFolderEdt->setText(i18n("Last Search"));
       QString baseName = mSearchFolderEdt->text();
       QString fullName = baseName;
       int count = 0;
@@ -531,7 +531,7 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void KMFldSearch::updateCreateButton( const QString &s)
 {
-    mSearchFolderBtn->setEnabled(s != "search" && mSearchFolderOpenBtn->isEnabled());
+    mSearchFolderBtn->setEnabled(s != i18n("Last Search") && mSearchFolderOpenBtn->isEnabled());
 }
 
 //-----------------------------------------------------------------------------
