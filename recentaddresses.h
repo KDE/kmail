@@ -5,6 +5,7 @@
 #include <kabc/addressee.h>
 
 class KConfig;
+namespace KMail {
 
 /**
  * Handles a list of "recent email-addresses". Simply set a max-count and
@@ -13,7 +14,7 @@ class KConfig;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
 
-class KMRecentAddresses
+class RecentAddresses
 {
     friend class foobar; // private destructor
 
@@ -21,7 +22,7 @@ public:
     /**
      * @returns the only possible instance of this class.
      */
-    static KMRecentAddresses * self();
+    static RecentAddresses * self();
 
     /**
      * @returns the list of recent addresses.
@@ -62,8 +63,8 @@ public:
     void save( KConfig * );
 
 private:
-    KMRecentAddresses();
-    ~KMRecentAddresses();
+    RecentAddresses();
+    ~RecentAddresses();
 
     KABC::Addressee::List m_addresseeList;
 
@@ -71,7 +72,9 @@ private:
 
     uint m_maxCount;
 
-    static KMRecentAddresses *s_self;
+    static RecentAddresses *s_self;
+};
+
 };
 
 #endif // KMRECENTADDR_H

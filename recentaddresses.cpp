@@ -2,29 +2,29 @@
 #include <kglobal.h>
 
 #include <kdebug.h>
-#include "kmrecentaddr.h"
+#include "recentaddresses.h"
 
-KMRecentAddresses * KMRecentAddresses::s_self = 0;
+KMail::RecentAddresses * KMail::RecentAddresses::s_self = 0;
 
-KMRecentAddresses * KMRecentAddresses::self()
+KMail::RecentAddresses * KMail::RecentAddresses::self()
 {
     if ( !s_self )
-        s_self = new KMRecentAddresses();
+        s_self = new KMail::RecentAddresses();
     return s_self;
 }
 
-KMRecentAddresses::KMRecentAddresses()
+KMail::RecentAddresses::RecentAddresses()
 {
     load( KGlobal::config() );
 }
 
-KMRecentAddresses::~KMRecentAddresses()
+KMail::RecentAddresses::~RecentAddresses()
 {
     // if you want this destructor to get called, use a KStaticDeleter
     // on s_self
 }
 
-void KMRecentAddresses::load( KConfig *config )
+void KMail::RecentAddresses::load( KConfig *config )
 {
     QStringList addresses;
     QString name;
@@ -47,13 +47,13 @@ void KMRecentAddresses::load( KConfig *config )
     adjustSize();
 }
 
-void KMRecentAddresses::save( KConfig *config )
+void KMail::RecentAddresses::save( KConfig *config )
 {
     KConfigGroupSaver cs( config, "General" );
     config->writeEntry( "Recent Addresses", addresses() );
 }
 
-void KMRecentAddresses::add( const QString& entry )
+void KMail::RecentAddresses::add( const QString& entry )
 {
     if ( !entry.isEmpty() && m_maxCount > 0 ) {
         QString email;
@@ -75,19 +75,19 @@ void KMRecentAddresses::add( const QString& entry )
     }
 }
 
-void KMRecentAddresses::setMaxCount( int count )
+void KMail::RecentAddresses::setMaxCount( int count )
 {
     m_maxCount = count;
     adjustSize();
 }
 
-void KMRecentAddresses::adjustSize()
+void KMail::RecentAddresses::adjustSize()
 {
     while ( m_addresseeList.count() > m_maxCount )
         m_addresseeList.remove( m_addresseeList.fromLast() );
 }
 
-QStringList KMRecentAddresses::addresses() const
+QStringList KMail::RecentAddresses::addresses() const
 {
     QStringList addresses;
     for ( KABC::Addressee::List::ConstIterator it = m_addresseeList.begin();
