@@ -909,6 +909,7 @@ void KMMainWidget::slotEmptyFolder()
   }
 
   if (mFolder->folderType() == KMFolderTypeImap
+      || mFolder->folderType() == KMFolderTypeCachedImap
       || mFolder->folderType() == KMFolderTypeSearch)
   {
     slotMarkAll();
