@@ -22,7 +22,7 @@ namespace KMail {
 
   FileHtmlWriter::FileHtmlWriter( const QString & filename )
     : HtmlWriter(),
-      mFile( filename.isEmpty() ? "filehtmlwriter.out" : filename )
+      mFile( filename.isEmpty() ? QString( "filehtmlwriter.out" ) : filename )
   {
     mStream.setEncoding( QTextStream::UnicodeUTF8 );
   }
