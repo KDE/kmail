@@ -1110,7 +1110,10 @@ QCString KMMessage::createForwardBody(void)
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += "Subject: " + subject() + "\n";
-    s += "Date: " + dateStr() + "\n";
+    s += "Date: "
+         + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized, 
+                                             date(), sReplyLanguage, false )
+         + "\n";
     s += "From: " + from() + "\n";
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
