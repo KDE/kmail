@@ -553,11 +553,13 @@ void IdentityPage::apply() {
   saveActiveIdentity(); // Copy from textfields into list
   mIdentities.exportData();
 
-  if( mSecondIdentity ) {
+  if( mIdentities.count() > 1 ) {
+    // have more than one identity, so better show the combo in the
+    // composer now:
     KConfigGroup composer( kapp->config(), "Composer" );
-    int mShowHeaders = composer.readNumEntry( "headers", HDR_STANDARD );
-    mShowHeaders |= HDR_IDENTITY;
-    composer.writeEntry( "headers", mShowHeaders );
+    int showHeaders = composer.readNumEntry( "headers", HDR_STANDARD );
+    showHeaders |= HDR_IDENTITY;
+    composer.writeEntry( "headers", showHeaders );
   }
 
 }
@@ -722,8 +724,6 @@ void IdentityPage::slotNewIdentity()
     QString identityName = dialog.identityName().stripWhiteSpace();
     assert( !identityName.isEmpty() );
 
-    mSecondIdentity = ( mIdentities.count() == 1 );
-    
     //
     // Construct a new IdentityEntry:
     //
