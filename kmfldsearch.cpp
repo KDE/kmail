@@ -95,9 +95,6 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
   hbl->addWidget(mCbxFolders);
-
-  connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
-          this, SLOT(slotFolderActivated(KMFolder*)));
     
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
@@ -277,6 +274,10 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
 	  this, SLOT(folderInvalidated(KMFolder*)));
+
+  connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
+          this, SLOT(slotFolderActivated(KMFolder*)));
+
 }
 
 //-----------------------------------------------------------------------------
