@@ -859,7 +859,11 @@ QString KMReaderWin::quotedHTML(const QString& s)
       if( (newlineCount % 100) == 0 ) 
       {
 	htmlStr += tmpStr;
+	if (currQuoteLevel >= 0)
+	  htmlStr += "</font>";
 	htmlStr += "</div><div>"; //work around KHTML slowness
+	if (currQuoteLevel >= 0)
+	  htmlStr += mQuoteFontTag[currQuoteLevel%3];
 	tmpStr.truncate(0);
       }
 
