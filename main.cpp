@@ -189,11 +189,8 @@ static void recoverDeadLetters(void)
   folder.open();
 
   num = folder.count();
-  debug("%d messages in %s", num, (const char*)fname);
-
   for (i=0; i<num; i++)
   {
-    debug("processing dead letter #%d", i);
     msg = folder.take(0);
     if (msg)
     {

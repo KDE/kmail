@@ -1,5 +1,10 @@
 1998-06-23  Stefan Taferner  <taferner@kde.org> (KMail-0.7.7)
 
+	* Removed lots of old debug messages.
+
+	* Composer: answering the confirmation is no longer
+	ignored.
+
 	* Finetuning: added missing pixmaps to makefile and
 	repainted pixmap for queued and sent messages.
 

@@ -348,9 +348,6 @@ QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
     if (cur->name() == curFolder) idx=i;
   }
   if (idx>=0) cbx->setCurrentItem(idx);
-  debug("KMFilterDlg::createFolderCombo: idx=%d, arg=%s, name=%s", idx,
-	curFolder.data(), cbx->text(idx));
-
   return cbx;
 }
 
@@ -398,8 +395,6 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
 void KMFilterDlg::slotFilterSelected(int idx)
 {
   KMFilter* filter;
-
-  debug("KMFilterDlg::slotFilterSelected()");
 
   if (mFilter) applyFilterChanges();
   if ((uint)idx < filterMgr->count())

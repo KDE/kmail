@@ -284,7 +284,6 @@ int KMFolder::lock(void)
   }
 
   mFilesLocked = TRUE;
-  debug("Folder `%s' is now locked.", (const char*)location());
   return 0;
 }
 
@@ -303,7 +302,6 @@ int KMFolder::unlock(void)
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
-  debug("Unlocking folder `%s'.", (const char*)location());
 
 #if HAVE_FLOCK
   if (mIndexStream) flock(fileno(mIndexStream), LOCK_UN);
@@ -342,7 +340,7 @@ int KMFolder::createIndexFromContents(void)
   KMMsgInfo* mi;
   QString msgStr(256);
   QRegExp regexp(MSG_SEPERATOR_REGEX);
-  int i, num;
+  int i, num, numStatus;
   short needStatus;
 
   assert(mStream != NULL);
@@ -351,6 +349,7 @@ int KMFolder::createIndexFromContents(void)
   mMsgList.clear();
 
   num     = -1;
+  numStatus= 101;
   offs    = 0;
   size    = 0;
   dateStr = "";
@@ -375,10 +374,11 @@ int KMFolder::createIndexFromContents(void)
 
       if (num >= 0)
       {
-	if ((num & 255) == 0)
+	if (numStatus <= 0)
 	{
 	  msgStr.sprintf(i18n("Creating index file: %d messages done"), num);
 	  emit statusMsg(msgStr);
+	  numStatus = 100;
 	}
 
 	if (size > 0)
@@ -398,11 +398,12 @@ int KMFolder::createIndexFromContents(void)
 	  fromStr = "";
 	  subjStr = "";
 	}
-	else num--;
+	else num--,numStatus++;
       }
 
       offs = ftell(mStream);
       num++;
+      numStatus--;
       inHeader = TRUE;
       continue;
     }
@@ -511,7 +512,7 @@ bool KMFolder::readIndexHeader(void)
   fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
   if (indexVersion < INDEX_VERSION)
   {
-    debug("Index index file %s is out of date. Re-creating it.", 
+    debug("Index file %s is out of date. Re-creating it.", 
 	  (const char*)indexLocation());
     createIndexFromContents();
     return FALSE;
@@ -868,7 +869,7 @@ int KMFolder::compact(void)
   KMMessage* msg;
   QString tempName, msgStr;
   int openCount = mOpenCount;
-  int num;
+  int num, numStatus;
 
   tempName = "." + name();
   tempName.detach();
@@ -881,12 +882,13 @@ int KMFolder::compact(void)
   tempFolder->open();
   open();
 
-  for(num=1; count() > 0; num++)
+  for(num=1,numStatus=100; count() > 0; num++, numStatus--)
   {
-    if ((num & 255) == 0)
+    if (numStatus <= 0)
     {
       msgStr.sprintf(i18n("Compacting folder: %d messages done"), num);
       emit statusMsg(msgStr);
+      numStatus = 100;
     }
 
     msg = getMsg(0);

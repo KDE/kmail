@@ -139,9 +139,6 @@ const QString KMMessagePart::bodyDecoded(void) const
     break;
   }
 
-  debug("bodyDecoded (%s): len=%d, size=%d", cteStr().data(), 
-	result.length(), result.size());
-
   return result;
 }
 

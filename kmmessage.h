@@ -54,7 +54,7 @@ public:
   virtual KMMessage* createForward(void);
 
   /** Parse the string and create this message from it. */
-  virtual void fromString(const QString str);
+  virtual void fromString(const QString str, bool setStatus=FALSE);
 
   /** Return the entire message contents as a string. */
   virtual const QString asString(void);

@@ -323,6 +323,5 @@ const QString KMFilterRule::asString(void) const
   result += funcConfigNames[(int)mFunction];
   result += " \"" + mContents + "\"";
 
-  debug("%s=%d",funcConfigNames[(int)mFunction], (int)mFunction);
   return result;
 }

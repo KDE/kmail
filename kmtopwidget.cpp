@@ -37,9 +37,14 @@ KMTopLevelWidget::~KMTopLevelWidget()
 //-----------------------------------------------------------------------------
 void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
-  e->ignore();
-  writeConfig();
-  delete this;
+  KMTopLevelWidgetInherited::closeEvent(e);
+
+  if (e->isAccepted())
+  {
+    writeConfig();
+    e->ignore();
+    delete this;
+  }
 }
 
 
@@ -48,11 +53,12 @@ bool KMTopLevelWidget::close(bool aForceKill)
 {
   static bool rc;
   rc = KMTopLevelWidgetInherited::close(aForceKill);
+  if (!rc) return FALSE;
 
   if (KTopLevelWidget::memberList && KTopLevelWidget::memberList->isEmpty())
     kapp->quit();
 
-  return rc;
+  return TRUE;
 }
 
 

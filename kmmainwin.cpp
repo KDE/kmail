@@ -118,7 +118,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
-  debug("~KMMainWin");
   if (mHeaders)   delete mHeaders;
   if (mToolBar)   delete mToolBar;
   if (mMenuBar)   delete mMenuBar;

@@ -219,8 +219,6 @@ int KMMsgBase::compareBySubject(const KMMsgBase* other) const
   otherSubjStr = skipKeyword(other->subject(), ':', &otherHasKeywd);
 
   rc = stricmp(subjStr, otherSubjStr);
-  //debug("\"%s\" =?= \"%s\": %d", (const char*)subjStr, (const char*)otherSubjStr, rc);
-
   if (rc) return rc;
 
   // If both are equal return the one with a keyword (Re: / Fwd: /...)

@@ -111,9 +111,6 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 
   assert(aFileName!=NULL);
 
-  debug("WARNING: kStringToFile currently makes no backups and silently"
-	"replaces existing files!");
-
   if (info.exists())
   {
     if (aAskIfExists)

@@ -171,7 +171,6 @@ void KMAddrBookEditDlg::slotOk()
   for(idx=0; idx<num; idx++)
   {
     addr = mListBox.text(idx);
-    debug("addressbook: %s", addr);
     mAddrBook->insert(addr);
   }
   mAddrBook->store();

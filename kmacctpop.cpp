@@ -72,8 +72,6 @@ bool KMAcctPop::processNewMail(KMIOStatus *wid)
   void (*pipeHandler)(int);
   bool result;
 
-  debug("POP support is still experimental\nand may not work.");
-
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
   // DwPopClient::Open().
@@ -208,14 +206,11 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       return gotMsgs;
     }
     wid->updateProgressBar(id,num);
-    debug("processing message %d", id);
     app->processEvents();
     if (client.List(id) != '+')
       return popError("LIST", client);
     response = client.SingleLineResponse().c_str();
     sscanf(response.data(), "%3s %d %d", dummyStr, &dummy, &size);
-
-    debug("msg %d: size=%d %d", id, size, dummy);
 
     doFetchMsg = TRUE;
     if (size > 4500 && !mRetrieveAll)
@@ -237,7 +232,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 	    strnicmp(status,"OR",2)==0)
 	{
 	  doFetchMsg=FALSE;
-	  debug("no need to download msg %d", id);
+	  debug("message %d is old -- no need to download it", id);
 	}
       }
     }
@@ -249,7 +244,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       response = client.MultiLineResponse().c_str();
 
       msg = new KMMessage;
-      msg->fromString(response);
+      msg->fromString(response,TRUE);
       if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
 	processNewMsg(msg);
       else delete msg;

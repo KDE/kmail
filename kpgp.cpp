@@ -618,7 +618,6 @@ Kpgp::runPGP(int action, const char* args)
   unlink(outName.data());
   unlink(errName.data());
 
-  debug("pgp: parsing results");
   return parseInfo(action);
 }
 
@@ -642,7 +641,6 @@ bool Kpgp::parseInfo(int action)
       if(action == DECRYPT) 
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	debug("Kpgp: passphrase is bad");
 	havePassPhrase = FALSE;
 	returnFlag = FALSE;
       }
@@ -666,7 +664,6 @@ bool Kpgp::parseInfo(int action)
     }
     if((index = info.find("File has signature")) != -1)
     {
-      debug("Kpgp: message is signed");
       flagSigned = TRUE;
       flagSigIsGood = FALSE;
       if( info.find("Key matching expected") != -1)
@@ -725,7 +722,6 @@ bool Kpgp::parseInfo(int action)
   case SIGN:
     if(info.find("Pass phrase is good") != -1)
     {
-      debug("Kpgp: Good Passphrase!");
       flagEncrypted = TRUE;
     }
     if( info.find("Bad pass phrase") != -1)

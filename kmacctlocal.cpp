@@ -72,19 +72,17 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   mFolder->open();
 
   num = mailFolder.count();
-  debug("%ld messages in %s", num, (const char*)location());
 
   for (i=0; i<num; i++)
   {
     //if(statusWdg->abortRequested())
     //break;
     statusWdg->updateProgressBar(i,num);
-    debug("processing message %ld", i);
     msg = mailFolder.take(0);
+    msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
     if (msg) processNewMsg(msg);
     app->processEvents();
   }
-  debug("done, closing folders");
 
   rc = mailFolder.expunge();
   if (rc)

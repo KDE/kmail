@@ -224,7 +224,7 @@ const QString KMMessage::headerAsString(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::fromString(const QString aStr)
+void KMMessage::fromString(const QString aStr, bool aSetStatus)
 {
   int i, j, len;
 
@@ -243,7 +243,8 @@ void KMMessage::fromString(const QString aStr)
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
 
-  setStatus(headerField("Status"), headerField("X-Status"));
+  if (aSetStatus)
+    setStatus(headerField("Status"), headerField("X-Status"));
 
   mNeedsAssembly = FALSE;
 }

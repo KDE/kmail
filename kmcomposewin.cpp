@@ -184,8 +184,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
-  printf("~KMComposeWin\n");
-
   if (mAutoDeleteMsg && mMsg) delete mMsg;
 #ifdef HAS_KSPELL
   if (mKSpellConfig) delete KSpellConfig;
@@ -1385,8 +1383,7 @@ void KMComposeWin::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotClose()
 {
-  // we should check here if there were any changes...
-  close(TRUE);
+  close(FALSE);
 }
 
 
