@@ -1760,12 +1760,8 @@ void KMReaderWin::slotAtmOpen()
 }
 
 void KMReaderWin::openAttachment( int id, const QString & name ) {
-  // ### hack to make alert us when the caller doesn't play by the
-  // ### (clumsy) rules:
-  kdWarning( name != mAtmCurrentName, 5006 )
-    << "KMReaderWin::openAttachment(): Got \"" << name << "\", expected \""
-    << mAtmCurrentName << "\"" << endl;
   mAtmCurrentName = name;
+  mAtmCurrent = id;
 
   QString str, pname, cmd, fileName;
 
