@@ -203,6 +203,7 @@ namespace KMail {
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
       resize( geometry.readSizeEntry( "Identity Dialog size" ) );
+    mNameEdit->setFocus();
   }
 
   IdentityDialog::~IdentityDialog() {
