@@ -593,6 +593,8 @@ void KMFldSearch::enableGUI()
   actionButton(KDialogBase::Close)->setEnabled(!mSearching);
   mCbxFolders->setEnabled(!mSearching);
   mChkSubFolders->setEnabled(!mSearching);
+  mChkbxAllFolders->setEnabled(!mSearching);
+  mChkbxSpecificFolders->setEnabled(!mSearching);
 
   for(int i = 0; i < mNumRules; i++)
     mRules[i]->setEnabled(!mSearching);
