@@ -490,6 +490,19 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
+    mMailToComposeAction( 0 ),
+    mMailToReplyAction( 0 ),
+    mMailToForwardAction( 0 ),
+    mAddAddrBookAction( 0 ),
+    mOpenAddrBookAction( 0 ),
+    mCopyAction( 0 ),
+    mCopyURLAction( 0 ),
+    mUrlOpenAction( 0 ),
+    mUrlSaveAsAction( 0 ),
+    mAddBookmarksAction( 0 ),
+    mStartIMChatAction( 0 ),
+    mSelectAllAction( 0 ),
+    mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 )
 {
   mSplitterSizes << 180 << 100;
@@ -644,6 +657,8 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 
 // little helper function
 KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
+  if ( !mActionCollection )
+    return 0;
   const char * actionName = 0;
   if ( style == HeaderStyle::fancy() )
     actionName = "view_headers_fancy";
@@ -664,6 +679,8 @@ KRadioAction *KMReaderWin::actionForHeaderStyle( const HeaderStyle * style, cons
 }
 
 KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
+  if ( !mActionCollection )
+    return 0;
   const char * actionName = 0;
   if ( as == AttachmentStrategy::iconic() )
     actionName = "view_attachments_as_icons";
@@ -861,7 +878,8 @@ void KMReaderWin::readConfig(void)
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
 
   mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
-  mToggleFixFontAction->setChecked( mUseFixedFont );
+  if ( mToggleFixFontAction )
+    mToggleFixFontAction->setChecked( mUseFixedFont );
 
   mHtmlMail = reader.readBoolEntry( "htmlMail", false );
   mHtmlLoadExternal = reader.readBoolEntry( "htmlLoadExternal", false );
@@ -869,13 +887,13 @@ void KMReaderWin::readConfig(void)
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
   KRadioAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
-  assert( raction );
-  raction->setChecked( true );
+  if ( raction )
+    raction->setChecked( true );
 
   setAttachmentStrategy( AttachmentStrategy::create( reader.readEntry( "attachment-strategy", "smart" ) ) );
   raction = actionForAttachmentStrategy( attachmentStrategy() );
-  assert( raction );
-  raction->setChecked( true );
+  if ( raction )
+    raction->setChecked( true );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
