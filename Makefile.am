@@ -35,9 +35,14 @@ appsdir = $(kde_appsdir)/Utilities/
 install-data-local:
 	$(mkinstalldirs) $(appsdir)
 	$(INSTALL_DATA) KMail.kdelnk $(appsdir)
+	$(INSTALL_DATA) kmail.xpm $(kde_icondir)/kmail.xpm
+	$(mkinstalldirs) $(kde_minidir)
+	$(INSTALL_DATA) mini-kmail.xpm $(kde_minidir)/kmail.xpm
 
 uninstall-local:
-	-rm -f $(appsdir)/KMail.kdelnk
+	rm -f $(appsdir)/KMail.kdelnk
+	rm -f $(kde_icondir)/kmail.xpm
+	rm -f $(kde_minidir)/kmail.xpm
 	
 kmfolderdia.cpp:kmfolderdia.moc
 kmfolderdia.moc: kmfolderdia.h
