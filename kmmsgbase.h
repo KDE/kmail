@@ -102,6 +102,9 @@ public:
   static QString skipKeyword(const QString& str, char sepChar=':',
 				 bool* keywordFound=NULL);
 
+  /** Convert all non-ascii characters to question marks */
+  static const QCString toUsAscii(const QString& _str);
+
   /** Copy all values from other to this object. */
   void assign(const KMMsgBase* other);
 

@@ -279,6 +279,17 @@ QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
+const QCString KMMsgBase::toUsAscii(const QString& _str)
+{
+  QString result = _str.copy();
+  int len = result.length();
+  for (int i = 0; i < len; i++)
+    if (result.at(i).unicode() >= 128) result.at(i) = '?';
+  return result.latin1();
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 {
   QCString aStr = _str.ascii();
@@ -392,7 +403,8 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
     else cset = charset;
   QTextCodec *codec = QTextCodec::codecForName(cset);
   QCString latin;
-  if (codec) latin = codec->fromUnicode(_str);
+  if (charset == "us-ascii") latin = toUsAscii(_str);
+  else if (codec) latin = codec->fromUnicode(_str);
     else latin = _str.local8Bit();
   int cr, start, stop, pos = 0;
   int latinLen = latin.length();
@@ -469,7 +481,8 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
     else cset = charset;
   QTextCodec *codec = QTextCodec::codecForName(cset);
   QCString latin;
-  if (codec) latin = codec->fromUnicode(_str);
+  if (charset == "us-ascii") latin = toUsAscii(_str);
+  else if (codec) latin = codec->fromUnicode(_str);
     else latin = _str.local8Bit();
 
   char *l = latin.data();
