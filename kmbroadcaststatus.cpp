@@ -86,7 +86,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   
   m_pProgressBar = new KProgress( this );
   m_pProgressBar->setLineWidth( 1 );
-  m_pProgressBar->setFrameStyle( QFrame::Box | QFrame::Raised );
+  m_pProgressBar->setFrameStyle( QFrame::Box );
   m_pProgressBar->installEventFilter( this );
   m_pProgressBar->setMinimumWidth( w );
   stack->addWidget( m_pProgressBar, 1 );
