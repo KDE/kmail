@@ -1140,6 +1140,13 @@ void KMHeaders::msgAdded(int id)
           parent = NULL;
       }
     }
+    
+    if (parent && mFolder->getMsgBase(parent->id())->isWatched())
+      mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
+    else if (parent && mFolder->getMsgBase(parent->id())->isIgnored()) {
+      mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
+      mFolder->setStatus( id, KMMsgStatusRead );
+    }
     if (parent)
       hi = new KMHeaderItem( parent->item(), id );
     else
@@ -1148,13 +1155,6 @@ void KMHeaders::msgAdded(int id)
     // o/` ... my buddy and me .. o/`
     hi->setSortCacheItem(sci);
     sci->setItem(hi);
-
-    if (parent && mFolder->getMsgBase(parent->id())->isWatched())
-      mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
-    else if (parent && mFolder->getMsgBase(parent->id())->isIgnored()) {
-      mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
-      mFolder->setStatus( id, KMMsgStatusRead );
-    }
 
     // Update and resize the id trees.
     mItems.resize( mFolder->count() );
@@ -3284,7 +3284,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
                 continue;
 
             if(threaded && i->item()) {
-                khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
                 // If the parent is watched or ignored, propagate that to it's
                 // children
                 if (mFolder->getMsgBase(i->id())->isWatched())
@@ -3293,6 +3292,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
                   mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusIgnored);
                   mFolder->setStatus(new_kci->id(), KMMsgStatusRead);
                 }
+                khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
             } else {
                 khi = new KMHeaderItem(this, new_kci->id(), new_kci->key());
             }
