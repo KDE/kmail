@@ -1374,8 +1374,6 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
   }
 
-  bool bOk = true;
-
   bool doSign    = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
 
@@ -1404,7 +1402,9 @@ bool KMComposeWin::applyChanges(void)
     }
   }
   
-  if( bOk && !doSignCompletely ) {
+  bool bOk = true;
+
+  if( !doSignCompletely ) {
     if( cryptPlug ) {
       // note: only ask for signing if "Warn me" flag is set! (khz)
       if( cryptPlug->warnSendUnsigned() ) {
@@ -1424,7 +1424,10 @@ bool KMComposeWin::applyChanges(void)
             + i18n("</b></qt>") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
-        doSign = ( ret == KMessageBox::Yes );
+        else if( ret == KMessageBox::Yes ) {
+          doSign = true;
+          doSignCompletely = true;
+        }
       }
     } else {
       // ask if the message should be encrypted via old build-in pgp code
@@ -1451,8 +1454,11 @@ bool KMComposeWin::applyChanges(void)
             + i18n("Encrypt all parts of this message?")
             + i18n("</b></qt>") ) );
         if( ret == KMessageBox::Cancel )
-        bOk = false;
-        doEncrypt = ( ret == KMessageBox::Yes );
+          bOk = false;
+        else if( ret == KMessageBox::Yes ) {
+          doEncrypt = true;
+          doEncryptCompletely = true;
+        }
       }
       
       /*
