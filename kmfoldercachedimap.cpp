@@ -1014,10 +1014,10 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
   int flags;
   const int v = 42;
   while (pos >= 0) {
-    KMMessage *msg = new KMMessage;
-    msg->fromString((*it).cdata.mid(16, pos - 16));
-    flags = msg->headerField("X-Flags").toInt();
-    ulong uid = msg->UID();
+    KMMessage msg;
+    msg.fromString((*it).cdata.mid(16, pos - 16));
+    flags = msg.headerField("X-Flags").toInt();
+    ulong uid = msg.UID();
     if( uid != 0 ) {
       if ( uidsOnServer.count() == uidsOnServer.size() ) {
         uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
@@ -1043,14 +1043,12 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
          KMFolderImap::flagsToStatus( existingMessage, flags );
          // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
-      delete msg;
     } else {
-      ulong size = msg->headerField("X-Length").toULong();
+      ulong size = msg.headerField("X-Length").toULong();
       mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
       if( imapPath() == "/INBOX/" )
          mUidsForDownload << uid;
 
-      delete msg;
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
