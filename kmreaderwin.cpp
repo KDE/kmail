@@ -993,11 +993,11 @@ QString KMReaderWin::quotedHTML(const QString& s)
       }
       else if( prevQuoteLevel >= 0 )
       {
-	line.prepend( "</font><br>\n" ); // Added extra BR to work around bug
+	line.prepend( "</font><br>" ); // Added extra BR to work around bug
 	prevQuoteLevel = -1;
       }
 
-      tmpStr += line + "<br>\n";
+      tmpStr += line + "<br>";
       if( (newlineCount % 100) == 0 )
       {
 	htmlStr += tmpStr;
