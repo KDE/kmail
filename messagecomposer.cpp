@@ -619,11 +619,10 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
       const KCursorSaver idle( KBusyPtr::idle() );
       const QString msg = i18n("You have requested to sign this message, "
 			       "but no valid signing keys have been configured "
-			       "for this identity.\n"
-			       "If you choose to continue, "
-			       "no signing will be performed.");
+			       "for this identity.");
       if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
-					       i18n("Send &Unsigned") )
+					       i18n("Send Unsigned"),
+                                               i18n("Send &Unsigned") )
 	   == KMessageBox::Cancel ) {
 	mRc = false;
 	return false;
