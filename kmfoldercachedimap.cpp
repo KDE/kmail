@@ -770,7 +770,8 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if( !noContent() && mAccount->hasAnnotationSupport() && !mContentsTypeChanged ) {
+    if( !noContent() && mAccount->hasAnnotationSupport() &&
+        ( !mContentsTypeChanged || mAnnotationFolderType.isEmpty() ) ) {
       newState( mProgress, i18n("Retrieving annotations"));
       // If in the future we want to retrieve more annotations, we should then write
       // a multiGetAnnotation job in annotationjobs.*
