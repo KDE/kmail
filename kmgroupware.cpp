@@ -150,33 +150,6 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
 }
 
 
-void KMGroupware::slotInvalidateIMAPFolders()
-{
-  QString str = i18n("Are you sure you want to refresh the IMAP cache?\n"
-		     "This will remove all changes you have done locally to your folders");
-  QString s1 = i18n("Refresh IMAP Cache");
-  QString s2 = i18n("&Refresh");
-  if( KMessageBox::warningContinueCancel(kmkernel->mainWin(), str, s1, s2 ) == KMessageBox::Continue)
-    kmkernel->acctMgr()->invalidateIMAPFolders();
-}
-
-//-----------------------------------------------------------------------------
-void KMGroupware::setupActions()
-{
-  static bool actionsSetup = false;
-
-  if( !actionsSetup && kmkernel->mainWin() ) {
-    actionsSetup = true;
-
-    // file menu: some entries
-    new KAction( i18n("refresh local imap cache", "Refresh Local IMAP Cache"), 0,
-		 this, SLOT(slotInvalidateIMAPFolders()), kmkernel->mainWin()->actionCollection(),
-		 "invalidate_imap_cache" );
-  }
-
-  emit signalMenusChanged();
-}
-
 //-----------------------------------------------------------------------------
 //   Special Contacts methods called by KMKernel's DCOP functions
 //-----------------------------------------------------------------------------

@@ -45,7 +45,6 @@ public:
 
 
 public:
-  void setupActions(); // Not const since it emits a signal
   void processVCalRequest( const QCString& receiver, const QString& vCalIn,
                            QString& choice );
   void processVCalReply( const QCString& sender, const QString& vCalIn,
@@ -95,14 +94,6 @@ public:
   void reloadFolderTree() const;
 
   void setMainWidget( KMMainWidget* mw ) { mMainWidget = mw; }
-
-signals:
-  /** The menus were changed */
-  void signalMenusChanged();
-
-public slots:
-  /** Delete and sync the local IMAP cache  */
-  void slotInvalidateIMAPFolders();
 
 protected:
   // Figure out if a vCal is a todo, event or neither

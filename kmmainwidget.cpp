@@ -1012,6 +1012,14 @@ void KMMainWidget::slotRefreshFolder()
   }
 }
 
+void KMMainWidget::slotInvalidateIMAPFolders() {
+  if ( KMessageBox::warningContinueCancel( this,
+          i18n("Are you sure you want to refresh the IMAP cache?\n"
+	       "This will remove all changes that you have done "
+	       "locally to your IMAP folders."),
+	  i18n("Refresh IMAP Cache"), i18n("&Refresh") ) == KMessageBox::Continue )
+    kmkernel->acctMgr()->invalidateIMAPFolders();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll() {
@@ -2021,6 +2029,10 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&Expire All Folders"), 0,
 		      this, SLOT(slotExpireAll()),
 		      actionCollection(), "expire_all_folders" );
+
+  (void) new KAction( i18n("&Refresh Local IMAP Cache"), "refresh",
+		      this, SLOT(slotInvalidateIMAPFolders()),
+		      actionCollection(), "file_invalidate_imap_cache" );
 
   (void) new KAction( i18n("Empty T&rash"), 0,
 		      KMKernel::self(), SLOT(slotEmptyTrash()),
