@@ -221,6 +221,8 @@ private:
                            int _changes );
   void triggerKolabFreeBusy( const KURL& folderURL );
 
+  static bool folderIsAlarmRelevant( const KMFolder * );
+
 private:
   QGuardedPtr<KMFolder> mContacts;
   QGuardedPtr<KMFolder> mCalendar;

@@ -47,6 +47,8 @@
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"
+#include "acljobs.h"
+#include "kmfoldercachedimap.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -624,7 +626,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
-    subResources.append( SubResource( f->location(),  f->prettyURL(), !f->isReadOnly() ) );
+    subResources.append( SubResource( f->location(),  f->prettyURL(), 
+                                     !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
@@ -636,7 +639,9 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
-      subResources.append( SubResource( f->location(), f->prettyURL(), !f->isReadOnly() ) );
+      subResources.append( SubResource( f->location(), f->prettyURL(), 
+                                        !f->isReadOnly(), 
+                                        folderIsAlarmRelevant( f ) ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
@@ -1257,9 +1262,10 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
              this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   }
 
-  // Tell about the new resource
+  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
+                    !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
+
   /* FIXME merge once we are back in HEAD. IMAP Resource still uses the other one. */
-  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL() );
   subresourceAdded( folderContentsType( contentsType ), location );
 }
 
@@ -1578,15 +1584,20 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
 #else
-  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), 
+                    mCalendar->label(), true, true );
   subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), 
+                    mTasks->label(), true, true );
   subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), 
+                    mJournals->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), 
+                    mContacts->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), 
+                    mNotes->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location() );
   // This also shows that we might even get rid of the mCalendar etc. special
   // case and just use ExtraFolder for all
@@ -1809,6 +1820,37 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
       return 0;
     return static_cast<KMFolder*>( node );
   }
+}
+
+
+/* We treat all folders as relevant wrt alarms for which we have Administer
+ * rights or for which the "Incidences relevant for everyone" annotation has
+ * been set. It can be reasonably assumed that those are "ours". All local folders
+ * must be ours anyhow. */
+bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
+{
+  bool administerRights = true;
+  bool relevantForOwner = true;
+  bool relevantForEveryone = false;
+  if ( folder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap *imapFolder = static_cast<KMFolderImap*>( folder->storage() );
+    administerRights = 
+      imapFolder->userRights() <= 0 || imapFolder->userRights() & KMail::ACLJobs::Administer;
+  }
+  if ( folder->folderType() == KMFolderTypeCachedImap ) {
+    KMFolderCachedImap *dimapFolder = static_cast<KMFolderCachedImap*>( folder->storage() );
+    administerRights = 
+      dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
+    relevantForOwner = dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins;
+    relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
+  }
+#if 0
+  kdDebug(5006) << k_funcinfo << endl;
+  kdDebug(5006) << "Folder: " << folder->label() << " has administer rights: " << administerRights << endl;
+  kdDebug(5006) << "and is relevant for owner: " << relevantForOwner <<  endl;
+  kdDebug(5006) << "and relevant for everyone: "  << relevantForEveryone << endl;
+#endif
+  return ( administerRights && relevantForOwner ) || relevantForEveryone;
 }
 
 #include "kmailicalifaceimpl.moc"
