@@ -1252,19 +1252,31 @@ QCString KMMessage::createForwardBody()
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createForward()
 {
-  KMMessage* msg = new KMMessage;
+  KMMessage* msg = new KMMessage();
   KMMessagePart msgPart;
   QString id;
-  int i;
 
-  msg->initFromMessage(this);
+  msg->fromDwString( this->asDwString() );
+  msg->cleanupHeader();
+  // remember the type and subtype, initFromMessage sets the contents type to 
+  // text/plain, via initHeader, for unclear reasons
+  const int type = msg->type();
+  const int subtype = msg->subtype();
+  msg->initFromMessage( this );
+  //restore type
+  msg->setType( type );
+  msg->setSubtype( subtype );
 
   QString st = QString::fromUtf8(createForwardBody());
   QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
   if (encoding.isEmpty()) encoding = "utf-8";
-  QCString str = codecForName(encoding)->fromUnicode(st);
-
   msg->setCharset(encoding);
+
+  msg->setSubject( forwardSubject() );
+  msg->removePrivateHeaderFields();
+ 
+#ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
+  QCString str = codecForName(encoding)->fromUnicode(st);
   msg->setBody(str);
 
   if (numBodyParts() > 0)
@@ -1281,7 +1293,7 @@ KMMessage* KMMessage::createForward()
     msg->addBodyPart(&msgPart);
 
     bool outsideRfc822 = true;
-    for (i = 0; i < numBodyParts(); i++)
+    for ( int i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
       QCString mimeType = msgPart.typeStr().lower() + '/'
@@ -1299,11 +1311,9 @@ KMMessage* KMMessage::createForward()
         outsideRfc822 = false;
     }
   }
+#endif // BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
 
-  msg->setSubject( forwardSubject() );
-
-  msg->cleanupHeader();
-
+  
   // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
 
