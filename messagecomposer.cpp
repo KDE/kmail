@@ -1680,7 +1680,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
   }
 
   msg->setHeaderField( "X-KMail-Recipients",
-                       splitInfo.recipients.join(", ") );
+                       splitInfo.recipients.join(", "), KMMessage::Address );
 
   if ( mDebugComposerCrypto ) {
     kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;

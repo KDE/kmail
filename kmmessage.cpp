@@ -1091,7 +1091,7 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   msg->setHeaderField( "Resent-From", strFrom, Address, true );
 
   msg->setHeaderField( "X-KMail-Redirect-From", strByWayOf );
-  msg->setHeaderField( "X-KMail-Recipients", toStr );
+  msg->setHeaderField( "X-KMail-Recipients", toStr, Address );
 
   msg->link(this, KMMsgStatusForwarded);
 

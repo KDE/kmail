@@ -3707,7 +3707,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 	(*it)->setBcc( KMMessage::expandAliases( mComposer->originalBCC() ));
       QString recips = (*it)->headerField( "X-KMail-Recipients" );
       if( !recips.isEmpty() ) {
-	(*it)->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
+	(*it)->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ), KMMessage::Address );
       }
       (*it)->cleanupHeader();
       sentOk = kmkernel->msgSender()->send((*it), mSendNow);
