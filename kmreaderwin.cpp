@@ -2323,9 +2323,9 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
   } else {
       if( reader )
         reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
-          i18n("No Crypto Plug-In settings found.").utf8(),
-          i18n("Please specify a Plug-In by invoking").utf8(),
-          i18n("the 'Settings/Configure KMail / Plug-In' dialog!").utf8(),
+          i18n("No Crypto Plug-In settings found."),
+          i18n("Please specify a Plug-In by invoking"),
+          i18n("the 'Settings/Configure KMail / Plug-In' dialog!"),
           decryptedData );
   }
   return bDecryptionOk;
