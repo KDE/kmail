@@ -1003,13 +1003,14 @@ void KMMsgBase::setTransferInProgress(bool value, bool force)
 //-----------------------------------------------------------------------------
 static void swapEndian(QString &str)
 {
-  ushort us;
   uint len = str.length();
-  for (uint i = 0; i < len; i++)
-  {
-    us = str[i].unicode();
-    str[i] = QChar(kmail_swap_16(us));
+  QChar *copy = new QChar[len];
+  const QChar *orig = str.unicode();
+  for (uint i = 0; i < len; i++) {
+    copy[i] = kmail_swap_16(orig[i].unicode());
   }
+  str.setUnicode( copy, len );
+  delete [] copy;
 }
 
 //-----------------------------------------------------------------------------
@@ -1033,7 +1034,7 @@ namespace {
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
-  QString ret("");
+  QString ret;
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
