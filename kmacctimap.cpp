@@ -106,6 +106,7 @@ void KMAcctImap::init(void)
   mPrefix = "/";
   mAutoExpunge = TRUE;
   mHiddenFolders = FALSE;
+  mOnlySubscribedFolders = FALSE;
   mUseSSL = FALSE;
   mUseTLS = FALSE;
   mIdle = TRUE;
@@ -131,6 +132,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setAuth(acct->auth());
   setAutoExpunge(acct->autoExpunge());
   setHiddenFolders(acct->hiddenFolders());
+  setOnlySubscribedFolders(acct->onlySubscribedFolders());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setUseSSL(acct->useSSL());
@@ -153,6 +155,7 @@ void KMAcctImap::readConfig(KConfig& config)
   if (mFolder) mFolder->setImapPath(mPrefix);
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
+  mOnlySubscribedFolders = config.readBoolEntry("subscribed-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
   mUseTLS = config.readBoolEntry("use-tls", FALSE);
 }
@@ -174,6 +177,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("prefix", mPrefix);
   config.writeEntry("auto-expunge", mAutoExpunge);
   config.writeEntry("hidden-folders", mHiddenFolders);
+  config.writeEntry("subscribed-folders", mOnlySubscribedFolders);
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
 }
@@ -303,6 +307,13 @@ void KMAcctImap::setAutoExpunge(bool aAutoExpunge)
 void KMAcctImap::setHiddenFolders(bool aHiddenFolders)
 {
   mHiddenFolders = aHiddenFolders;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setOnlySubscribedFolders(bool aOnlySubscribedFolders)
+{
+  mOnlySubscribedFolders = aOnlySubscribedFolders;
 }
 
 

@@ -105,6 +105,12 @@ public:
   virtual void setHiddenFolders(bool);
 
   /**
+   * Show only subscribed folders
+   */
+  bool onlySubscribedFolders() { return mOnlySubscribedFolders; }
+  virtual void setOnlySubscribedFolders(bool);
+
+  /**
    * Use SSL or not
    */
   bool useSSL() { return mUseSSL; }
@@ -209,6 +215,7 @@ protected:
   bool    mUseSSL;
   bool    mUseTLS;
   bool    mHiddenFolders;
+  bool    mOnlySubscribedFolders;
   bool    mProgressEnabled;
   int     mTotal;
   bool    mIdle;

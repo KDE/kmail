@@ -120,6 +120,7 @@ class AccountDialog : public KDialogBase
       QLineEdit    *prefixEdit;
       QCheckBox    *autoExpungeCheck;
       QCheckBox    *hiddenFoldersCheck;
+      QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
       QButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;

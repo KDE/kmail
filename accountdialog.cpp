@@ -608,9 +608,9 @@ void AccountDialog::makeImapAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 10, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 11, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 9, 10 );
+  grid->setRowStretch( 10, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -651,16 +651,20 @@ void AccountDialog::makeImapAccountPage()
   label->setBuddy( mImap.prefixEdit );
   grid->addWidget( mImap.prefixEdit, 5, 1 );
 
-  mImap.autoExpungeCheck =
-    new QCheckBox( i18n("&Automatically expunge deleted messages"), page1);
-  grid->addMultiCellWidget( mImap.autoExpungeCheck, 6, 6, 0, 1 );
-
-  mImap.hiddenFoldersCheck = new QCheckBox( i18n("&Show hidden folders"), page1);
-  grid->addMultiCellWidget( mImap.hiddenFoldersCheck, 7, 7, 0, 1 );
-
   mImap.storePasswordCheck =
     new QCheckBox( i18n("Sto&re IMAP password in configuration file"), page1 );
-  grid->addMultiCellWidget( mImap.storePasswordCheck, 8, 8, 0, 1 );
+  grid->addMultiCellWidget( mImap.storePasswordCheck, 6, 6, 0, 1 );
+
+  mImap.autoExpungeCheck =
+    new QCheckBox( i18n("&Automatically expunge deleted messages"), page1);
+  grid->addMultiCellWidget( mImap.autoExpungeCheck, 7, 7, 0, 1 );
+
+  mImap.hiddenFoldersCheck = new QCheckBox( i18n("&Show hidden folders"), page1);
+  grid->addMultiCellWidget( mImap.hiddenFoldersCheck, 8, 8, 0, 1 );
+
+  mImap.subscribedFoldersCheck = new QCheckBox(
+    i18n("Show &only subscribed folders"), page1);
+  grid->addMultiCellWidget( mImap.subscribedFoldersCheck, 9, 9, 0, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -790,6 +794,7 @@ void AccountDialog::setupSettings()
     mImap.prefixEdit->setText( ai.prefix() );
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
+    mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
@@ -1046,6 +1051,7 @@ void AccountDialog::saveSettings()
     epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
+    epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );

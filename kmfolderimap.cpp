@@ -219,7 +219,7 @@ void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
     && imapPath() == mAccount->prefix();
   KURL url = mAccount->getUrl();
   url.setPath(((jd.inboxOnly) ? QString("/") : imapPath())
-    + ";TYPE=LIST");
+    + ";TYPE=" + ((mAccount->onlySubscribedFolders()) ? "LSUB" : "LIST"));
   if (!mAccount->makeConnection())
   { 
     if (fti) fti->setOpen( FALSE );
