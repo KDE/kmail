@@ -162,7 +162,9 @@ int main(int argc, char *argv[])
      return 0;
 
   KMailApplication app;
-  KGlobal::locale()->insertCatalogue("libkdenetwork");
+
+  // import i18n data from libraries:
+  KMail::insertLibraryCatalogues();
 
   // Check that all updates have been run on the config file:
   KMail::checkConfigUpdates();

@@ -127,6 +127,20 @@ void lockOrDie() {
   config.sync();
 }
 
+void insertLibraryCatalogues() {
+  static const char * catalogues[] = {
+    "libkdenetwork",
+    "libkdepim",
+    "libktnef",
+    "libkcal",
+    "libksieve",
+  };
+
+  KLocale * l = KGlobal::locale();
+  for ( unsigned int i = 0 ; i < sizeof catalogues / sizeof *catalogues ; ++i )
+    l->insertCatalogue( catalogues[i] );
+}
+
 void cleanup()
 {
   const QString lockLocation = locateLocal("data", "kmail/lock");

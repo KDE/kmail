@@ -65,7 +65,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kdDebug(5006) << "KMailPart()..." << endl;
   kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
-  KGlobal::locale()->insertCatalogue("libkdenetwork");
+  // import i18n data from libraries:
+  KMail::insertLibraryCatalogues();
 
   // Check that all updates have been run on the config file:
   KMail::checkConfigUpdates();

@@ -17,6 +17,7 @@ namespace KMail
     QString getMyHostName(void);
     void checkConfigUpdates();
     void lockOrDie();
+    void insertLibraryCatalogues();
     void cleanup();
 }
 
