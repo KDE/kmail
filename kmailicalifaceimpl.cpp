@@ -357,6 +357,8 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
+                                                const QString& plainTextBody,
+                                                const QMap<QCString, QString>& customHeaders,
                                                 const QStringList& attachmentURLs,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
@@ -375,25 +377,20 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->headers().ContentType().Assemble();
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
+
+  QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
+  const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.end();
+  for ( ; ith != ithEnd ; ++ith ) {
+    msg->setHeaderField( ith.key(), ith.data() );
+  }
+
   // add a first body part to be displayed by all mailer
   // than can NOT display Kolab data: no matter if these
   // mailers are MIME compliant or not
   KMMessagePart firstPart;
   firstPart.setType(    DwMime::kTypeText     );
   firstPart.setSubtype( DwMime::kSubtypePlain );
-  const char * firstPartTextToTranslate = I18N_NOOP(
-    "This is a Kolab Groupware object.\nTo view this object you"
-    " will need an email client that can understand the Kolab"
-    " Groupware format.\nFor a list of such email clients please"
-    " visit\n%1" );
-  const char * url = "http://www.kolab.org/kolab2-clients.html";
-  QString firstPartTextUntranslated = QString::fromLatin1( firstPartTextToTranslate ).arg( url );
-  QString firstPartText = i18n( firstPartTextToTranslate ).arg( url );
-  if ( firstPartText != firstPartTextUntranslated ) {
-    firstPartText.append("\n\n-----------------------------------------------------\n\n");
-    firstPartText.append( firstPartTextUntranslated );
-  }
-  firstPart.setBodyFromUnicode( firstPartText );
+  firstPart.setBodyFromUnicode( plainTextBody );
   msg->addBodyPart( &firstPart );
 
   Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
@@ -412,8 +409,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
       bAttachOK = false;
       break;
     }
-    if ( bymimetype )
-      msg->setHeaderField( "X-Kolab-Type", *itmime );
   }
 
   if( bAttachOK ){
@@ -776,6 +771,8 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
+                                     const QString& plainTextBody,
+                                     const QMap<QCString, QString>& customHeaders,
                                      const QStringList& attachmentURLs,
                                      const QStringList& attachmentMimetypes,
                                      const QStringList& attachmentNames,
@@ -827,7 +824,12 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
+    QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
+    const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.begin();
+    for ( ; ith != ithEnd ; ++ith )
+      newMsg->setHeaderField( ith.key(), ith.data() );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
+    // Note that plainTextBody isn't used in this branch. We assume it's still valid from when the mail was created.
 
     // Delete some attachments according to list
     for( QStringList::ConstIterator it = deletedAttachments.begin();
@@ -870,7 +872,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
   } else {
     // Message not found - store it newly
-    rc = addIncidenceKolab( *f, subject,
+    rc = addIncidenceKolab( *f, subject, plainTextBody, customHeaders,
                             attachmentURLs,
                             attachmentNames,
                             attachmentMimetypes );

@@ -90,6 +90,8 @@ k_dcop:
   virtual Q_UINT32 update( const QString& resource,
                            Q_UINT32 sernum,
                            const QString& subject,
+                           const QString& plainTextBody,
+                           const QMap<QCString, QString>& customHeaders,
                            const QStringList& attachmentURLs,
                            const QStringList& attachmentMimetypes,
                            const QStringList& attachmentNames,
