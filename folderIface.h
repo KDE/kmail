@@ -54,6 +54,7 @@ namespace KMail {
     virtual QString unreadIconPath() const;
     virtual int messages();
     virtual int unreadMessages();
+    virtual int unreadRecursiveMessages();
 
     //not yet
     //virtual QValueList<DCOPRef> messageRefs();

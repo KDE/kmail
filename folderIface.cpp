@@ -73,13 +73,19 @@ FolderIface::unreadIconPath() const
 int
 FolderIface::messages()
 {
-    return mFolder->countUnreadRecursive();
+    return mFolder->count();
 }
 
 int
 FolderIface::unreadMessages()
 {
     return mFolder->countUnread();
+}
+
+int
+FolderIface::unreadRecursiveMessages()
+{
+    return mFolder->countUnreadRecursive();
 }
 
 /*
