@@ -88,6 +88,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->slotWordWrapToggled( false );
+  cWin->setSigningAndEncryptionDisabled( true );
 
   // TODO: These are no longer available. It was an internal
   // implementation detail of kmcomposewin, anyway. Please find
