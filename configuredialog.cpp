@@ -4007,7 +4007,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   // IMAP resource setup
   QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
 
-  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP Resource functionality"), b1 );
+  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
 
   mBox = new QVBox( b1 );
   mBox->setSpacing( KDialog::spacingHint() );

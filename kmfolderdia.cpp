@@ -362,7 +362,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     if (mFolder) imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
     bool checked = (imapFolder) ? imapFolder->includeInMailCheck() : true;
     // should this folder be included in new-mail-checks?
-    QGroupBox* newmailGroup = new QGroupBox( i18n("Check for new mail"), page, "newmailGroup" );
+    QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), page, "newmailGroup" );
     newmailGroup->setColumnLayout( 0,  Qt::Vertical );
     topLayout->addWidget( newmailGroup );
 

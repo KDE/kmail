@@ -392,7 +392,7 @@ void KMailICalIfaceImpl::readConfig()
     if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required folders for the IMAP resource"
 					    " as subfolders of %1. If you dont want this, press \"No\","
 					    " and the IMAP resource will be disabled").arg(folderParentDir->name()),
-				    i18n("IMAP resource Folders") ) == KMessageBox::No ) {
+				    i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
       mUseResourceIMAP = false;
       mFolderParent = 0;
       kernel->groupware().reloadFolderTree();
