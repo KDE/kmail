@@ -2148,9 +2148,6 @@ void ConfigureDialog::slotApply( void )
     bool confirmBeforeSend = mNetwork.confirmSendCheck->isChecked();
     config.writeEntry("confirm-before-send", confirmBeforeSend );
 
-    // Incoming mail
-    kernel->acctMgr()->writeConfig(FALSE);
-
     // Add accounts marked as new
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
     for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
@@ -2170,6 +2167,8 @@ void ConfigureDialog::slotApply( void )
 			    i18n("Unable to locate account ") + (*it)->name() );
     mAccountsToDelete.clear();
 
+    // Incoming mail
+    kernel->acctMgr()->writeConfig(FALSE);
   }
   else if( activePage == mAppearance.pageIndex )
   {
