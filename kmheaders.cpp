@@ -1447,6 +1447,12 @@ void KMHeaders::nextMessage()
 {
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemBelow()) {
+    QListViewItem *temp = lvi;
+    while (temp) {
+	temp->firstChild();
+	temp = temp->parent();
+    }
+      
     clearSelection();
     setSelected( lvi, FALSE );
     lvi->repaint();
@@ -1461,6 +1467,12 @@ void KMHeaders::prevMessage()
 {
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemAbove()) {
+    QListViewItem *temp = lvi;
+    while (temp) {
+	temp->firstChild();
+	temp = temp->parent();
+    }
+
     clearSelection();
     setSelected( lvi, FALSE );
     lvi->repaint();
