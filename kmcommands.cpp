@@ -2325,6 +2325,9 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
 
+  // adds the new date to the message
+  newMsg->removeHeaderField( "Date" );
+
   win = new KMComposeWin();
   win->setMsg(newMsg, false, true);
   win->show();
