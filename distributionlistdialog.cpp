@@ -35,10 +35,10 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 
-class RecipientItem : public QCheckListItem
+class NewStyleRecipientItem : public QCheckListItem
 {
   public:
-    RecipientItem( QListView *list, const KABC::Addressee &addressee )
+    NewStyleRecipientItem( QListView *list, const KABC::Addressee &addressee )
       : QCheckListItem( list, addressee.realName(), CheckBox ),
         mAddressee( addressee )
     {
@@ -90,7 +90,7 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
           KABC::StdAddressBook::self( true )->findByEmail( email );
         KABC::Addressee::List::ConstIterator it3;
         for( it3 = addressees.begin(); it3 != addressees.end(); ++it3 ) {
-          RecipientItem *item = new RecipientItem( mRecipientsList, *it3 );
+          NewStyleRecipientItem *item = new NewStyleRecipientItem( mRecipientsList, *it3 );
           if ( it3 == addressees.begin() ) item->setOn( true );
         }
       }
@@ -109,7 +109,7 @@ void DistributionListDialog::slotUser1()
 
   QListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
-    RecipientItem *item = static_cast<RecipientItem *>( i );
+    NewStyleRecipientItem *item = static_cast<NewStyleRecipientItem *>( i );
     if ( item->isOn() ) {
       kdDebug() << "  " << item->addressee().fullEmail() << endl;
       addressees.append( item->addressee() );
