@@ -164,10 +164,10 @@ void MboxCompactionJob::done( int rc )
     mbox->close(true);
     mbox->setAutoCreateIndex( autoCreate );
     mbox->setNeedsCompacting( false );            // We are clean now
-    str = i18n( "Mailbox %1 successfully compacted" ).arg( mSrcFolder->label() );
+    str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
   } else {
     mbox->close();
-    str = i18n( "Error occurred while compacting %1. Compaction aborted." ).arg( mSrcFolder->label() );
+    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
     kdDebug(5006) << "Error occurred while compacting " << mbox->location() << endl;
     kdDebug(5006) << "Compaction aborted." << endl;
   }
@@ -243,9 +243,9 @@ void MaildirCompactionJob::done( int rc )
   mCancellable = false;
   QString str;
   if ( !rc ) {
-    str = i18n( "Mailbox %1 successfully compacted" ).arg( mSrcFolder->label() );
+    str = i18n( "Folder \"%1\" successfully compacted" ).arg( mSrcFolder->label() );
   } else {
-    str = i18n( "Error occurred while compacting %1. Compaction aborted." ).arg( mSrcFolder->label() );
+    str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
   }
   mErrorCode = rc;
   storage->setNeedsCompacting( false );
