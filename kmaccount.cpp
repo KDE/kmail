@@ -393,15 +393,10 @@ void KMAccount::mailCheck()
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipts()
 {
-  // re-entrant
-  QValueList<KMMessage*> receipts;
   QValueList<KMMessage*>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
-    receipts.append(*it);
+    kernel->msgSender()->send(*it); //might process events
   mReceipts.clear();
-
-  for(it = receipts.begin(); it != receipts.end(); ++it)
-    kernel->msgSender()->send(*it);  //might process events
 }
 
 //-----------------------------------------------------------------------------
