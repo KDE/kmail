@@ -195,8 +195,7 @@ namespace KMail {
 			bool& signatureFound,
 			CryptPlug::SignatureMetaData& sigMeta,
 			bool showWarning,
-                        bool& passphraseError,
-                        bool& wrongKeyUsage,
+			bool& passphraseError,
 			QString& aErrorText );
 
     bool processMailmanMessage( partNode * node );
