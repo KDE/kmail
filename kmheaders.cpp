@@ -172,18 +172,21 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   updateMessageList();
 
   setCurrentItem(-1);
-  nextUnreadMessage();
+  if (mFolder) nextUnreadMessage();
 
   setAutoUpdate(autoUpd);
   if (autoUpd) repaint();
 
-  msgHeaderChanged(currentItem());
-  makeHeaderVisible();
+  if (mFolder)
+  {
+    msgHeaderChanged(currentItem());
+    makeHeaderVisible();
 
-  str.sprintf(i18n("%d Messages, %d unread."),
-	      mFolder->count(), mFolder->countUnread());
-  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
-  mOwner->statusMsg(str);
+    str.sprintf(i18n("%d Messages, %d unread."),
+		mFolder->count(), mFolder->countUnread());
+    if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
+    mOwner->statusMsg(str);
+  }
 }
 
 
@@ -631,6 +634,8 @@ void KMHeaders::nextUnreadMessage()
   KMMsgBase* msgBase = NULL;
   int i, idx, cnt;
 
+  if (!mFolder) return;
+
   idx = currentItem();
   cnt = mFolder->count();
   for (i=idx+1; i<cnt; i++)
@@ -648,6 +653,8 @@ void KMHeaders::prevUnreadMessage()
 {
   KMMsgBase* msgBase = NULL;
   int i, idx;
+
+  if (!mFolder) return;
 
   idx = currentItem();
   for (i=idx-1; i>=0; i--)

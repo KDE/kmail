@@ -1,5 +1,7 @@
 1998-06-18  Stefan Taferner  <taferner@kde.org> (KMail-0.7.5)
 
+	* Deleting folders crashed kmail. Fixed.
+
 	* Folder-compacting: added busy pointer and progress
 	output in the status bar (idea from Mario).	
 
