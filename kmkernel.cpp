@@ -872,7 +872,12 @@ void KMKernel::init()
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
   the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
+  
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
+  KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
+  if (lsf)
+    the_searchFolderMgr->remove( lsf );
+    
   the_acctMgr       = new KMAcctMgr();
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
