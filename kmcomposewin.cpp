@@ -1072,7 +1072,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 
 
 //-----------------------------------------------------------------------------
-const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) {
+const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const {
   unsigned int len;
   QString lenStr;
 
