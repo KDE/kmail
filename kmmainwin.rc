@@ -102,16 +102,17 @@
    <Separator/>
    <Action name="copy_to" />
    <Action name="move_to" />
+   <Separator/> 
    <Action name="set_status" />
    <Action name="thread_status" />
-   <Separator/>
    <Action name="thread_watched" />
    <Action name="thread_ignored" />
    <Separator/>
-   <Action name="apply_filters" />
-   <Separator/>
+   <Action name="create_filter"/>
    <Menu name="apply_filter_actions" >
      <text>A&amp;pply Filter</text>
+     <Action name="apply_filters" /> 
+     <Separator/>
      <ActionList name="menu_filter_actions" />
    </Menu>
   </Menu>
@@ -126,7 +127,6 @@
    <Separator/>
    <Action name="tools_edit_vacation"/>
    <Separator/>
-   <Action name="create_filter"/>
    <Action name="filter_log_viewer"/>
    <Separator/>
    <Action name="antiSpamWizard"/>
