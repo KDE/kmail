@@ -1359,6 +1359,7 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
         } else {
           mGuessedUnreadMsgs = (*it).m_long;
         }
+        mUnreadMsgs = mGuessedUnreadMsgs;
         emit numUnreadMsgsChanged( this );
       }
     }
