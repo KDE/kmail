@@ -410,6 +410,7 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
     QPalette newPal = kapp->palette();
     newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+    newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
     setPalette( newPal );
     mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
     mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
@@ -419,6 +420,7 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colBack = c4;
     QPalette newPal = kapp->palette();
     newPal.setColor( QColorGroup::Base, c4 );
+    newPal.setColor( QColorGroup::Text, c1 );
     setPalette( newPal );
     mPaintInfo.colNew = c2;
     mPaintInfo.colUnread = c3;

@@ -266,6 +266,7 @@ void KMFolderTree::readColorConfig (void)
   }
   QPalette newPal = kapp->palette();
   newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+  newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
   setPalette( newPal );
 }
 
