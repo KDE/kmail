@@ -16,6 +16,7 @@
 #include "kmsender.h"
 #include "kmidentity.h"
 #include "kfileio.h"
+#include "kmaddrbookdlg.h" // for the button in KMFilterActionWithAddress
 
 #include <kstddirs.h>
 #include <kconfig.h>
@@ -23,9 +24,11 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
+#include <kiconloader.h>
 
+//#include <qhbox.h>
 #include <qcombobox.h>
-#include <qlineedit.h>
+//#include <qlineedit.h>
 #include <qvaluelist.h>
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 
@@ -251,6 +254,41 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
 //
 //=============================================================================
 
+KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* parent, const char* name )
+  : QWidget( parent, name )
+{
+  QHBoxLayout *hbl = new QHBoxLayout(this);
+  hbl->setSpacing(4);
+  mLineEdit = new QLineEdit(this);
+  hbl->addWidget( mLineEdit, 1 /*stretch*/ );
+  mBtn = new QPushButton( QString::null ,this );
+  mBtn->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
+  mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
+  hbl->addWidget( mBtn );
+
+  connect( mBtn, SIGNAL(clicked()),
+	   this, SLOT(slotAddrBook()) );
+}
+
+void KMFilterActionWithAddressWidget::slotAddrBook()
+{
+  KMAddrBookSelDlg dlg( kernel->addrBook() );
+  QString txt;
+
+  if ( dlg.exec() == QDialog::Rejected ) return;
+
+  txt = mLineEdit->text().stripWhiteSpace();
+
+  if ( !txt.isEmpty() ) {
+    if ( txt.right(1)[0] != ',' )
+      txt += ", ";
+    else
+      txt += ' ';
+  }
+
+  mLineEdit->setText( txt + dlg.address() );
+}
+
 KMFilterActionWithAddress::KMFilterActionWithAddress( const char* aName, const QString aLabel )
   : KMFilterActionWithString( aName, aLabel )
 {
@@ -258,24 +296,24 @@ KMFilterActionWithAddress::KMFilterActionWithAddress( const char* aName, const Q
 
 QWidget* KMFilterActionWithAddress::createParamWidget( QWidget* parent ) const
 {
-  // later on this will be replaced with a line edit alongside an
-  // "..." button that calls the address book.
-  return KMFilterActionWithString::createParamWidget( parent );
+  KMFilterActionWithAddressWidget *w = new KMFilterActionWithAddressWidget(parent);
+  w->setText( mParameter );
+  return w;
 }
 
 void KMFilterActionWithAddress::applyParamWidgetValue( QWidget* paramWidget )
 {
-  KMFilterActionWithString::applyParamWidgetValue( paramWidget );
+  mParameter = ((KMFilterActionWithAddressWidget*)paramWidget)->text();
 }
 
 void KMFilterActionWithAddress::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  KMFilterActionWithString::setParamWidgetValue( paramWidget );
+  ((KMFilterActionWithAddressWidget*)paramWidget)->setText( mParameter );
 }
 
 void KMFilterActionWithAddress::clearParamWidget( QWidget* paramWidget ) const
 {
-  KMFilterActionWithString::clearParamWidget( paramWidget );
+  ((KMFilterActionWithAddressWidget*)paramWidget)->clear();
 }
 
 //=============================================================================
@@ -796,3 +834,5 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   delete action;
 }
 
+//------------------------------------------------
+#include "kmfilteraction.moc"

@@ -12,6 +12,8 @@
 #include <qlist.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
+#include <qhbox.h>
+#include <qlineedit.h>
 
 class KMMessage;
 class QWidget;
@@ -511,6 +513,32 @@ protected:
 private:
   QList<KMFilterActionDesc> mList;
 };
+
+//=============================================================================
+// The param widget for KMFilterActionWithAddress
+//=============================================================================
+
+class QPushButton;
+
+class KMFilterActionWithAddressWidget : public QWidget
+{
+  Q_OBJECT
+public:
+  KMFilterActionWithAddressWidget( QWidget* parent=0, const char* name=0 );
+
+public:
+  void clear() { mLineEdit->clear(); }
+  QString text() const { return mLineEdit->text(); }
+  void setText( const QString & aString ) { mLineEdit->setText( aString ); }
+
+protected slots:
+  void slotAddrBook();
+
+private:
+  QPushButton* mBtn;
+  QLineEdit*   mLineEdit;
+};
+
 
 
 #endif /*kmfilteraction_h*/
