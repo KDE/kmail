@@ -134,7 +134,7 @@ private:
   /** Unescape all escaped "From", i.e. replace all occurrences of "\n>From"
       in place with "\nFrom". Returns the length of the unescaped string.
   */
-  size_t unescapeFrom( char* str, const size_t strLen );
+  static size_t unescapeFrom( char* str, const size_t strLen );
 
 
   FILE *mStream;
