@@ -14,8 +14,9 @@
 #include <qpalette.h>
 #include <qfont.h>
 #include <keditcl.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <kio/job.h>
+#include <kglobalsettings.h>
 
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
@@ -36,7 +37,7 @@ class QListView;
 class QListViewItem;
 class QPopupMenu;
 class QPushButton;
-class KDNDDropZone;
+class KCompletion;
 class KEdit;
 class KMComposeWin;
 class KMMessage;
@@ -59,8 +60,8 @@ class KMEdit: public KEdit
 {
   Q_OBJECT
 public:
-  KMEdit(QWidget *parent=NULL,KMComposeWin* composer=NULL,
-	 const char *name=NULL);
+  KMEdit(QWidget *parent=0L,KMComposeWin* composer=0L,
+	 const char *name=0L);
   virtual ~KMEdit();
 
   /**
@@ -98,36 +99,45 @@ private:
 
 
 //-----------------------------------------------------------------------------
-#define KMLineEditInherited QLineEdit
-class KMLineEdit : public QLineEdit
+#define KMLineEditInherited KLineEdit
+class KMLineEdit : public KLineEdit
 {
   Q_OBJECT
 
 public:
-  KMLineEdit(KMComposeWin* composer = NULL, QWidget *parent = NULL,
-	     const char *name = NULL);
+  KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0L,
+             const char *name = 0L);
   virtual ~KMLineEdit();
 
-  /** Set cursor to end of line. */
-   void cursorAtEnd();
-
+  virtual void setFont( const QFont& );
+    
 signals:
-  /** Emitted when Ctrl-. (period) is pressed. */
+  /** Emitted when Ctrl-T is pressed. */
   void completion();
 
 public slots:
-   void undo();
-   void copy();
-   void cut();
-   void paste();
-   void markAll();
-   void slotCompletion();
+  void undo();
+  /** Set cursor to end of line. */
+  void cursorAtEnd();
 
 protected:
   virtual bool eventFilter(QObject*, QEvent*);
   virtual void dropEvent(QDropEvent *e);
   KMComposeWin* mComposer;
-protected:
+
+private slots:
+  void slotCompletion();
+  void slotPopupCompletion( const QString& );
+
+private:
+  void loadAddresses();
+
+  QString m_previousAddresses;
+  bool m_useCompletion;
+
+  static bool s_addressesDirty;
+  static KCompletion *s_completion;
+
 };
 
 
@@ -140,7 +150,7 @@ class KMComposeWin : public KMTopLevelWidget
   friend class KMHeaders;         // needed for the digest forward
 
 public:
-  KMComposeWin(KMMessage* msg=NULL, QString id = "unknown" );
+  KMComposeWin(KMMessage* msg=0L, QString id = "unknown" );
   ~KMComposeWin();
 
   /** Add descriptions to the encodings in the list */
@@ -286,7 +296,7 @@ public slots:
   /** KIO slots for attachment insertion */
   void slotAttachFileData(KIO::Job *, const QByteArray &);
   void slotAttachFileResult(KIO::Job *);
-   
+
   void addAttach(const KURL url);
 
 signals:
@@ -371,7 +381,6 @@ protected:
 
   KMEdit* mEditor;
   QGridLayout* mGrid;
-  //KDNDDropZone *mDropZone;
   KMMessage *mMsg;
   QListView *mAtmListBox;
   QList<QListViewItem> mAtmItemList;
@@ -410,6 +419,9 @@ protected:
   QString mCharset;
   QString mDefCharset;
   QFont mSavedEditorFont;
+
+private slots:
+  void slotCompletionModeChanged( KGlobalSettings::Completion );
 
 private:
   QColor foreColor,backColor;

@@ -29,6 +29,8 @@
 #include <kabapi.h>
 #include <kaction.h>
 #include <kcharsets.h>
+#include <kcompletion.h>
+#include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
@@ -61,7 +63,6 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
-#include <qfont.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qregexp.h>
@@ -86,9 +87,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (),
   mMainWidget(this),
   mIdentity(&mMainWidget), mTransport(true, &mMainWidget),
-  mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
-  mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
-  mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget, "subjectLine"),
+  mEdtFrom(this,false,&mMainWidget), mEdtReplyTo(this,false,&mMainWidget),
+  mEdtTo(this,true,&mMainWidget),  mEdtCc(this,true,&mMainWidget),
+  mEdtBcc(this,true,&mMainWidget), 
+  mEdtSubject(this,false,&mMainWidget, "subjectLine"),
   mLblIdentity(&mMainWidget), mLblTransport(&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
@@ -150,6 +152,17 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   connect(&mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(&mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(&mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
+
+  connect(&mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+  connect(&mEdtCc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+  connect(&mEdtBcc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+  connect(&mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+  connect(&mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
 
   mMainWidget.resize(480,510);
   setCentralWidget(&mMainWidget);
@@ -274,7 +287,7 @@ void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   QString str;
-  //  int w, h, 
+  //  int w, h,
   int maxTransportItems;
 
   KConfigGroupSaver saver(config, "Composer");
@@ -312,13 +325,21 @@ void KMComposeWin::readConfig(void)
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
 
+  int mode = config->readNumEntry("Completion Mode",
+                                  KGlobalSettings::completionMode() );
+  mEdtFrom.setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtReplyTo.setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtTo.setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtCc.setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtBcc.setCompletionMode( (KGlobalSettings::Completion) mode );
+
   readColorConfig();
 
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
     useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
-    
+
     int headerCount = config->readNumEntry("mime-header-count", 0);
     mCustHeaders.clear();
     mCustHeaders.setAutoDelete(true);
@@ -1355,7 +1376,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
       return;
     }
   if (dlg.exec()==QDialog::Rejected) return;
-  txt = QString(aLineEdit->text()).stripWhiteSpace();
+  txt = aLineEdit->text().stripWhiteSpace();
   if (!txt.isEmpty())
     {
       if (txt.right(1).at(0)!=',') txt += ", ";
@@ -1861,7 +1882,7 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 void KMComposeWin::slotEncryptToggled(bool on)
 {
   if (on) encryptAction->setIcon("lock");
-    else encryptAction->setIcon("unlock");
+  else encryptAction->setIcon("unlock");
 }
 
 
@@ -2252,242 +2273,9 @@ void KMComposeWin::slotIdentityActivated(int)
   mId = identStr;
 }
 
-
-//=============================================================================
-//
-//   Class  KMLineEdit
-//
-//=============================================================================
-KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent,
-		       const char *name): KMLineEditInherited(parent,name)
-{
-  mComposer = composer;
-
-  installEventFilter(this);
-
-  connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
-}
-
-
-//-----------------------------------------------------------------------------
-KMLineEdit::~KMLineEdit()
-{
-  removeEventFilter(this);
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMLineEdit::eventFilter(QObject*, QEvent* e)
-{
-#ifdef KeyPress
-#undef KeyPress
-#endif
-
-  if (e->type() == QEvent::KeyPress)
-  {
-    QKeyEvent* k = (QKeyEvent*)e;
-
-    if (k->state()==ControlButton && k->key()==Key_T)
-    {
-      emit completion();
-      cursorAtEnd();
-      return TRUE;
-    }
-    // ---sven's Return is same Tab and arrow key navigation start ---
-    if (k->key() == Key_Enter || k->key() == Key_Return)
-    {
-      mComposer->focusNextPrevEdit(this,TRUE);
-      return TRUE;
-    }
-    if (k->state()==ControlButton && k->key() == Key_Right)
-    {
-      if ((int)strlen(text()) == cursorPosition()) // at End?
-      {
-        emit completion();
-        cursorAtEnd();
-        return TRUE;
-      }
-      return FALSE;
-    }
-    if (k->key() == Key_Up)
-    {
-      mComposer->focusNextPrevEdit(this,FALSE); // Go up
-      return TRUE;
-    }
-    if (k->key() == Key_Down)
-    {
-      mComposer->focusNextPrevEdit(this,TRUE); // Go down
-      return TRUE;
-    }
-    // ---sven's Return is same Tab and arrow key navigation end ---
-
-  }
-  else if (e->type() == QEvent::MouseButtonPress)
-  {
-    QMouseEvent* me = (QMouseEvent*)e;
-    if (me->button() == RightButton)
-    {
-      QPopupMenu* p = new QPopupMenu;
-      p->insertItem(i18n("Cut"),this,SLOT(cut()));
-      p->insertItem(i18n("Copy"),this,SLOT(copy()));
-      p->insertItem(i18n("Paste"),this,SLOT(paste()));
-      p->insertItem(i18n("Mark all"),this,SLOT(markAll()));
-      setFocus();
-      p->popup(QCursor::pos());
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::cursorAtEnd()
-{
-  QKeyEvent ev( QEvent::KeyPress, Key_End, 0, 0 );
-  QLineEdit::keyPressEvent( &ev );
-}
-
-
-void KMLineEdit::undo()
-{
-    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z
-    keyPressEvent( &k );
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::copy()
-{
-  QString t = markedText();
-  QApplication::clipboard()->setText(t);
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::cut()
-{
-  if(hasMarkedText())
-  {
-    QString t = markedText();
-    QKeyEvent k(QEvent::KeyPress, Key_D, 0, ControlButton);
-    keyPressEvent(&k);
-    QApplication::clipboard()->setText(t);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::paste()
-{
-  QKeyEvent k(QEvent::KeyPress, Key_V, 0, ControlButton);
-  keyPressEvent(&k);
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::markAll()
-{
-  selectAll();
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::slotCompletion()
-{
-  QString t;
-  QString Name(name());
-
-  if (Name == "subjectLine")
-  {
-    //mComposer->focusNextPrevEdit(this,TRUE); //IMHO, it is useless now (sven)
-
-    return;
-  }
-
-  QPopupMenu pop;
-  int n;
-
-  KMAddrBook adb;
-  adb.readConfig();
-
-  if(adb.load() == IO_FatalError)
-    return;
-
-  QString s(text());
-  QString prevAddr;
-  n = s.findRev(',');
-  if (n>=0)
-  {
-    prevAddr = s.left(n+1) + ' ';
-    s = s.mid(n+1,255).stripWhiteSpace();
-  }
-
-  n=0;
-  if (!KMAddrBookExternal::useKAB())
-    for (QString a=adb.first(); a; a=adb.next())
-      {
-	if (QString(a).find(s,0,false) >= 0)
-	  {
-	    pop.insertItem(a);
-	    n++;
-	  }
-      }
-  else {
-    QStringList addresses;
-    KabBridge::addresses(&addresses);
-    QStringList::Iterator it = addresses.begin();
-    for (; it != addresses.end(); ++it)
-      {
-	if ((*it).find(s,0,false) >= 0)
-	  {
-	    pop.insertItem(*it);
-	    n++;
-	  }
-      }
-  }
-
-  if (n > 1)
-  {
-    int id;
-    pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
-    pop.setActiveItem(pop.idAt(0));
-    id = pop.exec();
-
-    if (id!=-1)
-    {
-      setText(prevAddr + pop.text(id));
-      //mComposer->focusNextPrevEdit(this,TRUE);
-    }
-  }
-  else if (n==1)
-  {
-    setText(prevAddr + pop.text(pop.idAt(0)));
-    //mComposer->focusNextPrevEdit(this,TRUE);
-  }
-
-  setFocus();
-  cursorAtEnd();
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::dropEvent(QDropEvent *e)
-{
-  QStrList uriList;
-  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
-  {
-    QString ct = text();
-    for (QStrListIterator it(uriList); it; ++it)
-    {
-      if (!ct.isEmpty()) ct.append(", ");
-      KURL u(*it);
-      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path()));
-      else ct.append(QString::fromUtf8(*it));
-    }
-    setText(ct);
-  }
-  else QLineEdit::dropEvent(e);
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-
   KWin kwin;
   QTabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
@@ -2539,6 +2327,315 @@ void KMComposeWin::setReplyFocus( bool hasMessage )
   mEditor->setFocus();
   if ( hasMessage )
     mEditor->setCursorPosition( 1, 0 );
+}
+
+void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
+{
+    KConfig *config = KGlobal::config();
+    KConfigGroupSaver cs( config, "Composer" );
+    config->writeEntry( "Completion Mode", (int) mode );
+    config->sync(); // maybe not?
+
+    // sync all the lineedits to the same completion mode
+    mEdtFrom.setCompletionMode( mode );
+    mEdtReplyTo.setCompletionMode( mode );
+    mEdtTo.setCompletionMode( mode );
+    mEdtCc.setCompletionMode( mode );
+    mEdtBcc.setCompletionMode( mode );
+}
+
+//=============================================================================
+//
+//   Class  KMLineEdit
+//
+//=============================================================================
+
+KCompletion * KMLineEdit::s_completion = 0L;
+bool KMLineEdit::s_addressesDirty = false;
+
+KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
+                       QWidget *parent, const char *name) 
+    : KMLineEditInherited(parent,name)
+{
+  mComposer = composer;
+  m_useCompletion = useCompletion;
+  
+  if ( !s_completion ) {
+      s_completion = new KCompletion();
+      s_completion->setOrder( KCompletion::Sorted );
+  }
+
+  installEventFilter(this);
+
+  if ( m_useCompletion )
+  {
+      setCompletionObject( s_completion, false ); // we handle it ourself
+      connect( this, SIGNAL( completion(const QString&)),
+               this, SLOT(slotCompletion() ));
+
+      // old-style completion via Ctrl-T
+      connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
+
+      KCompletionBox *box = completionBox();
+      // ### this disconnect has to be fixed in kdeui
+      disconnect( box, SIGNAL( highlighted( const QString& )),
+                  this, SLOT( setText( const QString& )));
+      connect( box, SIGNAL( highlighted( const QString& )),
+               this, SLOT( slotPopupCompletion( const QString& ) ));
+
+
+      // Whenever a new KMLineEdit is created (== a new composer is created),
+      // we set a dirty flag to reload the addresses upon the first completion.
+      // The address completions are shared between all KMLineEdits.
+      // Is there a signal that tells us about addressbook updates?
+      s_addressesDirty = true;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+KMLineEdit::~KMLineEdit()
+{
+  removeEventFilter(this);
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::setFont( const QFont& font )
+{
+    KMLineEditInherited::setFont( font );
+    if ( m_useCompletion )
+        completionBox()->setFont( font );
+}
+
+//-----------------------------------------------------------------------------
+bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
+{
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+  if (e->type() == QEvent::KeyPress)
+  {
+    QKeyEvent* k = (QKeyEvent*)e;
+
+    if (completionMode() == KGlobalSettings::CompletionNone &&
+        k->state()==ControlButton && k->key()==Key_T)
+    {
+      emit completion();
+      cursorAtEnd();
+      return TRUE;
+    }
+    // ---sven's Return is same Tab and arrow key navigation start ---
+    if ((k->key() == Key_Enter || k->key() == Key_Return) &&
+        !completionBox()->isVisible())
+    {
+      mComposer->focusNextPrevEdit(this,TRUE);
+      return TRUE;
+    }
+    if (k->state()==ControlButton && k->key() == Key_Right)
+    {
+      if ((int)text().length() == cursorPosition()) // at End?
+      {
+        emit completion();
+        cursorAtEnd();
+        return TRUE;
+      }
+      return FALSE;
+    }
+    if (k->key() == Key_Up)
+    {
+      mComposer->focusNextPrevEdit(this,FALSE); // Go up
+      return TRUE;
+    }
+    if (k->key() == Key_Down)
+    {
+      mComposer->focusNextPrevEdit(this,TRUE); // Go down
+      return TRUE;
+    }
+    // ---sven's Return is same Tab and arrow key navigation end ---
+
+  }
+  return KMLineEditInherited::eventFilter(o, e);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::cursorAtEnd()
+{
+    setCursorPosition( text().length() );
+}
+
+
+void KMLineEdit::undo()
+{
+    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z
+    keyPressEvent( &k );
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::slotCompletion()
+{
+    if ( !m_useCompletion )
+        return;
+
+    QString s(text());
+    QString prevAddr;
+    int n = s.findRev(',');
+    if (n>= 0)
+    {
+        prevAddr = s.left(n+1) + ' ';
+        s = s.mid(n+1,255).stripWhiteSpace();
+    }
+
+    KCompletionBox *box = completionBox();
+
+    if ( s.isEmpty() )
+    {
+        box->hide();
+        return;
+    }
+
+    KGlobalSettings::Completion  mode = completionMode();
+
+    if ( s_addressesDirty )
+        loadAddresses();
+
+    QString match;
+    int curPos = cursorPosition();
+    if ( mode != KGlobalSettings::CompletionNone )
+        match = s_completion->makeCompletion( s );
+
+    // kdDebug() << "** completion for: " << s << " : " << match << endl;
+
+    switch ( mode )
+    {
+        case KGlobalSettings::CompletionPopup:
+        {
+            if ( !match.isNull() )
+            {
+                m_previousAddresses = prevAddr;
+                box->clear();
+                box->insertStringList( s_completion->allMatches( s ));
+                box->popup();
+            }
+            else
+                box->hide();
+
+            break;
+        }
+
+        case KGlobalSettings::CompletionShell:
+        {
+            if ( !match.isNull() && match != s )
+            {
+                setText( prevAddr + match );
+                cursorAtEnd();
+            }
+            break;
+        }
+
+        case KGlobalSettings::CompletionMan: // Short-Auto in fact
+        case KGlobalSettings::CompletionAuto:
+        {
+            if ( !match.isNull() && match != s )
+            {
+                QString adds = prevAddr + match;
+                validateAndSet( adds, curPos, curPos, adds.length() );
+            }
+            break;
+        }
+
+        default: // fall through
+        case KGlobalSettings::CompletionNone:
+        {
+            QPopupMenu pop;
+
+            QStringList addresses = s_completion->items();
+            QStringList::Iterator it = addresses.begin();
+            for (; it != addresses.end(); ++it)
+            {
+                if ((*it).find(s,0,false) >= 0)
+                    pop.insertItem(*it);
+            }
+
+            if (pop.count() > 1)
+            {
+                int id;
+                pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
+                pop.setActiveItem(pop.idAt(0));
+                id = pop.exec();
+
+                if (id > -1)
+                    setText(prevAddr + pop.text(id));
+            }
+            else if (pop.count() == 1)
+            {
+                setText(prevAddr + pop.text(pop.idAt(0)));
+            }
+
+            setFocus();
+            cursorAtEnd();
+            break;
+        }
+    }
+}
+
+void KMLineEdit::slotPopupCompletion( const QString& completion )
+{
+    setText( m_previousAddresses + completion );
+    cursorAtEnd();
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::loadAddresses()
+{
+    s_completion->clear();
+    s_addressesDirty = false;
+
+    KMAddrBook adb;
+    adb.readConfig();
+
+    if(adb.load() == IO_FatalError)
+        return;
+
+    if (!KMAddrBookExternal::useKAB()) {
+        for (QString a = adb.first(); !a.isEmpty(); a = adb.next())
+        {
+            s_completion->addItem( a );
+            // kdDebug() << "** 1 adding: " << a << endl;
+        }
+    }
+
+    else {
+        QStringList addresses;
+        KabBridge::addresses(&addresses);
+        QStringList::Iterator it = addresses.begin();
+        for (; it != addresses.end(); ++it)
+        {
+            s_completion->addItem( *it );
+            // kdDebug() << "** 2 adding: " << *it << endl;
+        }
+    }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::dropEvent(QDropEvent *e)
+{
+  QStrList uriList;
+  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
+  {
+    QString ct = text();
+    for (QStrListIterator it(uriList); it; ++it)
+    {
+      if (!ct.isEmpty()) ct.append(", ");
+      KURL u(*it);
+      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path()));
+      else ct.append(QString::fromUtf8(*it));
+    }
+    setText(ct);
+  }
+  else QLineEdit::dropEvent(e);
 }
 
 
