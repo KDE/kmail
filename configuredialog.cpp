@@ -604,7 +604,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   // "up" button: stretch 0
   // ### FIXME: shouldn't this be a QToolButton?
   mTransportUpButton = new QPushButton( QString::null, this );
-  mTransportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
+  mTransportUpButton->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
   //  mTransportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
   mTransportUpButton->setAutoDefault( false );
   mTransportUpButton->setEnabled( false ); // b/c no item is selected yet
@@ -615,7 +615,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   // "down" button: stretch 0
   // ### FIXME: shouldn't this be a QToolButton?
   mTransportDownButton = new QPushButton( QString::null, this );
-  mTransportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
+  mTransportDownButton->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   //  mTransportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mTransportDownButton->setAutoDefault( false );
   mTransportDownButton->setEnabled( false ); // b/c no item is selected yet
