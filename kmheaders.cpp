@@ -1694,6 +1694,7 @@ void KMHeaders::incCurrentMessage()
                this,SLOT(highlightMessage(QListViewItem*)));
     setCurrentItem( lvi->itemBelow() );
     ensureCurrentItemVisible();
+    setFocus();
     connect(this,SIGNAL(currentChanged(QListViewItem*)),
                this,SLOT(highlightMessage(QListViewItem*)));
   }
@@ -1707,6 +1708,7 @@ void KMHeaders::decCurrentMessage()
                this,SLOT(highlightMessage(QListViewItem*)));
     setCurrentItem( lvi->itemAbove() );
     ensureCurrentItemVisible();
+    setFocus();
     connect(this,SIGNAL(currentChanged(QListViewItem*)),
             this,SLOT(highlightMessage(QListViewItem*)));
   }
