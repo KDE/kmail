@@ -896,7 +896,8 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ACLS:
     mSyncState = SYNC_STATE_GET_ACLS;
 
-    if( !noContent() && mAccount->hasACLSupport() ) {
+    if( !noContent() && mAccount->hasACLSupport() &&
+      ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       bool hasChangedACLs = false;
       ACLList::ConstIterator it = mACLList.begin();
       for ( ; it != mACLList.end() && !hasChangedACLs; ++it ) {
