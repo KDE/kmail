@@ -7,6 +7,7 @@
 
 #include "kmreaderwin.h"
 #include "partNode.h"
+#include "kmmsgpart.h"
 #include "kmkernel.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
@@ -112,7 +113,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
                            SLOT( slotSaveAsEncoded() ) );
         popup->insertItem( i18n( "Save Selected Items..." ), this,
                            SLOT( slotSaveSelected() ) );
-        popup->insertItem( i18n( "Save All..." ), this,
+        popup->insertItem( i18n( "Save All Attachments..." ), this,
                            SLOT( slotSaveAll() ) );
         popup->exec( point );
         delete popup;
@@ -232,9 +233,14 @@ void KMMimePartTree::slotSaveAll()
         return;
 
     QString dir = fdlg.selectedURL().path();
-    QListViewItemIterator lit( firstChild() );
-    for ( ; lit.current();  ) {
+    for ( QListViewItemIterator lit( firstChild() ); lit.current();  ++lit ) {
         KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( lit.current() );
+
+        //Check if it has the Content-Disposition... filename: header
+        //to make sure it's an actuall attachment
+        if( item->node()->msgPart().fileName().isNull() )
+            continue;
+
         QString s = item->text(0);
         if( s.startsWith( "file: " ) )
             s = s.mid(6).stripWhiteSpace();
@@ -256,7 +262,6 @@ void KMMimePartTree::slotSaveAll()
             }
             slotSaveItem( item, filename );
         }
-        ++lit;
     }
 }
 
