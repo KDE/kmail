@@ -1,3 +1,4 @@
+#include <kdebug.h>
 #include <kmmessage.h>
 #include <qregexp.h>
 
@@ -47,7 +48,7 @@ static QString check_x_beenthere(const KMMessage  *message,
     return header;
 }
 
-/* X-Mailing-List: <([^@]+) */
+/* Delivered-To:: <([^@]+) */
 static QString check_delivered_to(const KMMessage  *message,
                                   QString &header_name,
                                   QString &header_value )
@@ -63,7 +64,7 @@ static QString check_delivered_to(const KMMessage  *message,
     return header.mid( 13, header.find( "@" ) - 13 );
 }
 
-/* X-Mailing-List: <([^@]+) */
+/* X-Mailing-List: <?([^@]+) */
 static QString check_x_mailing_list(const KMMessage  *message,
                                     QString &header_name,
                                     QString &header_value )
@@ -72,13 +73,39 @@ static QString check_x_mailing_list(const KMMessage  *message,
     if ( header.isEmpty() )
         return QString::null;
 
-    if (header.at( 0 ) != '<' || header.find( "@" ) < 2  ||
-        header.at( header.length() - 1 ) != '>')
+    if ( header.find( "@" ) < 1 )
         return QString::null;
 
     header_name = "X-Mailing-List";
     header_value = header;
-    header = header.mid(1,  header.find( "@" ) - 1);
+    if ( header[0] == '<' )
+        header = header.mid(1,  header.find( "@" ) - 1);
+    else
+        header = header.left( header.find( "@" ) );
+    return header;
+}
+
+/* List-Id: [^<]* <([^.]+) */
+static QString check_list_id(const KMMessage  *message,
+			     QString &header_name,
+			     QString &header_value )
+{
+    int lAnglePos, firstDotPos;
+    QString header = message->headerField( "List-Id" );
+    if ( header.isEmpty() )
+        return QString::null;
+
+    lAnglePos = header.find( "<" );
+    if ( lAnglePos < 0 )
+        return QString::null;
+
+    firstDotPos = header.find( ".", lAnglePos );
+    if ( firstDotPos < 0 )
+        return QString::null;
+
+    header_name = "List-Id";
+    header_value = header;
+    header = header.mid( lAnglePos + 1, firstDotPos - lAnglePos - 1 );
     return header;
 }
 
@@ -120,6 +147,7 @@ static QString check_x_loop(const KMMessage  *message,
 
 MagicDetectorFunc magic_detector[] =
 {
+    check_list_id,
     check_sender,
     check_x_mailing_list,
     check_mailing_list,
