@@ -156,7 +156,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 
   setCaption( i18n("Composer") );
   setMinimumSize(200,200);
-  
+
   mBtnIdentity.setFocusPolicy(QWidget::NoFocus);
   mBtnTransport.setFocusPolicy(QWidget::NoFocus);
   mBtnTo.setFocusPolicy(QWidget::NoFocus);
@@ -452,7 +452,7 @@ void KMComposeWin::slotView(void)
   if (!sender()->isA("KToggleAction"))
     return;
   KToggleAction *act = (KToggleAction *) sender();
-  
+
   if (act == allFieldsAction)
     id = 0;
   else if (act == identityAction)
@@ -513,7 +513,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     showHeaders = HDR_ALL;
   else
     showHeaders = mShowHeaders;
-  
+
   for (mask=1,mNumHeaders=0; mask<=showHeaders; mask<<=1)
     if ((showHeaders&mask) != 0) mNumHeaders++;
 
@@ -715,7 +715,7 @@ void KMComposeWin::setupActions(void)
   KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
   KStdAction::paste (this, SLOT(slotPaste()), actionCollection());
   KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
-  
+
   KStdAction::find (this, SLOT(slotFind()), actionCollection());
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
@@ -801,9 +801,9 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-  
 
-  
+
+
   encryptAction = new KToggleAction (i18n("Encrypt message"),
                                      "pub_key_red", 0,
                                      actionCollection(), "encrypt_message");
@@ -820,7 +820,7 @@ void KMComposeWin::setupActions(void)
   }
 
   signAction->setChecked(mAutoPgpSign);
-  
+
 
   createGUI("kmcomposerui.rc");
 }
@@ -942,7 +942,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
     mEdtFrom.setText( ident.fullEmailAddr() );
     mEdtReplyTo.setText( ident.replyToAddr() );
-  }  
+  }
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport.isChecked() && !transport.isEmpty())
@@ -1012,10 +1012,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
-    // Not user friendy if this modal fileseletor opens before the 
+    // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) ); 
+    QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   }
   mEditor->setModified(FALSE);
 
@@ -1163,7 +1163,7 @@ bool KMComposeWin::queryClose ()
 
   if(mEditor->isModified() || mEdtFrom.edited() || mEdtReplyTo.edited() ||
      mEdtTo.edited() || mEdtCc.edited() || mEdtBcc.edited() ||
-     mEdtSubject.edited() || 
+     mEdtSubject.edited() ||
      (mTransport.lineEdit() && mTransport.lineEdit()->edited()))
   {
     rc = KMessageBox::warningContinueCancel(this,
@@ -1298,7 +1298,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart, 
+void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
 				 QListViewItem *lvi)
 {
   unsigned int len;
@@ -1561,7 +1561,7 @@ void KMComposeWin::slotAttachProperties()
   KMMsgPartDlg dlg;
   KMMessagePart* msgPart;
   int idx = currentAttachmentNum();
-  
+
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
@@ -2105,7 +2105,7 @@ void KMComposeWin::slotIdentityActivated(int)
 
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom.setText(ident.fullEmailAddr());
-  if(!ident.replyToAddr().isNull()) 
+  if(!ident.replyToAddr().isNull())
     mEdtReplyTo.setText(ident.replyToAddr());
   if (ident.organization().isEmpty())
     mMsg->removeHeaderField("Organization");
@@ -2115,13 +2115,13 @@ void KMComposeWin::slotIdentityActivated(int)
   QString edtText = mEditor->text();
   int pos = edtText.findRev( "\n-- \n" + mOldSigText);
 
-  if (((pos >= 0) && (pos + mOldSigText.length() + 6 == edtText.length())) ||
+  if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||
       (mOldSigText.isEmpty())) {
     if (pos >= 0)
       edtText.truncate(pos);
     if (!ident.signature().isEmpty()) {
       edtText.append( "\n-- \n" );
-      edtText.append( ident.signature() + "\n" );
+      edtText.append( ident.signature() );
     }
     mEditor->setText( edtText );
   }
@@ -2313,7 +2313,7 @@ void KMLineEdit::slotCompletion()
 	  }
       }
   }
-  
+
   if (n > 1)
   {
     int id;
