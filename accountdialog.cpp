@@ -679,12 +679,12 @@ void AccountDialog::makePopAccountPage()
   mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
-  mPop.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentication method only if you have a good reason", "&PLAIN"),
-    mPop.authGroup  );
   mPop.authLogin = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mPop.authGroup );
+  mPop.authPlain = new QRadioButton( i18n("Please translate this "
+    "authentication method only if you have a good reason", "&PLAIN"),
+    mPop.authGroup  );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup );
   mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup );
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
@@ -882,12 +882,12 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
-  mImap.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentication method only if you have a good reason", "&PLAIN"),
-     mImap.authGroup );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mImap.authGroup );
+  mImap.authPlain = new QRadioButton( i18n("Please translate this "
+    "authentication method only if you have a good reason", "&PLAIN"),
+     mImap.authGroup );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mImap.authGroup );
   mImap.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mImap.authGroup );
   mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), mImap.authGroup );
@@ -969,10 +969,10 @@ void AccountDialog::setupSettings()
     else if (ap.useTLS())
       mPop.encryptionTLS->setChecked( TRUE );
     else mPop.encryptionNone->setChecked( TRUE );
-    if (ap.auth() == "PLAIN")
-      mPop.authPlain->setChecked( TRUE );
-    else if (ap.auth() == "LOGIN")
+    if (ap.auth() == "LOGIN")
       mPop.authLogin->setChecked( TRUE );
+    else if (ap.auth() == "PLAIN")
+      mPop.authPlain->setChecked( TRUE );
     else if (ap.auth() == "CRAM-MD5")
       mPop.authCRAM_MD5->setChecked( TRUE );
     else if (ap.auth() == "DIGEST-MD5")
@@ -1316,10 +1316,10 @@ void AccountDialog::saveSettings()
     epa.setUseTLS( mPop.encryptionTLS->isChecked() );
     if (mPop.authUser->isChecked())
       epa.setAuth("USER");
-    else if (mPop.authPlain->isChecked())
-      epa.setAuth("PLAIN");
     else if (mPop.authLogin->isChecked())
       epa.setAuth("LOGIN");
+    else if (mPop.authPlain->isChecked())
+      epa.setAuth("PLAIN");
     else if (mPop.authCRAM_MD5->isChecked())
       epa.setAuth("CRAM-MD5");
     else if (mPop.authDigestMd5->isChecked())
@@ -1360,10 +1360,10 @@ void AccountDialog::saveSettings()
       epa.setAuth("DIGEST-MD5");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
-    else if (mImap.authPlain->isChecked())
-      epa.setAuth("PLAIN");
     else if (mImap.authLogin->isChecked())
       epa.setAuth("LOGIN");
+    else if (mImap.authPlain->isChecked())
+      epa.setAuth("PLAIN");
     else epa.setAuth("*");
     assert( mSieveConfigEditor );
     epa.setSieveConfig( mSieveConfigEditor->config() );
@@ -1403,10 +1403,10 @@ void AccountDialog::saveSettings()
       epa.setAuth("DIGEST-MD5");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
-    else if (mImap.authPlain->isChecked())
-      epa.setAuth("PLAIN");
     else if (mImap.authLogin->isChecked())
       epa.setAuth("LOGIN");
+    else if (mImap.authPlain->isChecked())
+      epa.setAuth("PLAIN");
     else epa.setAuth("*");
     assert( mSieveConfigEditor );
     epa.setSieveConfig( mSieveConfigEditor->config() );
