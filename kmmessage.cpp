@@ -892,6 +892,10 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     // strip all my addresses from the list of recipients
     QStringList recipients = splitEmailAddrList( toStr );
     toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
+    // ... unless the list contains only my addresses (reply to self)
+    if ( toStr.isEmpty() && !recipients.isEmpty() )
+      toStr = recipients[0];
+
     break;
   }
   case KMail::ReplyList : {
@@ -927,23 +931,21 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       }
     }
 
-    // if it is a mailing list, add the posting address
-    if ( !mailingListAddresses.isEmpty() )
-      recipients.prepend( mailingListAddresses[0] );
-
-    // add From address if appropriate
-    if ( !from().isEmpty() ) {
-      if ( !mailingListAddresses.isEmpty() ) {
-        // in case of replying to a mailing list message add the From address
-        // to the list of CC recipients if it's not already there
-        if ( !addressIsInAddressList( from(), recipients ) ) {
-          ccRecipients += from();
-          kdDebug(5006) << "Added " << from()
-                        << " to the list of CC recipients"
-                        << endl;
-        }
+    if ( !mailingListAddresses.isEmpty() ) {
+      // this is a mailing list message
+      if ( recipients.isEmpty() && !from().isEmpty() ) {
+        // The sender didn't set a Reply-to address, so we add the From
+        // address to the list of CC recipients.
+        ccRecipients += from();
+        kdDebug(5006) << "Added " << from() << " to the list of CC recipients"
+                      << endl;
       }
-      else if ( recipients.isEmpty() ) {
+      // if it is a mailing list, add the posting address
+      recipients.prepend( mailingListAddresses[0] );
+    }
+    else {
+      // this is a normal message
+      if ( recipients.isEmpty() && !from().isEmpty() ) {
         // in case of replying to a normal message only then add the From
         // address to the list of recipients if there was no Reply-to address
         recipients += from();
@@ -975,7 +977,20 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     if ( !ccRecipients.isEmpty() ) {
       // strip all my addresses from the list of CC recipients
       ccRecipients = stripMyAddressesFromAddressList( ccRecipients );
+
+      // in case of a reply to self toStr might be empty. if that's the case
+      // then propagate a cc recipient to To: (if there is any).
+      if ( toStr.isEmpty() && !ccRecipients.isEmpty() ) {
+        toStr = ccRecipients[0];
+        ccRecipients.pop_front();
+      }
+
       msg->setCc( ccRecipients.join(", ") );
+    }
+
+    if ( toStr.isEmpty() && !recipients.isEmpty() ) {
+      // reply to self without other recipients
+      toStr = recipients[0];
     }
     break;
   }
