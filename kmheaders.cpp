@@ -2692,6 +2692,7 @@ void KMHeaders::folderCleared()
     mSubjectLists.clear();
     mImperfectlyThreadedList.clear();
     mPrevCurrent = 0;
+    emit selected(0);
 }
 
 bool KMHeaders::writeSortOrder()
