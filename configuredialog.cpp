@@ -2298,7 +2298,7 @@ void AppearancePage::ProfileTab::setup() {
   mListView->clear();
   // find all profiles (config files named "profile-xyz-rc"):
   QString profileFilenameFilter = QString::fromLatin1("profile-*-rc");
-  mProfileList = KGlobal::dirs()->findAllResources( "config",
+  mProfileList = KGlobal::dirs()->findAllResources( "appdata",
 						    profileFilenameFilter );
 
   kdDebug(5006) << "Profile manager: found " << mProfileList.count() 
