@@ -1503,6 +1503,7 @@ void KMComposeWin::slotSetCharset()
   if (mAtmList.count() <= 0)
     mMsg->setCharset(mCharset);
   writeConfig();
+  setEditCharset();
 }
 
 
@@ -2060,6 +2061,12 @@ void KMComposeWin::setEditCharset()
   {
     KGlobal::charsets()->setQFont(fnt, KGlobal::charsets()->nameToID(mCharset));
     mEditor->setFont(fnt);
+    mEdtFrom.setFont(fnt);
+    mEdtReplyTo.setFont(fnt);
+    mEdtTo.setFont(fnt);
+    mEdtCc.setFont(fnt);
+    mEdtBcc.setFont(fnt);
+    mEdtSubject.setFont(fnt);
   }
 }
 
