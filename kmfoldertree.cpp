@@ -216,6 +216,9 @@ bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
 //-----------------------------------------------------------------------------
 void KMFolderTreeItem::properties()
 {
+  if ( !mFolder )
+    return;
+
   KMFolderDialog *props;
 
   props = new KMFolderDialog( mFolder, mFolder->parent(), 0,
