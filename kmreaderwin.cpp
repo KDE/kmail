@@ -21,6 +21,7 @@
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
 #include "mailsourceviewer.h"
+using KMail::MailSourceViewer;
 #include "partNode.h"
 #include "linklocator.h"
 #include "kmmsgdict.h"
@@ -3095,16 +3096,16 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       setCaption(i18n("View Attachment: ") + pname);
       show();
   } else {
-      KMTextBrowser *browser = new KMTextBrowser(); // deletes itself
+      MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself
       QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
       if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
         str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
       }
-      browser->setText(str);
-      browser->resize(500, 550);
-      browser->show();
+      viewer->setText(str);
+      viewer->resize(500, 550);
+      viewer->show();
   }
   // ---Sven's view text, html and image attachments in html widget end ---
 }

@@ -2,6 +2,7 @@
     This file is part of KMail
 
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
+    Copyright (c) 2003 Zack Rusin <zack@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -30,22 +31,23 @@
 #include <klocale.h>
 #include <kdebug.h>
 
+namespace KMail {
 
-KMUndoStack::KMUndoStack(int size)
+UndoStack::UndoStack(int size)
   : QObject(0, "undostack"), mSize(size), mLastId(0),
     mCachedInfo(0)
 {
    mStack.setAutoDelete(true);
 }
 
-void KMUndoStack::clear()
+void UndoStack::clear()
 {
    mStack.clear();
 }
 
-int KMUndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
+int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
 {
-  KMUndoInfo *info = new KMUndoInfo;
+  UndoInfo *info = new UndoInfo;
   info->id         = ++mLastId;
   info->srcFolder  = srcFolder;
   info->destFolder = destFolder;
@@ -56,10 +58,10 @@ int KMUndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
   return info->id;
 }
 
-void KMUndoStack::addMsgToAction( int undoId, ulong serNum )
+void UndoStack::addMsgToAction( int undoId, ulong serNum )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
-    QPtrListIterator<KMUndoInfo> itr( mStack );
+    QPtrListIterator<UndoInfo> itr( mStack );
     while ( itr.current() ) {
       if ( itr.current()->id == undoId ) {
         mCachedInfo = itr.current();
@@ -73,7 +75,7 @@ void KMUndoStack::addMsgToAction( int undoId, ulong serNum )
   mCachedInfo->serNums.append( serNum );
 }
 
-void KMUndoStack::undo()
+void UndoStack::undo()
 {
   KMMessage *msg;
   ulong serNum;
@@ -81,7 +83,7 @@ void KMUndoStack::undo()
   KMFolder *curFolder;
   if ( mStack.count() > 0 )
   {
-    KMUndoInfo *info = mStack.take(0);
+    UndoInfo *info = mStack.take(0);
     emit undoStackChanged();
     QValueList<ulong>::iterator itr;
     info->destFolder->open();
@@ -109,17 +111,17 @@ void KMUndoStack::undo()
 }
 
 void
-KMUndoStack::pushSingleAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
+UndoStack::pushSingleAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
 {
   int id = newUndoAction( folder, destFolder );
   addMsgToAction( id, serNum );
 }
 
 void
-KMUndoStack::msgDestroyed( KMMsgBase* /*msg*/)
+UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 {
   /*
-   for(KMUndoInfo *info = mStack.first(); info; )
+   for(UndoInfo *info = mStack.first(); info; )
    {
       if (info->msgIdMD5 == msg->msgIdMD5())
       {
@@ -133,12 +135,12 @@ KMUndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 }
 
 void
-KMUndoStack::folderDestroyed( KMFolder *folder)
+UndoStack::folderDestroyed( KMFolder *folder)
 {
-   for(KMUndoInfo *info = mStack.first(); info; )
+   for( UndoInfo *info = mStack.first(); info; )
    {
-      if ((info->srcFolder == folder) ||
-	  (info->destFolder == folder))
+      if ( (info->srcFolder == folder) ||
+	   (info->destFolder == folder) )
       {
          mStack.removeRef( info );
          info = mStack.current();
@@ -149,5 +151,6 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
    emit undoStackChanged();
 }
 
+}
 
 #include "undostack.moc"

@@ -34,6 +34,7 @@
 
 #include <ktextbrowser.h>
 
+
 /**
  * A tiny little class to use for displaying raw messages, textual
  * attachments etc.
@@ -42,10 +43,14 @@
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KMTextBrowser : public KTextBrowser
+namespace KMail {
+
+class MailSourceViewer : public KTextBrowser
 {
 public:
-    KMTextBrowser( QWidget *parent = 0, const char *name = 0 );
+  MailSourceViewer( QWidget *parent = 0, const char *name = 0 );
 };
+
+}
 
 #endif // MAILSOURCEVIEWER_H

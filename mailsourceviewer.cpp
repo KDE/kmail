@@ -40,33 +40,33 @@
 
 namespace KMail {
 
-  class MailSourceHighlighter : public QSyntaxHighlighter
-  {
-  public:
-    MailSourceHighlighter( QTextEdit* edit )
-      : QSyntaxHighlighter( edit )
-      {}
-    int highlightParagraph( const QString& text, int ) {
-      QRegExp regexp( "^([\\w-]+:\\s)" );
-      if( regexp.search( text ) != -1 ) {
-        QFont font = textEdit()->currentFont();
-        font.setBold( true );
-        setFormat( 0, regexp.matchedLength(), font );
-      }
-      return 0;
+class MailSourceHighlighter : public QSyntaxHighlighter
+{
+public:
+  MailSourceHighlighter( QTextEdit* edit )
+    : QSyntaxHighlighter( edit )
+  {}
+  int highlightParagraph( const QString& text, int ) {
+    QRegExp regexp( "^([\\w-]+:\\s)" );
+    if( regexp.search( text ) != -1 ) {
+      QFont font = textEdit()->currentFont();
+      font.setBold( true );
+      setFormat( 0, regexp.matchedLength(), font );
     }
-  };
+    return 0;
+  }
+};
 
+MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
+  : KTextBrowser( parent, name )
+{
+  setWFlags( WDestructiveClose );
+  QAccel *accel = new QAccel( this, "browser close-accel" );
+  accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
+  setTextFormat( Qt::PlainText );
+  setWordWrap( KTextBrowser::NoWrap );
+  new MailSourceHighlighter( this );
+  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 }
 
-KMTextBrowser::KMTextBrowser( QWidget *parent, const char *name )
-    : KTextBrowser( parent, name )
-{
-    setWFlags( WDestructiveClose );
-    QAccel *accel = new QAccel( this, "browser close-accel" );
-    accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
-    setTextFormat( Qt::PlainText );
-    setWordWrap( KTextBrowser::NoWrap );
-    new KMail::MailSourceHighlighter( this );
-    KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 }

@@ -2,6 +2,7 @@
     This file is part of KMail
 
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
+    Copyright (c) 2003 Zack Rusin <zack@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -28,8 +29,10 @@
 class KMFolder;
 class KMMsgBase;
 
+namespace KMail {
+
 /** A class for storing Undo information. */
-class KMUndoInfo
+class UndoInfo
 {
 public:
   int               id;
@@ -38,12 +41,12 @@ public:
   KMFolder         *destFolder;
 };
 
-class KMUndoStack : public QObject
+class UndoStack : public QObject
 {
   Q_OBJECT
 
 public:
-  KMUndoStack(int size);
+  UndoStack(int size);
 
   void clear();
   int  size() const { return mStack.count(); }
@@ -55,13 +58,15 @@ public:
   void msgDestroyed( KMMsgBase *msg);
   void folderDestroyed( KMFolder *folder);
 protected:
-  QPtrList<KMUndoInfo> mStack;
+  QPtrList<UndoInfo> mStack;
   int mSize;
   int mLastId;
-  KMUndoInfo *mCachedInfo;
+  UndoInfo *mCachedInfo;
 
 signals:
    void undoStackChanged();
 };
+
+}
 
 #endif

@@ -661,7 +661,7 @@ void KMKernel::init()
     foldersPath = QDir::homeDirPath() + QString("/Mail");
     transferMail();
   }
-  the_undoStack     = new KMUndoStack(20);
+  the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/imap"), KMImapDir);
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);

@@ -16,14 +16,15 @@ namespace KIO {
 }
 namespace KMail {
   class MailServiceImpl;
+  class UndoStack;
 }
 using KMail::MailServiceImpl;
+using KMail::UndoStack;
 class KConfig;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
 class KMFolderMgr;
-class KMUndoStack;
 class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
@@ -143,7 +144,7 @@ public:
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
-  KMUndoStack *undoStack() { return the_undoStack; }
+  UndoStack *undoStack() { return the_undoStack; }
   KMAcctMgr *acctMgr() { return the_acctMgr; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
@@ -228,7 +229,7 @@ private:
   KMFolder *the_draftsFolder;
 
   KMFolderMgr *the_folderMgr, *the_imapFolderMgr, *the_searchFolderMgr;
-  KMUndoStack *the_undoStack;
+  UndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
