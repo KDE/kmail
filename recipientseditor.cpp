@@ -154,6 +154,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   mCombo = new RecipientComboBox( this );
   mCombo->insertStringList( recipientTypes );
   topLayout->addWidget( mCombo );
+  QToolTip::add( mCombo, i18n("Select type of recipient") );
 
   mEdit = new RecipientLineEdit( this );
   topLayout->addWidget( mEdit );
@@ -176,6 +177,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   mRemoveButton->setIconSet( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
   connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
+  QToolTip::add( mRemoveButton, i18n("Remove recipient line") );
 
   mCombo->setFixedHeight( height );
   mRemoveButton->setFixedHeight( height );
@@ -595,10 +597,13 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   mDistributionListButton->hide();
   connect( mDistributionListButton, SIGNAL( clicked() ),
     SIGNAL( saveDistributionList() ) );
+  QToolTip::add( mDistributionListButton,
+    i18n("Save recipients as distribution list") );
 
   mSelectButton = new QPushButton( "Se&lect...", this );
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
+  QToolTip::add( mSelectButton, i18n("Select recipients from address book") );
 
   initRecipientPicker();
 }
