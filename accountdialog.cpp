@@ -29,6 +29,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qwhatsthis.h>
+#include <qhbox.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -347,11 +348,12 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableLocalInterval(bool)) );
-  mLocal.intervalLabel = new QLabel( i18n("Check inter&val (minutes):"), page );
+  mLocal.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
   mLocal.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( 1 );
   topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
 
@@ -401,47 +403,50 @@ void AccountDialog::makeMaildirAccountPage()
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
-  topLayout->addWidget( label, 2, 0 );
   mMaildir.nameEdit = new QLineEdit( page );
   topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
+  QLabel *label = new QLabel( mMaildir.nameEdit, i18n("&Name:"), page );
+  topLayout->addWidget( label, 2, 0 );
 
-  label = new QLabel( i18n("Location:"), page );
-  topLayout->addWidget( label, 3, 0 );
   mMaildir.locationEdit = new QComboBox( true, page );
   topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
   mMaildir.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
+  label = new QLabel( mMaildir.locationEdit, i18n("&Location:"), page );
+  topLayout->addWidget( label, 3, 0 );
 
-  QPushButton *choose = new QPushButton( i18n("Choose..."), page );
+  QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
   choose->setAutoDefault( false );
   connect( choose, SIGNAL(clicked()), this, SLOT(slotMaildirChooser()) );
   topLayout->addWidget( choose, 3, 2 );
 
   mMaildir.excludeCheck =
-    new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
+    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
   topLayout->addMultiCellWidget( mMaildir.excludeCheck, 5, 5, 0, 2 );
 
   mMaildir.intervalCheck =
-    new QCheckBox( i18n("Enable interval mail checking"), page );
+    new QCheckBox( i18n("Enable &interval mail checking"), page );
   topLayout->addMultiCellWidget( mMaildir.intervalCheck, 6, 6, 0, 2 );
   connect( mMaildir.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableMaildirInterval(bool)) );
-  mMaildir.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
+  mMaildir.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
   topLayout->addWidget( mMaildir.intervalLabel, 7, 0 );
   mMaildir.intervalSpin = new KIntNumInput( page );
   mMaildir.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mMaildir.intervalSpin->setSuffix( i18n(" min") );
   mMaildir.intervalSpin->setValue( 1 );
+  mMaildir.intervalLabel->setBuddy( mMaildir.intervalSpin );
   topLayout->addWidget( mMaildir.intervalSpin, 7, 1 );
 
-  label = new QLabel( i18n("Destination folder:"), page );
-  topLayout->addWidget( label, 8, 0 );
   mMaildir.folderCombo = new QComboBox( false, page );
   topLayout->addWidget( mMaildir.folderCombo, 8, 1 );
+  label = new QLabel( mMaildir.folderCombo,
+		      i18n("&Destination folder:"), page );
+  topLayout->addWidget( label, 8, 0 );
 
-  label = new QLabel( i18n("Precommand:"), page );
-  topLayout->addWidget( label, 9, 0 );
   mMaildir.precommand = new QLineEdit( page );
   topLayout->addWidget( mMaildir.precommand, 9, 1 );
+  label = new QLabel( mMaildir.precommand, i18n("&Precommand:"), page );
+  topLayout->addWidget( label, 9, 0 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -467,9 +472,9 @@ void AccountDialog::makePopAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 16, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 13, 10 );
+  grid->setRowStretch( 14, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -514,55 +519,61 @@ void AccountDialog::makePopAccountPage()
   grid->addMultiCellWidget( mPop.storePasswordCheck, 6, 6, 0, 1 );
 
   mPop.deleteMailCheck =
-    new QCheckBox( i18n("&Delete mail from server"), page1 );
+    new QCheckBox( i18n("&Delete message from server after fetching"), page1 );
   grid->addMultiCellWidget( mPop.deleteMailCheck, 7, 7, 0, 1 );
 
   mPop.excludeCheck =
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mPop.excludeCheck, 8, 8, 0, 1 );
 
+  QHBox * hbox = new QHBox( page1 );
+  hbox->setSpacing( KDialog::spacingHint() );
   mPop.filterOnServerCheck =
-    new QCheckBox( i18n("&Filter mail on server"), page1 );
-  grid->addMultiCellWidget( mPop.filterOnServerCheck, 9, 9, 0, 1 );
-  connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
-	   this, SLOT(slotEnableCheckSize(bool)) );
-  mPop.filterOnServerSizeLabel =
-    new QLabel( i18n("Si&ze of messages to filter:"), page1 );
-  grid->addWidget(mPop.filterOnServerSizeLabel, 10, 0 );
-  mPop.filterOnServerSizeSpin = new KIntNumInput ( page1 );
+    new QCheckBox( i18n("&Filter messages if they are greater than"), hbox );
+  mPop.filterOnServerSizeSpin = new KIntNumInput ( hbox );
+  mPop.filterOnServerSizeSpin->setEnabled( false );
+  hbox->setStretchFactor( mPop.filterOnServerSizeSpin, 1 );
   mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
   mPop.filterOnServerSizeSpin->setValue( 50000 );
-  mPop.filterOnServerSizeLabel->setBuddy( mPop.filterOnServerSizeSpin );
-  grid->addWidget(mPop.filterOnServerSizeSpin, 10, 1 );
+  mPop.filterOnServerSizeSpin->setSuffix( i18n(" byte") );
+  grid->addMultiCellWidget( hbox, 9, 9, 0, 1 );
+  connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
+	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
+  QString msg = i18n("If you select this option, Pop Filters will be used to "
+		     "decide what to do with messages. You can then select "
+		     "to download, delete or keep them on the server." );
+  QWhatsThis::add( mPop.filterOnServerCheck, msg );
+  QWhatsThis::add( mPop.filterOnServerSizeSpin, msg );
 
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mPop.intervalCheck, 11, 11, 0, 1 );
+  grid->addMultiCellWidget( mPop.intervalCheck, 10, 10, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
-  mPop.intervalLabel = new QLabel( i18n("Check inter&val (minutes):"), page1 );
-  grid->addWidget( mPop.intervalLabel, 12, 0 );
+  mPop.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
+  grid->addWidget( mPop.intervalLabel, 11, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( 1 );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
-  grid->addWidget( mPop.intervalSpin, 12, 1 );
+  grid->addWidget( mPop.intervalSpin, 11, 1 );
 
   label = new QLabel( i18n("Des&tination folder:"), page1 );
-  grid->addWidget( label, 13, 0 );
+  grid->addWidget( label, 12, 0 );
   mPop.folderCombo = new QComboBox( false, page1 );
   label->setBuddy( mPop.folderCombo );
-  grid->addWidget( mPop.folderCombo, 13, 1 );
+  grid->addWidget( mPop.folderCombo, 12, 1 );
 
   label = new QLabel( i18n("Precom&mand:"), page1 );
-  grid->addWidget( label, 14, 0 );
+  grid->addWidget( label, 13, 0 );
   mPop.precommand = new QLineEdit( page1 );
   label->setBuddy(mPop.precommand);
-  grid->addWidget( mPop.precommand, 14, 1 );
+  grid->addWidget( mPop.precommand, 13, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
 
   mPop.usePipeliningCheck =
     new QCheckBox( i18n("&Use pipelining for faster mail download"), page2 );
@@ -632,7 +643,7 @@ void AccountDialog::makeImapAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 14, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
@@ -707,7 +718,7 @@ void AccountDialog::makeImapAccountPage()
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, 12, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( 1, 60, 1, true );
+  mImap.intervalSpin->setRange( 1, 60, 1, FALSE );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
@@ -720,7 +731,7 @@ void AccountDialog::makeImapAccountPage()
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
-  QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
+  QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
 
   mImap.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
@@ -833,7 +844,6 @@ void AccountDialog::setupSettings()
     else mPop.authUser->setChecked( TRUE );
 
     slotEnablePopInterval( interval >= 1 );
-    slotEnableCheckSize( ap.filterOnServer() );
     folderCombo = mPop.folderCombo;
   }
   else if( accountType == "imap" )
@@ -1242,12 +1252,6 @@ void AccountDialog::slotEnablePopInterval( bool state )
 {
   mPop.intervalSpin->setEnabled( state );
   mPop.intervalLabel->setEnabled( state );
-}
-
-void AccountDialog::slotEnableCheckSize( bool state )
-{
-  mPop.filterOnServerSizeSpin->setEnabled( state );
-  mPop.filterOnServerSizeLabel->setEnabled( state );
 }
 
 void AccountDialog::slotEnableImapInterval( bool state )

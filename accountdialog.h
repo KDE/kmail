@@ -107,7 +107,6 @@ class AccountDialog : public KDialogBase
       QCheckBox    *intervalCheck;
       QCheckBox    *filterOnServerCheck;
       QLabel       *intervalLabel;
-      QLabel       *filterOnServerSizeLabel;
       KIntNumInput *intervalSpin;
       KIntNumInput *filterOnServerSizeSpin;
       QComboBox    *folderCombo;
@@ -150,7 +149,6 @@ class AccountDialog : public KDialogBase
     virtual void slotOk();
     void slotLocationChooser();
     void slotMaildirChooser();
-    void slotEnableCheckSize( bool state );
     void slotEnablePopInterval( bool state );
     void slotEnableImapInterval( bool state );
     void slotEnableLocalInterval( bool state );
