@@ -277,8 +277,6 @@ void KMMainWidget::readConfig(void)
     toggleFixFontAction()->setChecked( readerConfig.readBoolEntry( "useFixedFont",
                                                                false ) );
 
-  mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
-
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
     mThreadPref = config->readBoolEntry( "nestedMessages", false );
@@ -1651,7 +1649,8 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       imap->expungeFolder(imap, TRUE);
   }
 
-  writeFolderConfig();
+  if ( mFolder != aFolder )
+    writeFolderConfig();
   if ( mFolder ) {
     disconnect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
