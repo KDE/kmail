@@ -1235,9 +1235,19 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   pgp->setMessage(cText);
 
+  // get PGP user id for the chosen identity
+  QString pgpUserId;
+  QString identStr = i18n( "Default" );
+  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
+    identStr = mId;
+  }
+  KMIdentity ident(identStr);
+  ident.readConfig();
+  pgpUserId = ident.pgpIdentity();
+
   if (!doEncrypt)
   {
-    if(pgp->sign()) return pgp->message();
+    if(pgp->sign(pgpUserId)) return pgp->message();
   }
   else
   {
@@ -1258,8 +1268,8 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       lastindex = index;
     }
     while (lastindex > 0);
-
-    if(pgp->encryptFor(persons, doSign))
+    
+    if(pgp->encryptFor(persons, pgpUserId, doSign))
       return pgp->message();
   }
 
@@ -2217,7 +2227,6 @@ void KMComposeWin::slotIdentityActivated(int)
     mMsg->removeHeaderField("Organization");
   else
     mMsg->setHeaderField("Organization", ident.organization());
-  Kpgp::getKpgp()->setUser(ident.pgpIdentity());
 
   QString edtText = mEditor->text();
   int pos = edtText.findRev( "\n-- \n" + mOldSigText);
