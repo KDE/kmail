@@ -85,6 +85,7 @@ namespace {
     void blockEnd() {}
     void hashComment( const QString & ) {}
     void bracketComment( const QString & ) {}
+    void lineFeed() {}
     void error( const KSieve::Error & e ) {
       kdDebug( 5006 ) << "VacationDataExtractor::error() ### "
 		      << e.asString() << " @ " << e.line() << "," << e.column()
@@ -103,6 +104,9 @@ namespace {
     }
 
     void stringArgument( const QString & string, bool ) {
+      stringArgument( string, false, QString::null );
+    }
+    void stringArgument( const QString & string, bool, const QString & ) {
       kdDebug( 5006 ) << "VacationDataExtractor::stringArgument( \"" << string << "\" )" << endl;
       if ( mContext == Addresses ) {
 	mAliases.push_back( string );
@@ -126,6 +130,9 @@ namespace {
 
     void stringListArgumentStart() {}
     void stringListEntry( const QString & string, bool ) {
+      stringListEntry( string, false, QString::null );
+    }
+    void stringListEntry( const QString & string, bool, const QString & ) {
       kdDebug( 5006 ) << "VacationDataExtractor::stringListEntry( \"" << string << "\" )" << endl;
       if ( mContext != Addresses )
 	return;
@@ -176,9 +183,6 @@ namespace KMail {
     kdDebug(5006) << "~Vacation()" << endl;
   }
 
-  static inline QString lf2crlf( QString s ) {
-    return s.replace( '\n', "\r\n" );
-  }
   static inline QString dotstuff( QString s ) {
     if ( s.startsWith( "." ) )
       return '.' + s.replace( "\n.", "\n.." );
@@ -210,7 +214,7 @@ namespace KMail {
     script += QString::fromLatin1("text:\n");
     script += dotstuff( messageText.isEmpty() ? defaultMessageText() : messageText );
     script += QString::fromLatin1( "\n.\n;\n" );
-    return lf2crlf( script );
+    return script;
   }
 
   static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
