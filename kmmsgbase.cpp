@@ -328,7 +328,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
     valid = TRUE;
     // parse charset name
     charset = "";
-    for (i=2,pos+=2; i<maxLen && (*pos!='?'&&(ispunct(*pos)||isalnum(*pos))); i++)
+    for (i=2,pos+=2; i<maxLen && (*pos!='?'&&(*pos==' '||ispunct(*pos)||isalnum(*pos))); i++)
     {
       charset += *pos;
       pos++;
