@@ -58,10 +58,10 @@ k_dcop:
        This method will set content type encoding, mime types, etc. as
        per the MailTT specification.
     */
-    virtual int sendCertificate( const QString& to, 
+    virtual int sendCertificate( const QString& to,
                                  const QByteArray& certData ) = 0;
 
-    
+
   virtual void compactAllFolders() = 0;
 
   /** @param foldername the requested foldername in kmail (at the
