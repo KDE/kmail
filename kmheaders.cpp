@@ -2841,7 +2841,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
 	if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
-	    new KMHeaderItem(this, sortCache[x]->id(), sortCache[x]->key());
+	    khi = new KMHeaderItem(this, sortCache[x]->id(), sortCache[x]->key());
 	    sortCache[x]->setItem(mItems[sortCache[x]->id()] = khi);
 	}
 	delete sortCache[x];
