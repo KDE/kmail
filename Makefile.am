@@ -14,7 +14,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp kbusyptr.cpp kmmsgdict.cpp \
-		cryptplugwrapper.cpp klistboxdialog.cpp \
+		klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
 		directoryservicesconfigurationdialog.ui \
@@ -36,7 +36,6 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
-		cryptplugwrapperlist.cpp \
 		directoryservicesconfigurationdialogimpl.cpp \
 		adddirectoryservicedialog.ui adddirectoryservicedialogimpl.cpp kmmimeparttree.cpp \
 		certificatehandlingdialog.ui certificatehandlingdialogimpl.cpp \
@@ -48,7 +47,6 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		encryptionconfigurationdialogimpl.cpp
 
 noinst_HEADERS = directoryservicesconfigurationdialogimpl.h \
-		 cryptplugwrapperlist.h \
 		 adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmmainwin.h certificatehandlingdialogimpl.h \
 		 certificatewizardimpl.h partNode.h \
