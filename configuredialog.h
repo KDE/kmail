@@ -31,7 +31,7 @@ class NetworkPage;
 class AppearancePage;
 class ComposerPage;
 class SecurityPage;
-class MiscPage;
+class FolderPage;
 class PluginPage;
 class CryptPlugWrapperList;
 class SignatureConfigurationDialogImpl;
@@ -75,7 +75,7 @@ class ConfigureDialog : public KDialogBase
     AppearancePage *mAppearancePage;
     ComposerPage   *mComposerPage;
     SecurityPage   *mSecurityPage;
-    MiscPage       *mMiscPage;
+    FolderPage     *mFolderPage;
     PluginPage     *mPluginPage;
     CryptPlugWrapperList* mCryptPlugList;
 };

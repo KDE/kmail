@@ -179,13 +179,13 @@ ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
   vlay->addWidget( mSecurityPage );
   mSecurityPage->setPageIndex( pageIndex( page ) );
 
-  // Miscellaneous Page:
-  page = addPage( MiscPage::iconLabel(), MiscPage::title(),
-		  loadIcon( MiscPage::iconName() ) );
+  // Folder Page:
+  page = addPage( FolderPage::iconLabel(), FolderPage::title(),
+		  loadIcon( FolderPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mMiscPage = new MiscPage( page );
-  vlay->addWidget( mMiscPage );
-  mMiscPage->setPageIndex( pageIndex( page ) );
+  mFolderPage = new FolderPage( page );
+  vlay->addWidget( mFolderPage );
+  mFolderPage->setPageIndex( pageIndex( page ) );
 
   // Plugin Page:
 
@@ -218,7 +218,7 @@ void ConfigureDialog::slotCancelOrClose()
   mAppearancePage->dismiss();
   mComposerPage->dismiss();
   mSecurityPage->dismiss();
-  mMiscPage->dismiss();
+  mFolderPage->dismiss();
   mPluginPage->dismiss();
 }
 
@@ -246,8 +246,8 @@ void ConfigureDialog::slotHelp() {
     kapp->invokeHelp( mComposerPage->helpAnchor() );
   else if ( activePage == mSecurityPage->pageIndex() )
     kapp->invokeHelp( mSecurityPage->helpAnchor() );
-  else if ( activePage == mMiscPage->pageIndex() )
-    kapp->invokeHelp( mMiscPage->helpAnchor() );
+  else if ( activePage == mFolderPage->pageIndex() )
+    kapp->invokeHelp( mFolderPage->helpAnchor() );
   else if ( activePage == mPluginPage->pageIndex() )
     kapp->invokeHelp( mPluginPage->helpAnchor() );
   else
@@ -262,7 +262,7 @@ void ConfigureDialog::setup()
   mAppearancePage->setup();
   mComposerPage->setup();
   mSecurityPage->setup();
-  mMiscPage->setup();
+  mFolderPage->setup();
   mPluginPage->setup();
 }
 
@@ -272,7 +272,7 @@ void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
   mAppearancePage->installProfile( profile );
   mComposerPage->installProfile( profile );
   mSecurityPage->installProfile( profile );
-  mMiscPage->installProfile( profile );
+  mFolderPage->installProfile( profile );
   mPluginPage->installProfile( profile );
 }
 
@@ -294,8 +294,8 @@ void ConfigureDialog::apply( bool everything ) {
   if ( everything || activePage == mSecurityPage->pageIndex() )
     mSecurityPage->apply();
 
-  if ( everything || activePage == mMiscPage->pageIndex() )
-    mMiscPage->apply();
+  if ( everything || activePage == mFolderPage->pageIndex() )
+    mFolderPage->apply();
 
   if ( everything || activePage == mPluginPage->pageIndex() )
     mPluginPage->apply();
@@ -3313,79 +3313,28 @@ void SecurityPage::GeneralTab::apply() {
 
 // *************************************************************
 // *                                                           *
-// *                        MiscPage                           *
+// *                       FolderPage                          *
 // *                                                           *
 // *************************************************************
 
 
-
-QString MiscPage::iconLabel() {
-  return i18n("Miscellaneous");
+QString FolderPage::iconLabel() {
+  return i18n("Folders");
 }
 
-const char * MiscPage::iconName() {
-  return "misc";
+const char * FolderPage::iconName() {
+  return "folder";
 }
 
-QString MiscPage::title() {
-  return i18n("Various Settings That Don't Fit Elsewhere");
+QString FolderPage::title() {
+  return i18n("Settings for Folders");
 }
 
-QString MiscPage::helpAnchor() {
-  return QString::fromLatin1("configure-misc");
-}
-
-MiscPage::MiscPage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
-{
-  //
-  // "Folders" tab:
-  //
-  mFoldersTab = new FoldersTab();
-  addTab( mFoldersTab, mFoldersTab->title() );
-
-// Disabled until kab is ported to libkabc.
-#if 0
-  //
-  // "Addressbook" tab:
-  //
-  mAddressbookTab = new AddressbookTab();
-  addTab( mAddressbookTab, mAddressbookTab->title() );
-#endif
-}
-
-void MiscPage::setup() {
-  mFoldersTab->setup();
-#if 0
-  mAddressbookTab->setup();
-#endif
-}
-
-void MiscPage::installProfile( KConfig * profile ) {
-  mFoldersTab->installProfile( profile );
-#if 0
-  mAddressbookTab->installProfile( profile );
-#endif
-}
-
-void MiscPage::apply() {
-  mFoldersTab->apply();
-#if 0
-  mAddressbookTab->apply();
-#endif
-}
-
-
-QString MiscPage::FoldersTab::title() {
-  return i18n("&Folders");
-}
-
-QString MiscPage::FoldersTab::helpAnchor() {
+QString FolderPage::helpAnchor() {
   return QString::fromLatin1("configure-misc-folders");
 }
 
-
-MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
+FolderPage::FolderPage( QWidget * parent, const char * name )
   : ConfigurationPage( parent, name )
 {
   // temp. vars:
@@ -3394,7 +3343,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   QGroupBox   *group;
   QLabel      *label;
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
@@ -3485,7 +3434,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
-void MiscPage::FoldersTab::setup() {
+void FolderPage::setup() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup behaviour( kapp->config(), "Behaviour" );
 
@@ -3505,7 +3454,7 @@ void MiscPage::FoldersTab::setup() {
   mMailboxPrefCombo->setCurrentItem( num );
 }
 
-void MiscPage::FoldersTab::apply() {
+void FolderPage::apply() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup behaviour( kapp->config(), "Behaviour" );
 
@@ -3526,82 +3475,6 @@ void MiscPage::FoldersTab::apply() {
     general.writeEntry( "when-to-expire", expireManual );
 }
 
-
-
-QString MiscPage::AddressbookTab::title() {
-  return i18n("Address&book");
-}
-
-QString MiscPage::AddressbookTab::helpAnchor() {
-  return QString::fromLatin1("configure-misc-addressbook");
-}
-
-
-static const struct {
-  const char * label;
-  const char * description;
-} addressBooks[] = {
-#if 0
-  { I18N_NOOP("KAB"),
-    I18N_NOOP("The KDE Address Book graphical interface (KAB) using the "
-	      "standard KDE Address Book (KAB) database. Requires the "
-	      "kdeutils package to be installed.") },
-#endif
-  { I18N_NOOP("KAddressbook"),
-    I18N_NOOP("The new KDE Address Book graphical interface "
-	      "(KAddressbook) using the standard KDE Address Book (KAB) "
-	      "database.") },
-};
-static const int numAddressBooks = sizeof addressBooks / sizeof *addressBooks;
-
-MiscPageAddressbookTab::MiscPageAddressbookTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
-{
-  // tmp. vars:
-  QVBoxLayout  *vlay;
-  QHBoxLayout  *hlay;
-  QWidgetStack *widgetStack;
-  QGroupBox    *group;
-  QLabel       *label;
-
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-
-  // addressbook combo box and label:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mAddressbookCombo = new QComboBox( false, this );
-  for ( int i = 0 ; i < numAddressBooks ; i++ )
-    mAddressbookCombo->insertItem( i18n( addressBooks[i].label ) );
-
-  hlay->addWidget( new QLabel( mAddressbookCombo,
-			       i18n("Choose a&ddressbook:"), this ) );
-  hlay->addWidget( mAddressbookCombo, 1 );
-
-  group = new QVGroupBox( i18n("Description"), this );
-
-  widgetStack = new QWidgetStack( group );
-  for ( int i = 0 ; i < numAddressBooks ; i++ ) {
-    label = new QLabel( i18n( addressBooks[i].description ), widgetStack );
-    label->setAlignment( AlignTop|WordBreak );
-    widgetStack->addWidget( label, i );
-  }
-  widgetStack->raiseWidget( 0 );
-  connect( mAddressbookCombo, SIGNAL(highlighted(int)),
-	   widgetStack, SLOT(raiseWidget(int)) );
-
-  vlay->addWidget( group );
-  vlay->addStretch( 100 );
-}
-
-void MiscPage::AddressbookTab::setup() {
-  int num = KConfigGroup( kapp->config(), "General" )
-    .readNumEntry( "addressbook", numAddressBooks - 1 );
-  mAddressbookCombo->setCurrentItem( num );
-}
-
-void MiscPage::AddressbookTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  general.writeEntry( "addressbook", mAddressbookCombo->currentItem() );
-}
 
 
 // *************************************************************

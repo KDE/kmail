@@ -740,19 +740,17 @@ protected:
 
 //
 //
-// MiscPage
+// FolderPage
 //
 //
 
-class MiscPageFoldersTab : public ConfigurationPage {
+class FolderPage : public ConfigurationPage {
   Q_OBJECT
 public:
-  MiscPageFoldersTab( QWidget * parent=0, const char * name=0 );
+  FolderPage( QWidget * parent=0, const char * name=0 );
 
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
+  static QString iconLabel();
+  static const char * iconName();
   static QString title();
   static QString helpAnchor();
 
@@ -771,48 +769,6 @@ protected:
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
-};
-
-class MiscPageAddressbookTab : public ConfigurationPage {
-  Q_OBJECT
-public:
-  MiscPageAddressbookTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
-  static QString helpAnchor();
-
-  void setup();
-  void apply();
-
-protected:
-  QComboBox *mAddressbookCombo;
-};
-
-
-class MiscPage : public TabbedConfigurationPage {
-  Q_OBJECT
-public:
-  MiscPage( QWidget * parent=0, const char * name=0 );
-
-  static QString iconLabel();
-  static const char * iconName();
-  static QString title();
-  static QString helpAnchor();
-
-  void setup();
-  void apply();
-  void installProfile( KConfig * profile );
-
-  typedef MiscPageFoldersTab FoldersTab;
-  typedef MiscPageAddressbookTab AddressbookTab;
-
-protected:
-  FoldersTab     *mFoldersTab;
-  AddressbookTab *mAddressbookTab;
 };
 
 //
