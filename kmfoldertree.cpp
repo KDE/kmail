@@ -577,7 +577,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
   KConfig* config = app->config();
   KMFolder *folder = fti->folder;
-  if (folder)
+  if (!folder)
     return TRUE;
   int pathLen = folder->path().length() - folderMgr->basePath().length();
   QString path = folder->path().right( pathLen );
@@ -585,6 +585,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   if (!path.isEmpty())
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + folder->name());
+
   return config->readBoolEntry("isOpen", false);
 } 
 
