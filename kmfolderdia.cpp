@@ -16,6 +16,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #include "kmmainwin.h"
 #include "kmglobal.h"
@@ -36,7 +37,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
   mFolder = aFolder;
-    qDebug("KMFolderDialog::KMFolderDialog()");
+  kdDebug()<<"KMFolderDialog::KMFolderDialog()\n";
 
   // Main tab
   //
@@ -115,7 +116,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   topLayout->addLayout( hl );
   topLayout->addSpacing( spacingHint()*2 );
 
-  
+
   label = new QLabel( i18n("Post Address:"), page );
   hl->addWidget( label );
   mailingListPostAddress = new QLineEdit( page );
@@ -139,7 +140,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //     mailingListAdminAddress->setEnabled(folder->isMailingList());
     holdsMailingList->setChecked(folder->isMailingList());
   }
-  qDebug("Exiting KMFolderDialog::KMFolderDialog()");
+  kdDebug()<<"Exiting KMFolderDialog::KMFolderDialog()\n";
 }
 
 

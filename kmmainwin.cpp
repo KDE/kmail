@@ -41,6 +41,7 @@
 #include <kcharsets.h>
 #include <kmimetype.h>
 #include <knotifyclient.h>
+#include <kdebug.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -654,7 +655,7 @@ void KMMainWin::slotCompose()
   msg->initHeader();
 
   if (mFolder && mFolder->isMailingList()) {
-    qDebug("mFolder->isMailingList() %s", mFolder->mailingListPostAddress().latin1());
+      kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
     msg->setTo(mFolder->mailingListPostAddress());
   }
 
@@ -1445,7 +1446,7 @@ void KMMainWin::setupMenuBar()
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
   connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
-  
+
   actMenu = actActionMenu->popupMenu();
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
