@@ -87,6 +87,7 @@ static void writePid(bool ready);
 //-----------------------------------------------------------------------------
 static void ungrabPtrKb(void)
 {
+  if(!KTMainWindow::memberList) return;
   QWidget* widg = KTMainWindow::memberList->first();
   Display* dpy;
 

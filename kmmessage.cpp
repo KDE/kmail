@@ -335,12 +335,11 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   {
      Kpgp* pgp = Kpgp::getKpgp();
      assert(pgp != NULL);
-     if (pgp->setMessage(bodyDecoded()) && pgp->isEncrypted() &&
-         pgp->decrypt())
-     {
-       result = QString(pgp->message()).stripWhiteSpace();
-     }
-     else result = QString(bodyDecoded()).stripWhiteSpace();
+     pgp->setMessage(bodyDecoded());
+     if( pgp->isEncrypted() )
+         pgp->decrypt();
+
+     result = QString(pgp->message()).stripWhiteSpace();
 
      result.replace(reNL,nlIndentStr) + '\n';
   }
