@@ -1000,9 +1000,9 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
 
     KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
-    epa.setHost( mPop.hostEdit->text() );
+    epa.setHost( mPop.hostEdit->text().stripWhiteSpace() );
     epa.setPort( mPop.portEdit->text().toInt() );
-    epa.setLogin( mPop.loginEdit->text() );
+    epa.setLogin( mPop.loginEdit->text().stripWhiteSpace() );
     epa.setPasswd( mPop.passwordEdit->text(), true );
     epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
@@ -1030,10 +1030,10 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( TRUE );
 
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
-    epa.setHost( mImap.hostEdit->text() );
+    epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
     epa.setPort( mImap.portEdit->text().toInt() );
     epa.setPrefix( mImap.prefixEdit->text() );
-    epa.setLogin( mImap.loginEdit->text() );
+    epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
