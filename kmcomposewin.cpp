@@ -1565,8 +1565,9 @@ bool KMComposeWin::applyChanges(void)
             kdDebug(5006) << "                                                       done." << endl;
           }
         }
-      } else
+      } else {
         encodedBody = body;
+      }
     }
 
     // S/MIME multi part parts
@@ -1631,7 +1632,7 @@ bool KMComposeWin::applyChanges(void)
     }
 
     if( bOk ) {
-      if( !bcc().isEmpty() ) {
+      if( !bcc().isEmpty() && doEncrypt ) {
         QStringList bccRecips = KMMessage::splitEmailAddrList( bcc() );
         for( QStringList::ConstIterator it = bccRecips.begin();
             it != bccRecips.end();
