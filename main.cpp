@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current maintainer"), "haeckel@kde.org" );
   about.addAuthor( "Don Sanders", I18N_NOOP("Core developer and former maintainer"), "sanders@kde.org" );
   about.addAuthor( "Stefan Taferner ", I18N_NOOP("Original author"), "taferner@kde.org" );
-  about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Encryption"), "ingo.kloecker@epost.de" );
+  about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Encryption"), "kloecker@kde.de" );
   about.addAuthor( "Marc Mutz", I18N_NOOP("Core developer"), "mutz@kde.org" );
   about.addAuthor( "Daniel Naber", I18N_NOOP("Documentation"), "daniel.naber@t-online.de" );
   about.addAuthor( "Andreas Gungl", I18N_NOOP("Encryption"), "a.gungl@gmx.de" );
