@@ -1005,16 +1005,15 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
                               i18n("&Troubleshoot IMAP Cache..."),
                               folder, SLOT(slotTroubleshoot()) );
     }
+    folderMenu->insertSeparator();
   }
 
   if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
-    folderMenu->insertSeparator();
     mMainWidget->action("post_message")->plug(folderMenu);
   }
 
   if (fti->folder() && fti->parent())
   {
-    folderMenu->insertSeparator();
     folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
         i18n("&Assign Shortcut..."),
         fti,
