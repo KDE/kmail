@@ -760,49 +760,60 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-QCString KMMsgBase::encodeRFC2231String(const QString& _str,
-  const QCString& charset)
+QCString KMMsgBase::encodeRFC2231String( const QString& _str,
+                                         const QCString& charset )
 {
-  if (_str.isEmpty()) return QCString();
-  QCString cset;
-  if (charset.isEmpty()) cset = QCString(kernel->networkCodec()->mimeName()).lower();
-    else cset = charset;
-  const QTextCodec *codec = codecForName(cset);
-  QCString latin;
-  if (charset == "us-ascii") latin = toUsAscii(_str);
-  else if (codec) latin = codec->fromUnicode(_str);
-    else latin = _str.local8Bit();
+  if ( _str.isEmpty() )
+    return QCString();
 
-  char *l = latin.data();
-  char hexcode;
-  int i;
-  bool quote;
-  while (*l)
-  {
-    if (*l < 32) break;
-    l++;
+  QCString cset;
+  if ( charset.isEmpty() )
+    cset = QCString( kernel->networkCodec()->mimeName() ).lower();
+  else
+    cset = charset;
+  const QTextCodec *codec = codecForName( cset );
+  QCString latin;
+  if ( charset == "us-ascii" )
+    latin = toUsAscii( _str );
+  else if ( codec )
+    latin = codec->fromUnicode( _str );
+  else
+    latin = _str.local8Bit();
+
+  char *l;
+  for ( l = latin.data(); *l; ++l ) {
+    if ( ( *l & 0xE0 == 0 ) || ( *l & 0x80 ) )
+      // *l is control character or 8-bit char
+      break;
   }
-  if (!*l) return latin;
+  if ( !*l )
+    return latin;
+
   QCString result = cset + "''";
-  l = latin.data();
-  while (*l)
-  {
-#warning "This code is wrong.  char is unsigned on my platform."
-    quote = *l < 0;
-    for (i = 0; i < 17; i++) if (*l == especials[i]) quote = true;
-    if (quote)
-    {
+  for ( l = latin.data(); *l; ++l ) {
+    bool needsQuoting = ( *l & 0x80 );
+    if( !needsQuoting ) {
+      int len = especials.length();
+      for ( int i = 0; i < len; i++ )
+        if ( *l == especials[i] ) {
+          needsQuoting = true;
+          break;
+        }
+    }
+    if ( needsQuoting ) {
       result += '%';
-      hexcode = ((*l & 0xF0) >> 4) + 48;
-      if (hexcode >= 58) hexcode += 7;
+      unsigned char hexcode;
+      hexcode = ( ( *l & 0xF0 ) >> 4 ) + 48;
+      if ( hexcode >= 58 )
+        hexcode += 7;
       result += hexcode;
-      hexcode = (*l & 0x0F) + 48;
-      if (hexcode >= 58) hexcode += 7;
+      hexcode = ( *l & 0x0F ) + 48;
+      if ( hexcode >= 58 )
+        hexcode += 7;
       result += hexcode;
     } else {
       result += *l;
     }
-    l++;
   }
   return result;
 }
