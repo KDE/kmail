@@ -88,7 +88,7 @@ bool KMAcctLocal::processNewMail(void)
   rc = mailFolder.expunge();
   if (rc)
     warning(nls->translate("Cannot remove mail from\nmailbox `%s':\n%s"),
-	    (const char*)mailFolder.location(), sys_errlist[rc]);
+	    (const char*)mailFolder.location(), strerror(rc));
 
   mailFolder.close();
   mFolder->close();
