@@ -2900,7 +2900,8 @@ void KMMainWidget::updateMessageActions()
     }
     if ( mHeaders->isThreaded() && count == 1 ) {
       QListViewItem *cur = mHeaders->currentItem();
-      singleMailIsPartOfThread = cur->parent() || cur->childCount() > 0;
+      if ( cur )
+        singleMailIsPartOfThread = cur->parent() || cur->childCount() > 0;
     }
 
     bool mass_actions = count >= 1;
