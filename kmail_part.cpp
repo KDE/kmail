@@ -37,6 +37,7 @@
 #include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmfolder.h"
+#include "kmacctmgr.h"
 #include "sidebarextension.h"
 #include "infoextension.h"
 #include "recentaddresses.h"
@@ -118,7 +119,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   setXMLFile( "kmmainwin.rc" );
   kmkernel->inboxFolder()->close();
 #else
-  mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(), 
+  mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
                                  kapp->config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
@@ -148,6 +149,12 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
+  kdDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
+  // Running KIO jobs prevent kapp from exiting, so we need to kill them
+  // if they are only about checking mail (not important stuff like moving messages)
+  kmkernel->abortMailCheck();
+  kmkernel->acctMgr()->cancelMailCheck();
+
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;
