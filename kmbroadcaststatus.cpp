@@ -54,7 +54,7 @@ void KMBroadcastStatus::setStatusProgressEnable( const QString &id,
 void KMBroadcastStatus::setStatusProgressPercent( const QString &id,
   unsigned long percent )
 {
-  if (!id.isEmpty()) ids.insert(id, percent);
+  if (!id.isEmpty()) return;
   unsigned long sum = 0, count = 0;
   for (QMap<QString,unsigned long>::iterator it = ids.begin();
     it != ids.end(); it++)
