@@ -30,6 +30,7 @@
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include "kmmessage.h"
+#include "kmwelcomemsg.h"
 #include <kapp.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -193,8 +194,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       welcomeMessage->setFrom(i18n("KMail"));
       welcomeMessage->setSubject(i18n("Welcome to KMail!"));
       // FIXME - we need a real body put in here!
-      welcomeMessage->setBody(i18n("Welcome to KMail.  This should be"
-                                   " fixed before final release.\n"));
+      welcomeMessage->setBody(_KM_WelcomeMsg);
       welcomeMessage->setStatus(KMMsgStatusNew);
 
       switch(kernel->filterMgr()->process(welcomeMessage)) {
