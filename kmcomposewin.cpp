@@ -4094,6 +4094,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
+  KDialogBase dlg(KDialogBase::Plain, i18n("Spellchecker"),
+                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok,
+                  this, 0, true, true );
   KWin kwin;
   QTabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
