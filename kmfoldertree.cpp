@@ -593,7 +593,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
   } // for-end
 }
 //-----------------------------------------------------------------------------
-// The folder neds a refresh!
+// The folder needs a refresh!
 void KMFolderTree::refresh(KMFolder* folder, bool doUpdate)
 {
   reload();
@@ -1499,6 +1499,8 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
       repaint = true;
     }
   }
+  if (fti->parent() && !fti->parent()->isOpen())
+    repaint = false; // we're not visible
   if (repaint) {
     fti->setNeedsRepaint( true );
     refresh();
