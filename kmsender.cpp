@@ -348,7 +348,6 @@ void KMSender::cleanup(void)
 
   else kernel->outboxFolder()->compact();
 
-  setStatusMsg(i18n("Done sending messages."));
   kernel->serverReady (true); // sven - enable ipc
   labelDialog->hide();
   if (quitOnDone)
