@@ -57,7 +57,8 @@ private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
-  QLineEdit *indentPrefixEdit;
+  QLineEdit *indentPrefixEdit, *wrapColumnEdit;
+  QCheckBox *autoSign, *wordWrap, *monospFont;
   QRadioButton *smtpRadio,*sendmailRadio;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;

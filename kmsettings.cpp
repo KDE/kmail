@@ -289,14 +289,14 @@ void KMSettings::createTabComposer(QWidget *parent)
   indentPrefixEdit = createLabeledEntry(grp, grid, 
 					nls->translate("Indentation:"),
 					NULL, 5, 0);
-  grid->setColStretch(1,1);
+  grid->setColStretch(0,1);
   grid->setColStretch(1,10);
   grid->setColStretch(2,0);
   grid->activate();
   //grp->adjustSize();
 
 
-  //---------- set the values
+  // set the values
   config->setGroup("KMMessage");
   str = config->readEntry("phrase-reply");
   if (str.isEmpty()) str = nls->translate("On %D, you wrote:");
@@ -311,6 +311,43 @@ void KMSettings::createTabComposer(QWidget *parent)
   phraseForwardEdit->setText(str);
 
   indentPrefixEdit->setText(config->readEntry("indent-prefix", "> "));
+
+  //---------- group appearance
+  grp = new QGroupBox(nls->translate("Appearance"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 7, 3, 20, 4);
+
+  autoSign = new QCheckBox(nls->translate("Automatically append signature"),
+			   grp);
+  autoSign->adjustSize();
+  autoSign->setMinimumSize(autoSign->sizeHint());
+  grid->addMultiCellWidget(autoSign, 0, 0, 0, 1);
+
+  wordWrap = new QCheckBox(nls->translate("Word wrap at column:"), grp);
+  wordWrap->adjustSize();
+  wordWrap->setMinimumSize(autoSign->sizeHint());
+  grid->addWidget(wordWrap, 1, 0);
+
+  wrapColumnEdit = new QLineEdit(grp);
+  wrapColumnEdit->adjustSize();
+  wrapColumnEdit->setMinimumSize(50, wrapColumnEdit->sizeHint().height());
+  grid->addWidget(wrapColumnEdit, 1, 1);
+
+  monospFont = new QCheckBox(nls->translate("Use monospaced font"), grp);
+  monospFont->adjustSize();
+  monospFont->setMinimumSize(monospFont->sizeHint());
+  grid->addMultiCellWidget(monospFont, 2, 2, 0, 1);
+
+  grid->setColStretch(0,1);
+  grid->setColStretch(1,1);
+  grid->setColStretch(2,10);
+  grid->activate();
+
+  config->setGroup("Composer");
+  autoSign->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
+  wordWrap->setChecked(config->readNumEntry("word-wrap",1));
+  wrapColumnEdit->setText(config->readEntry("break-at","80"));
+  monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
 
   //---------- ére we gø
   box->addStretch(10);
@@ -492,12 +529,19 @@ void KMSettings::doApply()
   //----- incoming mail
   acctMgr->writeConfig(FALSE);
 
-  //----- phrases
+  //----- composer phrases
   config->setGroup("KMMessage");
   config->writeEntry("phrase-reply", phraseReplyEdit->text());
   config->writeEntry("phrase-reply-all", phraseReplyAllEdit->text());
   config->writeEntry("phrase-forward", phraseForwardEdit->text());
   config->writeEntry("indent-prefix", indentPrefixEdit->text());
+
+  //----- composer appearance
+  config->setGroup("Composer");
+  config->writeEntry("signature", autoSign->isChecked()?"auto":"manual");
+  config->writeEntry("word-wrap", wordWrap->isChecked());
+  config->writeEntry("break-at", atoi(wrapColumnEdit->text()));
+  config->writeEntry("font", monospFont->isChecked()?"fixed":"variable");
 
   //-----
   app->getConfig()->sync();

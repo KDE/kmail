@@ -370,11 +370,12 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(nls->translate("&Cc"), HDR_CC);
   menu->insertItem(nls->translate("&Bcc"), HDR_BCC);
   menu->insertItem(nls->translate("&Subject"), HDR_SUBJECT);
-  menu->insertItem(nls->translate("&Newsgroups"), HDR_NEWSGROUPS); //added for KRN
-  menu->insertItem(nls->translate("&Followup-To"), HDR_FOLLOWUP_TO); //added for KRN
+  menu->insertItem(nls->translate("&Newsgroups"), HDR_NEWSGROUPS); // for KRN
+  menu->insertItem(nls->translate("&Followup-To"), HDR_FOLLOWUP_TO); // for KRN
   mMenuBar->insertItem(nls->translate("&View"), menu);
 
-  //---------- Menu: Attach  menu = new QPopupMenu();
+  //---------- Menu: Attach
+  menu = new QPopupMenu();
   menu->insertItem(nls->translate("Append S&ignature"), this, 
 		   SLOT(slotAppendSignature()));
   menu->insertItem(nls->translate("&Attach..."), this, SLOT(slotAttachFile()));
