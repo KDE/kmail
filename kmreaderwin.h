@@ -56,19 +56,27 @@ public:
   /** Re-parse the current message. */
   void update(void) { setMsg(mMsg); }
 
-  /** print current message. */
+  /** Print current message. */
   virtual void printMsg(void);
 
 signals:
-  /** emitted to show a text on the status line. */
+  /** Emitted to show a text on the status line. */
   void statusMsg(const char* text);
-                                
+
+  /** The user presses the right mouse button. */
+  void popupMenu(const QPoint& mousePos);
+                         
+  /** The user has clicked onto an URL that is no attachment. */
+  void urlClicked(const char* url, int button);
+                         
 public slots:
   /** HTML Widget scrollbar and layout handling. */
   void slotScrollVert(int _y);
   void slotScrollHorz(int _x);
   void slotScrollUp();
   void slotScrollDown();
+  void slotScrollPrior();
+  void slotScrollNext();
   void slotDocumentChanged();
   void slotDocumentDone();
 
@@ -78,8 +86,14 @@ public slots:
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const char* url);
 
-  /** The user presses the right mouse button over an URL. */
+  /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const char* url, const QPoint& mousePos);
+
+  /** Some attachment operations. */
+  void slotAtmOpen();
+  void slotAtmPrint();
+  void slotAtmSave();
+  void slotAtmProperties();
 
 protected:
   /** Feeds the HTML viewer with the contents of the current message. */
@@ -104,12 +118,16 @@ protected:
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
 
-  /** some necessary event handling. */
+  /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
   virtual void resizeEvent(QResizeEvent *);
 
+  /** Returns id of message part from given URL or -1 if invalid. */
+  virtual int msgPartFromUrl(const char* url);
+
 protected:
   int mAtmInline;
+  int mAtmCurrent;
   KMMessage *mMsg;
   KHTMLWidget *mViewer;
   QScrollBar *mSbVert, *mSbHorz;

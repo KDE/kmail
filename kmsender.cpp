@@ -77,14 +77,14 @@ bool KMSender::sendQueued(void)
   KMMessage* msg;
   bool rc = TRUE;
 
-  queuedFolder->open();
-  while(queuedFolder->count() > 0)
+  outboxFolder->open();
+  while(outboxFolder->count() > 0)
   {
-    msg = queuedFolder->getMsg(0);
+    msg = outboxFolder->getMsg(0);
     rc = send(msg, TRUE);
     if (!rc) break;
   }
-  queuedFolder->close();
+  outboxFolder->close();
   return rc;
 }
 
@@ -93,6 +93,7 @@ bool KMSender::sendQueued(void)
 bool KMSender::send(KMMessage* aMsg, short sendNow)
 {
   bool sendOk = FALSE;
+  int rc;
 
   assert(aMsg != NULL);
   if (!identity->mailingAllowed())
@@ -107,13 +108,22 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   //aMsg->viewSource("KMSender::send()");
 
   if (sendNow==-1) sendNow = mSendImmediate;
-  if (!sendNow) return (queuedFolder->addMsg(aMsg)==0);
+  if (!sendNow)
+  {
+    rc = outboxFolder->addMsg(aMsg);
+    if (!rc) aMsg->setStatus(KMMsgStatusQueued);
+    return (rc==0);
+  }
 
   if (mMethod == smSMTP) sendOk = sendSMTP(aMsg);
   else if (mMethod == smMail) sendOk = sendMail(aMsg);
   else warning(nls->translate("Please specify a send\nmethod in the settings\n"
 			      "and try again."));
-  if (sendOk) sentFolder->addMsg(aMsg);
+  if (sendOk)
+  {
+    aMsg->setStatus(KMMsgStatusSent);
+    sentFolder->addMsg(aMsg);
+  }
 
   return sendOk;
 }

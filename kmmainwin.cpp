@@ -1,19 +1,7 @@
 // kmmainwin.cpp
 
-#include <errno.h>
-#include <assert.h>
-#include <qstring.h>
-#include <qpixmap.h>
 #include <qdir.h>
-#include <qfile.h>
-#include <qtstream.h>
-#include <kmsgbox.h>
-#include <kconfig.h>
-#include <kapp.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kstdaccel.h>
-#include <knewpanner.h>
+
 #include "kmfoldermgr.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
@@ -31,16 +19,36 @@
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
 #include "kmversion.h"
+#include "kmsender.h"
+
+#include <qaccel.h>
+#include <qstring.h>
+#include <qpixmap.h>
+#include <qfile.h>
+#include <qtstream.h>
+#include <kmsgbox.h>
+#include <kconfig.h>
+#include <kapp.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kstdaccel.h>
+#include <knewpanner.h>
+
+#include <errno.h>
+#include <stdlib.h>
+#include <assert.h>
 
 #include "kmmainwin.moc"
 
-static int windowCount = 0;
 
+static int windowCount = 0;
 
 //-----------------------------------------------------------------------------
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
+  QAccel *accel = new QAccel(this);
+
   mIntegrated = TRUE;
   mFolder     = NULL;
 
@@ -63,12 +71,28 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
+  accel->connectItem(accel->insertItem(Key_Left),
+		     mHeaders, SLOT(prevMessage()));
+  accel->connectItem(accel->insertItem(Key_Right), 
+		     mHeaders, SLOT(nextMessage()));
 
   mMsgView = new KMReaderWin(mVertPanner);
   connect(mMsgView, SIGNAL(statusMsg(const char*)),
 	  this, SLOT(statusMsg(const char*)));
+  connect(mMsgView, SIGNAL(popupMenu(const QPoint&)),
+	  this, SLOT(slotMsgPopup(const QPoint&)));
+  connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
+	  this, SLOT(slotUrlClicked(const char*,int)));
+  accel->connectItem(accel->insertItem(Key_Up),
+		     mMsgView, SLOT(slotScrollUp()));
+  accel->connectItem(accel->insertItem(Key_Down), 
+		     mMsgView, SLOT(slotScrollDown()));
+  accel->connectItem(accel->insertItem(Key_Prior),
+		     mMsgView, SLOT(slotScrollPrior()));
+  accel->connectItem(accel->insertItem(Key_Next), 
+		     mMsgView, SLOT(slotScrollNext()));
 
-  parseConfiguration();
+  readConfig();
 
   mVertPanner->setAbsSeperatorPos(mVertPannerSep);
   mHorizPanner->setAbsSeperatorPos(mHorizPannerSep);
@@ -82,6 +106,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   windowCount++;
 
+  // set active folder to inbox folder
   folderSelected(inboxFolder);
 }
 
@@ -96,10 +121,10 @@ KMMainWin::~KMMainWin()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::parseConfiguration()
+void KMMainWin::readConfig()
 {
-  int x, y, w, h;
   KConfig *config = app->getConfig();
+  int x, y, w, h;
   QString str;
 
   config->setGroup("Geometry");
@@ -114,6 +139,29 @@ void KMMainWin::parseConfiguration()
     sscanf(str,"%d,%d",&mVertPannerSep,&mHorizPannerSep);
   else
     mHorizPannerSep = mVertPannerSep = 100;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::writeConfig(bool aWithSync)
+{
+  QString s;
+  KConfig *config = app->getConfig();
+  QRect r = geometry();
+
+  mMsgView->writeConfig(FALSE);
+
+
+  config->setGroup("Geometry");
+
+  s.sprintf("%i,%i,%i,%i",r.x()-6,r.y()-24,r.width(),r.height());
+  config->writeEntry("Main", s);
+
+  s.sprintf("%i,%i", mVertPanner->seperatorPos(), 
+	    mHorizPanner->seperatorPos());
+  config->writeEntry("Panners", s);
+
+  if (aWithSync) config->sync();
 }
 
 
@@ -141,32 +189,11 @@ void KMMainWin::statusMsg(const char* aText)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::show(void)
-{
-  KMMainWinInherited::show();
-  resize(size());
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWin::closeEvent(QCloseEvent *e)
 {
-  QString s;
-  KConfig *config = app->getConfig();
-  QRect r = geometry();
+  KMMainWinInherited::closeEvent(e);
+  writeConfig(FALSE);
 
-  KTopLevelWidget::closeEvent(e);
-
-  config->setGroup("Geometry");
-
-  s.sprintf("%i,%i,%i,%i",r.x()-6,r.y()-24,r.width(),r.height());
-  config->writeEntry("Main", s);
-
-  s.sprintf("%i,%i", mVertPanner->seperatorPos(), 
-	    mHorizPanner->seperatorPos());
-  config->writeEntry("Panners", s);
-
-  config->sync();
   e->accept();
   if (!(--windowCount)) qApp->quit();
 }
@@ -292,13 +319,14 @@ void KMMainWin::slotRemoveFolder()
     return;
   }
 
-  str.sprintf(nls->translate("Are you sure you want to remove the folder \""
-			     "%s\"\nand all of its child folders?"),
+  str.sprintf(nls->translate("Are you sure you want to remove the folder\n"
+			     "\"%s\", discarding it's contents ?"),
 			     (const char*)mFolder->label());
   if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),str))==1)
   {
     mHeaders->setFolder(NULL);
     folderMgr->remove(mFolder);
+    // mFolderTree->reload();
   }
 }
 
@@ -368,17 +396,24 @@ void KMMainWin::slotMoveMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotSendQueued()
+{
+  msgSender->sendQueued();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotViewChange()
 {
-  if(bodyParts->isItemChecked(bodyParts->idAt(0)))
+  if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
   {
-    bodyParts->setItemChecked(bodyParts->idAt(0),FALSE);
-    bodyParts->setItemChecked(bodyParts->idAt(1),TRUE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),FALSE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),TRUE);
   }
-  else if(bodyParts->isItemChecked(bodyParts->idAt(1)))
+  else if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(1)))
   {
-    bodyParts->setItemChecked(bodyParts->idAt(1),FALSE);
-    bodyParts->setItemChecked(bodyParts->idAt(0),TRUE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(1),FALSE);
+    mBodyPartsMenu->setItemChecked(mBodyPartsMenu->idAt(0),TRUE);
   }
 
   //mMsgView->setInline(!mMsgView->isInline());
@@ -423,12 +458,56 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   KMReaderWin *win;
 
   assert(msg != NULL);
-  debug("KMMainWin::slotMsgActivated() called");
+
   win = new KMReaderWin;
   win->setCaption(msg->subject());
-  win->resize(400,600);
+  win->resize(550,600);
   win->setMsg(msg);
   win->show();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUrlClicked(const char* aUrl, int)
+{
+  KMComposeWin *win;
+  KMMessage* msg;
+
+  if (!strnicmp(aUrl, "mailto:", 7))
+  {
+    msg = new KMMessage;
+    msg->initHeader();
+    msg->setTo(aUrl+7);
+
+    win = new KMComposeWin(msg);
+    win->show();
+  }
+  else if (!strnicmp(aUrl, "http:", 5) || !strnicmp(aUrl, "ftp:", 4) ||
+	   !strnicmp(aUrl, "file:", 5))
+  {
+    system("kfmclient openURL \""+QString(aUrl)+"\"");
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMsgPopup(const QPoint& aPoint)
+{
+  QPopupMenu* menu = new QPopupMenu;
+
+  menu->insertItem(nls->translate("&Reply..."), this, SLOT(slotReplyToMsg()));
+  menu->insertItem(nls->translate("Reply &All..."), this, 
+		   SLOT(slotReplyAllToMsg()));
+  menu->insertItem(nls->translate("&Forward..."), this, 
+		   SLOT(slotForwardMsg()), Key_F);
+  menu->insertSeparator();
+  menu->insertItem(nls->translate("&Move..."), this, 
+		   SLOT(slotMoveMsg()), Key_M);
+  menu->insertItem(nls->translate("&Copy..."), this, 
+			  SLOT(slotUnimplemented()), Key_S);
+  menu->insertItem(nls->translate("&Delete"), this, 
+			  SLOT(slotDeleteMsg()), Key_D);
+  menu->popup(aPoint, 0);
 }
 
 
@@ -442,6 +521,9 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(nls->translate("New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
+  fileMenu->insertItem(nls->translate("Send Queued"), this,
+		       SLOT(slotSendQueued()));
+  fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("&Settings..."), this, 
 		       SLOT(slotSettings()));
   fileMenu->insertItem(nls->translate("&Filter..."), this, 
@@ -454,6 +536,7 @@ void KMMainWin::setupMenuBar()
 
   //----- Edit Menu
   QPopupMenu *editMenu = new QPopupMenu();
+#ifdef BROKEN
   editMenu->insertItem(nls->translate("&Undo"), this, SLOT(slotUnimplemented()),
 		       keys->undo());
   editMenu->insertSeparator();
@@ -464,6 +547,7 @@ void KMMainWin::setupMenuBar()
   editMenu->insertItem(nls->translate("&Paste"),this, SLOT(slotUnimplemented()),
 		       keys->paste());
   editMenu->insertSeparator();
+#endif
   editMenu->insertItem(nls->translate("&Find..."), this, 
 		       SLOT(slotUnimplemented()), keys->find());
 
@@ -482,15 +566,10 @@ void KMMainWin::setupMenuBar()
 
   //----- Message Menu
   QPopupMenu *messageMenu = new QPopupMenu();
-#ifdef BROKEN
-  messageMenu->insertItem(nls->translate("&Next"), mainView, 
-			  SLOT(slotNextMsg()), Key_N);
-  messageMenu->insertItem(nls->translate("&Previous"), mainView, 
-			  SLOT(slotPreviousMsg()), Key_P);
-  messageMenu->insertSeparator();
-#endif //BROKEN
-  messageMenu->insertItem(nls->translate("Toggle All &Headers"), this, 
-			  SLOT(slotUnimplemented()), Key_H);
+  messageMenu->insertItem(nls->translate("&Next"), mHeaders, 
+			  SLOT(nextMessage()), Key_N);
+  messageMenu->insertItem(nls->translate("&Previous"), mHeaders, 
+			  SLOT(prevMessage()), Key_P);
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("&Reply..."), this,
 			  SLOT(slotReplyToMsg()), Key_R);
@@ -505,27 +584,7 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotUnimplemented()), Key_S);
   messageMenu->insertItem(nls->translate("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
-#ifdef BROKEN
-  messageMenu->insertItem(nls->translate("&Undelete"), this,
-			  SLOT(slotUnimplemented()), Key_U);
-#endif
   messageMenu->insertSeparator();
-
-  bodyParts = new QPopupMenu();
-  bodyParts->setCheckable(TRUE);
-  bodyParts->insertItem(nls->translate("Inline"), this,
-			SLOT(slotViewChange()));
-  bodyParts->insertItem(nls->translate("Separate"), this,
-			SLOT(slotViewChange()));
-
-  printf("mainwin %i\n",showInline);
-  if(showInline)
-    bodyParts->setItemChecked(bodyParts->idAt(0),TRUE);
-  else
-    bodyParts->setItemChecked(bodyParts->idAt(1),TRUE);
-
-  messageMenu->insertItem(nls->translate("View Body Parts..."),bodyParts);
-
   messageMenu->insertItem(nls->translate("&Export..."), this, 
 			  SLOT(slotUnimplemented()), Key_E);
   messageMenu->insertItem(nls->translate("Pr&int..."), this,

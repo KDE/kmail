@@ -15,7 +15,9 @@ typedef enum
     KMMsgStatusUnread='U',
     KMMsgStatusOld='O',
     KMMsgStatusDeleted='D',
-    KMMsgStatusReplied='A'
+    KMMsgStatusReplied='A',
+    KMMsgStatusQueued='Q',
+    KMMsgStatusSent='S'
 } KMMsgStatus;
 
 class KMFolder;
@@ -26,6 +28,9 @@ class KMMsgBase
 public:
   KMMsgBase(KMFolder* p=NULL);
   virtual ~KMMsgBase();
+
+  /** Convert the given message status to a string. */
+  static const char* statusToStr(KMMsgStatus aStatus);
 
   /** Return owning folder. */
   KMFolder* parent(void) const { return mParent; }
@@ -42,9 +47,6 @@ public:
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
   virtual void setStatus(const char* statusStr);
-
-  /** Convert the given message status to a string. */
-  static const char* statusToStr(KMMsgStatus aStatus);
 
   /** Important header fields of the message that are also kept in the index. */
   virtual const QString subject(void) const = 0;

@@ -66,6 +66,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mGrid = NULL;
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
+  mAutoDeleteMsg = FALSE;
 
   setCaption(nls->translate("KMail Composer"));
   setMinimumSize(200,200);
@@ -107,6 +108,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
+  if (mAutoDeleteMsg && mMsg) delete mMsg;
 }
 
 
@@ -151,6 +153,13 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("composer", str);
 
   if (aWithSync) config->sync();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setAutoDelete(bool f)
+{
+  mAutoDeleteMsg = f;
 }
 
 
@@ -253,7 +262,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupMenuBar(void)
 {
-  QPopupMenu *menu, *subMenu;
+  QPopupMenu *menu;
   mMenuBar = new KMenuBar(this);
 
 
@@ -850,7 +859,11 @@ void KMComposeWin::slotSend()
 {
   kbp->busy();
   applyChanges();
-  if(msgSender->send(mMsg)) close();
+  if(msgSender->send(mMsg))
+  {
+    mAutoDeleteMsg = FALSE;
+    close();
+  }
   kbp->idle();
 }
 
@@ -860,7 +873,11 @@ void KMComposeWin::slotSendLater()
 {
   kbp->busy();
   applyChanges();
-  if(msgSender->send(mMsg,FALSE)) close();
+  if(msgSender->send(mMsg,FALSE))
+  {
+    mAutoDeleteMsg = FALSE;
+    close();
+  }
   kbp->idle();
 }
 
@@ -870,7 +887,6 @@ void KMComposeWin::slotAppendSignature()
 {
   QString sigFileName = identity->signatureFile();
   char buf[1024];
-  QFile sigFile;
   QString sigText;
 
   if (sigFileName.isEmpty())
@@ -883,18 +899,7 @@ void KMComposeWin::slotAppendSignature()
     if (sigFileName.isEmpty()) return;
   }
 
-  sigFile.setName(sigFileName);
-  if (!sigFile.open(IO_ReadOnly))
-  {
-    warning(nls->translate("Cannot open signature file:\n%s"),
-	    (const char*)sigFileName);
-    return;
-  }
-
-  while ((sigFile.readLine(buf,1024)) > 0)
-    sigText.append(buf);
-  sigFile.close();
-
+  sigText = kFileToString(sigFileName);
   mEditor->insertLine(sigText, -1);
 }
 

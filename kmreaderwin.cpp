@@ -8,12 +8,13 @@
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
 #include "kfileio.h"
+#include "kbusyptr.h"
+#include "kmmsgpartdlg.h"
 
 #include <html.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <mimelib/mimepp.h>
-#include <qaccel.h>
 #include <qregexp.h>
 #include <qstring.h>
 #include <errno.h>
@@ -47,21 +48,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 
   readConfig();
   initHtmlWidget();
-
-#ifdef BROKEN
-  QAccel *accel = new QAccel(this);
-  int UP =200;
-  int DOWN = 201;
-  accel->insertItem(Key_Up,UP);
-  accel->insertItem(Key_Down,DOWN);
-  accel->connectItem(UP, this, SLOT(slotScrollUp()));
-  accel->connectItem(DOWN,this,SLOT(slotScrollDown()));
-
-  if(currentMessage)
-    parseMessage(currentMessage);
-  else
-   clearCanvas();
-#endif //BROKEN
 }
 
 
@@ -104,9 +90,12 @@ void KMReaderWin::initHtmlWidget(void)
 
   mViewer = new KHTMLWidget(this, mPicsDir);
   mViewer->resize(width()-16, height()-110);
-  mViewer->setDefaultBGColor(app->activeTextColor);
   mViewer->setURLCursor(handCursor);
-
+  mViewer->setDefaultBGColor(QColor("#ffffff"));
+  /*
+  mViewer->setDefaultBGColor(pal->normal().background());
+  mViewer->setDefaultTextColor(app->textColor, app->);
+  */
   connect(mViewer,SIGNAL(URLSelected(const char *,int)),this,
 	  SLOT(slotUrlOpen(const char *,int)));
   connect(mViewer,SIGNAL(onURL(const char *)),this,
@@ -369,7 +358,7 @@ const QString KMReaderWin::strToHtml(const QString aStr) const
       pos--;
       htmlStr += "<A HREF=\"";
       htmlStr += str;
-      htmlStr += ">";
+      htmlStr += "\">";
       htmlStr += str;
       htmlStr += "</A>";
     }
@@ -388,7 +377,12 @@ void KMReaderWin::printMsg(void)
 }
 
 
-
+//-----------------------------------------------------------------------------
+int KMReaderWin::msgPartFromUrl(const char* aUrl)
+{
+  if (!aUrl || !mMsg || strncmp(aUrl,"part:",5)) return -1;
+  return (aUrl ? atoi(aUrl+5) : 0);
+}
 
 
 
@@ -422,45 +416,109 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   int id;
   KMMessagePart msgPart;
 
-  if (!mMsg) return;
-  id = aUrl ? atoi(aUrl+5) : 0;
-
-  debug("slotUrlOn(%s) called", aUrl);
-
-  if (id > 0)
+  id = msgPartFromUrl(aUrl);
+  if (id < 0)
   {
-    mMsg->bodyPart(id-1, &msgPart);
+    emit statusMsg(aUrl);
+  }
+  else
+  {
+    mMsg->bodyPart(id, &msgPart);
     emit statusMsg(msgPart.name());
   }
-  else emit statusMsg(aUrl);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
 {
-  QString fileName, str;
   int id;
-  KMMessagePart msgPart;
 
-  if (!mMsg) return;
-  id = aUrl ? atoi(aUrl+5)-1 : -1;
-  if (id < 0) return;
-  mMsg->bodyPart(id, &msgPart);
-
-  fileName = msgPart.name();
-  fileName = QFileDialog::getSaveFileName(NULL, "*", this);
-  if(fileName.isEmpty()) return;
-
-  str = msgPart.bodyDecoded();
-  if (!kStringToFile(str, fileName, TRUE))
-    warning(nls->translate("Could not save file"));
+  id = msgPartFromUrl(aUrl);
+  if (id >= 0)
+  {
+    // clicked onto an attachment
+    mAtmCurrent = id;
+    slotAtmSave();
+  }
+  else emit urlClicked(aUrl, aButton);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
 {
+  KMMessagePart msgPart;
+  int id;
+  QPopupMenu *menu;
+
+  id = msgPartFromUrl(aUrl);
+  if (id < 0) emit popupMenu(aPos);
+  else
+  {
+    mAtmCurrent = id;
+    menu = new QPopupMenu();
+    menu->insertItem(nls->translate("Open..."), this, SLOT(slotAtmOpen()));
+    menu->insertItem(nls->translate("Save as..."), this, SLOT(slotAtmSave()));
+    //menu->insertItem(nls->translate("Print..."), this, SLOT(slotAtmPrint()));
+    menu->insertItem(nls->translate("Properties..."), this,
+		     SLOT(slotAtmProperties()));
+    menu->popup(aPos,0);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmOpen()
+{
+  KMMessagePart msgPart;
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmSave()
+{
+  KMMessagePart msgPart;
+  QString fileName, str;
+
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  
+  fileName = msgPart.name();
+  fileName = QFileDialog::getSaveFileName(NULL, "*", this);
+  if(fileName.isEmpty()) return;
+
+  kbp->busy();
+  str = msgPart.bodyDecoded();
+  if (!kStringToFile(str, fileName, TRUE))
+    warning(nls->translate("Could not save file"));
+  kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmPrint()
+{
+  KMMessagePart msgPart;
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+
+  warning("KMReaderWin::slotAtmPrint()\nis not implemented");
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmProperties()
+{
+  KMMessagePart msgPart;
+  KMMsgPartDlg  dlg;
+
+  kbp->busy();
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  dlg.setMsgPart(&msgPart);
+  kbp->idle();
+
+  dlg.exec();
 }
 
 
@@ -481,18 +539,28 @@ void KMReaderWin::slotScrollHorz(int _x)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
-  int i = mSbVert->value();
-  i = i - 7;
-  mSbVert->setValue(i);	
+  mSbVert->setValue(mSbVert->value() - 10);	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollDown()
 {
-  int i = mSbVert->value();
-  i = i + 7;
-  mSbVert->setValue(i);
+  mSbVert->setValue(mSbVert->value() + 10);	
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotScrollPrior()
+{
+  mSbVert->setValue(mSbVert->value() - (height()*0.9));	
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotScrollNext()
+{
+  mSbVert->setValue(mSbVert->value() + (height()*0.9));	
 }
 
 
@@ -534,299 +602,6 @@ void KMReaderWin::slotDocumentDone()
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 #ifdef BROKEN
 
-void KMReaderWin::parseMessage(KMMessage *message)
-{
-  QString strTemp;
-  QString str1Temp;
-  QString subjStr;
-  QString text;
-  QString header;
-  QString dateStr;
-  QString fromStr;
-  QString toStr;
-  QString ccStr;
-  int i, numParts=0;
-  KMMessagePart msgPart;
-
-  currentMessage = message; // To make sure currentMessage is set.
-
-
-  dateStr = "Date: " + message->dateStr() + "<BR>";
-  fromStr = "From: " + KMMessage::emailAddrAsAnchor(message->from()) + "<BR>";
-
-  ccStr = message->cc();
-  if(!ccStr.isEmpty())
-    ccStr= "Cc: " + KMMessage::emailAddrAsAnchor(message->cc()) + "<BR>";
-			 
-  subjStr = "<FONT SIZE=+1> Subject: " + message->subject() + "</FONT><P>";
-  toStr = "To: " + message->to() + "<BR>";
-
-  // Init mViewer
-  mViewer->begin(picsDir);
-
-  // header
-  mViewer->write("<TABLE><TR><TD><IMG SRC=\"" + 
-		       picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
-  mViewer->write(subjStr);
-  mViewer->write(fromStr);
-  mViewer->write(toStr);
-  mViewer->write(ccStr);
-  mViewer->write(dateStr);
-  mViewer->write("</B></TD></TR></TABLE><br><br>");	
-
-  numParts = message->numBodyParts();
-  if (numParts <= 0)
-  {
-    text = message->body().stripWhiteSpace();
-    text += "\n";
-  }
-  else
-  {
-    for(i=0; i<numParts; i++)
-    {
-      debug("processing body part %d of %d", i, numParts);
-      message->bodyPart(i, &msgPart);
-      text += parseBodyPart(&msgPart, i);
-    }			
-  }
-
-  // Convert text to html
-  text.replace(QRegExp("\n"),"<BR>");
-  text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
-  
-    	
-  mViewer->write("<HTML><HEAD><TITLE> </TITLE></HEAD>");
-  mViewer->write("<BODY BGCOLOR=WHITE>");
-
-
-  // Okay! Let's write it to the canvas
-  mViewer->write(text);
-  mViewer->write("<BR></BODY></HTML>");
-  mViewer->end();
-  mViewer->parse();
-}
-
-
-QString KMReaderWin::parseBodyPart(KMMessagePart *p, int pnumber)
-{
-  QString text;
-  QString type;
-  QString subType;
-
-  QString pnumstring;
-  QString temp;
-  QString comment;
-  int pos;
-
-  assert(p != NULL);
-
-  debug("parsing part #%d: ``%s''", pnumber, (const char*)p->name());
-  comment = p->name();
-  pnumstring.sprintf("file:/%i",pnumber);
-  text = p->bodyDecoded(); // Decode bodyPart
-
-  // ************* MimeMagic stuff ****************// 
-  // This has to be improved vastly. For gz files (e.g) mimemagic still
-  // says it is an octet-stream and not a gzip file
-
-  KMimeMagicResult *result = new KMimeMagicResult();
-  result = magic->findBufferType(text,text.length()-1); // Removed -1	
-  if(result->getAccuracy() <= 50)
-  {
-    debug("  the accuracy is <= 50 ... should look at filename ending\n");
-  }
-  temp =  result->getContent(); // Determine Content Type
-  pos = temp.find("/",0,0);
-  type = temp.copy();
-  subType = temp.copy();
-  type.truncate(pos);
-  subType = subType.remove(0,pos+1); 
-  debug("  type: %s\n  subtype: %s", (const char*)type, (const char*)subType);
-  // ************* MimeMagic stuff end *****************//
-
-  QString fileName;
-  if(type == "text" && pnumber ==0) // If first bodyPart && type=="text" 
-  // Then we do not want it do be displayed as an icon.
-    {cout << "is text & 0\n";
-    text += "<br><hr><br>";
-    return text;
-    }
-  if(isInline() == false) // If we do not want 
-    //the attachments to be displayed inline
-    {cout << "is Inline\n";
-    return bodyPartIcon(type, subType, pnumstring, comment);
-    }
-
-  if(type == "text" && pnumber != 0)  // If content type is text.
-    {if(text.length()/80 > MAX_LINES) // Check for max_lines.
-      {temp.sprintf("The text attachment has more than %i lines.\n",
-		    MAX_LINES); 
-       temp += "Do you wish the attachment to be displayed inline?";
-       if(KMsgBox::yesNo(0,"KMail Message",temp) == 1)
-	 return bodyPartIcon(type, subType, pnumstring, comment);
-      }
-    text += "<br><hr><br>";
-    return text;
-    }
-  
-  else if(type == "message" && pnumber != 0)// If content type is message just display the text.
-    {text += "<br><hr><br>";
-    return text;
-    }
-
-  cout << "Neither text nor message\n";
-  return bodyPartIcon(type, subType, pnumstring, comment);
-    
-}
-
-QString KMReaderWin::bodyPartIcon(QString type, QString subType,
-				QString pnumstring, QString comment)
-{
-  QString text, icon, fileName, path;
-  QDir dir;
-  
-  path = KApplication::kdedir() + "/share/mimelnk/";
-  fileName = path + type + "/" + subType + ".kdelnk";
-
-  if (!dir.exists(fileName) && type == "text")
-    fileName = path + type + "/plain.kdelnk";
-
-  if (dir.exists(fileName))
-  {
-    KConfig config(fileName);
-    config.setGroup("KDE Desktop Entry");
-    icon = config.readEntry("Icon");
-    if(icon.isEmpty()) // If no icon specified.
-      icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
-    else icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-
-  }
-  else
-  {
-    icon = KApplication::kdedir() + "/share/icons/unknown.xpm";
-  }
-
-  text = "<TABLE><TR><TD><A HREF=\"" + pnumstring + "\"><IMG SRC=" + 
-         icon + ">" + comment + "</A></TD></TR></TABLE>" + "<BR><HR><BR>";
-
-  return text;
-
-}
-
-
-QString KMReaderWin::parseEAddress(QString old)
-{
-  int pos;
-  if((pos = old.find("<",0,0)) == -1)
-    {old = "<A HREF=\"mailto:" + old + "\">" + old +"</A>";
-    cout << old << "\n";
-    return old;
-    }
-
-}
-
-
-bool KMReaderWin::saveMail()
-{
-  QString fileName;
-  QString text;
-  QString err_str;
-
-  // QFileDialog can't take subject (e.g) as default savefilename yet.
-  fileName = QFileDialog::getSaveFileName(); 
-  if(fileName.isEmpty())
-    return false;
-
-  QFile *file = new QFile(fileName);
-  if(file->exists()) 
-    {if(!KMsgBox::yesNo(0,"Save Mail",
-			"File already exists!\nOverwrite it?"))
-      if(saveMail() == false)
-	return false;
-    else
-      return false;
-    }
-
-  if(!file->open(IO_ReadWrite | IO_Truncate))
-    {err_str = "Error opening saving File!\n";
-    err_str.append(strerror(errno)) ;
-    KMsgBox::message(0,"Save Body Part",err_str);
-    if(saveMail() == false)
-      return false;
-    }
-  text = currentMessage->asString();
-  if(file->writeBlock(text,text.length()) == -1)
-    {KMsgBox::message(0,"QFile::writeBlock()",
-		      "Serious error occured! Returning...");
-    return false;
-    }
-
-  file->close();
-  return true;
-
-
-}
-
-void KMReaderWin::slotOpenAtmnt()
-{
-  /*  if(!currentMessage)
-    return;
-  printf("CurrentAtmnt :%i\n",currentAtmnt);*/
-  ((KMReaderWin*)parentWidget())->toDo();
-}
-
-
-bool KMReaderWin::slotPrintAtmnt()
-{
-  QString text;
-  QString err_str;
-
-  KMMessagePart *p = new KMMessagePart();
-  currentMessage->bodyPart(currentAtmnt,p);
-  printf("before print decoding\n");
-  text = p->bodyDecoded();
-  printf("after print decoding\n");
-
-  // Some work to do.
-
-  return true;
-}
-
-void KMReaderWin::openURL(const char *url, int)
-{
-  // Once I have autoscanning of urls implemented which is 
-  // a pain cause I just hate parsing strings, selecting the url
-  // will call this function which will invoke kfm or the composer
-
-  printf("URL selected\n");
-  QString fullURL;
-  fullURL = url;
-  cout << fullURL << "\n";
-  
-  if (fullURL.find("http:") >= 0)
-    {QString cmd = "kfmclient exec ";
-    cmd += fullURL;
-    cmd += " Open";
-    system(cmd);
-    }
-  else if (fullURL.find("ftp:") >= 0)
-    {
-      QString cmd = "kfmclient exec ";
-      cmd += fullURL;
-      cmd += " Open";
-      system(cmd);
-    }
-  else if (fullURL.find("mailto:") >= 0)
-  {
-    KMMessage* msg;
-    fullURL.remove(0,7);
-    msg->initHeader();
-    msg->setTo(fullURL);
-    KMComposeWin *w = new KMComposeWin(msg);
-    w->show();
-  }
-
-}
 void KMReaderWin::popupHeaderMenu(const char *_url, const QPoint &cords)
 {
   QString url = _url;
@@ -837,176 +612,6 @@ void KMReaderWin::popupHeaderMenu(const char *_url, const QPoint &cords)
     p->popup(cords,0);
     }
   
-}
-
-void KMReaderWin::popupMenu(const char *_url, const QPoint &cords)
-{
-  QString temp=_url;
-  int number;
-  
-  if(temp.isEmpty())
-    {QPopupMenu *p = new QPopupMenu();
-    p->insertItem("Reply to Sender",this,SLOT(replyMessage()));
-    p->insertItem("Reply to All Recipients",this,SLOT(replyAll()));		   p->insertItem("Forward Message",this,SLOT(forwardMessage()));
-    p->insertSeparator();
-    QPopupMenu *folderMenu = new QPopupMenu(); 
-    folderMenu->insertItem("Inbox");
-    folderMenu->insertItem("Sent messages");
-    folderMenu->insertItem("Trash");
-    p->insertItem("Send Message to Folder",folderMenu);
-    p->insertItem("Delete Message",this,SLOT(deleteMessage()));
-    p->insertItem("Save Message",this,SLOT(saveMail()));		
-    p->insertItem("Print Message",this,SLOT(printMail()));
-    p->popup(cords,0);}
-  
-  else
-    {if(temp.find("@",0,0) != -1)// Check if mailto url
-      {popupHeaderMenu(temp,cords);
-      return;
-      }
-    temp.replace(QRegExp("file:/"),"");
-    cout << temp << "\n";
-    number = temp.toUInt();
-    printf("BodyPart : %i\n",number);
-    currentAtmnt = number;
-    QPopupMenu *p = new QPopupMenu();
-    p->insertItem("Open...",this,SLOT(slotOpenAtmnt()));
-    p->insertItem("Print...",this,SLOT(slotPrintAtmnt()));
-    p->insertItem("Save as...",this,SLOT(slotSaveAtmnt()));
-    p->popup(cords,0);}
-  
-} 
-
-void KMReaderWin::copy()
-{
-  mViewer->getSelectedText(selectedText);
-}
-
-void KMReaderWin::markAll()
-{
-}
-
-void KMReaderWin::viewSource()
-{
-  QString text;
-  KMProperties *p = new KMProperties(0,0,currentMessage);
-  p->show();
-  p->resize(p->size());
-}
-
-
-bool KMReaderWin::isInline()
-{
-  if(showInline == true)
-    return true;
-  else
-      return false;
-}
-
-
-void KMReaderWin::setInline(bool _inline)
-{
-  showInline=_inline;
-  updateDisplay();
-}
-
-/***************************************************************************/
-
-
-
-KMReaderWin::KMReaderWin(QWidget *, const char *, int msgno = 0,KMFolder *f =0)
-	:KTopLevelWidget(NULL)
-{
-
-  tempFolder = new KMFolder();
-  tempFolder = f;
-  setCaption("KMail Reader");
-
-  parseConfiguration();
-
-  newView = new KMReaderWin(this,NULL, msgno,f);
-  setView(newView);
-
-  setupMenuBar();
-
-  setupToolBar();
-
-  if(!showToolBar)
-	enableToolBar(KToolBar::Hide);
-  resize(480, 510);
-}
-
-// ******************** Public slots ********************
-
-
-void KMReaderWin::parseConfiguration()
-{
-  KConfig *config;
-  QString o;
-  config = KApplication::getKApplication()->getConfig();
-  config->setGroup("Settings");
-  o = config->readEntry("Reader ShowToolBar");
-  if((!o.isEmpty() && o.find("no",0,false)) == 0)
-	showToolBar = 0;
-  else
-	showToolBar = 1;
-}
-
-void KMReaderWin::doDeleteMessage()
-{
-}
-
-
-// ***************** Private slots ********************
-
-
-void KMReaderWin::invokeHelp()
-{
-
-  kapp->invokeHTMLHelp("","");
-
-}
-
-void KMReaderWin::toDo()
-{
-  KMsgBox::message(this,"Ouch",
-		   "Not yet implemented!\n"
-		   "We are sorry for the inconvenience :-)",1);
-}
-
-void KMReaderWin::newComposer()
-{
-  KMComposeWin *k = new KMComposeWin();
-  k->show();
-  k->resize(k->size());
-}
-
-void KMReaderWin::newReader()
-{
-/*	KMMainWin *w = new KMMainWin();
-	w->show();
-	w->resize(w->size());*/
-}
-
-void KMReaderWin::about()
-{
-  KMsgBox::message(this,"About",
-		   "kmail [ALPHA]\n\n"
-		   "Yat-Nam Lo <lynx@topaz.hknet.com>\n"
-		   "Stephan Meyer <Stephan.Meyer@munich.netsurf.de>\n"
-		   "Stefan Taferner <taferner@alpin.or.at>\n"
-		   "Markus Wübben <markus.wuebben@kde.org>\n\n"
-		   "This program is covered by the GPL.",1);
-}
-
-void KMReaderWin::toggleToolBar()
-{
-  enableToolBar(KToolBar::Toggle);
-}
-
-void KMReaderWin::abort()
-{
-  close();
 }
 
 

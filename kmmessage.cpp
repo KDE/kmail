@@ -72,32 +72,12 @@ bool KMMessage::isMessage(void) const
 //-----------------------------------------------------------------------------
 const QString KMMessage::asString(void)
 {
-  QString str;
-  DwString dwsrc, dwstr;
-
   if (mNeedsAssembly)
   {
     mNeedsAssembly = FALSE;
     mMsg->Assemble();
   }
-  dwsrc = mMsg->AsString();
-
-  switch (cte())
-  {
-  case DwMime::kCteBase64:
-    DwDecodeBase64(dwsrc, dwstr);
-    str = dwstr.c_str();
-    break;
-  case DwMime::kCteQuotedPrintable:
-    DwDecodeQuotedPrintable(dwsrc, dwstr);
-    str = dwstr.c_str();
-    break;
-  default:
-    str = dwsrc.c_str();
-    break;
-  }
-
-  resultStr = str;//.replace(QRegExp("\\r"),"");
+  resultStr = mMsg->AsString().c_str();
   return resultStr;
 }
 
@@ -603,6 +583,31 @@ const QString KMMessage::body(void) const
   QString str;
   str = mMsg->Body().AsString().c_str();
   return str;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::bodyDecoded(void) const
+{
+  DwString dwsrc, dwstr;
+
+  dwsrc = mMsg->Body().AsString().c_str();
+  switch (cte())
+  {
+  case DwMime::kCteBase64:
+    DwDecodeBase64(dwsrc, dwstr);
+    resultStr = dwstr.c_str();
+    break;
+  case DwMime::kCteQuotedPrintable:
+    DwDecodeQuotedPrintable(dwsrc, dwstr);
+    resultStr = dwstr.c_str();
+    break;
+  default:
+    resultStr = dwsrc.c_str();
+    break;
+  }
+
+  return resultStr;
 }
 
 

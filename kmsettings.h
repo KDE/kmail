@@ -60,7 +60,6 @@ private:
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;
-  KConfig *config;
 };
 
 

@@ -132,9 +132,6 @@ static void init(int argc, char *argv[])
   outboxFolder->setType("out");
   outboxFolder->open();
 
-  queuedFolder = folderMgr->findOrCreate(cfg->readEntry("queuedFolder", "queued"));
-  queuedFolder->open();
-
   sentFolder   = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent_mail"));
   sentFolder->setType("st");
   sentFolder->open();
@@ -156,6 +153,9 @@ static void cleanup(void)
   shuttingDown = TRUE;
 
   if (inboxFolder) inboxFolder->close(TRUE);
+  if (outboxFolder) outboxFolder->close(TRUE);
+  if (sentFolder) sentFolder->close(TRUE);
+  if (trashFolder) trashFolder->close(TRUE);
 
   if (msgSender) delete msgSender;
   if (filterMgr) delete filterMgr;

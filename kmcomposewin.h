@@ -53,6 +53,10 @@ public:
   /** Applies the user changes to the message object of the composer. */
   virtual void applyChanges(void);
 
+  /** If this flag is set the message of the composer is deleted when
+    the composer is closed and the message was not sent. Default: FALSE */
+  virtual void setAutoDelete(bool f);
+
 public slots:
   void slotPrint();
   void slotAttachFile();
@@ -146,7 +150,7 @@ protected:
   KStatusBar *mStatusBar;
   KTabListBox *mAtmListBox;
   KMMsgPartList mAtmList;
-  bool mAutoSign, mShowToolBar;
+  bool mAutoSign, mShowToolBar, mAutoDeleteMsg;
   int  mSendImmediate;
   long mShowHeaders;
   QString mDefEncoding;

@@ -45,8 +45,11 @@ public:
   /** Physically remove given folder and delete the given folder object. */
   virtual void remove(KMFolder* obsoleteFolder);
 
-  /* emits changed() signal */
+  /** emits changed() signal */
   virtual void contentsChanged(void);
+
+  /** Reloads all folders, discarding the existing ones. */
+  virtual void reload(void);
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook

@@ -27,11 +27,6 @@
 #include "kmglobal.h"
 #include <klocale.h>
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath):
@@ -96,13 +91,19 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 
   mDir.setPath(mBasePath);
   mDir.reload();
+  emit changed();
 }
 
 
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
 {
-  return mDir.createFolder(fName, sysFldr);
+  KMFolder* fld;
+
+  fld = mDir.createFolder(fName, sysFldr);
+  if (fld) emit changed();
+
+  return fld;
 }
 
 
@@ -143,6 +144,7 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   assert(aFolder != NULL);
   aFolder->remove();
   mDir.reload();
+  emit changed();
 }
 
 
@@ -157,6 +159,12 @@ KMFolderRootDir& KMFolderMgr::dir(void)
 void KMFolderMgr::contentsChanged(void)
 {
   emit changed();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::reload(void)
+{
 }
 
 

@@ -22,7 +22,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
 {
   QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
-  static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep;
+  static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep, pixSent, pixQueued;
 
   mOwner  = aOwner;
   mFolder = NULL;
@@ -35,17 +35,21 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
   setColumn(3, nls->translate("Date"), 300);
   readConfig();
 
-  pixNew = loader->loadIcon("kmmsgnew.xpm");
-  pixUns = loader->loadIcon("kmmsgunseen.xpm");
-  pixDel = loader->loadIcon("kmmsgdel.xpm");
-  pixOld = loader->loadIcon("kmmsgold.xpm");
-  pixRep = loader->loadIcon("kmmsgreplied.xpm");
+  pixNew   = loader->loadIcon("kmmsgnew.xpm");
+  pixUns   = loader->loadIcon("kmmsgunseen.xpm");
+  pixDel   = loader->loadIcon("kmmsgdel.xpm");
+  pixOld   = loader->loadIcon("kmmsgold.xpm");
+  pixRep   = loader->loadIcon("kmmsgreplied.xpm");
+  pixQueued= loader->loadIcon("kmmsgqueued.xpm");
+  pixSent  = loader->loadIcon("kmmsgsent.xpm");
 
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusNew), &pixNew);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusUnread), &pixUns);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusDeleted), &pixDel);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusOld), &pixOld);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusReplied), &pixRep);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusQueued), &pixQueued);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusSent), &pixSent);
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -356,33 +360,22 @@ KMMessage* KMHeaders::getMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::nextMsg()
+void KMHeaders::nextMessage()
 {
-  int idx;
+  int idx = currentItem();
 
-  kbp->busy();
-  idx = indexOfGetMsg();
-  if(idx < mFolder->count()-1)
-  {
-    emit selected(mFolder->getMsg(idx+1));
-    if (idx >= 0) setMsgRead(idx+1);
-  }
-  kbp->idle();
+  if (idx < mFolder->count())
+    setCurrentItem(idx+1);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::previousMsg()
+void KMHeaders::prevMessage()
 {
-  int idx; 
+  int idx = currentItem();
 
-  kbp->busy();
-  if((idx = indexOfGetMsg()) != 0)
-  {
-    emit selected(mFolder->getMsg(idx));
-    if (idx >= 0) setMsgRead(idx);
-  }
-  kbp->idle();
+  if (idx > 0) 
+    setCurrentItem(idx-1);
 }  
 
 
@@ -418,7 +411,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
 
   kbp->busy();
   mOwner->statusMsg("");
-  emit selected(mFolder->getMsg(idx));
+  emit activated(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }

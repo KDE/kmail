@@ -4,11 +4,13 @@
 #include "kmfolder.h"
 #include <mimelib/mimepp.h>
 
-#define NUM_STATUSLIST 4
+#define NUM_STATUSLIST 7
 static KMMsgStatus sStatusList[NUM_STATUSLIST+1] = 
 {
   KMMsgStatusDeleted, KMMsgStatusNew, 
   KMMsgStatusUnread, KMMsgStatusOld,
+  KMMsgStatusReplied, KMMsgStatusSent,
+  KMMsgStatusQueued,
   KMMsgStatusUnknown /* "Unknown" must be at the *end* of the list */
 };
 

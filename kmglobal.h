@@ -54,7 +54,6 @@ class KMFolder;
 extern KMFolder* inboxFolder;
 extern KMFolder* outboxFolder;
 extern KMFolder* sentFolder;
-extern KMFolder* queuedFolder;
 extern KMFolder* trashFolder;
 
 /** The "about KMail" text. */

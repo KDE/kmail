@@ -8,7 +8,6 @@
 #include <pwd.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sys/utsname.h>
 
 
 //-----------------------------------------------------------------------------
@@ -30,7 +29,7 @@ void KMIdentity::readConfig(void)
 {
   KConfig* config = kapp->getConfig();
   struct passwd* pw;
-  char str[80];
+  char  str[80];
 
   config->setGroup("Identity");
 
@@ -52,18 +51,7 @@ void KMIdentity::readConfig(void)
     pw = getpwuid(getuid());
     if (pw)
     {
-      struct utsname uts;
-      if (uname(&uts)==0)
-      {
-	strcpy(str, uts.nodename);
-	if (uts.domainname[0] && strcmp(uts.domainname,"(none)")!=0)
-	{
-	  strcat(str, ".");
-	  strcat(str, uts.domainname);
-	}
-      }
-      else strcpy(str,"localhost");
-
+      gethostname(str, 79);
       mEmailAddr = QString(pw->pw_name) + "@" + str;
       mEmailAddr.detach();
     }

@@ -19,7 +19,6 @@ class KMMessage;
 class KMFolder;
 
 #define KMMainWinInherited KTopLevelWidget
-
 class KMMainWin : public KTopLevelWidget
 {
   Q_OBJECT
@@ -27,9 +26,12 @@ class KMMainWin : public KTopLevelWidget
 public:
   KMMainWin(QWidget *parent = 0, char *name = 0);
   virtual ~KMMainWin();
-  virtual void show();
-  bool showInline;
-  QPopupMenu *bodyParts;
+
+  /** Read configuration options. */
+  virtual void readConfig();
+
+  /** Write configuration options. */
+  virtual void writeConfig(bool withSync=TRUE);
 
   /** Insert a text field to the status bar and return ID of this field. */
   virtual int statusBarAddItem(const char* text);
@@ -50,7 +52,6 @@ public slots:
 protected:
   virtual void closeEvent(QCloseEvent *);
 
-  void parseConfiguration();
   void setupMenuBar();
   void setupToolBar();
   void setupStatusBar();
@@ -78,6 +79,9 @@ protected slots:
   void slotMoveMsg();
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
+  void slotSendQueued();
+  void slotMsgPopup(const QPoint&);
+  void slotUrlClicked(const char* url, int button);
 
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);
@@ -96,7 +100,7 @@ protected:
   KNewPanner   *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
-  QPopupMenu   *mViewMenu;
+  QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;

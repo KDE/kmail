@@ -147,6 +147,9 @@ public:
   virtual const QString body(void) const;
   virtual void setBody(const QString aStr);
 
+  /** Returns a decode version of the body. */
+  virtual const QString bodyDecoded(void) const;
+
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */
   virtual int numBodyParts(void) const;

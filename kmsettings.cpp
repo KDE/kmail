@@ -36,7 +36,6 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 {
   initMetaObject();
 
-  config=app->getConfig();
   setCaption(nls->translate("Settings"));
   resize(500,600);
   setOKButton(nls->translate("Ok"));
@@ -432,7 +431,7 @@ void KMSettings::doApply()
   acctMgr->writeConfig(FALSE);
 
   //-----
-  config->sync();
+  app->getConfig()->sync();
   folderMgr->contentsChanged();
 }
 

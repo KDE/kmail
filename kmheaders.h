@@ -32,10 +32,7 @@ public:
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
-  /** Returns next message in the current Folder. */
-  virtual void nextMsg();
-  /** Returns previous message in the current Folder. */ 
-  virtual void previousMsg();
+
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first
     selected message, subsequent calls with no argument
@@ -53,7 +50,7 @@ signals:
   virtual void activated(KMMessage *);
 
 
-protected slots:
+public slots:
   void selectMessage(int msgId, int colId);
   void highlightMessage(int msgId, int colId);
   void msgHeaderChanged(int msgId);
@@ -61,6 +58,8 @@ protected slots:
   void msgAdded(int);
   void msgRemoved(int);
   void headerClicked(int);
+  void nextMessage();
+  void prevMessage();
 
 protected:
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
