@@ -1044,10 +1044,12 @@ void KMHeaders::msgChanged()
   // prevent IMAP messages from scrolling to top
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
              this,SLOT(highlightMessage(QListViewItem*)));
+  // remember all selected messages
+  QValueList<int> curItems = selectedItems();
   updateMessageList();
   setTopItemByIndex( i );
-  setCurrentMsg(cur);
-  setSelected( currentItem(), true );
+  setCurrentMsg( cur );
+  setSelectedByIndex( curItems, true );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
 
@@ -1835,6 +1837,17 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   }
 }
 
+void KMHeaders::setSelectedByIndex( QValueList<int> items, bool selected )
+{
+  for ( QValueList<int>::Iterator it = items.begin(); it != items.end(); ++it )
+  {
+    if ( ((*it) >= 0) && ((*it) < (int)mItems.size()) ) 
+    {
+      setSelected( mItems[(*it)], selected );
+    }
+  }
+}
+
 void KMHeaders::clearSelectableAndAboutToBeDeleted( Q_UINT32 serNum )
 {
   // fugly, but I see no way around it
@@ -1868,6 +1881,21 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
     }
   }
   return &mSelMsgBaseList;
+}
+
+//-----------------------------------------------------------------------------
+QValueList<int> KMHeaders::selectedItems()
+{
+  QValueList<int> items;
+  for ( QListViewItemIterator it(this); it.current(); it++ ) 
+  {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) 
+    {
+      KMHeaderItem* item = static_cast<KMHeaderItem*>( it.current() );
+      items.append( item->msgId() );
+    }
+  }
+  return items;
 }
 
 //-----------------------------------------------------------------------------
