@@ -793,7 +793,11 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
-        << aMsg->fromStrip() << endl;
+        << aMsg->fromStrip() << ", complete " << (aMsg->isComplete()) << endl;
+  
+  bool complete = true;
+  if ( aMsg && !aMsg->isComplete() )
+    complete = false;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
@@ -831,6 +835,11 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     mLastStatus = aMsg->status();
   } else {
     mLastStatus = KMMsgStatusUnknown;
+  }
+
+  if ( !complete ) {
+    kdDebug(5006) << "msg incomplete, return" << endl;
+    return; 
   }
 
   // Avoid flicker, somewhat of a cludge
@@ -985,9 +994,9 @@ void KMReaderWin::updateReaderWin()
   {
     if( !kmkernel->iCalIface().isResourceImapFolder( folder ) ){
       if ( mShowColorbar )
-	mColorBar->show();
+        mColorBar->show();
       else
-	mColorBar->hide();
+        mColorBar->hide();
       displayMessage();
     }
   }

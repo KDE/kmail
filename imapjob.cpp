@@ -310,11 +310,12 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         QString uid = msg->headerField("X-UID");
         msg->fromByteArray( (*it).data );
         msg->setHeaderField("X-UID",uid);
-        // it's not really complete but at least is has been transferred
-        msg->setComplete( TRUE );
+        if ( mPartSpecifier.isEmpty() ) 
+          msg->setComplete( TRUE );
       } else {
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
+        msg->setComplete( TRUE );
       }
     } else {
       gotData = false;
@@ -333,7 +334,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       emit messageRetrieved(msg);
     else
     {
-      // delete the msg
+      /* we got an answer but not data
+       * this means that the msg is not on the server anymore so delete it */
       parent->ignoreJobsForMessage( msg );
       int idx = parent->find( msg );
       if (idx != -1) parent->removeMsg( idx, true );
