@@ -3851,7 +3851,7 @@ bool KMAtmListViewItem::isSign()
 
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
                        QWidget *parent, const char *name)
-    : AddressLineEdit(parent,useCompletion,name), mComposer(composer)
+    : KPIM::AddresseeLineEdit(parent,useCompletion,name), mComposer(composer)
 {
 }
 
@@ -3877,7 +3877,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
       return;
     }
     // ---sven's Return is same Tab and arrow key navigation end ---
-  AddressLineEdit::keyPressEvent(e);
+  AddresseeLineEdit::keyPressEvent(e);
 }
 
 QPopupMenu *KMLineEdit::createPopupMenu()
@@ -3904,7 +3904,7 @@ void KMLineEdit::editRecentAddresses()
     for ( it = addrList.begin(); it != addrList.end(); ++it )
       RecentAddresses::self( KMKernel::config() )->add( *it );
 
-    loadAddresses();
+    loadContacts();
   }
 }
 
@@ -3997,15 +3997,22 @@ void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
 #endif
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::loadAddresses()
+void KMLineEdit::loadContacts()
 {
-    AddressLineEdit::loadAddresses();
+    // was: KABC::AddressLineEdit::loadAddresses()
+    AddresseeLineEdit::loadContacts();
 
     QStringList recent =
       RecentAddresses::self( KMKernel::config() )->addresses();
     QStringList::Iterator it = recent.begin();
-    for ( ; it != recent.end(); ++it )
-        addAddress( *it );
+    QString name, email;
+    for ( ; it != recent.end(); ++it ) {
+      KABC::Addressee addr;
+      getNameAndMail(*it, name, email);
+      addr.setNameFromString( name );
+      addr.insertEmail( email, true );
+      addContact( addr, 120 ); // more weight than kabc entries and more than ldap results
+    }
 }
 
 

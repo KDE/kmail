@@ -28,7 +28,7 @@
 #include "mailcomposerIface.h"
 
 #include "cryptplugwrapper.h"
-#include <kabc/addresslineedit.h>
+#include <libkdepim/addresseelineedit.h>
 #include <mimelib/mediatyp.h>
 
 class _StringPair {
@@ -174,7 +174,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-class KMLineEdit : public KABC::AddressLineEdit
+class KMLineEdit : public KPIM::AddresseeLineEdit
 {
     Q_OBJECT
 public:
@@ -182,7 +182,7 @@ public:
                const char *name = 0);
 protected:
     // Inherited. Always called by the parent when this widget is created.
-    virtual void loadAddresses();
+    virtual void loadContacts();
     /**
      * Smart insertion of email addresses. If @p pos is -1 then
      * @p str is inserted at the end of the current contents of this
