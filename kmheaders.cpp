@@ -2519,9 +2519,11 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
     if (!shiftSelection( beginSelection, lvi ))
       shiftSelection( lvi, beginSelection );
+    mousePressed = TRUE;
   }
   else if ((e->button() == LeftButton) && (e->state() & ControlButton)) {
     setSelected( lvi, !lvi->isSelected() );
+    mousePressed = TRUE;
   }
 }
 
