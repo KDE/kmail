@@ -1171,12 +1171,17 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     }
   }
 
-  QString str;
-  if (mPrinting) str = QString("<span style=\"color:#000000\">");
-  else str = QString("<span style=\"color:%1\">").arg( color.name() );
-  if( font.italic() ) { str += "<i>"; }
-  if( font.bold() ) { str += "<b>"; }
-  return( str );
+  QString style;
+  if( mPrinting )
+    style = "color:#000000;";
+  else
+    style = QString( "color:%1;" ).arg( color.name() );
+  if( font.italic() )
+    style += "font-style:italic;";
+  if( font.bold() )
+    style += "font-weight:bold;";
+
+  return QString( "<div style=\"%1\">" ).arg( style );
 }
 
 
@@ -2604,16 +2609,23 @@ QString KMReaderWin::quotedHTML(const QString& s)
 {
   QString htmlStr, line;
   QString normalStartTag;
-  QString normalEndTag;
-  QString quoteEnd("</span>");
+  const QString normalEndTag = "</div>";
+  const QString quoteEnd = "</div>";
 
   unsigned int pos, beg;
   unsigned int length = s.length();
   enum { First, New, Mid } paragState = First;
   bool rightToLeft = false;
 
-  if (mBodyFont.bold()) { normalStartTag += "<b>"; normalEndTag += "</b>"; }
-  if (mBodyFont.italic()) { normalStartTag += "<i>"; normalEndTag += "</i>"; }
+  QString style;
+  if( mBodyFont.bold() )
+    style += "font-weight:bold;";
+  if( mBodyFont.italic() )
+    style += "font-style:italic;";
+  if( style.isEmpty() )
+    normalStartTag = "<div>";
+  else
+    normalStartTag = QString("<div style=\"%1\">").arg( style );
 
   // skip leading empty lines
   for( pos = 0; pos < length && s[pos] <= ' '; pos++ );
@@ -2688,6 +2700,10 @@ QString KMReaderWin::quotedHTML(const QString& s)
   else
      htmlStr.append( quoteEnd );
 
+  //kdDebug(5006) << "KMReaderWin::quotedHTML:\n"
+  //              << "========================================\n"
+  //              << htmlStr
+  //              << "\n======================================\n";
   return htmlStr;
 }
 
