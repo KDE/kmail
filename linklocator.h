@@ -33,7 +33,6 @@
  * where more control is needed.
  *
  * @short Identifies URLs and email addresses embedded in plaintext.
- * @version $Id$
  * @author Dave Corrie <kde@davecorrie.com>
  */
 class LinkLocator
