@@ -1599,7 +1599,8 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	     (ch=='h' && aStr.mid(pos, 8) == "https://") ||
 	     (ch=='f' && aStr.mid(pos, 6) == "ftp://") ||
 	     (ch=='m' && aStr.mid(pos, 7) == "mailto:") ||
-	     (aStr.mid(pos, 4) == "www."))
+	     (aStr.mid(pos, 4) == "www.") ||
+	     (aStr.mid(pos, 4) == "ftp."))
 	     // note: no "file:" for security reasons
     {
       // handle cases like this: <link>http://foobar.org/</link>
@@ -1614,12 +1615,22 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	pos--;
       }
       str.truncate(i);
+
+      QString hyperlink;
+      if(str.left(4) == "www.")
+        hyperlink = "http://" + str;
+      else if(str.left(4) == "ftp.")
+        hyperlink = "ftp://" + str;
+      else
+        hyperlink = str;
+
       // don't create link if url is empty
       if( ( str == "http://" ) || ( str == "https://" ) ||
-          ( str == "ftp://" ) || ( str == "mailto" ) || (str == "www") )
+          ( str == "ftp://" ) || ( str == "mailto" ) ||
+          ( str == "www" ) || ( str == "ftp" ) )
         result += str;
       else
-        result += "<a href=\"" + str + "\">" + str + "</a>";
+        result += "<a href=\"" + hyperlink + "\">" + str + "</a>";
     }
     else if (ch=='@')
     {
