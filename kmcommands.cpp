@@ -72,6 +72,8 @@ using KMail::FolderJob;
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
+#include "secondarywindow.h"
+using KMail::SecondaryWindow;
 
 #include "kmcommands.moc"
 
@@ -808,6 +810,12 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
                             i18n( "The file doesn't contain a message." ) );
+        // Emulate closing of a secondary window so that KMail exits in case it
+        // was started with the --view command line option. Otherwise an
+        // invisible KMail would keep running.
+        SecondaryWindow *win = new SecondaryWindow();
+        win->close();
+        win->deleteLater();
         deleteLater();
         return;
       }
@@ -829,6 +837,10 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       KMessageBox::sorry( parentWidget(),
                           i18n( "The file doesn't contain a message." ) );
       delete dwMsg; dwMsg = 0;
+      // Emulate closing of a secondary window (see above).
+      SecondaryWindow *win = new SecondaryWindow();
+      win->close();
+      win->deleteLater();
       deleteLater();
       return;
     }

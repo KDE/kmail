@@ -112,6 +112,7 @@ public:
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
+  int viewMessage( const KURL & messageFile );
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }

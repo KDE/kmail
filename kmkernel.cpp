@@ -33,6 +33,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
+#include "kmcommands.h"
 // #### disabled for now #include "startupwizard.h"
 
 
@@ -87,7 +88,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mProgress(0), mConfigureDialog(0),
   mContextMenuShown( false )
 {
-  //kdDebug(5006) << "KMKernel::KMKernel" << endl;
+  kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
   the_startingUp = true;
   closed_by_user = true;
@@ -178,7 +179,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   KURL::List attachURLs;
   bool mailto = false;
   bool checkMail = false;
-  //bool viewOnly = false;
+  bool viewOnly = false;
 
   // process args:
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -227,6 +228,17 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   if (args->isSet("check"))
     checkMail = true;
 
+  if ( args->getOption( "view" ) ) {
+    viewOnly = true;
+    const QString filename =
+      QString::fromLocal8Bit( args->getOption( "view" ) );
+    messageFile = KURL( filename );
+    if ( !messageFile.isValid() ) {
+      messageFile = KURL();
+      messageFile.setPath( filename );
+    }
+  }
+
   for(int i= 0; i < args->count(); i++)
   {
     if (strncasecmp(args->arg(i),"mailto:",7)==0)
@@ -248,10 +260,14 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 
   args->clear();
 
-  if (!noArgsOpensReader && !mailto && !checkMail)
+  if ( !noArgsOpensReader && !mailto && !checkMail && !viewOnly )
     return false;
 
-  action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
+  if ( viewOnly )
+    viewMessage( messageFile );
+  else
+    action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
+            attachURLs );
   return true;
 }
 
@@ -422,6 +438,15 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   }
 
   return DCOPRef(cWin);
+}
+
+int KMKernel::viewMessage( const KURL & messageFile )
+{
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
+
+  openCommand->start();
+
+  return 1;
 }
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )

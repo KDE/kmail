@@ -20,6 +20,7 @@ KCmdLineOptions kmail_options[] =
   { "attach <url>",             I18N_NOOP("Add an attachment to the mail. This can be repeated."), 0 },
   { "check",			I18N_NOOP("Only check for new mail."), 0 },
   { "composer",			I18N_NOOP("Only open composer window."), 0 },
+  { "view <url>",               I18N_NOOP("View the given message file." ), 0 },
   { "+[address|URL]",		I18N_NOOP("Send message to 'address' resp. "
                                           "attach the file the 'URL' points "
                                           "to."), 0 },
