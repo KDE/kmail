@@ -1150,7 +1150,7 @@ void KMComposeWin::setupActions(void)
   for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
     l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
 
-  mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ), 0,
+  mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Protocol" ), 0,
 					   this, SLOT(slotSelectCryptoModule()),
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
