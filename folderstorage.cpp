@@ -1137,7 +1137,7 @@ size_t FolderStorage::crlf2lf( char* str, const size_t strLen )
   // replace all occurrences of "\r\n" with "\n" (in place)
   char* target = const_cast<char*>( source ); // target points to '\r'
   ++source; // source points to '\n'
-  for ( ; source < sourceEnd; ++source ) {
+  for ( ; source < sourceEnd && *source != '\0'; ++source ) {
     if ( *source != '\r' || *( source + 1 ) != '\n' )
       *target++ = *source;
   }
