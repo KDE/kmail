@@ -312,7 +312,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
   const int maxLen=200;
   int i;
 
-  if (aStr.find("=?") < 0) return aStr;
+  if (aStr.find("=?") < 0) return QString::fromLocal8Bit(aStr);
 
   for (pos=aStr.data(); *pos; pos++)
   {
@@ -532,7 +532,7 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
 const QString KMMsgBase::decodeRFC2231String(const QString& _str)
 {
   int p = _str.find("'");
-  if (p < 0) return _str;
+  if (p < 0) return QString::fromLocal8Bit(_str);
 
   QString charset = _str.left(p);
 
