@@ -513,6 +513,9 @@ void KMSender::doSendMsgAux()
 	       .arg(mCurrentMsg->subject()));
   if (!mSendProc->send(mCurrentMsg))
   {
+    mCurrentMsg->setTransferInProgress( false );
+    mOutboxFolder->unGetMsg( mFailedMessages );
+    mCurrentMsg = 0;
     cleanup();
     setStatusMsg(i18n("Failed to send (some) queued messages."));
     return;
@@ -585,6 +588,11 @@ void KMSender::slotIdle()
 
   if (mSendAborted) {
     // sending of message aborted
+    if ( mCurrentMsg ) {
+      mCurrentMsg->setTransferInProgress( false );
+      mOutboxFolder->unGetMsg( mFailedMessages );
+      mCurrentMsg = 0;
+    }
     msg = i18n("Sending aborted:\n%1\n"
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
@@ -597,6 +605,7 @@ void KMSender::slotIdle()
   } else {
     if (!mSendProc->sendOk()) {
       mCurrentMsg->setTransferInProgress( false );
+      mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
       mFailedMessages++;
       // Sending of message failed.
