@@ -54,7 +54,6 @@ value :=
 static QValueList<QString> tokenizeBy(const QString& str, const QRegExp& tok, bool keepEmpties = false) {
 QValueList<QString> tokens;
 unsigned int head, tail;
-const char *chstr = str.ascii();
 unsigned int length = str.length();
 
   if (length < 1) return tokens;
@@ -73,8 +72,7 @@ unsigned int length = str.length();
       tail = length;
 
     if (tail-head > 0 || keepEmpties) {    // it has to be at least 1 long!
-      thisline = &(chstr[head]);
-      thisline.truncate(tail-head);
+      thisline = str.mid(head, tail-head);
       tokens.append(thisline);
     }
   }
@@ -192,7 +190,7 @@ QValueList<QString> lines;
       tmplinetoken = (*j);
       tmplinetoken.truncate(tail);
       linetokens.append(tmplinetoken);
-      tmplinetoken = &((*j).ascii()[tail+1]);
+      tmplinetoken = (*j).mid(tail+1);
       linetokens.append(tmplinetoken);
 
       // check for qualifiers and

@@ -625,7 +625,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     if (!qstricmp(msgPart.typeStr(), "text")
        && !qstricmp(msgPart.subtypeStr(), "x-vcard")) {
         int vcerr;
-        vc = VCard::parseVCard(msgPart.body(), &vcerr);
+        QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+          KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+        if (!atmCodec) atmCodec = mCodec;
+        vc = VCard::parseVCard(atmCodec->toUnicode(msgPart
+          .bodyDecoded()), &vcerr);
 
         if (vc) {
           delete vc;
@@ -1447,7 +1451,8 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
         KMDisplayVCard *vcdlg;
 	int vcerr;
-	VCard *vc = VCard::parseVCard(aMsgPart->body(), &vcerr);
+	VCard *vc = VCard::parseVCard(codec->toUnicode(aMsgPart
+          ->bodyDecoded()), &vcerr);
 
 	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
@@ -1563,7 +1568,11 @@ void KMReaderWin::slotAtmOpen()
     if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
       KMDisplayVCard *vcdlg;
       int vcerr;
-      VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);
+      QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+        KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+      if (!atmCodec) atmCodec = mCodec;
+      VCard *vc = VCard::parseVCard(atmCodec->toUnicode(msgPart
+        .bodyDecoded()), &vcerr);
 
       if (!vc) {
         QString errstring = i18n("Error reading in vCard:\n");
