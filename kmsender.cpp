@@ -881,6 +881,8 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
+  *mMailerProc << "-f";
+  *mMailerProc << aMsg->sender().latin1();
 
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing
