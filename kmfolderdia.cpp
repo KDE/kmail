@@ -644,7 +644,7 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
   if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
     QString message = i18n("You have configured this folder to contain groupware information "
         "and the general configuration option to hide groupware folders is "
-        "set. That means that this folder will dissapear once the configuration "
+        "set. That means that this folder will disappear once the configuration "
         "dialog is closed. If you want to remove the folder again, you will need "
         "to temporarily disable hiding of groupware folders to be able to see it.");
     KMessageBox::information( this, message );
