@@ -1123,10 +1123,7 @@ bool KMComposeWin::applyChanges(void)
     } else
       body = codec->fromUnicode(str);
 
-    QByteArray bBody(body);
-    bBody.resize(bBody.size() - 1);
-    bodyPart.setBodyEncoded(bBody);
-
+    bodyPart.setBodyEncoded(body);
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
@@ -1450,7 +1447,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setCharset(mCharset);
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
-  msgPart->setBodyEncoded((*it).data);
+  msgPart->setBodyEncodedBinary((*it).data);
   msgPart->magicSetType();
   msgPart->setContentDisposition(QString("attachment; filename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
@@ -1631,7 +1628,7 @@ void KMComposeWin::slotAttachView()
   KTempFile* atmTempFile = new KTempFile();
   mAtmTempList.append( atmTempFile );
   atmTempFile->setAutoDelete( true );
-  kByteArrayToFile(msgPart->bodyDecoded(), atmTempFile->name(), false, false,
+  kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
   KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname, 0);
 }
@@ -1663,7 +1660,7 @@ void KMComposeWin::slotAttachSave()
 
   fileName = url.path();
 
-  kByteArrayToFile(msgPart->bodyDecoded(), fileName, TRUE);
+  kByteArrayToFile(msgPart->bodyDecodedBinary(), fileName, TRUE);
 }
 
 

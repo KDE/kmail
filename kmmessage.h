@@ -232,12 +232,16 @@ public:
   virtual void setBody(const QCString& aStr);
 
   /** Set the message body, encoding it according to the current content
-    transfer encoding. */
+    transfer encoding. The first method for null terminated strings,
+    the second for binary data */
   virtual void setBodyEncoded(const QCString& aStr);
+  virtual void setBodyEncodedBinary(const QByteArray& aStr);
 
   /** Returns a decoded version of the body from the current content transfer
-    encoding. */
+    encoding. The first method returns a null terminated string, the second
+    method is meant for binary data, not null is appended */
   virtual QCString bodyDecoded(void) const;
+  virtual QByteArray bodyDecodedBinary(void) const;
 
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */

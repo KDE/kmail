@@ -21,11 +21,22 @@ public:
   void setBody(const QString aStr);
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
-    contains the correct encoding. */
-  virtual QByteArray bodyDecoded(void) const;
+    contains the correct encoding. This routine is meant for binary data.
+    No trailing 0 is appended. */
+  virtual QByteArray bodyDecodedBinary(void) const;
 
-  /** Sets body, encoded according to the content-transfer-encoding. */
-  virtual void setBodyEncoded(const QByteArray& aStr);
+  /** Returns body as decoded string. Assumes that content-transfer-encoding
+    contains the correct encoding. This routine is meant for binary data.
+    No trailing 0 is appended. */
+  virtual QCString bodyDecoded(void) const;
+
+  /** Sets body, encoded according to the content-transfer-encoding.
+      BEWARE: The entire aStr is used including trailing 0 of text strings! */
+  virtual void setBodyEncodedBinary(const QByteArray& aStr);
+
+  /** Sets body, encoded according to the content-transfer-encoding.
+      This one is for text strings, the trailing 0 is not used. */
+  virtual void setBodyEncoded(const QCString& aStr);
 
   /** Returns decoded length of body. */
   virtual int size(void) const;
@@ -97,7 +108,10 @@ protected:
   QString mCte;
   QString mContentDescription;
   QString mContentDisposition;
-  QCString mBody;
+  QByteArray mBody;  // keep it null terminated since some callers
+                     // misuse it as a QCString. Really the callers
+                     // should be fixed like in kmreaderwin.cpp.
+                     // mBody should not be QCString since it can be binary.
   QString mName;
   QString mCharset;
   int mBodySize;

@@ -636,11 +636,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 //	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
-	  str = msgPart.bodyDecoded();
-	  str.resize( str.count() + 1 );
-	  str.at( str.count() - 1 ) = '\0';
-	  QCString cstr;
-	  cstr.assign(str);
+          QCString cstr(msgPart.bodyDecoded());
 	  if (i>0)
 	      mViewer->write("<br><hr><br>");
 
@@ -1034,7 +1030,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
     }
 
     // fixme: use KTempFile!
-    if (!kByteArrayToFile(aMsgPart->bodyDecoded(), fname, false, false, false))
+    if (!kByteArrayToFile(aMsgPart->bodyDecodedBinary(), fname, false, false, false))
       ok = false;
   }
   if (ok)
@@ -1614,7 +1610,7 @@ void KMReaderWin::slotAtmSave()
   fileName = url.path();
 
   kernel->kbp()->busy();
-  if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))
+  if (!kByteArrayToFile(msgPart.bodyDecodedBinary(), fileName, TRUE))
     qWarning(i18n("Could not save file"));
   kernel->kbp()->idle();
 }

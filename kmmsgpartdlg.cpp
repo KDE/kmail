@@ -199,7 +199,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 void KMMsgPartDlg::applyChanges(void)
 {
   QString str, type, subtype;
-  QByteArray body;
+  QCString body;
   int idx;
 
   if (!mMsgPart) return;

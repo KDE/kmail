@@ -1543,7 +1543,7 @@ QCString KMMessage::body(void) const
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::bodyDecoded(void) const
+QByteArray KMMessage::bodyDecodedBinary(void) const
 {
   DwString dwsrc, dwstr;
   QString result;
@@ -1561,10 +1561,22 @@ QCString KMMessage::bodyDecoded(void) const
     dwstr = dwsrc;
     break;
   }
-  // Should probably be returning a QByteArray, if it may contain NUL
 
-  QCString ba(dwstr.c_str(), dwstr.size() + 1);
+  int len=dwstr.size();
+  QByteArray ba(len);
+  memcpy(ba.data(),dwstr.data(),len);
+  return ba;
+}
 
+
+//-----------------------------------------------------------------------------
+QCString KMMessage::bodyDecoded(void) const
+{
+  QByteArray raw(bodyDecodedBinary());
+  int len=raw.size();
+  QCString ba(len+1);
+  memcpy(ba.data(),raw.data(),len);
+  ba[len] = 0;
   return ba;
 }
 
@@ -1572,11 +1584,17 @@ QCString KMMessage::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QCString& aStr)
 {
-  QCString bStr = aStr;
-  if (aStr.isNull())
-    bStr = "";
-  int len = bStr.length();
-  DwString dwSrc(bStr.data(), len);
+  int len = aStr.length();
+  QByteArray ba(len);
+  if (len > 0)
+    memcpy(ba.data(),aStr.data(),len);
+  setBodyEncodedBinary(ba);
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setBodyEncodedBinary(const QByteArray& aStr)
+{
+  DwString dwSrc(aStr.data(), aStr.size());
   DwString dwResult;
 
   switch (cte())
