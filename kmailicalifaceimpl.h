@@ -82,7 +82,7 @@ public:
                              Q_UINT32 sernum );
   QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
                                            const QString& resource );
-  QMap<QString, bool> subresourcesKolab( const QString& annotation );
+  QMap<QString, bool> subresourcesKolab( const QString& contentsType );
 
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it

@@ -73,7 +73,7 @@ k_dcop:
                                      Q_UINT32 sernum ) = 0;
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
                                                   const QString& resource ) = 0;
-  virtual QMap<QString, bool> subresourcesKolab( const QString& annotation ) = 0;
+  virtual QMap<QString, bool> subresourcesKolab( const QString& contentsType ) = 0;
   
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,

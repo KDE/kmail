@@ -340,10 +340,11 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   return lst;
 }
 
-QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& annotation )
+QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
   // TODO: khz
-  QMap<QString, bool> dummy;
+  QMap<QString, bool> aMap;
+  KMail::FolderContentsType cntType folderContentsType( contentsType );
   return dummy;
 }
 
