@@ -590,7 +590,7 @@ void KMMainWin::slotRemoveFolder()
   }
 
   str = i18n("Are you sure you want to remove the folder\n"
-			     "\"%1\", discarding it's contents ?")
+	     "\"%1\" and all subfolders, discarding their contents?")
 			     .arg(mFolder->label());
 
   if (KMessageBox::warningContinueCancel(this, str,

@@ -1698,6 +1698,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
     {
       tmp = addr.copy();
       result += tmp.replace(QRegExp("\""),"");
+      result = result.replace(QRegExp("\n"),"");
       result += "\">";
       if (stripped) result += KMMessage::stripEmailAddr(aEmail);
       else result += addr;

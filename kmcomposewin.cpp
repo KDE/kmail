@@ -65,6 +65,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <ktempfile.h>
+#include <fcntl.h>
 
 #if defined CHARSETS
 #include <kcharsets.h>
@@ -350,28 +351,30 @@ void KMComposeWin::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::deadLetter(void)
 {
-  FILE* fh;
-  char fname[128];
-  const char* msgStr;
-
   if (!mMsg) return;
 
   // This method is called when KMail crashed, so we better use as
   // basic functions as possible here.
   applyChanges();
-  msgStr = mMsg->asString();
-
-  sprintf(fname,"%s/dead.letter",getenv("HOME"));
-  fh = fopen(fname,"a");
-  if (fh)
+  QString msgStr = mMsg->asString();
+  QString fname = getenv("HOME");
+  fname += "/dead.letter";
+  // Security: the file is created in the user's home directory, which
+  // might be readable by other users. So the file only gets read/write
+  // permissions for the user himself. Note that we create the file with
+  // correct permissions, we do not set them after creating the file!
+  // (dnaber, 2000-02-27):
+  int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
+  if (fd != -1)
   {
-    fwrite("From ???@??? Mon Jan 01 00:00:00 1997\n", 19, 1, fh);
-    fwrite(msgStr, strlen(msgStr), 1, fh);
-    fwrite("\n", 1, 1, fh);
-    fclose(fh);
+    const char* startStr = "From ???@??? Mon Jan 01 00:00:00 1997\n";
+    write(fd, startStr, strlen(startStr));
+    write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
+    write(fd, "\n", 1);
+    close(fd);
     fprintf(stderr,"appending message to ~/dead.letter\n");
   }
-  else perror("cannot open ~/dead.letter");
+  else perror("cannot open ~/dead.letter for saving the current message");
 }
 
 

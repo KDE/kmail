@@ -899,7 +899,7 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   QVBoxLayout *vlay = new QVBoxLayout( group, KDialog::spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );  
 
-  storePass = new QCheckBox( i18n("Store passphrase"), group );
+  storePass = new QCheckBox( i18n("Keep passphrase in memory"), group );
   encToSelf = new QCheckBox( i18n("Always encrypt to self"), group );
   vlay->addWidget( storePass );
   vlay->addWidget( encToSelf );

@@ -817,7 +817,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
   compactOnExit->setChecked(config->readNumEntry("compact-all-on-exit", 0));
   sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
-  sendReceipts->setChecked(config->readBoolEntry("send-receipts", true));
+  sendReceipts->setChecked(config->readBoolEntry("send-receipts", false));
   useExternalEditor->setChecked(config->readBoolEntry("use-external-editor", false));  
   extEditorEdit->setText(config->readEntry("external-editor", ""));
   beepNotify->setChecked(config->readBoolEntry("beep-on-mail", false));
