@@ -208,8 +208,12 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 #endif
 
   mMsg = NULL;
-  if (aMsg)
+  if (aMsg) {
+    QString transport = aMsg->headerField("X-KMail-Transport");
     setMsg(aMsg);
+    if (!mBtnTransport.isChecked() && !transport.isEmpty())
+      mTransport.insertItem( transport, 0 );
+  }
 
   mEdtTo.setFocus();
   mDone = true;
@@ -357,13 +361,7 @@ void KMComposeWin::readConfig(void)
     }
 
   if (!mBtnTransport.isChecked() || mTransportHistory.isEmpty()) {
-    QString curTransport;
-    config->setGroup("sending mail");
-    if (config->readEntry("Method") == "mail")
-      curTransport = "file://" + config->readEntry("Mailer");
-    else
-      curTransport = "smtp://" + config->readEntry("Smtp Host") + ":" +
-	config->readEntry("Smtp Port");
+    QString curTransport = kernel->msgSender()->transportString();
     mTransportHistory.remove( curTransport );
     mTransportHistory.prepend( curTransport );
   }
@@ -1879,7 +1877,8 @@ void KMComposeWin::doSend(int aSendNow)
   // rectify the problem by editing their outgoing preferences and
   // resending.
   // Hence this following conditional
-  if (mTransport.currentText() != kernel->msgSender()->transportString())    
+  if ((mTransport.currentText() != kernel->msgSender()->transportString()) ||
+      (mMsg->headerField("X-KMail-Transport") != kernel->msgSender()->transportString()))
     mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
 
   sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
