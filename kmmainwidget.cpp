@@ -408,8 +408,12 @@ void KMMainWidget::writeConfig(void)
 
   geometry.writeEntry( "FolderPaneWidth", widths[0] );
   geometry.writeEntry( "HeaderPaneWidth", widths[1] );
-  geometry.writeEntry( "HeaderPaneHeight", heights[0] );
-  geometry.writeEntry( "ReaderPaneHeight", heights[1] );
+
+  // Do not save a wrong size when the widget is hidden
+  if ( mSearchAndHeaders && !mSearchAndHeaders->isHidden() ) {
+    geometry.writeEntry( "HeaderPaneHeight", heights[0] );
+    geometry.writeEntry( "ReaderPaneHeight", heights[1] );
+  }
 
   // save the state of the unread/total-columns
   geometry.writeEntry( "UnreadColumn", mFolderTree->unreadIndex() );
