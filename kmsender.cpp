@@ -281,10 +281,11 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
 
     if ( sentFolder == 0 )
       sentFolder = kmkernel->sentFolder();
-    else {
+
+    if ( sentFolder ) {
       rc = sentFolder->open();
       if (rc != 0) {
-	cleanup();
+        cleanup();
         return;
       }
     }
@@ -295,11 +296,10 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     case 2:
       perror("Critical error: Unable to process sent mail (out of space?)");
       KMessageBox::information(0, i18n("Critical error: "
-				       "Unable to process sent mail (out of space?)"
-				       "Moving failing message to \"sent-mail\" folder."));
+                   "Unable to process sent mail (out of space?)"
+                   "Moving failing message to \"sent-mail\" folder."));
       sentFolder->moveMsg(mCurrentMsg);
-      if ( sentFolder != kmkernel->sentFolder() )
-          sentFolder->close();
+      sentFolder->close();
       cleanup();
       return;
     case 1:
@@ -322,7 +322,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       // for speed optimization, this code assumes that mCurrentMsg is the
       // last one in it's parent folder; make sure that's really the case:
       assert( mCurrentMsg->parent()->find( mCurrentMsg )
-	      == mCurrentMsg->parent()->count() - 1 );
+              == mCurrentMsg->parent()->count() - 1 );
        // unGet this message:
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
     }
@@ -338,13 +338,13 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     if (mCurrentMsg && mCurrentMsg->transferInProgress())
     	mCurrentMsg = 0;
     // no more message: cleanup and done
-    if ( ( sentFolder != kmkernel->sentFolder() ) && ( sentFolder != 0 ) )
+    if ( sentFolder != 0 )
         sentFolder->close();
-    if (someSent) {
+    if ( someSent ) {
       if ( mSentMessages == mTotalMessages ) {
         setStatusMsg(i18n("%n queued message successfully sent.",
-		       	  "%n queued messages successfully sent.",
-			  mSentMessages));
+                          "%n queued messages successfully sent.",
+                     mSentMessages));
       } else {
         setStatusMsg(i18n("%1 of %2 queued messages successfully sent.")
             .arg(mSentMessages).arg( mTotalMessages ));
