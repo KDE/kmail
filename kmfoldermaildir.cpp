@@ -904,8 +904,11 @@ KMFolderIndex::IndexStatus KMFolderMaildir::indexStatus()
   if (!index_info.exists())
     return KMFolderIndex::IndexMissing;
 
-  return ((new_info.lastModified() > index_info.lastModified()) ||
-          (cur_info.lastModified() > index_info.lastModified()))
+  // Check whether the directories are more than 5 seconds newer than the index
+  // file. The 5 seconds are added to reduce the number of false alerts due
+  // to slightly out of sync clocks of the NFS server and the local machine.
+  return ((new_info.lastModified() > index_info.lastModified().addSecs(5)) ||
+          (cur_info.lastModified() > index_info.lastModified().addSecs(5)))
          ? KMFolderIndex::IndexTooOld
          : KMFolderIndex::IndexOk;
 }
