@@ -195,7 +195,6 @@ public slots:
   void slotSpellcheckConfig();
   void slotEditToolbars();
   void readConfig(void); // Read settings from app's config file.
-
   
   void slotUpdWinTitle(const QString& ); // Change window title to given string.
 
@@ -254,6 +253,9 @@ public slots:
   
   /** Move focus to next/prev edit widget */
   void focusNextPrevEdit(const QWidget* current, bool next);
+
+  /** Update composer field to reflect new identity  */
+  void slotIdentityActivated(int idx);
 
 protected:
   /** Install grid management and header fields. If fields exist that
@@ -366,7 +368,7 @@ protected:
   QList<QWidget> mEdtList;
   static QString mPathAttach;
   QPalette mPalette;
-  QString mId;
+  QString mId, mOldSigText;
   QStringList mTransportHistory;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;

@@ -185,6 +185,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   connect(&mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
   connect(&mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(&mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
+  connect(&mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
 
   mMainWidget.resize(480,510);
   setView(&mMainWidget, FALSE);
@@ -1878,6 +1879,7 @@ void KMComposeWin::slotAppendSignature()
   }
   else sigText = ident.signature();
 
+  mOldSigText = sigText;
   if (!sigText.isEmpty())
   {
     mEditor->insertLine("-- ", -1);
@@ -2039,6 +2041,36 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
   else if (aNext) mEditor->setFocus(); //Key up from first doea nothing (sven)
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotIdentityActivated(int)
+{
+  QString identStr = mIdentity.currentText();
+  if (!KMIdentity::identities().contains(identStr))
+    return;
+  KMIdentity ident(identStr);
+  ident.readConfig();
+
+  if(!ident.fullEmailAddr().isNull())
+    mEdtFrom.setText(ident.fullEmailAddr());
+  if(!ident.replyToAddr().isNull()) 
+    mEdtReplyTo.setText(ident.replyToAddr());
+  if (ident.organization().isEmpty())
+    mMsg->removeHeaderField("Organization");
+  else
+    mMsg->setHeaderField("Organization", ident.organization());
+
+  QString edtText = mEditor->text();
+  int pos = edtText.findRev(mOldSigText);
+  if ((pos > 0) && (pos + mOldSigText.length() == edtText.length())) {
+    bool mod = mEditor->isModified();
+    edtText.truncate(pos);
+    edtText.append(ident.signature());
+    mEditor->setText(edtText);
+    mEditor->setModified(mod);
+    mOldSigText = ident.signature();
+  }
+  mId = identStr;
+}
 
 
 //=============================================================================
