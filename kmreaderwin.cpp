@@ -532,13 +532,15 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     else if (ch=='@')
     {
       for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
-			 *pos=='_'||*pos=='-' || *pos=='*') && i<255; i++, pos--)
+			 *pos=='_'||*pos=='-' || *pos=='*' || *pos=='[' || *pos==']') 
+	     && i<255; i++, pos--)
       {
       }
       i1 = i;
       pos++; 
       for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
-			 *pos=='_'||*pos=='-' || *pos=='*') && i<255; i++, pos++)
+			 *pos=='_'||*pos=='-' || *pos=='*'  || *pos=='[' || *pos==']') 
+	     && i<255; i++, pos++)
       {
 	iStr += *pos;
       }
