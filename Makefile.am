@@ -30,7 +30,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
 		kmgroupware.cpp kmgroupwarefuncs.cpp startupwizard.cpp \
-		klistboxdialog.cpp \
+		csshelper.cpp klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
 		directoryservicesconfigurationdialog.ui \
