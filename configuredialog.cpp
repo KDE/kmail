@@ -2314,6 +2314,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mEditorRequester = new KURLRequester( hbox );
   connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  connect( mEditorRequester, SIGNAL( textChanged(const QString&) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hbox->setStretchFactor( mEditorRequester, 1 );
   label->setBuddy( mEditorRequester );
