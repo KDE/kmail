@@ -229,9 +229,16 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     }
     msg = 0;
   }
-  if (account->slave()) account->mapJobData.remove(it);
   account->displayProgress();
-  if (account->slave()) account->mJobList.remove(this);
+  if (account->slave()) {
+    /* Check whether the job and data have already been removed. This
+       happens because unGetMsg could have been called as a result of 
+       the message being filtered away upon messageRetrieved. */
+    if (account->mapJobData.find(it)) 
+      account->mapJobData.remove(it);
+    if (account->mJobList.find(this)) 
+      account->mJobList.remove(this);
+  }
   deleteLater();
 }
 
