@@ -427,7 +427,6 @@ void KMFilterDlg::slotBtnUp()
   mFilterList->insertItem(filter->name(), idx-1);
 
   mFilterList->setCurrentItem(idx-1);
-  mFilterList->repaint();
 }
 
 
@@ -447,7 +446,6 @@ void KMFilterDlg::slotBtnDown()
   mFilterList->insertItem(filter->name(), idx+1);
 
   mFilterList->setCurrentItem(idx+1);
-  mFilterList->repaint();
 }
 
 
@@ -474,7 +472,7 @@ void KMFilterDlg::slotBtnDelete()
   int idx = mFilterList->currentItem();
   if (idx < 0) return;
 
-  if(mFilter == filterMgr->at(idx)) mFilter = 0;
+  mFilter = 0;
 
   mFilterList->removeItem(idx);
   filterMgr->remove(idx);
