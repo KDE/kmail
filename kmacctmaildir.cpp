@@ -84,7 +84,7 @@ void KMAcctMaildir::processNewMail(bool)
     QFileInfo fi( location() );
     if ( !fi.exists() ) {
       checkDone( hasNewMail, CheckOK );
-      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, 0 );
       return;
     }
   }
@@ -195,7 +195,7 @@ void KMAcctMaildir::processNewMail(bool)
   }
   if (addedOk)
   {
-    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, num );
   }
   // else warning is written already
 

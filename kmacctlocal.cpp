@@ -108,7 +108,7 @@ bool KMAcctLocal::preProcess()
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
-      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, 0 );
       checkDone( mHasNewMail, CheckOK );
       return false;
     }
@@ -253,7 +253,7 @@ void KMAcctLocal::postProcess()
     }
 
     if( mMailCheckProgressItem ) { // do this only once...
-      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mName, mNumMsgs );
       mMailCheckProgressItem->setStatus(
         i18n( "Fetched 1 message from mailbox %1.",
               "Fetched %n messages from mailbox %1.",
