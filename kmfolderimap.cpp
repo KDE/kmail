@@ -539,7 +539,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
                 !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
-  ImapAccountBase::ListType type = 
+  ImapAccountBase::ListType type =
     (mAccount->onlySubscribedFolders() ? ImapAccountBase::ListSubscribed : ImapAccountBase::List);
   mAccount->listDirectory(mImapPath, type,
                           secondStep, folder(), reset);
@@ -1337,7 +1337,7 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
      // Send off a status setting job for each set.
      for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
        QString imappath = imapPath() + ";UID=" + ( *slit );
-       mAccount->setImapStatus(imappath, flags);
+       mAccount->setImapStatus(folder(), imappath, flags);
      }
   }
   mAccount->displayProgress();

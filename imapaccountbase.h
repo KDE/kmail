@@ -191,6 +191,12 @@ namespace KMail {
     void getACL( KMFolder* folder, const QString& imapPath );
 
     /**
+     * Set the status on the server
+     * Emits imapStatusChanged signal on success/error.
+     */
+    void setImapStatus( KMFolder* folder, const QString& path, const QCString& flags );
+
+    /**
      * The KIO-Slave died
      */
     void slaveDied() { mSlave = 0; killAllJobs(); }
@@ -236,6 +242,28 @@ namespace KMail {
      */
     bool hasACLSupport() const { return mACLSupport; }
 
+    /**
+     * Deprecated method for error handling. Please port to handleJobError.
+     */
+    void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
+
+    /**
+     * Handle an error coming from a KIO job
+     * and abort everything (in all cases) if abortSync is true [this is for slotSlaveError].
+     * Otherwise (abortSync==false), dimap will only abort in case of severe errors (connection broken),
+     * but on "normal" errors (no permission to delete, etc.) it will ask the user.
+     *
+     * @param error the error code, usually job->error())
+     * @param errorMsg the error message, usually job->errorText()
+     * @param job the kio job (can be 0). If set, removeJob will be called automatically.
+     * This is important! It means you should not call removeJob yourself in case of errors.
+     * We can't let the caller do that, since it should only be done afterwards, and only if we didn't abort.
+     *
+     * @param context a sentence that gives some context to the error, e.g. i18n("Error while uploading message [...]")
+     * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
+     */
+    virtual void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
+
   public slots:
     /**
      * gets the results of listDirectory
@@ -260,13 +288,6 @@ namespace KMail {
      */
     virtual void displayProgress();
 
-    /**
-     * Display an error message
-     */
-    virtual void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg) = 0;
-
-    /** Helper method to set the status on the server */
-    void setImapStatus(QString path, QCString flags);
   protected slots:
     /**
      * new-mail-notification for not-selected folders (is called via
@@ -275,7 +296,9 @@ namespace KMail {
     virtual void postProcessNewMail( KMFolder * );
     void slotCheckQueuedFolders();
 
+    /// Handle a message coming from the KIO scheduler saying that the slave is now connected
     void slotSchedulerSlaveConnected(KIO::Slave *aSlave);
+    /// Handle an error coming from the KIO scheduler
     void slotSchedulerSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
     /**
@@ -290,6 +313,7 @@ namespace KMail {
     void slotGetACLResult( KIO::Job* _job );
 
   protected:
+
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
     // ### Hacks
@@ -345,19 +369,28 @@ namespace KMail {
         QStringList, const ImapAccountBase::jobData &);
 
     /**
-     * Emitted when the subscription has changed
+     * Emitted when the subscription has changed,
+     * as a result of a changeSubscription call.
      */
     void subscriptionChanged(const QString& imapPath, bool subscribed);
 
     /**
-     * Emitted when the get-user-rights job is done.
+     * Emitted upon completion of the job for setting the status for a group of UIDs,
+     * as a result of a setImapStatus call.
+     * If the job succeeded, success is true.
+     */
+    void imapStatusChanged( KMFolder*, const QString& imapPath, bool success );
+
+    /**
+     * Emitted when the get-user-rights job is done,
+     * as a result of a getUserRights call.
      * Use userRights() to retrieve them, they will still be on 0 if the job failed.
      */
     void receivedUserRights( KMFolder* folder );
 
     /**
-     * Emitted when the get-the-ACLs job is done.
-     * @see getACL
+     * Emitted when the get-the-ACLs job is done,
+     * as a result of a getACL call.
      * @param folder the folder for which we were listing the ACLs (can be 0)
      * @param job the job that was used for doing so (can be used to display errors)
      * @param entries the ACL list. Make your copy of it, it comes from the job.

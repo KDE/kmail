@@ -136,31 +136,12 @@ public:
 
   /**
    * Handle an error coming from a KIO job
-   * and abort everything (in all cases) if abortSync is true.
-   * Otherwise (abortSync==false), we only abort in case of severe errors (connection broken),
-   * but not a "normal" errors (no permission to delete, etc.)
-   * It would be good to port more and more code to abortSync==false, i.e. better error recovery.
-   *
-   * @param error the error code, usually job->error())
-   * @param errorMsg the error message, usually job->errorText()
-   * @param job the kio job (can be 0). If set, removeJob will be called automatically.
-   * This is important! It means you should not call removeJob yourself in case of errors.
-   * We can't let the caller do that, since it should only be done afterwards, and only if we didn't abort.
-   *
-   * @param context a sentence that gives some context to the error, e.g. i18n("Error while uploading message [...]")
-   * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
+   * See ImapAccountBase::handleJobError for details.
    */
-  void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
+  virtual void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
 public slots:
   void processNewMail() { processNewMail( mFolder, true ); }
-
-  /**
-   * Handle an error coming from the KIO scheduler
-   * This slot has been abused for job error handling, but this should be changed
-   * to use handleJobError instead.
-   */
-  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
 protected:
   friend class KMAcctMgr;

@@ -122,9 +122,6 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
     mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
 {
-  connect( this, SIGNAL( listMessagesComplete() ),
-           this, SLOT( serverSyncInternal() ) );
-
   setUidValidity("");
   mLastUid=0;
   readUidCache();
@@ -514,7 +511,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
+  kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
@@ -563,8 +560,6 @@ void KMFolderCachedImap::serverSyncInternal()
     emit syncRunning( folder(), true );
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
     if( !noContent() ) {
-      // TODO (Bo): How can we obtain the UID validity on a noContent folder?
-      // TODO (Bo): Is it perhaps not necessary to do so?
       checkUidValidity();
       break;
     }
@@ -861,6 +856,7 @@ void KMFolderCachedImap::uploadFlags()
   mProgress += 10;
   //kdDebug(5006) << label() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
   if ( !uidMap.isEmpty() ) {
+    mStatusFlagsJobs = 0;
     emit statusMsg( i18n("%1: Uploading status of messages to server").arg(label()) );
     emit newState( label(), mProgress, i18n("Uploading status of messages to server"));
 
@@ -883,19 +879,35 @@ void KMFolderCachedImap::uploadFlags()
     for( dit = groups.begin(); dit != groups.end(); ++dit ) {
       QCString flags = dit.key().latin1();
       QStringList sets = KMFolderImap::makeSets( (*dit), true );
+      mStatusFlagsJobs += sets.count(); // ### that's not in kmfolderimap....
       // Send off a status setting job for each set.
       for( QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
         QString imappath = imapPath() + ";UID=" + ( *slit );
-        mAccount->setImapStatus(imappath, flags);
+        mAccount->setImapStatus(folder(), imappath, flags);
       }
     }
     // FIXME END DUPLICATED FROM KMFOLDERIMAP
+
+    connect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
+             this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
   } else {
     emit newState( label(), mProgress, i18n("No messages to upload to server"));
+    serverSyncInternal();
   }
-
-  serverSyncInternal();
 }
+
+void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool)
+{
+  if ( folder->storage() == this ) {
+    --mStatusFlagsJobs;
+    if ( mStatusFlagsJobs == 0 ) {
+      disconnect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
+                  this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
+      serverSyncInternal();
+    }
+  }
+}
+
 
 /* Upload new folders to server */
 void KMFolderCachedImap::createNewFolders()
@@ -1011,7 +1023,6 @@ void KMFolderCachedImap::listMessages() {
 
   if( !mAccount->slave() ) { // sync aborted
     resetSyncState();
-    emit listMessagesComplete();
     emit folderComplete( this, false );
     return;
   }
@@ -1020,33 +1031,19 @@ void KMFolderCachedImap::listMessages() {
   uidsForDeletionOnServer.clear();
   mMsgsForDownload.clear();
   mUidsForDownload.clear();
-  KURL url = mAccount->getUrl();
-  url.setPath(imapPath() + ";UID=1:*;SECTION=ENVELOPE");
-  KMAcctCachedImap::jobData jd( url.url(), folder() );
 
-  KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
-  mAccount->insertJob(newJob, jd);
-
-  connect( newJob, SIGNAL( result( KIO::Job* ) ),
-           this, SLOT( slotGetLastMessagesResult( KIO::Job* ) ) );
-  connect( newJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-           this, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
+  CachedImapJob* job = new CachedImapJob( FolderJob::tListMessages, this );
+  connect( job, SIGNAL( result(KMail::FolderJob *) ),
+           this, SLOT( slotGetLastMessagesResult(KMail::FolderJob *) ) );
+  job->start();
 }
 
-void KMFolderCachedImap::slotGetLastMessagesResult(KIO::Job * job)
+void KMFolderCachedImap::slotGetLastMessagesResult(KMail::FolderJob *job)
 {
   getMessagesResult(job, true);
 }
 
-
-//-----------------------------------------------------------------------------
-void KMFolderCachedImap::slotGetMessagesResult(KIO::Job * job)
-{
-  getMessagesResult(job, false);
-}
-
-// All this should be moved to CachedImapJob obviously...
+// Connected to the listMessages job in CachedImapJob
 void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -1121,28 +1118,16 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
   }
 }
 
-void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
+void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet )
 {
-
-  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
-  if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    kdDebug(5006) << "could not find job!?!?!" << endl;
-    serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
-    return;
-  }
-
-  if( job->error() ) {
-    mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while retrieving messages on the server: " ) + '\n' );
+  if( job->error() ) { // error listing messages but the user chose to continue
     mContentState = imapNoInformation;
-    // already done by handleJobError (if aborting)
-    //emit folderComplete(this, FALSE);
   } else {
-    if (lastSet)
+    if( lastSet ) { // always true here (this comes from online-imap...)
       mContentState = imapFinished;
-    mAccount->removeJob(it);
+    }
   }
-  if( lastSet )
-    emit listMessagesComplete();
+  serverSyncInternal();
 }
 
 void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
@@ -1348,8 +1333,9 @@ void KMFolderCachedImap::listDirectory2() {
   serverSyncInternal();
 }
 
-void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap*, bool success)
+void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool success)
 {
+  kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
   if ( success )
     serverSyncInternal();
   else
@@ -1361,8 +1347,9 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap*, bool success
       mCurrentSubfolder = 0;
     }
 
-    resetSyncState();
-    emit folderComplete( this, TRUE );
+    mSubfoldersForSync.clear();
+    mSyncState = SYNC_STATE_INITIAL;
+    emit folderComplete( this, false );
     close();
   }
 }
@@ -1444,6 +1431,7 @@ KMFolderCachedImap::slotMultiSetACLResult(KIO::Job *job)
 
   if ( job->error() )
     // Display error but don't abort the sync just for this
+    // PENDING(dfaure) reconsider using handleJobError now that it offers continue/cancel
     job->showErrorDialog();
 
   if (mAccount->slave()) mAccount->removeJob(job);

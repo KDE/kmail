@@ -100,7 +100,7 @@ public:
   /** Force the sync state to be done. */
   void resetSyncState();
 
-  virtual void checkUidValidity();
+  void checkUidValidity();
 
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
 
@@ -218,12 +218,12 @@ protected slots:
       QStringList, const ImapAccountBase::jobData &);
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
-  void getMessagesResult(KIO::Job * job, bool lastSet);
-  void slotGetMessagesResult(KIO::Job * job);
-  void slotGetLastMessagesResult(KIO::Job * job);
+  void getMessagesResult(KMail::FolderJob *, bool lastSet);
+  void slotGetLastMessagesResult(KMail::FolderJob *);
   void slotProgress(unsigned long done, unsigned long total);
 
   //virtual void slotCheckValidityResult(KIO::Job * job);
+  void slotSubFolderComplete(KMFolderCachedImap*, bool);
 
   // Connected to the imap account
   void slotConnectionResult( int errorCode );
@@ -234,7 +234,7 @@ protected slots:
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
   void slotDeleteMessagesResult(KMail::FolderJob *);
-  void slotSubFolderComplete(KMFolderCachedImap*, bool);
+  void slotImapStatusChanged(KMFolder* folder, const QString&, bool);
 
 protected:
   /* returns true if there were messages to delete
@@ -289,8 +289,6 @@ signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);
   void listComplete( KMFolderCachedImap* );
 
-  void listMessagesComplete();
-
   /* emitted at each state */
   void newState( const QString& folderName, int progressLevel, const QString& syncStatus );
 
@@ -325,6 +323,7 @@ private:
   } mSyncState;
 
   int mProgress;
+  int mStatusFlagsJobs;
 
   QString mUidValidity;
   QString     mImapPath;

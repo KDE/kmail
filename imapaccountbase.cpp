@@ -252,6 +252,14 @@ namespace KMail {
     return Connecting;
   }
 
+  // Deprecated method for error handling. Please port to handleJobError.
+  void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
+                                       const QString &errorMsg )
+  {
+    if (aSlave != mSlave) return;
+    handleJobError( errorCode, errorMsg, 0, QString::null, true );
+  }
+
   void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
 
     disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
@@ -313,7 +321,7 @@ namespace KMail {
   void ImapAccountBase::listDirectory(QString path, ListType subscription,
       bool secondStep, KMFolder* parent, bool reset, bool complete)
   {
-    if (makeConnection() == Error)
+    if (makeConnection() == Error) // ## doesn't handle Connecting
       return;
     // create jobData
     jobData jd;
@@ -405,16 +413,16 @@ namespace KMail {
     if ( it == jobsEnd() ) return;
     if (job->error())
     {
-      slotSlaveError( mSlave, job->error(),
-          job->errorText() );
+      // PENDING(dfaure) handleJobError
+      slotSlaveError( mSlave, job->error(), job->errorText() );
     }
-    if (!job->error())
+    else
     {
       // transport the information, include the jobData
       emit receivedFolders(mSubfolderNames, mSubfolderPaths,
           mSubfolderMimeTypes, *it);
+      removeJob(it);
     }
-    if (mSlave) removeJob(job);
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
@@ -436,12 +444,11 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if (makeConnection() != Connected)
+    if (makeConnection() != Connected) // ## doesn't handle Connecting
       return;
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
-    jobData jd;
-    jd.total = 1; jd.done = 0; jd.parent = NULL;
+    jobData jd( url.url(), NULL );
     // a bit of a hack to save one slot
     if (subscribe) jd.onlySubscribed = true;
     else jd.onlySubscribed = false;
@@ -459,6 +466,7 @@ namespace KMail {
     if ( it == jobsEnd() ) return;
     if (job->error())
     {
+      // PENDING(dfaure) handleJobError
       slotSlaveError( mSlave, job->error(),
           job->errorText() );
     } else {
@@ -477,8 +485,7 @@ namespace KMail {
 
     ACLJobs::GetUserRightsJob* job = ACLJobs::getUserRights( mSlave, url );
 
-    jobData jd;
-    jd.total = 1; jd.done = 0; jd.parent = parent;
+    jobData jd( url.url(), parent );
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -519,8 +526,7 @@ namespace KMail {
     url.setPath(imapPath);
 
     ACLJobs::GetACLJob* job = ACLJobs::getACL( mSlave, url );
-    jobData jd;
-    jd.total = 1; jd.done = 0; jd.parent = parent;
+    jobData jd( url.url(), parent );
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -543,7 +549,8 @@ namespace KMail {
       const QString &errorMsg)
   {
       if (aSlave != mSlave) return;
-      slotSlaveError( aSlave, errorCode, errorMsg );
+      // was: slotSlaveError( aSlave, errorCode, errorMsg );
+      handleJobError( errorCode, errorMsg, 0, QString::null, true );
       emit connectionResult( errorCode );
   }
 
@@ -722,7 +729,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::setImapStatus(QString path, QCString flags)
+  void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const QCString& flags )
   {
      // set the status on the server, the uids are integrated in the path
      kdDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
@@ -735,10 +742,12 @@ namespace KMail {
      stream << (int) 'S' << url << flags;
 
      if ( makeConnection() != ImapAccountBase::Connected )
-        return;
+       return; // can't happen with dimap
+
      KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
      KIO::Scheduler::assignJobToSlave(slave(), job);
-     ImapAccountBase::jobData jd( url.url(), 0 );
+     ImapAccountBase::jobData jd( url.url(), folder );
+     jd.path = path;
      insertJob(job, jd);
      connect(job, SIGNAL(result(KIO::Job *)),
            SLOT(slotSetStatusResult(KIO::Job *)));
@@ -748,11 +757,17 @@ namespace KMail {
   {
      ImapAccountBase::JobIterator it = findJob(job);
      if ( it == jobsEnd() ) return;
-     if (job->error() && job->error() != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
+     int errorCode = job->error();
+     if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
-        slotSlaveError( slave(), job->error(), job->errorText() );
+       emit imapStatusChanged( (*it).parent, (*it).path, false );
+       handleJobError( errorCode, job->errorText(), job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
      }
-     removeJob(it);
+     else
+     {
+       emit imapStatusChanged( (*it).parent, (*it).path, true );
+       removeJob(it);
+     }
   }
 
   //-----------------------------------------------------------------------------

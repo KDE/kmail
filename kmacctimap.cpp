@@ -88,10 +88,9 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-  const QString &errorMsg)
+
+void KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
 {
-  if (aSlave != mSlave) return;
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
   if (errorCode == KIO::ERR_DOES_NOT_EXIST)
@@ -107,6 +106,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if ( !mErrorDialogIsActive )
   {
     mErrorDialogIsActive = true;
+    // TODO use "context" in error message
     KMessageBox::error(kmkernel->mainWin(),
           KIO::buildErrorString(errorCode, errorMsg));
     mErrorDialogIsActive = false;

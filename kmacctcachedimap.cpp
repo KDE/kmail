@@ -127,24 +127,16 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-                                      const QString &errorMsg )
-{
-  if (aSlave != mSlave) return;
-  handleJobError( errorCode, errorMsg, 0, QString::null, true );
-}
-
-//-----------------------------------------------------------------------------
 void KMAcctCachedImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
 {
   // Copy job's data before a possible killAllJobs
   QStringList errors;
-  if ( job )
+  if ( job && job->error() != KIO::ERR_SLAVE_DEFINED /*workaround for kdelibs-3.2*/)
     errors = job->detailedErrorStrings();
 
   bool jobsKilled = true;
   switch( errorCode ) {
-  case KIO::ERR_SLAVE_DIED: slaveDied(); break;
+  case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
   case KIO::ERR_COULD_NOT_LOGIN: mAskAgain = TRUE; break;
   case KIO::ERR_CONNECTION_BROKEN:
     if ( slave() ) {

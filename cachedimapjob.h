@@ -89,7 +89,7 @@ public:
   // Delete folders
   CachedImapJob( const QStringList& folders, JobType type,
                  KMFolderCachedImap* folder = 0 );
-  // Other jobs (expunge folder, check uid validity)
+  // Other jobs (list messages,expunge folder, check uid validity)
   CachedImapJob( JobType type, KMFolderCachedImap* folder );
 
   virtual ~CachedImapJob();
@@ -101,10 +101,11 @@ public:
 protected:
   virtual void execute();
   virtual void expireMessages();
-  virtual void deleteMessages( const QString& uids );
-  virtual void expungeFolder();
-  virtual void checkUidValidity();
-  virtual void renameFolder( const QString &newName );
+  void deleteMessages( const QString& uids );
+  void expungeFolder();
+  void checkUidValidity();
+  void renameFolder( const QString &newName );
+  void listMessages();
 
 protected slots:
   virtual void slotGetNextMessage( KIO::Job *job = 0 );
@@ -117,6 +118,7 @@ protected slots:
   virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
   virtual void slotCheckUidValidityResult( KIO::Job *job );
   virtual void slotRenameFolderResult( KIO::Job *job );
+  virtual void slotListMessagesResult( KIO::Job * job );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
 
 private:

@@ -85,9 +85,9 @@ public:
   void listDirectory(QString path, ListType subscription,
       bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);
 
-  /** 
+  /**
    * Starts the folderlisting for the root folder
-   */   
+   */
   virtual void listDirectory();
 
   /**
@@ -95,16 +95,16 @@ public:
    * manager when a new account is created. The config group is
    * already properly set by the caller.
    */
-  virtual void readConfig(KConfig& config);  
+  virtual void readConfig(KConfig& config);
 
+  /**
+   * Handle an error coming from a KIO job
+   * See ImapAccountBase::handleJobError for details.
+   */
+  virtual void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
 public slots:
   void processNewMail() { processNewMail(TRUE); }
-
-  /**
-   * Display an error message
-   */
-  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
   /**
    * updates the new-mail-check folderlist
