@@ -1150,7 +1150,7 @@ bool KMGroupware::incomingResourceMessage( KMAccount* /*acct*/, KMMessage* /*msg
 void KMGroupware::reloadFolderTree() const
 {
   // Make the folder tree show the icons or not
-  if( mMainWidget->folderTree() )
+  if( mMainWidget && mMainWidget->folderTree() )
     mMainWidget->folderTree()->reload();
 }
 

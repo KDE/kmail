@@ -54,9 +54,6 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
      mFolderLanguage( 0 ), mUseResourceIMAP( false )
 {
-  QObject* gw = &kmkernel->groupware();
-  connect( gw, SIGNAL( signalRefresh( const QString& ) ),
-	   this, SLOT( slotRefresh( const QString& ) ) );
 }
 
 // Receive an ical from libkcal
