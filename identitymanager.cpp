@@ -263,13 +263,16 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
 void IdentityManager::createDefaultIdentity() {
   struct passwd * pw = getpwuid( getuid() );
 
-  QString fullName, emailAddr;
+  QString fullName/*, emailAddr*/;
   if ( pw ) {
     // extract possible full name from /etc/passwd
     fullName = QString::fromLocal8Bit( pw->pw_gecos );
     int i = fullName.find(',');
     if ( i > 0 ) fullName.truncate( i );
 
+/* ### This code is commented out because the guessed email address
+   ### is most likely anyway wrong (because it contains the full hostname).
+   ### Marc wanted to keep this stuff in the code for a future Config Wizard.
     // extract login name from /etc/passwd and get hostname to form an
     // educated guess about the possible email address:
     char str[256];
@@ -281,8 +284,9 @@ void IdentityManager::createDefaultIdentity() {
     emailAddr = QString::fromLatin1("%1@%2")
       .arg( QString::fromLocal8Bit( pw->pw_name ) )
       .arg( QString::fromLatin1( *str ? str : "localhost" ) );
+*/
   }
-  mShadowIdentities << KMIdentity( i18n("Default"), fullName, emailAddr );
+  mShadowIdentities << KMIdentity( i18n("Default"), fullName/*, emailAddr*/ );
   mShadowIdentities.last().setIsDefault( true );
 }
 
