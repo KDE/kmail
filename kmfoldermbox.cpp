@@ -43,8 +43,8 @@
 // Regular expression to find the line that seperates messages in a mail
 // folder:
 #define MSG_SEPERATOR_START "From "
-#define MSG_SEPERATOR_REGEX "^From .*[0-9][0-9]:[0-9][0-9].*$"
-static short msgSepLen = strlen(MSG_SEPERATOR_START);
+#define MSG_SEPERATOR_START_LEN (sizeof(MSG_SEPERATOR_START) - 1)
+#define MSG_SEPERATOR_REGEX "^From .*[0-9][0-9]:[0-9][0-9]"
 
 
 //-----------------------------------------------------------------------------
@@ -544,7 +544,7 @@ int KMFolderMbox::createIndexFromContents()
     if (!fgets(line, MAX_LINE, mStream)) atEof = true;
 
     if (atEof ||
-        (strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 &&
+        (memcmp(line, MSG_SEPERATOR_START, MSG_SEPERATOR_START_LEN)==0 &&
          regexp.search(line) >= 0))
     {
       size = pos - offs;
