@@ -21,6 +21,8 @@
 #include <kio/job.h>
 #include <kglobalsettings.h>
 
+#include <kpgp.h>
+
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 #include "mailcomposerIface.h"
@@ -262,7 +264,7 @@ public:
    * That's usefull for storing decrypted versions of messages which
    * were sent in encrypted form.                  (khz, 2002/06/24)
    */
-   bool composeMessage( CryptPlugWrapper* cryptPlug,
+   Kpgp::Result composeMessage( CryptPlugWrapper* cryptPlug,
                         QCString pgpUserId,
                         KMMessage& theMessage,
                         bool doSign,
@@ -625,7 +627,7 @@ private:
   bool signFlagOfAttachment(int idx);
 
 
-  bool encryptMessage( KMMessage* msg,
+  Kpgp::Result encryptMessage( KMMessage* msg,
                        const QStringList& recipients, bool doSign, bool doEncrypt,
                        CryptPlugWrapper* cryptPlug,
                        const QCString& encodedBody,int previousBoundaryLevel,

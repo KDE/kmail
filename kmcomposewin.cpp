@@ -1415,8 +1415,7 @@ bool KMComposeWin::applyChanges(void)
           QString( "<qt><b>"
             + i18n("Warning:")
             + "</b><br>"
-            + QString(
-                (doSign && !doSignCompletely)
+            + ((doSign && !doSignCompletely)
               ? i18n("You specified not to sign some parts of this message, but"
                      " you wanted to be warned not to send unsigned messages!")
               : i18n("You specified not to sign this message, but"
@@ -1446,8 +1445,7 @@ bool KMComposeWin::applyChanges(void)
           QString( "<qt><b>"
             + i18n("Warning:")
             + "</b><br>"
-            + QString(
-                (doEncrypt && !doEncryptCompletely)
+            + ((doEncrypt && !doEncryptCompletely)
               ? i18n("You specified not to encrypt some parts of this message, but"
                      " you wanted to be warned not to send unencrypted messages!")
               : i18n("You specified not to encrypt this message, but"
@@ -1520,9 +1518,9 @@ bool KMComposeWin::applyChanges(void)
   KMMessage* extraMessage = new KMMessage( *mMsg );
 
   if( bOk )
-    bOk = composeMessage( cryptPlug, pgpUserId,
+    bOk = (composeMessage( cryptPlug, pgpUserId,
                           *mMsg, doSign, doEncrypt, false,
-                          signCertFingerprint );
+                          signCertFingerprint ) == Kpgp::Ok);
 
   if( bOk ) {
     bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
@@ -1593,12 +1591,12 @@ bool KMComposeWin::applyChanges(void)
           entry->setSign(    saveSentSignatures );
         }
       }
-      bOk = composeMessage( cryptPlug, pgpUserId,
+      bOk = (composeMessage( cryptPlug, pgpUserId,
                             *extraMessage,
                             doSign    && saveSentSignatures,
                             doEncrypt && saveMessagesEncrypted,
                             true,
-                            signCertFingerprint );
+                             signCertFingerprint ) == Kpgp::Ok);
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
       extraMessage->cleanupHeader();
       mMsg->setUnencryptedMsg( extraMessage );
@@ -1628,7 +1626,7 @@ kdDebug(5006) << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asStrin
 }
 
 
-bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
+Kpgp::Result KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                    QCString pgpUserId,
                                    KMMessage& theMessage,
                                    bool doSign,
@@ -1636,7 +1634,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                    bool ignoreBcc,
                                    QCString& signCertFingerprint )
 {
-  bool bOk = true;
+  Kpgp::Result result = Kpgp::Ok;
   // create informative header for those that have no mime-capable
   // email client
   theMessage.setBody( "This message is in MIME format." );
@@ -1646,7 +1644,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
 
   qDebug( "***body = %s", body.data() );
 
-  if (body.isNull()) return FALSE;
+  if (body.isNull()) return Kpgp::Failure;
 
   if (body.isEmpty()) body = "\n"; // don't crash
 
@@ -1807,9 +1805,9 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                            structuring,
                                            signCertFingerprint );
       kdDebug(5006) << "                           size of signature: " << signature.count() << "\n" << endl;
-      bOk = !signature.isEmpty();
-      if( bOk ) {
-        bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+      result = signature.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
+      if( result == Kpgp::Ok ) {
+        result = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
                                       previousBoundaryLevel + doEncrypt ? 3 : 2,
                                       oldBodyPart.contentDescription(),
                                       oldBodyPart.typeStr(),
@@ -1820,8 +1818,8 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                       "signature",
                                       signature,
                                       structuring,
-                                      newBodyPart );
-        if( bOk ) {
+                                      newBodyPart ) ? Kpgp::Ok : Kpgp::Failure;
+        if( result == Kpgp::Ok ) {
           if( newBodyPart.name().isEmpty() )
             newBodyPart.setName("signed message part");
           newBodyPart.setCharset( oldBodyPart.charset() );
@@ -1835,9 +1833,9 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
       block.setText( encodedBody );
 
       // clearsign the message
-      bOk = block.clearsign( pgpUserId, mCharset );
+      result = block.clearsign( pgpUserId, mCharset );
 
-      if( bOk ) {
+      if( result == Kpgp::Ok ) {
         newBodyPart.setType(                       oldBodyPart.type() );
         newBodyPart.setSubtype(                    oldBodyPart.subtype() );
         newBodyPart.setCharset(                    oldBodyPart.charset() );
@@ -1846,13 +1844,13 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
         newBodyPart.setContentDisposition(         oldBodyPart.contentDisposition() );
         newBodyPart.setBodyEncoded( block.text() );
       }
-      else
+      else if ( result == Kpgp::Failure )
         KMessageBox::sorry(this, i18n("<qt><p>Signing not done.</p>%1</qt>")
 			   .arg( mErrorNoCryptPlugAndNoBuildIn ));
     }
   }
 
-  if( bOk ) {
+  if( result == Kpgp::Ok ) {
     // determine the list of public recipients
     QString _to = to().simplifyWhiteSpace();
     if( !cc().isEmpty() ) {
@@ -1873,15 +1871,15 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
         //kdDebug(5006) << "###BEFORE \"" << theMessage.asString() << "\""<< endl;
         KMMessage* yetAnotherMessageForBCC = new KMMessage( theMessage );
         KMMessagePart tmpNewBodyPart = newBodyPart;
-        bOk = encryptMessage( yetAnotherMessageForBCC,
+        result = encryptMessage( yetAnotherMessageForBCC,
                               tmpRecips,
                               doSign, doEncrypt, cryptPlug, encodedBody,
                               previousBoundaryLevel,
                               oldBodyPart,
                               earlyAddAttachments, allAttachmentsAreInBody,
                               tmpNewBodyPart,
-                              signCertFingerprint );
-        if( bOk ){
+                                 signCertFingerprint );
+        if( result == Kpgp::Ok ){
           yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
           bccMsgList.append( yetAnotherMessageForBCC );
           //kdDebug(5006) << "###BCC AFTER \"" << theMessage.asString() << "\""<<endl;
@@ -1891,18 +1889,18 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
     }
 
     // run encrypting for public recipient(s)
-    if( bOk )
-      bOk = encryptMessage( &theMessage,
+    if( result == Kpgp::Ok )
+      result = encryptMessage( &theMessage,
                             recipientsWithoutBcc,
                             doSign, doEncrypt, cryptPlug, encodedBody,
                             previousBoundaryLevel,
                             oldBodyPart,
                             earlyAddAttachments, allAttachmentsAreInBody,
                             newBodyPart,
-                            signCertFingerprint );
+                               signCertFingerprint );
     //        kdDebug(5006) << "###AFTER ENCRYPTION\"" << theMessage.asString() << "\""<<endl;
   }
-  return bOk;
+  return result;
 }
 
 
@@ -1911,7 +1909,7 @@ bool KMComposeWin::queryExit ()
   return true;
 }
 
-bool KMComposeWin::encryptMessage( KMMessage* msg,
+Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
                                    const QStringList& recipients,
                                    bool doSign,
                                    bool doEncrypt,
@@ -1924,17 +1922,17 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
                                    KMMessagePart newBodyPart,
                                    QCString& signCertFingerprint )
 {
+  Kpgp::Result result = Kpgp::Ok;
   if(!msg)
   {
     kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == NULL!\n" << endl;
-    return FALSE;
+    return Kpgp::Failure;
   }
 
   // This c-string (init empty here) is set by *first* testing of expiring
   // encryption certificate: stops us from repeatedly asking same questions.
   QCString encryptCertFingerprints;
 
-  bool bOk = true;
   // encrypt message
   if( doEncrypt ) {
     QCString innerContent;
@@ -1965,10 +1963,10 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
                                                     structuring,
                                                     encryptCertFingerprints );
 
-        bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
+        result = encryptedBody.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
 
-        if( bOk ) {
-          bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+        if( Kpgp::Ok == result ) {
+          result = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
                                         previousBoundaryLevel + doEncrypt ? 2 : 1,
                                         newBodyPart.contentDescription(),
                                         newBodyPart.typeStr(),
@@ -1979,8 +1977,8 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
                                         "encrypted data",
                                         encryptedBody,
                                         structuring,
-                                        newBodyPart );
-          if( bOk ) {
+                                        newBodyPart ) ? Kpgp::Ok : Kpgp::Failure;
+          if( Kpgp::Ok == result ) {
             if( newBodyPart.name().isEmpty() )
               newBodyPart.setName("encrypted message part");
           } else
@@ -2002,22 +2000,23 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
         QCString pgpUserId = ident.pgpIdentity();
 
         // encrypt the message
-        bOk = block.encrypt( recipients, pgpUserId, doSign, mCharset );
+        result = block.encrypt( recipients, pgpUserId, doSign, mCharset );
 
-        if( bOk ) {
+        if( Kpgp::Ok == result ) {
           newBodyPart.setBodyEncodedBinary( block.text() );
           if( newBodyPart.name().isEmpty() )
             newBodyPart.setName("encrypted message part");
         }
-        else
+        else if( Kpgp::Failure == result ) {
           KMessageBox::sorry(this,
             i18n("<qt><p>Encrypting not done.</p>%1</qt>").arg( mErrorNoCryptPlugAndNoBuildIn ));
+        }
       }
     }
   }
 
   // process the attachments that are not included into the body
-  if( bOk ) {
+  if( Kpgp::Ok == result ) {
     const KMMessagePart& ourFineBodyPart( (doSign || doEncrypt)
                                           ? newBodyPart
                                           : oldBodyPart );
@@ -2078,9 +2077,9 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
               QByteArray signature = pgpSignedMsg( encodedAttachment,
                                                    structuring,
                                                    signCertFingerprint );
-              bOk = !signature.isEmpty();
-              if( bOk ) {
-                bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+              result = signature.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
+              if( Kpgp::Ok == result ) {
+                result = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
                                               previousBoundaryLevel + 10 + idx,
                                               attachPart->contentDescription(),
                                               attachPart->typeStr(),
@@ -2091,8 +2090,8 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
                                               "signature",
                                               signature,
                                               structuring,
-                                              newAttachPart );
-                if( bOk ) {
+                                              newAttachPart ) ? Kpgp::Ok : Kpgp::Failure;
+                if( Kpgp::Ok == result ) {
                   if( newAttachPart.name().isEmpty() )
                     newAttachPart.setName("signed attachment");
                   if( encryptThisNow ) {
@@ -2117,10 +2116,10 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
                                                           structuring,
                                                           encryptCertFingerprints );
 
-              bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
+              result = encryptedBody.isEmpty() ? Kpgp::Failure : Kpgp::Ok;
 
-              if( bOk ) {
-                bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+              if( Kpgp::Ok == result ) {
+                result = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
                                               previousBoundaryLevel + 11 + idx,
                                               rEncryptMessagePart.contentDescription(),
                                               rEncryptMessagePart.typeStr(),
@@ -2131,8 +2130,8 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
                                               "encrypted data",
                                               encryptedBody,
                                               structuring,
-                                              newAttachPart );
-                if( bOk ) {
+                                              newAttachPart ) ? Kpgp::Ok : Kpgp::Failure;
+                if( Kpgp::Ok == result ) {
                   if( newAttachPart.name().isEmpty() ) {
                     newAttachPart.setName("encrypted attachment");
                   }
@@ -2171,7 +2170,7 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body ad
     }
 
   }
-  return bOk;
+  return result;
 }
 
 //-----------------------------------------------------------------------------
