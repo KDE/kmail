@@ -1016,6 +1016,22 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
   }
 }
 
+// This is among other things called when an expunge of a folder happens
+void KMailICalIfaceImpl::slotRefreshFolder( KMFolder* folder)
+{
+  // TODO: The resources would of course be better off, if only this
+  // folder would need refreshing. Currently it just orders a reload of
+  // the type of the folder
+  if( mUseResourceIMAP && folder ) {
+    if( folder == mCalendar || folder == mContacts
+        || folder == mNotes || folder == mTasks
+        || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
+      // Refresh the folder of this type
+      KMail::FolderContentsType ct = folder->storage()->contentsType();
+      slotRefresh( s_folderContentsType[ct].contentsTypeStr );
+    }
+  }
+}
 
 /****************************
  * The folder and message stuff code
@@ -1234,6 +1250,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
     connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    connect( folder, SIGNAL( expunged( KMFolder* ) ),
+             this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   }
 
   // Tell about the new resource
@@ -1523,16 +1541,6 @@ void KMailICalIfaceImpl::readConfig()
   if ( mNotes->folderType() == KMFolderTypeCachedImap )
     static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
 
-  // Connect the expunged signal
-  connect( mCalendar, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshCalendar() ) );
-  connect( mTasks,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshTasks() ) );
-  connect( mJournals, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshJournals() ) );
-  connect( mContacts, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshContacts() ) );
-  connect( mNotes,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshNotes() ) );
-
-  // Bad hack
-  connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
-
   kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
   kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
@@ -1597,12 +1605,6 @@ void KMailICalIfaceImpl::slotCheckDone()
   }
 }
 
-void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }
-void KMailICalIfaceImpl::slotRefreshTasks() { slotRefresh( "Task" ); }
-void KMailICalIfaceImpl::slotRefreshJournals() { slotRefresh( "Journal" ); }
-void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
-void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
-
 KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
                                           KMail::FolderContentsType contentsType )
 {
@@ -1661,6 +1663,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
   connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  connect( folder, SIGNAL( expunged( KMFolder* ) ),
+           this, SLOT( slotRefreshFolder( KMFolder* ) ) );
 
   return folder;
 }
