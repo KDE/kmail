@@ -12,11 +12,13 @@
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmpopfiltercnfrmdlg.h"
+#include "kmkernel.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kmainwindow.h>
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
 #include <kconfig.h>
@@ -800,7 +802,7 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   if (aSlave != mSlave) return;
   if (error == KIO::ERR_SLAVE_DIED) mSlave = 0;
   if (interactive) {
-    KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
+    KMessageBox::error(kmkernel->mainWin(), KIO::buildErrorString(error, errorMsg));
   }
 
 
