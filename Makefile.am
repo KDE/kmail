@@ -41,7 +41,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		certificatehandlingdialog.ui certificatehandlingdialogimpl.cpp \
 		certificatewizard.ui certificatewizardimpl.cpp \
 		mailinglist-magic.cpp kmrecentaddr.cpp kmacctmaildir.cpp \
-		linklocator.cpp \
+		linklocator.cpp spellingfilter.cpp \
                 mailcomposerIface.skel mailcomposerIface.stub \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp

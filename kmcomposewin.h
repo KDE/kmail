@@ -59,7 +59,7 @@ class KToggleAction;
 class KURL;
 class IdentityCombo;
 class CryptPlugWrapperList;
-
+class SpellingFilter;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
@@ -93,7 +93,7 @@ signals:
   void spellcheck_done(int result);
 public slots:
   void slotSpellcheck2(KSpell*);
-  void slotSpellResult(const QString &newtext);
+  void slotSpellResult(const QString&);
   void slotSpellDone();
   void slotExternalEditorDone(KProcess*);
 
@@ -106,6 +106,7 @@ protected:
   KMComposeWin* mComposer;
 private:
   KSpell *mKSpell;
+  SpellingFilter* mSpellingFilter;
   KTempFile *mTempFile;
   KProcess  *mExtEditorProcess;
   bool      extEditor;

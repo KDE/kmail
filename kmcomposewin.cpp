@@ -51,6 +51,7 @@
 
 #include <kspell.h>
 #include <kspelldlg.h>
+#include "spellingfilter.h"
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -4437,6 +4438,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   extEditor = false;     // the default is to use ourself
 
   mKSpell = NULL;
+  mSpellingFilter = 0;
   mTempFile = NULL;
   mExtEditorProcess = NULL;
 }
@@ -4603,23 +4605,41 @@ void KMEdit::spellcheck()
 void KMEdit::slotSpellcheck2(KSpell*)
 {
   spellcheck_start();
-  //we're going to want to ignore quoted-message lines...
-  mKSpell->check(text());
+
+  QString quotePrefix;
+  if(mComposer && mComposer->msg())
+  {
+    // read the quote indicator from the preferences
+    KConfig *config=kapp->config();
+    KConfigGroupSaver saver(config, "General");
+
+    int languageNr = config->readNumEntry("reply-current-language",0);
+    config->setGroup( QString("KMMessage #%1").arg(languageNr) );
+
+    quotePrefix = config->readEntry("indent-prefix", ">%_");
+    quotePrefix = mComposer->msg()->formatString(quotePrefix);
+  }
+
+  kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
+  mSpellingFilter = new SpellingFilter(text(), quotePrefix, SpellingFilter::FilterUrls,
+    SpellingFilter::FilterEmailAddresses);
+
+  mKSpell->check(mSpellingFilter->filteredText());
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotSpellResult(const QString &aNewText)
+void KMEdit::slotSpellResult(const QString &)
 {
   spellcheck_stop();
 
   int dlgResult = mKSpell->dlgResult();
   if ( dlgResult == KS_CANCEL )
   {
-     setText(aNewText);
+    kdDebug(5006) << "spelling: canceled - restoring text from SpellingFilter" << endl;
+    setText(mSpellingFilter->originalText());
   }
-  mKSpell->cleanUp();
 
-  kdDebug(5006) << "emitting spellcheck_done" << endl;
+  mKSpell->cleanUp();
   emit spellcheck_done( dlgResult );
 }
 
@@ -4629,6 +4649,11 @@ void KMEdit::slotSpellDone()
   KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
+
+  kdDebug(5006) << "spelling: delete SpellingFilter" << endl;
+  delete mSpellingFilter;
+  mSpellingFilter = 0;
+
   if (status == KSpell::Error)
   {
      KMessageBox::sorry(this, i18n("ISpell/Aspell could not be started. Please make sure you have ISpell or Aspell properly configured and in your PATH."));

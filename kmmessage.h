@@ -502,11 +502,11 @@ public:
    * and @p retStatus. */
   void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
 
-protected:
-  void assign( const KMMessage& other );
-
   /** Convert wildcards into normal string */
   QString formatString(const QString&) const;
+
+protected:
+  void assign( const KMMessage& other );
 
   QString mDrafts;
 
