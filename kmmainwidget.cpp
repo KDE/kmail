@@ -341,8 +341,10 @@ void KMMainWidget::readConfig(void)
   if (mMsgView)
     mMsgView->readConfig();
   slotSetEncoding();
+
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
+
   mFolderTree->readConfig();
 
   { // area for config group "General"
@@ -494,7 +496,6 @@ void KMMainWidget::createWidgets(void)
            mQuickSearchLine, SLOT( updateSearch() ) );
   if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
-  mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
     connect(mHeaders, SIGNAL(selected(KMMessage*)),
             this, SLOT(slotMsgSelected(KMMessage*)));

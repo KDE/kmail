@@ -232,9 +232,9 @@ public slots:
    * recursively select their children. */
   void setSelectedByIndex(QValueList<int> items, bool selected);
 
-  /** switch size-column
+  /** switch a column with the given id (see KPaintInfo enum)
       1 for activate, 0 for deactivate, -1 for toggle*/
-  void slotToggleSizeColumn(int mode = -1);
+  void slotToggleColumn(int id, int mode = -1);
 
   /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
@@ -244,8 +244,9 @@ protected:
     *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored, *pixSpam, *pixHam,
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
-      *pixFiller, *pixEncryptionProblematic,
-      *pixSignatureProblematic, *pixAttachment;
+    *pixFiller, *pixEncryptionProblematic,
+    *pixSignatureProblematic, *pixAttachment,
+    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);
@@ -396,7 +397,6 @@ private:
 
   /** popup to switch columns */
   KPopupMenu* mPopup;
-  int mSizeColumn;
 };
 
 #endif
