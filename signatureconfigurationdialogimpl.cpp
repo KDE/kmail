@@ -60,6 +60,12 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     if( ! FULLTEST ){
         askEachPartRB                ->hide(); // We won't implement that.
         
+        sendCertificatesBG           ->hide(); // Will implement that later
+        
+        pinEntryBG                   ->hide(); // Will implement that later
+        
+        saveMessagesBG               ->hide(); // We won't implement that.
+        
         dontSendCertificatesRB       ->hide(); // Will implement that later.
         sendChainWithoutRootRB       ->hide(); // Will implement that later.
         sendChainWithRootRB          ->hide(); // Will implement that later.
@@ -70,8 +76,6 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
         warnRootCertificateExpiresSB ->hide(); // Will implement that later.
         warnAddressNotInCertificateCB->hide(); // Will implement that later.
         
-        sendSigOpaqueRB              ->hide(); // Will implement that later.
-        
         pinOncePerSessionRB          ->hide(); // Will implement that later.
         pinAddCertificatesRB         ->hide(); // Will implement that later.
         pinAlwaysWhenSigningRB       ->hide(); // Will implement that later.
@@ -79,7 +83,6 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
         pinIntervalSB                ->hide(); // Will implement that later.
         
         saveSentSigsCB               ->hide(); // We won't implement that.
-        saveMessagesBG               ->hide(); // We won't implement that.
     }
 }
 
