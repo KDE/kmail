@@ -77,6 +77,7 @@ KMPopFilterAction KMPopHeadersView::mapToAction(int aColumn)
 /** No descriptions */
 void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint&,
         int aColumn) {
+  if ( !aItem ) return;
   KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>(aItem);
   assert( item );
   item->check(mapToAction(aColumn));
