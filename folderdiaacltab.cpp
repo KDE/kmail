@@ -376,6 +376,7 @@ void KMail::FolderDiaACLTab::load()
   } else if ( mDlg->parentFolder() ) {
     // new folder
     initializeWithValuesFromFolder( mDlg->parentFolder() );
+    mChanged = true; // ensure that saving happens
   }
 
   // KABC knows email addresses.
@@ -493,6 +494,8 @@ void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
     if ( (*it).permissions > -1 ) {
       ListViewItem* item = new ListViewItem( mListView );
       item->load( *it );
+      if ( !mDlg->folder() ) // new folder? everything is new then
+          item->setModified( true );
     }
   }
 }
@@ -500,7 +503,8 @@ void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
 void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
 {
   loadListView( aclList );
-  mInitialACLList = aclList;
+  if ( mDlg->folder() ) // not when creating a new folder
+    mInitialACLList = aclList;
   mStack->raiseWidget( mACLWidget );
   slotSelectionChanged( mListView->selectedItem() );
 }
