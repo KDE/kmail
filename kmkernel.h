@@ -5,9 +5,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <kurl.h>
 
-#include <cryptplugwrapperlist.h>
 #include "kmailIface.h"
 
 #define kernel KMKernel::self()
@@ -40,6 +38,7 @@ class KProgress;
 class KPassivePopup;
 class KMMainWin;
 class KMGroupware;
+class CryptPlugWrapperList;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -152,7 +151,7 @@ public:
 
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
-  CryptPlugWrapperList * cryptPlugList() { return &mCryptPlugList; }
+  CryptPlugWrapperList * cryptPlugList() const { return mCryptPlugList; }
 
   KMGroupware& groupware();
 
@@ -264,7 +263,7 @@ private:
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;
   QLabel *mCleanupLabel;
-  CryptPlugWrapperList mCryptPlugList;
+  CryptPlugWrapperList *mCryptPlugList;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;

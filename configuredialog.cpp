@@ -42,6 +42,7 @@
 #include "identitymanager.h"
 #include "identitylistview.h"
 #include "kcursorsaver.h"
+#include "cryptplugwrapperlist.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;

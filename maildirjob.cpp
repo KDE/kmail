@@ -35,6 +35,7 @@
 #include <kdebug.h>
 
 #include <qtimer.h>
+#include <qdatetime.h>
 
 namespace KMail {
 

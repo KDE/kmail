@@ -48,6 +48,8 @@ using KRecentAddress::RecentAddresses;
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
 #include "folderIface.h"
+#include "cryptplugwrapperlist.h"
+
 using KMail::FolderIface;
 
 #include <X11/Xlib.h>
@@ -646,7 +648,8 @@ void KMKernel::init()
 
   cfg = KMKernel::config();
 
-  mCryptPlugList.loadFromConfig( cfg );
+  mCryptPlugList = new CryptPlugWrapperList();
+  mCryptPlugList->loadFromConfig( cfg );
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");
@@ -963,6 +966,8 @@ void KMKernel::cleanupLoop()
   mConfigureDialog = 0;
   delete mWin;
   mWin = 0;
+  delete mCryptPlugList;
+  mCryptPlugList = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
   RecentAddresses::self()->save( KMKernel::config() );
