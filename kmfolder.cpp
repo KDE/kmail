@@ -26,18 +26,13 @@
 #include <config.h>
 #endif
 
-#if HAVE_FCNTL_H && !HAVE_FLOCK
+#if HAVE_FCNTL_H
 #include <fcntl.h>
 #endif
 
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
-#ifndef _BSD_COMPAT
-#define _BSD_COMPAT // flock is under BSD compliance oat least on IRIX
-#endif
-
 #include <sys/file.h>
 #include <klocale.h>
 
@@ -303,22 +298,16 @@ void KMFolder::close(bool aForced)
 int KMFolder::lock()
 {
   int rc;
-#if !HAVE_FLOCK
   struct flock fl;
   fl.l_type=F_WRLCK;
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-#endif
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
-#if HAVE_FLOCK
-  rc = flock(fileno(mStream), LOCK_NB|LOCK_EX);
-#else
   rc = fcntl(fileno(mStream), F_SETLK, &fl);
-#endif
 
   if (rc < 0)
   {
@@ -329,23 +318,15 @@ int KMFolder::lock()
 
   if (mIndexStream)
   {
-#if HAVE_FLOCK
-    rc = flock(fileno(mIndexStream), LOCK_UN);
-#else
     rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
-#endif
 
     if (rc < 0) 
     {
       debug("Cannot lock index of folder `%s': %s", (const char*)location(),
 	    strerror(errno));
       rc = errno;
-#if HAVE_FLOCK
-      rc = flock(fileno(mIndexStream), LOCK_UN);
-#else
       fl.l_type = F_UNLCK;
       rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
-#endif
       return rc;
     }
   }
@@ -359,24 +340,17 @@ int KMFolder::lock()
 int KMFolder::unlock()
 {
   int rc;
-#if !HAVE_FLOCK
   struct flock fl;
   fl.l_type=F_UNLCK;
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-#endif
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
-#if HAVE_FLOCK
-  if (mIndexStream) flock(fileno(mIndexStream), LOCK_UN);
-  rc = flock(fileno(mStream), LOCK_UN);
-#else
   if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
   rc = fcntl(fileno(mStream), F_SETLK, F_UNLCK);
-#endif
 
   return errno;
 }
