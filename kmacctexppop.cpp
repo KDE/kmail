@@ -508,6 +508,8 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 void KMAcctExpPop::slotAbortRequested()
 {
   if (stage == Idle) return;
+  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+          this, SLOT(slotAbortRequested()));
   stage = Quit;
   if (job) job->kill();
   job = 0L;
