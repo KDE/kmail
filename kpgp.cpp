@@ -220,14 +220,17 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 
   if(!prepare(TRUE)) return FALSE;
 
+
   persons.clear();
   pl = (QStrList*)&aPers;
   for(pers=pl->first(); pers; pers=pl->next())
   {
-    persStr += "\"";
-    persStr += pers;
-    persStr += "\" ";
-    persons.append(pers);
+      if (flagPgp50) 
+       persStr += "-r \""; else
+       persStr += "\"";
+      persStr += pers;
+      persStr += "\" ";
+      persons.append(pers);
   }
 
   if(sign) action += SIGN;
@@ -501,15 +504,55 @@ Kpgp::decode(const QString text, bool returnHTML)
 
 // --------------------- private functions -------------------
 
+bool
+Kpgp::runPgp50(QString cmd, int *in, int *out)
+{
+           int pin[2], pout[2], child_pid;
+
+         pipe(pin);
+         pipe(pout);
+
+         if(!(child_pid = fork()))
+         {
+           /*We're the child.*/
+           close(pin[1]);
+           dup2(pin[0], 0);
+           close(pin[0]);
+
+           close(pout[0]);
+           dup2(pout[1], 1);
+           close(pout[1]);
+
+           execl("/bin/sh", "sh", "-c", cmd.data(), NULL);
+           _exit(127);
+         }                                   
+         /*Only get here if we're the parent.*/
+         close(pout[1]);
+         *out = pout[0];
+         close(pin[0]);
+         *in = pin[1];
+
+         return TRUE;    
+}
 // check if pgp installed
 // currently only supports 2.6.x
+// Juraj : And now 5.x at alpha stage ;-). Please test ! I'll do too.
 bool 
 Kpgp::checkForPGP(void)
 {
-  int rc = system("pgp -h 2>/dev/null >/dev/null");
+  /* Check for pgp 5.0i */
+  int rc = system("pgpe -h 2>/dev/null >/dev/null");
 
-  if (rc != -1 && rc != 127) flagNoPGP = FALSE;
-  else flagNoPGP = TRUE;
+  flagNoPGP = FALSE;
+
+  if (!((rc != -1) && (rc != 127))) 
+  {
+    /* Oh no ! PGP 5.x not found. Check for 2.6.x instead */
+    flagPgp50 = FALSE;
+    rc = system("pgp -h 2>/dev/null >/dev/null");
+    if ((rc != -1) && (rc != 127)) 
+       flagNoPGP = TRUE;
+  } else flagPgp50 = TRUE;
 
   return flagNoPGP;
 }
@@ -524,7 +567,9 @@ Kpgp::runPGP(int action, const char* args)
   int infd, outfd, errfd;
   void (*oldsig)(int);
 
+  if (!flagPgp50) {
   cmd = "pgp +batchmode";
+
 
   switch (action)
   {
@@ -553,6 +598,37 @@ Kpgp::runPGP(int action, const char* args)
     warning("kpgp: wrong action given to runPGP()");
     return false;
   }
+ } else {
+  switch (action)
+  {
+  case ENCRYPT:
+    cmd = "pgpe -a";
+    break;
+  case SIGN:
+    cmd = "pgps -at";
+    addUserId=TRUE;
+    break;
+  case ENCSIGN:
+    cmd = "pgpe -sat";
+    addUserId=TRUE;
+    break;
+  case SIGNKEY:
+    cmd = "pgpk -s";
+    addUserId=TRUE;
+    break;
+  case DECRYPT:
+  case TEST:
+    cmd = "pgpv";
+    break;
+  case PUBKEYS:
+    cmd = "pgpk -l";
+    break;
+  default:
+    warning("kpgp: wrong action given to runPGP()");
+    return false;
+  }
+
+ }
 
   if(addUserId && !pgpUser.isEmpty())
   {
@@ -569,7 +645,7 @@ Kpgp::runPGP(int action, const char* args)
   }
 
   // add passphrase
-  if(havePassPhrase)
+  if((havePassPhrase) && (!flagPgp50))
   {
     sprintf(str," '-z%s'",(const char *)passPhrase);
     cmd += str;
@@ -577,24 +653,45 @@ Kpgp::runPGP(int action, const char* args)
   cmd += " -f";
 
   tmpName.sprintf("/tmp/.kmail-");
+  errName = tmpName + "err";
+
+  if (!flagPgp50) 
+  {
   inName  = tmpName + "in";
   outName = tmpName + "out";
-  errName = tmpName + "err";
 
   cmd = cmd + " <"+inName+" >"+outName+" 2>"+errName;
 
   infd = open(inName.data(), O_RDWR|O_CREAT|O_TRUNC,S_IREAD|S_IWRITE);
-  if (!input.isEmpty()) write(infd, input.data(), input.length());
+  } else 
+  {
+  cmd = cmd + " 2>"+errName;
+  if (havePassPhrase)
+    setenv("PGPPASSFD", "0", 1);
+  runPgp50(cmd,&infd,&outfd);
+  }
+  if ((havePassPhrase) && (flagPgp50)) 
+  {
+    write(infd, (const void *)passPhrase,strlen( (const char *)passPhrase));
+    write(infd, (const void *) "\n", strlen( (const char *) "\n")); 
+  }  
+  if (!input.isEmpty()) {
+    write(infd, input.data(), input.length());
+    }
   close(infd);
 
+  if (!flagPgp50) {
   oldsig = signal(SIGALRM,pgpSigHandler);
-  alarm(5);
+  alarm(15);
+  fprintf (stderr,"Volam prikazcok : \"%s\"\n",cmd.data());
   rc = system(cmd.data());
   alarm(0);
   signal(SIGALRM,oldsig);
+  }
 
   output = 0;
-  outfd = open(outName.data(), O_RDONLY);  
+  if (!flagPgp50)
+     outfd = open(outName.data(), O_RDONLY);  
   if (outfd >= 0) 
   {
     while ((len=read(outfd,str,1023))>0)
@@ -602,6 +699,11 @@ Kpgp::runPGP(int action, const char* args)
       str[len] ='\0';
       output += str;
     }
+    if (flagPgp50) 
+      {
+        wait(NULL);
+        unsetenv("PGPPASSFD");
+      }
     close(outfd);
   }
 
@@ -617,10 +719,12 @@ Kpgp::runPGP(int action, const char* args)
     close(errfd);
   }
 
+  if (!flagPgp50)
+  {
   unlink(inName.data());
   unlink(outName.data());
+  }
   unlink(errName.data());
-
   return parseInfo(action);
 }
 
@@ -638,7 +742,7 @@ bool Kpgp::parseInfo(int action)
       // FIXME: should do something with it...
     }
 
-    if( info.find("Bad pass phrase") != -1)
+    if( (info.find("Bad pass phrase") != -1) || (info.find("Bad passphrase") != -1))
     {
       //	       debug("Kpgp: isEncrypted");
       if(action == DECRYPT) 

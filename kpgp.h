@@ -145,6 +145,7 @@ private:
 
   bool checkForPGP(void);
   bool runPGP(int action = TEST, const char *args = 0);
+  bool runPgp50(QString cmd, int *in, int *out);
   bool parseInfo(int action);
 
   static Kpgp *kpgpObject;
@@ -163,6 +164,7 @@ private:
   QString errMsg;
 
   bool flagNoPGP;
+  bool flagPgp50;
   bool flagEncrypted;
   bool flagSigned;
   bool flagSigIsGood;
