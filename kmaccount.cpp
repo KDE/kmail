@@ -100,7 +100,7 @@ void KMAccount::clearPasswd()
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::setFolder(KMFolder* aFolder)
+void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 {
   if(!aFolder)
     {
@@ -109,13 +109,13 @@ void KMAccount::setFolder(KMFolder* aFolder)
     return;
     }
   mFolder = (KMAcctFolder*)aFolder;
+  if (addAccount) mFolder->addAccount(this);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAccount::readConfig(KConfig& config)
 {
-  KMAcctFolder* folder;
   QString folderName;
 
   mFolder = NULL;
@@ -126,13 +126,7 @@ void KMAccount::readConfig(KConfig& config)
 
   if (!folderName.isEmpty())
   {
-    folder = (KMAcctFolder*)kernel->folderMgr()->findIdString(folderName);
-    if (folder)
-    {
-      mFolder = folder;
-      mFolder->addAccount(this);
-    }
-    else kdDebug(5006) << "Cannot find folder `" << folderName << "' for account `" << mName << "'." << endl;
+    setFolder(kernel->folderMgr()->findIdString(folderName), true);
   }
 }
 

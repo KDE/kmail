@@ -836,10 +836,10 @@ void AccountDialog::setupSettings()
     mImap.excludeCheck->setChecked( ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
-		QString trashfolder = ai.trash();
-		if (trashfolder.isEmpty())
-			trashfolder = kernel->trashFolder()->idString();
-		mImap.trashCombo->setFolder( trashfolder );	
+    QString trashfolder = ai.trash();
+    if (trashfolder.isEmpty())
+      trashfolder = kernel->trashFolder()->idString();
+    mImap.trashCombo->setFolder( trashfolder );	
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
@@ -1157,6 +1157,19 @@ void AccountDialog::saveSettings()
   }
 
   kernel->acctMgr()->writeConfig(TRUE);
+  
+  // get the new account and register the new destination folder
+  KMAccount* newAcct = kernel->acctMgr()->find(mAccount->name());
+  if (newAcct)
+  {
+    if( accountType == "local" ) {
+      newAcct->setFolder( *mFolderList.at(mLocal.folderCombo->currentItem()), true );
+    } else if ( accountType == "pop" ) {
+      newAcct->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()), true );
+    } else if ( accountType == "maildir" ) {
+      newAcct->setFolder( *mFolderList.at(mMaildir.folderCombo->currentItem()), true );
+    }
+  }
 }
 
 

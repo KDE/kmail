@@ -83,7 +83,7 @@ public:
    * There can be exactly one folder that is fed by messages from an
    * account. */
   KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
-  virtual void setFolder(KMFolder*);
+  virtual void setFolder(KMFolder*, bool addAccount = false);
 
   /**
    * Process new mail for this account if one arrived. Returns TRUE if new

@@ -50,6 +50,7 @@
 #include "kmfldsearch.h"
 #include "mailinglist-magic.h"
 #include "kmmsgdict.h"
+#include "kmacctfolder.h"
 
 
 #include <assert.h>
@@ -864,11 +865,7 @@ void KMMainWin::slotRemoveFolder()
   QDir dir;
 
   if (!mFolder) return;
-  if (mFolder->isSystemFolder() || qstrcmp(mFolder->type(),"plain")!=0)
-  {
-    kdDebug(5006) << "Cannot remove a\nsystem folder." << endl;
-    return;
-  }
+  if (mFolder->isSystemFolder()) return;
 
   str = i18n("Are you sure you want to remove the folder "
 	     "\"%1\" and all subfolders, discarding their contents?")
@@ -878,6 +875,18 @@ void KMMainWin::slotRemoveFolder()
 				i18n("&Remove"), KStdGuiItem::cancel() )
       == KMessageBox::Yes)
   {
+    if (mFolder->hasAccounts())
+    {
+      // this folder has an account, so we need to change that to the inbox
+      KMAccount* acct = NULL;
+      KMAcctFolder* acctFolder = static_cast<KMAcctFolder*>(mFolder);
+      for ( acct = acctFolder->account(); acct; acct = acctFolder->nextAccount() )
+      {
+        acct->setFolder(kernel->inboxFolder());
+        KMessageBox::information(this,
+            i18n("The destination folder of the account '%1' was restored to the inbox.").arg(acct->name()));
+      }
+    }
     if (mFolder->protocol() == "imap")
       static_cast<KMFolderImap*>(mFolder)->removeOnServer();
     else
