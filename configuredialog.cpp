@@ -3347,7 +3347,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "not known at the time this version of KMail was written.</p>"
 	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
 	      "plain text.</p>"
-	      "<p><b>Note:</p> You can set this option on a per-folder basis "
+	      "<p><b>Note:</b> You can set this option on a per-folder basis "
 	      "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
   QWhatsThis::add( mHtmlMailCheck, msg );
 
