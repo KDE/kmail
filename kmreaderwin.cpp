@@ -479,7 +479,7 @@ kdDebug(5006) << "* text *" << endl;
                 reader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
                                   "border:2px solid %1;padding:10px;"
                                   "text-align:left;font-size:90%\">")
-                                  .arg( reader->cCBhtml.name() ) );
+                                  .arg( reader->cHtmlWarning.name() ) );
                 reader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
                                   "security reasons, only the raw HTML code "
                                   "is shown. If you trust the sender of this "
@@ -2049,6 +2049,7 @@ void KMReaderWin::readColorConfig(void)
   c2 = KGlobalSettings::linkColor();
   c3 = KGlobalSettings::visitedLinkColor();
   c4 = QColor(kapp->palette().active().base());
+  cHtmlWarning = QColor( 0xFF, 0x40, 0x40 ); // warning frame color: light red
 
   // The default colors are also defined in configuredialog.cpp
   cPgpEncrH = QColor( 0x00, 0x80, 0xFF ); // light blue
@@ -2056,9 +2057,10 @@ void KMReaderWin::readColorConfig(void)
   cPgpOk0H  = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpWarnH = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpErrH  = QColor( 0xFF, 0x00, 0x00 ); // red
-  cCBpgp   = QColor( 0x80, 0xFF, 0x80 ); // very light green
-  cCBplain = QColor( 0xFF, 0xFF, 0x80 ); // very light yellow
-  cCBhtml  = QColor( 0xFF, 0x40, 0x40 ); // light red
+  cCBnoHtmlB = Qt::lightGray;
+  cCBnoHtmlF = Qt::black;
+  cCBisHtmlB = Qt::black;
+  cCBisHtmlF = Qt::white;
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c1 = config->readColorEntry("ForegroundColor",&c1);
@@ -2070,9 +2072,11 @@ void KMReaderWin::readColorConfig(void)
     cPgpOk0H  = config->readColorEntry( "PGPMessageOkKeyBad", &cPgpOk0H );
     cPgpWarnH = config->readColorEntry( "PGPMessageWarn", &cPgpWarnH );
     cPgpErrH  = config->readColorEntry( "PGPMessageErr", &cPgpErrH );
-    cCBpgp   = config->readColorEntry( "ColorbarPGP", &cCBpgp );
-    cCBplain = config->readColorEntry( "ColorbarPlain", &cCBplain );
-    cCBhtml  = config->readColorEntry( "ColorbarHTML", &cCBhtml );
+    cHtmlWarning = config->readColorEntry( "HTMLWarningColor", &cHtmlWarning );
+    cCBnoHtmlB = config->readColorEntry( "ColorbarBackgroundPlain", &cCBnoHtmlB );
+    cCBnoHtmlF = config->readColorEntry( "ColorbarForegroundPlain", &cCBnoHtmlF );
+    cCBisHtmlB = config->readColorEntry( "ColorbarBackgroundHTML",  &cCBisHtmlB );
+    cCBisHtmlF = config->readColorEntry( "ColorbarForegroundHTML",  &cCBisHtmlF );
   }
 
   // determine the frame and body color for PGP messages from the header color
@@ -3643,38 +3647,12 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                         (DwMime::kTypeApplication == rootNodeCntType) ||
                         (DwMime::kTypeMessage     == rootNodeCntType) ||
                         (DwMime::kTypeModel       == rootNodeCntType) );
-
-    if( mColorBar->text().isEmpty() ) {
-      if(    (KMMsgFullyEncrypted     == encryptionState)
-          || (KMMsgPartiallyEncrypted == encryptionState)
-          || (KMMsgFullySigned        == signatureState)
-          || (KMMsgPartiallySigned    == signatureState) ){
-        mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : cCBpgp );
-        partNode::CryptoType crypt = mRootNode->firstCryptoType();
-        switch( crypt ){
-            case partNode::CryptoTypeUnknown:
-                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeUnknown." << endl;
-                break;
-            case partNode::CryptoTypeNone:
-                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeNone." << endl;
-                break;
-            case partNode::CryptoTypeInlinePGP:
-            case partNode::CryptoTypeOpenPgpMIME:
-                mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-            case partNode::CryptoTypeSMIME:
-                mColorBar->setText(i18n("\nS\n-\nM\nI\nM\nE\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-            case partNode::CryptoType3rdParty:
-                mColorBar->setText(i18n("\nS\ne\nc\nu\nr\ne\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-        }
-      }
-    }
   }
   if( mColorBar->text().isEmpty() ) {
-    mColorBar->setEraseColor( cCBplain );
-    mColorBar->setText(i18n("\nU\nn\nt\nr\nu\ns\nt\ne\nd\n \nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setEraseColor( cCBnoHtmlB );
+    mColorBar->setPaletteForegroundColor( cCBnoHtmlF );
+    mColorBar->setTextFormat( Qt::PlainText );
+    mColorBar->setText(i18n("\nN\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
   }
 }
 
@@ -4649,8 +4627,10 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
-  mColorBar->setEraseColor( cCBhtml );
-  mColorBar->setText(i18n("\nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
+  mColorBar->setEraseColor( cCBisHtmlB );
+  mColorBar->setPaletteForegroundColor( cCBisHtmlF );
+  mColorBar->setTextFormat( Qt::RichText );
+  mColorBar->setText(i18n("<b><br>H<br>T<br>M<br>L<br> <br>M<br>e<br>s<br>s<br>a<br>g<br>e</b>"));
   queueHtml(aStr);
 }
 

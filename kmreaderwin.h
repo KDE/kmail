@@ -538,12 +538,17 @@ protected:
   bool mIsFirstTextPart;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
-  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B, // colors for PGP (Frame, Header, Body)
+  // colors for PGP (Frame, Header, Body)
+  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B,
          cPgpOk0F, cPgpOk0H, cPgpOk0B,
          cPgpWarnF, cPgpWarnH, cPgpWarnB,
          cPgpErrF, cPgpErrH, cPgpErrB,
          cPgpEncrF, cPgpEncrH, cPgpEncrB;
-  QColor cCBpgp, cCBplain, cCBhtml; // colors for colorbar
+  // color of frame of warning preceeding the source of HTML messages
+  QColor cHtmlWarning;
+  // colors for colorbar
+  QColor cCBnoHtmlB, cCBnoHtmlF,
+         cCBisHtmlB, cCBisHtmlF;
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
   bool    mUnicodeFont;

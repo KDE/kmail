@@ -1733,7 +1733,7 @@ static const struct {
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP message - valid signature with untrusted key") },
   { "PGPMessageWarn", I18N_NOOP("OpenPGP message - unchecked signature") },
   { "PGPMessageErr", I18N_NOOP("OpenPGP message - bad signature") },
-  { "HTMLWarningColor", I18N_NOOP("Border around HTML message") },
+  { "HTMLWarningColor", I18N_NOOP("Border around warning prepending HTML messages") },
   { "ColorbarBackgroundPlain", I18N_NOOP("HTML status bar background - No HTML message") },
   { "ColorbarForegroundPlain", I18N_NOOP("HTML status bar foreground - No HTML message") },
   { "ColorbarBackgroundHTML",  I18N_NOOP("HTML status bar background - HTML message") },
