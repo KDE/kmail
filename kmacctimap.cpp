@@ -357,7 +357,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
 {
   if (aSlave != mSlave) return;
-  if (errorCode == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
   KMessageBox::error(0, KIO::buildErrorString(errorCode, errorMsg));
   killAllJobs();
@@ -479,7 +479,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
   if (job->error())
   {
     if (!quiet) job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
   }
   displayProgress();
 }

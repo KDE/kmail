@@ -1245,6 +1245,7 @@ void KMFolderImap::setStatus(int idx, KMMsgStatus status)
 void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status)
 {
   KMFolder::setStatus(ids, status);
+  if (mReadOnly) return;
 
   // get the uids 
   QValueList<int> uids;
