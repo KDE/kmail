@@ -3843,7 +3843,9 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   } else {
     mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
     mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
-    mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+    if( !bcc().isEmpty() )
+      // don't overwrite a custom Bcc header if the Bcc field is empty
+      mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
     QString recips = mMsg->headerField( "X-KMail-Recipients" );
     if( !recips.isEmpty() ) {
       mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
