@@ -920,8 +920,6 @@ void AccountDialog::setupSettings()
   {
     KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
 
-	if (acctLocal)
-	{
     mLocal.nameEdit->setText( mAccount->name() );
     mLocal.nameEdit->setFocus();
     mLocal.locationEdit->setEditText( acctLocal->location() );
@@ -945,8 +943,6 @@ void AccountDialog::setupSettings()
 
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
-	}
-
   }
   else if( accountType == "pop" )
   {
@@ -1088,8 +1084,6 @@ void AccountDialog::setupSettings()
   {
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
-	if (acctMaildir)
-	{
     mMaildir.nameEdit->setText( mAccount->name() );
     mMaildir.nameEdit->setFocus();
     mMaildir.locationEdit->setEditText( acctMaildir->location() );
@@ -1102,7 +1096,6 @@ void AccountDialog::setupSettings()
 
     slotEnableMaildirInterval( interval >= 1 );
     folderCombo = mMaildir.folderCombo;
-	}
   }
   else // Unknown account type
     return;
@@ -1118,7 +1111,7 @@ void AccountDialog::setupSettings()
   if( acctFolder == 0 )
   {
     folderCombo->insertItem( i18n("<none>") );
-  }22
+  }
   else
   {
     uint i = 0;
