@@ -561,9 +561,9 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
     mFolder->setImapPath( (*it).path );
     mFolder->KMFolder::rename( (*it).url );
 
-    if( oldPath.endsWith( "/" ) ) oldPath = oldPath.left( oldPath.length() -1 );
+    if( oldPath.endsWith( "/" ) ) oldPath.truncate( oldPath.length() -1 );
     QString newPath = mFolder->imapPath();
-    if( newPath.endsWith( "/" ) ) newPath = newPath.left( newPath.length() -1 );
+    if( newPath.endsWith( "/" ) ) newPath.truncate( newPath.length() -1 );
     renameChildFolders( mFolder->child(), oldPath, newPath );
     kernel->imapFolderMgr()->contentsChanged();
   }

@@ -668,7 +668,6 @@ void KMAcctExpPop::slotGetNextMsg()
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
-    kdDebug(5006) << "Data: <End>" << endl;
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
@@ -723,7 +722,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   if (spc > 0) {
     if (stage == List) {
       QString length = qdata.mid(spc+1);
-      if (length.find(' ') != -1) length = length.left(length.find(' '));
+      if (length.find(' ') != -1) length.truncate(length.find(' '));
       int len = length.toInt();
       numBytes += len;
       QString id = qdata.left(spc);
