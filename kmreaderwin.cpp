@@ -30,6 +30,7 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kglobalsettings.h>
 #include <kpgp.h>
 #include <kpgpblock.h>
 #include <krun.h>
@@ -2980,21 +2981,21 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       iio->setFileName(aFileName);
       if( iio->read() ) {
           QImage img = iio->image();
-          int scnum = QApplication::desktop()->screenNumber(mMainWindow);
+          QRect desk = KGlobalSettings::desktopGeometry(mMainWindow);
           // determine a reasonable window size
           int width, height;
           if( img.width() < 50 )
               width = 70;
-          else if( img.width()+20 < QApplication::desktop()->screen(scnum)->width() )
+          else if( img.width()+20 < desk.width() )
               width = img.width()+20;
           else
-              width = QApplication::desktop()->screen(scnum)->width();
+              width = desk.width();
           if( img.height() < 50 )
               height = 70;
-          else if( img.height()+20 < QApplication::desktop()->screen(scnum)->height() )
+          else if( img.height()+20 < desk.height() )
               height = img.height()+20;
           else
-              height = QApplication::desktop()->screen(scnum)->height();
+              height = desk.height();
           mMainWindow->resize( width, height );
       }
       // Just write the img tag to HTML:
