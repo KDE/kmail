@@ -417,7 +417,6 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   {
     int i;
     if (!replyToStr.isEmpty()) toStr += replyToStr + ", ";
-    else if (!loopToStr.isEmpty()) toStr = loopToStr + ", ";
     if (!from().isEmpty()) toStr += from() + ", ";
     if (!to().isEmpty()) toStr += to() + ", ";
     toStr = toStr.simplifyWhiteSpace() + " ";
@@ -451,7 +450,6 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   else
   {
     if (!replyToStr.isEmpty()) toStr = replyToStr;
-    else if (!loopToStr.isEmpty()) toStr = loopToStr;
     else if (!from().isEmpty()) toStr = from();
   }
 
