@@ -424,7 +424,10 @@ bool KMGroupware::vPartToHTML( int /*aUpdateCounter*/, const QString& vCal,
   // the events will be deleted automatically when cl is destroyed
   eventList.setAutoDelete(false);
 
-  Q_ASSERT(eventList.count() != 0);
+  if( eventList.count() == 0 )
+    // This could be a task
+    // TODO: Handle tasks
+    return false;
 
   // parse the first event out of the vcal
   // ### is it legal to have several events per mail?
