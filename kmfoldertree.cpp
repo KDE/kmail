@@ -838,5 +838,12 @@ void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
   KMFolderTreeInherited::contentsMouseReleaseEvent( f );
 }
 
+void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
+{
+  if (e->button() != NoButton)
+    return;
+  KMFolderTreeInherited::contentsMouseMoveEvent( e );
+}
+
 #include "kmfoldertree.moc"
 
