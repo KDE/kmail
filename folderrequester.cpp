@@ -90,7 +90,7 @@ void FolderRequester::setFolder( KMFolder *folder )
 {
   mFolder = folder;
   if ( mFolder )
-    edit->setText( mFolder->label() );
+    edit->setText( mFolder->prettyURL() );
   emit folderChanged( folder );
 }
 
