@@ -358,6 +358,9 @@ void RecipientsView::slotDeleteDueLine()
      RecipientLine *line = mLines.at( i );
      moveChild( line, childX( line ), childY( line ) - mLineHeight );
    }
+   
+   calculateTotal();
+   
    resizeView();
 }
 
