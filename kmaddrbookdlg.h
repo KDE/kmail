@@ -10,12 +10,13 @@
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qlistbox.h>
-#include <qlineedit.h>
 #include <qlayout.h>
 #include <qvaluelist.h> // for kab stuff
 
 class KMAddrBook;
 class KabBridge;
+class KLineEdit;
+class QCheckBox;
 class QStringList; // for kab stuff
 class KabKey; // for kab stuff
 
@@ -24,6 +25,8 @@ class KMAddrBookSelDlg: public QDialog
 {
   Q_OBJECT
 public:
+  enum { AddressBookAddresses = 1, RecentAddresses };
+
   KMAddrBookSelDlg(KMAddrBook* addrBook, const QString& caption=QString::null);
   virtual ~KMAddrBookSelDlg();
 
@@ -36,11 +39,19 @@ protected slots:
   void slotOk();
   void slotCancel();
 
+  void toggleShowRecent( bool );
+  void readConfig();
+  void saveConfig();
+  /** you can OR AddressBookAddresses and RecentAddresses as @p addressTypes */
+
 protected:
+  void showAddresses( int addressTypes );
+
   KMAddrBook* mAddrBook;
   QGridLayout mGrid;
   QListBox mListBox;
   QPushButton mBtnOk, mBtnCancel;
+  QCheckBox *mCheckBox;
   QString mAddress;
 };
 
@@ -70,11 +81,10 @@ protected slots:
 protected:
   KMAddrBook* mAddrBook;
   QListBox* mListBox;
-  QLineEdit* mEdtAddress;
+  KLineEdit* mEdtAddress;
   int mIndex;
 
   //kab specific
-  QStringList *mAddresses;
   QValueList<KabKey> *mKeys;
 };
 

@@ -2605,7 +2605,7 @@ void KMLineEdit::loadAddresses()
     QStringList::Iterator it = recent.begin();
     for ( ; it != recent.end(); ++it )
         s_completion->addItem( *it );
-    
+
     KMAddrBook adb;
     adb.readConfig();
 
@@ -2613,11 +2613,9 @@ void KMLineEdit::loadAddresses()
         return;
 
     if (!KMAddrBookExternal::useKAB()) {
-        for (QString a = adb.first(); !a.isEmpty(); a = adb.next())
-        {
-            s_completion->addItem( a );
-            // kdDebug() << "** 1 adding: " << a << endl;
-        }
+        QStringList::ConstIterator it = adb.begin();
+        for ( ; it != adb.end(); ++it )
+            s_completion->addItem( *it );
     }
 
     else {
@@ -2625,10 +2623,7 @@ void KMLineEdit::loadAddresses()
         KabBridge::addresses(&addresses);
         QStringList::Iterator it = addresses.begin();
         for (; it != addresses.end(); ++it)
-        {
             s_completion->addItem( *it );
-            // kdDebug() << "** 2 adding: " << *it << endl;
-        }
     }
 }
 

@@ -19,6 +19,8 @@ KMRecentAddresses::KMRecentAddresses()
 
 KMRecentAddresses::~KMRecentAddresses()
 {
+    // if you want this destructor to get called, use a KStaticDeleter
+    // on s_self
 }
 
 void KMRecentAddresses::load( KConfig *config )
@@ -54,7 +56,6 @@ void KMRecentAddresses::setMaxCount( int count )
 
 void KMRecentAddresses::adjustSize()
 {
-    // for convenience, we don't sync the completion objects here.
     while ( m_addresses.count() > m_maxCount )
         m_addresses.remove( m_addresses.fromLast() );
 }

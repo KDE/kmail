@@ -45,13 +45,30 @@ KMAddrBook::~KMAddrBook()
 //-----------------------------------------------------------------------------
 void KMAddrBook::insert(const QString &aAddress)
 {
-  if (find((const char *)aAddress.local8Bit())<0)
+  QStringList::ConstIterator it = find(aAddress);
+  if (it == end())
   {
-    inSort((const char *)aAddress.local8Bit());
+    inSort(aAddress);
     mModified=TRUE;
   }
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAddrBook::inSort(const QString& entry)
+{
+  QStringList::Iterator it = KMAddrBookInherited::begin();
+  QStringList::Iterator itEnd = KMAddrBookInherited::end();
+  QString address = entry.lower();
+  for ( ; it != itEnd; ++it) {
+    if ((*it).lower() < address)
+      break;
+  }
+  if ( it == KMAddrBookInherited::begin() )
+    append( entry );
+  else
+    KMAddrBookInherited::insert( it, entry );
+}
 
 //-----------------------------------------------------------------------------
 void KMAddrBook::remove(const QString &aAddress)
@@ -101,7 +118,7 @@ int KMAddrBook::load(const QString &aFileName)
   QFile file(fname);
   int rc;
 
-  if(!fname)
+  if(fname.isNull())
     return IO_FatalError;
 
   if (!file.open(IO_ReadOnly)) return file.status();
@@ -113,8 +130,10 @@ int KMAddrBook::load(const QString &aFileName)
   while ( !t.eof() )
   {
     line = t.readLine();
-      if (line[0]!='#' && !line.isNull()) inSort((const char *)line.local8Bit());
+    if (!line.isNull() && line[0]!='#')
+      insert(line);
   }
+
   rc = file.status();
   file.close();
 
@@ -126,7 +145,6 @@ int KMAddrBook::load(const QString &aFileName)
 //-----------------------------------------------------------------------------
 int KMAddrBook::store(const QString &aFileName)
 {
-  QString addr;
   QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
   QFile file(fname);
 
@@ -138,13 +156,13 @@ int KMAddrBook::store(const QString &aFileName)
   QTextStream ts( &file );
   ts.setEncoding(QTextStream::Locale);
 
-  addr = "# kmail addressbook file\n";
-  ts << addr;
+  ts << QString::fromLatin1( "# kmail addressbook file\n" );
   if (file.status() != IO_Ok) return fileError(file.status());
 
-  for (addr=QString::fromLocal8Bit(first()); addr; addr=QString::fromLocal8Bit(next()))
+  QStringList::ConstIterator it = begin();
+  for ( ; it != end(); ++it )
   {
-    ts << addr << "\n";
+    ts << *it << "\n";
     if (file.status() != IO_Ok) return fileError(file.status());
   }
   file.close();
@@ -176,15 +194,6 @@ int KMAddrBook::fileError(int status) const
 
   return status;
 }
-
-
-//-----------------------------------------------------------------------------
-int KMAddrBook::compareItems(Item aItem1, Item aItem2)
-{
-  return strcasecmp((const char*)aItem1, (const char*)aItem2);
-}
-
-
 
 
 //-----------------------------------------------------------------------------

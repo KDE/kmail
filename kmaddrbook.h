@@ -5,14 +5,13 @@
 #ifndef KMAddrBook_h
 #define KMAddrBook_h
 
-#include <qstrlist.h>
-#include <qstringlist.h> // for KabBridge
+#include <qstringlist.h>
 #include <qvaluelist.h>  // for KabBridge
 #include <kabapi.h> // for KabBridge
 
 
-#define KMAddrBookInherited QStrList
-class KMAddrBook: protected QStrList
+#define KMAddrBookInherited QStringList
+class KMAddrBook: protected QStringList
 {
 public:
   KMAddrBook();
@@ -25,11 +24,15 @@ public:
   /** Remove given address from the addressbook. */
   virtual void remove(const QString& address);
 
-  /** Returns first address in addressbook or NULL if addressbook is empty. */
-  virtual QString first(void) { return KMAddrBookInherited::first(); }
+  /** Returns an iterator pointing to the first address or to @ref end() */
+  QStringList::ConstIterator begin() const { 
+    return KMAddrBookInherited::begin(); 
+  }
 
-  /** Returns next address in addressbook or NULL. */
-  virtual QString next(void) { return KMAddrBookInherited::next(); }
+  /** Returns an iterator pointing to the end of the list */
+  QStringList::ConstIterator end() const { 
+    return KMAddrBookInherited::end(); 
+  }
 
   /** Clear addressbook (remove the contents). */
   virtual void clear(void);
@@ -54,10 +57,12 @@ public:
   virtual bool modified(void) const { return mModified; }
 
 protected:
-  virtual int compareItems(Item item1, Item item2);
-
   /** Displays a detailed message box and returns 'status' */
   virtual int fileError(int status) const;
+
+  /** inserts @p entry alphabetically sorted into the addressbook 
+      Does NOT check for duplicates! */
+  void inSort(const QString& entry);
 
   QString mDefaultFileName;
   bool mModified;
