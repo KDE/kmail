@@ -107,12 +107,12 @@ void KMSearchRuleWidget::reset()
 
 QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
 {
-  if (i18nVal == i18n("<To or Cc>")) return QString("<To or Cc>");
-  if (i18nVal == i18n("<body>")) return QString("<body>");
-  if (i18nVal == i18n("<message>")) return QString("<message>");
-  if (i18nVal == i18n("<any header>")) return QString("<any header>");
-  if (i18nVal == i18n("<size>")) return QString("<size>");
-  if (i18nVal == i18n("<age in days>")) return QString("<age in days>");
+  if (i18nVal == i18n("<recipients>")) return QString::fromLatin1("<recipients>");
+  if (i18nVal == i18n("<body>")) return QString::fromLatin1("<body>");
+  if (i18nVal == i18n("<message>")) return QString::fromLatin1("<message>");
+  if (i18nVal == i18n("<any header>")) return QString::fromLatin1("<any header>");
+  if (i18nVal == i18n("<size>")) return QString::fromLatin1("<size>");
+  if (i18nVal == i18n("<age in days>")) return QString::fromLatin1("<age in days>");
   return i18nVal;
 }
 
@@ -137,10 +137,10 @@ void KMSearchRuleWidget::initLists() const
   {
     // also see KMSearchRule::matches() and KMSearchRule::Function
     // if you change the following strings!
-    sFilterFuncList.append(i18n("equals"));
-    sFilterFuncList.append(i18n("doesn't equal"));
     sFilterFuncList.append(i18n("contains"));
     sFilterFuncList.append(i18n("doesn't contain"));
+    sFilterFuncList.append(i18n("equals"));
+    sFilterFuncList.append(i18n("doesn't equal"));
     sFilterFuncList.append(i18n("matches regular expr."));
     sFilterFuncList.append(i18n("doesn't match reg. expr."));
     sFilterFuncList.append(i18n("is greater than"));
@@ -158,7 +158,7 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append(i18n("<message>"));
     sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));
-    sFilterFieldList.append(i18n("<To or Cc>"));
+    sFilterFieldList.append(i18n("<recipients>"));
     sFilterFieldList.append(i18n("<size>"));
     sFilterFieldList.append(i18n("<age in days>"));
     // these others only represent message headers and you can add to

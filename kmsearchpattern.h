@@ -32,8 +32,8 @@ public:
       Also, it is assumed that these functions come in pairs of logical
       opposites (ie. "=" <-> "!=", ">" <-> "<=", etc.).
   */
-  enum Function { FuncEquals=0, FuncNotEqual,
-		  FuncContains, FuncContainsNot, 
+  enum Function { FuncContains=0, FuncContainsNot, 
+		  FuncEquals, FuncNotEqual,
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
 		  FuncIsLess, FuncIsGreaterOrEqual };
@@ -99,7 +99,7 @@ public:
       @li <message>: Try to match against the whole message.
       @li <body>: Try to match against the body of the message.
       @li <any header>: Try to match against any header field.
-      @li <To or Cc>: Try to match against both To: and Cc: header fields.
+      @li <recipients>: Try to match against both To: and Cc: header fields.
       @li <size>: Try to match against size of message (numerical).
       @li <age in days>: Try to match against age of message (numerical).
   */

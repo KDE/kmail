@@ -22,7 +22,7 @@
 #endif
 
 static const char* funcConfigNames[] =
-  { "equals", "not-equal", "contains", "contains-not", "regexp",
+  { "contains", "contains-not", "equals", "not-equal", "regexp",
     "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal", 0 };
 
 
@@ -75,7 +75,7 @@ void KMSearchRule::init(const KMSearchRule* aRule)
   if (aRule) 
     init( aRule->field(), aRule->function(), aRule->contents() );
   else
-    init ( "", FuncEquals, "" );
+    init ( "", FuncContains, "" );
 }
 
 //-----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void KMSearchRule::init(const QCString aField, const char* aStrFunction,
 			const QString aContents)
 {
   int intFunc = findInStrList( funcConfigNames, aStrFunction );
-  Function func = Function( ( intFunc >= 0 ) ? (Function)intFunc : FuncEquals );
+  Function func = Function( ( intFunc >= 0 ) ? (Function)intFunc : FuncContains );
   init ( aField, func, aContents );
 }
 
@@ -105,9 +105,18 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     msgContents = msg->bodyDecoded();
   } else if( mField == "<any header>" ) {
     msgContents = msg->headerAsString();
-  } else if( mField == "<To or Cc>" ) {
-    return matches( false, 0, 0, msg->headerField("To") )
+  } else if( mField == "<recipients>" ) {
+    // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
+    // meet user's expectations. See FAQ entry in KDE 2.2.2's KMail
+    // handbook
+    if ( mFunction == KMSearchRule::FuncEquals
+	 || mFunction == KMSearchRule::FuncNotEqual )
+      // do we need to treat this case specially? Ie.: What shall
+      // "equality" mean for recipients.
+      return matches( false, 0, 0, msg->headerField("To") )
         || matches( false, 0, 0, msg->headerField("Cc") );
+    // 
+    msgContents = msg->headerField("To") + msg->headerField("Cc");
   } else if( mField == "<size>" ) {
     numerical = TRUE;
     numericalMsgContents = int(msg->msgSize());
@@ -197,9 +206,15 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
   static const QString& func = KGlobal::staticQString( "func" );
   static const QString& contents = KGlobal::staticQString( "contents" );
 
-  init( config->readEntry( field + cIdx  ).latin1(),
-	config->readEntry( func + cIdx ).latin1(),
-	config->readEntry( contents + cIdx ) );
+  QString requestedField = config->readEntry( field + cIdx );
+  if ( requestedField == "<To or Cc>" )
+    init( "<recipients>",
+	  config->readEntry( func + cIdx ).latin1(),
+	  config->readEntry( contents + cIdx ) );
+  else
+    init( config->readEntry( field + cIdx  ).latin1(),
+	  config->readEntry( func + cIdx ).latin1(),
+	  config->readEntry( contents + cIdx ) );
 }
 
 
