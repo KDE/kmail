@@ -2498,8 +2498,18 @@ void KMMainWin::updateMessageActions()
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
-    forwardAction->setEnabled( mass_actions );
-    forwardAttachedAction->setEnabled( mass_actions );
+    // FIXME: Temporarily disable forwarding of multiple IMAP messages because
+    //        it doesn't work correctly
+    if( mFolder && mFolder->protocol() != "imap" )
+    {
+      forwardAction->setEnabled( mass_actions );
+      forwardAttachedAction->setEnabled( mass_actions );
+    }
+    else
+    {
+      forwardAction->setEnabled( count == 1 );
+      forwardAttachedAction->setEnabled( count == 1 );
+    }
     action( "apply_filters" )->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
