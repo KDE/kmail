@@ -251,7 +251,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
   KProcess precommandProcess;
 
   // Run the pre command if there is one
-  if (precommand.length() == 0)
+  if ( precommand.isEmpty() )
     return true;
 
   KMBroadcastStatus::instance()->setStatusMsg(
@@ -268,7 +268,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
     parseString = parseString.right(parseString.length() - (left+1));
     left = parseString.find(' ', 0, false);
   }
-  args << parseString;    
+  args << parseString;
 
   for (unsigned int i = 0; i < args.count(); i++)
     {
@@ -276,12 +276,29 @@ bool KMAccount::runPrecommand(const QString &precommand)
       precommandProcess << args[i];
     }
 
-  kapp->processEvents();
+  KMAccountPrivate priv;
+
+  connect(&precommandProcess, SIGNAL(processExited(KProcess *)),
+          &priv, SLOT(precommandExited(KProcess *)));
+
   kdDebug() << "Running precommand " << precommand << endl;
-  if (!precommandProcess.start(KProcess::Block))
-    return false;
+  precommandProcess.start( KProcess::NotifyOnExit );
+
+  kapp->enter_loop();
+
+  if (!precommandProcess.normalExit() || precommandProcess.exitStatus() != 0)
+      return false;
 
   return true;
+}
+
+KMAccountPrivate::KMAccountPrivate( QObject *p ) :
+    QObject( p ) {}
+
+void  KMAccountPrivate::precommandExited(KProcess *p)
+{
+    kdDebug() << "precommand exited " << p->exitStatus() << endl;
+    kapp->exit_loop();
 }
 
 //-----------------------------------------------------------------------------

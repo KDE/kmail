@@ -21,6 +21,7 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMMessage;
+class KProcess;
 
 class KMAccount: public QObject
 {
@@ -39,7 +40,7 @@ public:
 
   /** Set password to "" (empty string) */
   virtual void clearPasswd();
-  
+
   /** Set intelligent default values to the fields of the account. */
   virtual void init(void) = 0;
 
@@ -54,7 +55,7 @@ public:
   /** Process new mail for this account if one arrived. Returns TRUE if new
     mail has been found. Whether the mail is automatically loaded to
     an associated folder or not depends on the type of the account. */
-  virtual void processNewMail(bool interactive) = 0; 
+  virtual void processNewMail(bool interactive) = 0;
 
   /** Read config file entries. This method is called by the account
     manager when a new account is created. */
@@ -64,7 +65,7 @@ public:
     is already properly set by the caller. */
   virtual void writeConfig(KConfig& config);
 
-  /** Set/get interval for checking if new mail arrived (in minutes). 
+  /** Set/get interval for checking if new mail arrived (in minutes).
     An interval of zero (or less) disables the automatic checking. */
   virtual void setCheckInterval(int aInterval);
   int checkInterval(void) const { return mInterval; }
@@ -92,7 +93,7 @@ signals:
 
 protected slots:
   virtual void mailCheck();
-  virtual void sendReceipts(); 
+  virtual void sendReceipts();
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
@@ -127,6 +128,17 @@ class KMAcctList: public QList<KMAccount>
 public:
   virtual ~KMAcctList() {}
   short _dummy; // some compilers fail otherwise
+};
+
+class KMAccountPrivate : public QObject
+{
+    Q_OBJECT
+
+public:
+    KMAccountPrivate( QObject *parent = 0);
+
+public slots:
+    void precommandExited(KProcess *);
 };
 
 #endif /*kmaccount_h*/
