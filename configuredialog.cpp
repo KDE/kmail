@@ -2354,7 +2354,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
 	   mEditorRequester, SLOT(setEnabled(bool)) );
 
-  label = new QLabel( i18n("%f will be replaced with the "
+  label = new QLabel( i18n("<b>%f</b> will be replaced with the "
 			   "filename to edit."), group );
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
@@ -2457,12 +2457,12 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   // row 0: help text
   glay->addMultiCellWidget( new QLabel( i18n("The following placeholders are "
 					     "supported in the reply phrases:\n"
-					     "%D=date, %S=subject, \n"
-                                             "%e=sender's address, %F=sender's name, %f=sender's initials,\n"
-                                             "%T=recipient's name, %t=recipient's name and address\n"
-                                             "%C=carbon copy names, %c=carbon copy names and addresses\n"
-					     "%%=percent sign, %_=space, "
-					     "%L=linebreak"), this ),
+					     "<b>%D</b>: date, <b>%S</b>: subject,\n"
+                                             "<b>%e</b>: sender's address, <b>%F</b>: sender's name, <b>%f</b>: sender's initials,\n"
+                                             "<b>%T</b>: recipient's name, <b>%t</b>: recipient's name and address,\n"
+                                             "<b>%C</b>: carbon copy names, <b>%c</b>: carbon copy names and addresses,\n"
+					     "<b>%%</b>: percent sign, <b>%_</b>: space, "
+					     "<b>%L</b>: linebreak"), this ),
 			    0, 0, 0, 2 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:
