@@ -959,9 +959,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
     verifyWordWrapLengthIsAdequate(bodyDecoded);
 
+// Workaround for bug in QT-2.2.2
+if (mCharset == "utf-8") mEditor->setText(QString::fromUtf8(bodyDecoded));
+else
+{
     QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
     mEditor->setText(codec->toUnicode(bodyDecoded));
     mEditor->insertLine("\n", -1);
+}
 
     for(i=1; i<num; i++)
     {
@@ -976,8 +981,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     if ((mCharset=="") || (mCharset == "default"))
       mCharset = defaultCharset();
 
+// Workaround for bug in QT-2.2.2
+if (mCharset == "utf-8")
+  mEditor->setText(QString::fromUtf8(mMsg->bodyDecoded()));
+else
+{
     QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
     mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
+}
   }
 
   setCharset(mCharset);
