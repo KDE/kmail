@@ -180,6 +180,8 @@ void KMFilter::readConfig(KConfig* config)
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
     bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", false);
+    bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
+    bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
 
     int i, numActions;
@@ -251,6 +253,7 @@ void KMFilter::writeConfig(KConfig* config) const
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
     config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
+    config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config->writeEntry( "Icon", mIcon );
 
     QString key;

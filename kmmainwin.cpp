@@ -27,7 +27,7 @@ KMMainWin::KMMainWin(QWidget *)
       mReallyClose( false )
 {
   kapp->ref();
-  mKMMainWidget = new KMMainWidget( this, "KMMainWidget", actionCollection() );
+  mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
@@ -44,8 +44,9 @@ KMMainWin::KMMainWin(QWidget *)
 
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc", false );
+  // Don't use conserveMemory() because this renders dynamic plugging
+  // of actions unusable!
 
-  conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
