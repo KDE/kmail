@@ -1068,6 +1068,7 @@ bool KMComposeWin::applyChanges(void)
     KMMessagePart bodyPart, *msgPart;
 
     mMsg->deleteBodyParts();
+    mMsg->removeHeaderField("Content-Type");
     mMsg->setAutomaticFields(TRUE);
 
     // create informative header for those that have no mime-capable
@@ -1092,7 +1093,11 @@ bool KMComposeWin::applyChanges(void)
 
     // Since there is at least one more attachment create another bodypart
     for (msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next())
+    {
+      if (msgPart->typeStr().lower() == "text")
+        msgPart->setCharset(mCharset);
       mMsg->addBodyPart(msgPart);
+    }
   }
   if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
   mEdtFrom.setEdited(FALSE);
@@ -1458,7 +1463,6 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   // create message part
   msgPart = new KMMessagePart;
-  msgPart->setCharset(mCharset);
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncodedBinary((*it).data);
