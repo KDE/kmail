@@ -1249,6 +1249,8 @@ const char* KMFolder::type() const
 const QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
+  if (mIsSystemFolder) return i18n(name());
+  if (name() == "inbox") return i18n(name());
   return name();
 }
 
