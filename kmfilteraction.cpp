@@ -156,10 +156,7 @@ void KMFilterActionMove::argsFromString(const QString argsStr)
 
 const QString KMFilterActionMove::argsAsString(void) const
 {
-  if (mDest) {
-    KMFolder *mDestFolder = &(*mDest);
-    resultStr = mDestFolder->idString();
-  }
+  if (mDest) resultStr = mDest->idString();
   else resultStr = "";
   return resultStr;
 }
