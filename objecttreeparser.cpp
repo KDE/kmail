@@ -1998,7 +1998,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                         certificate = QString("%1%2</a>")
                                       .arg( startKeyHREF )
                                       .arg( "certificate" );
-                    if( blockAddrs.count() ){
+                    if( !blockAddrs.empty() ){
                         if( blockAddrs.grep(
                                 msgFrom,
                                 false ).isEmpty() ) {
@@ -2064,7 +2064,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     if (block.signer.isEmpty())
                         signer = "";
                     else {
-                        if( blockAddrs.count() ){
+                        if( !blockAddrs.empty() ){
                             QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
                         }
