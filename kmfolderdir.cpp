@@ -192,7 +192,7 @@ bool KMFolderDir::reload(void)
 
       // For this to be a cached IMAP folder, it must be in the KMail imap
       // subdir and must be have a uidcache file or be a maildir folder
-      if( path().startsWith( locateLocal("data", "kmail/imap") )
+      if( path().startsWith( locateLocal("data", "kmail/dimap") )
 	  && ( dir.exists( imapcachefile) || dir.exists( maildir ) ) )
       {
 	kdDebug(5006) << "KMFolderDir creating new CachedImap folder with name " << fname << endl;
