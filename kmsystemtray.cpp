@@ -56,8 +56,8 @@ mNewMessagePopupId(-1), mPopupMenu(0)
   setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
 
-  mDefaultIcon = SmallIcon( "kmail" );
-  mTransparentIcon = SmallIcon( "kmail" );
+  mDefaultIcon = loadIcon( "kmail" );
+  mTransparentIcon = loadIcon( "kmail" );
   KIconEffect::semiTransparent( mTransparentIcon );
 
   setPixmap(mDefaultIcon);
