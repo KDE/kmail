@@ -673,7 +673,7 @@ void KMFilterListBox::slotDelete()
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
     mListBox->setSelected( oIdxSelItem, TRUE );
-  else if ( (int)mListBox->count() )
+  else if ( count )
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
     mListBox->setSelected( count - 1, TRUE );
