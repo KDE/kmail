@@ -2,6 +2,7 @@
 #include "config.h"
 #include "kmkernel.h"
 
+#include "kmstartup.h"
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
@@ -1449,14 +1450,16 @@ void KMKernel::slotEmptyTrash()
   }
 }
 
-KConfig *KMKernel::myConfig = 0;
-static KStaticDeleter<KConfig> myConfigSD;
-
 KConfig* KMKernel::config()
 {
-    if (!myConfig)
-	myConfig = myConfigSD.setObject(myConfig, new KConfig( "kmailrc"));
-    return myConfig;
+    assert(mySelf);
+    if (!mySelf->mConfig)
+    {
+	mySelf->mConfig = KSharedConfig::openConfig( "kmailrc" );
+        // Check that all updates have been run on the config file:
+        KMail::checkConfigUpdates();
+    }
+    return mySelf->mConfig;
 }
 
 KMGroupware & KMKernel::groupware()

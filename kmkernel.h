@@ -6,6 +6,8 @@
 #include <qobject.h>
 #include <qstring.h>
 
+#include <kconfig.h>
+
 #include "kmailIface.h"
 
 #define kmkernel KMKernel::self()
@@ -20,7 +22,6 @@ namespace KMail {
 }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
-class KConfig;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
@@ -269,7 +270,7 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
-  static KConfig *myConfig;
+  KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;
