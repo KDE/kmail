@@ -1007,15 +1007,6 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( !mFolder )
     return ErrorButGoOn;
 
-  kdDebug(5006) << "KMFilterActionMove::process: msg->fcc() == " << msg->fcc() << endl;
-
-  // If the user has defined a special folder to Fcc then we ignore folder filters.
-  if ( !msg->fcc().isEmpty() )
-  {
-      kdDebug(5006) << "KMFilterActionMove::process: will not process KMFilterActionWithFolder" << endl;
-      return GoOn;
-  }
-
   KMFilterAction::tempOpenFolder( mFolder );
 
   if ( msg->parent() )
