@@ -1979,13 +1979,13 @@ void KMComposeWin::addrBookSelInto()
       dlg.setSelectedTo( lst );
   }
 
-  txt = cc();
+  txt = mEdtCc->text();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedCC( lst );
   }
 
-  txt = bcc();
+  txt = mEdtBcc->text();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedBCC( lst );
