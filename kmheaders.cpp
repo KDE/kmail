@@ -1882,20 +1882,27 @@ void KMHeaders::nextMessage()
 {
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemBelow()) {
-    QListViewItem *temp = lvi;
-    while (temp) {
-	temp->firstChild();
-	temp = temp->parent();
-    }
-
     clearSelection();
     setSelected( lvi, FALSE );
+    selectNextMessage();
+  }
+}
+
+void KMHeaders::selectNextMessage()
+{
+ QListViewItem *lvi = currentItem();
+  if (lvi && lvi->itemBelow()) {
+    QListViewItem *temp = lvi;
+    while (temp) {
+      temp->firstChild();
+      temp = temp->parent();
+    }
     lvi->repaint();
     setSelected( lvi->itemBelow(), TRUE );
     setCurrentItem(lvi->itemBelow());
     makeHeaderVisible();
     setFolderInfoStatus();
-   }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1903,14 +1910,21 @@ void KMHeaders::prevMessage()
 {
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemAbove()) {
-    QListViewItem *temp = lvi;
-    while (temp) {
-	temp->firstChild();
-	temp = temp->parent();
-    }
-
     clearSelection();
     setSelected( lvi, FALSE );
+    selectPrevMessage();
+  }
+}
+
+void KMHeaders::selectPrevMessage()
+{
+  QListViewItem *lvi = currentItem();
+  if (lvi && lvi->itemAbove()) {
+    QListViewItem *temp = lvi;
+    while (temp) {
+      temp->firstChild();
+      temp = temp->parent();
+    }
     lvi->repaint();
     setSelected( lvi->itemAbove(), TRUE );
     setCurrentItem(lvi->itemAbove());

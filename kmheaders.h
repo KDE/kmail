@@ -220,8 +220,12 @@ public slots:
   void msgRemoved(int,QString);
   /** Make the next header visible scrolling if necessary */
   void nextMessage();
+  /** Same as nextMessage() but don't clear the current selection */
+  void selectNextMessage();
   /** Make the previous header visible scrolling if necessary */
   void prevMessage();
+  /** Same as prevMessage() but don't clear the current selection */
+  void selectPrevMessage();
   /** Make the nextUnread message header visible scrolling if necessary */
   void nextUnreadMessage(bool acceptCurrent = false);
   /** Make the previous message header visible scrolling if necessary */

@@ -347,6 +347,10 @@ void KMMainWin::createWidgets(void)
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
   		     mHeaders, SLOT(nextMessage()));
+  accel->connectItem(accel->insertItem(SHIFT+Key_Left),
+                     mHeaders, SLOT(selectPrevMessage()));
+  accel->connectItem(accel->insertItem(SHIFT+Key_Right),
+                     mHeaders, SLOT(selectNextMessage()));
 
   if (!mEncodingStr.isEmpty())
     mCodec = KMMsgBase::codecForName(mEncodingStr);
