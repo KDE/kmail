@@ -242,7 +242,13 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(nls->translate("From: ") +
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
     mViewer->write(nls->translate("To: ") +
-		   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR><BR>");
+                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR><BR>");
+#ifdef KRN
+    if (!mMsg->references().isEmpty())
+        mViewer->write(nls->translate("References: ") +
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
+#endif
+
     break;
 
   case HdrFancy:
@@ -259,6 +265,11 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(nls->translate("Date: ") +
 		   strToHtml(mMsg->dateStr()) + "<BR>");
     mViewer->write("</B></TD></TR></TABLE><BR>");
+#ifdef KRN
+    if (!mMsg->references().isEmpty())
+        mViewer->write(nls->translate("References: ") +
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
+#endif
     break;
 
   case HdrLong:

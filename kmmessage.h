@@ -220,6 +220,12 @@ public:
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
 
+#ifdef KRN
+  /** Convert a normal References: header into a list of anchors
+   to news URLs for the referred articles. Right now, only for KRN. */
+  static const QString refsAsAnchor(const QString references);
+#endif
+
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);

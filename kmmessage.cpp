@@ -117,6 +117,39 @@ const QString KMMessage::id(void) const
       return "";
 }
 
+#ifdef KRN
+const QString KMMessage::refsAsAnchor(const QString references)
+{
+    QString refsdata=references;
+    QString t,t2,result;
+    int count=1;
+
+    while (1)
+    {
+        int index=refsdata.find('>');
+        if (index==-1)
+        {
+            break;
+            refsdata=refsdata.stripWhiteSpace();
+            refsdata=refsdata.mid(1,refsdata.length()-2);
+            t.setNum(count++);
+            t="<a href=\"news:///"+refsdata+"\">"+t+"</a> ";
+            result+=t;
+        }
+        else
+        {
+            t.setNum(count++);
+            t2=refsdata.left(index+1).stripWhiteSpace();
+            t2=t2.mid(1,t2.length()-2);
+            t="<a href=\"news:///"+t2+"\">"+t+"</a> ";
+            refsdata=refsdata.right(refsdata.length()-index-1);
+            result+=t;
+        }
+    }
+    return result.data();
+}
+#endif
+
 /* End of functions added by KRN */
 
 
