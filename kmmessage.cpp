@@ -306,21 +306,14 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   {
      Kpgp* pgp = Kpgp::getKpgp();
      assert(pgp != NULL);
-     if (pgp->setMessage(bodyDecoded()))
-     {
-       if (pgp->isEncrypted())
-       {
-         if(pgp->decrypt()) 
-             result = QString(pgp->message()).stripWhiteSpace()
+     if ((pgp->setMessage(bodyDecoded())) &&
+         (pgp->isEncrypted()) &&
+         (pgp->decrypt()))
+           result = QString(pgp->message()).stripWhiteSpace()
                          .replace(reNL,nlIndentStr) + '\n';
-       }
-     }
      else 
-     {
-        
-     result = QString(bodyDecoded()).stripWhiteSpace()
+           result = QString(bodyDecoded()).stripWhiteSpace()
                 .replace(reNL,nlIndentStr) + '\n';
-     }
   }
   else
   {
@@ -338,8 +331,16 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 	    stricmp(msgPart.typeStr(),"message")==0)
 	{
 	  result += aIndentStr;
-	  result += QString(msgPart.bodyDecoded())
-	    .replace(reNL,(const char*)nlIndentStr);
+          Kpgp* pgp = Kpgp::getKpgp();
+          assert(pgp != NULL);
+          if ((pgp->setMessage(msgPart.bodyDecoded())) &&
+              (pgp->isEncrypted()) &&
+              (pgp->decrypt()))
+                  result = QString(pgp->message())
+                              .replace(reNL,nlIndentStr) + '\n';
+          else
+	    result += QString(msgPart.bodyDecoded())
+	       .replace(reNL,(const char*)nlIndentStr);
 	  result += '\n';
 	}
 	else isInline = FALSE;
