@@ -639,7 +639,7 @@ void KMComposeWin::setupToolBar(void)
 {
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(BarIcon("send"),0,
+  mToolBar->insertButton(UserIcon("send"),0,
 			SIGNAL(clicked()),this,
 			SLOT(slotSend()),TRUE,i18n("Send message"));
   mToolBar->insertSeparator();
@@ -675,10 +675,10 @@ void KMComposeWin::setupToolBar(void)
 			SLOT(slotPaste()),TRUE,i18n("Paste clipboard contents"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(BarIcon("attach"),8,
+  mToolBar->insertButton(UserIcon("attach"),8,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAttachFile()),TRUE,i18n("Attach file"));
-  mToolBar->insertButton(BarIcon("openbook"),7,
+  mToolBar->insertButton(UserIcon("openbook"),7,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAddrBook()),TRUE,
 			 i18n("Open addressbook..."));
@@ -687,12 +687,12 @@ void KMComposeWin::setupToolBar(void)
 			SLOT(slotSpellcheck()),TRUE,"Spellcheck message");
   mToolBar->insertSeparator();
   mBtnIdSign = 9;
-  mToolBar->insertButton(BarIcon("feather_white"), mBtnIdSign,
+  mToolBar->insertButton(UserIcon("feather_white"), mBtnIdSign,
 			 TRUE, i18n("sign message"));
   mToolBar->setToggle(mBtnIdSign);
   mToolBar->setButton(mBtnIdSign, mAutoPgpSign);
   mBtnIdEncrypt = 10;
-  mToolBar->insertButton(BarIcon("pub_key_red"), mBtnIdEncrypt,
+  mToolBar->insertButton(UserIcon("pub_key_red"), mBtnIdEncrypt,
 			 TRUE, i18n("encrypt message"));
   mToolBar->setToggle(mBtnIdEncrypt);
   // these buttons should only be enabled, if pgp is actually installed
@@ -2351,6 +2351,7 @@ void KMEdit::slotSpellDone()
      emit spellcheck_done();
   }
 }
+
 
 
 
