@@ -354,7 +354,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                      "automatically. Identities can be set up in the main configuration "
                      "dialog. (Settings -> Configure KMail)") );
 
-  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver"), this, "senderGroup" );
+  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver Column in List of Messages"), this, "senderGroup" );
   senderGroup->setColumnLayout( 0,  Qt::Vertical );
 
   topLayout->addWidget( senderGroup );
@@ -362,7 +362,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QHBoxLayout *sl = new QHBoxLayout( senderGroup->layout() );
   sl->setSpacing( 6 );
 
-  QLabel *sender_label = new QLabel( i18n("Sho&w:" ), senderGroup );
+  QLabel *sender_label = new QLabel( i18n("Sho&w Column:" ), senderGroup );
   sl->addWidget( sender_label );
   mShowSenderReceiverComboBox = new QComboBox(senderGroup);
   sender_label->setBuddy(mShowSenderReceiverComboBox);
