@@ -234,6 +234,7 @@ protected slots:
   // Connected to the imap account
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
+  void slotGetAnnotationResult( KIO::Job* );
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
 
@@ -317,6 +318,8 @@ private:
     SYNC_STATE_GET_MESSAGES,
     SYNC_STATE_HANDLE_INBOX,
     SYNC_STATE_GET_USERRIGHTS,
+    SYNC_STATE_GET_ANNOTATIONS,
+    SYNC_STATE_SET_ANNOTATIONS,
     SYNC_STATE_GET_ACLS,
     SYNC_STATE_SET_ACLS,
     SYNC_STATE_FIND_SUBFOLDERS,

@@ -66,6 +66,8 @@ using KMail::ListJob;
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvaluelist.h>
+#include "annotationjobs.h"
+using namespace KMail;
 
 #define UIDCACHE_VERSION 1
 
@@ -491,6 +493,8 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_EXPUNGE_MESSAGES:  return "SYNC_STATE_EXPUNGE_MESSAGES";
   case SYNC_STATE_HANDLE_INBOX:      return "SYNC_STATE_HANDLE_INBOX";
   case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
+  case SYNC_STATE_GET_ANNOTATIONS:   return "SYNC_STATE_GET_ANNOTATIONS";
+  case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
   case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
   case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
@@ -519,8 +523,10 @@ QString KMFolderCachedImap::state2String( int state ) const
    delete_messages 10
    expunge_messages 5
    get_messages variable (remaining-5) i.e. minimum 15.
+   set_annotations 0 (rare)
+   get_annotations 2
    set_acls 0 (rare)
-   get_acls 5
+   get_acls 3
 
   noContent folders have only a few of the above steps
   (permissions, and all subfolder stuff), so its steps should be given more span
@@ -738,8 +744,38 @@ void KMFolderCachedImap::serverSyncInternal()
       serverSyncInternal();
       break;
     } else
-      // Continue with the ACLs
-      mSyncState = SYNC_STATE_SET_ACLS;
+      mSyncState = SYNC_STATE_SET_ANNOTATIONS;
+
+  case SYNC_STATE_SET_ANNOTATIONS:
+#define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
+//#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
+
+    mSyncState = SYNC_STATE_GET_ANNOTATIONS;
+    if ( mContentsTypeChanged ) {
+      // TODO
+    }
+
+  case SYNC_STATE_GET_ANNOTATIONS:
+    mSyncState = SYNC_STATE_SET_ACLS;
+
+    if( !noContent() && mAccount->hasAnnotationSupport() ) {
+      newState( mProgress, i18n("Retrieving annotations"));
+      // If in the future we want to retrieve more annotations, we should then write
+      // a multiGetAnnotation job in annotationjobs.*
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      QStringList attributes;
+      attributes << "value";
+      AnnotationJobs::GetAnnotationJob* job =
+        AnnotationJobs::getAnnotation( mAccount->slave(), url, KOLAB_FOLDERTYPE, attributes );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      jd.cancellable = true;
+      mAccount->insertJob(job, jd);
+
+      connect(job, SIGNAL(result(KIO::Job *)),
+              SLOT(slotGetAnnotationResult(KIO::Job *)));
+      break;
+    }
 
   case SYNC_STATE_SET_ACLS:
     mSyncState = SYNC_STATE_GET_ACLS;
@@ -771,6 +807,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
+      newState( mProgress, i18n("Retrieving permissions"));
       mAccount->getACL( folder(), mImapPath );
       connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
@@ -1598,6 +1635,59 @@ void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
     FolderStorage::setContentsType( type );
     mContentsTypeChanged = true;
   }
+}
+
+// The index in this array is the KMail::FolderContentsType enum
+static const struct {
+  const char* annotation;
+} s_contentsType2Annotation[] = {
+  { "mail" },
+  { "event" },
+  { "contact" },
+  { "note" },
+  { "task" },
+  { "journal" }
+};
+
+void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+  AnnotationJobs::GetAnnotationJob* annjob = static_cast<AnnotationJobs::GetAnnotationJob *>( job );
+  if ( annjob->error() ) {
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) // that's when the imap server doesn't support annotations
+      mAccount->setHasNoAnnotationSupport();
+    else
+      kdWarning(5006) << "slotGetAnnotationResult: " << job->errorString() << endl;
+  } else {
+    AnnotationList lst = annjob->annotations();
+    for ( unsigned int i = 0 ; i < lst.size() ; ++ i ) {
+      //kdDebug(5006) << "Found annotation: " << lst[i].name << " = " << lst[i].value << endl;
+      if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
+        QString value = lst[i].value;
+        QString type = value;
+        QString subtype;
+        int dot = value.find( '.' );
+        if ( dot != -1 ) {
+          type.truncate( dot );
+          subtype = value.mid( dot + 1 );
+        }
+        for ( uint i = 0 ; i < sizeof s_contentsType2Annotation / sizeof *s_contentsType2Annotation; ++i ) {
+          if ( type == s_contentsType2Annotation[i].annotation ) {
+            setContentsType( static_cast<KMail::FolderContentsType>( i ) );
+            mContentsTypeChanged = false; // we changed it, not the user
+            break;
+          }
+        }
+        // TODO handle subtype (inbox, drafts, sentitems, junkemail)
+      }
+    }
+  }
+
+  if (mAccount->slave()) mAccount->removeJob(job);
+  mProgress += 2;
+  serverSyncInternal();
 }
 
 #include "kmfoldercachedimap.moc"

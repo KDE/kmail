@@ -90,6 +90,7 @@ namespace KMail {
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
+      mAnnotationSupport( true ),
       mSlaveConnected( false ),
       mListDirProgressItem( 0 )
   {
@@ -834,7 +835,7 @@ namespace KMail {
     }
     mapJobData.remove( it );
   }
-  
+
   //-----------------------------------------------------------------------------
   KPIM::ProgressItem* ImapAccountBase::listDirProgressItem()
   {
@@ -853,7 +854,7 @@ namespace KMail {
     }
     return mListDirProgressItem;
   }
-  
+
 } // namespace KMail
 
 #include "imapaccountbase.moc"
