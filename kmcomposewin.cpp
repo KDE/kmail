@@ -337,7 +337,6 @@ bool KMComposeWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
-     return true;
   }
   return KMTopLevelWidget::event(e);
 }
