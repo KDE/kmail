@@ -307,9 +307,9 @@ void KMFolder::close(bool aForced)
   if (mAutoCreateIndex)
   {
       if (isIndexOutdated()) {
-	  kdDebug(5006) << "Critical error: " << location() << 
+	  kdDebug(5006) << "Critical error: " << location() <<
 	      " has been modified by an external application while KMail was running." << endl;
-	  exit(1);      
+	  //	  exit(1); backed out due to broken nfs
       }
 
       bool dirty = mDirty;
@@ -1200,7 +1200,7 @@ KMMessage* KMFolder::getMsg(int idx)
       msg = readMsg(idx);
       // sanity check
       if (mConsistent && (!msg || (msg->date() != mbDate) || (msg->subject() != mbSubject))) {
-	  kdDebug(5006) << "Error: " << location() << 
+	  kdDebug(5006) << "Error: " << location() <<
 	  " Index file is inconsistent with folder file. This should never happen." << endl;
 	  mConsistent = FALSE; // Don't compact
 	  writeConfig();
@@ -1370,11 +1370,11 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   int growth = 0, oldlength = 0;
 
   if (isIndexOutdated()) {
-      kdDebug(5006) << "Critical error: " << location() << 
+      kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
-      exit(1);      
+      //      exit(1); backed out due to broken nfs
   }
-  
+
   if (!mStream)
   {
     opened = TRUE;
@@ -1720,7 +1720,7 @@ int KMFolder::compact()
 
   if (!needsCompact)
       return 0;
-  
+
   if (!mConsistent) {
     kdDebug(5006) << location() << " compaction skipped." << endl;
     return 0;
@@ -1728,11 +1728,11 @@ int KMFolder::compact()
   kdDebug(5006) << "Compacting " << endl;
 
   if (isIndexOutdated()) {
-      kdDebug(5006) << "Critical error: " << location() << 
+      kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
-      exit(1);      
+      //      exit(1); backed out due to broken nfs
   }
-  
+
   tempName = path() + "/." + name() + ".compacted";
   mode_t old_umask = umask(077);
   FILE *tmpfile = fopen(tempName.local8Bit(), "w");
