@@ -876,6 +876,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   clearSelection();
   setCurrentItem( qlvi );
   setSelected( qlvi, TRUE );
+  ensureItemVisible( qlvi );
   if (!folder) {
     emit folderSelected(0); // Root has been selected
   }
