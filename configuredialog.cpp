@@ -2772,6 +2772,11 @@ void ConfigureDialog::slotModifySelectedAccount( void )
 
     if (!account) {
       account = kernel->acctMgr()->find( listItem->text(0) );
+      if( account == 0 )
+      {
+        KMessageBox::sorry( this, i18n("Unable to locate account") );
+        return;
+      }
 
       mModifiedAccountsType *mod = new mModifiedAccountsType;
       mod->oldAccount = account;
@@ -2787,6 +2792,7 @@ void ConfigureDialog::slotModifySelectedAccount( void )
       return;
     }
   }
+      KMessageBox::sorry( this, i18n("XXXXXXXXXXXXXXXX") );
 
   QStringList accountNames = occupiedNames();
   accountNames.remove( account->name() );
