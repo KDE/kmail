@@ -4958,7 +4958,7 @@ void CertificatesPage::slotStartCertManager()
 	{
 	    KProcess certManagerProc; // save to create on the heap, since
                               // there is no parent
-    	certManagerProc << "certmanager";
+    	certManagerProc << "kgpgcertmanager";
     	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->displayName();
     	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->libName();
 
