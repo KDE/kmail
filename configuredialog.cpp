@@ -72,8 +72,10 @@
 #include <qvbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
+#include <qtextcodec.h>
 
 // other headers:
+#include <assert.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"

@@ -12,6 +12,7 @@
 //#include <qlayout.h>
 #include <qhbox.h>
 #include <qstyle.h>
+#include <qtextcodec.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -45,9 +46,9 @@
 #include "kmreaderwin.h"
 
 // for selection
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
+//#include <X11/X.h>
+//#include <X11/Xlib.h>
+//#include <X11/Xatom.h>
 
 // X headers...
 #undef Never
@@ -57,6 +58,7 @@
 #include <unistd.h>
 #include <klocale.h>
 #include <kstandarddirs.h>  // for access and getpid
+#include <kglobalsettings.h>
 //--- Sven's save attachments to /tmp end ---
 
 // for the click on attachment stuff (dnaber):
