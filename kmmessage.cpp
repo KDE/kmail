@@ -229,7 +229,6 @@ void KMMessage::fromString(const QString aStr)
   result = aStr;
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
-  debug("KMMessage::fromString: subject=\"%s\"", subject().data());
   mNeedsAssembly = FALSE;
 }
 
@@ -433,7 +432,6 @@ void KMMessage::cleanupHeader(void)
     nextField = field->Next();
     if (field->FieldBody()->AsString().empty())
     {
-      debug("removing field %s", field->FieldNameStr().c_str());
       header.RemoveField(field);
       mNeedsAssembly = TRUE;
     }
