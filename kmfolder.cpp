@@ -1096,13 +1096,15 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       kdDebug() << "Undoing changes" << endl;
       truncate( location(), revert );
     }
-    kernel->kbp()->idle();
+    bool busy = kernel->kbp()->isBusy();
+    if (busy) kernel->kbp()->idle();
     KMessageBox::sorry(0,
 	  i18n("Unable to add message to folder.\n"
 	       "(No space left on device or insufficient quota?)\n\n"
 	       "Free space and sufficient quota are required to continue safely."));
-    kernel->kbp()->busy();
+    if (busy) kernel->kbp()->busy();
     if (opened) close();
+    kernel->kbp()->idle();
     return error;
   }
 
@@ -1139,12 +1141,13 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 	kdDebug() << "Undoing changes" << endl;
 	truncate( indexLocation(), revert );
       }
-      kernel->kbp()->idle();
+      bool busy = kernel->kbp()->isBusy();
+      if (busy) kernel->kbp()->idle();
       KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
 	     "(No space left on device or insufficient quota?)\n\n"
 	     "Free space and sufficient quota are required to continue safely."));
-      kernel->kbp()->busy();
+      if (busy) kernel->kbp()->busy();
       if (opened) close();
       return error;
     }
