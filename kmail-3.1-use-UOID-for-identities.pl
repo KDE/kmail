@@ -60,8 +60,8 @@ foreach my $folderGroup ( @folderGroups ) {
 	 and exists($configFile{$folderGroup}{'MailingListIdentity'}) ) {
 	$identity = $configFile{$folderGroup}{'MailingListIdentity'};
     }
-    # write the new Identity=<uoid> key if identity is not empty or default:
-    if ( $identity ne "" and $identity ne "Default" ) {
+    # write the new Identity=<uoid> key if we have an UOID for the identity:
+    if ( exists( $nameToUOID{$identity} ) ) {
 	print "$folderGroup\nIdentity=" . $nameToUOID{$identity} . "\n";
     }
 }
