@@ -609,3 +609,4 @@ KMMsgIndex::stopQuery(int id)
 {
     return mActiveSearches.remove(id);
 }
+#include "kmmsgindex.moc"
