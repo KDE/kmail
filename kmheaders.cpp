@@ -919,7 +919,7 @@ void KMHeaders::setPalette(const QPalette& p)
 
   debug("KMHeaders::setPalette(): %d %d %d", c.red(), c.green(), c.blue());
 
-  KMHeadersInherited::setPalette(*kapp->palette());
+  KMHeadersInherited::setPalette(kapp->palette());
   lbox.setPalette(p);
   lbox.setBackgroundColor(c);
   lbox.repaint(TRUE);
