@@ -1488,16 +1488,16 @@ namespace KMail {
       }
       QString comment = "<b>" + i18n( "Certificate import status:" ) + "</b><br>&nbsp;<br>";
       if ( nImp )
-        comment += i18n( "%n new certificate was imported.",
+        comment += i18n( "1 new certificate was imported.",
                          "%n new certificates were imported.", nImp ) + "<br>";
       if ( nUnc )
-        comment += i18n( "%n certificate was unchanged.",
+        comment += i18n( "1 certificate was unchanged.",
                          "%n certificates were unchanged.", nUnc ) + "<br>";
       if ( nSKImp )
-        comment += i18n( "%n new secret key was imported.",
+        comment += i18n( "1 new secret key was imported.",
                          "%n new secret keys were imported.", nSKImp ) + "<br>";
       if ( nSKUnc )
-        comment += i18n( "%n secret key was unchanged.",
+        comment += i18n( "1 secret key was unchanged.",
                          "%n secret keys were unchanged.", nSKUnc ) + "<br>";
       comment += "&nbsp;<br>";
       htmlWriter()->queue( comment );
