@@ -7,12 +7,13 @@
 #include <stdlib.h>
 
 //-----------------------------------------------------------------------------
-KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
+KMMsgList::KMMsgList(int initSize)
+  : QMemArray<KMMsgBase*>(initSize),
+    mHigh( 0 ), mCount( 0 )
 {
-    for (long int i=size()-1; i>=0; i--)
-	KMMsgListInherited::at(i) = 0;
-    mHigh  = 0;
-    mCount = 0;
+  if ( size() > 0 )
+    for (unsigned int i=size(); i>0; i--)
+	QMemArray<KMMsgBase*>::at(i-1) = 0;
 }
 
 
@@ -26,35 +27,31 @@ KMMsgList::~KMMsgList()
 //-----------------------------------------------------------------------------
 void KMMsgList::clear(bool doDelete, bool syncDict)
 {
-  KMMsgBase* msg = 0;
-  long i;
-  
   KMMsgDict *dict = 0;
   if (syncDict)
     dict = kmkernel->msgDict();
-  
-  for (i=mHigh-1; i>=0; i--)
-  {
-    msg = at(i);
-    if (msg) {
-      if (dict)
-        dict->remove(msg);
-      KMMsgListInherited::at(i) = 0;
-      if (doDelete) delete msg;
+
+  if ( mHigh > 0 )
+    for (unsigned int i=mHigh; i>0; i--)
+    {
+      KMMsgBase * msg = at(i-1);
+      if (msg) {
+	if (dict)
+	  dict->remove(msg);
+	at(i-1) = 0;
+	if (doDelete) delete msg;
+      }
     }
-  }
   mHigh  = 0;
   mCount = 0;
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgList::resize(int aSize)
+bool KMMsgList::resize(unsigned int aSize)
 {
-  int i, oldSize = size();
+  unsigned int i, oldSize = size();
   KMMsgBase* msg;
-
-  assert(aSize>=0);
 
   // delete messages that will get lost, if any
   if (aSize < mHigh)
@@ -72,18 +69,18 @@ bool KMMsgList::resize(int aSize)
   }
 
   // do the resizing
-  if (!KMMsgListInherited::resize(aSize)) return FALSE;
+  if (!QMemArray<KMMsgBase*>::resize(aSize)) return FALSE;
 
   // initialize new elements
   for (i=oldSize; i<aSize; i++)
-    KMMsgListInherited::at(i) = 0;
+    at(i) = 0;
 
   return TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgList::reset(int aSize)
+bool KMMsgList::reset(unsigned int aSize)
 {
   if (!resize(aSize)) return FALSE;
   clear();
@@ -92,56 +89,43 @@ bool KMMsgList::reset(int aSize)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::set(int idx, KMMsgBase* aMsg)
+void KMMsgList::set(unsigned int idx, KMMsgBase* aMsg)
 {
-  int doubleSize;
-
-  assert(idx>=0);
-
   if (idx >= size())
-  {
-    doubleSize = size() << 1;
-    resize(idx>doubleSize ? idx+16 : doubleSize);
-  }
+    resize( idx > 2 * size() ? idx + 16 : 2 * size() );
 
   if (!at(idx) && aMsg) mCount++;
   else if (at(idx) && !aMsg) mCount--;
 
   delete at(idx);
   
-  KMMsgListInherited::at(idx) = aMsg;
+  at(idx) = aMsg;
 
   if (!aMsg || idx >= mHigh) rethinkHigh();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::insert(int idx, KMMsgBase* aMsg, bool syncDict)
+void KMMsgList::insert(unsigned int idx, KMMsgBase* aMsg, bool syncDict)
 {
-  int i, doubleSize;
-
-  assert(idx>=0);
   KMMsgDict *dict = 0;
   if (syncDict)
     dict = kmkernel->msgDict();
 
   if (idx >= size())
-  {
-    doubleSize = size() << 1;
-    resize(idx>doubleSize ? idx+16 : doubleSize);
-  }
+    resize( idx > 2 * size() ? idx + 16 : 2 * size() );
 
   if (aMsg) mCount++;
 
-  for (i=mHigh; i>idx; i--) {
+  for (unsigned int i=mHigh; i>idx; i--) {
     if (dict)
       dict->remove(at(i - 1));
-    KMMsgListInherited::at(i) = KMMsgListInherited::at(i-1);
+    at(i) = at(i-1);
     if (dict)
       dict->insert(at(i), i);
   }
 
-  KMMsgListInherited::at(idx) = aMsg;
+  at(idx) = aMsg;
   if (dict)
     dict->insert(at(idx), idx);
 
@@ -150,43 +134,41 @@ void KMMsgList::insert(int idx, KMMsgBase* aMsg, bool syncDict)
 
 
 //-----------------------------------------------------------------------------
-int KMMsgList::append(KMMsgBase* aMsg, bool syncDict)
+unsigned int KMMsgList::append(KMMsgBase* aMsg, bool syncDict)
 {
-  int idx = mHigh;
+  const unsigned int idx = mHigh;
   insert(idx, aMsg, syncDict); // mHigh gets modified in here
   return idx;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::remove(int idx)
+void KMMsgList::remove(unsigned int idx)
 {
-  int i;
-
-  assert(idx>=0 && idx<size());
+  assert(idx<size());
   KMMsgDict *dict = kmkernel->msgDict();
   
-  if (KMMsgListInherited::at(idx)) {
+  if (at(idx)) {
     mCount--;
     if (dict)
       dict->remove(at(idx));
   }
   
   mHigh--;
-  for (i=idx; i<mHigh; i++) {
+  for (unsigned int i=idx; i<mHigh; i++) {
     if (dict)
       dict->update(at(i + 1), i + 1, i);
-    KMMsgListInherited::at(i) = KMMsgListInherited::at(i+1);
+    at(i) = at(i+1);
   }
   
-  KMMsgListInherited::at(mHigh) = 0;
+  at(mHigh) = 0;
 
   rethinkHigh();
 }
 
 
 //-----------------------------------------------------------------------------
-KMMsgBase* KMMsgList::take(int idx)
+KMMsgBase* KMMsgList::take(unsigned int idx)
 {
   KMMsgBase* msg=at(idx);
   remove(idx);
@@ -195,9 +177,9 @@ KMMsgBase* KMMsgList::take(int idx)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::rethinkHigh(void)
+void KMMsgList::rethinkHigh()
 {
-  int sz = (int)size();
+  unsigned int sz = size();
 
   if (mHigh < sz && at(mHigh))
   {
@@ -216,7 +198,7 @@ void KMMsgList::rethinkHigh(void)
 //-----------------------------------------------------------------------------
 void KMMsgList::fillMsgDict(KMMsgDict *dict)
 {
-  for (int idx = 0; idx < mHigh; idx++)
+  for (unsigned int idx = 0; idx < mHigh; idx++)
     if (at(idx))
       dict->insert(0, at(idx), idx);
 }

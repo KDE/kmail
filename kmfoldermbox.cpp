@@ -48,7 +48,7 @@ static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 //-----------------------------------------------------------------------------
 KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
-  : KMFolderMboxInherited(aParent, aName)
+  : KMFolderIndex(aParent, aName)
 {
   mStream         = 0;
   mFilesLocked    = FALSE;
@@ -1083,14 +1083,14 @@ int KMFolderMbox::compact()
   off_t offs=0;
   int msgs=0;
   QCString mtext;
-  for(int idx = 0; idx < mMsgList.count(); idx++) {
+  for(unsigned int idx = 0; idx < mMsgList.count(); idx++) {
     if(!(msgs++ % 10)) {
       msgStr = i18n("Compacting folder: one message done",
       				"Compacting folder: %n messages done", msgs);
       if (!kmkernel->shuttingDown())
 	  emit statusMsg(msgStr);
     }
-    mi = (KMMsgInfo*)mMsgList[idx];
+    mi = (KMMsgInfo*)mMsgList.at(idx);
     msize = mi->msgSize();
     if (mtext.size() < msize + 2)
       mtext.resize(msize+2);

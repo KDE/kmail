@@ -92,9 +92,9 @@ int KMFolderIndex::updateIndex()
     return 0;
   bool dirty = mDirty;
   mDirtyTimer->stop();
-  for (int i=0; !dirty && i<mMsgList.high(); i++)
-    if (mMsgList[i])
-      dirty = !mMsgList[i]->syncIndexString();
+  for (unsigned int i=0; !dirty && i<mMsgList.high(); i++)
+    if (mMsgList.at(i))
+      dirty = !mMsgList.at(i)->syncIndexString();
   if (!dirty) { // Update successful
       touchMsgDict();
       return 0;
@@ -107,7 +107,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   QString tempName;
   QString indexName;
   mode_t old_umask;
-  int i=0, len;
+  int len;
   const uchar *buffer = 0;
 
   indexName = indexLocation();
@@ -143,9 +143,9 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   if ( !createEmptyIndex ) {
     KMMsgBase* msgBase;
-    for (i=0; i<mMsgList.high(); i++)
+    for (unsigned int i=0; i<mMsgList.high(); i++)
     {
-      if (!(msgBase = mMsgList[i])) continue;
+      if (!(msgBase = mMsgList.at(i))) continue;
       buffer = msgBase->asIndexString(len);
       fwrite(&len,sizeof(len), 1, tmpIndexStream);
 
