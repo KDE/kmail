@@ -3192,7 +3192,7 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                 mColorBar->setText(i18n("\nS\n-\nM\nI\nM\nE\n \nM\ne\ns\ns\na\ng\ne"));
                 break;
             case partNode::CryptoType3rdParty:
-                mColorBar->setText(i18n("\nS\ne\nc\nu\n\rn\ne\n \nM\ne\ns\ns\na\ng\ne"));
+                mColorBar->setText(i18n("\nS\ne\nc\nu\nr\ne\n \nM\ne\ns\ns\na\ng\ne"));
                 break;
         }
       }
