@@ -167,6 +167,9 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
   initMetaObject();
 
+  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  setLineWidth(0);
+
   mUpdateTimer = NULL;
   setSelectionMode( Extended );
 
@@ -495,7 +498,7 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
 
-  setColumnWidth( 0, size().width() - 5 );
+  setColumnWidth( 0, size().width() );
   KMFolderTreeInherited::resizeEvent(e);
 }
 

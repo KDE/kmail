@@ -23,6 +23,7 @@
 #include "kurl.h"
 
 #include <khtml_part.h>
+#include <khtmlview.h> // So that we can get rid of the frames
 #include <kapp.h>
 #include <kconfig.h>
 #include <kcursor.h>
@@ -274,10 +275,6 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
 
 
 
-
-
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
@@ -286,6 +283,9 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setURLCursor(KCursor::handCursor());
   //  mViewer->setDefaultBGColor(QColor("#ffffff"));
   //  mViewer->setFollowsLinks( FALSE );
+
+  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  mViewer->view()->setLineWidth(0);
 
   // ### FIXME
   connect(mViewer->browserExtension(),SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,

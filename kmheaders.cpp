@@ -269,6 +269,9 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mNested = false;
   mNestedOverride = false;
 
+  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  setLineWidth(0);
+
   readConfig();
 
   mPaintInfo.flagCol = -1;
