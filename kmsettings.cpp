@@ -847,7 +847,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctType = mAcct->type();
 
   setCaption("Configure Account");
-  grid = new QGridLayout(this, 13, 3, 8, 4);
+  grid = new QGridLayout(this, 16, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(i18n("Type:"), this);
@@ -896,6 +896,15 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   }
   else fatal("KMAccountSettings: unsupported account type");
 
+    intervalChk = new QCheckBox(i18n("Enable interval Mail checking"), this);
+  if(mAcct->checkInterval()<= 0)
+    intervalChk->setChecked(false);
+  else
+    intervalChk->setChecked(true);
+  grid->addMultiCellWidget(intervalChk, 8, 9, 1, 2);
+
+
+
   // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
@@ -904,7 +913,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   lbl = new QLabel(i18n("Store new mail in account:"), this);
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
-  grid->addMultiCellWidget(lbl, 8, 8, 0, 2);
+  grid->addMultiCellWidget(lbl, 10, 10, 0, 2);
 
   // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
@@ -920,7 +929,8 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mFolders->adjustSize();
   mFolders->setMinimumSize(100, mEdtName->minimumSize().height());
   mFolders->setMaximumSize(500, mEdtName->minimumSize().height());
-  grid->addWidget(mFolders, 9, 1);
+  grid->addWidget(mFolders, 11, 1);
+
 
   // buttons at bottom
   btnBox = new QWidget(this);
@@ -940,9 +950,9 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 11, 11, 0, 2);
+  grid->addMultiCellWidget(btnBox, 14, 14, 0, 2);
 
-  resize(350,310);
+  resize(350,325);
   grid->activate();
   adjustSize();
   setMinimumSize(size());

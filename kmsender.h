@@ -41,8 +41,9 @@ public:
   virtual bool send(KMMessage* msg, short sendNow=-1);
 
   /** Start sending all queued messages. Returns TRUE on success. */
-  virtual bool sendQueued(void);
+  virtual bool sendQueued();
 
+  virtual bool sendSingleMail(KMMessage *msg);
   /** Returns TRUE if sending is in progress. */
   bool sending(void) const { return mSendInProgress; }
 
@@ -89,7 +90,7 @@ protected slots:
 
 protected:
   /** handle sending of messages */
-  virtual void doSendMsg(void);
+  virtual void doSendMsg();
 
   /** cleanup after sending */
   virtual void cleanup(void);

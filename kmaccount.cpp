@@ -97,7 +97,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Type", type());
   config.writeEntry("Name", mName);
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
-  config.writeEntry("CheckInterval", mInterval);
+  config.writeEntry("check-interval", mInterval);
 }
 
 

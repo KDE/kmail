@@ -98,7 +98,7 @@ private:
   QLineEdit *mEdtPort;
   QComboBox *mFolders;
   KMAccount *mAcct;
-  QCheckBox *chk;
+  QCheckBox *chk, *intervalChk;
 };
 
 #endif

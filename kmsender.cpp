@@ -162,6 +162,14 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 }
 
 
+bool KMSender::sendSingleMail( KMMessage *aMsg) 
+{
+
+  return true;
+
+}
+
+
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
 {
@@ -174,10 +182,13 @@ bool KMSender::sendQueued(void)
     return FALSE;
   }
 
+
   // open necessary folders
   outboxFolder->open();
-  sentFolder->open();
   mCurrentMsg = NULL;
+
+  sentFolder->open();
+
 
   // create a sender
   if (mSendProc) delete mSendProc;
@@ -197,18 +208,19 @@ bool KMSender::sendQueued(void)
 
 
 //-----------------------------------------------------------------------------
-void KMSender::doSendMsg(void)
+void KMSender::doSendMsg()
 {
 #ifndef KRN
   assert(mSendProc != NULL);
 
   // Move previously sent message to folder "sent"
   if (mCurrentMsg)
-  {
-    mCurrentMsg->setStatus(KMMsgStatusSent);
-    sentFolder->moveMsg(mCurrentMsg);
-    mCurrentMsg = NULL;
-  }
+    {
+      mCurrentMsg->setStatus(KMMsgStatusSent);
+      sentFolder->moveMsg(mCurrentMsg);
+      mCurrentMsg = NULL;
+    }
+  
 
   // See if there is another queued message
   mCurrentMsg = outboxFolder->getMsg(0);

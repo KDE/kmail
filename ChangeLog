@@ -1,3 +1,7 @@
+Sun Sep  6 18:28:45 1998  Markus Wuebben  <markus@kde.org>
+
+	* kmreaderwin.cpp :  Finally fixed attachment problem
+
 1998-07-31  Markus Wuebben  <markus@kde.org>
 
 	* kmsettings.cpp / kmmainwin.cpp Implemented send mail on check.

@@ -257,6 +257,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
       contDisp = msgPart.contentDisposition();
+      debug("type: %s",type.data());
+      debug("subtye: %s",subtype.data());
+      debug("contDisp %s",contDisp.data());
       
       if (i <= 0) asIcon = FALSE;
       else switch (mAttachmentStyle)
@@ -287,7 +290,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       }
     }
   }
-  else
+  else // if numBodyParts <= 0
   {
     writeBodyStr(aMsg->bodyDecoded());
   }
@@ -484,11 +487,16 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
   QString iconName, href(255), label, comment;
 
-  assert(aMsgPart!=NULL);
+  if(aMsgPart == NULL) {
+    debug("writePartIcon: aMsgPart == NULL\n");
+    return;
+  }
+
+  debug("writePartIcon: PartNum: %i",aPartNum);
 
   label = aMsgPart->name();
   comment = aMsgPart->contentDescription();
-  href.sprintf("part:%d", aPartNum+1);
+  href.sprintf("part://%i", aPartNum+1);
 
   iconName = aMsgPart->iconName();
   if (iconName.left(11)=="unknown.xpm")
@@ -612,8 +620,8 @@ void KMReaderWin::printMsg(void)
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const char* aUrl)
 {
-  if (!aUrl || !mMsg || strncmp(aUrl,"part:",5)) return -1;
-  return (aUrl ? atoi(aUrl+5) : 0);
+  if (!aUrl || !mMsg || strncmp(aUrl,"part://",7)) return -1;
+  return (aUrl ? atoi(aUrl+7) : 0);
 }
 
 
@@ -644,6 +652,8 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   KMMessagePart msgPart;
 
   id = msgPartFromUrl(aUrl);
+
+  debug("id: %i",id);
   if (id <= 0)
   {
     emit statusMsg(aUrl);
