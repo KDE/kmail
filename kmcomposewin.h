@@ -187,6 +187,12 @@ protected:
 */
 
     virtual void keyPressEvent(QKeyEvent*);
+
+    virtual QPopupMenu *createPopupMenu();
+
+private slots:
+    void editRecentAddresses();
+
 private:
     KMComposeWin* mComposer;
 };

@@ -57,6 +57,7 @@ using KRecentAddress::RecentAddresses;
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
+#include <kdialogbase.h>
 #include <kfiledialog.h>
 #include <kwin.h>
 #include <kinputdialog.h>
@@ -70,6 +71,7 @@ using KRecentAddress::RecentAddresses;
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kstdguiitem.h>
+#include <keditlistbox.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -5568,7 +5570,37 @@ bool KMAtmListViewItem::isSign()
     return false;
 }
 
+//=============================================================================
+//
+//   Class  KMRecentAddressDialog
+//
+//=============================================================================
+class KMRecentAddressDialog : public KDialogBase
+{
+  public:
+    KMRecentAddressDialog( QWidget *parent, const char *name = 0 )
+      : KDialogBase( Plain, i18n( "Edit recent addresses" ), Ok | Cancel, Ok,
+                     parent, name, true, true )
+    {
+      QWidget *page = plainPage();
+      QVBoxLayout *layout = new QVBoxLayout( page, marginHint(), spacingHint() );
 
+      mEditor = new KEditListBox( i18n( "Recent Addresses" ), page, "", false,
+                                  KEditListBox::Add | KEditListBox::Remove );
+      layout->addWidget( mEditor );
+    }
+
+    void setAddresses( const QStringList &addrs )
+    {
+      mEditor->clear();
+      mEditor->insertStringList( addrs );
+    }
+
+    QStringList addresses() const { return mEditor->items(); }
+
+  private:
+    KEditListBox *mEditor;
+};
 
 //=============================================================================
 //
@@ -5605,6 +5637,34 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
     }
     // ---sven's Return is same Tab and arrow key navigation end ---
   AddressLineEdit::keyPressEvent(e);
+}
+
+QPopupMenu *KMLineEdit::createPopupMenu()
+{
+    QPopupMenu *menu = KLineEdit::createPopupMenu();
+    if ( !menu )
+        return 0;
+
+    menu->insertSeparator();
+    menu->insertItem( i18n( "Edit recent addresses..." ),
+                      this, SLOT( editRecentAddresses() ) );
+
+    return menu;
+}
+
+void KMLineEdit::editRecentAddresses()
+{
+  KMRecentAddressDialog dlg( this );
+  dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
+  if ( dlg.exec() ) {
+    RecentAddresses::self( KMKernel::config() )->clear();
+    QStringList addrList = dlg.addresses();
+    QStringList::Iterator it;
+    for ( it = addrList.begin(); it != addrList.end(); ++it )
+      RecentAddresses::self( KMKernel::config() )->add( *it );
+
+    loadAddresses();
+  }
 }
 
 #if 0
