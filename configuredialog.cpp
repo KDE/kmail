@@ -2751,7 +2751,7 @@ void ConfigureDialog::slotSignatureType( int id )
   if( flag==true )
   {
     mIdentity.signatureEditButton->setEnabled(
-      !mIdentity.signatureExecCheck->isChecked() );
+      !mIdentity.signatureExecCheck->isChecked()&& !mIdentity.signatureFileEdit->lineEdit()->text().isEmpty());
   }
   else
   {
