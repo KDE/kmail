@@ -253,22 +253,12 @@ void AntiSpamWizard::accept()
     KMKernel::self()->filterMgr()->appendFilter( classHamFilter );
 
     // add the classification filter actions to the toolbar
-//    KToolBar * toolbar = KMKernel::self()->mainWin()->toolBar();
     QString filterNameSpam =
         QString( "Filter Action %1" ).arg( classSpamFilterPattern->name() );
     filterNameSpam = filterNameSpam.replace( " ", "_" );
-/*
-    if ( !actionCollection->action( filterNameSpam.local8Bit() )->isPlugged( toolbar ) )
-      actionCollection->action( filterNameSpam.local8Bit() )->plug( toolbar );
-*/
-
     QString filterNameHam =
         QString( "Filter Action %1" ).arg( classHamFilterPattern->name() );
     filterNameHam = filterNameHam.replace( " ", "_" );
-/*
-    if ( !actionCollection->action( filterNameHam.local8Bit() )->isPlugged( toolbar ) )
-      actionCollection->action( filterNameHam.local8Bit() )->plug( toolbar );
-*/
 
     // FIXME post KDE 3.2
     // The following code manipulates the kmmainwin.rc file directly. Usuallay
@@ -281,9 +271,7 @@ void AntiSpamWizard::accept()
     // (a.gungl@gmx.de)
 
     // make the toolbar changes persistent - let's be very conservative here
-//    KXMLGUIFactory * guiFactory = KMKernel::self()->mainWin()->guiFactory();
-//    QString config = guiFactory->readConfigFile( "kmmainwin.rc" );
-    QString config = KXMLGUIFactory::readConfigFile( "kmmainwin.rc" );
+    QString config = KXMLGUIFactory::readConfigFile( "kmmainwin.rc", new KInstance( "kmail" ) );
 #ifndef NDEBUG
     kdDebug(5006) << "Read kmmainwin.rc contents (last 1000 chars printed):" << endl;
     kdDebug(5006) << config.right( 1000 ) << endl;
@@ -340,8 +328,7 @@ void AntiSpamWizard::accept()
           kdDebug(5006) << "####################################################" << endl;
 #endif
           // write back the modified resource file
-//          guiFactory->saveConfigFile( domDoc, "kmmainwin.rc" );
-          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc" );
+          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc", new KInstance( "kmail" ) );
         }
       }
       else
