@@ -1,3 +1,10 @@
+1998-09-26  Stefan Taferner  <taferner@kde.org> (KMail-0.8.1)
+
+	* Addressbook: finally fixed bug in not reading last line.
+	Thanks to all who reported!
+
+	* Replaced occurances of KTopLevelWidget with KTMainWindow.
+
 1998-09-21  Markus Wuebben  <markus@office.DInet.de>
 
 	* added a short cut for mail checking

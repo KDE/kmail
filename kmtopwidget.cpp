@@ -55,7 +55,8 @@ bool KMTopLevelWidget::close(bool aForceKill)
   rc = KMTopLevelWidgetInherited::close(aForceKill);
   if (!rc) return FALSE;
 
-  if (KTopLevelWidget::memberList && KTopLevelWidget::memberList->isEmpty())
+  if (KMTopLevelWidgetInherited::memberList && 
+      KMTopLevelWidgetInherited::memberList->isEmpty())
     kapp->quit();
 
   return TRUE;
@@ -67,10 +68,11 @@ void KMTopLevelWidget::forEvery(KForEvery func)
 {
   KMTopLevelWidget* w;
 
-  if (KTopLevelWidget::memberList)
+  if (KMTopLevelWidgetInherited::memberList)
   {
-    for (w = (KMTopLevelWidget*)KTopLevelWidget::memberList->first(); w;
-	 w = (KMTopLevelWidget*)KTopLevelWidget::memberList->next())
+    for (w=(KMTopLevelWidget*)KMTopLevelWidgetInherited::memberList->first();
+	 w;
+	 w=(KMTopLevelWidget*)KMTopLevelWidgetInherited::memberList->next())
     {
       if (w->inherits("KMTopLevelWidget")) (w->*func)();
     }

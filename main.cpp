@@ -124,9 +124,9 @@ static void signalHandler(int sigId)
   fprintf(stderr, "*** KMail got signal %d\n", sigId);
 
   // try to cleanup all windows
-  while (KTopLevelWidget::memberList->first() != NULL)
+  while (KTMainWindow::memberList->first() != NULL)
   {
-    win = KTopLevelWidget::memberList->take();
+    win = KTMainWindow::memberList->take();
     if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
     delete win;
   }

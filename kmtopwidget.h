@@ -19,7 +19,7 @@
 #ifndef kmtopwidget_h
 #define kmtopwidget_h
 
-#include <ktopwidget.h>
+#include <ktmainwindow.h>
 
 class KMTopLevelWidget;
 
@@ -29,8 +29,8 @@ typedef void (KMTopLevelWidget::*KForEvery)(void);
 /** Top level window that offers methods to be called on every 
  * existing top level window.
  */
-#define KMTopLevelWidgetInherited KTopLevelWidget
-class KMTopLevelWidget: public KTopLevelWidget
+#define KMTopLevelWidgetInherited KTMainWindow
+class KMTopLevelWidget: public KTMainWindow
 {
   Q_OBJECT
 
