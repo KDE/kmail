@@ -274,6 +274,8 @@ void KMSender::doSendMsg()
   // remove header fields that shall not be included in sending
   mCurrentMsg->removeHeaderField("Status");
   mCurrentMsg->removeHeaderField("X-Status");
+  mCurrentMsg->removeHeaderField("X-KMail-Identity");
+  mCurrentMsg->removeHeaderField("X-KMail_Transport");
 
   // start sending the current message
   mSendProc->preSendInit();
