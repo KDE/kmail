@@ -365,7 +365,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
       pgp->clearOutput();
       return true;
     }
-    if(ret == 0) status = doEncSign(persons, sign, true);
+    if(ret == KMessageBox::Yes) status = doEncSign(persons, sign, true);
   }
   if( status & KpgpBase::MISSINGKEY)
   {
