@@ -478,12 +478,12 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
   switch (aType)
   {
   case QtDebugMsg:
-    kDebugInfo(0, msg);
+    kdDebug() << msg;
     break;
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)kapp->name(), msg.data());
-    kDebugInfo(0, msg);
+    kdDebug() << msg;
     break;
 
   case QtFatalMsg:
