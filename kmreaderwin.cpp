@@ -69,7 +69,7 @@ using KMail::TeeHtmlWriter;
 
 // KABC includes
 #include <kabc/addressee.h>
-#include <kabc/vcardconverter.h>
+#include <kabc/vcardtool.h>
 
 // khtml headers
 #include <khtml_part.h>
@@ -1164,12 +1164,8 @@ kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tre
     // ### FIXME: We should only do this if the vCard belongs to the sender,
     // ### i.e. if the sender's email address is contained in the vCard.
     const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
-    KABC::VCardConverter vc;
-    KABC::Addressee a;
-    bool isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v3_0);
-    if (!isOk)
-      isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v2_1);
-    if( isOk ) {
+    KABC::VCardTool t;
+    if ( !t.parseVCards( vcard ).empty() ) {
       hasVCard = true;
       kdDebug(5006) << "FOUND A VALID VCARD" << endl;
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
