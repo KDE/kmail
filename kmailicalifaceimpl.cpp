@@ -711,7 +711,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   if( !mUseResourceIMAP )
     return false;
 
-  if( entries.count() & 2 == 1 )
+  if( entries.count() % 2 == 1 )
     // Something is wrong - an odd amount of strings should not happen
     return false;
 
