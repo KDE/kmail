@@ -1426,10 +1426,6 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
     emit folderComplete( this, false );
     return false;
   }
-  if ( noChildren() ) {
-    emit folderComplete( this, true );
-    return true;
-  }
   // reset
   if ( this == mAccount->rootFolder() )
     mAccount->setHasInbox( false );
