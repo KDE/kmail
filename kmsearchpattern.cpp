@@ -175,7 +175,7 @@ KMSearchRuleString::KMSearchRuleString( const QCString & field,
 {
   if ( field.isEmpty() || field[0] == '<' )
     mBmHeaderField = 0;
-  else //TODO handle the unrealistic case of the message starting with mField
+  else // make sure you handle the unrealistic case of the message starting with mField
     mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data());
 }
 
@@ -239,7 +239,10 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     if ( endOfHeader == DwString::npos )
       endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    size_t start = headerField->FindIn( headers, 0, false );
+    // In case the searched header is at the beginning, we have to prepend 
+    // a newline - see the comment in KMSearchRuleString constructor
+    DwString fakedHeaders( "\n" );
+    size_t start = headerField->FindIn( fakedHeaders.append( headers ), 0, false );
     // if the header field doesn't exist then return false for positive
     // functions and true for negated functions (e.g. "does not
     // contain"); note that all negated string functions correspond
