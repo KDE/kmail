@@ -1433,7 +1433,7 @@ int KMFolder::countUnreadRecursive()
   QListIterator<KMFolderNode> it(*dir);
   for ( ; it.current(); ++it )
       if (!it.current()->isDir()) {
-	  folder = dynamic_cast<KMFolder*>(it.current());
+	  folder = static_cast<KMFolder*>(it.current());
 	  count += folder->countUnreadRecursive();
       }
 	       

@@ -287,7 +287,7 @@ void KMFolderTree::updateUnreadAll()
     folderNode =fdir->next())
   {
     if (!folderNode->isDir()) {
-      folder = dynamic_cast<KMFolder*>(folderNode);
+      folder = static_cast<KMFolder*>(folderNode);
 
       folder->open();
       folder->countUnread();
@@ -318,7 +318,7 @@ void KMFolderTree::writeConfig()
 {
   QListViewItemIterator it( this );
   while (it.current()) {
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it.current());
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti)
       writeIsListViewItemOpen(fti);
     ++it;
@@ -336,7 +336,7 @@ void KMFolderTree::reload(void)
 
   QListViewItemIterator it( this );
   while (it.current()) {
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it.current());
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder)
       disconnect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 		 this,SLOT(refresh(KMFolder*)));
@@ -353,7 +353,7 @@ void KMFolderTree::reload(void)
 
   QListViewItemIterator jt( this );
   while (jt.current()) {
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(jt.current());
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
     if (fti && fti->folder)
       connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 	      this,SLOT(refresh(KMFolder*)));
@@ -374,7 +374,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
        folderNode != NULL;
        folderNode = fdir->next())
     if (!folderNode->isDir()) {
-      folder = dynamic_cast<KMFolder*>(folderNode);
+      folder = static_cast<KMFolder*>(folderNode);
       ASSERT(parent);
       fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
 
@@ -421,7 +421,7 @@ void KMFolderTree::delayedUpdate()
   QListViewItemIterator it( this );
   while (it.current()) {
     bool repaintRequired = false;
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it.current());
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (!fti || !fti->folder) {
       ++it;
       continue;
@@ -460,7 +460,7 @@ void KMFolderTree::delayedUpdate()
 // Folders have been added/deleted update the tree of folders
 void KMFolderTree::doFolderListChanged()
 {
-  KMFolderTreeItem* fti = dynamic_cast< KMFolderTreeItem* >(currentItem());
+  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
   if (!fti || !fti->folder)
     return;
   KMFolder* folder = fti->folder;
@@ -485,7 +485,7 @@ void KMFolderTree::setSelected( QListViewItem *i, bool select )
 // so that the header list and reader window can be udpated.
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
-  KMFolderTreeItem* fti = dynamic_cast< KMFolderTreeItem* >(qlvi);
+  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
   if (fti)
     folder = fti->folder;
@@ -528,7 +528,7 @@ QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 {
   QListViewItemIterator it( this );
   while (it.current()) {
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it.current());
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder == folder) {
       return it.current();
     }
@@ -549,7 +549,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!topLevelWidget()) return; // safe bet
 
   QPopupMenu *folderMenu = new QPopupMenu;
-  KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(lvi);
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
   if (!fti || !fti->folder)
     return;
 
@@ -579,7 +579,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 // Requires creating the appropriate subdirectory and show a dialog
 void KMFolderTree::addChildFolder()
 {
-  KMFolderTreeItem *fti = dynamic_cast<KMFolderTreeItem*>(currentItem());
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(currentItem());
   if (!fti)
     return;
   KMFolder *aFolder = fti->folder;
@@ -793,7 +793,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     if ( item ) {
         QString str;
-	KMFolderTreeItem *fti = dynamic_cast<KMFolderTreeItem*>(item);
+	KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 	if (fti && (fti != oldSelected) && (fti->folder))
         {
           if (e->action() == QDropEvent::Copy) emit folderDropCopy(fti->folder);
