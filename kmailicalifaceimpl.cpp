@@ -65,9 +65,8 @@ static void reloadFolderTree();
 // Local helper class
 class KMailICalIfaceImpl::ExtraFolder {
 public:
-  ExtraFolder( KMFolder* f, KMail::FolderContentsType t ) : folder( f ), type( t ) {}
+  ExtraFolder( KMFolder* f ) : folder( f ) {}
   KMFolder* folder;
-  KMail::FolderContentsType type;
 };
 
 // The index in this array is the KMail::FolderContentsType enum
@@ -334,7 +333,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   KMail::FolderContentsType t = folderContentsType( type );
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it )
-    if ( it.current()->type == t )
+    if ( it.current()->folder->storage()->contentsType() == t )
       lst << it.current()->folder->location();
 
   return lst;
@@ -354,7 +353,7 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
-    if ( it.current()->type == t
+    if ( it.current()->folder->storage()->contentsType() == t
          // && f->isXMLFolder()
          )
       map.insert( f->location(), !f->isReadOnly() );
@@ -622,7 +621,7 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
     else {
       ExtraFolder* ef = mExtraFolders.find( folder->location() );
       if ( ef != 0 )
-        return folderContentsType( ef->type );
+        return folderContentsType( folder->storage()->contentsType() );
     }
   }
 
@@ -740,15 +739,14 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
 
-  // Find previous type of this folder
+  // Check if already know that folder
   ExtraFolder* ef = mExtraFolders.find( folder->location() );
-  if ( ( ef && ef->type == contentsType ) || ( !ef && contentsType == 0 ) )
-    // Nothing to tell!
+  if ( !ef && contentsType == 0 ) // mail -> don't care
     return;
 
   if ( ef ) {
     // Notify that the old folder resource is no longer available
-    subresourceDeleted(folderContentsType( ef->type ), folder->location() );
+    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), folder->location() );
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
@@ -757,12 +755,10 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
       return;
     }
 
-    // So the type changed to another groupware type.
-    // Set the entry to the new type
-    ef->type = contentsType;
+    // So the type changed to another groupware type, ok.
   } else {
     // Make a new entry for the list
-    ef = new ExtraFolder( folder, contentsType );
+    ef = new ExtraFolder( folder );
     mExtraFolders.insert( folder->location(), ef );
 
     // And listen to changes from it
@@ -786,7 +782,7 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
     return 0;
 
   ExtraFolder* ef = mExtraFolders.find( folder );
-  if ( ef && ef->type == t )
+  if ( ef && ef->folder->storage()->contentsType() == t )
     return ef->folder;
 
   return 0;
