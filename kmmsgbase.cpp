@@ -27,7 +27,7 @@ KMMsgBase::KMMsgBase(KMFolder* aParent)
   mDirty   = FALSE;
   mMsgSize = 0;
   mFolderOffset = 0;
-  mStatus  = KMMsgStatusUnknown;
+  mStatus  = KMMsgStatusNew;
   mDate    = 0;
 }
 

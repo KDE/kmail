@@ -126,6 +126,7 @@ int KMFolder::open(void)
 
   assert(name() != NULL);
 
+  mFilesLocked = FALSE;
   mStream = fopen(location(), "r+"); // messages file
   if (!mStream) 
   {
@@ -156,7 +157,7 @@ int KMFolder::open(void)
     rc = createIndexFromContents();
   }
 
-  if (!rc) lock();
+  if (!rc) rc = lock();
   mQuiet = 0;
 
   return rc;
@@ -250,7 +251,6 @@ int KMFolder::lock(void)
     return errno;
   }
 
-// JACEK: was (!mIndexStream) - nonsense which crashed fileno
   if (mIndexStream)
   {
 #if HAVE_FLOCK

@@ -1,3 +1,14 @@
+1998-03-28  Stefan Taferner  <taferner@kde.org>
+
+	* Pop: new messages retrieved from pop accounts were not
+	marked new. Now fixed.
+
+1998-03-26  Stefan Taferner  <taferner@kde.org>
+
+	* Folders: when opening and locking a folder there were
+	cases (in fact most of the time) when the folder seemed
+	to be not locked but was. Now this is handled better.
+
 1998-03-24  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.4)
 
 	* Message: decoding of quoted-printable RFC1522 strings
