@@ -1131,7 +1131,7 @@ int KMFolderMbox::compact()
       box = inf.readLink();
     if (!box)
       box = location();
-    ::rename(tempName.local8Bit(), box.local8Bit());
+    ::rename(QFile::encodeName(tempName), QFile::encodeName(box));
     writeIndex();
     writeConfig();
     mAutoCreateIndex = false;
