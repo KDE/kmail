@@ -1846,6 +1846,7 @@ static const struct {
   { "quote1-font", I18N_NOOP("Quoted text - first level"), false },
   { "quote2-font", I18N_NOOP("Quoted text - second level"), false },
   { "quote3-font", I18N_NOOP("Quoted text - third level"), false },
+  { "print-font",  I18N_NOOP("Printing output"), true },
 };
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 

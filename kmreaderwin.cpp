@@ -282,7 +282,8 @@ void KMReaderWin::readConfig(void)
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = QFont("helvetica");
-    mBodyFont = config->readFontEntry("body-font", &mBodyFont);
+    mBodyFont = config->readFontEntry((mPrinting) ? "print-font" : "body-font",
+      &mBodyFont);
     fntSize = mBodyFont.pointSize();
     mBodyFamily = mBodyFont.family();
   }
@@ -679,12 +680,13 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-    ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: 12pt }\n")
+    ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; }\n")
+        .arg( mBodyFamily ).arg( fntSize )
       : QString("body { font-family: \"%1\"; font-size: %2pt; "
         "color: #%3; background-color: #%4; }\n")
         .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1))
         .arg(colorToString(c4))) +
-    ((mPrinting) ? QString("a { color: #000000; text-decoration: none }")
+    ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: #%1; ").arg(colorToString(c2)) +
         "text-decoration: none; }" + // just playing
         QString( "table.encr { background-color: #%1; "
@@ -727,9 +729,9 @@ void KMReaderWin::parseMsg(void)
         .arg( colorToString( cPgpErrH ) ) +
         QString( "tr.signErrB { background-color: #%1; }\n" )
         .arg( colorToString( cPgpErrB ) )) +
-		 "</style></head><body " +
+		 "</style></head>" +
 		 // TODO: move these to stylesheet, too:
-        ((mPrinting) ? QString("") : bkgrdStr + ">" ));
+    ((mPrinting) ? QString("<body>") : QString("<body ") + bkgrdStr + ">" ));
 
   if (!parent())
     setCaption(mMsg->subject());
