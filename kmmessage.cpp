@@ -887,9 +887,8 @@ KMMessage* KMMessage::createForward(void)
     str += "\n-------------------------------------------------------\n";
   }
 
-  QTextCodec *codec = KGlobal::charsets()->codecForName(charset());
-  s = codec->toUnicode(str);
-  msg->setBody(asQuotedString(s, sIndentPrefixStr));
+  msg->setCharset(charset());
+  msg->setBody(str);
 
   if (numBodyParts() > 0)
   {
