@@ -1,6 +1,5 @@
 // kmmainwin.cpp
 //#define MALLOC_DEBUG 1
-#define IDENTITY_UOIDs
 
 #include <kwin.h>
 
@@ -16,6 +15,8 @@
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qguardedptr.h>
+#include <qtl.h>
+#include <qvaluelist.h>
 
 #include <kopenwith.h>
 
@@ -602,6 +603,10 @@ void KMMainWin::createWidgets(void)
   mMsgView->setMimePartTree( mMimePartTree );
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
+  new KAction(
+    i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
+    SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
+
   new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
@@ -3174,6 +3179,55 @@ void KMMainWin::slotChangeCaption(QListViewItem * i)
     names.prepend( item->text(0) );
   setCaption( names.join("/") );
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWin::removeDuplicates()
+{
+    KMFolder *oFolder = mFolder;
+    mHeaders->setFolder(0);
+    QMap< QString, QValueList<int> > idMD5s;
+    QValueList<int> redundantIds;
+    QValueList<int>::Iterator kt;
+    if (!mFolder)
+       return;
+    mFolder->open();
+    for (int i = mFolder->count() - 1; i >= 0; --i) {
+       QString id = (*mFolder)[i]->msgIdMD5();
+       idMD5s[id].append( i );
+    }
+    QMap< QString, QValueList<int> >::Iterator it;
+    for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
+       QValueList<int>::Iterator jt;
+       bool finished = false;
+       for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
+           if (!((*mFolder)[*jt]->isUnread())) {
+               (*it).remove( jt );
+               (*it).prepend( *jt );
+               finished = true;
+           }
+       for ( jt = (*it).begin(), ++jt; jt != (*it).end(); ++jt )
+           redundantIds.append( *jt );
+    }
+    qHeapSort( redundantIds );
+    kt = redundantIds.end();
+    int numDuplicates = 0;
+    if (kt != redundantIds.begin()) do {
+       mFolder->removeMsg( *(--kt) );
+       ++numDuplicates;
+    }
+    while (kt != redundantIds.begin());
+
+    mFolder->close();
+    mHeaders->setFolder(oFolder);
+    QString msg;
+    if ( numDuplicates )
+      msg = i18n("Removed %n duplicate message.",
+		 "Removed %n duplicate messages.", numDuplicates );
+    else
+      msg = i18n("No duplicate messages found.");
+    KMBroadcastStatus::instance()->setStatusMsg( msg );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::initializeFilterActions()

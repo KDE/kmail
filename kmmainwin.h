@@ -330,6 +330,7 @@ protected slots:
 
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
+  void removeDuplicates();
   /** Create actions for marked filters */
   void initializeFilterActions();
   /** Plug filter actions into a popup menu */
