@@ -799,7 +799,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.portEdit, row, 1 );
 
   ++row;
-  label = new QLabel( i18n("Prefix to &folders:"), page1 );
+  label = new QLabel( i18n("Prefix to fol&ders:"), page1 );
   grid->addWidget( label, row, 0 );
   mImap.prefixEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.prefixEdit );
@@ -813,7 +813,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   if( !connected ) {
     ++row;
     mImap.autoExpungeCheck =
-      new QCheckBox( i18n("Automatically compact folders (expunges &deleted messages)"), page1);
+      new QCheckBox( i18n("Automaticall&y compact folders (expunges deleted messages)"), page1);
     grid->addMultiCellWidget( mImap.autoExpungeCheck, row, row, 0, 1 );
   }
 
@@ -836,7 +836,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     // not implemented for disconnected yet
     ++row;
     mImap.loadOnDemandCheck = new QCheckBox(
-        i18n("Load attachments on demand"), page1);
+        i18n("Load attach&ments on demand"), page1);
     grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
   }
 
