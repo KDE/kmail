@@ -1440,8 +1440,8 @@ void KMMainWin::slotMailtoReply()
 
   if (!(msg = mHeaders->getMsg(-1))) return;
   id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
   rmsg->setTo(mUrlCurrent.path());
 
