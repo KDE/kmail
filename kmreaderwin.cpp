@@ -139,9 +139,11 @@ kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" <
 kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
               << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
   }
+kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
   parseObjectTree( node.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
+kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
 }
-                                                                                          
+
 
 
 // this function will be replaced once KMime is alive (khz, 29.11.2001)
@@ -685,47 +687,52 @@ while( ( current = it.current() ) ) {
                   bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
                   bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 
-                  // we call signature verification
-                  // if we either *know* that it is signed mail or
-                  // if there is *neither* signed *nor* encrypted parameter
-                  if( !isEncrypted ) {
-                    if( isSigned )
-                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
-                    else
-                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
-                    if(    writeOpaqueOrMultipartSignedData( 0, *curNode )
-                        && !isSigned ) {
-                      kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
-                      isSigned = true;
-                    }
+                  // Analyze "signTestNode" node to find/verify a signature.
+                  // If zero this verification was sucessfully done after
+                  // decrypting via recursion by insertAndParseNewChildNode().
+                  partNode* signTestNode = curNode;
 
 
-                    if( isSigned )
-                      curNode->setSigned( true );
-                  }
-
-                  // we call decryption function
-                  // if it turned out that this is not signed mail
+                  // We try decrypting the content
+                  // if we either *know* that it is an encrypted message part
+                  // or there is neither signed nor encrypted parameter.
                   if( !isSigned ) {
                     if( isEncrypted )
                       kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
                     else
                       kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
                     QCString decryptedData;
-                    if( okDecryptMIME( *curNode, decryptedData ) ) {
+                    if( okDecryptMIME( *curNode, decryptedData, false ) ) {
+                      kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
                       isEncrypted = true;
+                      curNode->setEncrypted( true );
                       insertAndParseNewChildNode( *curNode,
                                                   &*decryptedData,
                                                   "encrypted data" );
-                    }
-                    else
-                    {
-                      writeHTMLStr(mCodec->toUnicode( decryptedData ));
+                      if( curNode->mChild && curNode->mChild->isSigned() ) {
+                        isSigned = true;
+                        signTestNode = 0;
+                      } else
+                        signTestNode = curNode->mChild;
                     }
                   }
-                  if( isEncrypted )
-                    curNode->setEncrypted( true );
+
+                  // We now try signature verification if necessarry.
+                  if( signTestNode ) {
+                    if( isSigned )
+                        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
+                    else
+                        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
+
+                    if(    writeOpaqueOrMultipartSignedData( 0, *signTestNode )
+                        && !isSigned ) {
+                        kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
+                        isSigned = true;
+                        signTestNode->setSigned( true );
+                    }
+                  }
+
                   if( isSigned || isEncrypted )
                     bDone = true;
 
@@ -1879,7 +1886,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
 }
 
 
-bool KMReaderWin::okDecryptMIME( partNode& data, QCString& decryptedData )
+bool KMReaderWin::okDecryptMIME( partNode& data, QCString& decryptedData, bool showWarning )
 {
   const QString errorContentCouldNotBeDecrypted( i18n("Content could *not* be decrypted.") );
 
@@ -1934,7 +1941,7 @@ bool KMReaderWin::okDecryptMIME( partNode& data, QCString& decryptedData )
       kdDebug() << "\nKMReaderWin::decryptMIME: returned from CRYPTPLUG" << endl;
       if( bDecryptionOk )
         decryptedData = cleartext;
-      else {
+      else if( showWarning ){
         showMessageAndSetData( errorContentCouldNotBeDecrypted,
           i18n("Crypto Plug-In %1 could not decrypt the data.").arg(cryptPlug->libName()),
           i18n("Make sure the Plug-In is installed properly and check your"),

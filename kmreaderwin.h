@@ -276,7 +276,9 @@ protected:
 
   /** Returns the contents of the given multipart/encrypted
     object. Data is decypted.  May contain body parts. */
-  virtual bool okDecryptMIME( partNode& data, QCString& decryptedData );
+  virtual bool okDecryptMIME( partNode& data,
+                              QCString& decryptedData,
+                              bool showWarning=true );
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
@@ -316,6 +318,12 @@ protected:
 
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
+
+//private:
+//  /** extracted parts from writeBodyStr() */
+//  class BlockMetaData;
+//  QString openMessageBlock(BlockMetaData& block);
+//  QString closeMessageBlock(BlockMetaData& block);
 
 protected:
   bool mHtmlMail, mHtmlOverride;
