@@ -696,7 +696,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       while (item && item->itemAbove())
 	item = static_cast<KMHeaderItem*>(item->itemAbove());
       if (item)
-	id = findUnread(TRUE, item->msgId(), jumpToFirst);
+	id = findUnread(TRUE, item->msgId(), true);
       else
 	id = -1;
 
