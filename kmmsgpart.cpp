@@ -61,7 +61,7 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
   QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
-  QTextCodec * codec = KMMsgBase::codecForName( encoding );
+  const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
   QValueList<int> dummy;
   setCharset( encoding );
@@ -79,7 +79,7 @@ const QTextCodec * KMMessagePart::codec() const {
 }
 
 QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
-  if (codec == 0)
+  if ( !codec )
     // No codec was given, so try the charset in the mail
     codec = this->codec();
   assert( codec );
