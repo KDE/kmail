@@ -289,7 +289,7 @@ int main(int argc, char *argv[])
     QString msg = i18n("Only one instance of KMail can be run at "
       "any one time. It is already running on a different display "
       "with PID %1 on host %2 according to the lock file located "
-      "at %3").arg(oldPid).arg(oldHostName).arg(lockLocation);
+      "at %3.").arg(oldPid).arg(oldHostName).arg(lockLocation);
 
     KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
       KNotifyClient::Error );
