@@ -32,3 +32,7 @@ Id=7
 File=kmailrc
 Group=General
 Key=createOwnMessageIdHeaders,useCustomMessageIdSuffix
+# Upgrade "PGP Identity" (KDE 2.2.x) -> "Default PGP Key" (KDE 3.0)
+Id=8
+File=kmailrc
+Script=kmail-pgpidentity.pl,perl
