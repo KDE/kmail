@@ -127,6 +127,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMTopLevelWidget (),
 {
   //setWFlags( WType_TopLevel | WStyle_Dialog );
 
+  mDone = false;
   mGrid = NULL;
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
@@ -193,6 +194,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMTopLevelWidget (),
     setMsg(aMsg);
 
   mEdtTo.setFocus();
+  mDone = true;
 }
 
 
@@ -377,6 +379,9 @@ void KMComposeWin::deadLetter(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView(void)
 {
+  if (!mDone)
+    return; // otherwise called from rethinkFields during the construction
+            // which is not the intended behavior
   int id;
 
   //This sucks awfully, but no, I cannot get an activated(int id) from
@@ -430,7 +435,6 @@ void KMComposeWin::slotView(void)
 
 void KMComposeWin::rethinkFields(bool fromSlot)
 {
-
   //This sucks even more but again no ids. sorry (sven)
   int mask, row, numRows;
   long showHeaders;
