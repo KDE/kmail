@@ -161,7 +161,7 @@ void AddToKabDialog::addToEntry()
 
 void AddToKabDialog::newEntry()
 {
-  KDialogBase dialog(this, 0, true, "Create new address",
+  KDialogBase dialog(this, 0, true, i18n("Create new address"),
 		     KDialogBase::Ok|KDialogBase::Cancel,
 		     KDialogBase::Ok,
 		     true);
