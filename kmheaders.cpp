@@ -1436,7 +1436,6 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
     kernel->msgDict()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
-    p->close();
   }
 
   return filterResult;
@@ -1517,14 +1516,12 @@ void KMHeaders::applyFiltersOnMsg()
   }
 
   clearSelection();
-
   for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
     int idx = msgBase->parent()->find(msgBase);
     assert(idx != -1);
-    KMMessage * msg = mFolder->getMsg(idx);
+    KMMessage * msg = msgBase->parent()->getMsg(idx);
     if (msg->transferInProgress()) continue;
     msg->setTransferInProgress(true);
-    mFolder->open();
     if ( !msg->isComplete() )
     {
       FolderJob *job = mFolder->createJob(msg);
@@ -1535,7 +1532,6 @@ void KMHeaders::applyFiltersOnMsg()
       if (slotFilterMsg(msg) == 2) break;
     }
   }
-  kernel->filterMgr()->cleanup();
 
   setContentsPos( topX, topY );
   emit selected( 0 );
