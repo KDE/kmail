@@ -3905,11 +3905,32 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
     else if( KURLDrag::canDecode( e ) ) {
         KURL::List urlList;
         if( KURLDrag::decode( e, urlList ) ) {
-            for( KURL::List::Iterator it = urlList.begin();
-                 it != urlList.end(); ++it ) {
-                mComposer->addAttach( *it );
+            KPopupMenu p;
+            p.insertItem( i18n("Add As Text"), 0 );
+            p.insertItem( i18n("Add As Attachment"), 1 );
+            int id = p.exec( mapToGlobal( e->pos() ) );
+            switch ( id) {
+              case 0:
+                for ( KURL::List::Iterator it = urlList.begin();
+                     it != urlList.end(); ++it ) {
+                  insert( (*it).url() );
+                }
+                break;
+              case 1:
+                for ( KURL::List::Iterator it = urlList.begin();
+                     it != urlList.end(); ++it ) {
+                  mComposer->addAttach( *it );
+                }
+                break;
             }
         }
+        else if ( QTextDrag::canDecode( e ) ) {
+          QString s;
+          if ( QTextDrag::decode( e, s ) )
+            insert( s );
+        }
+        else
+          kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
     }
     else {
         return KEdit::contentsDropEvent(e);
