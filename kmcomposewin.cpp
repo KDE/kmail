@@ -5032,7 +5032,7 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
-#if KDE_IS_VERSION( 3, 1, 90 )
+#if !KDE_IS_VERSION( 3, 1, 90 )
 void KMComposeWin::slotToggleToolBar()
 {
   if(toolBar("mainToolBar")->isVisible())
