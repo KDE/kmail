@@ -2015,7 +2015,6 @@ void KMHeaders::updateMessageList(bool set_selection)
   readSortOrder(set_selection);
   if (mNested != mNestedOverride) {
     buildIdTrees();
-    mImperfectlyThreadedList.clear();
   }
 }
 
@@ -2805,6 +2804,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
     //threaded cases
     QPtrList<KMSortCacheItem> unparented;
+    mImperfectlyThreadedList.clear();
 
     //cleanup
     noRepaint = TRUE;
@@ -3044,7 +3044,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		QString  ref = msg->replyToAuxIdMD5();
                if (!ref.isEmpty()) {
 		    parent = msgs[ref];
-                   (*it)->setImperfectlyThreaded(true);
+                    (*it)->setImperfectlyThreaded(true);
                }
 	    }
 	    if (!parent && msg->subjectIsPrefixed() && mSubjThreading) {
@@ -3188,12 +3188,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );
 	}
     } else {
-      // only reset the selection if we have no current item
-      if (mCurrentItem <= 0)
-      {
-      setTopItemByIndex(mTopItem);
-      setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
-      }
+        // only reset the selection if we have no current item
+        if (mCurrentItem <= 0) {
+          setTopItemByIndex(mTopItem);
+          setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
+        }
     }
     END_TIMER(selection);
     SHOW_TIMER(selection);
