@@ -9,6 +9,8 @@
 #include <qregexp.h>
 #include <kmfolder.h>
 #include <kmheaders.h>
+#include <kmkernel.h>
+#include <kmmsgdict.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -643,6 +645,17 @@ QCString KMMsgBase::encodeBase64(const QCString& aStr)
   DwEncodeBase64(dwsrc, dwdest);
   result = dwdest.c_str();
   return result;
+}
+
+//-----------------------------------------------------------------------------
+unsigned long KMMsgBase::getMsgSerNum() const
+{
+  unsigned long msn = 0;
+  if (mParent) {
+    int index = mParent->find((const KMMsgBasePtr)this);
+    msn = kernel->msgDict()->getMsgSerNum(mParent, index);
+  }
+  return msn;
 }
 
 //-----------------------------------------------------------------------------

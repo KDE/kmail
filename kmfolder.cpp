@@ -359,7 +359,7 @@ bool KMFolder::readIndex()
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
     }
-    mMsgList.append(mi);
+    mMsgList.append(mi, false);
   }
   if( version < 1505)
   {
@@ -824,6 +824,17 @@ int KMFolder::find(const QString& msgIdMD5) const
 
 
 //-----------------------------------------------------------------------------
+int KMFolder::find(unsigned long msgSerNum) const
+{
+  for (int i=0; i<mMsgList.high(); ++i)
+    if (mMsgList[i]->getMsgSerNum() == msgSerNum)
+      return i;
+
+  return -1;
+}
+
+
+//-----------------------------------------------------------------------------
 int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 {
   QString oldLoc, oldIndexLoc, newLoc, newIndexLoc;
@@ -1147,6 +1158,14 @@ bool KMFolder::updateIndexStreamPtr(bool)
     return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+void KMFolder::fillMsgDict(KMMsgDict *dict)
+{
+  open();
+  mMsgList.fillMsgDict(dict);
+  close();
+}
+
+//-----------------------------------------------------------------------------
+
 #include "kmfolder.moc"
-
-

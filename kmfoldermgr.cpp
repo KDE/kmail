@@ -27,6 +27,7 @@
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmundostack.h"
+#include "kmmsgdict.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):
@@ -367,6 +368,53 @@ void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
     if (folder->child()) {
       expireAllFolders( folder->child() );
     }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
+{
+  bool atTop = false;
+  if (!dir) {
+    dir = &mDir;
+    atTop = true;
+  }
+  
+  KMFolderNode* cur;
+  for (cur=dir->first(); cur; cur=dir->next()) {
+    if (cur->isDir())
+      continue;
+    KMFolder *folder = static_cast<KMFolder*>(cur);
+    
+    if (pass == 1)
+      dict->readFolderIds(folder);
+    else if (pass == 2) {
+      if (!dict->hasFolderIds(folder))
+        folder->fillMsgDict(dict);
+    }
+    
+    if (folder->child())
+      readMsgDict(dict, folder->child(), pass);
+  }
+  
+  if (pass == 1 && atTop)
+    readMsgDict(dict, dir, pass + 1);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
+{
+  if (!dir)
+    dir = &mDir;
+
+  KMFolderNode* cur;
+  for (cur=dir->first(); cur; cur=dir->next()) {
+    if (cur->isDir())
+      continue;
+    KMFolder *folder = static_cast<KMFolder*>(cur);
+    dict->writeFolderIds(folder);
+    if (folder->child())
+      writeMsgDict(dict, folder->child());
   }
 }
 

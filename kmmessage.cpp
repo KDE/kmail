@@ -54,6 +54,7 @@ int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
 
 //-----------------------------------------------------------------------------
+#if 0
 KMMessage::KMMessage(DwMessage* aMsg)
   : mMsg(aMsg),
     mNeedsAssembly(true),
@@ -63,7 +64,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mCodec(0)
 {
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReferences(const QCString& aStr)
@@ -86,6 +87,25 @@ QCString KMMessage::id(void) const
 
 
 //-----------------------------------------------------------------------------
+unsigned long KMMessage::getMsgSerNum() const
+{
+  if (mMsgSerNum)
+    return mMsgSerNum;
+  return KMMsgBase::getMsgSerNum();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
+{
+  if (newMsgSerNum)
+    mMsgSerNum = newMsgSerNum;
+  else if (!mMsgSerNum)
+      mMsgSerNum = getMsgSerNum();
+}
+
+
+//-----------------------------------------------------------------------------
 KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
 {
   mNeedsAssembly = FALSE;
@@ -99,11 +119,12 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mStatus  = KMMsgStatusNew;
   mDate    = 0;
   mFileName = "";
+  mMsgSerNum = 0;
 }
 
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
+KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
@@ -116,6 +137,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
   mStatus = msgInfo.status();
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
+  mMsgSerNum = msgInfo.getMsgSerNum();
   assign(&msgInfo);
 }
 

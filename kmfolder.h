@@ -29,6 +29,7 @@
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
+class KMMsgDict;
 
 #define KMFolderInherited KMFolderNode
 
@@ -150,6 +151,9 @@ public:
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const QString& msgIdMD5) const;
 
+  /** Returns the index of the given message or -1 if not found. */
+  virtual int find(unsigned long msgSerNum) const;
+  
   /** Number of messages in this folder. */
   virtual int count() const { return mMsgList.count(); }
 
@@ -382,6 +386,10 @@ public:
   ExpireUnits getReadExpireUnits() { return readExpireUnits; }
 
   void expireOldMessages();
+
+  /** Inserts messages into the message dictionary.  Might be called
+    during kernel initialization. */
+  void fillMsgDict(KMMsgDict *dict);
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

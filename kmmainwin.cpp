@@ -47,6 +47,7 @@
 #include "kmversion.h"
 #include "kmfldsearch.h"
 #include "mailinglist-magic.h"
+#include "kmmsgdict.h"
 
 
 #include <assert.h>
@@ -354,8 +355,8 @@ void KMMainWin::createWidgets(void)
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(statusMsg(const QString&)));
-  connect(mMsgView, SIGNAL(popupMenu(const KURL&,const QPoint&)),
-	  this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
+  connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
+	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
   connect(mMsgView, SIGNAL(urlClicked(const KURL&,int)),
 	  this, SLOT(slotUrlClicked(const KURL&,int)));
   connect(mMsgView, SIGNAL(showAtmMsg(KMMessage *)),
@@ -1251,6 +1252,34 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   kernel->kbp()->idle();
 }
 
+//-----------------------------------------------------------------------------
+KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
+{
+  KMFolder *folder;
+  int index;
+  
+  kernel->msgDict()->getLocation(aMsg, &folder, &index);
+  if (!folder)
+    return 0;
+
+  // setting current folder only if we actually have to
+  if (folder != mFolder) {
+    folderSelected(folder, false);
+    slotSelectFolder(folder);
+  }
+
+  KMMsgBase *msgBase = folder->getMsg(index);
+  KMMessage *msg = static_cast<KMMessage *>(msgBase);
+  
+  // setting current message only if we actually have to
+  unsigned long curMsgSerNum = 0;
+  if (mHeaders->currentMsg())
+    curMsgSerNum = mHeaders->currentMsg()->getMsgSerNum();
+  if (curMsgSerNum != msg->getMsgSerNum())
+    mHeaders->setCurrentMsg(index);
+  
+  return msg;
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
@@ -1390,6 +1419,9 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   win->setHtmlOverride(mFolderHtmlPref);
   KMMessage *newMessage = new KMMessage();
   newMessage->fromString(msg->asString());
+  // the following line makes sure the message has a unique serial number
+  // and that it is in the message dictionary
+  newMessage->setMsgSerNum(msg->getMsgSerNum());
   showMsg(win, newMessage);
 }
 
@@ -1414,10 +1446,8 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 
   connect(win, SIGNAL(statusMsg(const QString&)),
           this, SLOT(statusMsg(const QString&)));
-/*
-  connect(win, SIGNAL(popupMenu(const KURL&,const QPoint&)),
-          this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
-*/
+  connect(win, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
+          this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
   connect(win, SIGNAL(urlClicked(const KURL&,int)),
           this, SLOT(slotUrlClicked(const KURL&,int)));
   connect(win, SIGNAL(showAtmMsg(KMMessage *)),
@@ -1526,8 +1556,11 @@ void KMMainWin::slotMailtoCompose()
   KMMessage *msg = new KMMessage;
   QString id = "";
 
-  if ( mFolder )
-    id = mFolder->identity();
+  if ( mMsgCurrent )
+    id = mMsgCurrent->parent()->identity();
+  else
+    if ( mFolder )
+      id = mFolder->identity();
   msg->initHeader(id);
   msg->setCharset("utf-8");
   msg->setTo(mUrlCurrent.path());
@@ -1545,7 +1578,8 @@ void KMMainWin::slotMailtoReply()
   KMMessage *msg, *rmsg;
   QString id;
 
-  if (!(msg = mHeaders->getMsg(-1))) return;
+  /* if (!(msg = mHeaders->getMsg(-1))) return; */
+  msg = mMsgCurrent;
   id = msg->headerField( "X-KMail-Identity" );
   if ( id.isEmpty() )
     id = mFolder->identity();
@@ -1565,7 +1599,8 @@ void KMMainWin::slotMailtoForward()
   KMComposeWin *win;
   KMMessage *msg, *fmsg;
 
-  if (!(msg = mHeaders->getMsg(-1))) return;
+  /* if (!(msg = mHeaders->getMsg(-1))) return; */
+  msg = mMsgCurrent;
   fmsg = msg->createForward();
   fmsg->setTo(mUrlCurrent.path());
 
@@ -1610,11 +1645,12 @@ void KMMainWin::slotUrlOpen()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
+void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu * menu = new KPopupMenu;
   updateMessageActions();
 
+  mMsgCurrent = jumpToMessage(&aMsg);
   mUrlCurrent = aUrl;
 
   if (!aUrl.isEmpty())
@@ -1623,12 +1659,14 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
     {
       // popup on a mailto URL
       menu->insertItem(i18n("Send to..."), this,
-		       SLOT(slotMailtoCompose()));
-      menu->insertItem(i18n("Send reply to..."), this,
-		       SLOT(slotMailtoReply()));
-      menu->insertItem(i18n("Forward to..."), this,
-		       SLOT(slotMailtoForward()));
-      menu->insertSeparator();
+                       SLOT(slotMailtoCompose()));
+      if ( mMsgCurrent ) {
+        menu->insertItem(i18n("Send reply to..."), this,
+                         SLOT(slotMailtoReply()));
+        menu->insertItem(i18n("Forward to..."), this,
+                         SLOT(slotMailtoForward()));
+        menu->insertSeparator();
+      }
       menu->insertItem(i18n("Add to addressbook"), this,
 		       SLOT(slotMailtoAddAddrBook()));
       menu->insertItem(i18n("Copy to clipboard"), this,
@@ -1647,8 +1685,8 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
   {
     // popup somewhere else (i.e., not a URL) on the message
 
-     if (!mFolder) // no messages
-     {
+    if (!mMsgCurrent) // no messages
+    {
          delete menu;
          return;
      }

@@ -85,6 +85,11 @@ public:
 
   void folderSelected(KMFolder*, bool jumpToUnread);
 
+  /** Jump to any message in any folder.  The message serial number of the
+      argument message is used to locate the original message, which
+      is then returned. */
+  KMMessage *jumpToMessage(KMMessage *aMsg);
+
 public slots:
   virtual void show();
   virtual void hide();
@@ -179,7 +184,7 @@ protected slots:
   void slotSetHeaderStyle(int);
   void slotSetEncoding();
   void slotSendQueued();
-  void slotMsgPopup(const KURL &url, const QPoint&);
+  void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
   void slotUrlClicked(const KURL &url, int button);
   void slotCopyText();
   void slotMarkAll();
@@ -245,6 +250,7 @@ protected:
   QString       mNewMailCmd;
   int		mMessageStatusId;
   QValueList<int> *mHorizPannerSep, *mVertPannerSep;
+  KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;

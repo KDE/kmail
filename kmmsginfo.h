@@ -67,6 +67,7 @@ public:
   KMMsgInfo& operator=(const KMMessage&);
   KMMsgInfo& operator=(const KMMsgInfo&);
 
+
 private:
   KMMsgStatus mStatus;
   class KMMsgInfoPrivate;

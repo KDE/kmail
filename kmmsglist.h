@@ -8,6 +8,7 @@
 #include <qarray.h>
 #include "kmmsgbase.h"
 
+class KMMsgDict;
 
 #define KMMsgListInherited QMemArray<KMMsgBasePtr>
 class KMMsgList: public QMemArray<KMMsgBasePtr>
@@ -22,29 +23,33 @@ public:
   /** Destructor also deletes all messages in the list. */
   virtual ~KMMsgList();
 
-  /** Remove message at given index without deleting it. */
+  /** Remove message at given index without deleting it.
+    Also removes from message dictionary. */
   virtual void remove(int idx);
 
-  /** Returns message at given index and removes it from the list. */
+  /** Returns message at given index and removes it from the list.
+    Also removes from message dictionary. */
   virtual KMMsgBasePtr take(int idx);
 
-  /** Insert message at given index. Resizes the array if necessary. */
-  virtual void insert(int idx, KMMsgBasePtr msg);
+  /** Insert message at given index. Resizes the array if necessary.
+    If @p syncDict, also updates message dictionary. */
+  virtual void insert(int idx, KMMsgBasePtr msg, bool syncDict = true);
 
   /** Append given message after the last used message. Resizes the
-    array if necessary. Returns index of new position. */
-  virtual int append(KMMsgBasePtr msg);
+    array if necessary. Returns index of new position.
+    If @p syncDict, also updates message dictionary. */
+  virtual int append(KMMsgBasePtr msg, bool syncDict = true);
 
   /** Clear messages. If autoDelete is set (default) the messages are 
-      deleted. The array is not resized. */
+      deleted. The array is not resized.  Does not sync message dictionary. */
   virtual void clear(bool autoDelete=TRUE);
 
   /** Resize array and initialize new elements if any. Returns
-    FALSE if memory cannot be allocated. */
+    FALSE if memory cannot be allocated.  Does not sync message dictionary. */
   virtual bool resize(int size);
 
   /** Clear the array and resize it to given size. Returns FALSE
-    if memory cannot be allocated. */
+    if memory cannot be allocated.  Does not sync message dictionary. */
   virtual bool reset(int size);
 
   /** Returns message at given index. */
@@ -55,7 +60,7 @@ public:
 
   /** Set message at given index. The array is resized if necessary. If
    there is already a message at the given index this message is *not*
-   deleted. */
+   deleted.  Does not sync the message dictionary. */
   virtual void set(int idx, KMMsgBasePtr msg);
 
   /** Returns first unused index (index of last message plus one). */
@@ -66,6 +71,10 @@ public:
 
   /** Size of the array. */
   int size(void) const { return ((int)KMMsgListInherited::size()); }
+
+  /** Inserts messages into the message dictionary.  Might be called
+    during kernel initialization. */
+  void fillMsgDict(KMMsgDict *dict);
 
 protected:
   /** Set mHigh to proper value */

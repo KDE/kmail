@@ -24,6 +24,7 @@ class KabAPI;
 class KMSender;
 class KMIdentity;
 class KMKernel;
+class KMMsgDict;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -108,6 +109,7 @@ public:
   inline KMAddrBook *addrBook() { return the_addrBook; }
   KabAPI *KABaddrBook();
   inline KMSender *msgSender() { return the_msgSender; }
+  inline KMMsgDict *msgDict() { return the_msgDict; }
 
   inline bool firstStart() { return the_firstStart; }
   inline QString previousVersion() { return the_previousVersion; }
@@ -118,6 +120,9 @@ public:
   void notClosedByUser();
 
   void emergencyExit( const QString& reason );
+
+  /** Returns a message serial number that hasn't been used yet. */
+  unsigned long getNextMsgSerNum();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
@@ -138,6 +143,7 @@ private:
   KMAddrBook *the_addrBook;
   KabAPI *the_KAB_addrBook;
   KMSender *the_msgSender;
+  KMMsgDict *the_msgDict;
   struct putData
   {
     KURL url;

@@ -12,6 +12,7 @@
 #include "kmfolderdir.h"
 
 class KMFolder;
+class KMMsgDict;
 
 #define KMFolderMgrInherited QObject
 class KMFolderMgr: public QObject
@@ -80,6 +81,13 @@ public:
 
   /** Expire old messages in all folders */
   virtual void expireAllFolders( KMFolderDir *adir = 0 );
+
+  /** Inserts messages into the message dictionary.  Called during
+    kernel initialization. */
+  void readMsgDict(KMMsgDict *dict, KMFolderDir *dir=0, int pass = 1);
+  
+  /** Writes message serial on disk.  Called during kernel shutdown. */
+  void writeMsgDict(KMMsgDict *dict, KMFolderDir *dir=0);
 
 public slots:
   /** Compacts all folders (they know is it needed) */

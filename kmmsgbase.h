@@ -166,6 +166,9 @@ public:
    */
   static QCString autoDetectCharset(const QCString &encoding, const QStringList &encodingList, const QString &text);
 
+  /** Returns the message serial number for the message. */
+  virtual unsigned long getMsgSerNum() const;
+
 protected:
   KMFolder* mParent;
   bool mDirty;

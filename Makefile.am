@@ -12,7 +12,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
-		kmreaderwin.cpp kbusyptr.cpp \
+		kmreaderwin.cpp kbusyptr.cpp kmmsgdict.cpp \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmfolderdir.cpp \

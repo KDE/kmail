@@ -382,6 +382,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   aMsg->setParent(this);
   aMsg->setMsgSize(size);
   idx = mMsgList.append(aMsg);
+  aMsg->setMsgSerNum();
 
   // write index entry if desired
   if (mAutoCreateIndex)

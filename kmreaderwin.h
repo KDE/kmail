@@ -129,7 +129,7 @@ signals:
   void statusMsg(const QString& text);
 
   /** The user presses the right mouse button. 'url' may be NULL. */
-  void popupMenu(const KURL &url, const QPoint& mousePos);
+  void popupMenu(KMMessage &msg, const KURL &url, const QPoint& mousePos);
 
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const KURL &url, int button);

@@ -815,6 +815,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   aMsg->setFolderOffset(offs);
   aMsg->setMsgSize(size);
   idx = mMsgList.append(aMsg);
+  aMsg->setMsgSerNum();
 
   // change the length of the previous message to encompass white space added
   if ((idx > 0) && (growth > 0)) {

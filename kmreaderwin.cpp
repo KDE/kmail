@@ -432,7 +432,7 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
-      kdDebug(5006) << aMsg->subject() << " " << aMsg->fromStrip() << endl;
+      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ") " << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   //if (!force && aMsg && mMsg == aMsg)
@@ -1473,7 +1473,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   int id = msgPartFromUrl(url);
   if (id < 0)
   {
-    emit popupMenu(url, aPos);
+    emit popupMenu(*mMsg, url, aPos);
   }
   else
   {

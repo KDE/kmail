@@ -26,11 +26,13 @@ public:
   /** Straight forward initialization. */
   KMMessage(KMFolder* parent=NULL);
 
+#if 0
   /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);
+#endif
 
   /** Copy constructor. Does *not* automatically load the message. */
-  KMMessage(const KMMsgInfo& msgInfo);
+  KMMessage(KMMsgInfo& msgInfo);
 
   /** Destructor. */
   virtual ~KMMessage();
@@ -210,6 +212,12 @@ public:
   /** Returns the message ID, useful for followups */
   virtual QCString id(void) const;
 
+  /** Returns the message serial number. */
+  virtual unsigned long getMsgSerNum() const;
+  /** Sets the message serial number.  If defaulted to zero, the
+    serial number will be assigned using the dictionary. */
+  virtual void setMsgSerNum(unsigned long newMsgSerNum = 0);
+  
   /** Get or set header field with given name */
   virtual QString headerField(const QCString& name) const;
   virtual void setHeaderField(const QCString& name, const QString& value);
@@ -396,6 +404,7 @@ protected:
     unsigned long mFolderOffset, mMsgSize;
     time_t mDate;
     KMMsgStatus mStatus;
+    unsigned long mMsgSerNum;
 };
 
 typedef KMMessage* KMMessagePtr;

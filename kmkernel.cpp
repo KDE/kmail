@@ -11,7 +11,6 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmmessage.h"
@@ -28,10 +27,13 @@
 #include "kmpgpwrap.h"
 #include "kmversion.h"
 #include "kmrecentaddr.h"
+#include "kmmsgdict.h"
 #include <kwin.h>
 
 #include <X11/Xlib.h>
 #include <kapplication.h>
+
+#include <qmutex.h>
 
 KMKernel *KMKernel::mySelf = 0;
 
@@ -44,6 +46,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
   closed_by_user = true;
+  the_msgDict = 0;
   new KMpgpWrap();
 }
 
@@ -517,6 +520,7 @@ void KMKernel::init()
   KMMessage::readConfig();
   the_msgSender = new KMSender;
 
+  the_msgDict = new KMMsgDict;
 
   the_server_is_ready = true;
 
@@ -623,12 +627,14 @@ void KMKernel::cleanup(void)
     if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }
-
+  
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
-
+  
+  delete the_msgDict;
+  
   if (the_folderMgr) delete the_folderMgr;
   the_folderMgr = 0;
   if (the_imapFolderMgr) delete the_imapFolderMgr;
