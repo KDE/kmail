@@ -32,6 +32,7 @@ class QRadioButton;
 class KColorButton;
 class KFontChooser;
 class KpgpConfig;
+class ColorListBox;
 
 #include <klistview.h>
 #include <kdialogbase.h>
@@ -138,12 +139,18 @@ class ConfigureDialog : public KDialogBase
     class ListView : public KListView
     {
       public:
-        ListView( QWidget *parent, const char *name );
+        ListView( QWidget *parent=0, const char *name=0, int visibleItem=10 );
 	void resizeColums( void );
+
+	void setVisibleItem( int visibleItem, bool updateSize=true );
+	virtual QSize sizeHint( void ) const; 
 
       protected:
 	virtual void resizeEvent( QResizeEvent *e );
-	virtual void showEvent( QShowEvent *e );	
+	virtual void showEvent( QShowEvent *e );
+
+      private:
+	int mVisibleItem;
     };
 
     struct IdentityWidget
@@ -188,17 +195,10 @@ class ConfigureDialog : public KDialogBase
       QComboBox    *fontLocationCombo;
       KFontChooser *fontChooser;
       QCheckBox    *customColorCheck;
-      KColorButton *backgroundColorButton;
-      KColorButton *foregroundColorButton;
-      KColorButton *newColorButton;
-      KColorButton *unreadColorButton;
-      QLabel       *backgroundColorLabel;
-      QLabel       *foregroundColorLabel;
-      QLabel       *newColorLabel;
-      QLabel       *unreadColorLabel;
+      ColorListBox *colorList;
       QCheckBox    *longFolderCheck;
       int          activeFontIndex;
-      QString      fontString[3];
+      QString      fontString[6];
     };
     struct ComposerWidget
     {
@@ -274,9 +274,9 @@ class ConfigureDialog : public KDialogBase
     void setupMimePage( void );
     void setupSecurityPage( void );
     void setupMiscPage( void );
-    
     void saveActiveIdentity( void );
     void setIdentityInformation( const QString &identityName );
+    QStringList identityStrings( void );
 
   private slots:
     void slotNewIdentity( void );

@@ -23,8 +23,9 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp \
 		kmundostack.cpp ktablistbox.cpp kmbroadcaststatus.cpp \
-		kmacctexppop.cpp configuredialog.cpp kmkernel.cpp \
-                kmailIface.skel kmailIface.stub main.cpp 
+		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp \
+                kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
+		accountdialog.cpp
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -38,7 +39,7 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc kmtopwidget.moc ktablistbox.moc \
 		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc \
-                kmkernel.moc
+                colorlistbox.moc kmkernel.moc accountdialog.moc
 
 
 include_HEADERS = kmailIface.h

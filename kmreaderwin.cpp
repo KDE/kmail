@@ -172,7 +172,7 @@ void KMReaderWin::readConfig(void)
   if (mViewer->fontSizes()[0]+diff > 0) {
     for (i=0;i<7; i++)
       fontsizes[i] = mViewer->fontSizes()[i] + diff; //fontsizes << mViewer->fontSizes()[i] + diff;
-    mViewer->setFontSizes(fontsizes);
+    //mViewer->setFontSizes(fontsizes);
   }
 
 

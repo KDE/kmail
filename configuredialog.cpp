@@ -27,6 +27,7 @@
 #include <qcombobox.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qheader.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qmultilineedit.h>
@@ -49,6 +50,7 @@
 #include <kpgp.h>
 
 
+#include "colorlistbox.h"
 #include "configuredialog.h"
 #include "kfontutils.h"
 #include "kmaccount.h"
@@ -756,9 +758,11 @@ void ConfigureDialog::ApplicationLaunch::run( void )
 }
 
 
-ConfigureDialog::ListView::ListView( QWidget *parent, const char *name ) 
+ConfigureDialog::ListView::ListView( QWidget *parent, const char *name,
+				     int visibleItem ) 
   : KListView( parent, name )
 {
+  setVisibleItem(visibleItem);
 }
 
 
@@ -794,6 +798,39 @@ void ConfigureDialog::ListView::resizeColums( void )
   }
   setColumnWidth( c-1, w3 );
 }
+
+
+void ConfigureDialog::ListView::setVisibleItem( int visibleItem, 
+						bool updateSize )
+{
+  mVisibleItem = QMAX( 1, visibleItem );
+  if( updateSize == true )
+  {
+    QSize s = sizeHint();
+    setMinimumSize( s.width() + verticalScrollBar()->sizeHint().width() + 
+		    lineWidth() * 2, s.height() );
+  }
+}
+
+
+QSize ConfigureDialog::ListView::sizeHint( void ) const
+{
+  QSize s = QListView::sizeHint();
+  
+  int h = fontMetrics().height() + 2*itemMargin();
+  if( h % 2 > 0 ) { h++; }
+  
+  s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());
+  return( s );
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -879,7 +916,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 		Ok, parent, name, modal, true )
 {
   setHelp( "kmail/kmail.html", QString::null );
-  //setIconListAllVisible( true );
+  setIconListAllVisible( true );
 
   makeIdentityPage();
   makeNetworkPage();
@@ -1046,7 +1083,7 @@ void ConfigureDialog::makeNetworkPage( void )
   label = new QLabel( buttonGroup );
   label->setText(i18n("Accounts:   (add at least one account!)"));
   glay->addMultiCellWidget(label, 1, 1, 0, 1);
-  mNetwork.accountList = new ListView( buttonGroup, "accountList" );
+  mNetwork.accountList = new ListView( buttonGroup, "accountList", 5 );
   mNetwork.accountList->addColumn( i18n("Name") );
   mNetwork.accountList->addColumn( i18n("Type") );
   mNetwork.accountList->addColumn( i18n("Folder") );
@@ -1107,9 +1144,15 @@ void ConfigureDialog::makeApperancePage( void )
   mAppearance.fontLocationLabel = new QLabel( i18n("Location:"), page1 );
   hlay->addWidget( mAppearance.fontLocationLabel );
   mAppearance.fontLocationCombo = new QComboBox( page1 );
-  mAppearance.fontLocationCombo->insertItem(i18n("Message Body"));
-  mAppearance.fontLocationCombo->insertItem(i18n("Message List"));
-  mAppearance.fontLocationCombo->insertItem(i18n("Folder List"));
+  QStringList fontStringList;
+  fontStringList.append( i18n("Message Body") );
+  fontStringList.append( i18n("Message List") );
+  fontStringList.append( i18n("Folder List") );
+  fontStringList.append( i18n("Quoted text - First level") );
+  fontStringList.append( i18n("Quoted text - Second level") );
+  fontStringList.append( i18n("Quoted text - Third level") );
+  mAppearance.fontLocationCombo->insertStringList(fontStringList);
+
   connect( mAppearance.fontLocationCombo, SIGNAL(activated(int) ),
 	   this, SLOT(slotFontSelectorChanged(int)) );
   hlay->addWidget( mAppearance.fontLocationCombo );
@@ -1130,31 +1173,27 @@ void ConfigureDialog::makeApperancePage( void )
   hline = new QFrame( page2 );
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   vlay->addWidget( hline );
-  QGridLayout *glay = new QGridLayout( vlay, 4, 2 );
-  glay->setColStretch( 1, 10 );
 
-  mAppearance.backgroundColorLabel = 
-    new QLabel( i18n("Background Color"), page2 );
-  glay->addWidget( mAppearance.backgroundColorLabel, 0, 0 );
-  mAppearance.backgroundColorButton = new KColorButton( page2 );
-  glay->addWidget( mAppearance.backgroundColorButton, 0, 1 );
-  mAppearance.foregroundColorLabel = 
-    new QLabel( i18n("Normal Text Color"), page2 );
-  glay->addWidget( mAppearance.foregroundColorLabel, 1, 0 );
-  mAppearance.foregroundColorButton = new KColorButton( page2 );
-  glay->addWidget( mAppearance.foregroundColorButton, 1, 1 );
-  mAppearance.newColorLabel = 
-    new QLabel( i18n("URL Link/New Color"), page2 );
-  glay->addWidget( mAppearance.newColorLabel, 2, 0 );
-  mAppearance.newColorButton = new KColorButton( page2 );
-  glay->addWidget( mAppearance.newColorButton, 2, 1 );
-  mAppearance.unreadColorLabel = 
-    new QLabel( i18n("F&ollowed Link/Unread Color"), page2 );
-  glay->addWidget( mAppearance.unreadColorLabel, 3, 0 );
-  mAppearance.unreadColorButton = new KColorButton( page2 );
-  glay->addWidget( mAppearance.unreadColorButton, 3, 1 );
-  vlay->addStretch(10);
- 
+  QStringList modeList;
+  modeList.append( i18n("Composer Background") );
+  modeList.append( i18n("Normal Text") );
+  modeList.append( i18n("Quoted Text - First level") );
+  modeList.append( i18n("Quoted Text - Second level") );
+  modeList.append( i18n("Quoted Text - Third level") );
+  modeList.append( i18n("URL Link/New") );
+  modeList.append( i18n("Followed Link/Unread") );
+
+  mAppearance.colorList = new ColorListBox( page2 );
+  vlay->addWidget( mAppearance.colorList, 10 );
+  for( uint i=0; i<modeList.count(); i++ )
+  {
+    ColorListItem *listItem = new ColorListItem( modeList[i] );
+    mAppearance.colorList->insertItem( listItem );
+  }
+  mAppearance.colorList->setCurrentItem(0);
+
+
+
   QWidget *page3 = new QWidget( tabWidget );
   tabWidget->addTab( page3, i18n("Layout") );
   vlay = new QVBoxLayout( page3, spacingHint() );
@@ -1495,24 +1534,46 @@ void ConfigureDialog::setupApperancePage( void )
   mAppearance.fontString[2] = 
     config.readEntry("folder-font", "helvetica-medium-r-12");
   slotFontSelectorChanged(0);
+  mAppearance.fontString[3] = 
+    config.readEntry("quote1-font", "helvetica-medium-r-12");
+  mAppearance.fontString[4] = 
+    config.readEntry("quote2-font", "helvetica-medium-r-12");
+  mAppearance.fontString[5] = 
+    config.readEntry("quote3-font", "helvetica-medium-r-12");
 
   bool state = config.readBoolEntry("defaultFonts", false );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
   slotCustomFontSelectionChanged();
 
   config.setGroup("Reader");
-  QColor defaultColor = QColor(kapp->palette().normal().text());
-  mAppearance.foregroundColorButton->setColor(
-    config.readColorEntry("ForegroundColor",&defaultColor ) );
-  defaultColor = QColor(kapp->palette().normal().base());
-  mAppearance.backgroundColorButton->setColor(
-    config.readColorEntry("BackgroundColor",&defaultColor ) );
+
+  QColor defaultColor = QColor(kapp->palette().normal().base());  
+  mAppearance.colorList->setColor(
+    0, config.readColorEntry("BackgroundColor",&defaultColor ) );
+
+  defaultColor = QColor(kapp->palette().normal().text());
+  mAppearance.colorList->setColor( 
+    1, config.readColorEntry("ForegroundColor",&defaultColor ) );
+  
+  defaultColor = QColor(kapp->palette().normal().text());
+  mAppearance.colorList->setColor( 
+    2, config.readColorEntry("QuoutedText1",&defaultColor ) );
+
+  defaultColor = QColor(kapp->palette().normal().text());
+  mAppearance.colorList->setColor( 
+    3, config.readColorEntry("QuoutedText2",&defaultColor ) );
+
+  defaultColor = QColor(kapp->palette().normal().text());
+  mAppearance.colorList->setColor( 
+    4, config.readColorEntry("QuoutedText3",&defaultColor ) );
+
   defaultColor = QColor("blue");
-  mAppearance.newColorButton->setColor(
-    config.readColorEntry("LinkColor",&defaultColor ) );
+  mAppearance.colorList->setColor( 
+    5, config.readColorEntry("LinkColor",&defaultColor ) );
+
   defaultColor = QColor("red");
-  mAppearance.unreadColorButton->setColor(
-    config.readColorEntry("FollowedColor",&defaultColor ) );
+  mAppearance.colorList->setColor(
+    6, config.readColorEntry("FollowedColor",&defaultColor ) );
 
   state = config.readBoolEntry("defaultColors", false );
   mAppearance.customColorCheck->setChecked( state == false ? true : false );
@@ -1705,6 +1766,16 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
 }
 
 
+QStringList ConfigureDialog::identityStrings( void )
+{
+  QStringList list;
+  for( int i=0; i< mIdentity.identityCombo->count(); i++ )
+  {
+    list += mIdentity.identityCombo->text(i);
+  }
+  return( list );
+}
+
 
 
 void ConfigureDialog::slotNewIdentity( void )
@@ -1719,12 +1790,7 @@ void ConfigureDialog::slotNewIdentity( void )
   // Make and open the dialog 
   //
   NewIdentityDialog *dialog = new NewIdentityDialog( this, "new", true );
-
-  QStringList list;
-  for( int i=0; i< mIdentity.identityCombo->count(); i++ )
-  {
-    list += mIdentity.identityCombo->text(i);
-  }
+  QStringList list = identityStrings();
   dialog->setIdentities( list );
 
   int result = dialog->exec();
@@ -1957,6 +2023,8 @@ void ConfigureDialog::slotAccountSelected( void )
 }
 
 
+#include "accountdialog.h"
+
 
 void ConfigureDialog::slotAddAccount( void )
 {
@@ -1983,7 +2051,7 @@ void ConfigureDialog::slotAddAccount( void )
     break;
   }
 
-  KMAccount *account = kernel->acctMgr()->create( accountType, i18n("Unnamed") );
+  KMAccount *account = kernel->acctMgr()->create(accountType,i18n("Unnamed"));
   if( account == 0 )
   {
     KMessageBox::sorry( this, i18n("Unable to create account") );
@@ -1992,9 +2060,9 @@ void ConfigureDialog::slotAddAccount( void )
 
   account->init(); // fill the account fields with good default values
 
-  KMAccountSettings *accountSettings = 
-    new KMAccountSettings( this, 0, account );
-  if( accountSettings->exec() == QDialog::Accepted )
+  AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
+  dialog->setCaption( i18n("Add account") );
+  if( dialog->exec() == QDialog::Accepted )
   {
     QListViewItem *listItem = 
       new QListViewItem(mNetwork.accountList,account->name(),account->type());
@@ -2007,8 +2075,7 @@ void ConfigureDialog::slotAddAccount( void )
   {
     kernel->acctMgr()->remove(account);
   }
-
-  delete accountSettings;
+  delete dialog;
 }
 
 
@@ -2028,17 +2095,20 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     return;
   }
 
-  KMAccountSettings *dialog = new KMAccountSettings( this, 0, account );
-  dialog->exec();
-  delete dialog;
-
-  listItem->setText( 0, account->name() );
-  listItem->setText( 1, account->type() );
-  if( account->folder() ) 
-  { 
-    listItem->setText( 2, account->folder()->name() );
+  AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
+  dialog->setCaption( i18n("Modify account") );
+  if( dialog->exec() == QDialog::Accepted )
+  {
+    listItem->setText( 0, account->name() );
+    listItem->setText( 1, account->type() );
+    if( account->folder() ) 
+    { 
+      listItem->setText( 2, account->folder()->name() );
+    }
   }
+  delete dialog;
 }
+
 
 
 void ConfigureDialog::slotRemoveSelectedAccount( void )
@@ -2097,16 +2167,7 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
 
 void ConfigureDialog::slotCustomColorSelectionChanged( void )
 {
-  bool flag = mAppearance.customColorCheck->isChecked();
-  mAppearance.backgroundColorButton->setEnabled( flag );
-  mAppearance.foregroundColorButton->setEnabled( flag );
-  mAppearance.newColorButton->setEnabled( flag );
-  mAppearance.unreadColorButton->setEnabled( flag );
-  mAppearance.backgroundColorLabel->setEnabled( flag );
-  mAppearance.foregroundColorLabel->setEnabled( flag );
-  mAppearance.newColorLabel->setEnabled( flag );
-  mAppearance.unreadColorLabel->setEnabled( flag );
-
+  mAppearance.colorList->setEnabled(mAppearance.customColorCheck->isChecked());
 }
 
 void ConfigureDialog::slotWordWrapSelectionChanged( void )
