@@ -251,31 +251,6 @@ void KMComposeWin::setBody(QString body)
   mEditor->setText(body);
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::makeDescriptiveNames(QStringList &encodings)
-{
-  QStringList encodingNames = KGlobal::charsets()->availableEncodingNames();
-  QMap<QTextCodec*, QString> encodingMap;
-  for (QStringList::Iterator it = encodingNames.begin();
-    it != encodingNames.end(); it++)
-  {
-    QTextCodec *codec = KMMsgBase::codecForName((*it).latin1());
-    if (codec) encodingMap.insert(codec, *it);
-  }
-  for (QStringList::Iterator it = encodings.begin();
-    it != encodings.end(); it++)
-  {
-    QTextCodec *codec = KMMsgBase::codecForName((*it).latin1());
-    QMap<QTextCodec*, QString>::Iterator it2 = encodingMap.find(codec);
-    if (it2 == encodingMap.end())
-      (*it) = KGlobal::charsets()->languageForEncoding(*it)
-      + " ( " + *it + " )";
-    else
-      (*it) = KGlobal::charsets()->languageForEncoding(*it2)
-      + " ( " + *it + " )";
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 bool KMComposeWin::event(QEvent *e)
@@ -794,11 +769,7 @@ void KMComposeWin::setupActions(void)
   wordWrapAction->setChecked(mWordWrap);
   connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
-  KConfig *config = kapp->config();
-  KConfigGroupSaver saver(config, "Composer");
-  QStringList encodings = config->readListEntry("charsets");
-  makeDescriptiveNames( encodings );
-
+  QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
   encodingAction->setItems( encodings );
   encodingAction->setCurrentItem( -1 );
 

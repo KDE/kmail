@@ -1765,7 +1765,7 @@ void KMMainWin::setupMenuBar()
 
   //----- Message-Encoding Submenu
   mEncoding = new KSelectAction( i18n( "Set &Encoding" ), "charset", 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
-  QStringList encodings = KGlobal::charsets()->descriptiveEncodingNames();
+  QStringList encodings = KMMsgBase::supportedEncodings(FALSE);
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
   mEncoding->setCurrentItem(0);

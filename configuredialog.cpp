@@ -37,6 +37,7 @@
 #include <qwhatsthis.h>
 
 #include <kapplication.h>
+#include <kcharsets.h>
 #include <kemailsettings.h>
 #include <kfiledialog.h>
 #include <kfontdialog.h>
@@ -1249,6 +1250,14 @@ void ConfigureDialog::makeComposerPage( void )
   connect( mComposer.charsetListBox, SIGNAL(selectionChanged()),
            this, SLOT(slotCharsetSelectionChanged()) );
 
+  // We might need this again, if we implement automatic charset selection
+  // in the composer
+  charsetsGroup->hide();
+  mComposer.addCharsetButton->hide();
+  mComposer.removeCharsetButton->hide();
+  mComposer.charsetUpButton->hide();
+  mComposer.charsetDownButton->hide();
+
   //default charset
   QGroupBox *defaultCharsetGroup = new QGroupBox( i18n("Default charset"),
     charsetPage );
@@ -1263,6 +1272,7 @@ void ConfigureDialog::makeComposerPage( void )
   charsetVLay->addWidget( mComposer.forceReplyCharsetCheck );
   topLevel3->addWidget( defaultCharsetGroup );
   topLevel3->addSpacing( spacingHint() );
+  topLevel3->addStretch();
 }
 
 
@@ -1870,17 +1880,19 @@ void ConfigureDialog::setupComposerPage( void )
     mComposer.charsetListBox->insertStringList( charsets );
     mComposer.charsetListBox->setCurrentItem( 0 );
 
-    charsets.prepend( i18n("Use language encoding") );
     mComposer.defaultCharsetCombo->clear();
-    mComposer.defaultCharsetCombo->insertStringList(charsets);
+    mComposer.defaultCharsetCombo->insertItem( i18n("Use language encoding") );
+    mComposer.defaultCharsetCombo->insertStringList(
+      KMMsgBase::supportedEncodings(TRUE));
     QString str = config->readEntry( "charset", "" );
-    if (str.isNull() || str.isEmpty() || str == "default")
+    if (str.isEmpty() || str == "default")
       mComposer.defaultCharsetCombo->setCurrentItem( 0 );
     else
     {
       bool found = false;
       for (int j = 1; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
-	if (mComposer.defaultCharsetCombo->text( j ) == str)
+	if (KGlobal::charsets()->encodingForName(mComposer
+          .defaultCharsetCombo->text( j )) == str)
 	{
 	  mComposer.defaultCharsetCombo->setCurrentItem( j );
 	  found = true;
@@ -2376,8 +2388,8 @@ void ConfigureDialog::slotDoApply( bool everything )
       if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
 	config->writeEntry("charset", "default");
       else
-	config->writeEntry("charset", mComposer.defaultCharsetCombo->
-			   currentText());
+	config->writeEntry("charset", KGlobal::charsets()->encodingForName(
+        mComposer.defaultCharsetCombo->currentText()));
       config->writeEntry("force-reply-charset",
 			 mComposer.forceReplyCharsetCheck->isChecked() );
     }

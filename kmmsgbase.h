@@ -24,6 +24,7 @@ typedef enum
     KMMsgStatusFlag='G'
 } KMMsgStatus;
 
+class QStringList;
 class KMFolder;
 
 
@@ -118,6 +119,9 @@ public:
 
   /** Convert all non-ascii characters to question marks */
   static const QCString toUsAscii(const QString& _str);
+
+  /** Return a list of the supported encodings */
+  static QStringList supportedEncodings(bool usAscii);
 
   /** Copy all values from other to this object. */
   void assign(const KMMsgBase* other);

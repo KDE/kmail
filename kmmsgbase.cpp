@@ -3,6 +3,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kcharsets.h>
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -199,6 +200,31 @@ const QCString KMMsgBase::toUsAscii(const QString& _str)
   for (int i = 0; i < len; i++)
     if (result.at(i).unicode() >= 128) result.at(i) = '?';
   return result.latin1();
+}
+
+
+//-----------------------------------------------------------------------------
+QStringList KMMsgBase::supportedEncodings(bool usAscii)
+{
+  QStringList encodingNames = KGlobal::charsets()->availableEncodingNames();
+  QStringList encodings;
+  QMap<QString,bool> mimeNames;
+  for (QStringList::Iterator it = encodingNames.begin();
+    it != encodingNames.end(); it++)
+  {
+    QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
+    QString mimeName = (codec) ? QString(codec->mimeName()).lower() : (*it);
+    if (mimeNames.find(mimeName) == mimeNames.end())
+    {
+      encodings.append(KGlobal::charsets()->languageForEncoding(*it)
+        + " ( " + mimeName + " )");
+      mimeNames.insert(mimeName, TRUE);
+    }
+  }
+  encodings.sort();
+  if (usAscii) encodings.prepend(KGlobal::charsets()
+    ->languageForEncoding("us-ascii") + " ( us-ascii )");
+  return encodings;
 }
 
 

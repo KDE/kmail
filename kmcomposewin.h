@@ -176,11 +176,6 @@ public:
   void setBody (QString body);
 
   /**
-   * Add descriptions to the encodings in the list
-   */
-  static void makeDescriptiveNames(QStringList &encodings);
-
-  /**
    * To catch palette changes
    */
   virtual bool event(QEvent *e);
