@@ -180,7 +180,7 @@ public:
         mMsgPartOk = false;
     }
 
-    KMMessagePart& msgPart() {
+    KMMessagePart& msgPart() const {
         if( !mMsgPartOk ) {
             KMMessage::bodyPart(mDwPart, &mMsgPart);
             mMsgPartOk = true;
@@ -331,7 +331,7 @@ public:
     bool          mWasProcessed; // to be used by parseObjectTree()
 private:
     DwBodyPart*   mDwPart;   // may be zero
-    KMMessagePart mMsgPart;  // is valid - even if mDwPart is zero
+    mutable KMMessagePart mMsgPart;  // is valid - even if mDwPart is zero
     QCString      mEncodedBody;
     QString       mFromAddress;
     int           mType;
@@ -339,7 +339,7 @@ private:
     CryptoType    mCryptoType;
     KMMsgEncryptionState mEncryptionState;
     KMMsgSignatureState  mSignatureState;
-    bool          mMsgPartOk;
+    mutable bool  mMsgPartOk;
     bool          mEncodedOk;
     bool          mDeleteDwBodyPart;
     KMMimePartTreeItem* mMimePartTreeItem;
