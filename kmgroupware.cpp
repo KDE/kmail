@@ -145,7 +145,7 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
  * Message part formatting
  */
 
-QString KMGroupware::vPartToHTML( const QString& iCal )
+QString KMGroupware::vPartToHTML( const QString& /*iCal*/ )
 {
   return "<b>This is an iCalendar attachment handled by the wrong bodypart"
          "formatterplugin.</b><p/>";
