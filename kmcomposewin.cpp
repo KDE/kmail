@@ -2692,9 +2692,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 if( 0 < sigDaysLeft )
                     txt1 = i18n( "The certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( sigDaysLeft );
                 else if( 0 > sigDaysLeft )
-                    txt1 = i18n( "The certificate you want to use for signing has expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( sigDaysLeft );
+                    txt1 = i18n( "The certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( sigDaysLeft );
                 else
-                    txt1 = i18n( "The certificate you want to use for signing expires right today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
+                    txt1 = i18n( "The certificate you want to use for signing expires today.<br>This means that, starting from tomorrow, the recipients will not be able to check your signature any longer." );
                 int ret = KMessageBox::warningYesNo( this,
                                                     i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
                                                     i18n( "Certificate Warning" ) );
