@@ -30,14 +30,6 @@
 #include "kmmsgpart.h"
 #include <mimelib/mediatyp.h>
 
-#ifdef HAVE_PATHS_H
-#include <paths.h>
-#endif
-
-#ifndef _PATH_SENDMAIL
-#define _PATH_SENDMAIL  "/usr/sbin/sendmail"
-#endif
-
 #define SENDER_GROUP "sending mail"
 
 //-----------------------------------------------------------------------------
