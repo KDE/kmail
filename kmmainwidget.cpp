@@ -585,16 +585,16 @@ void KMMainWidget::createWidgets(void)
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
 
   new KAction(
-   i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
-   SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
-  accel->connectItem(accel->insertItem(CTRL+Key_Right),
-                     mFolderTree, SLOT(incCurrentFolder()));
-
-  new KAction(
     i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
     SLOT(slotAbortAll()), actionCollection(), "cancel" );
   accel->connectItem(accel->insertItem(Key_Escape),
                      ProgressManager::instance(), SLOT(slotAbortAll()));
+  
+  new KAction(
+   i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
+   SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
+  accel->connectItem(accel->insertItem(CTRL+Key_Right),
+                     mFolderTree, SLOT(incCurrentFolder()));
 
   new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
@@ -607,6 +607,23 @@ void KMMainWidget::createWidgets(void)
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
+  new KAction(
+    i18n("Focus on Next Message"), ALT+Key_Right, mHeaders,
+    SLOT(incCurrentMessage()), actionCollection(), "inc_current_message");
+    accel->connectItem( accel->insertItem( ALT+Key_Right ),
+                        mHeaders, SLOT( incCurrentMessage() ) );
+
+  new KAction(
+    i18n("Focus on Previous Message"), ALT+Key_Left, mHeaders,
+    SLOT(decCurrentMessage()), actionCollection(), "dec_current_message");
+    accel->connectItem( accel->insertItem( ALT+Key_Left ),
+                        mHeaders, SLOT( decCurrentMessage() ) );
+ 
+  new KAction(
+    i18n("Select Message with Focus"), ALT+Key_Space, mHeaders,
+    SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
+    accel->connectItem( accel->insertItem( ALT+Key_Space ),
+                        mHeaders, SLOT( selectCurrentMessage() ) );
 
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );

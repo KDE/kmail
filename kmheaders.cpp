@@ -2279,6 +2279,40 @@ void KMHeaders::selectPrevMessage()
   }
 }
 
+
+void KMHeaders::incCurrentMessage()
+{
+  QListViewItem *lvi = currentItem();
+  if ( lvi && lvi->itemBelow() ) {
+
+    disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+               this,SLOT(highlightMessage(QListViewItem*)));
+    setCurrentItem( lvi->itemBelow() );
+    ensureCurrentItemVisible();
+    connect(this,SIGNAL(currentChanged(QListViewItem*)),
+               this,SLOT(highlightMessage(QListViewItem*)));
+  }
+}
+
+void KMHeaders::decCurrentMessage()
+{
+  QListViewItem *lvi = currentItem();
+  if ( lvi && lvi->itemAbove() ) {
+    disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+               this,SLOT(highlightMessage(QListViewItem*)));
+    setCurrentItem( lvi->itemAbove() );
+    ensureCurrentItemVisible();
+    connect(this,SIGNAL(currentChanged(QListViewItem*)),
+            this,SLOT(highlightMessage(QListViewItem*)));
+  }
+}
+
+void KMHeaders::selectCurrentMessage()
+{
+  setCurrentMsg( currentItemIndex() );
+  highlightMessage( currentItem() );
+}
+
 //-----------------------------------------------------------------------------
 void KMHeaders::findUnreadAux( KMHeaderItem*& item,
                                         bool & foundUnreadMessage,

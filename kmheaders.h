@@ -209,6 +209,12 @@ public slots:
   /** Make the previous message header visible scrolling if necessary, returning
     true if an unread message is found */
   bool prevUnreadMessage();
+  /** Focus the next message, but don't select it. */
+  void incCurrentMessage();
+  /** Focus the previous message, but don't select it. */
+  void decCurrentMessage();
+  /** Select the message which currently has focus, if it's not already selected. */
+  void selectCurrentMessage();
   /** Don't show a drag cursor */
   void slotNoDrag();
   /** timer function to set the current time regularly */
