@@ -41,6 +41,7 @@
 
 #include "kmheaders.h"
 #include "kmsearchpattern.h"
+#include "kmmainwidget.h"
 
 namespace KMail {
 
@@ -70,6 +71,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   for ( int i = 0; i < KMail::StatusValueCount; i++ )
     mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
   mStatusCombo->setCurrentItem( 0 );
+  mStatusCombo->installEventFilter( this );
   connect( mStatusCombo, SIGNAL ( activated( int ) ),
            this, SLOT( slotStatusChanged( int ) ) );
 
@@ -89,6 +91,42 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
 HeaderListQuickSearch::~HeaderListQuickSearch()
 {
+}
+
+
+bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
+{
+  if ( watched == mStatusCombo )
+  {
+    KMMainWidget *mainWidget = 0L;
+
+    // Travel up the parents list until we find the main widget
+    for ( QWidget *curWidget = parentWidget(); curWidget != NULL; curWidget = curWidget->parentWidget() )
+    {
+      mainWidget = ::qt_cast<KMMainWidget *>( curWidget );
+      if ( mainWidget )
+        break;
+    }
+
+    if ( mainWidget )
+    {
+      switch ( event->type() )
+      {
+      case QEvent::FocusIn:
+        mainWidget->setAccelsEnabled( false );
+        break;
+      case QEvent::FocusOut:
+        mainWidget->setAccelsEnabled( true );
+        break;
+      default:
+        // Avoid compiler warnings
+        break;
+      }
+    }
+  }
+
+  // In either case, always return false, we NEVER want to eat the event
+  return false;
 }
 
 

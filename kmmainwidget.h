@@ -17,6 +17,7 @@
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
 
+class QAccel;
 class QVBoxLayout;
 class QSplitter;
 class QTextCodec;
@@ -146,6 +147,12 @@ public:
   void modifyFolder( KMFolderTreeItem* folderItem );
 
   void readCurrentOverrideCodec();
+
+  /**
+   * Enable or disable the global accelerators. This is useful for keyboard
+   * navigation inside child widgets like combo boxes.
+   */
+  void setAccelsEnabled( bool enabled = true );
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -420,7 +427,7 @@ private:
   KToggleAction* mTotalColumnToggle;
 
   KToggleAction *mToggleShowQuickSearchAction;
-private:
+
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
@@ -481,6 +488,8 @@ private:
   KXMLGUIClient *mGUIClient;
 
   static QPtrList<KMMainWidget>* s_mainWidgetList;
+
+  QAccel *mAccel;
 };
 
 #endif

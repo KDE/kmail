@@ -49,6 +49,13 @@ public:
                                              KActionCollection *actionCollection,
                                              const char *name = 0 );
     virtual ~HeaderListQuickSearch();
+
+    /**
+     * Used to disable the main window's accelerators when the search widget's
+     * combo has focus
+     */
+    bool eventFilter( QObject *watched, QEvent *event );
+
 public slots:
    void reset();
 
