@@ -460,12 +460,19 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeRFC2231String(const QString& _str)
+const QString KMMsgBase::encodeRFC2231String(const QString& _str,
+  const QString& charset)
 {
   if (_str.isEmpty()) return _str;
-  char *latin = (char *)calloc(1, _str.length() + 1);
-  strcpy(latin, _str.latin1());
-  char *l = latin;
+  QString cset;
+  if (charset.isEmpty()) cset = KGlobal::locale()->charset();
+    else cset = charset;
+  QTextCodec *codec = QTextCodec::codecForName(cset);
+  QCString latin;
+  if (codec) latin = codec->fromUnicode(_str);
+    else latin = _str.local8Bit();
+
+  char *l = latin.data();
   char hexcode;
   int i;
   bool quote;
@@ -474,9 +481,10 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str)
     if (*l < 0) break;
     l++;
   }
-  if (!*l) return _str;
-  QString result = QString("iso-8859-1''");
-  l = latin;
+  if (!*l) return latin;
+  QString result = cset;
+  result += QString("''");
+  l = latin.data();
   while (*l)
   {
     quote = *l < 0;
@@ -495,7 +503,6 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str)
     }
     l++;
   }
-  free(latin);
   return result;
 }
 

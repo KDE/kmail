@@ -2,6 +2,7 @@
 
 #include "kmmsgpartdlg.h"
 #include "kmmsgpart.h"
+#include "kmmsgbase.h"
 
 #ifndef KRN
 #include "kmglobal.h"
@@ -206,7 +207,12 @@ void KMMsgPartDlg::applyChanges(void)
   kernel->kbp()->busy();
   str = mEdtName->text();
   if (!str.isEmpty() || !mMsgPart->name().isEmpty())
+  {
     mMsgPart->setName(str);
+    QString encName = KMMsgBase::encodeRFC2231String(str, mMsgPart->charset());
+    mMsgPart->setContentDisposition(QString("attachment; filename")
+      + ((str != encName) ? "*" : "") +  "=\"" + encName + "\"");
+  }
 
   str = mEdtComment->text();
   if (!str.isEmpty() || !mMsgPart->contentDescription().isEmpty())

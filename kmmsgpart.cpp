@@ -308,7 +308,7 @@ const QString KMMessagePart::contentDescription(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDescription(const QString aStr)
 {
-  mContentDescription = aStr.copy();
+  mContentDescription = KMMsgBase::encodeRFC2047String(aStr, charset());
 }
 
 

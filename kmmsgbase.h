@@ -134,7 +134,8 @@ public:
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */
-  static const QString encodeRFC2231String(const QString& aStr);
+  static const QString encodeRFC2231String(const QString& aStr,
+    const QString& charset);
 
   /** Decode given string as described in RFC2231 */
   static const QString decodeRFC2231String(const QString& aStr);

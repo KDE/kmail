@@ -677,7 +677,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 //-----------------------------------------------------------------------------
 // If middle button and folder holds mailing-list, create a message to that list
 
-void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint &p, int)
+void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint &, int)
 {
   // react on middle-button only
   if (btn != Qt::MidButton) return;

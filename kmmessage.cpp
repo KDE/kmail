@@ -1831,17 +1831,18 @@ void KMMessage::deleteBodyParts(void)
 //-----------------------------------------------------------------------------
 void KMMessage::addBodyPart(const KMMessagePart* aPart)
 {
+  QString charset  = aPart->charset();
+
   DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
 
   QString type     = aPart->typeStr();
   QString subtype  = aPart->subtypeStr();
   QString cte      = aPart->cteStr();
   QString contDesc = KMMsgBase::encodeRFC2047String(aPart->
-    contentDescription(), aPart->charset());
+    contentDescription(), charset);
   QString contDisp = aPart->contentDisposition();
-  QString name     = KMMsgBase::encodeRFC2231String(aPart->name());
+  QString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
   bool RFC2231encoded = aPart->name() != name;
-  QString charset  = aPart->charset();
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
