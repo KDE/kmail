@@ -183,6 +183,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
+  mCodec = NULL;
 
   assign(&msgInfo);
 }
