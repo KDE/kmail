@@ -957,6 +957,9 @@ void KMHeaders::msgAdded(int id)
   if ((childCount() == 1) && hi) {
     setSelected( hi, true );
     setCurrentItem( firstChild() );
+    // ### workaround the fact that Qt 3.0.1's QListView doesn't emit
+    // selectionChanged() on setSelected:
+    /*own slot*/highlightMessage( firstChild() );
   }
 }
 
