@@ -279,7 +279,7 @@ int KMFolderMbox::lock()
       break;
 
     case procmail_lockfile:
-      cmd_str = "lockfile ";
+      cmd_str = "lockfile -l20 -r5 ";
       if (!mProcmailLockFileName.isEmpty())
 	cmd_str += mProcmailLockFileName;
       else
@@ -294,7 +294,7 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "lockfile " + indexLocation() + ".lock";
+        cmd_str = "lockfile -l20 -r5 " + indexLocation() + ".lock";
         rc = system( cmd_str.local8Bit() );
         if( rc != 0 )
         {
