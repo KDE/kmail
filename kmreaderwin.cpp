@@ -2181,6 +2181,8 @@ void KMReaderWin::slotMailtoReply()
 void KMReaderWin::slotShowMsgSrc()
 {
   KMMessage *msg = message();
+  if ( !msg )
+    return;
   bool oldStatus = msg->isComplete();
   msg->setComplete( true ); // otherwise imap messages are completely downloaded
   KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, msg,
