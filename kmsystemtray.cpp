@@ -260,7 +260,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
         ++it;
       }
 
-      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New messages in..."),
+      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New Messages In..."),
                                                   newMessagesPopup, mNewMessagePopupId, 3);
 
       kdDebug(5006) << "Folders added" << endl;

@@ -181,7 +181,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
   mPopup = new KPopupMenu(this);
-  mPopup->insertTitle(i18n("View columns"));
+  mPopup->insertTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));

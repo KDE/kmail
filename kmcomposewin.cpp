@@ -1044,7 +1044,7 @@ void KMComposeWin::setupActions(void)
         ++i;
     }
 
-    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto module" ),
+    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
                              0, // no accel
                              this, SLOT( slotSelectCryptoModule() ),
                              actionCollection(),
@@ -1121,7 +1121,7 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
   menu->insertSeparator();
-  menu->insertItem(i18n("Fixed font widths"), this, SLOT(slotUpdateFont()));
+  menu->insertItem(i18n("Fixed Font Widths"), this, SLOT(slotUpdateFont()));
   mEditor->installRBPopup(menu);
   */
   updateCursorPosition();

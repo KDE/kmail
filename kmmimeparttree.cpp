@@ -108,7 +108,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
 */
         QPopupMenu* popup = new QPopupMenu;
         popup->insertItem( i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
-        popup->insertItem( i18n( "Save As &Encoded..." ), this,
+        popup->insertItem( i18n( "Save as &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
         popup->insertItem( i18n( "Save Selected Items..." ), this,
                            SLOT( slotSaveSelected() ) );

@@ -486,7 +486,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
   mPopup = new KPopupMenu(this);
-  mPopup->insertTitle(i18n("View columns"));
+  mPopup->insertTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
   mSizeColumn = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
 
