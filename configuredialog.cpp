@@ -2329,7 +2329,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 	   mEditorRequester, SLOT(setEnabled(bool)) );
 
   label = new QLabel( i18n("<b>%f</b> will be replaced with the "
-			   "filename to edit."), group );
+			   "file name to edit."), group );
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
 	   label, SLOT(setEnabled(bool)) );

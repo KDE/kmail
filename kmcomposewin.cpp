@@ -1087,7 +1087,7 @@ void KMComposeWin::setupActions(void)
   mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
-  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties..."), 0, this,
+  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties"), 0, this,
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 

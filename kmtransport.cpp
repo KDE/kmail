@@ -355,11 +355,11 @@ void KMTransportDialog::makeSmtpPage()
   grid->addMultiCellWidget( line, 11, 11, 0, 1 );
 
   mSmtp.specifyHostnameCheck =
-    new QCheckBox( i18n("Sen&d custom hostname to server"), page1 );
+    new QCheckBox( i18n("Sen&d custom host name to server"), page1 );
   grid->addMultiCellWidget( mSmtp.specifyHostnameCheck, 12, 12, 0, 1 );
   QWhatsThis::add(mSmtp.specifyHostnameCheck,
                   i18n("Check this option to have KMail use "
-                       "a custom hostname when identifying itself "
+                       "a custom host name when identifying itself "
                        "to the mail server."
                        "<p>This is useful when your system's hostname "
                        "may not be set correctly or to mask your "
@@ -369,7 +369,7 @@ void KMTransportDialog::makeSmtpPage()
   grid->addWidget( mSmtp.localHostnameLabel, 13, 0);
   mSmtp.localHostnameEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.localHostnameEdit,
-                  i18n("Enter the hostname KMail should use when "
+                  i18n("Enter the host name KMail should use when "
                        "identifying itself to the server."));
   mSmtp.localHostnameLabel->setBuddy( mSmtp.localHostnameEdit );
   grid->addWidget( mSmtp.localHostnameEdit, 13, 1 );
