@@ -233,6 +233,10 @@ public:
 
   void showAttachmentPopup( int id, const QString & name, const QPoint & p );
 
+  /** Set the serial number of the message this reader window is currently
+   *  waiting for. Used to discard updates for already deselected messages. */
+  void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -307,6 +311,8 @@ public slots:
   void slotShowMsgSrc();
   void slotSaveMsg();
   void slotSaveAttachments();
+  
+  void slotMessageArrived( KMMessage *msg );
 
 protected slots:
   /** Some attachment operations. */
@@ -423,6 +429,7 @@ private:
   bool mAtmUpdate;
   int mChoice;
   KService::Ptr mOffer;
+  unsigned long mWaitingForSerNum;
 };
 
 

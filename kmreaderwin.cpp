@@ -490,6 +490,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMimeTreeAtBottom = true;
   mAutoDelete = false;
   mLastSerNum = 0;
+  mWaitingForSerNum = 0;
   mMessage = 0;
   mLastStatus = KMMsgStatusUnknown;
   mMsgDisplay = true;
@@ -562,6 +563,20 @@ KMReaderWin::~KMReaderWin()
   delete mRootNode;
   removeTempFiles();
 }
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotMessageArrived( KMMessage *msg )
+{
+  if (msg && ((KMMsgBase*)msg)->isMessage()) {
+    if ( msg->getMsgSerNum() == mWaitingForSerNum ) {
+      setMsg( msg, true );
+    } else {
+      kdDebug( 5006 ) <<  "KMReaderWin::slotMessageArrived - ignoring update" << endl;
+    }
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 bool KMReaderWin::update( KMail::ISubject * subject )
@@ -815,6 +830,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mDelayedMarkTimer.stop();
 
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
+  if ( !aMsg ) mWaitingForSerNum = 0; // otherwise it has been set
 
   // assume if a serial number exists it can be used to find the assoc KMMessage
   if (mLastSerNum <= 0)
@@ -868,6 +884,7 @@ void KMReaderWin::clearCache()
   clear();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;
+  mWaitingForSerNum = 0;
   mMessage = 0;
 }
 

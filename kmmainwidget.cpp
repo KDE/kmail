@@ -1655,12 +1655,13 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
     if ( msg->transferInProgress() )
       return;
     mMsgView->clear();
+    mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
     if ( mJob )
       disconnect( mJob, 0, this, 0 );
     mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0,
           "STRUCTURE", mMsgView->attachmentStrategy() );
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotUpdateImapMessage(KMMessage*)));
+            mMsgView, SLOT(slotMessageArrived(KMMessage*)));
     mJob->start();
   } else {
     mMsgView->setMsg(msg);
@@ -1751,27 +1752,6 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
     kdDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
 }
 
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
-{
-  if (msg && ((KMMsgBase*)msg)->isMessage()) {
-    // don't update if we have since left the folder
-    if ( mFolder &&
-       ( mFolder == msg->parent()
-      || mFolder->folderType() == KMFolderTypeSearch ) )
-    {
-      mMsgView->setMsg(msg, TRUE);
-    } else {
-      kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
-    }
-  }  else {
-    // force an update of the folder
-    if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
-      static_cast<KMFolderImap*>(mFolder->storage())->getFolder(true);
-  }
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusNew()

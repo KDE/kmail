@@ -289,7 +289,6 @@ protected slots:
   void slotSearch();
   void slotSearchClosed();
   void slotFind();
-  void slotUpdateImapMessage(KMMessage *msg);
   void slotIntro();
   void slotShowStartupFolder();
   /** Show tip-of-the-day on startup */
