@@ -1360,15 +1360,15 @@ void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat forma
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 {
   // Try the standard folders
-  if( mCalendar->location() == resource )
+  if( mCalendar && mCalendar->location() == resource )
     return mCalendar;
-  if ( mContacts->location() == resource )
+  if ( mContacts && mContacts->location() == resource )
     return mContacts;
-  if ( mNotes->location() == resource )
+  if ( mNotes && mNotes->location() == resource )
     return mNotes;
-  if ( mTasks->location() == resource )
+  if ( mTasks && mTasks->location() == resource )
     return mTasks;
-  if ( mJournals->location() == resource )
+  if ( mJournals && mJournals->location() == resource )
     return mJournals;
 
   // No luck. Try the extrafolders
