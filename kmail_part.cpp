@@ -32,8 +32,10 @@
 #include "kmbroadcaststatus.h"
 #include "aboutdata.h"
 #include "kmkernel.h"
+#include "kmfolder.h"
 #if KDE_IS_VERSION( 3, 1, 90 )
-#  include "sidebarextension.h"
+#include "sidebarextension.h"
+#include "infoextension.h"
 #endif
 
 
@@ -133,6 +135,11 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
                                 "KMailSidebar" );
+
+  // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
+  KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
+  connect (mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT( exportFolder(KMFolder*) ) );
+  connect (this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)));
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -167,6 +174,11 @@ bool KMailPart::openFile()
 
   widget->show();
   return true;
+}
+
+void KMailPart::exportFolder( KMFolder *folder )
+{
+	emit textChanged( folder->label() );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)

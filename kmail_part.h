@@ -43,6 +43,7 @@ class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;
 class KMLittleProgressDlg;
+class KMFolder;
 
 class ActionManager;
 
@@ -62,6 +63,10 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     virtual void save() { /*TODO*/ }
     virtual void exit();
     virtual void updateEditMenu() {};
+	void exportFolder( KMFolder* folder );
+
+  signals:
+    void textChanged( const QString& );
 
   protected:
     virtual bool openFile();
