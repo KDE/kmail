@@ -393,7 +393,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
       result += *pos;
     }
   }
-  return result;
+  return result.replace(QRegExp("\n[ \t]"),"");
 }
 
 
