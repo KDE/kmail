@@ -24,6 +24,8 @@
 #include <qlistview.h>
 #include <qheader.h>
 
+#include <stdlib.h>
+
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, 
   QString curFolder, bool modal, WFlags f): 

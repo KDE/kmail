@@ -39,6 +39,8 @@
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
 
+#include <stdlib.h>
+
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
 QPixmap* KMHeaders::pixDel = 0;

@@ -71,6 +71,7 @@
 
 #include "configuredialog.moc"
 
+#include <stdlib.h>
 
 //
 // I include some of the images for now to reduce file adm.
