@@ -88,10 +88,12 @@ void KMAcctLocal::processNewMail(bool)
   QTime t;
   hasNewMail = false;
 
-  QFileInfo fi( location() );
-  if ( fi.size() == 0 && precommand().isEmpty() ) {
-    emit finishedCheck(hasNewMail);
-    return;
+  if ( precommand().isEmpty() ) {
+    QFileInfo fi( location() );
+    if ( fi.size() == 0 ) {
+      emit finishedCheck(hasNewMail);
+      return;
+    }
   }
 
   KMFolder mailFolder(NULL, location());

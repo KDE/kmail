@@ -142,7 +142,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete = new QPushButton( QString::null, hb );
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
-  mBtnRename = new QPushButton( i18n("Rename"), hb );
+  mBtnRename = new QPushButton( i18n("Rename..."), hb );
   QToolTip::add(mBtnNew,i18n("Add a new filter to the list."));
   QToolTip::add(mBtnDelete,i18n("Delete the selected filter."));
   QToolTip::add(mBtnRename,i18n("Rename the selected filter."));
