@@ -9,6 +9,8 @@
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
+#include "progressmanager.h"
+using KPIM::ProgressManager;
 
 #include "kmfoldermgr.h"
 
@@ -129,6 +131,15 @@ bool KMAcctLocal::preProcess()
   BroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
+
+  Q_ASSERT( !mMailCheckProgressItem );
+  mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
+    "MailCheck" + mName,
+    mName,
+    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    false, // cannot be canceled
+    false ); // no tls/ssl
+
   // run the precommand
   if (!runPrecommand(precommand()))
   {
@@ -165,6 +176,8 @@ bool KMAcctLocal::preProcess()
 
   mNumMsgs = mMailFolder->count();
 
+  mMailCheckProgressItem->setTotalItems( mNumMsgs );
+
   // prepare the static parts of the status message:
   mStatusMsgStub = i18n("Moving message %3 of %2 from %1.")
     .arg(mMailFolder->location()).arg( mNumMsgs );
@@ -184,7 +197,9 @@ bool KMAcctLocal::fetchMsg()
 
   const QString statusMsg = mStatusMsgStub.arg( mMsgsFetched );
   BroadcastStatus::instance()->setStatusMsg( statusMsg );
-  //BroadcastStatus::instance()->setStatusProgressPercent( "L" + mName, (mMsgsFetched*100) / mNumMsgs );
+  mMailCheckProgressItem->incCompletedItems();
+  mMailCheckProgressItem->updateProgress();
+  mMailCheckProgressItem->setStatus( statusMsg );
 
   msg = mMailFolder->take(0);
   if (msg)
@@ -237,7 +252,18 @@ void KMAcctLocal::postProcess()
                                      .arg( mMailFolder->location() )
                                      .arg( strerror( rc ) ) );
     }
-    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
+
+    if( mMailCheckProgressItem ) { // do this only once...
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
+      // FIXME Message reused from KMAcctExpPop, due to feature freeze
+      mMailCheckProgressItem->setStatus(
+        i18n( "Fetched 1 message from %1. Terminating transmission...",
+              "Fetched %n messages from %1. Terminating transmission...",
+              mNumMsgs )
+        .arg( "localhost" ) );
+      mMailCheckProgressItem->setComplete();
+      mMailCheckProgressItem = 0;
+    }
   }
   // else warning is written already
 
