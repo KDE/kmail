@@ -125,8 +125,7 @@ namespace KMail {
         }
       }
       if ( !part->partSpecifier().endsWith(".HEADER") &&
-           part->typeStr() != "MULTIPART" &&
-           !part->loadPart() )
+           part->typeStr() != "MULTIPART" )
         part->setLoadHeaders( true ); // load MIME header
       
       if ( part->loadHeaders() || part->loadPart() )
