@@ -1896,6 +1896,7 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
 					bool onlyNew,
 					bool aDirNext )
 {
+if (item) kdDebug() << "item = " << item->msgId() << endl;
   KMMsgBase* msgBase = 0;
   KMHeaderItem *lastUnread = 0;
   /* itemAbove() is _slow_ */
@@ -1925,6 +1926,7 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
     }
     item = lastUnread;
   }
+if (item) kdDebug() << "item = " << item->msgId() << endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -2007,13 +2009,16 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
-    if ( !mFolder->countUnread() ) return;
-    int i = findUnread(TRUE, -1, false, acceptCurrent);
-    if ( i < 0 && mLoopOnGotoUnread )
-      // this assumes that (0 == firstChild()->msgId()) !
-      i = findUnread(TRUE, 0, false, acceptCurrent); // from top
-    setCurrentMsg(i);
-    ensureCurrentItemVisible();
+  if ( !mFolder->countUnread() ) return;
+  int i = findUnread(TRUE, -1, false, acceptCurrent);
+  if ( i < 0 && mLoopOnGotoUnread )
+  {
+    KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
+    if ( first )
+      i = findUnread(TRUE, first->msgId(), false, acceptCurrent); // from top
+  }
+  setCurrentMsg(i);
+  ensureCurrentItemVisible();
 }
 
 void KMHeaders::ensureCurrentItemVisible()
