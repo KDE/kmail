@@ -1,4 +1,5 @@
 // kmfldsearch.cpp
+// TODO: really sort by date, not by the string that shows the date
 // TODO: Add search in subfolder checkbox
 // TODO: Use msgIdMD5 in MSGID_COLUMN
 
@@ -67,7 +68,12 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLastFocus = new QWidget();	// to remeber the position of the focus
 
   mLbxMatches = new QListView(this, "Search in Folders");
-  mLbxMatches->setSorting(-1);
+  /* Default is to sort by date. TODO: Unfortunately this sorts *while*
+     inserting, which looks rather strange - the user cannot read
+     the results so far as they are constantly sorted --dnaber
+  */
+  mLbxMatches->setSorting(2);
+  mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->addColumn(i18n("Subject"), 150);
   mLbxMatches->addColumn(i18n("Sender"), 120);
   mLbxMatches->addColumn(i18n("Date"), 120);
@@ -234,19 +240,10 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
     msg = aFld->getMsg(i);
     if (msg && searchInMessage(msg))
     {
-      /* Insert item at the end. Not very elgant, but this way the user
-         can look at the first results while new results are added at the
-         bottom. Doesn't make search noticeably slower --dnaber
-      */
-      QListViewItem *lastchild=mLbxMatches->firstChild();
-      if (lastchild)
-        for (;lastchild->nextSibling()!=0; lastchild=lastchild->nextSibling())
-	  ;
       (void)new QListViewItem(mLbxMatches,
-      			      lastchild,
 			      msg->subject(), 
 			      msg->from(),
-			      msg->dateStr(),
+			      msg->dateShortStr(),
 			      aFld->name(),
 			      QString("%1").arg(i),
 			      QString("%1").arg(fldNum)
@@ -374,12 +371,10 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
 
   //  mMainWin->slotMsgSelected(msg);
   mMainWin->slotSelectMessage(msg);
-  fprintf(stderr, "still here 3\n");
 }
 
 
 //-----------------------------------------------------------------------------
-
 void KMFldSearch::enableGUI() {
   mBtnClose->setEnabled(!mSearching);
   mCbxFolders->setEnabled(!mSearching);
