@@ -499,7 +499,7 @@ namespace KMail {
         kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
     } else {
 #ifndef NDEBUG
-      kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
+      //kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
 #endif
       // Store the permissions
       if ( folder->folderType() == KMFolderTypeImap )
@@ -555,6 +555,9 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+#if 0 // KMAcctImap and KMAcctCachedImap have their own reimplementation, so this one isn't useful
+      // KMAcctCachedImap has an improved version (with support for continue/cancel)
+      // Someone should port KMAcctImap to it, and then it can be moved here.
   void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
       const QString &errorMsg)
   {
@@ -573,6 +576,7 @@ namespace KMail {
     } else
       kdDebug(5006) << "suppressing error:" << errorMsg << endl;
   }
+#endif
 
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::jobData::htmlURL() const

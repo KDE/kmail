@@ -263,7 +263,7 @@ namespace KMail {
     /**
      * Display an error message
      */
-    void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
+    virtual void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg) = 0;
 
     /** Helper method to set the status on the server */
     void setImapStatus(QString path, QCString flags);

@@ -345,6 +345,7 @@ void CachedImapJob::slotPutNextMessage()
 }
 
 //-----------------------------------------------------------------------------
+// TODO: port to KIO::StoredTransferJob once it's ok to require kdelibs-3.3
 void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -390,8 +391,9 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   if ( job->error() ) {
+    // ### (*it).items isn't set... but showing a UID isn't really helpful, is it?
     QString myError = "<p><b>" + i18n("Error while uploading message")
-      + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->name()).arg((*it).htmlURL())
+      + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->label()).arg((*it).htmlURL())
       + "</p><p>" + i18n("This could be because you do not have permission to do this; the error message from the server communication is here:") + "</p>";
     mAccount->handleJobError( job->error(), job->errorText(), job, myError );
     delete this;
@@ -435,7 +437,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 
     if ( job->error() && !silentUpload ) {
       QString myError = "<p><b>" + i18n("Error while uploading folder")
-        + "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
+        + "</b></p><p>" + i18n("Could not make the folder <b>%1</b> on the server.").arg((*it).items[0])
         + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
       mAccount->handleJobError( job->error(), job->errorText(), job, myError );
     }
@@ -462,6 +464,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   // This is necessary in case of an error while creating the subfolder,
   // so that folderComplete is called on the parent (and the sync resetted).
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+  jd.items << folder->label(); // for the err msg
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);

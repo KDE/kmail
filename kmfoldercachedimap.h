@@ -234,6 +234,7 @@ protected slots:
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
   void slotDeleteMessagesResult(KMail::FolderJob *);
+  void slotSubFolderComplete(KMFolderCachedImap*, bool);
 
 protected:
   /* returns true if there were messages to delete

@@ -775,7 +775,7 @@ void KMFolderCachedImap::serverSyncInternal()
     {
       if( mCurrentSubfolder ) {
         disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-                    this, SLOT( serverSyncInternal() ) );
+                    this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
         mCurrentSubfolder = 0;
       }
 
@@ -788,7 +788,7 @@ void KMFolderCachedImap::serverSyncInternal()
         mCurrentSubfolder = mSubfoldersForSync.front();
         mSubfoldersForSync.pop_front();
         connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-                 this, SLOT( serverSyncInternal() ) );
+                 this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
 
         // kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
@@ -809,7 +809,6 @@ void KMFolderCachedImap::serverSyncInternal()
 */
 void KMFolderCachedImap::slotConnectionResult( int errorCode )
 {
-  kdDebug(5006) << k_funcinfo << errorCode << endl;
   disconnect( mAccount, SIGNAL( connectionResult(int) ),
               this, SLOT( slotConnectionResult(int) ) );
   if ( !errorCode ) {
@@ -904,7 +903,7 @@ void KMFolderCachedImap::createNewFolders()
   QValueList<KMFolderCachedImap*> newFolders = findNewFolders();
   //emit syncState( SYNC_STATE_CREATE_SUBFOLDERS, newFolders.count() );
   mProgress += 10;
-  //kdDebug(5006) << label() << ": +10 (createNewFolders) -> " << mProgress << "%" << endl;
+  //kdDebug(5006) << label() << " createNewFolders:" << newFolders.count() << " new folders." << endl;
   if( !newFolders.isEmpty() ) {
     emit statusMsg( i18n("%1: Creating subfolders on server").arg(label()) );
     emit newState( label(), mProgress, i18n("Creating subfolders on server"));
@@ -1135,7 +1134,8 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
   if( job->error() ) {
     mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while retrieving messages on the server: " ) + '\n' );
     mContentState = imapNoInformation;
-    emit folderComplete(this, FALSE);
+    // already done by handleJobError (if aborting)
+    //emit folderComplete(this, FALSE);
   } else {
     if (lastSet)
       mContentState = imapFinished;
@@ -1348,6 +1348,25 @@ void KMFolderCachedImap::listDirectory2() {
   serverSyncInternal();
 }
 
+void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap*, bool success)
+{
+  if ( success )
+    serverSyncInternal();
+  else
+  {
+    // success == false means the sync was aborted.
+    if ( mCurrentSubfolder ) {
+      disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+                  this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+      mCurrentSubfolder = 0;
+    }
+
+    resetSyncState();
+    emit folderComplete( this, TRUE );
+    close();
+  }
+}
+
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -1385,7 +1404,6 @@ void
 KMFolderCachedImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
-  kdDebug() << imapPath() << " setUserRights: " << userRights << endl;
 }
 
 void
@@ -1460,6 +1478,7 @@ void KMFolderCachedImap::slotDeleteMessagesResult( KMail::FolderJob* job )
 // called by KMAcctCachedImap::killAllJobs
 void KMFolderCachedImap::resetSyncState()
 {
+  mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
   emit newState( label(), mProgress, i18n("Aborted"));
   emit statusMsg( i18n("%1: Aborted").arg(label()) );
