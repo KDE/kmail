@@ -1887,7 +1887,7 @@ void KMFolderImap::search( KMSearchPattern* pattern )
   {
     // not much to do here
     QValueList<Q_UINT32> serNums;
-    emit searchDone( folder(), serNums, pattern );
+    emit searchResult( folder(), serNums, pattern, true );
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern );
@@ -1900,7 +1900,7 @@ void KMFolderImap::search( KMSearchPattern* pattern )
 void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums,
                                    KMSearchPattern* pattern )
 {
-  emit searchDone( folder(), serNums, pattern );
+  emit searchResult( folder(), serNums, pattern, true );
 }
 
 //-----------------------------------------------------------------------------

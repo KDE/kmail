@@ -850,7 +850,8 @@ void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  config->writeEntry("UnreadMsgs", mGuessedUnreadMsgs == -1 ? mUnreadMsgs : -1);
+  config->writeEntry("UnreadMsgs", 
+      mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
   config->writeEntry("ContentsType", mContentsType);
@@ -1028,14 +1029,26 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
 //-----------------------------------------------------------------------------
 void FolderStorage::search( KMSearchPattern* pattern )
 {
-  QValueList<Q_UINT32> serNums;
-  for ( int i = 0; i < count(); ++i )
+  mSearchPattern = pattern;
+  mCurrentSearchedMsg = 0;
+  slotProcessNextSearchBatch();
+}
+
+void FolderStorage::slotProcessNextSearchBatch()
+{
+  QValueList<Q_UINT32> matchingSerNums;
+  int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
+  for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
     Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
-    if ( pattern->matches( serNum ) )
-      serNums.append( serNum );
+    if ( mSearchPattern->matches( serNum ) )
+      matchingSerNums.append( serNum );
   }
-  emit searchDone( folder(), serNums, pattern );
+  mCurrentSearchedMsg = end;
+  bool complete = ( end == count() ) ? true : false;
+  emit searchResult( folder(), matchingSerNums, mSearchPattern, complete );
+  if ( !complete )
+    QTimer::singleShot( 0, this, SLOT(slotProcessNextSearchBatch()) );
 }
 
 //-----------------------------------------------------------------------------

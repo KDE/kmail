@@ -468,11 +468,19 @@ signals:
   void removed(KMFolder*, bool);
 
   /**
-   * Emitted when a search is completed
+   * Emitted when a search delivers results
    * The matching serial numbers are included
+   * If @p complete is true the search is done
    */
-  void searchDone( KMFolder*, QValueList<Q_UINT32>, KMSearchPattern* );
+  void searchResult( KMFolder*, QValueList<Q_UINT32>, 
+      KMSearchPattern*, bool complete );
+
+  /**
+   * Emitted when a search for a single message is completed
+   * The matching serial number is included
+   */
   void searchDone( KMFolder*, Q_UINT32, KMSearchPattern* );
+
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
@@ -488,6 +496,9 @@ public slots:
 
 protected slots:
   virtual void removeJob( QObject* );
+
+  /** Process the next search batch */
+  void slotProcessNextSearchBatch();
 
 protected:
   /**
@@ -566,6 +577,9 @@ protected:
   KMail::FolderContentsType mContentsType;
 
   KMFolder* mFolder;
+
+  int mCurrentSearchedMsg;
+  KMSearchPattern* mSearchPattern;
 };
 
 #endif // FOLDERSTORAGE_H

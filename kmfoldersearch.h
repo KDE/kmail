@@ -64,7 +64,8 @@ signals:
 
 protected slots:
   void slotProcessNextBatch();
-  void slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, KMSearchPattern* );
+  void slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
+      KMSearchPattern*, bool );
 
 protected:
   friend class KMIndexSearchTarget;

@@ -230,11 +230,11 @@ void KMSearch::slotProcessNextBatch()
             folder->open();
             mOpenedFolders.append( folder );
             connect( folder->storage(), 
-                SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32>, 
-                    KMSearchPattern* ) ),
+                SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, 
+                    KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, 
-                    KMSearchPattern* ) ) );
+                SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, 
+                    KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -243,37 +243,40 @@ void KMSearch::slotProcessNextBatch()
     }
 }
 
-void KMSearch::slotSearchFolderDone( KMFolder* folder, 
+void KMSearch::slotSearchFolderResult( KMFolder* folder, 
                                      QValueList<Q_UINT32> serNums, 
-                                     KMSearchPattern* pattern )
+                                     KMSearchPattern* pattern, bool complete )
 {
     if ( pattern != mSearchPattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
-    disconnect( folder->storage(), 
-        SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32>, 
-            KMSearchPattern* ) ),
-        this,
-        SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, 
-            KMSearchPattern* ) ) );
-    --mRemainingFolders;
     mLastFolder = folder->label();
-    mSearchedCount += folder->count();
-    folder->close();
-    mOpenedFolders.remove( folder );
     QValueListIterator<Q_UINT32> it;
     for ( it = serNums.begin(); it != serNums.end(); ++it )
     {
-        emit found( *it );
-        ++mFoundCount;
+      emit found( *it );
+      ++mFoundCount;
     }
-    if ( mRemainingFolders <= 0 )
+    if ( complete )
     {
+      disconnect( folder->storage(), 
+          SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, 
+              KMSearchPattern*, bool ) ),
+          this,
+          SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, 
+              KMSearchPattern*, bool ) ) );
+      mSearchedCount += folder->count();
+      --mRemainingFolders;
+      folder->close();
+      mOpenedFolders.remove( folder );
+      if ( mRemainingFolders <= 0 )
+      {
         mRemainingFolders = 0;
         mRunning = false;
         mLastFolder = QString::null;
         mRemainingFolders = -1;
         mFolders.clear();
         emit finished( true );
+      }
     }
 }
 
