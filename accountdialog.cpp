@@ -495,6 +495,10 @@ void AccountDialog::makePopAccountPage()
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
   mPop.hostEdit = new QLineEdit( page1 );
+  // only ASCII letters, digits, plus, minus and dots are allowed
+  mPop.hostEdit->setValidator(
+    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ),
+                          0 ) );
   label->setBuddy( mPop.hostEdit );
   grid->addWidget( mPop.hostEdit, 3, 1 );
 
@@ -656,6 +660,10 @@ void AccountDialog::makeImapAccountPage()
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
   mImap.hostEdit = new QLineEdit( page1 );
+  // only ASCII letters, digits, plus, minus and dots are allowed
+  mImap.hostEdit->setValidator(
+    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ),
+                          0 ) );
   label->setBuddy( mImap.hostEdit );
   grid->addWidget( mImap.hostEdit, 3, 1 );
 
