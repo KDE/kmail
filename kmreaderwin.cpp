@@ -2785,6 +2785,8 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   aMsg->setEncryptionState( encryptionState );
   aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
   
+  bool emitReplaceMsgByUnencryptedVersion = false;
+  
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
@@ -2800,7 +2802,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   //       This could be changed in the objectTreeToDecryptedMsg() function
   //       by deciding when (or when not, resp.) to set the 'dataNode' to
   //       something different than 'curNode'.
-  bool emitReplaceMsgByUnencryptedVersion = false;
   if(    !onlyProcessHeaders
       && (aMsg == mMsg)
       && (    (KMMsgFullyEncrypted == encryptionState)
