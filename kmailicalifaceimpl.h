@@ -194,7 +194,8 @@ private:
   bool updateAttachment( KMMessage& msg,
                          const QString& attachmentURL,
                          const QString& attachmentName,
-                         const QString& attachmentMimetype );
+                         const QString& attachmentMimetype,
+                         bool lookupByName );
   bool deleteAttachment( KMMessage& msg,
                          const QString& attachmentURL );
   Q_UINT32 addIncidenceKolab( KMFolder& folder,

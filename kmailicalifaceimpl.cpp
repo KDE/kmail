@@ -232,11 +232,13 @@ inline static void debugBodyParts( const char*, const KMMessage& ) {}
 
 // Add (or overwrite, resp.) an attachment in an existing mail,
 // attachments must be local files, they are identified by their names.
+// If lookupByName if false the attachment to replace is looked up by mimetype.
 // return value: wrong if attachment could not be added/updated
 bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
                                            const QString& attachmentURL,
                                            const QString& attachmentName,
-                                           const QString& attachmentMimetype )
+                                           const QString& attachmentMimetype,
+                                           bool lookupByName )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::updateAttachment( " << attachmentURL << " )" << endl;
 
@@ -273,7 +275,8 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       // to work later on.
       newPart->Headers().ContentDisposition().Parse();
 
-      DwBodyPart* part = findBodyPart( msg, attachmentName );
+      DwBodyPart* part = lookupByName ? findBodyPart( msg, attachmentName )
+                         : findBodyPartByMimeType( msg, sType, sSubtype );
       if ( part ) {
         // Make sure the replacing body part is pointing
         // to the same next part as the original body part.
@@ -398,7 +401,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && itmime != attachmentMimetypes.end()
        && iturl != attachmentURLs.end();
        ++itname, ++iturl, ++itmime ){
-    if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
+    bool bymimetype = (*itname).startsWith( "application/x-vnd.kolab." );
+    if( !updateAttachment( *msg, *iturl, *itname, *itmime, !bymimetype ) ){
       kdWarning(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
@@ -789,7 +793,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
          && itmime != attachmentMimetypes.end()
          && itname != attachmentNames.end();
          ++iturl, ++itname, ++itmime ){
-      if( !updateAttachment( *newMsg, *iturl, *itname, *itmime ) ){
+      bool bymimetype = (*itname).startsWith( "application/x-vnd.kolab." );
+      if( !updateAttachment( *newMsg, *iturl, *itname, *itmime, bymimetype ) ){
         kdDebug(5006) << "Attachment error, can not update attachment " << *iturl << endl;
         break;
       }
