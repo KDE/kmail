@@ -424,9 +424,9 @@ kdDebug(5006) << "Multipart processing children - DONE" << endl;
         // decrypt and store simple part
 kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (if inline encrypted):" << endl;
         // Problem: body text may be inline PGP encrypted, so we can not just dump it.
-        
+
 kdDebug(5006) << "\n\n\npart as is:\n" << part->Body().AsString().c_str() << endl;
-        
+
         if( bKeepPartAsIs ){
 kdDebug(5006) << "bKeepPartAsIs == TRUE" << endl;
           resultingData += part->Body().AsString().c_str();
@@ -438,8 +438,8 @@ kdDebug(5006) << "bKeepPartAsIs == FALSE" << endl;
           otp.setKeepEncryptions( false );
           otp.parseObjectTree( curNode );
           //resultingData += otp.rawReplyString();  // re-enable this, once ObjectTreeParser is updated.
-  
-  
+
+
           // Temporary solution, to be replaced by a Kleo::CryptoBackend job inside ObjectTreeParser:
           bool bDecryptedInlinePGP = false;
           QPtrList<Kpgp::Block> pgpBlocks;
@@ -463,9 +463,9 @@ kdDebug(5006) << "bKeepPartAsIs == FALSE" << endl;
             resultingData += otp.rawReplyString();
           }
           // end of temporary solution.
-  
-          
-        }  
+
+
+        }
 kdDebug(5006) << "decrypting of single body - DONE" << endl;
       }
     } else {
@@ -1276,7 +1276,7 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
     if(    (aMsg == message())
         /*
            We remove this, because it is now required to ask EACH time :-)
-        
+
           // only proceed if this message was not saved encryptedly before
           // to make sure only *new* messages are saved in decrypted form
         && ((KMMsgStatusUnknown | KMMsgStatusNew | KMMsgStatusUnread) & mLastStatus)
@@ -1312,6 +1312,7 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
           // try this:
           aMsg->setBody( resultString );
           KMMessage* unencryptedMessage = new KMMessage( *aMsg );
+          unencryptedMessage->setParent( 0 );
           // because this did not work:
           /*
           DwMessage dwMsg( DwString( aMsg->asString() ) );
