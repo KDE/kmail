@@ -352,12 +352,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-    QByteArray data;
-    QDataStream arg(data, IO_WriteOnly );
-    arg << type;
-    kdDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )"
-              << endl;
-    emitDCOPSignal( "signalRefresh(QString,QString)", data );
+    signalRefresh( type, QString::null /* PENDING(bo) folder->location() */ );
+    kdDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
   }
 }
 
@@ -526,8 +522,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 
   if ( ef ) {
     // Notify that the old folder resource is no longer available
-    dcopEmit( "subresourceDeleted(QString,QString)",
-              folderContentsType( ef->type ), folder->location() );
+    subresourceDeleted(folderContentsType( ef->type ), folder->location() );
 
     if ( contentsType == 0 ) {
       // Delete the old entry and stop here
@@ -545,8 +540,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   }
 
   // Tell about the new resource
-  dcopEmit( "subresourceAdded(QString,QString)",
-            folderContentsType( contentsType ), folder->location() );
+  subresourceAdded( folderContentsType( contentsType ), folder->location() );
 }
 
 /****************************
@@ -782,30 +776,6 @@ QPixmap* KMailICalIfaceImpl::pixContacts;
 QPixmap* KMailICalIfaceImpl::pixCalendar;
 QPixmap* KMailICalIfaceImpl::pixNotes;
 QPixmap* KMailICalIfaceImpl::pixTasks;
-
-void KMailICalIfaceImpl::dcopEmit( const QCString& signal, const QString& arg0,
-                                   const QString& arg1, const QString& arg2 )
-{
-  QByteArray data;
-  QDataStream arg( data, IO_WriteOnly );
-  arg << arg0;
-  QCString s = signal + "(QString";
-  if ( arg1 != QString::null ) {
-    arg << arg1;
-    s += ",QString";
-  }
-  if ( arg2 != QString::null ) {
-    arg << arg2;
-    s += ",QString";
-  }
-  s += ")";
-
-  kdDebug(5006) << "Emitting DCOP signal " << s << " with args ( " << arg0
-                << ( arg1 == QString::null ? QString() : ", " + arg1 )
-                << ( arg2 == QString::null ? QString() : ", " + arg2 )
-                << " )" << endl;
-  emitDCOPSignal( s, data );
-}
 
 static void reloadFolderTree()
 {
