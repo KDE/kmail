@@ -331,8 +331,8 @@ namespace KMail {
                "be visible to other recipients.</p>"
                "<p>This is commonly used to send a copy of each sent message to "
                "another account of yours.</p>"
-               "<p>To specify more than one address, use a comma to seperate "
-               "the list of BCC recpients.</p>"
+               "<p>To specify more than one address, use commas to separate "
+               "the list of BCC recipients.</p>"
                "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );

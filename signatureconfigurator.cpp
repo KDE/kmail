@@ -101,7 +101,7 @@ namespace KMail {
     // page 0: input field for direct entering:
     mTextEdit = new QTextEdit( widgetStack );
     QWhatsThis::add(mTextEdit, 
-        i18n("Use this field to enter an abitrary static signature."));
+        i18n("Use this field to enter an arbitrary static signature."));
     widgetStack->addWidget( mTextEdit, pageno );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrap( QTextEdit::NoWrap );
@@ -117,7 +117,7 @@ namespace KMail {
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KURLRequester( page );
     QWhatsThis::add(mFileRequester, 
-        i18n("Use this requester to specifiy a text file that contains your "
+        i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
     hlay->addWidget( new QLabel( mFileRequester,
@@ -144,10 +144,10 @@ namespace KMail {
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );
     QWhatsThis::add(mCommandEdit, 
-        i18n("You can add an abitrary command here, either with or without path "
-             "depending on wether or not the command is in your Path. For every "
-             "new mail, KMail will execute the command and show its output to "
-             "standard output as signature. Usual commands for use with this "
+        i18n("You can add an arbitrary command here, either with or without path "
+             "depending on whether or not the command is in your Path. For every "
+             "new mail, KMail will execute the command and use what it outputs (to "
+             "standard output) as a signature. Usual commands for use with this "
              "mechanism are \"fortune\" or \"ksig -random\"."));
     hlay->addWidget( new QLabel( mCommandEdit,
 				 i18n("S&pecify command:"), page ) );
