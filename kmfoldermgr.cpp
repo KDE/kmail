@@ -74,7 +74,6 @@ void KMFolderMgr::expireAll() {
 
 #define DO_FOR_ALL(function, folder_code) \
   KMFolderNode* node; \
-  if (dir == 0) return; \
   QPtrListIterator<KMFolderNode> it(*dir); \
   for ( ; (node = it.current()); ) { \
     ++it; \
