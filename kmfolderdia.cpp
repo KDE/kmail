@@ -1,5 +1,35 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
-// kmfolderdia.cpp
+/**
+ * kmfolderdia.cpp
+ *
+ * Copyright (c) 1997-2004 KMail Developers
+ *
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; version 2 of the License
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of this program with any edition of
+ *  the Qt library by Trolltech AS, Norway (or with modified versions
+ *  of Qt that use the same license as Qt), and distribute linked
+ *  combinations including the two.  You must obey the GNU General
+ *  Public License in all respects for all of the code used other than
+ *  Qt.  If you modify this file, you may extend this exception to
+ *  your version of the file, but you are not obligated to do so.  If
+ *  you do not wish to do so, delete this exception statement from
+ *  your version.
+ */
+
 #include <config.h>
 
 #include "kmacctfolder.h"
@@ -26,37 +56,70 @@
 #include <qgroupbox.h>
 #include <qregexp.h>
 #include <qlabel.h>
+#include <qvbox.h>
 
 #include <assert.h>
 
 #include "kmfolderdia.h" //has to be later because of KMFolder* fdcls
 #include "kmfolderdia.moc"
 
+using namespace KMail;
+
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
-			       QWidget *aParent, const QString& aCap,
+			       KMFolderTree* aParent, const QString& aCap,
 			       const QString& aName):
   KDialogBase( KDialogBase::Tabbed,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
                KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   mFolder( aFolder ),
-  mFolderDir( aFolderDir ),
-  mParent( aParent )
+  mFolderDir( aFolderDir )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
-  createGeneralTab( aName );
-  createMLTab();
+  ConfigModuleTab* tab;
+  QVBox* box;
+
+  box = addVBoxPage( i18n("General") );
+  tab = new FolderDiaGeneralTab( this, aParent, aName, box );
+  //connect( tab, SIGNAL(changed( bool )),
+  //         this, SIGNAL(changed( bool )) );
+  mTabs.append( tab );
+
+  box = addVBoxPage( i18n("Mailing List") );
+  tab = new FolderDiaMailingListTab( this, box );
+  //connect( tab, SIGNAL(changed( bool )),
+  //         this, SIGNAL(changed( bool )) );
+  mTabs.append( tab );
+
+  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
+    mTabs[i]->load();
 }
 
-void KMFolderDialog::createGeneralTab( const QString& aName )
+void KMFolderDialog::slotOk()
 {
-  QFrame *page = addPage( i18n("General") );
-  QVBoxLayout *topLayout =  new QVBoxLayout( page, 0, spacingHint(),
-                                             "topLayout" );
+  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
+    mTabs[i]->save();
+  KDialogBase::slotOk();
+}
 
-  QGroupBox *fpGroup = new QGroupBox( i18n("Folder Position"), page, "fpGroup" );
-  fpGroup->setColumnLayout( 0,  Qt::Vertical );
+void KMFolderDialog::slotChanged( bool )
+{
+  // TODO, support for 'changed', and Apply button.
+  //if ( b )
+  //  m_changed = true;
+}
+
+//----------------------------------------------------------------------------
+KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTree* aParent,
+                                                 const QString& aName,
+                                                 QWidget* parent, const char* name )
+  : ConfigModuleTab( parent, name ), mDlg( dlg )
+{
+  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+
+  QGroupBox *fpGroup = new QGroupBox( i18n("Folder Position"), this, "fpGroup" );
+  fpGroup->setColumnLayout( 0, Qt::Vertical );
 
   topLayout->addWidget( fpGroup );
 
@@ -67,9 +130,9 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   hl->addWidget( label );
 
   mNameEdit = new KLineEdit( fpGroup );
-  if( !mFolder )
+  if( !mDlg->folder() )
     mNameEdit->setFocus();
-  mNameEdit->setText( mFolder ? mFolder->label() : i18n("unnamed") );
+  mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
   if (!aName.isEmpty())
     mNameEdit->setText(aName);
   mNameEdit->setMinimumSize(mNameEdit->sizeHint());
@@ -86,7 +149,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   belongsToLabel->setBuddy( mBelongsToComboBox );
 
   //start icons group
-  QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), page, "iconGroup" );
+  QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), this, "iconGroup" );
   iconGroup->setColumnLayout( 0,  Qt::Vertical );
 
   topLayout->addWidget( iconGroup );
@@ -144,7 +207,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
 
   //end icons group
 
-  mMailboxTypeGroupBox = new QGroupBox( i18n("Folder Type"), page, "mMailboxTypeGroupBox" );
+  mMailboxTypeGroupBox = new QGroupBox( i18n("Folder Type"), this, "mMailboxTypeGroupBox" );
   mMailboxTypeGroupBox->setColumnLayout( 0,  Qt::Vertical );
 
   topLayout->addWidget( mMailboxTypeGroupBox );
@@ -166,27 +229,27 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
     if ( type < 0 || type > 1 ) type = 1;
     mMailboxTypeComboBox->setCurrentItem( type );
   }
-  mMailboxTypeComboBox->setEnabled( !mFolder );
+  mMailboxTypeComboBox->setEnabled( !mDlg->folder() );
   ml->addWidget( mMailboxTypeComboBox );
   ml->addStretch( 1 );
 
   QStringList str;
-  if( !mFolder ) {
+  if( !mDlg->folder() ) {
     // new folder can be subfolder of any other folder
-    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, true, true,
-                                                          true, false, true, false);
+    aParent->createFolderList(&str, &mDlg->folders(), true, true,
+                              true, false, true, false);
   }
-  else if( mFolder->folderType() != KMFolderTypeImap
-           && mFolder->folderType() != KMFolderTypeCachedImap ) {
+  else if( mDlg->folder()->folderType() != KMFolderTypeImap
+           && mDlg->folder()->folderType() != KMFolderTypeCachedImap ) {
     // already existant local folder can only be moved locally
-    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, true, false,
-                                                          false, false, true, false);
+    aParent->createFolderList(&str, &mDlg->folders(), true, false,
+                              false, false, true, false);
   }
   else {
     // already existant IMAP folder can't be moved, but we add all
     // IMAP folders so that the correct parent folder can be shown
-    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, false, true,
-                                                          true, false, true, false);
+    aParent->createFolderList(&str, &mDlg->folders(), false, true,
+                              true, false, true, false);
   }
 
   str.prepend( i18n( "Local Folders" ) );
@@ -198,7 +261,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   //
   // Expiry data.
   //
-  mExpireGroupBox = new QGroupBox(i18n("Old Message Expiry"), page);
+  mExpireGroupBox = new QGroupBox(i18n("Old Message Expiry"), this);
   mExpireGroupBox->setColumnLayout(0, Qt::Vertical);
   QGridLayout *expLayout = new QGridLayout(mExpireGroupBox->layout());
   expLayout->setSpacing(6);
@@ -256,10 +319,10 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
            this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
 
   expLayout->setColStretch(0, 3);
-  expLayout->setColStretch(0, 100);
+  expLayout->setColStretch(0, 100); /// ### was this meant to be "1, 100"?
 
 
-  QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), page );
+  QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
   idGroup->setColumnLayout( 0, Qt::Vertical );
   QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
   idLayout->setSpacing( 6 );
@@ -271,7 +334,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   label->setBuddy( mIdentityComboBox );
   idLayout->addWidget( mIdentityComboBox, 3 );
 
-  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver"), page, "senderGroup" );
+  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver"), this, "senderGroup" );
   senderGroup->setColumnLayout( 0,  Qt::Vertical );
 
   topLayout->addWidget( senderGroup );
@@ -288,7 +351,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   mShowSenderReceiverComboBox->insertItem(i18n("Receiver"), 2);
 
   QString whoField;
-  if (mFolder) whoField = mFolder->userWhoField();
+  if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();
   if (whoField.isEmpty()) mShowSenderReceiverComboBox->setCurrentItem(0);
   if (whoField == "From") mShowSenderReceiverComboBox->setCurrentItem(1);
   if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
@@ -297,7 +360,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   sl->addStretch( 1 );
 
   // should this folder be included in new-mail-checks?
-  QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), page, "newmailGroup" );
+  QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), this, "newmailGroup" );
   newmailGroup->setColumnLayout( 0,  Qt::Vertical );
   topLayout->addWidget( newmailGroup );
 
@@ -314,14 +377,14 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
 
   KMFolder* parentFolder = 0;
 
-  if( mFolderDir ) {
+  if( mDlg->folderDir() ) {
     // search the parent folder of the folder
 //    kdDebug(5006) << "search the parent folder of the folder" << endl;
     QValueListConstIterator<QGuardedPtr<KMFolder> > it;
     int i = 1;
-    for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
+    for( it = mDlg->folders().begin(); it != mDlg->folders().end(); ++it, ++i ) {
 //      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
-      if( (*it)->child() == mFolderDir ) {
+      if( (*it)->child() == mDlg->folderDir() ) {
         parentFolder = *it;
         mBelongsToComboBox->setCurrentItem( i );
         slotUpdateItems( i );
@@ -330,12 +393,12 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
     }
   }
 
-  if ( mFolder ) {
+  if ( mDlg->folder() ) {
     // existing folder
-    initializeWithValuesFromFolder( mFolder );
+    initializeWithValuesFromFolder( mDlg->folder() );
 
     // mailbox folder type
-    switch ( mFolder->folderType() ) {
+    switch ( mDlg->folder()->folderType() ) {
       case KMFolderTypeSearch:
         mMailboxTypeComboBox->setCurrentItem( 2 );
         belongsToLabel->hide();
@@ -398,7 +461,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if ( mFolder && mFolder->isSystemFolder() ) {
+  if ( mDlg->folder() && mDlg->folder()->isSystemFolder() ) {
     fpGroup->hide();
     iconGroup->hide();
     mMailboxTypeGroupBox->hide();
@@ -406,21 +469,303 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   }
 }
 
-//----------------------------------------------------------------------------
-void KMFolderDialog::createMLTab()
+void FolderDiaGeneralTab::load()
 {
- if ( mFolder && mFolder->noContent() ) {
+  // Nothing here, all is done in the ctor
+}
+
+void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
+  if ( !folder )
+    return;
+
+  // folder icons
+  mIconsCheckBox->setChecked( folder->useCustomIcons() );
+  mNormalIconLabel->setEnabled( folder->useCustomIcons() );
+  mNormalIconButton->setEnabled( folder->useCustomIcons() );
+  mUnreadIconLabel->setEnabled( folder->useCustomIcons() );
+  mUnreadIconButton->setEnabled( folder->useCustomIcons() );
+  QString iconPath = folder->normalIconPath();
+  if ( !iconPath.isEmpty() )
+    mNormalIconButton->setIcon( iconPath );
+  iconPath = folder->unreadIconPath();
+  if ( !iconPath.isEmpty() )
+    mUnreadIconButton->setIcon( iconPath );
+
+  // folder identity
+  mIdentityComboBox->setCurrentIdentity( folder->identity() );
+
+  // settings for automatic deletion of old messages
+  mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
+  // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
+  // Should really do something better than hardcoding this everywhere.
+  if( folder->getReadExpireUnits() >= 0
+      && folder->getReadExpireUnits() < expireMaxUnits) {
+    mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
+  }
+  if( folder->getUnreadExpireUnits() >= 0
+      && folder->getUnreadExpireUnits() < expireMaxUnits ) {
+    mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
+  }
+  int age = folder->getReadExpireAge();
+  if ( age >= 1 && age <= 500 ) {
+    mReadExpiryTimeNumInput->setValue( age );
+  } else {
+    mReadExpiryTimeNumInput->setValue( 7 );
+  }
+  age = folder->getUnreadExpireAge();
+  if ( age >= 1 && age <= 500 ) {
+    mUnreadExpiryTimeNumInput->setValue( age );
+  } else {
+    mUnreadExpiryTimeNumInput->setValue( 28 );
+  }
+  if( !folder->isAutoExpire() ) {
+    mReadExpiryTimeNumInput->setEnabled( false );
+    mReadExpiryUnitsComboBox->setEnabled( false );
+    mUnreadExpiryTimeNumInput->setEnabled( false );
+    mUnreadExpiryUnitsComboBox->setEnabled( false );
+  }
+  else {
+    // disable the number fields if "Never" is selected
+    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
+    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
+  }
+  if (folder->folderType() == KMFolderTypeImap)
+  {
+    KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
+    bool checked = imapFolder->includeInMailCheck();
+    mNewMailCheckBox->setChecked(checked);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
+{
+  mDlg->enableButtonOK( !str.isEmpty() );
+}
+
+//-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::slotUpdateItems ( int current )
+{
+  KMFolder* selectedFolder = 0;
+  // check if the index is valid (the top level has no entrance in the mDlg->folders())
+  if (current > 0) selectedFolder = *mDlg->folders().at(current - 1);
+  if (selectedFolder && (selectedFolder->folderType() == KMFolderTypeImap ||
+			 selectedFolder->folderType() == KMFolderTypeCachedImap))
+  {
+    // deactivate stuff that is not available for imap
+    mMailboxTypeGroupBox->setEnabled( false );
+  } else {
+    // activate it
+    mMailboxTypeGroupBox->setEnabled( true );
+  }
+}
+
+//-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::save()
+{
+  // moving of IMAP folders is not yet supported
+  bool bIsNewFolder = ( !mDlg->folder() );
+  if ( bIsNewFolder || !mDlg->folder()->isSystemFolder() )
+  {
+    QString acctName;
+    QString fldName, oldFldName;
+    KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
+    KMFolder *selectedFolder = 0;
+    int curFolder = mBelongsToComboBox->currentItem();
+
+    if( !bIsNewFolder ) oldFldName = mDlg->folder()->name();
+    if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
+    else fldName = oldFldName;
+    fldName.remove('/');
+    fldName.remove(QRegExp("^\\.*"));
+    if (fldName.isEmpty()) fldName = i18n("unnamed");
+
+    if (mMailboxTypeComboBox->currentItem() == 2) {
+      selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
+    }
+    else if (curFolder != 0)
+    {
+      selectedFolder = *mDlg->folders().at(curFolder - 1);
+      selectedFolderDir = selectedFolder->createChildFolder();
+    }
+
+    QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
+    if( selectedFolderDir->hasNamedFolder( fldName )
+        && ( !( mDlg->folder()
+                && ( selectedFolderDir == mDlg->folder()->parent() )
+                && ( mDlg->folder()->name() == fldName ) ) ) )
+    {
+      KMessageBox::error( this, message );
+      return;
+    }
+
+    message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
+    KMFolderDir* folderDir = selectedFolderDir;
+
+
+    // Buggy?
+    if( mDlg->folder() && mDlg->folder()->child() )
+      while( ( folderDir != &kmkernel->folderMgr()->dir() )
+             && ( folderDir != mDlg->folder()->parent() ) ) {
+        if( folderDir->findRef( mDlg->folder() ) != -1 ) {
+          KMessageBox::error( this, message );
+          return;
+        }
+        folderDir = folderDir->parent();
+      }
+    // End buggy?
+
+
+    if( mDlg->folder() && mDlg->folder()->child() && selectedFolderDir &&
+        ( selectedFolderDir->path().find( mDlg->folder()->child()->path() + "/" ) == 0 ) ) {
+      KMessageBox::error( this, message );
+      return;
+    }
+
+    if( mDlg->folder() && mDlg->folder()->child()
+        && ( selectedFolderDir == mDlg->folder()->child() ) ) {
+      KMessageBox::error( this, message );
+      return;
+    }
+
+    if( bIsNewFolder ) {
+      if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
+      {
+        mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
+        static_cast<KMFolderImap*>(selectedFolder->storage())->createFolder(fldName);
+      } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
+        mDlg->setFolder( kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir ) );
+      } else if (mMailboxTypeComboBox->currentItem() == 2) {
+        mDlg->setFolder( kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() ) );
+      } else if (mMailboxTypeComboBox->currentItem() == 1) {
+        mDlg->setFolder( kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir ) );
+      } else {
+        mDlg->setFolder( kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir ) );
+      }
+    }
+    else if( ( oldFldName != fldName )
+             || ( mDlg->folder()->parent() != selectedFolderDir ) )
+    {
+      if( mDlg->folder()->parent() != selectedFolderDir ) {
+        if( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+          QString message = i18n("Moving IMAP folders is not supported");
+          KMessageBox::error( this, message );
+        } else
+          mDlg->folder()->rename(fldName, selectedFolderDir );
+      } else
+        mDlg->folder()->rename(fldName);
+
+      kmkernel->folderMgr()->contentsChanged();
+    }
+  }
+
+  KMFolder* folder = mDlg->folder();
+  if( folder ) {
+    folder->setIdentity( mIdentityComboBox->currentIdentity() );
+    // Settings for auto expiry of old email messages.
+    folder->setAutoExpire(mExpireFolderCheckBox->isChecked());
+    folder->setUnreadExpireAge(mUnreadExpiryTimeNumInput->value());
+    folder->setReadExpireAge(mReadExpiryTimeNumInput->value());
+    folder->setUnreadExpireUnits((ExpireUnits)mUnreadExpiryUnitsComboBox->currentItem());
+    folder->setReadExpireUnits((ExpireUnits)mReadExpiryUnitsComboBox->currentItem());
+    // Update the tree iff new icon paths are different and not empty or if
+    // useCustomIcons changed.
+    if ( folder->useCustomIcons() != mIconsCheckBox->isChecked() ) {
+      folder->setUseCustomIcons( mIconsCheckBox->isChecked() );
+      // Reset icons, useCustomIcons was turned off.
+      if ( !folder->useCustomIcons() ) {
+        folder->setIconPaths( "", "" );
+      }
+    }
+    if ( folder->useCustomIcons() &&
+      (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
+      ( !mNormalIconButton->icon().isEmpty())) ||
+      (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
+      ( !mUnreadIconButton->icon().isEmpty())) ) {
+      folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+    }
+        // set whoField
+    if (mShowSenderReceiverComboBox->currentItem() == 1)
+      folder->setUserWhoField("From");
+    else if (mShowSenderReceiverComboBox->currentItem() == 2)
+      folder->setUserWhoField("To");
+    else
+      folder->setUserWhoField(QString::null);
+
+    if( bIsNewFolder )
+      folder->close();
+
+    if( folder->folderType() == KMFolderTypeImap )
+    {
+      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( folder->storage() );
+      imapFolder->setIncludeInMailCheck(
+          mNewMailCheckBox->isChecked() );
+    }
+  }
+}
+
+/**
+ * Called when the 'auto expire' toggle is clicked.
+ * Enables/disables all widgets related to this.
+ */
+void FolderDiaGeneralTab::slotExpireFolder(bool expire)
+{
+  if (expire) {
+    // disable the number field if "Never" is selected
+    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
+    mReadExpiryUnitsComboBox->setEnabled(true);
+    // disable the number field if "Never" is selected
+    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
+    mUnreadExpiryUnitsComboBox->setEnabled(true);
+  } else {
+    mReadExpiryTimeNumInput->setEnabled(false);
+    mReadExpiryUnitsComboBox->setEnabled(false);
+    mUnreadExpiryTimeNumInput->setEnabled(false);
+    mUnreadExpiryUnitsComboBox->setEnabled(false);
+  }
+}
+
+
+/**
+ * Enable/disable the number field if appropriate
+ */
+void FolderDiaGeneralTab::slotReadExpiryUnitChanged( int value )
+{
+  // disable the number field if "Never" is selected
+  mReadExpiryTimeNumInput->setEnabled( value != 0 );
+}
+
+
+/**
+ * Enable/disable the number field if appropriate
+ */
+void FolderDiaGeneralTab::slotUnreadExpiryUnitChanged( int value )
+{
+  // disable the number field if "Never" is selected
+  mUnreadExpiryTimeNumInput->setEnabled( value != 0 );
+}
+
+void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
+{
+    mUnreadIconButton->setIcon( icon );
+}
+
+//----------------------------------------------------------------------------
+FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
+                                                  QWidget* parent, const char* name )
+  : ConfigModuleTab( parent, name ), mDlg( dlg )
+{
+  if ( mDlg->folder() && mDlg->folder()->noContent() ) {
     return;
   }
 
   QLabel* label;
-  QFrame *page = addPage( i18n("Mailing List") );
   mLastItem = 0;
 
-  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint(),
+  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint(),
                                             "topLayout" );
 
-  QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), page );
+  QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), this );
   mlGroup->setColumnLayout( 0,  Qt::Vertical );
   QVBoxLayout *groupLayout = new QVBoxLayout( mlGroup->layout() );
   topLayout->addWidget( mlGroup );
@@ -508,308 +853,37 @@ void KMFolderDialog::createMLTab()
   mAddressCombo->insertStringList( el );
   QObject::connect( mAddressCombo, SIGNAL(activated(int)),
                     SLOT(slotAddressChanged(int)) );
+}
 
-  if (mFolder) mMailingList = mFolder->mailingList();
+void FolderDiaMailingListTab::load()
+{
+  if (mDlg->folder()) mMailingList = mDlg->folder()->mailingList();
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
   mMLHandlerCombo->setCurrentItem( mMailingList.handler() );
   mEditList->insertStringList( mMailingList.postURLS().toStringList() );
 
   mAddressCombo->setCurrentItem( mLastItem );
-  mHoldsMailingList->setChecked( mFolder && mFolder->isMailingListEnabled() );
+  mHoldsMailingList->setChecked( mDlg->folder() && mDlg->folder()->isMailingListEnabled() );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderDialog::initializeWithValuesFromFolder( KMFolder* folder ) {
-  if ( !folder )
-    return;
-
-  // folder icons
-  mIconsCheckBox->setChecked( folder->useCustomIcons() );
-  mNormalIconLabel->setEnabled( folder->useCustomIcons() );
-  mNormalIconButton->setEnabled( folder->useCustomIcons() );
-  mUnreadIconLabel->setEnabled( folder->useCustomIcons() );
-  mUnreadIconButton->setEnabled( folder->useCustomIcons() );
-  QString iconPath = folder->normalIconPath();
-  if ( !iconPath.isEmpty() )
-    mNormalIconButton->setIcon( iconPath );
-  iconPath = folder->unreadIconPath();
-  if ( !iconPath.isEmpty() )
-    mUnreadIconButton->setIcon( iconPath );
-
-  // folder identity
-  mIdentityComboBox->setCurrentIdentity( folder->identity() );
-
-  // settings for automatic deletion of old messages
-  mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
-  // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
-  // Should really do something better than hardcoding this everywhere.
-  if( folder->getReadExpireUnits() >= 0
-      && folder->getReadExpireUnits() < expireMaxUnits) {
-    mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
-  }
-  if( folder->getUnreadExpireUnits() >= 0
-      && folder->getUnreadExpireUnits() < expireMaxUnits ) {
-    mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
-  }
-  int age = folder->getReadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mReadExpiryTimeNumInput->setValue( age );
-  } else {
-    mReadExpiryTimeNumInput->setValue( 7 );
-  }
-  age = folder->getUnreadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mUnreadExpiryTimeNumInput->setValue( age );
-  } else {
-    mUnreadExpiryTimeNumInput->setValue( 28 );
-  }
-  if( !folder->isAutoExpire() ) {
-    mReadExpiryTimeNumInput->setEnabled( false );
-    mReadExpiryUnitsComboBox->setEnabled( false );
-    mUnreadExpiryTimeNumInput->setEnabled( false );
-    mUnreadExpiryUnitsComboBox->setEnabled( false );
-  }
-  else {
-    // disable the number fields if "Never" is selected
-    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
-    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
-  }
-  if (folder->folderType() == KMFolderTypeImap)
-  {
-    KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
-    bool checked = imapFolder->includeInMailCheck();
-    mNewMailCheckBox->setChecked(checked);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::slotFolderNameChanged( const QString& str )
+void FolderDiaMailingListTab::save()
 {
-  enableButtonOK( !str.isEmpty() );
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::slotUpdateItems ( int current )
-{
-  KMFolder* selectedFolder = 0;
-  // check if the index is valid (the top level has no entrance in the mFolders)
-  if (current > 0) selectedFolder = *mFolders.at(current - 1);
-  if (selectedFolder && (selectedFolder->folderType() == KMFolderTypeImap ||
-			 selectedFolder->folderType() == KMFolderTypeCachedImap))
-  {
-    // deactivate stuff that is not available for imap
-    mMailboxTypeGroupBox->setEnabled( false );
-  } else {
-    // activate it
-    mMailboxTypeGroupBox->setEnabled( true );
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::slotOk()
-{
-  bool bIsNewFolder = ( !mFolder );
-  // moving of IMAP folders is not yet supported
-  if ( bIsNewFolder || !mFolder->isSystemFolder() )
-  {
-    QString acctName;
-    QString fldName, oldFldName;
-    KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
-    KMFolder *selectedFolder = 0;
-    int curFolder = mBelongsToComboBox->currentItem();
-
-    if( !bIsNewFolder ) oldFldName = mFolder->name();
-    if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
-    else fldName = oldFldName;
-    fldName.replace("/", "");
-    fldName.replace(QRegExp("^\\.*"), "");
-    if (fldName.isEmpty()) fldName = i18n("unnamed");
-
-    if (mMailboxTypeComboBox->currentItem() == 2) {
-      selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
-    }
-    else if (curFolder != 0)
-    {
-      selectedFolder = *mFolders.at(curFolder - 1);
-      selectedFolderDir = selectedFolder->createChildFolder();
-    }
-
-    QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
-    if( selectedFolderDir->hasNamedFolder( fldName )
-        && ( !( mFolder
-                && ( selectedFolderDir == mFolder->parent() )
-                && ( mFolder->name() == fldName ) ) ) )
-    {
-      KMessageBox::error( this, message );
-      return;
-    }
-
-    message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
-    KMFolderDir* folderDir = selectedFolderDir;
-
-
-    // Buggy?
-    if( mFolder && mFolder->child() )
-      while( ( folderDir != &kmkernel->folderMgr()->dir() )
-             && ( folderDir != mFolder->parent() ) ) {
-        if( folderDir->findRef( mFolder ) != -1 ) {
-          KMessageBox::error( this, message );
-          return;
-        }
-        folderDir = folderDir->parent();
-      }
-    // End buggy?
-
-
-    if( mFolder && mFolder->child() && selectedFolderDir &&
-        ( selectedFolderDir->path().find( mFolder->child()->path() + "/" ) == 0 ) ) {
-      KMessageBox::error( this, message );
-      return;
-    }
-
-    if( mFolder && mFolder->child()
-        && ( selectedFolderDir == mFolder->child() ) ) {
-      KMessageBox::error( this, message );
-      return;
-    }
-
-    if( bIsNewFolder ) {
-      if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
-      {
-        mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
-        static_cast<KMFolderImap*>(selectedFolder->storage())->createFolder(fldName);
-      } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
-        mFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
-      } else if (mMailboxTypeComboBox->currentItem() == 2) {
-        mFolder = kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() );
-      } else if (mMailboxTypeComboBox->currentItem() == 1) {
-        mFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
-      } else {
-        mFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-      }
-    }
-    else if( ( oldFldName != fldName )
-             || ( mFolder->parent() != selectedFolderDir ) )
-    {
-      if( mFolder->parent() != selectedFolderDir ) {
-        if( mFolder->folderType() == KMFolderTypeCachedImap ) {
-          QString message = i18n("Moving IMAP folders is not supported");
-          KMessageBox::error( this, message );
-        } else
-          mFolder->rename(fldName, selectedFolderDir );
-      } else
-        mFolder->rename(fldName);
-
-      kmkernel->folderMgr()->contentsChanged();
-    }
-  }
-
-  if( mFolder )
+  KMFolder* folder = mDlg->folder();
+  if( folder )
   {
     // settings for mailingList
-    mFolder->setMailingListEnabled( mHoldsMailingList && mHoldsMailingList->isChecked() );
+    folder->setMailingListEnabled( mHoldsMailingList && mHoldsMailingList->isChecked() );
     fillMLFromWidgets();
-    mFolder->setMailingList( mMailingList );
-    mFolder->setIdentity( mIdentityComboBox->currentIdentity() );
-
-    // Settings for auto expiry of old email messages.
-    mFolder->setAutoExpire(mExpireFolderCheckBox->isChecked());
-    mFolder->setUnreadExpireAge(mUnreadExpiryTimeNumInput->value());
-    mFolder->setReadExpireAge(mReadExpiryTimeNumInput->value());
-    mFolder->setUnreadExpireUnits((ExpireUnits)mUnreadExpiryUnitsComboBox->currentItem());
-    mFolder->setReadExpireUnits((ExpireUnits)mReadExpiryUnitsComboBox->currentItem());
-    // Update the tree iff new icon paths are different and not empty or if
-    // useCustomIcons changed.
-    if ( mFolder->useCustomIcons() != mIconsCheckBox->isChecked() ) {
-      mFolder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-      // Reset icons, useCustomIcons was turned off.
-      if ( !mFolder->useCustomIcons() ) {
-        mFolder->setIconPaths( "", "" );
-      }
-    }
-    if ( mFolder->useCustomIcons() &&
-      (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
-      ( !mNormalIconButton->icon().isEmpty())) ||
-      (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
-      ( !mUnreadIconButton->icon().isEmpty())) ) {
-      mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
-    }
-        // set whoField
-    if (mShowSenderReceiverComboBox->currentItem() == 1)
-      mFolder->setUserWhoField("From");
-    else if (mShowSenderReceiverComboBox->currentItem() == 2)
-      mFolder->setUserWhoField("To");
-    else
-      mFolder->setUserWhoField(QString::null);
-
-    if( bIsNewFolder )
-      mFolder->close();
-
-    if( mFolder->folderType() == KMFolderTypeImap )
-    {
-      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( ((KMFolder*) mFolder)->storage() );
-      imapFolder->setIncludeInMailCheck(
-          mNewMailCheckBox->isChecked() );
-    }
+    folder->setMailingList( mMailingList );
   }
-
-  KDialogBase::slotOk();
-}
-
-/**
- * Called when the 'auto expire' toggle is clicked.
- * Enables/disables all widgets related to this.
- */
-void KMFolderDialog::slotExpireFolder(bool expire)
-{
-  if (expire) {
-    // disable the number field if "Never" is selected
-    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
-    mReadExpiryUnitsComboBox->setEnabled(true);
-    // disable the number field if "Never" is selected
-    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
-    mUnreadExpiryUnitsComboBox->setEnabled(true);
-  } else {
-    mReadExpiryTimeNumInput->setEnabled(false);
-    mReadExpiryUnitsComboBox->setEnabled(false);
-    mUnreadExpiryTimeNumInput->setEnabled(false);
-    mUnreadExpiryUnitsComboBox->setEnabled(false);
-  }
-}
-
-
-/**
- * Enable/disable the number field if appropriate
- */
-void
-KMFolderDialog::slotReadExpiryUnitChanged( int value )
-{
-  // disable the number field if "Never" is selected
-  mReadExpiryTimeNumInput->setEnabled( value != 0 );
-}
-
-
-/**
- * Enable/disable the number field if appropriate
- */
-void
-KMFolderDialog::slotUnreadExpiryUnitChanged( int value )
-{
-  // disable the number field if "Never" is selected
-  mUnreadExpiryTimeNumInput->setEnabled( value != 0 );
-}
-
-void
-KMFolderDialog::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
-{
-    mUnreadIconButton->setIcon( icon );
 }
 
 //----------------------------------------------------------------------------
-void KMFolderDialog::slotHoldsML( bool holdsML )
+void FolderDiaMailingListTab::slotHoldsML( bool holdsML )
 {
   mMLHandlerCombo->setEnabled( holdsML );
-  if ( mFolder && mFolder->count() )
+  if ( mDlg->folder() && mDlg->folder()->count() )
     mDetectButton->setEnabled( holdsML );
   mAddressCombo->setEnabled( holdsML );
   mEditList->setEnabled( holdsML );
@@ -817,16 +891,16 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
 }
 
 //----------------------------------------------------------------------------
-void KMFolderDialog::slotDetectMailingList()
+void FolderDiaMailingListTab::slotDetectMailingList()
 {
-  if ( !mFolder ) return; // in case the folder was just created
-  int num = mFolder->count();
+  if ( !mDlg->folder() ) return; // in case the folder was just created
+  int num = mDlg->folder()->count();
   const int checks = 5;
 
   kdDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
 
   for( int i = --num; i > num-checks; --i ) {
-    KMMessage *mes = mFolder->getMsg( i );
+    KMMessage *mes = mDlg->folder()->getMsg( i );
     if ( !mes )
       continue;
     mMailingList = MailingList::detect( mes );
@@ -844,13 +918,13 @@ void KMFolderDialog::slotDetectMailingList()
 }
 
 //----------------------------------------------------------------------------
-void KMFolderDialog::slotMLHandling( int element )
+void FolderDiaMailingListTab::slotMLHandling( int element )
 {
   mMailingList.setHandler( static_cast<MailingList::Handler>( element ) );
 }
 
 //----------------------------------------------------------------------------
-void KMFolderDialog::slotAddressChanged( int i )
+void FolderDiaMailingListTab::slotAddressChanged( int i )
 {
   fillMLFromWidgets();
   fillEditBox();
@@ -858,7 +932,7 @@ void KMFolderDialog::slotAddressChanged( int i )
 }
 
 //----------------------------------------------------------------------------
-void KMFolderDialog::fillMLFromWidgets()
+void FolderDiaMailingListTab::fillMLFromWidgets()
 {
   if ( !mHoldsMailingList->isChecked() )
     return;
@@ -885,7 +959,7 @@ void KMFolderDialog::fillMLFromWidgets()
   }
 }
 
-void KMFolderDialog::fillEditBox()
+void FolderDiaMailingListTab::fillEditBox()
 {
   mEditList->clear();
   switch ( mAddressCombo->currentItem() ) {
@@ -909,27 +983,33 @@ void KMFolderDialog::fillEditBox()
   }
 }
 
-void KMFolderDialog::slotInvokeHandler()
+void FolderDiaMailingListTab::slotInvokeHandler()
 {
   KMCommand *command =0;
   switch ( mAddressCombo->currentItem() ) {
   case 0:
-    command = new KMMailingListPostCommand( this, mFolder );
+    command = new KMMailingListPostCommand( this, mDlg->folder() );
     break;
   case 1:
-    command = new KMMailingListSubscribeCommand( this, mFolder );
+    command = new KMMailingListSubscribeCommand( this, mDlg->folder() );
     break;
   case 2:
-    command = new KMMailingListUnsubscribeCommand( this, mFolder );
+    command = new KMMailingListUnsubscribeCommand( this, mDlg->folder() );
     break;
   case 3:
-    command = new KMMailingListArchivesCommand( this, mFolder );
+    command = new KMMailingListArchivesCommand( this, mDlg->folder() );
     break;
   case 4:
-    command = new KMMailingListHelpCommand( this, mFolder );
+    command = new KMMailingListHelpCommand( this, mDlg->folder() );
     break;
   default:
     kdWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
   }
   if ( command ) command->start();
+}
+
+void KMFolderDialog::setFolder( KMFolder* folder )
+{
+  Q_ASSERT( mFolder.isNull() );
+  mFolder = folder;
 }

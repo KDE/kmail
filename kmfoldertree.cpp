@@ -223,7 +223,7 @@ void KMFolderTreeItem::properties()
 
   KMFolderDialog *props;
 
-  props = new KMFolderDialog( mFolder, mFolder->parent(), listView(),
+  props = new KMFolderDialog( mFolder, mFolder->parent(), static_cast<KMFolderTree *>( listView() ),
                               i18n("Properties of Folder %1").arg( mFolder->label() ) );
   props->exec();
   //Nothing here the above exec() may actually delete this KMFolderTreeItem
