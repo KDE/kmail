@@ -626,7 +626,7 @@ KMReaderWin::~KMReaderWin()
 //-----------------------------------------------------------------------------
 bool KMReaderWin::update( KMail::ISubject * subject )
 {
-  if ( static_cast<KMMessage*>(subject) != message() ) 
+  if ( static_cast<KMMessage*>(subject) != message() )
   {
     kdDebug(5006) << "KMReaderWin::update - ignoring update" << endl;
     return false;
@@ -639,7 +639,7 @@ bool KMReaderWin::update( KMail::ISubject * subject )
       // replace the dwpart of the node
       node->setDwPart( static_cast<KMMessage*>(subject)->lastUpdatedPart() );
       // update the tmp file
-      kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName, 
+      kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
           false, false, false );
     }
   } else {
@@ -826,11 +826,11 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
     return;
-  
+
   // (de)register as observer
-  if (mMessage) 
+  if (mMessage)
     mMessage->detach( this );
-  if (aMsg) 
+  if (aMsg)
     aMsg->attach( this );
   mAtmUpdate = false;
 
@@ -905,25 +905,16 @@ static const int numKMailChanges =
 // automatically below:
 static const char * const kmailNewFeatures[] = {
   I18N_NOOP("KMail can now be embedded in the Kontact container application."),
-  I18N_NOOP("'Search Folders'; a KMail folder that stores a search expression and is dynamically updated (also known as virtual folders)."),
+  I18N_NOOP("Search Folders (a.k.a Virtual Folders)"),
   I18N_NOOP("As-you-type spell checking is supported."),
   I18N_NOOP("Panel applet showing unread message totals."),
-  I18N_NOOP("Remove duplicates function for removing duplicate messages in a folder."),
-  I18N_NOOP("Messages can be dragged and dropped on a composer window to add those messages as attachments."),
-  I18N_NOOP("Improved threading; threading by subject."),
-  I18N_NOOP("Deletion in threaded mode is improved, child messages will no longer be scattered when a parent is deleted."),
-  I18N_NOOP("Multiple messages can now be selected in the search dialog."),
-  I18N_NOOP("New context menu in the search dialog with Move, Copy, Reply etc. actions for operating on selected messages."),
-  I18N_NOOP("Search criteria in the search dialog now supports more types of rules and a variable number of rules."),
-  I18N_NOOP("Faster searching of large messages."),
+  I18N_NOOP("Per folder duplicate mail removal"),
+  I18N_NOOP("Drag and drop support of messages onto the composer"),
+  I18N_NOOP("Improved threading; threading by subject, sort stable deletion"),
+  I18N_NOOP("Numerous search dialog improvements"),
   I18N_NOOP("SMTP pipelining (faster mail submission)."),
-  I18N_NOOP("The separate window for reading mail has a context menu with Reply, Copy etc. actions for operating on the message displayed."),
-  I18N_NOOP("The separate window for reading mail has a tool bar."),
-  I18N_NOOP("Startup of KMail is faster."),
-  I18N_NOOP("Switching between folders is faster."),
-  I18N_NOOP("The contents of all composer windows are saved to disk periodically saved to prevent mail loss in the result of a system crash."),
-  I18N_NOOP("The state of KMail folders is saved to disk periodically to prevent status information loss in the result of a system crash."),
-  I18N_NOOP("Configurable startup folder."),
+  I18N_NOOP("Separate reader window improvements, including new tool bar"),
+  I18N_NOOP("Configurable startup folder.")
   I18N_NOOP("IMAP messages are loaded progressively."),
   I18N_NOOP("IMAP attachments are loaded on demand."),
   I18N_NOOP("KMail can check your accounts for new mail on startup.")
