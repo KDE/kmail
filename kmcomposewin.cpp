@@ -2164,7 +2164,7 @@ void KMComposeWin::slotIdentityActivated(int)
       (mOldSigText.isEmpty())) {
     if (pos >= 0)
       edtText.truncate(pos);
-    if (!ident.signature().isEmpty()) {
+    if (!ident.signature().isEmpty() && mAutoSign) {
       edtText.append( "\n" );
       if (!ident.signature().startsWith("-- \n")) edtText.append( "-- \n" );
       edtText.append( ident.signature() );
