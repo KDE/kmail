@@ -410,22 +410,6 @@ namespace KMail {
 
       dumpToFile( "dat_03_reader.sig", signaturetext.data(),
                   signaturetext.size() );
-
-#ifndef NDEBUG
-      QCString deb;
-      deb =  "\n\nS I G N A T U R E = ";
-      if ( signatureIsBinary )
-        deb += "[binary data]";
-      else {
-        deb += "\"";
-        deb += signaturetext;
-        deb += "\"";
-      }
-      deb += "\n\nC O N T E N T = \"";
-      deb += cleartext;
-      deb += "\"  <--  E N D    O F    C O N T E N T\n\n";
-      kdDebug(5006) << deb << endl;
-#endif
     }
 
     CryptPlug::SignatureMetaData localSigMeta;
@@ -538,14 +522,6 @@ namespace KMail {
                                                    fromAddress ) );
         bIsOpaqueSigned = true;
 
-#ifndef NDEBUG
-        if ( doCheck ) {
-          kdDebug(5006) << "\n\nN E W    C O N T E N T = \""
-                        << new_cleartext
-                        << "\"  <--  E N D    O F    N E W    C O N T E N T\n\n"
-                        << endl;
-        }
-#endif
         CryptPlugWrapperSaver cpws( this, cryptPlug );
         insertAndParseNewChildNode( sign,
                                     doCheck ? new_cleartext
@@ -1082,6 +1058,7 @@ namespace KMail {
     }
 #endif
 
+#if 0
     // special treatment of TNEF attachment (might be invitation or similar)
     partNode * dataTNEF = child->findType( DwMime::kTypeApplication,
                                            DwMime::kSubtypeMsTNEF, false, true );
@@ -1095,6 +1072,7 @@ namespace KMail {
         return true;
       }
     }
+#endif
 
     // normal treatment of the parts in the mp/mixed container
     stdChildHandling( child );
