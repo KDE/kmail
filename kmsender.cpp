@@ -59,6 +59,13 @@ KMSender::KMSender()
   mSendInProgress = FALSE;
   mCurrentMsg = NULL;
   readConfig();
+  quitOnDone = false;
+  label = new QLabel;
+  //label->setAutoResize(true);
+  label->setCaption("KMail");
+  label->setIcon(kapp->getMiniIcon());
+  connect (this, SIGNAL(statusMsg(const char *)),
+           label, SLOT(setText(const char*)));
 }
 
 
@@ -67,6 +74,7 @@ KMSender::~KMSender()
 {
   writeConfig(FALSE);
   if (mSendProc) delete mSendProc;
+  if (label) delete label;
 }
 
 
@@ -242,6 +250,12 @@ void KMSender::doSendMsg()
   // start the sender process or initialize communication
   if (!mSendProcStarted)
   {
+    serverReady(false); //sven - stop IPC
+    
+    label->setText(i18n("Initiating sender process..."));
+    label->resize(400, label->sizeHint().height());
+    label->show();
+    //kapp->processEvents();
     emit statusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())
     {
@@ -287,9 +301,22 @@ void KMSender::cleanup(void)
   else outboxFolder->compact();
 
   emit statusMsg(i18n("Done sending messages."));
+  serverReady(true); // sven - enable ipc
+  label->hide();
+  if (quitOnDone)
+  {
+    debug ("Done sending messages.");
+    kapp->quit();
+  }
 #endif
 }
 
+
+//-----------------------------------------------------------------------------
+void KMSender::quitWhenFinished()
+{
+  quitOnDone=true;
+}
 
 //-----------------------------------------------------------------------------
 void KMSender::slotIdle()
@@ -457,7 +484,14 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
       j = receiver.find('>', i+1);
       if (j > i) receiver = receiver.mid(i+1, j-i-1);
     }
-
+    else // if it's "radej@kde.org (Sven Radej)"
+    {
+      i=receiver.find('(');
+      if (i > 0)
+        receiver.truncate(i);  // "radej@kde.org "
+    }
+    //printf ("Receiver = %s\n", receiver.data());
+    
     if (!receiver.isEmpty()) 
     {
       rc = addOneRecipient(receiver);

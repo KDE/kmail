@@ -54,6 +54,11 @@ public:
 
 protected:
   virtual void closeEvent(QCloseEvent*);
+  /**
+   * Accept quit if last window and we are not sending. Otherwise,
+   * wait till sender is finished. Called automatically from KTMW.
+   */
+  virtual bool queryExit();
 
 private:
   // app->quit() is called when sWindowCount<=0 in destructor

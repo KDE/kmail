@@ -9,6 +9,7 @@
 #include <mimelib/utility.h>
 #include <qstring.h>
 #include <qobject.h>
+#include <qlabel.h>
 
 class KMMessage;
 class KMFolder;
@@ -81,6 +82,11 @@ public:
   /** Write configuration to global config with optional sync() */
   virtual void writeConfig(bool withSync=TRUE);
 
+  /**
+   * Tells sender to quit application when finished.
+   */
+  void quitWhenFinished();
+  
 signals:
   /** Emitted regularly to inform the user of what is going on */
   void statusMsg(const char*);
@@ -114,6 +120,8 @@ private:
   bool mSendProcStarted;
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
+  bool quitOnDone;
+  QLabel *label;
 };
 
 

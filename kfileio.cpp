@@ -166,7 +166,8 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   }
 
   len = aBuffer.size() - 1;
-  debug("kStringToFile: writing %d bytes", len, aBuffer.length());
+  // This has to many arguments in format warning so I commented it out (sven)
+  //debug("kStringToFile: writing %d bytes", len, aBuffer.length());
   writeLen = file.writeBlock(aBuffer.data(), len);
 
   if (writeLen < 0) 

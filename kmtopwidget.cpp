@@ -18,7 +18,8 @@
  */
 #include "kmtopwidget.h"
 #include <kapp.h>
-
+#include "kmsender.h"
+#include "kmglobal.h"
 int KMTopLevelWidget::sWindowCount = 0;
 
 //-----------------------------------------------------------------------------
@@ -98,4 +99,16 @@ void KMTopLevelWidget::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
+
+bool KMTopLevelWidget::queryExit()
+{
+  // sven - against quit while sending
+  if (msgSender && msgSender->sending()) // sender working?
+  {
+    msgSender->quitWhenFinished();       // tell him to quit app when finished
+    return false;                        // don't quit now
+  }
+  return true;                           // sender not working, quit
+}
+
 #include "kmtopwidget.moc"

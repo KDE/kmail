@@ -1,3 +1,13 @@
+1999-02-06  Sven Radej <radej@kde.org> (KMail-1.0.17)
+
+        * Server-client method - no more locking problems, lost instead
+          of sent mail, ghost messages...
+          Do the right thing when sending to "me@there (John Doe)"
+          Waldo's folderless-acount-segv-fix
+          More against destroyed last char in message
+          Better long/normal folder-list geometry bugfix
+          Don't quit while sending, and show a label while you send.
+        
 1999-02-03  Sven Radej <radej@kde.org> (KMail-1.0.16)
 
 	* Bugfix:  possible segv-on-create-folder. Reciever is properly

@@ -945,10 +945,18 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
+  if (acctFolder == 0)
+  {
+    acctFolder = (KMFolder*)fdir->first();
+  }  
   mFolders = new QComboBox(this);
-  mFolders->insertItem(i18n("<none>"));
-  for (i=1, folder=(KMFolder*)fdir->first(); folder; 
-       folder=(KMFolder*)fdir->next())
+  if (acctFolder == 0)
+  {
+    mFolders->insertItem(i18n("<none>"));
+  }
+  else for (i=0, folder=(KMFolder*)fdir->first(); 
+  	    folder; 
+            folder=(KMFolder*)fdir->next())
   {
     if (folder->isDir() || folder->isSystemFolder()) continue;
     mFolders->insertItem(folder->name());
@@ -1012,8 +1020,7 @@ void KMAccountSettings::accept()
   }
 
   id = mFolders->currentItem();
-  if (id > 0) fld = folderMgr->find(mFolders->currentText());
-  else fld = NULL;
+  fld = folderMgr->find(mFolders->currentText());
   mAcct->setFolder((KMFolder*)fld);
 
   mAcct->setCheckInterval(mChkInterval->isChecked() ? 3 : 0);

@@ -52,6 +52,7 @@ public:
 public slots:
   virtual void show();
   virtual void hide();
+  void slotCheckMail(); // sven moved here as public
 
   /** Output given message in the statusbar message field. */
   void statusMsg(const char* text);
@@ -76,7 +77,7 @@ protected slots:
   void slotUnimplemented();
   void slotViewChange();
   void slotAddFolder();
-  void slotCheckMail();
+  //void slotCheckMail(); sven - moved to public slots
   void slotCompose();
   void slotModifyFolder();
   void slotRemoveFolder();

@@ -103,12 +103,22 @@ void KMAcctMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::singleCheckMail(KMAccount *account)
 {
+  debug ("checking mail, server busy");
+  serverReady(false);
   bool hasNewMail = FALSE;
   //kbp->busy();
   KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
   wid->show();
 
-  if (account->processNewMail(wid))
+  if (account->folder() == 0)
+  {
+    QString tmp(1024); //Unsafe
+    tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+ 	        "Mail checking aborted\n"
+	        "Check your account settings!"), account->name().data());
+    warning(tmp.data());
+  }
+  else if (account->processNewMail(wid))
   {
     hasNewMail = TRUE;
     emit newMail(account);
@@ -117,6 +127,9 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
   filterMgr->cleanup();
   kbp->idle();
 
+  debug ("checked mail, server ready"); // sven
+  serverReady(true);                    // sven warning this might be recursive
+  // if message "check" is pending. No harm I think.
   return hasNewMail;
 }
 
@@ -197,13 +210,23 @@ bool KMAcctMgr::checkMail(void)
     return FALSE;
   }
 
-
+  debug ("checking mail, server busy");
+  serverReady(false);
   KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
   wid->show();
   
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
-    if (cur->processNewMail(wid))
+    if (cur->folder() == 0)
+    {
+      QString tmp(1024); // Unsafe
+      tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+                       "Mail checking aborted\n"
+                       "Check your account settings!"), cur->name().data());
+      warning(tmp.data());
+      break;
+    }
+    else   if (cur->processNewMail(wid))
     {
       hasNewMail = TRUE;
       emit newMail(cur);
@@ -211,7 +234,8 @@ bool KMAcctMgr::checkMail(void)
   }
   delete wid;
   filterMgr->cleanup();
-
+  debug ("checked mail, server ready");
+  serverReady(true);
   return hasNewMail;
 }
 
@@ -242,22 +266,36 @@ bool KMAcctMgr::intCheckMail(int item) {
 		 "receive mail."));
     return FALSE;
   }
-
+  debug ("checking mail, server busy");
+  serverReady(false);
+  
   KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
   wid->show();
   
   int x = 0;
   cur = mAcctList.first();
   for(x=0; x < item; x++)
+  {
     cur=mAcctList.next();
+  }
 
-  if (cur->processNewMail(wid))
-    {
-      hasNewMail = TRUE;
-      emit newMail(cur);
-    }
+  if (cur->folder() == 0)
+  {
+    QString tmp(1024); // Unsafe
+    tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
+                     "Mail checking aborted\n"
+                     "Check your account settings!"), cur->name().data());
+    warning(tmp.data());
+  }
+  else if (cur->processNewMail(wid))
+  {
+    hasNewMail = TRUE;
+    emit newMail(cur);
+  }
 
   delete wid;
+  debug ("checked mail, server ready");
+  serverReady(true);
   return hasNewMail;
 
 }

@@ -32,7 +32,10 @@
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
-
+//--- Sven's pseudo IPC&locking start ---
+#include "kfileio.h"
+#include "kwm.h"
+//--- Sven's pseudo IPC&locking end ---
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
 KMAcctMgr* acctMgr = NULL;
@@ -78,7 +81,8 @@ static void cleanup(void);
 static void setSignalHandler(void (*handler)(int));
 static void recoverDeadLetters(void);
 static void processArgs(int argc, char *argv[]);
-
+static void checkMessage(void);
+static void writePid(bool ready);
 
 //-----------------------------------------------------------------------------
 // Message handler
@@ -115,14 +119,137 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     abort();
   }
 }
+//--- Sven's pseudo IPC&locking start ---
+void serverReady(bool flag)
+{
+  writePid(flag);
+  if (flag) // are we ready now?
+    checkMessage(); //check for any pending mesages
+}
 
+static void writePid (bool ready)
+{
+  FILE* lck;
+  char nlck[80];
+  sprintf (nlck, "/tmp/.kmail%d.lck", getuid());
+  lck = fopen (nlck, "w");
+  if (!ready)
+    fprintf (lck, "%d", 0-getpid());
+  else
+    fprintf (lck, "%d", getpid());
+  fclose (lck);
+}
+
+static void checkMessage()
+{
+  char lf[80];
+  sprintf (lf, "/tmp/.kmail%d.msg", getuid());
+  if (access(lf, F_OK) != 0)
+  {
+    printf ("No message for me\n");
+    return;
+  }
+  QString cmd;
+  QString delcmd;
+  cmd = kFileToString(lf);
+  delcmd.sprintf("rm -rf /tmp/.kmail%d.msg", getuid());
+  system (delcmd.data()); // delete message if any
+  // find a KMMainWin
+  KMMainWin *kmmWin = 0;
+  if (kapp->topWidget() && kapp->topWidget()->isA("KMMainWin"))
+    kmmWin = (KMMainWin *) kapp->topWidget();
+
+  if (cmd.find ("show") == 0)
+  {
+    //printf ("show();\n");
+    if (!kmmWin)
+    {
+      kmmWin = new KMMainWin;
+      kmmWin->show(); // thanks, Patrick!
+    }
+    else
+      KWM::activate(kmmWin->winId());
+    //kmmWin->show();
+    //kmmWin->raise();
+  }
+  else if (cmd.find ("check") == 0)
+  {
+    //printf ("check();\n");
+    if (!kmmWin)
+      kmmWin = new KMMainWin;
+    KWM::activate(kmmWin->winId());
+    //kmmWin->show();
+    //kmmWin->raise();
+    kmmWin->slotCheckMail();
+  }
+  else
+  {
+    int j;
+    int i = cmd.find ("To: ", 0, true);
+    if (i==-1)
+      return; // not a mailto command
+
+    QString to = "";
+    QString cc = "";
+    QString bcc = "";
+    QString subj = "";
+
+    j = cmd.find('\n', i);
+    to = cmd.mid(i+4,j-i-4);
+
+    i = cmd.find ("Cc: ", j, true);
+    if (i!=-1)
+    {
+      j = cmd.find('\n', i);
+      cc= cmd.mid(i+4,j-i-4);
+    }
+
+    i = cmd.find ("Bcc: ", j, true);
+    if (i!=-1)
+    {
+      j = cmd.find('\n', i);
+      bcc= cmd.mid(i+5,j-i-5);
+    }
+    i = cmd.find ("Subject: ", j, true);
+    if (i!=-1)
+    {
+      j = cmd.find('\n', i);
+      subj= cmd.mid(i+9,j-i-9);
+    }
+    //printf ("To: %s\nCc: %s\nBcc: %s\nSubject: %s\n",
+    //        to.data(), cc.data(), bcc.data(), subj.data());
+
+    KMComposeWin* win;
+    KMMessage* msg = new KMMessage;
+
+    msg->initHeader();
+    if (!cc.isEmpty()) msg->setCc(cc);
+    if (!bcc.isEmpty()) msg->setBcc(bcc);
+    if (!subj.isEmpty()) msg->setSubject(subj);
+    if (!to.isEmpty()) msg->setTo(to);
+
+    win = new KMComposeWin(msg);
+    assert(win != NULL);
+    win->show();
+  }
+  
+}
+//--- Sven's pseudo IPC&locking end ---
 
 //-----------------------------------------------------------------------------
 // Crash recovery signal handler
 static void signalHandler(int sigId)
 {
   QWidget* win;
-
+  //--- Sven's pseudo IPC&locking start ---
+  if (sigId == SIGUSR1)
+  {
+    fprintf(stderr, "*** KMail got message\n");
+    checkMessage();
+    setSignalHandler(signalHandler);
+    return;
+  }
+  //--- Sven's pseudo IPC&locking end ---
   fprintf(stderr, "*** KMail got signal %d\n", sigId);
 
   // try to cleanup all windows
@@ -150,6 +277,9 @@ static void setSignalHandler(void (*handler)(int))
   signal(SIGHUP,  handler);
   signal(SIGFPE,  handler);
   signal(SIGABRT, handler);
+  //--- Sven's pseudo IPC&locking start ---
+  signal(SIGUSR1,  handler);
+  //--- Sven's pseudo IPC&locking end ---
 }
 
 
@@ -284,7 +414,9 @@ static void init(int& argc, char *argv[])
 {
   QString  acctPath, foldersPath;
   KConfig* cfg;
-
+  //--- Sven's pseudo IPC&locking start ---
+  if (!app) // because we might have constructed it before to remove KDE args
+  //--- Sven's pseudo IPC&locking end ---
   app = new KApplication(argc, argv, "kmail");
   kbp = new KBusyPtr;
   cfg = app->getConfig();
@@ -381,6 +513,12 @@ static void cleanup(void)
   cmd.sprintf("rm -rf /tmp/kmail%d", getpid());
   system (cmd.data()); // delete your owns only
   //--- Sven's save attachments to /tmp end ---
+  //--- Sven's pseudo IPC&locking start ---
+  cmd.sprintf("rm -rf /tmp/.kmail%d.lck", getuid());
+  system (cmd.data()); // delete your owns only
+  cmd.sprintf("rm -rf /tmp/.kmail%d.msg", getuid());
+  system (cmd.data()); // delete your owns only
+  //--- Sven's pseudo IPC&locking end ---
 }
 
 
@@ -443,6 +581,111 @@ static void processArgs(int argc, char *argv[])
 //-----------------------------------------------------------------------------
 main(int argc, char *argv[])
 {
+  //--- Sven's pseudo IPC&locking start ---
+  app=0;
+  {
+    int pId;
+    
+    char lf[80];
+    sprintf (lf, "/tmp/.kmail%d.lck", getuid());
+    if (access (lf, F_OK) != 0)
+      writePid(true); // we are server and ready
+    else
+    {
+      FILE *lock, *msg;
+      lock = fopen (lf, "r");
+      fscanf (lock, "%d", &pId);
+      fclose (lock);
+      sprintf (lf, "/tmp/.kmail%d.msg", getuid());
+      msg = fopen (lf, "w");
+      int i;
+      app = new KApplication(argc, argv, "kmail"); // clear arg list
+      argc--;
+      argv++;
+
+      // process args:
+      QString to, cc, bcc, subj;
+
+      for (i=0; i<argc; i++)
+      {
+        if (strcmp(argv[i],"-s")==0)
+        {
+          if (i<argc-1) subj = argv[++i];
+          mailto = TRUE;
+        }
+        else if (strcmp(argv[i],"-c")==0)
+        {
+          if (i<argc-1) cc = argv[++i];
+          mailto = TRUE;
+        }
+        else if (strcmp(argv[i],"-b")==0)
+        {
+          if (i<argc-1) bcc = argv[++i];
+          mailto = TRUE;
+        }
+        else if (strcmp(argv[i],"-check")==0)
+          checkNewMail = TRUE;
+        else if (argv[i][0]=='-')
+        {
+          warning(i18n("Unknown command line option: %s"), argv[i]);
+          // unknown parameter
+        }
+        else
+        {
+          if (!to.isEmpty()) to += ", ";
+          if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
+          else to += argv[i];
+          mailto = TRUE;
+        }
+      }
+
+      if (checkNewMail)
+        fprintf (msg, "check");
+      else if (mailto)
+      {
+        if (!to.isEmpty()) fprintf (msg, "To: %s\n", to.data());
+        if (!cc.isEmpty()) fprintf (msg, "Cc: %s\n", cc.data());
+        if (!bcc.isEmpty()) fprintf (msg, "Bcc: %s\n", bcc.data());
+        if (!subj.isEmpty()) fprintf (msg, "Subject: %s\n",subj.data());
+      }
+      else
+        fprintf (msg, "show");
+      fclose (msg);                   //message written
+
+      
+      if (pId < 0)                    // server busy?
+      {
+        if (kill(0-pId, 0) != 0)      // try if it lives at all
+        {
+          printf ("Server died whyle busy\n");
+          writePid(true);             // he diedd and left his pid uncleaned
+        }
+        else
+        {
+          printf ("Server is busy - message pending\n");
+          exit (0);                   // ok he lives but is busy
+        }
+      }
+      else                            // if not busy
+      {
+        if (kill (pId, SIGUSR1) != 0) // Dead?
+        {
+          printf ("Server died whyle ready\n");
+          writePid(true);             // then we are server
+        }
+        else
+        {
+          printf ("Server is ready - message sent\n");
+          exit (0);
+        }
+      }
+    }
+    printf ("We are starting normaly\n");
+    sprintf(lf, "rm -rf /tmp/.kmail%d.msg", getuid());
+    system (lf); // clear old mesage
+  }
+  //--- Sven's pseudo IPC&locking end ---
+
   KMMainWin* mainWin;
 
   init(argc, argv);

@@ -279,7 +279,7 @@ protected:
   /** Open addressbook and append selected addresses to the given
     edit field. */
   virtual void addrBookSelInto(KMLineEdit* destEdit);
-
+  
 private:
   /** Get message including signing and encrypting it */
   virtual const QString pgpProcessedMsg(void);

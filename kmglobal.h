@@ -71,4 +71,6 @@ extern KMFolder* trashFolder;
 /** The "about KMail" text. */
 extern const char* aboutText;
 
+void serverReady(bool flag);
+
 #endif /*kmglobal_h*/
