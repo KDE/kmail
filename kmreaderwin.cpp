@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
 #include <config.h>
 #include <stdlib.h>
@@ -2840,7 +2840,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
     s += "==";
   else
     s += "!=";
-  s += " mMsg, bool onlyProcessHeaders == ";
+  s += " aMsg, bool onlyProcessHeaders == ";
   if( onlyProcessHeaders )
     s += "true";
   else
@@ -3011,7 +3011,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
 
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
 kdDebug(5006) << "(!onlyProcessHeaders) = "                        << (!onlyProcessHeaders) << endl;
-kdDebug(5006) << "(aMsg == mMsg) = "                               << (aMsg == mMsg) << endl;
+kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
 kdDebug(5006) << "   (KMMsgStatusUnknown == mLastStatus) = "           << (KMMsgStatusUnknown == mLastStatus) << endl;
 kdDebug(5006) << "|| (KMMsgStatusNew     == mLastStatus) = "           << (KMMsgStatusNew     == mLastStatus) << endl;
 kdDebug(5006) << "|| (KMMsgStatusUnread  == mLastStatus) = "           << (KMMsgStatusUnread  == mLastStatus) << endl;
@@ -3023,7 +3023,7 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
   if(    !onlyProcessHeaders
          // only proceed if we were called the normal way - not by
          // double click on the message (==not running in a separate window)
-      && (aMsg == mMsg)
+      && (aMsg == message())
          // only proceed if this message was not saved encryptedly before
          // to make sure only *new* messages are saved in decrypted form
       && (    (KMMsgStatusUnknown == mLastStatus)
