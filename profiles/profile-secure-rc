@@ -1,0 +1,22 @@
+[KMail Profile]
+name=Most secure
+desc=Sets all neccesary options to achive maximum security
+
+[Composer]
+pgp-auto-sign=true
+pgp-auto-encrypt=true
+
+[Reader]
+ColorbarHTML=255,64,64
+ColorbarPGP=128,255,128
+ColorbarPlain=255,255,128
+PGPMessageErr=255,0,0
+PGPMessgaeOK=63,255,63
+PGPMessageWarn=255,255,63
+defaultColors=false
+showColorbar=true
+htmlMail=false
+htmlLoadExternal=false
+
+[General]
+send-receipts=false

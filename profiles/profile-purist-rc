@@ -1,0 +1,20 @@
+[KMail Profile]
+name=Purist
+desc=Most features turned off, KDE global settings are used
+
+[Reader]
+defaultColors=true
+showColorbar=false
+htmlMail=false
+
+[Fonts]
+defaultFonts=true
+
+# should this profile be restricted to font and color changes?
+[Geometry]
+nestedMessages=false
+longFolderList=true
+
+[General]
+dateDisplay=ctime
+showMessageSize=false
