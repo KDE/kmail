@@ -1000,8 +1000,13 @@ int KMFolder::appendtoMsgDict(int idx)
 {
   int ret = 0;
   KMMsgDict *dict = kernel->msgDict();
-  if (dict)
-    ret = dict->appendtoFolderIds(this, idx);
+  if (dict) {
+    if (count() == 1) {
+      ret = dict->writeFolderIds(this);
+    } else {
+      ret = dict->appendtoFolderIds(this, idx);
+    }
+  }
   return ret;
 }
 
