@@ -41,7 +41,7 @@ KMUndoStack::pushAction(KMMessage *msg, KMFolder *folder)
    {
       mStack.removeLast();
    }
-   mStack.append(info);
+   mStack.prepend(info);
 }
 
 void 
