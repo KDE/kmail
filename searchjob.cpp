@@ -178,49 +178,63 @@ void SearchJob::slotSearchFolderComplete()
   disconnect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
             this, SLOT( slotSearchFolderComplete()) );
 
-  if ( mLocalSearchPattern->isEmpty() )
-  {
+  if ( mLocalSearchPattern->isEmpty() ) {
     // search for the serial number of the UIDs
     // data contains all found uids separated by blank
     QValueList<Q_UINT32> serNums;
     QStringList searchHits = QStringList::split( " ", mImapSearchData );
-    for ( int i = 0; i < mFolder->count(); ++i )
-    {
+    for ( int i = 0; i < mFolder->count(); ++i ) {
       KMMsgBase * base = mFolder->getMsgBase( i );
-      if ( searchHits.contains( QString::number( base->UID() ) ) )
-      {
+      if ( searchHits.contains( QString::number( base->UID() ) ) ) {
         Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( mFolder->folder(), i );
         serNums.append( serNum );
       }
     }
     emit searchDone( serNums, mSearchPattern );
-  } else
-  {
+  } else {
     // we have search patterns that can not be handled by the server
-    // so we need to download all messages and check
-    QString question = i18n("To execute your search all messages of the folder %1 "
-        "have to be downloaded from the server. This may take some time. "
-        "Do you want to continue your search?").arg( mFolder->label() );
-    if ( KMessageBox::warningContinueCancel( 0, question,
-          i18n("Continue Search"), i18n("&Search"), 
-          "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
-    {
-      QValueList<Q_UINT32> serNums;
-      emit searchDone( serNums, mSearchPattern );
+    mRemainingMsgs = mFolder->count();
+    if ( mRemainingMsgs == 0 ) {
+      emit searchDone( mSearchSerNums, mSearchPattern );
       return;
     }
-    mRemainingMsgs = mFolder->count();
-    for ( int i = 0; i < mFolder->count(); ++i )
-    {
-      KMMessage * msg = mFolder->getMsg( i );
-      ImapJob *job = new ImapJob( msg );
-      job->setParentFolder( mFolder );
-      connect( job, SIGNAL(messageRetrieved(KMMessage*)),
-          this, SLOT(slotSearchMessageArrived(KMMessage*)) );
-      job->start();
+
+    // Let's see if all we need is status, that we can do locally. Optimization.
+    bool needToDownload = false;
+    for ( QPtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
+      if ( (*it)->field() != "<status>" ) {
+        needToDownload = true;
+        break;
+      }
     }
-    if ( mRemainingMsgs == 0 )
-      emit searchDone( mSearchSerNums, mSearchPattern );
+
+    if ( needToDownload ) {
+      // so we need to download all messages and check
+      QString question = i18n("To execute your search all messages of the folder %1 "
+          "have to be downloaded from the server. This may take some time. "
+          "Do you want to continue your search?").arg( mFolder->label() );
+      if ( KMessageBox::warningContinueCancel( 0, question,
+            i18n("Continue Search"), i18n("&Search"), 
+            "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
+      {
+        QValueList<Q_UINT32> serNums;
+        emit searchDone( serNums, mSearchPattern );
+        return;
+      }
+    }
+    unsigned int numMsgs = mRemainingMsgs;
+    for ( unsigned int i = 0; i < numMsgs ; ++i ) {
+      KMMessage * msg = mFolder->getMsg( i );
+      if ( needToDownload ) {
+        ImapJob *job = new ImapJob( msg );
+        job->setParentFolder( mFolder );
+        connect( job, SIGNAL(messageRetrieved(KMMessage*)),
+            this, SLOT(slotSearchMessageArrived(KMMessage*)) );
+        job->start();
+      } else {
+        slotSearchMessageArrived( msg );
+      }
+    }
   }
 }
 
