@@ -28,7 +28,9 @@
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
+
 #include <qtextcodec.h>
+
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
@@ -1611,10 +1613,6 @@ void KMSaveAttachmentsCommand::parse( partNode *rootNode )
   QPtrList<partNode> attachments;
   for( partNode *child = rootNode; child; child = child->mChild ) {
     for( partNode *tmp = child; tmp; tmp = tmp->mNext ) {
-      //Check if it has the Content-Disposition... filename: header
-      //to make sure it's an actual attachment
-      if ( tmp->msgPart().fileName().isNull() )
-        continue;
       attachments.append( tmp );
     }
   }
@@ -1624,9 +1622,11 @@ void KMSaveAttachmentsCommand::parse( partNode *rootNode )
 void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
 {
   if ( attachments.isEmpty() ) {
+    KMessageBox::information( 0, i18n("Found no attachments to save") );
     return;
   }
   mAttachments = attachments;
+  // load all parts
   KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachments, retrievedMessage() );
   connect( command, SIGNAL( partsRetrieved() ),
       this, SLOT( slotSaveAll() ) );
@@ -1648,12 +1648,21 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   } else
   {
     // only one item, get the desired filename
-    const QString s = itr.current()->msgPart().fileName();
+    // replace all ':' with '_' because ':' isn't allowed on FAT volumes
+    const QString s = itr.current()->msgPart().fileName().replace( ':', '_' );
     file = KFileDialog::getSaveFileName( s, QString::null, mParent, QString::null );
   }
 
   while ( itr.current() ) {
     QString s = itr.current()->msgPart().fileName();
+    // Check if it has the Content-Disposition... filename: header
+    // to make sure it's an actual attachment
+    // we can't do the check earlier as we first need to load the mimeheader
+    // for imap attachments to do this check
+    if ( s.isEmpty() ) {
+      ++itr;
+      continue;
+    }
 
     QString filename;
     if ( !dir.isEmpty() )
@@ -1663,7 +1672,6 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
     if( !filename.isEmpty() ) {
       if( QFile::exists( filename ) ) {
-        // Unlike slotSaveAs, we're saving multiple files, so show which one creates trouble
         if( KMessageBox::warningYesNo( mParent,
                                        i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
                                        i18n( "KMail Warning" ) ) ==
@@ -1739,7 +1747,8 @@ void KMLoadPartsCommand::start()
   QPtrListIterator<partNode> it( mParts );
   while ( it.current() )
   {
-    if ( !it.current()->msgPart().isComplete() )
+    if ( !it.current()->msgPart().isComplete() &&
+         !it.current()->msgPart().partSpecifier().isEmpty() )
     {
       // incomplete part so retrieve it first
       ++mNeedsRetrieval;
@@ -1755,7 +1764,7 @@ void KMLoadPartsCommand::start()
     }
     ++it;
   }
-  if ( mNeedsRetrieval == 0)
+  if ( mNeedsRetrieval == 0 )
     execute();
 }
 
@@ -1772,7 +1781,8 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage* msg, QString partSpecifie
         it.current()->setDwPart( part );
       ++it;
     }
-  }
+  } else
+    kdWarning(5006) << "KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!" << endl;
   --mNeedsRetrieval;
   if ( mNeedsRetrieval == 0 )
     execute();

@@ -75,6 +75,7 @@ public:
 	       int f=0 );
   virtual ~KMReaderWin();
 
+  /** Updates the current message */
   virtual bool update( KMail::ISubject * );
 
   /** Read settings from app's config file. */
@@ -273,8 +274,6 @@ public slots:
 
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
-  void slotUrlPopup();
-  void slotPreUrlPopup(const QString &, const QPoint& mousePos);
 
   /** The user selected "Find" from the menu. */
   void slotFind();
@@ -312,7 +311,6 @@ public slots:
   void slotUrlCopy();
   /** Open URL in mUrlCurrent using Kfm. */
   void slotUrlOpen();
-  void slotPreUrlOpen();
   /** Save the page to a file */
   void slotUrlSave();
     void slotAddBookmarks();
@@ -333,6 +331,8 @@ protected slots:
   void slotAtmProperties();
   void slotDelayedResize();
   void slotTouchMessage();
+  void slotAtmLoadPart( int );
+  void slotAtmDistributeClick();
 
 protected:
   /** Watch for palette changes */
@@ -440,7 +440,7 @@ private:
   KMail::HtmlWriter * mHtmlWriter;
   // an attachment should be updated
   bool mAtmUpdate;
-  QPoint mPos;
+  int mChoice;
 };
 
 

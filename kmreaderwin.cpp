@@ -639,6 +639,7 @@ bool KMReaderWin::update( KMail::ISubject * subject )
   }
   if ( mAtmUpdate )
   {
+    kdDebug(5006) << "KMReaderWin::update - attachment" << endl;
     partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
     if ( node )
     {
@@ -647,11 +648,12 @@ bool KMReaderWin::update( KMail::ISubject * subject )
       // update the tmp file
       kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
           false, false, false );
-    }
+    } else
+      kdWarning(5006) << "KMReaderWin::update - Could not find node for attachment!" << endl;
   } else {
+    kdDebug(5006) << "KMReaderWin::update - message" << endl;
     updateReaderWin();
   }
-//  mAtmUpdate = false;
 
   return true;
 }
@@ -819,14 +821,14 @@ void KMReaderWin::initHtmlWidget(void)
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotPreUrlOpen()));
+          SLOT(slotUrlOpen()));
   connect(mViewer->browserExtension(),
           SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotPreUrlOpen()));
+          SLOT(slotUrlOpen()));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
-          SLOT(slotPreUrlPopup(const QString &, const QPoint &)));
+          SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
 
 
@@ -1621,7 +1623,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     // clicked onto an attachment
     mAtmCurrent = id;
     mAtmCurrentName = aUrl.path();
-    slotAtmOpen();
+    slotAtmLoadPart( 1 );
   }
   else {
 //      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
@@ -1629,12 +1631,6 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
       mUrlClicked = aUrl;
       emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlPopup()
-{
-  slotUrlPopup( mUrlClicked.path(), mPos );
 }
 
 //-----------------------------------------------------------------------------
@@ -1655,14 +1651,56 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     mAtmCurrent = id;
     mAtmCurrentName = url.path();
     KPopupMenu *menu = new KPopupMenu();
-    menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
-    menu->insertItem(i18n("Open With..."), this, SLOT(slotAtmOpenWith()));
-    menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
-    menu->insertItem(i18n("Save As..."), this, SLOT(slotAtmSave()));
-    menu->insertItem(i18n("Properties..."), this,
-		     SLOT(slotAtmProperties()));
+    menu->insertItem(i18n("Open..."), 1);
+    menu->insertItem(i18n("Open With..."), 2);
+    menu->insertItem(i18n("View..."), 3);
+    menu->insertItem(i18n("Save As..."), 4);
+    menu->insertItem(i18n("Properties..."), 5);
+    connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
     menu->exec(aPos,0);
     delete menu;
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmLoadPart( int choice )
+{
+  mChoice = choice;
+
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if ( node && !node->msgPart().isComplete() )
+  {
+    // load the part
+    mAtmUpdate = true;
+    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
+    connect( command, SIGNAL( partsRetrieved() ),
+        this, SLOT( slotAtmDistributeClick() ) );
+    command->start();
+  } else
+    slotAtmDistributeClick();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmDistributeClick()
+{
+  switch ( mChoice )
+  {
+    case 1:
+      slotAtmOpen();
+      break;
+    case 2:
+      slotAtmOpenWith();
+      break;
+    case 3:
+      slotAtmView();
+      break;
+    case 4:
+      slotAtmSave();
+      break;
+    case 5:
+      slotAtmProperties();
+      break;
+    default: kdWarning(5006) << "unknown menu item " << mChoice << endl;
   }
 }
 
@@ -1919,6 +1957,13 @@ void KMReaderWin::slotAtmSave()
   if ( !node )
     return;
 
+  QPtrList<partNode> parts;
+  parts.append( node );
+  // save, do not leave encoded
+  KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
+      message(), false );
+  command->start();
+/*
   const KMMessagePart & msgPart = node->msgPart();
 
   // prepend the previously used save dir,
@@ -1937,6 +1982,7 @@ void KMReaderWin::slotAtmSave()
   mSaveAttachDir = url.directory() + '/';
 
   kernel->byteArrayToRemoteFile( msgPart.bodyDecodedBinary(), url );
+  */
 }
 
 
@@ -2264,47 +2310,6 @@ void KMReaderWin::slotUrlCopy()
     KMCommand *command = new KMUrlCopyCommand( mUrlClicked, mainWidget );
     command->start();
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotPreUrlOpen()
-{
-  mAtmCurrent = msgPartFromUrl( mUrlClicked );
-  if ( mAtmCurrent > 0 )
-  {
-    // these are needed for update( KMail::ISubject * )
-    mAtmUpdate = true;
-    mAtmCurrentName = mUrlClicked.path();
-
-    partNode* node = partNodeFromUrl( mUrlClicked );
-    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
-    connect( command, SIGNAL( partsRetrieved() ),
-        this, SLOT( slotUrlOpen() ) );
-    command->start();
-  } else
-    slotUrlOpen( mUrlClicked, KParts::URLArgs() );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotPreUrlPopup( const QString &aUrl, const QPoint &pos )
-{
-  KURL url( aUrl );
-  mAtmCurrent = msgPartFromUrl( url );
-  mUrlClicked = url;
-  mPos = pos;
-  if ( mAtmCurrent > 0 )
-  {
-    // these are needed for update( KMail::ISubject * )
-    mAtmUpdate = true;
-    mAtmCurrentName = url.path();
-
-    partNode* node = partNodeFromUrl( aUrl );
-    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
-    connect( command, SIGNAL( partsRetrieved() ),
-        this, SLOT( slotUrlPopup() ) );
-    command->start();
-  } else
-    slotUrlPopup( aUrl, pos );
 }
 
 //-----------------------------------------------------------------------------

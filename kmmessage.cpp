@@ -4108,7 +4108,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     if (!mLastUpdated)
     {
       kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "
-        << partSpecifier << endl;
+        << specifier << endl;
       return;
     }
     if ( partSpecifier.endsWith(".MIME") )

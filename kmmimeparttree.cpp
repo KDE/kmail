@@ -149,12 +149,6 @@ void KMMimePartTree::slotSaveAll()
     QPtrList<QListViewItem> items;
     for ( QListViewItemIterator lit( firstChild() ); lit.current();  ++lit ) {
         KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( lit.current() );
-
-        //Check if it has the Content-Disposition... filename: header
-        //to make sure it's an actual attachment
-        if( item->node()->msgPart().fileName().isNull() )
-            continue;
-
         items.append( item );
     }
 
