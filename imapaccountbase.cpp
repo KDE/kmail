@@ -65,7 +65,8 @@ namespace KMail {
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
       mProgressEnabled( false ),
-      mIdle( true )
+      mIdle( true ),
+      mErrorDialogIsActive( false )
   {
     mPort = imapDefaultPort;
   }
