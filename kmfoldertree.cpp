@@ -201,6 +201,41 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int)));
 }
 
+bool KMFolderTree::event(QEvent *e)
+{
+  if (e->type() == QEvent::ApplicationPaletteChange)
+  {
+     readColorConfig();
+     return true;
+  }
+  return QListView::event(e);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::readColorConfig (void)
+{
+  KConfig* conf = kapp->config();
+  // Custom/System color support
+  conf->setGroup("Reader");
+  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c2=QColor("blue");
+  QColor c4=QColor(kapp->palette().normal().base());
+
+  if (!conf->readBoolEntry("defaultColors",TRUE)) {
+    mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
+    mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
+    mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
+  }
+  else {
+    mPaintInfo.colFore = c1;
+    mPaintInfo.colUnread = c2;
+    mPaintInfo.colBack = c4;
+  }
+  QPalette newPal = kapp->palette();
+  newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+  setPalette( newPal );
+}
+
 //-----------------------------------------------------------------------------
 void KMFolderTree::readConfig (void)
 {
@@ -215,28 +250,8 @@ void KMFolderTree::readConfig (void)
     mPaintInfo.pixmapOn = TRUE;
     mPaintInfo.pixmap = QPixmap( pixmapFile );
   }
-
-  // Custom/System color support
-  conf->setGroup("Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
-  QColor c2=QColor("blue");
-  QColor c4=QColor(kapp->palette().normal().base());
-
-  if (!conf->readBoolEntry("defaultColors",TRUE)) {
-    mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
-    mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
-    QPalette newPal = palette();
-    newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
-    setPalette( newPal );
-    mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
-  }
-  else {
-    mPaintInfo.colFore = c1;
-    mPaintInfo.colUnread = c2;
-    QPalette newPal = palette();
-    newPal.setColor( QColorGroup::Base, c4 );
-    setPalette( newPal );
-  }
+ 
+  readColorConfig();
 
   // Custom/Ssystem font support
   conf->setGroup("Fonts");

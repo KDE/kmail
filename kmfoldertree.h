@@ -42,6 +42,9 @@ public:
   /** Read config options. */
   virtual void readConfig(void);
 
+  /** Read color options and set palette. */
+  void readColorConfig(void);
+
 signals:
   /* The selected folder has changed */
   void folderSelected(KMFolder*);
@@ -69,6 +72,9 @@ protected slots:
   void openFolder();
 
 protected:
+  // Catch palette changes
+  virtual bool event(QEvent *e);
+ 
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
 
   // Updates the number of unread messages for all folders

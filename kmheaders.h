@@ -114,6 +114,9 @@ public:
 
   /** Read config options. */
   virtual void readConfig(void);
+
+  /** Read color options and set palette. */
+  virtual void readColorConfig(void);
   
   // Refresh the list of message headers shown
   virtual void reset(void);
@@ -177,6 +180,9 @@ public slots:
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
     *pixQueued, *pixFwd;
+
+  // Look for color changes
+  virtual bool event(QEvent *e);
 
   // Overrided to support backing pixmap
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );

@@ -149,6 +149,12 @@ public:
   KMComposeWin(KMMessage* msg=NULL, QString id = "unknown" );
   ~KMComposeWin();
 
+  /** To catch palette changes */
+  virtual bool event(QEvent *e);
+  
+  /** update colors */
+  void readColorConfig();
+
   /** Write settings to app's config file. */
    void writeConfig(void);
 

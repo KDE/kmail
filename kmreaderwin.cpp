@@ -137,25 +137,30 @@ void KMReaderWin::makeAttachDir(void)
 }
 
 
+bool KMReaderWin::event(QEvent *e)
+{
+  if (e->type() == QEvent::ApplicationPaletteChange)
+  {
+     readColorConfig();
+     if (mMsg) {
+       mMsg->readConfig();
+       setMsg(mMsg, true); // Force update
+     }
+     return true;
+  }
+  return KMReaderWinInherited::event(e);
+}
+
+
+
 //-----------------------------------------------------------------------------
-void KMReaderWin::readConfig(void)
+void KMReaderWin::readColorConfig(void)
 {
   KConfig *config = kapp->config();
-
-  config->setGroup("Pixmaps");
-  mBackingPixmapOn = FALSE;
-  mBackingPixmapStr = config->readEntry("Readerwin","");
-  if (mBackingPixmapStr != "")
-    mBackingPixmapOn = TRUE;
-
-  config->setGroup("Reader");
-  mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  mAtmInline = config->readNumEntry("attach-inline", 100);
-  mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
-  mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
-							   SmartAttmnt);
 #ifdef KRN
   config->setGroup("ArticleListOptions");
+#else
+  config->setGroup("Reader");
 #endif
   c1 = QColor(kapp->palette().normal().text());
   c2 = KGlobalSettings::linkColor();
@@ -173,6 +178,33 @@ void KMReaderWin::readConfig(void)
 
   mRecyleQouteColors = config->readBoolEntry( "RecycleQuoteColors", false );
 
+  //
+  // Prepare the quoted fonts
+  //
+  mQuoteFontTag[0] = quoteFontTag(0);
+  mQuoteFontTag[1] = quoteFontTag(1);
+  mQuoteFontTag[2] = quoteFontTag(2);
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::readConfig(void)
+{
+  KConfig *config = kapp->config();
+
+  config->setGroup("Pixmaps");
+  mBackingPixmapOn = FALSE;
+  mBackingPixmapStr = config->readEntry("Readerwin","");
+  if (mBackingPixmapStr != "")
+    mBackingPixmapOn = TRUE;
+
+  config->setGroup("Reader");
+  mHtmlMail = config->readBoolEntry( "htmlMail", false );
+  mAtmInline = config->readNumEntry("attach-inline", 100);
+  mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
+  mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
+							   SmartAttmnt);
+
+
 #ifndef KRN
   int i, diff;
   fntSize = 0;
@@ -180,7 +212,6 @@ void KMReaderWin::readConfig(void)
   config->setGroup("Fonts");
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
-    mViewer->setStandardFont(kstrToFont(mBodyFont).family());
     fntSize = kstrToFont(mBodyFont).pointSize();
     mBodyFamily = kstrToFont(mBodyFont).family();
   }
@@ -189,6 +220,7 @@ void KMReaderWin::readConfig(void)
     fntSize = KGlobalSettings::generalFont().pointSize();
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
+  mViewer->setStandardFont(mBodyFamily);
 
   QValueList<int> fontsizes;
   mViewer->resetFontSizes();
@@ -205,13 +237,7 @@ void KMReaderWin::readConfig(void)
   mViewer->setFixedFont(config->readEntry("FixedFont","courier"));
 #endif
 
-  //
-  // Prepare the quoted fonts
-  //
-  mQuoteFontTag[0] = quoteFontTag(0);
-  mQuoteFontTag[1] = quoteFontTag(1);
-  mQuoteFontTag[2] = quoteFontTag(2);
-
+  readColorConfig();
 
   if (mMsg) {
     update();

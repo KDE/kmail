@@ -32,6 +32,9 @@ public:
   KMReaderWin(QWidget *parent=0, const char *name=0, int f=0);
   virtual ~KMReaderWin();
 
+  /** Read color settings and set palette */
+  virtual void readColorConfig(void);
+
   /** Read settings from app's config file. */
   virtual void readConfig(void);
 
@@ -146,6 +149,9 @@ protected slots:
   void slotDelayedResize();
 
 protected:
+  /** Watch for palette changes */
+  virtual bool event(QEvent *e);
+
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);

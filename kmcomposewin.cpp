@@ -223,6 +223,46 @@ KMComposeWin::~KMComposeWin()
   if (mAutoDeleteMsg && mMsg) delete mMsg;
 }
 
+bool KMComposeWin::event(QEvent *e)
+{
+  if (e->type() == QEvent::ApplicationPaletteChange)
+  {
+     readColorConfig();
+     return true;
+  }
+  return KMTopLevelWidget::event(e);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::readColorConfig(void)
+{
+  KConfig *config = kapp->config();
+  config->setGroup("Reader");
+  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c4=QColor(kapp->palette().normal().base());
+
+  if (!config->readBoolEntry("defaultColors",TRUE)) {
+    foreColor = config->readColorEntry("ForegroundColor",&c1);
+    backColor = config->readColorEntry("BackgroundColor",&c4);
+  }
+  else {
+    foreColor = c1;
+    backColor = c4;
+  }
+
+  // Color setup
+  mPalette = kapp->palette().copy();
+  QColorGroup cgrp  = mPalette.normal();
+  cgrp.setColor( QColorGroup::Base, backColor);
+  cgrp.setColor( QColorGroup::Text, foreColor);
+  mPalette.setNormal(cgrp);
+  mPalette.setDisabled(cgrp);
+  mPalette.setActive(cgrp);
+  mPalette.setInactive(cgrp);
+
+  setPalette(mPalette);
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
@@ -254,39 +294,7 @@ void KMComposeWin::readConfig(void)
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
 #endif
 
-  config->setGroup("Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
-  QColor c4=QColor(kapp->palette().normal().base());
-
-  if (!config->readBoolEntry("defaultColors",TRUE)) {
-    foreColor = config->readColorEntry("ForegroundColor",&c1);
-    backColor = config->readColorEntry("BackgroundColor",&c4);
-  }
-  else {
-    foreColor = c1;
-    backColor = c4;
-  }
-
-  // Color setup
-  mPalette = palette().copy();
-  QColorGroup cgrp  = mPalette.normal();
-  QColorGroup ncgrp(foreColor,cgrp.background(),
-		    cgrp.light(),cgrp.dark(), cgrp.mid(), foreColor,
-		    backColor);
-  mPalette.setNormal(ncgrp);
-  mPalette.setDisabled(ncgrp);
-  mPalette.setActive(ncgrp);
-  mPalette.setInactive(ncgrp);
-
-  //  mIdentity.setPalette(mPalette);
-  mTransport.setPalette(mPalette);
-  mEdtFrom.setPalette(mPalette);
-  mEdtReplyTo.setPalette(mPalette);
-  mEdtTo.setPalette(mPalette);
-  mEdtCc.setPalette(mPalette);
-  mEdtBcc.setPalette(mPalette);
-  mEdtSubject.setPalette(mPalette);
-  mAtmListBox->setPalette(mPalette);
+  readColorConfig();
 
 #ifndef KRN
   config->setGroup("General");
@@ -690,7 +698,7 @@ void KMComposeWin::setupActions(void)
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
 #ifndef KRN
-  (void) new KAction (i18n("Open Mailreader"), /*QIconSet(BarIcon("kmail")),*/
+  (void) new KAction (i18n("&Open Mailreader"), /*QIconSet(BarIcon("kmail")),*/
                       0, this, SLOT(slotNewMailReader()),
                       actionCollection(), "open_mailreader");
 #endif
@@ -858,10 +866,6 @@ void KMComposeWin::setupEditor(void)
 
   // Font setup
   mEditor->setFont(mBodyFont);
-
-  // Color setup
-  mEditor->setPalette(mPalette);
-  mEditor->setBackgroundColor(backColor);
 
   menu = new QPopupMenu();
   //#ifdef BROKEN

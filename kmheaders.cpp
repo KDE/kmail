@@ -347,6 +347,47 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
     p->fillRect( rect, colorGroup().base() );
 }
 
+bool KMHeaders::event(QEvent *e)
+{
+  if (e->type() == QEvent::ApplicationPaletteChange)
+  {
+     readColorConfig();
+     return true;
+  }
+  return KMHeadersInherited::event(e);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::readColorConfig (void)
+{
+  KConfig* config = kapp->config();
+  // Custom/System colors
+  config->setGroup("Reader");
+  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c2=QColor("blue");
+  QColor c3=QColor("red");
+  QColor c4=QColor(kapp->palette().normal().base());
+
+  if (!config->readBoolEntry("defaultColors",TRUE)) {
+    mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
+    mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
+    QPalette newPal = kapp->palette();
+    newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+    setPalette( newPal );
+    mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
+    mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
+  }
+  else {
+    mPaintInfo.colFore = c1;
+    mPaintInfo.colBack = c4;
+    QPalette newPal = kapp->palette();
+    newPal.setColor( QColorGroup::Base, c4 );
+    setPalette( newPal );
+    mPaintInfo.colNew = c2;
+    mPaintInfo.colUnread = c3;
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::readConfig (void)
@@ -366,31 +407,7 @@ void KMHeaders::readConfig (void)
   config->setGroup("General");
   mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
 
-  // Custom/System colors
-  config->setGroup("Reader");
-  QColor c1=QColor(kapp->palette().normal().text());
-  QColor c2=QColor("blue");
-  QColor c3=QColor("red");
-  QColor c4=QColor(kapp->palette().normal().base());
-
-  if (!config->readBoolEntry("defaultColors",TRUE)) {
-    mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
-    mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
-    QPalette newPal = palette();
-    newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
-    setPalette( newPal );
-    mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
-    mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
-  }
-  else {
-    mPaintInfo.colFore = c1;
-    mPaintInfo.colBack = c4;
-    QPalette newPal = palette();
-    newPal.setColor( QColorGroup::Base, c4 );
-    setPalette( newPal );
-    mPaintInfo.colNew = c2;
-    mPaintInfo.colUnread = c3;
-  }
+  readColorConfig();
 
   // Custom/System fonts
   config->setGroup("Fonts");
