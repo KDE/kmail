@@ -60,6 +60,9 @@ k_dcop_signals:
                        const QString& entry );
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
+  void signalRefresh( const QString& type, const QString& folder );
+  void subresourceAdded( const QString& type, const QString& resource );
+  void subresourceDeleted( const QString& type, const QString& resource );
 };
 
 #endif

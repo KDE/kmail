@@ -14,6 +14,7 @@
 #include "kmfoldermgr.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
+#include "kmailicalifaceimpl.h"
 #include "expirejob.h"
 
 #include <errno.h>
@@ -32,7 +33,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
-    mUseCustomIcons( false ), mMailingListEnabled( false )
+    mUseCustomIcons( false ), mMailingListEnabled( false ), mContentsType( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -115,6 +116,8 @@ void KMFolder::readConfig( KConfig* config )
   mId = config->readUnsignedNumEntry("Id", 0);
   mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
 
+  setContentsType( config->readNumEntry( "ContentsType", 0 ) );
+
   if ( mUseCustomIcons )
     emit iconsChanged();
 }
@@ -140,6 +143,8 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("WhoField", mUserWhoField);
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
+
+  config->writeEntry( "ContentsType", mContentsType );
 }
 
 KMFolderType KMFolder::folderType() const
@@ -684,6 +689,16 @@ void KMFolder::expireOldMessages( bool immediate )
 KMFolder* KMFolder::trashFolder() const
 {
   return mStorage ? mStorage->trashFolder() : 0;
+}
+
+void KMFolder::setContentsType( int type )
+{
+  // Damage control. Shouldn't happen to be used, but resort to mail anyway
+  if ( type < 0 || type > 5 ) type = 0;
+  if ( type != mContentsType ) {
+    mContentsType = type;
+    kmkernel->iCalIface().folderContentsTypeChanged( this, type );
+  }
 }
 
 int KMFolder::writeIndex( bool createEmptyIndex )

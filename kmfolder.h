@@ -473,6 +473,9 @@ public:
   bool putRepliesInSameFolder() const { return mPutRepliesInSameFolder; }
   void setPutRepliesInSameFolder( bool b ) { mPutRepliesInSameFolder = b; }
 
+  void setContentsType( int type );
+  int contentsType() const { return mContentsType; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -566,6 +569,10 @@ private:
 
   /** Should replies to messages in this folder be put in here? */
   bool mPutRepliesInSameFolder;
+
+  /** Type of contents in this folder. */
+  // TODO: Make this an enum
+  int mContentsType;
 };
 
 #endif /*kmfolder_h*/

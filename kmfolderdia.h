@@ -141,6 +141,7 @@ private:
   QComboBox *mBelongsToComboBox;
   QComboBox *mMailboxTypeComboBox;
   QComboBox *mShowSenderReceiverComboBox;
+  QComboBox *mContentsComboBox;
   QLineEdit *mNameEdit;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;

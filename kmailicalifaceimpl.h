@@ -35,10 +35,11 @@
 #define KMAILICALIFACEIMPL_H
 
 #include "kmailicalIface.h"
+#include "kmfoldertype.h"
 
 #include <kfoldertree.h>
 
-#include "kmfoldertype.h"
+#include <qdict.h>
 
 class KMFolder;
 class KMMessage;
@@ -117,6 +118,9 @@ public:
 
   bool isEnabled() const { return mUseResourceIMAP; }
 
+  /** Called when a folders contents have changed */
+  void folderContentsTypeChanged( KMFolder*, int );
+
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();
@@ -136,6 +140,11 @@ private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
 
+  /** Emit a dcop signal */
+  void dcopEmit( const QCString& signal, const QString& arg0,
+                 const QString& arg1 = QString::null,
+                 const QString& arg2 = QString::null );
+
   void loadPixmaps() const;
 
   KMFolder* mContacts;
@@ -143,6 +152,10 @@ private:
   KMFolder* mNotes;
   KMFolder* mTasks;
   KMFolder* mJournals;
+
+  // The extra IMAP resource folders
+  class ExtraFolder;
+  QDict<ExtraFolder> mExtraFolders;
 
   unsigned int mFolderLanguage;
 

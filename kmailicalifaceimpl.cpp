@@ -59,6 +59,36 @@
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
 
+// Local helper class
+class KMailICalIfaceImpl::ExtraFolder {
+public:
+  ExtraFolder( KMFolder* f, int t ) : folder( f ), type( t ) {}
+  KMFolder* folder;
+  int type;
+};
+
+static QString folderContentsType( int type )
+{
+  switch( type ) {
+  case 1: return "Calendar";
+  case 2: return "Contact";
+  case 3: return "Note";
+  case 4: return "Task";
+  case 5: return "Journal";
+  default: return "Mail";
+  }
+}
+
+static int folderContentsType( const QString& type )
+{
+  if ( type == "Calendar" ) return 1;
+  if ( type == "Contact" ) return 2;
+  if ( type == "Note" ) return 3;
+  if ( type == "Task" ) return 4;
+  if ( type == "Journal" ) return 5;
+  return 0;
+}
+
 /*
   This interface have three parts to it - libkcal interface;
   kmail interface; and helper functions.
@@ -77,6 +107,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 {
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
+
+  mExtraFolders.setAutoDelete( true );
 }
 
 // Receive an iCal or vCard from the resource
@@ -480,6 +512,43 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   ( new KMDeleteMsgCommand( msg->parent(), msg ) )->start();
 }
 
+void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
+                                                    int contentsType )
+{
+  kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
+                << ", " << contentsType << ")\n";
+
+  // Find previous type of this folder
+  ExtraFolder* ef = mExtraFolders.find( folder->location() );
+  if ( ( ef && ef->type == contentsType ) || ( !ef && contentsType == 0 ) )
+    // Nothing to tell!
+    return;
+
+  if ( ef ) {
+    // Notify that the old folder resource is no longer available
+    dcopEmit( "subresourceDeleted(QString,QString)",
+              folderContentsType( ef->type ), folder->location() );
+
+    if ( contentsType == 0 ) {
+      // Delete the old entry and stop here
+      mExtraFolders.remove( folder->location() );
+      return;
+    }
+
+    // So the type changed to another groupware type.
+    // Set the entry to the new type
+    ef->type = contentsType;
+  } else {
+    // Make a new entry for the list
+    ef = new ExtraFolder( folder, contentsType );
+    mExtraFolders.insert( folder->location(), ef );
+  }
+
+  // Tell about the new resource
+  dcopEmit( "subresourceAdded(QString,QString)",
+            folderContentsType( contentsType ), folder->location() );
+}
+
 /****************************
  * The config stuff
  */
@@ -713,6 +782,30 @@ QPixmap* KMailICalIfaceImpl::pixContacts;
 QPixmap* KMailICalIfaceImpl::pixCalendar;
 QPixmap* KMailICalIfaceImpl::pixNotes;
 QPixmap* KMailICalIfaceImpl::pixTasks;
+
+void KMailICalIfaceImpl::dcopEmit( const QCString& signal, const QString& arg0,
+                                   const QString& arg1, const QString& arg2 )
+{
+  QByteArray data;
+  QDataStream arg( data, IO_WriteOnly );
+  arg << arg0;
+  QCString s = signal + "(QString";
+  if ( arg1 != QString::null ) {
+    arg << arg1;
+    s += ",QString";
+  }
+  if ( arg2 != QString::null ) {
+    arg << arg2;
+    s += ",QString";
+  }
+  s += ")";
+
+  kdDebug(5006) << "Emitting DCOP signal " << s << " with args ( " << arg0
+                << ( arg1 == QString::null ? QString() : ", " + arg1 )
+                << ( arg2 == QString::null ? QString() : ", " + arg2 )
+                << " )" << endl;
+  emitDCOPSignal( s, data );
+}
 
 static void reloadFolderTree()
 {

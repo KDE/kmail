@@ -44,6 +44,7 @@
 #include "mailinglist-magic.h"
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
+#include "kmailicalifaceimpl.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -459,6 +460,31 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   sl->addWidget( mShowSenderReceiverComboBox );
   sl->addStretch( 1 );
 
+  if ( kmkernel->iCalIface().isEnabled() &&
+       !kmkernel->iCalIface().isResourceImapFolder( mDlg->folder() ) ) {
+    // Only do make this settable, if the IMAP resource is enabled
+    // and it's not the personal folders (those must not be changed)
+    QGroupBox *typeGroup = new QGroupBox( i18n("Contents" ), this );
+    typeGroup->setColumnLayout( 0, Qt::Vertical );
+    QHBoxLayout *typeLayout = new QHBoxLayout( typeGroup->layout() );
+    typeLayout->setSpacing( 6 );
+    topLayout->addWidget( typeGroup );
+    label = new QLabel( i18n("&Folder contents:"), typeGroup );
+    typeLayout->addWidget( label );
+    mContentsComboBox = new QComboBox( typeGroup );
+    label->setBuddy( mContentsComboBox );
+    typeLayout->addWidget( mContentsComboBox, 3 );
+
+    mContentsComboBox->insertItem( i18n( "Mail" ) );
+    mContentsComboBox->insertItem( i18n( "Calendar" ) );
+    mContentsComboBox->insertItem( i18n( "Contacts" ) );
+    mContentsComboBox->insertItem( i18n( "Notes" ) );
+    mContentsComboBox->insertItem( i18n( "Tasks" ) );
+    mContentsComboBox->insertItem( i18n( "Journal" ) );
+    mContentsComboBox->setCurrentItem( mDlg->folder()->contentsType() );
+  } else
+    mContentsComboBox = 0;
+
   // should this folder be included in new-mail-checks?
   QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), this, "newmailGroup" );
   newmailGroup->setColumnLayout( 0,  Qt::Vertical );
@@ -784,6 +810,10 @@ bool FolderDiaGeneralTab::save()
       folder->setUserWhoField("To");
     else
       folder->setUserWhoField(QString::null);
+
+    // Set type field
+    if ( mContentsComboBox )
+      mDlg->folder()->setContentsType( mContentsComboBox->currentItem() );
 
     if( mDlg->isNewFolder() )
       folder->close();
