@@ -1323,14 +1323,18 @@ void KMailICalIfaceImpl::slotFolderRenamed()
 void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
                                                     const QString &newLocation )
 {
-   ExtraFolder* ef = mExtraFolders.find( oldLocation );
-   if ( ef ) {
-     // reuse the ExtraFolder entry, but adjust the key
-     mExtraFolders.setAutoDelete( false );
-     mExtraFolders.remove( oldLocation );
-     mExtraFolders.setAutoDelete( true );
-     mExtraFolders.insert( newLocation, ef );
-   }
+  KMFolder *folder = findResourceFolder(  oldLocation );
+  ExtraFolder* ef = mExtraFolders.find( oldLocation );
+  if ( ef ) {
+    // reuse the ExtraFolder entry, but adjust the key
+    mExtraFolders.setAutoDelete( false );
+    mExtraFolders.remove( oldLocation );
+    mExtraFolders.setAutoDelete( true );
+    mExtraFolders.insert( newLocation, ef );
+  }
+  if (  folder )
+    subresourceDeleted(  folderContentsType(  folder->storage()->contentsType() ), oldLocation );
+
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
