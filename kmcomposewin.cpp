@@ -3094,7 +3094,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     kdDebug(5006) << ds << endl << endl;
                 }
                 signature.assign( ciphertext, cipherLen );
-            } else {
+            } else if ( errId == /*GPGME_Canceled*/20 ) {
+	        return false;
+	    } else {
                 QString error("#");
                 error += QString::number( errId );
                 error += "  :  ";

@@ -900,7 +900,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
           : i18n("Make sure the plug-in is installed properly and check "
                  "your specifications made in the "
                  "'Settings->Configure KMail->Security' dialog."),
-          decryptedData );
+	  decryptedData, (errId != /*GPGME_Canceled*/20) );
       }
       delete errTxt;
     }

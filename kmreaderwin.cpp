@@ -1438,7 +1438,8 @@ void KMReaderWin::showMessageAndSetData( const QString& txt0,
                                          const QString& txt1,
                                          const QString& txt2a,
                                          const QString& txt2b,
-                                         QCString& data )
+                                         QCString& data,
+					 bool showMessageBox )
 {
   data  = "<hr><b><h2>";
   data += txt0.utf8();
@@ -1453,7 +1454,8 @@ void KMReaderWin::showMessageAndSetData( const QString& txt0,
   data += "<br>&nbsp; &nbsp; ";
   data += txt2b.utf8();
   data += "</i>";
-  KMessageBox::sorry(this, txt0+"\n\n"+txt1+"\n\n"+txt2a+"\n"+txt2b);
+  if ( showMessageBox )
+    KMessageBox::sorry(this, txt0+"\n\n"+txt1+"\n\n"+txt2a+"\n"+txt2b);
 }
 
 

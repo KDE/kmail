@@ -377,7 +377,8 @@ protected:
                                       const QString& txt1,
                                       const QString& txt2a,
                                       const QString& txt2b,
-                                      QCString& data );
+                                      QCString& data,
+				      bool showMessageBox=true );
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
