@@ -1563,14 +1563,14 @@ void KMCopyCommand::execute()
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList)
-  :mDestFolder( destFolder ), mMsgList( msgList )
+  :mDestFolder( destFolder ), mMsgList( msgList ), mProgressItem( 0 )
 {
   setDeletesItself( true );
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMessage *msg )
-  :mDestFolder( destFolder )
+  :mDestFolder( destFolder ), mProgressItem( 0 )
 {
   setDeletesItself( true );
   mMsgList.append( &msg->toMsgBase() );
@@ -1578,7 +1578,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMsgBase *msgBase )
-  :mDestFolder( destFolder )
+  :mDestFolder( destFolder ), mProgressItem( 0 )
 {
   setDeletesItself( true );
   mMsgList.append( msgBase );
