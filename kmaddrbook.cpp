@@ -4,7 +4,7 @@
 
 #include "kmaddrbook.h"
 #include <kapp.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kmsgbox.h>
 #include <qfile.h>
 #include <assert.h>
@@ -137,18 +137,18 @@ int KMAddrBook::fileError(int status) const
   switch(status)
   {
   case IO_ReadError:
-    msg = klocale->translate("Could not read file:\n%s");
+    msg = i18n("Could not read file:\n%s");
     break;
   case IO_OpenError:
-    msg = klocale->translate("Could not open file:\n%s");
+    msg = i18n("Could not open file:\n%s");
     break;
   default:
-    msg = klocale->translate("Error while writing file:\n%s");
+    msg = i18n("Error while writing file:\n%s");
   }
 
   str.sprintf(msg, mDefaultFileName.data());
-  KMsgBox::message(NULL, klocale->translate("File I/O Error"), str,
-		   KMsgBox::STOP, klocale->translate("Ok"));
+  KMsgBox::message(NULL, i18n("File I/O Error"), str,
+		   KMsgBox::STOP, i18n("Ok"));
 
   return status;
 }

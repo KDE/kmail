@@ -48,7 +48,7 @@ uninstall-local:
 	rm -f $(kde_minidir)/kmail.xpm
 	
 messages:
-	@XGETTEXT@ -ktranslate -C -x../../kdelibs/po/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot 
+	@XGETTEXT@ -ki18n -C -x../../kdelibs/po/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot 
 
 kmfolderdia.cpp:kmfolderdia.moc
 kmfolderdia.moc: kmfolderdia.h

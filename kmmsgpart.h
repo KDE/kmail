@@ -75,7 +75,7 @@ public:
   // Get or set the 'Content-Disposition' header field
   const QString contentDisposition() const;
   void setContentDisposition(const QString aStr);
- 
+
 protected:
   QString mType;
   QString mSubtype;

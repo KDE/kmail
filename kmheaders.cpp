@@ -15,7 +15,7 @@
 
 #include <drag.h>
 #include <qstrlist.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kiconloader.h>
 #include <kapp.h>
 
@@ -35,10 +35,10 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   getMsgIndex = -1;
   mSortField = KMMsgList::sfDate;
 
-  setColumn(0, nls->translate("F"), 17, KMHeadersInherited::PixmapColumn);
-  setColumn(1, nls->translate("Sender"), 200);
-  setColumn(2, nls->translate("Subject"), 270);
-  setColumn(3, nls->translate("Date"), 300);
+  setColumn(0, i18n("F"), 17, KMHeadersInherited::PixmapColumn);
+  setColumn(1, i18n("Sender"), 200);
+  setColumn(2, i18n("Subject"), 270);
+  setColumn(3, i18n("Date"), 300);
   readConfig();
 
   pixNew   = loader->loadIcon("kmmsgnew.xpm");
@@ -298,9 +298,9 @@ void KMHeaders::saveMsg (int msgId)
   }
 
   if (kStringToFile(str, fileName, TRUE))
-    mOwner->statusMsg(nls->translate("Message(s) saved."));
+    mOwner->statusMsg(i18n("Message(s) saved."));
   else
-    mOwner->statusMsg(nls->translate("Failed to save message(s)."));
+    mOwner->statusMsg(i18n("Failed to save message(s)."));
 }
 
 
@@ -612,9 +612,9 @@ void KMHeaders::updateMessageList(void)
   setAutoUpdate(TRUE);
   repaint();
 
-  hdr.sprintf(nls->translate("%d Messages, %d unread."),
+  hdr.sprintf(i18n("%d Messages, %d unread."),
 	      mFolder->count(), mFolder->countUnread());
-  if (mFolder->isReadOnly()) hdr += nls->translate("Folder is read-only.");
+  if (mFolder->isReadOnly()) hdr += i18n("Folder is read-only.");
 
   mOwner->statusMsg(hdr);
   kbp->idle();

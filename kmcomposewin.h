@@ -107,6 +107,7 @@ public slots:
   void slotCut();
   void slotCopy();
   void slotPaste();
+  void slotMarkAll();
 
   /** Change window title to given string. */
   void slotUpdWinTitle(const char *);
@@ -157,6 +158,9 @@ public slots:
   void slotSpellResult(char* newtext);
   void slotSpellCorrected(char *originalword, char *newword, long pos);
   void slotSpellMispelling (char *word, QStrList *, long pos);
+
+  /** Append current message to ~/dead.letter */
+  virtual void deadLetter(void);
 
 protected:
   /** Install grid management and header fields. If fields exist that

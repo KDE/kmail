@@ -14,7 +14,7 @@
 #include <kconfig.h>
 #include <qlined.h>
 #include <qpushbt.h>
-#include <klocale.h>
+#include <kapp.h>
 
 #include "kmacctpop.h"
 #include "kalarmtimer.h"
@@ -107,7 +107,7 @@ bool KMAcctPop::doProcessNewMail(void)
   // is everything specified ?
   if (mHost.isEmpty() || mPort<=0)
   {
-    warning(nls->translate("Please specify Host, Port  and\n"
+    warning(i18n("Please specify Host, Port  and\n"
 			   "destination folder in the settings\n"
 			   "and try again."));
     return FALSE;
@@ -236,12 +236,12 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   QString msg, caption;
   kbp->idle();
 
-  caption = nls->translate("Pop Mail Error");
+  caption = i18n("Pop Mail Error");
 
   // First we assume the worst: A network error
   if (aClient.LastFailure() != DwProtocolClient::kFailNoFailure)
   {
-    caption = nls->translate("Pop Mail Network Error");
+    caption = i18n("Pop Mail Network Error");
     msg = aClient.LastFailureStr();
   }
 
@@ -257,12 +257,12 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   {
     msg = aClient.MultiLineResponse().c_str();
     if (msg.isEmpty()) msg = aClient.SingleLineResponse().c_str();
-    if (msg.isEmpty()) msg = nls->translate("Unknown error");
+    if (msg.isEmpty()) msg = i18n("Unknown error");
     // Negative response by the server e.g STAT responses '- ....'
   }
 
   QString tmp;
-  tmp.sprintf(nls->translate("Account: %s\nIn %s:\n%s"), name().data(), aStage.data(),msg.data());
+  tmp.sprintf(i18n("Account: %s\nIn %s:\n%s"), name().data(), aStage.data(),msg.data());
   KMsgBox::message(0, caption, tmp);
   kbp->busy();
   aClient.Quit();
@@ -414,7 +414,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   setCaption(caption);
 
   QLabel *label = new QLabel(this);
-  label->setText(nls->translate("Login Name:"));
+  label->setText(i18n("Login Name:"));
   label->resize(label->sizeHint());
 
   label->move(20,30);
@@ -423,7 +423,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   usernameLEdit->setGeometry(100,27,150,25);
   
   QLabel *label1 = new QLabel(this);
-  label1->setText(nls->translate("Password:"));
+  label1->setText(i18n("Password:"));
   label1->resize(label1->sizeHint());
   label1->move(20,80);
 

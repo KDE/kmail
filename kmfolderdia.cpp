@@ -6,7 +6,7 @@
 #include <qfile.h>
 #include <qtstream.h>
 #include <kmsgbox.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <qlined.h>
 #include <qpushbt.h>
 #include <qlistbox.h>
@@ -35,16 +35,16 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
 
   label = new QLabel(this);
   label->setGeometry(20,20,40,25);
-  label->setText(nls->translate("Name:"));
+  label->setText(i18n("Name:"));
   label->setAlignment(290);
 
   nameEdit = new QLineEdit(this);
   nameEdit->setGeometry(70,20,340,25);
   nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->name().data() : nls->translate("unnamed"));
+  nameEdit->setText(folder ? folder->name().data() : i18n("unnamed"));
 
   label = new QLabel(this);
-  label->setText(nls->translate("Associated with"));
+  label->setText(i18n("Associated with"));
   label->adjustSize();
   label->move(20,74);
 
@@ -54,7 +54,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   connect(assocList,SIGNAL(selected(int)),this,SLOT(doAssocSelected(int)));
 
   label = new QLabel(this);
-  label->setText(nls->translate("Unassociated Accounts"));
+  label->setText(i18n("Unassociated Accounts"));
   label->adjustSize();
   label->move(250,74);
 
@@ -77,12 +77,12 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
 
   QPushButton *button = new QPushButton(this);
   button->setGeometry(190,260,100,30);
-  button->setText(nls->translate("Ok"));
+  button->setText(i18n("Ok"));
   connect(button,SIGNAL(clicked()),this,SLOT(doAccept()));
 
   button = new QPushButton(this);
   button->setGeometry(310,260,100,30);
-  button->setText(nls->translate("Cancel"));
+  button->setText(i18n("Cancel"));
   connect(button,SIGNAL(clicked()),this,SLOT(reject()));
 
   resize(430,340);
@@ -117,7 +117,7 @@ void KMFolderDialog::doAccept()
   if (folder) oldFldName = folder->name();
   if (*nameEdit->text()) fldName = nameEdit->text();
   else fldName = oldFldName;
-  if (fldName.isEmpty()) fldName = nls->translate("unnamed");
+  if (fldName.isEmpty()) fldName = i18n("unnamed");
 
   if (!folder) folder = (KMAcctFolder*)folderMgr->createFolder(fldName);
   else if (oldFldName != fldName)

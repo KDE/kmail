@@ -9,7 +9,7 @@
 #include <qfile.h>
 #include <assert.h>
 #include <kconfig.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <qregexp.h>
 
 #include "kmacctmgr.h"
@@ -65,7 +65,7 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
 
   mFolder = NULL;
-  mName   = config.readEntry("Name", nls->translate("Unnamed"));
+  mName   = config.readEntry("Name", i18n("Unnamed"));
   folderName = config.readEntry("Folder", "");
 
   if (!folderName.isEmpty())
@@ -102,7 +102,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
 
   newMsg->initHeader();
   newMsg->setTo(receiptTo);
-  newMsg->setSubject(nls->translate("Receipt: ") + aMsg->subject());
+  newMsg->setSubject(i18n("Receipt: ") + aMsg->subject());
 
   str  = "Your message was successfully delivered.";
   str += "\n\n---------- Message header follows ----------\n";
@@ -130,7 +130,7 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
   {
     rc = mFolder->addMsg(aMsg);
     if (rc) perror("failed to add message");
-    if (rc) warning(nls->translate("Failed to add message:")+
+    if (rc) warning(i18n("Failed to add message:")+
 		    '\n' + QString(strerror(rc)));
   }
 }

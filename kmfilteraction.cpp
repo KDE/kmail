@@ -5,7 +5,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
-#include <klocale.h>
+#include <kapp.h>
 #include <kconfig.h>
 #include <qcombo.h>
 
@@ -69,7 +69,7 @@ KMFilterAction* KMFilterActionMove::newAction(void)
 
 const QString KMFilterActionMove::label(void) const
 {
-  return nls->translate("transfer");
+  return i18n("transfer");
 }
 
 KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
@@ -130,7 +130,7 @@ KMFilterActionSkip::KMFilterActionSkip(): KMFilterAction("skip")
 
 const QString KMFilterActionSkip::label(void) const
 {
-  return nls->translate("skip rest");
+  return i18n("skip rest");
 }
 
 KMFilterAction* KMFilterActionSkip::newAction(void)
@@ -161,9 +161,9 @@ const QString KMFilterActionSkip::argsAsString(void) const
 //=============================================================================
 void KMFilterActionDict::init(void)
 {
-  insert("transfer", nls->translate("transfer"),
+  insert("transfer", i18n("transfer"),
 	 KMFilterActionMove::newAction);
-  insert("skip rest", nls->translate("skip rest"),
+  insert("skip rest", i18n("skip rest"),
 	 KMFilterActionSkip::newAction);
   // Register custom filter actions below this line.
 }

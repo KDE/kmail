@@ -25,7 +25,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
-#include <klocale.h>
+#include <kapp.h>
 
 
 //-----------------------------------------------------------------------------
@@ -132,10 +132,10 @@ KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
 
   if (!folder)
   {
-    warning(nls->translate("Creating missing folder\n`%s'"), aFolderName);
+    warning(i18n("Creating missing folder\n`%s'"), aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
-    if (!folder) fatal(nls->translate("Cannot create folder `%s'\nin %s"),
+    if (!folder) fatal(i18n("Cannot create folder `%s'\nin %s"),
 		       aFolderName, (const char*)mBasePath);
   }
   return folder;
@@ -147,7 +147,8 @@ void KMFolderMgr::remove(KMFolder* aFolder)
 {
   assert(aFolder != NULL);
   aFolder->remove();
-  mDir.reload();
+  mDir.remove(aFolder);
+  //mDir.reload();
   emit changed();
 }
 

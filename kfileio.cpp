@@ -1,7 +1,7 @@
 // kfileio.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 
-#include <klocale.h>
+#include <kapp.h>
 #include <kapp.h>
 #include <kmsgbox.h>
 #include <qmsgbox.h>
@@ -23,8 +23,8 @@ static void msgDialog(const char* msg, const char* arg=NULL)
   if (arg) str.sprintf(msg, arg);
   else str = msg;
 
-  KMsgBox::message(NULL, klocale->translate("File I/O Error"), str,
-		   KMsgBox::STOP, klocale->translate("Ok"));
+  KMsgBox::message(NULL, i18n("File I/O Error"), str,
+		   KMsgBox::STOP, i18n("Ok"));
 }
 
 
@@ -42,21 +42,21 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
   if (!info.exists())
   {
     if (aVerbose)
-      msgDialog(klocale->translate("The specified file does not exist:\n%s"),
+      msgDialog(i18n("The specified file does not exist:\n%s"),
 		aFileName);
     return 0;
   }
   if (info.isDir())
   {
     if (aVerbose)
-      msgDialog(klocale->translate("This is a directory and not a file:\n%s"),
+      msgDialog(i18n("This is a directory and not a file:\n%s"),
 		aFileName);
     return 0;
   }
   if (!info.isReadable())
   {
     if (aVerbose)
-      msgDialog(klocale->translate("You do not have read permissions "
+      msgDialog(i18n("You do not have read permissions "
 				   "to the file:\n%s"), aFileName);
     return 0;
   }
@@ -66,13 +66,13 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     if (aVerbose) switch(file.status())
     {
     case IO_ReadError:
-      msgDialog(klocale->translate("Could not read file:\n%s"), aFileName);
+      msgDialog(i18n("Could not read file:\n%s"), aFileName);
       break;
     case IO_OpenError:
-      msgDialog(klocale->translate("Could not open file:\n%s"), aFileName);
+      msgDialog(i18n("Could not open file:\n%s"), aFileName);
       break;
     default:
-      msgDialog(klocale->translate("Error while reading file:\n%s"),aFileName);
+      msgDialog(i18n("Error while reading file:\n%s"),aFileName);
     }
     return 0;
   }
@@ -89,7 +89,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
   if (readLen < len)
   {
     QString msg(256);
-    msg.sprintf(klocale->translate("Could only read %u bytes of %u."),
+    msg.sprintf(i18n("Could only read %u bytes of %u."),
 		readLen, len);
     msgDialog(msg);
     return 0;
@@ -117,11 +117,11 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     if (aAskIfExists)
     {
       QString str(256);
-      str.sprintf(klocale->translate(
+      str.sprintf(i18n(
 		  "File %s exists.\nDo you want to replace it ?"),
 		  aFileName);
-      rc = QMessageBox::information(NULL, klocale->translate("Information"),
-	   str, klocale->translate("&Ok"), klocale->translate("&Cancel"),
+      rc = QMessageBox::information(NULL, i18n("Information"),
+	   str, i18n("&Ok"), i18n("&Cancel"),
 	   0, 1);
       if (rc != 0) return FALSE;
     }
@@ -136,10 +136,10 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
       {
 	// failed to rename file
 	if (!aVerbose) return FALSE;
-	rc = QMessageBox::warning(NULL, klocale->translate("Warning"),
-	     klocale->translate(
+	rc = QMessageBox::warning(NULL, i18n("Warning"),
+	     i18n(
              "Failed to make a backup copy of %s.\nContinue anyway ?"),
-	     klocale->translate("&Ok"), klocale->translate("&Cancel"), 0, 1);
+	     i18n("&Ok"), i18n("&Cancel"), 0, 1);
 	if (rc != 0) return FALSE;
       }
     }
@@ -150,14 +150,14 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     if (aVerbose) switch(file.status())
     {
     case IO_WriteError:
-      msgDialog(klocale->translate("Could not write to file:\n%s"), aFileName);
+      msgDialog(i18n("Could not write to file:\n%s"), aFileName);
       break;
     case IO_OpenError:
-      msgDialog(klocale->translate("Could not open file for writing:\n%s"),
+      msgDialog(i18n("Could not open file for writing:\n%s"),
 		aFileName);
       break;
     default:
-      msgDialog(klocale->translate("Error while writing file:\n%s"),aFileName);
+      msgDialog(i18n("Error while writing file:\n%s"),aFileName);
     }
     return FALSE;
   }
@@ -167,13 +167,13 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 
   if (writeLen < 0) 
   {
-    msgDialog(klocale->translate("Could not write to file:\n%s"), aFileName);
+    msgDialog(i18n("Could not write to file:\n%s"), aFileName);
     return FALSE;
   }
   else if (writeLen < len)
   {
     QString msg(256);
-    msg.sprintf(klocale->translate("Could only write %d bytes of %d."),
+    msg.sprintf(i18n("Could only write %d bytes of %d."),
 		writeLen, len);
     msgDialog(msg);
     return FALSE;

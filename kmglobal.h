@@ -11,6 +11,9 @@
 #ifndef kmglobal_h
 #define kmglobal_h
 
+#include <qlist.h>
+#include <qwidget.h>
+
 extern bool shuttingDown;
 
 /** Contains and handles user identity information. */
@@ -38,8 +41,8 @@ class KMSender;
 extern KMSender* msgSender;
 
 /** Global locale for localization of messages. */
-class KLocale;
-extern KLocale* nls;
+//class KLocale;
+//extern KLocale* nls;  // use i18n() now !
 
 /** Standard accelerator keys. */
 class KStdAccel;
@@ -63,6 +66,10 @@ extern KMFolder* inboxFolder;
 extern KMFolder* outboxFolder;
 extern KMFolder* sentFolder;
 extern KMFolder* trashFolder;
+
+/** Global list of top level windows. */
+typedef QList<QWidget> WindowList;
+extern WindowList* windowList;
 
 /** The "about KMail" text. */
 extern const char* aboutText;

@@ -4,20 +4,20 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include <assert.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kapp.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   KMAddrBookSelDlgInherited(NULL, aCap, TRUE), mGrid(this, 2, 2),
   mListBox(this),
-  mBtnOk(klocale->translate("Ok"),this), 
-  mBtnCancel(klocale->translate("Cancel"),this)
+  mBtnOk(i18n("Ok"),this), 
+  mBtnCancel(i18n("Cancel"),this)
 {
   const char* addr;
 
   initMetaObject();
-  setCaption(aCap ? aCap : klocale->translate("Addressbook"));
+  setCaption(aCap ? aCap : i18n("Addressbook"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
@@ -84,15 +84,15 @@ void KMAddrBookSelDlg::slotCancel()
 KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   KMAddrBookEditDlgInherited(NULL, NULL, TRUE), mGrid(this, 3, 4),
   mListBox(this), mEdtAddress(this),
-  mBtnOk(klocale->translate("Ok"),this), 
-  mBtnCancel(klocale->translate("Cancel"),this),
-  mBtnAdd(klocale->translate("Add"),this), 
-  mBtnRemove(klocale->translate("Remove"),this)
+  mBtnOk(i18n("Ok"),this), 
+  mBtnCancel(i18n("Cancel"),this),
+  mBtnAdd(i18n("Add"),this), 
+  mBtnRemove(i18n("Remove"),this)
 {
   const char* addr;
 
   initMetaObject();
-  setCaption(aCap ? aCap : klocale->translate("Addressbook Manager"));
+  setCaption(aCap ? aCap : i18n("Addressbook Manager"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;

@@ -5,7 +5,6 @@
 #include "kmfolderdir.h"
 #include "kmfolder.h"
 #include <kapp.h>
-#include <klocale.h>
 
 #include <assert.h>
 #include <qfile.h>
@@ -76,7 +75,7 @@ KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
   rc = fld->create();
   if (rc)
   {
-    warning(kapp->getLocale()->translate("Error while creating folder `%s':\n%s"),
+    warning(i18n("Error while creating folder `%s':\n%s"),
 	    aFolderName, strerror(rc));
     delete fld;
     return NULL;

@@ -15,12 +15,12 @@
 #include <kconfig.h>
 #include <kapp.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <qregexp.h>
 
 #ifdef KRN
 #include <kapp.h>
-#include <klocale.h>
+#include <kapp.h>
 extern KApplication *app;
 extern KLocale *nls;
 extern KMIdentity *identity;
@@ -105,13 +105,13 @@ bool KMSender::settingsOk(void) const
 {
   if (mMethod!=smSMTP && mMethod!=smMail)
   {
-    warning(nls->translate("Please specify a send\nmethod in the settings\n"
+    warning(i18n("Please specify a send\nmethod in the settings\n"
 			   "and try again."));
     return FALSE;
   }
   if (!identity->mailingAllowed())
   {
-    warning(nls->translate("Please set the required fields in the\n"
+    warning(i18n("Please set the required fields in the\n"
 			   "identity settings:\n"
 			   "user-name and email-address"));
     return FALSE;
@@ -131,7 +131,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (!aMsg->to() || aMsg->to()[0]=='\0')
   {
-    warning(nls->translate("You must specify a receiver"));
+    warning(i18n("You must specify a receiver"));
     return FALSE;
   }
 
@@ -142,7 +142,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   rc = outboxFolder->addMsg(aMsg);
   if (rc)
   {
-    warning(nls->translate("Cannot add message to outbox folder"));
+    warning(i18n("Cannot add message to outbox folder"));
     return FALSE;
   }
 
@@ -165,7 +165,7 @@ bool KMSender::sendQueued(void)
 
   if (mSendInProgress)
   {
-    warning(nls->translate("Sending still in progress"));
+    warning(i18n("Sending still in progress"));
     return FALSE;
   }
 
@@ -217,7 +217,7 @@ void KMSender::doSendMsg(void)
   // start the sender process or initialize communication
   if (!mSendProcStarted)
   {
-    emit statusMsg(nls->translate("Initiating sender process..."));
+    emit statusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())
     {
       cleanup();
@@ -233,7 +233,7 @@ void KMSender::doSendMsg(void)
 
   // start sending the current message
   mSendProc->preSendInit();
-  emit statusMsg(nls->translate("Sending message: ")+mCurrentMsg->subject());
+  emit statusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
   if (!mSendProc->send(mCurrentMsg))
   {
     cleanup();
@@ -259,7 +259,7 @@ void KMSender::cleanup(void)
   if (outboxFolder->count()<=0) outboxFolder->expunge();
   else outboxFolder->compact();
 
-  emit statusMsg(nls->translate("Done sending messages."));
+  emit statusMsg(i18n("Done sending messages."));
 #endif
 }
 
@@ -279,7 +279,7 @@ void KMSender::slotIdle()
   {
     // sending of message failed
     QString msg;
-    msg = nls->translate("Sending failed:");
+    msg = i18n("Sending failed:");
     msg += '\n';
     msg += mSendProc->message();
     warning(msg);
@@ -406,7 +406,7 @@ bool KMSendSendmail::start(void)
 {
   if (mSender->mailer().isEmpty())
   {
-    warning(nls->translate("Please specify a mailer program\n"
+    warning(i18n("Please specify a mailer program\n"
 			   "in the settings."));
     return FALSE;
   }
@@ -446,7 +446,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
 
   if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
   {
-    warning(nls->translate("Failed to execute mailer program %s"),
+    warning(i18n("Failed to execute mailer program %s"),
 	    (const char*)mSender->mailer());
     return FALSE;
   }
@@ -555,12 +555,12 @@ bool KMSendSMTP::start(void)
   mClient = new DwSmtpClient;
   assert(mClient != NULL);
 
-  smtpInCmd(nls->translate("connecting to server"));
+  smtpInCmd(i18n("connecting to server"));
   mClient->Open(mSender->smtpHost(), mSender->smtpPort()); // Open connection
   if(!mClient->IsOpen()) // Check if connection succeded
   {
     QString str(256);
-    str.sprintf(nls->translate("Cannot open SMTP connection to\n"
+    str.sprintf(i18n("Cannot open SMTP connection to\n"
 			       "host %s for sending:\n%s"), 
 		(const char*)mSender->smtpHost(),
 		(const char*)mClient->Response().c_str());
@@ -589,7 +589,7 @@ bool KMSendSMTP::finish(void)
   }
 
   if (mClient->Close() != 0)
-    warning(nls->translate("Cannot close SMTP connection."));
+    warning(i18n("Cannot close SMTP connection."));
 
   signal(SIGALRM, mOldHandler);
   delete mClient;
@@ -639,7 +639,7 @@ bool KMSendSMTP::smtpSend(KMMessage* msg)
   if(replyCode != 354) 
     return smtpFailed("DATA", replyCode);
 
-  smtpInCmd(nls->translate("transmitting message"));
+  smtpInCmd(i18n("transmitting message"));
   replyCode = mClient->SendData((const char*)msgStr);
   smtpDebug("<body>");
   if(replyCode != 250 && replyCode != 251)
@@ -693,9 +693,9 @@ bool KMSendSMTP::smtpFailed(const char* inCommand,
   const char* errorStr = mClient->Response().c_str();
 
   if (replyCode==0 && (!errorStr || !*errorStr))
-    errorStr = nls->translate("network error");
+    errorStr = i18n("network error");
 
-  str.sprintf(nls->translate("a SMTP error occured.\n"
+  str.sprintf(i18n("a SMTP error occured.\n"
 			     "Command: %s\n"
 			     "Response: %s\n" 
 			     "Return code: %d"),
@@ -710,7 +710,7 @@ bool KMSendSMTP::smtpFailed(const char* inCommand,
 void KMSendSMTP::smtpInCmd(const char* inCommand)
 {
   char str[80];
-  sprintf(str,nls->translate("Sending SMTP command: %s"), inCommand);
+  sprintf(str,i18n("Sending SMTP command: %s"), inCommand);
   statusMsg(str);
 }
 

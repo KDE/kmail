@@ -9,7 +9,7 @@
 #include <qregexp.h>
 #include <assert.h>
 #include <string.h>
-#include <klocale.h>
+#include <kapp.h>
 
 static const char* opConfigNames[] = 
   { "ignore", "and", "unless", "or", NULL };
@@ -170,7 +170,7 @@ void KMFilter::readConfig(KConfig* config)
     mAction[j] = sActionDict->create(actName);
     if (!mAction[j])
     {
-      warning(nls->translate("Unknown filter action `%s'\n"
+      warning(i18n("Unknown filter action `%s'\n"
 			     "in filter rule `%s'.\n"
 			     "Ignoring it."),
 	      (const char*)actName, (const char*)mName);

@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <kconfig.h>
 #include <kapp.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -184,13 +184,12 @@ bool KMAcctMgr::checkMail(void)
 {
   KMAccount* cur;
   bool hasNewMail = FALSE;
-  int num;
 
   if (mAcctList.isEmpty())
   {
-    warning(nls->translate("You need to add an account in the network\n"
-			   "section of the settings in order to\n"
-			   "receive mail."));
+    warning(i18n("You need to add an account in the network\n"
+		 "section of the settings in order to\n"
+		 "receive mail."));
     return FALSE;
   }
 

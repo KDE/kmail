@@ -22,11 +22,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <kmsgbox.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kstdaccel.h>
 #include <kmidentity.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <kdebug.h>
+#include <signal.h>
+#include <string.h>
+#include <unistd.h>
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
@@ -34,7 +38,6 @@ KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
 KMFilterMgr* filterMgr = NULL;
 KMSender* msgSender = NULL;
-KLocale* nls = NULL;
 KMFolder* inboxFolder = NULL;
 KMFolder* outboxFolder = NULL;
 KMFolder* queuedFolder = NULL;
@@ -44,6 +47,8 @@ KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 KMFilterActionDict* filterActionDict = NULL;
 KMAddrBook* addrBook = NULL;
+WindowList* windowList = NULL;
+
 
 bool shuttingDown = FALSE;
 const char* aboutText = 
@@ -58,30 +63,44 @@ const char* aboutText =
 
 static msg_handler oldMsgHandler = NULL;
 
+static void kmailMsgHandler(QtMsgType aType, const char* aMsg);
+static void signalHandler(int sigId);
+static void testDir(const char *_name);
+static void transferMail(void);
+static void initFolders(KConfig* cfg);
+static void init(int argc, char *argv[]);
+static void cleanup(void);
+static void setSignalHandler(void (*handler)(int));
+static void recoverDeadLetters(void);
+
 
 //-----------------------------------------------------------------------------
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
   QString appName = app->appName();
+  QString msg = aMsg;
+  msg.detach();
 
   switch (aType)
   {
   case QtDebugMsg:
-    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), aMsg);
+    kdebug(KDEBUG_INFO, 0, msg);
     break;
 
   case QtWarningMsg:
-    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), aMsg);
+    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), msg.data());
     if (strncmp(aMsg,"KCharset:",9) != 0 &&
 	strncmp(aMsg,"QGManager:",10) != 0)
-      KMsgBox::message(NULL, appName+" "+nls->translate("warning"), aMsg, 
+    {
+      KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(), 
 		       KMsgBox::EXCLAMATION);
+    }
     break;
 
   case QtFatalMsg:
-    fprintf(stderr, appName+" "+nls->translate("fatal error")+": %s\n", aMsg);
-    KMsgBox::message(NULL, appName+" "+nls->translate("fatal error"),
+    fprintf(stderr, appName+" "+i18n("fatal error")+": %s\n", msg.data());
+    KMsgBox::message(NULL, appName+" "+i18n("fatal error"),
 		     aMsg, KMsgBox::STOP);
     abort();
   }
@@ -89,16 +108,95 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void testDir( const char *_name )
+// Crash recovery signal handler
+static void signalHandler(int sigId)
+{
+  QWidget* win;
+
+  fprintf(stderr, "*** KMail got signal %d: %s\n", sigId,
+	  strsignal(sigId));
+
+  // try to cleanup all windows
+  while (windowList->first() != NULL)
+  {
+    win = windowList->take();
+    if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
+    delete win;
+  }
+
+  // If KMail crashes again below this line we consider the data lost :-|
+  // Otherwise KMail will end in an infinite loop.
+  setSignalHandler(SIG_DFL);
+  cleanup();
+  exit(1);
+}
+
+
+//-----------------------------------------------------------------------------
+static void setSignalHandler(void (*handler)(int))
+{
+  signal(SIGSEGV, handler);
+  signal(SIGKILL, handler);
+  signal(SIGTERM, handler);
+  signal(SIGHUP,  handler);
+  signal(SIGFPE,  handler);
+  signal(SIGABRT, handler);
+}
+
+
+//-----------------------------------------------------------------------------
+static void testDir(const char *_name)
 {
   DIR *dp;
   QString c = getenv("HOME");
   c += _name;
   dp = opendir(c.data());
-  if (dp == NULL)
-    ::mkdir(c.data(), S_IRWXU);
-  else
-    closedir(dp);
+  if (dp == NULL) ::mkdir(c.data(), S_IRWXU);
+  else closedir(dp);
+}
+
+
+//-----------------------------------------------------------------------------
+// Open a composer for each message found in ~/dead.letter
+static void recoverDeadLetters(void)
+{
+  KMComposeWin* win;
+  KMMessage* msg;
+  QDir dir = QDir::home();
+  QString fname = dir.path();
+  int i, rc, num;
+
+  if (!dir.exists("dead.letter")) return;
+  fname += "/dead.letter";
+  KMFolder folder(NULL, fname);
+
+  folder.setAutoCreateIndex(FALSE);
+  rc = folder.open();
+  if (rc)
+  {
+    perror("cannot open file "+fname);
+    return;
+  }
+
+  folder.quiet(TRUE);
+  folder.open();
+
+  num = folder.count();
+  debug("%ld messages in %s", num, fname);
+
+  for (i=0; i<num; i++)
+  {
+    debug("processing dead letter #%d", i);
+    msg = folder.take(0);
+    if (msg)
+    {
+      win = new KMComposeWin;
+      win->setMsg(msg);
+      win->show();
+    }
+  }
+  folder.close();
+  unlink(fname);
 }
 
 
@@ -113,8 +211,8 @@ static void transferMail(void)
   // know how to fix this problem with a simple symbolic link  =;-)
   if (!dir.cd("KMail")) return;
 
-  rc = KMsgBox::yesNo(NULL, app->appName()+" "+nls->translate("warning"),
-		      nls->translate(
+  rc = KMsgBox::yesNo(NULL, app->appName()+" "+i18n("warning"),
+		      i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
 	    "directory ~/Mail for it's messages.\n"
 	    "KMail can move the contents of the directory ~/KMail into\n"
@@ -169,7 +267,7 @@ static void init(int argc, char *argv[])
   KConfig* cfg;
 
   app = new KApplication(argc, argv, "kmail");
-  nls = app->getLocale();
+  windowList = new WindowList;
 
   kbp = new KBusyPtr;
   cfg = app->getConfig();
@@ -211,6 +309,8 @@ static void init(int argc, char *argv[])
   KMMessage::readConfig();
 
   msgSender = new KMSender;
+
+  setSignalHandler(signalHandler);
 }
 
 
@@ -265,7 +365,8 @@ main(int argc, char *argv[])
     win = new KMComposeWin(msg);
     win->show();
   }
-    
+
+  recoverDeadLetters();
   app->exec();
 
   mainWin->writeConfig(FALSE);

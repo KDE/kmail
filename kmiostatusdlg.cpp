@@ -6,7 +6,7 @@
 
 #include <qlabel.h>
 #include <qpushbt.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kapp.h>
 
 //-----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ KMIOStatusDlg::KMIOStatusDlg(const char* aCap):
   mLblStatus->setGeometry(10, y, w, h);
   y += y+2;
 
-  mBtnAbort = new QPushButton(klocale->translate("&Abort"), this);
+  mBtnAbort = new QPushButton(i18n("&Abort"), this);
   mBtnAbort->adjustSize();
   mBtnAbort->move(10, y);
   connect(mBtnAbort,SIGNAL(clicked()),this,SLOT(reject()));

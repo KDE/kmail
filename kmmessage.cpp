@@ -1153,8 +1153,8 @@ void KMMessage::readConfig(void)
   KConfig *config=kapp->getConfig();
     
   config->setGroup("KMMessage");
-  sReplyStr = config->readEntry("phrase-reply",nls->translate("On %D, you wrote:"));
-  sReplyAllStr = config->readEntry("phrase-reply-all",nls->translate("On %D, %F wrote:"));
-  sForwardStr = config->readEntry("phrase-forward",nls->translate("Forwarded Message"));
+  sReplyStr = config->readEntry("phrase-reply",i18n("On %D, you wrote:"));
+  sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
+  sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
   sIndentPrefixStr = config->readEntry("indent-prefix",">");
 }

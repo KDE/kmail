@@ -10,7 +10,7 @@
 #include "kmfolderdir.h"
 #include "kmfoldermgr.h"
 
-#include <klocale.h>
+#include <kapp.h>
 #include <kmsgbox.h>
 #include <ktablistbox.h>
 #include <kbuttonbox.h>
@@ -61,9 +61,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   grid  = new QGridLayout(this, 3, 2, 4, 4);
   mFilter = NULL;
 
-  setCaption(nls->translate("Filter Rules"));
-  //setOKButton(nls->translate("Ok"));
-  //setCancelButton(nls->translate("Cancel"));
+  setCaption(i18n("Filter Rules"));
+  //setOKButton(i18n("Ok"));
+  //setCancelButton(i18n("Cancel"));
 
   mFilterList = new QListBox(this);
   mFilterList->setMinimumSize(100, 200);
@@ -140,27 +140,27 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   buttonBox = new KButtonBox(this, KButtonBox::HORIZONTAL, 0, 2);
   grid->addMultiCellWidget(buttonBox, 2, 2, 0, 1);
 
-  mBtnUp = buttonBox->addButton(nls->translate("Up"));
+  mBtnUp = buttonBox->addButton(i18n("Up"));
   connect(mBtnUp,SIGNAL(clicked()),SLOT(slotBtnUp()));
 
-  mBtnDown  = buttonBox->addButton(nls->translate("Down"));
+  mBtnDown  = buttonBox->addButton(i18n("Down"));
   connect(mBtnDown,SIGNAL(clicked()),SLOT(slotBtnDown()));
 
-  mBtnNew = buttonBox->addButton(nls->translate("New"));
+  mBtnNew = buttonBox->addButton(i18n("New"));
   connect(mBtnNew,SIGNAL(clicked()),SLOT(slotBtnNew()));
 
-  mBtnDelete = buttonBox->addButton(nls->translate("Delete"));
+  mBtnDelete = buttonBox->addButton(i18n("Delete"));
   connect(mBtnDelete,SIGNAL(clicked()),SLOT(slotBtnDelete()));
 
   buttonBox->addStretch();
-  mBtnOk = buttonBox->addButton(nls->translate("Ok"));
+  mBtnOk = buttonBox->addButton(i18n("Ok"));
   connect(mBtnOk,SIGNAL(clicked()),SLOT(slotBtnOk()));
 
-  mBtnCancel = buttonBox->addButton(nls->translate("Cancel"));
+  mBtnCancel = buttonBox->addButton(i18n("Cancel"));
   connect(mBtnCancel,SIGNAL(clicked()),SLOT(slotBtnCancel()));
 
   buttonBox->addStretch();
-  btnHelp = buttonBox->addButton(nls->translate("Help"));
+  btnHelp = buttonBox->addButton(i18n("Help"));
   connect(btnHelp,SIGNAL(clicked()),SLOT(slotBtnHelp()));
 
   buttonBox->layout();
@@ -370,7 +370,7 @@ void KMFilterDlg::slotBtnNew()
 {
   int idx;
   KMFilter* filter = new KMFilter;
-  filter->setName(nls->translate("Unnamed"));
+  filter->setName(i18n("Unnamed"));
 
   idx = mFilterList->currentItem();
 
@@ -428,7 +428,7 @@ void KMFilterDlg::initLists(void)
   //---------- initialize list of filter actions
   if (sFilterActionList.count() <= 0)
   {
-    sFilterActionList.append(nls->translate("<nothing>"));
+    sFilterActionList.append(i18n("<nothing>"));
     for (name=filterActionDict->first(); !name.isEmpty(); 
 	 name=filterActionDict->next())
     {
@@ -439,28 +439,28 @@ void KMFilterDlg::initLists(void)
   //---------- initialize list of filter functions
   if (sFilterOpList.count() <= 0)
   {
-    sFilterOpList.append(nls->translate("ignore"));
-    sFilterOpList.append(nls->translate("and"));
-    sFilterOpList.append(nls->translate("unless"));
-    sFilterOpList.append(nls->translate("or"));
+    sFilterOpList.append(i18n("ignore"));
+    sFilterOpList.append(i18n("and"));
+    sFilterOpList.append(i18n("unless"));
+    sFilterOpList.append(i18n("or"));
   }
 
   //---------- initialize list of filter operators
   if (sFilterFuncList.count() <= 0)
   {
-    sFilterFuncList.append(nls->translate("equals"));
-    sFilterFuncList.append(nls->translate("not equal"));
-    sFilterFuncList.append(nls->translate("contains"));
-    sFilterFuncList.append(nls->translate("doesn't contain"));
-    sFilterFuncList.append(nls->translate("regular expression"));
+    sFilterFuncList.append(i18n("equals"));
+    sFilterFuncList.append(i18n("not equal"));
+    sFilterFuncList.append(i18n("contains"));
+    sFilterFuncList.append(i18n("doesn't contain"));
+    sFilterFuncList.append(i18n("regular expression"));
   }
 
   //---------- initialize list of filter operators
   if (sFilterFieldList.count() <= 0)
   {
-    sFilterFieldList.append(nls->translate("<message>"));
-    sFilterFieldList.append(nls->translate("<body>"));
-    sFilterFieldList.append(nls->translate("<any header>"));
+    sFilterFieldList.append(i18n("<message>"));
+    sFilterFieldList.append(i18n("<body>"));
+    sFilterFieldList.append(i18n("<any header>"));
     sFilterFieldList.append("Subject");
     sFilterFieldList.append("From");
     sFilterFieldList.append("To");

@@ -21,10 +21,8 @@
 #include <qlined.h>
 
 #include <kapp.h>
-#include <klocale.h>
+#include <kapp.h>
 #include <kiconloader.h>
-
-#define translate(X) klocale->translate(X) 
 
 
 static void
@@ -109,7 +107,7 @@ Kpgp::setMessage(const QString mess)
   {
     if(flagNoPGP)
     {
-      errMsg = translate("Couldn't find PGP executable.\n"
+      errMsg = i18n("Couldn't find PGP executable.\n"
 			 "Please check your PATH is set correctly.");
       return FALSE;
     }
@@ -154,7 +152,7 @@ Kpgp::prepare(bool needPassPhrase)
 {
   if(flagNoPGP)
   {
-    errMsg = translate("Could not find PGP executable.\n"
+    errMsg = i18n("Could not find PGP executable.\n"
 		       "Please check your PATH is set correctly.");
     return FALSE;
   }
@@ -164,7 +162,7 @@ Kpgp::prepare(bool needPassPhrase)
       setPassPhrase(askForPass());
     if(!havePassPhrase)
     {
-      errMsg = translate("The pass phrase is missing.");
+      errMsg = i18n("The pass phrase is missing.");
       return FALSE;
     }
   }
@@ -348,7 +346,7 @@ Kpgp::changePassPhrase(const QString /*oldPass*/,
 		       const QString /*newPass*/)
 {
   //FIXME...
-  warning(translate("Sorry, but this feature\nis still missing"));
+  warning(i18n("Sorry, but this feature\nis still missing"));
   return FALSE;
 }
 
@@ -436,11 +434,11 @@ Kpgp::decode(const QString text, bool returnHTML)
     if(returnHTML) deciphered += "<B>";
     else deciphered += "----- ";
     if(pgp->goodSignature()){
-      deciphered += translate("Message signed by");
+      deciphered += i18n("Message signed by");
     } else {
-      deciphered += translate("Warning"); 
+      deciphered += i18n("Warning"); 
       deciphered += ":";
-      deciphered += translate("Message has a bad signature from");
+      deciphered += i18n("Message has a bad signature from");
     }
     deciphered += " " + pgp->signedBy();
     if(returnHTML) deciphered += "</B><BR>";
@@ -448,7 +446,7 @@ Kpgp::decode(const QString text, bool returnHTML)
     deciphered += pgp->message();
     if(returnHTML) deciphered += "<B><BR>";
     else deciphered += "\n\n----- ";
-    deciphered += translate("End PGP signed message"); 
+    deciphered += i18n("End PGP signed message"); 
     if(returnHTML) deciphered += "</B><BR>";
     else deciphered += " -----\n";
   }
@@ -642,7 +640,7 @@ bool Kpgp::parseInfo(int action)
       //	       debug("Kpgp: isEncrypted");
       if(action == DECRYPT) 
       {
-	errMsg = translate("Bad pass Phrase; couldn't decrypt");
+	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
 	debug("Kpgp: passphrase is bad");
 	havePassPhrase = FALSE;
 	returnFlag = FALSE;
@@ -731,7 +729,7 @@ bool Kpgp::parseInfo(int action)
     }
     if( info.find("Bad pass phrase") != -1)
     {
-      errMsg = translate("Bad pass Phrase; couldn't sign");
+      errMsg = i18n("Bad pass Phrase; couldn't sign");
       returnFlag = FALSE;
       havePassPhrase = FALSE;
     }
@@ -788,7 +786,7 @@ KpgpPass::KpgpPass(QWidget *parent, const char *name)
   if(cursor != 0)
     kapp->setOverrideCursor(QCursor(ibeamCursor));
   this->setCursor(QCursor(ibeamCursor));
-  QLabel *text = new QLabel(translate("Please enter your\nPGP passphrase"),this);
+  QLabel *text = new QLabel(i18n("Please enter your\nPGP passphrase"),this);
   text->move(56,4);
   text->setAutoResize(TRUE);
   QLabel *icon = new QLabel(this);
@@ -815,7 +813,7 @@ KpgpPass::~KpgpPass()
 QString 
 KpgpPass::getPassphrase(QWidget *parent)
 {
-  KpgpPass kpgppass(parent, translate("PGP Security Check"));
+  KpgpPass kpgppass(parent, i18n("PGP Security Check"));
   kpgppass.exec();
   return kpgppass.getPhrase().copy();
 }

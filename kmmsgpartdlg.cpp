@@ -8,14 +8,14 @@
 #endif
 
 #ifdef KRN
-#include <klocale.h>
+#include <kapp.h>
 #include "kbusyptr.h"
 extern KLocale *nls;
 extern KBusyPtr *kbp;
 #endif
 
 #include "kbusyptr.h"
-#include <klocale.h>
+#include <kapp.h>
 #include <qcombo.h>
 #include <qpushbt.h>
 #include <qlabel.h>
@@ -38,7 +38,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
 
   resize(320, 190);
   if (aCaption) setCaption(aCaption);
-  else setCaption(nls->translate("Message Part Properties"));
+  else setCaption(i18n("Message Part Properties"));
 
   mLblIcon = new QLabel(this);
   mLblIcon->resize(32, 32);
@@ -59,7 +59,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   grid->addMultiCellWidget(mLblSize, 1, 1, 1, 3);
 
   //-----
-  label = new QLabel(nls->translate("Name:"), this);
+  label = new QLabel(i18n("Name:"), this);
   label->adjustSize();
   label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 2, 0);
@@ -70,7 +70,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   grid->addMultiCellWidget(mEdtName, 2, 2, 1, 3);
 
   //-----
-  label = new QLabel(nls->translate("Description:"), this);
+  label = new QLabel(i18n("Description:"), this);
   label->adjustSize();
   label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 3, 0);
@@ -80,15 +80,15 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   mEdtComment->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mEdtComment, 3, 3, 1, 3);
 
-  label = new QLabel(nls->translate("Encoding:"), this);
+  label = new QLabel(i18n("Encoding:"), this);
   label->adjustSize();
   label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 4, 0);
 
   mCbxEncoding = new QComboBox(this);
-  mCbxEncoding->insertItem(nls->translate("none (8bit)"));
-  mCbxEncoding->insertItem(nls->translate("base 64"));
-  mCbxEncoding->insertItem(nls->translate("quoted printable"));
+  mCbxEncoding->insertItem(i18n("none (8bit)"));
+  mCbxEncoding->insertItem(i18n("base 64"));
+  mCbxEncoding->insertItem(i18n("quoted printable"));
   mCbxEncoding->setMinimumSize(100, h);
   mCbxEncoding->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mCbxEncoding, 4, 4, 1, 2);
@@ -102,13 +102,13 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
 	
 
   //-----
-  btnOk = new QPushButton(nls->translate("Ok"), this);
+  btnOk = new QPushButton(i18n("Ok"), this);
   btnOk->adjustSize();
   btnOk->setMinimumSize(btnOk->sizeHint());
   connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
   grid->addMultiCellWidget(btnOk, 5, 5, 0, 1);
 
-  btnCancel = new QPushButton(nls->translate("Cancel"), this);
+  btnCancel = new QPushButton(i18n("Cancel"), this);
   btnCancel->adjustSize();
   btnCancel->setMinimumSize(btnCancel->sizeHint());
   connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));

@@ -228,7 +228,7 @@ void KMReaderWin::parseMsg(void)
 
       if (!asIcon)
       {
-	if (stricmp(type, "text")==0 || stricmp(type, "message")==0)
+	if (i<=0 || stricmp(type, "text")==0 || stricmp(type, "message")==0)
 	{
 	  str = msgPart.bodyDecoded();
 	  if (i>0) mViewer->write("<BR><HR><BR>");
@@ -270,13 +270,13 @@ void KMReaderWin::writeMsgHeader(void)
   case HdrStandard:
     mViewer->write("<FONT SIZE=+1><B>" +
 		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
-    mViewer->write(nls->translate("From: ") +
+    mViewer->write(i18n("From: ") +
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
-    mViewer->write(nls->translate("To: ") +
+    mViewer->write(i18n("To: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
-        mViewer->write(nls->translate("References: ") +
+        mViewer->write(i18n("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
 #endif
     mViewer->write("<BR>");
@@ -286,18 +286,18 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + mPicsDir +
 		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+1>");
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT><BR>");
-    mViewer->write(nls->translate("From: ")+
+    mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
-    mViewer->write(nls->translate("To: ") +
+    mViewer->write(i18n("To: ") +
 		   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
     if (!mMsg->cc().isEmpty())
-      mViewer->write(nls->translate("Cc: ")+
+      mViewer->write(i18n("Cc: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
-    mViewer->write(nls->translate("Date: ") +
+    mViewer->write(i18n("Date: ") +
 		   strToHtml(mMsg->dateStr()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
-        mViewer->write(nls->translate("References: ") +
+        mViewer->write(i18n("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
 #endif
     mViewer->write("</B></TD></TR></TABLE><BR>");
@@ -306,26 +306,26 @@ void KMReaderWin::writeMsgHeader(void)
   case HdrLong:
     mViewer->write("<FONT SIZE=+1><B>" +
 		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
-    mViewer->write(nls->translate("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
-    mViewer->write(nls->translate("From: ") +
+    mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
+    mViewer->write(i18n("From: ") +
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
-    mViewer->write(nls->translate("To: ") +
+    mViewer->write(i18n("To: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
     if (!mMsg->cc().isEmpty())
-      mViewer->write(nls->translate("Cc: ")+
+      mViewer->write(i18n("Cc: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
     if (!mMsg->bcc().isEmpty())
-      mViewer->write(nls->translate("Bcc: ")+
+      mViewer->write(i18n("Bcc: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->bcc()) + "<BR>");
     if (!mMsg->replyTo().isEmpty())
-      mViewer->write(nls->translate("Reply to: ")+
+      mViewer->write(i18n("Reply to: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->replyTo()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
-        mViewer->write(nls->translate("References: ") +
+        mViewer->write(i18n("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
     if (!mMsg->groups().isEmpty())
-        mViewer->write(nls->translate("Groups: ")+mMsg->groups()+"<BR>");
+        mViewer->write(i18n("Groups: ")+mMsg->groups()+"<BR>");
 #endif
     mViewer->write("<BR>");
     break;
@@ -360,13 +360,13 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       if(pgp->decrypt())
       {
 	line.sprintf("<B>%s</B><BR>",
-		     (const char*)nls->translate("Encrypted message"));
+		     (const char*)i18n("Encrypted message"));
 	mViewer->write(line);
       }
       else
       {
 	line.sprintf("<B>%s</B><BR>%s<BR><BR>",
-		     (const char*)nls->translate("Cannot decrypt message:"),
+		     (const char*)i18n("Cannot decrypt message:"),
 		     (const char*)pgp->lastErrorMsg());
 	mViewer->write(line);
       }
@@ -384,8 +384,8 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   // check for PGP encryption/signing
   if (pgp->isSigned())
   {
-    if (pgp->goodSignature()) sig = nls->translate("Message was signed by");
-    else sig = nls->translate("Warning: Bad signature from");
+    if (pgp->goodSignature()) sig = i18n("Message was signed by");
+    else sig = i18n("Warning: Bad signature from");
     
     line.sprintf("<B>%s %s</B><BR>", sig.data(), 
 		 pgp->signedBy().data());
@@ -574,7 +574,7 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   else
   {
     mMsg->bodyPart(id-1, &msgPart);
-    emit statusMsg(nls->translate("Attachment: ") + msgPart.name());
+    emit statusMsg(i18n("Attachment: ") + msgPart.name());
   }
 }
 
@@ -609,11 +609,11 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
     // Attachment popup
     mAtmCurrent = id-1;
     menu = new QPopupMenu();
-    menu->insertItem(nls->translate("Open..."), this, SLOT(slotAtmOpen()));
-    menu->insertItem(nls->translate("View..."), this, SLOT(slotAtmView()));
-    menu->insertItem(nls->translate("Save as..."), this, SLOT(slotAtmSave()));
-    //menu->insertItem(nls->translate("Print..."), this, SLOT(slotAtmPrint()));
-    menu->insertItem(nls->translate("Properties..."), this,
+    menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
+    menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
+    menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
+    //menu->insertItem(i18n("Print..."), this, SLOT(slotAtmPrint()));
+    menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));
     menu->popup(aPos,0);
   }
@@ -635,7 +635,7 @@ void KMReaderWin::slotAtmView()
   kbp->busy();
   str = msgPart.bodyDecoded();
 
-  edt->setCaption(nls->translate("View Attachment: ") + pname);
+  edt->setCaption(i18n("View Attachment: ") + pname);
   edt->insertLine(str);
   edt->setReadOnly(TRUE);
   edt->show();
@@ -659,7 +659,7 @@ void KMReaderWin::slotAtmOpen()
   tmpName = tempnam(NULL, NULL);
   if (!tmpName)
   {
-    warning(nls->translate("Could not create temporary file"));
+    warning(i18n("Could not create temporary file"));
     return;
   }
   fileName = tmpName;
@@ -679,7 +679,7 @@ void KMReaderWin::slotAtmOpen()
   kbp->busy();
   str = msgPart.bodyDecoded();
   if (!kStringToFile(str, fileName, TRUE))
-    warning(nls->translate("Could not save temporary file %s"),
+    warning(i18n("Could not save temporary file %s"),
 	    (const char*)fileName);
   kbp->idle();
   cmd = "kfmclient openURL \'";
@@ -705,7 +705,7 @@ void KMReaderWin::slotAtmSave()
   kbp->busy();
   str = msgPart.bodyDecoded();
   if (!kStringToFile(str, fileName, TRUE))
-    warning(nls->translate("Could not save file"));
+    warning(i18n("Could not save file"));
   kbp->idle();
 }
 

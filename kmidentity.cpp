@@ -5,7 +5,7 @@
 
 #include <kapp.h>
 #include <kconfig.h>
-#include <klocale.h>
+#include <kapp.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -159,7 +159,7 @@ const QString KMIdentity::signature(void) const
 
     if (errno)
     {
-      warning(klocale->translate("Failed to execute signature script\n%s\n%s"),
+      warning(i18n("Failed to execute signature script\n%s\n%s"),
 	      sigcmd.data(), strerror(errno));
       return 0;
     }

@@ -6,7 +6,7 @@
 #include "kmacctfolder.h"
 #include "kmglobal.h"
 
-#include <klocale.h>
+#include <kapp.h>
 #include <kconfig.h>
 
 #include <stdlib.h>
@@ -84,7 +84,7 @@ bool KMAcctLocal::processNewMail(void)
 
   rc = mailFolder.expunge();
   if (rc)
-    warning(nls->translate("Cannot remove mail from\nmailbox `%s':\n%s"),
+    warning(i18n("Cannot remove mail from\nmailbox `%s':\n%s"),
 	    (const char*)mailFolder.location(), strerror(rc));
 
   mailFolder.close();

@@ -8,7 +8,7 @@
 #include "kmmessage.h"
 #include "kmfolderdir.h"
 
-#include <klocale.h>
+#include <kapp.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 
@@ -16,15 +16,20 @@
 #include <errno.h>
 #include <assert.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#if HAVE_FCNTL_H && !HAVE_FLOCK
+#include <fcntl.h>
+#endif
+
+#include <stdlib.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/file.h>
 
 #define MAX_LINE 4096
 #define INIT_MSGS 8
@@ -131,7 +136,7 @@ int KMFolder::open(void)
     if (isIndexOutdated()) // test if contents file has changed
     {
       mIndexStream = NULL;
-      warning(nls->translate("Contents of folder `%s' changed.\n"
+      warning(i18n("Contents of folder `%s' changed.\n"
 			     "Recreating the index file."), 
 	      (const char*)name());
     }
@@ -222,23 +227,37 @@ int KMFolder::lock(void)
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
+#if HAVE_FLOCK
+  rc = flock(fileno(mStream), LOCK_NB|LOCK_EX);
+#else
   rc = fcntl(fileno(mStream), F_SETLK, F_WRLCK);
-  if (rc)
+#endif
+
+  if (rc < 0)
   {
-    debug("Cannot lock folder `%s': %s", (const char*)location(),
-	  strerror(errno));
+    debug("Cannot lock folder `%s': %s (%d)", (const char*)location(),
+	  strerror(errno), errno);
     return errno;
   }
 
   if (mIndexStream >= 0)
   {
+#if HAVE_FLOCK
+    rc = flock(fileno(mIndexStream), LOCK_UN);
+#else
     rc = fcntl(fileno(mIndexStream), F_SETLK, F_WRLCK);
-    if (rc) 
+#endif
+
+    if (rc < 0) 
     {
       debug("Cannot lock index of folder `%s': %s", (const char*)location(),
 	    strerror(errno));
       rc = errno;
+#if HAVE_FLOCK
+      rc = flock(fileno(mIndexStream), LOCK_UN);
+#else
       rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
+#endif
       return rc;
     }
   }
@@ -258,15 +277,15 @@ int KMFolder::unlock(void)
   mFilesLocked = FALSE;
   debug("Unlocking folder `%s'.", (const char*)location());
 
+#if HAVE_FLOCK
+  if (mIndexStream) flock(fileno(mIndexStream), LOCK_UN);
+  rc = flock(fileno(mStream), LOCK_UN);
+#else
+  if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
   rc = fcntl(fileno(mStream), F_SETLK, F_UNLCK);
-  if (rc) return errno;
+#endif
 
-  if (mIndexStream >= 0)
-  {
-    rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
-    if (rc) return errno;
-  }
-  return 0;
+  return errno;
 }
 
 
@@ -318,7 +337,7 @@ int KMFolder::createIndexFromContents(void)
   {
     if ((num & 127) == 0)
     {
-      msgStr.sprintf(nls->translate("Creating index file: %d messages done"), 
+      msgStr.sprintf(i18n("Creating index file: %d messages done"), 
 		     num);
       emit statusMsg(msgStr);
     }

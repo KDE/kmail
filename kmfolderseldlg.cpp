@@ -6,7 +6,7 @@
 #include "kmglobal.h"
 #include "kmfolderdir.h"
 
-#include <klocale.h>
+#include <kapp.h>
 #include <qpushbt.h>
 #include <qlistbox.h>
 #include <qlayout.h>
@@ -29,7 +29,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   box->addWidget(mListBox, 100);
   connect(mListBox, SIGNAL(highlighted(int)), this, SLOT(slotSelect(int)));
 
-  btnCancel = new QPushButton(nls->translate("Cancel"), this, "Cancel");
+  btnCancel = new QPushButton(i18n("Cancel"), this, "Cancel");
   btnCancel->setMinimumSize(btnCancel->size());
   connect(btnCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
   box->addWidget(btnCancel, 1);
