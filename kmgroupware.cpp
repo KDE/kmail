@@ -85,7 +85,7 @@ using namespace KABC;
 
 //-----------------------------------------------------------------------------
 KMGroupware::KMGroupware( QObject* parent, const char* name )
-  : QObject( parent, name ), mUseGroupware( false )
+  : QObject( parent, name ), mUseGroupware( false ), mMainWidget( 0 )
 {
 }
 
@@ -334,8 +334,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
     replyStream >> rc;
     kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
 
-    if( rc )
-      mMainWidget->slotTrashMsg();
+    if( rc && mMainWidget ) mMainWidget->slotTrashMsg();
   } else
     kdDebug(5006) << "KOrganizer call failed";
 }
@@ -402,7 +401,7 @@ void KMGroupware::processVCalReply( const QCString& sender,
   }
 
   // An answer was saved, so trash the message
-  mMainWidget->slotTrashMsg();
+  if( mMainWidget ) mMainWidget->slotTrashMsg();
 }
 
 
