@@ -43,5 +43,5 @@ EXTRA_DIST = KMail.desktop
 KDE_ICON = kmail
 
 messages:
-	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot
+	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot $(kmail_SOURCES) && mv messages.po $(podir)/kmail.pot
 
