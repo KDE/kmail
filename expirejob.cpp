@@ -241,6 +241,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
                   "canceled." )
             .arg( mSrcFolder->label(), mMoveToFolder->label() );
     }
+  default: ;
   }
   KMBroadcastStatus::instance()->setStatusMsg( msg );
 
