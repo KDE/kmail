@@ -122,7 +122,7 @@ public:
       debug( QString("Null message %1").arg( mMsgId ) );
     }
     if (fromStr == i18n("Unknown")) {
-      debug( QString("Null messagex %1").arg( mMsgId ) );
+      debug( QString("Unknown message %1").arg( mMsgId ) );
     }
     setText( mPaintInfo->senderCol, fromStr.simplifyWhiteSpace() );
 
@@ -1429,8 +1429,8 @@ void KMHeaders::updateMessageList(void)
 	msgId = "";
       }
       if (mTree[msgId])
-	// pathological case, duplicate ids
-	; //debug( "duplicate msgIds detected: Id " + msgId );
+	; // pathological case, duplicate ids
+	//debug( "duplicate msgIds detected: Id " + msgId );
       else
 	mTree.replace( msgId, new QValueList< int > );
       mTree[msgId]->append( i ); // head of list is parent, rest children
@@ -1473,7 +1473,7 @@ void KMHeaders::updateMessageList(void)
       if (msgId.isNull())
 	msgId = "";
       assert(mTreeToplevel[msgId]);
-      if (*mTreeToplevel[msgId]) {
+      if (*mTreeToplevel[msgId] && !mItems[i]) {
 	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
 	mItems[i] = hi;
 	recursivelyAddChildren( i, hi );

@@ -545,6 +545,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 			 SLOT(slotRemoveFolder()));
   }
   folderMenu->exec (p, 0);
+  triggerUpdate();
   delete folderMenu;
 }
 
