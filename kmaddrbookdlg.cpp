@@ -163,7 +163,8 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 
   // Change of behaviour between QT 2.1b1 and QT2.1b2
   //  changeItem below changes the currentItem!
-  if (oldIndex>=0) {
+
+  if ((oldIndex>=0) && (mEdtAddress->text() != mListBox->text(oldIndex))) {
     if (kernel->useKAB())
       KabBridge::replace( mEdtAddress->text(), *(mKeys->at(oldIndex)) );
     mListBox->changeItem(mEdtAddress->text(), oldIndex);
