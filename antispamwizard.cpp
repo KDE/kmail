@@ -99,9 +99,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   mProgramsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
   addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
   mRulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
-  addPage( mRulesPage, i18n( "Please select the filters to be created inside KMail." ));
   mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
-  addPage( mVirusRulesPage, i18n( "Please select the filters to be created inside KMail." ));
 
   connect( mProgramsPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkProgramsSelections( void ) ) );
@@ -115,8 +113,6 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 
   setNextEnabled( mInfoPage, false );
   setNextEnabled( mProgramsPage, false );
-  setNextEnabled( mRulesPage, false );
-  setNextEnabled( mVirusRulesPage, false );
 
   QTimer::singleShot( 500, this, SLOT( checkToolAvailability( void ) ) );
 }
@@ -183,7 +179,7 @@ void AntiSpamWizard::accept()
     {
       if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ))
       {
-        if ((*it).getType() == (QString) "av")
+        if ( (*it).isVirusTool() )
         {
             const QCString header = (*it).getDetectionHeader().ascii();
             const QString & pattern = (*it).getDetectionPattern();
@@ -261,7 +257,7 @@ void AntiSpamWizard::accept()
     {
       if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
       {
-          if ((*it).getType() == (QString) "spam")
+          if ( (*it).isSpamTool() )
           {
             const QCString header = (*it).getDetectionHeader().ascii();
             const QString & pattern = (*it).getDetectionPattern();
@@ -446,15 +442,39 @@ void AntiSpamWizard::checkProgramsSelections()
   bool status = false;
   bool canClassify = false;
   QValueListIterator<SpamToolConfig> it = mToolList.begin();
+  mSpamToolsUsed = false;
+  mVirusToolsUsed = false;
   while ( it != mToolList.end() )
   {
     if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
+    {
       status = true;
+      if ( (*it).isSpamTool() )
+        mSpamToolsUsed = true;
+      if ( (*it).isVirusTool() )
+        mVirusToolsUsed = true;
+    }
     if ( (*it).useBayesFilter() )
       canClassify = true;
     it++;
   }
+
   mRulesPage->allowClassification( canClassify );
+  
+  removePage( mRulesPage );
+  removePage( mVirusRulesPage );
+  if ( mSpamToolsUsed == true )
+  {
+    addPage( mRulesPage, i18n( "Please select the filters to be created inside KMail." ));
+    setNextEnabled( mRulesPage, false );
+    setFinishEnabled( mRulesPage, false );
+  }
+  if ( mVirusToolsUsed == true )
+  {
+    addPage( mVirusRulesPage, i18n( "Please select the filters to be created inside KMail." ));
+    setFinishEnabled( mVirusRulesPage, false );
+  }
+
   setNextEnabled( mProgramsPage, status );
 }
 
@@ -464,9 +484,17 @@ void AntiSpamWizard::checkRulesSelections()
   if ( mRulesPage->moveRulesSelected() || mRulesPage->pipeRulesSelected()
       || mRulesPage->classifyRulesSelected() )
   {
-    setNextEnabled( mRulesPage, true );
-  } else {
-    setNextEnabled( mRulesPage, false );
+    if ( mVirusToolsUsed )
+      setNextEnabled( mRulesPage, true );
+    else
+      setFinishEnabled( mRulesPage, true );
+  }
+  else
+  {
+    if ( mVirusToolsUsed )
+      setNextEnabled( mRulesPage, false );
+    else
+      setFinishEnabled( mRulesPage, false );
   }
 }
 

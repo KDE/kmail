@@ -226,6 +226,11 @@ namespace KMail {
 
       /* The action collection where the filter menu action is searched in */
       KActionCollection * mActionCollection;
+      
+      /* Are any spam tools selected? */
+      bool mSpamToolsUsed;
+      /* Are any virus tools selected? */
+      bool mVirusToolsUsed;
   };
 
 
