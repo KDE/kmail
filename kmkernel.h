@@ -17,6 +17,7 @@
 namespace KIO {
   class Job;
 }
+class QLabel;
 class KMFolder;
 class KBusyPtr;
 class KBusyPtr;
@@ -31,7 +32,8 @@ class KMKernel;
 class KMMsgDict;
 class IdentityManager;
 class KProcess;
-class KProgressDialog;
+class KProgress;
+class KPassivePopup;
 class ConfigureDialog;
 class KMMainWin;
 
@@ -240,7 +242,9 @@ private:
   bool the_firstInstance;
   static KMKernel *mySelf;
   QTextCodec *netCodec;
-  KProgressDialog *mProgress;
+  KProgress *mProgress;
+  KPassivePopup *mCleanupPopup;
+  QLabel *mCleanupLabel;
   ConfigureDialog *mConfigureDialog;
 
   CryptPlugWrapperList mCryptPlugList;

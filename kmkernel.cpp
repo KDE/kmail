@@ -9,6 +9,9 @@
 
 #include <dcopclient.h>
 
+#include <qvbox.h>
+
+#include <kaboutdata.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
@@ -18,6 +21,7 @@
 #include <kio/job.h>
 #include <kprocess.h>
 #include <kprogress.h>
+#include <kpassivepopup.h>
 
 #include "kmreaderwin.h"
 #include "kmmainwin.h"
@@ -735,24 +739,29 @@ void KMKernel::cleanup(void)
 
 void KMKernel::cleanupProgress()
 {
-  int value = mProgress->progressBar()->progress()+1;
-  mProgress->progressBar()->setProgress(value);
+  mProgress->advance( 1 );
 }
 
 void KMKernel::cleanupLoop()
 {
   mProgress = 0;
+  mCleanupLabel = 0;
+  mCleanupPopup = 0;
   int nrFolders = the_folderMgr->folderCount();
   if (closed_by_user)
   {
-    mProgress = new KProgressDialog(0, "kmail-cleanupProgressDlg", i18n("Cleaning Up"), i18n("Cleaning up..."), true);
-    mProgress->setAutoClose(false);
-    mProgress->setAllowCancel(false);
-    mProgress->setInitialSize(QSize(350,130), true);
-    mProgress->progressBar()->setTotalSteps(nrFolders*2+2);
-    mProgress->show();
-    mProgress->progressBar()->setProgress(1);
-    QApplication::flushX();
+    mCleanupPopup = new KPassivePopup();
+    QVBox *box = mCleanupPopup->standardView( kapp->aboutData()->programName(),
+                                              QString::null, kapp->miniIcon());
+    mCleanupLabel = new QLabel( i18n("Cleaning up"), box );
+    mProgress = new KProgress( box, "kmail-cleanupProgress" );
+    mCleanupPopup->setView( box );
+    
+    mProgress->setTotalSteps(nrFolders*2+2);
+    mProgress->setProgress(1);
+    QApplication::syncX();
+    mCleanupPopup->adjustSize();
+    mCleanupPopup->show();
     kapp->processEvents();
     connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
   }
@@ -783,10 +792,10 @@ void KMKernel::cleanupLoop()
 
     if (config->readBoolEntry("empty-trash-on-exit", true))
     {
-      if (mProgress)
+      if (mCleanupLabel)
       {
-        mProgress->setLabel(i18n("Emptying trash..."));
-        QApplication::flushX();
+        mCleanupLabel->setText(i18n("Emptying trash..."));
+        QApplication::syncX();
         kapp->processEvents();
       }
       the_trashFolder->expunge();
@@ -794,35 +803,35 @@ void KMKernel::cleanupLoop()
   }
 
   if (mProgress)
-    mProgress->progressBar()->setProgress(2);
+    mProgress->setProgress(2);
 
   if (expire) {
-    if (mProgress)
+    if (mCleanupLabel)
     {
-       mProgress->setLabel(i18n("Expiring old messages..."));
-       QApplication::flushX();
+       mCleanupLabel->setText(i18n("Expiring old messages..."));
+       QApplication::syncX();
        kapp->processEvents();
     }
     the_folderMgr->expireAllFolders(0);
   }
 
   if (mProgress)
-     mProgress->progressBar()->setProgress(2+nrFolders);
+     mProgress->setProgress(2+nrFolders);
 
   if (closed_by_user && the_folderMgr) {
     if (config->readBoolEntry("compact-all-on-exit", true))
     {
-      if (mProgress)
+      if (mCleanupLabel)
       {
-        mProgress->setLabel(i18n("Compacting folders..."));
-        QApplication::flushX();
+        mCleanupLabel->setText(i18n("Compacting folders..."));
+        QApplication::syncX();
         kapp->processEvents();
       }
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
     }
   }
   if (mProgress)
-     mProgress->progressBar()->setProgress(2+2*nrFolders);
+     mProgress->setProgress(2+2*nrFolders);
 
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
@@ -841,11 +850,13 @@ void KMKernel::cleanupLoop()
   //qInstallMsgHandler(oldMsgHandler);
   KMRecentAddresses::self()->save( KGlobal::config() );
   kapp->config()->sync();
-  if (mProgress)
+  if (mCleanupPopup)
   {
     sleep(1); // Give the user some time to realize what's going on
-    delete mProgress;
-    mProgress = 0;
+    delete mCleanupPopup;
+    mCleanupPopup = 0;
+    mCleanupLabel = 0; // auto-deleted child of mCleanupPopup
+    mProgress = 0;     // ditto
   }
   kapp->exit_loop();
 }
