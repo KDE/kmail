@@ -661,7 +661,6 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
         if (f)
         {
           f->close();
-          kmkernel->imapFolderMgr()->contentsChanged();
         } else {
           kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
         }
@@ -669,6 +668,12 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       if (f)
       {
         f->setAccount(mAccount);
+        if ( f->hasChildren() == FolderStorage::ChildrenUnknown ) 
+        {
+          // this is for new folders
+          kmkernel->imapFolderMgr()->contentsChanged();
+        }
+
         // update children state
         if ( subfolderAttributes[i].find( "haschildren", 0, false ) != -1 )
         {
