@@ -754,6 +754,13 @@ void KMMainWin::slotEmptyFolder()
        !=KMessageBox::Continue) return;
   }
 
+  if (mFolder->account())
+  {
+    slotMarkAll();
+    slotDeleteMsg();
+    return;
+  }
+
   mMsgView->clearCache();
 
   kernel->kbp()->busy();
