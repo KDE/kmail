@@ -141,15 +141,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
 KMFolderCachedImap::~KMFolderCachedImap()
 {
   if( !mFolderRemoved ) {
-    // Only write configuration when the folder haven't been deleted
-    // Why isn't this in writeConfig?
-    KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
-    configGroup.writeEntry( "ImapPath", mImapPath );
-    configGroup.writeEntry( "NoContent", mNoContent );
-    configGroup.writeEntry( "ReadOnly", mReadOnly );
-    configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
-    writeAnnotationConfig();
-
+    writeConfig();
     writeUidCache();
   }
 
@@ -193,6 +185,17 @@ void KMFolderCachedImap::readConfig()
     config->readBoolEntry( "StatusChangedLocally", false );
 
   mAnnotationFolderTypeChanged = config->readBoolEntry( "AnnotationFolderTypeChanged", false );
+}
+
+void KMFolderCachedImap::writeConfig()
+{
+  KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
+  configGroup.writeEntry( "ImapPath", mImapPath );
+  configGroup.writeEntry( "NoContent", mNoContent );
+  configGroup.writeEntry( "ReadOnly", mReadOnly );
+  configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
+  writeAnnotationConfig();
+  KMFolderMaildir::writeConfig();
 }
 
 void KMFolderCachedImap::writeAnnotationConfig()
@@ -899,6 +902,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // All done for this folder.
     mProgress = 100; // all done
     newState( mProgress, i18n("Synchronization done"));
+    kmkernel->iCalIface().folderSynced( folder() );
 
     if ( !mRecurse ) // "check mail for this folder" only
       mSubfoldersForSync.clear();
@@ -1636,6 +1640,8 @@ KMFolderCachedImap::slotMultiSetACLResult(KIO::Job *job)
     // Display error but don't abort the sync just for this
     // PENDING(dfaure) reconsider using handleJobError now that it offers continue/cancel
     job->showErrorDialog();
+  else
+    kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
 
   if (mAccount->slave()) mAccount->removeJob(job);
   serverSyncInternal();

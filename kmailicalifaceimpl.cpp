@@ -185,6 +185,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
   rc = true;
 
+  addFolderChange( f, Contents );
+
   mResourceQuiet = quiet;
   return rc;
 }
@@ -834,6 +836,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   }
 
   f->close();
+  addFolderChange( f, Contents );
 
   return rc;
 }
@@ -1184,6 +1187,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   assert(idx != -1);
   srcFolder->removeMsg(idx);
   delete msg;
+  addFolderChange( srcFolder, Contents );
 }
 
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
@@ -1265,16 +1269,38 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
 void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
 {
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
-  if ( it != mFolderInfoMap.end() )
+  if ( it != mFolderInfoMap.end() ) {
     (*it).mStorageFormat = format;
-  else {
-    FolderInfo info;
-    info.mStorageFormat = format;
+  } else {
+    FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
   }
   KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
   configGroup.writeEntry( folder->idString() + "-storageFormat",
                           format == StorageXML ? "xml" : "icalvcard" );
+}
+
+void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges changes )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() ) {
+    (*it).mChanges = static_cast<FolderChanges>( (*it).mChanges | changes );
+  } else { // Otherwise, well, it's a folder we don't care about.
+    kdDebug(5006) << "addFolderChange: nothing known about folder " << folder->location() << endl;
+  }
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  configGroup.writeEntry( folder->idString() + "-changes", (*it).mChanges );
+}
+
+void KMailICalIfaceImpl::folderSynced( KMFolder* folder )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() && (*it).mChanges ) {
+    // emit dcop signal
+    kdDebug(5006) << "emitting signalFolderSynced(" << folder->prettyURL() << " " << (*it).mChanges << endl;
+    signalFolderSynced( folder->location(), (*it).mChanges );
+    (*it).mChanges = NoChange;
+  }
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
