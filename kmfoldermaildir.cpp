@@ -57,7 +57,7 @@ KMFolderMaildir::~KMFolderMaildir()
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::canAccess()
 {
-  
+
   assert(name() != "");
 
   if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
@@ -68,13 +68,13 @@ int KMFolderMaildir::canAccess()
 
   if (access(QFile::encodeName(location() + "/cur"), R_OK | W_OK | X_OK) != 0)
     return 1;
-  
+
   if (access(QFile::encodeName(location() + "/tmp"), R_OK | W_OK | X_OK) != 0)
     return 1;
 
   return 0;
 }
-  
+
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::open()
 {
@@ -89,7 +89,7 @@ int KMFolderMaildir::open()
     bool busy = kernel->kbp()->isBusy();
     if (busy) kernel->kbp()->idle();
     KMessageBox::sorry(0, i18n("Error opening %1. Either this is not a valid "
-      "maildir folder or you don't have sufficiant access permissions.")
+      "maildir folder or you don't have sufficient access permissions.")
       .arg(name()));
     if (busy) kernel->kbp()->busy();
     return EPERM;
@@ -240,12 +240,12 @@ int KMFolderMaildir::expungeContents()
   QStringList::ConstIterator it(files.begin());
   for ( ; it != files.end(); ++it)
     QFile::remove(d.filePath(*it));
-  
+
   d.setPath(location() + "/cur");
   files = d.entryList();
   for (it = files.begin(); it != files.end(); ++it)
     QFile::remove(d.filePath(*it));
-  
+
   return 0;
 }
 
@@ -373,7 +373,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if (aMsg->status() == KMMsgStatusUnread || 
+  if (aMsg->status() == KMMsgStatusUnread ||
       aMsg->status() == KMMsgStatusNew ||
       this == kernel->outboxFolder())
   {
@@ -409,9 +409,9 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
-    
+
     error |= appendtoMsgDict(idx);
-    
+
     if (error) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
@@ -521,7 +521,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   {
     if (!f.readLine(line, MAX_LINE))
       atEof = true;
-  
+
     // are we done with this file?  if so, compile our info and store
     // it in a KMMsgInfo object
     if (atEof || !inHeader)
@@ -736,7 +736,7 @@ bool KMFolderMaildir::isIndexOutdated()
   if (!index_info.exists())
     return TRUE;
 
-  return ((new_info.lastModified() > index_info.lastModified()) || 
+  return ((new_info.lastModified() > index_info.lastModified()) ||
           (cur_info.lastModified() > index_info.lastModified()));
 }
 
@@ -800,7 +800,7 @@ int KMFolderMaildir::removeContents()
   QCString cmd;
   cmd.sprintf("rm -rf '%s'", QFile::encodeName(location()).data());
   system(cmd.data());
-  
+
   return 0;
 }
 
