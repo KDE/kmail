@@ -2259,7 +2259,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
 		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
 
-  mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
+  mModifyFolderAction = new KAction( i18n("&Properties..."), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"), 
@@ -2270,10 +2270,10 @@ void KMMainWidget::setupActions()
   mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
-  mExpireFolderAction = new KAction(i18n("&Expire"), 0, this, SLOT(slotExpireFolder()),
+  mExpireFolderAction = new KAction(i18n("&Expire Folder"), 0, this, SLOT(slotExpireFolder()),
 				   actionCollection(), "expire");
 
-  mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
+  mCompactFolderAction = new KAction( i18n("&Compact Folder"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
   mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload",
