@@ -589,7 +589,7 @@ void KMMainWidget::createWidgets(void)
     SLOT(slotAbortAll()), actionCollection(), "cancel" );
   accel->connectItem(accel->insertItem(Key_Escape),
                      ProgressManager::instance(), SLOT(slotAbortAll()));
-  
+
   new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
@@ -618,7 +618,7 @@ void KMMainWidget::createWidgets(void)
     SLOT(decCurrentMessage()), actionCollection(), "dec_current_message");
     accel->connectItem( accel->insertItem( ALT+Key_Left ),
                         mHeaders, SLOT( decCurrentMessage() ) );
- 
+
   new KAction(
     i18n("Select Message with Focus"), ALT+Key_Space, mHeaders,
     SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
@@ -1504,7 +1504,7 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  KMCommand *command = 
+  KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, mCodec );
   command->start();
@@ -2062,7 +2062,6 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
   win->showMsg( mCodec, newMessage );
-  win->resize( 550, 600 );
   win->show();
 }
 
@@ -2340,9 +2339,9 @@ void KMMainWidget::setupActions()
   mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload", 
+  mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload",
                                       KStdAccel::shortcut( KStdAccel::Reload ), this,
-                                      SLOT(slotRefreshFolder()), 
+                                      SLOT(slotRefreshFolder()),
                                       actionCollection(), "refresh_folder" );
 
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
@@ -3369,7 +3368,7 @@ void KMMainWidget::initializeFolderShortcutActions()
 {
 
   // If we are loaded as a part, this will be set to fals, since the part
-  // does xml loading. Temporarily set to true, in that case, so the 
+  // does xml loading. Temporarily set to true, in that case, so the
   // accels are added to the collection as expected.
   bool old = actionCollection()->isAutoConnectShortcuts();
 
@@ -3383,7 +3382,7 @@ void KMMainWidget::initializeFolderShortcutActions()
   }
   actionCollection()->setAutoConnectShortcuts( old );
 }
- 
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
@@ -3442,17 +3441,17 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
 {
   // remove the old one, autodelete
   mFolderShortcutCommands.remove( folder->idString() );
-  if ( folder->shortcut().isNull() ) 
+  if ( folder->shortcut().isNull() )
     return;
-  
+
   FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
   mFolderShortcutCommands.insert( folder->idString(), c );
 
   QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyURL() );
   QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
   QString normalizedName = actionname.replace(" ", "_");
-  KAction* action = 
-    new KAction(actionlabel, folder->shortcut(), c, SLOT(start()), 
+  KAction* action =
+    new KAction(actionlabel, folder->shortcut(), c, SLOT(start()),
                 actionCollection(), normalizedName.local8Bit());
   action->setIcon( folder->unreadIconPath() );
   c->setAction( action ); // will be deleted along with the command
