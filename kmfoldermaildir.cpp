@@ -508,7 +508,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // now move the file to the correct location
   QString new_loc(location() + "/cur/");
   new_loc += filename;
-  if (moveInternal(tmp_file, new_loc, filename, aMsg->status()) == QString::null)
+  if (moveInternal(tmp_file, new_loc, filename, aMsg->status()).isNull())
   {
     file.remove();
     if (opened) close();
