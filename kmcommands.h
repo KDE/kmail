@@ -771,6 +771,12 @@ public:
   KMIMChatCommand( const KURL &url, KMMessage *msg=0 );
 
 private:
+  /**
+   * Try to start a chat with the addressee associated the mail address in <i>url</i>.
+   * If there is no addressee for the email address, or more than one, a KMessageBox is shown to inform the user.
+   * If the addressee does not have instant messaging address(es), this is currently handled by the instant messaging client
+   * which handles the request, since we don't have a convenient API for extracting them using KABC.
+   */
   virtual Result execute();
 
   KURL mUrl;
