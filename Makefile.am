@@ -1,3 +1,4 @@
+KDE_CXXFLAGS = $(USE_RTTI) 
 
 SUBDIRS = pics
 INCLUDES = $(all_includes)
