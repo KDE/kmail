@@ -3458,6 +3458,17 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
   if( mUseGroupware && kernel->groupware().handleLink( aUrl, message() ) )
     return;
 
+  // handle own links
+  if( aUrl.protocol() == "kmail" )
+  {
+    if( aUrl.path() == "showHTML" )
+    {
+      setHtmlOverride(!mHtmlOverride);
+      update( true );
+      return;
+    }
+  }
+
   if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
   {
     if (!mViewer->gotoAnchor(aUrl.ref()))
@@ -4186,7 +4197,7 @@ void KMReaderWin::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotPrintMsg()
 {
-  KMCommand *command = new KMPrintCommand( mMainWindow, message() );
+  KMCommand *command = new KMPrintCommand( mMainWindow, message(), htmlOverride() );
   command->start();
 }
 

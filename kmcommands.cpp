@@ -1295,13 +1295,4 @@ void KMUrlClickedCommand::execute()
     }
     (void) new KRun( mUrl );
   }
-  // handle own links
-  else if( mUrl.protocol() == "kmail" )
-  {
-    if( mUrl.path() == "showHTML" )
-    {
-      mReaderWin->setHtmlOverride(!mHtmlPref);
-      mReaderWin->update( true );
-    }
-  }
 }
