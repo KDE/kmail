@@ -771,9 +771,16 @@ private:
   Kleo::CryptoConfigEntry* mDoNotCheckCertPolicyConfigEntry;
   Kleo::CryptoConfigEntry* mNeverConsultConfigEntry;
   Kleo::CryptoConfigEntry* mFetchMissingConfigEntry;
+  Kleo::CryptoConfigEntry* mIgnoreServiceURLEntry;
+  Kleo::CryptoConfigEntry* mIgnoreHTTPDPEntry;
+  Kleo::CryptoConfigEntry* mDisableHTTPEntry;
+  Kleo::CryptoConfigEntry* mIgnoreLDAPDPEntry;
+  Kleo::CryptoConfigEntry* mDisableLDAPEntry;
   // Other widgets
   Kleo::CryptoConfigEntry* mOCSPResponderURLConfigEntry;
   Kleo::CryptoConfigEntry* mOCSPResponderSignature;
+  Kleo::CryptoConfigEntry* mCustomHTTPProxy;
+  Kleo::CryptoConfigEntry* mCustomLDAPProxy;
 
   Kleo::CryptoConfig* mConfig;
 };

@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>571</width>
-            <height>402</height>
+            <width>666</width>
+            <height>623</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>SMimeConfiguration</string>
     </property>
     <vbox>
         <property name="name">
@@ -118,6 +121,14 @@
                         </spacer>
                     </hbox>
                 </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>ignoreServiceURLCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Ignore Service URL of certificates</string>
+                    </property>
+                </widget>
             </vbox>
         </widget>
         <widget class="QCheckBox">
@@ -153,6 +164,148 @@
                 <string>If this option is checked, missing issuer certificates are fetched when necessary (this applies to both validation methods, CRLs and OCSP)</string>
             </property>
         </widget>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>HTTPGroupBox</cstring>
+            </property>
+            <property name="title">
+                <string>HTTP Requests</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>ignoreHTTPDPCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Ignore HTTP CRL Distribution Point of certificates</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>When looking for the location of a CRL, the to be tested certificate usually contains so called "CRL Distribution Point" (DP) entries which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>disableHTTPCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Don't perform any HTTP requests</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Entirely disables the use of HTTP for S/MIME.</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel" row="0" column="1">
+                            <property name="name">
+                                <cstring>systemHTTPProxy</cstring>
+                            </property>
+                            <property name="text">
+                                <string>no proxy</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton" row="1" column="0">
+                            <property name="name">
+                                <cstring>useCustomHTTPProxyRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Use this proxy for HTTP requests: </string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton" row="0" column="0">
+                            <property name="name">
+                                <cstring>honorHTTPProxyRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Use system HTTP proxy:</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit" row="1" column="1">
+                            <property name="name">
+                                <cstring>customHTTPProxy</cstring>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>LDAPGroupBox</cstring>
+            </property>
+            <property name="title">
+                <string>LDAP Requests</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>ignoreLDAPDPCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Ignore LDAP CRL Distribution Point of certificates</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>When looking for the location of a CRL, the to be tested certificate usually contains so called "CRL Distribution Point" (DP) entries which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>disableLDAPCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Don't perform any LDAP requests</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Entirely disables the use of LDAP for S/MIME.</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>customLDAPLabel</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Proxy host for LDAP requests:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLineEdit">
+                            <property name="name">
+                                <cstring>customLDAPProxy</cstring>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been ommitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
+The syntax is "HOST" or "HOST:PORT". If PORT is ommitted, port 389 (standard LDAP port) is used.</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer23</cstring>
@@ -166,7 +319,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>90</height>
+                    <height>73</height>
                 </size>
             </property>
         </spacer>
@@ -202,6 +355,21 @@
         <receiver>OCSPGroupBox</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>useCustomHTTPProxyRB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>customHTTPProxy</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>honorHTTPProxyRB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>customHTTPProxy</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kleo::keyrequester.h</includehint>
+</includehints>
 </UI>
