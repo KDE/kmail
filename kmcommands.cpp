@@ -1263,7 +1263,7 @@ KMCommand::Result KMRedirectCommand::execute()
   KMMessage *newMsg = msg->createRedirect( dlg.to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( newMsg, FALSE ) ) {
+  if ( !kmkernel->msgSender()->send( newMsg, kmkernel->msgSender()->sendImmediate() ) ) {
     kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
     return Failed; // error: couldn't send
   }
