@@ -368,7 +368,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsg && (mMsgBufMD5 == mMsg->msgIdMD5()))
+  if (mMsg && !mMsg->msgIdMD5().isEmpty() && (mMsgBufMD5 == mMsg->msgIdMD5()))
     return;
 
   mMsgBuf = mMsg;

@@ -975,6 +975,23 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
   mMsgView->setMsg(msg);
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSelectFolder(KMFolder* folder)
+{
+  QListViewItem* item = mFolderTree->indexOfFolder(folder);
+  if (item)
+    mFolderTree->setCurrentItem( item );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSelectMessage(KMMessage* msg)
+{
+  int idx = mFolder->find(msg);
+  if (idx != -1) {
+    mHeaders->setCurrentMsg(idx);
+    mMsgView->setMsg(msg);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetMsgStatus(int id)

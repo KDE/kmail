@@ -200,7 +200,7 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
 			      msg->from(),
 			      msg->dateStr(),
 			      aFld->name(),
-			      msg->id()
+			      QString("%1").arg(i)
 			      );
       mNumMatches++;
       updStatus();
@@ -299,12 +299,14 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   if (!fld) 
     return;
 
-  mMainWin->folderSelected(fld);
+  //  mMainWin->folderSelected(fld);
+  mMainWin->slotSelectFolder(fld);
   msg = fld->getMsg(atoi(item->text(MSGID_COLUMN)));
   if (!msg) 
     return;
 
-  mMainWin->slotMsgSelected(msg);
+  //  mMainWin->slotMsgSelected(msg);
+  mMainWin->slotSelectMessage(msg);
   fprintf(stderr, "still here 3\n");
 }
 

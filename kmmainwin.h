@@ -81,6 +81,10 @@ public slots:
   void statusMsg(const QString& text);
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);
+  
+  /** Change the current folder, select a message in the current folder */
+  void slotSelectFolder(KMFolder*);
+  void slotSelectMessage(KMMessage*);
 
 protected:
   void setupMenuBar();
