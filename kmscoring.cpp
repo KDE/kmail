@@ -2,9 +2,9 @@
 
 #include <kdebug.h>
 
+#include "kmmainwin.h"
 #include "kmmessage.h"
-#include "kmfoldermgr.h"
-#include "kmkernel.h"
+#include "kmfoldertree.h"
 #include "kmscoring.h"
 
 KMScorableArticle::KMScorableArticle(const QString &msg)
@@ -80,7 +80,8 @@ KMScorableGroup::~KMScorableGroup()
 //////////////////////////////
 
 KMScoringManager::KMScoringManager()
-    : mConfDialog(0)
+  : mConfDialog(0),
+    mMainWin(0)
 {
 }
 
@@ -90,13 +91,28 @@ KMScoringManager::~KMScoringManager()
 
 class KMFolder;
 
+void
+KMScoringManager::setMainWin(QObject *parent)
+{
+  mMainWin = dynamic_cast<KMMainWin*>(parent);
+  if (!mMainWin) {
+    kdDebug() << "KMScoringManager::setMainWin() : mMainWin == 0" << endl;
+  }
+}
+
+
 QStringList
 KMScoringManager::getGroups() const
 {
   QValueList<QGuardedPtr<KMFolder> > dummy;
     
   QStringList res;
-  kernel->folderMgr()->createFolderList( &res, &dummy );
+
+  if (mMainWin) {
+    KMFolderTree *tree = mMainWin->folderTree();
+    if (tree)
+      tree->createFolderList( &res, &dummy );
+  }
   
   return res;
 }

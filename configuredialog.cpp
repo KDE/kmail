@@ -1009,6 +1009,7 @@ void ConfigureDialog::makeAppearancePage( void )
   KScoringRulesConfig* ksc =
       new KScoringRulesConfig(KMScoringManager::globalScoringManager(),
                               false, page6);
+  KMScoringManager::globalScoringManager()->setMainWin(parent());
   vlay->addWidget( ksc );
 
 }

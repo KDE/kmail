@@ -19,6 +19,8 @@
 #include <qmap.h>
 #include <kscoring.h>
 
+class QWidget;
+class KMMainWin;
 class KDialogBase;
 
 class KMScorableArticle : public ScorableArticle
@@ -54,21 +56,24 @@ class KMScoringManager : public KScoringManager
   Q_OBJECT
 
 public:
-    KMScoringManager();
-    virtual ~KMScoringManager();
-    virtual QStringList getGroups() const;
+  KMScoringManager();
+  virtual ~KMScoringManager();
+  virtual QStringList getGroups() const;
 
-    void configure();
+  void setMainWin(QObject *parent);
+  
+  void configure();
 
-    static KMScoringManager* globalScoringManager();
+  static KMScoringManager* globalScoringManager();
 
 protected:
-    KDialogBase  *mConfDialog;
+  KDialogBase  *mConfDialog;
+  KMMainWin *mMainWin;
 
-    static KMScoringManager *mScoringManager;
+  static KMScoringManager *mScoringManager;
     
 protected slots:
-    void slotDialogDone();
+  void slotDialogDone();
 
 };
 
