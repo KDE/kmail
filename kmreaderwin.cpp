@@ -685,14 +685,6 @@ while( ( current = it.current() ) ) {
                   QCString ctypStr( headers.ContentType().AsString().c_str() );
                   bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
                   bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
-                  // we call signature verification
-                  // if we either *know* that it is signed mail or
-                  // if there is *neither* signed *nor* encrypted parameter
-                  if( !isEncrypted ) {
-                    if( isSigned )
-                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
-                    else
-                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
 
                   // Analyze "signTestNode" node to find/verify a signature.
@@ -842,7 +834,6 @@ kdDebug(5006) << "* model *" << endl;
     /*mViewer->view()->viewport()->setUpdatesEnabled( true );
     mViewer->view()->setUpdatesEnabled( true );
     mViewer->view()->viewport()->repaint( false );*/
-  }
   }
 }
 
