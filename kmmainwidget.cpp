@@ -895,10 +895,9 @@ void KMMainWidget::modifyFolder( KMFolderTreeItem* folderItem )
 {
   KMFolder* folder = folderItem->folder();
   KMFolderTree* folderTree = static_cast<KMFolderTree *>( folderItem->listView() );
-  KMFolderDialog *props = new KMFolderDialog( folder, folder->parent(), folderTree,
-                                              i18n("Properties of Folder %1").arg( folder->label() ) );
-  props->exec();
-  delete props;
+  KMFolderDialog props( folder, folder->parent(), folderTree,
+                        i18n("Properties of Folder %1").arg( folder->label() ) );
+  props.exec();
   updateFolderMenu();
 }
 
