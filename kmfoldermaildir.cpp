@@ -5,6 +5,8 @@
 #include <config.h>
 #endif
 
+#include <limits.h>
+
 #include <qdir.h>
 #include <qregexp.h>
 
