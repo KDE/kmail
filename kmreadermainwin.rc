@@ -1,11 +1,10 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="2" name="kmreadermainwin" >
+<kpartgui version="3" name="kmreadermainwin" >
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
   <text>Main Toolbar</text>
   <Action name="file_print" />
   <Separator/>
-  <Action name="reply" />
-  <Action name="reply_all" />
+  <Action name="message_reply_menu" />
   <Action name="message_forward"/>
  </ToolBar>
 </kpartgui>

@@ -42,7 +42,7 @@
 
 #include <qtextcodec.h>
 
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
@@ -56,6 +56,7 @@
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
+#include <kimproxy.h>
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -81,11 +82,14 @@ using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
-#include "kimproxy.h"
+#include <redirectdialog.h>
+using KMail::RedirectDialog;
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
+
+#include "broadcaststatus.h"
 
 #include "kmcommands.moc"
 
@@ -224,6 +228,7 @@ void KMCommand::transferSelectedMsgs()
   mCountMsgs = 0;
   mRetrievedMsgs.clear();
   mCountMsgs = mMsgList.count();
+  uint totalSize = 0;
   // the KProgressDialog for the user-feedback. Only enable it if it's needed.
   // For some commands like KMSetStatusCommand it's not needed. Note, that
   // for some reason the KProgressDialog eats the MouseReleaseEvent (if a
@@ -266,12 +271,15 @@ void KMCommand::transferSelectedMsgs()
       KMCommand::mCountJobs++;
       FolderJob *job = thisMsg->parent()->createJob(thisMsg);
       job->setCancellable( false );
+      totalSize += thisMsg->msgSizeServer();
       // emitted when the message was transferred successfully
       connect(job, SIGNAL(messageRetrieved(KMMessage*)),
               this, SLOT(slotMsgTransfered(KMMessage*)));
       // emitted when the job is destroyed
       connect(job, SIGNAL(finished()),
               this, SLOT(slotJobFinished()));
+      connect(job, SIGNAL(progress(unsigned long, unsigned long)),
+              this, SLOT(slotProgress(unsigned long, unsigned long)));
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
       job->start();
@@ -290,7 +298,7 @@ void KMCommand::transferSelectedMsgs()
     if ( mProgressDialog ) {
       connect(mProgressDialog, SIGNAL(cancelClicked()),
               this, SLOT(slotTransferCancelled()));
-      mProgressDialog->progressBar()->setTotalSteps(KMCommand::mCountJobs);
+      mProgressDialog->progressBar()->setTotalSteps(totalSize);
     }
   }
 }
@@ -304,6 +312,11 @@ void KMCommand::slotMsgTransfered(KMMessage* msg)
 
   // save the complete messages
   mRetrievedMsgs.append(msg);
+}
+
+void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
+{
+  mProgressDialog->progressBar()->setProgress( done );
 }
 
 void KMCommand::slotJobFinished()
@@ -323,7 +336,6 @@ void KMCommand::slotJobFinished()
   }
   // update the progressbar
   if ( mProgressDialog ) {
-    mProgressDialog->progressBar()->advance(1);
     mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
           "Please wait while the %n messages are transferred", KMCommand::mCountJobs));
   }
@@ -366,6 +378,12 @@ void KMCommand::slotTransferCancelled()
   }
   mRetrievedMsgs.clear();
   emit messagesTransfered( Canceled );
+}
+
+void KMCommand::keepFolderOpen( KMFolder *folder )
+{
+  folder->open();
+  mFolders.append( folder );
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
@@ -507,16 +525,14 @@ KMCommand::Result KMUrlCopyCommand::execute()
     clip->setText( address );
     clip->setSelectionMode( false );
     clip->setText( address );
-    if (mMainWidget)
-      mMainWidget->statusMsg( i18n( "Address copied to clipboard." ));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));
   } else {
     // put the url into the mouse selection and the clipboard
     clip->setSelectionMode( true );
     clip->setText( mUrl.url() );
     clip->setSelectionMode( false );
     clip->setText( mUrl.url() );
-    if ( mMainWidget )
-      mMainWidget->statusMsg( i18n( "URL copied to clipboard." ));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "URL copied to clipboard." ));
   }
 
   return OK;
@@ -616,7 +632,7 @@ KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
 KMCommand::Result KMShowMsgSrcCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
-  QString str = QString::fromLatin1( msg->asString() );
+  QString str = msg->codec()->toUnicode( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setCaption( i18n("Message as Plain Text") );
@@ -640,13 +656,10 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-namespace {
-  KURL subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveURL( subject.mid( subject.findRev(':') + 1 )
-                                            .stripWhiteSpace()
-                                            .replace( QDir::separator(), '_' ),
+static KURL subjectToUrl( const QString & subject ) {
+    return KFileDialog::getSaveURL( subject.stripWhiteSpace()
+                                           .replace( QDir::separator(), '_' ),
                                     QString::null );
-  }
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
@@ -658,7 +671,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   if ( !msg ) return;
   setDeletesItself( true );
   mMsgList.append( msg->getMsgSerNum() );
-  mUrl = subjectToUrl( msg->subject() );
+  mUrl = subjectToUrl( msg->cleanSubject() );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
@@ -685,7 +698,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     ++it;
   }
   mMsgListIndex = 0;
-  mUrl = subjectToUrl( msgBase->subject() );
+  mUrl = subjectToUrl( msgBase->cleanSubject() );
 }
 
 KURL KMSaveMsgCommand::url()
@@ -1240,18 +1253,21 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
-  //TODO: move KMMessage::createRedirect to here
-  KMComposeWin *win;
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() )
     return Failed;
+    
+  RedirectDialog dlg( parentWidget(), "redirect", true,
+                      kmkernel->msgSender()->sendImmediate() );
+  if (dlg.exec()==QDialog::Rejected) return Failed;
 
-  KCursorSaver busy(KBusyPtr::busy());
-  win = new KMComposeWin();
-  win->setMsg(msg->createRedirect(), FALSE);
-  win->setCharset(msg->codec()->mimeName());
-  win->show();
+  KMMessage *newMsg = msg->createRedirect( dlg.to() );
+  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
+  if ( !kmkernel->msgSender()->send( newMsg, dlg.sendImmediate() ) ) {
+    kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
+    return Failed; // error: couldn't send
+  }
   return OK;
 }
 
@@ -1274,8 +1290,8 @@ KMCommand::Result KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride )
-  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride )
+  KMMessage *msg, bool htmlOverride, const QTextCodec* codec )
+  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mCodec( codec )
 {
 }
 
@@ -1285,6 +1301,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setPrinting(TRUE);
   printWin.readConfig();
   printWin.setHtmlOverride( mHtmlOverride );
+  printWin.setOverrideCodec( mCodec );
   printWin.setMsg(retrievedMessage(), TRUE);
   printWin.printMsg();
 
@@ -1426,9 +1443,34 @@ void KMMetaFilterActionCommand::start()
   KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
   *mHeaders->selectedMsgs(), mFilter);
   filterCommand->start();
+  int contentX, contentY;
+  KMHeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
+  mHeaders->finalizeMove( item, contentX, contentY );
 #endif
 }
 
+FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
+                                              KMFolder *folder )
+    : mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
+{
+}
+
+
+FolderShortcutCommand::~FolderShortcutCommand()
+{
+  if ( mAction ) mAction->unplugAll();
+  delete mAction;
+}
+
+void FolderShortcutCommand::start()
+{
+  mMainWidget->slotSelectFolder( mFolder );
+}
+
+void FolderShortcutCommand::setAction( KAction* action )
+{
+  mAction = action;
+}
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
                                                         KMMessage *msg )
@@ -1561,7 +1603,7 @@ void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList )
-  :mDestFolder( destFolder ), mMsgList( msgList )
+:mDestFolder( destFolder ), mMsgList( msgList )
 {
 }
 
@@ -1624,9 +1666,11 @@ KMCommand::Result KMCopyCommand::execute()
         job->start();
       } else {
         int rc, index;
+        mDestFolder->open();
         rc = mDestFolder->addMsg(newMsg, &index);
         if (rc == 0 && index != -1)
           mDestFolder->unGetMsg( mDestFolder->count() - 1 );
+        mDestFolder->close();
       }
     }
 
@@ -1677,6 +1721,12 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
   mMsgList.append( msgBase );
 }
 
+KMMoveCommand::KMMoveCommand( Q_UINT32 )
+:mProgressItem( 0 )
+{
+  setDeletesItself( true );
+}
+
 KMCommand::Result KMMoveCommand::execute()
 {
   setEmitsCompletedItself( true );
@@ -1695,7 +1745,7 @@ KMCommand::Result KMMoveCommand::execute()
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),
          mDestFolder ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
-  connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+  connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
 
   KMMessage *msg;
@@ -1749,6 +1799,7 @@ KMCommand::Result KMMoveCommand::execute()
         list.append(msg);
       } else {
         // We are moving to a local folder.
+        mDestFolder->open();
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
@@ -1758,10 +1809,12 @@ KMCommand::Result KMMoveCommand::execute()
               undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
             kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
+          mDestFolder->close();
         } else if (rc != 0) {
           // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
           completeMove( Failed );
+          mDestFolder->close();
           return Failed;
         }
       }
@@ -1779,7 +1832,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
   }
   if (!list.isEmpty() && mDestFolder) {
-       mDestFolder->moveMsg(list, &index);
+    mDestFolder->moveMsg(list, &index);
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
@@ -1846,6 +1899,8 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
 
 void KMMoveCommand::completeMove( Result result )
 {
+  if ( mDestFolder )
+    mDestFolder->close();
   if ( mProgressItem )
     mProgressItem->setComplete();
   setResult( result );
@@ -1861,15 +1916,25 @@ void KMMoveCommand::slotMoveCanceled()
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList )
-:KMMoveCommand(findTrashFolder( srcFolder ), msgList)
+:KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
-:KMMoveCommand(findTrashFolder( srcFolder ), msg)
+:KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
 }
 
+KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
+:KMMoveCommand( sernum )
+{
+  KMFolder *srcFolder;
+  int idx;
+  kmkernel->msgDict()->getLocation( sernum, &srcFolder, &idx );
+  KMMsgBase *msg = srcFolder->getMsgBase( idx );
+  addMsg( msg );
+  setDestFolder( findTrashFolder( srcFolder ) );
+}
 
 KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 {
@@ -1880,6 +1945,7 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
     return trash;
   return 0;
 }
+
 
 KMUrlClickedCommand::KMUrlClickedCommand( const KURL &url, uint identity,
   KMReaderWin *readerWin, bool htmlPref, KMMainWidget *mainWidget )
@@ -1933,8 +1999,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
            (mUrl.protocol() == "smb"))
   {
-    if (mMainWidget)
-      mMainWidget->statusMsg( i18n("Opening URL..."));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||
@@ -2070,6 +2135,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
 
+  QMap< QString, int > renameNumbering;
+
   Result globalResult = OK;
   int unnamedAtmCount = 0;
   for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
@@ -2094,11 +2161,39 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
 
     if ( !curUrl.isEmpty() ) {
+
+     // Rename the file if we have already saved one with the same name:
+     // try appending a number before extension (e.g. "pic.jpg" => "pic_2.jpg")
+     QString origFile = curUrl.fileName();
+     QString file = origFile;
+
+     while ( renameNumbering.contains(file) ) {
+       file = origFile;
+       int num = renameNumbering[file] + 1;
+       int dotIdx = file.findRev('.');
+       file = file.insert( (dotIdx>=0) ? dotIdx : file.length(), QString("_") + QString::number(num) );
+     }
+     curUrl.setFileName(file);
+
+     // Increment the counter for both the old and the new filename
+     if ( !renameNumbering.contains(origFile))
+         renameNumbering[origFile] = 1;
+     else
+         renameNumbering[origFile]++;
+
+     if ( file != origFile ) {
+        if ( !renameNumbering.contains(file))
+            renameNumbering[file] = 1;
+        else
+            renameNumbering[file]++;
+     }
+
+
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
-        if ( KMessageBox::warningYesNo( parentWidget(),
+        if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
               .arg( curUrl.fileName() ),
-              i18n( "KMail Warning" ) ) == KMessageBox::No ) {
+              i18n( "File Already Exists" ), i18n("Overwrite") ) == KMessageBox::Cancel) {
           continue;
         }
       }
@@ -2292,7 +2387,7 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
     for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
           it != mPartMap.end();
           ++it ) {
-      if ( it.key()->dwPart() == part )
+      if ( it.key()->dwPart()->partId() == part->partId() )
         it.key()->setDwPart( part );
     }
   } else
@@ -2327,6 +2422,9 @@ KMCommand::Result KMResendMessageCommand::execute()
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
   newMsg->setParent( 0 );
+
+  // adds the new date to the message
+  newMsg->removeHeaderField( "Date" );
 
   win = new KMComposeWin();
   win->setMsg(newMsg, false, true);

@@ -188,19 +188,6 @@ public:
 protected:
     // Inherited. Always called by the parent when this widget is created.
     virtual void loadContacts();
-    /**
-     * Smart insertion of email addresses. If @p pos is -1 then
-     * @p str is inserted at the end of the current contents of this
-     * lineedit. Else @p str is inserted at @p pos.
-     * Features:
-     * - Automatically adds ',' if necessary to separate email addresses
-     * - Correctly decodes mailto URLs
-     * - Recognizes email addresses which are protected against address
-     *   harvesters, i.e. "name at kde dot org" and "name(at)kde.org"
-
-    void smartInsert( const QString &str, int pos = -1 );
-    virtual void dropEvent(QDropEvent *e);
-*/
 
     virtual void keyPressEvent(QKeyEvent*);
 
@@ -327,6 +314,12 @@ public:
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
   /**
+   * If this flag is set, the compose window will delete itself after
+   * the window has been closed.
+   */
+  void setAutoDeleteWindow( bool f );
+
+  /**
    * If this folder is set, the original message is inserted back after
    * cancelling
    */
@@ -368,6 +361,14 @@ public:
     mSubjectTextWasSpellChecked = _spell;
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
+
+
+  /** Disabled signing and encryption completely for this composer window. */
+  void setSigningAndEncryptionDisabled( bool v )
+  {
+    mSigningAndEncryptionExplicitlyDisabled = v;
+  }
+
 public slots:
   /**
    * Actions:
@@ -605,10 +606,13 @@ protected:
   /**
    * Show or hide header lines
    */
-  void rethinkHeaderLine( int value, int mask, int& row,
-                          const QString& labelStr, QLabel* lbl,
-                          QLineEdit* edt, QPushButton* btn = 0,
-                          const QString& toolTip = QString::null );
+
+  void rethinkHeaderLine( int aValue, int aMask, int& aRow,
+                          const QString &aLabelStr, QLabel* aLbl,
+                          QLineEdit* aEdt, QPushButton* aBtn = 0,
+                          const QString &toolTip = QString::null,
+                          const QString &whatsThis = QString::null );
+
   void rethinkHeaderLine( int value, int mask, int& row,
                           const QString& labelStr, QLabel* lbl,
                           QComboBox* cbx, QCheckBox *chk );
@@ -616,7 +620,7 @@ protected:
   /**
    * Initialization methods
    */
-  void setupActions();
+  void setupActions(int aCryptoMessageFormat=-1);
   void setupStatusBar();
   void setupEditor();
 
@@ -624,14 +628,12 @@ protected:
   /**
    * Header fields.
    */
-    QString subject(void) const { return mEdtSubject->text(); }
-    QString to(void) const { return mEdtTo->text(); }
-    QString cc(void) const
-   { return (mEdtCc->isHidden()) ? QString::null : mEdtCc->text(); }
-    QString bcc(void) const
-   { return (mEdtBcc->isHidden()) ? QString::null : mEdtBcc->text(); }
-    QString from(void) const { return mEdtFrom->text(); }
-    QString replyTo(void) const { return mEdtReplyTo->text(); }
+  QString subject() const;
+  QString to() const;
+  QString cc() const;
+  QString bcc() const;
+  QString from() const;
+  QString replyTo() const;
 
   /**
    * Use the given folder as sent-mail folder if the given folder exists.
@@ -748,6 +750,7 @@ protected:
   int mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
+  bool mSigningAndEncryptionExplicitlyDisabled;
   bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
   bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;

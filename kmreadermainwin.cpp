@@ -63,7 +63,6 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     const QTextCodec *codec, char *name )
   : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
-  resize( 550, 600 );
   mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
   mReaderWin->setOverrideCodec( codec );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
@@ -94,7 +93,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride() );
+      mReaderWin->htmlOverride(), mReaderWin->overrideCodec() );
   command->start();
 }
 
@@ -203,10 +202,12 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
+  connect( mForwardActionMenu, SIGNAL( activated() ), this,
+           SLOT( slotForwardMsg() ) );
 
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward" );
+				actionCollection(), "message_forward_inline" );
   mForwardActionMenu->insert( mForwardAction );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),

@@ -53,23 +53,29 @@
 
 using namespace KMail;
 
-AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
+AntiSpamWizard::AntiSpamWizard( WizardMode mode,
+                                QWidget* parent, KMFolderTree * mainFolderTree,
                                 KActionCollection * collection )
-  : KWizard( parent )
+  : KWizard( parent ),
+    mSpamRulesPage( 0 ),
+    mVirusRulesPage( 0 ),
+    mMode( mode )
 {
   // read the configuration for the anti-spam tools
-  ConfigReader reader( mToolList );
+  ConfigReader reader( mMode, mToolList );
   reader.readAndMergeConfig();
   mToolList = reader.getToolList();
 
 #ifndef NDEBUG
-    kdDebug(5006) << endl << "Considered anti-spam/virus tools: " << endl;
+  if ( mMode == AntiSpam )
+    kdDebug(5006) << endl << "Considered anti-spam tools: " << endl;
+  else
+    kdDebug(5006) << endl << "Considered anti-virus tools: " << endl;
 #endif
   QStringList descriptionList;
   QStringList whatsThisList;
-  QValueListIterator<SpamToolConfig> it = mToolList.begin();
-  while ( it != mToolList.end() )
-  {
+  for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+        it != mToolList.end(); ++it ) {
     descriptionList.append( (*it).getVisibleName() );
     whatsThisList.append( (*it).getWhatsThisText() );
 #ifndef NDEBUG
@@ -88,25 +94,32 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
     kdDebug(5006) << "Supports Bayes Filter: " << (*it).useBayesFilter() << endl;
     kdDebug(5006) << "Type: " << (*it).getType() << endl << endl;
 #endif
-    it++;
   }
 
   mActionCollection = collection;
 
-  setCaption( i18n( "Anti-Spam/Virus Wizard" ));
-  mInfoPage = new ASWizInfoPage( 0, "" );
-  addPage( mInfoPage, i18n( "Welcome to the KMail Anti-Spam/Virus Wizard." ));
+  setCaption( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
+                                    : i18n( "Anti-Virus Wizard" ) );
+  mInfoPage = new ASWizInfoPage( mMode, 0, "" );
+  addPage( mInfoPage,
+           ( mMode == AntiSpam )
+           ? i18n( "Welcome to the KMail Anti-Spam Wizard" )
+           : i18n( "Welcome to the KMail Anti-Virus Wizard" ) );
   mProgramsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
-  addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
-  mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
-  mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
-
+  addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail" ));
   connect( mProgramsPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkProgramsSelections( void ) ) );
-  connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
-            this, SLOT( checkSpamRulesSelections( void ) ) );
-  connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
-            this, SLOT( checkVirusRulesSelections( void ) ) );
+
+  if ( mMode == AntiSpam ) {
+    mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
+    connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
+             this, SLOT( checkSpamRulesSelections( void ) ) );
+  }
+  else {
+    mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
+    connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
+             this, SLOT( checkVirusRulesSelections( void ) ) );
+  }
 
   connect( this, SIGNAL( helpClicked( void) ),
             this, SLOT( slotHelpClicked( void ) ) );
@@ -114,323 +127,241 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   setNextEnabled( mInfoPage, false );
   setNextEnabled( mProgramsPage, false );
 
-  QTimer::singleShot( 500, this, SLOT( checkToolAvailability( void ) ) );
+  QTimer::singleShot( 0, this, SLOT( checkToolAvailability( void ) ) );
 }
 
 
 void AntiSpamWizard::accept()
 {
-  kdDebug( 5006 ) << "Folder name for spam is "
-                  << mSpamRulesPage->selectedFolderName() << endl;
-  kdDebug( 5006 ) << "Folder name for viruses is "
-                  << mVirusRulesPage->selectedFolderName() << endl;
+  if ( mSpamRulesPage )
+    kdDebug( 5006 ) << "Folder name for spam is "
+                    << mSpamRulesPage->selectedFolderName() << endl;
+  if ( mVirusRulesPage )
+    kdDebug( 5006 ) << "Folder name for viruses is "
+                    << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
+  QPtrList<KMFilter> filterList;
 
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
-  QValueListIterator<SpamToolConfig> it = mToolList.begin();
-  while ( it != mToolList.end() )
-  {
-    if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
-       ( mVirusRulesPage->pipeRulesSelected() && (*it).isVirusTool() ) )
-    {
-      // pipe messages through the anti-virus tools,
-      // one single filter for each tool
-      // (could get combined but so it's easier to understand for the user)
-      KMFilter* pipeFilter = new KMFilter();
-      QPtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
-      KMFilterAction* pipeFilterAction = dict["filter app"]->create();
-      pipeFilterAction->argsFromString( (*it).getDetectCmd() );
-      pipeFilterActions->append( pipeFilterAction );
-      KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
-      pipeFilterPattern->setName( (*it).getFilterName() );
-      pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                 KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-      pipeFilter->setApplyOnOutbound( FALSE);
-      pipeFilter->setApplyOnInbound();
-      pipeFilter->setApplyOnExplicit();
-      pipeFilter->setStopProcessingHere( FALSE );
-      pipeFilter->setConfigureShortcut( FALSE );
-
-      KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
-    }
-    it++;
-  }
-
-  if ( mVirusRulesPage->moveRulesSelected() )
-  {
-    // Sort out viruses depending on header fields set by the tools
-    KMFilter* virusFilter = new KMFilter();
-    QPtrList<KMFilterAction>* virusFilterActions = virusFilter->actions();
-    KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
-    virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
-    virusFilterActions->append( virusFilterAction1 );
-    if ( mVirusRulesPage->markReadRulesSelected() ) {
-      KMFilterAction* virusFilterAction2 = dict["set status"]->create();
-      virusFilterAction2->argsFromString( "R" ); // Read
-      virusFilterActions->append( virusFilterAction2 );
-    }
-    KMSearchPattern* virusFilterPattern = virusFilter->pattern();
-    virusFilterPattern->setName( i18n( "Virus handling" ) );
-    virusFilterPattern->setOp( KMSearchPattern::OpOr );
-    it = mToolList.begin();
-    while ( it != mToolList.end() )
-    {
-      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ))
+  if ( mMode == AntiVirus ) {
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
+         ( mVirusRulesPage->pipeRulesSelected() && (*it).isVirusTool() ) )
       {
-        if ( (*it).isVirusTool() )
-        {
-            const QCString header = (*it).getDetectionHeader().ascii();
-            const QString & pattern = (*it).getDetectionPattern();
-            if ( (*it).isUseRegExp() )
-              virusFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncRegExp, pattern ) );
-            else
-              virusFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncContains, pattern ) );
-        }
-      }
-      it++;
-    }
-    virusFilter->setApplyOnOutbound( FALSE);
-    virusFilter->setApplyOnInbound();
-    virusFilter->setApplyOnExplicit();
-    virusFilter->setStopProcessingHere( TRUE );
-    virusFilter->setConfigureShortcut( FALSE );
-
-    KMKernel::self()->filterMgr()->appendFilter( virusFilter );
-  }
-
-  it = mToolList.begin();
-  while ( it != mToolList.end() )
-  {
-    if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
-       ( mSpamRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
-    {
-      // pipe messages through the anti-spam tools,
-      // one single filter for each tool
-      // (could get combined but so it's easier to understand for the user)
-      KMFilter* pipeFilter = new KMFilter();
-      QPtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
-      KMFilterAction* pipeFilterAction = dict["filter app"]->create();
-      pipeFilterAction->argsFromString( (*it).getDetectCmd() );
-      pipeFilterActions->append( pipeFilterAction );
-      KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
-      pipeFilterPattern->setName( (*it).getFilterName() );
-      pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                 KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-      pipeFilter->setApplyOnOutbound( FALSE);
-      pipeFilter->setApplyOnInbound();
-      pipeFilter->setApplyOnExplicit();
-      pipeFilter->setStopProcessingHere( FALSE );
-      pipeFilter->setConfigureShortcut( FALSE );
-
-      KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
-    }
-    it++;
-  }
-
-  if ( mSpamRulesPage->moveRulesSelected() )
-  {
-    // Sort out spam depending on header fields set by the tools
-    KMFilter* spamFilter = new KMFilter();
-    QPtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
-    KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
-    spamFilterAction1->argsFromString( mSpamRulesPage->selectedFolderName() );
-    spamFilterActions->append( spamFilterAction1 );
-    KMFilterAction* spamFilterAction2 = dict["set status"]->create();
-    spamFilterAction2->argsFromString( "P" ); // Spam
-    spamFilterActions->append( spamFilterAction2 );
-    if ( mSpamRulesPage->markReadRulesSelected() ) {
-      KMFilterAction* spamFilterAction3 = dict["set status"]->create();
-      spamFilterAction3->argsFromString( "R" ); // Read
-      spamFilterActions->append( spamFilterAction3 );
-    }
-    KMSearchPattern* spamFilterPattern = spamFilter->pattern();
-    spamFilterPattern->setName( i18n( "Spam handling" ) );
-    spamFilterPattern->setOp( KMSearchPattern::OpOr );
-    it = mToolList.begin();
-    while ( it != mToolList.end() )
-    {
-      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
-      {
-          if ( (*it).isSpamTool() )
-          {
-            const QCString header = (*it).getDetectionHeader().ascii();
-            const QString & pattern = (*it).getDetectionPattern();
-            if ( (*it).isUseRegExp() )
-              spamFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncRegExp, pattern ) );
-            else
-              spamFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncContains, pattern ) );
-          }
-      }
-      it++;
-    }
-    spamFilter->setApplyOnOutbound( FALSE);
-    spamFilter->setApplyOnInbound();
-    spamFilter->setApplyOnExplicit();
-    spamFilter->setStopProcessingHere( TRUE );
-    spamFilter->setConfigureShortcut( FALSE );
-
-    KMKernel::self()->filterMgr()->appendFilter( spamFilter );
-  }
-
-  if ( mSpamRulesPage->classifyRulesSelected() )
-  {
-    // Classify messages manually as Spam
-    KMFilter* classSpamFilter = new KMFilter();
-    classSpamFilter->setIcon( "mark_as_spam" );
-    QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
-    KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
-    classSpamFilterActionFirst->argsFromString( "P" );
-    classSpamFilterActions->append( classSpamFilterActionFirst );
-    it = mToolList.begin();
-    while ( it != mToolList.end() )
-    {
-      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
-          && (*it).useBayesFilter() )
-      {
-        KMFilterAction* classSpamFilterAction = dict["execute"]->create();
-        classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
-        classSpamFilterActions->append( classSpamFilterAction );
-      }
-      it++;
-    }
-    KMFilterAction* classSpamFilterActionLast = dict["transfer"]->create();
-    classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedFolderName() );
-    classSpamFilterActions->append( classSpamFilterActionLast );
-
-    KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
-    classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
-    classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-    classSpamFilter->setApplyOnOutbound( FALSE);
-    classSpamFilter->setApplyOnInbound( FALSE );
-    classSpamFilter->setApplyOnExplicit( FALSE );
-    classSpamFilter->setStopProcessingHere( TRUE );
-    classSpamFilter->setConfigureShortcut( TRUE );
-    KMKernel::self()->filterMgr()->appendFilter( classSpamFilter );
-
-    // Classify messages manually as not Spam / as Ham
-    KMFilter* classHamFilter = new KMFilter();
-    QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
-    KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
-    classHamFilterActionFirst->argsFromString( "H" );
-    classHamFilterActions->append( classHamFilterActionFirst );
-    it = mToolList.begin();
-    while ( it != mToolList.end() )
-    {
-      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
-          && (*it).useBayesFilter() )
-      {
-        KMFilterAction* classHamFilterAction = dict["execute"]->create();
-        classHamFilterAction->argsFromString( (*it).getHamCmd() );
-        classHamFilterActions->append( classHamFilterAction );
-      }
-      it++;
-    }
-    KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
-    classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
-    classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
+        // pipe messages through the anti-virus tools,
+        // one single filter for each tool
+        // (could get combined but so it's easier to understand for the user)
+        KMFilter* pipeFilter = new KMFilter();
+        QPtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
+        KMFilterAction* pipeFilterAction = dict["filter app"]->create();
+        pipeFilterAction->argsFromString( (*it).getDetectCmd() );
+        pipeFilterActions->append( pipeFilterAction );
+        KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
+        pipeFilterPattern->setName( (*it).getFilterName() );
+        pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-    classHamFilter->setApplyOnOutbound( FALSE);
-    classHamFilter->setApplyOnInbound( FALSE );
-    classHamFilter->setApplyOnExplicit( FALSE );
-    classHamFilter->setStopProcessingHere( TRUE );
-    classHamFilter->setConfigureShortcut( TRUE );
-    KMKernel::self()->filterMgr()->appendFilter( classHamFilter );
+        pipeFilter->setApplyOnOutbound( FALSE);
+        pipeFilter->setApplyOnInbound();
+        pipeFilter->setApplyOnExplicit();
+        pipeFilter->setStopProcessingHere( FALSE );
+        pipeFilter->setConfigureShortcut( FALSE );
 
-    // add the classification filter actions to the toolbar
-    QString filterNameSpam =
-        QString( "Filter %1" ).arg( classSpamFilterPattern->name() );
-    filterNameSpam = filterNameSpam.replace( " ", "_" );
-    QString filterNameHam =
-        QString( "Filter %1" ).arg( classHamFilterPattern->name() );
-    filterNameHam = filterNameHam.replace( " ", "_" );
+        filterList.append( pipeFilter );
+      }
+    }
 
-    // FIXME post KDE 3.2
-    // The following code manipulates the kmmainwin.rc file directly. Usuallay
-    // one would expect to let the toolbar write back it's change from above
-    // i.e. the new structure including the two added actions.
-    // In KDE 3.2 there is no API for that so I only fund the way to read in
-    // the XML file myself, to change it and write it out then.
-    // As soon as an API is available, the following part can certainly get
-    // replaced by one or two statements.
-    // (a.gungl@gmx.de)
-
-    // make the toolbar changes persistent - let's be very conservative here
-    QString config =
-        KXMLGUIFactory::readConfigFile( "kmmainwin.rc", KMKernel::self()->xmlGuiInstance() );
-#ifndef NDEBUG
-    kdDebug(5006) << "Read kmmainwin.rc contents (last 1000 chars printed):" << endl;
-    kdDebug(5006) << config.right( 1000 ) << endl;
-    kdDebug(5006) << "#####################################################" << endl;
-#endif
-    QDomDocument domDoc;
-    domDoc.setContent( config );
-    QDomNodeList domNodeList = domDoc.elementsByTagName( "ToolBar" );
-    if ( domNodeList.count() > 0 )
-      kdDebug(5006) << "ToolBar section found." << endl;
-    else
-      kdDebug(5006) << "No ToolBar section found." << endl;
-    for ( unsigned int i = 0; i < domNodeList.count(); i++ )
+    if ( mVirusRulesPage->moveRulesSelected() )
     {
-      QDomNode domNode = domNodeList.item( i );
-      QDomNamedNodeMap nodeMap = domNode.attributes();
-      kdDebug(5006) << "name=" << nodeMap.namedItem( "name" ).nodeValue() << endl;
-      if ( nodeMap.namedItem( "name" ).nodeValue() == "mainToolBar" )
-      {
-        kdDebug(5006) << "mainToolBar section found." << endl;
-        bool spamActionFound = false;
-        bool hamActionFound = false;
-        QDomNodeList domNodeChildList = domNode.childNodes();
-        for ( unsigned int j = 0; j < domNodeChildList.count(); j++ )
+      // Sort out viruses depending on header fields set by the tools
+      KMFilter* virusFilter = new KMFilter();
+      QPtrList<KMFilterAction>* virusFilterActions = virusFilter->actions();
+      KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
+      virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
+      virusFilterActions->append( virusFilterAction1 );
+      if ( mVirusRulesPage->markReadRulesSelected() ) {
+        KMFilterAction* virusFilterAction2 = dict["set status"]->create();
+        virusFilterAction2->argsFromString( "R" ); // Read
+        virusFilterActions->append( virusFilterAction2 );
+      }
+      KMSearchPattern* virusFilterPattern = virusFilter->pattern();
+      virusFilterPattern->setName( i18n( "Virus handling" ) );
+      virusFilterPattern->setOp( KMSearchPattern::OpOr );
+      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+            it != mToolList.end(); ++it ) {
+        if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ))
         {
-          QDomNode innerDomNode = domNodeChildList.item( j );
-          QDomNamedNodeMap innerNodeMap = innerDomNode.attributes();
-          if ( innerNodeMap.namedItem( "name" ).nodeValue() == filterNameSpam )
-            spamActionFound = true;
-          if ( innerNodeMap.namedItem( "name" ).nodeValue() == filterNameHam )
-            hamActionFound = true;
-        }
-
-        // append the new actions if not yet existing
-        if ( !spamActionFound )
-        {
-          QDomElement domElemSpam = domDoc.createElement( "Action" );
-          domElemSpam.setAttribute( "name", filterNameSpam );
-          domNode.appendChild( domElemSpam );
-          kdDebug(5006) << "Spam action added to toolbar." << endl;
-        }
-        if ( !hamActionFound )
-        {
-          QDomElement domElemHam = domDoc.createElement( "Action" );
-          domElemHam.setAttribute( "name", filterNameHam );
-          domNode.appendChild( domElemHam );
-          kdDebug(5006) << "Ham action added to toolbar." << endl;
-        }
-        if ( !spamActionFound || !hamActionFound )
-        {
-#ifndef NDEBUG
-          kdDebug(5006) << "New kmmainwin.rc structur (last 1000 chars printed):" << endl;
-          kdDebug(5006) << domDoc.toString().right( 1000 ) << endl;
-          kdDebug(5006) << "####################################################" << endl;
-#endif
-          // write back the modified resource file
-          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc",
-              KMKernel::self()->xmlGuiInstance() );
+          if ( (*it).isVirusTool() )
+          {
+              const QCString header = (*it).getDetectionHeader().ascii();
+              const QString & pattern = (*it).getDetectionPattern();
+              if ( (*it).isUseRegExp() )
+                virusFilterPattern->append(
+                  KMSearchRule::createInstance( header,
+                  KMSearchRule::FuncRegExp, pattern ) );
+              else
+                virusFilterPattern->append(
+                  KMSearchRule::createInstance( header,
+                  KMSearchRule::FuncContains, pattern ) );
+          }
         }
       }
-      else
-        kdDebug(5006) << "No mainToolBar section found." << endl;
+      virusFilter->setApplyOnOutbound( FALSE);
+      virusFilter->setApplyOnInbound();
+      virusFilter->setApplyOnExplicit();
+      virusFilter->setStopProcessingHere( TRUE );
+      virusFilter->setConfigureShortcut( FALSE );
+
+      filterList.append( virusFilter );
     }
+  }
+  else { // AntiSpam mode
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
+         ( mSpamRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
+      {
+        // pipe messages through the anti-spam tools,
+        // one single filter for each tool
+        // (could get combined but so it's easier to understand for the user)
+        KMFilter* pipeFilter = new KMFilter();
+        QPtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
+        KMFilterAction* pipeFilterAction = dict["filter app"]->create();
+        pipeFilterAction->argsFromString( (*it).getDetectCmd() );
+        pipeFilterActions->append( pipeFilterAction );
+        KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
+        pipeFilterPattern->setName( (*it).getFilterName() );
+        pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                   KMSearchRule::FuncIsLessOrEqual, "256000" ) );
+        pipeFilter->setApplyOnOutbound( FALSE);
+        pipeFilter->setApplyOnInbound();
+        pipeFilter->setApplyOnExplicit();
+        pipeFilter->setStopProcessingHere( FALSE );
+        pipeFilter->setConfigureShortcut( FALSE );
+
+        filterList.append( pipeFilter );
+      }
+    }
+
+    if ( mSpamRulesPage->moveRulesSelected() )
+    {
+      // Sort out spam depending on header fields set by the tools
+      KMFilter* spamFilter = new KMFilter();
+      QPtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
+      KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
+      spamFilterAction1->argsFromString( mSpamRulesPage->selectedFolderName() );
+      spamFilterActions->append( spamFilterAction1 );
+      KMFilterAction* spamFilterAction2 = dict["set status"]->create();
+      spamFilterAction2->argsFromString( "P" ); // Spam
+      spamFilterActions->append( spamFilterAction2 );
+      if ( mSpamRulesPage->markReadRulesSelected() ) {
+        KMFilterAction* spamFilterAction3 = dict["set status"]->create();
+        spamFilterAction3->argsFromString( "R" ); // Read
+        spamFilterActions->append( spamFilterAction3 );
+      }
+      KMSearchPattern* spamFilterPattern = spamFilter->pattern();
+      spamFilterPattern->setName( i18n( "Spam handling" ) );
+      spamFilterPattern->setOp( KMSearchPattern::OpOr );
+      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+            it != mToolList.end(); ++it ) {
+        if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
+        {
+            if ( (*it).isSpamTool() )
+            {
+              const QCString header = (*it).getDetectionHeader().ascii();
+              const QString & pattern = (*it).getDetectionPattern();
+              if ( (*it).isUseRegExp() )
+                spamFilterPattern->append(
+                  KMSearchRule::createInstance( header,
+                  KMSearchRule::FuncRegExp, pattern ) );
+              else
+                spamFilterPattern->append(
+                  KMSearchRule::createInstance( header,
+                  KMSearchRule::FuncContains, pattern ) );
+            }
+        }
+      }
+      spamFilter->setApplyOnOutbound( FALSE);
+      spamFilter->setApplyOnInbound();
+      spamFilter->setApplyOnExplicit();
+      spamFilter->setStopProcessingHere( TRUE );
+      spamFilter->setConfigureShortcut( FALSE );
+
+      filterList.append( spamFilter );
+    }
+
+    if ( mSpamRulesPage->classifyRulesSelected() )
+    {
+      // Classify messages manually as Spam
+      KMFilter* classSpamFilter = new KMFilter();
+      classSpamFilter->setIcon( "mark_as_spam" );
+      QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
+      KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
+      classSpamFilterActionFirst->argsFromString( "P" );
+      classSpamFilterActions->append( classSpamFilterActionFirst );
+      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+            it != mToolList.end(); ++it ) {
+        if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
+            && (*it).useBayesFilter() )
+        {
+          KMFilterAction* classSpamFilterAction = dict["execute"]->create();
+          classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
+          classSpamFilterActions->append( classSpamFilterAction );
+        }
+      }
+      KMFilterAction* classSpamFilterActionLast = dict["transfer"]->create();
+      classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedFolderName() );
+      classSpamFilterActions->append( classSpamFilterActionLast );
+
+      KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
+      classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
+      classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                      KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+      classSpamFilter->setApplyOnOutbound( FALSE);
+      classSpamFilter->setApplyOnInbound( FALSE );
+      classSpamFilter->setApplyOnExplicit( FALSE );
+      classSpamFilter->setStopProcessingHere( TRUE );
+      classSpamFilter->setConfigureShortcut( TRUE );
+      classSpamFilter->setConfigureToolbar( TRUE );
+      filterList.append( classSpamFilter );
+
+      // Classify messages manually as not Spam / as Ham
+      KMFilter* classHamFilter = new KMFilter();
+      classHamFilter->setIcon( "mark_as_ham" );
+      QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
+      KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
+      classHamFilterActionFirst->argsFromString( "H" );
+      classHamFilterActions->append( classHamFilterActionFirst );
+      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+            it != mToolList.end(); ++it ) {
+        if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
+            && (*it).useBayesFilter() )
+        {
+          KMFilterAction* classHamFilterAction = dict["execute"]->create();
+          classHamFilterAction->argsFromString( (*it).getHamCmd() );
+          classHamFilterActions->append( classHamFilterAction );
+        }
+      }
+      KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
+      classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
+      classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+      classHamFilter->setApplyOnOutbound( FALSE);
+      classHamFilter->setApplyOnInbound( FALSE );
+      classHamFilter->setApplyOnExplicit( FALSE );
+      classHamFilter->setStopProcessingHere( TRUE );
+      classHamFilter->setConfigureShortcut( TRUE );
+      classHamFilter->setConfigureToolbar( TRUE );
+      filterList.append( classHamFilter );
+    }
+
+    /* Now that all the filters have been added to the list, tell
+     * the filter manager about it. That will emit filterListUpdate
+     * which will result in the filter list in kmmainwidget being 
+     * initialized. This should happend only once. */
+    KMKernel::self()->filterMgr()->appendFilters( filterList );
   }
 
   QDialog::accept();
@@ -441,34 +372,36 @@ void AntiSpamWizard::checkProgramsSelections()
 {
   bool status = false;
   bool canClassify = false;
-  QValueListIterator<SpamToolConfig> it = mToolList.begin();
   mSpamToolsUsed = false;
   mVirusToolsUsed = false;
-  while ( it != mToolList.end() )
-  {
+  for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+        it != mToolList.end(); ++it ) {
     if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
     {
       status = true;
-      if ( (*it).isSpamTool() )
+      if ( (*it).isSpamTool() ) {
         mSpamToolsUsed = true;
+        if ( (*it).useBayesFilter() )
+          canClassify = true;
+      }
       if ( (*it).isVirusTool() )
         mVirusToolsUsed = true;
     }
-    if ( (*it).useBayesFilter() )
-      canClassify = true;
-    it++;
   }
 
-  mSpamRulesPage->allowClassification( canClassify );
+  if ( mSpamRulesPage )
+    mSpamRulesPage->allowClassification( canClassify );
 
-  removePage( mSpamRulesPage );
-  removePage( mVirusRulesPage );
-  if ( mSpamToolsUsed )
+  if ( mSpamRulesPage )
+    removePage( mSpamRulesPage );
+  if ( mVirusRulesPage )
+    removePage( mVirusRulesPage );
+  if ( ( mMode == AntiSpam ) && mSpamToolsUsed )
   {
     addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
     checkSpamRulesSelections();
   }
-  if ( mVirusToolsUsed )
+  if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
   {
     addPage( mVirusRulesPage, i18n( "Please select the virus filters to be created inside KMail." ));
     checkVirusRulesSelections();
@@ -480,29 +413,12 @@ void AntiSpamWizard::checkProgramsSelections()
 
 void AntiSpamWizard::checkSpamRulesSelections()
 {
-  if ( anySpamOptionChecked() )
-  {
-    if ( mVirusToolsUsed )
-      setNextEnabled( mSpamRulesPage, true );
-    else
-      setFinishEnabled( mSpamRulesPage, true );
-  }
-  else
-  {
-    setNextEnabled( mSpamRulesPage, mVirusToolsUsed );
-    setFinishEnabled( mSpamRulesPage, false );
-  }
-  if ( mVirusToolsUsed )
-    checkVirusRulesSelections();
+  setFinishEnabled( mSpamRulesPage, anySpamOptionChecked() );
 }
 
 void AntiSpamWizard::checkVirusRulesSelections()
 {
-  if ( anyVirusOptionChecked() )
-    setFinishEnabled( mVirusRulesPage, true );
-  else
-    setFinishEnabled( mVirusRulesPage,
-                      anySpamOptionChecked() && mSpamToolsUsed );
+  setFinishEnabled( mVirusRulesPage, anyVirusOptionChecked() );
 }
 
 
@@ -511,17 +427,17 @@ void AntiSpamWizard::checkToolAvailability()
   KCursorSaver busy(KBusyPtr::busy()); // this can take some time to find the tools
 
   // checkboxes for the tools
-  QValueListIterator<SpamToolConfig> it = mToolList.begin();
-  while ( it != mToolList.end() )
-  {
+  for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+        it != mToolList.end(); ++it ) {
     QString text( i18n("Scanning for %1...").arg( (*it).getId() ) );
     mInfoPage->setScanProgressText( text );
     KApplication::kApplication()->processEvents( 200 );
     int rc = checkForProgram( (*it).getExecutable() );
     mProgramsPage->setProgramAsFound( (*it).getVisibleName(), !rc );
-    it++;
   }
-  mInfoPage->setScanProgressText( i18n("Scanning for anti-spam/virus tools finished.") );
+  mInfoPage->setScanProgressText( ( mMode == AntiSpam )
+                                  ? i18n("Scanning for anti-spam tools finished.")
+                                  : i18n("Scanning for anti-virus tools finished.") );
   setNextEnabled( mInfoPage, true );
 }
 
@@ -539,7 +455,10 @@ int AntiSpamWizard::checkForProgram( QString executable )
 
 void AntiSpamWizard::slotHelpClicked()
 {
-  KApplication::kApplication()->invokeHelp( "the-anti-spam-wizard", "kmail" );
+  if ( mMode == AntiSpam )
+    kapp->invokeHelp( "the-anti-spam-wizard", "kmail" );
+  else
+    kapp->invokeHelp( "the-anti-virus-wizard", "kmail" );
 }
 
 
@@ -552,7 +471,8 @@ bool AntiSpamWizard::anySpamOptionChecked()
 
 bool AntiSpamWizard::anyVirusOptionChecked()
 {
-  return ( mVirusRulesPage->moveRulesSelected() || mVirusRulesPage->pipeRulesSelected() );
+  return ( mVirusRulesPage->moveRulesSelected()
+           || mVirusRulesPage->pipeRulesSelected() );
 }
 
 
@@ -560,7 +480,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId,
       int configVersion,QString name, QString exec,
       QString url, QString filter, QString detection, QString spam, QString ham,
-      QString header, QString pattern, bool regExp, bool bayesFilter, QString type)
+      QString header, QString pattern, bool regExp, bool bayesFilter, WizardMode type)
   : mId( toolId ), mVersion( configVersion ),
     mVisibleName( name ), mExecutable( exec ), mWhatsThisText( url ),
     mFilterName( filter ), mDetectCmd( detection ), mSpamCmd( spam ),
@@ -571,40 +491,55 @@ AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId,
 
 
 //---------------------------------------------------------------------------
-AntiSpamWizard::ConfigReader::ConfigReader( QValueList<SpamToolConfig> & configList )
+AntiSpamWizard::ConfigReader::ConfigReader( WizardMode mode,
+                                            QValueList<SpamToolConfig> & configList )
   : mToolList( configList ),
-    mConfig( "kmail.antispamrc", true )
-{}
+    mMode( mode )
+{
+  if ( mMode == AntiSpam )
+    mConfig = new KConfig( "kmail.antispamrc", true );
+  else
+    mConfig = new KConfig( "kmail.antivirusrc", true );
+}
+
+AntiSpamWizard::ConfigReader::~ConfigReader( )
+{
+  delete mConfig;
+}
 
 
 void AntiSpamWizard::ConfigReader::readAndMergeConfig()
 {
+  QString groupName = ( mMode == AntiSpam )
+                      ? QString("Spamtool #%1")
+                      : QString("Virustool #%1");
   // read the configuration from the global config file
-  mConfig.setReadDefaults( true );
-  KConfigGroup general( &mConfig, "General" );
+  mConfig->setReadDefaults( true );
+  KConfigGroup general( mConfig, "General" );
   int registeredTools = general.readNumEntry( "tools", 0 );
   for (int i = 1; i <= registeredTools; i++)
   {
-    KConfigGroup toolConfig( &mConfig,
-      QCString("Spamtool #") + QCString().setNum(i) );
+    KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
     mToolList.append( readToolConfig( toolConfig ) );
   }
 
   // read the configuration from the user config file
   // and merge newer config data
-  mConfig.setReadDefaults( false );
-  KConfigGroup user_general( &mConfig, "General" );
+  mConfig->setReadDefaults( false );
+  KConfigGroup user_general( mConfig, "General" );
   int user_registeredTools = user_general.readNumEntry( "tools", 0 );
   for (int i = 1; i <= user_registeredTools; i++)
   {
-    KConfigGroup toolConfig( &mConfig,
-      QCString("Spamtool #") + QCString().setNum(i) );
+    KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
     mergeToolConfig( readToolConfig( toolConfig ) );
   }
   // Make sure to have add least one tool listed even when the
   // config file was not found or whatever went wrong
-  if ( registeredTools < 1 && user_registeredTools < 1)
-    mToolList.append( createDummyConfig() );
+  // Currently only works for spam tools
+  if ( mMode == AntiSpam ) {
+    if ( registeredTools < 1 && user_registeredTools < 1 )
+      mToolList.append( createDummyConfig() );
+  }
 }
 
 
@@ -627,11 +562,10 @@ AntiSpamWizard::SpamToolConfig
   QString header = configGroup.readEntry( "DetectionHeader" );
   QString pattern = configGroup.readEntry( "DetectionPattern" );
   bool useRegExp  = configGroup.readBoolEntry( "UseRegExp" );
-  bool supportsBayes = configGroup.readBoolEntry( "SupportsBayes" );
-  QString type = configGroup.readEntry( "Type" );
+  bool supportsBayes = configGroup.readBoolEntry( "SupportsBayes", false );
   return SpamToolConfig( id, version, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd,
-                         header, pattern, useRegExp, supportsBayes, type );
+                         header, pattern, useRegExp, supportsBayes, mMode );
 }
 
 
@@ -644,16 +578,15 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
                         "sa-learn -L --spam --no-rebuild --single",
                         "sa-learn -L --ham --no-rebuild --single",
                         "X-Spam-Flag", "yes",
-                        false, true, "spam" );
+                        false, true, AntiSpam );
 }
 
 
 void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConfig config )
 {
   bool found = false;
-  QValueListIterator<SpamToolConfig> it = mToolList.begin();
-  while ( it != mToolList.end() && !found)
-  {
+  for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+        it != mToolList.end(); ++it ) {
 #ifndef NDEBUG
     kdDebug(5006) << "Check against tool: " << (*it).getId() << endl;
     kdDebug(5006) << "Against version   : " << (*it).getVersion() << endl;
@@ -669,8 +602,8 @@ void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConf
         mToolList.remove( it );
         mToolList.append( config );
       }
+      break;
     }
-    else it++;
   }
   if ( !found )
     mToolList.append( config );
@@ -678,7 +611,8 @@ void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConf
 
 
 //---------------------------------------------------------------------------
-ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
+ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
+                              QWidget * parent, const char * name )
   : QWidget( parent, name )
 {
   QGridLayout *grid = new QGridLayout( this, 1, 1, KDialog::marginHint(),
@@ -686,22 +620,38 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
   grid->setColStretch( 1, 10 );
 
   mIntroText = new QLabel( this );
-  mIntroText->setText( i18n(
-    "<p>Here you get some assistance in setting up KMail's filter "
-    "rules to use some commonly-known anti-spam/virus tools.</p>"
-    "<p>The wizard can detect those tools on your computer as "
-    "well as create filter rules to classify messages using these "
-    "tools and to separate messages classified as spam, or which "
-    "contain viruses. The wizard will not take any existing filter "
-    "rules into consideration but will append new rules in any"
-    "case.</p>"
-    "<p><b>WARNING:</b> As KMail is blocked during the scan of the "
-    "messages for spam or viruses, you may encounter problems with "
-    "the responsivness of KMail because anti-spam/virus tool "
-    "operations are usually time consuming. Please consider "
-    "deleting the filter rules created by the wizard to get "
-    "back to the former behavior."
-    ) );
+  mIntroText->setText(
+    ( mode == AntiSpamWizard::AntiSpam )
+    ? i18n(
+      "<p>Here you can get some assistance in setting up KMail's filter "
+      "rules to use some commonly-known anti-spam tools.</p>"
+      "<p>The wizard can detect those tools on your computer as "
+      "well as create filter rules to classify messages using these "
+      "tools and to separate messages classified as spam. "
+      "The wizard will not take any existing filter "
+      "rules into consideration: it will always append the new rules.</p>"
+      "<p><b>Warning:</b> As KMail is blocked during the scan of the "
+      "messages for spam, you may encounter problems with "
+      "the responsiveness of KMail because anti-spam tool "
+      "operations are usually time consuming; please consider "
+      "deleting the filter rules created by the wizard to get "
+      "back to the former behavior."
+      )
+    : i18n(
+      "<p>Here you can get some assistance in setting up KMail's filter "
+      "rules to use some commonly-known anti-virus tools.</p>"
+      "<p>The wizard can detect those tools on your computer as "
+      "well as create filter rules to classify messages using these "
+      "tools and to separate messages containing viruses. "
+      "The wizard will not take any existing filter "
+      "rules into consideration: it will always append the new rules.</p>"
+      "<p><b>Warning:</b> As KMail is blocked during the scan of the "
+      "messages for viruses, you may encounter problems with "
+      "the responsiveness of KMail because anti-virus tool "
+      "operations are usually time consuming; please consider "
+      "deleting the filter rules created by the wizard to get "
+      "back to the former behavior."
+      ) );
   grid->addWidget( mIntroText, 0, 0 );
 
   mScanProgressText = new QLabel( this );
@@ -906,9 +856,9 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
   QGridLayout *grid = new QGridLayout( this, 5, 1, KDialog::marginHint(),
                                        KDialog::spacingHint() );
 
-  mPipeRules = new QCheckBox( i18n("Classify messages using the anti-virus tools"), this );
+  mPipeRules = new QCheckBox( i18n("Check messages using the anti-virus tools"), this );
   QWhatsThis::add( mPipeRules,
-      i18n( "Let the anti-virus tools classify your messages. The wizard "
+      i18n( "Let the anti-virus tools check your messages. The wizard "
             "will create appropriate filters. The messages are usually "
             "marked by the tools so that following filters can react "
             "on this and, for example, move virus messages to a special folder.") );

@@ -19,6 +19,13 @@ public:
   KMMessagePart( QDataStream & stream );
   virtual ~KMMessagePart();
 
+  /** Reset to text/plain with 7bit cte and clear all other properties. */
+  void clear();
+
+  /** Obtains an independant copy (i.e. without explicitely shared data) of the
+      data contained in msgPart. */
+  void duplicate( const KMMessagePart & msgPart );
+
   /** Get or set the message body */
   QCString body(void) const;
   void setBody(const QCString &aStr);
@@ -44,7 +51,7 @@ public:
   /** Sets body, encoded in the best fitting
       content-transfer-encoding, which is determined by character
       frequency count.
-      
+
       @param aBuf       input buffer
       @param allowedCte return: list of allowed cte's
       @param allow8Bit  whether "8bit" is allowed as cte.

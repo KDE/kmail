@@ -73,6 +73,8 @@ public:
   void writeConfig( KConfig* config ) const;
 
   FolderStorage* storage() { return mStorage; }
+  /** if the folder is const, the storage should be as well */
+  const FolderStorage* storage() const { return mStorage; }
 
   /** Returns the type of this folder */
   KMFolderType folderType() const;
@@ -177,10 +179,6 @@ public:
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);
-
-  /** Returns FALSE, if the message has to be retrieved from an IMAP account
-   * first. In this case this function does this and cares for the rest */
-  bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
 
   /** Remove (first occurrence of) given message from the folder. */
   void removeMsg(int i, bool imapQuiet = FALSE);
@@ -499,9 +497,6 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
-  void setContentsType( int type );
-  int contentsType() const { return mContentsType; }
-
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -513,7 +508,7 @@ signals:
 
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
-  void expunged();
+  void expunged( KMFolder* );
 
   /** Emitted when the icon paths are set. */
   void iconsChanged();
@@ -597,10 +592,6 @@ private:
 
   /** Should new mail in this folder be ignored? */
   bool mIgnoreNewMail;
-
-  /** Type of contents in this folder. */
-  // TODO: Make this an enum
-  int mContentsType;
 };
 
 #endif /*kmfolder_h*/
