@@ -424,14 +424,15 @@ void KMSettings::done(int r)
     config->writeEntry("Reply-To Address",replytoEdit->text());
     config->writeEntry("Signature File",sigEdit->text());
 
-    config->setGroup("Network");
     if (sendmailRadio->isChecked()) 
-      config->writeEntry("Outgoing Type","2");
+      msgSender->setMethod(KMSender::smMail);
     else if (smtpRadio->isChecked()) 
-      config->writeEntry("Outgoing Type","1");
-    config->writeEntry("Sendmail Location",sendmailLocationEdit->text());
-    config->writeEntry("SMTP Host",smtpServerEdit->text());
-    config->writeEntry("SMTP Port",smtpPortEdit->text());
+      msgSender->setMethod(KMSender::smSMTP);
+
+    msgSender->setMailer(sendmailLocationEdit->text());
+    msgSender->setSmtpHost(smtpServerEdit->text());
+    QString t = smtpPortEdit->text();
+    msgSender->setSmtpPort(t.toUInt());
   }
 }
 

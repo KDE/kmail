@@ -31,7 +31,7 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mSendImmediate = (bool)mCfg->readNumEntry("immediate", TRUE);
   mMailer = mCfg->readEntry("mailer", QString("/usr/sbin/sendmail"));
   mSmtpHost = mCfg->readEntry("smtphost", QString("localhost"));
-  mSmtpPort = mCfg->readNumEntry("smptport", 25);
+  mSmtpPort = mCfg->readNumEntry("smtpport", 25);
 
   mCfg->setGroup("General");
   outboxName = mCfg->readEntry("outbox", QString("outbox"));
@@ -336,6 +336,7 @@ void KMSender::setMethod(Method aMethod)
   mMethod = aMethod;
   mCfg->setGroup(SENDER_GROUP);
   mCfg->writeEntry("method", (int)mMethod);
+  mCfg->sync();
 }
 
 
@@ -363,6 +364,7 @@ void KMSender::setSmtpHost(const QString& aSmtpHost)
   mSmtpHost = aSmtpHost;
   mCfg->setGroup(SENDER_GROUP);
   mCfg->writeEntry("smtphost", mSmtpHost);
+  mCfg->sync();
 }
 
 
@@ -372,4 +374,5 @@ void KMSender::setSmtpPort(int aSmtpPort)
   mSmtpPort = aSmtpPort;
   mCfg->setGroup(SENDER_GROUP);
   mCfg->writeEntry("smtpport", mSmtpPort);
+  mCfg->sync();
 }

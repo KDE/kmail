@@ -21,7 +21,8 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
-		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc kmimemagic.moc
+		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc \
+		kmimemagic.moc kmacctpop.moc kmaccount.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -113,3 +114,11 @@ kshortcut.moc: kshortcut.h
 kmimemagic.cpp: kmimemagic.moc
 kmimemagic.moc: kmimemagic.h
 	$(MOC) kmimemagic.h -o kmimemagic.moc
+
+kmacctpop.cpp: kmacctpop.moc
+kmacctpop.moc: kmacctpop.h
+	$(MOC) kmacctpop.h -o kmacctpop.moc
+
+kmaccount.cpp: kmaccount.moc
+kmaccount.moc: kmaccount.h
+	$(MOC) kmaccount.h -o kmaccount.moc

@@ -25,10 +25,6 @@
 #include <mimelib/string.h>
 
 
-#define FORWARD 0
-#define REPLY 1
-#define REPLYALL 2
-
 class KMReaderView : public QWidget
 {
 Q_OBJECT

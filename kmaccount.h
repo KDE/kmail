@@ -7,6 +7,10 @@
 
 #include <qstring.h>
 #include <qlist.h>
+#include <qpushbt.h>
+#include <qlined.h>
+#include <qwidget.h>
+#include <qobject.h>
 #include <Kconfig.h>
 #include <kmsgbox.h>
 
@@ -15,8 +19,9 @@ class QTextStream;
 class KMAcctMgr;
 class KMAcctFolder;
 
-class KMAccount
+class KMAccount : public QObject
 {
+Q_OBJECT
   friend class KMAcctMgr;
 
 public:

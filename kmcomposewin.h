@@ -34,12 +34,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#define FORWARD 0
-#define REPLY 1
-#define REPLYALL 2
-
 class KMMessage;
 class QGridLayout;
+enum Action { actNoOp =0, actForward=1, actReply=2, actReplyAll=3 };
 
 
 //-----------------------------------------------------------------------------
@@ -48,10 +45,10 @@ class KMComposeView : public QWidget
   Q_OBJECT
 public:
   KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0,
-		KMMessage *message=0, int action =0);
+		KMMessage *message=0, Action ac = actNoOp);
   ~KMComposeView();
   KEdit *editor;
-  KDNDDropZone *zone;
+
 
 private:
   QLineEdit *fromLEdit;
@@ -63,43 +60,41 @@ private:
   QString SMTPServer;
   QString EMailAddress;
   QString ReplyToAddress;
-  int indexAttachment;
   QStrList *urlList;
-  KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
-  KTabListBox *attachmentWidget;
-  KMMessage * prepareMessage();
+  KTabListBox *attachmentListBox;
   QFrame *frame;
-  void initKMimeMagic();
   KMimeMagic *magic;
 
-public slots:
-  void printIt();
-  void find();
-  void attachFile();
-  void sendNow();
-  void sendLater();
-
-private slots:
-  void undoEvent();
-  void copyText();
-  void cutText();
-  void pasteText();
-  void markAll();
-  void slotSelectFont();
-  void toDo();
-  void newComposer();
-  void appendSignature();
   void parseConfiguration();
   void forwardMessage();
   void replyMessage();
   void replyAll();
-  void detachFile(int,int);
-  void insertFile();
-  void getDNDAttachment();
   void insertNewAttachment(QString );
   void createAttachmentWidget();
-  void deleteAttachmentWidget();
-  void slotChangeHeading(const char *);
+  void initKMimeMagic();
+  KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
+  KMMessage * prepareMessage();
+
+public slots:
+  void slotPrintIt();
+  void slotFind();
+  void slotAttachFile();
+  void slotSendNow();
+  void slotSendLater();
+
+private slots:
+  void slotUndoEvent();
+  void slotCopyText();
+  void slotCutText();
+  void slotPasteText();
+  void slotMarkAll();
+  void slotSelectFont();
+  void slotToDo();
+  void slotNewComposer();
+  void slotAppendSignature();
+  void slotInsertFile();
+  void slotGetDNDObject();
+  void slotUpdateHeading(const char *);
   void slotPopupMenu(int, int);
   void slotOpenAttachment();
   void slotRemoveAttachment();
@@ -108,6 +103,7 @@ private slots:
 
 protected:
   QGridLayout* grid;
+  KDNDDropZone *zone;
   virtual void resizeEvent(QResizeEvent*);
 };
 
@@ -119,7 +115,7 @@ class KMComposeWin : public KTopLevelWidget
 
 public:
   KMComposeWin(QWidget *parent = 0, const char *name = 0, 
-	       QString emailAddress=0, KMMessage *message=0, int action = 0);
+	       QString emailAddress=0, KMMessage *message=0, Action action = actNoOp);
   virtual void show();
   QString encoding;
   friend class KMComposeView;  

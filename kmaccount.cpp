@@ -9,7 +9,7 @@
 #include <qfile.h>
 #include <assert.h>
 
-#include "kmaccount.h"
+#include "kmaccount.moc"
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 

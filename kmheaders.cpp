@@ -236,7 +236,7 @@ void KMHeaders::forwardMsg (int msgId)
   kbp->busy();
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    w = new KMComposeWin(0, 0, 0, msg, FORWARD);
+    w = new KMComposeWin(0, 0, 0, msg, actForward);
     w->show();
   }
   kbp->idle(); 
@@ -252,7 +252,7 @@ void KMHeaders::replyToMsg (int msgId)
   kbp->busy();
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    w = new KMComposeWin(0, 0, 0, msg, REPLY);
+    w = new KMComposeWin(0, 0, 0, msg, actReply);
     w->show();
   }
   kbp->idle(); 
@@ -268,7 +268,7 @@ void KMHeaders::replyAllToMsg (int msgId)
   kbp->busy();
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    w = new KMComposeWin(0, 0, 0, msg, REPLYALL);
+    w = new KMComposeWin(0, 0, 0, msg, actReplyAll);
     w->show();
   }
   kbp->idle(); 

@@ -10,10 +10,6 @@
 #include "kmimemagic.h"
 #include <kiconloader.h>
 
-#define FORWARD 0
-#define REPLY 1
-#define REPLYALL 2
-
 KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,KMFolder *f = 0)
 	:QWidget(parent,name)
 {
@@ -426,7 +422,7 @@ QString KMReaderView::parseEAddress(QString old)
 void KMReaderView::replyMessage()
 {
 	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-					   currentMessage,REPLY);
+					   currentMessage,actReply);
 	c->show();
 	c->resize(c->size());
 }
@@ -434,7 +430,7 @@ void KMReaderView::replyMessage()
 void KMReaderView::replyAll()
 {
 	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-					   currentMessage,REPLYALL);
+					   currentMessage,actReplyAll);
         c->show();
         c->resize(c->size());
 
@@ -442,7 +438,7 @@ void KMReaderView::replyAll()
 void KMReaderView::forwardMessage()
 {
 	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-					   currentMessage,FORWARD);
+					   currentMessage,actForward);
 	c->show();
 	c->resize(c->size());
 }
