@@ -25,6 +25,7 @@ KWidgetLister::KWidgetLister( int minWidgets, int maxWidgets, QWidget *parent, c
   //--------- the button box
   mLayout = new QVBoxLayout(this, 0, 4);
   mButtonBox = new QHBox(this);
+  mButtonBox->setSpacing(4);
   mLayout->addWidget( mButtonBox );
 
   mBtnMore = new QPushButton( i18n("more widgets","&More"), mButtonBox );
@@ -126,6 +127,8 @@ void KWidgetLister::setNumberOfShownWidgetsTo( int aNum )
   // add missing widgets
   for ( ; missingWidgets ; missingWidgets-- )
     addWidgetAtEnd();
+
+  enableControls();
 }
 
 void KWidgetLister::enableControls()
