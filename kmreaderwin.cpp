@@ -1689,7 +1689,7 @@ void KMReaderWin::slotAtmOpen()
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
   // TODO: show full path for Service, not only name
   QString mimetype = KMimeType::findByURL(KURL(mAtmCurrentName))->name();
-  KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
+  KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
   QString question;
   QString open_text = i18n("Open");
   QString filenameText = msgPart.fileName();
