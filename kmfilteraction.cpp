@@ -391,49 +391,6 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
 }
 
 //=============================================================================
-// Skip all other filter rules
-//=============================================================================
-class KMFilterActionSkip: public KMFilterAction
-{
-public:
-  KMFilterActionSkip();
-  virtual const QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
-  static KMFilterAction* newAction(void);
-};
-
-KMFilterActionSkip::KMFilterActionSkip(): KMFilterAction("skip rest")
-{
-}
-
-const QString KMFilterActionSkip::label(void) const
-{
-  return i18n("skip rest");
-}
-
-KMFilterAction* KMFilterActionSkip::newAction(void)
-{
-  return (new KMFilterActionSkip);
-}
-
-int KMFilterActionSkip::process(KMMessage*, bool& stopIt)
-{
-  stopIt = TRUE;
-  return -1;
-}
-
-void KMFilterActionSkip::argsFromString(const QString)
-{
-}
-
-const QString KMFilterActionSkip::argsAsString(void) const
-{
-  return "";
-}
-
-//=============================================================================
 // Specify Identity to be used when replying to a message
 //=============================================================================
 class KMFilterActionIdentity: public KMFilterAction
@@ -574,8 +531,6 @@ void KMFilterActionDict::init(void)
 	 KMFilterActionTransport::newAction);
   insert("transfer", i18n("transfer"),
 	 KMFilterActionMove::newAction);
-  insert("skip rest", i18n("skip rest"),
-	 KMFilterActionSkip::newAction);
   insert("forward", i18n("forward to"),
          KMFilterActionForward::newAction);
   insert("execute", i18n("execute"),
