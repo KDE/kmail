@@ -3254,7 +3254,9 @@ void ConfigureDialog::slotAddReplyPrefix( void )
   KLineEditDlg *linedlg = new KLineEditDlg(i18n("Enter new reply prefix"), "", this);
   if( linedlg->exec() == QDialog::Accepted )
   {
-    mComposer.replyListBox->insertItem( linedlg->text() );
+      QString repString=linedlg->text();
+      if(!repString.isEmpty())
+          mComposer.replyListBox->insertItem( repString );
   }
   delete linedlg;
 }
@@ -3276,7 +3278,9 @@ void ConfigureDialog::slotAddForwardPrefix( void )
   KLineEditDlg *linedlg = new KLineEditDlg(i18n("Enter new forward prefix"), "", this);
   if( linedlg->exec() == QDialog::Accepted )
   {
-    mComposer.forwardListBox->insertItem( linedlg->text() );
+      QString forwString=linedlg->text();
+      if(!forwString.isEmpty())
+          mComposer.forwardListBox->insertItem( forwString );
   }
   delete linedlg;
 }
