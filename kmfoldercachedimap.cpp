@@ -1334,9 +1334,13 @@ void KMFolderCachedImap::listDirectory2() {
     // create the INBOX
     for (node = folder()->child()->first(); node; node = folder()->child()->next())
       if (!node->isDir() && node->name() == "INBOX") break;
-    if (node) f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-    else f = static_cast<KMFolderCachedImap*>
-      (folder()->child()->createFolder("INBOX", true, KMFolderTypeCachedImap)->storage());
+    if (node)
+      f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+    else {
+      KMFolder* newFolder = folder()->child()->createFolder("INBOX", true, KMFolderTypeCachedImap);
+      if (newFolder)
+        f = static_cast<KMFolderCachedImap*>(newFolder->storage());
+    }
     f->setAccount(mAccount);
     f->setImapPath("/INBOX/");
     f->folder()->setLabel(i18n("inbox"));
@@ -1384,8 +1388,9 @@ void KMFolderCachedImap::listDirectory2() {
         foldersForDeletionOnServer << subfolderPath;
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
-        f = static_cast<KMFolderCachedImap*>
-          (folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
+        KMFolder* newFolder = folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap);
+        if (newFolder)
+          f = static_cast<KMFolderCachedImap*>(newFolder->storage());
         if (f) {
           f->close();
           f->setAccount(mAccount);
