@@ -973,7 +973,10 @@ if( fileD1.open( IO_WriteOnly ) ) {
     return error;
   }
 
-  fprintf(mStream, "From %s %s\n", (const char *)aMsg->fromEmail(),
+  QCString address( aMsg->fromEmail() );
+  if ( address.isEmpty() )
+    address = "unknown@unknown.invalid";
+  fprintf(mStream, "From %s %s\n", address.data(),
           (const char *)aMsg->dateShortStr());
   off_t offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
