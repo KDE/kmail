@@ -146,7 +146,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(msg_parent->storage());
     url.setPath( imapDestFolder->imapPath() + ";UID=" + sets );
     ImapAccountBase::jobData jd;
-    jd.parent = 0; mOffset = 0;
+    jd.parent = 0; jd.offset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList = msgList;
 
@@ -231,6 +231,9 @@ void ImapJob::slotGetNextMessage()
   }
   KURL url = account->getUrl();
   QString path = msgParent->imapPath() + ";UID=" + msg->headerField("X-UID");
+  ImapAccountBase::jobData jd;
+  jd.parent = 0; jd.offset = 0;
+  jd.total = 1; jd.done = 0;
   if ( !mPartSpecifier.isEmpty() )
   {
     if ( mPartSpecifier.find ("STRUCTURE", 0, false) != -1 ) {
@@ -239,15 +242,17 @@ void ImapJob::slotGetNextMessage()
       path += ";SECTION=HEADER";
     } else {
       path += ";SECTION=BODY.PEEK[" + mPartSpecifier + "]";
+      DwBodyPart * part = msg->findDwBodyPart( msg->getFirstDwBodyPart(), mPartSpecifier );
+      if (part)
+        jd.total = part->BodySize();      
     }
   } else {
       path += ";SECTION=BODY.PEEK[]";
+      uint size = msg->headerField("X-Length").toUInt();
+      if (size > 0) jd.total = size;      
   }  
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
-  ImapAccountBase::jobData jd;
-  jd.parent = 0;
-  jd.total = 1; jd.done = 0;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
   KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );
@@ -264,6 +269,11 @@ void ImapJob::slotGetNextMessage()
   }
   connect( mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
            msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)) );
+  if ( jd.total > 1 )
+  {
+    connect(mJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
+        this, SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
+  }
 }
 
 
@@ -299,6 +309,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
            mPartSpecifier == "HEADER" )
       {
         uint size = msg->headerField("X-Length").toUInt();
+        if ( size > 0 && mPartSpecifier.isEmpty() )
+          (*it).done = size;
         QString uid = msg->headerField("X-UID");
         msg->fromByteArray( (*it).data );
         msg->setHeaderField("X-UID",uid);
@@ -498,12 +510,10 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
     if ( !(*it).msgList.isEmpty() )
     {
       const ulong * sernum = (ulong *)(*it).msgList.last()->getMsgSerNum();
-//      kdDebug(5006) << "insert sernum " << (*it).msgList.last()->getMsgSerNum() << " for " << uid << endl;
       imapFolder->insertUidSerNumEntry(uid, sernum);
     } else if (mMsgList.first())
     {
       const ulong * sernum = (ulong *)mMsgList.first()->getMsgSerNum();
-//      kdDebug(5006) << "insert sernum " << mMsgList.first()->getMsgSerNum() << " for " << uid << endl;
       imapFolder->insertUidSerNumEntry(uid, sernum);
     }
   }
@@ -548,6 +558,22 @@ void ImapJob::execute()
 void ImapJob::expireMessages()
 {
     return;
+}
+
+//-----------------------------------------------------------------------------
+void ImapJob::slotProcessedSize(KIO::Job * job, KIO::filesize_t processed)
+{
+  KMMessage *msg = mMsgList.first();
+  if (!msg || !msg->parent() || !job) {
+    return;
+  }
+  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent()->storage());
+  KMAcctImap *account = parent->account();
+  if ( !account ) return;
+  ImapAccountBase::JobIterator it = account->findJob( job );
+  if ( it == account->jobsEnd() ) return;
+  (*it).done = processed;
+  emit progress( (*it).done, (*it).total );
 }
 
 }//namespace KMail

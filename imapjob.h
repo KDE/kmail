@@ -71,6 +71,8 @@ private slots:
   /** result of a copy-operation */
   void slotCopyMessageResult( KIO::Job *job );
   void slotCopyMessageInfoData( KIO::Job *, const QString &data );
+  void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
+
 private:
   void execute();
   void expireMessages();
@@ -78,7 +80,6 @@ private:
              QPtrList<KMMessage>& msgList );
   KIO::Job *mJob;
   QByteArray mData;
-  int mTotal, mDone, mOffset;
   const AttachmentStrategy *mAttachmentStrategy;
 };
 

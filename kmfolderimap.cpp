@@ -1069,6 +1069,8 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
       partSpecifier = QString::null;
 
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
+    connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
+        mAccount, SLOT( displayProgress() ) );
     return job;
   }
 }
