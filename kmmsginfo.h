@@ -58,8 +58,8 @@ public:
   virtual void setMsgIdMD5(const QString&);
 
   /** Grr.. c++! */
-  virtual void setStatus(const char* s1, const char* s2=0) { return KMMsgBase::setStatus(s1, s2); }
-  virtual void setDate(const char* s1) { return KMMsgBase::setDate(s1); }
+  virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
+  virtual void setDate(const char* s1) { KMMsgBase::setDate(s1); }
 
   virtual bool dirty(void) const;
 

@@ -356,7 +356,7 @@ public:
     virtual KMMsgStatus status(void) const { return mStatus; }
     /** Set status and mark dirty. */
     virtual void setStatus(const KMMsgStatus status);
-    virtual void setStatus(const char* s1, const char* s2=0) { return KMMsgBase::setStatus(s1, s2); }
+    virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
 protected:
     /** Convert wildcards into normal string */

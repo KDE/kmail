@@ -110,7 +110,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
     deleteMessage(msg);
   }
 
-  return KMFolderImapInherited::removeMsg(idx);
+  KMFolderImapInherited::removeMsg(idx);
 }
 
 //-----------------------------------------------------------------------------
