@@ -50,7 +50,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                                             QWidget *parent,
                                             const char *name )
 :  KDialogBase( parent, name, true,
-               i18n( "Shortcut for folder %1" ).arg( folder->label() ),
+               i18n( "Shortcut for Folder %1" ).arg( folder->label() ),
                KDialogBase::Ok | KDialogBase::Cancel ),
    mFolder( folder )
 {
