@@ -1033,10 +1033,13 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       HeaderItem *item = static_cast<HeaderItem*>(lvi);
       SortCacheItem *sci = item->sortCacheItem();
       SortCacheItem *parent = findParent( sci );
-      if (!parent) parent = findParentBySubject( sci );
+      if ( !parent && mSubjThreading ) 
+        parent = findParentBySubject( sci );
+
+      Q_ASSERT( !parent || parent->item() != removedItem );
       myParent->takeItem(lvi);
-      if (parent && parent->item() != item)
-          parent->item()->insertItem(lvi);
+      if ( parent && parent->item() != item && parent->item() != removedItem )
+        parent->item()->insertItem(lvi);
       else
         insertItem(lvi);
 
