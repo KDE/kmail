@@ -60,6 +60,8 @@ namespace AnnotationJobs {
 
 /**
  * Set an annotation entry (note that it can have multiple attributes)
+ * @param slave Slave object the job should be assigned to
+ * @param url URL for the annotation
  * @param entry the name of the annotation entry
  * @param attributes attribute name+value pairs
  */
@@ -75,6 +77,8 @@ MultiSetAnnotationJob* multiSetAnnotation( KIO::Slave* slave, const KURL& url, c
 class GetAnnotationJob;
 /**
  * Get an annotation entry
+ * @param slave Slave object the job should be assigned to
+ * @param url URL for the annotation
  * @param entry the name of the annotation entry
  * @param attributes attribute names
  */
