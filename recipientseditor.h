@@ -116,6 +116,15 @@ class RecipientLine : public QWidget
 
     bool isEmpty();
 
+    /** Returns true if the user has made any modifications to this
+        RecipientLine.
+    */
+    bool isModified();
+
+    /** Resets the modified flag to false. 
+    */
+    void clearModified();
+
     void setComboWidth( int w );
 
     void fixTabOrder( QWidget *previous );
@@ -144,12 +153,14 @@ class RecipientLine : public QWidget
     void slotFocusUp();
     void slotFocusDown();
     void slotPropagateDeletion();
+    void slotTypeModified();
 
   private:
     QComboBox *mCombo;
     RecipientLineEdit *mEdit;
     QPushButton *mRemoveButton;
     int mRecipientsCount;
+    bool mModified;
 };
 
 class RecipientsView : public QScrollView
@@ -172,6 +183,15 @@ class RecipientsView : public QScrollView
         @param type      The recipient type.
     */
     void removeRecipient( const QString & recipient, Recipient::Type type );
+
+    /** Returns true if the user has made any modifications to the list of
+        recipients.
+    */
+    bool isModified();
+
+    /** Resets the modified flag to false. 
+    */
+    void clearModified();
 
     void activateLine( RecipientLine * );
 
@@ -207,6 +227,7 @@ class RecipientsView : public QScrollView
     RecipientLine* mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
+    bool mModified;
 };
 
 class RecipientsToolTip : public QToolTip
@@ -281,6 +302,15 @@ class RecipientsEditor : public QWidget
     */
     void removeRecipient( const QString & recipient, Recipient::Type type );
 
+    /** Returns true if the user has made any modifications to the list of
+        recipients.
+    */
+    bool isModified();
+
+    /** Resets the modified flag to false. 
+    */
+    void clearModified();
+
     void setFirstColumnWidth( int );
 
   public slots:
@@ -301,6 +331,7 @@ class RecipientsEditor : public QWidget
   private:
     RecipientsView *mRecipientsView;
     SideWidget* mSideWidget;
+    bool mModified;
 };
 
 #endif

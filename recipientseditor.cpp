@@ -144,7 +144,7 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 }
 
 RecipientLine::RecipientLine( QWidget *parent )
-  : QWidget( parent ), mRecipientsCount( 0 )
+  : QWidget( parent ), mRecipientsCount( 0 ), mModified( false )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
@@ -169,6 +169,9 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
   connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
+  connect( mCombo, SIGNAL( activated ( int ) ),
+           this, SLOT( slotTypeModified() ) );
+
   mRemoveButton = new QPushButton( this );
   mRemoveButton->setIconSet( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
@@ -184,6 +187,11 @@ void RecipientLine::slotFocusUp()
 void RecipientLine::slotFocusDown()
 {
   emit downPressed( this );
+}
+
+void RecipientLine::slotTypeModified()
+{
+  mModified = true;
 }
 
 void RecipientLine::analyzeLine( const QString &text )
@@ -242,6 +250,17 @@ bool RecipientLine::isEmpty()
   return mEdit->text().isEmpty();
 }
 
+bool RecipientLine::isModified()
+{
+  return mModified || mEdit->isModified();
+}
+
+void RecipientLine::clearModified()
+{
+  mModified = false;
+  mEdit->clearModified();
+}
+
 void RecipientLine::slotReturnPressed()
 {
   emit returnPressed( this );
@@ -284,7 +303,7 @@ void RecipientLine::clear()
 }
 
 RecipientsView::RecipientsView( QWidget *parent )
-  : QScrollView( parent )
+  : QScrollView( parent ), mCurDelLine( 0 ), mModified( false )
 {
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
@@ -409,6 +428,8 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
 
 void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
 {
+  if ( !line->isEmpty() )
+    mModified = true;
   if ( mLines.count() == 1 ) {
     line->clear();
   } else {
@@ -517,6 +538,35 @@ void RecipientsView::removeRecipient( const QString & recipient,
   }
   if ( line )
     line->clear();
+}
+
+bool RecipientsView::isModified()
+{
+  if ( mModified )
+    return true;
+
+  QPtrListIterator<RecipientLine> it( mLines );
+  RecipientLine *line;
+  while( ( line = it.current() ) ) {
+    if ( line->isModified() ) {
+      return true;
+    }
+    ++it;
+  }
+
+  return false;
+}
+
+void RecipientsView::clearModified()
+{
+  mModified = false;
+
+  QPtrListIterator<RecipientLine> it( mLines );
+  RecipientLine *line;
+  while( ( line = it.current() ) ) {
+    line->clearModified();
+    ++it;
+  }
 }
 
 void RecipientsView::setFocus()
@@ -697,7 +747,7 @@ void SideWidget::pickRecipient()
 
 
 RecipientsEditor::RecipientsEditor( QWidget *parent )
-  : QWidget( parent )
+  : QWidget( parent ), mModified( false )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
@@ -740,6 +790,7 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
   }
 
   line->setRecipient( r );
+  mModified = true;
 }
 
 void RecipientsEditor::saveDistributionList()
@@ -805,6 +856,17 @@ void RecipientsEditor::removeRecipient( const QString & recipient,
                                         Recipient::Type type )
 {
   mRecipientsView->removeRecipient( recipient, type );
+}
+
+bool RecipientsEditor::isModified()
+{
+  return mModified || mRecipientsView->isModified();
+}
+
+void RecipientsEditor::clearModified()
+{
+  mModified = false;
+  mRecipientsView->clearModified();
 }
 
 void RecipientsEditor::clear()
