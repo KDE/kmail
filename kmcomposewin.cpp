@@ -2955,7 +2955,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         dialog.resize( 700, 200 );
 
         QCString signer = from().utf8();
-        signer.replace(QRegExp("\\x0001"), " ");
+        signer.replace('\x001', ' ');
 
         kdDebug(5006) << "\n\nRetrieving keys for: " << from() << endl;
         char* certificatePtr = 0;
@@ -3435,7 +3435,7 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
   bool bEncrypt = true;
 
   QCString addressee = recipient.utf8();
-  addressee.replace(QRegExp("\\x0001"), " ");
+  addressee.replace('\x001', ' ');
   kdDebug(5006) << "\n\n1st try:  Retrieving keys for: " << recipient << endl;
 
 
@@ -4585,7 +4585,7 @@ QString KMComposeWin::quotePrefixName() const
 
 void KMComposeWin::slotPasteAsQuotation()
 {
-    if( mEditor->hasFocus() && msg())
+    if( mEditor->hasFocus() && msg() )
     {
         QString quotePrefix = quotePrefixName();
         QString s = QApplication::clipboard()->text();
@@ -4595,7 +4595,7 @@ void KMComposeWin::slotPasteAsQuotation()
                     s[i] = ' ';
             }
             s.prepend(quotePrefix);
-            s.replace(QRegExp("\n"),"\n"+quotePrefix);
+            s.replace("\n","\n"+quotePrefix);
             mEditor->insert(s);
         }
     }
@@ -4604,13 +4604,13 @@ void KMComposeWin::slotPasteAsQuotation()
 
 void KMComposeWin::slotAddQuotes()
 {
-    if( mEditor->hasFocus()&&msg())
+    if( mEditor->hasFocus() && msg() )
     {
         if ( mEditor->hasMarkedText()) {
             QString s =  mEditor->markedText();
             QString quotePrefix = quotePrefixName();
             s.prepend(quotePrefix);
-            s.replace(QRegExp("\n"),"\n"+quotePrefix);
+            s.replace("\n", "\n"+quotePrefix);
             mEditor->insert(s);
         } else {
             int l =  mEditor->currentLine();
@@ -4627,7 +4627,7 @@ void KMComposeWin::slotAddQuotes()
 
 void KMComposeWin::slotRemoveQuotes()
 {
-    if( mEditor->hasFocus()&&msg())
+    if( mEditor->hasFocus() && msg() )
     {
         QString quotePrefix = quotePrefixName();
         if (mEditor->hasMarkedText()) {
@@ -4635,7 +4635,7 @@ void KMComposeWin::slotRemoveQuotes()
             QString quotePrefix = quotePrefixName();
             if (s.left(2) == quotePrefix )
                 s.remove(0,2);
-            s.replace(QRegExp("\n"+quotePrefix),"\n");
+            s.replace("\n"+quotePrefix,"\n");
             mEditor->insert(s);
         } else {
             int l = mEditor->currentLine();
