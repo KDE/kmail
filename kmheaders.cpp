@@ -2319,7 +2319,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   // let klistview do it's thing, expanding/collapsing, selection/deselection
   KListView::contentsMousePressEvent(e);
   /* QListView's shift-select selects also invisible items. Until that is
-     fixed, we shave to deselect hidden items here manually, so the quick
+     fixed, we have to deselect hidden items here manually, so the quick
      search doesn't mess things up. */
   if ( e->state() & ShiftButton ) {
     QListViewItemIterator it( this, QListViewItemIterator::Invisible );
