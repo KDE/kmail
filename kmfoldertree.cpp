@@ -66,10 +66,6 @@ public:
   void paintBranches( QPainter * p, const QColorGroup & cg,
 		      int w, int y, int h, GUIStyle s )
 {
-  /******************************************************
-   This code has been replaced due to licensing problems
-   -sanders
-  *******************************************************/
   QListViewItem::paintBranches( p, cg, w, y, h, s);
 }
 
@@ -481,6 +477,13 @@ void KMFolderTree::doFolderListChanged()
   }
 }
 
+
+void KMFolderTree::setSelected( QListViewItem *i, bool select )
+{
+    clearSelection();
+    QListView::setSelected( i, select );
+}
+
 //-----------------------------------------------------------------------------
 // When not dragging and dropping a change in the selected item
 // indicates the user has changed the active folder emit a signal
@@ -858,41 +861,6 @@ void KMFolderTree::keyPressEvent( QKeyEvent * e )
       connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	      this,SLOT(doFolderSelected(QListViewItem*)));
     }
-}
-
-void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
-{
-  int b = e->state() & !ShiftButton & !ControlButton;
-  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonPress,
-				    e->pos(),
-				    e->globalPos(),
-				    e->button(),
-				    b );
-  clearSelection();
-  KMFolderTreeInherited::contentsMousePressEvent( f );
-  // Force current item to be selected for some reason in certain weird
-  // circumstances this is not always the case
-
-  if (currentItem())
-    setSelected( currentItem(), true );
-}
-
-void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
-{
-  int b = e->state() & !ShiftButton & !ControlButton;
-  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonRelease,
-				    e->pos(),
-				    e->globalPos(),
-				    e->button(),
-				    b );
-  KMFolderTreeInherited::contentsMouseReleaseEvent( f );
-}
-
-void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
-{
-  if (e->state() != NoButton)
-    return;
-  KMFolderTreeInherited::contentsMouseMoveEvent( e );
 }
 
 #include "kmfoldertree.moc"

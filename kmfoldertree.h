@@ -26,7 +26,7 @@ protected:
 public:
   KMFolderTree(QWidget *parent=0, const char *name=0);
   virtual ~KMFolderTree();
-  
+
   // Save config options
   void writeConfig();
 
@@ -44,6 +44,9 @@ public:
 
   /** Read color options and set palette. */
   void readColorConfig(void);
+
+  /** Ensure that there is only one selected item */
+  virtual void setSelected( QListViewItem *, bool );
 
 signals:
   /* The selected folder has changed */
@@ -74,7 +77,7 @@ protected slots:
 protected:
   // Catch palette changes
   virtual bool event(QEvent *e);
- 
+
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
 
   // Updates the number of unread messages for all folders
@@ -88,7 +91,7 @@ protected:
 
   KMFolderNodeList mList;
   QTimer* mUpdateTimer;
-  static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn, 
+  static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn,
     *pixOut, *pixTr, *pixSent;
 
   // We need out own root, otherwise the QListView will create its own
@@ -104,16 +107,13 @@ protected:
 
   // Navigation/Selection methods
   virtual void keyPressEvent( QKeyEvent * e );
-  virtual void contentsMousePressEvent( QMouseEvent * e );
-  virtual void contentsMouseReleaseEvent( QMouseEvent * e );
-  virtual void contentsMouseMoveEvent( QMouseEvent* e );
 
   //Drag and drop variables
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
   QTimer autoopen_timer;
   KMPaintInfo mPaintInfo;
-  
+
   // ########### The Trolls may move this Drag and drop stuff to QScrollView
 private:
     QTimer autoscroll_timer;

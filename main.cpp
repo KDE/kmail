@@ -217,9 +217,10 @@ int main(int argc, char *argv[])
 
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   // Go!
-  kapp->exec();
+  int ret = kapp->exec();
 
   // clean up
   kmailKernel.cleanup();
+  return ret;
 }
 

@@ -59,7 +59,7 @@ bool KMHeaders::mFalse = false;
 
 //-----------------------------------------------------------------------------
 // KMHeaderToFolderDrag method definitions
-KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent, 
+KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent,
 					    const char * name )
     : QStoredDrag( "KMHeaderToFolderDrag/magic", parent, name )
 {
@@ -84,9 +84,9 @@ public:
   KMPaintInfo *mPaintInfo;
 
   // Constuction a new list view item with the given colors and pixmap
-  KMHeaderItem( QListView* parent, KMFolder* folder, int msgId, 
+  KMHeaderItem( QListView* parent, KMFolder* folder, int msgId,
 		KMPaintInfo *aPaintInfo )
-    : QListViewItem( parent ), 
+    : QListViewItem( parent ),
       mFolder( folder ),
       mMsgId( msgId ),
       mPaintInfo( aPaintInfo )
@@ -95,9 +95,9 @@ public:
   }
 
   // Constuction a new list view item with the given parent, colors, & pixmap
-  KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId, 
+  KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId,
 		KMPaintInfo *aPaintInfo )
-    : QListViewItem( parent ), 
+    : QListViewItem( parent ),
       mFolder( folder ),
       mMsgId( msgId ),
       mPaintInfo( aPaintInfo )
@@ -110,7 +110,7 @@ public:
   {
     mMsgId = aMsgId;
   }
-  
+
   // Profiling note: About 30% of the time taken to initialize the
   // listview is spent in this function. About 60% is spent in operator
   // new and QListViewItem::QListViewItem.
@@ -194,7 +194,7 @@ public:
   void reset( KMFolder *aFolder, int aMsgId )
   {
     mFolder = aFolder;
-    mMsgId = aMsgId;    
+    mMsgId = aMsgId;
     irefresh();
   }
 
@@ -212,7 +212,7 @@ public:
     QColor c = _cg.text();
 
     _cg.setColor( QColorGroup::Text, *mColor );
-    
+
 #ifdef fixedfont
     if( column == mPaintInfo->dateCol ) {
       QFont f = p->font();
@@ -223,7 +223,7 @@ public:
 #endif
 
     QListViewItem::paintCell( p, _cg, column, width, align );
-    
+
     _cg.setColor( QColorGroup::Text, c );
   }
 
@@ -240,7 +240,7 @@ public:
       if (mPaintInfo->status)
 	return QString( QChar( (char)mFolder->getMsgBase( mMsgId )->status() ));
       else
-	return KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) 
+	return KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() )
 	  + " " + mSortArrival;
     }
     else if (column == mPaintInfo->sizeCol) {
@@ -278,7 +278,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mNestedOverride = false;
   mousePressed = FALSE;
 
-  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
   readConfig();
@@ -322,7 +322,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   	  this,SLOT(selectMessage(QListViewItem*)));
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
-  
+
   beginSelection = 0;
   endSelection = 0;
 }
@@ -344,11 +344,11 @@ KMHeaders::~KMHeaders ()
 void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 {
   if (mPaintInfo.pixmapOn)
-    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(), 
-			mPaintInfo.pixmap, 
-			rect.left() + contentsX(), 
+    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(),
+			mPaintInfo.pixmap,
+			rect.left() + contentsX(),
 			rect.top() + contentsY() );
-  else 
+  else
     p->fillRect( rect, colorGroup().base() );
 }
 
@@ -622,7 +622,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
     colText = i18n("Receiver");
   setColumnText( mPaintInfo.senderCol, colText);
- 
+
   colText = i18n( "Date" );
   if (mPaintInfo.orderOfArrival)
     colText = i18n( "Date (Order of Arrival)" );
@@ -766,7 +766,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   mItems[msgId]->repaint();
 }
 
-                                                             
+
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 {
@@ -831,7 +831,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     if (msg->parent()) // unGet this msg
       msg->parent()->unGetMsg( msg->parent()->count() -1 );
   }
-  
+
   setContentsPos( topX, topY );
   emit selected( 0 );
   if (next) {
@@ -857,7 +857,7 @@ void KMHeaders::setMsgRead (int msgId)
 {
   KMMessage* msg;
   KMMsgStatus st;
-  
+
   for (msg=getMsg(msgId); msg; msg=getMsg())
     {
       st = msg->status();
@@ -904,7 +904,7 @@ void KMHeaders::saveMsg (int msgId)
   }
 
   QString fileName = url.path();
- 
+
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
     str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
@@ -966,7 +966,7 @@ void KMHeaders::bounceMsg ()
   }
 
   // No composer appears. So better ask before sending.
-  if (KMessageBox::warningContinueCancel(this, 
+  if (KMessageBox::warningContinueCancel(this,
       i18n("Return the message to the sender as undeliverable?\n"
 	   "This will only work if the email address of the sender,\n"
 	   "%1, is valid.").arg(fromStr),
@@ -1022,7 +1022,7 @@ void KMHeaders::forwardMsg ()
     // ask if they want a mime digest forward
 
     if (KMessageBox::questionYesNo(this, i18n("Forward selected messages as"
-                                              " a MIME digest?")) 
+                                              " a MIME digest?"))
                                                       == KMessageBox::Yes) {
       // we default to the first identity to save prompting the user
       // (the messages could have different identities)
@@ -1061,7 +1061,7 @@ void KMHeaders::forwardMsg ()
         dwh.MessageId().CreateDefault();
         msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
         msgPartText += QString("Content-Description: %1").arg(thisMsg->subject());
-        if (!thisMsg->subject().contains("(fwd)")) 
+        if (!thisMsg->subject().contains("(fwd)"))
           msgPartText += " (fwd)";
         msgPartText += "\n\n";
         // set the part
@@ -1162,11 +1162,11 @@ void KMHeaders::replyToMsg ()
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
 
-  if (!msg) 
+  if (!msg)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE), 
+  win = new KMComposeWin(msg->createReply(FALSE),
 			 msg->headerField( "X-KMail-Identity" ));
   win->show();
   kernel->kbp()->idle();
@@ -1265,7 +1265,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   }
   else
     emit selected( 0 );
-  
+
   setContentsPos( contentX, contentY );
   makeHeaderVisible();
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -1288,12 +1288,12 @@ void KMHeaders::undo()
     if (idx == -1) // message moved to folder that has been emptied
       return;
     msg = curFolder->getMsg( idx );
-    folder->moveMsg( msg );     
+    folder->moveMsg( msg );
     if (folder->count() > 1)
       folder->unGetMsg( folder->count() - 1 );
     curFolder->close();
   }
-  else 
+  else
   {
     // Sorry.. stack is empty..
     KMessageBox::sorry(this, i18n("I can't undo anything, sorry!"));
@@ -1301,7 +1301,7 @@ void KMHeaders::undo()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::copySelectedToFolder(int menuId ) 
+void KMHeaders::copySelectedToFolder(int menuId )
 {
   if (mMenuToFolder[menuId])
     copyMsgToFolder( mMenuToFolder[menuId] );
@@ -1470,7 +1470,7 @@ void KMHeaders::prevMessage()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::findUnreadAux( KMHeaderItem*& item, 
+void KMHeaders::findUnreadAux( KMHeaderItem*& item,
 					bool & foundUnreadMessage,
 					bool onlyNew,
 					bool aDirNext )
@@ -1504,12 +1504,12 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
     item = mItems[aStartAt];
   else {
     item = currentHeaderItem();
-    if (!item) 
+    if (!item)
       item = static_cast<KMHeaderItem*>(firstChild());
-    if (!item) 
+    if (!item)
       return -1;
-    
-    if (aDirNext) 
+
+    if (aDirNext)
       item = static_cast<KMHeaderItem*>(item->itemBelow());
     else
       item = static_cast<KMHeaderItem*>(item->itemAbove());
@@ -1554,7 +1554,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
   if (item)
     return item->msgId();
 
-  
+
   // A cludge to try to keep the number of unread messages in sync
   int unread = mFolder->countUnread();
   if (((unread == 0) && foundUnreadMessage) ||
@@ -1636,17 +1636,17 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
     msgId = "";
   mIdTree.replace( msgId, parent );
 
-  assert( mTreeSeen[msgId] ); 
-  if (*(mTreeSeen[msgId])) // this can happen in the pathological case of 
+  assert( mTreeSeen[msgId] );
+  if (*(mTreeSeen[msgId])) // this can happen in the pathological case of
     // multiple messages having the same id. This case, even the extra
     // pathological version where messages have the same id and different
     // reply-To-Ids, should be handled ok. Later messages with duplicate
     // ids will be shown as children of the first one in the bunch.
     return;
   mTreeSeen.replace( msgId, &mTrue );
-  
+
   // iterator over items in children list (exclude parent)
-  // recusively add them as children of parent 
+  // recusively add them as children of parent
   QValueList<int> *messageList = mTree[msgId];
   assert(messageList);
 
@@ -1654,7 +1654,7 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
   for (it = messageList->begin(); it != messageList->end(); ++it) {
     if (*it == i)
       continue;
-    
+
     KMHeaderItem* hi = new KMHeaderItem( parent, mFolder, *it, &mPaintInfo );
     assert(mItems[*it] == 0);
     mItems.operator[](*it) = hi;
@@ -1672,7 +1672,7 @@ void KMHeaders::updateMessageList(void)
   KMMsgBase* mb;
 
   mPrevCurrent = 0;
-  KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
+  //KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   if (!mFolder)
   {
     clear();
@@ -1712,7 +1712,7 @@ void KMHeaders::updateMessageList(void)
       delete mItems[temp-1];
   }
 
-  mItems.resize( mFolder->count() );  
+  mItems.resize( mFolder->count() );
 
   if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
     for (i=0; i<mFolder->count(); i++)
@@ -1764,13 +1764,13 @@ void KMHeaders::updateMessageList(void)
 	continue;
       if (replyToId == msgId) //xxx
 	continue;
-      
+
       QValueList< int > *parentList = mTree[replyToId];
       if (parentList)
 	parentList->append( i );
       else
 	continue;
-      
+
       if (msgId.isNull())
 	msgId = "";
       QValueList< int > *thisList = mTree[msgId];
@@ -1778,8 +1778,8 @@ void KMHeaders::updateMessageList(void)
       thisList->remove( i );
       mTreeToplevel.replace( msgId, &mFalse );
     }
-    
-    // Create new list view items for each top level message (one 
+
+    // Create new list view items for each top level message (one
     // with no parent) and recusively create list view items for
     // each of its children
     for (i=0; i<mFolder->count(); i++) {
@@ -1822,6 +1822,7 @@ void KMHeaders::updateMessageList(void)
       }
   }
 
+  KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   sort();
 
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -1830,22 +1831,22 @@ void KMHeaders::updateMessageList(void)
 
 //-----------------------------------------------------------------------------
 // KMail Header list selection/navigation description
-// 
-// If the selection state changes the reader window is updated to show the 
+//
+// If the selection state changes the reader window is updated to show the
 // current item.
-// 
-// (The selection state of a message or messages can be changed by pressing 
+//
+// (The selection state of a message or messages can be changed by pressing
 //  space, or normal/shift/cntrl clicking).
-// 
-// The following keyboard events are supported when the messages headers list 
-// has focus, Ctrl+Key_Down, Ctrl+Key_Up, Ctrl+Key_Home, Ctrl+Key_End, 
-// Ctrl+Key_Next, Ctrl+Key_Prior, these events change the current item but do 
+//
+// The following keyboard events are supported when the messages headers list
+// has focus, Ctrl+Key_Down, Ctrl+Key_Up, Ctrl+Key_Home, Ctrl+Key_End,
+// Ctrl+Key_Next, Ctrl+Key_Prior, these events change the current item but do
 // not change the selection state.
 //
 // See contentsMousePressEvent below for a description of mouse selection
 // behaviour.
 //
-// Exception: When shift selecting either with mouse or key press the reader 
+// Exception: When shift selecting either with mouse or key press the reader
 // window is updated regardless of whether of not the selection has changed.
 void KMHeaders::keyPressEvent( QKeyEvent * e )
 {
@@ -1907,7 +1908,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }
 
   setCurrentItem( lvi );
-  if ((e->button() == LeftButton) && 
+  if ((e->button() == LeftButton) &&
       !(e->state() & ControlButton) &&
       !(e->state() & ShiftButton)) {
     mousePressed = TRUE;
@@ -1930,7 +1931,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
       setSelected( lvi, TRUE );
     }
     slotRMB();
-  }  
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1938,8 +1939,8 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
   QListViewItem *endSelection = itemAt( contentsToViewport( e->pos() ));
 
-  if ((e->button() == LeftButton) 
-      && !(e->state() & ControlButton) 
+  if ((e->button() == LeftButton)
+      && !(e->state() & ControlButton)
       && !(e->state() & ShiftButton)) {
     clearSelectionExcept( endSelection );
   }
@@ -2030,7 +2031,7 @@ void KMHeaders::slotRMB()
   menu->insertItem(i18n("&Bounce"), topLevelWidget(),
                    SLOT(slotBounceMsg()));
   menu->insertSeparator();
-  menu->insertItem(i18n("&Save As..."), topLevelWidget(), 
+  menu->insertItem(i18n("&Save As..."), topLevelWidget(),
                    SLOT(slotSaveMsg()), KStdAccel::key(KStdAccel::Save));
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
