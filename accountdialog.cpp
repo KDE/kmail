@@ -667,7 +667,7 @@ void AccountDialog::makeImapAccountPage()
   grid->addMultiCellWidget( mImap.storePasswordCheck, 6, 6, 0, 1 );
 
   mImap.autoExpungeCheck =
-    new QCheckBox( i18n("&Automatically expunge deleted messages"), page1);
+    new QCheckBox( i18n("&Automatically compact folders (expunges deleted messages)"), page1);
   grid->addMultiCellWidget( mImap.autoExpungeCheck, 7, 7, 0, 1 );
 
   mImap.hiddenFoldersCheck = new QCheckBox( i18n("&Show hidden folders"), page1);
