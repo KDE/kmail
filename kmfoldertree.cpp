@@ -974,7 +974,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if (!fti->folder()->noContent())
     {
-      int id = folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
+      int id = folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check Mail in This Folder"), mMainWidget,
                                       SLOT(slotRefreshFolder()));
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
         folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
