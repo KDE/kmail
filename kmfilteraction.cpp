@@ -618,6 +618,7 @@ QString KMFilterActionReplyTo::argsAsString(void) const
 //=============================================================================
 void KMFilterActionDict::init(void)
 {
+  mList.setAutoDelete(true);
   insert("transfer", i18n("transfer"),
 	 KMFilterActionMove::newAction);
   insert("set identity", i18n("set identity"),

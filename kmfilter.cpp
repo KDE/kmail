@@ -62,7 +62,7 @@ KMFilter::KMFilter(KConfig* config)
     mName = QString::null;
     mOperator = OpIgnore;
     for (i=0; i<=FILTER_MAX_ACTIONS; i++)
-      mAction[i] = NULL;
+      mAction[i] = 0;
   }
 }
 
@@ -70,6 +70,8 @@ KMFilter::KMFilter(KConfig* config)
 //-----------------------------------------------------------------------------
 KMFilter::~KMFilter()
 {
+   for (int i=0; i<=FILTER_MAX_ACTIONS; i++)
+      delete mAction[i];
 }
 
 
@@ -222,7 +224,7 @@ void KMFilter::readConfig(KConfig* config)
   }
 
   while (j<=FILTER_MAX_ACTIONS)
-    mAction[j++] = NULL;
+    mAction[j++] = 0;
 }
 
 
