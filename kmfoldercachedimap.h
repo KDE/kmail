@@ -215,11 +215,13 @@ public:
   /// Set the list of ACL for this folder (for FolderDiaACLTab)
   void setACLList( const ACLList& arr );
 
-  /// Reimplemented from FolderStorage
-  void setContentsType( KMail::FolderContentsType type );
-
   // Reimplemented so the mStatusChangedLocally bool can be set
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
+
+  QString annotationFolderType() const { return mAnnotationFolderType; }
+
+  // For kmailicalifaceimpl only
+  void updateAnnotationFolderType();
 
 protected slots:
   /**
@@ -396,12 +398,13 @@ private:
   //bool mHoldSyncs;
   bool mRecurse;
   bool mCreateInbox;
-  bool mContentsTypeChanged;
   /** Set to true by setStatus. Indicates that the client has changed
       the status of at least one mail. The mail flags will therefore be
       uploaded to the server, overwriting the server's notion of the status
       of the mails in this folder. */
   bool mStatusChangedLocally;
+  /// Set to true when the annotation needs to be set on the next sync
+  bool mAnnotationFolderTypeChanged;
 };
 
 #endif /*kmfoldercachedimap_h*/

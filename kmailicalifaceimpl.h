@@ -164,6 +164,8 @@ public:
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.
   void setStorageFormat( KMFolder* folder, StorageFormat format );
 
+  static const char* annotationForContentsType( KMail::FolderContentsType type );
+
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();
@@ -184,11 +186,11 @@ private slots:
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
-  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString,
-                        KMail::FolderContentsType contentsType );
+  KMFolder* initFolder( const char* typeString, KMail::FolderContentsType contentsType );
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
+  KMFolder* findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
   KMFolder* findResourceFolder( const QString& resource );
 
   bool updateAttachment( KMMessage& msg,
