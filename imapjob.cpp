@@ -293,6 +293,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
+  bool gotData = true;
   if (job->error())
   {
     account->slotSlaveError( account->slave(), job->error(), job->errorText() );
@@ -313,6 +314,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
       }
+    } else {
+      gotData = false;
     }
   }
   if (account->slave()) {
@@ -324,7 +327,16 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   if ( mPartSpecifier.isEmpty() ||
        mPartSpecifier == "HEADER" )
   {
-    emit messageRetrieved(msg);
+    if ( gotData )
+      emit messageRetrieved(msg);
+    else
+    {
+      // delete the msg
+      parent->ignoreJobsForMessage( msg );
+      int idx = parent->find( msg );
+      if (idx != -1) parent->removeMsg( idx, true );
+      emit messageRetrieved( 0 );
+    }
   } else {
     emit messageUpdated(msg, mPartSpecifier);
   }
