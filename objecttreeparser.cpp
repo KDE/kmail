@@ -1465,7 +1465,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     switch( subtype  ){
     case DwMime::kSubtypePostscript: {
       kdDebug(5006) << "postscript" << endl;
-      result.setIsImage( true );
+      // showing PostScript inline can be used for a DoS attack;
+      // therefore it's disabled until KMail is fixed to not hang
+      // while a PostScript attachment is rendered; IK 2003-02-20
+      //result.setIsImage( true );
     }
       break;
     case DwMime::kSubtypeOctetStream: {
