@@ -1493,8 +1493,19 @@ void AccountDialog::saveSettings()
     KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
 
     if (acctMaildir) {
-      mAccount->setName( mMaildir.nameEdit->text() );
-      acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
+        mAccount->setName( mMaildir.nameEdit->text() );
+        acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
+      
+        KMFolder *targetFolder = *mFolderList.at(mMaildir.folderCombo->currentItem());
+        if ( targetFolder->location()  == acctMaildir->location() ) {
+            /* 
+               Prevent data loss if the user sets the destination folder to be the same as the
+               source account maildir folder by setting the target folder to the inbox. 
+               ### FIXME post 3.2: show dialog and let the user chose another target folder
+            */
+            targetFolder = kmkernel->inboxFolder();
+        }
+        mAccount->setFolder( targetFolder );
     }
     mAccount->setCheckInterval( mMaildir.intervalCheck->isChecked() ?
 			     mMaildir.intervalSpin->value() : 0 );
@@ -1504,9 +1515,6 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( mMaildir.excludeCheck->isChecked() );
 
     mAccount->setPrecommand( mMaildir.precommand->text() );
-
-    mAccount->setFolder( *mFolderList.at(mMaildir.folderCombo->currentItem()) );
-
   }
 
   kmkernel->acctMgr()->writeConfig(TRUE);
