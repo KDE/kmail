@@ -1221,10 +1221,10 @@ bool KMComposeWin::queryClose ()
     rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or save message"),
-           i18n("Discard"), i18n("Save as draft"));
+           i18n("Save as draft"), i18n("Discard") );
     if (rc == KMessageBox::Cancel)
       return false;
-    else if (rc == KMessageBox::No)
+    else if (rc == KMessageBox::Yes)
       slotSaveDraft();
   }
   return true;
