@@ -63,7 +63,7 @@ using KMail::AddressesDialog;
 
 #include <kspell.h>
 #include <kspelldlg.h>
-#include "spellingfilter.h"
+#include <spellingfilter.h>
 #include <syntaxhighlighter.h>
 using Syntaxhighlighter::DictSpellChecker;
 using Syntaxhighlighter::SpellChecker;

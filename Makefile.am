@@ -61,7 +61,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		certificatehandlingdialogimpl.cpp \
 		certificatewizard.ui certificatewizardimpl.cpp \
 		mailinglist-magic.cpp recentaddresses.cpp kmacctmaildir.cpp \
-		linklocator.cpp spellingfilter.cpp attachmentstrategy.cpp \
+		attachmentstrategy.cpp \
 		headerstrategy.cpp headerstyle.cpp khtmlparthtmlwriter.cpp \
 		filehtmlwriter.cpp teehtmlwriter.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
