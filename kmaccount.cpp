@@ -439,7 +439,6 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
 //-----------------------------------------------------------------------------
 void KMAccount::checkDone( bool newmail, CheckStatus status )
 {
-  kdDebug() << k_funcinfo << " deleting mailcheck-progressitem=" << mMailCheckProgressItem << endl;
   mCheckingMail = false;
   // Reset the timeout for automatic mailchecking. The user might have
   // triggered the check manually.
