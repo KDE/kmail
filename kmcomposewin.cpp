@@ -1115,9 +1115,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     Kpgp::Module* pgp = Kpgp::Module::getKpgp();
     assert(pgp != NULL);
 
-    if( allowDecryption && pgp->setMessageForDecryption( bodyDecoded ) )
+    QPtrList<Kpgp::Block> pgpBlocks;
+    QStrList nonPgpBlocks;
+    if( allowDecryption &&
+        Kpgp::Module::prepareMessageForDecryption( bodyDecoded,
+                                                   pgpBlocks, nonPgpBlocks ) )
     {
-      QPtrList<Kpgp::Block> pgpBlocks = pgp->pgpBlocks();
       // Only decrypt/strip off the signature if there is only one OpenPGP
       // block in the message
       if( pgpBlocks.count() == 1 )
@@ -1126,8 +1129,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
         if( ( block->type() == Kpgp::PgpMessageBlock ) ||
             ( block->type() == Kpgp::ClearsignedBlock ) )
         {
-          QStrList nonPgpBlocks = pgp->nonPgpBlocks();
-
           if( block->type() == Kpgp::PgpMessageBlock )
             // try to decrypt this OpenPGP block
             block->decrypt();

@@ -1146,14 +1146,14 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
   bool isPgpMessage = false; // true if the message contains at least one
                              // PGP MESSAGE or one PGP SIGNED MESSAGE block
 
-  if( pgp->setMessageForDecryption( aStr ) )
+  QPtrList<Kpgp::Block> pgpBlocks;
+  QStrList nonPgpBlocks;
+  if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
     bool isEncrypted = false, isSigned = false;
     QString signer;
-    QPtrList<Kpgp::Block> pgpBlocks = pgp->pgpBlocks();
     QPtrListIterator<Kpgp::Block> pbit( pgpBlocks );
 
-    QStrList nonPgpBlocks = pgp->nonPgpBlocks();
     QStrListIterator npbit( nonPgpBlocks );
 
     for( ; *pbit != 0; ++pbit, ++npbit )
