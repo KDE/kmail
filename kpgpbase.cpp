@@ -391,8 +391,11 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
       cmd += "\" ";
       ++it;
     }
-    if(flagEncryptToSelf)
-      cmd += " --default-recipient-self";
+  }
+  if(flagEncryptToSelf) {
+    cmd += " --recipient \"";
+    cmd += user();
+    cmd += "\" ";
   }
   cmd += " --set-filename stdin ";
 
