@@ -182,6 +182,7 @@ protected slots:
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
+  void slotRefreshFolder();
   void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideThread();
@@ -336,7 +337,8 @@ protected:
   KMFldSearch *searchWin;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
-      *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
+      *compactFolderAction, *refreshFolderAction, *emptyFolderAction, 
+      *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *folderAction, *headerAction, *mimeAction;
 

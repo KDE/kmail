@@ -49,6 +49,7 @@
 #include "kmreadermainwin.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
+#include "kmfoldertype.h"
 #include "kmacctcachedimap.h"
 #include "kmcomposewin.h"
 #include "kmfolderseldlg.h"
@@ -1104,6 +1105,20 @@ void KMMainWidget::slotCompactFolder()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotRefreshFolder()
+{
+  if (mFolder)
+  {
+    if (mFolder->folderType() == KMFolderTypeImap)
+    {
+      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
+      imap->getAndCheckFolder();
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll() {
   KConfig    *config = KMKernel::config();
   int        ret = 0;
@@ -1969,6 +1984,9 @@ void KMMainWidget::setupActions()
   compactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
+  refreshFolderAction = new KAction( i18n("&Refresh"), "reload", Key_F5 , this,
+                     SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
+
   emptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
@@ -2600,6 +2618,7 @@ void KMMainWidget::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  refreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   emptyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   emptyFolderAction->setText( (mFolder && kernel->folderIsTrash(mFolder))
     ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );

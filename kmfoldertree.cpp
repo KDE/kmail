@@ -1004,6 +1004,10 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     folderMenu->insertItem(SmallIcon("configure"),
         i18n("Subscription"), mMainWidget,
         SLOT(slotSubscriptionDialog()));
+
+    folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget, 
+            SLOT(slotRefreshFolder()));
+
   }
 
   folderMenu->exec (p, 0);
