@@ -97,7 +97,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeUnknown; }
 
   /** Returns the filename of the folder (reimplemented in KMFolderImap) */
-  virtual QString fileName() const; 
+  virtual QString fileName() const;
   /** Returns full path to folder file */
   QString location() const;
 
@@ -143,7 +143,7 @@ public:
    * for each derived KMFolder).
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0, QString partSpecifier = QString::null, 
+                                KMFolder *folder = 0, QString partSpecifier = QString::null,
                                 const AttachmentStrategy *as = 0 ) const;
   virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
@@ -304,7 +304,7 @@ public:
   /** Is the folder read-only? */
   virtual bool isReadOnly() const = 0;
 
-  
+
   /** Returns the label of the folder for visualization. */
   virtual QString label() const;
   void setLabel(const QString& lbl) { mLabel = lbl; }
@@ -321,9 +321,6 @@ public:
 
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
-
-  /** Returns a string that can be used to identify this folder */
-  virtual QString idString() const;
 
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */

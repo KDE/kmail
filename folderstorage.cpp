@@ -706,9 +706,9 @@ const char* FolderStorage::type() const
 //-----------------------------------------------------------------------------
 QString FolderStorage::label() const
 {
-  if ( folder() && !mSystemLabel.isEmpty() ) 
+  if ( folder() && !mSystemLabel.isEmpty() )
      return mSystemLabel;
-  if ( folder() && !mLabel.isEmpty() ) 
+  if ( folder() && !mLabel.isEmpty() )
      return mLabel;
   if ( folder() && folder()->isSystemFolder() )
      return i18n( folder()->name().latin1() );
@@ -782,31 +782,11 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 }
 
 //-----------------------------------------------------------------------------
-QString FolderStorage::idString() const
-{
-  KMFolderNode* folderNode = folder()->parent();
-  if (!folderNode)
-    return "";
-  while (folderNode->parent())
-    folderNode = folderNode->parent();
-  int pathLen = folder()->path().length() - folderNode->path().length();
-  QString relativePath = folder()->path().right( pathLen );
-  if (!relativePath.isEmpty())
-    relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
-  QString escapedName = QString( folder()->name() );
-  /* Escape [ and ] as they are disallowed for kconfig sections and that is
-     what the idString is primarily used for. */
-  escapedName.replace( "[", "%(" );
-  escapedName.replace( "]", "%)" );
-  return relativePath + escapedName;
-}
-
-//-----------------------------------------------------------------------------
 void FolderStorage::readConfig()
 {
   //kdDebug(5006)<<"#### READING CONFIG  = "<< name() <<endl;
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
   if (mTotalMsgs == -1)
@@ -822,7 +802,7 @@ void FolderStorage::readConfig()
 void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
   config->writeEntry("UnreadMsgs", countUnread());
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);

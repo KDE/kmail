@@ -1128,7 +1128,7 @@ int KMFolderMbox::compact()
     kdDebug(5006) << location() << " compaction skipped." << endl;
     return 0;
   }
-  kdDebug(5006) << "Compacting " << idString() << endl;
+  kdDebug(5006) << "Compacting " << folder()->idString() << endl;
 
   if (KMFolderIndex::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<

@@ -590,7 +590,21 @@ void KMFolder::correctUnreadMsgsCount()
 
 QString KMFolder::idString() const
 {
-  return mStorage ? mStorage->idString() : QString::null;
+  KMFolderNode* folderNode = parent();
+  if (!folderNode)
+    return "";
+  while (parent())
+    folderNode = folderNode->parent();
+  int pathLen = path().length() - folderNode->path().length();
+  QString relativePath = path().right( pathLen );
+  if (!relativePath.isEmpty())
+    relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
+  QString escapedName = QString( name() );
+  /* Escape [ and ] as they are disallowed for kconfig sections and that is
+     what the idString is primarily used for. */
+  escapedName.replace( "[", "%(" );
+  escapedName.replace( "]", "%)" );
+  return relativePath + escapedName;
 }
 
 void KMFolder::setAutoExpire( bool enabled )

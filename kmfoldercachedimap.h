@@ -74,14 +74,17 @@ class KMFolderCachedImap : public KMFolderMaildir
   Q_OBJECT
 
 public:
-  static QString cacheLocation() { 
-     return locateLocal("data", "kmail/dimap" ); 
-  } 
+  static QString cacheLocation() {
+     return locateLocal("data", "kmail/dimap" );
+  }
+
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
   KMFolderCachedImap(KMFolder* folder, const char* name=0);
   virtual ~KMFolderCachedImap();
+
+  virtual void readConfig();
 
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
@@ -187,8 +190,8 @@ public:
 
 protected slots:
   /**
-   * Connected to ImapAccountBase::receivedFolders 
-   * creates/removes folders 
+   * Connected to ImapAccountBase::receivedFolders
+   * creates/removes folders
    */
   void slotListResult(QStringList, QStringList,
       QStringList, const ImapAccountBase::jobData &);
@@ -248,7 +251,7 @@ public slots:
    * Sync this folder and it's subfolders.
    */
   void processNewMail();
-  
+
 private slots:
   void serverSyncInternal();
 

@@ -55,20 +55,6 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mCheckMail = TRUE;
   mCheckingValidity = FALSE;
   mAlreadyRemoved = false;
-
-  KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
-  mUidValidity = config->readEntry("UidValidity");
-  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
-  if (QString(aName).upper() == "INBOX" && mImapPath == "/INBOX/")
-  {
-    folder->setSystemFolder( true );
-    setLabel( i18n("inbox") );
-  }
-  mNoContent = config->readBoolEntry("NoContent", FALSE);
-  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
-
-  readConfig();
 }
 
 KMFolderImap::~KMFolderImap()
@@ -155,8 +141,19 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
 void KMFolderImap::readConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
   mCheckMail = config->readBoolEntry("checkmail", true);
+
+  mUidValidity = config->readEntry("UidValidity");
+  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
+  if (QString(name()).upper() == "INBOX" && mImapPath == "/INBOX/")
+  {
+    folder()->setSystemFolder( true );
+    setLabel( i18n("inbox") );
+  }
+  mNoContent = config->readBoolEntry("NoContent", FALSE);
+  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
+
   KMFolderMbox::readConfig();
 }
 
@@ -164,7 +161,7 @@ void KMFolderImap::readConfig()
 void KMFolderImap::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
   config->writeEntry("checkmail", mCheckMail);
   config->writeEntry("UidValidity", mUidValidity);
   config->writeEntry("ImapPath", mImapPath);
@@ -625,7 +622,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       for (node = folder()->child()->first(); node;
            node = folder()->child()->next())
         if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
-      if (node) 
+      if (node)
         f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
       else {
         f = static_cast<KMFolderImap*>

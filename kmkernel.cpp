@@ -1017,7 +1017,7 @@ void KMKernel::closeAllKMailWindows()
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
     ++it;
-    if (window->isA("KMMainWindow") || 
+    if (window->isA("KMMainWindow") ||
 	window->inherits("KMail::SecondaryWindow"))
       window->close( true ); // close and delete the window
   }
@@ -1610,7 +1610,7 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
   if (folder == the_trashFolder) return true;
   if (folder->folderType() != KMFolderTypeImap) return false;
   KMFolderImap *fi = static_cast<KMFolderImap*>(folder->storage());
-  if (fi->account() && fi->account()->trash() == fi->idString())
+  if (fi->account() && fi->account()->trash() == folder->idString())
     return true;
   return false;
 }

@@ -121,18 +121,6 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
     mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
 {
-  KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
-  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
-  if (QString(aName).upper() == "INBOX" && mImapPath == "/INBOX/")
-  {
-    mLabel = i18n("inbox");
-    // for the icon
-    folder->setSystemFolder(true);
-  }
-  mNoContent = config->readBoolEntry("NoContent", FALSE);
-  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
-
   connect( this, SIGNAL( listMessagesComplete() ),
            this, SLOT( serverSyncInternal() ) );
 
@@ -148,7 +136,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if( !mFolderRemoved ) {
     // Only write configuration when the folder haven't been deleted
     KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver(config, "Folder-" + idString());
+    KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
     config->writeEntry("ImapPath", mImapPath);
     config->writeEntry("NoContent", mNoContent);
     config->writeEntry("ReadOnly", mReadOnly);
@@ -157,6 +145,23 @@ KMFolderCachedImap::~KMFolderCachedImap()
   }
 
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
+}
+
+void KMFolderCachedImap::readConfig()
+{
+  KConfig* config = KMKernel::config();
+  KConfigGroupSaver saver( config, "Folder-" + folder()->idString() );
+  if( mImapPath.isEmpty() ) mImapPath = config->readEntry( "ImapPath" );
+  if( QString( name() ).upper() == "INBOX" && mImapPath == "/INBOX/" )
+  {
+    mLabel = i18n( "inbox" );
+    // for the icon
+    folder()->setSystemFolder( true );
+  }
+  mNoContent = config->readBoolEntry( "NoContent", false );
+  mReadOnly = config->readBoolEntry( "ReadOnly", false );
+
+  KMFolderMaildir::readConfig();
 }
 
 void KMFolderCachedImap::remove()
@@ -882,7 +887,7 @@ bool KMFolderCachedImap::deleteMessages()
 {
   /* Delete messages from cache that are gone from the server */
   QPtrList<KMMessage> msgsForDeletion;
-  
+
   // It is not possible to just go over all indices and remove
   // them one by one because the index list can get resized under
   // us. So use msg pointers instead
@@ -1021,7 +1026,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       uidsOnServer.insert( uid, &v );
     }
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
-      /* 
+      /*
        * If this message UID is not present locally, then it must
        * have been deleted by the user, so we delete it on the
        * server also.
@@ -1114,7 +1119,7 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
           QStringList, const ImapAccountBase::jobData &)));
 
   // start a new listing for the root-folder
-  bool reset = ( mImapPath == mAccount->prefix() && 
+  bool reset = ( mImapPath == mAccount->prefix() &&
                 !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
@@ -1166,8 +1171,8 @@ void KMFolderCachedImap::slotListResult( QStringList mFolderNames,
   QPtrList<KMFolder> toRemove;
   while (node) {
     if (!node->isDir() ) {
-      if ( mSubfolderNames.findIndex(node->name()) == -1 && 
-          (node->name().upper() != "INBOX" || !mAccount->createInbox()) ) 
+      if ( mSubfolderNames.findIndex(node->name()) == -1 &&
+          (node->name().upper() != "INBOX" || !mAccount->createInbox()) )
       {
         // This subfolder isn't present on the server
         kdDebug(5006) << node->name() << " isn't on the server." << endl;
