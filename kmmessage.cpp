@@ -2115,7 +2115,7 @@ QString KMMessage::strippedSubjectMD5() const {
 
 //-----------------------------------------------------------------------------
 QString KMMessage::subjectMD5() const {
-  return base64EncodedMD5( subject().stripWhiteSpace(), true /*utf8*/ );
+  return base64EncodedMD5( subject(), true /*utf8*/ );
 }
 
 //-----------------------------------------------------------------------------
