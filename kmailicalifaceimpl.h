@@ -63,10 +63,6 @@ public:
 
   bool isWritableFolder( const QString& type, const QString& resource );
 
-  KURL getAttachment( const QString& resource,
-                      const QString& sernum,
-                      const QString& filename );
-
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   bool update( const QString& type, const QString& folder,
@@ -77,24 +73,23 @@ public:
                const QString& uid, const QString& entry );
 
   // Update a kolab storage entry
-  bool update( const QString& type, const QString& folder, const QString& id,
-               const QString& xml, const QStringList& attachments,
-               const QStringList& deletedAttachments );
-
   bool update( const QString& resource,
-               const QString& sernum,
+               Q_UINT32 sernum,
                const QStringList& attachments,
                const QStringList& deletedAttachments );
 
   bool deleteIncidenceKolab( const QString& resource,
-                             const QString& sernum );
-  QMap<QString, QString> incidencesKolab( const QString& type,
-                                          const QString& resource );
+                             Q_UINT32 sernum );
+  QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
+                                           const QString& resource );
   QMap<QString, bool> subresourcesKolab( const QString& annotation );
 
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
-  QString getAttachment( const QString& filename );
+  KURL getAttachment( const QString& resource,
+                      Q_UINT32 sernum,
+                      const QString& filename );
+
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
@@ -142,6 +137,9 @@ public:
   /** Find message matching a given UID. */
   static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
 
+  /** Find message matching a given serial number. */
+  static KMMessage* findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder );
+  
   /** Convenience function to delete a message. */
   static void deleteMsg( KMMessage* msg );
 
@@ -172,6 +170,8 @@ private:
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
+  bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
+  
   void loadPixmaps() const;
 
   QGuardedPtr<KMFolder> mContacts;

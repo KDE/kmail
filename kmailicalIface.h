@@ -52,7 +52,7 @@ k_dcop:
                                  const QString& resource ) = 0;
 
   virtual KURL getAttachment( const QString& resource,
-                              const QString& sernum,
+                              Q_UINT32 sernum,
                               const QString& filename ) = 0;
   
   // This saves the iCals/vCards in the entries in the folder.
@@ -63,14 +63,15 @@ k_dcop:
   // Update a single entry in the storage layer
   virtual bool update( const QString& type, const QString& folder,
                        const QString& uid, const QString& entry ) = 0;
+  // Update a kolab storage entry
   virtual bool update( const QString& resource,
-                       const QString& sernum,
+                       Q_UINT32 sernum,
                        const QStringList& attachments,
                        const QStringList& deletedAttachments ) = 0;
 
   virtual bool deleteIncidenceKolab( const QString& resource,
-                                     const QString& sernum ) = 0;
-  virtual QMap<QString, QString> incidencesKolab( const QString& type,
+                                     Q_UINT32 sernum ) = 0;
+  virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
                                                   const QString& resource ) = 0;
   virtual QMap<QString, bool> subresourcesKolab( const QString& annotation ) = 0;
   

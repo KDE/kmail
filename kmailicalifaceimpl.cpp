@@ -43,10 +43,12 @@
 #include "kmcommands.h"
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
+#include "kmmsgpart.h"
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 
 #include <mimelib/enum.h>
+#include <mimelib/utility.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -163,13 +165,41 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 }
 
 // The resource orders a deletion
+bool KMailICalIfaceImpl::deleteIncidence( KMFolder& folder,
+                                          const QString& uid,
+                                          Q_UINT32 serNum )
+{
+  if( !mUseResourceIMAP )
+    return false;
+
+  bool rc = false;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
+  const bool bIsImap = isResourceImapFolder( &folder );
+  KMMessage* msg = bIsImap
+                 ? findMessageBySerNum( serNum, &folder )
+                 : findMessageByUID(    uid,    &folder );
+  if( msg ) {
+    // Message found - delete it and return happy
+    deleteMsg( msg );
+    rc = true;
+  }else{
+    if( bIsImap )
+      kdDebug(5006) << "Message not found, cannot remove serNum " << serNum << endl;
+    else
+      kdDebug(5006) << "Message not found, cannot remove id " << uid << endl;
+  }
+
+  mResourceQuiet = quiet;
+  return rc;
+}
+
+// The resource orders a deletion
 bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
                                           const QString& folder,
                                           const QString& uid )
 {
-  // TODO: If this is a Kolab folder, then uid is actually the
-  // serial number. Find the message from this and delete it.
-
   if( !mUseResourceIMAP )
     return false;
 
@@ -180,19 +210,11 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  // Find the folder and the incidence in it
+  // Find the folder
   KMFolder* f = folderFromType( type, folder );
-  if( f ) {
-    KMMessage* msg = /*isResourceImapFolder( f )
-                   ? findMessageBySerialNumber( uid, f );
-                   : */findMessageByUID( uid, f );
-    if( msg ) {
-      // Message found - delete it and return happy
-      deleteMsg( msg );
-      rc = true;
-    } else
-      kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
-  } else
+  if( f )
+    rc = deleteIncidence( folder, uid, 0 );
+  else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
@@ -200,19 +222,33 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
 }
 
 bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
-                                               const QString& sernum )
+                                               Q_UINT32 sernum )
 {
-  // TODO: khz
-  return false;
+  // Find the message from the serial number and delete it.
+  if( !mUseResourceIMAP )
+    return false;
+
+  kdDebug(5006) << "KMailICalIfaceImpl::deleteIncidenceKolab( "
+                << resource << ", " << sernum << ")\n";
+  bool rc = false;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
+  // Find the folder
+  KMFolder* f = kmkernel->findFolderById( resource );
+  if( f )
+    rc = deleteIncidence( *f, "", sernum );
+  else
+    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+
+  mResourceQuiet = quiet;
+  return rc;
 }
 
 // The resource asks for a full list of incidences
 QStringList KMailICalIfaceImpl::incidences( const QString& type,
                                             const QString& folder )
 {
-  // TODO: If the folder is a Kolab storage folder, then return the
-  // XML file, and the serial number of the mail (for easier later update)
-
   if( !mUseResourceIMAP )
     return QStringList();
 
@@ -235,20 +271,54 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   return ilist;
 }
 
-QMap<QString, QString> KMailICalIfaceImpl::incidencesKolab( const QString& type,
-                                          const QString& resource )
+QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
+                                                             const QString& resource )
 {
-  // TODO: khz
-  QMap<QString, QString> dummy;
-  return dummy;
-}
+  /// Get the mimetype attachments from this folder. Returns a
+  /// QMap with serialNumber/attachment pairs.
+  /// (serial numbers of the mail are provided for easier later update)
 
-KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
-                                        const QString& sernum,
-                                        const QString& filename )
-{
-  // TODO: khz
-  return KURL();
+  QMap<Q_UINT32, QString> aMap;
+  if( !mUseResourceIMAP )
+    return aMap;
+
+  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
+                << resource << " )" << endl;
+
+  KMFolder* f = kmkernel->findFolderById( resource );
+  if ( f ) {
+    f->open();
+    QString s;
+    for( int i=0; i<f->count(); ++i ) {
+      bool unget = !f->isMessage(i);
+      KMMessage* msg = f->getMsg( i );
+      if( msg ){
+        const int iSlash = mimetype.contains('/');
+        const QCString sType    = mimetype.left( iSlash   ).latin1();
+        const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+        if( sType.isEmpty() || sSubtype.isEmpty() ){
+          kdError(5006) << mimetype << " not an type/subtype combination" << endl;
+        }else{
+          const int msgType    = DwTypeStrToEnum(   DwString(sType));
+          const int msgSubtype = DwSubtypeStrToEnum(DwString(sSubtype));
+          DwBodyPart* dwPart = msg->findDwBodyPart( msgType,
+                                                    msgSubtype );
+          if( dwPart ){
+            KMMessagePart msgPart;
+            KMMessage::bodyPart(dwPart, &msgPart);
+            aMap.insert(msg->getMsgSerNum(), msgPart.body());
+          }else{
+            // This is *not* an error: it may be that not all of the messages
+            // have a message part that is matching the wanted MIME type
+          }
+        }
+        if( unget ) f->unGetMsg(i);
+      }
+    }
+  }else{
+    kdError(5006) << resource << " not such IMAP folder found" << endl;
+  }
+  return aMap;
 }
 
 QStringList KMailICalIfaceImpl::subresources( const QString& type )
@@ -353,8 +423,8 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   return rc;
 }
 
-bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
-                                 const QString& id, const QString& xml,
+bool KMailICalIfaceImpl::update( const QString& resource,
+                                 Q_UINT32 sernum,
                                  const QStringList& attachments,
                                  const QStringList& deletedAttachments )
 {
@@ -372,20 +442,13 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   // If the mail does not already exist, id will not be a valid serial
   // number, and the mail should just be added instead. In this case
   // the deletedAttachments can be forgotten.
-
-  return false;
-}
-
-bool KMailICalIfaceImpl::update( const QString& resource,
-                                 const QString& sernum,
-                                 const QStringList& attachments,
-                                 const QStringList& deletedAttachments )
-{
   // TODO: khz
   return false;
 }
 
-QString KMailICalIfaceImpl::getAttachment( const QString& filename )
+KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
+                                        Q_UINT32 sernum,
+                                        const QString& filename )
 {
   kdError(5006) << "NYI: KMailICalIfaceImpl::getAttachment()\n";
 
@@ -393,7 +456,8 @@ QString KMailICalIfaceImpl::getAttachment( const QString& filename )
   // and return a URL to it. It's up to the resource to delete the
   // tmp file later.
 
-  return QString::null;
+  // TODO: khz
+  return KURL();
 }
 
 // KMail added a file to one of the groupware folders
@@ -620,6 +684,26 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
   }
 
   return 0;
+}
+
+// Find message matching a given UID
+KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder )
+{
+  if( !folder ) return 0;
+
+  KMFolder* aFolder = 0;
+  KMMessage *message = 0;
+  int index;
+  kmkernel->msgDict()->getLocation( serNum, &aFolder, &index );
+  if( aFolder ){
+      message = aFolder->getMsg( index );
+  }
+  if( aFolder != folder )
+    kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) folder not matching\n" << endl;
+  else
+    if (!message)
+      kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) invalid serial number\n" << endl;
+  return message;
 }
 
 void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
