@@ -307,14 +307,13 @@ void KMComposeView::forwardMessage()
           temp.sprintf("Subject: %s\n", subject);
           editor->append(temp);
           if(!currentMessage->numAttch())
-                  {printf("Message is none MULTIPART\n");
-                  temp = currentMessage->getText(&length);
+                  {temp = currentMessage->getText(&length);
                   editor->append(temp);
                   }
         else
-                {printf("Message is MULTIPART!\n");
-		//temp = currentMessage->getText(&length);
-                //editor->append(temp);
+		{temp = currentMessage->getText(&length);
+		temp.truncate(length);
+                editor->append(temp);
                 }
           editor->update();
           editor->repaint();
@@ -341,16 +340,20 @@ void KMComposeView::replyAll()
           toLEdit->setText(from);
 	  ccLEdit->setText(cc);
           subjLEdit->setText(temp);
-	  printf("Checkion if replyAll is MP\n");
           if(!currentMessage->numAttch())
-                  {printf("No, it is not a MP message\n");
-		  temp.sprintf("\nOn %s %s wrote:\n",from ,date);
+		  {temp.sprintf("\nOn %s %s wrote:\n",from ,date);
                   editor->append(temp);
                   temp = currentMessage->getText(&length);
                   editor->append(temp);
-		  printf("Leaving test\n");
                   }
-          printf("After\n");
+	  else
+		{temp.sprintf("\nOn %s %s wrote:\n",from ,date);
+                 editor->append(temp);
+		temp = currentMessage->getText(&length);
+		temp.truncate(length);
+		editor->append(temp);
+		}
+
           lines = editor->numLines();
           printf("We are here\n");
           for(int x=2;x < lines;x++)
@@ -381,16 +384,21 @@ void KMComposeView::replyMessage()
           temp.sprintf("Re: %s",subject);
           toLEdit->setText(from);
           subjLEdit->setText(temp);
-	  printf("Checking if msg is MP\n");
 	  if(!currentMessage->numAttch())
-	          {printf("Yes, it is a MP mes\n");
-		  temp.sprintf("\nOn %s %s wrote:\n",date ,from);
+	          {temp.sprintf("\nOn %s %s wrote:\n",date ,from);
 		  editor->append(temp);
 		  temp =  currentMessage->getText(&length);
         	  editor->append(temp);
-		  printf("Leaving cM->gA()\n");
 		  }
-	  printf("After\n");
+	  else 
+		{temp.sprintf("\nOn %s %s wrote:\n",from ,date);
+                editor->append(temp);
+		temp = currentMessage->getText(&length);
+		temp.truncate(length);
+		editor->append(temp);
+		}
+
+		  
           lines = editor->numLines();
           printf("We are here\n");
           for(int x=2;x < lines;x++)
