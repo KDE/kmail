@@ -291,7 +291,7 @@ int KMPopHeadersViewItem::compare(QListViewItem *i, int col, bool ascending)
 ///  dlg
 /////////////////////////////////////////
 /////////////////////////////////////////
-KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
+KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
       : KDialogBase(aParent, aName, TRUE, i18n("KMail POP Filter"), Ok | Help, Ok, FALSE)
 {
   unsigned int rulesetCount = 0;
