@@ -80,6 +80,8 @@ bool Callback::mailICal( const QString& to, const QString iCal,
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
       msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
+      // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
+      msg->setBcc( "" );
   }
 
   KMComposeWin *cWin = new KMComposeWin(msg);
