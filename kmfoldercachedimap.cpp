@@ -1010,7 +1010,8 @@ void KMFolderCachedImap::listMessages() {
     return;
   }
 
-  if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
+  if( !mAccount->slave() ) { // sync aborted
+    resetSyncState();
     emit listMessagesComplete();
     emit folderComplete( this, false );
     return;
@@ -1132,8 +1133,7 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
   }
 
   if( job->error() ) {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-                              job->errorText() );
+    mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while retrieving messages on the server: " ) + '\n' );
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else {
@@ -1172,7 +1172,8 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 bool KMFolderCachedImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
-  if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
+  if( !mAccount->slave() ) { // sync aborted
+    resetSyncState();
     emit folderComplete( this, false );
     return false;
   }

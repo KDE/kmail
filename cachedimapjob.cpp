@@ -429,22 +429,22 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       return;
     }
 
-    if ( job->error() &&
-         !static_cast<KMFolderCachedImap*>((*it).parent->storage())->silentUpload() ) {
-      QStringList errors = job->detailedErrorStrings();
-      QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
+    // make copy of setting, to reset it before potentially destroying 'it'
+    bool silentUpload = static_cast<KMFolderCachedImap*>((*it).parent->storage())->silentUpload();
+    static_cast<KMFolderCachedImap*>((*it).parent->storage())->setSilentUpload( false );
+
+    if ( job->error() && !silentUpload ) {
+      QString myError = "<p><b>" + i18n("Error while uploading folder")
         + "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
         + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
-      KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2],
-                          errors[0] );
+      mAccount->handleJobError( job->error(), job->errorText(), job, myError );
     }
-    static_cast<KMFolderCachedImap*>((*it).parent->storage())->setSilentUpload( false );
-    mAccount->removeJob( it );
 
     if( job->error() ) {
       delete this;
       return;
     }
+    mAccount->removeJob( it );
   }
 
   if (mFolderList.isEmpty()) {
@@ -458,7 +458,10 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + folder->name());
 
-  ImapAccountBase::jobData jd( url.url(), folder->folder() );
+  // Associate the jobData with the parent folder, not with the child
+  // This is necessary in case of an error while creating the subfolder,
+  // so that folderComplete is called on the parent (and the sync resetted).
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);

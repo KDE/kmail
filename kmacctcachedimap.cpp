@@ -277,6 +277,7 @@ void KMAcctCachedImap::slotAbortRequested()
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
+  //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (it = mapJobData.begin(); it != mapJobData.end(); ++it)
     if ((*it).parent)
