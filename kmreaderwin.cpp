@@ -2198,7 +2198,7 @@ QString KMReaderWin::createAtmFileLink() const
   if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {
     return linkName; // success
   }
-  kdWarning() << "Couldn't link to " << mAtmCurrentName << endl;
+  kdWarning(5006) << "Couldn't link to " << mAtmCurrentName << endl;
   return QString::null;
 }
 
