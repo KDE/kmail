@@ -50,7 +50,7 @@ KMIOStatus::task KMIOStatus::Task() {
 
 
 void KMIOStatus::prepareTransmission(QString,task) {
-  
+  update();
   
 }
 

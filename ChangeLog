@@ -1,3 +1,10 @@
+1998-06-21  Mario Weilguni   <mweilguni@kde.org>
+
+	* small fix for quicker response in kmnewiostatus.cpp
+
+	* "Delete folder" dialog now defaults to "No" (compliant to 
+	KDE standards)
+
 1998-06-20  Markus Wuebben  <markus@kde.org>
 
 	* kmsender.cpp (cleanup): Fixed the sendQueued problem.
