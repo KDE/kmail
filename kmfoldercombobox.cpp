@@ -70,7 +70,8 @@ void KMFolderComboBox::createFolderList(QStringList *names,
   while (i < folders->count())
   {
     if ((*(folders->at(i)))->isSystemFolder()
-      && (*(folders->at(i)))->protocol() != "imap")
+	&& (*(folders->at(i)))->protocol() != "imap"
+	&& (*(folders->at(i)))->protocol() != "cachedimap")
     {
       folders->remove(folders->at(i));
       names->remove(names->at(i));
