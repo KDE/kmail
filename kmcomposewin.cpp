@@ -1170,13 +1170,19 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
 
   if (codec && codec->toUnicode(cText) != text)
   {
+    QString oldText = mEditor->text();
+    mEditor->setText(codec->toUnicode(cText));
     kernel->kbp()->idle();
-    if (KMessageBox::warningYesNo(0L,
+    bool anyway = (KMessageBox::warningYesNo(0L,
     i18n("Not all characters fit into the chosen"
     " encoding.\nSend the message anyway?"),
     i18n("Some characters will be lost"),
-    i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
+    i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
+    if (!anyway)
+    {
+      mEditor->setText(oldText);
       return QCString();
+    }
   }
 
   if (!doSign && !doEncrypt) return cText;
