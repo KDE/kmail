@@ -32,20 +32,18 @@ void KMUndoStack::clear()
 }
 
 void 
-KMUndoStack::pushAction(KMMessage *msg, KMFolder *folder)
+KMUndoStack::pushAction(KMMsgBase *msg, KMFolder *folder)
 {
    KMUndoInfo *info = new KMUndoInfo;
    info->msg = msg;
    info->folder = folder;
    if ((int) mStack.count() == mSize)
-   {
       mStack.removeLast();
-   }
    mStack.prepend(info);
 }
 
 void 
-KMUndoStack::msgDestroyed( KMMessage *msg)
+KMUndoStack::msgDestroyed( KMMsgBase *msg)
 {
    for(KMUndoInfo *info = mStack.first(); info; )
    {
@@ -75,7 +73,7 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
 }
 
 bool 
-KMUndoStack::popAction(KMMessage *&msg, KMFolder *&folder)
+KMUndoStack::popAction(KMMsgBase *&msg, KMFolder *&folder)
 {
    if (mStack.count() == 0) return false;
    KMUndoInfo *info = mStack.take(0);

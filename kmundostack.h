@@ -23,14 +23,14 @@
 
 #include <qlist.h>
 
-class KMMessage;
+class KMMsgBase;
 class KMFolder;
 
 // A class for storing Undo information.
 class KMUndoInfo
 {
 public:
-   KMMessage *msg;
+   KMMsgBase *msg;
    KMFolder *folder;
 };
   
@@ -40,10 +40,10 @@ public:
    KMUndoStack(int size);
 
    void clear();   
-   void pushAction(KMMessage *msg, KMFolder *folder);
-   void msgDestroyed( KMMessage *msg);
+   void pushAction(KMMsgBase *msg, KMFolder *folder);
+   void msgDestroyed( KMMsgBase *msg);
    void folderDestroyed( KMFolder *folder);
-   bool popAction(KMMessage *&msg, KMFolder *&folder);
+   bool popAction(KMMsgBase *&msg, KMFolder *&folder);
 protected:
    QList<KMUndoInfo> mStack;      
    int mSize;
