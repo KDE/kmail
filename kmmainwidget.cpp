@@ -479,7 +479,7 @@ void KMMainWidget::createWidgets(void)
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            quickSearchLine, SLOT( updateSearch() ) );
  
-  new QLabel(i18n("Show only mails with status:"), searchToolBar, "kde toolbar widget");
+  new QLabel(i18n("Show only mail with status:"), searchToolBar, "kde toolbar widget");
   // FIXME hook up to real status widget once that is back in
   QComboBox *cb = new QComboBox(searchToolBar, "quick search status combo box");
   cb->insertItem(i18n("any status"));
