@@ -677,13 +677,13 @@ namespace KMail {
   void ImapAccountBase::setFolder(KMFolder* folder, bool addAccount)
   {
     if (folder)
-    { 
+    {
       folder->setSystemLabel(name());
       folder->setId(id());
     }
     NetworkAccount::setFolder(folder, addAccount);
   }
-  
+
 } // namespace KMail
 
 #include "imapaccountbase.moc"
