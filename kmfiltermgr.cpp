@@ -217,15 +217,16 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
   }
 
   bool stopIt = false;
+  bool atLeastOneRuleMatched = false;
 
   if (!beginFiltering( msg ))
     return 1;
   for ( QPtrListIterator<KMFilter> it(*this) ; !stopIt && it.current() ; ++it ) {
 
     if ( ( (set&Outbound) && (*it)->applyOnOutbound() ) ||
-	 ( (set&Inbound)  && (*it)->applyOnInbound() ) ||
-	 ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
-	// filter is applicable
+         ( (set&Inbound)  && (*it)->applyOnInbound() ) ||
+         ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
+        // filter is applicable
 
       if ( FilterLog::instance()->isLogging() ) {
         QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
@@ -233,20 +234,27 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
         FilterLog::instance()->add( logText, FilterLog::patternDesc );
       }
       if ( (*it)->pattern()->matches( msg ) ) {
-	// filter matches
+        // filter matches
         if ( FilterLog::instance()->isLogging() ) {
           FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
                                       FilterLog::patternResult );
         }
-	// execute actions:
-	if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
-	  return 2;
+        atLeastOneRuleMatched = true;
+        // execute actions:
+        if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
+          return 2;
       }
     }
   }
 
   KMFolder *folder = MessageProperty::filterFolder( msg );
-  endFiltering( msg );
+  /* endFilter does a take() and addButKeepUID() to ensure the changed 
+   * message is on disk. This is unnessecary if nothing matched, so just 
+   * reset state and don't update the listview at all. */
+  if ( atLeastOneRuleMatched )
+    endFiltering( msg );
+  else
+    MessageProperty::setFiltering( msg, false );
   if (folder) {
     tempOpenFolder( folder );
     folder->moveMsg(msg);
