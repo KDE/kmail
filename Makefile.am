@@ -53,7 +53,7 @@ rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc
 
 updatedir = $(kde_datadir)/kconf_update
-update_DATA = kmail.upd
+update_DATA = kmail.upd upgrade-transport.pl
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot

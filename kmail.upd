@@ -1,9 +1,8 @@
 # Update for transport configuration
 Id=1
-File=kmailrc,kmailrc
+File=kmailrc
 Group=sending mail,Transport 1
-Key=Smtp Host,host
-Key=Smtp Port,port
+Script=upgrade-transport.pl,perl
 # Remove passwords in the old format
 Id=3
 File=kmailrc
