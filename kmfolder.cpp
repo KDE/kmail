@@ -25,7 +25,8 @@
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
-  : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 ),
+  : KMFolderNode( aParent, aFolderName ), mStorage(0), 
+    mParent( aParent ), mChild( 0 ),
     mIsSystemFolder( false ),
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
@@ -132,22 +133,22 @@ void KMFolder::writeConfig( KConfig* config ) const
 
 KMFolderType KMFolder::folderType() const
 {
-  return mStorage->folderType();
+  return mStorage ? mStorage->folderType() : KMFolderTypeUnknown;
 }
 
 QString KMFolder::fileName() const
 {
-  return mStorage->fileName();
+  return mStorage ? mStorage->fileName() : QString::null;
 }
 
 QString KMFolder::location() const
 {
-  return mStorage->location();
+  return mStorage ? mStorage->location() : QString::null;
 }
 
 QString KMFolder::indexLocation() const
 {
-  return mStorage->indexLocation();
+  return mStorage ? mStorage->indexLocation() : QString::null;
 }
 
 QString KMFolder::subdirLocation() const
@@ -556,7 +557,7 @@ void KMFolder::correctUnreadMsgsCount()
 
 QString KMFolder::idString() const
 {
-  return mStorage->idString();
+  return mStorage ? mStorage->idString() : QString::null;
 }
 
 void KMFolder::setAutoExpire( bool enabled )
