@@ -2602,6 +2602,8 @@ bool KMHeaders::writeSortOrder()
     while(KMHeaderItem *i = items.pop()) {
       kmb = mFolder->getMsgBase( i->mMsgId );
 
+      assert(kmb); // I have seen 0L come out of this, called from
+                   // KMHeaders::setFolder(0xgoodpointer, false);
       QString replymd5 = kmb->replyToIdMD5();
       QString replyToAuxId = kmb->replyToAuxIdMD5();
       int parent_id = -2; //no parent, top level
