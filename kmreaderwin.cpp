@@ -456,6 +456,7 @@ void KMReaderWin::displayAboutPage()
     "<li>Pipelining for POP3 (faster mail download on slow responding networks)</li>\n"
     "<li>Performance improvements for IMAP</li>\n"
     "<li>Automatic configuration of the POP3/IMAP security features</li>\n"
+    "<li>DIGEST-MD5 authentication</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
