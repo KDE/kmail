@@ -316,7 +316,11 @@ const QString KMMessagePart::fileName(void) const
   str = mContentDisposition.mid(i+9, j-i-9).stripWhiteSpace();
 
   len = str.length();
-  if (str[0]=='"' && str[len-1]=='"') return str.mid(1, len-2);
+  if (str[0]=='"' && str[len-1]=='"') 
+      str = str.mid(1, len-2);
+
+  str = KMMsgBase::decodeQuotedPrintableString(str);
+
   return str;
 }
 
@@ -352,8 +356,10 @@ const QString KMMessagePart::name(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setName(const QString aStr)
 {
-  mName = aStr.copy();
+  mName = KMMsgBase::decodeQuotedPrintableString(aStr);
 }
+
+
 #if defined CHARSETS
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::charset(void) const
