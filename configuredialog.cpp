@@ -4021,8 +4021,13 @@ _dirservicesPage->hide();
 
     connect( mTabWidget, SIGNAL(currentChanged( QWidget * )),
              this, SLOT(slotCurrentPlugInTabPageChanged( QWidget * )) );
-    
+
     //slotPlugSelectionChanged();
+}
+
+void PluginPage::dismiss()
+{
+    _generalPage->dismiss();
 }
 
 
@@ -4680,7 +4685,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     kdDebug(5006) << "29) RET = " << ret << endl;
     return ret;
 }
-  
+
 
 void PluginPage::savePluginConfig( int pluginno )
 {
@@ -4697,8 +4702,8 @@ void PluginPage::savePluginConfig( int pluginno )
     // Set the right config group
     config->setGroup( QString( "CryptPlug #%1" ).arg( pluginno ) );
 
-    
-/*    
+
+/*
             int numEntry = _generalPage->plugList->childCount();
             QListViewItem *item = _generalPage->plugList->firstChild();
             int i = 0;
@@ -4714,9 +4719,9 @@ void PluginPage::savePluginConfig( int pluginno )
             _pluginPage->_dirservicesPage->plugListBoxDirServConf->insertItem( item );
 
 */
-    
-    
-    
+
+
+
     // The signature tab - everything here needs to be written both
     // into config and into the crypt plug wrapper.
 
@@ -5049,6 +5054,29 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
     this, SLOT(slotPlugUpdateURLChanged(const QString&)) );
 }
 
+void GeneralPage::dismiss()
+{
+    QListViewItem *tmp;
+    while ( currentPlugItem &&
+            currentPlugItem->text(0).isEmpty() &&
+            currentPlugItem->text(1).isEmpty() &&
+            currentPlugItem->text(2).isEmpty() ) {
+        tmp = currentPlugItem;
+        if ( currentPlugItem->itemBelow() )
+            currentPlugItem = currentPlugItem->itemBelow();
+        else if ( currentPlugItem->itemAbove() )
+            currentPlugItem = currentPlugItem->itemAbove();
+        else
+            currentPlugItem = 0;
+        delete tmp;
+    }
+    if ( currentPlugItem == 0 ) {
+        plugNameEdit->setEnabled( false );
+        plugLocationRequester->setEnabled( false );
+        plugUpdateURLEdit->setEnabled( false );
+    }
+}
+
 void GeneralPage::setup()
 {
     KConfig *config = kapp->config();
@@ -5096,7 +5124,7 @@ void GeneralPage::apply()
 {
     // Save the "General" tab
     savePluginsConfig( true );
-      
+
     // Find the number of the current plugin.
     int currentPlugin = _pluginPage->_signaturePage->plugListBoxSignConf->currentItem();
     Q_ASSERT( currentPlugin == _pluginPage->_certificatesPage->plugListBoxCertConf->currentItem() );
@@ -5195,11 +5223,10 @@ void GeneralPage::slotNewPlugIn( void )
                                                  "", "", "", "" );
     plugList->setCurrentItem( listItem );
     plugList->setSelected( listItem, true );
-    
     currentPlugItem = plugList->selectedItem();
 
     if( currentPlugItem != 0 ) {
-        plugNameEdit->setEnabled(      true);
+        plugNameEdit->setEnabled( true);
         plugLocationRequester->setEnabled(  true);
         plugUpdateURLEdit->setEnabled( true);
         plugNameEdit->setFocus();

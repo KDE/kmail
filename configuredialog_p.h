@@ -472,7 +472,7 @@ protected:
     const char *  displayName;
     KMime::DateFormatter::FormatType dateDisplay;
   } dateDisplayConfig[ numDateDisplayConfig ];
-  
+
 private:
   int mShowMIMETreeModeLastValue;
 };
@@ -932,7 +932,8 @@ public slots:
     void slotPlugNameChanged( const QString& );
     void slotPlugLocationChanged( const QString& );
     void slotPlugUpdateURLChanged( const QString& );
-    
+    void dismiss();
+
 private:
     PluginPage* _pluginPage;
     QListView* plugList;
@@ -963,12 +964,12 @@ public:
 
   void savePluginConfig( int pluginno );
   bool isPluginConfigEqual( int pluginno ) const;
-  
+
 public slots:
   void slotPlugListBoxConfigurationChanged( int );
   void slotPlugSelectionChanged();
   void slotCurrentPlugInTabPageChanged( QWidget * );
-
+  void dismiss();
 private:
   GeneralPage* _generalPage;
   CertificatesPage* _certificatesPage;

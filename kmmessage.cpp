@@ -1210,7 +1210,7 @@ QCString KMMessage::createForwardBody(void)
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += "Subject: " + subject() + "\n";
     s += "Date: "
-         + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized, 
+         + KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
                                              date(), sReplyLanguage, false )
          + "\n";
     s += "From: " + from() + "\n";
@@ -1373,7 +1373,7 @@ void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
   QString idString = msg->headerField("X-KMail-Identity").stripWhiteSpace();
   bool ok = false;
   uint id = idString.toUInt( &ok );
-  
+
   if ( !ok || id == 0 )
     id = kernel->identityManager()->identityForAddress( msg->to() + msg->cc() ).uoid();
   if ( id == 0 && msg->parent() )
@@ -1438,8 +1438,9 @@ QString KMMessage::dateStr(void) const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  return KMime::DateFormatter::formatDate( static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
-					   unixTime, general.readEntry( "customDateFormat" ) );
+  return KMime::DateFormatter::formatDate(
+      static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
+      unixTime, general.readEntry( "customDateFormat" ));
 }
 
 
