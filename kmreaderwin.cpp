@@ -531,6 +531,7 @@ void KMReaderWin::displayAboutPage()
     "<li>On demand downloading or deleting without downloading of big mails on "
     "a POP3 server</li>\n"
     "<li>Automatic configuration of the POP3/IMAP/SMTP security features</li>\n"
+    "<li>Automatic encoding selection for outgoing mails.</li>\n"
     "<li>DIGEST-MD5 authentication</li>\n"
     "<li>Identity based sent-mail and drafts folders</li>\n"
     "<li>Expiry of old messages</li>\n"
