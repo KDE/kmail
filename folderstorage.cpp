@@ -668,6 +668,11 @@ void FolderStorage::remove()
   int rc = removeContents();
 
   needsCompact = false; //we are dead - no need to compact us
+
+  // Erase settings, otherwise they might interfer when recreating the folder
+  KConfig* config = KMKernel::config();
+  config->deleteGroup( "Folder-" + folder()->idString() );
+
   emit removed(folder(), (rc ? false : true));
 }
 
