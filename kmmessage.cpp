@@ -887,8 +887,8 @@ KMMessage* KMMessage::createForward(void)
     str += "\n-------------------------------------------------------\n";
   }
 
-  msg->setCharset(charset());
-  if (!charset().isEmpty()) msg->setBody(str);
+  if (!charset().isEmpty()) msg->setCharset(charset());
+  msg->setBody(str);
 
   if (numBodyParts() > 0)
   {
