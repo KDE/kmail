@@ -3731,11 +3731,11 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   label = new QLabel( mMailboxPrefCombo,
 		      i18n("to be continued with \"flat files\" and "
 			   "\"directories\", resp.",
-			   "By default, &mail folders on disk are"), this );
+			   "By default, &message folders on disk are"), this );
   mMailboxPrefCombo->insertStringList( QStringList()
-	  << i18n("continuation of \"By default, &mail folders on disk are\"",
+	  << i18n("continuation of \"By default, &message folders on disk are\"",
 		  "flat files (\"mbox\" format)")
-	  << i18n("continuation of \"By default, &mail folders on disk are\"",
+	  << i18n("continuation of \"By default, &message folders on disk are\"",
 		  "directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
@@ -3745,18 +3745,18 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   // mail Drag'n'Drop actions settings:
   mActionWhenDnD = new QVButtonGroup( i18n("In normal mo&de"), this );
   mActionWhenDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenDnD->insert(new QRadioButton(      i18n("Move mail"), mActionWhenDnD));
-  mActionWhenDnD->insert(new QRadioButton(      i18n("Copy mail"), mActionWhenDnD));
+  mActionWhenDnD->insert(new QRadioButton(      i18n("Move message"), mActionWhenDnD));
+  mActionWhenDnD->insert(new QRadioButton(      i18n("Copy message"), mActionWhenDnD));
   mActionWhenDnD->insert(new QRadioButton(      i18n("Ask me"),    mActionWhenDnD));
   mActionWhenShiftDnD = new QVButtonGroup( i18n("&SHIFT key pressed"), this );
   mActionWhenShiftDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Move mail"), mActionWhenShiftDnD));
-  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Copy mail"), mActionWhenShiftDnD));
+  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Move message"), mActionWhenShiftDnD));
+  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Copy message"), mActionWhenShiftDnD));
   mActionWhenShiftDnD->insert(new QRadioButton( i18n("Ask me"),    mActionWhenShiftDnD));
   mActionWhenCtrlDnD = new QVButtonGroup( i18n("CT&RL key pressed"), this );
   mActionWhenCtrlDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Move mail"), mActionWhenCtrlDnD));
-  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Copy mail"), mActionWhenCtrlDnD));
+  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Move message"), mActionWhenCtrlDnD));
+  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Copy message"), mActionWhenCtrlDnD));
   mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Ask me"),    mActionWhenCtrlDnD));
   vlay->addWidget(
     new QLabel( i18n("On Drag'n'Drop of mail to another folder:"),
