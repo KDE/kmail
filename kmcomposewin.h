@@ -88,7 +88,7 @@ signals:
   void spellcheck_done();
 public slots:
   void slotSpellcheck2(KSpell*);
-  void slotSpellResult(const char *newtext);
+  void slotSpellResult(const QString &newtext);
   void slotSpellDone();
 
 protected:

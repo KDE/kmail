@@ -2496,8 +2496,8 @@ void KMEdit::spellcheck()
           this, SLOT (misspelling (QString, QStringList *, unsigned)));
   connect (mKSpell, SIGNAL (corrected (QString, QString, unsigned)),
           this, SLOT (corrected (QString, QString, unsigned)));
-  connect (mKSpell, SIGNAL (done(const char *)),
-          this, SLOT (slotSpellResult (const char *)));
+  connect (mKSpell, SIGNAL (done(const QString &)),
+          this, SLOT (slotSpellResult (const QString&)));
 }
 
 
@@ -2510,7 +2510,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotSpellResult(const char *aNewText)
+void KMEdit::slotSpellResult(const QString &aNewText)
 {
   spellcheck_stop();
   if (mKSpell->dlgResult() == 0)
