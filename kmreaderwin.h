@@ -185,6 +185,7 @@ protected:
 protected:
   QString colorToString(const QColor&);
 
+  bool mHtmlMail;
   int mAtmInline;
   int mAtmCurrent;
   KMMessage *mMsg, *mMsgBuf;

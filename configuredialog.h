@@ -225,6 +225,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox     *recycleColorCheck;
       QCheckBox     *longFolderCheck;
       QCheckBox     *nestedMessagesCheck;
+      QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
       QString       fontString[6];
       ListView      *profileList;

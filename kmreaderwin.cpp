@@ -124,6 +124,7 @@ void KMReaderWin::readConfig(void)
     mBackingPixmapOn = TRUE;
 
   config->setGroup("Reader");
+  mHtmlMail = config->readBoolEntry( "htmlMail", true );
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
@@ -442,13 +443,20 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       {
         aMsg->bodyPart(i, &msgPart);        // set part...
         subtype = msgPart.subtypeStr();     // get subtype...
-        if (stricmp(subtype, "html")==0)    // is it html?
+        if (mHtmlMail && stricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
           str = QCString(msgPart.bodyDecoded());      // decode it...
           mViewer->write(str);              // write it...
           return;                           // return, finshed.
-        }                                   // wasn't html ignore.
-      }                                     // end for.
+        }
+	else if (!mHtmlMail && (stricmp(subtype, "plain")==0))    
+	                                    // wasn't html show only if
+	{                                   // support for html is turned off
+          str = QCString(msgPart.bodyDecoded());      // decode it...
+          writeBodyStr(str);
+          return;
+	}
+      }                                     
       // if we are here we didnt find any html part. Handle it normaly then
     }
     // This works only for alternative msgs without attachments. Alternative
@@ -483,12 +491,12 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       {
 //	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 //	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
-	if ((type == "") || (stricmp(type, "text")==0))//||stricmp(type, "message")==0)
+	if ((type == "") || (stricmp(type, "text")==0))
 	{
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
-	  if (stricmp(subtype, "html")==0)
+	  if (mHtmlMail && (stricmp(subtype, "html")==0))
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
@@ -525,7 +533,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
   else // if numBodyParts <= 0
   {
-    if (type.find("text/html;") != -1)
+    if (mHtmlMail && (type.find("text/html;") != -1))
       mViewer->write(aMsg->bodyDecoded());
     else
       writeBodyStr(aMsg->bodyDecoded());
@@ -1135,7 +1143,7 @@ void KMReaderWin::slotAtmView()
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<HTML><BODY>");
       QString str = msgPart.bodyDecoded();
-      if (stricmp(msgPart.subtypeStr(), "html")==0)
+      if (mHtmlMail && (stricmp(msgPart.subtypeStr(), "html")==0))
         win->mViewer->write(str);
       else  //plain text
         win->writeBodyStr(str);

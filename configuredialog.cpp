@@ -1296,8 +1296,12 @@ void ConfigureDialog::makeAppearancePage( void )
   vlay->addWidget( mAppearance.longFolderCheck );
 
   mAppearance.nestedMessagesCheck = 
-    new QCheckBox( i18n("Collect replies in a nested treelist"), page3 );
+    new QCheckBox( i18n("Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
+
+  mAppearance.htmlMailCheck = 
+    new QCheckBox( i18n("Prefer plain text to HTML rendering"), page3 );
+  vlay->addWidget( mAppearance.htmlMailCheck );
 
   vlay->addStretch(10); // Eat unused space a bottom
 
@@ -1728,6 +1732,10 @@ void ConfigureDialog::setupAppearancePage( void )
 
   state = config.readBoolEntry( "nestedMessages", false );
   mAppearance.nestedMessagesCheck->setChecked( state );
+
+  config.setGroup("Reader");
+  state = config.readBoolEntry( "htmlMail", true );
+  mAppearance.htmlMailCheck->setChecked( state );
 }
 
 
@@ -1859,6 +1867,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
+    mAppearance.htmlMailCheck->setChecked( false );
   }
   else if( item == mAppearance.mListItemNewFeature )
   {
@@ -1882,6 +1891,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( true );
   }
   else if( item == mAppearance.mListItemContrast )
   {
@@ -1905,6 +1915,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( true );
   }
   else
   {
@@ -2034,6 +2045,10 @@ void ConfigureDialog::slotApply( void )
 
     bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
     config.writeEntry( "nestedMessages", nestedMessages );
+
+    config.setGroup("Reader");
+    bool htmlMail = mAppearance.htmlMailCheck->isChecked();
+    config.writeEntry( "htmlMail", htmlMail );
   }
   else if( activePage == mComposer.pageIndex )
   {
