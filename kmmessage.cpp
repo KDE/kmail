@@ -7,6 +7,8 @@
 #define ALLOW_GUI 1
 #include "kmmessage.h"
 #include "mailinglist-magic.h"
+#include "messageproperty.h"
+using KMail::MessageProperty;
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
@@ -79,9 +81,7 @@ const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 KMMessage::KMMessage(DwMessage* aMsg)
   : mMsg(aMsg),
     mNeedsAssembly(true),
-    mIsComplete(false),
     mDecodeHTML(false),
-    mTransferInProgress(0),
     mOverrideCodec(0),
     mMsgSize(0),
     mUnencryptedMsg(0)
@@ -102,6 +102,7 @@ KMMessage::KMMessage(const KMMessage& other) :
 
 void KMMessage::assign( const KMMessage& other )
 {
+  MessageProperty::forget( this );
   delete mMsg;
   delete mUnencryptedMsg;
 
@@ -110,8 +111,8 @@ void KMMessage::assign( const KMMessage& other )
     mMsg = new DwMessage( *(other.mMsg) );
   mOverrideCodec = other.mOverrideCodec;
   mDecodeHTML = other.mDecodeHTML;
-  mIsComplete = false;//other.mIsComplete;
-  mTransferInProgress = other.mTransferInProgress;
+  Q_UINT32 otherTransfer = MessageProperty::transferInProgress( &other );
+  MessageProperty::setTransferInProgress( this, otherTransfer );
   mMsgSize = other.mMsgSize;
   mMsgLength = other.mMsgLength;
   mFolderOffset = other.mFolderOffset;
@@ -125,8 +126,6 @@ void KMMessage::assign( const KMMessage& other )
   else
     mUnencryptedMsg = 0;
   //mFileName = ""; // we might not want to copy the other messages filename (?)
-  //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
-  mMsgSerNum = 0;
   //KMMsgBase::assign( &other );
 }
 
@@ -151,21 +150,9 @@ QCString KMMessage::id() const
 
 
 //-----------------------------------------------------------------------------
-unsigned long KMMessage::getMsgSerNum() const
-{
-  if (mMsgSerNum)
-    return mMsgSerNum;
-  return KMMsgBase::getMsgSerNum();
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 {
-  if (newMsgSerNum)
-    mMsgSerNum = newMsgSerNum;
-  else if (!mMsgSerNum)
-      mMsgSerNum = getMsgSerNum();
+  MessageProperty::setSerialCache( this, newMsgSerNum );
 }
 
 
@@ -176,8 +163,6 @@ KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
   mMsg = new DwMessage;
   mOverrideCodec = 0;
   mDecodeHTML = FALSE;
-  mIsComplete = FALSE;
-  mTransferInProgress = 0;
   mMsgSize = 0;
   mMsgLength = 0;
   mFolderOffset = 0;
@@ -187,7 +172,6 @@ KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
   mMDNSentState = KMMsgMDNStateUnknown;
   mDate    = 0;
   mFileName = "";
-  mMsgSerNum = 0;
   mUnencryptedMsg = 0;
 }
 
@@ -199,8 +183,6 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   mMsg = new DwMessage;
   mOverrideCodec = 0;
   mDecodeHTML = FALSE;
-  mIsComplete = FALSE;
-  mTransferInProgress = 0;
   mMsgSize = msgInfo.msgSize();
   mMsgLength = 0;
   mFolderOffset = msgInfo.folderOffset();
@@ -210,7 +192,6 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   mMDNSentState = msgInfo.mdnSentState();
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
-  mMsgSerNum = msgInfo.getMsgSerNum();
   KMMsgBase::assign(&msgInfo);
   mUnencryptedMsg = 0;
 }
@@ -219,7 +200,6 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
 //-----------------------------------------------------------------------------
 KMMessage::~KMMessage()
 {
-  Q_ASSERT( !transferInProgress() );
   delete mMsg;
   kmkernel->undoStack()->msgDestroyed( this );
 }
@@ -3867,18 +3847,6 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
 
   return address;
 }
-
-//-----------------------------------------------------------------------------
-void KMMessage::setTransferInProgress( bool value, bool force )
-{
-  if ( force && !value )
-    mTransferInProgress = 0;
-  else
-    value ? ++mTransferInProgress : --mTransferInProgress;
-  if ( mTransferInProgress < 0 )
-    mTransferInProgress = 0;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig()

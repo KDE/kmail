@@ -15,9 +15,9 @@
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
-#include <qobject.h>
 #include <qwidget.h>
 
+class KMMsgBase;
 class KMMessage;
 class QWidget;
 class KMFolder;
@@ -44,7 +44,8 @@ class KMFilterAction
 public:
   /** Possible return codes of @ref process:
 
-      @li @p Moved: The message we re-parented.
+      @li @p ErrorNeedComplete: Could not process because a
+      complete message is needed.
 
       @li @p GoOn: Go on with applying filter actions.
 
@@ -56,7 +57,7 @@ public:
       processing (e.g. "disk full").
 
   */
-  enum ReturnCode { Moved = 0x1, GoOn = 0x2, ErrorButGoOn = 0x4,
+  enum ReturnCode { ErrorNeedComplete = 0x1, GoOn = 0x2, ErrorButGoOn = 0x4,
 		    CriticalError = 0x8 };
   /** Initialize filter action with (english) name @p aName and
       (internationalized) label @p aLabel. */
@@ -74,10 +75,20 @@ public:
   /** Execute action on given message. Returns @p CriticalError if a
       critical error has occurred (eg. disk full), @p ErrorButGoOn if
       there was a non-critical error (e.g. invalid address in
-      'forward' action), @p GoOn if the message shall be processed by
+      'forward' action), @p ErrorNeedComplete if a complete message
+      is required, @p GoOn if the message shall be processed by
       further filters and @p Ok otherwise.
   */
   virtual ReturnCode process(KMMessage* msg) const = 0;
+
+  /** Execute an action on given message asynchronously.
+      Emits a result signal on completion.
+  */
+  virtual void processAsync(KMMessage* msg) const;
+
+  /** Determines if the action depends on the body of the message
+  */
+  virtual bool requiresBody(KMMsgBase* msgBase) const;
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter

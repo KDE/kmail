@@ -29,10 +29,6 @@ class KMFilter
 public:
   /** Result codes returned by @ref process. They mean:
 
-      @param MsgExpropriated You no longer own the message. E.g. if
-      the message was moved to another folder. You should stop
-      processing here.
-
       @param GoOn Everything OK. You are still the owner of the
       message and you should continue applying filter actions to this
       message.
@@ -42,7 +38,7 @@ public:
       @param NoResult For internal use only!
 
   */
-  enum ReturnCode { NoResult, MsgExpropriated, GoOn, CriticalError };
+  enum ReturnCode { NoResult, GoOn, CriticalError };
 
   /** Constructor that initializes from given config file, if given.
     * Filters are stored one by one in config groups, i.e. one filter, one group.
@@ -72,6 +68,10 @@ public:
       stop the filtering of this message.
   */
   ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
+
+  /** Determines if the filter depends on the body of the message
+  */
+  bool requiresBody(KMMsgBase* msgBase);
 
   /** No descriptions */
   KMPopFilterAction action();

@@ -2,6 +2,9 @@
 #include "config.h"
 #include "kmkernel.h"
 
+#include <weaver.h>
+#include <weaverlogger.h>
+
 #include "kmstartup.h"
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
@@ -772,6 +775,11 @@ void KMKernel::init()
   delete the_msgIndex;
   the_msgIndex = 0;
 #endif
+
+  the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
+  the_weaverLogger = new KPIM::ThreadWeaver::WeaverThreadLogger(this);
+  the_weaverLogger->attach (the_weaver);
+
 }
 
 void KMKernel::cleanupImapFolders()
@@ -944,6 +952,9 @@ void KMKernel::cleanup(void)
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
 
+  delete the_weaver;
+  the_weaver = 0;
+
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:
   // We first have to fire up a new event loop.
@@ -1042,7 +1053,8 @@ void KMKernel::cleanupLoop()
         QApplication::syncX();
         kapp->processEvents();
       }
-      the_trashFolder->expunge();
+      if ( the_trashFolder->count() > 0 )
+        the_trashFolder->expunge();
     }
   }
 

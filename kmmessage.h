@@ -432,8 +432,6 @@ public:
   /** Returns the message ID, useful for followups */
   QCString id() const;
 
-  /** Returns the message serial number. */
-  unsigned long getMsgSerNum() const;
   /** Sets the message serial number.  If defaulted to zero, the
     serial number will be assigned using the dictionary. */
   void setMsgSerNum(unsigned long newMsgSerNum = 0);
@@ -722,21 +720,6 @@ public:
   void setDecodeHTML(bool aDecodeHTML)
   { mDecodeHTML = aDecodeHTML; }
 
-  /** Return if the message is complete and not only the header of a message
-   * in an IMAP folder */
-  bool isComplete()
-  { return mIsComplete; }
-
-  /** Set if the message is a complete message */
-  void setComplete(bool value)
-  { mIsComplete = value; }
-
-  /** Return, if the message should not be deleted */
-  bool transferInProgress() { return ( mTransferInProgress > 0 ); }
-
-  /** Set that the message shall not be deleted because it is still required */
-  void setTransferInProgress(bool value, bool force = false);
-
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig();
@@ -834,8 +817,7 @@ private:
   QString mDrafts;
   mutable DwMessage* mMsg;
   mutable bool       mNeedsAssembly;
-  bool mIsComplete, mDecodeHTML;
-  int mTransferInProgress;
+  bool mDecodeHTML;
   static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
   const QTextCodec * mOverrideCodec;
@@ -844,7 +826,6 @@ private:
   off_t mFolderOffset;
   size_t mMsgSize, mMsgLength;
   time_t mDate;
-  unsigned long mMsgSerNum;
   KMMsgEncryptionState mEncryptionState;
   KMMsgSignatureState mSignatureState;
   KMMsgMDNSentState mMDNSentState;

@@ -9,8 +9,10 @@
 
 #include "kmfilteraction.h"
 
+#include "kmcommands.h"
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
+#include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
 #include "kmidentity.h"
@@ -20,7 +22,10 @@
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 #include "kmmsgbase.h"
-
+#include "messageproperty.h"
+#include "actionscheduler.h"
+using KMail::MessageProperty;
+using KMail::ActionScheduler;
 #include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
@@ -32,6 +37,8 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextcodec.h>
+#include <qtimer.h>
+#include <qobject.h>
 #include <assert.h>
 
 
@@ -49,6 +56,19 @@ KMFilterAction::KMFilterAction( const char* aName, const QString aLabel )
 
 KMFilterAction::~KMFilterAction()
 {
+}
+
+void KMFilterAction::processAsync(KMMessage* msg) const
+{
+  ActionScheduler *handler = MessageProperty::filterHandler( msg );
+  ReturnCode result = process( msg );
+  if (handler)
+    handler->actionMessage( result );
+}
+
+bool KMFilterAction::requiresBody(KMMsgBase*) const
+{
+  return true;
 }
 
 KMFilterAction* KMFilterAction::newAction()
@@ -427,6 +447,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   return result;
 }
 
+
 KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* aMsg, bool withOutput) const
 {
   Q_ASSERT( aMsg );
@@ -703,6 +724,8 @@ class KMFilterActionSetStatus: public KMFilterActionWithStringList
 public:
   KMFilterActionSetStatus();
   virtual ReturnCode process(KMMessage* msg) const;
+  virtual bool requiresBody(KMMsgBase*) const;
+
   static KMFilterAction* newAction();
 
   virtual bool isEmpty() const { return false; }
@@ -762,6 +785,11 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) cons
   KMMsgStatus status = stati[idx-1] ;
   msg->setStatus( status );
   return GoOn;
+}
+
+bool KMFilterActionSetStatus::requiresBody(KMMsgBase*) const
+{
+  return false;
 }
 
 void KMFilterActionSetStatus::argsFromString( const QString argsStr )
@@ -1244,6 +1272,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 public:
   KMFilterActionMove();
   virtual ReturnCode process(KMMessage* msg) const;
+  virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1262,20 +1291,14 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( !mFolder )
     return ErrorButGoOn;
 
-  KMFilterAction::tempOpenFolder( mFolder );
-
-  if ( msg->parent() )
-    return Moved; // the message already has a parent??? so what?
-  if ( mFolder->moveMsg(msg) == 0 ) {
-    if ( kmkernel->folderIsTrash( mFolder ) )
-      sendMDN( msg, KMime::MDN::Deleted );
-    return Moved; // ok, added
-  } else {
-    kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
-    return CriticalError; // critical error: couldn't add
-  }
+  MessageProperty::setFilterFolder( msg, mFolder );
+  return GoOn;
 }
 
+bool KMFilterActionMove::requiresBody(KMMsgBase*) const
+{
+    return false; //iff mFolder->folderMgr == msgBase->parent()->folderMgr;
+}
 
 //=============================================================================
 // KMFilterActionForward - forward to
@@ -1453,13 +1476,65 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 // External message filter: executes a shell command with message
 // on stdin; altered message is expected on stdout.
 //=============================================================================
+
+#include <weaver.h>
+class PipeJob : public KPIM::ThreadWeaver::Job
+{
+  public:
+    PipeJob(QObject* parent = 0 , const char* name = 0, KMMessage* aMsg = 0, QString cmd = 0, QString tempFileName = 0 )
+      : Job (parent, name),
+        mTempFileName(tempFileName),
+        mCmd(cmd),
+        mMsg( aMsg )
+    {
+    }
+
+    ~PipeJob() {}
+    virtual void processEvent( KPIM::ThreadWeaver::Event *ev )
+    {
+      KPIM::ThreadWeaver::Job::processEvent( ev );
+      if ( ev->action() == KPIM::ThreadWeaver::Event::JobFinished )
+        deleteLater( );
+    }
+  protected:
+    void run()
+    {
+      KPIM::ThreadWeaver::debug (1, "PipeJob::run: doing it .\n");
+      FILE *p;
+      QByteArray ba;
+
+      p = popen(QFile::encodeName(mCmd), "r");
+      int len =100;
+      char buffer[100];
+      // append data to ba:
+      while (true)  {
+        if (! fgets( buffer, len, p ) ) break;
+        int oldsize = ba.size();
+        ba.resize( oldsize + strlen(buffer) );
+        qmemmove( ba.begin() + oldsize, buffer, strlen(buffer) );
+      }
+      pclose(p);
+      if ( !ba.isEmpty() ) {
+        KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).latin1() );
+        mMsg->fromByteArray( ba );
+      }
+
+      KPIM::ThreadWeaver::debug (1, "PipeJob::run: done.\n" );
+      // unlink the tempFile
+      QFile::remove(mTempFileName);
+    }
+    QString mTempFileName;
+    QString mCmd;
+    KMMessage *mMsg;
+};
+
 class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExtFilter();
   virtual ReturnCode process(KMMessage* msg) const;
+  virtual void processAsync(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
-
 };
 
 KMFilterAction* KMFilterActionExtFilter::newAction(void)
@@ -1471,12 +1546,45 @@ KMFilterActionExtFilter::KMFilterActionExtFilter()
   : KMFilterActionWithCommand( "filter app", i18n("pipe through") )
 {
 }
-
 KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) const
 {
   return KMFilterActionWithCommand::genericProcess( aMsg, true ); // use output
 }
 
+void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
+{
+
+  ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
+  KTempFile * inFile = new KTempFile;
+  inFile->setAutoDelete(FALSE);
+  inFile->close();
+
+  QPtrList<KTempFile> atmList;
+  atmList.setAutoDelete(TRUE);
+  atmList.append( inFile );
+
+  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  if ( commandLine.isEmpty() )
+    handler->actionMessage( ErrorButGoOn );
+
+  // The parentheses force the creation of a subshell
+  // in which the user-specified command is executed.
+  // This is to really catch all output of the command as well
+  // as to avoid clashes of our redirection with the ones
+  // the user may have specified. In the long run, we
+  // shouldn't be using tempfiles at all for this class, due
+  // to security aspects. (mmutz)
+  commandLine =  "(" + commandLine + ") <" + inFile->name();
+
+  // write message to file
+  QString tempFileName = inFile->name();
+  kCStringToFile( aMsg->asString(), tempFileName, //###
+      false, false, false );
+
+  PipeJob *job = new PipeJob(0, 0, aMsg, commandLine, tempFileName);
+  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
+  kmkernel->weaver()->enqueue(job);
+}
 
 //=============================================================================
 // KMFilterActionExecSound - execute command
@@ -1487,6 +1595,7 @@ class KMFilterActionExecSound : public KMFilterActionWithTest
 public:
   KMFilterActionExecSound();
   virtual ReturnCode process(KMMessage* msg) const;
+  virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1543,19 +1652,22 @@ KMFilterAction* KMFilterActionExecSound::newAction(void)
   return (new KMFilterActionExecSound());
 }
 
-
-KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage */*aMsg*/) const
+KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage*) const
 {
-    if ( mParameter.isEmpty() )
-        return ErrorButGoOn;
-    QString play = mParameter;
-    QString file = QString::fromLatin1("file:");
-    if (mParameter.startsWith(file))
-        play = mParameter.mid(file.length());
-    KAudioPlayer::play(QFile::encodeName(play));
-    return GoOn;
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
+  QString play = mParameter;
+  QString file = QString::fromLatin1("file:");
+  if (mParameter.startsWith(file))
+    play = mParameter.mid(file.length());
+  KAudioPlayer::play(QFile::encodeName(play));
+  return GoOn;
 }
 
+bool KMFilterActionExecSound::requiresBody(KMMsgBase*) const
+{
+  return false;
+}
 
 KMFilterActionWithUrl::KMFilterActionWithUrl( const char* aName, const QString aLabel )
   : KMFilterAction( aName, aLabel )
@@ -1646,4 +1758,3 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   mList.append( desc );
   delete action;
 }
-

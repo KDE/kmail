@@ -82,6 +82,8 @@ public:
   virtual void copyMsgToFolder(KMFolder* destination,
                                KMMessage* aMsg = 0);
 
+  /** Resets toBeDeleted and selectable status of all selected items. */
+  virtual void clearSelectableAndAboutToBeDeleted(Q_UINT32 serNum);
   /** Returns list of selected messages. Mark the corresponding
       header items to be deleted, if specified. */
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);

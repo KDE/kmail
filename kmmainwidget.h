@@ -92,8 +92,6 @@ public:
 
   static void cleanup();
 
-  // Proxy the actions from the reader window,
-  // but action( "some_name" ) some name could be used instead.
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
   KAction *replyAction() { return mReplyAction; }
   KAction *replyAllAction() { return mReplyAllAction; }

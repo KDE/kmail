@@ -98,7 +98,7 @@ k_dcop:
   virtual DCOPRef getFolder( const QString& vpath ) =0;
 
 k_dcop_hidden:
-  virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0; 
+  virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
 };
 
 #endif

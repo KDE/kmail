@@ -89,10 +89,6 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
     case KMFilterAction::CriticalError:
       // in case it's a critical error: return immediately!
       return CriticalError;
-    case KMFilterAction::Moved:
-      // Message saved in a folder
-      kdDebug(5006) << "got result Moved" << endl;
-      status = MsgExpropriated;
     case KMFilterAction::ErrorButGoOn:
     default:
       break;
@@ -105,6 +101,17 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   stopIt = stopProcessingHere();
 
   return status;
+}
+
+bool KMFilter::requiresBody( KMMsgBase* msg )
+{
+  if (pattern() && pattern()->requiresBody())
+    return true; // no pattern means always matches?
+  QPtrListIterator<KMFilterAction> it( *actions() );
+  for ( it.toFirst() ; it.current() ; ++it )
+    if ((*it)->requiresBody( msg ))
+      return true;
+  return false;
 }
 
 /** No descriptions */

@@ -5,6 +5,8 @@
 
 #include <qobject.h>
 #include <qstring.h>
+#include <weaver.h>
+#include <weaverlogger.h>
 
 #include <kconfig.h>
 #include <kdeversion.h>
@@ -109,7 +111,7 @@ public:
   bool storeAddresses( QString addresses, QStringList delUIDs );
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
-  virtual bool showMail( Q_UINT32 serialNumber, QString messageId ); 
+  virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
@@ -164,6 +166,7 @@ public:
   KMMsgDict *msgDict();
   KMMsgIndex *msgIndex();
 
+  KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
   CryptPlugWrapperList * cryptPlugList() const { return mCryptPlugList; }
@@ -299,6 +302,10 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
+
+  /* Weaver */
+  KPIM::ThreadWeaver::Weaver *the_weaver;
+  KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
 };
 
 #endif

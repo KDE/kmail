@@ -25,9 +25,7 @@
 //
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
-
 #include <errno.h>
-
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
@@ -44,6 +42,8 @@
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
+#include "actionscheduler.h"
+using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
 #include "kmcomposewin.h"
@@ -119,6 +119,7 @@ void KMCommand::preTransfer()
 {
   connect(this, SIGNAL(messagesTransfered(bool)),
           this, SLOT(slotPostTransfer(bool)));
+  kmkernel->filterMgr()->ref();
 
   if (mMsgList.find(0) != -1) {
       emit messagesTransfered(false);
@@ -1141,9 +1142,27 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
 
 void KMMetaFilterActionCommand::start()
 {
+#if 0 // use action scheduler
+  KMFilterMgr::FilterSet set = KMFilterMgr::All;
+  QPtrList<KMFilter> filters;
+  filters.append( mFilter );
+  ActionScheduler *scheduler = new ActionScheduler( set, filters, mHeaders );
+  scheduler->setAlwaysMatch( true );
+  scheduler->setAutoDestruct( true );
+
+  int contentX, contentY;
+  KMHeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
+  QPtrList<KMMsgBase> msgList = *mHeaders->selectedMsgs(true);
+  mHeaders->finalizeMove( nextItem, contentX, contentY );
+
+
+  for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
+    scheduler->execFilters( msg );
+#else
   KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
-    *mHeaders->selectedMsgs(), mFilter);
+  *mHeaders->selectedMsgs(), mFilter);
   filterCommand->start();
+#endif
 }
 
 
@@ -1356,6 +1375,14 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
   mMsgList.append( &msg->toMsgBase() );
 }
 
+KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
+                              KMMsgBase *msgBase )
+  :mDestFolder( destFolder )
+{
+  setDeletesItself( true );
+  mMsgList.append( msgBase );
+}
+
 void KMMoveCommand::execute()
 {
   typedef QMap< KMFolder*, QPtrList<KMMessage>* > FolderToMessageListMap;
@@ -1375,6 +1402,7 @@ void KMMoveCommand::execute()
   if (mDestFolder) {
     connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
+
   }
 
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
@@ -1426,7 +1454,8 @@ void KMMoveCommand::execute()
         }
       }
     } else {
-      // really delete messages that are already in the trash folder
+      // really delete messages that are already in the trash folder or if
+      // we are really, really deleting, not just moving to trash
       if (srcFolder->folderType() == KMFolderTypeImap) {
         if (!folderDeleteList[srcFolder])
           folderDeleteList[srcFolder] = new QPtrList<KMMessage>;
@@ -1445,6 +1474,17 @@ void KMMoveCommand::execute()
       it.key()->removeMsg(*it.data());
       delete it.data();
     }
+    /* The list is empty, which means that either all messages were to be
+     * deleted, which is done above, or all of them were already in this folder.
+     * In both cases make sure a completed() signal is emitted nonetheless. */
+    KMFolder *srcFolder = 0;
+    if ( mMsgList.first() ) {
+      srcFolder = mMsgList.first()->parent();
+      if ( mDestFolder && mDestFolder == srcFolder ) {
+        emit completed( true );
+        deleteLater();
+      }
+    }
     if ( !mDestFolder ) {
       emit completed( true );
       deleteLater();
@@ -1454,7 +1494,6 @@ void KMMoveCommand::execute()
 
 void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
 {
-  kdDebug(5006) <<  "KMMoveCommand::slotImapFolderCompleted: " << success << endl;
   if ( success ) {
     // the folder was checked successfully but we were still called, so check
     // if we are still waiting for messages to show up. If so, uidValidity

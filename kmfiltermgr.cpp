@@ -6,6 +6,8 @@
 // other kmail headers
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
+#include "messageproperty.h"
+using KMail::MessageProperty;
 
 // other KDE headers
 #include <kdebug.h>
@@ -120,44 +122,51 @@ int KMFilterMgr::processPop( KMMessage * msg ) const {
   return NoAction;
 }
 
-int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) const {
-  if ( !msg || !filter )
-    return 1;
+bool KMFilterMgr::beginFiltering(KMMsgBase *msgBase) const
+{
+  if (MessageProperty::filtering( msgBase ))
+    return false;
+  MessageProperty::setFiltering( msgBase, true );
+  MessageProperty::setFilterFolder( msgBase, 0 );
+  return true;
+}
 
-  // remove msg from parent in case we want to move it:
-  KMFolder * parent = msg->parent();
-  if ( parent ) {
-    parent->open();
-    parent->removeMsg( parent->find( msg ) );
-    parent->close();
-  }
-  msg->setParent( 0 );
-
-  bool stopIt = false;
-  int result;
-  switch( filter->execActions( msg, stopIt ) ) {
-  case KMFilter::CriticalError:
+int KMFilterMgr::moveMessage(KMMessage *msg) const
+{
+  if (MessageProperty::filterFolder(msg)->moveMsg( msg ) == 0) {
+    if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
+      KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
+  } else {
+    kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
     return 2;
-  case KMFilter::MsgExpropriated:
-    result = 0;
-    break;
-  default:
-    result = 1;
-    break;
   }
+  return 0;
+}
 
-  // readd message if it wasn't moved:
-  if ( parent && !msg->parent() ) {
-    parent->open();
-    if ( parent->addMsg( msg ) != 0 )
-      kmkernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
-    parent->close();
+void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
+{
+  MessageProperty::setFiltering( msgBase, false );
+}
+
+int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
+  if ( !msg || !filter || !beginFiltering( msg ))
+    return 1;
+  bool stopIt = false;
+  int result = 1;
+  if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
+    return 2;
+
+  KMFolder *folder = MessageProperty::filterFolder( msg );
+  
+  endFiltering( msg );
+  if (folder) {
+    tempOpenFolder( folder );
+    result = folder->moveMsg( msg );
   }
-
   return result;
 }
 
-int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
+int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
   if ( bPopFilter )
     return processPop( msg );
 
@@ -168,11 +177,9 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
   }
 
   bool stopIt = false;
-  int status = -1;
-  bool msgTaken = false; // keep track of whether we removeMsg'ed already
 
-  KMFolder * parent=0;
-
+  if (!beginFiltering( msg ))
+    return 1;
   for ( QPtrListIterator<KMFilter> it(*this) ; !stopIt && it.current() ; ++it ) {
 
     if ( ( (set&Outbound) && (*it)->applyOnOutbound() ) ||
@@ -182,43 +189,21 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
 
       if ( (*it)->pattern()->matches( msg ) ) {
 	// filter matches
-
-	// remove msg from parent in case we want to move it; make
-	// sure we only do these things once:
-	if ( !msgTaken ) {
-	  parent = msg->parent();
-	  if ( msg->parent() )
-	    msg->parent()->removeMsg( msg->parent()->find( msg ) );
-	  msg->setParent( 0 );
-	  msgTaken = true;
-	}
-
 	// execute actions:
-	switch ( (*it)->execActions(msg, stopIt) ) {
-	case KMFilter::CriticalError:
-	  // Critical error - immediate return
+	if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
 	  return 2;
-	case KMFilter::MsgExpropriated:
-	  // Message saved in a folder
-	  status = 0;
-	default:
-	  break;
-	}
-
       }
     }
   }
 
-  // readd the message if it wasn't moved:
-  if ( msgTaken && parent && !msg->parent() ) {
-    int rc = parent->addMsg( msg );
-    if ( rc )
-      kmkernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+  KMFolder *folder = MessageProperty::filterFolder( msg );
+  endFiltering( msg );
+  if (folder) {
+    tempOpenFolder( folder );
+    folder->moveMsg(msg);
+    return 0;
   }
-  if (status < 0) // No filters matched, keep copy of message
-    status = 1;
-
-  return status;
+  return 1;
 }
 
 

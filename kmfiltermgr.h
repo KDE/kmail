@@ -6,14 +6,15 @@
 #ifndef kmfiltermgr_h
 #define kmfiltermgr_h
 
+#include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
 #include <qptrlist.h>
 #include <qguardedptr.h>
 #include <qobject.h>
 
-class KMFilterDlg;
 class KMFilter;
+class KMFilterDlg;
 
 class KMFilterMgr: public QObject, public QPtrList<KMFilter>
 {
@@ -39,6 +40,10 @@ public:
       rule with "field equals value" */
   void createFilter( const QCString & field, const QString & value );
 
+  bool beginFiltering(KMMsgBase *msgBase) const;
+  int moveMessage(KMMessage *msg) const;
+  void endFiltering(KMMsgBase *msgBase) const;
+
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
       should be used.
@@ -51,11 +56,11 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( KMMessage * msg, FilterSet aSet=Inbound ) const;
+  int process( KMMessage * msg, FilterSet aSet=Inbound );
 
   /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
       are as with the above method. */
-  int process( KMMessage * msg, const KMFilter * filter ) const;
+  int process( KMMessage * msg, const KMFilter * filter );
 
   void cleanup();
   /** Increment the reference count for the filter manager.

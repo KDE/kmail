@@ -546,8 +546,9 @@ class KMMoveCommand : public KMMenuCommand
 public:
   KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
   KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
+  KMMoveCommand( KMFolder* destFolder, KMMsgBase * msgBase );
 
-private slots:
+public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
   void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
 

@@ -7,6 +7,8 @@
 #include "kmfolderindex.h"
 #include "kmheaders.h"
 #include "kmmsgdict.h"
+#include "messageproperty.h"
+using KMail::MessageProperty;
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -77,6 +79,7 @@ KMMsgBase::KMMsgBase(KMFolderIndex* aParent)
 //-----------------------------------------------------------------------------
 KMMsgBase::~KMMsgBase()
 {
+  MessageProperty::forget( this );
 }
 
 
@@ -87,6 +90,9 @@ void KMMsgBase::assign(const KMMsgBase* other)
   mDirty  = other->mDirty;
   mIndexOffset = other->mIndexOffset;
   mIndexLength = other->mIndexLength;
+  MessageProperty::forget( this );
+  bool otherTransfer = MessageProperty::transferInProgress( other );
+  MessageProperty::setTransferInProgress( this, otherTransfer );
 }
 
 
@@ -120,7 +126,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
   } else {
     mStatus |= aStatus;
     // Ignored and Watched are toggleable, yet mutually exclusive.
-    // That is an arbitrary restriction on my part. HAR HAR HAR :) -till 
+    // That is an arbitrary restriction on my part. HAR HAR HAR :) -till
     if (aStatus == KMMsgStatusWatched)
       mStatus &= ~KMMsgStatusIgnored;
     if (aStatus == KMMsgStatusIgnored) {
@@ -140,10 +146,10 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
   }
 
 }
- 
+
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
-{ 
+{
   mDirty = TRUE;
   KMMsgStatus oldStatus = status();
   switch (aStatus) {
@@ -159,14 +165,14 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusOld;
       mStatus &= ~KMMsgStatusRead;
       mStatus &= ~KMMsgStatusNew;
-      mStatus |= KMMsgStatusUnread; 
+      mStatus |= KMMsgStatusUnread;
       break;
 
     case KMMsgStatusOld:
       // old can't be new or unread
       mStatus &= ~KMMsgStatusNew;
       mStatus &= ~KMMsgStatusUnread;
-      mStatus |= KMMsgStatusOld; 
+      mStatus |= KMMsgStatusOld;
       break;
 
     case KMMsgStatusNew:
@@ -174,19 +180,19 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusOld;
       mStatus &= ~KMMsgStatusRead;
       mStatus &= ~KMMsgStatusUnread;
-      mStatus |= KMMsgStatusNew; 
+      mStatus |= KMMsgStatusNew;
       break;
 
     case KMMsgStatusDeleted:
-      mStatus |= KMMsgStatusDeleted; 
+      mStatus |= KMMsgStatusDeleted;
       break;
 
     case KMMsgStatusReplied:
-      mStatus |= KMMsgStatusReplied; 
+      mStatus |= KMMsgStatusReplied;
       break;
 
     case KMMsgStatusForwarded:
-      mStatus |= KMMsgStatusForwarded; 
+      mStatus |= KMMsgStatusForwarded;
       break;
 
     case KMMsgStatusQueued:
@@ -207,7 +213,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
     // Watched and ignored are mutually exclusive
     case KMMsgStatusWatched:
       mStatus &= ~KMMsgStatusIgnored;
-      mStatus |= KMMsgStatusWatched; 
+      mStatus |= KMMsgStatusWatched;
       break;
 
     case KMMsgStatusIgnored:
@@ -227,7 +233,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus = aStatus;
       break;
   }
-  
+
   if (mParent) {
     if (idx < 0)
       idx = mParent->find( this );
@@ -470,8 +476,8 @@ QString KMMsgBase::statusToSortRank()
   if (status() & KMMsgStatusUnread) sstr[1] = 'b';
   //if (status() & KMMsgStatusOld) sstr[1] = 'c';
   //if (status() & KMMsgStatusRead) sstr[1] = 'c';
-  
-  // Third level. In somewhat arbitrary order. 
+
+  // Third level. In somewhat arbitrary order.
   if (status() & KMMsgStatusDeleted) sstr[2] = 'a';
   if (status() & KMMsgStatusFlag) sstr[3] = 'a';
   if (status() & KMMsgStatusReplied) sstr[4] = 'a';
@@ -900,14 +906,14 @@ QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
 QString KMMsgBase::base64EncodedMD5( const QCString & s ) {
   if (s.stripWhiteSpace().isEmpty()) return "";
   return base64EncodedMD5( s.stripWhiteSpace().data() );
-}  
+}
 
 QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
   if (!s || !len) return "";
   static const int Base64EncodedMD5Len = 22;
   KMD5 md5( s, len );
   return md5.base64Digest().left( Base64EncodedMD5Len );
-}  
+}
 
 
 //-----------------------------------------------------------------------------
@@ -953,13 +959,46 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
 //-----------------------------------------------------------------------------
 unsigned long KMMsgBase::getMsgSerNum() const
 {
-  unsigned long msn = 0;
+  unsigned long msn = MessageProperty::serialCache( this );
+  if (msn)
+    return msn;
   if (mParent) {
     int index = mParent->find((KMMsgBase*)this);
     msn = kmkernel->msgDict()->getMsgSerNum(mParent, index);
+    if (msn)
+      MessageProperty::setSerialCache( this, msn );
   }
   return msn;
 }
+
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isComplete()
+{
+  return MessageProperty::complete( getMsgSerNum() );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgBase::setComplete(bool value)
+{
+  MessageProperty::setComplete( getMsgSerNum(), value );
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::transferInProgress()
+{
+  return MessageProperty::transferInProgress( getMsgSerNum() );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgBase::setTransferInProgress(bool value, bool force)
+{
+  MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
+}
+
 
 //-----------------------------------------------------------------------------
 static void swapEndian(QString &str)
@@ -1263,4 +1302,3 @@ bool KMMsgBase::syncIndexString() const
   }
   return FALSE;
 }
-

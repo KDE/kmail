@@ -16,6 +16,8 @@
 #include "kmkernel.h"
 using KMail::FolderJob;
 #include "kmbroadcaststatus.h"
+#include "actionscheduler.h"
+using KMail::ActionScheduler;
 #include <maillistdrag.h>
 using namespace KPIM;
 
@@ -1518,6 +1520,21 @@ void KMHeaders::setFolderInfoStatus ()
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg()
 {
+#if 0 // uses action scheduler
+  KMFilterMgr::FilterSet set = KMFilterMgr::All;
+  QPtrList<KMFilter> filters;
+  filters = *( kmkernel->filterMgr() );
+  ActionScheduler *scheduler = new ActionScheduler( set, filters, this );
+  scheduler->setAutoDestruct( true );
+
+  int contentX, contentY;
+  KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+  QPtrList<KMMsgBase> msgList = *selectedMsgs(true);
+  finalizeMove( nextItem, contentX, contentY );
+
+  for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
+    scheduler->execFilters( msg );
+#else
   emit maybeDeleting();
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -1573,6 +1590,7 @@ void KMHeaders::applyFiltersOnMsg()
   makeHeaderVisible();
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
+#endif
 }
 
 
@@ -1824,6 +1842,22 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
       for( ; (*it) != nextRoot; ++it )
          (*it)->setSelected( true );
   }
+}
+
+void KMHeaders::clearSelectableAndAboutToBeDeleted( Q_UINT32 serNum )
+{
+  // fugly, but I see no way around it
+  for (QListViewItemIterator it(this); it.current(); it++) {
+    KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
+    if ( item->aboutToBeDeleted() ) {
+      KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
+      if ( serNum == msgBase->getMsgSerNum() ) {
+        item->setAboutToBeDeleted ( false );
+        item->setSelectable ( true );
+      }
+    }
+  }
+  triggerUpdate();
 }
 
 //-----------------------------------------------------------------------------
@@ -2946,10 +2980,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
     noRepaint = true;
     clear();
     noRepaint = false;
-    
+
     mItems.fill( 0, mFolder->count() );
     sortCache.fill( 0 );
-    
+
     QString sortFile = KMAIL_SORT_FILE(mFolder);
     FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
     mSortInfo.fakeSort = 0;
