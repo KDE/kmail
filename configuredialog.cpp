@@ -977,7 +977,7 @@ void ConfigureDialog::show( void )
   if( isVisible() == false )
   {
     setup();
-    showPage(0);
+    //showPage(0); Perhaps best to remember the page?
   }
   KDialogBase::show();
 }
@@ -1671,7 +1671,7 @@ void ConfigureDialog::setupAppearancePage( void )
   bool state = config.readBoolEntry("defaultFonts", false );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
   slotCustomFontSelectionChanged();
-  slotFontSelectorChanged(0);
+  updateFontSelector();
 
   config.setGroup("Reader");
 
@@ -1907,21 +1907,26 @@ void ConfigureDialog::installProfile( void )
   }
 
   slotCustomFontSelectionChanged();
-  // A little trick to get a proper update
-  int index = mAppearance.activeFontIndex;
-  mAppearance.activeFontIndex = -1;
-  slotFontSelectorChanged( index );
+  updateFontSelector();
   slotCustomColorSelectionChanged();
 }
 
 
+//
+// Refresh the font selector with the active font string. The current
+// font selector setting is ignored.
+//
+void ConfigureDialog::updateFontSelector( void )
+{
+  mAppearance.activeFontIndex = mAppearance.fontLocationCombo->currentItem();
+  if( mAppearance.activeFontIndex < 0 ) mAppearance.activeFontIndex = 0;
 
-
-
-
-
-
-
+  int i=mAppearance.activeFontIndex;
+  if( mAppearance.fontString[i].isEmpty() == false )
+  {
+    mAppearance.fontChooser->setFont( kstrToFont(mAppearance.fontString[i] ) );
+  }
+}
 
 
 
@@ -1978,7 +1983,16 @@ void ConfigureDialog::slotApply( void )
   }
   else if( activePage == mAppearance.pageIndex )
   {
+    //
+    // Fake a selector change. It will save the current selector setting
+    // into the font string with index "mAppearance.activeFontIndex"
+    //
     slotFontSelectorChanged( mAppearance.activeFontIndex );
+
+    //
+    // If the profile tab page is visible, then install the selected
+    // entry. It will the be written to disk below.
+    //
     if( mAppearance.profileList->isVisible() )
     {
       installProfile();
@@ -1993,6 +2007,7 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry( "quote1-font", mAppearance.fontString[3] );
     config.writeEntry( "quote2-font", mAppearance.fontString[4] );
     config.writeEntry( "quote3-font", mAppearance.fontString[5] );
+    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
 
     config.setGroup("Reader");
     bool defaultColors = !mAppearance.customColorCheck->isChecked();
@@ -2598,9 +2613,9 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   {
     // Save prev setting
     mAppearance.fontString[mAppearance.activeFontIndex] = 
-      kfontToStr( mAppearance.fontChooser->font() );    
+      kfontToStr( mAppearance.fontChooser->font() );
   }
-  mAppearance.activeFontIndex = index;
+  mAppearance.activeFontIndex = QMAX( 0, index );
   if( mAppearance.fontString[index].isEmpty() == false ) 
     mAppearance.fontChooser->setFont( kstrToFont(mAppearance.fontString[index]));
 }

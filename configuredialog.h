@@ -327,6 +327,7 @@ class ConfigureDialog : public KDialogBase
     void setupMiscPage( void );
     void installProfile( void );
 
+    void updateFontSelector( void );
     void saveActiveIdentity( void );
     void setIdentityInformation( const QString &identityName );
     QStringList identityStrings( void );
