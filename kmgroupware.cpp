@@ -66,6 +66,7 @@ using namespace KABC;
 #include <dcopclient.h>
 #include <kparts/part.h>
 #include <kconfig.h>
+#include <kapplication.h>
 
 #include <kdebug.h>
 
@@ -572,18 +573,10 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
 				      const QString& vCalIn,
                                       QString& choice )
 {
-  ignore_GroupwareDataChangeSlots = true;
-  bool inOK = false, outOK = false;
-  QString outVCal;
-
-  VCalType type = getVCalType( vCalIn );
-  if( type == vCalUnknown ) {
-    kdDebug(5006) << "processVCalRequest called with something that is not a vCal\n";
-    return;
-  }
-
+#if 0
   // If we are in legacy mode, and there is more than one receiver, we
   // need to ask the user which address to use
+  // FIXME: Reinstate Outlook workaround
   KMMessage* msgOld = mMainWin->mainKMWidget()->headers()->currentMsg();
   KConfigGroup options( KMKernel::config(), "Groupware" );
   QString fromAddress; // this variable is only used in legacy mode
@@ -623,15 +616,14 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
           }
       }
   }
+#endif
 
   // step 1: call Organizer
-  if("accept" == choice ){
-    emit signalAcceptedEvent( false, receiver, vCalIn, inOK, outVCal, outOK );
-  }else if("accept conditionally" == choice ){
-    emit signalAcceptedEvent( true, receiver, vCalIn, inOK, outVCal, outOK );
-  }else if("decline" == choice ){
-    emit signalRejectedEvent( receiver, vCalIn, inOK, outVCal, outOK );
-  }else if("check" == choice ){
+  if( choice == "check" ) {
+    // Perhaps bring up KOrganizer here? Or is that better done from KOrg?
+
+    // Old code:
+#if 0
     emit signalShowCalendarView();
     slotGroupwareShow( true );
     // try to find out the start and end time
@@ -645,9 +637,32 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       QDateTime end = QDateTime::fromString( sDtEnd.left( sDtEnd.find(  '@')), Qt::ISODate );
       emit signalCalendarUpdateView( start, end );
     }
-    emit signalEventRequest( receiver, vCalIn, inOK, choice, outVCal, outOK );
+    //emit signalEventRequest( receiver, vCalIn );
+#endif
   }
+
+  QByteArray data, replyData;
+  QCString replyType;
+  QDataStream arg( data, IO_WriteOnly );
+  arg << choice << receiver << vCalIn;
+  if( kapp->dcopClient()->call( "korganizer", "KOrganizerIface",
+				"eventRequest(QString,QCString,QString)",
+				data, replyType, replyData )
+      && replyType == "bool" )
+  {
+    bool rc;
+    QDataStream replyStream( replyData, IO_ReadOnly );
+    replyStream >> rc;
+    kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
+
+    if( rc )
+      mMainWin->mainKMWidget()->slotTrashMsg();
+  } else
+    kdDebug(5006) << "KOrganizer call failed";
+
+#if 0
   // step 2: process vCal returned by Organizer
+  // (HEAD port:) This is crap. It needs to be done by korganizer, not by kmail
   if( outOK && mMainWin ){
     // mMainWin->slotNewBodyReplyToMsg( outVCal );
     KMMessage* msgNew = 0;
@@ -668,7 +683,6 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       internal_directlySendMessage( msgNew );
     }
     if( "accept" == choice || "accept conditionally" == choice ) {
-#if 0
       // TODO: Don't save this directly - give it to korganizer instead
       if( type == vCalTodo )
 	// This is a task
@@ -676,12 +690,11 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       else
 	// This is an appointment
 	mMainWin->mainKMWidget()->slotMoveMsgToFolder( mCalendar );
-#endif
     } else if("decline" == choice )
-      mMainWin->mainKMWidget()->slotTrashMsg();
   }
+#endif
+
   slotGroupwareHide();
-  ignore_GroupwareDataChangeSlots = false;
 }
 
 
@@ -852,7 +865,7 @@ bool KMGroupware::eventFilter( QObject *o, QEvent *e ) const {
 
 //-----------------------------------------------------------------------------
 bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
-                               bool useGroupware, QString& prefix, QString& postfix )
+                               QString& prefix, QString& postfix ) const
 {
   VCalType type = getVCalType( vCal );
   if( type == vCalUnknown ) {
@@ -896,13 +909,19 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
 
   QString sSummary = event->summary();
 
+  kdDebug(5006) << "Event stuff: " << sLocation << ", " << sDtEnd << ", "
+		<< sDtStart << ", " << sDescr << ", " << sMethod << ", "
+		<< sAttendee << endl;
+
   string2HTML( sLocation );
   string2HTML( sDescr );
 
+#if 0
   sDtStart = ISOToLocalQDateTime( sDtStart );
   sDtEnd = ISOToLocalQDateTime( sDtEnd );
   sDtStart = sDtStart.right( sDtStart.length() - sDtStart.find( '@' ) - 1 ) ;
   sDtEnd = sDtEnd.right( sDtEnd.length() - sDtEnd.find( '@' ) - 1 );
+#endif
   sMethod = sMethod.lower();
   sAttendee = sAttendee.upper();
 
@@ -966,7 +985,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   }
 
   // show the 'buttons' (only if in groupware mode)
-  if( useGroupware ) {
+  if( mUseGroupware ) {
     prefix.append( "<br>&nbsp;<br>&nbsp;<br><table border=\"0\" cellspacing=\"0\"><tr><td>&nbsp;</td><td>" );
     if( sMethod == "request" || sMethod == "update" ) {
       // Accept
@@ -1386,7 +1405,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
 
 //-----------------------------------------------------------------------------
 bool KMGroupware::msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname,
-                                bool useGroupware, QString& prefix, QString& postfix )
+                                QString& prefix, QString& postfix ) const
 {
   QByteArray tnef( kFileToBytes( fname, false ) );
   if( tnef.count() ) {
@@ -1398,8 +1417,7 @@ bool KMGroupware::msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fna
                                                         "vPart_decoded.raw",
                                                         theBody ) );
       if( !fname2.isEmpty() )
-        return vPartToHTML( updateCounter, vPart, fname2,
-			    useGroupware, prefix, postfix );
+        return vPartToHTML( updateCounter, vPart, fname2, prefix, postfix );
     }
   }else{
     KMessageBox::error(0, i18n("<qt>Unable to open file <b>%1</b>.</qt>").arg(fname));
