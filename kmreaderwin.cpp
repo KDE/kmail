@@ -67,7 +67,7 @@ extern KBusyPtr *kbp;
 #endif
 
 QString KMReaderWin::mAttachDir;
-const int KMReaderWin::delay = 0;
+const int KMReaderWin::delay = 100;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
