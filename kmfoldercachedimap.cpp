@@ -841,23 +841,27 @@ void KMFolderCachedImap::serverSyncInternal()
       break;
     }
  
-  case SYNC_STATE_GET_ANNOTATIONS:
+  case SYNC_STATE_GET_ANNOTATIONS: {
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
 //#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
+    bool needToGetInitialAnnotations = false;
     if ( !noContent() ) {
       // for a folder we didn't create ourselves: get annotation from server
-      if ( mAnnotationFolderType == "FROMSERVER" )
+      if ( mAnnotationFolderType == "FROMSERVER" ) {
+        needToGetInitialAnnotations = true;
         mAnnotationFolderType = QString::null;
-      else
+      } else {
         updateAnnotationFolderType();
+      }
     }
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if ( !noContent() && mAccount->hasAnnotationSupport() && kmkernel->iCalIface().isEnabled() ) {
+    if ( !noContent() && mAccount->hasAnnotationSupport() && 
+        ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
       QStringList annotations; // list of annotations to be fetched
       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
         annotations << KOLAB_FOLDERTYPE;
@@ -880,7 +884,7 @@ void KMFolderCachedImap::serverSyncInternal()
         break;
       }
     }
-
+  } // case
   case SYNC_STATE_SET_ANNOTATIONS:
 
     mSyncState = SYNC_STATE_SET_ACLS;
