@@ -891,7 +891,7 @@ void KMFolderTree::addChildFolder()
   if (fti->folder)
     if (!fti->folder->createChildFolder())
       return;
-
+  
   KMFolderDir *dir = &(kernel->folderMgr()->dir());
   if (fti->folder)
     dir = fti->folder->child();
@@ -903,10 +903,12 @@ void KMFolderTree::addChildFolder()
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
       qlvi->setOpen(TRUE);
+      blockSignals( true );
       setCurrentItem( qlvi );
+      blockSignals( false );
     }
   }
-     // update if added to root Folder
+  // update if added to root Folder
   if (!fti->folder || fti->folder->isDir()) {
      doFolderListChanged();
      reload();
