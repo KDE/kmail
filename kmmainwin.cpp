@@ -35,6 +35,10 @@
 
 #include <kparts/browserextension.h>
 
+#include <kaction.h>
+#include <kstdaction.h>
+#include <kedittoolbar.h>
+
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
@@ -90,7 +94,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   activatePanners();
 
   setupMenuBar();
-  setupToolBar();
   setupStatusBar();
 
   idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
@@ -120,8 +123,6 @@ KMMainWin::~KMMainWin()
   writeFolderConfig();
 
   if (mHeaders)    delete mHeaders;
-  if (mToolBar)    delete mToolBar;
-  if (mMenuBar)    delete mMenuBar;
   if (mStatusBar)  delete mStatusBar;
   if (mFolderTree) delete mFolderTree;
 }
@@ -512,7 +513,7 @@ void KMMainWin::slotAddrBook()
 void KMMainWin::slotUseKab()
 {
   mUseKab = !mUseKab;
-  fileMenu->setItemChecked( mUseKabId, mUseKab );
+  useKabAction->setChecked( mUseKab );
   kernel->setUseKAB( mUseKab );
 }
 
@@ -1258,88 +1259,133 @@ void KMMainWin::getAccountMenu()
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
-  fileMenu = new QPopupMenu();
-  fileMenu->insertItem(i18n("&New Mail Client"), this,
-		       SLOT(slotNewMailReader()));
-  fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Save &As..."), this,
-			   SLOT(slotSaveMsg()), KStdAccel::key(KStdAccel::Save));
-  fileMenu->insertItem(i18n("&Print..."), this,
-			   SLOT(slotPrintMsg()), KStdAccel::key(KStdAccel::Print));
-  fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Compact all &folders"), kernel->folderMgr(),
-                        SLOT(compactAll()));
-  fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Check &Mail"), this,
-		       SLOT(slotCheckMail()), CTRL+Key_L);
-  actMenu = new QPopupMenu();
-
-  getAccountMenu();
-
-  connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
+  KActionMenu *fileActionMenu = new KActionMenu( i18n("&File" ),
+					     actionCollection(), "file" );
+  QPopupMenu *fileMenu = fileActionMenu->popupMenu();
   connect(fileMenu,SIGNAL(highlighted(int)),this,SLOT(slotMenuActivated()));
 
-  fileMenu->insertItem(i18n("Check Mail in..."),actMenu);
+  (void) new KAction( i18n("&New Mail Client"), 0, this, SLOT(slotNewMailReader()),
+		      actionCollection(), "new_mail_client" );
 
-  fileMenu->insertItem(i18n("Send &Queued"), this,
-		       SLOT(slotSendQueued()));
-  fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Settings..."), this,
-		       SLOT(slotSettings()));
-  fileMenu->insertItem(i18n("&Addressbook..."), this,
-		       SLOT(slotAddrBook()));
-  mUseKabId = fileMenu->insertItem(i18n("Use KAB"), this,
-				   SLOT(slotUseKab()));
-  fileMenu->setItemChecked( mUseKabId, mUseKab );
-  fileMenu->insertItem(i18n("F&ilter..."), this,
-		       SLOT(slotFilter()));
-  fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("&Close"), this,
-			   SLOT(slotClose()), KStdAccel::key(KStdAccel::Close));
-  fileMenu->insertItem(i18n("&Quit"), this,
-			   SLOT(quit()), KStdAccel::key(KStdAccel::Quit));
+  (void) new KAction( i18n("Save &As"), "filesave",  KStdAccel::key(KStdAccel::Save),
+		      this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
+
+  KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
+  
+  (void) new KAction( i18n("Compact all &folders"), 0,
+		      kernel->folderMgr(), SLOT(compactAll()),
+		      actionCollection(), "compact_all_folders" );
+
+  (void) new KAction( i18n("Check &Mail"), "message_get", CTRL+Key_L,
+		      this, SLOT(slotCheckMail()),
+		      actionCollection(), "check_mail" );
+
+  KActionMenu *actActionMenu = new 
+    KActionMenu( i18n("Check Mail in"), actionCollection(), "check_mail_in" );
+
+  actMenu = actActionMenu->popupMenu();
+  getAccountMenu();
+  connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
+
+  (void) new KAction( i18n("Send &Queued"), 0, this, 
+		      SLOT(slotSendQueued()), actionCollection(), "");
+
+  (void) new KAction( i18n("Configuration..."), 0, this, 
+		      SLOT(slotSettings()), actionCollection(), "settings" );
+
+  (void) new KAction( i18n("&AddressBook..."), "contents", 0, this, 
+		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
+
+  useKabAction = new KToggleAction( i18n("Use KAB"), 0, this, 
+		      SLOT(slotUseKab()), actionCollection(), "use_kab" );
+  useKabAction->setChecked( mUseKab );
+
+  (void) new KAction( i18n("F&ilter Rules..."), 0, this, 
+		      SLOT(slotFilter()), actionCollection(), "filter" );
+
+  KStdAction::close( this, SLOT(slotClose()), actionCollection());
+  KStdAction::quit( this, SLOT(quit()), actionCollection());
 
   //----- Edit Menu
-  QPopupMenu *editMenu = new QPopupMenu();
-  editMenu->insertItem(i18n("&Undo"), this,
-                       SLOT(slotUndo()), KStdAccel::key(KStdAccel::Undo));
-  editMenu->insertItem(i18n("&Copy text"), this, SLOT(slotCopyText()),
-			   KStdAccel::key(KStdAccel::Copy));
-  editMenu->insertItem(i18n("&Delete"), this,
-			  SLOT(slotDeleteMsg()), Key_D);
-  // GS - should we put menu items to copy, cut & paste emails?
-  editMenu->insertSeparator();
-  editMenu->insertItem(i18n("&Search messages..."), this,
-                       SLOT(slotSearch()), Key_S);
-  editMenu->insertItem(i18n("&Find in message..."), this,
-		       SLOT(slotFind()), KStdAccel::key(KStdAccel::Find));
-  editMenu->insertSeparator();
-  editMenu->insertItem(i18n("Mar&k all messages"), this,
-	               SLOT(slotMarkAll()), Key_K);
+  KStdAction::undo( this, SLOT(slotUndo()), actionCollection());
+
+  (void) new KAction( i18n("&Copy text"), KStdAccel::key(KStdAccel::Copy), this, 
+		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
+
+  (void) new KAction( i18n("&Delete"), "message_delete", Key_D, this, 
+		      SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+
+  (void) new KAction( i18n("&Search messages..."), "find", Key_S, this, 
+		      SLOT(slotSearch()), actionCollection(), "search_messages" );
+
+  (void) new KAction( i18n("&Find in message..."), KStdAccel::key(KStdAccel::Find), this, 
+		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
+
+  (void) new KAction( i18n("Select all messages"), Key_K, this, 
+		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   //----- Folder Menu
-  mFolderMenu = new QPopupMenu();
-  mFolderMenu->insertItem(i18n("&Create..."), this,
-			 SLOT(slotAddFolder()));
-  mFolderMenu->insertItem(i18n("&Modify..."), this,
-			 SLOT(slotModifyFolder()));
-  mFolderMenu->insertItem(i18n("C&ompact"), this,
-			 SLOT(slotCompactFolder()));
-  mFolderMenu->insertSeparator();
-  mFolderMenu->insertItem(i18n("&Empty"), this,
-			 SLOT(slotEmptyFolder()));
-  mFolderMenu->insertItem(i18n("&Remove"), this,
-			 SLOT(slotRemoveFolder()));
-  mFolderMenu->insertSeparator();
-  htmlId = mFolderMenu->insertItem("", this,
-				  SLOT(slotOverrideHtml()));
-  threadId = mFolderMenu->insertItem("", this,
-				    SLOT(slotOverrideThread()));
-  QObject::connect( mFolderMenu, SIGNAL( aboutToShow() ),
-		    this, SLOT( updateFolderMenu() ));
+  (void) new KAction( i18n("&Create"), 0, this, 
+		      SLOT(slotAddFolder()), actionCollection(), "create" );
 
-  //----- Message-Status Submenu
-  QPopupMenu *msgStatusMenu = new QPopupMenu;
+  (void) new KAction( i18n("&Modify"), 0, this, 
+		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
+
+  (void) new KAction( i18n("C&ompact"), 0, this, 
+		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
+
+  (void) new KAction( i18n("&Empty"), 0, this, 
+		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
+
+  (void) new KAction( i18n("&Remove"), 0, this, 
+		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
+
+  preferHtmlAction = new KToggleAction( i18n("Prefer HTML to plain text"), 0, this, 
+		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+
+  threadMessagesAction = new KToggleAction( i18n("Thread messages"), 0, this, 
+		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
+
+  //----- Message Menu
+  (void) new KAction( i18n("New &Message"), "filenew", KStdAccel::key(KStdAccel::New), this, 
+		      SLOT(slotCompose()), actionCollection(), "new_message" );
+
+  (void) new KAction( i18n("&Next"), Key_N, mHeaders, 
+		      SLOT(nextMessage()), actionCollection(), "next" );
+
+  (void) new KAction( i18n("Next unread"), "next", Key_Plus, mHeaders, 
+		      SLOT(nextUnreadMessage()), actionCollection(), "next_unread" );
+
+  (void) new KAction( i18n("&Previous"), Key_P, mHeaders, 
+		      SLOT(prevMessage()), actionCollection(), "previous" );
+
+  (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, mHeaders, 
+		      SLOT(prevUnreadMessage()), actionCollection(), "previous_unread" );
+
+  (void) new KAction( i18n("&Reply..."), "message_reply", Key_R, this, 
+		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
+
+  (void) new KAction( i18n("Reply &All..."), "message_replyall", Key_A, this, 
+		      SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
+
+  (void) new KAction( i18n("&Forward..."), "message_forward", Key_F, this, 
+		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
+
+  (void) new KAction( i18n("R&edirect..."), Key_E, this, 
+		      SLOT(slotRedirectMsg()), actionCollection(), "redirect" );
+
+  (void) new KAction( i18n("&Bounce..."), 0, this, 
+		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
+
+  (void) new KAction( i18n("Send again..."), 0, this, 
+		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
+
+  (void) new KAction( i18n("Edi&t..."), Key_T, this, 
+		      SLOT(slotEditMsg()), actionCollection(), "edit" );
+
+  KActionMenu *setStatusAction = new KActionMenu( i18n("Set status" ), 
+					     actionCollection(), "set_status" );
+  QPopupMenu *msgStatusMenu = setStatusAction->popupMenu();
   connect(msgStatusMenu, SIGNAL(activated(int)), this,
 	  SLOT(slotSetMsgStatus(int)));
   msgStatusMenu->insertItem(i18n("New"), (int)KMMsgStatusNew);
@@ -1349,64 +1395,33 @@ void KMMainWin::setupMenuBar()
   msgStatusMenu->insertItem(i18n("Queued"), (int)KMMsgStatusQueued);
   msgStatusMenu->insertItem(i18n("Sent"), (int)KMMsgStatusSent);
 
-  //----- Message Menu
-  messageMenu = new QPopupMenu;
-  QObject::connect( messageMenu, SIGNAL( aboutToShow() ),
-		    this, SLOT( updateMessageMenu() ));
+  KActionMenu *moveActionMenu = new KActionMenu( i18n("&Move to" ), 
+					     actionCollection(), "move_to" );
+  moveMenu = moveActionMenu->popupMenu();
+  
+  KActionMenu *copyActionMenu = new KActionMenu( i18n("&Copy to" ), 
+					     actionCollection(), "copy_to" );
+  copyMenu = copyActionMenu->popupMenu();
 
-  messageMenu->insertItem(i18n("New &Message"), this,
-			  SLOT(slotCompose()), KStdAccel::key(KStdAccel::New));
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("&Next"), mHeaders,
-			  SLOT(nextMessage()), Key_N);
-  messageMenu->insertItem(i18n("Next unread"), mHeaders,
-			  SLOT(nextUnreadMessage()), Key_Plus);
-  messageMenu->insertItem(i18n("&Previous"), mHeaders,
-			  SLOT(prevMessage()), Key_P);
-  messageMenu->insertItem(i18n("Previous unread"), mHeaders,
-			  SLOT(prevUnreadMessage()), Key_Minus);
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("&Reply..."), this,
-			  SLOT(slotReplyToMsg()), Key_R);
-  messageMenu->insertItem(i18n("Reply &All..."), this,
-			  SLOT(slotReplyAllToMsg()), Key_A);
-  messageMenu->insertItem(i18n("&Forward..."), this,
-			  SLOT(slotForwardMsg()), Key_F);
-  messageMenu->insertItem(i18n("R&edirect..."), this,
-			  SLOT(slotRedirectMsg()), Key_E);
-  messageMenu->insertItem(i18n("&Bounce..."), this,
-			  SLOT(slotBounceMsg()));
-  messageMenu->insertItem(i18n("Send again..."), this,
-			  SLOT(slotResendMsg()));
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Edi&t..."),this,
-			  SLOT(slotEditMsg()), Key_T);
-  messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
-  moveId = messageMenu->insertItem(i18n("&Move..."), this,
-			  SLOT(slotMoveMsg()));
-  copyId = messageMenu->insertItem(i18n("&Copy..."), this,
-			  SLOT(slotCopyMsg()));
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Apply filters"), this,
-			  SLOT(slotApplyFilters()), CTRL+Key_J);
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("View Source..."), this,
-			  SLOT(slotShowMsgSrc()));
+  (void) new KAction( i18n("Apply filters"), CTRL+Key_J, this, 
+		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
+
+  (void) new KAction( i18n("View Source..."), 0, this, 
+		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
+
 
   //----- View Menu
-  mViewMenu = new QPopupMenu();
+  KActionMenu *viewMenuAction = new 
+    KActionMenu( i18n("things to show", "&View"), actionCollection(), "view" );
+
+  mViewMenu = viewMenuAction->popupMenu();
   mViewMenu->setCheckable(TRUE);
   connect(mViewMenu,SIGNAL(activated(int)),SLOT(slotSetHeaderStyle(int)));
-  mViewMenu->insertItem(i18n("&Brief Headers"),
-		       KMReaderWin::HdrBrief);
-  mViewMenu->insertItem(i18n("&Fancy Headers"),
-		       KMReaderWin::HdrFancy);
-  mViewMenu->insertItem(i18n("&Standard Headers"),
-		       KMReaderWin::HdrStandard);
-  mViewMenu->insertItem(i18n("&Long Headers"),
-		       KMReaderWin::HdrLong);
-  mViewMenu->insertItem(i18n("&All Headers"),
-		       KMReaderWin::HdrAll);
+  mViewMenu->insertItem(i18n("&Brief Headers"), KMReaderWin::HdrBrief);
+  mViewMenu->insertItem(i18n("&Fancy Headers"), KMReaderWin::HdrFancy);
+  mViewMenu->insertItem(i18n("&Standard Headers"), KMReaderWin::HdrStandard);
+  mViewMenu->insertItem(i18n("&Long Headers"), KMReaderWin::HdrLong);
+  mViewMenu->insertItem(i18n("&All Headers"), KMReaderWin::HdrAll);
   mViewMenu->insertSeparator();
   mViewMenu->insertItem(i18n("Iconic Attachments"),
 		       KMReaderWin::HdrAll + KMReaderWin::IconicAttmnt);
@@ -1417,89 +1432,31 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
-  //----- Help Menu
-  QPopupMenu *mHelpMenu = helpMenu(aboutText, false);
+  //  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  (void) new KAction( i18n("Configure Tool&bars..."), 0, this, 
+		      SLOT(slotEditToolbars()), actionCollection(), "config_toolbars" );
+  
+  createGUI( "kmmainwin.rc", false );
 
-  //----- Menubar
-  mMenuBar  = new KMenuBar(this);
-  mMenuBar->insertItem(i18n("&File"), fileMenu);
-  mMenuBar->insertItem(i18n("&Edit"), editMenu);
-  mMenuBar->insertItem(i18n("F&older"), mFolderMenu);
-  mMenuBar->insertItem(i18n("&Message"), messageMenu);
-  mMenuBar->insertItem(i18n("things to show", "&View"), mViewMenu);
-  mMenuBar->insertSeparator();
-  mMenuBar->insertItem(i18n("&Help"), mHelpMenu);
+  QObject::connect( guiFactory()->container("folder", this), 
+		    SIGNAL( aboutToShow() ), this, SLOT( updateFolderMenu() ));
 
-  setMenu(mMenuBar);
+  QObject::connect( guiFactory()->container("message", this), 
+		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
+
+  conserveMemory();
 }
-
 
 //-----------------------------------------------------------------------------
-void KMMainWin::setupToolBar()
+void KMMainWin::slotEditToolbars()
 {
-  mToolBar = new KToolBar(this);
-  mToolBar->setFullSize( TRUE );
-  
-#ifdef MALLOC_DEBUG
-  mToolBar->insertButton(BarIcon("filenew"), 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotMemInfo()), TRUE,
-			i18n("Malloc info"));
-#endif
+  KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
-  mToolBar->insertButton("filenew", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotCompose()), TRUE,
-			i18n("Compose new message"));
-
-  mToolBar->insertButton("filesave", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotSaveMsg()), TRUE,
-			i18n("Save message to file"));
-
-  mToolBar->insertButton("fileprint", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotPrintMsg()), TRUE,
-			i18n("Print message"));
-
-  mToolBar->insertSeparator();
-
-  mToolBar->insertButton("message_get", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotCheckMail()), TRUE,
-			i18n("Get new messages"));
-  mToolBar->insertSeparator();
-
-  mToolBar->insertButton("message_reply", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotReplyToMsg()), TRUE,
-			i18n("Reply to author"));
-
-  mToolBar->insertButton("message_replyall", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotReplyAllToMsg()), TRUE,
-			i18n("Reply to all recipients"));
-
-  mToolBar->insertButton("message_forward", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotForwardMsg()), TRUE,
-			i18n("Forward message"));
-
-  mToolBar->insertButton("message_delete", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotDeleteMsg()), TRUE,
-			i18n("Delete message"));
-
-  mToolBar->insertSeparator();
-  mToolBar->insertButton("contents", 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotAddrBook()), TRUE,
-			i18n("Open addressbook..."));
-
-
-  addToolBar(mToolBar);
+  if (dlg.exec() == true)
+  {
+    createGUI("kmmainwin.rc");
+  }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()
@@ -1552,17 +1509,17 @@ void KMMainWin::copySelectedToFolder(int menuId )
 QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
 					 bool move,
 					 QObject *receiver,
-					 KMMenuToFolder *aMenuToFolder)
+					 KMMenuToFolder *aMenuToFolder,
+					 QPopupMenu *menu )
 {
   KMFolderNode *folderNode;
   KMFolder* folder;
 
-  QPopupMenu *msgMoveMenu = new QPopupMenu;
   if (move)
-    connect(msgMoveMenu, SIGNAL(activated(int)), receiver,
+    connect(menu, SIGNAL(activated(int)), receiver,
 	    SLOT(moveSelectedToFolder(int)));
   else
-    connect(msgMoveMenu, SIGNAL(activated(int)), receiver,
+    connect(menu, SIGNAL(activated(int)), receiver,
 	    SLOT(copySelectedToFolder(int)));
   for (folderNode = aFolderDir->first();
        folderNode != NULL;
@@ -1570,52 +1527,43 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
 
-      int menuId = msgMoveMenu->insertItem(folder->label());
+      int menuId = menu->insertItem(folder->label());
       aMenuToFolder->insert( menuId, folder );
 
       KMFolderDir *child = folder->child();
       if (child && child->first()) {
 	QPopupMenu *subMenu = folderToPopupMenu( child, move, receiver,
-						 aMenuToFolder );
+						 aMenuToFolder,
+						 new QPopupMenu() );
 	// add an item to the top of the submenu somehow subMenu
-	msgMoveMenu->insertItem(i18n(folder->label() + " child"), subMenu);
+	menu->insertItem(i18n(folder->label() + " child"), subMenu);
       }
     }
-  return msgMoveMenu;
+  return menu;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::updateMessageMenu()
 {
-  int moveIndex = messageMenu->indexOf( moveId );
-  int copyIndex = messageMenu->indexOf( copyId );
-  messageMenu->removeItem( moveId );
-  messageMenu->removeItem( copyId );
-
   KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
-  QPopupMenu *msgMoveMenu;
-  msgMoveMenu =  folderToPopupMenu( dir, TRUE, this, &mMenuToFolder );
-  QPopupMenu *msgCopyMenu;
-  msgCopyMenu = folderToPopupMenu( dir, FALSE, this, &mMenuToFolder );
-  moveId = messageMenu->insertItem(i18n("&Move to"), msgMoveMenu, -1,
-				   moveIndex );
-  copyId = messageMenu->insertItem(i18n("&Copy to"), msgCopyMenu, -1,
-				   copyIndex );
+  moveMenu->clear();
+  folderToPopupMenu( dir, TRUE, this, &mMenuToFolder, moveMenu );
+  copyMenu->clear();
+  folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, copyMenu );
 }
 
 
+//-----------------------------------------------------------------------------
 void KMMainWin::updateFolderMenu()
 {
-  mFolderMenu->setItemEnabled(htmlId, mFolder ? true : false);
-  mFolderMenu->setItemEnabled(threadId, mFolder ? true : false);
-
-  mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text" ));
-  mFolderMenu->setItemChecked(htmlId, mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref);
-
-  mFolderMenu->changeItem(threadId, i18n( "Thread messages" ));
-  mFolderMenu->setItemChecked(threadId, mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
+  preferHtmlAction->setEnabled( mFolder ? true : false );
+  threadMessagesAction->setEnabled( true );
+  threadMessagesAction->setEnabled( mFolder ? true : false );
+  
+  preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
+  threadMessagesAction->setChecked( mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
 }
 
 #ifdef MALLOC_DEBUG

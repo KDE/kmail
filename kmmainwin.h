@@ -25,6 +25,8 @@ class KMFolder;
 class KMAccount;
 class KMLittleProgressDlg;
 class KMFldSearch;
+class KToggleAction;
+class KActionMenu;
 
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -68,7 +70,8 @@ public:
   virtual QPopupMenu* folderToPopupMenu(KMFolderDir* aFolderDir, 
 					bool move,
 					QObject *receiver,
-					KMMenuToFolder *aMenuToFolder);
+					KMMenuToFolder *aMenuToFolder,
+					QPopupMenu *menu);
 
   static void cleanup();
 
@@ -86,10 +89,10 @@ public slots:
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
+  void slotEditToolbars();
 
 protected:
   void setupMenuBar();
-  void setupToolBar();
   void setupStatusBar();
   void createWidgets();
   void activatePanners();
@@ -172,15 +175,13 @@ protected slots:
   virtual void updateFolderMenu();
   
 protected:
-  KMenuBar     *mMenuBar;
-  KToolBar     *mToolBar;
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
-  QPopupMenu   *mFolderMenu, *mViewMenu, *mBodyPartsMenu;
+  QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
@@ -201,6 +202,9 @@ protected:
   bool mUseKab;
   int mUseKabId;
   ConfigureDialog *mConfigureDialog;
+
+  KToggleAction *useKabAction, *preferHtmlAction, *threadMessagesAction;
+  QPopupMenu *copyMenu, *moveMenu;
 };
 
 #endif

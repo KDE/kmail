@@ -1939,10 +1939,10 @@ void KMHeaders::slotRMB()
   KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
 
-  QPopupMenu *msgMoveMenu;
-  msgMoveMenu =  mOwner->folderToPopupMenu( dir, TRUE, this, &mMenuToFolder );
-  QPopupMenu *msgCopyMenu;
-  msgCopyMenu =  mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder );
+  QPopupMenu *msgMoveMenu = new QPopupMenu();
+  mOwner->folderToPopupMenu( dir, TRUE, this, &mMenuToFolder, msgMoveMenu );
+  QPopupMenu *msgCopyMenu = new QPopupMenu();
+  mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, msgCopyMenu );
 
   menu->insertItem(i18n("&Reply..."), topLevelWidget(),
 		   SLOT(slotReplyToMsg()));

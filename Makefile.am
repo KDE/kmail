@@ -43,7 +43,7 @@ EXTRA_DIST = KMail.desktop
 KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
-rc_DATA = kmcomposerui.rc
+rc_DATA = kmcomposerui.rc kmmainwin.rc
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
