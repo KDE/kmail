@@ -25,7 +25,7 @@
 #include <assert.h>
 #include <unistd.h>
 
-#if HAVE_FCNTL_H
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
 #endif
 

@@ -29,7 +29,7 @@
 #include <assert.h>
 #include <utime.h>
 
-#if HAVE_BYTESWAP_H
+#ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
 #endif
 #include <kapplication.h>
