@@ -19,8 +19,8 @@ enum KMPopFilterAction {NoAction, Down, Later, Delete} ;
 class KMPopHeaders {
 public:
 
-	KMPopHeaders();
-	~KMPopHeaders();
+  KMPopHeaders();
+  ~KMPopHeaders();
   /** constructor */
   KMPopHeaders(QString aId, QString aUid, KMPopFilterAction aAction);
 
