@@ -156,7 +156,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mDictionaryAction( 0 ),
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
-    mComposer( 0 )
+    mComposer( 0 ),
+    mLabelWidth( 0 )
 {
   mClassicalRecipients = GlobalSettings::recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -357,10 +358,16 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect (mEditor, SIGNAL( pasteImage() ),
     this, SLOT (slotPaste() ) );
 
-
   mMainWidget->resize(480,510);
   setCentralWidget(mMainWidget);
   rethinkFields();
+
+  if ( !mClassicalRecipients ) {
+    mRecipientsEditor->setFirstColumnWidth( mLabelWidth );
+    // This is ugly, but if it isn't called the line edits in the recipients
+    // editor aren't wide enough until the first resize event comes.
+    rethinkFields();
+  }
 
   if ( GlobalSettings::useExternalEditor() ) {
     mEditor->setUseExternalEditor(true);
@@ -920,17 +927,20 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->show();
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
+    if ( aLbl->width() > mLabelWidth ) mLabelWidth = aLbl->width();
 
     aEdt->setBackgroundColor( mBackColor );
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
 
-    mGrid->addWidget(aEdt, aRow, 1);
-    if (aBtn)
-    {
+    if (aBtn) {
+      mGrid->addWidget(aEdt, aRow, 1);
+
       mGrid->addWidget(aBtn, aRow, 2);
       aBtn->setFixedSize(aBtn->sizeHint().width(), aLbl->height());
       aBtn->show();
+    } else {
+      mGrid->addMultiCellWidget(aEdt, aRow, aRow, 1, 2 );
     }
     aRow++;
   }
@@ -956,6 +966,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->show();
     aLbl->setBuddy(aCbx);
     mGrid->addWidget(aLbl, aRow, 0);
+    if ( aLbl->width() > mLabelWidth ) mLabelWidth = aLbl->width();
 
     //    aCbx->setBackgroundColor( mBackColor );
     aCbx->show();

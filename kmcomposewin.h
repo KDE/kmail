@@ -926,6 +926,7 @@ private:
   bool mClassicalRecipients;
 
   RecipientsEditor *mRecipientsEditor;
+  int mLabelWidth;
 };
 
 #endif

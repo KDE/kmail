@@ -227,6 +227,12 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
   }
 }
 
+void RecipientLine::setComboWidth( int w )
+{
+  mCombo->setFixedWidth( w );
+}
+
+
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
 {
@@ -273,6 +279,8 @@ RecipientLine *RecipientsView::addLine()
   }
 
   mLines.append( line );
+
+  line->setComboWidth( mFirstColumnWidth );
 
   mLineHeight = line->minimumSizeHint().height();
 
@@ -431,6 +439,20 @@ void RecipientsView::setFocusBottom()
   else  kdWarning() << "No last" << endl;
 }
 
+void RecipientsView::setFirstColumnWidth( int w )
+{
+  mFirstColumnWidth = w;
+
+  QPtrListIterator<RecipientLine> it( mLines );
+  RecipientLine *line;
+  while( ( line = it.current() ) ) {
+    line->setComboWidth( mFirstColumnWidth );
+    ++it;
+  }
+
+  resizeView();
+}
+
 
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   : QWidget( parent ), mView( view ), mRecipientPicker( 0 )
@@ -518,7 +540,7 @@ RecipientsEditor::~RecipientsEditor()
 void RecipientsEditor::slotPickedRecipient( const QString &rec )
 {
   RecipientLine *line = mRecipientsView->activeLine();
-  line->setRecipient( rec );
+  line->setRecipient( Recipient( rec, line->recipientType() ) );
   
   mRecipientsView->addLine()->activate();
 }
@@ -577,6 +599,11 @@ void RecipientsEditor::setFocusTop()
 void RecipientsEditor::setFocusBottom()
 {
   mRecipientsView->setFocusBottom();
+}
+
+void RecipientsEditor::setFirstColumnWidth( int w )
+{
+  mRecipientsView->setFirstColumnWidth( w );
 }
 
 #include "recipientseditor.moc"

@@ -100,6 +100,8 @@ class RecipientLine : public QWidget
 
     bool isEmpty();
 
+    void setComboWidth( int w );
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
@@ -141,6 +143,8 @@ class RecipientsView : public QScrollView
 
     void activateLine( RecipientLine * );
 
+    void setFirstColumnWidth( int );
+
   public slots:
     RecipientLine *addLine();
 
@@ -169,6 +173,7 @@ class RecipientsView : public QScrollView
     QPtrList<RecipientLine> mLines;
     RecipientLine* mCurDelLine;
     int mLineHeight;
+    int mFirstColumnWidth;
 };
 
 class SideWidget : public QWidget
@@ -210,6 +215,8 @@ class RecipientsEditor : public QWidget
 
     void setRecipientString( const QString &, Recipient::Type );
     QString recipientString( Recipient::Type );
+
+    void setFirstColumnWidth( int );
 
   public slots:
     void setFocus();
