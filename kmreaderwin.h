@@ -176,7 +176,6 @@ protected slots:
   void slotAtmOpen();
   void slotAtmOpenWith();
   void slotAtmView();
-  void slotAtmPrint();
   void slotAtmSave();
   void slotAtmProperties();
   void slotDelayedResize();

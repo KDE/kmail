@@ -242,9 +242,6 @@ public slots:
   /** Insert arbitary public key from public keyring in the editor. */
   void slotInsertPublicKey();
 
-  /** Popup a nice "not implemented" message. */
-  void slotToDo();
-
   /** Open a popup-menu in the attachments-listbox. */
   void slotAttachPopupMenu(QListViewItem *, const QPoint &, int);
 

@@ -127,10 +127,9 @@ void KMReaderWin::makeAttachDir(void)
   directory.sprintf("kmail%d/", getpid());
   mAttachDir = locateLocal( "tmp", directory );
 
-  if (mAttachDir.isNull()) qWarning(i18n("Failed to create temporary "
-					"attachment directory '%2': %1")
-					.arg(strerror(errno))
-					.arg(directory));
+  if (mAttachDir.isNull()) KMessageBox::error(NULL,
+    i18n("Failed to create temporary attachment directory '%2': %1")
+    .arg(strerror(errno)).arg(directory));
 }
 
 
@@ -863,7 +862,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   default:
-    qWarning("Unsupported header style %d", mHeaderStyle);
+    kdDebug() << "Unsupported header style " << mHeaderStyle << endl;
   }
   mViewer->write("<br>\n");
 }
@@ -1387,7 +1386,6 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     menu->insertItem(i18n("Open with..."), this, SLOT(slotAtmOpenWith()));
     menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
-    //menu->insertItem(i18n("Print..."), this, SLOT(slotAtmPrint()));
     menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));
     menu->popup(aPos,0);
@@ -1690,18 +1688,8 @@ void KMReaderWin::slotAtmSave()
 
   kernel->kbp()->busy();
   if (!kByteArrayToFile(msgPart.bodyDecodedBinary(), fileName, TRUE))
-    qWarning(i18n("Could not save file"));
+    KMessageBox::error(NULL, i18n("Could not save file"));
   kernel->kbp()->idle();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmPrint()
-{
-  KMMessagePart msgPart;
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
-
-  qWarning("KMReaderWin::slotAtmPrint()\nis not implemented");
 }
 
 

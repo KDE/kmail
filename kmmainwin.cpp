@@ -587,12 +587,6 @@ void KMMainWin::slotAddrBook()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUnimplemented()
-{
-  qWarning(i18n("Sorry, but this feature\nis still missing"));
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWin::slotAddFolder()
 {
   KMFolderDialog *d;
@@ -778,7 +772,7 @@ void KMMainWin::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
   {
-    qWarning(i18n("Cannot remove a\nsystem folder."));
+    kdDebug() << "Cannot remove a\nsystem folder." << endl;
     return;
   }
 

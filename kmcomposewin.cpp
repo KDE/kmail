@@ -1847,13 +1847,6 @@ void KMComposeWin::slotNewMailReader()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotToDo()
-{
-  qWarning(i18n("Sorry, but this feature\nis still missing"));
-}
-
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
   if (text.isEmpty())

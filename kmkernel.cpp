@@ -438,9 +438,6 @@ void KMKernel::init()
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
   //kdDebug() << "1" << endl;
-  // Stefan: Yes, we really want this message handler. Without it,
-  // kmail does not show vital qWarning() dialogs.
-  //qInstallMsgHandler(&kmailMsgHandler);
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");

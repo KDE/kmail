@@ -172,9 +172,6 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
 
   if (!folder)
   {
-    // Are these const char* casts really necessary? -sanders
-    qWarning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
-
     folder = createFolder(aFolderName, TRUE);
     if (!folder) {
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
