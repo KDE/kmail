@@ -1290,6 +1290,44 @@ void ConfigureDialog::makeApperancePage( void )
   vlay->addWidget( mAppearance.nestedMessagesCheck );
 
   vlay->addStretch(10); // Eat unused space a bottom
+
+
+  QWidget *page4 = new QWidget( tabWidget );
+  tabWidget->addTab( page4, i18n("Profiles") );
+  vlay = new QVBoxLayout( page4, spacingHint() );
+  
+  QLabel *label = new QLabel( page4 );
+  label->setText(i18n("Define or use a GUI profile"));
+  vlay->addWidget( label );
+
+  mAppearance.profileList = new ListView( page4, "tagList" );
+  mAppearance.profileList->addColumn( i18n("Available profiles") );
+  mAppearance.profileList->setAllColumnsShowFocus( true );
+  mAppearance.profileList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+  mAppearance.profileList->setSorting( -1 );
+  vlay->addWidget( mAppearance.profileList, 1 );
+
+  hlay = new QHBoxLayout( vlay );
+  QPushButton *pushButton = new QPushButton(i18n("&New"), page4 );
+  pushButton->setAutoDefault( false );
+  hlay->addWidget( pushButton );
+  mAppearance.profileDeleteButton = new QPushButton(i18n("Dele&te"), page4 );
+  mAppearance.profileDeleteButton->setAutoDefault( false );
+  hlay->addWidget( mAppearance.profileDeleteButton );
+  hlay->addStretch(10);
+
+  mAppearance.mListItemDefault = 
+    new QListViewItem( mAppearance.profileList, 
+    i18n("KMail Classic - KMail as you know it") );
+  mAppearance.mListItemNewFeature = 
+    new QListViewItem( mAppearance.profileList, mAppearance.mListItemDefault, 
+    i18n("New Features - Extended functionality in KDE-2") );
+  mAppearance.mListItemContrast = 
+    new QListViewItem(mAppearance.profileList, mAppearance.mListItemNewFeature,
+    i18n("High Contrast - For the visually impaired user"));
+  mAppearance.profileList->setSelected( mAppearance.mListItemDefault, true );
+
+     
 }
 
 
@@ -1770,6 +1808,101 @@ void ConfigureDialog::setupMiscPage( void )
 }
 
 
+
+void ConfigureDialog::installProfile( void )
+{
+  QListViewItem *item = mAppearance.profileList->selectedItem();
+  if( item == 0 )
+  {
+    return;
+  }
+
+  if( item == mAppearance.mListItemDefault )
+  {
+    mAppearance.fontString[0] = "adobe-normal-r-12";
+    mAppearance.fontString[1] = "adobe-normal-r-12";
+    mAppearance.fontString[2] = "adobe-normal-r-12";
+    mAppearance.fontString[3] = "adobe-normal-i-12"; 
+    mAppearance.fontString[4] = "adobe-normal-i-12";
+    mAppearance.fontString[5] = "adobe-normal-i-12"; 
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 3, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 4, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( false );
+  }
+  else if( item == mAppearance.mListItemNewFeature )
+  {
+    mAppearance.fontString[0] = "adobe-normal-r-12";
+    mAppearance.fontString[1] = "adobe-normal-r-12";
+    mAppearance.fontString[2] = "adobe-normal-r-12";
+    mAppearance.fontString[3] = "adobe-normal-r-12";
+    mAppearance.fontString[4] = "adobe-normal-r-12";
+    mAppearance.fontString[5] = "adobe-normal-r-12";
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#006400") );
+    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( true );
+  }
+  else if( item == mAppearance.mListItemContrast )
+  {
+    mAppearance.fontString[0] = "adobe-bold-r-14";
+    mAppearance.fontString[1] = "adobe-bold-r-14";
+    mAppearance.fontString[2] = "adobe-bold-r-14";
+    mAppearance.fontString[3] = "adobe-bold-r-14"; 
+    mAppearance.fontString[4] = "adobe-bold-r-14";
+    mAppearance.fontString[5] = "adobe-bold-r-14";
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
+    mAppearance.colorList->setColor( 1, black );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#006400") );
+    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( true );
+  }
+  else
+  {
+  }
+
+  slotCustomFontSelectionChanged();
+  // A little trick to get a proper update
+  int index = mAppearance.activeFontIndex;
+  mAppearance.activeFontIndex = -1;
+  slotFontSelectorChanged( index );
+  slotCustomColorSelectionChanged();
+}
+
+
+
+
+
+
+
+
+
+
+
+
 void ConfigureDialog::slotDefault( void )
 {
   KMessageBox::sorry( this, i18n( "This feature is not working yet." ) );
@@ -1824,6 +1957,10 @@ void ConfigureDialog::slotApply( void )
   else if( activePage == mAppearance.pageIndex )
   {
     slotFontSelectorChanged( mAppearance.activeFontIndex );
+    if( mAppearance.profileList->isVisible() )
+    {
+      installProfile();
+    }
 
     config.setGroup("Fonts");
     bool defaultFonts = !mAppearance.customFontCheck->isChecked();

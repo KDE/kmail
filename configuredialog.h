@@ -215,17 +215,22 @@ class ConfigureDialog : public KDialogBase
 	activeFontIndex = -1;
       }
 
-      int          pageIndex;
-      QCheckBox    *customFontCheck;
-      QLabel       *fontLocationLabel;
-      QComboBox    *fontLocationCombo;
-      KFontChooser *fontChooser;
-      QCheckBox    *customColorCheck;
-      ColorListBox *colorList;
-      QCheckBox    *longFolderCheck;
-      QCheckBox    *nestedMessagesCheck;
-      int          activeFontIndex;
-      QString      fontString[6];
+      int           pageIndex;
+      QCheckBox     *customFontCheck;
+      QLabel        *fontLocationLabel;
+      QComboBox     *fontLocationCombo;
+      KFontChooser  *fontChooser;
+      QCheckBox     *customColorCheck;
+      ColorListBox  *colorList;
+      QCheckBox     *longFolderCheck;
+      QCheckBox     *nestedMessagesCheck;
+      int           activeFontIndex;
+      QString       fontString[6];
+      ListView      *profileList;
+      QListViewItem *mListItemDefault;
+      QListViewItem *mListItemNewFeature;
+      QListViewItem *mListItemContrast;
+      QPushButton  *profileDeleteButton;
     };
     struct ComposerWidget
     {
@@ -319,6 +324,8 @@ class ConfigureDialog : public KDialogBase
     void setupMimePage( void );
     void setupSecurityPage( void );
     void setupMiscPage( void );
+    void installProfile( void );
+
     void saveActiveIdentity( void );
     void setIdentityInformation( const QString &identityName );
     QStringList identityStrings( void );
