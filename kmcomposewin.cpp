@@ -2427,7 +2427,7 @@ void KMComposeWin::slotSpellcheckDone(int result)
   switch( result )
   {
     case KS_CANCEL:
-      statusBar()->changeItem(i18n(" Spell check cancelled."),0);
+      statusBar()->changeItem(i18n(" Spell check canceled."),0);
       break;
     case KS_STOP:
       statusBar()->changeItem(i18n(" Spell check stopped."),0);
