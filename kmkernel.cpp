@@ -1150,6 +1150,7 @@ void KMKernel::cleanupImapFolders()
         KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
         exit(-1);
       }
+      cfld->folder()->setId( acct->id() );
     }
 
     cfld->setNoContent(true);
