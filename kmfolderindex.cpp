@@ -104,18 +104,20 @@ int KMFolderIndex::updateIndex()
 int KMFolderIndex::writeIndex()
 {
   QString tempName;
-  int old_umask;
+  QString indexName;
+  mode_t old_umask;
   int i=0, len;
   const uchar *buffer = 0;
-  old_umask = umask(077);
 
-  tempName = indexLocation() + ".temp";
+  indexName = indexLocation();
+  tempName = indexName + ".temp";
   unlink(QFile::encodeName(tempName));
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
   utime(QFile::encodeName(location()), 0);
 
+  old_umask = umask(077);
   FILE *tmpIndexStream = fopen(QFile::encodeName(tempName), "w");
   umask(old_umask);
   if (!tmpIndexStream)
@@ -164,12 +166,12 @@ int KMFolderIndex::writeIndex()
   if( fclose( tmpIndexStream ) != 0 )
     return errno;
 
-  ::rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
+  ::rename(QFile::encodeName(tempName), QFile::encodeName(indexName));
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
 
-  mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+  mIndexStream = fopen(QFile::encodeName(indexName), "r+"); // index file
   assert( mIndexStream );
   updateIndexStreamPtr();
 
@@ -281,7 +283,9 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   mIndexSwapByteOrder = false;
   mIndexSizeOfLong = sizeof(long);
 
-  fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
+  int ret = fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
+  if ( ret == EOF || ret == 0 )
+      return false; // index file has invalid header
   if(gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
