@@ -1240,6 +1240,20 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // check for presence of a priority header, indicating urgent mail:
   urgentAction->setChecked( newMsg->isUrgent() );
 
+  // enable/disable encryption if the message was/wasn't encrypted
+  if(    ( mMsg->encryptionState() == KMMsgPartiallyEncrypted )
+      || ( mMsg->encryptionState() == KMMsgFullyEncrypted ) )
+    mLastEncryptActionState = true;
+  else if( mMsg->encryptionState() == KMMsgNotEncrypted )
+    mLastEncryptActionState = false;
+
+  // enable/disable signing if the message was/wasn't signed
+  if(    ( mMsg->signatureState() == KMMsgPartiallySigned )
+      || ( mMsg->signatureState() == KMMsgFullySigned ) )
+    mLastSignActionState = true;
+  else if( mMsg->signatureState() == KMMsgNotSigned )
+    mLastSignActionState = false;
+
   // get PGP user id for the currently selected identity
   QCString pgpUserId = ident.pgpIdentity();
   mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
