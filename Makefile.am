@@ -35,7 +35,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc
 
-CLEAN_FILES = $(BUILT_SOURCES)
+DISTCLEANFILES = $(BUILT_SOURCES)
 
 appsdir = $(kde_appsdir)/Internet/
 
