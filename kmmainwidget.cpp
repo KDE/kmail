@@ -2018,14 +2018,17 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       // popup on a mailto URL
       mMsgView->mailToComposeAction()->plug( menu );
       if ( mMsgCurrent ) {
-	mMsgView->mailToReplyAction()->plug( menu );
-	mMsgView->mailToForwardAction()->plug( menu );
+        mMsgView->mailToReplyAction()->plug( menu );
+        mMsgView->mailToForwardAction()->plug( menu );
         menu->insertSeparator();
       }
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
       mMsgView->copyAction()->plug( menu );
       mMsgView->startImChatAction()->plug( menu );
+      // only enable if our KIMProxy is functional
+      mMsgView->startImChatAction()->setEnabled( kmkernel->imProxy()->initialize() );
+
     } else {
       // popup on a not-mailto URL
       mMsgView->urlOpenAction()->plug( menu );
@@ -2036,6 +2039,8 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     if ( aUrl.protocol() == "im" )
     {
       // popup on an IM address
+      // no need to check the KIMProxy is initialized, as these protocols will
+      // only be present if it is.
       mMsgView->startImChatAction()->plug( menu );
     }
     kdDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
