@@ -1096,14 +1096,10 @@ void KMMessage::setXMark(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::replyToId(void) const
 {
-      int rightAngle;
+  int rightAngle;
   QString replyTo = headerField("In-Reply-To");
   if (replyTo.isEmpty())
-    replyTo = headerField("In-reply-to");
-  if (replyTo.isEmpty())
     replyTo = headerField("References");
-  if (replyTo.isEmpty())
-    replyTo = headerField("references");
 
   rightAngle = replyTo.find( '>' );
   if (rightAngle != -1)
@@ -1123,7 +1119,14 @@ void KMMessage::setReplyToId(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::msgId(void) const
 {
-  return headerField("Message-Id");
+  int rightAngle;
+  QString msgId = headerField("Message-Id");
+
+  rightAngle = msgId.find( '>' );
+  if (rightAngle != -1)
+    msgId.truncate( rightAngle + 1 );
+  debug( "msgId " + msgId );
+  return msgId;
 }
 
 
