@@ -2207,20 +2207,18 @@ QCString KMMessage::getEmailAddr(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
-  QCString result, addr, tmp2;
-  const char *pos;
-  char ch;
+  QString result, addr, tmp2;
+  QChar ch;
   bool insideQuote = false;
 
-  // FIXME: use unicode instead of utf8
-  QCString email = aEmail.utf8();
+  QString email = aEmail;
 
   if (email.isEmpty()) return email;
 
   result = "<a href='mailto:";
-  for (pos=email.data(); *pos; pos++)
+  for (uint pos = 0; pos < email.length(); pos++)
   {
-    ch = *pos;
+    ch = email[pos];
     if (ch == '"') insideQuote = !insideQuote;
     if (ch == '<') addr += "&lt;";
     else if (ch == '>') addr += "&gt;";
@@ -2231,24 +2229,24 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
     if (ch != ',' || insideQuote)
       tmp2 += ch;
 
-    if ((ch == ',' && !insideQuote) || !pos[1])
+    if ((ch == ',' && !insideQuote) || pos + 1 >= email.length())
     {
       result += addr;
-      result = result.replace(QRegExp("\n"),"");
       result += "'>";
-      if (stripped) result += KMMessage::stripEmailAddr(tmp2).latin1();
+      if (stripped) result += KMMessage::stripEmailAddr(tmp2);
       else result += addr;
       tmp2 = "";
       result += "</a>";
       if (ch == ',')
       {
 	result += ", <a href='mailto:";
-	while (pos[1]==' ') pos++;
+	while (email[pos+1] == ' ') pos++;
       }
       addr = "";
     }
   }
-  return QString::fromUtf8(result);
+  result = result.replace(QRegExp("\n"),"");
+  return result;
 }
 
 

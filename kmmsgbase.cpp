@@ -245,7 +245,20 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   {
     QString str = QString::fromLocal8Bit(aStr);
     if (str.find('\n') == -1) return str;
-    return str.replace(QRegExp("\n[\t ]")," ");
+    QString str2((QChar*)NULL, str.length());
+    uint i = 0;
+    while (i < str.length())
+    {
+      if (str[i] == '\n')
+      {
+        str2 += " ";
+        i += 2;
+      } else {
+        str2 += str[i];
+        i++;
+      }
+    }
+    return str2;
   }
 
   for (pos=aStr.data(); *pos; pos++)
