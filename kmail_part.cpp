@@ -122,7 +122,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
-  new KParts::SideBarExtension( kernel->mainWin()-mainKMWidget()->folderTree(), this );
+  //new KParts::SideBarExtension( kernel->mainWin()-mainKMWidget()->leftFrame(), this );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -137,7 +137,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
-  new KParts::SideBarExtension( kernel->mainWin()->mainKMWidget()->folderTree(),
+  new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
                                 "KMailSidebar" );
 #endif

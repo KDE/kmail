@@ -372,10 +372,6 @@ void KMMainWidget::readConfig(void)
     // Update systray
     kernel->toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
-    if (oldWindowLayout != mWindowLayout ||
-        oldShowMIMETreeMode != mShowMIMETreeMode )
-      activatePanners();
-
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
