@@ -1874,7 +1874,7 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
       QListViewItem *nextRoot = item->itemBelow();
       QListViewItemIterator it( item->firstChild() );
       for( ; (*it) != nextRoot; ++it )
-         (*it)->setSelected( true );
+         (*it)->setSelected( selected );
   }
 }
 
