@@ -2139,8 +2139,8 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
                             .arg(i18n("From: "))
                             .arg(KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE))
                             .arg(hasVCard ?
-                                 ""
-                                 : "&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>")
+                                 "&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>"
+                                 : "")
                             .arg((mMsg->headerField("Organization").isEmpty()) ?
                                  ""
                                  : "&nbsp;&nbsp;(" +
