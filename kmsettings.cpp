@@ -39,7 +39,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   initMetaObject();
 
   setCaption(nls->translate("Settings"));
-  resize(600,700);
+  resize(500,500);
   setOKButton(nls->translate("Ok"));
   setCancelButton(nls->translate("Cancel"));
 
@@ -267,27 +267,31 @@ void KMSettings::createTabComposer(QWidget *parent)
   //---------- group: phrases
   grp = new QGroupBox(nls->translate("Phrases"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 6, 3, 20, 4);
+  grid = new QGridLayout(grp, 7, 3, 20, 4);
 
-  lbl = new QLabel(nls->translate("The following placeholders are supported in the\n"
-				  "reply phrases: %D=date, %S=subject, %F=sender,"
-				  "\n%%=percent sign"), grp);
+  lbl = new QLabel(nls->translate(
+        "The following placeholders are supported in the reply phrases:\n"
+	"%D=date, %S=subject, %F=sender, %%=percent sign"), grp);
   lbl->adjustSize();
-  lbl->setMinimumSize(lbl->size());
+  lbl->setMinimumSize(100,lbl->size().height());
+  grid->setRowStretch(0,10);
   grid->addMultiCellWidget(lbl, 0, 0, 0, 2);
 
   phraseReplyEdit = createLabeledEntry(grp, grid, 
 				       nls->translate("Reply to sender:"),
-				       NULL, 1, 0);
+				       NULL, 2, 0);
   phraseReplyAllEdit = createLabeledEntry(grp, grid, 
 					  nls->translate("Reply to all:"),
-					  NULL, 2, 0);
+					  NULL, 3, 0);
   phraseForwardEdit = createLabeledEntry(grp, grid, 
 					 nls->translate("Forward:"),
-					 NULL, 3, 0);
+					 NULL, 4, 0);
   indentPrefixEdit = createLabeledEntry(grp, grid, 
 					nls->translate("Indentation:"),
 					NULL, 5, 0);
+  grid->setColStretch(1,1);
+  grid->setColStretch(1,10);
+  grid->setColStretch(2,0);
   grid->activate();
   //grp->adjustSize();
 
@@ -309,7 +313,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   indentPrefixEdit->setText(config->readEntry("indent-prefix", "> "));
 
   //---------- ére we gø
-  box->addStretch(1000);
+  box->addStretch(10);
   box->activate();
  
   addTab(tab, nls->translate("Composer"));

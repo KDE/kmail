@@ -29,7 +29,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1100
+#define INDEX_VERSION 1101
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -131,7 +131,8 @@ int KMFolder::open(void)
     {
       mIndexStream = NULL;
       warning(nls->translate("Contents of folder `%s' changed.\n"
-			     "Recreating the index file."));
+			     "Recreating the index file."), 
+	      (const char*)name());
     }
     else mIndexStream = fopen(indexLocation(), "r+"); // index file
 
@@ -605,7 +606,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   // write message to folder file
   fseek(mStream, 0, SEEK_END);
-  fwrite("From ???@??? 00:00:00 1997 +0000\n", 33, 1, mStream);
+  fwrite("From ???@??? Mon Jan 1 00:00:00 1997\n", 37, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
   if (msgText[len-1]!='\n') fwrite("\n", 1, 1, mStream);

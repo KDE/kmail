@@ -413,7 +413,8 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
     else if (ch=='>') htmlStr += "&gt;";
     else if (ch=='&') htmlStr += "&amp;";
     else if ((ch=='h' && strncmp(pos,"http:",5)==0) ||
-	     (ch=='f' && strncmp(pos,"ftp:",4)==0))
+	     (ch=='f' && strncmp(pos,"ftp:",4)==0) ||
+	     (ch=='m' && strncmp(pos,"mailto:",7)==0))
     {
       for (i=0; *pos && *pos>' ' && i<255; i++, pos++)
 	str[i] = *pos;
