@@ -85,11 +85,11 @@
 
 static inline bool warnSendUnsigned() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-warning-unsigned", true );
+    return group.readBoolEntry( "crypto-warning-unsigned", false );
 }
 static inline bool warnSendUnencrypted() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-warning-unencrypted", true );
+    return group.readBoolEntry( "crypto-warning-unencrypted", false );
 }
 static inline bool saveMessagesEncrypted() {
     KConfigGroup group( KMKernel::config(), "Composer" );
