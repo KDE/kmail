@@ -46,8 +46,8 @@ KMTextSource::~KMTextSource() {
 }
 
 
-QString KMTextSource::text(Q_UINT32 serialNumber) const {
-    QString rc;
+QCString KMTextSource::text(Q_UINT32 serialNumber) const {
+    QCString rc;
     KMFolder *folder = 0;
     int idx;
     kmkernel->msgDict()->getLocation(serialNumber, &folder, &idx);
