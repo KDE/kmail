@@ -15,6 +15,8 @@
 
 #include <kmime_mdn.h>
 
+#include<libemailfunctions/email.h>
+
 template <typename T>
 class QValueList;
 
@@ -375,6 +377,18 @@ public:
     Used for threading.
   */
   QString strippedSubjectMD5() const;
+
+  /**
+    Validate a list of email addresses, and also allow
+    aliases and distribution lists to be expanded
+    before validation.
+    Returns the broken address in question.
+    FIXME: this should be in libemailfucntions but that
+           requires moving expandAliases and all that
+           it brings
+  */
+  static KPIM::EmailParseResult isValidEmailAddressList( const QString& aStr,
+                                                         QString& brokenAddress );
 
   /**
     Get a hash of the subject.
