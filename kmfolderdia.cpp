@@ -218,6 +218,10 @@ void KMFolderDialog::slotCancelAccept()
 {
   mDelayedSavingTabs = -1;
   enableButtonOK( true );
+  // Don't try to create it twice
+  if ( !mFolder.isNull() )
+    mIsNewFolder = false;
+
   // Other tabs might call slotReadyForAccept. -1 ensures that it won't close the dialog,
   // but the OK button being enabled means that people might succeed in running
   // the same job from save more than once.
@@ -235,8 +239,6 @@ void KMFolderDialog::setFolder( KMFolder* folder )
 {
   Q_ASSERT( mFolder.isNull() );
   mFolder = folder;
-  if ( folder )
-    mIsNewFolder = false;
 }
 
 //----------------------------------------------------------------------------
