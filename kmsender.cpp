@@ -11,6 +11,7 @@
 #include "kmmessage.h"
 #include "kmidentity.h"
 #include "kmiostatusdlg.h"
+#include "kbusyptr.h"
 
 #include <kconfig.h>
 #include <kprocess.h>
@@ -158,11 +159,23 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
       return false;
     }
   if (!settingsOk()) return FALSE;
-
+  
   if (aMsg->to().isEmpty())
   {
+    kernel->kbp()->idle();
     KMessageBox::information(0,i18n("You must specify a receiver"));
     return FALSE;
+  }
+
+  if (aMsg->subject().isEmpty())
+  {
+    kernel->kbp()->idle();
+    int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
+    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
+    if( rc == KMessageBox::No ) {
+      return FALSE;
+    }
+    kernel->kbp()->busy();
   }
 
   if (sendNow==-1) sendNow = mSendImmediate;
