@@ -14,7 +14,6 @@
 #include <qtextcodec.h>
 #include <qheader.h>
 
-#include "cryptplugwrapperlist.h"
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
@@ -81,6 +80,7 @@
 #include <kstatusbar.h>
 #include <qpopupmenu.h>
 
+#include "cryptplugwrapperlist.h"
 #include "klistboxdialog.h"
 
 #include "kmcomposewin.moc"
@@ -2577,7 +2577,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
   QByteArray signature;
 
   // we call the cryptplug for signing
-  CryptPlugWrapper* cryptPlug = kernel->cryptPlugList()->active();
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
   if( cryptPlug ) {
     kdDebug(5006) << "\nKMComposeWin::pgpSignedMsg calling CRYPTPLUG "
                   << cryptPlug->libName() << endl;
@@ -2866,7 +2866,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
   QByteArray encoding;
 
   // we call the cryptplug
-  CryptPlugWrapper* cryptPlug = kernel->cryptPlugList()->active();
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
   if( cryptPlug ) {
     kdDebug(5006) << "\nKMComposeWin::pgpEncryptedMsg: going to call CRYPTPLUG "
                   << cryptPlug->libName() << endl;
@@ -3853,7 +3853,7 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false, 
+  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
     atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
   win->show();
 }
@@ -4298,10 +4298,10 @@ void KMComposeWin::slotSelectCrypto()
   dialog.resize( 350, 200 );
   dialog.entriesLB->clear();
 
-  CryptPlugWrapper* activeCryptPlug = kernel->cryptPlugList()->active();
+  CryptPlugWrapper* activeCryptPlug = mCryptPlugList->active();
 
   CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *(kernel->cryptPlugList()) );
+  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
   int idx=-1;
   int i=0;
   while( ( current = it.current() ) ) {
