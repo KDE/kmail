@@ -1571,8 +1571,10 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if (KMMsgBase::codecForName(KGlobal::charsets()->encodingForName(*it)
-      .latin1()) == KMMsgBase::codecForName(mCharset))
+    if ((mCharset.lower() == "us-ascii" && i == 0) ||
+     (i != 0 && KGlobal::charsets()->codecForName(
+      KGlobal::charsets()->encodingForName(*it))
+      == KGlobal::charsets()->codecForName(mCharset)))
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();
