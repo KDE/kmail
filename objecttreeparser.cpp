@@ -184,7 +184,7 @@ namespace KMail {
   }
 
 
-  void ObjectTreeParser::parseObjectTree( partNode* node ) {
+  void ObjectTreeParser::parseObjectTree( partNode * node ) {
     kdDebug(5006) << "\n**\n** ObjectTreeParser::parseObjectTree( "
 		  << (node ? "node OK, " : "no node, ")
 		  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
@@ -192,6 +192,9 @@ namespace KMail {
 
     // make widgets visible that might have been hidden by
     // previous groupware activation
+
+    // ### (mmutz) This type of code needs to go to whereever
+    // ### parseObjectTree is called from in the first place!
     if ( mReader && kmkernel->groupware().isEnabled() )
       emit mReader->signalGroupwareShow( false );
 
@@ -203,121 +206,125 @@ namespace KMail {
       // start the new viewer content
       htmlWriter()->begin();
       htmlWriter()->write( cssHelper()->htmlHead( mReader->isFixedFont() ) );
+      if ( !node ) { // no node, no content:
+	htmlWriter()->queue("</body></html>");
+	htmlWriter()->flush();
+      }
     }
-    if (node && (showOnlyOneMimePart() || (mReader && /*mReader->mShowCompleteMessage &&*/ !node->mRoot ))) {
-      if ( showOnlyOneMimePart() ) {
-	// set this node and all it's children and their children to 'not yet processed'
-	node->mWasProcessed = false;
-	if ( node->mChild )
-	  node->mChild->setProcessed( false );
-      } else
-	// set this node and all it's siblings and all it's childrens to 'not yet processed'
-	node->setProcessed( false );
+    // end of ###
+
+    if ( !node )
+      return;
+
+    // reset "processed" flags for...
+    if ( showOnlyOneMimePart() ) {
+      // ... this node and all descendants
+      node->mWasProcessed = false;
+      if ( node->mChild )
+	node->mChild->setProcessed( false );
+    } else if ( mReader && !node->mRoot ) {
+      // ...this node and all it's siblings and descendants
+      node->setProcessed( false );
     }
 
-    if ( node ) {
-      ProcessResult processResult;
-      partNode* curNode = node;
+    ProcessResult processResult;
 
-      // process all mime parts that are not covered by one of the CRYPTPLUGs
-      if ( !curNode->mWasProcessed ) {
-	bool bDone = false;
+    // process all mime parts that are not covered by one of the CRYPTPLUGs
+    if ( !node->mWasProcessed ) { // ### (mmutz) this conditional screams to be a guard clause!
+      bool bDone = false;
 
-	if ( const BodyPartFormatter * bpf
-	     = BodyPartFormatter::createFor( curNode->type(), curNode->subType() ) ) {
-	  kdDebug() << "Hit BodyPartFormatter!" << endl;
-	  bDone = bpf->process( this, curNode, processResult );
-	} else {
-	  switch ( curNode->type() ){ // this is going to die soon! (mmutz)
-	  case DwMime::kTypeText:
-	    kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (text/*)!!!" << endl;
-	    break;
-	  case DwMime::kTypeMultipart:
-	    bDone = processMultiPartType( curNode->subType(), curNode,
-					  processResult );
-	    break;
-	  case DwMime::kTypeMessage:
-	    bDone = processMessageType( curNode->subType(), curNode,
+      if ( const BodyPartFormatter * bpf
+	   = BodyPartFormatter::createFor( node->type(), node->subType() ) ) {
+	kdDebug() << "Hit BodyPartFormatter!" << endl;
+	bDone = bpf->process( this, node, processResult );
+      } else {
+	switch ( node->type() ){ // this is going to die soon! (mmutz)
+	case DwMime::kTypeText:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (text/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeMultipart:
+	  bDone = processMultiPartType( node->subType(), node,
 					processResult );
-	    break;
-	  case DwMime::kTypeApplication:
-	    kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (application/*)!!!" << endl;
-	    break;
-	  case DwMime::kTypeImage:
-	    bDone = processImageType( curNode->subType(), curNode,
-				      processResult );
-	    break;
-	  case DwMime::kTypeAudio:
-	    bDone = processAudioType( curNode->subType(), curNode,
-				      processResult );
-	    break;
-	  case DwMime::kTypeVideo:
-	    bDone = processVideoType( curNode->subType(), curNode,
-				      processResult );
-	    break;
-	  case DwMime::kTypeModel:
-	    bDone = processModelType( curNode->subType(), curNode,
-				      processResult );
-	    break;
-	  }
+	  break;
+	case DwMime::kTypeMessage:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (message/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeApplication:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (application/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeImage:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (image/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeAudio:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (audio/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeVideo:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (video/*)!!!" << endl;
+	  break;
+	case DwMime::kTypeModel:
+	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (model/*)!!!" << endl;
+	  break;
 	}
-
-	if ( !bDone
-            && mReader
-            && ( attachmentStrategy() != AttachmentStrategy::hidden()
-                 || showOnlyOneMimePart()
-                 || !curNode->mRoot /* message is an attachment */ ) ) {
-	  bool asIcon = true;
-	  if ( showOnlyOneMimePart() ) {
-	    asIcon = !curNode->hasContentDispositionInline();
-	  }
-	  else if ( !processResult.neverDisplayInline() ) {
-	    const AttachmentStrategy * as = attachmentStrategy();
-	    if ( as == AttachmentStrategy::iconic() ) 
-	      asIcon = true;
-	    else if ( as == AttachmentStrategy::inlined() )
-	      asIcon = false;
-	    else if ( as == AttachmentStrategy::smart() )
-              asIcon = !curNode->hasContentDispositionInline();
-	    else if ( as == AttachmentStrategy::hidden() )
-              // the node is the message! show it!
-              asIcon = false;
-	  }
-          // neither image nor text -> show as icon
-	  if ( !processResult.isImage()
-              && curNode->type() != DwMime::kTypeText )
-            asIcon = true;
-	  if ( asIcon ) {
-	    if ( attachmentStrategy() != AttachmentStrategy::hidden() 
-                || showOnlyOneMimePart() )
-	      writePartIcon( &curNode->msgPart(), curNode->nodeId() );
-	  } else if ( processResult.isImage() ) {
-	    writePartIcon( &curNode->msgPart(), curNode->nodeId(), true );
-	  } else {
-	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    writeBodyString( cstr, curNode->trueFromAddress(),
-			     codecFor( curNode ), processResult );
-	  }
-	}
-	curNode->mWasProcessed = true;
       }
-      // parse the siblings (children are parsed in the 'multipart' case terms)
-      if ( !showOnlyOneMimePart() && curNode && curNode->mNext )
-	parseObjectTree( curNode->mNext );
 
-      // adjust signed/encrypted flags if inline PGP was found
-      if ( ( processResult.inlineSignatureState()  != KMMsgNotSigned ) ||
-          ( processResult.inlineEncryptionState() != KMMsgNotEncrypted ) ) {
-	if (    partNode::CryptoTypeUnknown == curNode->cryptoType()
-	       || partNode::CryptoTypeNone    == curNode->cryptoType() ){
-	  curNode->setCryptoType( partNode::CryptoTypeInlinePGP );
+      // ### (mmutz) default handling should go into the respective
+      // ### bodypartformatters.
+      if ( !bDone
+	   && mReader
+	   && ( attachmentStrategy() != AttachmentStrategy::hidden()
+		|| showOnlyOneMimePart()
+		|| !node->mRoot /* message is an attachment */ ) ) {
+	bool asIcon = true;
+	if ( showOnlyOneMimePart() )
+	  // ### (mmutz) this is wrong! If I click on an image part, I
+	  // want the equivalent of "view...", except for the extra
+	  // window!
+	  asIcon = !node->hasContentDispositionInline();
+	else if ( !processResult.neverDisplayInline() )
+	  if ( const AttachmentStrategy * as = attachmentStrategy() )
+	    asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+	// neither image nor text -> show as icon
+	if ( !processResult.isImage()
+	     && node->type() != DwMime::kTypeText )
+	  asIcon = true;
+	if ( asIcon ) {
+	  if ( attachmentStrategy() != AttachmentStrategy::hidden() 
+	       || showOnlyOneMimePart() )
+	    writePartIcon( &node->msgPart(), node->nodeId() );
+	} else if ( processResult.isImage() ) {
+	  writePartIcon( &node->msgPart(), node->nodeId(), true );
+	} else {
+	  writeBodyString( node->msgPart().bodyDecoded(),
+			   node->trueFromAddress(),
+			   codecFor( node ), processResult );
 	}
-        curNode->setSignatureState( processResult.inlineSignatureState() );
-        curNode->setEncryptionState( processResult.inlineEncryptionState() );
       }
-      if ( partNode::CryptoTypeUnknown == curNode->cryptoType() )
-	curNode->setCryptoType( partNode::CryptoTypeNone );
+      // end of ###
+      node->mWasProcessed = true;
     }
+    // parse the siblings (children are parsed in the 'multipart' case terms)
+    // ### FIXME (mmutz): use iteration instead of recursion!
+    if ( !showOnlyOneMimePart() && node && node->mNext )
+      parseObjectTree( node->mNext );
+
+    // adjust signed/encrypted flags if inline PGP was found
+
+    // ### (mmutz) I think this is a bug if node->mWasProcessed is
+    // true from the beginning (_can_ it?), then any crypto state is
+    // reset. I therefore believe that this code should be inside the
+    // corresponding conditional above:
+    if ( ( processResult.inlineSignatureState()  != KMMsgNotSigned ) ||
+	 ( processResult.inlineEncryptionState() != KMMsgNotEncrypted ) ) {
+      if (    partNode::CryptoTypeUnknown == node->cryptoType()
+	      || partNode::CryptoTypeNone    == node->cryptoType() ){
+	node->setCryptoType( partNode::CryptoTypeInlinePGP );
+      }
+      node->setSignatureState( processResult.inlineSignatureState() );
+      node->setEncryptionState( processResult.inlineEncryptionState() );
+    }
+    if ( partNode::CryptoTypeUnknown == node->cryptoType() )
+      node->setCryptoType( partNode::CryptoTypeNone );
+    // end of ###
 
     if ( mReader && showOnlyOneMimePart() ) {
       htmlWriter()->queue("</body></html>");
@@ -789,43 +796,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   }
   return bOk ? fname : QString::null;
 }
-
-#if 0
-  bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
-					  ProcessResult & result ) {
-    kdDebug(5006) << "* text *" << endl;
-    switch ( subtype ){
-    case DwMime::kSubtypeHtml:
-      if ( mReader )
-	kdDebug(5006) << "html, attachmentstrategy = "
-		      << attachmentStrategy()->name() << endl;
-      else
-	kdDebug(5006) << "html" << endl;
-      return processTextHtmlSubtype( curNode, result );
-    case DwMime::kSubtypeVCal:
-      kdDebug(5006) << "calendar" << endl;
-      return processTextVCalSubtype( curNode, result );
-    case DwMime::kSubtypeXVCard:
-      kdDebug(5006) << "v-card" << endl;
-      return processTextVCardSubtype( curNode, result );
-    case DwMime::kSubtypeRtf:
-      kdDebug(5006) << "rtf" << endl;
-      return processTextRtfSubtype( curNode, result );
-    case DwMime::kSubtypeRichtext:
-      kdDebug(5006) << "rich text" << endl;
-      // fall through: richtext is the predecessor to enriched:
-    case DwMime::kSubtypeEnriched:
-      kdDebug(5006) << "enriched " << endl;
-      return processTextEnrichedSubtype( curNode, result );
-    case DwMime::kSubtypePlain:
-      kdDebug(5006) << "plain " << endl;
-      // fall through: plain is the default subtype of text/
-    default:
-      kdDebug(5006) << "default " << endl;
-      return processTextPlainSubtype( curNode, result );
-    }
-  }
-#endif
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
@@ -1445,17 +1415,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return bDone;    
   }
 
-  bool ObjectTreeParser::processMessageType( int subtype, partNode * curNode,
-					     ProcessResult & result ) {
-    kdDebug(5006) << "* message *" << endl;
-    switch ( subtype ) {
-    case DwMime::kSubtypeRfc822:
-      kdDebug(5006) << "RfC 822" << endl;
-      return processMessageRfc822Subtype( curNode, result );
-    default:
-      return false;
-    }
-  }
 
   bool ObjectTreeParser::processMessageRfc822Subtype( partNode * curNode, ProcessResult & ) {
     if ( mReader
@@ -1508,32 +1467,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return true;
   }
 
-#if 0
-  bool ObjectTreeParser::processApplicationType( int subtype, partNode * curNode,
-						 ProcessResult & result ) {
-    kdDebug(5006) << "* application *" << endl;
-    switch ( subtype  ){
-    case DwMime::kSubtypePgpClearsigned:
-      kdDebug(5006) << "pgp" << endl;
-      // treat obsolete app/pgp subtype as t/p:
-      return processTextPlainSubtype( curNode, result );
-    case DwMime::kSubtypePostscript:
-      kdDebug(5006) << "postscript" << endl;
-      return processApplicationPostscriptSubtype( curNode, result );
-    case DwMime::kSubtypeOctetStream:
-      kdDebug(5006) << "octet stream" << endl;
-      return processApplicationOctetStreamSubtype( curNode, result );
-    case DwMime::kSubtypePkcs7Mime:
-      kdDebug(5006) << "pkcs7 mime" << endl;
-      return processApplicationPkcs7MimeSubtype( curNode, result );
-    case DwMime::kSubtypeMsTNEF:
-      kdDebug(5006) << "MS TNEF encoded" << endl;
-      return processApplicationMsTnefSubtype( curNode, result );
-    default:
-      return false;
-    }
-  }
-#endif
 
   bool ObjectTreeParser::processApplicationPostscriptSubtype( partNode *, ProcessResult & ) {
     // showing PostScript inline can be used for a DoS attack;
@@ -1780,12 +1713,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return true;
   }
 
-  bool ObjectTreeParser::processImageType( int /*subtype*/, partNode * /*curNode*/,
-					   ProcessResult & result ) {
-    result.setIsImage( true );
-    return false;
-  }
-
   bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
 					   ProcessResult & /*result*/ ) {
     // We always show audio as icon.
@@ -1794,17 +1721,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       writePartIcon( &curNode->msgPart(), curNode->nodeId() );
     return true;
   }
-
-  bool ObjectTreeParser::processVideoType( int /*subtype*/, partNode * /*curNode*/,
-					   ProcessResult & /*result*/ ) {
-    return false;
-  }
-
-  bool ObjectTreeParser::processModelType( int /*subtype*/, partNode * /*curNode*/,
-					   ProcessResult & /*result*/ ) {
-    return false;
-  }
-
 
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
 					  const QString & fromAddress,

@@ -180,7 +180,6 @@ namespace KMail {
 			QString& aErrorText );
 
   public:// (during refectoring)
-    //bool processTextType( int subtype, partNode * node, ProcessResult & result );
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
     bool processTextVCalSubtype( partNode * node, ProcessResult & result );
@@ -198,25 +197,14 @@ namespace KMail {
     bool processMultiPartSignedSubtype( partNode * node, ProcessResult & result );
     bool processMultiPartEncryptedSubtype( partNode * node, ProcessResult & result );
 
-    bool processMessageType( int subtype, partNode * node, ProcessResult & result );
-
     bool processMessageRfc822Subtype( partNode * node, ProcessResult & result );
-
-    bool processApplicationType( int subtype, partNode * node, ProcessResult & result );
 
     bool processApplicationPostscriptSubtype( partNode * node, ProcessResult & result );
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
     bool processApplicationMsTnefSubtype( partNode * node, ProcessResult & result );
 
-    bool processImageType( int subtype, partNode * node, ProcessResult & result );
-
     bool processAudioType( int subtype, partNode * node, ProcessResult & result );
-
-    bool processVideoType( int subtype, partNode * node, ProcessResult & result );
-
-    bool processModelType( int subtype, partNode * node, ProcessResult & result );
-
 
   private:
     void writeBodyString( const QCString & bodyString,

@@ -32,6 +32,7 @@
 #include "bodypartformatter.h"
 
 #include "objecttreeparser.h"
+#include "partNode.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/string.h>
@@ -52,6 +53,39 @@ namespace {
   };
 
   const AnyTypeBodyPartFormatter * AnyTypeBodyPartFormatter::self = 0;
+
+
+  class AudioTypeBodyPartFormatter : public KMail::BodyPartFormatter {
+    static const AudioTypeBodyPartFormatter * self;
+  public:
+    bool process( KMail::ObjectTreeParser * otp, partNode * node, KMail::ProcessResult & result ) const {
+      return otp->processAudioType( node->subType(), node, result );
+    }
+    static const KMail::BodyPartFormatter * create() {
+      if ( !self )
+	self = new AudioTypeBodyPartFormatter();
+      return self;
+    }
+  };
+
+  const AudioTypeBodyPartFormatter * AudioTypeBodyPartFormatter::self = 0;
+
+
+  class ImageTypeBodyPartFormatter : public KMail::BodyPartFormatter {
+    static const ImageTypeBodyPartFormatter * self;
+  public:
+    bool process( KMail::ObjectTreeParser *, partNode *, KMail::ProcessResult & result ) const {
+      result.setIsImage( true );
+      return false;
+    }
+    static const KMail::BodyPartFormatter * create() {
+      if ( !self )
+	self = new ImageTypeBodyPartFormatter();
+      return self;
+    }
+  };
+
+  const ImageTypeBodyPartFormatter * ImageTypeBodyPartFormatter::self = 0;
 
 #define CREATE_BODY_PART_FORMATTER(subtype) \
   class subtype##BodyPartFormatter : public KMail::BodyPartFormatter { \
@@ -84,6 +118,8 @@ namespace {
   CREATE_BODY_PART_FORMATTER(ApplicationMsTnef)
   //CREATE_BODY_PART_FORMATTER(ApplicationPgp)
 
+  CREATE_BODY_PART_FORMATTER(MessageRfc822)
+
   typedef TextPlainBodyPartFormatter TextEnrichedBodyPartFormatter;
   typedef TextPlainBodyPartFormatter ApplicationPgpBodyPartFormatter;
 
@@ -93,37 +129,79 @@ namespace {
 
 typedef const KMail::BodyPartFormatter * (*BodyPartFormatterCreator)();
 
-static const struct {
-  const char * type;
+struct SubtypeBuiltin {
   const char * subtype;
   BodyPartFormatterCreator create;
-} builtins[] = {
-  //{ "application", "octet-stream", &AppOctetStreamFormatter::create },
-  //{ "application", "pkcs7-mime", &AppPkcs7MimeFormatter::create },
-  //{ "application", "ms-tnef", &AppMsTnefFormatter::create },
-  //{ "application", "postscript", &AppPostscriptFormatter::create },
-  //{ "application", "pgp", &AppPgpFormatter::create },
-  //{ "text", "html", &TextHtmlFormatter::create },
-  { "text", "plain", &TextPlainBodyPartFormatter::create },
-  //{ "text", "enriched", &TextEnrichedFormatter::create },
-  //{ "text", "vcal", &TextVCalFormatter::create },
-  //{ "text", "vcard", &TextVCardFormatter::create },
-  //{ "text", "rtf", &TextRtfFormatter::create },
-  //{ "multipart", "mixed", &MultiPartMixedFormatter::create },
-  //{ "multipart", "alternative", &MultiPartAlternativeFormatter::create },
-  //{ "multipart", "digest", &MultiPartDigestFormatter::create },
-  //{ "multipart", "parallel", &MultiPartParallelFormatter::create },
-  //{ "multipart", "related", &MultiPartRelatedFormatter::create },
-  //{ "multipart", "signed", &MultiPartSignedFormatter::create },
-  //{ "multipart", "encrypted", &MultiPartEncryptedFormatter::create },
-  //{ "multipart", "report", &MultiPartReportFormatter::create },
-  //{ "message", "rfc822", &MessageRfc822Formatter::create },
-  //{ "image", "*", &AnyImageFormatter::create },
-  //{ "audio", "*", &AnyAudioFormatter::create },
-  //{ "model", "*", &AnyModelFormatter::create },
-  //{ "video", "*", &AnyVideoFormatter::create },
-  //{ "*", "*", &AnyTypeFormatter::create }
 };
+
+static const SubtypeBuiltin applicationSubtypeBuiltins[] = {
+  { "octet-stream", &ApplicationOctetStreamBodyPartFormatter::create },
+  { "pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
+  { "x-pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
+  { "ms-tnef", &ApplicationMsTnefBodyPartFormatter::create },
+  { "postscript", &ApplicationPostscriptBodyPartFormatter::create },
+  { "pgp", &ApplicationPgpBodyPartFormatter::create },
+};
+
+static const SubtypeBuiltin textSubtypeBuiltins[] = {
+  { "html", &TextHtmlBodyPartFormatter::create },
+  { "enriched", &TextEnrichedBodyPartFormatter::create },
+  { "calendar", &TextVCalBodyPartFormatter::create },
+  { "x-vcard", &TextVCardBodyPartFormatter::create },
+  { "vcard", &TextVCardBodyPartFormatter::create },
+  { "rtf", &TextRtfBodyPartFormatter::create },
+  { "*", &TextPlainBodyPartFormatter::create },
+};
+
+static const SubtypeBuiltin multipartSubtypeBuiltins[] = {
+  //{ "mixed", &MultiPartMixedFormatter::create },
+  //{ "alternative", &MultiPartAlternativeFormatter::create },
+  //{ "digest", &MultiPartDigestFormatter::create },
+  //{ "parallel", &MultiPartParallelFormatter::create },
+  //{ "related", &MultiPartRelatedFormatter::create },
+  //{ "signed", &MultiPartSignedFormatter::create },
+  //{ "encrypted", &MultiPartEncryptedFormatter::create },
+  //{ "report", &MultiPartReportFormatter::create },
+};
+
+static const SubtypeBuiltin messageSubtypeBuiltins[] = {
+  { "rfc822", &MessageRfc822BodyPartFormatter::create },
+};
+
+static const SubtypeBuiltin imageSubtypeBuiltins[] = {
+  { "*", &ImageTypeBodyPartFormatter::create },
+};
+
+static const SubtypeBuiltin audioSubtypeBuiltins[] = {
+  { "*", &AudioTypeBodyPartFormatter::create },
+};
+
+static const SubtypeBuiltin anySubtypeBuiltins[] = {
+  { "*", &AnyTypeBodyPartFormatter::create },
+};
+
+#ifdef DIM
+#undef DIM
+#endif
+#define DIM(x) sizeof(x) / sizeof(*x)
+
+static const struct {
+  const char * type;
+  const SubtypeBuiltin * subtypes;
+  unsigned int num_subtypes;
+} builtins[] = {
+  { "application", applicationSubtypeBuiltins, DIM(applicationSubtypeBuiltins) },
+  { "text", textSubtypeBuiltins, DIM(textSubtypeBuiltins) },
+  { "multipart", multipartSubtypeBuiltins, DIM(multipartSubtypeBuiltins) },
+  { "message", messageSubtypeBuiltins, DIM(messageSubtypeBuiltins) },
+  { "image", imageSubtypeBuiltins, DIM(imageSubtypeBuiltins) },
+  { "audio", audioSubtypeBuiltins, DIM(audioSubtypeBuiltins) },
+  //{ "model", modelSubtypeBuiltins, DIM(modelSubtypeBuiltins) },
+  //{ "video", videoSubtypeBuiltins, DIM(videoSubtypeBuiltins) },
+  { "*", anySubtypeBuiltins, DIM(anySubtypeBuiltins) },
+};
+
+#undef DIM
 
 const KMail::BodyPartFormatter * KMail::BodyPartFormatter::createFor( int type, int subtype ) {
   DwString t, st;
@@ -171,23 +249,27 @@ namespace {
   }
 
   const KMail::BodyPartFormatter * createForImage( const char * ) {
-    return 0;
+    return ImageTypeBodyPartFormatter::create();
   }
 
   const KMail::BodyPartFormatter * createForVideo( const char * ) {
-    return 0;
+    return AnyTypeBodyPartFormatter::create();
   }
 
   const KMail::BodyPartFormatter * createForAudio( const char * ) {
-    return 0;
+    return AudioTypeBodyPartFormatter::create();
   }
 
   const KMail::BodyPartFormatter * createForModel( const char * ) {
-    return 0;
+    return AnyTypeBodyPartFormatter::create();
   }
 
-  const KMail::BodyPartFormatter * createForMessage( const char * ) {
-    return 0;
+  const KMail::BodyPartFormatter * createForMessage( const char * subtype ) {
+    if ( !subtype || !*subtype )
+      return 0;
+    if ( qstricmp( subtype, "rfc822" ) == 0 )
+      return MessageRfc822BodyPartFormatter::create();
+    return AnyTypeBodyPartFormatter::create();
   }
 
   const KMail::BodyPartFormatter * createForMultiPart( const char * ) {
