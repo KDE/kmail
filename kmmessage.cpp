@@ -845,27 +845,30 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (!noQuote)
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, allowDecryption));
 
-  QStringList::Iterator it;
+  // replace arbitrary sequences of reply prefixes:
   bool recognized = false;
-  for (it = sReplySubjPrefixes.begin(); !recognized && (it != sReplySubjPrefixes.end()); ++it)
+  // construct a big regexp that
+  // 1. is anchored to the beginning of the subject (sans whitespace)
+  // 2. matches at least one of the part regexps in sReplySubjPrefixes
+  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s+")
+    .arg( sReplySubjPrefixes.join(")|(?:") );
+  kdDebug(5006) << "KMMessage::createReply(): bigRegExp = \"" << bigRegExp
+		<< "\"" << endl;
+  QRegExp rx( bigRegExp, false /*case insens.*/ );
+  if ( !rx.isValid() )
   {
-    QString prefix = subject().left((*it).length());
-    if (prefix.lower() == (*it).lower()) //recognized
-    {
-      if (!sReplaceSubjPrefix || (prefix == "Re:"))
-        msg->setSubject(subject());
-      else
-      {
-        //replace recognized prefix with "Re: "
-        //handle crappy subjects Re:  blah blah (note double space)
-        int subjStart = (*it).length();
-        while (subject()[subjStart].isSpace()) //strip only from beginning
-          subjStart++;
-        msg->setSubject("Re: " + subject().mid(subjStart,
-                                   subject().length() - subjStart));
-      }
+    kdDebug(5006) << "reply prefix regexp is " << "invalid!" << endl;
+    // try good ole Re:
+    recognized = subject().startsWith("Re:");
+  } else { // valid rx
+    QString subj = subject();
+    if ( rx.search( subj ) == 0 ) { // matches
+      
       recognized = true;
-    }
+      if ( sReplaceSubjPrefix )
+	msg->setSubject( subj.replace( 0, rx.matchedLength(), "Re: " ) );
+    } else
+      recognized = false;
   }
   if (!recognized)
     msg->setSubject("Re: " + subject());
