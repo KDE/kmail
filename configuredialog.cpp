@@ -2702,7 +2702,7 @@ void IdentityList::import()
 }
 
 
-void IdentityList::export()
+void IdentityList::save()
 {
   for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
   {
