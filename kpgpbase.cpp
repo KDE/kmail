@@ -801,6 +801,13 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
       status |= ERROR;
     }
   }
+  if (info.find("Encryption error") != -1)
+  {
+    errMsg = i18n("PGP error occured. Please check\nyour PGP setup and key rings.");
+    status |= NO_SEC_KEY;
+    status |= BADKEYS;
+    status |= ERROR;
+  }
   //debug("status = %d",status);
   return status;
 }
