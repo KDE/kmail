@@ -1889,7 +1889,6 @@ KMCommand::Result KMMoveCommand::execute()
       it.key()->removeMsg(*it.data());
       delete it.data();
     }
-#if 0
     /* The list is empty, which means that either all messages were to be
      * deleted, which is done above, or all of them were already in this folder.
      * In both cases make sure a completed() signal is emitted nonetheless. */
@@ -1904,7 +1903,6 @@ KMCommand::Result KMMoveCommand::execute()
       // normal local move
       completeMove( OK );
     }
-#endif
   }
 
   return OK;
