@@ -113,15 +113,15 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
     QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 2 /*cols*/,
 				       0 /*border*/, spacingHint() );
     gl->setColStretch( 1, 1 );
-    QLabel *l = new QLabel("Apply this filter on", adv_w );
+    QLabel *l = new QLabel(i18n("Apply this filter on"), adv_w );
     gl->addWidget( l, 0, 0, Qt::AlignLeft );
     mApplicability = new QComboBox( FALSE, adv_w );
-    mApplicability->insertItem( "incoming messages" );
-    mApplicability->insertItem( "outgoing messages" );
-    mApplicability->insertItem( "both" );
-    mApplicability->insertItem( "explicit \"Apply Filters\" only" );
+    mApplicability->insertItem( i18n("incoming messages") );
+    mApplicability->insertItem( i18n("outgoing messages") );
+    mApplicability->insertItem( i18n("both") );
+    mApplicability->insertItem( i18n("explicit \"Apply Filters\" only") );
     gl->addWidget( mApplicability, 0, 1, Qt::AlignLeft );
-    mStopProcessingHere = new QCheckBox( "If this filter matches, stop processing here", adv_w );
+    mStopProcessingHere = new QCheckBox( i18n("If this filter matches, stop processing here"), adv_w );
     gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
 			    1, 1, /*from to row*/
 			    0, 1 /*from to col*/ );
