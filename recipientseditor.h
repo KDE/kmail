@@ -26,11 +26,13 @@
 
 #include <qwidget.h>
 #include <qscrollview.h>
+#include <qlineedit.h>
+
+#include "kmcomposewin.h"
 
 class RecipientsPicker;
 
 class QComboBox;
-class KMLineEdit;
 class QLabel;
 
 class Recipient
@@ -62,6 +64,22 @@ class Recipient
     Type mType;
 };
 
+/* Helper Class */
+
+class RecipientLineEdit : public KMLineEdit
+{
+  Q_OBJECT
+  public:
+    RecipientLineEdit(  QWidget * parent ) :
+      KMLineEdit( true, parent ) { }
+
+  signals:
+    void deleteMe();
+
+  protected:
+    void keyPressEvent(  QKeyEvent *ev );
+};
+
 class RecipientLine : public QWidget
 {
     Q_OBJECT
@@ -82,7 +100,9 @@ class RecipientLine : public QWidget
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
     void upPressed( RecipientLine * );
+    void deleteLine(  RecipientLine * );
     void emptyChanged();
+
 
   protected:
     void keyPressEvent( QKeyEvent * );
@@ -92,10 +112,11 @@ class RecipientLine : public QWidget
     void checkEmptyState( const QString & );
     void slotFocusUp();
     void slotFocusDown();
+    void slotPropagateDeletion();
 
   private:
     QComboBox *mCombo;
-    KMLineEdit *mEdit;
+    RecipientLineEdit *mEdit;
     bool mIsEmpty;
 };
 
@@ -135,10 +156,13 @@ class RecipientsView : public QScrollView
     void slotReturnPressed( RecipientLine * );
     void slotDownPressed( RecipientLine * );
     void slotUpPressed( RecipientLine * );
+    void slotDecideLineDeletion(  RecipientLine * );
+    void slotDeleteDueLine();
     void calculateTotal();
 
   private:
     QPtrList<RecipientLine> mLines;
+    RecipientLine* mCurDelLine;
     int mLineHeight;
 };
 

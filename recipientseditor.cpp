@@ -26,7 +26,6 @@
 
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
-#include "kmcomposewin.h"
 
 #include <kdebug.h>
 #include <kinputdialog.h>
@@ -36,7 +35,6 @@
 #include <qlabel.h>
 #include <qscrollview.h>
 #include <qcombobox.h>
-#include <qlineedit.h>
 #include <qhbox.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
@@ -112,6 +110,17 @@ QStringList Recipient::allTypeLabels()
   return types;
 }
 
+void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
+{
+  if ( ev->key() == Key_Backspace  &&  text().isEmpty() )
+  {
+      ev->accept();
+      emit deleteMe(); 
+  }
+  else
+    QLineEdit::keyPressEvent( ev );
+
+}
 
 RecipientLine::RecipientLine( QWidget *parent )
   : QWidget( parent ), mIsEmpty( true )
@@ -124,9 +133,10 @@ RecipientLine::RecipientLine( QWidget *parent )
   mCombo->insertStringList( recipientTypes );
   topLayout->addWidget( mCombo );
 
-  mEdit = new KMLineEdit( true, this );
+  mEdit = new RecipientLineEdit( this );
   topLayout->addWidget( mEdit );
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
+  connect( mEdit, SIGNAL( deleteMe() ), SLOT( slotPropagateDeletion() ) );
   connect( mEdit, SIGNAL( textChanged( const QString & ) ),
     SLOT( checkEmptyState( const QString & ) ) );
   connect( mEdit, SIGNAL( focusUp() ), SLOT( slotFocusUp() ) );
@@ -192,6 +202,11 @@ void RecipientLine::slotReturnPressed()
   emit returnPressed( this );
 }
 
+void RecipientLine::slotPropagateDeletion()
+{
+  emit deleteLine( this ); 
+}
+
 void RecipientLine::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Key_Up ) {
@@ -200,7 +215,6 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
     emit downPressed( this );
   }
 }
-
 
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
@@ -239,6 +253,8 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotUpPressed( RecipientLine * ) ) );
   connect( line, SIGNAL( downPressed( RecipientLine * ) ),
     SLOT( slotDownPressed( RecipientLine * ) ) );
+  connect( line, SIGNAL( deleteLine( RecipientLine * ) ),
+    SLOT( slotDecideLineDeletion( RecipientLine * ) ) );
   connect( line, SIGNAL( emptyChanged() ), SLOT( calculateTotal() ) );
 
   mLines.append( line );
@@ -299,6 +315,32 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
   } else {
     emit focusUp();
   }
+}
+
+void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
+{
+  if ( mLines.first() != line ) {
+    mCurDelLine = line;
+    QTimer::singleShot( 0, this, SLOT( slotDeleteDueLine( ) ) );
+  }
+}
+
+void RecipientsView::slotDeleteDueLine()
+{ 
+   RecipientLine *line = mCurDelLine;
+   int pos = mLines.find( line );
+
+   mLines.at( pos-1 )->activate();
+   mLines.remove( line );
+   removeChild( line );
+   delete line;
+
+   for( uint i = pos; i < mLines.count(); ++i ) {
+     RecipientLine *line = mLines.at( i );
+     moveChild( line, childX( line ), childY( line ) - mLineHeight );
+   }
+
+   setFixedHeight( mLines.count() * mLineHeight );
 }
 
 void RecipientsView::activateLine( RecipientLine *line )
