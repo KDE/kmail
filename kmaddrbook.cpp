@@ -205,22 +205,25 @@ void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
     if (AddressBook::NoError !=
 	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
       continue;
-    if ((entry.emails.count() > 0) && !entry.emails[0].isEmpty()) {
-      if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
-	addr = "";
-      else
-	addr = "\"" + entry.fn + "\" ";
-      email = entry.emails[0];
-      if (!addr.isEmpty() && (email.find( "<" ) == -1)
-	  && (email.find( ">" ) == -1)
-	  && (email.find( "," ) == -1))
-	  addr += "<" + email + ">";
-      else
-	  addr += email;
-      addr.stripWhiteSpace();
-      result->append( addr );
-      if (keys)
-	keys->append( key );
+    int emails_count;
+    for( emails_count = 0; emails_count < entry.emails.count(); emails_count++ ) {
+      if (!entry.emails[emails_count].isEmpty()) {
+	if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
+	  addr = "";
+	else
+	  addr = "\"" + entry.fn + "\" ";
+	email = entry.emails[emails_count];
+	if (!addr.isEmpty() && (email.find( "<" ) == -1)
+	    && (email.find( ">" ) == -1)
+	    && (email.find( "," ) == -1))
+	    addr += "<" + email + ">";
+	else
+	    addr += email;
+	addr.stripWhiteSpace();
+	result->append( addr );
+	if (keys)
+	  keys->append( key );
+      }
     }
   }
 }
