@@ -264,12 +264,12 @@ void KMReaderWin::writeMsgHeader(void)
 		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
     mViewer->write(nls->translate("Date: ") +
 		   strToHtml(mMsg->dateStr()) + "<BR>");
-    mViewer->write("</B></TD></TR></TABLE><BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(nls->translate("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
 #endif
+    mViewer->write("</B></TD></TR></TABLE><BR>");
     break;
 
   case HdrLong:
