@@ -1026,8 +1026,15 @@ void KMMainWidget::slotRemoveFolder()
     }
     if (mFolder->folderType() == KMFolderTypeImap)
       kmkernel->imapFolderMgr()->remove(mFolder);
-    else if (mFolder->folderType() == KMFolderTypeCachedImap)
+    else if (mFolder->folderType() == KMFolderTypeCachedImap) {
+      // Deleted by user -> tell the account (see KMFolderCachedImap::listDirectory2)
+      KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
+      KMAcctCachedImap* acct = storage->account();
+      if ( acct )
+        acct->addDeletedFolder( storage->imapPath() );
+
       kmkernel->dimapFolderMgr()->remove(mFolder);
+    }
     else if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
