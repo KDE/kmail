@@ -98,6 +98,7 @@ void KMIdentity::readConfig(void)
     }
   }
 
+  mVCardFile = config->readEntry("VCardFile");
   mOrganization = config->readEntry("Organization");
   mReplyToAddr = config->readEntry("Reply-To Address");
   mSignatureFile = config->readEntry("Signature File");
@@ -124,6 +125,7 @@ void KMIdentity::writeConfig(bool aWithSync)
   config->writeEntry("Signature File", mSignatureFile);
   config->writeEntry("Inline Signature", mSignatureInlineText );
   config->writeEntry("UseSignatureFile", mUseSignatureFile );
+  config->writeEntry("VCardFile", mVCardFile);
 
   if (aWithSync) config->sync();
 }
@@ -154,6 +156,13 @@ void KMIdentity::setOrganization(const QString str)
 void KMIdentity::setEmailAddr(const QString str)
 {
   mEmailAddr = str.copy();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setVCardFile(const QString str)
+{
+  mVCardFile = str.copy();
 }
 
 

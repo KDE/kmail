@@ -48,6 +48,11 @@ public:
   const QString emailAddr(void) const { return mEmailAddr; }
   virtual void setEmailAddr(const QString);
 
+  /** vCard to attach to outgoing emails */
+  const QString vCardFile(void) const { return mVCardFile; }
+  const QString VCardFile(void) const { return mVCardFile; }
+  virtual void setVCardFile(const QString);
+
   /** email address in the format "username <name@host>" suitable
     for the "From:" field of email messages. */
   const QString fullEmailAddr(void) const;
@@ -78,6 +83,7 @@ protected:
   QString mIdentity, mFullName, mOrganization, mEmailAddr;
   QString mReplyToAddr, mSignatureFile;
   QString mSignatureInlineText;
+  QString mVCardFile;
   bool    mUseSignatureFile;
 };
 
