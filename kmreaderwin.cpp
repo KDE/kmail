@@ -207,31 +207,30 @@ kdDebug(5006) << "* text *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeHtml: {
 kdDebug(5006) << "html" << endl;
-              // ---Sven's strip </BODY> and </HTML> from end of attachment start-
-              // We must fo this, or else we will see only 1st inlined html
-              // attachment.  It is IMHO enough to search only for </BODY> and
-              // put \0 there.
-// KALLE: Reuse this line!!!
- QCString cstr( curNode->msgPart().bodyDecoded() );
-              int i = cstr.findRev("</body>", -1, false); //case insensitive
-              if( 0 <= i )
-                cstr.truncate(i);
-              else // just in case - search for </html>
-              {
-                i = cstr.findRev("</html>", -1, false); //case insensitive
-                if( 0 <= i ) cstr.truncate(i);
-              }
-              // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-
-              if( !htmlMail() ) {
-                writeHTMLStr(     "<table border=1 cellpadding=20><tr><td align=center>");
-                writeHTMLStr(i18n("Data is shown in <b>HTML source mode</b> because<br>"
-                                  "mail contains <i>no plain text version</i> of it."));
-                writeHTMLStr(     "<br>&nbsp;<br>");
+              QCString cstr( curNode->msgPart().bodyDecoded() );
+              if( htmlMail() ) {
+                // ---Sven's strip </BODY> and </HTML> from end of attachment start-
+                // We must fo this, or else we will see only 1st inlined html
+                // attachment.  It is IMHO enough to search only for </BODY> and
+                // put \0 there.
+                int i = cstr.findRev("</body>", -1, false); //case insensitive
+                if( 0 <= i )
+                  cstr.truncate(i);
+                else // just in case - search for </html>
+                {
+                  i = cstr.findRev("</html>", -1, false); //case insensitive
+                  if( 0 <= i ) cstr.truncate(i);
+                }
+                // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+              } else {
+                writeHTMLStr(     "<table border=1 cellpadding=10><tr><td align=center>");
+                writeHTMLStr(i18n("Data shown as <b>HTML source</b> because "
+                                  "mail contains <i>no plain text version</i>."));
+                writeHTMLStr(     "<br>");
                 writeHTMLStr(i18n("This is the default - and safe - behavior of KMail."));
-                writeHTMLStr(     "<br>&nbsp;<br><font size=-1>");
-                writeHTMLStr(i18n("To enable HTML rendering, at your own risk,<br>"
-                                  "use the respective &quot;Folder&quot; menu option."));
+                writeHTMLStr(     "<br><font size=-1>");
+                writeHTMLStr(i18n("To enable HTML rendering (at your own risk) "
+                                  "use &quot;Folder&quot; menu option."));
                 writeHTMLStr(     " </font></td></tr></table>&nbsp;<br>&nbsp;<br>");
               }
               writeHTMLStr(mCodec->toUnicode( htmlMail() ? cstr : KMMessage::html2source( cstr )));
@@ -2435,7 +2434,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
               keyTrust = pgp->keyTrust( signer );
 
             // HTMLize the signer's user id and create mailto: link
-            signer.replace( QRegExp("&"), "&amp;" );
+            signer.replace( QRegExp("&"), "&;" );
             signer.replace( QRegExp("<"), "&lt;" );
             signer.replace( QRegExp(">"), "&gt;" );
             signer.replace( QRegExp("\""), "&quot;" );

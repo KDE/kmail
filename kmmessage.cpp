@@ -2468,7 +2468,7 @@ QString KMMessage::generateMessageId( const QString& addr )
 //-----------------------------------------------------------------------------
 QCString KMMessage::html2source( const QCString & src )
 {
-  QCString result( 1 + 4*src.length() );  // maximal possible length
+  QCString result( 1 + 6*src.length() );  // maximal possible length
 
   QCString::ConstIterator s = src.begin();
   QCString::Iterator d = result.begin();
@@ -2497,6 +2497,25 @@ QCString KMMessage::html2source( const QCString & src )
     case '>': {
         *d++ = '&';
         *d++ = 'g';
+        *d++ = 't';
+        *d++ = ';';
+        ++s;
+      }
+      break;
+    case '~': {
+        *d++ = '&';
+        *d++ = 'a';
+        *d++ = 'm';
+        *d++ = 'p';
+        *d++ = ';';
+        ++s;
+      }
+      break;
+    case '\\': {
+        *d++ = '&';
+        *d++ = 'q';
+        *d++ = 'u';
+        *d++ = 'o';
         *d++ = 't';
         *d++ = ';';
         ++s;
