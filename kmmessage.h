@@ -80,7 +80,9 @@ public:
   /** Straight forward initialization. */
   KMMessage(KMFolder* parent=0);
 
-  /** Constructor from a DwMessage. */
+  /** Constructor from a DwMessage. KMMessage takes possession of the
+      DwMessage, so don't dare to delete it.
+  */
   KMMessage(DwMessage*);
 
   /** Copy constructor. Does *not* automatically load the message. */
