@@ -377,7 +377,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     nml->addStretch( 1 );
   }
 
-  if( mFolder ) {
+  if( aFolderDir ) {
     // search the parent folder of the folder
     kdDebug(5006) << "search the parent folder of the folder" << endl;
     QValueListConstIterator<QGuardedPtr<KMFolder> > it;
