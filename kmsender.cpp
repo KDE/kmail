@@ -385,6 +385,33 @@ void KMSendProc::statusMsg(const char* aMsg)
   app->processEvents(500);
 }
 
+//-----------------------------------------------------------------------------
+bool KMSendProc::addRecipients(const QStrList& aRecipientList)
+{
+  QStrList* recpList = (QStrList*)&aRecipientList;
+  QString receiver;
+  int i, j;
+  bool rc;
+
+  for (receiver=recpList->first(); !receiver.isNull(); receiver=recpList->next())
+  {
+    i = receiver.find('<');
+    if (i >= 0)
+    {
+      j = receiver.find('>', i+1);
+      receiver = receiver.mid(i+1, j-i-1);
+    }
+
+    if (!receiver.isEmpty()) 
+    {
+      debug("KMSendProc::addRecipients: adding %s", receiver.data());
+      rc = addOneRecipient(receiver);
+      if (!rc) return FALSE;
+    }
+  }
+  return TRUE;
+}
+
 
 //=============================================================================
 //=============================================================================
@@ -440,9 +467,9 @@ bool KMSendSendmail::send(KMMessage* aMsg)
 
   mMailerProc->clearArguments();
   *mMailerProc << mSender->mailer();
-  addRcptList(aMsg->to());
-  if (!aMsg->cc().isEmpty()) addRcptList(aMsg->cc());
-  if (!aMsg->bcc().isEmpty()) addRcptList(aMsg->bcc());
+  addRecipients(aMsg->headerAddrField("To"));
+  if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
+  if (!aMsg->bcc().isEmpty()) addRecipients(aMsg->headerAddrField("Bcc"));
 
   if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
   {
@@ -503,33 +530,12 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 
 
 //-----------------------------------------------------------------------------
-void KMSendSendmail::addRcptList(const QString aRecipients)
+bool KMSendSendmail::addOneRecipient(const QString aRcpt)
 {
-  QString receiver;
-  int index, lastindex, replyCode, i, j;
-
-  lastindex = -1;
-  do
-  {
-    index = aRecipients.find(",",lastindex+1);
-    receiver = aRecipients.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
-    i = receiver.find('<');
-    if (i >= 0)
-    {
-      j = receiver.find('>', i+1);
-      receiver = receiver.mid(i+1, j-i-1);
-    }
-
-    if (!receiver.isEmpty()) 
-    {
-      debug("KMSendSendmail::addRcptList: adding %s", receiver.data());
-      *mMailerProc << receiver;
-      lastindex = index;
-    }
-  }
-  while (lastindex > 0);
+  assert(mMailerProc!=NULL);
+  if (!aRcpt.isEmpty()) *mMailerProc << aRcpt;
+  return TRUE;
 }
-
 
 
 //=============================================================================
@@ -609,27 +615,27 @@ bool KMSendSMTP::send(KMMessage *msg)
 
 
 //-----------------------------------------------------------------------------
-bool KMSendSMTP::smtpSend(KMMessage* msg)
+bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
   QString str, msgStr;
   int replyCode;
 
-  assert(msg != NULL);
+  assert(aMsg != NULL);
 
-  msgStr = prepareStr(msg->asString(), TRUE);
+  msgStr = prepareStr(aMsg->asString(), TRUE);
 
   smtpInCmd("MAIL");
   replyCode = mClient->Mail(identity->emailAddr());
   smtpDebug("MAIL");
   if(replyCode != 250) return smtpFailed("MAIL", replyCode);
 
-  if (!smtpSendRcptList(msg->to())) return FALSE;
+  if (!addRecipients(aMsg->headerAddrField("To"))) return FALSE;
 
-  if(!msg->cc().isEmpty())
-    if (!smtpSendRcptList(msg->cc())) return FALSE;
+  if(!aMsg->cc().isEmpty())
+    if (!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
 
-  if(!msg->bcc().isEmpty())
-    if (!smtpSendRcptList(msg->bcc())) return FALSE;
+  if(!aMsg->bcc().isEmpty())
+    if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
 
   app->processEvents(500);
 
@@ -650,37 +656,17 @@ bool KMSendSMTP::smtpSend(KMMessage* msg)
 
 
 //-----------------------------------------------------------------------------
-bool KMSendSMTP::smtpSendRcptList(const QString aRecipients)
+bool KMSendSMTP::addOneRecipient(const QString aRcpt)
 {
-  QString receiver;
-  int index, lastindex, replyCode, i, j;
+  int replyCode;
+  if (aRcpt.isEmpty()) return TRUE;
 
-  lastindex = -1;
-  do
-  {
-    index = aRecipients.find(",",lastindex+1);
-    receiver = aRecipients.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
-    i = receiver.find('<');
-    if (i >= 0)
-    {
-      j = receiver.find('>', i+1);
-      receiver = receiver.mid(i+1, j-i-1);
-    }
+  smtpInCmd("RCPT");
+  replyCode = mClient->Rcpt(aRcpt);
+  smtpDebug("RCPT");
 
-    if (!receiver.isEmpty())
-    {
-      smtpInCmd("RCPT");
-      replyCode = mClient->Rcpt(receiver);
-      smtpDebug("RCPT");
-
-      if(replyCode != 250 && replyCode != 251)
-	return smtpFailed("RCPT", replyCode);
-
-      lastindex = index;
-    }
-  }
-  while (lastindex > 0);
-
+  if(replyCode != 250 && replyCode != 251)
+    return smtpFailed("RCPT", replyCode);
   return TRUE;
 }
 

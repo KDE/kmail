@@ -46,8 +46,17 @@ static int findInStrList(const char* strList[], const char* str)
 //-----------------------------------------------------------------------------
 KMFilter::KMFilter(KConfig* config)
 {
+  int i;
+
   if (!sActionDict) sActionDict = new KMFilterActionDict;
   if (config) readConfig(config);
+  else
+  {
+    mName = 0;
+    mOperator = OpIgnore;
+    for (i=0; i<=FILTER_MAX_ACTIONS; i++)
+      mAction[i] = NULL;
+  }
 }
 
 
@@ -156,13 +165,13 @@ void KMFilter::readConfig(KConfig* config)
   mRuleB.init(fieldB, funcB, contB);
 
   num = config->readNumEntry("actions",0);
-  if (num > FILTER_MAX_ACTIONS)
+  if (num >= FILTER_MAX_ACTIONS)
   {
-    num = FILTER_MAX_ACTIONS;
+    num = FILTER_MAX_ACTIONS - 1;
     warning("Too many filter actions in filter rule `%s'", (const char*)mName);
   }
 
-  for (i=0, j=0; i<num; i++, j++)
+  for (i=0, j=0; i<num; i++)
   {
     actName.sprintf("action-name-%d", i);
     argsName.sprintf("action-args-%d", i);
@@ -174,14 +183,14 @@ void KMFilter::readConfig(KConfig* config)
 			     "in filter rule `%s'.\n"
 			     "Ignoring it."),
 	      (const char*)actName, (const char*)mName);
-      j--;
       continue;
     }
-    mAction[i]->argsFromString(config->readEntry(argsName));
+    mAction[j]->argsFromString(config->readEntry(argsName));
+    j++;
   }
 
-  while (i<=FILTER_MAX_ACTIONS)
-    mAction[i++] = NULL;
+  while (j<=FILTER_MAX_ACTIONS)
+    mAction[j++] = NULL;
 }
 
 

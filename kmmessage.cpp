@@ -638,6 +638,26 @@ void KMMessage::setXMark(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
+const QStrList KMMessage::headerAddrField(const QString aName) const
+{
+  static QStrList resultList;
+  DwHeaders& header = mMsg->Headers();
+  DwAddressList* addrList;
+  DwAddress* addr;
+
+  if (aName.isEmpty()) return resultList;
+  addrList = (DwAddressList*)&header.FieldBody((const char*)aName);
+
+  for (addr=addrList->FirstAddress(); addr; addr=addr->Next())
+  {
+    resultList.append(decodeRFC1522String(addr->AsString().c_str()));
+  }
+
+  return resultList;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMessage::headerField(const QString aName) const
 {
   DwHeaders& header = mMsg->Headers();

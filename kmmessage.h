@@ -6,6 +6,7 @@
 
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
+#include <qstrlist.h>
 
 class KMFolder;
 class DwMessage;
@@ -151,6 +152,12 @@ public:
   /** Get or set header field with given name */
   virtual const QString headerField(const QString name) const;
   virtual void setHeaderField(const QString name, const QString value);
+
+  /** Returns header address list as string list. Warning: returns
+    a temporary object !
+    Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
+    ResentCc, ResentReplyTo, ResentTo */
+  virtual const QStrList headerAddrField(const QString name) const;
 
   /** Remove header field with given name */
   virtual void removeHeaderField(const QString name);

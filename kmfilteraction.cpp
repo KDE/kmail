@@ -80,15 +80,18 @@ KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
 bool KMFilterActionMove::process(KMMessage* msg, bool&)
 {
   if (!mDest) return TRUE;
-  mDest->addMsg(msg);
+  mDest->moveMsg(msg);
   return FALSE;
 }
 
 QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
 {
   QString name;
+  QComboBox* cbx;
+
   if (mDest) name = mDest->name();
-  return aParent->createFolderCombo(name);
+  cbx = aParent->createFolderCombo(name);
+  return cbx;
 }
 
 void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
@@ -124,7 +127,7 @@ public:
   static KMFilterAction* newAction(void);
 };
 
-KMFilterActionSkip::KMFilterActionSkip(): KMFilterAction("skip")
+KMFilterActionSkip::KMFilterActionSkip(): KMFilterAction("skip rest")
 {
 }
 
@@ -141,7 +144,7 @@ KMFilterAction* KMFilterActionSkip::newAction(void)
 bool KMFilterActionSkip::process(KMMessage*, bool& stopIt)
 {
   stopIt = TRUE;
-  return FALSE;
+  return TRUE;
 }
 
 void KMFilterActionSkip::argsFromString(const QString)
@@ -194,9 +197,19 @@ KMFilterAction* KMFilterActionDict::create(const QString name)
   return NULL;
 }
 
-const QString KMFilterActionDict::labelOf(const QString name)
+int KMFilterActionDict::indexOf(const QString aName)
 {
-  KMFilterActionDesc* desc = find(name);
+  KMFilterActionDesc* desc;
+  int i;
+
+  for (i=0,desc=mList.first(); desc; i++,desc=mList.next())
+    if (desc->name==aName) return i;
+  return -1;
+}
+
+const QString KMFilterActionDict::labelOf(const QString aName)
+{
+  KMFilterActionDesc* desc = find(aName);
   if (desc) return desc->label;
   return "";
 }

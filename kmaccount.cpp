@@ -128,6 +128,7 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
 
   if (filterMgr->process(aMsg))
   {
+    debug("adding msg to inbox");
     rc = mFolder->addMsg(aMsg);
     if (rc) perror("failed to add message");
     if (rc) warning(i18n("Failed to add message:")+

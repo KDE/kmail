@@ -182,7 +182,7 @@ static void recoverDeadLetters(void)
   folder.open();
 
   num = folder.count();
-  debug("%ld messages in %s", num, fname);
+  debug("%ld messages in %s", num, (const char*)fname);
 
   for (i=0; i<num; i++)
   {

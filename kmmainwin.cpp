@@ -488,17 +488,17 @@ void KMMainWin::slotSetHeaderStyle(int id)
 {
   if (!mMsgView) return;
   if(id <= 5)
-    {mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
+  {
+    mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
     mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
     mViewMenu->setItemChecked(id, TRUE);
-    return;
-    }
-  if(id > 5)
-    {mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
-    mMsgView->setAttachmentStyle(id-5);
+  }
+  else
+  {
+    mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
     mViewMenu->setItemChecked(id, TRUE);
-    return;
-    }
+    mMsgView->setAttachmentStyle(id-5);
+  }
 }
 
 
@@ -809,10 +809,8 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Send again..."), this, 
 			  SLOT(slotResendMsg()));
-#ifdef BROKEN
   messageMenu->insertItem(i18n("Apply filters"), this, 
 			  SLOT(slotApplyFilters()), CTRL+Key_J);
-#endif
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("View Source..."), this,
 			  SLOT(slotShowMsgSrc()));
@@ -869,7 +867,7 @@ void KMMainWin::setupToolBar()
 
   mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0, 
 			SIGNAL(clicked()), this,
-			SLOT(slotUnimplemented()), TRUE,
+			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
 
   mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 

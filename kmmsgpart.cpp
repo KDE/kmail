@@ -39,9 +39,6 @@ void KMMessagePart::setBodyEncoded(const QString aStr)
   int encoding = contentTransferEncoding();
   int len = aStr.size();
 
-  debug("KMMessagePart::setBodyEncoded: len=%d, size=%d\n",
-	aStr.length(), aStr.size());
-
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
@@ -80,9 +77,6 @@ const QString KMMessagePart::bodyDecoded(void) const
   int encoding = contentTransferEncoding();
   int len;
 
-  debug("KMMessagePart::bodyDecoded: len=%d, size=%d\n",
-	mBody.length(), mBody.size());
-
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
@@ -95,7 +89,7 @@ const QString KMMessagePart::bodyDecoded(void) const
     dwSrc = mBody;
     DwDecodeBase64(dwSrc, dwResult);
     len = dwResult.size();
-    result.resize(len+1);
+    result.resize(len);
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
     break;
   case DwMime::kCte7bit:

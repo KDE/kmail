@@ -18,6 +18,7 @@ class KProcess;
 class DwSmtpClient;
 class KMIOStatusDlg;
 class KMSendProc;
+class QStrList;
 
 class KMSender: public QObject
 {
@@ -87,15 +88,15 @@ protected slots:
   virtual void slotIdle();
 
 protected:
-  // handle sending of messages
+  /** handle sending of messages */
   virtual void doSendMsg(void);
 
-  // cleanup after sending
+  /** cleanup after sending */
   virtual void cleanup(void);
 
-  // Test if all required settings are set.
-  // Reports problems to user via dialogs and returns FALSE.
-  // Returns TRUE if everything is Ok.
+  /** Test if all required settings are set.
+      Reports problems to user via dialogs and returns FALSE.
+      Returns TRUE if everything is Ok. */
   virtual bool settingsOk(void) const;
 
 private:
@@ -124,43 +125,58 @@ class KMSendProc: public QObject
 public:
   KMSendProc(KMSender*);
 
-  // Initialize sending of one or more messages.
+  /** Initialize sending of one or more messages. */
   virtual bool start(void);
 
-  // Initializes variables directly before send() is called.
+  /** Initializes variables directly before send() is called. */
   virtual void preSendInit(void);
 
-  // Send given message. May return before message is sent.
+  /** Send given message. May return before message is sent. */
   virtual bool send(KMMessage* msg) = 0;
 
-  // Cleanup after sending messages.
+  /** Cleanup after sending messages. */
   virtual bool finish(void);
 
-  // Returns TRUE if send was successful, and FALSE otherwise.
-  // Returns FALSE if sending is still in progress.
+  /** Returns TRUE if send was successful, and FALSE otherwise.
+      Returns FALSE if sending is still in progress. */
   bool sendOk(void) const { return mSendOk; }
 
-  // Returns TRUE if sending is still in progress.
+  /** Returns TRUE if sending is still in progress. */
   bool sending(void) const { return mSending; }
 
-  // Returns error message of last call of failed().
+  /** Returns error message of last call of failed(). */
   const QString message(void) const { return mMsg; }
 
 signals:
-  // Emitted when the current message is sent or an error occured.
+  /** Emitted when the current message is sent or an error occured. */
   void idle();
 
 protected:
-  // Called to signal a transmission error. The sender then
-  // calls finish() and terminates sending of messages. Sets mSending to FALSE.
+  /** Called to signal a transmission error. The sender then
+    calls finish() and terminates sending of messages. 
+    Sets mSending to FALSE. */
   virtual void failed(const QString msg);
 
-  // Prepare message for sending.
+  /** Prepare message for sending. */
   virtual const QString prepareStr(const QString str, bool toCRLF=FALSE);
 
-  // Informs the user
+  /** Informs the user about what is going on. */
   virtual void statusMsg(const char* msg);
 
+  /** Called once for the contents of the header fields To, Cc, and Bcc.
+    Returns TRUE on success and FALSE on failure. 
+    Calls addOneRecipient() for each recipient in the list. Aborts and
+    returns FALSE if addOneRecipient() returns FALSE. */
+  virtual bool addRecipients(const QStrList& aRecpList);
+
+  /** Called from within addRecipients() once for each recipient in
+    the list after all surplus characters have been stripped. E.g.
+    for: "Stefan Taferner" <taferner@kde.org>
+    addRecpient(taferner@kde.org) is called. 
+    Returns TRUE on success and FALSE on failure. */
+  virtual bool addOneRecipient(const QString aRecipient) = 0;
+
+protected:
   bool mSendOk, mSending;
   QString mMsg;
   KMSender* mSender;
@@ -185,7 +201,7 @@ protected slots:
   void sendmailExited(KProcess*);
 
 protected:
-  virtual void addRcptList(const QString aRecipients);
+  virtual bool addOneRecipient(const QString aRecipient);
 
   QString mMsgStr;
   char* mMsgPos;
@@ -209,7 +225,7 @@ protected:
   virtual bool smtpFailed(const char* inCommand, int replyCode);
   virtual void smtpDebug(const char* inCommand);
   virtual void smtpInCmd(const char* inCommand);
-  virtual bool smtpSendRcptList(const QString recipients);
+  virtual bool addOneRecipient(const QString aRecipient);
   
   void (*mOldHandler)(int);
   DwSmtpClient* mClient;

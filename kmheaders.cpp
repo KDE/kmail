@@ -180,7 +180,7 @@ void KMHeaders::msgRemoved(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(int msgId)
 {
-  char hdr[256];
+  QString hdr(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
 
@@ -190,8 +190,9 @@ void KMHeaders::msgHeaderChanged(int msgId)
   assert(mb != NULL);
 
   flag = mb->status();
-  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, (const char*)mb->from(), 
-	  (const char*)mb->subject(), (const char*)mb->dateStr());
+  hdr.sprintf("%c\n%.100s\n %.100s\n%.40s", (char)flag, 
+	      (const char*)mb->from(), (const char*)mb->subject(),
+	      (const char*)mb->dateStr());
   changeItem(hdr, msgId);
 
   if (flag==KMMsgStatusNew) changeItemColor(darkRed, msgId);
@@ -242,11 +243,14 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 void KMHeaders::applyFiltersOnMsg(int msgId)
 {
   KMMessage* msg;
+  KMMessageList* msgList = selectedMsgs();
+  int idx, cur = firstSelectedMsg(currentItem());
 
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
+  for (idx=cur, msg=msgList->first(); msg; msg=msgList->next())
     filterMgr->process(msg);
-  }
+
+  if (cur > count()) cur = count()-1;
+  setCurrentItem(cur);
 }
 
 

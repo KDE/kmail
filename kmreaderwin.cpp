@@ -80,7 +80,7 @@ void KMReaderWin::readConfig(void)
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
-							IconicAttmnt);
+							SmartAttmnt);
 #ifdef KRN
   config->setGroup("ArticleListOptions");
   QColor c1=QColor("black");
@@ -224,7 +224,15 @@ void KMReaderWin::parseMsg(void)
       contDisp = msgPart.contentDisposition();
       
       if (i <= 0) asIcon = FALSE;
-      else asIcon = (contDisp.find("inline")<0);
+      else switch (mAttachmentStyle)
+      {
+      case IconicAttmnt: 
+	asIcon=TRUE; break;
+      case InlineAttmnt:
+	asIcon=FALSE; break;
+      case SmartAttmnt:
+	asIcon=(contDisp.find("inline")<0);
+      }
 
       if (!asIcon)
       {

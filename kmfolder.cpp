@@ -26,10 +26,13 @@
 #endif
 
 #include <stdlib.h>
-#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
+
+#ifndef isblank
+#  define isblank(x) ((x)==' '||(x)=='\t')
+#endif
 
 #define MAX_LINE 4096
 #define INIT_MSGS 8
@@ -573,6 +576,7 @@ KMMessage* KMFolder::take(int idx)
   if (!mb->isMessage()) readMsg(idx);
 
   msg = (KMMessage*)mMsgList.take(idx);
+  msg->setParent(NULL);
   mDirty = TRUE;
   if (!mQuiet) emit msgRemoved(idx);
 
@@ -634,7 +638,7 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
   if (msgParent)
   {
     msgParent->open();
-    msgParent->take(msgParent->find(aMsg));
+    aMsg = msgParent->take(msgParent->find(aMsg));
     msgParent->close();
   }
 

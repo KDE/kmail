@@ -36,7 +36,7 @@ public:
 
   /** Execute action on given message. Returns TRUE if the message
    * shall be processed by further filters and FALSE otherwise. 
-   * Set stopIt to TRUE to stop applying filters to this msg and
+   * Sets stopIt to TRUE to stop applying filters to this msg and
    * do not change it otherwise. */
   virtual bool process(KMMessage* msg, bool& stopIt) = 0;
 
@@ -100,6 +100,7 @@ public:
 };
 typedef QList<KMFilterActionDesc> KMFilterActionDescList;
 
+//----------------------
 class KMFilterActionDict
 {
 public:
@@ -122,6 +123,7 @@ public:
   virtual KMFilterAction* create(const QString name);
   virtual const QString labelOf(const QString name);
   virtual const QString nameOf(const QString label);
+  virtual int indexOf(const QString name);
 
 protected:
   virtual void init(void);

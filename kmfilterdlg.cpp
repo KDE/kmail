@@ -167,14 +167,15 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   buttonBox->setMaximumSize(32767, buttonBox->sizeHint().height());
 
   //----------
-  grid->setRowStretch(0, 10);
+  grid->setRowStretch(0, 2);
   grid->setRowStretch(1, 10);
-  grid->setRowStretch(2, 0);
+  grid->setRowStretch(2, 2);
   grid->setColStretch(0, 10);
   grid->setColStretch(1, 20);
   grid->activate();
 
   reloadFilterList();
+  mFilterList->setCurrentItem(0);
 }
 
 
@@ -226,22 +227,89 @@ void KMFilterDlg::clear(void)
 void KMFilterDlg::showFilter(KMFilter* aFilter)
 {
   int i;
-  assert(aFilter!=NULL);
+  KMFilterAction* action;
+  QWidget* pwidg;
 
+  assert(aFilter!=NULL);
   clear();
+
+  mRuleOp->setCurrentItem((int)aFilter->oper());
+
+  i = indexOfRuleField(aFilter->ruleA().field());
+  if (i < 0)
+  {
+    mRuleFieldA->changeItem(aFilter->ruleA().field(),0);
+    i = 0;
+  }
+  else mRuleFieldA->changeItem(" ",0);
+  mRuleFieldA->setCurrentItem(i);
+  mRuleFuncA->setCurrentItem((int)aFilter->ruleA().function());
+  mRuleValueA->setText(aFilter->ruleA().contents());
+
+  i = indexOfRuleField(aFilter->ruleB().field());
+  if (i < 0)
+  {
+    mRuleFieldB->changeItem(aFilter->ruleB().field(),0);
+    i = 0;
+  }
+  else mRuleFieldB->changeItem(" ",0);
+  mRuleFieldB->setCurrentItem(i);
+  mRuleFuncB->setCurrentItem((int)aFilter->ruleB().function());
+  mRuleValueB->setText(aFilter->ruleB().contents());
 
   for (i=0; i<FILTER_MAX_ACTIONS; i++)
   {
+    action = aFilter->action(i);
+    if (mFaField[i]) delete mFaField[i];
+    mFaField[i] = NULL;
+
+    if (!action) mFaType[i]->setCurrentItem(0);
+    else
+    {
+      mFaType[i]->setCurrentItem(1+filterActionDict->indexOf(action->name()));
+      pwidg = action->createParamWidget(this);
+      mFaField[i] = pwidg;
+      if (pwidg)
+      {
+	QPoint pos = mFaType[i]->pos();
+	pos.setX(pos.x() + mFaType[i]->width() + 4);
+	pwidg->move(pos);
+	pwidg->show();
+      }
+    }
   }
 
   mFilter = aFilter;
+  mCurFilterIdx = mFilterList->currentItem();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::applyFilterChanges(void)
 {
-  
+  KMFilterAction* action;
+  int i;
+
+  if (!mFilter) return;
+
+  mFilter->ruleA().init(mRuleFieldA->currentText(), 
+			(KMFilterRule::Function)mRuleFuncA->currentItem(),
+			mRuleValueA->text());
+  mFilter->ruleB().init(mRuleFieldB->currentText(), 
+			(KMFilterRule::Function)mRuleFuncB->currentItem(),
+			mRuleValueB->text());
+  mFilter->setOper((KMFilter::Operator)mRuleOp->currentItem());
+
+  mFilter->setName(QString("<")+mRuleFieldA->currentText()+">:"+
+		   mRuleValueA->text());
+  mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
+
+  for (i=0; i<FILTER_MAX_ACTIONS; i++)
+  {
+    action = mFilter->action(i);
+    if (!action) continue;
+    action->applyParamWidgetValue(mFaField[i]);
+  }
 }
 
 
@@ -274,14 +342,16 @@ QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
   QComboBox* cbx = new QComboBox(this);
   KMFolderDir* fdir = &(folderMgr->dir());
   KMFolder* cur;
-  int i=0, idx=-1;
+  int i, idx=-1;
 
-  for (cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
+  for (i=0,cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
   {
     cbx->insertItem(cur->name());
     if (cur->name() == curFolder) idx=i;
   }
   if (idx>=0) cbx->setCurrentItem(idx);
+  debug("KMFilterDlg::createFolderCombo: idx=%d, arg=%s, name=%s", idx,
+	curFolder.data(), cbx->text(idx));
 
   return cbx;
 }
@@ -292,6 +362,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
 {
   KMFilterAction* action;
   QWidget* widg;
+  QPoint pos;
   int i;
 
   if (!mFilter) return;
@@ -304,15 +375,24 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   mFaField[i] = NULL;
   mGridRow = i;
 
-  action = filterActionDict->create(sFilterActionList.at(idx));
-  if (!action || idx <= 0) return;
-
-  if (mFilter->action(idx)) delete mFilter->action(idx);
-  mFilter->setAction(idx, action);
+  if (mFilter->action(i)) delete mFilter->action(i);
+  action = filterActionDict->create(
+              filterActionDict->nameOf(sFilterActionList.at(idx)));
+  mFilter->setAction(i, action);
+  if (!action || idx < 0) 
+  {
+    debug("no action selected");
+    return;
+  }
 
   widg = action->createParamWidget(this);
+  mFaField[i] = widg;
   if (!widg) return;
   
+  pos = mFaType[i]->pos();
+  pos.setX(pos.x() + mFaType[idx]->width() + 4);
+  widg->move(pos);
+  widg->show();
 }
 
 
@@ -321,9 +401,19 @@ void KMFilterDlg::slotFilterSelected(int idx)
 {
   KMFilter* filter;
 
+  debug("KMFilterDlg::slotFilterSelected()");
+
   if (mFilter) applyFilterChanges();
-  filter = filterMgr->at(idx);
-  if (filter) showFilter(filter);
+  if (idx < filterMgr->count())
+  {
+    filter = filterMgr->at(idx);
+    if (filter) showFilter(filter);
+  }
+  else
+  {
+    clear();
+    mFilter = NULL;
+  }
 }
 
 
@@ -373,13 +463,11 @@ void KMFilterDlg::slotBtnNew()
   filter->setName(i18n("Unnamed"));
 
   idx = mFilterList->currentItem();
-
   if (idx >= 0) filterMgr->insert(idx, filter);
   else filterMgr->append(filter);
-
-  mFilterList->insertItem(filter->name());
-
-  if (idx < 0) idx = ((int)mFilterList->count()) - 1;
+  idx = filterMgr->find(filter);
+  mFilterList->insertItem(filter->name(), idx);
+  mFilterList->setCurrentItem(idx);
   slotFilterSelected(idx);
 }
 
@@ -403,6 +491,7 @@ void KMFilterDlg::slotBtnDelete()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnOk()
 {
+  if (mFilter) applyFilterChanges();
   accept();
 }
 
@@ -417,6 +506,19 @@ void KMFilterDlg::slotBtnCancel()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFilterDlg::indexOfRuleField(const QString aName) const
+{
+  int i;
+
+  for (i=sFilterFieldList.count()-1; i>=0; i--)
+  {
+    if (sFilterFieldList.at(i)==aName) break;
+  }
+  return i;
 }
 
 
@@ -458,6 +560,7 @@ void KMFilterDlg::initLists(void)
   //---------- initialize list of filter operators
   if (sFilterFieldList.count() <= 0)
   {
+    sFilterFieldList.append(" ");
     sFilterFieldList.append(i18n("<message>"));
     sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));

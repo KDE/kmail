@@ -58,6 +58,9 @@ protected:
   // Returns FALSE if grid was not created with setGrid() or given ptr is NULL
   virtual bool testOpts(const QWidget* ptr) const;
 
+  // Returns index of filter rule field
+  virtual int indexOfRuleField(const QString fieldName) const;
+
   // Initialize static lists. Automatically called.
   static void initLists(void);
 
@@ -65,6 +68,7 @@ protected:
   QGridLayout *mGrid;
   int mGridRow;
   int mActLineHeight;
+  int mCurFilterIdx;
   QListBox *mFilterList;
   QWidget *mFilterArea;
   QPushButton *mBtnUp, *mBtnDown, *mBtnNew, *mBtnDelete, *mBtnOk, *mBtnCancel;
