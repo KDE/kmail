@@ -21,6 +21,7 @@ using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
+#include "kmmessage.h"
 
 #include <kglobal.h>
 #include <klocale.h>

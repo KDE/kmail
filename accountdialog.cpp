@@ -54,6 +54,7 @@ using KMail::SieveConfigEditor;
 #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
+#include "kmmessage.h"
 
 #include <cassert>
 

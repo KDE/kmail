@@ -24,6 +24,7 @@
 #include "identitycombo.h"
 #include "kmkernel.h"
 #include "kmfolderimap.h"
+#include "kmmessage.h"
 
 #include "kmfolderdia.moc"
 

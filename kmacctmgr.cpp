@@ -14,6 +14,7 @@
 #include "kmbroadcaststatus.h"
 #include "kmkernel.h"
 #include "kmfiltermgr.h"
+#include "kmmessage.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
