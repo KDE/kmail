@@ -2346,7 +2346,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
       DwParameter *nameParam;
       nameParam = new DwParameter;
       nameParam->SetAttribute("name*");
-      nameParam->SetValue(name.data());
+      nameParam->SetValue(name.data(),true);
       ct.AddParameter(nameParam);
     } else {
       if(!name.isEmpty())
@@ -2365,10 +2365,11 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
       if (aPart->parameterValue() != QString(paramValue))
       {
         param->SetAttribute((paramAttr + '*').data());
+	param->SetValue(paramValue.data(),true);
       } else {
         param->SetAttribute(paramAttr.data());
+	param->SetValue(paramValue.data());
       }
-      param->SetValue(paramValue.data());
       ct.AddParameter(param);
     }
 
