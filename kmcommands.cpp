@@ -1173,6 +1173,7 @@ void KMMoveCommand::execute()
           }
         }
       }
+      srcFolder->close();
     } else {
       // really delete messages that are already in the trash folder
       if (srcFolder->protocol() == "imap") {
@@ -1187,7 +1188,6 @@ void KMMoveCommand::execute()
     }
     // adjust the remembered number, numbering is changed during delete.
     if ( nextId > idx ) nextId--;
-
   }
   if (!list.isEmpty() && mDestFolder)
     mDestFolder->moveMsg(list, &index);
@@ -1195,8 +1195,8 @@ void KMMoveCommand::execute()
   FolderToMessageListMap::Iterator it;
   for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
     it.key()->removeMsg(*it.data());
-    delete it.data();
     it.key()->close();
+    delete it.data();
   }
 
   if (mHeaders)
