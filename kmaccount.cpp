@@ -79,7 +79,8 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
     mResource(false),
     mExclude(false),
     mCheckingMail(false),
-    mPrecommandSuccess(true)
+    mPrecommandSuccess(true),
+    mHasInbox(false)
 {
   assert(aOwner != 0);
 

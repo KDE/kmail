@@ -66,7 +66,8 @@ namespace KMail {
       mOnlySubscribedFolders( false ),
       mProgressEnabled( false ),
       mIdle( true ),
-      mErrorDialogIsActive( false )
+      mErrorDialogIsActive( false ),
+      mCreateInbox( false )
   {
     mPort = imapDefaultPort;
   }
@@ -291,7 +292,7 @@ namespace KMail {
       && path == prefix();
     jd.onlySubscribed = onlySubscribed;
     if (parent) jd.parent = parent;
-    if (!secondStep) mHasInbox = FALSE;
+    if (!secondStep) mCreateInbox = FALSE;
     // make the URL
     KURL url = getUrl();
     url.setPath(((jd.inboxOnly) ? QString("/") : path)
@@ -341,8 +342,13 @@ namespace KMail {
           && (!(*it).inboxOnly || name.upper() == "INBOX"))
       {
         if (((*it).inboxOnly ||
-              url.path() == "/INBOX/") && name.upper() == "INBOX")
-          mHasInbox = TRUE; // INBOX-only
+              url.path() == "/INBOX/") && name.upper() == "INBOX" && 
+            !mHasInbox)
+        {
+          // our INBOX
+          mCreateInbox = TRUE;
+          mHasInbox = TRUE;
+        }
 
         // Some servers send _lots_ of duplicates
         if (mSubfolderNames.findIndex(name) == -1)

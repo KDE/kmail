@@ -474,7 +474,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     if (mIsSystemFolder && mImapPath == "/INBOX/"
         && mAccount->prefix() == "/INBOX/")
     {
-      mAccount->setHasInbox(FALSE);
+      mAccount->setCreateInbox(FALSE);
       mSubfolderNames.clear();
     }
     createChildFolder();
@@ -483,7 +483,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     while (node)
     {
       // check if the folders still exist on the server
-      if (!node->isDir() && (node->name() != "INBOX" || !mAccount->hasInbox())
+      if (!node->isDir() && (node->name() != "INBOX" || !mAccount->createInbox())
           && mSubfolderNames.findIndex(node->name()) == -1)
       {
         kdDebug(5006) << node->name() << " disappeared." << endl;
@@ -492,7 +492,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       }
       else node = mChild->next();
     }
-    if (mAccount->hasInbox())
+    if (mAccount->createInbox())
     {
       // INBOX-special
       for (node = mChild->first(); node; node = mChild->next())

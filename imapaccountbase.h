@@ -168,6 +168,12 @@ namespace KMail {
 	 */
 	void processNewMailSingleFolder(KMFolder* folder); 
 
+    /**
+     * Set whether the current listDirectory should create an INBOX
+     */ 
+    bool createInbox() { return mCreateInbox; }
+    void setCreateInbox( bool create ) { mCreateInbox = create; }
+
   public slots:
     /**
      * gets the results of listDirectory
@@ -228,6 +234,7 @@ namespace KMail {
     bool mErrorDialogIsActive : 1;
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
+    bool mCreateInbox;
 
   signals:
     /**
