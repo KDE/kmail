@@ -86,6 +86,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 {
 
   mAutoDelete = false;
+  mLastSerNum = 0;
   mMsg = 0;
   mMsgBuf = 0;
   mMsgBufMD5 = "";
@@ -488,14 +489,15 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ") " << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
-  //if (!force && aMsg && mMsg == aMsg)
-  //  return;
+  if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
+    return;
 
   kdDebug(5006) << "set Msg, force = " << force << endl;
 
   // connect to the updates if we have hancy headers
   
   mMsg = aMsg;
+  mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
   if (mMsg)
   {
     mMsg->setCodec(mCodec);

@@ -271,6 +271,7 @@ protected:
   QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;
+  unsigned long mLastSerNum;
 
   int fntSize;
   int mVcnum;
