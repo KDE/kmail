@@ -284,6 +284,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive)
       upd = 0;
       if (!aFld) // Folder deleted while searching!
 	break;
+      num = aFld->count();
     }
     if (unget) aFld->unGetMsg(i);
   }
