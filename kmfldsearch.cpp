@@ -182,7 +182,7 @@ void KMFldSearch::updStatus(void)
 		.arg(mNumMatches)
 		.arg(mSearchFolder)
 		.arg(mCount);
-  if (!mSearching || mCount % 100 == 0) mLblStatus->setText(str);
+  mLblStatus->setText(str);
 }
 
 
@@ -213,7 +213,7 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
   bool matches = true;
 
   mCount++;
-  updStatus();
+  if (mCount % 100 == 0) updStatus();
   for(i=0; matches && i<mNumRules; i++)
     if (!mRules[i]->matches(aMsg, aMsgStr))
       matches = false;
@@ -272,7 +272,6 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 			      QString("%1").arg(fldNum)
 			      );
       mNumMatches++;
-      updStatus();
     }
     if (upd > 10)
     {
@@ -479,6 +478,8 @@ void KMFldSearchRule::prepare(void)
 {
   mFieldIdx = mCbxField->currentItem();
   mField = mCbxField->currentText();
+  mHeaderField = "\n" + mField + ": ";
+  mFieldLength = mField.length() + 3;
   mFunc = mCbxFunc->currentItem();
   mValue = mEdtValue->text();
   mNonLatin = mValue.utf8().length() != mValue.length();
@@ -522,9 +523,10 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
   } else {
     int start, stop;
     char ch;
-    start = aMsgStr.find(QCString("\n" + mField + ": "));
+    start = aMsgStr.find(mHeaderField);
     if (start == -1) return false;
-    start += mField.length() + 3;
+    if (aMsgStr.find("\n\n") < start) return false;
+    start += mFieldLength;
     stop = aMsgStr.find("\n", start);
     while (stop != -1 && (ch = aMsgStr.at(stop + 1)) == ' ' || ch == '\t')
       stop = aMsgStr.find("\n", stop + 1);

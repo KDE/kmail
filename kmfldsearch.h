@@ -104,6 +104,8 @@ protected:
   QComboBox *mCbxField, *mCbxFunc;
   QLineEdit *mEdtValue;
   QString mField, mValue;
+  QCString mHeaderField;
+  int mFieldLength;
   bool mNonLatin;
   int mFieldIdx, mFunc;
 };
