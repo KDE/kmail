@@ -929,7 +929,8 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
 
   if (mExecOnNew) {
     if (!mNewMailCmd.isEmpty()) {
-      KShellProcess p;
+      KProcess p;
+      p.setUseShell(true);
       p << mNewMailCmd;
       p.start(KProcess::DontCare);
     }

@@ -85,7 +85,8 @@ QString Signature::textFromCommand( bool * ok ) const
   }
 
   // create a shell process:
-  KShellProcess proc;
+  KProcess proc;
+  proc.setUseShell(true);
   proc << mUrl;
 
   // let the kernel collect the output for us:

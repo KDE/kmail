@@ -29,6 +29,7 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
+  mPrecommandProcess.setUseShell(true);
   mPrecommandProcess << precommand;
 
   connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),

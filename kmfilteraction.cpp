@@ -418,7 +418,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  // KShellProcess doesn't support a QProcess::launch() equivalent, so
+  // KProcess doesn't support a QProcess::launch() equivalent, so
   // we must use a temp file :-(
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(TRUE);
@@ -446,7 +446,8 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   kCStringToFile( aMsg->asString(), tempFileName, //###
 		  false, false, false );
 
-  KShellProcess shProc;
+  KProcess shProc;
+  shProc.setUseShell(true);
   shProc << commandLine;
 
   // let the kernel collect the output for us:

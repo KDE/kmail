@@ -36,7 +36,7 @@ signals:
   void finished(bool);
 
 protected:
-  KShellProcess mPrecommandProcess;
+  KProcess mPrecommandProcess;
   QString mPrecommand;
 };
 
