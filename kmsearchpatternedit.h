@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfilterrulesedit.h
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL
@@ -13,15 +14,16 @@
 
 class KMSearchRule;
 class KMSearchPattern;
+namespace KMail {
+  class RegExpLineEdit;
+}
+using KMail::RegExpLineEdit;
 
-class QPushButton;
-class QDialog;
 template <typename T> class QPtrList;
 class QString;
 class QComboBox;
 class QLineEdit;
 class QRadioButton;
-class QPushButton;
 class QWidgetStack;
 
 /** A widget to edit a single KMSearchRule.
@@ -81,7 +83,6 @@ protected:
   int indexOfStatus(const QString & aStatus) const;
 
 protected slots:
-  void editRegExp();
   void functionChanged( int which );
   void slotRuleChanged( int which );
 
@@ -92,10 +93,8 @@ private:
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
   QWidgetStack* mValueWidgetStack;
-  QLineEdit* mRuleValue; // used for all but status searches
+  RegExpLineEdit *mRuleValue; // used for all but status searches
   QComboBox* mStati;     // special case of a status search
-  QPushButton* mRuleEditBut;
-  QDialog* mRegExpEditDialog;
   QStringList mFilterFieldList, mFilterFuncList, mStatiList;
 };
 

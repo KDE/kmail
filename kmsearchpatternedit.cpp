@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmsearchpatternedit.cpp
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL
@@ -6,15 +7,13 @@
 #include "kmsearchpatternedit.h"
 
 #include "kmsearchpattern.h"
+#include "regexplineedit.h"
 
 #include <klocale.h>
 #include <kdebug.h>
 #include <klineedit.h>
-#include <kparts/componentfactory.h>
-#include <kregexpeditorinterface.h>
+#include <kdialog.h>
 
-#include <qpushbutton.h>
-#include <qdialog.h>
 #include <qradiobutton.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
@@ -29,9 +28,7 @@
 //=============================================================================
 
 KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly, bool absoluteDates)
-  : QHBox(parent,name),
-    mRuleEditBut(0),
-    mRegExpEditDialog(0)
+  : QHBox(parent,name)
 {
   initLists( headersOnly, absoluteDates ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
@@ -44,23 +41,22 @@ KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, con
 
 void KMSearchRuleWidget::initWidget()
 {
-  setSpacing(4);
+  setSpacing( KDialog::spacingHint() );
 
   mRuleField = new QComboBox( true, this, "mRuleField" );
   mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
   mValueWidgetStack = new QWidgetStack( this, "mValueWidgetStack" );
-  mRuleValue = new KLineEdit( this, "mRuleValue" );
+  mRuleValue = new RegExpLineEdit( this, "mRuleValue" );
   mStati = new QComboBox( false, this, "mStati" );
   mValueWidgetStack->addWidget( mRuleValue );
   mValueWidgetStack->addWidget( mStati );
   mValueWidgetStack->raiseWidget( mRuleValue );
 
-  if( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
-    mRuleEditBut = new QPushButton( i18n("Edit..."), this, "mRuleEditBut" );
-    connect( mRuleEditBut, SIGNAL( clicked() ), this, SLOT( editRegExp()));
-    connect( mRuleFunc, SIGNAL( activated(int) ), this, SLOT( functionChanged(int) ) );
-    functionChanged( mRuleFunc->currentItem() );
-  }
+  setStretchFactor( mValueWidgetStack, 10 );
+
+  connect( mRuleFunc, SIGNAL( activated(int) ),
+           this, SLOT( functionChanged(int) ) );
+  functionChanged( mRuleFunc->currentItem() );
 
   mRuleFunc->insertStringList(mFilterFuncList);
   mRuleFunc->adjustSize();
@@ -81,22 +77,9 @@ void KMSearchRuleWidget::initWidget()
 	   this, SIGNAL(contentsChanged(const QString &)) );
 }
 
-void KMSearchRuleWidget::editRegExp()
-{
-  if ( mRegExpEditDialog == 0 )
-    mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString::null, this );
-
-  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( mRegExpEditDialog->qt_cast( "KRegExpEditorInterface" ) );
-  if( iface ) {
-    iface->setRegExp( mRuleValue->text() );
-    if( mRegExpEditDialog->exec() == QDialog::Accepted )
-      mRuleValue->setText( iface->regExp() );
-  }
-}
-
 void KMSearchRuleWidget::functionChanged( int which )
 {
-  mRuleEditBut->setEnabled( which == 4 || which == 5 );
+  mRuleValue->showEditButton( which == 4 || which == 5 );
 }
 
 
@@ -126,8 +109,7 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
     mValueWidgetStack->raiseWidget( mRuleValue );
     mRuleValue->setText( aRule->contents() );
   }
-  if (mRuleEditBut)
-    functionChanged( (int)aRule->function() );
+  functionChanged( (int)aRule->function() );
 
   blockSignals(FALSE);
 }
@@ -152,8 +134,7 @@ void KMSearchRuleWidget::reset()
   mRuleField->setCurrentItem( 0 );
 
   mRuleFunc->setCurrentItem( 0 );
-  if (mRuleEditBut)
-      mRuleEditBut->setEnabled( false );
+  mRuleValue->showEditButton( false );
   mValueWidgetStack->raiseWidget( mRuleValue );
   mRuleValue->clear();
   mStati->setCurrentItem( 0 );
