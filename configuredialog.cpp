@@ -4329,13 +4329,14 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
     Q_ASSERT( wrapper );
     if( !wrapper ) {
-        return false;
+      // No wrapper? Better not annoy the user...
+      return true;
     }
 
     // if the wrapper is not initialized, it does not return
     // reasonable values, and saving them won't help either - just
     // return true
-    if( !wrapper->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok )
+    if( wrapper->initStatus( 0 ) != CryptPlugWrapper::InitStatus_Ok )
         return true;
 
     bool ret = true;
@@ -4345,13 +4346,13 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _signaturePage->sigDialog->askEachPartRB->isChecked() ) ||
              ( ( wrapper->signEmail() == SignEmail_DontSign ) &&
                _signaturePage->sigDialog->dontSignRB->isChecked() ) );
-//     qDebug( "wrapper->signEmail() == %d", wrapper->signEmail() );
-//     qDebug( "%d, %d, %d, %d, %d, %d", ( wrapper->signEmail() == SignEmail_SignAll ), _signaturePage->sigDialog->signAllPartsRB->isChecked(), ( wrapper->signEmail() == SignEmail_Ask ), _signaturePage->sigDialog->askEachPartRB->isChecked(), ( wrapper->signEmail() == SignEmail_DontSign ), _signaturePage->sigDialog->dontSignRB->isChecked() );
+    kdDebug(5006) << "1) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->warnSendUnsigned() ==
              _signaturePage->sigDialog->warnUnsignedCB->isChecked() );
+    kdDebug(5006) << "2) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4363,6 +4364,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _signaturePage->sigDialog->sendChainWithoutRootRB->isChecked() ) ||
              ( ( wrapper->sendCertificates() == SendCert_SendChainWithRoot ) ||
                _signaturePage->sigDialog->sendChainWithRootRB->isChecked() ) );
+    kdDebug(5006) << "3) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4370,6 +4372,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
         !_signaturePage->sigDialog ||
         !_signaturePage->sigDialog->signatureAlgorithmCO )
         return true;
+    kdDebug(5006) << "4) RET = " << ret << endl;
 
     ret &= ( ( ( wrapper->signatureAlgorithm() == SignAlg_SHA1 ) &&
                _signaturePage &&
@@ -4377,42 +4380,50 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _signaturePage->sigDialog->signatureAlgorithmCO &&
                ( _signaturePage->sigDialog->signatureAlgorithmCO->currentText() ==
                  "SHA-1" ) ) );
+    kdDebug(5006) << "5) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->signatureCertificateExpiryNearWarning() ==
              _signaturePage->sigDialog->warnSignatureCertificateExpiresCB->isChecked() );
+    kdDebug(5006) << "6) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->signatureCertificateExpiryNearInterval() ==
              _signaturePage->sigDialog->warnSignatureCertificateExpiresSB->value() );
+    kdDebug(5006) << "7) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->caCertificateExpiryNearWarning() ==
              _signaturePage->sigDialog->warnCACertificateExpiresCB->isChecked() );
+    kdDebug(5006) << "8) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->caCertificateExpiryNearInterval() ==
              _signaturePage->sigDialog->warnCACertificateExpiresSB->value() );
+    kdDebug(5006) << "9) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->rootCertificateExpiryNearWarning() ==
              _signaturePage->sigDialog->warnRootCertificateExpiresCB->isChecked() );
+    kdDebug(5006) << "10) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->rootCertificateExpiryNearInterval() ==
              _signaturePage->sigDialog->warnRootCertificateExpiresSB->value() );
+    kdDebug(5006) << "11) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->warnNoCertificate() ==
              _signaturePage->sigDialog->warnAddressNotInCertificateCB->isChecked() );
 
+    kdDebug(5006) << "12) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4426,16 +4437,19 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
              ( ( wrapper->numPINRequests() == PinRequest_AlwaysWhenSigning ) &&
                _signaturePage->sigDialog->pinAlwaysWhenSigningRB->isChecked() ) ||
              ( ( wrapper->numPINRequests() == PinRequest_AfterMinutes ) ) );
+    kdDebug(5006) << "13) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->numPINRequestsInterval() ==
              _signaturePage->sigDialog->pinIntervalSB->value() );
+    kdDebug(5006) << "14) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->saveSentSignatures() ==
              _signaturePage->sigDialog->saveSentSigsCB->isChecked() );
+    kdDebug(5006) << "15) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4445,11 +4459,13 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _encryptionPage->encDialog->askEachPartRB->isChecked() ) ||
              ( ( wrapper->encryptEmail() == EncryptEmail_DontEncrypt ) &&
                _encryptionPage->encDialog->dontEncryptRB->isChecked() ) );
+    kdDebug(5006) << "16) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->warnSendUnencrypted() ==
              _encryptionPage->encDialog->warnUnencryptedCB->isChecked() );
+    kdDebug(5006) << "17) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4462,41 +4478,49 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
              ( ( wrapper->encryptionAlgorithm() == EncryptAlg_RSA ) &&
                ( _encryptionPage->encDialog->encryptionAlgorithmCO->currentText() ==
                  "RSA" ) ) );
+    kdDebug(5006) << "18) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->receiverCertificateExpiryNearWarning() ==
              _encryptionPage->encDialog->warnReceiverCertificateExpiresCB->isChecked() );
+    kdDebug(5006) << "19) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->receiverCertificateExpiryNearWarningInterval() ==
              _encryptionPage->encDialog->warnReceiverCertificateExpiresSB->value() );
+    kdDebug(5006) << "20) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->certificateInChainExpiryNearWarning() ==
              _encryptionPage->encDialog->warnChainCertificateExpiresCB->isChecked() );
+    kdDebug(5006) << "21) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->certificateInChainExpiryNearWarningInterval() ==
              _encryptionPage->encDialog->warnChainCertificateExpiresSB->value() );
+    kdDebug(5006) << "22) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->saveMessagesEncrypted() ==
              _encryptionPage->encDialog->storeEncryptedCB->isChecked() );
+    kdDebug(5006) << "23) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->checkCertificatePath() ==
              _encryptionPage->encDialog->checkCertificatePathCB->isChecked() );
+    kdDebug(5006) << "24) RET = " << ret << endl;
     if( !ret )
         return false;
 
     ret &= ( wrapper->checkEncryptionCertificatePathToRoot() ==
              _encryptionPage->encDialog->alwaysCheckRootRB->isChecked() );
+    kdDebug(5006) << "25) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4505,6 +4529,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     CryptPlugWrapper::DirectoryServer* servers =
         wrapper->directoryServers( &numDirServers );
     dirServersEqual &= ( numDirServers == _dirservicesPage->dirservDialog->x500LV->childCount() );
+    kdDebug(5006) << "25.5) dirServersEqual = " << dirServersEqual << endl;
     if( dirServersEqual ) {
         // same number of entries in plugin and dialog
         QListViewItemIterator lvit( _dirservicesPage->dirservDialog->x500LV );
@@ -4523,6 +4548,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
         }
     }
     ret &= dirServersEqual;
+    kdDebug(5006) << "26) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4532,6 +4558,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _dirservicesPage->dirservDialog->localOnlyCertRB->isChecked() ) ||
              ( ( wrapper->certificateSource() == CertSrc_Server ) &&
                _dirservicesPage->dirservDialog->dsOnlyCertRB->isChecked() ) );
+    kdDebug(5006) << "27) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4541,9 +4568,11 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _dirservicesPage->dirservDialog->localOnlyCRLRB->isChecked() ) ||
              ( ( wrapper->crlSource() == CertSrc_Server ) &&
                _dirservicesPage->dirservDialog->dsOnlyCRLRB->isChecked() ) );
+    kdDebug(5006) << "28) RET = " << ret << endl;
     if( !ret )
         return false;
 
+    kdDebug(5006) << "29) RET = " << ret << endl;
     return ret;
 }
 
