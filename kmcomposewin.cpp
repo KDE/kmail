@@ -928,7 +928,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
   if (num > 0)
   {
-    QString bodyDecoded; // Workaroud for bug in QT-2.2.4, better use QCString
+    QCString bodyDecoded;
     mMsg->bodyPart(0, &bodyPart);
 
     int firstAttachment = (bodyPart.typeStr().lower() == "text") ? 1 : 0;
@@ -944,17 +944,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
       verifyWordWrapLengthIsAdequate(bodyDecoded);
 
-// Workaround for bug in QT-2.2.2
-if (mCharset == "utf-8") mEditor->setText(QString::fromUtf8(bodyDecoded));
-else
-{
       QTextCodec *codec = KMMsgBase::codecForName(mCharset);
       if (codec)
         mEditor->setText(codec->toUnicode(bodyDecoded));
       else
         mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
       mEditor->insertLine("\n", -1);
-}
     } else mEditor->setText("");
     for(i=firstAttachment; i<num; i++)
     {
@@ -985,17 +980,11 @@ else
         }
       }
 
-// Workaround for bug in QT-2.2.2
-if (mCharset == "utf-8")
-  mEditor->setText(QString::fromUtf8(bodyDecoded));
-else
-{
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     if (codec) {
       mEditor->setText(codec->toUnicode(bodyDecoded));
     } else
       mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-}
   }
 
   setCharset(mCharset);
@@ -1195,10 +1184,10 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   } else
       cText = codec->fromUnicode(text);
 
-  if (!text.isEmpty() && codec && mCharset != "utf-8" && codec->toUnicode(QString(cText)) != text) // Workaround for bug in QT-2.2.4
+  if (!text.isEmpty() && codec && codec->toUnicode(cText) != text)
   {
     QString oldText = mEditor->text();
-    mEditor->setText(codec->toUnicode(QString(cText))); // Workaround
+    mEditor->setText(codec->toUnicode(cText));
     kernel->kbp()->idle();
     bool anyway = (KMessageBox::warningYesNo(0L,
     i18n("Not all characters fit into the chosen"
