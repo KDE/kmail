@@ -1210,7 +1210,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
     {
       const char *startofstring = qpstr.data();
       const char *startpos = pos;
-      for (i=0; pos >= startofstring && *pos
+      for (i=0; pos >= startofstring && *pos > 0
 	     && (isalnum(*pos)
 		 || *pos=='@' || *pos=='.' || *pos=='_' || *pos=='-'
 		 || *pos=='*' || *pos=='[' || *pos==']' || *pos=='=')
@@ -1219,7 +1219,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	}
       i1 = i;
       pos++;
-      for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
+      for (i=0; *pos > 0 && (isalnum(*pos)||*pos=='@'||*pos=='.'||
 			 *pos=='_' || *pos=='-' || *pos=='*'  || *pos=='[' ||
                          *pos==']' || *pos=='=')
 	     && i<255; i++, pos++)
