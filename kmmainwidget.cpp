@@ -3119,7 +3119,7 @@ void KMMainWidget::updateFolderMenu()
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
                                                            || ( cachedImap && knownImapPath ) ) );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
