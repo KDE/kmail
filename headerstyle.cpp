@@ -394,9 +394,12 @@ namespace KMail {
         // kabcUid is embedded in im: URIs to indicate which IM contact to message
         kabcUid = addresses[0].uid();
         
+        // im status
+        presence = imProxy->presenceString( kabcUid );
+        kdDebug( 5006 ) << "got presence: '" << presence << "'" << endl;
+        // picture
         if ( strategy->showHeader( "statuspic" ) )
         {
-          // picture
           QString photoURL;
           if ( addresses[0].photo().isIntern() )
           {
@@ -423,20 +426,17 @@ namespace KMail {
           {
             //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
             userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
+            if ( presence.isEmpty() )
+            {  
+              userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
+            }
+            else
+              userHTML = QString( "<div class=\"senderpic\">"
+                                    "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
+                                    "</div>" ).arg( kabcUid )
+                                              .arg( userHTML )
+                                              .arg( presence );
           }
-        }
-        // im status
-        presence = imProxy->presenceString( addresses[0].uid() );
-        if ( !userHTML.isEmpty() )
-        {
-          if ( presence.isEmpty() )
-            userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
-          else
-            userHTML = QString( "<div class=\"senderpic\">"
-                                "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
-                                "</div>" ).arg( kabcUid )
-                                          .arg( userHTML )
-                                          .arg( presence );
         }
       }
       else
@@ -445,6 +445,15 @@ namespace KMail {
         userHTML = "&nbsp;";
       }
 	}
+    // if there are apps available, but presence is still empty, they must be turned off
+    if ( presence.isEmpty() )
+    {
+      if ( imProxy->imAppsAvailable() && !imProxy->isPresent( kabcUid ) )
+        presence = i18n( "No IM application running" );
+      //else - testing only!
+        //presence = i18n( "DCOP/InstantMessenger not installed" );
+    }
+    kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
     //case HdrFancy:
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
