@@ -1470,6 +1470,8 @@ KMFolderCachedImap::slotReceivedUserRights( KMFolder* folder )
                 this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
     if ( mUserRights == 0 ) // didn't work
       mUserRights = -1; // error code (used in folderdia)
+    else
+      mReadOnly = ( mUserRights & KMail::ACLJobs::Insert ) == 0;
     mProgress += 5;
     serverSyncInternal();
   }
@@ -1577,6 +1579,11 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
       static_cast<KMFolderCachedImap*>(folder->storage())->setSubfolderState( state );
     }
   }
+}
+
+void KMFolderCachedImap::setImapPath(const QString &path)
+{
+   mImapPath = path;
 }
 
 #include "kmfoldercachedimap.moc"
