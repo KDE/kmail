@@ -3803,6 +3803,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mEnableGwCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   */
+  mEnableGwCB = 0;
   mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
@@ -3816,8 +3817,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
 void MiscPage::GroupwareTab::load() {
   // Read the groupware config
-  mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
-  gBox->setEnabled( mEnableGwCB->isChecked() );
+  if ( mEnableGwCB ) {
+    mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
+    gBox->setEnabled( mEnableGwCB->isChecked() );
+  }
   mLegacyMangleFromTo->setChecked( GlobalSettings::groupwareLegacyMangleFromToHeaders() );
 
   // Read the IMAP resource config
@@ -3836,7 +3839,8 @@ void MiscPage::GroupwareTab::load() {
 
 void MiscPage::GroupwareTab::save() {
   // Write the groupware config
-  GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
+  if ( mEnableGwCB )
+    GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
   GlobalSettings::setGroupwareLegacyMangleFromToHeaders(
         mLegacyMangleFromTo->isChecked() );
 
