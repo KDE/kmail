@@ -15,11 +15,11 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-static const char* opConfigNames[] = 
+static const char* opConfigNames[] =
   { "ignore", "and", "unless", "or", NULL };
 
 static const char* funcConfigNames[] =
-  { "equals", "not-equal", "contains", "contains-not", "regexp", 
+  { "equals", "not-equal", "contains", "contains-not", "regexp",
     "not-regexp", NULL };
 
 
@@ -85,7 +85,7 @@ bool KMFilter::matches(const KMMessage* msg)
   matchesB = mRuleB.matches(msg);
   switch (mOperator)
   {
-  case OpAnd: 
+  case OpAnd:
     return (matchesA && matchesB);
   case OpAndNot:
     return (matchesA && !matchesB);
@@ -335,7 +335,7 @@ bool KMFilterRule::matches(const KMMessage* msg)
     return msgContents.contains(mContents, FALSE);
 
   case KMFilterRule::FuncContainsNot:
-    return ( ! msgContents.find(mContents, FALSE) );
+    return ( msgContents.find(mContents, FALSE) < 0 );
 
   case KMFilterRule::FuncRegExp:
     return (msgContents.find(QRegExp(mContents, FALSE)) >= 0);
