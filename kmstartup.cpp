@@ -85,7 +85,8 @@ void checkConfigUpdates() {
   QStringList updates;
   updates << "9"
 	  << "3.1-update-identities"
-	  << "3.1-use-identity-uoids";
+	  << "3.1-use-identity-uoids"
+	  << "3.1-new-mail-notification";
   for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
     config->checkUpdate( *it, updateFile );
   startup.writeEntry( "update-level", currentUpdateLevel );
