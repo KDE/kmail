@@ -876,10 +876,15 @@ void KMReaderWin::writeBodyStr(const QString aStr)
                       .arg(sig).arg(sdata).arg(sdata);
       }
     }
-    htmlStr += quotedHTML(pgp->message());
-    if(pgpMessage) htmlStr += "<br><b>End pgp message</b><br><br>";
-    str = pgp->backmatter();
-    if(!str.isEmpty()) htmlStr += quotedHTML(str);
+    if (pgpMessage)
+    {
+      htmlStr += quotedHTML(pgp->message());
+      htmlStr += QString("<br><b>%1</b><br><br>")
+        .arg(i18n("End of pgp message"));
+      str = pgp->backmatter();
+      if(!str.isEmpty()) htmlStr += quotedHTML(str);
+    } // if (!pgpMessage) then the message only looked similar to a pgp message
+    else htmlStr = mCodec->toUnicode(quotedHTML(aStr));
   }
   else htmlStr += mCodec->toUnicode(quotedHTML(aStr));
   mViewer->write(htmlStr);
