@@ -9,12 +9,13 @@
 #include <qtablevw.h>
 #include <qcolor.h>
 #include <qpixmap.h>
+#include <drag.h>
 
 #define MAX_SEP_CHARS 16
 
 class KTabListBoxColumn;
-class KTabListBoxItem;
 class KTabListBoxTable;
+class KTabListBoxItem;
 class KTabListBox;
 
 typedef QDict<QPixmap> KTabListBoxDict;
@@ -31,20 +32,27 @@ public:
   virtual ~KTabListBoxTable();
 
 protected:
-  virtual void mouseDoubleClickEvent (QMouseEvent *);
-  virtual void mousePressEvent (QMouseEvent *);
-  virtual void mouseReleaseEvent (QMouseEvent *);
+  virtual void mouseDoubleClickEvent (QMouseEvent*);
+  virtual void mousePressEvent (QMouseEvent*);
+  virtual void mouseReleaseEvent (QMouseEvent*);
+  virtual void mouseMoveEvent (QMouseEvent*);
+  virtual void doItemSelection (QMouseEvent*, int idx);
 
   virtual void paintCell (QPainter*, int row, int col);
   virtual int cellWidth (int col);
 
   void reconnectSBSignals (void);
+
+  static QPoint dragStartPos;
+  static int dragCol, dragRow;
+  static int selIdx;
+  bool dragging;
 };
 
 
 //--------------------------------------------------
-#define KTabListBoxInherited QWidget
-class KTabListBox : public QWidget
+#define KTabListBoxInherited KDNDWidget
+class KTabListBox : public KDNDWidget
 {
   Q_OBJECT;
   friend KTabListBoxTable;
@@ -82,6 +90,11 @@ public:
 	// set the current (selected) column. colId is the value that
 	// is transfered with the selected() signal that is emited.
 
+  virtual void unmarkAll (void);
+	// unmark all items
+  virtual void markItem (int idx, int colId=-1);
+  virtual void unmarkItem (int idx);
+
   int findItem (int yPos) const { return (lbox.findRow(yPos)); }
 
   int topItem (void) const { return (lbox.topCell()); }
@@ -111,6 +124,12 @@ public:
 
   void repaint (void) { QWidget::repaint(); lbox.repaint(); }
 
+  bool startDrag(int col, int row, const QPoint& mousePos);
+	// Indicates that a drag has started with given item.
+	// Returns TRUE if we are dragging, FALSE if drag-start failed.
+
+  QPixmap& dndPixmap(void) { return dndDefaultPixmap; }
+
 signals:
   void highlighted (int Index, int column);
 	// emited when the current item changes (either via setCurrentItem()
@@ -128,15 +147,18 @@ protected:
   void updateItem (int idx, bool clear = TRUE);
   bool needsUpdate (int id) { return (lbox.autoUpdate() && itemVisible(id)); }
 
+  KTabListBoxItem* getItem (int idx);
+
   virtual void resizeEvent (QResizeEvent*);
   virtual void paintEvent (QPaintEvent*);
 
   virtual void resizeList (int newNumItems=-1);
 	// Resize item array. Per default enlarge it to double size
 
-  virtual void mouseDoubleClickEvent (QMouseEvent *);
-  virtual void mousePressEvent (QMouseEvent *);
-  virtual void mouseReleaseEvent (QMouseEvent *);
+  virtual bool prepareForDrag (int col, int row, char** data, int* size, 
+			       int* type);
+	// Called to set drag data, size, and type. If this method
+	// returns FALSE then no drag occurs.
 
   KTabListBoxColumn*	colList;
   KTabListBoxItem*	itemList;
@@ -146,6 +168,7 @@ protected:
   KTabListBoxDict	pixDict;
   KTabListBoxTable	lbox;
   int			labelHeight;
+  QPixmap		dndDefaultPixmap;
 
 private:		// Disabled copy constructor and operator=
   KTabListBox (const KTabListBox &) {}
@@ -167,10 +190,15 @@ public:
 
   KTabListBoxItem& operator= (const KTabListBoxItem&);
 
+  int marked (void) const { return mark; }
+  bool isMarked (void) const { return (mark >= -1); }
+  virtual void setMarked (int mark);
+
 private:
   QString* txt;
   int columns;
   QColor fgColor;
+  int mark;
 
   friend class KTabListBox;
 };
@@ -200,5 +228,12 @@ protected:
   KTabListBox::ColumnType colType;
   KTabListBox* parent;
 };
+
+
+
+inline KTabListBoxItem* KTabListBox :: getItem (int idx)
+{
+  return ((idx>=0 && idx<maxItems) ? &itemList[idx] : (KTabListBoxItem*)NULL);
+}
 
 #endif /*KTabListBox_h*/

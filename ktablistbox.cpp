@@ -7,10 +7,12 @@
 #include <qpixmap.h>
 #include <qapp.h>
 #include <qdrawutl.h>
+#include <kapp.h>
 
 #define INIT_MAX_ITEMS 16
 
 #include "ktablistbox.moc"
+
 
 //=============================================================================
 //
@@ -21,6 +23,7 @@ KTabListBoxItem :: KTabListBoxItem (int aColumns)
 {
   columns = aColumns;
   txt = new QString[columns];
+  mark = -2;
 }
 
 
@@ -34,6 +37,12 @@ KTabListBoxItem :: ~KTabListBoxItem ()
 void KTabListBoxItem :: setForeground (const QColor& fg)
 {
   fgColor = fg;
+}
+
+
+void KTabListBoxItem :: setMarked (int m)
+{
+  mark = m;
 }
 
 
@@ -132,7 +141,14 @@ KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
   KTabListBoxInherited (parent, name, f), lbox(this)
 {
   const QFontMetrics* fm = &fontMetrics();
+  QString f;
+
   initMetaObject();
+
+  f = kapp->kdedir();
+  f.detach();
+  f += "/lib/pics/khtmlw_dnd.xpm";
+  dndDefaultPixmap.load(f.data());
 
   maxItems = 0;
   current  = -1;
@@ -144,7 +160,6 @@ KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
   if (columns > 0) lbox.setNumCols(columns);
 
   lbox.setGeometry(0, labelHeight, width(), height()-labelHeight);
-
 }
 
 
@@ -205,19 +220,51 @@ void KTabListBox :: setCurrentItem (int idx, int colId)
 
   if (idx>=numRows()) return;
 
+  unmarkAll();
+
   if (idx != current)
   {
     i = current;
     current = idx;
 
-    updateItem(i);
+    updateItem(i,FALSE);
   }
 
   if (current >= 0)
   {
-    updateItem(current);
+    markItem(idx);
     emit highlighted(current, colId);
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox :: markItem (int idx, int colId)
+{
+  if (itemList[idx].marked()==colId) return;
+  itemList[idx].setMarked(colId);
+  updateItem(idx,FALSE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox :: unmarkItem (int idx)
+{
+  int mark;
+
+  mark = itemList[idx].marked();
+  itemList[idx].setMarked(-2);
+  if (mark>=-1) updateItem(idx);
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox :: unmarkAll (void)
+{
+  int i;
+
+  for (i=numRows()-1; i>=0; i--)
+    unmarkItem(i);
 }
 
 
@@ -328,7 +375,13 @@ void KTabListBox :: updateItem (int row, bool erase)
 //-----------------------------------------------------------------------------
 void KTabListBox :: clear (void)
 {
+  int i;
+
+  for (i=numRows()-1; i>=0; i--)
+    itemList[i].setMarked(-2);
+
   setNumRows(0);
+  lbox.setTopLeftCell(0,0);
   current = -1;
 }
 
@@ -362,12 +415,6 @@ void KTabListBox :: resizeList (int newNumItems)
   maxItems = newNumItems;
 
   setNumRows(ih);
-}
-
-
-//-----------------------------------------------------------------------------
-void KTabListBox :: mouseDoubleClickEvent (QMouseEvent*)
-{
 }
 
 
@@ -421,15 +468,26 @@ void KTabListBox :: paintEvent (QPaintEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: mousePressEvent (QMouseEvent* e)
+bool KTabListBox :: startDrag (int aCol, int aRow, const QPoint& p)
 {
-  printf ("+%d+%d\n", e->pos().x(), e->pos().y());
+  int       dx = -(dndDefaultPixmap.width() >> 1);
+  int       dy = -(dndDefaultPixmap.height() >> 1);
+  KDNDIcon* icon = new KDNDIcon(dndDefaultPixmap, p.x()+dx, p.y()+dy);
+  int       size, type;
+  char*	    data;
+
+  if (!prepareForDrag(aCol,aRow, &data, &size, &type)) return FALSE;
+
+  KTabListBoxInherited::startDrag(icon, data, size, type, dx, dy);
+  return TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: mouseReleaseEvent (QMouseEvent*)
+bool KTabListBox :: prepareForDrag (int aCol, int aRow, char** data, 
+				    int* size, int* type)
 {
+  return FALSE;
 }
 
 
@@ -443,6 +501,7 @@ void KTabListBox :: horSbValue (int val)
 //-----------------------------------------------------------------------------
 void KTabListBox :: horSbSlidingDone ()
 {
+  printf ("sliding done\n");
 }
 
 
@@ -453,12 +512,21 @@ void KTabListBox :: horSbSlidingDone ()
 //   C L A S S   KTabListBoxTable
 //
 //=============================================================================
+
+QPoint KTabListBoxTable::dragStartPos;
+int KTabListBoxTable::dragCol = -1;
+int KTabListBoxTable::dragRow = -1;
+int KTabListBoxTable::selIdx  = -1;
+
+
 KTabListBoxTable :: KTabListBoxTable (KTabListBox *parent):
   KTabListBoxTableInherited (parent)
 {
   QFontMetrics fm = fontMetrics();
 
   initMetaObject();
+
+  dragging = FALSE;
 
   setTableFlags (Tbl_autoVScrollBar|Tbl_autoHScrollBar|Tbl_smoothVScrolling|
 		 Tbl_clipCellPainting);
@@ -495,16 +563,19 @@ void KTabListBoxTable :: paintCell (QPainter* p, int row, int col)
   QColor bg;
   QColorGroup g = colorGroup();
   KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBoxItem* item = owner->getItem(row);
 
-  if (owner->current == row)
+  if (!item) return;
+
+  if (item->marked()==-1)
   {
     bg = g.background();
     p->fillRect (0, 0, cellWidth(col), cellHeight(row), bg);
   }
-  p->setPen (owner->itemList[row].foreground());
+  p->setPen (item->foreground());
   p->setBackgroundColor (g.base());
 
-  owner->colList[col].paintCell (p, owner->itemList[row].text(col));
+  owner->colList[col].paintCell (p, item->text(col));
 }
 
 
@@ -531,16 +602,92 @@ void KTabListBoxTable :: mouseDoubleClickEvent (QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mousePressEvent (QMouseEvent* e)
+void KTabListBoxTable :: doItemSelection (QMouseEvent* e, int idx)
 {
   KTabListBox* owner = (KTabListBox*)parentWidget();
-  owner->setCurrentItem (findRow(e->pos().y()), findCol(e->pos().x()));
+  int i, di;
+
+  owner->unmarkAll();
+  if ((e->state()&ShiftButton)!=0 && owner->currentItem()>=0)
+  {
+    i  = owner->currentItem();
+    di = (i>idx ? -1 : 1);
+    while (1)
+    {
+      owner->markItem(i);
+      if (i == idx) break;
+      i += di;
+    }
+  }
+  else owner->setCurrentItem(idx);
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mouseReleaseEvent (QMouseEvent*)
+void KTabListBoxTable :: mousePressEvent (QMouseEvent* e)
 {
+  KTabListBox* owner = (KTabListBox*)parentWidget();
+  int idx;
+
+  // arm for possible dragging
+  dragStartPos = e->pos();
+  dragCol = findCol(e->pos().x());
+  dragRow = findRow(e->pos().y());
+
+  // handle item highlighting
+  idx = findRow(e->pos().y());
+  if (idx >= 0 && owner->getItem(idx)->marked() < -1)
+  {
+    doItemSelection(e, idx);
+    selIdx = idx;
+  }
+  else selIdx = -1;
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBoxTable :: mouseReleaseEvent (QMouseEvent* e)
+{
+  KTabListBox* owner = (KTabListBox*)parentWidget();
+  int idx;
+
+  if (dragging)
+  {
+    owner->mouseReleaseEvent(e);
+    dragRow = dragCol = -1;
+    dragging = FALSE;
+  }
+  else
+  {
+    idx = findRow(e->pos().y());
+    if (idx >= 0 && selIdx < 0)
+      doItemSelection(e, idx);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBoxTable :: mouseMoveEvent (QMouseEvent* e)
+{
+  KTabListBox* owner = (KTabListBox*)parentWidget();
+
+  if (dragging)
+  {
+    owner->mouseMoveEvent(e);
+    return;
+  }
+
+  if ((e->state() & (RightButton|LeftButton|MidButton)) != 0)
+  {
+    if (dragRow >= 0 && dragCol >= 0 &&
+	(abs(e->pos().x()-dragStartPos.x()) >= 5 ||
+	 abs(e->pos().y()-dragStartPos.y()) >= 5))
+    {
+      // we have a liftoff !
+      dragging = owner->startDrag(dragCol, dragRow, mapToGlobal(e->pos()));
+      return;
+    }
+  }
 }
 
 

@@ -1,7 +1,17 @@
-#include <qstrlist.h>
+// $Id$
+
 #include "kmheaders.h"
 #include "mclass.h"
+#include "kbusyptr.h"
+#include "kmdragdata.h"
+#include <drag.h>
+#include <qstrlist.h>
 
+#define MFL_DEL 'D'
+#define MFL_NEW 'N'
+#define MFL_UNREAD 'U'
+
+extern KBusyPtr* kbp;
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name)
@@ -74,7 +84,7 @@ void KMHeaders::deleteMsg (int msgId)
   Message* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
+  {    
     msg->del();
     changeItem(msg->getFlag(), getMsgIndex, 0);
   }
@@ -95,8 +105,26 @@ void KMHeaders::undeleteMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::toggleDeleteMsg (int msgId)
+{
+  Message* msg;
+
+  if (!(msg=getMsg(msgId))) return;
+
+  if (msg->getFlag() != MFL_DEL) deleteMsg(msgId);
+  else undeleteMsg(msgId);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::forwardMsg (int msgId)
 {
+  static bool isBusy = FALSE;
+
+  if (isBusy) kbp->idle();
+  else kbp->busy();
+
+  isBusy = !isBusy;
 }
 
 
@@ -121,7 +149,9 @@ void KMHeaders::moveMsgToFolder (Folder* destination, int msgId)
 //-----------------------------------------------------------------------------
 Message* KMHeaders::getMsg (int msgId)
 {
-  if (!folder) 
+  int i, high;
+
+  if (!folder || msgId < -2)
   {
     getMsgIndex = -1;
     return NULL;
@@ -129,13 +159,32 @@ Message* KMHeaders::getMsg (int msgId)
   if (msgId >= 0) 
   {
     getMsgIndex = msgId;
+    getMsgMulti = FALSE;
     return folder->getMsg(msgId+1);
   }
 
   if (msgId == -1)
   {
+    getMsgMulti = TRUE;
     getMsgIndex = currentItem();
+    for (i=0,high=numRows(); i<high; i++)
+    {
+      if (itemList[i].isMarked())
+      {
+	getMsgIndex = i;
+	break;
+      }
+    }
+ 
     return (getMsgIndex>=0 ? folder->getMsg(getMsgIndex+1) : NULL);
+  }
+
+  if (getMsgIndex < 0) return NULL;
+
+  if (getMsgMulti) for (getMsgIndex++; getMsgIndex < numRows(); getMsgIndex++)
+  {
+    if (itemList[getMsgIndex].isMarked()) 
+      return folder->getMsg(getMsgIndex+1);
   }
 
   getMsgIndex = -1;
@@ -158,10 +207,11 @@ void KMHeaders::changeItem (char c, int itemIndex, int column)
 //-----------------------------------------------------------------------------
 void KMHeaders::highlightMessage(int idx, int colId)
 {
-  printf ("message %d highlighted (column %d)\n", idx, colId);
+  kbp->busy();
   if (idx >= 0) setMsgRead(idx);
-
+  
   emit messageSelected(folder->getMsg(idx+1));
+  kbp->idle();
 }
 
 
@@ -193,6 +243,7 @@ void KMHeaders::updateMessageList(void)
   clear();
   if (!folder) return;
 
+  kbp->busy();
   setAutoUpdate(FALSE);
   for (i = (long)1; i <= folder->numMsg(); i++)
   {
@@ -209,6 +260,42 @@ void KMHeaders::updateMessageList(void)
   }
   setAutoUpdate(TRUE);
   repaint();
+  kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMHeaders :: prepareForDrag (int aCol, int aRow, char** data, 
+				  int* size, int* type)
+{
+  static KmDragData dd;
+  int i, from, to, high;
+
+  high = numRows()-1;
+  for (i=0, from=-1; i<=high; i++)
+  {
+    if (itemList[i].isMarked())
+    {
+      from = i;
+      break;
+    }
+  }
+  for (i=high-1, to=-1; i>=0; i--)
+  {
+    if (itemList[i].isMarked())
+    {
+      to = i;
+      break;
+    }
+  }
+  if (from < 0 || to < 0) return FALSE;
+
+  dd.init(folder, from, to);
+  *data = (char*)&dd;
+  *size = sizeof(dd);
+  *type = DndRawData;
+
+  return TRUE;
 }
 
 
