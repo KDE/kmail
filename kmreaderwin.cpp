@@ -102,11 +102,15 @@ void KMReaderWin::readConfig(void)
                                 ,config->readColorEntry("FollowedColor",&c3));
   mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
 
+#ifndef KRN
   config->setGroup("Fonts");
   mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
   mViewer->setStandardFont(kstrToFont(mBodyFont).family());
   //mViewer->setFixedFont(mFixedFont);
-
+#else
+  mViewer->setStandardFont(config->readEntry("StandardFont","helvetica"));
+  mViewer->setFixedFont(config->readEntry("FixedFont","courier"));
+#endif
   update();
 }
 
