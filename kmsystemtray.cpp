@@ -394,6 +394,8 @@ void KMSystemTray::showKMail()
   assert(mainWin);
   if(mainWin)
   {
+    KWin::WindowInfo cur =  KWin::windowInfo( mainWin->winId(), NET::WMDesktop );
+    if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
     // switch to appropriate desktop
     if ( mDesktopOfMainWin != NET::OnAllDesktops )
       KWin::setCurrentDesktop( mDesktopOfMainWin );
