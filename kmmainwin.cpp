@@ -81,7 +81,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mFolder = NULL;
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
-
+  mCountJobs = 0;
 
   mPanner1Sep << 1 << 1;
   mPanner2Sep << 1 << 1 << 1;
@@ -1879,7 +1879,7 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
 {
-  if (msg && ((KMMsgBase*)msg)->isMessage()) 
+  if (msg && ((KMMsgBase*)msg)->isMessage())
     mMsgView->setMsg(msg, TRUE);
   else // force an update of the folder
     static_cast<KMFolderImap*>(mFolder)->getFolder(true);
