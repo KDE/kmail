@@ -46,7 +46,7 @@ I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
 	   "<p>It will be inserted just before the currently "
 	   "selected one, but you can always change that "
 	   "later on.</p>"
-	   "<p>If you have hit this button accidently, you can undo this "
+	   "<p>If you have hit this button accidentally, you can undo this "
 	   "by clicking on the <em>delete</em> button (to the right).</p></qt>" );
 const char * _wt_filterlist_delete =
 I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently "
