@@ -142,6 +142,10 @@ public:
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
+  
+  /** Checks a shortcut against the actioncollection and returns whether it
+   * is already used and therefor not valid or not. */
+  bool shortcutIsValid( const KShortcut& ) const;
 
 
 public slots:
@@ -205,7 +209,7 @@ protected:
   void updateFileMenu();
   void updateViewMenu();
 
-  KActionCollection * actionCollection() { return mActionCollection; }
+  KActionCollection * actionCollection() const { return mActionCollection; }
 
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );

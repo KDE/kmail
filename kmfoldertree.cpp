@@ -258,7 +258,9 @@ void KMFolderTreeItem::assignShortcut()
     return;
 
   KMail::FolderShortcutDialog *shorty = 
-    new KMail::FolderShortcutDialog( mFolder, listView() );
+    new KMail::FolderShortcutDialog( mFolder,
+              static_cast<KMFolderTree *>( listView() )->mainWidget(),
+              listView() );
   shorty->exec();
   return;
 }

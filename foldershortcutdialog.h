@@ -43,6 +43,7 @@
 class KShortcut;
 class KMFolder;
 class KKeyButton;
+class KMMainWidget;
 
 namespace KMail
 {
@@ -51,7 +52,8 @@ class FolderShortcutDialog : public KDialogBase
 {
 Q_OBJECT
 public:
-	FolderShortcutDialog( KMFolder *folder, QWidget *parent=0, const char *name=0 );
+	FolderShortcutDialog( KMFolder *folder, KMMainWidget *mw, 
+                        QWidget *parent=0, const char *name=0 );
 	~FolderShortcutDialog();
 
 
@@ -61,6 +63,7 @@ protected slots:
 
 private:
   KMFolder *mFolder;
+  KMMainWidget *mMainWidget;
   KKeyButton *mKeyButton;
 
 }; // End of class FolderShortcutDialog

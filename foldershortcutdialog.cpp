@@ -43,19 +43,22 @@
 
 #include <kkeybutton.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
+#include "kmmainwidget.h"
 #include "foldershortcutdialog.h"
 #include "kmfolder.h"
 
 using namespace KMail;
 
 FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
+                                            KMMainWidget *mainwidget,
                                             QWidget *parent,
                                             const char *name )
 :  KDialogBase( parent, name, true,
                i18n( "Shortcut for Folder %1" ).arg( folder->label() ),
                KDialogBase::Ok | KDialogBase::Cancel ),
-   mFolder( folder )
+   mFolder( folder ), mMainWidget( mainwidget )
 {
   QVBox *box = makeVBoxMainWidget();
   QVGroupBox *gb = new QVGroupBox( i18n("Select shortcut for folder"), box );
@@ -79,8 +82,14 @@ FolderShortcutDialog::~FolderShortcutDialog()
 
 void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
 {
-  // hm, check if it's valid?
-  mKeyButton->setShortcut( sc, false );
+  if ( sc == mKeyButton->shortcut() ) return;
+  if ( !mMainWidget->shortcutIsValid( sc ) ) {
+    QString msg( i18n( "The selected shortcut is already used, "
+          "please select a different one." ) );
+    KMessageBox::sorry( mMainWidget, msg );
+  } else {
+    mKeyButton->setShortcut( sc, false );
+  }
 }
 
 void FolderShortcutDialog::slotOk()

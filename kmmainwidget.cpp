@@ -86,6 +86,7 @@ using KMail::HeaderListQuickSearch;
 #include <assert.h>
 #include <kstatusbar.h>
 #include <kstaticdeleter.h>
+#include <kaction.h>
 
 #include <kmime_mdn.h>
 #include <kmime_header_parsing.h>
@@ -3369,6 +3370,16 @@ void KMMainWidget::initializeFilterActions()
 void KMMainWidget::slotFolderRemoved( KMFolder *folder )
 {
   mFolderShortcutCommands.remove( folder->idString() );
+}
+
+bool KMMainWidget::shortcutIsValid( const KShortcut &sc ) const
+{
+  KActionPtrList actions = actionCollection()->actions();
+  KActionPtrList::Iterator it( actions.begin() );
+  for ( ; it != actions.end(); it++ ) {
+    if ( (*it)->shortcut() == sc ) return false;
+  }
+  return true;
 }
 
 void KMMainWidget::slotShortcutChanged( KMFolder *folder )
