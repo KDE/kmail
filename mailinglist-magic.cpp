@@ -24,7 +24,7 @@ static QString check_sender(const KMMessage  *message,
         if ( index == -1 )
             return QString::null;
 
-        header = header.left( index );
+        header.truncate( index );
         header_name = "Sender";
         header_value = header;
     }
@@ -43,7 +43,7 @@ static QString check_x_beenthere(const KMMessage  *message,
 
     header_name = "X-BeenThere";
     header_value = header;
-    header = header.left( header.find( '@' ) );
+    header.truncate( header.find( '@' ) );
     return header;
 }
 
@@ -80,7 +80,7 @@ static QString check_x_mailing_list(const KMMessage  *message,
     if ( header[0] == '<' )
         header = header.mid(1,  header.find( '@' ) - 1);
     else
-        header = header.left( header.find( '@' ) );
+        header.truncate( header.find( '@' ) );
     return header;
 }
 
@@ -125,7 +125,7 @@ static QString check_list_post(const KMMessage  *message,
     header_name = "List-Post";
     header_value = header;
     header = header.mid( lAnglePos + 8, header.length());
-    header = header.left( header.find('@') );
+    header.truncate( header.find('@') );
     return header;
 }
 
@@ -161,7 +161,7 @@ static QString check_x_loop(const KMMessage  *message,
 
     header_name = "X-Loop";
     header_value = header;
-    header = header.left(header.find( '@' ));
+    header.truncate(header.find( '@' ));
     return header;
 }
 
@@ -175,7 +175,7 @@ static QString check_x_ml_name(const KMMessage  *message,
 
     header_name = "X-ML-Name";
     header_value = header;
-    header = header.left(header.find( '@' ));
+    header.truncate(header.find( '@' ));
     return header;
 }
 
