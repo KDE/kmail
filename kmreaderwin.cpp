@@ -1384,22 +1384,21 @@ void KMReaderWin::slotAtmOpen()
   fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
 
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
-  // TODO: use KTempFile?
   // TODO: show full path for Service, not only name
   QString mimetype = KMimeType::findByURL(KURL(fileName))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
   QString question;
+  QString open_text = i18n("Open");
   if ( offer ) {
     question = i18n("Open attachment '%1' using '%2'?").arg(msgPart.fileName()).arg(offer->name());
   } else {
-    question = i18n("Open attachment?\n");
-    question += i18n("You will be able to choose the application that opens the attachment.");
+    question = i18n("Open attachment?");
+    open_text = i18n("Open with...");
   }
   question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
   // TODO: buttons don't have the correct order, but "Save" should be default
-  int choice = KMessageBox::warningYesNoCancel(this,
-      question,
-      i18n("Open Attachment?"), i18n("Save to disk"), i18n("Open"), i18n("Cancel"));
+  int choice = KMessageBox::warningYesNoCancel(this, question,
+      i18n("Open Attachment?"), i18n("Save to disk"), open_text, i18n("Cancel"));
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmSave();
   } else if( choice == KMessageBox::No ) {	// Open
