@@ -772,7 +772,6 @@ bool FolderDiaGeneralTab::save()
       folder->storage()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
-    kmkernel->folderMgr()->contentsChanged();
 
     folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
 

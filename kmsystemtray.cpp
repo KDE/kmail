@@ -268,9 +268,8 @@ void KMSystemTray::foldersChanged()
     KMFolder * currentFolder = *it;
     QString currentName = *strIt;
 
-    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
-         (currentFolder->folderType() == KMFolderTypeImap)) &&
-         !currentFolder->ignoreNewMail() )
+    if((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
+       (currentFolder->folderType() == KMFolderTypeImap))
     {
       /** If this is a new folder, start listening for messages */
       connect(currentFolder, SIGNAL(numUnreadMsgsChanged(KMFolder *)),
