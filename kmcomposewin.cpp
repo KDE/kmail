@@ -1109,8 +1109,7 @@ bool KMComposeWin::applyChanges(void)
     // text message.
     mMsg->deleteBodyParts();
     mMsg->setAutomaticFields(TRUE);
-    mMsg->setTypeStr("text");
-    mMsg->setSubtypeStr("plain");
+    mMsg->setHeaderField("Content-Type","text/plain");
 
     mMsg->setCteStr(isQP ? "quoted-printable": "8bit");
 
