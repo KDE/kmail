@@ -43,6 +43,10 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
+// X headers...
+#undef Never
+#undef Always
+
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
 #include <klocale.h>
