@@ -1551,6 +1551,8 @@ void KMComposeWin::slotAppendSignature()
     sigFileName = dlg.selectedFile();
     if (sigFileName.isEmpty()) return;
     sigText = kFileToString(sigFileName, TRUE);
+    identity->setSignatureFile(sigFileName);
+    identity->writeConfig(true);
   }
   else sigText = identity->signature();
 

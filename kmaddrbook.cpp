@@ -96,7 +96,7 @@ int KMAddrBook::load(const char* aFileName)
   if (!file.open(IO_ReadOnly)) return file.status();
   clear();
 
-  while (file.readLine(line,255)>0 && !file.atEnd())
+  while (!file.atEnd() && file.readLine(line,255)>0 )
   {
     if (line[strlen(line)-1] < ' ') line[strlen(line)-1] = '\0';
     if (line[0]!='#' && line[0]!='\0') inSort(line);

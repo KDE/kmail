@@ -9,8 +9,8 @@
 
 #include <ctype.h>
 
-#define NUM_STATUSLIST 7
-static KMMsgStatus sStatusList[NUM_STATUSLIST+1] = 
+#define NUM_STATUSLIST 9
+static KMMsgStatus sStatusList[NUM_STATUSLIST] = 
 {
   KMMsgStatusDeleted, KMMsgStatusNew, 
   KMMsgStatusUnread,  KMMsgStatusOld,

@@ -234,14 +234,14 @@ void KMMessage::fromString(const QString aStr, bool aSetStatus)
 
   // copy string and throw out obsolete control characters
   len = aStr.length();
-  result.resize(len);
+  result.resize(len +1);
   for (i=0,j=0; i<len; i++)
   {
     if (aStr[i]>=' ' || aStr[i]=='\t' || aStr[i]=='\n')
       result[j++] = aStr[i];
   }
-
-  mMsg->FromString((const char*)aStr);
+  result[j++] = '\0'; // terminate zero for casting
+  mMsg->FromString((const char*)result);
   mMsg->Parse();
 
   if (aSetStatus)

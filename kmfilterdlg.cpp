@@ -561,6 +561,7 @@ void KMFilterDlg::initLists(void)
     sFilterFieldList.append("Subject");
     sFilterFieldList.append("From");
     sFilterFieldList.append("To");
+    sFilterFieldList.append("Cc");
     sFilterFieldList.append("Reply-To");
     sFilterFieldList.append("Organization");
     sFilterFieldList.append("Resent-From");
