@@ -915,7 +915,7 @@ void KMComposeWin::setupActions(void)
 
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( mId );
+    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
   QString pgpUserId = ident.pgpIdentity();
 
   selectCryptoAction->setEnabled(true);
@@ -1378,6 +1378,12 @@ bool KMComposeWin::applyChanges(void)
 
   bool doSign    = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
+
+  // get PGP user id for the chosen identity
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
+  QCString pgpUserId = ident.pgpIdentity();
+
   // make sure we have a valid CryptPlugList
   bool tmpPlugList = !mCryptPlugList;
   if( tmpPlugList && (doSign || doEncrypt) ) {
@@ -1430,7 +1436,7 @@ bool KMComposeWin::applyChanges(void)
       case EncryptEmail_DontEncrypt:
         break;
       }
-    } else if( mAutoPgpEncrypt ) {
+    } else if( mAutoPgpEncrypt && !pgpUserId.isEmpty() ) {
       // check if the message should be encrypted via old build-in pgp code
       int status = pgp->encryptionPossible( recipients );
       if( status == 1 )
@@ -1629,11 +1635,6 @@ bool KMComposeWin::applyChanges(void)
         Kpgp::Block block;
         block.setText( encodedBody );
 
-        // get PGP user id for the chosen identity
-        const KMIdentity & ident =
-          kernel->identityManager()->identityForNameOrDefault( mId );
-        QCString pgpUserId = ident.pgpIdentity();
-
         // clearsign the message
         bOk = block.clearsign( pgpUserId, mCharset );
 
@@ -1773,7 +1774,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
 
       // get PGP user id for the chosen identity
       const KMIdentity & ident =
-          kernel->identityManager()->identityForNameOrDefault( mId );
+        kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
       QCString pgpUserId = ident.pgpIdentity();
 
       // encrypt the message
@@ -3142,7 +3143,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
-    kernel->identityManager()->identityForNameOrDefault( mId ).pgpIdentity();
+    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
 
   QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (armoredKey.isEmpty())
@@ -3712,7 +3713,7 @@ void KMComposeWin::slotAppendSignature()
   bool mod = mEditor->isModified();
 
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( mId );
+    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
   QString sigText = ident.signatureText();
 #if 0 // will be moved to identitymanager
   if( sigText.isNull() && ident.useSignatureFile() )
