@@ -23,6 +23,7 @@
 #include <qtextedit.h>
 #include <qsyntaxhighlighter.h>
 #include <qcolor.h>
+#include <qstringlist.h>
 
 class QAccel;
 class KSpell;
@@ -55,6 +56,7 @@ public:
     virtual int highlightParagraph( const QString& text,
 				    int endStateOfLastPara );
     virtual bool isMisspelled( const QString& word ) = 0;
+    static QStringList personalWords();
 
 private:
     void flushCurrentWord();

@@ -34,6 +34,8 @@ using KMail::AddressesDialog;
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
 #include "kmcommands.h"
+#include "syntaxhighlighter.h"
+using KMail::SpellChecker;
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -5549,6 +5551,10 @@ void KMEdit::spellcheck()
 
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
+  QStringList l = SpellChecker::personalWords();
+  for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
+      mKSpell->addPersonal( *it );
+  }
   connect (mKSpell, SIGNAL( death()),
           this, SLOT (slotSpellDone()));
   connect (mKSpell, SIGNAL (misspelling (const QString &, const QStringList &, unsigned int)),

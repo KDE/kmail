@@ -126,6 +126,18 @@ int SpellChecker::highlightParagraph( const QString& text,
     return endStateOfLastPara;
 }
 
+QStringList SpellChecker::personalWords()
+{
+    QStringList l;
+    l.append( "KMail" );
+    l.append( "KOrganizer" );
+    l.append( "KHTML" );
+    l.append( "KIO" );
+    l.append( "KJS" );
+    l.append( "Konqueror" );
+    return l;
+}
+
 void SpellChecker::flushCurrentWord()
 {
     while ( currentWord[0].isPunct() ) {
@@ -150,7 +162,7 @@ void SpellChecker::flushCurrentWord()
 
 	if ( isPlainWord && currentWord.length() > 2 &&
 	     isMisspelled(currentWord) )
-	    setFormat( currentPos, currentWord.length(), mColor );
+            setFormat( currentPos, currentWord.length(), mColor );
     }
     currentWord = "";
 }
@@ -177,6 +189,10 @@ void DictSpellChecker::slotSpellReady( KSpell *spell )
     connect( sDictionaryMonitor, SIGNAL( destroyed() ),
 	     this, SLOT( slotDictionaryChanged() ));
     mSpell = spell;
+    QStringList l = SpellChecker::personalWords();
+    for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
+        mSpell->addPersonal( *it );
+    }
     connect( spell, SIGNAL( misspelling (const QString &, const QStringList &, unsigned int) ),
 	     this, SLOT( slotMisspelling (const QString &, const QStringList &, unsigned int)));
     QTimer::singleShot(0, this, SLOT(slotRehighlight()));
