@@ -616,6 +616,8 @@ KpgpBaseG::pubKeys()
 	publicKeys.append(line);
       }
     }
+    else
+      break;
     index = index2;
   }
   //debug("finished reading keys");
@@ -964,6 +966,8 @@ KpgpBase2::pubKeys()
       //debug("KpgpBase: found key for %s",(const char *)line);
       publicKeys.append(line);
     }
+    else
+      break;
     index = index2;
   }
   
@@ -1277,6 +1281,8 @@ KpgpBase5::pubKeys()
 	publicKeys.append(line);
       }
     }
+    else
+      break;
     index = index2;
   }
   //debug("finished reading keys");
@@ -1483,6 +1489,8 @@ KpgpBase6::pubKeys()
       //debug("KpgpBase: found key for %s",(const char *)line);
       publicKeys.append(line);
     }
+    else
+      break;
     index = index2;
   }
   return publicKeys;
