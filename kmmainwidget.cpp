@@ -871,26 +871,12 @@ void KMMainWidget::slotCompose()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPostToML()
 {
-  KMComposeWin *win;
-  KMMessage* msg = new KMMessage;
-
-  if ( mFolder ) {
-      msg->initHeader( mFolder->identity() );
-
-      if (mFolder->isMailingListEnabled()) {
-          kdDebug(5006)<<QString("mFolder->isMailingListEnabled() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;
-
-          msg->setTo(mFolder->mailingListPostAddress());
-      }
-      win = new KMComposeWin(msg, mFolder->identity());
-      win->setFocusToSubject();
-  } else {
-      msg->initHeader();
-      win = new KMComposeWin(msg);
+  if ( mFolder && mFolder->isMailingListEnabled() ) {
+    KMCommand *command = new KMMailingListPostCommand( this, mFolder );
+    command->start();
   }
-
-  win->show();
-
+  else
+    slotCompose();
 }
 
 
