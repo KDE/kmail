@@ -977,7 +977,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.phraseLanguageCombo = new LanguageComboBox( false, group );
   glay->addWidget( mComposer.phraseLanguageCombo, 2, 1 );
   mComposer.LanguageList = NULL;
-  QHBoxLayout *languageHlay = new QHBoxLayout( group, 0, spacingHint() );
+  QHBoxLayout *languageHlay = new QHBoxLayout( 0, 0, spacingHint() );
   glay->addLayout( languageHlay, 3, 1 );
   QPushButton *newButton = new QPushButton( i18n("Add..."), group );
   mComposer.removeButton = new QPushButton( i18n("Remove"), group );
@@ -1893,7 +1893,7 @@ void ConfigureDialog::slotDoApply( bool everything )
       if ((it == 0) || (!kernel->acctMgr()->remove(*it)))
         KMessageBox::sorry( this,
 			    i18n("Unable to locate account %1").arg((*it)->name()) );
-    }		    
+    }		
     mAccountsToDelete.clear();
 
     // Incoming mail
@@ -2062,7 +2062,7 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry( "compact-all-on-exit",
 		       mMisc.compactOnExitCheck->isChecked() );
     config.writeEntry( "confirm-before-empty",
-                       mMisc.emptyFolderConfirmCheck->isChecked() );           
+                       mMisc.emptyFolderConfirmCheck->isChecked() );
     config.writeEntry( "use-external-editor",
 		       mMisc.externalEditorCheck->isChecked() );
     config.writeEntry( "external-editor",
@@ -2885,7 +2885,7 @@ void ConfigureDialog::slotAddCharset( void )
     this);
   if ( linedlg->exec() == QDialog::Accepted )
   {
-    if (linedlg->text().lower() == "us-ascii" || 
+    if (linedlg->text().lower() == "us-ascii" ||
       KMMsgBase::codecForName( linedlg->text() ))
     {
       mComposer.charsetListBox->insertItem( linedlg->text(),
