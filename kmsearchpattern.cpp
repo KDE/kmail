@@ -282,12 +282,21 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
       // "equality" mean for recipients.
       return matchesInternal( msg->headerField("To") )
           || matchesInternal( msg->headerField("Cc") )
-          || matchesInternal( msg->headerField("Bcc") );
+          || matchesInternal( msg->headerField("Bcc") )
+          // sometimes messages have multiple Cc headers
+          || matchesInternal( msg->cc() );
 
-    msgContents = msg->headerField("To") + msg->headerField("Cc")
-                + msg->headerField("Bcc");
+    msgContents = msg->headerField("To");
+    if ( !msg->headerField("Cc").compare( msg->cc() ) )
+      msgContents += msg->headerField("Cc");
+    else
+      msgContents += msg->cc();
+    msgContents += msg->headerField("Bcc");
+    
   }  else {
-    msgContents = msg->headerField( field() );
+    // make sure to treat messages with multiple header lines for
+    // the same header correctly
+    msgContents = msg->headerFields( field() ).join( " " );
   }
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
