@@ -40,19 +40,35 @@
 #include "kmmsgdict.h"
 #include "kmkernel.h"
 #include "objecttreeparser.h"
+
 using KMail::ObjectTreeParser;
 
+#include <libkcal/icalformat.h>
+#include <libkcal/calendarlocal.h>
+#include <libkcal/event.h>
+
+using namespace KCal;
+
+#include <kabc/addressee.h>
+#include <kabc/address.h>
+#include <kabc/phonenumber.h>
+#include <kabc/vcardconverter.h>
+
+using namespace KABC;
+
+#include <ktnef/ktnefparser.h>
+#include <ktnef/ktnefmessage.h>
+#include <ktnef/ktnefdefs.h>
+
+#include <kurl.h>
 #include <kmessagebox.h>
 #include <klibloader.h>
 #include <kiconloader.h>
 #include <dcopclient.h>
 #include <kparts/part.h>
 #include <kconfig.h>
-#include <kdebug.h>
 
-#include <ktnef/ktnefparser.h>
-#include <ktnef/ktnefmessage.h>
-#include <ktnef/ktnefdefs.h>
+#include <kdebug.h>
 
 #include <qregexp.h>
 #include <qbuffer.h>
@@ -1381,19 +1397,39 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
     return false;
   }
 
-  // Read the vCal
-  QString sLocation( "LOCATION" );
-  QString sDtStart( "DTSTART" );
-  QString sDtEnd( "DTEND" );
-  QString sDescr( "DESCRIPTION" );
-  QString sMethod( "METHOD");
-  QString sAttendee( "ATTENDEE" );
-  QString sSummary( "SUMMARY" );
-  vPartMicroParser( vCal.utf8(), sLocation, sDtStart, sDtEnd, sDescr, sMethod, sAttendee, sSummary );
+  CalendarLocal cl;
+  ICalFormat format;
+  format.fromString(&cl, vCal);
+  QPtrList<Event> eventList = cl.events();
+  eventList.setAutoDelete(true);
+
+  Q_ASSERT(eventList.count() != 0);
+
+  // parse the first event out of the vcal
+  // ### is it legal to have several events per mail?
+  Event* event = eventList.first();
+  QString sLocation = event->location();
+  QString sDtEnd = event->dtEndTimeStr();
+  QString sDtStart = event->dtStartTimeStr();
+  QString sDescr = event->description().simplifyWhiteSpace();
+  QString sMethod; // = event->method(); //###TODO actually the scheduler needs to do that
+  QPtrList<Attendee> attendees = event->attendees();
+  QString sAttendee;
+
+  QPtrListIterator<Attendee> it(attendees);
+
+  while (it.current())
+  {
+    sAttendee += (*it)->name();
+    if (!it.atLast()) sAttendee += ",";
+    ++it;
+  }
+
+  QString sSummary = event->summary();
+
   string2HTML( sLocation );
-  while( sDescr.endsWith("\\n") )
-    sDescr.truncate( sDescr.length()-2 );
   string2HTML( sDescr );
+
   sDtStart = ISOToLocalQDateTime( sDtStart );
   sDtEnd = ISOToLocalQDateTime( sDtEnd );
   sDtStart = sDtStart.right( sDtStart.length() - sDtStart.find( '@' ) - 1 ) ;
@@ -1522,74 +1558,22 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
 
 
 //-----------------------------------------------------------------------------
-QString attendeeLine( const QString& name, const QString& mail, bool bIsRSVP,
-                      bool bIsReply, bool bAccepted, bool bAcceptedCond, bool bDeclined )
+
+QString stringProp( KTNEFMessage* tnefMsg, const Q_UINT32& key,
+                    const QString& fallback = QString::null)
 {
-  QString line( "ATTENDEE;" );
-  if( !name.isEmpty() ){
-    line.append( "CN=\"" );
-    line.append( name );
-    line.append( "\";" );
-  }
-  line.append( "RSVP=" );
-  line.append( bIsRSVP ? "TRUE" : "FALSE" );
-  line.append( ";" );
-  if( bIsReply ){
-    line.append( "PARTSTAT=" );
-    if( bAccepted )
-      line.append( "ACCEPTED" );
-    else if( bAcceptedCond )
-      line.append( "TENTATIVE" );
-    else if( bDeclined )
-      line.append( "DECLINED" );
-    else
-      line.append( "TENTATIVE" ); // use this as fallback ?   (khz, 2002/10/16)
-    line.append( ':' );
-  }else{
-    line.append( "PARTSTAT=NEEDS-ACTION;" );
-    line.append( "ROLE=REQ-PARTICIPANT;" );
-  }
-  line.append( "MAILTO:" );
-  line.append( mail );
-  return line;
+  return tnefMsg->findProp( key < 0x10000 ? key & 0xFFFF : key >> 16, fallback );
 }
 
-QString stringProp( KTNEFMessage* tnefMsg, const QString&  prefix, const QString&  title,
-                    const Q_UINT32& key, const QString&  fallback )
+QString sNamedProp( KTNEFMessage* tnefMsg, const QString& name,
+                    const QString& fallback = QString::null)
 {
-  QString res;
-  QString value( tnefMsg->findProp( key < 0x10000 ? key & 0xFFFF : key >> 16,
-                                    fallback ) );
-  if( !value.isEmpty() ){
-    res = prefix;
-    if( !title.isEmpty() ){
-      res.append( title );
-      res.append( ':'   );
-    }
-    res.append( value );
-  }
-  return res;
-}
-
-QString sNamedProp( KTNEFMessage* tnefMsg, const QString& prefix, const QString& title,
-                    const QString& name, const QString& fallback )
-{
-  QString res;
-  QString value( tnefMsg->findNamedProp( name, fallback ) );
-  if( !value.isEmpty() ){
-    res = prefix;
-    if( !title.isEmpty() ){
-      res.append( title );
-      res.append( ':'   );
-    }
-    res.append( value );
-  }
-  return res;
+  return tnefMsg->findNamedProp( name, fallback );
 }
 
 //-----------------------------------------------------------------------------
-bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
-                                 int& aUpdateCounter,
+
+bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, int& aUpdateCounter,
                                  QString& vPart )
 {
   // Note: vPart is not erased but
@@ -1598,6 +1582,12 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
 
   KTNEFParser parser;
   QBuffer buf( tnef );
+  CalendarLocal cal;
+  Addressee addressee;
+  VCardConverter cardConv;
+  ICalFormat calFormat;
+  Event* event = new Event();
+
   if( parser.openDevice( &buf ) )
   {
     KTNEFMessage* tnefMsg = parser.message();
@@ -1605,7 +1595,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
 
     // everything depends from property PR_MESSAGE_CLASS
     // (this is added by KTNEFParser):
-    QString msgClass = tnefMsg->findProp(0x001A, "", true).upper();
+    QString msgClass = tnefMsg->findProp(0x001A, QString::null, true).upper();
     if( !msgClass.isEmpty() ){
       // Match the old class names that might be used by Outlook for
       // compatibility with Microsoft Mail for Windows for Workgroups 3.1.
@@ -1630,28 +1620,31 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
       }
       bool bCompatClassNote = (msgClass == "IPM.MICROSOFT MAIL.NOTE");
 
+
       if( bCompatClassAppointment || "IPM.APPOINTMENT" == msgClass ){
 
         // retrieve the update counter
         aUpdateCounter = tnefMsg->findNamedProp("0x8201", "0").toInt();
         // compose a vCal
         bool bIsReply = false;
-        vPart = "BEGIN:VCALENDAR\n";
-        vPart += "PRODID:-//Microsoft Corporation//Outlook ";
-        vPart += tnefMsg->findNamedProp("0x8554", "9.0");
-        vPart += "MIMEDIR/EN\n";
-        vPart += "VERSION:2.0\n";
+        QString prodID;
+        prodID += "-//Microsoft Corporation//Outlook ";
+        prodID += tnefMsg->findNamedProp("0x8554", "9.0");
+        prodID += "MIMEDIR/EN\n";
+        prodID += "VERSION:2.0\n";
+        calFormat.setApplication("Outlook", prodID);
 
-        vPart += "METHOD:";
+        Scheduler::Method method;
+
         if( bCompatMethodRequest )
-          vPart += "REQUEST";
-        else if( bCompatMethodCancled )
-          vPart += "CANCEL";
-        else if( bCompatMethodAccepted ||
-                 bCompatMethodAcceptedCond ||
-                 bCompatMethodDeclined ){
+          method  = Scheduler::Request;
+        else if ( bCompatMethodCancled )
+          method = Scheduler::Cancel;
+        else if ( bCompatMethodAccepted ||
+                  bCompatMethodAcceptedCond ||
+                  bCompatMethodDeclined ){
+          method = Scheduler::Reply;
           bIsReply = true;
-          vPart += "REPLY";
         }
         else{
           // pending(khz): verify whether "0x0c17" is the right tag ???
@@ -1661,285 +1654,265 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
           // but WHAT ABOUT REPLIES ???
           //
           //
-          if( tnefMsg->findProp(0x0c17, "") == "1" )
-            bIsReply = true;
-          vPart += "REQUEST";
-        }
-        vPart += '\n';
 
-        QString sSenderSearchKeyEmail( tnefMsg->findProp(0x0C1D, "") );
+          if( tnefMsg->findProp(0x0c17) == "1" )
+            bIsReply = true;
+          method = Scheduler::Request;
+        }
+
+        /// ###  FIXME Need to get this attribute written
+        ScheduleMessage schedMsg(event, method, ScheduleMessage::Unknown /*???*/);
+		
+        QString sSenderSearchKeyEmail( tnefMsg->findProp(0x0C1D) );
+
         if( !sSenderSearchKeyEmail.isEmpty() ){
           int colon = sSenderSearchKeyEmail.find(':');
-          if( -1 < colon ) // may be e.g. "SMTP:KHZ@KDE.ORG"
+          if( sSenderSearchKeyEmail.find(':') == -1 ) // may be e.g. "SMTP:KHZ@KDE.ORG"
             sSenderSearchKeyEmail.remove(0, colon+1);
         }
 
-        vPart += "BEGIN:VEVENT\n";
-        QString s( tnefMsg->findProp(0x0e04, "") );
-        QStringList attendees( QStringList::split(';', s) );
+        QString s( tnefMsg->findProp(0x0e04) );
+        QStringList attendees = QStringList::split(';', s);
         if( attendees.count() ){
           for ( QStringList::Iterator it = attendees.begin(); it != attendees.end(); ++it ) {
             // skip all entries that have no '@' since these are no mail addresses
-            if( -1 < (*it).find('@') ){
+            if( (*it).find('@') == -1 ){
               s = (*it).stripWhiteSpace();
-              vPart += attendeeLine( QString(),
-                                     s,
-                                     true,
-                                     bIsReply,
-                                     bCompatMethodAccepted,
-                                     bCompatMethodAcceptedCond,
-                                     bCompatMethodDeclined );
-              vPart += '\n';
+
+              Attendee *attendee = new Attendee(s,s, true);
+              if (bIsReply) {
+                if (bCompatMethodAccepted)
+                  attendee->setStatus(Attendee::Accepted);
+                if (bCompatMethodAcceptedCond)
+                  attendee->setStatus(Attendee::Declined);
+                if (bCompatMethodDeclined)
+                  attendee->setStatus(Attendee::Tentative);
+              }
+              else {
+                attendee->setStatus(Attendee::NeedsAction);
+                attendee->setRole(Attendee::ReqParticipant);
+              }
+              event->addAttendee(attendee);
             }
-          }
-        }else{
+         }
+       }
+       else
+       {
           // Oops, no attendees?
           // This must be old style, let us use the PR_SENDER_SEARCH_KEY.
           s = sSenderSearchKeyEmail;
           if( !s.isEmpty() ){
-            vPart += attendeeLine( QString(),
-                                   s,
-                                   true,
-                                   bIsReply,
-                                   bCompatMethodAccepted,
-                                   bCompatMethodAcceptedCond,
-                                   bCompatMethodDeclined );
-            vPart += '\n';
+            Attendee *attendee = new Attendee(QString::null,QString::null, true);
+            if (bIsReply) {
+              if (bCompatMethodAccepted)
+                attendee->setStatus(Attendee::Accepted);
+              if (bCompatMethodAcceptedCond)
+                attendee->setStatus(Attendee::Declined);
+              if (bCompatMethodDeclined)
+                attendee->setStatus(Attendee::Tentative);
+            }
+            else {
+              attendee->setStatus(Attendee::NeedsAction);
+              attendee->setRole(Attendee::ReqParticipant);
+            }
+            event->addAttendee(attendee);
           }
         }
-        s = tnefMsg->findProp(0x0c1f, ""); // look for organizer property
+        s = tnefMsg->findProp(0x0c1f); // look for organizer property
         if( s.isEmpty() && !bIsReply )
           s = sSenderSearchKeyEmail;
-        if( !s.isEmpty() ){
-          vPart += "ORGANIZER;MAILTO:";
-          vPart += s;
-          vPart += '\n';
-        }
-        s = tnefMsg->findNamedProp("0x8516", "")
-              .replace(QChar('-'), "")
-              .replace(QChar(':'), "");
-        vPart += "DTSTART:";
-        vPart += s;
-        vPart += "Z\n";
-        s = tnefMsg->findNamedProp("0x8517", "")
-              .replace(QChar('-'), "")
-              .replace(QChar(':'), "");
-        vPart += "DTEND:";
-        vPart += s;
-        vPart += "Z\n";
-        vPart += "LOCATION:";
-        vPart += tnefMsg->findNamedProp("0x8208", "");
-        vPart += '\n';
+        if( !s.isEmpty() )
+          event->setOrganizer(s);
+
+        s = tnefMsg->findProp(0x8516)
+              .replace(QChar('-'), QString::null)
+              .replace(QChar(':'), QString::null);
+	    event->setDtStart(QDateTime::fromString(s)); // ## Format??
+
+        s = tnefMsg->findProp(0x8517)
+              .replace(QChar('-'), QString::null)
+              .replace(QChar(':'), QString::null);
+
+	    event->setDtEnd(QDateTime::fromString(s));
+
+        s = tnefMsg->findProp(0x8208);
+        event->setLocation(s);
 
         // is it OK to set this to OPAQUE always ??
-        vPart += "TRANSP:OPAQUE\n";
-
-        vPart += "SEQUENCE:0\n";
+        //vPart += "TRANSP:OPAQUE\n"; ###FIXME, portme!
+        //vPart += "SEQUENCE:0\n";
 
         // is "0x0023" OK  -  or should we look for "0x0003" ??
-        vPart += "UID:";
-        vPart += tnefMsg->findNamedProp("0x0023", "");
-        vPart += '\n';
+        s = tnefMsg->findProp(0x0023);
+        event->setUid(s);
 
-        vPart += "DTSTAMP:";
         // pending(khz): is this value in local timezone ??   must it be adjusted ??
         // most likely this is a bug in the server or in Outlook - we ignore it for now.
-        vPart += tnefMsg->findNamedProp("0x8202", "")
-              .replace(QChar('-'), "")
-              .replace(QChar(':'), "");
-        vPart += '\n';
+        s = tnefMsg->findProp(0x8202)
+              .replace(QChar('-'), QString::null)
+              .replace(QChar(':'), QString::null);
+        // event->setDtStamp(QDateTime::fromString(s)); // ### libkcal always uses currentDateTime()
 
-        vPart += "CATEGORIES:";
-        vPart += tnefMsg->findNamedProp("Keywords", "");
-        vPart += '\n';
-        vPart += "DESCRIPTION:";
-        vPart += tnefMsg->findProp(0x1000, "");
-        vPart += '\n';
-        vPart += "SUMMARY:";
-        vPart += tnefMsg->findProp(0x0070, "");
-        vPart += '\n';
 
-        vPart += "PRIORITY:";
-        s = tnefMsg->findProp(0x0026, "");
-        if( "1" == s )
-          vPart += "URGENT";
-        else if( ("0" == s) || ("-1" == s) )
-          vPart += "NORMAL";
-        vPart += '\n';
+		
+        s = tnefMsg->findNamedProp("Keywords");
+		event->setCategories(s);
+
+        s = tnefMsg->findProp(0x1000);
+        event->setDescription(s);
+
+        s = tnefMsg->findProp(0x0070);
+        event->setSummary(s);
+
+
+        s = tnefMsg->findProp(0x0026);
+        event->setPriority(s.toInt());
 
         // is reminder flag set ?
-        if( "TRUE" == tnefMsg->findProp(0x8503, "").upper() ){
-          vPart += "CLASS:PUBLIC\n";
-          vPart += "BEGIN:VALARM\n";
+        if(!tnefMsg->findProp(0x8503).isEmpty()) {
+
+		  Alarm *alarm = new Alarm(event);
+
           QDateTime highNoonTime(
-                      pureISOToLocalQDateTime( tnefMsg->findProp(0x8502, "")
+                      pureISOToLocalQDateTime( tnefMsg->findProp(0x8502)
                                                     .replace(QChar('-'), "")
                                                     .replace(QChar(':'), "") ) );
           QDateTime wakeMeUpTime(
                       pureISOToLocalQDateTime( tnefMsg->findProp(0x8560, "")
                                                     .replace(QChar('-'), "")
                                                     .replace(QChar(':'), "") ) );
-          vPart += "TRIGGER:PT";
-          if( highNoonTime.isValid() && wakeMeUpTime.isValid() )
-            vPart += QString::number( wakeMeUpTime.secsTo( highNoonTime ) / 60 );
-          else
-            vPart += "15"; // default: wake them up 15 minutes before the appointment
-          vPart += "M\n";
+
+           alarm->setTime(wakeMeUpTime);
+
+           if( highNoonTime.isValid() && wakeMeUpTime.isValid() )
+             alarm->setStartOffset(Duration(highNoonTime, wakeMeUpTime));
+           else
+             // default: wake them up 15 minutes before the appointment
+             alarm->setStartOffset(Duration(15*60));
+			 alarm->setDisplayAlarm(i18n("Reminder"));
 
           // sorry: the different action types are not known (yet)
           //        so we allways set 'DISPLAY' (no sounds, no images...)
-          vPart += "ACTION:DISPLAY\n";
-          vPart += "DESCRIPTION:";
-          vPart += i18n("Reminder");
-          vPart += '\n';
-          vPart += "END:VALARM\n";
+		  event->addAlarm(alarm);
         }
-        vPart += "END:VEVENT\n";
-        vPart += "END:CALENDAR\n";
+		cal.addEvent(event);
         bOk = true;
         // we finished composing a vCal
 
       }else if( bCompatClassNote || "IPM.CONTACT" == msgClass ){
 
-        vPart =  stringProp(tnefMsg, "\n","UID", attMSGID, "" );
-        vPart += stringProp(tnefMsg, "\n","FN", MAPI_TAG_PR_DISPLAY_NAME, "" );
-        vPart += sNamedProp(tnefMsg, "\n","EMAIL", MAPI_TAG_CONTACT_EMAIL1EMAILADDRESS, "" );
-        vPart += sNamedProp(tnefMsg, "\n","EMAIL", MAPI_TAG_CONTACT_EMAIL2EMAILADDRESS, "" );
-        vPart += sNamedProp(tnefMsg, "\n","EMAIL", MAPI_TAG_CONTACT_EMAIL3EMAILADDRESS, "" );
-        vPart += sNamedProp(tnefMsg, "\n","X-KADDRESSBOOK-X-IMAddress", MAPI_TAG_CONTACT_IMADDRESS, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-SpousesName", MAPI_TAG_PR_SPOUSE_NAME, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-ManagersName", MAPI_TAG_PR_MANAGER_NAME, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-AssistantsName", MAPI_TAG_PR_ASSISTANT, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-Department", MAPI_TAG_PR_DEPARTMENT_NAME, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-Office", MAPI_TAG_PR_OFFICE_LOCATION, "" );
-        vPart += stringProp(tnefMsg, "\n","X-KADDRESSBOOK-X-Profession", MAPI_TAG_PR_PROFESSION, "" );
-        QString s( tnefMsg->findProp( MAPI_TAG_PR_WEDDING_ANNIVERSARY, "")
-                      .replace(QChar('-'), "")
-                      .replace(QChar(':'), "") );
-        if( !s.isEmpty() ){
-          vPart += "\nX-KADDRESSBOOK-X-Anniversary:";
-          vPart += s;
-        }
-        vPart += sNamedProp(tnefMsg, "\n","URL", MAPI_TAG_CONTACT_WEBPAGE, "" );
+        addressee.setUid(stringProp(tnefMsg, attMSGID));
+        addressee.setFormattedName(stringProp(tnefMsg, MAPI_TAG_PR_DISPLAY_NAME));
+        addressee.insertEmail(sNamedProp(tnefMsg, MAPI_TAG_CONTACT_EMAIL1EMAILADDRESS),true);
+        addressee.insertEmail(sNamedProp(tnefMsg, MAPI_TAG_CONTACT_EMAIL2EMAILADDRESS),false);
+        addressee.insertEmail(sNamedProp(tnefMsg, MAPI_TAG_CONTACT_EMAIL3EMAILADDRESS),false);
+        addressee.insertCustom("KADDRESSBOOK", "X-IMAddress",
+          sNamedProp(tnefMsg, MAPI_TAG_CONTACT_IMADDRESS));
+        addressee.insertCustom("KADDRESSBOOK", "X-SpousesName",
+          stringProp(tnefMsg, MAPI_TAG_PR_SPOUSE_NAME));
+        addressee.insertCustom("KADDRESSBOOK", "X-ManagersName",
+          stringProp(tnefMsg, MAPI_TAG_PR_MANAGER_NAME));
+        addressee.insertCustom("KADDRESSBOOK", "X-AssistantsName",
+          stringProp(tnefMsg, MAPI_TAG_PR_ASSISTANT));
+        addressee.insertCustom("KADDRESSBOOK", "X-Department",
+          stringProp(tnefMsg, MAPI_TAG_PR_DEPARTMENT_NAME));
+        addressee.insertCustom("KADDRESSBOOK", "X-Office",
+          stringProp(tnefMsg, MAPI_TAG_PR_OFFICE_LOCATION));
+        addressee.insertCustom("KADDRESSBOOK", "X-Profession",
+          stringProp(tnefMsg, MAPI_TAG_PR_PROFESSION));
+
+        QString s = tnefMsg->findProp( MAPI_TAG_PR_WEDDING_ANNIVERSARY)
+                      .replace(QChar('-'), QString::null)
+                      .replace(QChar(':'), QString::null);
+
+        if( !s.isEmpty() )
+          addressee.insertCustom("KADDRESSBOOK", "X-Anniversary", s);
+
+        addressee.setUrl(sNamedProp(tnefMsg, MAPI_TAG_CONTACT_WEBPAGE));
+
         // collect parts of Name entry
-        s = stringProp(tnefMsg, "","", MAPI_TAG_PR_SURNAME, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_GIVEN_NAME, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_MIDDLE_NAME, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_DISPLAY_NAME_PREFIX, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_GENERATION, "" );
-        if( s != ";;;;" ){
-          vPart += "\nN:";
-          vPart += s;
-        }
-        vPart += stringProp(tnefMsg, "\n","NICKNAME", MAPI_TAG_PR_NICKNAME, "" );
-        vPart += stringProp(tnefMsg, "\n","ROLE", MAPI_TAG_PR_TITLE, "" );
-        vPart += stringProp(tnefMsg, "\n","ORG", MAPI_TAG_PR_COMPANY_NAME, "" );
+        addressee.setFamilyName(stringProp(tnefMsg, MAPI_TAG_PR_SURNAME));
+        addressee.setGivenName(stringProp(tnefMsg, MAPI_TAG_PR_GIVEN_NAME));
+        addressee.setAdditionalName(stringProp(tnefMsg, MAPI_TAG_PR_MIDDLE_NAME));
+        addressee.setPrefix(stringProp(tnefMsg, MAPI_TAG_PR_DISPLAY_NAME_PREFIX));
+        addressee.setSuffix(stringProp(tnefMsg, MAPI_TAG_PR_GENERATION));
+
+        addressee.setNickName(stringProp(tnefMsg, MAPI_TAG_PR_NICKNAME));
+        addressee.setRole(stringProp(tnefMsg, MAPI_TAG_PR_TITLE));
+        addressee.setOrganization(stringProp(tnefMsg, MAPI_TAG_PR_COMPANY_NAME));
         /*
         the MAPI property ID of this (multiline) )field is unknown:
         vPart += stringProp(tnefMsg, "\n","NOTE", ... , "" );
         */
 
-        s = stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_PO_BOX, "" );
-        s += ";";
-        //s += stringProp(tnefMsg, "","", don't know, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_STREET, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_CITY, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_STATE_OR_PROVINCE, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_POSTAL_CODE, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_HOME_ADDRESS_COUNTRY, "" );
-        // note: If no HOME address properties were found
-        //       we use the POSTAL address as home address.
-        if( s == ";;;;;;" ){
-          s = stringProp(tnefMsg, "","", MAPI_TAG_PR_PO_BOX, "" );
-          s += ";";
-          //s += stringProp(tnefMsg, "","", don't know, "" );
-          s += ";";
-          s += stringProp(tnefMsg, "","", MAPI_TAG_PR_STREET_ADDRESS, "" );
-          s += ";";
-          s += stringProp(tnefMsg, "","", MAPI_TAG_PR_LOCALITY, "" );
-          s += ";";
-          s += stringProp(tnefMsg, "","", MAPI_TAG_PR_STATE_OR_PROVINCE, "" );
-          s += ";";
-          s += stringProp(tnefMsg, "","", MAPI_TAG_PR_POSTAL_CODE, "" );
-          s += ";";
-          s += stringProp(tnefMsg, "","", MAPI_TAG_PR_STATE_OR_PROVINCE, "" );
-        }
-        if( s != ";;;;;;" ){
-          vPart += "\nADR;TYPE=home:";
-          vPart += s;
-        }
-        s = sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSPOBOX, "" );
-        s += ";";
-        //s += sNamedProp(tnefMsg, "","", don't know, "" );
-        s += ";";
-        s += sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSSTREET, "" );
-        s += ";";
-        s += sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSCITY, "" );
-        s += ";";
-        s += sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSSTATE, "" );
-        s += ";";
-        s += sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSPOSTALCODE, "" );
-        s += ";";
-        s += sNamedProp(tnefMsg, "","", MAPI_TAG_CONTACT_BUSINESSADDRESSCOUNTRY, "" );
-        if( s != ";;;;;;" ){
-          vPart += "\nADR;TYPE=work:";
-          vPart += s;
-        }
-        s = stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_PO_BOX, "" );
-        s += ";";
-        //s += stringProp(tnefMsg, "","", don't know, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_STREET, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_CITY, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_STATE_OR_PROVINCE, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_POSTAL_CODE, "" );
-        s += ";";
-        s += stringProp(tnefMsg, "","", MAPI_TAG_PR_OTHER_ADDRESS_COUNTRY, "" );
-        if( s != ";;;;;;" ){
-          vPart += "\nADR;TYPE=dom:";
-          vPart += s;
-        }
+        Address adr;
+
+        adr.setPostOfficeBox(stringProp(tnefMsg, MAPI_TAG_PR_HOME_ADDRESS_PO_BOX));
+        adr.setStreet(stringProp(tnefMsg,        MAPI_TAG_PR_HOME_ADDRESS_STREET));
+        adr.setLocality(stringProp(tnefMsg,      MAPI_TAG_PR_HOME_ADDRESS_CITY));
+        adr.setRegion(stringProp(tnefMsg,        MAPI_TAG_PR_HOME_ADDRESS_STATE_OR_PROVINCE));
+        adr.setPostalCode(stringProp(tnefMsg,    MAPI_TAG_PR_HOME_ADDRESS_POSTAL_CODE));
+        adr.setCountry(stringProp(tnefMsg,       MAPI_TAG_PR_HOME_ADDRESS_COUNTRY));
+        adr.setType(Address::Home);
+
+        addressee.insertAddress(adr);
+
+        adr.setPostOfficeBox(sNamedProp(tnefMsg, MAPI_TAG_CONTACT_BUSINESSADDRESSPOBOX));
+        adr.setStreet(sNamedProp(tnefMsg,        MAPI_TAG_CONTACT_BUSINESSADDRESSSTREET));
+        adr.setLocality(sNamedProp(tnefMsg,      MAPI_TAG_CONTACT_BUSINESSADDRESSCITY));
+        adr.setRegion(sNamedProp(tnefMsg,        MAPI_TAG_CONTACT_BUSINESSADDRESSSTATE));
+        adr.setPostalCode(sNamedProp(tnefMsg,    MAPI_TAG_CONTACT_BUSINESSADDRESSPOSTALCODE));
+        adr.setCountry(sNamedProp(tnefMsg,       MAPI_TAG_CONTACT_BUSINESSADDRESSCOUNTRY));
+        adr.setType(Address::Work);
+
+        addressee.insertAddress(adr);
+
+        adr.setPostOfficeBox(stringProp(tnefMsg, MAPI_TAG_PR_OTHER_ADDRESS_PO_BOX));
+        adr.setStreet(stringProp(tnefMsg,        MAPI_TAG_PR_OTHER_ADDRESS_STREET));
+        adr.setLocality(stringProp(tnefMsg,      MAPI_TAG_PR_OTHER_ADDRESS_CITY));
+        adr.setRegion(stringProp(tnefMsg,        MAPI_TAG_PR_OTHER_ADDRESS_STATE_OR_PROVINCE));
+        adr.setPostalCode(stringProp(tnefMsg,    MAPI_TAG_PR_OTHER_ADDRESS_POSTAL_CODE));
+        adr.setCountry(stringProp(tnefMsg,       MAPI_TAG_PR_OTHER_ADDRESS_COUNTRY));
+        adr.setType(Address::Dom);
+
+        addressee.insertAddress(adr);
+
         // problem: the 'other' address was stored by KOrganizer in
         //          a line looking like the following one:
         // vPart += "\nADR;TYPE=dom;TYPE=intl;TYPE=parcel;TYPE=postal;TYPE=work;TYPE=home:other_pobox;;other_str1\nother_str2;other_loc;other_region;other_pocode;other_country
 
-        vPart += stringProp(tnefMsg, "\n","TEL;TYPE=home", MAPI_TAG_PR_HOME_TELEPHONE_NUMBER, "" );
-        vPart += stringProp(tnefMsg, "\n","TEL;TYPE=work", MAPI_TAG_PR_BUSINESS_TELEPHONE_NUMBER, "" );
-        vPart += stringProp(tnefMsg, "\n","TEL;TYPE=cell", MAPI_TAG_PR_MOBILE_TELEPHONE_NUMBER, "" );
-        vPart += stringProp(tnefMsg, "\n","TEL;TYPE=home;TYPE=fax", MAPI_TAG_PR_HOME_FAX_NUMBER, "" );
-        vPart += stringProp(tnefMsg, "\n","TEL;TYPE=work;TYPE=fax", MAPI_TAG_PR_BUSINESS_FAX_NUMBER, "" );
-        s = tnefMsg->findProp( MAPI_TAG_PR_BIRTHDAY, "")
-                      .replace(QChar('-'), "")
-                      .replace(QChar(':'), "");
-        if( !s.isEmpty() ){
-          vPart += "\nBDAY:";
-          vPart += s;
-        }
-        // add the vPart's header and footer
-        if( !vPart.isEmpty() ){
-          vPart.prepend("BEGIN:VCARD"
-                        "\nVERSION:3.0"  );
-          vPart.append( "\nCLASS:PRIVATE"
-                        "\nEND:VCARD"    );
-          bOk = true;
-        }
+        QString nr;
+        nr = stringProp(tnefMsg, MAPI_TAG_PR_HOME_TELEPHONE_NUMBER);
+        addressee.insertPhoneNumber(KABC::PhoneNumber(nr,PhoneNumber::Home));
+        nr = stringProp(tnefMsg, MAPI_TAG_PR_BUSINESS_TELEPHONE_NUMBER);
+        addressee.insertPhoneNumber(KABC::PhoneNumber(nr,PhoneNumber::Work));
+        nr = stringProp(tnefMsg, MAPI_TAG_PR_MOBILE_TELEPHONE_NUMBER);
+        addressee.insertPhoneNumber(KABC::PhoneNumber(nr,PhoneNumber::Cell));
+        nr = stringProp(tnefMsg, MAPI_TAG_PR_HOME_FAX_NUMBER);
+        addressee.insertPhoneNumber(KABC::PhoneNumber(nr,PhoneNumber::Fax|PhoneNumber::Home));
+        nr = stringProp(tnefMsg, MAPI_TAG_PR_BUSINESS_FAX_NUMBER);
+        addressee.insertPhoneNumber(KABC::PhoneNumber(nr,PhoneNumber::Fax|PhoneNumber::Work));
+
+        s = tnefMsg->findProp( MAPI_TAG_PR_BIRTHDAY)
+                      .replace(QChar('-'), QString::null)
+                      .replace(QChar(':'), QString::null);
+        if( !s.isEmpty() )
+          addressee.setBirthday(QDateTime::fromString(s));
+
+      bOk == (!addressee.isEmpty());
+
       }else if( "IPM.NOTE" == msgClass ){
 
       } // else if ... and so on ...
     }
   }
+
+  // compose return string
+
+  QString s;
+  vPart  = calFormat.toString(&cal);
+  if (cardConv.addresseeToVCard(addressee, s, VCardConverter::v3_0));
+    vPart += s;
 
   return bOk;
 }

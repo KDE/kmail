@@ -17,7 +17,8 @@ bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_LDADD   = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 		../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la  \
-		../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la 
+		../mimelib/libmimelib.la ../ktnef/lib/libktnef.la ../libkcal/libkcal.la \
+		libkmailcommon.la 
 
 libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
