@@ -91,7 +91,6 @@ private:
   QTimer mTimer;
   QStringList mEntryList;
   int mCurrentIndex;
-  bool mImmediate;
   bool mFolderOpen;
   bool mSilent;
 };
