@@ -32,6 +32,7 @@
 #include <qcombobox.h>
 #include <qwidgetstack.h>
 #include <qtextedit.h>
+#include <qwhatsthis.h>
 
 #include <assert.h>
 
@@ -53,11 +54,16 @@ namespace KMail {
 
     // "enable signatue" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Enable signature"), this );
+    QWhatsThis::add(mEnableCheck, 
+        i18n("Check this box if you want KMail to append a signature to mails "
+             "written with this identity."));
     vlay->addWidget( mEnableCheck );
 
     // "obtain signature text from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
     mSourceCombo = new QComboBox( false, this );
+    QWhatsThis::add(mSourceCombo,
+        i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
 		   << i18n("continuation of \"obtain signature text from\"",
@@ -94,6 +100,8 @@ namespace KMail {
     int pageno = 0;
     // page 0: input field for direct entering:
     mTextEdit = new QTextEdit( widgetStack );
+    QWhatsThis::add(mTextEdit, 
+        i18n("Use this field to enter an abitrary static signature."));
     widgetStack->addWidget( mTextEdit, pageno );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrap( QTextEdit::NoWrap );
@@ -108,6 +116,10 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KURLRequester( page );
+    QWhatsThis::add(mFileRequester, 
+        i18n("Use this requester to specifiy a text file that contains your "
+             "signature. It will be read every time you create a new mail or "
+             "append a new signature."));
     hlay->addWidget( new QLabel( mFileRequester,
 				 i18n("S&pecify file:"), page ) );
     hlay->addWidget( mFileRequester, 1 );
@@ -115,6 +127,7 @@ namespace KMail {
     connect( mFileRequester, SIGNAL(textChanged(const QString &)),
 	     this, SLOT(slotEnableEditButton(const QString &)) );
     mEditButton = new QPushButton( i18n("Edit &File"), page );
+    QWhatsThis::add(mEditButton, i18n("Opens the specified file in a text editor."));
     connect( mEditButton, SIGNAL(clicked()), SLOT(slotEdit()) );
     mEditButton->setAutoDefault( false );
     mEditButton->setEnabled( false ); // initially nothing to edit
@@ -130,6 +143,12 @@ namespace KMail {
     mCommandEdit = new KLineEdit( page );
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );
+    QWhatsThis::add(mCommandEdit, 
+        i18n("You can add an abitrary command here, either with or without path "
+             "depending on wether or not the command is in your Path. For every "
+             "new mail, KMail will execute the command and show its output to "
+             "standard output as signature. Usual commands for use with this "
+             "mechanism are \"fortune\" or \"ksig -random\"."));
     hlay->addWidget( new QLabel( mCommandEdit,
 				 i18n("S&pecify command:"), page ) );
     hlay->addWidget( mCommandEdit, 1 );
