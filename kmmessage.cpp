@@ -32,6 +32,7 @@
 #include <time.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kwm.h>
 
 #if ALLOW_GUI
 #include <qmultilineedit.h>
@@ -1587,6 +1588,7 @@ void KMMessage::viewSource(const QString aCaption) const
   QMultiLineEdit* edt;
 
   edt = new QMultiLineEdit;
+  KWM::setMiniIcon(edt->winId(), kapp->miniIcon());
   if (aCaption) edt->setCaption(aCaption);
 
   edt->insertLine(str);

@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <qstrlist.h>
 #include <klocale.h>
+#include <kwm.h>
 
 static QStrList sFilterOpList, sFilterFuncList, sFilterFieldList, 
                 sFilterActionList;
@@ -60,6 +61,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   mFilter = 0;
 
   setCaption(i18n("Filter Rules"));
+  KWM::setMiniIcon(winId(), kapp->miniIcon());
 
   mFilterList = new QListBox(this);
   mFilterList->setMinimumSize(100, 200);

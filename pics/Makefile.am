@@ -8,7 +8,7 @@ data_DATA = green-bullet.png kmfldin.png kmfldout.png kmfolder.png \
 	kmfldsent.png closed.png green-bullet.png \
 	stopwatch.xbm stopwatchMask.xbm kdelogo.xpm \
 	feather_white.png pub_key_red.png pgp-keys.png \
-	kmfolderfull.png abup.png abdown.png
+	kmfolderfull.png abup.png abdown.png 
 
 datadir = $(kde_datadir)/kmail/pics
 

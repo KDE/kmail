@@ -1098,7 +1098,7 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this, 
 		       SLOT(slotAddrBook()));
-  fileMenu->insertItem(i18n("&Filter..."), this, 
+  fileMenu->insertItem(i18n("F&ilter..."), this, 
 		       SLOT(slotFilter()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("&Close"), this, 

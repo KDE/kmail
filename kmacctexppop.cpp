@@ -4,7 +4,6 @@
 
 #include "kmacctexppop.moc"
 
-#include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
@@ -17,6 +16,7 @@
 #include <qpushbutton.h>
 #include <kapp.h>
 #include <kstddirs.h>
+#include <qlayout.h>
 
 #include "kmacctexppop.h"
 #include "kalarmtimer.h"
@@ -29,6 +29,9 @@
 #include <qmessagebox.h> // just for kioslave testing
 #include <qtooltip.h>
 #include "kmbroadcaststatus.h"
+
+#include <kwm.h>
+#include <kbuttonbox.h>
 
 //-----------------------------------------------------------------------------
 KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
@@ -251,42 +254,69 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
 {
   // This function pops up a little dialog which asks you 
   // for a new username and password if one of them was wrong or not set.
+  QLabel *l;
 
   kbp->idle();
-
   act = account;
-  setMaximumSize(300,180);
-  setMinimumSize(300,180);
-  setCaption(caption);
+  KWM::setMiniIcon(winId(), kapp->miniIcon());
+  setCaption(caption);  
 
-  QLabel *label = new QLabel(this);
-  label->setText(i18n("Login Name:"));
-  label->resize(label->sizeHint());
+  QGridLayout *gl = new QGridLayout(this, 4, 2, 10);
 
-  label->move(20,30);
-  usernameLEdit = new QLineEdit(this,"NULL");
-  usernameLEdit->setText(login);
-  usernameLEdit->setGeometry(100,27,150,25);
+  QPixmap pix(locate("data", QString::fromLatin1("kdeui/pics/keys.png")));
+  if(!pix.isNull()) {
+    l = new QLabel(this);
+    l->setPixmap(pix);
+    l->setFixedSize(l->sizeHint());
+    gl->addWidget(l, 0, 0);
+  }
+
+  l = new QLabel(i18n("You need to supply a username and a\n"
+		      "password to access this mailbox."), 
+		 this);
+  l->setFixedSize(l->sizeHint());
+  gl->addWidget(l, 0, 1);
   
-  QLabel *label1 = new QLabel(this);
-  label1->setText(i18n("Password:"));
-  label1->resize(label1->sizeHint());
-  label1->move(20,80);
+  l = new QLabel(i18n("Login Name:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 1, 0);
+
+  usernameLEdit = new QLineEdit(login, this);
+  usernameLEdit->setFixedHeight(usernameLEdit->sizeHint().height());
+  usernameLEdit->setMinimumWidth(usernameLEdit->sizeHint().width());
+  gl->addWidget(usernameLEdit, 1, 1);
+
+  l = new QLabel(i18n("Password:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 2, 0);  
 
   passwdLEdit = new QLineEdit(this,"NULL");
   passwdLEdit->setEchoMode(QLineEdit::Password);
   passwdLEdit->setText(passwd);
-  passwdLEdit->setGeometry(100,76,150,25);
-  connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
+  passwdLEdit->setFixedHeight(passwdLEdit->sizeHint().height());
+  passwdLEdit->setMinimumWidth(passwdLEdit->sizeHint().width());
+  gl->addWidget(passwdLEdit, 2, 1);
+  connect(passwdLEdit, SIGNAL(returnPressed()),
+	  SLOT(slotOkPressed()));
 
-  ok = new QPushButton(i18n("OK") ,this,"NULL");
-  ok->setGeometry(55,130,70,25);
-  connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
+  KButtonBox *bbox = new KButtonBox(this);
+  bbox->addStretch(1);
+  ok = bbox->addButton(i18n("OK"));
+  ok->setDefault(true);
+  cancel = bbox->addButton(i18n("Cancel"));
+  bbox->layout();
+  gl->addMultiCellWidget(bbox, 3, 3, 0, 1);
 
-  cancel = new QPushButton(i18n("Cancel"), this);
-  cancel->setGeometry(180,130,70,25);
-  connect(cancel,SIGNAL(pressed()),this,SLOT(slotCancelPressed()));
+  connect(ok, SIGNAL(pressed()),
+	  this, SLOT(slotOkPressed()));
+  connect(cancel, SIGNAL(pressed()),
+	  this, SLOT(slotCancelPressed()));
 
+  if(strlen(login) > 0)
+    passwdLEdit->setFocus();
+  else
+    usernameLEdit->setFocus();
+  gl->activate();
 }
 
 //-----------------------------------------------------------------------------
