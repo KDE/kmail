@@ -248,6 +248,38 @@ void KMMessage::setSubject(const char* aStr)
 
 
 //-----------------------------------------------------------------------------
+const char* KMMessage::headerField(const char* aName) const
+{
+  DwHeaders& header = mMsg->Headers();
+
+  if (!aName || !header.HasField(aName)) return "";
+  return header.FindField(aName)->AsString().c_str();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setHeaderField(const char* aName, const char* aValue)
+{
+  DwHeaders& header = mMsg->Headers();
+  DwString str;
+  DwField* field;
+
+  if (!aName) return;
+  if (!aValue) aValue="";
+
+  str = aName;
+  if (str[str.length()-1] != ':') str += ": ";
+  else str += " ";
+  str += aValue;
+
+  field = new DwField(str, mMsg);
+  field->Parse();
+
+  header.AddOrReplaceField(field);
+}
+
+
+//-----------------------------------------------------------------------------
 const char* KMMessage::typeStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
@@ -363,7 +395,7 @@ void KMMessage::setBody(const char* aStr)
 {
   mMsgStr.assign(aStr);
   mMsg->Body().FromString(mMsgStr);
-  mMsg->Parse();
+  mMsg->Assemble();
 }
 
 

@@ -13,31 +13,43 @@
 
 extern bool shuttingDown;
 
+/** Contains and handles user identity information. */
 class KMIdentity;
 extern KMIdentity* identity;
 
+/** Global animated busy pointer. */
 class KBusyPtr;
 extern KBusyPtr* kbp;
 
+/** The application object. */
 class KApplication;
 extern KApplication* app;
 
+/** Account manager: manages all accounts for mail retrieval. */
 class KMAcctMgr;
 extern KMAcctMgr* acctMgr;
 
+/** Folder manager: manages all mail folders. */
 class KMFolderMgr;
 extern KMFolderMgr* folderMgr;
 
+/** Sender: handles sending of messages. */
 class KMSender;
 extern KMSender* msgSender;
 
+/** Global locale for localization of messages. */
 class KLocale;
 extern KLocale* nls;
 
-class KShortCut;
-extern KShortCut* keys;
+/** Standard accelerator keys. */
+class KStdAccel;
+extern KStdAccel* keys;
 
-class KMFolder;
+/** Filter manager: handles mail filters and applies them to messages. */
+class KMFilterMgr;
+extern KMFilterMgr* filterMgr;
+
+/** A bunch of standard mail folders. */
 class KMFolder;
 extern KMFolder* inboxFolder;
 extern KMFolder* outboxFolder;

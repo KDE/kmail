@@ -6,7 +6,7 @@
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
 #include "kmimemagic.h"
-#include "kmmainview.h"
+#include "kmmainwin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"

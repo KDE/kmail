@@ -11,7 +11,6 @@
 #include "kmsender.h"
 
 #include <drag.h>
-#include <html.h>
 #include <iostream.h>
 #include <kapp.h>
 #include <kiconloader.h>
@@ -21,7 +20,9 @@
 #include <kstatusbar.h>
 #include <ktablistbox.h>
 #include <ktoolbar.h>
+#include <kstdaccel.h>
 #include <mimelib/mimepp.h>
+#include <html.h>
 #include <qaccel.h>
 #include <qbttngrp.h>
 #include <qevent.h>
@@ -883,47 +884,47 @@ void KMComposeWin::setupMenuBar()
 
   QPopupMenu *fmenu = new QPopupMenu();
   fmenu->insertItem(nls->translate("Send"),composeView,
-		    SLOT(slotSendNow()), ALT+Key_X);
+		    SLOT(slotSendNow()));
   fmenu->insertItem(nls->translate("Send &later"),composeView,
-		    SLOT(slotSendLater()),ALT+Key_L);
+		    SLOT(slotSendLater()));
   fmenu->insertSeparator();
   fmenu->insertItem(nls->translate("Address &Book..."),composeView,
-		    SLOT(slotToDo()),ALT+Key_B);
+		    SLOT(slotToDo()), ALT+Key_B);
   fmenu->insertItem(nls->translate("&Print..."),composeView,
-		    SLOT(slotPrintIt()),ALT+Key_P);
+		    SLOT(slotPrintIt()), keys->print());
   fmenu->insertSeparator();
   fmenu->insertItem(nls->translate("New &Composer"),composeView,
-		    SLOT(slotNewComposer()),ALT+Key_C);
+		    SLOT(slotNewComposer()), keys->openNew());
   fmenu->insertItem(nls->translate("New Mail&reader"),this,
 		    SLOT(doNewMailReader()),ALT+Key_R);
   fmenu->insertSeparator();
   fmenu->insertItem(nls->translate("&Close"),this,
-		    SLOT(abort()),CTRL+ALT+Key_C);
-  menuBar->insertItem(nls->translate("File"),fmenu);
+		    SLOT(abort()), keys->close());
+  menuBar->insertItem(nls->translate("&File"),fmenu);
   
 
   QPopupMenu  *emenu = new QPopupMenu();
   emenu->insertItem(nls->translate("Undo"),composeView,
-		    SLOT(slotUndoEvent()));
+		    SLOT(slotUndoEvent()), keys->undo());
   emenu->insertSeparator();
   emenu->insertItem(nls->translate("Cut"),composeView,
-		    SLOT(slotCutText()),CTRL + Key_X);
+		    SLOT(slotCutText()), keys->cut());
   emenu->insertItem(nls->translate("Copy"),composeView,
-		    SLOT(slotCopyText()),CTRL + Key_C);
+		    SLOT(slotCopyText()), keys->copy());
   emenu->insertItem(nls->translate("Paste"),composeView,
-		    SLOT(slotPasteText()),CTRL + Key_V);
+		    SLOT(slotPasteText()), keys->paste());
   emenu->insertItem(nls->translate("Mark all"),composeView,
-		    SLOT(slotMarkAll()),CTRL + Key_A);
+		    SLOT(slotMarkAll()), CTRL + Key_A);
   emenu->insertSeparator();
   emenu->insertItem(nls->translate("Find..."),composeView,
-		    SLOT(slotFind()));
-  menuBar->insertItem(nls->translate("Edit"),emenu);
+		    SLOT(slotFind()), keys->find());
+  menuBar->insertItem(nls->translate("&Edit"),emenu);
 
   QPopupMenu *mmenu = new QPopupMenu();
   mmenu->insertItem(nls->translate("Recip&ients..."),composeView,
-		    SLOT(slotToDo()),ALT+Key_I);
+		    SLOT(slotToDo()));
   mmenu->insertItem(nls->translate("Insert &File"), composeView,
-		    SLOT(slotInsertFile()),ALT+Key_F);
+		    SLOT(slotInsertFile()));
   mmenu->insertSeparator();
 
   QPopupMenu *menv = new QPopupMenu();
@@ -931,30 +932,30 @@ void KMComposeWin::setupMenuBar()
   menv->insertItem(nls->translate("Normal"));
   menv->insertItem(nls->translate("Low"));
   mmenu->insertItem(nls->translate("Priority"),menv);
-  menuBar->insertItem(nls->translate("Message"),mmenu);
+  menuBar->insertItem(nls->translate("&Message"),mmenu);
 
   QPopupMenu *amenu = new QPopupMenu();
   amenu->insertItem(nls->translate("&File..."),composeView,
-		    SLOT(slotAttachFile()),ALT+Key_F);
+		    SLOT(slotAttachFile()));
   amenu->insertItem(nls->translate("Si&gnature"),composeView,
-		    SLOT(slotAppendSignature()),ALT+Key_G);
+		    SLOT(slotAppendSignature()));
 
   menu = new QPopupMenu();
- menu->setCheckable(TRUE);
+  menu->setCheckable(TRUE);
   menu->insertItem(nls->translate("Base 64"),this,
 		    SLOT(slotEncodingChanged()));
   menu->insertItem(nls->translate("Quoted Printable"),this,
 		    SLOT(slotEncodingChanged()));
   amenu->insertItem(nls->translate("Encoding"),menu);
-  menuBar->insertItem(nls->translate("Attach"),amenu);
+  menuBar->insertItem(nls->translate("&Attach"),amenu);
 
   QPopupMenu *omenu = new QPopupMenu();
   omenu->insertItem(nls->translate("Toggle T&oolbar"),this,
-		    SLOT(toggleToolBar()),ALT+Key_O);
+		    SLOT(toggleToolBar()));
   omenu->insertItem(nls->translate("Change &Font"),composeView,
 		    SLOT(slotSelectFont()),ALT+Key_F);
   omenu->setItemChecked(omenu->idAt(2),TRUE);
-  menuBar->insertItem(nls->translate("Options"),omenu);
+  menuBar->insertItem(nls->translate("&Options"),omenu);
   menuBar->insertSeparator();
 
   QPopupMenu *hmenu = new QPopupMenu();
@@ -963,7 +964,7 @@ void KMComposeWin::setupMenuBar()
   hmenu->insertSeparator();
   hmenu->insertItem(nls->translate("About"),this,SLOT(about()));
   hmenu->insertItem(nls->translate("About &Qt"),this,SLOT(aboutQt()));
-  menuBar->insertItem(nls->translate("Help"),hmenu);
+  menuBar->insertItem(nls->translate("&Help"),hmenu);
 
   setMenu(menuBar);
 }
@@ -1055,18 +1056,20 @@ KEdit * KMComposeView::getEditor()
 //-----------------------------------------------------------------------------
 void KMComposeWin::abort()
 {
-  QString str;
+  const char* str;
   int result;
 
-  str =  "The composer may contain data\nthat will be lost if you ";
-  str += "close the window now.\nDo you wish to continue?\n";
  
   if(!composeView->getEditor()->isModified())
     {close();
     return;
     }
   else
-    result = KMsgBox::yesNo(0,"KMail Message", str);
+  {
+    str = nls->translate("The composed message will be discarded.\n"
+			 "Do you reall want to close ?");
+    result = KMsgBox::yesNo(0, nls->translate("Warning"), str);
+  }
 
   if(result==1)
     close();

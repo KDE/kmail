@@ -1,35 +1,30 @@
 // kmsettings.cpp
 
 #include <qdir.h>
-#include <qlabel.h>
-#include <qpushbt.h>
+
+#include "kmacctlocal.h"
+#include "kmacctmgr.h"
+#include "kmacctpop.h"
+#include "kmacctseldlg.h"
+#include "kmfolder.h"
+#include "kmfoldermgr.h"
+#include "kmglobal.h"
+#include "kmidentity.h"
+#include "kmmainwin.h"
+#include "kmsender.h"
+
+#include <kapp.h>
+#include <klocale.h>
+#include <kmsgbox.h>
+#include <ktablistbox.h>
+#include <qbttngrp.h>
 #include <qfiledlg.h>
 #include <qframe.h>
-#include <qbttngrp.h>
-#include <qlayout.h>
 #include <qgrpbox.h>
-#include <klocale.h>
-#include <kapp.h>
-#include <kmsgbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qpushbt.h>
 #include <qradiobt.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
-#include <klocale.h>
-#include <qlayout.h>
-#include <kmfoldermgr.h>
-#include <kmfolder.h>
-#include <kmidentity.h>
-
-#include "kmmainwin.h"
-#include "kmacctlocal.h"
-#include "kmacctpop.h"
-#include "kmacctmgr.h"
-#include "kmfolder.h"
-#include "kmglobal.h"
-#include "kmsender.h"
-#include "ktablistbox.h"
-#include "kmacctseldlg.h"
 
 //------
 #include "kmsettings.moc"
@@ -44,7 +39,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   config=app->getConfig();
   setCaption(nls->translate("Settings"));
   resize(500,600);
-  setOKButton(nls->translate("OK"));
+  setOKButton(nls->translate("Ok"));
   setCancelButton(nls->translate("Cancel"));
 
 #ifdef NEEDS_LOTS_OF_WORK
@@ -600,7 +595,7 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
   }
 
-  acctMgr->sync();
+  acctMgr->writeConfig(TRUE);
 
   QDialog::accept();
 }

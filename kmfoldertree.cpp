@@ -149,7 +149,7 @@ int KMFolderTree::indexOfFolder(const KMFolder* folder) const
 
   for (i=0, cur=list->first(); cur; cur=list->next())
   {
-    if (cur == folder) return i;
+    if (cur == (KMFolderNode*)folder) return i;
     i++;
   }
   return -1;

@@ -10,6 +10,7 @@
 #include <qfile.h>
 #include <qmsgbox.h>
 #include <kconfig.h>
+#include <kapp.h>
 #include <klocale.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -20,9 +21,7 @@
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 {
   assert(aBasePath != NULL);
-
   mAcctList.setAutoDelete(TRUE);
-
   setBasePath(aBasePath);
 }
 
@@ -30,7 +29,7 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 //-----------------------------------------------------------------------------
 KMAcctMgr::~KMAcctMgr()
 {
-  sync();
+  writeConfig(FALSE);
   mAcctList.clear();
 }
 
@@ -53,51 +52,49 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::sync(void)
+void KMAcctMgr::writeConfig(bool withSync)
 {
-  KConfig config(mBasePath);
+  KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName;
   int i;
 
-  config.setGroup("General");
-  config.writeEntry("Accounts", mAcctList.count());
+  config->setGroup("General");
+  config->writeEntry("accounts", mAcctList.count());
 
   for (i=1,acct=mAcctList.first(); acct; acct=mAcctList.next(),i++)
   {
     groupName.sprintf("Account %d", i);
-    config.setGroup(groupName);
-    acct->writeConfig(config);
+    config->setGroup(groupName);
+    acct->writeConfig(*config);
   }
-  config.sync();
+  if (withSync) config->sync();
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::reload(void)
+void KMAcctMgr::readConfig(void)
 {
-  KConfig config(mBasePath);
+  KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName, acctType, acctName;
   int i, num;
 
   mAcctList.clear();
 
-  config.setGroup("General");
-  num = config.readNumEntry("Accounts", 0);
+  config->setGroup("General");
+  num = config->readNumEntry("accounts", 0);
 
   for (i=1; i<=num; i++)
   {
     groupName.sprintf("Account %d", i);
-    config.setGroup(groupName);
-    acctType = config.readEntry("Type");
-    acctName = config.readEntry("Name");
+    config->setGroup(groupName);
+    acctType = config->readEntry("Type");
+    acctName = config->readEntry("Name");
     acct = create(acctType, acctName);
     if (!acct) continue;
-    acct->readConfig(config);
+    acct->readConfig(*config);
   }
-
-  return TRUE;
 }
 
 

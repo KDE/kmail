@@ -61,6 +61,7 @@ protected slots:
   void doHelp();
   void doNewMailReader();
   void doSettings();
+  void doFilter();
   void doUnimplemented();
   void doViewChange();
   void doAddFolder();

@@ -11,7 +11,7 @@
 #include <kapp.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kshortcut.h>
+#include <kstdaccel.h>
 #include "knewpanner.h"
 
 #include "kmsettings.h"
@@ -28,6 +28,7 @@
 #include "kmcomposewin.h"
 #include "kmglobal.h"
 #include "kmfolderseldlg.h"
+#include "kmfiltermgr.h"
 
 #include "kmmainwin.moc"
 
@@ -215,6 +216,13 @@ void KMMainWin::doSettings()
 {
   KMSettings dlg(this);
   dlg.exec();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::doFilter()
+{
+  filterMgr->openDialog();
 }
 
 
@@ -421,6 +429,8 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("&Settings..."), this, 
 		       SLOT(doSettings()));
+  fileMenu->insertItem(nls->translate("&Filter..."), this, 
+		       SLOT(doFilter()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("&Close"), this, 
 		       SLOT(doClose()), keys->close());

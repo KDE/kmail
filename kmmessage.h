@@ -5,7 +5,6 @@
 #define kmmessage_h
 
 #include <mimelib/string.h>
-
 #include <time.h>
 
 class KMFolder;
@@ -90,6 +89,10 @@ public:
   /** Get or set the 'Subject' header field */
   virtual const char* subject(void) const;
   virtual void setSubject(const char* aStr);
+
+  /** Get or set header field with given name */
+  virtual const char* headerField(const char* name) const;
+  virtual void setHeaderField(const char* name, const char* value);
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)

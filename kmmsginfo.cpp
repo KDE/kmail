@@ -64,8 +64,20 @@ void KMMsgInfo::deleteMsg(void)
 //-----------------------------------------------------------------------------
 int KMMsgInfo::compareBySubject(const KMMsgInfo* other) const
 {
-  return (strcasecmp(skipKeyword(mSubject, ':'), 
-		     skipKeyword(other->mSubject, ':')));
+  int rc;
+  const char *skip, *otherSkip;
+  bool hasRe, otherHasRe;
+
+  skip = skipKeyword(mSubject, ':');
+  otherSkip = skipKeyword(other->mSubject, ':');
+  rc = strcasecmp(skip, otherSkip);
+  if (rc) return rc;
+
+  // If both are equal return the one with a "Re:" at the beginning as the
+  // larger one.
+  hasRe = ((const char*)mSubject != skip);
+  otherHasRe = (((const char*)other->mSubject) != otherSkip);
+  return (hasRe - otherHasRe);
 }
 
 

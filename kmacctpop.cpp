@@ -19,6 +19,7 @@
 #include "kmglobal.h"
 #include "kbusyptr.h"
 #include "kmacctfolder.h"
+#include "kmfiltermgr.h"
 
 
 //-----------------------------------------------------------------------------

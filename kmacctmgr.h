@@ -30,11 +30,11 @@ public:
     character is expanded to the contents of the HOME environment variable. */
   virtual void setBasePath(const char* aBasePath);
 
-  /** Completely reload accounts from disk. Returns TRUE on success. */
-  virtual bool reload(void);
+  /** Completely reload accounts from config. */
+  virtual void readConfig(void);
 
-  /** Write accounts to disk. */
-  virtual void sync(void);
+  /** Write accounts to config. */
+  virtual void writeConfig(bool withSync=TRUE);
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */

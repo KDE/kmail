@@ -11,12 +11,13 @@
 #include "kmsender.h"
 #include "kbusyptr.h"
 #include "kmcomposewin.h"
+#include "kmfiltermgr.h"
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <kmsgbox.h>
 #include <klocale.h>
-#include <kshortcut.h>
+#include <kstdaccel.h>
 #include <kmidentity.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -25,6 +26,7 @@ KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
 KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
+KMFilterMgr* filterMgr = NULL;
 KMSender* msgSender = NULL;
 KLocale* nls = NULL;
 KMFolder* inboxFolder = NULL;
@@ -32,7 +34,7 @@ KMFolder* outboxFolder = NULL;
 KMFolder* queuedFolder = NULL;
 KMFolder* sentFolder = NULL;
 KMFolder* trashFolder = NULL;
-KShortCut* keys = NULL;
+KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 bool shuttingDown = FALSE;
 
@@ -82,7 +84,7 @@ void testDir( const char *_name )
 //-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
 {
-  QString  acctPath, foldersPath, trashName;
+  QString  acctPath, foldersPath;
   KConfig* cfg;
 
   app = new KApplication(argc, argv, "kmail");
@@ -91,15 +93,15 @@ static void init(int argc, char *argv[])
   kbp = new KBusyPtr;
   cfg = app->getConfig();
 
-  keys = new KShortCut(cfg);
+  keys = new KStdAccel(cfg);
 
   oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 
-  testDir( "/.kde" );
-  testDir( "/.kde/share" );  
-  testDir( "/.kde/share/config" );  
-  testDir( "/.kde/share/apps" );
-  testDir( "/.kde/share/apps/kmail" );
+  testDir("/.kde");
+  testDir("/.kde/share");
+  testDir("/.kde/share/config");  
+  testDir("/.kde/share/apps");
+  testDir("/.kde/share/apps/kmail");
 
   identity = new KMIdentity;
 
@@ -110,6 +112,7 @@ static void init(int argc, char *argv[])
 
   folderMgr = new KMFolderMgr(foldersPath);
   acctMgr   = new KMAcctMgr(acctPath);
+  filterMgr = new KMFilterMgr;
 
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
 				         cfg->readEntry("inboxFolder", "inbox"));
@@ -128,7 +131,9 @@ static void init(int argc, char *argv[])
   trashFolder->setType("tr");
   trashFolder->open();
 
-  acctMgr->reload();
+  acctMgr->readConfig();
+  filterMgr->readConfig();
+
   msgSender = new KMSender;
 }
 
@@ -139,6 +144,7 @@ static void cleanup(void)
   shuttingDown = TRUE;
 
   if (msgSender) delete msgSender;
+  if (filterMgr) delete filterMgr;
   if (acctMgr) delete acctMgr;
   if (folderMgr) delete folderMgr;
   if (kbp) delete kbp;

@@ -8,11 +8,14 @@
 #include <klocale.h>
 #include <kconfig.h>
 
+static QString resultStr;
+
 
 //-----------------------------------------------------------------------------
-KMFilterAction::KMFilterAction(const char* label): 
-  KMFilterActionInherited(NULL, label)
+KMFilterAction::KMFilterAction(const QString name, const QString label): 
+  KMFilterActionInherited(NULL, name)
 {
+  mLabel = label.copy();
 }
 
 
@@ -34,42 +37,81 @@ KMFilterAction::~KMFilterAction()
 class KMFilterActionMove: public KMFilterAction
 {
 public:
-  KMFilterActionMove(const char* label);
-  virtual bool process(KMMessage* msg);
-  virtual void installGUI(KMFilterActionGUI* caller);
-  virtual void readConfig(KConfig* config);
-  virtual void writeConfig(KConfig* config);
+  KMFilterActionMove(const QString name, const QString label);
+  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual void installGUI(KMGFilterDlg* caller);
+  virtual void argsFromString(const QString argsStr);
+  virtual const QString argsAsString(void) const;
 
 protected:
   KMFolder* mDest;
 };
 
-KMFilterActionMove::KMFilterActionMove(const char* aLabel): 
-  KMFilterAction(aLabel)
+KMFilterActionMove::KMFilterActionMove(const QString n, const QString l):
+  KMFilterAction(n, l)
 {
   mDest = NULL;
 }
 
-bool KMFilterActionMove::process(KMMessage* msg)
+bool KMFilterActionMove::process(KMMessage* msg, bool&)
 {
   if (!mDest) return TRUE;
   mDest->addMsg(msg);
   return FALSE;
 }
 
-void KMFilterActionMove::installGUI(KMFilterActionGUI* caller)
+void KMFilterActionMove::installGUI(KMGFilterDlg* caller)
 {
   caller->addFolderList(nls->translate("To folder:"), &mDest);
 }
 
-void KMFilterActionMove::readConfig(KConfig* config)
+void KMFilterActionMove::argsFromString(const QString argsStr)
 {
-  mDest = (KMFolder*)folderMgr->find(config->readEntry("Destination"));
+  mDest = (KMFolder*)folderMgr->find(argsStr);
 }
 
-void KMFilterActionMove::writeConfig(KConfig* config)
+const QString KMFilterActionMove::argsAsString(void) const
 {
-  config->writeEntry("Destination", mDest ? (const char*)mDest->name() : "");
+  if (mDest) resultStr = mDest->name();
+  else resultStr = "";
+  return resultStr;
+}
+
+
+//=============================================================================
+// Skip all other filter rules
+//
+class KMFilterActionSkip: public KMFilterAction
+{
+public:
+  KMFilterActionSkip(const QString name, const QString label);
+  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual void installGUI(KMGFilterDlg* caller);
+  virtual void argsFromString(const QString argsStr);
+  virtual const QString argsAsString(void) const;
+};
+
+KMFilterActionSkip::KMFilterActionSkip(const QString n, const QString l):
+  KMFilterAction(n, l)
+{
+}
+
+bool KMFilterActionSkip::process(KMMessage*, bool& stopIt)
+{
+  stopIt = TRUE;
+  return FALSE;
+}
+
+void KMFilterActionSkip::installGUI(KMGFilterDlg*)
+{
+}
+
+void KMFilterActionSkip::argsFromString(const QString)
+{
+}
+
+const QString KMFilterActionSkip::argsAsString(void) const
+{
 }
 
 
@@ -78,22 +120,36 @@ void KMFilterActionMove::writeConfig(KConfig* config)
 //   Filter  Action  Dictionary
 //
 //=============================================================================
-KMFilterActionDict::KMFilterActionDict(int initSize):
-  KMFilterActionDictInherited(initSize, FALSE)
+KMFilterActionDict::KMFilterActionDict():
+  KMFilterActionDictInherited(23, FALSE)
 {
   setAutoDelete(TRUE);
-  init();
+
+  insert("transfer",
+	 new KMFilterActionMove("transfer", nls->translate("transfer")));
+  insert("skip",
+	 new KMFilterActionSkip("skip", nls->translate("skip")));
+  // Register custom filter actions below this line.
 }
 
 
+//=============================================================================
+//
+//   Generic Filter  Action  Dialog
+//
+//=============================================================================
+KMGFilterDlg::KMGFilterDlg(QWidget* parent, const char* name, bool modal,
+			   WFlags f):
+  KMGFilterDlgInherited(parent, name, modal, f)
+{
+  initMetaObject();
+}
+
 //-----------------------------------------------------------------------------
-KMFilterActionDict::~KMFilterActionDict()
+KMGFilterDlg::~KMGFilterDlg()
 {
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFilterActionDict::init(void)
-{
-  insert("transfer", new KMFilterActionMove(nls->translate("transfer")));
-}
+#include "kmfilteraction.moc"
