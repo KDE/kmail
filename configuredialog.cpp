@@ -1611,6 +1611,8 @@ void ConfigureDialog::setupIdentityPage( void )
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
   mIdentity.mActiveIdentity = "";
   // populate fcc folder list
+  mIdentity.mFolderNames.clear();
+  mIdentity.mFolderList.clear();
   kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
   for ( unsigned int i = 0; i < mIdentity.mFolderList.count(); i++ )
   {
