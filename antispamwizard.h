@@ -265,7 +265,8 @@ namespace KMail {
       bool pipeRulesSelected() const;
       bool classifyRulesSelected() const;
       bool moveRulesSelected() const;
-
+      bool markReadRulesSelected() const;
+      
       QString selectedFolderName() const;
       void allowClassification( bool enabled );
 
@@ -279,6 +280,7 @@ namespace KMail {
       QCheckBox * mPipeRules;
       QCheckBox * mClassifyRules;
       QCheckBox * mMoveRules;
+      QCheckBox * mMarkRules;
       SimpleFolderTree *mFolderTree;
   };
 

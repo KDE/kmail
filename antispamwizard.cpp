@@ -161,8 +161,13 @@ void AntiSpamWizard::accept()
     spamFilterAction1->argsFromString( mRulesPage->selectedFolderName() );
     spamFilterActions->append( spamFilterAction1 );
     KMFilterAction* spamFilterAction2 = dict["set status"]->create();
-    spamFilterAction2->argsFromString( "P" );
+    spamFilterAction2->argsFromString( "P" ); // Spam
     spamFilterActions->append( spamFilterAction2 );
+    if ( mRulesPage->markReadRulesSelected() ) {
+      KMFilterAction* spamFilterAction3 = dict["set status"]->create();
+      spamFilterAction3->argsFromString( "R" ); // Read
+      spamFilterActions->append( spamFilterAction3 );
+    }
     KMSearchPattern* spamFilterPattern = spamFilter->pattern();
     spamFilterPattern->setName( i18n( "Spam handling" ) );
     spamFilterPattern->setOp( KMSearchPattern::OpOr );
@@ -277,7 +282,7 @@ void AntiSpamWizard::accept()
     // (a.gungl@gmx.de)
 
     // make the toolbar changes persistent - let's be very conservative here
-    QString config = 
+    QString config =
         KXMLGUIFactory::readConfigFile( "kmmainwin.rc", KMKernel::self()->xmlGuiInstance() );
 #ifndef NDEBUG
     kdDebug(5006) << "Read kmmainwin.rc contents (last 1000 chars printed):" << endl;
@@ -335,7 +340,7 @@ void AntiSpamWizard::accept()
           kdDebug(5006) << "####################################################" << endl;
 #endif
           // write back the modified resource file
-          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc", 
+          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc",
               KMKernel::self()->xmlGuiInstance() );
         }
       }
@@ -647,11 +652,11 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
                                   KMFolderTree * mainFolderTree )
   : QWidget( parent, name )
 {
-  QGridLayout *grid = new QGridLayout( this, 2, 1, KDialog::marginHint(),
-                                        KDialog::spacingHint() );
+  QGridLayout *grid = new QGridLayout( this, 5, 1, KDialog::marginHint(),
+                                       KDialog::spacingHint() );
 
   mClassifyRules = new QCheckBox( i18n("Classify messages manually as spam"), this );
-  QWhatsThis::add( mClassifyRules, 
+  QWhatsThis::add( mClassifyRules,
       i18n( "Sometimes messages are classified wrongly or even not at all; "
             "the latter might be by intention, because you perhaps filter "
             "out messages from mailing lists before you let the anti-spam "
@@ -662,7 +667,7 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
   grid->addWidget( mClassifyRules, 0, 0 );
 
   mPipeRules = new QCheckBox( i18n("Classify messages using the anti-spam tools"), this );
-  QWhatsThis::add( mPipeRules, 
+  QWhatsThis::add( mPipeRules,
       i18n( "Let the anti-spam tools classify your messages. The wizard "
             "will create appropriate filters. The messages are usually "
             "marked by the tools so that following filters can react "
@@ -670,16 +675,24 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
   grid->addWidget( mPipeRules, 1, 0 );
 
   mMoveRules = new QCheckBox( i18n("Move detected spam messages to the selected folder"), this );
-  QWhatsThis::add( mMoveRules, 
+  QWhatsThis::add( mMoveRules,
       i18n( "A filter to detect messages classified as spam and to move "
             "those messages into a predefined folder is created. The "
             "default folder is the trash folder, but you may change that "
             "in the folder view.") );
   grid->addWidget( mMoveRules, 2, 0 );
 
+  mMarkRules = new QCheckBox( i18n("Additionally mark detected spam messages as read"), this );
+  mMarkRules->setEnabled( false );
+  QWhatsThis::add( mMarkRules,
+      i18n( "Additionally to moving messages which have been classified as "
+            "spam to the selected folder the messages will be marked as "
+            "read.") );
+  grid->addWidget( mMarkRules, 3, 0 );
+
   QString s = "trash";
   mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
-  grid->addWidget( mFolderTree, 3, 0 );
+  grid->addWidget( mFolderTree, 4, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
@@ -687,6 +700,10 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
+  connect( mMarkRules, SIGNAL(clicked()),
+            this, SLOT(processSelectionChange(void)) );
+  connect( mMoveRules, SIGNAL( toggled( bool ) ),
+           mMarkRules, SLOT( setEnabled( bool ) ) );
 }
 
 
@@ -705,6 +722,12 @@ bool ASWizRulesPage::classifyRulesSelected() const
 bool ASWizRulesPage::moveRulesSelected() const
 {
   return mMoveRules->isChecked();
+}
+
+
+bool ASWizRulesPage::markReadRulesSelected() const
+{
+  return mMarkRules->isChecked();
 }
 
 
