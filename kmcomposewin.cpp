@@ -757,7 +757,7 @@ void KMComposeWin::setupActions(void)
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addresbook");
   (void) new KAction (i18n("&New Composer..."), "filenew",
-                      KStdAccel::key(KStdAccel::New),
+                      KStdAccel::shortcut(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
 
@@ -962,9 +962,9 @@ void KMComposeWin::setupEditor(void)
   menu = new QPopupMenu(this);
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
-		   SLOT(undo()), KStdAccel::key(KStdAccel::Undo));
+		   SLOT(undo()), KStdAccel::shortcut(KStdAccel::Undo));
   menu->insertItem(i18n("Redo"),mEditor,
-		   SLOT(redo()), KStdAccel::key(KStdAccel::Redo));
+		   SLOT(redo()), KStdAccel::shortcut(KStdAccel::Redo));
   menu->insertSeparator();
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
@@ -2654,7 +2654,7 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
   {
     QKeyEvent* k = (QKeyEvent*)e;
 
-    if (KStdAccel::isEqual( k, KStdAccel::SubstringCompletion ))
+    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).contains(KKey(k)))
     {
       doCompletion(true);
       return TRUE;

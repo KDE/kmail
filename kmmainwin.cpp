@@ -1793,7 +1793,7 @@ void KMMainWin::setupMenuBar()
 		      actionCollection(), "new_mail_client" );
 
   saveAsAction = new KAction( i18n("Save &As..."), "filesave",
-    KStdAccel::key(KStdAccel::Save),
+    KStdAccel::shortcut(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
 
   printAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
@@ -1836,7 +1836,7 @@ void KMMainWin::setupMenuBar()
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");
 
-  (void) new KAction( i18n("&Copy Text"), KStdAccel::key(KStdAccel::Copy), this,
+  (void) new KAction( i18n("&Copy Text"), KStdAccel::shortcut(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
   deleteAction = new KAction( i18n("&Delete"), "editdelete", Key_D, this,
@@ -1845,13 +1845,13 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Search Messages..."), "find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
-  (void) new KAction( i18n("&Find in Message..."), KStdAccel::key(KStdAccel::Find), this,
+  (void) new KAction( i18n("&Find in Message..."), KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
   (void) new KAction( i18n("Sele&ct All Messages"), Key_K, this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
-  (void) new KAction( i18n("Select Message &Text"), KStdAccel::key(KStdAccel::SelectAll), this,
+  (void) new KAction( i18n("Select Message &Text"), KStdAccel::shortcut(KStdAccel::SelectAll), this,
 		      SLOT(slotSelectText()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
@@ -1880,7 +1880,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
   //----- Message Menu
-  (void) new KAction( i18n("New Message..."), "filenew", KStdAccel::key(KStdAccel::New), this,
+  (void) new KAction( i18n("New Message..."), "filenew", KStdAccel::shortcut(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
   (void) new KAction( i18n("next message","&Next"), Key_N, this,
