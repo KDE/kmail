@@ -4253,7 +4253,8 @@ void MiscPage::GroupwareTab::save() {
         if (!node->isDir() && node->name() == "INBOX")
           folder = static_cast<KMFolder*>(node);
     }
-    GlobalSettings::setTheIMAPResourceAccount( acct->id() );
+    if ( acct )
+      GlobalSettings::setTheIMAPResourceAccount( acct->id() );
   }
 
   bool enabled = mEnableImapResCB->isChecked() && folder;
