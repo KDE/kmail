@@ -22,6 +22,7 @@
 #define _CONFIGURE_DIALOG_H_
 
 class QCheckBox;
+class QComboBox;
 class QLabel;
 class QLineEdit;
 class QListViewItem;
@@ -34,6 +35,87 @@ class KpgpConfig;
 
 #include <klistview.h>
 #include <kdialogbase.h>
+
+
+class NewIdentityDialog : public KDialogBase
+{
+  Q_OBJECT
+
+  public:
+    NewIdentityDialog( QWidget *parent=0, const char *name=0, bool modal=true);
+    void setIdentities( const QStringList &list );
+
+    QString identityText( void );
+    QString duplicateText( void );
+      
+  private slots:
+    void radioClicked( int id );
+
+  private:
+    QLineEdit *mLineEdit; 
+    QLabel    *mComboLabel;
+    QComboBox *mComboBox;
+};
+
+
+
+
+class IdentityEntry
+{
+  public:
+    QString identity() const;
+    QString fullName() const;
+    QString organization() const;
+    QString emailAddress() const;
+    QString replyToAddress() const;
+    QString signatureFileName() const;
+    QString signatureInlineText() const;
+    bool    signatureFileIsAProgram() const;
+    bool    useSignatureFile() const;
+
+    void setIdentity( const QString &identity );
+    void setFullName( const QString &fullName );
+    void setOrganization( const QString &organization );
+    void setEmailAddress( const QString &emailAddress );
+    void setReplyToAddress( const QString &replytoAddress );
+    void setSignatureFileName( const QString &signatureFileName );
+    void setSignatureInlineText( const QString &signatureInlineText );
+    void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
+    void setUseSignatureFile( bool useSignatureFile );
+
+  private:
+    QString mIdentity;
+    QString mFullName;
+    QString mOrganization;
+    QString mEmailAddress;
+    QString mReplytoAddress;
+    QString mSignatureFileName;
+    QString mSignatureInlineText;
+    bool    mSignatureFileIsAProgram;
+    bool    mUseSignatureFile;
+};
+
+
+class IdentityList
+{
+  public:
+    IdentityList();
+
+    QStringList identities( void );
+    IdentityEntry *get( const QString &identity );
+ 
+    void initialize( void );
+    void add( const IdentityEntry &entry );
+    void add( const QString &identity, const QString &copyFrom );
+    void update( const IdentityEntry &entry );
+
+    void remove( const QString &identity );
+
+  private:
+    QList<IdentityEntry> mList;
+};
+
+
 
 class ConfigureDialog : public KDialogBase
 {
@@ -66,6 +148,8 @@ class ConfigureDialog : public KDialogBase
 
     struct IdentityWidget
     {
+      QComboBox      *identityCombo;
+      QPushButton    *removeIdentityButton;
       QLineEdit      *nameEdit;
       QLineEdit      *organizationEdit;
       QLineEdit      *emailEdit;
@@ -78,6 +162,7 @@ class ConfigureDialog : public KDialogBase
       QRadioButton   *signatureFileRadio;
       QRadioButton   *signatureTextRadio;
       QMultiLineEdit *signatureTextEdit;
+      QString        mActiveIdentity;
     };
     struct NetworkWidget
     {
@@ -168,7 +253,7 @@ class ConfigureDialog : public KDialogBase
     };
 
   public:
-    ConfigureDialog( QWidget *parent=0, char *name=0, bool modal=true );
+    ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
     ~ConfigureDialog( void );
 
     void setup( void );
@@ -190,7 +275,12 @@ class ConfigureDialog : public KDialogBase
     void setupSecurityPage( void );
     void setupMiscPage( void );
 
+    void setIdentityInformation( const QString &identityName );
+
   private slots:
+    void slotNewIdentity( void );
+    void slotRemoveIdentity( void );
+    void slotIdentitySelectorChanged( void );
     void slotSignatureType( int id );
     void slotSignatureChooser( void );
     void slotSignatureEdit( void );
@@ -224,6 +314,8 @@ class ConfigureDialog : public KDialogBase
     MimeWidget       mMime;
     SecurityWidget   mSecurity;
     MiscWidget       mMisc;
+
+    IdentityList     mIdentityList;
 };
 
 

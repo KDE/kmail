@@ -24,6 +24,7 @@
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qlabel.h>
@@ -796,11 +797,89 @@ void ConfigureDialog::ListView::resizeColums( void )
 
 
 
-ConfigureDialog::ConfigureDialog( QWidget *parent, char *name, bool modal )
+
+NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name, 
+				      bool modal )
+  :KDialogBase( parent, name, modal, i18n("New identity"), Ok|Cancel|Help, Ok,
+		true )
+{
+  QFrame *page = makeMainWidget();
+  QGridLayout *glay = new QGridLayout( page, 6, 2, 0, spacingHint() );
+  glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  glay->setRowStretch( 5, 10 );
+
+  QLabel *label = new QLabel( i18n("New Identity:"), page );
+  glay->addWidget( label, 0, 0 );
+  
+  mLineEdit = new QLineEdit( page );
+  glay->addWidget( mLineEdit, 0, 1 );
+
+  QButtonGroup *group = new QButtonGroup( page );
+  connect( group, SIGNAL(clicked(int)), this, SLOT(radioClicked(int)) );
+  group->hide();
+
+  QRadioButton *radioEmpty = 
+    new QRadioButton( i18n("With empty fields"), page );
+  group->insert(radioEmpty);
+  glay->addMultiCellWidget( radioEmpty, 1, 1, 0, 1 );
+
+  QRadioButton *radioControlCenter = 
+    new QRadioButton( i18n("Use Control Center settings"), page );
+  group->insert(radioControlCenter);
+  glay->addMultiCellWidget( radioControlCenter, 2, 2, 0, 1 );
+
+  QRadioButton *radioDuplicate = 
+    new QRadioButton( i18n("Duplicate existing identity"), page );
+  group->insert(radioDuplicate);
+  glay->addMultiCellWidget( radioDuplicate, 3, 3, 0, 1 );
+
+  mComboLabel = new QLabel( i18n("Existing identities:"), page );
+  glay->addWidget( mComboLabel, 4, 0 );
+
+  mComboBox = new QComboBox( false, page );
+  glay->addWidget( mComboBox, 4, 1 );
+
+  group->setButton(0);
+  radioClicked(0);
+}
+
+
+void NewIdentityDialog::radioClicked( int id )
+{
+  bool state = id == 2;
+  mComboLabel->setEnabled( state );
+  mComboBox->setEnabled( state );
+}
+
+
+void NewIdentityDialog::setIdentities( const QStringList &list )
+{
+  mComboBox->clear();
+  mComboBox->insertStringList( list );
+}
+
+
+QString NewIdentityDialog::identityText( void )
+{
+  return( mLineEdit->text() );
+}
+
+
+QString NewIdentityDialog::duplicateText( void )
+{
+  return( mComboBox->isEnabled() ? mComboBox->currentText() : QString::null );
+}
+
+
+
+
+ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, 
+				  bool modal )
   :KDialogBase( IconList, i18n("Configure"), Help|Default|Apply|Ok|Cancel,
 		Ok, parent, name, modal, true )
 {
   setHelp( "kmail/kmail.html", QString::null );
+  setIconListAllVisible( true );
 
   makeIdentityPage();
   makeNetworkPage();
@@ -809,7 +888,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, char *name, bool modal )
   makeMimePage();
   makeSecurityPage();
   makeMiscPage();
-  setup();
+  setup();  
 }
 
 
@@ -824,30 +903,50 @@ void ConfigureDialog::makeIdentityPage( void )
 			  QPixmap(user_xpm) /*ListIcon("user")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
 
-  QGridLayout *glay = new QGridLayout( topLevel, 10, 3 );
+  QGridLayout *glay = new QGridLayout( topLevel, 11, 3 );
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  glay->setRowStretch( 9, 10 );
+  glay->setRowStretch( 10, 10 );
   glay->setColStretch( 1, 10 );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
+  QLabel *label = new QLabel( i18n("Identity:"), page );
   glay->addWidget( label, 0, 0 );
+  QWidget *helper = new QWidget( page );
+  glay->addMultiCellWidget( helper, 0, 0, 1, 2 );
+  QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
+  mIdentity.identityCombo = new QComboBox( false, helper );
+  connect( mIdentity.identityCombo, SIGNAL(activated(int)),
+	   this, SLOT(slotIdentitySelectorChanged()) ); 
+  hlay->addWidget( mIdentity.identityCombo, 10 );
+  QPushButton *newButton = new QPushButton( i18n("New..."), helper );
+  connect( newButton, SIGNAL(clicked()),
+	   this, SLOT(slotNewIdentity()) );
+  newButton->setAutoDefault( false );
+  hlay->addWidget( newButton );
+  mIdentity.removeIdentityButton = new QPushButton( i18n("Remove"), helper );
+  connect( mIdentity.removeIdentityButton, SIGNAL(clicked()),
+	   this, SLOT(slotRemoveIdentity()) );
+  mIdentity.removeIdentityButton->setAutoDefault( false );
+  hlay->addWidget( mIdentity.removeIdentityButton );
+
+  label = new QLabel( i18n("Name:"), page );
+  glay->addWidget( label, 2, 0 );
   mIdentity.nameEdit = new QLineEdit( page );
-  glay->addMultiCellWidget( mIdentity.nameEdit, 0, 0, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.nameEdit, 2, 2, 1, 2 );
 
   label = new QLabel( i18n("Organization:"), page );
-  glay->addWidget( label, 1, 0 );
+  glay->addWidget( label, 3, 0 );
   mIdentity.organizationEdit = new QLineEdit( page );
-  glay->addMultiCellWidget( mIdentity.organizationEdit, 1, 1, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.organizationEdit, 3, 3, 1, 2 );
 
   label = new QLabel( i18n("Email Address:"), page );
-  glay->addWidget( label, 2, 0 );
+  glay->addWidget( label, 4, 0 );
   mIdentity.emailEdit = new QLineEdit( page );
-  glay->addMultiCellWidget( mIdentity.emailEdit, 2, 2, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.emailEdit, 4, 4, 1, 2 );
 
   label = new QLabel( i18n("Reply-To Address:"), page );
-  glay->addWidget( label, 3, 0 );
+  glay->addWidget( label, 5, 0 );
   mIdentity.replytoEdit = new QLineEdit( page );
-  glay->addMultiCellWidget( mIdentity.replytoEdit, 3, 3, 1, 2 );  
+  glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );  
 
   QButtonGroup *buttonGroup = new QButtonGroup( page );  
   connect( buttonGroup, SIGNAL(clicked(int)), 
@@ -856,37 +955,37 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.signatureFileRadio = 
     new QRadioButton( i18n("Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 4, 4, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 6, 6, 0, 2 );
 
   mIdentity.signatureFileLabel = new QLabel( i18n("Signature File:"), page );
-  glay->addWidget( mIdentity.signatureFileLabel, 5, 0 );
+  glay->addWidget( mIdentity.signatureFileLabel, 7, 0 );
   mIdentity.signatureFileEdit = new QLineEdit( page );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addWidget( mIdentity.signatureFileEdit, 5, 1 );
+  glay->addWidget( mIdentity.signatureFileEdit, 7, 1 );
   mIdentity.signatureBrowseButton = new QPushButton( i18n("Choose..."), page );
   connect( mIdentity.signatureBrowseButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureChooser()) );
   mIdentity.signatureBrowseButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureBrowseButton, 5, 2 );
+  glay->addWidget( mIdentity.signatureBrowseButton, 7, 2 );
 
   mIdentity.signatureExecCheck = 
     new QCheckBox( i18n("The file is a program"), page );
-  glay->addWidget( mIdentity.signatureExecCheck, 7, 1 );
+  glay->addWidget( mIdentity.signatureExecCheck, 8, 1 );
   mIdentity.signatureEditButton = new QPushButton( i18n("Edit File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureEditButton, 7, 2 );
+  glay->addWidget( mIdentity.signatureEditButton, 8, 2 );
 
   mIdentity.signatureTextRadio = 
     new QRadioButton( i18n("Specify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
-  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 8, 8, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 9, 9, 0, 2 );
 
   mIdentity.signatureTextEdit = new QMultiLineEdit( page );
   mIdentity.signatureTextEdit->setText("Does not work yet");
-  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 9, 9, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 10, 10, 0, 2 );
 }
 
 
@@ -1079,6 +1178,7 @@ void ConfigureDialog::makeComposerPage( void )
   tabWidget->addTab( page1, i18n("Phrases and Appearance") );
   QVBoxLayout *vlay = new QVBoxLayout( page1, spacingHint() );
 
+  
   QGroupBox *group = new QGroupBox(i18n("Phrases"), page1 );
   vlay->addWidget( group );
 
@@ -1343,25 +1443,13 @@ void ConfigureDialog::setup( void )
 
 
 
-
 void ConfigureDialog::setupIdentityPage( void )
 {
-  mIdentity.nameEdit->setText(identity->fullName());
-  mIdentity.organizationEdit->setText(identity->organization());
-  mIdentity.emailEdit->setText(identity->emailAddr());
-  mIdentity.replytoEdit->setText(identity->replyToAddr());
-  mIdentity.signatureFileEdit->setText(identity->signatureFile());
-  if( 1 )
-  {
-    mIdentity.signatureFileRadio->setChecked(true);
-    slotSignatureType(0);
-  }
-  else
-  {
-    mIdentity.signatureTextRadio->setChecked(true);
-    slotSignatureType(1);
-  }
+  mIdentityList.initialize();
+  mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
+  slotIdentitySelectorChanged(); // This will trigger an update
 }
+
 
 void ConfigureDialog::setupNetworkPage( void )
 {
@@ -1542,6 +1630,133 @@ void ConfigureDialog::setupMiscPage( void )
 }
 
 
+void ConfigureDialog::setIdentityInformation( const QString &identityName )
+{
+  if( mIdentity.mActiveIdentity == identityName )
+  {
+    return;
+  }
+
+  //
+  // 1. Save current settings to the list
+  //
+  IdentityEntry *entry = mIdentityList.get(mIdentity.mActiveIdentity);
+  if( entry != 0 )
+  {
+    entry->setFullName( mIdentity.nameEdit->text() );
+    entry->setOrganization( mIdentity.organizationEdit->text() );
+    entry->setEmailAddress( mIdentity.emailEdit->text() );
+    entry->setReplyToAddress( mIdentity.replytoEdit->text() );
+    entry->setSignatureFileName( mIdentity.signatureFileEdit->text() );
+    entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
+    entry->setSignatureFileIsAProgram(
+      mIdentity.signatureFileRadio->isChecked() );
+    entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
+  }
+
+  mIdentity.mActiveIdentity = identityName;
+
+  //
+  // 2. Display the new settings
+  //
+  bool useSignatureFile;
+  entry = mIdentityList.get(identityName);
+  if( entry == 0 )
+  {
+    mIdentity.nameEdit->setText("");
+    mIdentity.organizationEdit->setText("");
+    mIdentity.emailEdit->setText("");
+    mIdentity.replytoEdit->setText("");
+    mIdentity.signatureFileEdit->setText("");
+    mIdentity.signatureFileRadio->setChecked( false );
+    mIdentity.signatureTextEdit->setText( "" );
+    useSignatureFile = true;
+  }
+  else
+  {
+    mIdentity.nameEdit->setText( entry->fullName() );
+    mIdentity.organizationEdit->setText( entry->organization() );
+    mIdentity.emailEdit->setText( entry->emailAddress() );
+    mIdentity.replytoEdit->setText( entry->replyToAddress() );
+    mIdentity.signatureFileEdit->setText( entry->signatureFileName() );
+    mIdentity.signatureFileRadio->setChecked(entry->signatureFileIsAProgram());
+    mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
+    useSignatureFile = entry->useSignatureFile();
+  }
+
+  if( useSignatureFile = true )
+  {
+    mIdentity.signatureFileRadio->setChecked(true);
+    slotSignatureType(0);
+  }
+  else
+  {
+    mIdentity.signatureTextRadio->setChecked(true);
+    slotSignatureType(1);
+  }
+}
+
+
+void ConfigureDialog::slotNewIdentity( void )
+{
+  NewIdentityDialog *dialog = new NewIdentityDialog( this, "new", true );
+
+  QStringList list;
+  for( int i=0; i< mIdentity.identityCombo->count(); i++ )
+  {
+    list += mIdentity.identityCombo->text(i);
+  }
+  dialog->setIdentities( list );
+
+  int result = dialog->exec();
+  if( result == QDialog::Accepted )
+  {
+    QString identityText = dialog->identityText().stripWhiteSpace();
+    if( identityText.isEmpty() == false )
+    {
+      QString defaultIdentity = list.first();
+      list.remove( defaultIdentity );
+      list += identityText;
+      list.sort();
+      list.prepend( defaultIdentity );
+
+      mIdentity.identityCombo->clear();
+      mIdentity.identityCombo->insertStringList(list);
+      mIdentity.identityCombo->setCurrentItem( list.findIndex(identityText) );
+      mIdentityList.add( identityText, dialog->duplicateText() );
+      slotIdentitySelectorChanged();
+    }
+  }
+  delete dialog;
+}
+
+
+void ConfigureDialog::slotRemoveIdentity( void )
+{
+  int currentItem = mIdentity.identityCombo->currentItem();
+  if( currentItem > 0 ) // Item 0 is the default and can not be removed.
+  {
+    QString msg = i18n(
+     "Do you really want to remove the identity\n"
+     "named \"%1\" ?").arg(mIdentity.identityCombo->currentText());
+    int result = KMessageBox::warningYesNo( this, msg );
+    if( result == KMessageBox::Yes )
+    {
+      mIdentityList.remove( mIdentity.identityCombo->currentText() );
+      mIdentity.identityCombo->removeItem( currentItem );
+      mIdentity.identityCombo->setCurrentItem( currentItem-1 );
+      slotIdentitySelectorChanged();
+    }
+  }
+}
+
+
+void ConfigureDialog::slotIdentitySelectorChanged( void )
+{
+  int currentItem = mIdentity.identityCombo->currentItem();
+  mIdentity.removeIdentityButton->setEnabled( currentItem != 0 );
+  setIdentityInformation( mIdentity.identityCombo->currentText() );
+}
 
 
 void ConfigureDialog::slotSignatureType( int id )
@@ -2024,4 +2239,211 @@ void ConfigureDialog::slotMailCommandChooser( void )
     mMisc.mailCommandEdit->setText( url.path() );
   }
 }
+
+
+
+
+
+
+
+QString IdentityEntry::identity() const
+{
+  return( mIdentity );
+}
+
+QString IdentityEntry::fullName() const
+{
+  return( mFullName );
+}
+
+QString IdentityEntry::organization() const 
+{
+  return( mOrganization );
+}
+
+QString IdentityEntry::emailAddress() const
+{
+  return( mEmailAddress );
+}
+
+QString IdentityEntry::replyToAddress() const
+{
+  return( mReplytoAddress );
+}
+
+QString IdentityEntry::signatureFileName() const 
+{
+  return( mSignatureFileName );
+}
+
+QString IdentityEntry::signatureInlineText() const
+{
+  return( mSignatureInlineText );
+}
+
+bool IdentityEntry::signatureFileIsAProgram() const
+{
+  return( mSignatureFileIsAProgram );
+}
+
+bool IdentityEntry::useSignatureFile() const
+{
+  return( mUseSignatureFile );
+}
+
+
+void IdentityEntry::setIdentity( const QString &identity )
+{
+  mIdentity = identity;
+}
+
+void IdentityEntry::setFullName( const QString &fullName )
+{
+  mFullName = fullName;
+}
+
+void IdentityEntry::setOrganization( const QString &organization )
+{
+  mOrganization = organization;
+}
+
+void IdentityEntry::setEmailAddress( const QString &emailAddress )
+{
+  mEmailAddress = emailAddress;
+}
+
+void IdentityEntry::setReplyToAddress( const QString &replytoAddress )
+{
+  mReplytoAddress = replytoAddress;
+}
+
+void IdentityEntry::setSignatureFileName( const QString &signatureFileName )
+{
+  mSignatureFileName = signatureFileName;
+}
+
+void IdentityEntry::setSignatureInlineText( const QString &signatureInlineText)
+{
+  mSignatureInlineText = signatureInlineText;
+}
+
+void IdentityEntry::setSignatureFileIsAProgram( bool signatureFileIsAProgram )
+{
+  mSignatureFileIsAProgram = signatureFileIsAProgram;
+}
+
+void IdentityEntry::setUseSignatureFile( bool useSignatureFile )
+{
+  mUseSignatureFile = useSignatureFile;
+}
+
+
+
+
+
+IdentityList::IdentityList()
+{
+  mList.setAutoDelete(true);
+}
+
+
+QStringList IdentityList::identities()
+{
+  QStringList list;
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
+  {
+    list += e->identity();
+  }
+  return( list );
+}
+
+
+IdentityEntry *IdentityList::get( const QString &identity )
+{
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
+  {
+    if( identity == e->identity() )
+    {
+      return( e );
+    }
+  }
+  return( 0 );
+}
+
+
+void IdentityList::remove( const QString &identity )
+{
+  IdentityEntry *e = get(identity);
+  if( e != 0 )
+  {
+    mList.remove(e);
+  }
+}
+
+
+
+void IdentityList::initialize()
+{
+  //
+  // Pretty easy for now.
+  //
+  IdentityEntry entry;
+  entry.setIdentity( i18n("Default") );
+  entry.setFullName( identity->fullName() );
+  entry.setOrganization( identity->organization() );
+  entry.setEmailAddress( identity->emailAddr() );
+  entry.setReplyToAddress( identity->replyToAddr() );
+  entry.setSignatureFileName( identity->signatureFile() );
+  entry.setSignatureInlineText( "" );
+  entry.setSignatureFileIsAProgram( false );
+  entry.setUseSignatureFile( true );
+
+  add( entry );
+}
+
+
+
+void IdentityList::add( const IdentityEntry &entry )
+{
+  if( get( entry.identity() ) != 0 )
+  {
+    return; // We can not have duplicates.
+  }
+  mList.append( new IdentityEntry(entry) );
+}
+
+
+void IdentityList::add( const QString &identity, const QString &copyFrom )
+{
+  if( get( identity ) != 0 )
+  {
+    return; // We can not have duplicates.
+  }
+
+  IdentityEntry newEntry;
+
+  IdentityEntry *src = get( copyFrom );
+  if( src != 0 )
+  {
+    newEntry = *src;
+  }
+
+  newEntry.setIdentity( identity );
+  add( newEntry );
+}
+
+
+
+void IdentityList::update( const IdentityEntry &entry )
+{
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
+  {
+    if( entry.identity() == e->identity() )
+    {
+      *e = entry;
+      return;
+    }
+  }
+}
+
 
