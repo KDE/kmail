@@ -71,7 +71,7 @@ public:
   QColor *mColor;
   QString mSortDate, mSortArrival;
   KMPaintInfo *mPaintInfo;
-  
+
   // Constuction a new list view item with the given colors and pixmap
   KMHeaderItem( QListView* parent, KMFolder* folder, int msgId, 
 		KMPaintInfo *aPaintInfo )
@@ -262,6 +262,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   setAllColumnsShowFocus( TRUE );
   mNested = false;
   mNestedOverride = false;
+  mousePressed = FALSE;
 
   // Espen 2000-05-14: Getting rid of thick ugly frames 
   setLineWidth(0);
@@ -718,6 +719,8 @@ void KMHeaders::msgRemoved(int id, QString msgId)
     insertItem(lastChild);
   }
 
+  if (currentItem() == mItems[id])
+    mPrevCurrent = 0;
   delete mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     //    debug( QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()));
@@ -1403,6 +1406,11 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   if (idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
+  if (lvi != mPrevCurrent) {
+    if (mPrevCurrent)
+      mFolder->unGetMsg(mPrevCurrent->msgId());
+    mPrevCurrent = item;
+  }
 }
 
 
@@ -1466,6 +1474,7 @@ void KMHeaders::updateMessageList(void)
   KMMsgBase* mb;
   bool autoUpd;
 
+  mPrevCurrent = 0;
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   if (!mFolder)
   {

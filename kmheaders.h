@@ -248,6 +248,7 @@ private:
   bool getMsgMulti;             // ditto
   KMHeaderItem* getMsgItem;     // ditto
   KMMessageList mSelMsgList;    // KMHeaders::selectedMsgs isn't reentrant
+  KMHeaderItem* mPrevCurrent;
 
   QListViewItem *beginSelection, *endSelection; // For shift selection
 
