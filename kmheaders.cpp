@@ -1379,7 +1379,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   SerNumList serNums;
   for (QListViewItemIterator it(this); it.current(); ++it)
-    if (it.current()->isSelected()) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       serNums.append( msgBase->getMsgSerNum() );
