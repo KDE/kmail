@@ -35,6 +35,7 @@
 #include <knotifydialog.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>
+#include <kaddrbook.h>
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
@@ -733,7 +734,7 @@ void KMMainWidget::slotPopFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KMAddrBookExternal::openAddressBook(this);
+  KAddrBookExternal::openAddressBook(this);
 }
 
 

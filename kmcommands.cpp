@@ -54,6 +54,7 @@
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
+#include <kaddrbook.h>
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermbox.h"
@@ -429,7 +430,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
 
 void KMMailtoAddAddrBookCommand::execute()
 {
-  KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+  KAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
                                 parentWidget() );
 }
 
@@ -442,7 +443,8 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
 
 void KMMailtoOpenAddrBookCommand::execute()
 {
-  KMAddrBookExternal::openEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+  QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
+  KAddrBookExternal::openEmail( KMMessage::getEmailAddr(addr), addr ,
                                  parentWidget() );
 }
 

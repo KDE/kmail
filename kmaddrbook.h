@@ -25,17 +25,5 @@ public:
     static QStringList categories();
 };
 
-class KMAddrBookExternal {
-public:
-  static void addEmail( const QString &addr, QWidget *parent );
-  static void addNewAddressee( QWidget* );
-  static void openEmail( const QString &addr, QWidget *parent );
-  static void openAddressBook( QWidget *parent );
-
-  static bool addVCard( const KABC::Addressee& addressee, QWidget *parent );
-
-private:
-  static bool addAddressee( const KABC::Addressee& addressee );
-};
 
 #endif /*KMAddrBook_h*/

@@ -23,6 +23,7 @@
 
 #include "vcardviewer.h"
 #include "kmaddrbook.h"
+#include <kaddrbook.h>
 
 #include <addresseeview.h>
 using KPIM::AddresseeView;
@@ -70,7 +71,7 @@ KMail::VCardViewer::~VCardViewer()
 
 void KMail::VCardViewer::slotUser1()
 {
-  KMAddrBookExternal::addVCard( *itAddresseeList, this );
+  KAddrBookExternal::addVCard( *itAddresseeList, this );
 }
 
 void KMail::VCardViewer::slotUser2()

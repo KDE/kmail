@@ -24,6 +24,7 @@
 #include "kfileio.h"
 #include "kmmsgpartdlg.h"
 #include <kpgpblock.h>
+#include <kaddrbook.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
@@ -1922,7 +1923,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KMAddrBookExternal::openAddressBook(this);
+  KAddrBookExternal::openAddressBook(this);
 }
 
 
