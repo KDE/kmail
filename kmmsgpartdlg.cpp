@@ -91,7 +91,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	   this, SLOT(slotMimeTypeChanged(const QString&)) );
   glay->addWidget( mMimeType, 0, 1 );
 
-  msg = i18n("<qt><p>The <em>mime type</em> of the file.</p>"
+  msg = i18n("<qt><p>The <em>MIME type</em> of the file.</p>"
 	     "<p>Normally, you don't need to touch this setting, since the "
 	     "type of the file is automatically checked. But sometimes, %1 "
 	     "may not detect the type correctly. Here's where you can fix "
@@ -148,7 +148,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   msg = i18n("<qt><p>The transport encoding of this part.</p>"
 	     "<p>Normally, you don't need to change this, since %1 will use "
-	     "a decent default encoding, depending on the mime type. Yet "
+	     "a decent default encoding, depending on the MIME type. Yet "
 	     "sometimes, you can significantly reduce the size of the "
 	     "resulting message, e.g. if a PostScript file doesn't contain "
 	     "binary data, but consists of pure text. In this case, choosing "
@@ -163,7 +163,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   msg = i18n("<qt><p>Check this option if you want to suggest to the "
 	     "recipient the automatic (inline) display of this part in the "
-	     "message preview instead of the default icon view.</p>"
+	     "message preview, instead of the default icon view.</p>"
 	     "<p>Technically, this is carried out by setting this part's "
 	     "<em>Content-Disposition</em> header field to \"inline\" "
 	     "instead of the default \"attachment\".</p></qt>");
