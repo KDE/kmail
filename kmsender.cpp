@@ -594,22 +594,13 @@ bool KMSendProc::finish(void)
 }
 
 //-----------------------------------------------------------------------------
-const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
+const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF,
+  bool noSingleDot)
 {
   QString str;
-  int num;
   int pos=0;
 
   if (aStr.isEmpty()) return str;
-
-  for (num=0; pos<(int)aStr.length(); pos++)
-  {
-    if (aStr[pos]=='\n')
-    {
-      num++;
-      if (aStr[pos+1]=='.') num++;
-    }
-  }
 
   // Convert LF to CR+LF and handle dots at beginning of line.
   for (pos=0; pos<(int)aStr.length(); pos++)
@@ -619,11 +610,11 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
     {
       if (toCRLF) str += '\r';
       str += c;
-      if (aStr[pos+1]=='.' && aStr[pos+2]<=' ')
+      if (noSingleDot && aStr[pos+1]=='.' && aStr[pos+2]=='\n')
       {
 	pos++;
 	str += '.';
-	str += '.';
+        str += ' ';
       }
     }
     else str += c;
@@ -937,7 +928,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
     return smtpFailed("DATA", replyCode);
 
   statusMsg(i18n("transmitting message"));
-  msgStr = prepareStr(aMsg->asString(), TRUE);
+  msgStr = prepareStr(aMsg->asString(), TRUE, FALSE);
   replyCode = mClient->SendData((const char*)msgStr);
   if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
 
