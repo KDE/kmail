@@ -33,9 +33,6 @@ public:
   /** Write configuration options. */
   virtual void writeConfig(void);
 
-protected:
-  virtual bool queryClose ();
-
 public slots:
   void statusMsg(const QString&);
   void htmlStatusMsg(const QString&);
@@ -47,6 +44,9 @@ public slots:
   void slotEditToolbars();
   void slotUpdateToolbars();
   void setupStatusBar();
+
+protected:
+  virtual bool queryClose ();
 
 protected slots:
   void slotQuit();
