@@ -5997,6 +5997,8 @@ void KMEdit::slotExternalEditorDone(KProcess* proc)
 //-----------------------------------------------------------------------------
 void KMEdit::spellcheck()
 {
+  if (  mKSpell )
+    return;
   mWasModifiedBeforeSpellCheck = isModified();
   spellLineEdit = !spellLineEdit;
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
