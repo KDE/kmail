@@ -191,7 +191,8 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
-  /** Create actions for marked filters */
+  /** Clear and create actions for marked filters */
+  void clearFilterActions();
   void initializeFilterActions();
  
   /** Add, remove or adjust the folder's shortcut. */
