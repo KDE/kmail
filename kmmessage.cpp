@@ -1203,7 +1203,7 @@ void KMMessage::initHeader( const QString & id )
   setSubject("");
   setDateToday();
 
-  setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
+  setHeaderField("User-Agent", "KMail/" KMAIL_VERSION );
 // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");
 }
