@@ -55,8 +55,6 @@ public:
   void setStatusProgressEnable( const QString& id, bool enable );
   /** Emit an update progress widget(s) percent completed signal */
   void setStatusProgressPercent( const QString& id, unsigned long percent );
-  /** Set if the acccount checking is using ssl */
-  void setUsingSSL( bool isUsing );
 
   /** Returns true IFF the user has requested the current operation
       (the one whose progress is being shown) should be aborted.
@@ -81,9 +79,6 @@ signals:
   void statusProgressPercent( unsigned long );
   /** Emitted when reset is called. */
   void resetRequested();
-  /** Emitted when user wants to abort the connection. */
-  void signalAbortRequested();
-  void signalUsingSSL( bool );
 
 public slots:
 

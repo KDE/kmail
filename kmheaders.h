@@ -292,7 +292,6 @@ protected slots:
 
 private slots:
   void slotMoveCompleted( bool success );
-  void slotMoveAborted( );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for

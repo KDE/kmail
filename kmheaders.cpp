@@ -1641,8 +1641,6 @@ void KMHeaders::deleteMsg ()
   KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList );
   connect (command, SIGNAL(completed( bool)),
            this, SLOT(slotMoveCompleted( bool)));
-  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotMoveAborted()));
   command->start();
 
   KMBroadcastStatus::instance()->setStatusMsg("");
@@ -1728,35 +1726,8 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
   connect (command, SIGNAL(completed( bool)),
            this, SLOT(slotMoveCompleted( bool)));
-
-  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotMoveAborted()));
-
   command->start();
 
-}
-
-void KMHeaders::slotMoveAborted( )
-{
-  /* The user cancelled the move, reset the state of all messages involved and
-   * repaint. */
-  KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
-  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-             this, SLOT(slotMoveAborted()));
-
-  for (QListViewItemIterator it(this); it.current(); it++) {
-    KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
-    if ( item->aboutToBeDeleted() ) {
-      item->setAboutToBeDeleted ( false );
-      item->setSelectable ( true );
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      if ( msgBase->isMessage() ) {
-        KMMessage *msg = static_cast<KMMessage *>(msgBase);
-        if ( msg ) msg->setTransferInProgress( false, true );
-      }
-    }
-  }
-  triggerUpdate();
 }
 
 void KMHeaders::slotMoveCompleted( bool success )
@@ -1765,11 +1736,27 @@ void KMHeaders::slotMoveCompleted( bool success )
    if (success) {
     KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
   } else {
-    // FIXME dialog? Offer rollback?
+    /* The move failed or the user canceled it reset the state of all
+     * messages involved and repaint.
+     *
+     * Note: This potentially resets too many items if there is more than one
+     *       move going on. Oh well, I suppose no animals will be harmed.
+     * */
+    for (QListViewItemIterator it(this); it.current(); it++) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
+      if ( item->aboutToBeDeleted() ) {
+        item->setAboutToBeDeleted ( false );
+        item->setSelectable ( true );
+        KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
+        if ( msgBase->isMessage() ) {
+          KMMessage *msg = static_cast<KMMessage *>(msgBase);
+          if ( msg ) msg->setTransferInProgress( false, true );
+        }
+      }
+    }
+    triggerUpdate();
     KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
   }
-  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-             this, SLOT(slotMoveAborted()));
 }
 
 bool KMHeaders::canUndo() const

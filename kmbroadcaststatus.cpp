@@ -34,11 +34,6 @@ KMBroadcastStatus::KMBroadcastStatus()
   reset();
 }
 
-void KMBroadcastStatus::setUsingSSL( bool isUsing )
-{
-  emit signalUsingSSL( isUsing );
-}
-
 void KMBroadcastStatus::setStatusMsg( const QString& message )
 {
   emit statusMsg( message );
@@ -184,7 +179,6 @@ void KMBroadcastStatus::setAbortRequested()
 void KMBroadcastStatus::requestAbort()
 {
   abortRequested_ = true;
-  emit signalAbortRequested();
 }
 #include "kmbroadcaststatus.moc"
 

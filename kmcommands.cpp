@@ -1593,15 +1593,14 @@ void KMMoveCommand::execute()
     return;
   KCursorSaver busy(KBusyPtr::busy());
 
-  // TODO connect cancel
-  // TODO set SSL state according to sourceand destfolder connection?
+  // TODO set SSL state according to source and destfolder connection?
   Q_ASSERT( !mProgressItem );
   mProgressItem =
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),
          "Moving messages" );
-  connect( this, SIGNAL(completed( bool )),
-           this, SLOT( slotMoveCompleted()));
+  connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+           this, SLOT( slotMoveCanceled() ) );
 
   KMMessage *msg;
   KMMsgBase *msgBase;
@@ -1666,8 +1665,7 @@ void KMMoveCommand::execute()
         } else if (rc != 0) {
           // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
-          emit completed( false);
-          deleteLater();
+          completeMove( false);
           return;
         }
       }
@@ -1699,13 +1697,11 @@ void KMMoveCommand::execute()
     if ( mMsgList.first() ) {
       srcFolder = mMsgList.first()->parent();
       if ( mDestFolder && mDestFolder == srcFolder ) {
-        emit completed( true );
-        deleteLater();
+        completeMove( true );
       }
     }
     if ( !mDestFolder ) {
-      emit completed( true );
-      deleteLater();
+      emit completeMove( true );
     }
   }
 }
@@ -1726,8 +1722,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
   } else {
     // Should we inform the user here or leave that to the caller?
   }
-  emit completed( success );
-  deleteLater();
+  completeMove( success );
 }
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
@@ -1737,27 +1732,31 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
                      "folder or invalid serial number." << endl;
     return;
   }
-
   mLostBoys.remove(serNum);
   if ( mLostBoys.isEmpty() ) {
     // we are done. All messages transferred to the host succesfully
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
     }
-    emit completed( true );
-    deleteLater();
+    completeMove( true );
   } else {
     mProgressItem->incCompletedItems();
     mProgressItem->updateProgress();
   }
 }
 
-void KMMoveCommand::slotMoveCompleted( )
+void KMMoveCommand::completeMove( bool success )
 {
   if ( mProgressItem )
     mProgressItem->setComplete();
+  emit completed( success );
+  deleteLater();
 }
 
+void KMMoveCommand::slotMoveCanceled()
+{
+   completeMove( false );
+}
 
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,

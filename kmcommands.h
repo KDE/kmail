@@ -592,10 +592,11 @@ public:
 public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
   void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
-  void slotMoveCompleted();
+  void slotMoveCanceled();
 
 private:
   virtual void execute();
+  void completeMove( bool success );
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
