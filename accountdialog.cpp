@@ -495,10 +495,10 @@ void AccountDialog::makePopAccountPage()
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
   mPop.hostEdit = new QLineEdit( page1 );
-  // only ASCII letters, digits, plus, minus and dots are allowed
+  // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
+  // compatibility) are allowed
   mPop.hostEdit->setValidator(
-    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ),
-                          0 ) );
+    new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
   label->setBuddy( mPop.hostEdit );
   grid->addWidget( mPop.hostEdit, 3, 1 );
 
@@ -660,10 +660,10 @@ void AccountDialog::makeImapAccountPage()
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
   mImap.hostEdit = new QLineEdit( page1 );
-  // only ASCII letters, digits, plus, minus and dots are allowed
-  mImap.hostEdit->setValidator(
-    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ),
-                          0 ) );
+  // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
+  // compatibility) are allowed
+  mPop.hostEdit->setValidator(
+    new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
   label->setBuddy( mImap.hostEdit );
   grid->addWidget( mImap.hostEdit, 3, 1 );
 
