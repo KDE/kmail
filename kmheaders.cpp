@@ -2715,7 +2715,10 @@ bool KMHeaders::writeSortOrder()
     FILE *sortStream = fopen(QFile::encodeName(tempName), "w");
     if (!sortStream)
       return false;
+
+    mSortInfo.ascending = !mSortDescending;
     mSortInfo.dirty = false;
+    mSortInfo.column = mSortCol;
     fprintf(sortStream, KMAIL_SORT_HEADER, KMAIL_SORT_VERSION);
     //magic header information
     Q_INT32 byteOrder = 0x12345678;
