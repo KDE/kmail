@@ -1227,33 +1227,33 @@ static const struct {
   const char * text;
 } mdnMessageBoxes[] = {
   { "mdnNormalAsk", true,
-    I18N_NOOP("This message contains a request to send a disposition "
-	      "notification.\n"
+    I18N_NOOP("This message contains a request to return a notification "
+	      "about your reception of the message.\n"
 	      "You can either ignore the request or let KMail send a "
 	      "\"denied\" or normal response.") },
   { "mdnUnknownOption", false,
-    I18N_NOOP("This message contains a request to send a disposition "
-	      "notification.\n"
+    I18N_NOOP("This message contains a request to send a notification "
+	      "about your reception of the message.\n"
 	      "It contains a processing instruction that is marked as "
 	      "\"required\", but which is unknown to KMail.\n"
 	      "You can either ignore the request or let KMail send a "
 	      "\"failed\" response.") },
   { "mdnMultipleAddressesInReceiptTo", true,
-    I18N_NOOP("This message contains a request to send a disposition "
-	      "notification,\n"
+    I18N_NOOP("This message contains a request to send a notification "
+	      "about your reception of the message,\n"
 	      "but it is requested to send the notification to more "
 	      "than one address.\n"
 	      "You can either ignore the request or let KMail send a "
 	      "\"denied\" or normal response.") },
   { "mdnReturnPathEmpty", true,
-    I18N_NOOP("This message contains a request to send a disposition "
-	      "notification,\n"
+    I18N_NOOP("This message contains a request to send a notification "
+	      "about your reception of the message,\n"
 	      "but there is no return-path set.\n"
 	      "You can either ignore the request or let KMail send a "
 	      "\"denied\" or normal response.") },
   { "mdnReturnPathNotInReceiptTo", true,
-    I18N_NOOP("This message contains a request to send a disposition "
-	      "notification,\n"
+    I18N_NOOP("This message contains a request to send a notification "
+	      "about your reception of the message,\n"
 	      "but the return-path address differs from the address "
 	      "the notification was requested to be sent to.\n"
 	      "You can either ignore the request or let KMail send a "
