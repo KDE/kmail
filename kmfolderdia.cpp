@@ -1156,10 +1156,7 @@ void FolderDiaMailingListTab::slotDetectMailingList()
   kdDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
 
   // first try the currently selected message
-  KMFolderTree *folderTree = dynamic_cast<KMFolderTree *>( mDlg->parent() );
-  assert( folderTree );
-  assert( folderTree->mainWidget() );
-  assert( folderTree->mainWidget()->headers() );
+  KMFolderTree *folderTree = static_cast<KMFolderTree *>( mDlg->parent() );
   int curMsgIdx = folderTree->mainWidget()->headers()->currentItemIndex();
   if ( curMsgIdx > 0 ) {
     KMMessage *mes = mDlg->folder()->getMsg( curMsgIdx );
