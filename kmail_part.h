@@ -64,7 +64,7 @@ class KMailPart: public KPIM::Part, virtual public KMailPartIface
   public slots:
     virtual void save() { /*TODO*/ }
     virtual void exit();
-    virtual void updateEditMenu() {};
+    virtual void updateEditMenu() {}
     void exportFolder( KMFolder* folder );
     void slotIconChanged( KMFolderTreeItem *fti );
     void slotNameChanged( KMFolderTreeItem *fti );
