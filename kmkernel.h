@@ -313,7 +313,6 @@ protected slots:
 signals:
   void configChanged();
   void folderRemoved( KMFolder* aFolder );
-  void showMailCalled();
 
 private:
   void openReader( bool onlyCheck );

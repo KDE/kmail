@@ -32,7 +32,7 @@
 #include <kparts/statusbarextension.h>
 #include <kparts/factory.h>
 #include <kparts/event.h>
-#include <libkdepim/part.h>
+#include <kparts/part.h>
 
 #include <qwidget.h>
 
@@ -49,7 +49,7 @@ class KMFolderTreeItem;
 
 class ActionManager;
 
-class KMailPart: public KPIM::Part, virtual public KMailPartIface
+class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
 {
     Q_OBJECT
   public:
