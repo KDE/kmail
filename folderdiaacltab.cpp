@@ -717,7 +717,7 @@ bool KMail::FolderDiaACLTab::supports( KMFolder* refFolder )
     imapAccount = static_cast<KMFolderImap*>( refFolder->storage() )->account();
   else
     imapAccount = static_cast<KMFolderCachedImap*>( refFolder->storage() )->account();
-  return imapAccount->hasACLSupport(); // support for ACLs (or not tried connecting yet)
+  return imapAccount && imapAccount->hasACLSupport(); // support for ACLs (or not tried connecting yet)
 }
 
 #include "folderdiaacltab.moc"
