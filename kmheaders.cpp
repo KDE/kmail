@@ -1275,7 +1275,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
   KMHeaderItem *removedItem = mItems[id];
   KMHeaderItem *curItem = currentHeaderItem();
-  int curItemIndex = currentItemIndex();
 
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
@@ -1351,7 +1350,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   delete removedItem;
   // we might have rethreaded it, in which case its current state will be lost
   if ( curItem && curItem != removedItem ) {
-    setCurrentMsg( curItemIndex );
+    setCurrentItem( curItem );
+    setSelectionAnchor( currentItem() );
   }
   END_TIMER(msgRemoved);
   SHOW_TIMER(msgRemoved);
