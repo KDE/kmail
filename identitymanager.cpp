@@ -39,7 +39,8 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 IdentityManager::IdentityManager( QObject * parent, const char * name )
   : ConfigManager( parent, name )
 {
-  rollback();
+  readConfig();
+  mShadowIdentities = mIdentities;
   // we need at least a default identity:
   if ( mIdentities.isEmpty() ) {
     kdDebug( 5006 ) << "IdentityManager: No identity found. Creating default." << endl;
@@ -64,7 +65,6 @@ void IdentityManager::commit()
 
 void IdentityManager::rollback()
 {
-  readConfig();
   mShadowIdentities = mIdentities;
 }
 
