@@ -90,7 +90,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   //FIXME: Centralize all the readConfig calls somehow - Zack
   mStorage->readConfig();
 
-  if ( mId == 0 )
+  if ( mId == 0 && aParent )
     mId = aParent->manager()->createId();
 }
 
