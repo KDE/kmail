@@ -925,14 +925,14 @@ void AccountDialog::slotPipeliningClicked()
 {
   if (mPop.usePipeliningCheck->isChecked())
     KMessageBox::information(0, 
-      i18n("Please note that this feature can cause some POP3 servers\n"
-      "that don't support pipelining to send corrupted mails.\n\n"
-      "This is configurable, because some servers support pipelining\n"
-      "but don't announce their capabilities. To check, if your POP3 server\n"
-      "announces pipelining support, use the button at the bottom of\n"
+      i18n("Please note that this feature can cause some POP3 servers "
+      "that don't support pipelining to send corrupted mails.\n"
+      "This is configurable, because some servers support pipelining "
+      "but don't announce their capabilities. To check, if your POP3 server "
+      "announces pipelining support, use the button at the bottom of "
       "the dialog.\n"
-      "If your server doesn't announce it, but you want more speed\n"
-      "you should do some testing first by sending yourself a bunch\n"
+      "If your server doesn't announce it, but you want more speed "
+      "you should do some testing first by sending yourself a bunch "
       "of mails and downloading them."), QString::null,
       "pipelining");
 }

@@ -1009,8 +1009,8 @@ void KMMainWin::slotOverrideHtml()
   if( mHtmlPref == mFolderHtmlPref ) {
     int result = KMessageBox::warningContinueCancel( this,
       // the warning text is taken from configuredialog.cpp:
-      i18n( "Use of HTML in mail will make you more vulnerable to\n"
-        "\"spam\" and may increase the likelihood that your system will be\n"
+      i18n( "Use of HTML in mail will make you more vulnerable to "
+        "\"spam\" and may increase the likelihood that your system will be "
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
       i18n( "Continue" ),

@@ -109,7 +109,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 //   {
 //     QString tmp; //Unsafe
 //     tmp = i18n("Account %1 has no mailbox defined!\n"
-//  	        "Mail checking aborted\n"
+//  	        "Mail checking aborted.\n"
 // 	        "Check your account settings!")
 // 		.arg(account->name());
 //     KMessageBox::information(0,tmp);
@@ -161,7 +161,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     {
       QString tmp; //Unsafe
       tmp = i18n("Account %1 has no mailbox defined!\n"
-		 "Mail checking aborted\n"
+		 "Mail checking aborted.\n"
 		 "Check your account settings!")
 	         .arg(curAccount->name());
       KMessageBox::information(0,tmp);
@@ -255,8 +255,8 @@ void KMAcctMgr::checkMail(bool _interactive)
 
   if (mAcctList.isEmpty())
   {
-    KMessageBox::information(0,i18n("You need to add an account in the network\n"
-				    "section of the settings in order to\n"
+    KMessageBox::information(0,i18n("You need to add an account in the network "
+				    "section of the settings in order to "
 				    "receive mail."));
     return;
   }
@@ -296,9 +296,8 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   if (mAcctList.isEmpty())
   {
-    KMessageBox::information(0,i18n("You need to add an account in the network"
-				    "\n"
-				    "section of the settings in order to\n"
+    KMessageBox::information(0,i18n("You need to add an account in the network "
+				    "section of the settings in order to "
 				    "receive mail."));
     return;
   }
@@ -316,7 +315,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   {
     QString tmp;
     tmp = i18n("Account %1 has no mailbox defined!\n"
-                     "Mail checking aborted\n"
+                     "Mail checking aborted.\n"
                      "Check your account settings!")
 		.arg(cur->name());
     KMessageBox::information(0,tmp);

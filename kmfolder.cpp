@@ -290,8 +290,8 @@ bool KMFolder::readIndexHeader(int *gv)
       int r = KMessageBox::questionYesNo(0,
 					 i18n(
 					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
-					    "This index can be regenerated from your mail folder, but some\n"
-					    "information, including status flags, may be lost. Do you wish\n"
+					    "This index can be regenerated from your mail folder, but some "
+					    "information, including status flags, may be lost. Do you wish "
 					    "to downgrade your index file ?") .arg(name()) .arg(indexVersion) );
       kapp->restoreOverrideCursor();
       if (r == KMessageBox::Yes)

@@ -672,11 +672,11 @@ void KMKernel::transferMail(void)
 
   rc = KMessageBox::questionYesNo(0,
          i18n(
-	    "The directory ~/KMail exists. From now on, KMail uses the\n"
+	    "The directory ~/KMail exists. From now on, KMail uses the "
 	    "directory ~/Mail for its messages.\n"
-	    "KMail can move the contents of the directory ~/KMail into\n"
-	    "~/Mail, but this will replace existing files with the same\n"
-	    "name in the directory ~/Mail (e.g. inbox).\n\n"
+	    "KMail can move the contents of the directory ~/KMail into "
+	    "~/Mail, but this will replace existing files with the same "
+	    "name in the directory ~/Mail (e.g. inbox).\n"
 	    "Shall KMail move the mail folders now ?"));
 
   if (rc == KMessageBox::No) return;
@@ -832,8 +832,8 @@ void KMKernel::notClosedByUser()
 
 void KMKernel::emergencyExit( const QString& reason )
 {
-  QString mesg = i18n("KMail encountered a fatal error and will\n"
-                      "terminate now.\n\nThe error was:\n%1").arg( reason );
+  QString mesg = i18n("KMail encountered a fatal error and will "
+                      "terminate now.\nThe error was:\n%1").arg( reason );
 
   kdWarning() << mesg << endl;
   KNotifyClient::userEvent( mesg, KNotifyClient::Messagebox, KNotifyClient::Error );

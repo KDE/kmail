@@ -519,9 +519,9 @@ void KMAcctExpPop::slotJobFinished() {
       && !idsOfMsgs.isEmpty())
     {
       KMessageBox::sorry(0, i18n("Your POP3 server doesn't support the UIDL "
-      "command.\nThis command is required to determine in a reliable way,\n"
+      "command.  This command is required to determine in a reliable way, "
       "which of the mails on the server KMail has already seen before.\n"
-      "The feature to leave the mails on the server will therefore not\n"
+      "The feature to leave the mails on the server will therefore not "
       "work properly."));
     }
 

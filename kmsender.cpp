@@ -97,14 +97,14 @@ bool KMSender::settingsOk(void) const
   ident.readConfig();
   if (KMTransportInfo::availableTransports().isEmpty())
   {
-    KMessageBox::information(0,i18n("Please specify a send\n"
-				    "method in the settings\n"
+    KMessageBox::information(0,i18n("Please specify a send "
+				    "method in the settings "
 				    "and try again."));
     return FALSE;
   }
   if (!ident.mailingAllowed())
   {
-    KMessageBox::information(0,i18n("Please set the required fields in the\n"
+    KMessageBox::information(0,i18n("Please set the required fields in the "
 				    "identity settings:\n"
 				    "user-name and email-address"));
     return FALSE;
@@ -456,12 +456,12 @@ void KMSender::slotIdle()
   if (mSendProc)
       errString = mSendProc->message();
 
-  msg = i18n("Sending failed:\n%1\n\n"
-        "The message will stay in the 'outbox' folder until you either\n"
-        "fix the problem (e.g. a broken address) or remove the message\n"
-	"from the 'outbox' folder.\n\n"
-	"Note: other messages will also be blocked by this message, as\n"
-	"long as it is in the 'outbox' folder\n\n"
+  msg = i18n("Sending failed:\n%1\n"
+        "The message will stay in the 'outbox' folder until you either "
+        "fix the problem (e.g. a broken address) or remove the message "
+	"from the 'outbox' folder.\n"
+	"Note: other messages will also be blocked by this message, as "
+	"long as it is in the 'outbox' folder\n"
 	"The following transport protocol was used:\n  %2")
     .arg(errString)
     .arg(mMethodStr);
@@ -732,13 +732,12 @@ void KMSendSendmail::start(void)
 {
   if (mSender->transportInfo()->host.isEmpty())
   {
-    QString str = i18n("Please specify a mailer program\n"
-				    "in the settings.");
+    QString str = i18n("Please specify a mailer program in the settings.");
     QString msg;
     msg = i18n("Sending failed:\n%1\n"
 	"The message will stay in the 'outbox' folder and will be resent.\n"
-        "Please remove it from there if you do not want the message to\n"
-		"be resent.\n\n"
+        "Please remove it from there if you do not want the message to "
+		"be resent.\n"
 	"The following transport protocol was used:\n  %2")
     .arg(str + "\n")
     .arg("sendmail://");

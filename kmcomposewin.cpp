@@ -1405,7 +1405,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       int ret =
         KMessageBox::warningYesNoCancel( this,
                                          "There are conflicting encryption "
-                                         "preferences!\n\n"
+                                         "preferences!\n"
                                          "Should this message be encrypted?" );
       kernel->kbp()->busy();
       if( ret == KMessageBox::Cancel )
@@ -1876,7 +1876,7 @@ void KMComposeWin::slotInsertPublicKey()
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
   } else {
-    KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid\n"
+    KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid "
     	"(e.g. key contains umlaut with wrong encoding)." ) );
   }
 }

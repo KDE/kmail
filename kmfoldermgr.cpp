@@ -112,7 +112,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath, bool aImap)
   if (!dir.exists())
   {
     if (!aImap)
-      KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
+      KMessageBox::information(0, i18n("Directory %1 does not yet exist.\n"
 				  "KMail will create it now.").arg(mBasePath));
     // FIXME: mkdir can fail!
     mkdir(QFile::encodeName(mBasePath), 0700);

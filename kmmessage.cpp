@@ -949,9 +949,9 @@ KMMessage* KMMessage::createBounce( bool )
     // No composer appears. So better ask before sending.
     if (KMessageBox::warningContinueCancel(0 /*app-global modal*/,
         i18n("Return the message to the sender as undeliverable?\n"
-	     "This will only work if the email address of the sender,\n"
+	     "This will only work if the email address of the sender, "
 	     "%1, is valid.\n"
-             "The failing address will be reported to be\n%2.")
+             "The failing address will be reported to be %2.")
         .arg(senderStr).arg(receiver),
 	i18n("Bounce Message"), i18n("Continue")) == KMessageBox::Cancel)
     {
