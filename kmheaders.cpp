@@ -2068,6 +2068,7 @@ void KMHeaders::slotRMB()
   mOwner->bounceAction->plug(menu);
   menu->insertSeparator();
   mOwner->saveAsAction->plug(menu);
+  mOwner->editAction->plug(menu);
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
   mOwner->deleteAction->plug(menu);

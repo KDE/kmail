@@ -1505,7 +1505,7 @@ void KMMainWin::setupMenuBar()
   if (encodings.findIndex( mEncodingStr ) != -1)
       mEncoding->setCurrentItem(encodings.findIndex( mEncodingStr ));
 
-  (void) new KAction( i18n("Edi&t..."), Key_T, this,
+  editAction = new KAction( i18n("Edi&t..."), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
   //----- Set status submenu

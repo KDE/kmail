@@ -77,7 +77,7 @@ public:
   static void cleanup();
   KAction *replyAction, *replyAllAction, *replyListAction,
       *forwardAction, *redirectAction,
-    *deleteAction, *saveAsAction, *bounceAction;
+    *deleteAction, *saveAsAction, *bounceAction, *editAction;
 
 public slots:
   virtual void show();
