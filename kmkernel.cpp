@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include <dcopclient.h>
+
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
@@ -15,6 +17,7 @@
 #include <qutf7codec.h>
 #include <kio/job.h>
 #include <kprocess.h>
+#include <kprogress.h>
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
@@ -50,7 +53,7 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent, name),  DCOPObject("KMailIface"),
-  mIdentityManager(0)
+  mIdentityManager(0), mProgress(0)
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
@@ -678,10 +681,6 @@ bool KMKernel::doSessionManagement()
 void KMKernel::cleanup(void)
 {
   the_shuttingDown = TRUE;
-  KConfig* config =  kapp->config();
-  KConfigGroupSaver saver(config, "General");
-
-  KMReaderWin::deleteAllStandaloneWindows();
 
   delete the_acctMgr;
   the_acctMgr = 0;
@@ -696,6 +695,67 @@ void KMKernel::cleanup(void)
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
 
+  KMReaderWin::deleteAllStandaloneWindows();
+  
+  // Since the application has already quit we can't use
+  // kapp->processEvents() because it will return immediately:
+  // We first have to fire up a new event loop. 
+  // We use the timer to transfer control to the cleanupLoop function
+  // once the event loop is running.
+  
+  // Don't handle DCOP requests from the event loop
+  kapp->dcopClient()->suspend();   
+  
+  // Schedule execution of cleanupLoop
+  QTimer::singleShot(0, this, SLOT(cleanupLoop()));
+  
+  // Start new event loop
+  kapp->enter_loop();
+}
+
+void KMKernel::cleanupProgress()
+{
+  int value = mProgress->progressBar()->progress()+1;
+  mProgress->progressBar()->setProgress(value);
+}
+
+void KMKernel::cleanupLoop()
+{
+  mProgress = 0;
+  int nrFolders = the_folderMgr->folderCount();
+  if (closed_by_user)
+  {
+    mProgress = new KProgressDialog(0, 0, i18n("Cleaning Up"), i18n("Cleaning Up"), true);
+    mProgress->setAutoClose(false);
+    mProgress->setAllowCancel(false);
+    mProgress->setInitialSize(QSize(350,130), true);
+    mProgress->progressBar()->setTotalSteps(nrFolders*2+2);
+  }
+
+
+  KConfig* config =  kapp->config();
+  KConfigGroupSaver saver(config, "General");
+
+  bool expire = false;
+  // Expire old messages in all folders.
+  if (closed_by_user) {
+    if (config->readNumEntry("when-to-expire")==expireAtExit) {
+      expire = true;
+
+      if (config->readBoolEntry("warn-before-expire")) {
+	expire = canExpire();
+      }
+    }
+  }
+
+  if (mProgress)
+  {
+    mProgress->show();
+    mProgress->progressBar()->setProgress(1);
+    kapp->processEvents();
+    connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
+  }
+
   if (!closed_by_user) {
       if (the_trashFolder)
 	  the_trashFolder->close();
@@ -705,28 +765,44 @@ void KMKernel::cleanup(void)
     the_trashFolder->close(TRUE);
 
     if (config->readBoolEntry("empty-trash-on-exit", true))
+    {
+      if (mProgress)
+      {
+        mProgress->setLabel(i18n("Emptying Trash"));
+        kapp->processEvents();
+      }
       the_trashFolder->expunge();
-
-  }
-
-  // Expire old messages in all folders.
-  if (closed_by_user) {
-    if (config->readNumEntry("when-to-expire")==expireAtExit) {
-      bool  expire = true;
-
-      if (config->readBoolEntry("warn-before-expire")) {
-	expire = canExpire();
-      }
-      if (expire) {
-	the_folderMgr->expireAllFolders(NULL);
-      }
     }
   }
 
+  if (mProgress)
+    mProgress->progressBar()->setProgress(2);
+
+  if (expire) {
+    if (mProgress)
+    {
+       mProgress->setLabel(i18n("Expiring Old Messages"));
+       kapp->processEvents();
+    }
+    the_folderMgr->expireAllFolders(NULL);
+  }
+
+  if (mProgress)
+     mProgress->progressBar()->setProgress(2+nrFolders);
+
   if (closed_by_user && the_folderMgr) {
     if (config->readBoolEntry("compact-all-on-exit", true))
+    {
+      if (mProgress)
+      {
+        mProgress->setLabel(i18n("Compacting Folders"));
+        kapp->processEvents();
+      }
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
+    }
   }
+  if (mProgress)
+     mProgress->progressBar()->setProgress(2+2*nrFolders);
 
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
@@ -745,6 +821,13 @@ void KMKernel::cleanup(void)
   //qInstallMsgHandler(oldMsgHandler);
   KMRecentAddresses::self()->save( KGlobal::config() );
   kapp->config()->sync();
+  if (mProgress)
+  {
+    sleep(1); // Give the user some time to realize what's going on
+    delete mProgress;
+    mProgress = 0;
+  }
+  kapp->exit_loop();
 }
 
 //Isn´t this obsolete? (sven)

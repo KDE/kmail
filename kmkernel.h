@@ -29,6 +29,7 @@ class KMKernel;
 class KMMsgDict;
 class IdentityManager;
 class KProcess;
+class KProgressDialog;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -176,6 +177,9 @@ public slots:
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
+  void cleanupLoop();
+  void cleanupProgress();
+  
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
@@ -219,6 +223,7 @@ private:
   bool the_firstInstance;
   static KMKernel *mySelf;
   QTextCodec *netCodec;
+  KProgressDialog *mProgress;
 };
 
 #endif
