@@ -180,7 +180,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
 // Helper function to find an attachment of a given mimetype
 // Can't use KMMessage::findDwBodyPart since it only works with known mimetypes.
-static DwBodyPart* findBodyPart( const KMMessage& msg, const char* sType, const char* sSubtype )
+static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sType, const char* sSubtype )
 {
   // quickly searching for our message part: since Kolab parts are
   // top-level parts we do *not* have to travel into embedded multiparts
@@ -197,6 +197,38 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const char* sType, const 
   }
   return 0;
 }
+
+// Helper function to find an attachment with a given filename
+static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachmentName )
+{
+  // quickly searching for our message part: since Kolab parts are
+  // top-level parts we do *not* have to travel into embedded multiparts
+  for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
+    //kdDebug(5006) << "findBodyPart:  - " << part->Headers().ContentDisposition().Filename().c_str() << endl;
+    if ( part->hasHeaders()
+         && attachmentName == part->Headers().ContentDisposition().Filename().c_str() )
+      return part;
+  }
+  return 0;
+}
+
+#if 0
+static void debugBodyParts( const char* foo, const KMMessage& msg )
+{
+  kdDebug() << "--debugBodyParts " << foo << "--" << endl;
+  for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
+    if ( part->hasHeaders() ) {
+      kdDebug() << " bodypart: " << part << endl;
+      kdDebug() << "        " << part->Headers().AsString().c_str() << endl;
+    }
+    else
+      kdDebug() << " part " << part << " has no headers" << endl;
+  }
+}
+#else
+inline static void debugBodyParts( const char*, const KMMessage& ) {}
+#endif
+
 
 // Add (or overwrite, resp.) an attachment in an existing mail,
 // attachments must be local files, they are identified by their names.
@@ -235,9 +267,14 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart.setBodyAndGuessCte( rawData, dummy );
       msgPart.setPartSpecifier( fileName );
 
-      DwBodyPart* part = findBodyPart( msg, sType, sSubtype );
+      DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
+      // This whole method is a bit special. We mix code for writing and code for reading.
+      // E.g. we need to parse the content-disposition again for ContentDisposition().Filename()
+      // to work later on.
+      newPart->Headers().ContentDisposition().Parse();
+
+      DwBodyPart* part = findBodyPart( msg, attachmentName );
       if ( part ) {
-        DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
         // Make sure the replacing body part is pointing
         // to the same next part as the original body part.
         newPart->SetNext( part->Next() );
@@ -248,7 +285,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
         msg.setNeedsAssembly();
         kdDebug(5006) << "Attachment " << attachmentName << " updated." << endl;
       } else {
-        msg.addBodyPart( &msgPart );
+        msg.addDwBodyPart( newPart );
         kdDebug(5006) << "Attachment " << attachmentName << " added." << endl;
       }
       bOK = true;
@@ -268,7 +305,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
   const int iSlash = mimetype.find('/');
   const QCString sType    = mimetype.left( iSlash   ).latin1();
   const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
-  DwBodyPart* part = findBodyPart( msg, sType, sSubtype );
+  DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype );
   if ( part ) {
     KMMessagePart msgPart;
     KMMessage::bodyPart(part, &msgPart);
@@ -293,21 +330,18 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 
   // quickly searching for our message part: since Kolab parts are
   // top-level parts we do *not* have to travel into embedded multiparts
-  DwBodyPart* part = msg.getFirstDwBodyPart();
-  while( part ){
-    if( attachmentName == part->Headers().ContentDisposition().Filename().c_str() ){
-      DwBodyPart emptyPart;
-      // Make sure the empty replacement body part is pointing
-      // to the same next part as the to be deleted body part.
-      emptyPart.SetNext( part->Next() );
-      // call DwBodyPart::operator =
-      *part = emptyPart;
-      msg.setNeedsAssembly();
-      kdDebug(5006) << "Attachment deleted." << endl;
-      bOK = true;
-      break;
-    }
-    part = part->Next();
+  DwBodyPart* part = findBodyPart( msg, attachmentName );
+  if ( part ) {
+    // ### BROKEN. REWRITE ME.
+    DwBodyPart emptyPart;
+    // Make sure the empty replacement body part is pointing
+    // to the same next part as the to be deleted body part.
+    emptyPart.SetNext( part->Next() );
+    // call DwBodyPart::operator =
+    *part = emptyPart;
+    msg.setNeedsAssembly();
+    kdDebug(5006) << "Attachment deleted." << endl;
+    bOK = true;
   }
 
   if( !bOK ){
@@ -370,7 +404,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && iturl != attachmentURLs.end();
        ++itname, ++iturl, ++itmime ){
     if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
-      kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
+      kdWarning(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
     }
@@ -378,14 +412,17 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
 
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
-    //msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
     msg->cleanupHeader();
+    //debugBodyParts( "after cleanup", *msg );
     msg->touch();
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();
     kdDebug(5006) << "addIncidenceKolab(): Message done and saved. Sernum: "
                   << sernum << endl;
+
+    //debugBodyParts( "after addMsg", *msg );
+
   } else
     kdError(5006) << "addIncidenceKolab(): Message *NOT* saved!\n";
 
@@ -540,7 +577,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
       if ( sType.isEmpty() || sSubtype.isEmpty() ) {
         kdError(5006) << mimetype << " not an type/subtype combination" << endl;
       } else {
-        DwBodyPart* dwPart = findBodyPart( *msg, sType, sSubtype );
+        DwBodyPart* dwPart = findBodyPartByMimeType( *msg, sType, sSubtype );
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
@@ -714,6 +751,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   kdDebug(5006) << attachmentURLs << "\n";
   kdDebug(5006) << attachmentMimetypes << "\n";
   kdDebug(5006) << attachmentNames << "\n";
+  kdDebug(5006) << "deleted attachments:" << deletedAttachments << "\n";
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -761,6 +799,13 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
         break;
       }
     }
+
+    //debugBodyParts( "in update, before cleanup", *newMsg );
+
+    // This is necessary for the headers to be readable later on
+    newMsg->cleanupHeader();
+
+    //debugBodyParts( "in update, after cleanup", *newMsg );
 
     deleteMsg( msg );
     if ( f->addMsg( newMsg ) == 0 ) {
@@ -815,25 +860,19 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
   if( msg ) {
     // Message found - look for the attachment:
 
-    // quickly searching for our message part: since Kolab parts are
-    // top-level parts we do *not* have to travel into embedded multiparts
-    DwBodyPart* part = msg->getFirstDwBodyPart();
-    while( part ){
-      if( filename == part->Headers().ContentDisposition().Filename().c_str() ){
-        // Save the contents of the attachment.
-        KMMessagePart aPart;
-        msg->bodyPart( part, &aPart );
-        QByteArray rawData( aPart.bodyDecodedBinary() );
+    DwBodyPart* part = findBodyPart( *msg, filename );
+    if ( part ) {
+      // Save the contents of the attachment.
+      KMMessagePart aPart;
+      msg->bodyPart( part, &aPart );
+      QByteArray rawData( aPart.bodyDecodedBinary() );
 
-        KTempFile file;
-        file.file()->writeBlock( rawData.data(), rawData.size() );
+      KTempFile file;
+      file.file()->writeBlock( rawData.data(), rawData.size() );
 
-        url.setPath( file.name() );
+      url.setPath( file.name() );
 
-        bOK = true;
-        break;
-      }
-      part = part->Next();
+      bOK = true;
     }
 
     if( !bOK ){
@@ -875,6 +914,8 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       // Read the XML from the attachment with the given mimetype
       ok = kolabXMLFoundAndDecoded( *msg, folderKolabMimeType( folder->storage()->contentsType() ), s );
       break;
+    case StorageUnknown: // can't happen
+      break;
     }
     if ( ok ) {
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
@@ -895,7 +936,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     return;
 
   QString type = folderContentsType( folder->storage()->contentsType() );
-  kdDebug() << k_funcinfo << folder << " " << type << " " << sernum << endl;
+  kdDebug(5006) << folder << " " << type << " " << sernum << endl;
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -931,6 +972,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
             }
         }
         break;
+    case StorageUnknown: // can't happen
+      break;
     }
     if ( ok ) {
         kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
@@ -1191,11 +1234,12 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
   FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() )
     return (*it).mStorageFormat;
-  return StorageIcalVcard;
+  return StorageUnknown;
 }
 
 void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
 {
+  assert( format != StorageUnknown );
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() )
     (*it).mStorageFormat = format;
