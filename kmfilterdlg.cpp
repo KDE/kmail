@@ -364,7 +364,7 @@ void KMFilterDlg::applyFilterChanges(void)
   mFilter->ruleA().init(ruleFieldToEnglish(mRuleFieldA->currentText()),
 			(KMFilterRule::Function)mRuleFuncA->currentItem(),
 			mRuleValueA->text());
-  mFilter->ruleB().init(ruleFieldToEnglish(mRuleFieldB->currentText()), 
+  mFilter->ruleB().init(ruleFieldToEnglish(mRuleFieldB->currentText()),
 			(KMFilterRule::Function)mRuleFuncB->currentItem(),
 			mRuleValueB->text());
   mFilter->setOper((KMFilter::Operator)mRuleOp->currentItem());
@@ -382,7 +382,7 @@ void KMFilterDlg::updateCurFilterName(const QString &/*text*/)
 {
   if (mCurFilterIdx < 0)
     return;
-  mFilter->setName(QString("<") + mRuleFieldA->currentText() + ">:" 
+  mFilter->setName(QString("<") + mRuleFieldA->currentText() + ">:"
 		   + mRuleValueA->text());
   QObject::disconnect(mFilterList,SIGNAL(highlighted(int)),this,SLOT(slotFilterSelected(int)));
   mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
@@ -420,7 +420,7 @@ QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
 }
 
 //-----------------------------------------------------------------------------
-QComboBox* KMFilterDlg::createFolderCombo( QStringList *str, 
+QComboBox* KMFilterDlg::createFolderCombo( QStringList *str,
 				  QValueList< QGuardedPtr<KMFolder> > *folders,
 				  QGuardedPtr<KMFolder> curFolder )
 {
@@ -484,7 +484,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   action = kernel->filterActionDict()->create(
               kernel->filterActionDict()->nameOf(*(sFilterActionList.at(idx))));
   mFilter->setAction(i, action);
-  if (!action || idx < 0) 
+  if (!action || idx < 0)
   {
     kdDebug() << "no action selected" << endl;
     return;
@@ -493,7 +493,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   widg = action->createParamWidget(this);
   mFaField[i] = widg;
   if (!widg) return;
-  
+
   pos = mFaType[i]->pos();
   pos.setX(pos.x() + mFaType[idx]->width() + 4);
   widg->move(pos);
@@ -631,11 +631,8 @@ void KMFilterDlg::slotBtnDelete()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnOk()
 {
-  if (mFilter) 
-  {
-    applyFilterChanges();
-    kernel->filterMgr()->writeConfig();
-  }
+  if (mFilter) applyFilterChanges();
+  kernel->filterMgr()->writeConfig();
 
   KMFilterDlgInherited::close();
 }
@@ -681,7 +678,7 @@ void KMFilterDlg::initLists()
   if (sFilterActionList.count() <= 0)
   {
     sFilterActionList.append(i18n("<nothing>"));
-    for (name=kernel->filterActionDict()->first(); !name.isEmpty(); 
+    for (name=kernel->filterActionDict()->first(); !name.isEmpty();
 	 name=kernel->filterActionDict()->next())
     {
       sFilterActionList.append(kernel->filterActionDict()->currentLabel());
@@ -711,7 +708,7 @@ void KMFilterDlg::initLists()
   if (sFilterFieldList.count() <= 0)
   {
     sFilterFieldList.append(" ");
-    // also see KMFilterRule::matches() and KMFilterDlg::ruleFieldToEnglish() 
+    // also see KMFilterRule::matches() and KMFilterDlg::ruleFieldToEnglish()
     // if you change the following strings!
     sFilterFieldList.append(i18n("<message>"));
     sFilterFieldList.append(i18n("<body>"));
@@ -739,7 +736,7 @@ void KMFilterDlg::enableControls()
     deleteEnabled = TRUE;
   if (deleteEnabled && (mFilterList->currentItem() != 0))
     upEnabled = TRUE;
-  if (deleteEnabled && 
+  if (deleteEnabled &&
       (mFilterList->currentItem() != (int)mFilterList->count() - 1))
     downEnabled = TRUE;
   mBtnUp->setEnabled( upEnabled );
