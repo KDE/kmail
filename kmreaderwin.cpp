@@ -1855,20 +1855,20 @@ void KMReaderWin::slotAtmOpen()
   QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(mAtmCurrentName)))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
   QString question;
-  QString open_text = i18n("&Open");
+  QString open_text;
   QString filenameText = msgPart.fileName();
   if (filenameText.isEmpty()) filenameText = msgPart.name();
   if ( offer ) {
-    question = i18n("Open attachment '%2' using '%1'?")
-      .arg(offer->name()).arg(filenameText);
+    open_text = i18n("&Open with '%1'").arg(offer->name());
   } else {
-    question = i18n("Open attachment '%1'?").arg(filenameText);
-    open_text = i18n("&Open With...");
+    open_text = i18n("&Open with...");
   }
-  question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
-  // TODO: buttons don't have the correct order, but "Save" should be default
-  int choice = KMessageBox::warningYesNoCancel(this, question,
-      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text);
+  question = i18n("Open attachment '%1'?\n"
+                  "Note that opening an attachment may compromise your "
+                  "system's security!").arg(filenameText);
+  int choice = KMessageBox::questionYesNoCancel(this, question,
+      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
+      QString::fromLatin1("askSave")+ mimetype ); // dontAskAgainName
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmSave();
   } else if( choice == KMessageBox::No ) {	// Open
