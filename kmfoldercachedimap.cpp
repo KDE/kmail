@@ -1211,6 +1211,7 @@ void KMFolderCachedImap::listDirectory2() {
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
 
     if (mSubfolderNames[i].upper() == "INBOX" &&
+        mSubfolderPaths[i] == "/INBOX/" &&
         mAccount->hasInbox()) // do not create an additional inbox
       continue;
 

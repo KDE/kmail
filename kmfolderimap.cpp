@@ -618,6 +618,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     {
       // create folders if necessary
       if (mSubfolderNames[i].upper() == "INBOX" &&
+          mSubfolderPaths[i] == "/INBOX/" &&
           mAccount->hasInbox()) // do not create an additional inbox
         continue;
       for (node = folder()->child()->first(); node;
