@@ -2480,7 +2480,7 @@ void KMMainWidget::setupActions()
 				    SLOT(slotApplyFilters()),
 				    actionCollection(), "apply_filters" );
 
-  mApplyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter Actions" ),
+  mApplyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter" ),
 					    actionCollection(),
 					    "apply_filter_actions" );
 
@@ -3210,13 +3210,13 @@ void KMMainWidget::initializeFilterActions()
   for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
         it.current() ; ++it )
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-      filterName = QString("Filter Action %1").arg((*it)->name());
+      filterName = QString("Filter %1").arg((*it)->name());
       normalizedName = filterName.replace(" ", "_");
       if (action(normalizedName.utf8()))
         continue;
       filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
       mFilterCommands.append(filterCommand);
-      QString as = i18n("Filter Action %1").arg((*it)->name());
+      QString as = i18n("Filter %1").arg((*it)->name());
       QString icon = (*it)->icon();
       if ( icon.isEmpty() )
         icon = "gear";
@@ -3236,7 +3236,7 @@ void KMMainWidget::plugFilterActions(QPopupMenu *menu)
 {
   for (QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()); it.current(); ++it)
       if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-	  QString filterName = QString("Filter Action %1").arg((*it)->name());
+	  QString filterName = QString("Filter %1").arg((*it)->name());
 	  filterName = filterName.replace(" ","_");
 	  KAction *filterAction = action(filterName.local8Bit());
 	  if (filterAction && menu)

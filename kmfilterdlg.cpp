@@ -155,7 +155,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
 			      1, 1, /*from to row*/
   			      0, 3 /*from to col*/ );
-      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter Actions menu"), adv_w );
+      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
       gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
 
       QHBox *hbox = new QHBox( adv_w );

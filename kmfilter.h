@@ -110,6 +110,11 @@ public:
       myFilter->pattern()->matches() now. */
   KMSearchPattern* pattern() { return &mPattern; }
 
+  /** Provides a reference to the internal pattern. If you used the
+      @p matches() function before, please convert to using
+      myFilter->pattern()->matches() now. */
+  const KMSearchPattern* pattern() const { return &mPattern; }
+
   /** Set whether this filter should be applied on
       outbound messages (@p aApply == TRUE) or not.
       @see applyOnOutbound applyOnInbound setApplyOnInbound

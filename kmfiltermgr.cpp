@@ -175,15 +175,31 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
     return 1;
   bool stopIt = false;
   int result = 1;
-  if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
-    return 2;
 
-  KMFolder *folder = MessageProperty::filterFolder( msg );
+  if ( FilterLog::instance()->isLogging() ) {
+    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
+    logText.append( filter->pattern()->asString() );
+    FilterLog::instance()->add( logText, FilterLog::patternDesc );
+  }
 
-  endFiltering( msg );
-  if (folder) {
-    tempOpenFolder( folder );
-    result = folder->moveMsg( msg );
+  if (filter->pattern()->matches( msg )) {
+    if ( FilterLog::instance()->isLogging() ) {
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+                                  FilterLog::patternResult );
+    }
+    if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
+      return 2;
+
+    KMFolder *folder = MessageProperty::filterFolder( msg );
+
+    endFiltering( msg );
+    if (folder) {
+      tempOpenFolder( folder );
+      result = folder->moveMsg( msg );
+    }
+  } else {
+    endFiltering( msg );
+    result = 1;
   }
   return result;
 }
