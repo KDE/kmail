@@ -91,6 +91,10 @@ namespace KMail {
       void folderChanged( KMFolder* );
 
     protected:
+      /** Capture space key to open the dialog */
+      virtual void keyPressEvent( QKeyEvent * e );
+
+    protected:
       KLineEdit* edit;
       KMFolder* mFolder;
       KMFolderTree* mFolderTree;

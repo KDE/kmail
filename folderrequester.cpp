@@ -58,6 +58,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
 
   setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
         QSizePolicy::Fixed ) );
+  setFocusPolicy( QWidget::StrongFocus );
 }
 
 //-----------------------------------------------------------------------------
@@ -98,6 +99,15 @@ void FolderRequester::setFolder( KMFolder *folder )
 void FolderRequester::setFolder( const QString &idString )
 {
   setFolder( kmkernel->findFolderById( idString ) );
+}
+
+//-----------------------------------------------------------------------------
+void FolderRequester::keyPressEvent( QKeyEvent * e )
+{
+  if ( e->key() == Qt::Key_Space )
+    slotOpenDialog();
+  else
+    e->ignore();
 }
 
 } // namespace KMail
