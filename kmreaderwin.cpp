@@ -888,7 +888,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
   const char *pos;
   char ch, str[256];
   int i, i1, x, len;
-  int maxLen = 30000;
+  const int maxLen = 30000;
   char htmlStr[maxLen+256];
   char* htmlPos;
   bool startOfLine = true;
