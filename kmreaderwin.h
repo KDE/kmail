@@ -27,13 +27,15 @@ class KMReaderView: public QWidget
 Q_OBJECT
 public:
 	KMReaderView(QWidget *parent =0, const char *name=0, int msgno = 0, Folder *f =0);
-	KHTMLWidget *theCanvas;
+	KHTMLWidget *messageCanvas;
+	KHTMLWidget *headerCanvas;
 private:
 	Message *currentMessage;
 	int currentIndex;
 	bool displayFull;
 	QScrollBar *vert;
 	QScrollBar *horz;
+	QFrame *separator;
 	Folder *currentFolder;
 	long allMessages;
 public slots:

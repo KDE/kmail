@@ -2,6 +2,7 @@
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
+#define PICS "file:$(KDEDIR)/lib/pics"
 
 KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,Folder *f = 0)
 	:QWidget(parent,name)
@@ -23,20 +24,30 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 
 	// Let's initialize the HTMLWidget
 
-	theCanvas = new KHTMLWidget(this,0,"/kde/lib/pics/");
-	theCanvas->setURLCursor(upArrowCursor);
-	theCanvas->resize(parent->width()-16,parent->height()-16);
-	connect(theCanvas,SIGNAL(URLSelected(const char *,int)),this,SLOT(openURL(const char *,int)));
-	vert = new QScrollBar( 0, 0, 12, theCanvas->height()-16, 0,
+
+	headerCanvas = new KHTMLWidget(this,0,0);
+	headerCanvas->resize(parent->width(),parent->height()-100);	
+
+	separator = new QFrame(this);
+	separator->setFrameStyle(QFrame::HLine | QFrame::Raised);
+	separator->setLineWidth(4);
+
+	messageCanvas = new KHTMLWidget(this,0,"/kde/lib/pics/");
+	messageCanvas->setURLCursor(upArrowCursor);
+	messageCanvas->resize(parent->width()-16,parent->height()-110); //16
+	connect(messageCanvas,SIGNAL(URLSelected(const char *,int)),this,SLOT(openURL(const char *,int)));
+	vert = new QScrollBar( 0, 110, 12, messageCanvas->height()-110, 0,
                         QScrollBar::Vertical, this, "vert" );
-        horz = new QScrollBar( 0, 0, 24, theCanvas->width()-16, 0,
+        horz = new QScrollBar( 0, 0, 24, messageCanvas->width()-16, 0,
                         QScrollBar::Horizontal, this, "horz" );	
-	connect( theCanvas, SIGNAL( scrollVert( int ) ), SLOT( slotScrollVert(int)));
-        connect( theCanvas, SIGNAL( scrollHorz( int ) ), SLOT( slotScrollHorz(int)));
-        connect( vert, SIGNAL(valueChanged(int)), theCanvas, SLOT(slotScrollVert(int)));
-        connect( horz, SIGNAL(valueChanged(int)), theCanvas, SLOT(slotScrollHorz(int)));
-	connect( theCanvas, SIGNAL( documentChanged() ), SLOT( slotDocumentChanged() ) );
-        connect( theCanvas, SIGNAL( documentDone() ), SLOT( slotDocumentDone() ) );	
+	connect( messageCanvas, SIGNAL( scrollVert( int ) ), SLOT( slotScrollVert(int)));
+        connect( messageCanvas, SIGNAL( scrollHorz( int ) ), SLOT( slotScrollHorz(int)));
+        connect( vert, SIGNAL(valueChanged(int)), messageCanvas, SLOT(slotScrollVert(int)));
+        connect( horz, SIGNAL(valueChanged(int)), messageCanvas, SLOT(slotScrollHorz(int)));
+	connect( messageCanvas, SIGNAL( documentChanged() ), SLOT( slotDocumentChanged() ) );
+        connect( messageCanvas, SIGNAL( documentDone() ), SLOT( slotDocumentDone() ) );	
+
+
 
 	// Puh, okay this is done
 
@@ -60,10 +71,15 @@ void KMReaderView::clearCanvas()
 {
 	// Produce a white canvas
 
-	theCanvas->begin();
-	theCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
-	theCanvas->end();
-	theCanvas->parse();
+	headerCanvas->begin(PICS);
+	headerCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
+	headerCanvas->end();
+	headerCanvas->parse();
+
+	messageCanvas->begin(PICS);
+	messageCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
+	messageCanvas->end();
+	messageCanvas->parse();
 }
 
 void KMReaderView::updateDisplay()
@@ -75,9 +91,11 @@ void KMReaderView::updateDisplay()
 
 void KMReaderView::resizeEvent(QResizeEvent *)
 {
-  theCanvas->setGeometry(0,0,this->width()-16,this->height()-16);
+  headerCanvas->setGeometry(0,0,this->width(),100);
+  separator->setGeometry(0,101,this->width(),4);
+  messageCanvas->setGeometry(0,106,this->width()-16,this->height()-120); //16
   horz->setGeometry(0,height()-16,width()-16,16);
-  vert->setGeometry(width()-16,0,16,height());
+  vert->setGeometry(width()-16,106,16,height()-112);
 }
 
 
@@ -121,68 +139,72 @@ void KMReaderView::parseMessage(Message *message)
 	header.replace(QRegExp("\n"),"<BR>");
 	text.replace(QRegExp("\n"),"<BR>");
 
-	theCanvas->begin();
-	theCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
-	theCanvas->write("<BODY BGCOLOR=WHITE>");
-	if(displayFull)
-		{theCanvas->write(header);
-		theCanvas->write(text);
-		}
-	else
-		{message->getFrom(sfrom);
-		message->getSubject(ssubj);
-		char sdate[256];
-		char scc[256];
-		QString dateStr;
-		QString ccStr;
-		message->getCc(scc);
-		message->getLongDate(sdate);
-		dateStr.sprintf("Date: %s<br>",sdate);
-		fromStr.sprintf("From: %s<br>",sfrom);
-		ccStr.sprintf("Cc: %s<br>",scc);
-	        subjStr.sprintf("Subject: %s<br><P>",ssubj);
-		theCanvas->write(dateStr);
-		theCanvas->write(fromStr);
-		theCanvas->write(ccStr);
-		theCanvas->write(subjStr);
-		theCanvas->write(text);
-		}
+	printf("We are here\n");
+	headerCanvas->begin(PICS);
+	headerCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
+	headerCanvas->write("<BODY BGCOLOR=WHITE>");
+	message->getFrom(sfrom);
+	message->getSubject(ssubj);
+	char sdate[256];
+	char scc[256];
+	QString dateStr;
+	QString ccStr;
+	message->getCc(scc);
+	message->getLongDate(sdate);
+	dateStr.sprintf("Date: %s<br>",sdate);
+	fromStr.sprintf("From: %s<br>",sfrom);
+	ccStr.sprintf("Cc: %s<br>",scc);
+        subjStr.sprintf("Subject: %s<br><P>",ssubj);
+	headerCanvas->write(dateStr);
+	headerCanvas->write(fromStr);
+	headerCanvas->write(ccStr);
+	headerCanvas->write(subjStr);
+	headerCanvas->write("</BODY></HTML>");
+	headerCanvas->end();
+	headerCanvas->parse();
+		
+
+	messageCanvas->begin(PICS);
+	messageCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
+	messageCanvas->write("<BODY BGCOLOR=WHITE>");
+	messageCanvas->write(text);
+		
 
 	if(noAttach != 0)
 		{while(noAttach > 0)
 			{printf("Attach : %i\n",noAttach);
 			printf("OK: Writing image for attachment\n");
 			Attachment *atmnt = new Attachment();
-			theCanvas->write("<hr><center><table><td><tr><IMG SRC=\"");
-			QString t;
-			t="/cs/kmail-970606/edit.jpg";
-			theCanvas->write(t);
-			theCanvas->write("\">");
-			theCanvas->write("<br><A HREF=\"");
+			messageCanvas->write("<hr><center><table><td><tr><IMG SRC=\"");
+			QString t="/usr/local/kde";
+			t += "/lib/pics/kmattach.jpg";
+			messageCanvas->write(t);
+			messageCanvas->write("\">");
+			messageCanvas->write("<br><A HREF=\"");
 			t.sprintf("%i",noAttach);
-			theCanvas->write(t);
-			theCanvas->write("\">Part 1.");
+			messageCanvas->write(t);
+			messageCanvas->write("\">Part 1.");
 			t.sprintf("%i</A>",noAttach);
-			theCanvas->write(t);
-			theCanvas->write("</td>");
-			theCanvas->write("<td ALIGN=LEFT>Name:");
+			messageCanvas->write(t);
+			messageCanvas->write("</td>");
+			messageCanvas->write("<td ALIGN=LEFT>Name:");
 			atmnt = message->getAttch(noAttach);
 			t = atmnt->getFilename();	
-			theCanvas->write(t);
-			theCanvas->write("<br>Type:");
+			messageCanvas->write(t);
+			messageCanvas->write("<br>Type:");
 			t.sprintf("%s", B[atmnt->getType()]);
-			theCanvas->write(t);
-			theCanvas->write("<br>Encoding:");
+			messageCanvas->write(t);
+			messageCanvas->write("<br>Encoding:");
 			t.sprintf("%s",E[atmnt->getEncoding()]);
-			theCanvas->write(t);
-			theCanvas->write("<br></td></tr></table></center>");
+			messageCanvas->write(t);
+			messageCanvas->write("<br></td></tr></table></center>");
 			noAttach--;
 			delete atmnt;
 			}
 		}		
-	theCanvas->write("</BODY></HTML>");
-	theCanvas->end();
-	theCanvas->parse();
+	messageCanvas->write("</BODY></HTML>");
+	messageCanvas->end();
+	messageCanvas->parse();
 	printf("Leaving parsing\n");
 }
 
@@ -305,13 +327,13 @@ void KMReaderView::slotScrollLeRi()
 
 void KMReaderView::slotDocumentChanged()
 {
-        if ( theCanvas->docHeight() > theCanvas->height() )
-                vert->setRange( 0, theCanvas->docHeight() - theCanvas->height() );
+        if ( messageCanvas->docHeight() > messageCanvas->height() )
+                vert->setRange( 0, messageCanvas->docHeight() - messageCanvas->height() );
         else
                 vert->setRange( 0, 0 );
 
-        if ( theCanvas->docWidth() > theCanvas->width() )
-                horz->setRange( 0, theCanvas->docWidth() - theCanvas->width() );
+        if ( messageCanvas->docWidth() > messageCanvas->width() )
+                horz->setRange( 0, messageCanvas->docWidth() - messageCanvas->width() );
         else
                 horz->setRange( 0, 0 );
 }
