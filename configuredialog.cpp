@@ -3421,6 +3421,7 @@ void SecurityPage::GeneralTab::apply() {
       QValueList<QGuardedPtr<KMFolder> > folders;
       kernel->folderMgr()->createFolderList(&names, &folders);
       kernel->imapFolderMgr()->createFolderList(&names, &folders);
+      kernel->searchFolderMgr()->createFolderList(&names, &folders);
       for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
       {
