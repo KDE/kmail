@@ -1470,8 +1470,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     ct.SetBoundary(mSaveBoundary);
     tmpDwPart->Assemble();
 
-    KMMessagePart newPart;
-    newPart.setBody(tmpDwPart->AsString().c_str());
+    //KMMessagePart newPart;
+    //newPart.setBody(tmpDwPart->AsString().c_str());
     msg->addDwBodyPart(tmpDwPart); // only this method doesn't add it as text/plain
 
     // add Attachments
