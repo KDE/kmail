@@ -1716,8 +1716,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
       if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
-        str += i18n("\n[KMail: Attachment contains binary data. Trying to show first character.]", 
-                    "\n[KMail: Attachment contains binary data. Trying to show first %n characters.]", 
+        str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]", 
+                    "[KMail: Attachment contains binary data. Trying to show first %n characters.]", 
                     str.length());
       }
       viewer->setText(str);
