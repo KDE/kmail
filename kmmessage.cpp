@@ -1157,11 +1157,25 @@ KMMessage* KMMessage::createForward()
   QString id;
 
   msg->fromDwString( this->asDwString() );
-  msg->cleanupHeader();
   // remember the type and subtype, initFromMessage sets the contents type to 
   // text/plain, via initHeader, for unclear reasons
   const int type = msg->type();
   const int subtype = msg->subtype();
+
+  // Strip out all headers apart from the content description ones, because we
+  // don't want to inherit them.
+  DwHeaders& header = msg->mMsg->Headers();
+  DwField* field = header.FirstField();
+  DwField* nextField;
+  while (field)
+  {
+    nextField = field->Next();
+    if ( ! QString( field->FieldNameStr().c_str() ).contains( "ontent" ) )
+      header.RemoveField(field);
+    field = nextField;
+  }
+  msg->mMsg->Assemble();
+
   msg->initFromMessage( this );
   //restore type
   msg->setType( type );
@@ -1173,51 +1187,7 @@ KMMessage* KMMessage::createForward()
   msg->setCharset(encoding);
 
   msg->setSubject( forwardSubject() );
-  msg->removePrivateHeaderFields();
-  msg->removeHeaderField( "Sender" );
- 
-#ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
-  QCString str = codecForName(encoding)->fromUnicode(st);
-  msg->setBody(str);
-
-  if (numBodyParts() > 0)
-  {
-    msg->setType( DwMime::kTypeMultipart );
-    msg->setSubtype( DwMime::kSubtypeMixed );
-    msg->headers().ContentType().CreateBoundary( 0 );
-    msg->headers().ContentType().Assemble();
-
-    msgPart.setTypeStr("text");
-    msgPart.setSubtypeStr("plain");
-    msgPart.setCharset(encoding);
-    msgPart.setBody(str);
-    msg->addBodyPart(&msgPart);
-
-    bool outsideRfc822 = true;
-    for ( int i = 0; i < numBodyParts(); i++)
-    {
-      bodyPart(i, &msgPart);
-      QCString mimeType( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
-      if ( kasciistricmp( mimeType, "message/rfc822" ) != 0 ) // != message/rfc822
-        outsideRfc822 = true;
-      // don't add the detached signature as attachment when forwarding a
-      // PGP/MIME signed message inline
-      if( outsideRfc822 &&
-          kasciistricmp( mimeType, "application/pgp-signature" ) != 0 ) { // != application/pgp-signature
-        if (i > 0 || kasciistricmp(msgPart.typeStr(),"text") != 0)
-          msg->addBodyPart(&msgPart);
-      }
-      // avoid kind of recursive attaching of rfc822 parts
-      if ( kasciistricmp( mimeType, "message/rfc822" ) == 0 ) // == message/rfc822
-        outsideRfc822 = false;
-    }
-  }
-#endif // BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
-
-  
-  // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
-
   return msg;
 }
 
