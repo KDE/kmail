@@ -1771,7 +1771,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
 	// ### Ugh. We depend on two enums being in sync:
         messagePart.keyTrust = (Kpgp::Validity)ext.validity;
-        messagePart.signer = ext.userid;
+        messagePart.signer = QString::fromUtf8( ext.userid );
         if( ext.creation_time )
             messagePart.creationTime = *ext.creation_time;
         if(     70 > messagePart.creationTime.tm_year
@@ -1785,8 +1785,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
             messagePart.creationTime.tm_mday = 1;
         }
         if( messagePart.signer.isEmpty() ) {
-            messagePart.signer = ext.name;
-            if( ext.email && ext.email[0] ) {
+            messagePart.signer = QString::fromUtf8( ext.name );
+            if( ext.email && *ext.email ) {
                 if( !messagePart.signer.isEmpty() )
                     messagePart.signer += " ";
                 messagePart.signer += "<";
@@ -1827,8 +1827,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
         txt.append( "</h2></b>" );
         txt.append( "<br>&nbsp;<br>" );
-        txt.append( i18n( "Status: " ).local8Bit() );
-        if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
+        txt.append( i18n( "Status: " ) );
+        if( sigMeta.status && *sigMeta.status ) {
           txt.append( "<i>" );
           txt.append( sigMeta.status );
           txt.append( "</i>" );
