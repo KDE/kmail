@@ -2790,7 +2790,6 @@ void KMHeaders::slotRMB()
      mOwner->replyAuthorAction()->plug( menu );
      mOwner->replyListAction()->plug(menu);
      mOwner->forwardMenu()->plug(menu);
-     mOwner->bounceAction()->plug(menu);
      mOwner->sendAgainAction()->plug(menu);
   }
   menu->insertSeparator();
