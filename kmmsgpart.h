@@ -149,6 +149,9 @@ public:
   /** Set the message part charset. */
   virtual void setCharset(const QCString &aStr);
 
+  /** Get a @ref QTextCodec suitable for this message part */
+  const QTextCodec * codec() const;
+
   /** Returns name of filename part of 'Content-Disposition' header field,
       if present. */
   QString fileName(void) const;

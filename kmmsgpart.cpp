@@ -68,13 +68,18 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
   setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
 
+const QTextCodec * KMMessagePart::codec() const {
+  const QTextCodec * c = KMMessage::codecForName( charset() );
+  if ( !c )
+    c = QTextCodec::codecForName("iso-8859-1");
+  assert( c );
+  return c;
+}
+
 QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
   if (codec == 0)
     // No codec was given, so try the charset in the mail
-    codec = KMMessage::codecForName( charset() );
-  if (codec == 0)
-    // That also didn't work, so try a default one.
-    codec = QTextCodec::codecForName("iso-8859-1");
+    codec = this->codec();
   assert( codec );
 
   return codec->toUnicode( bodyDecoded() );
