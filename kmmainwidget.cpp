@@ -80,8 +80,6 @@ using KMail::FolderJob;
 using KMail::AntiSpamWizard;
 #include "filterlogdlg.h"
 using KMail::FilterLogDialog;
-#include <cryptplugwrapperlist.h>
-#include <cryptplugfactory.h>
 #include <headerlistquicksearch.h>
 using KMail::HeaderListQuickSearch;
 
@@ -1423,23 +1421,17 @@ void KMMainWidget::slotEditVacation()
     delete mVacation; // QGuardedPtr sets itself to 0!
   }
 }
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotStartCertManager()
 {
-  const CryptPlugWrapper *wrapper = KMail::CryptPlugFactory::instance()->smime();
-  if ( !wrapper ) {
-    KMessageBox::error( this, i18n( "Could not start certificate manager: "
-                                    "you need to configure an S/MIME plugin first." ),
-                                    i18n( "KMail Error" ) );
-    return;
-  }
   KProcess certManagerProc; // save to create on the heap, since
   // there is no parent
   certManagerProc << "kleopatra";
 
   if( !certManagerProc.start( KProcess::DontCare ) )
-    KMessageBox::error( this, i18n( "Could not start certificate manager; "
-                                    "please check your installation." ),
+    KMessageBox::error( this, i18n( "Could not start certificate manager. "
+                                    "Please check your installation!" ),
                                     i18n( "KMail Error" ) );
   else
     kdDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
@@ -1447,6 +1439,19 @@ void KMMainWidget::slotStartCertManager()
   // out of scope here, since it is started in DontCare run mode.
 
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotStartWatchGnuPG()
+{
+  KProcess certManagerProc;
+  certManagerProc << "kwatchgnupg";
+
+  if( !certManagerProc.start( KProcess::DontCare ) )
+    KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg). "
+                                    "Please check your installation!" ),
+                                    i18n( "KMail Error" ) );
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCopyMsg()
 {
@@ -2205,6 +2210,11 @@ void KMMainWidget::setupActions()
 		     SLOT(slotStartCertManager()), actionCollection(), "tools_start_certman");
   // disable action if no certman binary is around
   if (KStandardDirs::findExe("kleopatra").isEmpty()) act->setEnabled(false);
+
+  act = new KAction( i18n("GnuPG Log Viewer..."), "pgp-keys", 0, this,
+		     SLOT(slotStartWatchGnuPG()), actionCollection(), "tools_start_kwatchgnupg");
+  // disable action if no kwatchgnupg binary is around
+  if (KStandardDirs::findExe("kwatchgnupg").isEmpty()) act->setEnabled(false);
 
   act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
 		     SLOT(slotImport()), actionCollection(), "import" );
