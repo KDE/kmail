@@ -140,6 +140,13 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   const QString &errorText)
 {
   if (aSlave != mSlave) return;
+  if ( mSSL && error == 0 ) {
+    // add a dummy entry to the list of SSL capabilities so that the receiver
+    // of the capabilities signal can use mListSSL.isEmpty() in order to find
+    // out whether SSL is supported
+    mListSSL.append("SSL");
+  }
+
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
   {
     // disconnect slave after every connect
@@ -159,7 +166,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   if ( error )
   {
     mJob = 0;
-    KMessageBox::error( kapp->activeWindow(), 
+    KMessageBox::error( kapp->activeWindow(),
         KIO::buildErrorString( error, errorText ),
         i18n("Error") );
     emit capabilities( mListNormal, mListSSL );
@@ -171,7 +178,6 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     mListNormal.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
-    //mListSSL.append("SSL");
     mJob = 0;
 
     emit capabilities( mListNormal, mListSSL );
