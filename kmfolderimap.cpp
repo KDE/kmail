@@ -1406,6 +1406,13 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
        mAccount->setImapStatus(folder(), imappath, flags);
      }
   }
+  if ( mContentState == imapInProgress ) {
+    // we're currently get'ing this folder
+    // to make sure that we get the latest flags abort the current listing and
+    // create a new one
+    disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
+    reallyGetFolder( QString::null );
+  }
 }
 
 //-----------------------------------------------------------------------------
