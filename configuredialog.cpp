@@ -190,11 +190,12 @@ QSize ConfigureDialog::ListView::sizeHint( void ) const
   return( s );
 }
 
-
+// FIXME: Add the help button again if there actually _is_ a
+// help text for this dialog!
 NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
 				      bool modal )
-  :KDialogBase( parent, name, modal, i18n("New Identity"), Ok|Cancel|Help, Ok,
-		true )
+  :KDialogBase( parent, name, modal, i18n("New Identity"),
+		Ok|Cancel/*|Help*/, Ok, true )
 {
   QFrame *page = makeMainWidget();
   QGridLayout *glay = new QGridLayout( page, 6, 2, 0, spacingHint() );
