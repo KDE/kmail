@@ -222,7 +222,7 @@ QDataStream & operator<<( QDataStream & stream, const Signature & sig ) {
 QDataStream & operator>>( QDataStream & stream, Signature & sig ) {
   Q_UINT8 t;
   stream >> t >> sig.mUrl >> sig.mText;
-  sig.mType = t;
+  sig.mType = (Signature::Type) t;
   return stream;
 }
 
