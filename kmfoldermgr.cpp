@@ -277,17 +277,17 @@ void KMFolderMgr::reload(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::createFolderList( QStringList *str, 
-				    QList<KMFolder> *folders )
+void KMFolderMgr::createFolderList(QStringList *str, 
+				   QValueList<QGuardedPtr<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, "" );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::createFolderList( QStringList *str, 
-				    QList<KMFolder> *folders,
-				    KMFolderDir *adir, 
-				    const QString& prefix)
+void KMFolderMgr::createFolderList(QStringList *str, 
+				   QValueList<QGuardedPtr<KMFolder> > *folders,
+				   KMFolderDir *adir, 
+				   const QString& prefix)
 {
   KMFolderNode* cur;
   KMFolderDir* fdir = adir ? adir : &(kernel->folderMgr()->dir());
@@ -296,7 +296,7 @@ void KMFolderMgr::createFolderList( QStringList *str,
     if (cur->isDir())
       continue;
 
-    KMFolder* folder = static_cast<KMFolder*>(cur);
+    QGuardedPtr<KMFolder> folder = static_cast<KMFolder*>(cur);
     str->append(prefix + folder->name());
     folders->append( folder );
     if (folder->child())

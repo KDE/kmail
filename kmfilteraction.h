@@ -10,6 +10,7 @@
 #include <qlist.h>
 #include <qobject.h>
 #include <qdialog.h>
+#include <qguardedptr.h>
 
 class KMFilterActionDict;
 class KMGFilterDlg;
@@ -95,9 +96,9 @@ public:
 
   /** Creates a combobox with a list of folders for the current filter 
     action, with curFolder as the current entry (if given). */
-  virtual QComboBox* createFolderCombo( QStringList *str, 
-					QList<KMFolder> *folders,
-					KMFolder *curFolder ) = 0;
+  virtual QComboBox* createFolderCombo( QStringList*, 
+					QValueList<QGuardedPtr<KMFolder> >*,
+					QGuardedPtr<KMFolder> ) = 0;
 
   /* Creates a combo box of strings */
   virtual QComboBox* createCombo( QStringList *str,

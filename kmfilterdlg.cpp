@@ -410,8 +410,8 @@ QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
 
 //-----------------------------------------------------------------------------
 QComboBox* KMFilterDlg::createFolderCombo( QStringList *str, 
-					  QList<KMFolder> *folders,
-					  KMFolder *curFolder )
+				  QValueList< QGuardedPtr<KMFolder> > *folders,
+				  QGuardedPtr<KMFolder> curFolder )
 {
   QComboBox* cbx = new QComboBox(false, this);
   int i=0,idx=-1;
@@ -422,10 +422,13 @@ QComboBox* KMFilterDlg::createFolderCombo( QStringList *str,
   for( st = str->begin(); st != str->end(); ++st)
     cbx->insertItem(*st);
 
-  KMFolder *folder;
-  for( folder = folders->first(); folder; folder = folders->next(), ++i )
+  QGuardedPtr<KMFolder> folder;
+  while (folders->at(i) != folders->end()) {
+    folder = *folders->at(i);
     if (folder == curFolder)
       idx = i;
+    ++i;
+  }
   if (idx>=0) cbx->setCurrentItem(idx);
   return cbx;
 }

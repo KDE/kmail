@@ -31,7 +31,7 @@ protected:
   QLineEdit *nameEdit;
   KMAcctFolder* folder;
   KMFolderDir* mFolderDir;
-  QList<KMFolder> mFolders;
+  QValueList<QGuardedPtr<KMFolder> > mFolders;
 };
 
 #endif /*__KMFOLDERDIA*/

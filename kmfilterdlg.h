@@ -42,9 +42,9 @@ public:
   /* Creates a combo box of all folder labels with folders indented
      with white space according to their position in the folder
      hierarchy */
-  virtual QComboBox* createFolderCombo( QStringList *str, 
-					QList<KMFolder> *folders,
-					KMFolder *curFolder );
+  virtual QComboBox* createFolderCombo( QStringList *,
+					QValueList<QGuardedPtr<KMFolder> >*,
+					QGuardedPtr<KMFolder> );
 
   /* Creates a combo box of strings */
   virtual QComboBox* createCombo( QStringList *str,

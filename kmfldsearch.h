@@ -6,6 +6,7 @@
 #define kmfldsearch_h
 
 #include <qdialog.h>
+#include <qguardedptr.h>
 
 class QLineEdit;
 class QPushButton;
@@ -44,7 +45,7 @@ protected:
   virtual bool searchInMessage(KMMessage*);
 
   /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
-  virtual void searchInFolder(KMFolder*,int);
+  virtual void searchInFolder(QGuardedPtr<KMFolder>, int);
 
   /** Search for matches in all folders. Calls searchInFolder() for every
       folder. */

@@ -61,10 +61,11 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QStringList str;
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
-  KMFolder *curFolder;
+  QGuardedPtr<KMFolder> curFolder;
   int i = 1;
   fileInFolder->insertStringList( str );
-  for (curFolder = mFolders.first(); curFolder; curFolder = mFolders.next()) {
+  while (mFolders.at(i - 1) != mFolders.end()) {
+    curFolder = *mFolders.at(i - 1);
     if (curFolder->child() == aFolderDir)
       fileInFolder->setCurrentItem( i );
     ++i;
@@ -85,7 +86,7 @@ void KMFolderDialog::slotOk()
   else fldName = oldFldName;
   if (fldName.isEmpty()) fldName = i18n("unnamed");
   if (curFolder != 0)
-    selectedFolderDir = mFolders.at(curFolder - 1)->createChildFolder();
+    selectedFolderDir = (*mFolders.at(curFolder - 1))->createChildFolder();
 
   QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
   if ((selectedFolderDir->hasNamedFolder(fldName)) &&

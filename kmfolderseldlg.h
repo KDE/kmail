@@ -7,6 +7,7 @@
 
 #include <qdialog.h>
 #include <qlist.h>
+#include <qguardedptr.h>
 
 class QListBox;
 class KMFolder;
@@ -29,7 +30,7 @@ protected slots:
 
 protected:
   QListBox* mListBox;
-  QList<KMFolder> mFolder;
+  QValueList<QGuardedPtr<KMFolder> > mFolder;
 
   static QString oldSelection;
 };

@@ -7,6 +7,7 @@
 #include <qstring.h>
 #include <qlist.h>
 #include <qobject.h>
+#include <qguardedptr.h>
 
 #include "kmfolderdir.h"
 
@@ -58,7 +59,7 @@ public:
   /** Create a list of formatted formatted folder labels and corresponding
    folders*/
   virtual void createFolderList( QStringList *str, 
-				 QList<KMFolder> *folders );
+				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
 public slots:
   /** Compacts all folders (they know is it needed) */
@@ -84,8 +85,8 @@ protected:
 
   /* Auxillary function to facilitate creating a list of formatted
      folder names, suitable for showing in QComboBox */
-  virtual void createFolderList( QStringList *str, 
- 				 QList<KMFolder> *folders,
+  virtual void createFolderList( QStringList *str,
+ 				 QValueList<QGuardedPtr<KMFolder> > *folders,
   				 KMFolderDir *adir,
   				 const QString& prefix);
 

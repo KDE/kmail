@@ -131,18 +131,11 @@ QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
   QString name;
   QComboBox* cbx;
   QStringList str;
-  QList<KMFolder> folders;
 
-  folders.clear();
   gfolders.clear();
 
-  kernel->folderMgr()->createFolderList( &str, &folders );
-  cbx = aParent->createFolderCombo( &str, &folders, mDest );
-  QListIterator<KMFolder> it(folders);
-  while (it.current()) {
-    gfolders.append( *it );
-    ++it;
-  }
+  kernel->folderMgr()->createFolderList( &str, &gfolders );
+  cbx = aParent->createFolderCombo( &str, &gfolders, mDest );
 
   return cbx;
 }

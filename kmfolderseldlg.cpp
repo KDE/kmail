@@ -24,7 +24,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   QPushButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this, 2, 0);
   QBoxLayout* bbox = new QHBoxLayout(0);
-  KMFolder* cur;
+  QGuardedPtr<KMFolder> cur;
 
   initMetaObject();
 
@@ -56,8 +56,8 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   kernel->folderMgr()->createFolderList( &str, &mFolder  );
   int i = 1;
   mListBox->insertStringList( str );
-  for (cur = mFolder.first(); cur; cur = mFolder.next())
-  {
+  while (mFolder.at(i - 1) != mFolder.end()) {
+    cur = *mFolder.at(i - 1);
     if(!oldSelection.isNull() && oldSelection == cur->label())
       mListBox->setCurrentItem(i - 1);
     ++i;
@@ -87,7 +87,7 @@ KMFolder* KMFolderSelDlg::folder(void)
   int idx = mListBox->currentItem();
 
   if (idx < 0) return NULL;
-  return mFolder.at(idx);
+  return *mFolder.at(idx);
 }
 
 

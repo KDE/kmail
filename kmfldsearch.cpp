@@ -138,7 +138,7 @@ KMFldSearch::~KMFldSearch()
 //-----------------------------------------------------------------------------
 QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
 {
- QList<KMFolder> folders;
+ QValueList<QGuardedPtr<KMFolder> > folders;
  QComboBox* cbx = new QComboBox(false, this);
  QStringList str;
  
@@ -218,13 +218,13 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
+void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 {
   KMMessage* msg;
   int i, num, upd;
   QString str;
 
-  assert(aFld!=NULL);
+  assert(aFld);
   
   mBtnSearch->setText("Stop");
   mSearchFolder=aFld->name();
@@ -256,6 +256,8 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
     {
       kapp->processEvents();
       upd = 0;
+      if (!aFld) // Folder deleted while searching!
+	break;
     }
     aFld->unGetMsg(i);
   }
@@ -274,13 +276,14 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
 //-----------------------------------------------------------------------------
 void KMFldSearch::searchInAllFolders(void)
 {
-  QList<KMFolder> folders;
-  KMFolder *folder;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  QGuardedPtr<KMFolder> folder;
   QStringList str;
   int i = 0;
 
   kernel->folderMgr()->createFolderList( &str, &folders );
-  for(folder = folders.first(); folder != 0; folder = folders.next()) {
+  while (folders.at(i) != folders.end()) {
+    folder = *folders.at(i);
     // Stop pressed?
     if(!mSearching)
       break;
@@ -319,11 +322,11 @@ void KMFldSearch::slotSearch()
   if (mCbxFolders->currentItem() <= 0) 
     searchInAllFolders();
   else {
-    QList<KMFolder> folders;
+    QValueList<QGuardedPtr<KMFolder> > folders;
     QStringList str;
     kernel->folderMgr()->createFolderList( &str, &folders );
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
-      searchInFolder(folders.at(mCbxFolders->currentItem()-1),
+      searchInFolder(*folders.at(mCbxFolders->currentItem()-1),
 		     mCbxFolders->currentItem()-1);
     }
   }
@@ -349,18 +352,20 @@ void KMFldSearch::slotClose()
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotShowMsg(QListViewItem *item)
 {
-  KMFolder* fld;
+  QGuardedPtr<KMFolder> fld;
   KMMessage* msg;
 
   if(!item)
     return;
 
   QString fldName = item->text(LOCATION_COLUMN);
-  QList<KMFolder> folders;
+  QValueList<QGuardedPtr<KMFolder> > folders;
   QStringList str;
   int idx = atoi(item->text(FOLDERID_COLUMN));
   kernel->folderMgr()->createFolderList( &str, &folders );
-  fld = folders.at(idx);
+  if (folders.at(idx) == folders.end())
+    return;
+  fld = *folders.at(idx);
   if (!fld) 
     return;
   // This could goto the wrong folder if the folder list has been modified
