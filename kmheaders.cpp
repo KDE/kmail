@@ -285,13 +285,14 @@ public:
         tmp.remove(QRegExp("[\r\n]"));
 
     } else if(col == headers->paintInfo()->dateCol) {
-        tmp = headers->mDate.dateString( mMsgBase->date() );
+      tmp = headers->mDate.dateString( mMsgBase->date() );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
-        if ( mMsgBase->parent()->folderType() == KMFolderTypeImap )
-        {
-          tmp = KIO::convertSize( mMsgBase->msgSizeServer() );
-        } else tmp = KIO::convertSize(mMsgBase->msgSize());
+      if ( mMsgBase->parent()->folderType() == KMFolderTypeImap ) {
+        tmp = KIO::convertSize( mMsgBase->msgSizeServer() );
+      } else {
+        tmp = KIO::convertSize( mMsgBase->msgSize() );
+      }
     }
     return tmp;
   }
@@ -427,7 +428,7 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder)
+  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder )
   {
     // It appears, that QListView in Qt-3.0 asks for the key
     // in QListView::clear(), which is called from
@@ -926,8 +927,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(folderCleared()));
       disconnect(mFolder, SIGNAL(expunged()),
                  this, SLOT(folderCleared()));
-      disconnect(mFolder, SIGNAL(statusMsg(const QString&)),
-                 mOwner, SLOT(statusMsg(const QString&)));
+      disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
+                  BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       writeSortOrder();
       mFolder->close();
       // System folders remain open but we also should write the index from
@@ -957,7 +958,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
       connect(mFolder, SIGNAL(expunged()),
                  this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
-              mOwner, SLOT(statusMsg(const QString&)));
+              BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           this, SLOT(setFolderInfoStatus()));
 
@@ -3209,7 +3210,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if (mPaintInfo.status)
                     sortOrder |= (1 << 5);
                 sortCache[x] = new KMSortCacheItem(
-                    x, KMHeaderItem::generate_key( this, msg, &mPaintInfo, sortOrder ) );
+                    x, KMHeaderItem::generate_key( this, msg, &mPaintInfo, sortOrder ));
                 if(threaded)
                     unparented.append(sortCache[x]);
                 else
