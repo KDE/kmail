@@ -995,7 +995,8 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   QGridLayout *glay = new QGridLayout( group, 1, 1,  KDialog::spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   QLabel *label = new QLabel( i18n("Please check if encryption really "
-  	"works before you start using it seriously."), group );
+  	"works before you start using it seriously.\nAlso note that attachments "
+	"are not encrypted by KMail."), group );
   glay->addWidget ( label, 1, 0 );
 
   group = new QGroupBox( i18n("Identity"), this );
