@@ -2295,7 +2295,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
       }
       aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
       // Modification by Markus
-      if (aPart->name().isEmpty())
+      if (aPart->name().isEmpty() || aPart->name() == " ")
       {
 	if (!headers.ContentType().Name().empty()) {
 	  aPart->setName(KMMsgBase::decodeRFC2047String(headers.
