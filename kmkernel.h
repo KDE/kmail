@@ -37,7 +37,7 @@ class KMFilterActionDict;
 class KMSender;
 namespace KPIM {
   class Identity;
-  class KPIM::IdentityManager;
+  class IdentityManager;
 }
 class KMKernel;
 class KMMsgDict;
