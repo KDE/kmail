@@ -1640,7 +1640,9 @@ bool KMComposeWin::queryClose ()
     const int rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to save the message for later or discard it?"),
            i18n("Close Composer"),
-           i18n("&Save as Draft"),
+           KGuiItem(i18n("&Save as Draft"), "filesave", QString::null,
+                  i18n("Save this message in the Drafts folder. It can "
+                  "then be edited and sent at a later time.")),
            KStdGuiItem::discard() );
     if (rc == KMessageBox::Cancel)
       return false;
