@@ -89,17 +89,6 @@ k_dcop:
   virtual void requestAddresses( QString filename ) = 0;
 
   /**
-     Locks the Contacts folder against changes from outside a DCOP
-     call.
-  */
-  virtual bool lockContactsFolder() = 0;
-
-  /**
-     Unlocks the Contacts folder.
-  */
-  virtual bool unlockContactsFolder() = 0;
-
-  /**
      Stores the addresses found in the specified file in the
      Contacts folder.
   */

@@ -6,7 +6,7 @@
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
 #include "kmmainwidget.h"
-#include "kmgroupware.h"
+#include "kmailicalifaceimpl.h"
 #include "kmacctmgr.h"
 #include "kmkernel.h"
 
@@ -92,8 +92,8 @@ void KMFolderTreeItem::init()
       setType(Drafts);
     else if (mFolder == kernel->trashFolder())
       setType(Trash);
-    else if(kernel->groupware().isGroupwareFolder(mFolder))
-      setType(kernel->groupware().folderType(mFolder));
+    else if(kernel->iCalIface().isResourceImapFolder(mFolder))
+      setType(kernel->iCalIface().folderType(mFolder));
   }
   else
 	  setRenameEnabled(0, false);
@@ -589,7 +589,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
           fti->setPixmap( 0, SmallIcon("trashcan_empty") );
           break;
         default:
-          if( !kernel->groupware().setFolderPixmap( *folder, *fti ) )
+          if( !kernel->iCalIface().setFolderPixmap( *folder, *fti ) )
 	    fti->setPixmap( 0, SmallIcon("folder") );
         }
 

@@ -15,6 +15,7 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kmgroupware.h"
+#include "kmailicalifaceimpl.h"
 #include "kfileio.h"
 #include "kmfolderindex.h"
 #include "kmcommands.h"
@@ -1180,7 +1181,7 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder;
   if (message(&folder))
   {
-    if( !kernel->groupware().isGroupwareFolder( folder ) ){
+    if( !kernel->iCalIface().isResourceImapFolder( folder ) ){
       if ( mShowColorbar )
 	mColorBar->show();
       else

@@ -35,6 +35,7 @@
 #include "kmsender.h"
 #include "kmgroupware.h"
 #include "kmkernel.h"
+#include "kmailicalifaceimpl.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -508,24 +509,24 @@ void StartupWizard::next()
   QWizard::next();
 }
 
-static bool checkSubfolders( KMFolderDir* dir, KMGroupware* gw, int language )
+static bool checkSubfolders( KMFolderDir* dir, int language )
 {
-  return dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Inbox, language ) ) &&
-    dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Calendar, language ) ) &&
-    dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Contacts, language ) ) &&
-    dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Notes, language ) ) &&
-    dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Tasks, language ) );
+  KMailICalIfaceImpl& ical = kernel->iCalIface();
+  return dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Inbox, language ) ) &&
+    dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Calendar, language ) ) &&
+    dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Contacts, language ) ) &&
+    dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Notes, language ) ) &&
+    dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Tasks, language ) );
 }
 
 void StartupWizard::guessExistingFolderLanguage()
 {
   KMFolderDir* dir = folder()->child();
-  KMGroupware* gw = &(KMKernel::self()->groupware());
 
-  if(  checkSubfolders( dir, gw, 0 ) ) {
+  if(  checkSubfolders( dir, 0 ) ) {
     // Check English
     setLanguage( 0, true );
-  } else if( checkSubfolders( dir, gw, 1 ) ) {
+  } else if( checkSubfolders( dir, 1 ) ) {
     // Check German
     setLanguage( 1, true );
   } else {

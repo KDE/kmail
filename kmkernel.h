@@ -42,6 +42,7 @@ class KProgress;
 class KPassivePopup;
 class KMMainWin;
 class KMGroupware;
+class KMailICalIfaceImpl;
 class CryptPlugWrapperList;
 
 class KMKernel : public QObject, virtual public KMailIface
@@ -101,8 +102,6 @@ public:
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
   void requestAddresses( QString filename );
-  bool lockContactsFolder();
-  bool unlockContactsFolder();
   bool storeAddresses( QString addresses, QStringList delUIDs );
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
@@ -158,6 +157,7 @@ public:
   CryptPlugWrapperList * cryptPlugList() const { return mCryptPlugList; }
 
   KMGroupware& groupware();
+  KMailICalIfaceImpl& iCalIface();
 
   bool firstStart() { return the_firstStart; }
   QString previousVersion() { return the_previousVersion; }
@@ -273,6 +273,7 @@ private:
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
   KMGroupware * mGroupware;
+  KMailICalIfaceImpl* mICalIface;
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;

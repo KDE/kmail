@@ -40,6 +40,7 @@
 #include "kmmsgdict.h"
 #include "kmkernel.h"
 #include "objecttreeparser.h"
+#include "kmailicalifaceimpl.h"
 
 using KMail::ObjectTreeParser;
 
@@ -63,7 +64,6 @@ using namespace KABC;
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <klibloader.h>
-#include <kiconloader.h>
 #include <dcopclient.h>
 #include <kparts/part.h>
 #include <kconfig.h>
@@ -83,18 +83,9 @@ using namespace KABC;
 
 #include <assert.h>
 
-// groupware folder icons:
-QPixmap* KMGroupware::pixContacts = 0;
-QPixmap* KMGroupware::pixCalendar = 0;
-QPixmap* KMGroupware::pixNotes    = 0;
-QPixmap* KMGroupware::pixTasks    = 0;
-
 // global status flag:
 static bool ignore_GroupwareDataChangeSlots = false;
 
-// Global tables of foldernames is different languages
-// For now: 0->English, 1->German
-static QMap<KFolderTreeItem::Type,QString> folderNames[2];
 
 //-----------------------------------------------------------------------------
 KMGroupware::KMGroupware( QObject* parent, const char* name ) :
@@ -102,15 +93,7 @@ KMGroupware::KMGroupware( QObject* parent, const char* name ) :
     mMainWin(0),
     mUseGroupware(false),
     mGroupwareIsHidingMimePartTree(false),
-    mFolderLanguage(0),
-    mKOrgPart(0),
-    mFolderParent(0),
-    mFolderType(KMFolderTypeUnknown),
-    mContactsLocked(false),
-    mContacts(0),
-    mCalendar(0),
-    mNotes(0),
-    mTasks(0)
+    mKOrgPart(0)
 {
 }
 
@@ -122,16 +105,10 @@ void KMGroupware::readConfig()
   if( options.readEntry( "Enabled", "notset" ) == "notset" )
     return;
 
-  bool enabled = options.readBoolEntry( "Enabled", true );
-
-  mUseGroupware = enabled;
+  mUseGroupware = options.readBoolEntry( "Enabled", true );
 
   // Set the menus on the main window
   setupActions();
-
-  // Make the folder tree show the icons or not
-  if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
-    mMainWin->mainKMWidget()->folderTree()->reload();
 
   if( !mUseGroupware ) {
     slotGroupwareHide();
@@ -140,55 +117,10 @@ void KMGroupware::readConfig()
     // delete (KParts::ReadOnlyPart*)mKOrgPart;
     // mKOrgPart = 0;
 
-    if( mContacts ) mContacts->setType("øh");
-    mContacts = mCalendar = mNotes = mTasks = 0;
-    if( mReader ) mReader->setUseGroupware( false );
-
     return;
   }
 
-  mFolderLanguage = options.readNumEntry( "FolderLanguage", 0 );
-  if( mFolderLanguage > 1 ) mFolderLanguage = 0; // Just for safety
-
-  QString parentName( options.readEntry("GroupwareFolder") );
-  KMFolder* folderParent = kernel->folderMgr()->findIdString( parentName );
-  if( folderParent == 0 )
-    folderParent = kernel->imapFolderMgr()->findIdString( parentName );
-
-  if( folderParent == 0 ) {
-    // Maybe nothing was configured?
-    mFolderParent = &(kernel->folderMgr()->dir());
-    mFolderType = KMFolderTypeMaildir;
-  } else {
-    KMFolderDir* oldParent = mFolderParent;
-
-    mFolderParent = folderParent->createChildFolder();
-    mFolderType = folderParent->folderType();
-
-    if( oldParent && oldParent != mFolderParent ) {
-      // Some other folder was previously set as the parent
-      // TODO: Do something!
-    }
-  }
-
-  if( !checkFolders() ) {
-    assert( mFolderParent );
-    if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required groupware folders"
-					    " as subfolders of %1. If you dont want this, press \"No\","
-					    " and the groupware functions will be disabled").arg(mFolderParent->name()),
-				    i18n("Groupware Folders") ) == KMessageBox::No ) {
-      mUseGroupware = false;
-    }
-  }
-
-  initFolders();
-
   internalCreateKOrgPart();
-
-  // Make KOrganizer re-read everything
-  slotRefreshCalendar();
-  slotRefreshTasks();
-  slotNotesFolderChanged();
 }
 
 //-----------------------------------------------------------------------------
@@ -197,171 +129,9 @@ KMGroupware::~KMGroupware()
   delete mKOrgPart;
 }
 
-//-----------------------------------------------------------------------------
-// Returns true if folder is a groupware folder. If groupware mode isn't enabled
-// this always returns false
-bool KMGroupware::isGroupwareFolder( KMFolder* folder ) const
-{
-  return mUseGroupware && folder && ( folder == mCalendar || folder == mContacts ||
-				      folder == mNotes || folder == mTasks );
-}
-
-//-----------------------------------------------------------------------------
-KFolderTreeItem::Type KMGroupware::folderType( KMFolder* folder ) const
-{
-  if( mUseGroupware && folder ) {
-    if( folder == mCalendar )
-      return KFolderTreeItem::Calendar;
-    else if( folder == mContacts )
-      return KFolderTreeItem::Contacts;
-    else if( folder == mNotes )
-      return KFolderTreeItem::Notes;
-    else if( folder == mTasks )
-      return KFolderTreeItem::Tasks;
-  }
-
-  return KFolderTreeItem::Other;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMGroupware::folderName( KFolderTreeItem::Type type, int language ) const
-{
-  static bool folderNamesSet = false;
-  if( !folderNamesSet ) {
-    folderNamesSet = true;
-    /*
-      Logical (enum)     English         German
-      ------------------------------------------------------
-      Contacts           Contacts        Kontakte
-      Calendar           Calendar        Kalender
-      Notes              Notes           Notizen
-      Tasks              Tasks           Aufgaben
-      Inbox              inbox           Posteingang
-      Outbox             outbox          Postausgang
-    */
-    /* NOTE: If you add something here, you also need to update
-       GroupwarePage in configuredialog.cpp */
-    // English
-    folderNames[0][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendar");
-    folderNames[0][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
-    folderNames[0][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
-    folderNames[0][KFolderTreeItem::Tasks] = QString::fromLatin1("Tasks");
-    //folderNames[0][KFolderTreeItem::Journal] = QString::fromLatin1("Journals");
-
-    // German
-    folderNames[1][KFolderTreeItem::Calendar] = QString::fromLatin1("Kalender");
-    folderNames[1][KFolderTreeItem::Contacts] = QString::fromLatin1("Kontakte");
-    folderNames[1][KFolderTreeItem::Notes] = QString::fromLatin1("Notizen");
-    folderNames[1][KFolderTreeItem::Tasks] = QString::fromLatin1("Aufgaben");
-  }
-
-  if( language == -1 ) return folderNames[mFolderLanguage][type];
-  else return folderNames[language][type];
-}
-
-bool KMGroupware::checkFolders() const
-{
-  if( !mUseGroupware ) return true;
-  if( !mFolderParent ) return false;
-
-  KMFolderNode* node;
-  node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Contacts ) );
-  if( !node || node->isDir() ) return false;
-  node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Calendar ) );
-  if( !node || node->isDir() ) return false;
-  node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Notes ) );
-  if( !node || node->isDir() ) return false;
-  node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
-  if( !node || node->isDir() ) return false;
-  return true;
-}
-
-//-----------------------------------------------------------------------------
-KMFolder* KMGroupware::initFolder( KFolderTreeItem::Type itemType, const char* typeString )
-{
-  // Figure out what type of folder this is supposed to be
-  KMFolderType type = mFolderType;
-  if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
-
-  KMFolder* folder = 0;
-
-  KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
-  if( node && !node->isDir() ) folder = static_cast<KMFolder*>(node);
-  if( !folder ) folder = mFolderParent->createFolder( folderName( itemType ), false, type );
-  if( folder->canAccess() != 0 ) {
-    KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
-		       .arg( folderName( itemType ) ) );
-    return 0;
-  }
-  folder->setType( typeString );
-  folder->setSystemFolder( true );
-  folder->open();
-
-  // Setup the signals for the IMAP resource
-  connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	   this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-  connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	   this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-
-  return folder;
-}
-
-void KMGroupware::initFolders()
-{
-  // Close the previous folders
-  cleanup();
-
-  // Set the new folders
-  if( mUseGroupware && mFolderParent ) {
-    mContacts = initFolder( KFolderTreeItem::Contacts, "GCo" );
-    mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa" );
-    mNotes = initFolder( KFolderTreeItem::Notes, "GNo" );
-    mTasks = initFolder( KFolderTreeItem::Tasks, "GTa" );
-
-    // TODO: Change Notes and Contacts to work like calendar and tasks and add Journals
-    // Connect the notes folder. This is the old way to do it :-(
-    connect( mNotes, SIGNAL( changed() ), this, SLOT( slotNotesFolderChanged() ) );
-    slotNotesFolderChanged();
-
-    connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
-    connect( mTasks, SIGNAL( expunged() ), this, SLOT( slotRefreshTasks() ) );
-
-    // Make the folder tree show the icons or not
-    if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
-      mMainWin->mainKMWidget()->folderTree()->reload();
-  }
-}
-
-
-static void cleanupFolder( KMFolder* folder, KMGroupware* gw )
-{
-  if( folder ) {
-    folder->setType( "plain" );
-    folder->setSystemFolder( false );
-    folder->disconnect( gw );
-    folder->close( true );
-  }
-}
-
-void KMGroupware::cleanup()
-{
-  cleanupFolder( mContacts, this );
-  cleanupFolder( mCalendar, this );
-  cleanupFolder( mNotes, this );
-  cleanupFolder( mTasks, this );
-
-  mContacts = mCalendar = mNotes = mTasks = 0;
-}
-
-
-bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
-                                        int& aUpdateCounter,
-                                        QString& s )
+bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
 {
   assert( msg );
-//   kdDebug(5006) << "KMGroupware::vPartFoundAndDecoded( " << msg->subject() << endl;
-//   kdDebug(5006) << msg->type() << ", " << msg->subtype() << ")" << endl;
 
   if( ( DwMime::kTypeText == msg->type() && ( DwMime::kSubtypeVCal   == msg->subtype() ||
 					      DwMime::kSubtypeXVCard == msg->subtype() ) ) ||
@@ -383,34 +153,13 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
       // kdDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
-      return KMGroupware::msTNEFToVPart( msgPart.bodyDecodedBinary(), aUpdateCounter, s );
+      return KMGroupware::msTNEFToVPart( msgPart.bodyDecodedBinary(), s );
     }
   }else if( DwMime::kTypeMultipart == msg->type() &&
 	    DwMime::kSubtypeMixed  == msg->subtype() ){
   }
 
   return false;
-}
-
-
-void KMGroupware::slotNotesFolderChanged()
-{
-  QStringList lNotes;
-  KMMessage* m;
-  if( mNotes )
-    for( int i=0; i<mNotes->count(); ++i ){
-      bool unget = !mNotes->isMessage(i);
-      m = mNotes->getMsg( i );
-      if( m ){
-        lNotes << QString::fromUtf8( m->asDwString().data(), m->asDwString().length() );
-	m->touch();
-      }
-      if( unget ) mNotes->unGetMsg(i);
-    }
-
-  ignore_GroupwareDataChangeSlots = true;
-  emit signalRefreshNotes( lNotes );
-  ignore_GroupwareDataChangeSlots = false;
 }
 
 
@@ -423,30 +172,6 @@ void KMGroupware::slotInvalidateIMAPFolders()
   if( KMessageBox::warningContinueCancel(mMainWin, str, s1, s2 ) == KMessageBox::Continue)
     kernel->acctMgr()->invalidateIMAPFolders();
 }
-
-//-----------------------------------------------------------------------------
-bool KMGroupware::setFolderPixmap(const KMFolder& folder, KMFolderTreeItem& fti) const
-{
-  if( !mUseGroupware )
-    return false;
-
-  // Make sure they are set
-  loadPixmaps();
-
-  if( folder.label() == folderName( KFolderTreeItem::Contacts ) )
-    fti.setPixmap( 0, *pixContacts );
-  else if( folder.label() == folderName( KFolderTreeItem::Calendar ) )
-    fti.setPixmap( 0, *pixCalendar );
-  else if( folder.label() == folderName( KFolderTreeItem::Notes ) )
-    fti.setPixmap( 0, *pixNotes );
-  else if( folder.label() == folderName( KFolderTreeItem::Tasks ) )
-    fti.setPixmap( 0, *pixTasks );
-  else
-    return false;
-
-  return true;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMGroupware::setupKMReaderWin(KMReaderWin* reader)
@@ -581,8 +306,6 @@ void KMGroupware::internalCreateKOrgPart()
   // ignore_GroupwareDataChangeSlots = true;
   slotRefreshCalendar();
   slotRefreshTasks();
-  // Notes
-  slotNotesFolderChanged();
   // ignore_GroupwareDataChangeSlots = false;
 }
 
@@ -704,41 +427,6 @@ void KMGroupware::setupActions()
   emit signalMenusChanged();
 }
 
-// find message matching a given UID and return it in msg* or trash it
-KMMessage *KMGroupware::findMessageByUID( const QString& uid, KMFolder* folder )
-{
-  assert( folder );
-
-  KMMessage* msg = 0;
-  KMMessage* m;
-  for( int i=0; i<folder->count() && !msg; ++i ){
-    bool unget = !folder->isMessage(i);
-    m = folder->getMsg( i );
-    if( m ){
-      int iDummy;
-      QString vCalOld;
-      if( vPartFoundAndDecoded( m, iDummy, vCalOld ) ){
-	QString uidOld( "UID" );
-	vPartMicroParser( vCalOld.utf8(), uidOld );
-	if( uidOld == uid )
-	  msg = m;
-      }
-    }
-    if( !msg && unget )
-      folder->unGetMsg(i);
-  }
-
-  return msg;
-}
-
-void KMGroupware::deleteMsg( KMMessage *msg )
-{
-  assert( msg );
-  QPtrList<KMMsgBase> mList;
-  mList.append(msg);
-  ( new KMDeleteMsgCommand( msg->parent(), mList ) )->start();
-}
-
 //-----------------------------------------------------------------------------
 //   Special Contacts methods called by KMKernel's DCOP functions
 //-----------------------------------------------------------------------------
@@ -748,23 +436,24 @@ void KMGroupware::requestAddresses( QString fname )
   if( file.open( IO_WriteOnly ) ) {
     QTextStream ts( &file );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
-    if( mContacts ){
-      int iDummy;
+
+    KMFolder* contacts = kernel->iCalIface().folderFromType( "Contact" );
+    if( contacts ) {
       QString s;
-      for( int i=0; i<mContacts->count(); ++i ){
-        bool unget = !mContacts->isMessage(i);
-        if( KMGroupware::vPartFoundAndDecoded( mContacts->getMsg( i ), iDummy, s ) ){
+      for( int i=0; i<contacts->count(); ++i ) {
+        bool unget = !contacts->isMessage(i);
+        if( KMGroupware::vPartFoundAndDecoded( contacts->getMsg( i ), s ) ) {
           ts << s;
           s.replace('\n', "\\n");
           s.truncate(65);
         }
-        if( unget ) mContacts->unGetMsg(i);
+        if( unget ) contacts->unGetMsg(i);
       }
-    }else{
+    }else {
       kdDebug(5006) << "+++KMGroupware::requestAddresses(): Contacts folder does not exist" << endl;
     }
     file.close();
-  }else{
+  }else {
     kdDebug(5006) << "+++KMGroupware::requestAddresses(): could not open file" << endl;
   }
 }
@@ -772,145 +461,76 @@ void KMGroupware::requestAddresses( QString fname )
 //--------------
 bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
 {
-  if( mContacts ){
-    QFile file( fname );
-    QStringList vCards;
-    if( file.open( IO_ReadOnly ) ) {
-      QTextStream ts( &file );
-      ts.setEncoding( QTextStream::UnicodeUTF8 );
-      QString currentVCard;
-      while( !ts.eof() ) {
-        QString line;
-        line = ts.readLine();
-        if( line.isEmpty() ) {
-          // New vCard
-          vCards << currentVCard;
-          currentVCard = "";
-        } else {
-          // Continue current vCard
-          currentVCard += line + "\r\n";
-        }
-      }
-      file.close();
-    }else{
-      kdDebug(5006) << "+++KMGroupware::storeAddresses(): could not open file" << endl;
-      return false;
-    }
+  KMFolder* contacts = kernel->iCalIface().folderFromType( "Contact" );
+  if( !contacts ) {
+    kdDebug(5006) << "KMGroupware::storeAddresses(): Contacts folder does not exist" << endl;
+    return false;
+  }
 
-    for( QStringList::iterator it = delUIDs.begin(); it != delUIDs.end(); ++it ) {
-      KMMessage* msg = findMessageByUID( *it, mContacts );
-      if( msg )
-        deleteMsg( msg );
-      else
-        kdDebug(5006) << "vCard not found, cannot remove: " << *it << endl;
-    }
-
-    for( QStringList::iterator it2 = vCards.begin(); it2 != vCards.end(); ++it2 ) {
-      QCString vCard( (*it2).utf8() );
-      QString uid( "UID" );
-      QString name( "NAME" );
-      vPartMicroParser( vCard, uid, name );
-      KMMessage* msg = findMessageByUID( uid, mContacts );
-      if( !msg ) {
-	// This is a new vCard, make a message to store it in
-        msg = new KMMessage(); // makes a "Content-Type=text/plain" message
-        msg->initHeader();
-        msg->setType( DwMime::kTypeText );
-        msg->setSubtype( DwMime::kSubtypeXVCard );
-        msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
-	msg->setSubject( "Contact" );
-	msg->setTo( name );
-
-	// add missing headers/content:
-	msg->setBodyEncoded( vCard );
-
-	// mark the message as read and store it in our Contacts folder
-	msg->touch();
-	mContacts->addMsg( msg );
+  QFile file( fname );
+  QStringList vCards;
+  if( file.open( IO_ReadOnly ) ) {
+    QTextStream ts( &file );
+    ts.setEncoding( QTextStream::UnicodeUTF8 );
+    QString currentVCard;
+    while( !ts.eof() ) {
+      QString line;
+      line = ts.readLine();
+      if( line.isEmpty() ) {
+	// New vCard
+	vCards << currentVCard;
+	currentVCard = "";
       } else {
-	// Figure out if the contact have been changed
-	int iDummy;
-	QString s;
-	if( vPartFoundAndDecoded( msg, iDummy, s ) && s.utf8() != vCard ) {
-	  msg->setBodyEncoded( vCard );
-	  msg->setTo( name );
-	}
+	// Continue current vCard
+	currentVCard += line + "\r\n";
       }
     }
+    file.close();
   }else{
-    kdDebug(5006) << "+++KMGroupware::storeAddresses(): Contacts folder does not exist" << endl;
+    kdDebug(5006) << "KMGroupware::storeAddresses(): could not open file" << endl;
+    return false;
   }
-  return true;
-}
 
-//--------------
-bool KMGroupware::lockContactsFolder()
-{
-  if( mContactsLocked )
-    return false;
-  mContactsLocked = true;
-  return true;
-}
-//--------------
-bool KMGroupware::unlockContactsFolder()
-{
-  if( !mContactsLocked )
-    return false;
-  mContactsLocked = false;
-  return true;
-}
+  for( QStringList::iterator it = delUIDs.begin(); it != delUIDs.end(); ++it ) {
+    KMMessage* msg = kernel->iCalIface().findMessageByUID( *it, contacts );
+    if( msg )
+      kernel->iCalIface().deleteMsg( msg );
+    else
+      kdDebug(5006) << "vCard not found, cannot remove: " << *it << endl;
+  }
 
+  for( QStringList::iterator it2 = vCards.begin(); it2 != vCards.end(); ++it2 ) {
+    QCString vCard( (*it2).utf8() );
+    QString uid( "UID" );
+    QString name( "NAME" );
+    vPartMicroParser( vCard, uid, name );
+    KMMessage* msg = kernel->iCalIface().findMessageByUID( uid, contacts );
+    if( !msg ) {
+      // This is a new vCard, make a message to store it in
+      msg = new KMMessage(); // makes a "Content-Type=text/plain" message
+      msg->initHeader();
+      msg->setType( DwMime::kTypeText );
+      msg->setSubtype( DwMime::kSubtypeXVCard );
+      msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+      msg->setSubject( "Contact" );
+      msg->setTo( name );
 
-//-----------------------------------------------------------------------------
-void KMGroupware::slotNewOrUpdatedNote( const QString& id, const QString& geometry, const QColor& color,
-					const QString& text)
-{
-  if( ignore_GroupwareDataChangeSlots ) return;
-  blockSignals(true);
-  KMFolder* folder = mNotes;
-  KMMessage* msgNew = 0;
+      // add missing headers/content:
+      msg->setBodyEncoded( vCard );
 
-  for( int i=0; i<folder->count(); ++i ){
-    bool unget = !folder->isMessage(i);
-    KMMessage* m = folder->getMsg( i );
-    if( m && (id == m->headerField("X-KOrg-Note-Id")) ) {
-      msgNew = folder->take(i);
-      break;
+      // mark the message as read and store it in our Contacts folder
+      msg->touch();
+      contacts->addMsg( msg );
+    } else {
+      // Figure out if the contact have been changed
+      QString s;
+      if( vPartFoundAndDecoded( msg, s ) && s.utf8() != vCard ) {
+	msg->setBodyEncoded( vCard );
+	msg->setTo( name );
+      }
     }
-    if( unget ) folder->unGetMsg(i);
   }
-
-  if( !msgNew ) msgNew = new KMMessage();
-
-  msgNew->setFrom( kernel->identityManager()->defaultIdentity().fullEmailAddr() );
-  msgNew->setTo( kernel->identityManager()->defaultIdentity().fullEmailAddr() );
-  msgNew->setHeaderField("Content-Type",
-                         "text/plain; charset=\"utf-8\"");
-  msgNew->setHeaderField("X-KOrg-Note-Id", id);
-  if( !geometry.isEmpty() ) msgNew->setHeaderField("X-KOrg-Note-Geometry", geometry);
-  if( color.isValid() ) msgNew->setHeaderField("X-KOrg-Note-Color", color.name() );
-  msgNew->setBodyEncoded(text.utf8());
-  folder->addMsg(msgNew);
-  blockSignals(false);
-}
-
-void KMGroupware::slotDeleteNote( const QString& _id )
-{
-  QString id = _id.stripWhiteSpace();
-  //if( ignore_GroupwareDataChangeSlots ) return;
-  //blockSignals(true);
-  mNotes->open();
-  for( int i=0; i<mNotes->count(); ++i ) {
-    bool unget = !mNotes->isMessage(i);
-    KMMessage* msg = mNotes->getMsg( i );
-    if( msg && id == msg->headerField("X-KOrg-Note-Id").stripWhiteSpace() ) {
-      deleteMsg( msg );
-      break;
-    } else if( unget )
-      mNotes->unGetMsg(i);
-  }
-  mNotes->close();
-  //blockSignals(false);
+  return true;
 }
 
 void internal_directlySendMessage(KMMessage* msg)
@@ -924,108 +544,9 @@ void internal_directlySendMessage(KMMessage* msg)
   //mMainWin->slotCompose( msgNew, 0 );
 }
 
-bool KMGroupware::addIncidence( const QString& type,
-				const QString& uid,
-				const QString& ical )
-{
-  KMFolder* folder = 0;
-
-  if( type == "Contact" ) {
-    folder = mCalendar;
-  } else if( type == "Calendar" ) {
-    folder = mCalendar;
-  } else if( type == "Note" ) {
-    folder = mNotes;
-  } else if( type == "Task" ) {
-    folder = mTasks;
-  } else {
-    kdError() << "No folder type \"" << type << "\"" << endl;
-    assert(0);
-  }
-
-  // process a new event:
-  KMMessage* msg = new KMMessage(); // makes a "Content-Type=text/plain" message
-  msg->initHeader();
-  msg->setType(    DwMime::kTypeText );
-  msg->setSubtype( DwMime::kSubtypeVCal );
-  msg->setHeaderField("Content-Type",
-		      "text/calendar; method=REQUEST; charset=\"utf-8\"");
-  msg->setSubject( uid ); // we could use the uid as subj
-  msg->setTo( msg->from() );
-  msg->setBodyEncoded( ical.utf8() );
-
-  msg->touch();
-  folder->addMsg( msg );
-  return true;
-}
-
-bool KMGroupware::deleteIncidence( const QString& type, const QString& uid )
-{
-  KMFolder* folder = 0;
-
-  if( type == "Contact" ) {
-    folder = mCalendar;
-  } else if( type == "Calendar" ) {
-    folder = mCalendar;
-  } else if( type == "Note" ) {
-    folder = mNotes;
-  } else if( type == "Task" ) {
-    folder = mTasks;
-  } else {
-    kdError() << "No such folder" << endl;
-    return false;
-  }
-
-  KMMessage* msg = findMessageByUID( uid, folder );
-  if( !msg ) return false;
-
-  deleteMsg( msg );
-  return true;
-}
-
-QStringList KMGroupware::incidences( const QString& type )
-{
-  KMFolder* folder = 0;
-
-  if( type == "Contact" ) {
-    folder = mCalendar;
-  } else if( type == "Calendar" ) {
-    folder = mCalendar;
-  } else if( type == "Note" ) {
-    folder = mNotes;
-  } else if( type == "Task" ) {
-    folder = mTasks;
-  } else if( type == "Journal" ) {
-    // TODO: Make journals work
-    return QStringList();
-  } else {
-    assert(0);
-  }
-
-  QStringList ilist;
-  QString s;
-  int iDummy;
-  for( int i=0; i<folder->count(); ++i ){
-    bool unget = !folder->isMessage(i);
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) )
-      ilist << s;
-    if( unget ) folder->unGetMsg(i);
-  }
-  return ilist;
-}
-
 void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
 {
-  QString type;
-  if( folder == mContacts ) {
-    type = "Contact";
-  } else if( folder == mCalendar ) {
-    type = "Calendar";
-  } else if( folder == mTasks ) {
-    type = "Task";
-  } else if( folder == mNotes ) {
-    type = "Note";
-  } else {
+  if( !kernel->iCalIface().isResourceImapFolder( folder ) ) {
     kdError() << "Not a groupware folder" << endl;
     return;
   }
@@ -1036,25 +557,15 @@ void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
   assert( folder == aFolder );
 
   bool unget = !folder->isMessage( i );
-  int iDummy;
   QString s;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) )
-    emit incidenceAdded( type, s );
+  if( vPartFoundAndDecoded( folder->getMsg( i ), s ) )
+    emit incidenceAdded( folder, s );
   if( unget ) folder->unGetMsg(i);
 }
 
 void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
 {
-  QString type;
-  if( folder == mContacts ) {
-    type = "Contact";
-  } else if( folder == mCalendar ) {
-    type = "Calendar";
-  } else if( folder == mTasks ) {
-    type = "Task";
-  } else if( folder == mNotes ) {
-    type = "Note";
-  } else {
+  if( !kernel->iCalIface().isResourceImapFolder( folder ) ) {
     kdError() << "Not a groupware folder" << endl;
     return;
   }
@@ -1065,12 +576,11 @@ void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
   assert( folder == aFolder );
 
   bool unget = !folder->isMessage( i );
-  int iDummy;
   QString s;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) ) {
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
     QString uid( "UID" );
     vPartMicroParser( s.utf8(), uid );
-    emit incidenceDeleted( type, uid );
+    emit incidenceDeleted( folder, uid );
   }
   if( unget ) folder->unGetMsg(i);
 }
@@ -1180,7 +690,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
     emit signalEventRequest( receiver, vCalIn, inOK, choice, outVCal, outOK );
   }
   // step 2: process vCal returned by Organizer
-  if( outOK && mMainWin && mCalendar ){
+  if( outOK && mMainWin ){
     // mMainWin->slotNewBodyReplyToMsg( outVCal );
     KMMessage* msgNew = 0;
     if( msgOld ){
@@ -1200,12 +710,15 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       internal_directlySendMessage( msgNew );
     }
     if( "accept" == choice || "accept conditionally" == choice ) {
+#if 0
+      // TODO: Don't save this directly - give it to korganizer instead
       if( type == vCalTodo )
 	// This is a task
 	mMainWin->mainKMWidget()->slotMoveMsgToFolder( mTasks );
       else
 	// This is an appointment
 	mMainWin->mainKMWidget()->slotMoveMsgToFolder( mCalendar );
+#endif
     } else if("decline" == choice )
       mMainWin->mainKMWidget()->slotTrashMsg();
   }
@@ -1230,6 +743,8 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
     ignore_GroupwareDataChangeSlots = true;
     // emit signal...
     emit signalIncidenceAnswer( sender, vCalIn, vCalOut );
+#if 0
+    // This code will be taken care of by korganizer
 
     // Check for the user stopping this transaction or some error happening
     if( vCalOut == "false" ) {
@@ -1243,7 +758,7 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
     QString uid( "UID" );
     vPartMicroParser( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8(), uid );
     KMFolder* folder = type == vCalEvent ? mCalendar : mTasks;
-    KMMessage* msgNew = findMessageByUID( uid, folder );
+    KMMessage* msgNew = kernel->iCalIface().findMessageByUID( uid, folder );
     bool isNewMsg = ( msgNew == 0 );
     if( isNewMsg ) {
       // Process a new event:
@@ -1277,6 +792,7 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
 					 i18n("The answer was registered in your task list.")),
 			      QString::null, "groupwareBox");
     ignore_GroupwareDataChangeSlots = false;
+#endif
   } else if( "cancel" == choice ) {
     QString uid( "UID" );
     QString descr("DESCRIPTION");
@@ -1303,36 +819,25 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
 
 
 //-----------------------------------------------------------------------------
-bool KMGroupware::isContactsFolder( KMFolder* folder ) const
-{
-  return mContacts && folder == mContacts;
-};
-
-
-//-----------------------------------------------------------------------------
 bool KMGroupware::folderSelected( KMFolder* folder )
 {
   bool bFound = mUseGroupware;
-  if( mUseGroupware ){
-    if( folder == mCalendar ){
-      slotGroupwareShow( true );
+  if( mUseGroupware ) {
+    KFolderTreeItem::Type type = kernel->iCalIface().folderType( folder );
+    switch( type ) {
+    case KFolderTreeItem::Calendar:
       emit signalShowCalendarView();
-    }
-    else if( folder == mContacts ){
-      // note: We do *not* show the KOrganizer plugin here!
-      //       Contacts are done via KAddressbook.
+      break;
+    case KFolderTreeItem::Contacts:
       emit signalShowContactsView();
-    }
-    else if( folder == mNotes ){
-      slotGroupwareShow( true );
+      break;
+    case KFolderTreeItem::Notes:
       emit signalShowNotesView();
-    }
-    else if( folder == mTasks ){
-      slotGroupwareShow( true );
+      break;
+    case KFolderTreeItem::Tasks:
       emit signalShowTodoView();
-    }
-    else{
-      slotGroupwareHide();
+      break;
+    default:
       bFound = false;
     }
   }
@@ -1573,8 +1078,7 @@ QString sNamedProp( KTNEFMessage* tnefMsg, const QString& name,
 
 //-----------------------------------------------------------------------------
 
-bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, int& aUpdateCounter,
-                                 QString& vPart )
+bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
 {
   // Note: vPart is not erased but
   //       keeps it's initial data if it cannot be decoded
@@ -1623,8 +1127,6 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, int& aUpdateCounter,
 
       if( bCompatClassAppointment || "IPM.APPOINTMENT" == msgClass ){
 
-        // retrieve the update counter
-        aUpdateCounter = tnefMsg->findNamedProp("0x8201", "0").toInt();
         // compose a vCal
         bool bIsReply = false;
         QString prodID;
@@ -1924,8 +1426,8 @@ bool KMGroupware::msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fna
 {
   QByteArray tnef( kFileToBytes( fname, false ) );
   if( tnef.count() ) {
-    int updateCounter;
-    if( msTNEFToVPart( tnef, updateCounter, vPart ) ){
+    int updateCounter = 0;
+    if( msTNEFToVPart( tnef, vPart ) ){
       QByteArray theBody( vPart.utf8() );
       QString fname2( ObjectTreeParser::byteArrayToTempFile( reader,
                                                         "groupware",
@@ -2052,9 +1554,8 @@ bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
   if( !mUseGroupware)
     return false;
 
-  int updateCounter;
   QString vCalIn;
-  if( vPartFoundAndDecoded( msg, updateCounter, vCalIn ) )
+  if( vPartFoundAndDecoded( msg, vCalIn ) )
     return false;
 
   bool vCalInOK, vCalOutOK, isFree;
@@ -2088,51 +1589,12 @@ bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
   return true;
 }
 
-/*!
-  This method checks whether the folder is one of Calendar, Notes, and
-  Tasks and informs KOrganizer accordingly about the deleted object.
-*/
-void KMGroupware::msgRemoved( KMFolder* folder, KMMessage* msg )
+
+void KMGroupware::reloadFolderTree() const
 {
-  assert( msg );
-  assert( msg->isMessage() );
-
-  int iDummy;
-  QString vCal;
-
-  // Let's try for a note
-  QString noteId = msg->headerField( "X-KOrg-Note-Id" );
-  if( !noteId.isEmpty() ) {
-    kdDebug(5006) << "%%% Deleting note with id: " << noteId << endl;
-    emit signalNoteDeleted( noteId );
-  } if( vPartFoundAndDecoded( msg, iDummy, vCal ) ) {
-    QString uid( "UID" );
-    vPartMicroParser( vCal.utf8(), uid );
-    if( !uid.isEmpty() ){
-      // We have found something with an UID, now tell KOrganizer if
-      // this was a relevant folder.
-      if( folder == mCalendar )
-	emit signalEventDeleted( uid );
-      else if( folder == mTasks )
-	emit signalTaskDeleted( uid );
-    }
-  } else
-    kdDebug(5006) << "%%% Unknown groupware deletion\n";
+  // Make the folder tree show the icons or not
+  if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
+    mMainWin->mainKMWidget()->folderTree()->reload();
 }
-
-
-void KMGroupware::loadPixmaps() const
-{
-  static bool pixmapsLoaded = false;
-
-  if( mUseGroupware && !pixmapsLoaded ) {
-    pixmapsLoaded = true;
-    pixContacts = new QPixmap( UserIcon("kmgroupware_folder_contacts"));
-    pixCalendar = new QPixmap( UserIcon("kmgroupware_folder_calendar"));
-    pixNotes    = new QPixmap( UserIcon("kmgroupware_folder_notes"));
-    pixTasks    = new QPixmap( UserIcon("kmgroupware_folder_tasks"));
-  }
-}
-
 
 #include "kmgroupware.moc"

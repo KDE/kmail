@@ -98,7 +98,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mGroupware = new KMGroupware( this );
 
   // Set up DCOP interface
-  (void)new KMailICalIfaceImpl( mGroupware );
+  mICalIface = new KMailICalIfaceImpl();
 
   mXmlGuiInstance = 0;
   mDeadLetterTimer = 0;
@@ -426,16 +426,6 @@ void KMKernel::requestAddresses( QString filename )
   mGroupware->requestAddresses( filename );
 }
 
-bool KMKernel::lockContactsFolder()
-{
-  return mGroupware->lockContactsFolder();
-}
-
-bool KMKernel::unlockContactsFolder()
-{
-  return mGroupware->unlockContactsFolder();
-}
-
 bool KMKernel::storeAddresses( QString addresses, QStringList delUIDs )
 {
   return mGroupware->storeAddresses( addresses, delUIDs );
@@ -699,6 +689,7 @@ void KMKernel::init()
     }
   }
   mGroupware->readConfig();
+  mICalIface->readConfig();
   // filterMgr->dump();
 #if 0 //disabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
@@ -943,7 +934,7 @@ void KMKernel::cleanupLoop()
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
-  mGroupware->cleanup();
+  mICalIface->cleanup();
 
   folderMgr()->writeMsgDict(msgDict());
   imapFolderMgr()->writeMsgDict(msgDict());
@@ -1389,9 +1380,17 @@ KConfig* KMKernel::config()
     return myConfig;
 }
 
-KMGroupware & KMKernel::groupware() {
+KMGroupware & KMKernel::groupware()
+{
   assert( mGroupware );
   return *mGroupware;
 }
+
+KMailICalIfaceImpl& KMKernel::iCalIface()
+{
+  assert( mICalIface );
+  return *mICalIface;
+}
+
 
 #include "kmkernel.moc"

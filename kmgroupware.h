@@ -35,10 +35,7 @@ class QDateTime;
 
 class DCOPClient;
 
-class KMKernel;
 class KMFolder;
-class KMFolderDir;
-class KMFolderTreeItem;
 class KMAccount;
 class KMMainWin;
 class KMMessage;
@@ -61,17 +58,9 @@ public:
   KMGroupware( QObject* parent = 0, const char* name = 0 );
   virtual ~KMGroupware();
 
-  ////////////////////////////////////////////////////////////////
-  // Resource IMAP interface - See also kmailicalifaceimap.(h|cpp)
-  bool addIncidence( const QString& type,
-		     const QString& uid,
-		     const QString& ical );
-  bool deleteIncidence( const QString& type, const QString& uid );
-  QStringList incidences( const QString& type );
-
 signals:
-  void incidenceAdded( const QString& type, const QString& ical );
-  void incidenceDeleted( const QString& type, const QString& uid );
+  void incidenceAdded( KMFolder* folder, const QString& ical );
+  void incidenceDeleted( KMFolder* folder, const QString& uid );
 
   /** Make the IMAP resource re-read all of the given type */
   void signalRefresh( const QString& type);
@@ -86,31 +75,9 @@ private slots:
   ////////////////////////////////////////////////////////////////
 
 public:
-
-  /**
-   * Returns true if groupware mode is enabled and folder is one of the
-   * groupware folders.
-   */
-  bool isGroupwareFolder( KMFolder* folder ) const;
-
-  /**
-   * Returns the groupware folder type. Other is returned if groupware
-   * isn't enabled or it isn't a groupware folder.
-   */
-  KFolderTreeItem::Type folderType( KMFolder* folder ) const;
-
-  QString folderName( KFolderTreeItem::Type type, int language = -1 ) const;
   bool folderSelected( KMFolder* folder );
-  bool isContactsFolder( KMFolder* folder ) const;
   bool checkFolders() const;
 
-  /** Initialize all folders. */
-  void initFolders();
-
-  /** Disconnect all slots and close the dirs. */
-  void cleanup();
-
-  bool setFolderPixmap(const KMFolder& folder, KMFolderTreeItem& fti) const;
   void setupKMReaderWin(KMReaderWin* reader);
   void setMimePartTree(KMMimePartTree* mimePartTree);
   void createKOrgPart(QWidget* parent);
@@ -130,12 +97,6 @@ public:
 
   bool hidingMimePartTree(){ return mGroupwareIsHidingMimePartTree; }
 
-  // find message matching a given UID and possibly take if from the folder
-  static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
-
-  // Convenience function to delete a message
-  static void deleteMsg( KMMessage* msg );
-
   // retrieve matching body part (either text/vCal (or vCard) or application/ms-tnef)
   // and decode it
   // returns a readable vPart in *s or in *sc or in both
@@ -143,17 +104,13 @@ public:
   // note: Additionally the number of the update counter (if any was found) is
   //       returned in aUpdateCounter, this applies only to TNEF data - in the
   //       iCal standard (RfC2445,2446) there is no update counter.
-  static bool vPartFoundAndDecoded( KMMessage* msg,
-                                    int& aUpdateCounter,
-                                    QString& s );
+  static bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
 
   enum DefaultUpdateCounterValue { NoUpdateCounter=-1 };
   // functions to be called by KMReaderWin for 'print formatting'
   static bool vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
                            bool useGroupware, QString& prefix, QString& postfix );
-  static bool msTNEFToVPart( const QByteArray& tnef,
-                             int& aUpdateCounter, // there is no such counter in RfC2466 (khz)
-                             QString& aVPart );
+  static bool msTNEFToVPart( const QByteArray& tnef, QString& aVPart );
   static bool msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname, bool useGroupware,
                             QString& prefix, QString& postfix );
 
@@ -171,30 +128,21 @@ public:
   /** These methods are called by KMKernel's DCOP functions. */
   virtual void requestAddresses( QString );
   virtual bool storeAddresses(QString, QStringList);
-  virtual bool lockContactsFolder();
-  virtual bool unlockContactsFolder();
 
   // automatic resource handling
   bool incomingResourceMessage( KMAccount*, KMMessage* );
 
-  // tell KOrganizer about messages to be deleted
-  void msgRemoved( KMFolder*, KMMessage* );
-
   void setMainWin(KMMainWin *mainWin) { mMainWin = mainWin; }
   void setHeaders(KMHeaders* headers );
+
+  // To be exchanged with something reasonable
+  void reloadFolderTree() const;
 
 public slots:
   /** View->Groupware menu */
   void slotGroupwareHide();
   /** additional groupware slots */
   void slotGroupwareShow(bool);
-
-  /** KO informs about a new or updated note */
-  void slotNewOrUpdatedNote( const QString& id, const QString& geometry, const QColor& color,
-			     const QString& text );
-  void slotDeleteNote( const QString& id );
-
-  void slotNotesFolderChanged();
 
   /** Delete and sync the local IMAP cache  */
   void slotInvalidateIMAPFolders();
@@ -215,14 +163,9 @@ protected:
   QGuardedPtr<KMHeaders>      mHeaders;
   QGuardedPtr<KMReaderWin>    mReader;
   QGuardedPtr<KMMimePartTree> mMimePartTree;
-  // groupware folder icons:
-  static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
 
 signals:
   void signalSetKroupwareCommunicationEnabled( QObject* );
-
-  /** Initialize Groupware with a list of Notes entries */
-  void signalRefreshNotes( const QStringList& );
 
   /** Make sure a given time span is visible in the Calendar */
   void signalCalendarUpdateView( const QDateTime&, const QDateTime& );
@@ -267,29 +210,14 @@ signals:
   void signalMenusChanged();
 
 private:
-  /** Helper function for initFolders. Initializes a single folder. */
-  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
-
   void internalCreateKOrgPart();
-  void loadPixmaps() const;
   void setEnabled( bool b );
 
   bool mUseGroupware;
   bool mGroupwareIsHidingMimePartTree;
-  int  mFolderLanguage;
   QSplitter* mPanner;
   QGuardedPtr<KParts::ReadOnlyPart> mKOrgPart;
   QGuardedPtr<QWidget> mKOrgPartParent;
-
-  KMFolderDir* mFolderParent;
-  KMFolderType mFolderType;
-
-  bool      mContactsLocked;
-  KMFolder* mInbox;
-  KMFolder* mContacts;
-  KMFolder* mCalendar;
-  KMFolder* mNotes;
-  KMFolder* mTasks;
 };
 
 #endif /* KMGROUPWARE_H */
