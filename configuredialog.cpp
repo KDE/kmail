@@ -1420,14 +1420,12 @@ void ConfigureDialog::makeAppearancePage( void )
   vlay2->addWidget( mAppearance.htmlMailCheck );
   QLabel *label = new QLabel( group );
   label->setAlignment( WordBreak);
-  label->setText(i18n("Note that HTML rendering introduces security implications."));
+  label->setTextFormat( RichText );
+  label->setText(i18n( 
+    "<b>WARNING:</b> Use of HTML in mail will make you more vulnerable to "
+    "\"spam\" and may increase the likelihood that your system will be "
+    "compromised by other present and anticipated security exploits.") );
   vlay2->addWidget( label );
-
-  /*
-  mAppearance.htmlMailCheck = 
-    new QCheckBox( i18n("Prefer plain text to HTML rendering"), page3 );
-  vlay->addWidget( mAppearance.htmlMailCheck );
-  */
 
   vlay->addStretch(10); // Eat unused space a bottom
 
