@@ -1105,6 +1105,7 @@ bool KMComposeWin::applyChanges(void)
     bodyPart.setCharset(mCharset);
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
+    if (body.isEmpty()) body = "\n";     // don't crash
 
     bodyPart.setBodyEncoded(body);
     mMsg->addBodyPart(&bodyPart);
@@ -1179,7 +1180,7 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
   } else
     cText = codec->fromUnicode(text);
 
-  if (codec && codec->toUnicode(cText) != text)
+  if (codec && mCharset != "utf-8" && codec->toUnicode(cText) != text)
   {
     QString oldText = mEditor->text();
     mEditor->setText(codec->toUnicode(cText));
