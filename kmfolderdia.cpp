@@ -296,28 +296,21 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   sl->addWidget( mShowSenderReceiverComboBox );
   sl->addStretch( 1 );
 
+  // should this folder be included in new-mail-checks?
+  QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), page, "newmailGroup" );
+  newmailGroup->setColumnLayout( 0,  Qt::Vertical );
+  topLayout->addWidget( newmailGroup );
 
-  if ( ((!mFolder) && mFolderDir->type() == KMImapDir) ||
-       (mFolder && (mFolder->folderType() == KMFolderTypeImap)) )
-  {
-    KMFolderImap* imapFolder = 0;
-    if (mFolder) imapFolder = static_cast<KMFolderImap*>(((KMFolder*)mFolder)->storage());
-    bool checked = (imapFolder) ? imapFolder->includeInMailCheck() : true;
-    // should this folder be included in new-mail-checks?
-    QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), page, "newmailGroup" );
-    newmailGroup->setColumnLayout( 0,  Qt::Vertical );
-    topLayout->addWidget( newmailGroup );
-
-    QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
-    nml->setSpacing( 6 );
-    QLabel *newmailLabel = new QLabel( i18n("Include in check:" ), newmailGroup );
-    nml->addWidget( newmailLabel );
-    mNewMailCheckBox = new QCheckBox(newmailGroup);
-    mNewMailCheckBox->setChecked(checked);
-    newmailLabel->setBuddy(mNewMailCheckBox);
-    nml->addWidget( mNewMailCheckBox );
-    nml->addStretch( 1 );
-  }
+  QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
+  nml->setSpacing( 6 );
+  QLabel *newmailLabel = new QLabel( i18n("Include in check:" ), newmailGroup );
+  nml->addWidget( newmailLabel );
+  mNewMailCheckBox = new QCheckBox(newmailGroup);
+  // default is on
+  mNewMailCheckBox->setChecked(true);
+  newmailLabel->setBuddy(mNewMailCheckBox);
+  nml->addWidget( mNewMailCheckBox );
+  nml->addStretch( 1 );
 
   KMFolder* parentFolder = 0;
 
@@ -337,7 +330,8 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
     }
   }
 
-  if( mFolder ) {
+  if ( mFolder ) {
+    // existing folder
     initializeWithValuesFromFolder( mFolder );
 
     // mailbox folder type
@@ -346,40 +340,71 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
         mMailboxTypeComboBox->setCurrentItem( 2 );
         belongsToLabel->hide();
         mBelongsToComboBox->hide();
+        newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
         mMailboxTypeComboBox->setCurrentItem( 1 );
+        newmailGroup->hide();
         break;
       case KMFolderTypeMbox:
         mMailboxTypeComboBox->setCurrentItem( 0 );
+        newmailGroup->hide();
         break;
       case KMFolderTypeImap:
+        belongsToLabel->setEnabled( false );
+        mBelongsToComboBox->setEnabled( false );
+        mMailboxTypeGroupBox->hide();
+        break;
       case KMFolderTypeCachedImap:
         belongsToLabel->setEnabled( false );
         mBelongsToComboBox->setEnabled( false );
+        mMailboxTypeGroupBox->hide();
+        newmailGroup->hide();
         break;
       default: ;
     }
   }
-  else if ( parentFolder ) {
+
+  if ( parentFolder ) {
+    // new folder
     initializeWithValuesFromFolder( parentFolder );
+
+    // mailbox folder type
+    switch ( parentFolder->folderType() ) {
+      case KMFolderTypeSearch:
+        mMailboxTypeComboBox->setCurrentItem( 2 );
+        belongsToLabel->hide();
+        mBelongsToComboBox->hide();
+        newmailGroup->hide();
+        break;
+      case KMFolderTypeMaildir:
+        mMailboxTypeComboBox->setCurrentItem( 1 );
+        newmailGroup->hide();
+        break;
+      case KMFolderTypeMbox:
+        mMailboxTypeComboBox->setCurrentItem( 0 );
+        newmailGroup->hide();
+        break;
+      case KMFolderTypeImap:
+        mMailboxTypeGroupBox->hide();
+        break;
+      case KMFolderTypeCachedImap:
+        mMailboxTypeGroupBox->hide();
+        newmailGroup->hide();
+        break;
+      default: ;
+    }
   }
 
   // Musn't be able to edit details for a system folder.
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if ( mFolder ) {
-    if ( mFolder->folderType() == KMFolderTypeImap
-         || mFolder->folderType() == KMFolderTypeCachedImap ) {
-      mMailboxTypeGroupBox->hide();
-    }
-    else if ( mFolder->isSystemFolder() ) {
-      fpGroup->hide();
-      iconGroup->hide();
-      mMailboxTypeGroupBox->hide();
-      idGroup->hide();
-    }
+  if ( mFolder && mFolder->isSystemFolder() ) {
+    fpGroup->hide();
+    iconGroup->hide();
+    mMailboxTypeGroupBox->hide();
+    idGroup->hide();
   }
 }
 
@@ -550,6 +575,12 @@ void KMFolderDialog::initializeWithValuesFromFolder( KMFolder* folder ) {
     // disable the number fields if "Never" is selected
     mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
     mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
+  }
+  if (folder->folderType() == KMFolderTypeImap)
+  {
+    KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
+    bool checked = imapFolder->includeInMailCheck();
+    mNewMailCheckBox->setChecked(checked);
   }
 }
 
