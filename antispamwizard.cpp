@@ -563,15 +563,6 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
 void ASWizInfoPage::setScanProgressText( const QString &toolName )
 {
   scanProgressText->setText( toolName );
-/* FIXME
-  if ( toolName.isEmpty() )
-    scanProgressText->setText( "" );
-  else
-  {
-    QString text( i18n("Scanning for ") + toolName + " ..." );
-    scanProgressText->setText( text );
-  }
-*/
 }
 
 //---------------------------------------------------------------------------
@@ -635,7 +626,10 @@ void ASWizProgramsPage::setProgramAsFound( const QString &visibleName, bool foun
     if ( found )
       labelText += foundText;
     else
+    {
       labelText += notFoundText;
+      box->setEnabled( false );
+    }
     box->setText( labelText );
   }
 }
