@@ -2,6 +2,7 @@
 #define KMRECENTADDR_H
 
 #include <qstringlist.h>
+#include <kabc/addressee.h>
 
 class KConfig;
 
@@ -27,7 +28,8 @@ public:
      * Note: an entry doesn't have to be one email address, it can be multiple,
      * like "Foo <foo@bar.org>, Bar Baz <bar@baz.org>".
      */
-    QStringList addresses() const { return m_addresses; }
+    QStringList     addresses() const;
+    const KABC::Addressee::List& kabcAddresses() const { return m_addresseeList; }
 
     /**
      * Adds an entry to the list.
@@ -63,13 +65,13 @@ private:
     KMRecentAddresses();
     ~KMRecentAddresses();
 
+    KABC::Addressee::List m_addresseeList;
+
     void adjustSize();
 
     uint m_maxCount;
-    QStringList m_addresses;
 
     static KMRecentAddresses *s_self;
-
 };
 
 #endif // KMRECENTADDR_H

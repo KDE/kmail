@@ -1,6 +1,7 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
+#include <kdebug.h>
 #include "kmrecentaddr.h"
 
 KMRecentAddresses * KMRecentAddresses::s_self = 0;
@@ -25,10 +26,23 @@ KMRecentAddresses::~KMRecentAddresses()
 
 void KMRecentAddresses::load( KConfig *config )
 {
-    m_addresses.clear();
+    QStringList addresses;
+    QString name;
+    QString email;
+
+    m_addresseeList.clear();
     KConfigGroupSaver cs( config, "General" );
     m_maxCount = config->readNumEntry( "Maximum Recent Addresses", 40 );
-    m_addresses = config->readListEntry( "Recent Addresses" );
+    addresses = config->readListEntry( "Recent Addresses" );
+    for ( QStringList::Iterator it = addresses.begin(); it != addresses.end(); ++it ) {
+        KABC::Addressee::parseEmailAddress( *it, name, email );
+        if ( !email.isEmpty() ) {
+            KABC::Addressee addr;
+            addr.setNameFromString( name );
+            addr.insertEmail( email, true );
+            m_addresseeList.append( addr );
+        }
+    }
 
     adjustSize();
 }
@@ -36,14 +50,27 @@ void KMRecentAddresses::load( KConfig *config )
 void KMRecentAddresses::save( KConfig *config )
 {
     KConfigGroupSaver cs( config, "General" );
-    config->writeEntry( "Recent Addresses", m_addresses );
+    config->writeEntry( "Recent Addresses", addresses() );
 }
 
 void KMRecentAddresses::add( const QString& entry )
 {
-    if ( !entry.isEmpty() && m_maxCount > 0 && m_addresses.first() != entry ) {
-        m_addresses.remove( entry ); // removes all existing "entry" items
-        m_addresses.prepend( entry );
+    if ( !entry.isEmpty() && m_maxCount > 0 ) {
+        QString email;
+        QString fullName;
+        KABC::Addressee addr;
+
+        KABC::Addressee::parseEmailAddress( entry, fullName, email );
+
+        for ( KABC::Addressee::List::Iterator it = m_addresseeList.begin();
+              it != m_addresseeList.end(); ++it )
+        {
+            if ( email == (*it).preferredEmail() )
+                return;//already inside
+        }
+        addr.setNameFromString( fullName );
+        addr.insertEmail( email, true );
+        m_addresseeList.prepend( addr );
         adjustSize();
     }
 }
@@ -56,6 +83,17 @@ void KMRecentAddresses::setMaxCount( int count )
 
 void KMRecentAddresses::adjustSize()
 {
-    while ( m_addresses.count() > m_maxCount )
-        m_addresses.remove( m_addresses.fromLast() );
+    while ( m_addresseeList.count() > m_maxCount )
+        m_addresseeList.remove( m_addresseeList.fromLast() );
+}
+
+QStringList KMRecentAddresses::addresses() const
+{
+    QStringList addresses;
+    for ( KABC::Addressee::List::ConstIterator it = m_addresseeList.begin();
+          it != m_addresseeList.end(); ++it )
+    {
+        addresses.append( (*it).fullEmail() );
+    }
+    return addresses;
 }
