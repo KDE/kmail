@@ -370,13 +370,12 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KURL &url, QWidget *parent )
 
 void KMAddBookmarksCommand::execute()
 {
-    QString filename = locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
-    KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,false );
-    KBookmarkGroup group = bookManager->root();
-    group.addBookmark( bookManager, mUrl.path(), KURL( mUrl));
-    bookManager->save();
-
-    //KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
+  QString filename = locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
+  KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,
+                                                                    false );
+  KBookmarkGroup group = bookManager->root();
+  group.addBookmark( bookManager, mUrl.path(), KURL( mUrl ) );
+  bookManager->save();
 }
 
 KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
