@@ -118,6 +118,9 @@ public:
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBasePtr msg) const { return mMsgList.find(msg); }
 
+  /** Returns the index of the given message or -1 if not found. */
+  virtual int find(const QString& msgIdMD5) const;
+
   /** Number of messages in this folder. */
   virtual int count() const { return mMsgList.count(); }
 

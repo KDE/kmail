@@ -32,22 +32,24 @@ void KMUndoStack::clear()
 }
 
 void 
-KMUndoStack::pushAction(KMMsgBase *msg, KMFolder *folder)
+KMUndoStack::pushAction(QString msgIdMD5, KMFolder *folder, KMFolder *destFolder)
 {
    KMUndoInfo *info = new KMUndoInfo;
-   info->msg = msg;
+   info->msgIdMD5 = msgIdMD5;
    info->folder = folder;
+   info->destFolder = destFolder;
    if ((int) mStack.count() == mSize)
       mStack.removeLast();
    mStack.prepend(info);
 }
 
 void 
-KMUndoStack::msgDestroyed( KMMsgBase *msg)
+KMUndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 {
+  /*
    for(KMUndoInfo *info = mStack.first(); info; )
    {
-      if (info->msg == msg)
+      if (info->msgIdMD5 == msg->msgIdMD5())
       {
          mStack.removeRef( info );
          info = mStack.current();
@@ -55,6 +57,7 @@ KMUndoStack::msgDestroyed( KMMsgBase *msg)
       else
          info = mStack.next();     
    }
+  */
 }
 
 void 
@@ -62,7 +65,8 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
 {
    for(KMUndoInfo *info = mStack.first(); info; )
    {
-      if (info->folder == folder)
+      if ((info->folder == folder) ||
+	  (info->destFolder == folder))
       {
          mStack.removeRef( info );
          info = mStack.current();
@@ -73,12 +77,13 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
 }
 
 bool 
-KMUndoStack::popAction(KMMsgBase *&msg, KMFolder *&folder)
+KMUndoStack::popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder)
 {
    if (mStack.count() == 0) return false;
    KMUndoInfo *info = mStack.take(0);
-   msg = info->msg;
+   msgIdMD5 = info->msgIdMD5;
    folder = info->folder;
+   destFolder = info->destFolder;
    delete info;
    return true;
 }

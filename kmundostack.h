@@ -22,16 +22,18 @@
 #define _KMUNDOSTACK_H_
 
 #include <qlist.h>
+#include <qstring.h>
 
-class KMMsgBase;
 class KMFolder;
+class KMMsgBase;
 
 // A class for storing Undo information.
 class KMUndoInfo
 {
 public:
-   KMMsgBase *msg;
+   QString msgIdMD5;
    KMFolder *folder;
+   KMFolder *destFolder;
 };
   
 class KMUndoStack 
@@ -40,10 +42,10 @@ public:
    KMUndoStack(int size);
 
    void clear();   
-   void pushAction(KMMsgBase *msg, KMFolder *folder);
+   void pushAction(QString msgIdMD5, KMFolder *folder, KMFolder* destFolder);
    void msgDestroyed( KMMsgBase *msg);
    void folderDestroyed( KMFolder *folder);
-   bool popAction(KMMsgBase *&msg, KMFolder *&folder);
+   bool popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder);
 protected:
    QList<KMUndoInfo> mStack;      
    int mSize;

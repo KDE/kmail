@@ -867,6 +867,18 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 
 
 //-----------------------------------------------------------------------------
+int KMFolder::find(const QString& msgIdMD5) const
+{
+  for (int i=0; i<mMsgList.high(); ++i)
+    if (mMsgList[i]->msgIdMD5() == msgIdMD5)
+      return i;
+
+  return -1;
+}
+
+
+
+//-----------------------------------------------------------------------------
 int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   long offs, size, len, revert;

@@ -1097,7 +1097,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
       rc = destFolder->moveMsg(msg);
       if (rc == 0) {
 	KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
-	kernel->undoStack()->pushAction( mb, mFolder );
+	kernel->undoStack()->pushAction( mb->msgIdMD5(), mFolder, destFolder );
       }
     }
     else
@@ -1132,17 +1132,17 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 void KMHeaders::undo()
 {
   KMMessage *msg;
-  KMMsgBase *mb;
-  KMFolder *folder;
-  if (kernel->undoStack()->popAction(mb, folder))
+  QString msgIdMD5;
+  KMFolder *folder, *curFolder;
+  if (kernel->undoStack()->popAction(msgIdMD5, folder, curFolder))
   {
-    if (mb->parent()) {
-      int idx = mb->parent()->find(mb);
-      assert(idx != -1);
-      msg = mb->parent()->getMsg( idx );
-     folder->moveMsg( msg );     
-      folder->unGetMsg( folder->count() - 1 );
-    }
+    curFolder->open();
+    int idx = curFolder->find(msgIdMD5);
+    assert(idx != -1);
+    msg = curFolder->getMsg( idx );
+    folder->moveMsg( msg );     
+    folder->unGetMsg( folder->count() - 1 );
+    curFolder->close();
   }
   else 
   {
