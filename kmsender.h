@@ -89,7 +89,7 @@ public:
   
 signals:
   /** Emitted regularly to inform the user of what is going on */
-  void statusMsg(const char*);
+  void statusMsg(const QString&);
 
 protected slots:
   virtual void slotIdle();
@@ -170,7 +170,7 @@ protected:
   virtual const QString prepareStr(const QString str, bool toCRLF=FALSE);
 
   /** Informs the user about what is going on. */
-  virtual void statusMsg(const char* msg);
+  virtual void statusMsg(const QString&);
 
   /** Called once for the contents of the header fields To, Cc, and Bcc.
     Returns TRUE on success and FALSE on failure. 

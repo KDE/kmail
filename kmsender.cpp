@@ -462,7 +462,7 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 }
 
 //-----------------------------------------------------------------------------
-void KMSendProc::statusMsg(const char* aMsg)
+void KMSendProc::statusMsg(const QString& aMsg)
 {
   if (mSender) emit mSender->statusMsg(aMsg);
   app->processEvents(500);

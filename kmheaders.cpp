@@ -162,8 +162,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 		 this, SLOT(msgRemoved(int)));
       disconnect(mFolder, SIGNAL(changed()),
 		 this, SLOT(msgChanged()));
-      disconnect(mFolder, SIGNAL(statusMsg(const char*)),
-		 mOwner, SLOT(statusMsg(const char*)));
+      disconnect(mFolder, SIGNAL(statusMsg(const QString&)),
+		 mOwner, SLOT(statusMsg(const QString&)));
       mFolder->close();
     }
 
@@ -179,8 +179,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	      this, SLOT(msgRemoved(int)));
       connect(mFolder, SIGNAL(changed()),
 	      this, SLOT(msgChanged()));
-      connect(mFolder, SIGNAL(statusMsg(const char*)),
-	      mOwner, SLOT(statusMsg(const char*)));
+      connect(mFolder, SIGNAL(statusMsg(const QString&)),
+	      mOwner, SLOT(statusMsg(const QString&)));
       readFolderConfig();
       mFolder->open();
       sort();
@@ -275,7 +275,7 @@ QString KMHeaders::msgAsLbxString(KMMsgBase* aMsg) const
   subjStr = aMsg->subject();
   if (subjStr.isEmpty()) subjStr = i18n("No Subject");
 
-  result.sprintf("%c\n%.100s\n%.100s\n%.40s", (char)flag,
+  result.sprintf("%c\n%s\n%s\n%s", (char)flag,
 		 (const char*)fromStr, (const char*)subjStr,
 		 (const char*)aMsg->dateStr());
   return result;

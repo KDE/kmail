@@ -78,7 +78,7 @@ public:
 
 signals:
   /** Emitted to show a text on the status line. */
-  void statusMsg(const char* text);
+  void statusMsg(const QString& text);
 
   /** The user presses the right mouse button. 'url' may be NULL. */
   void popupMenu(const char* url, const QPoint& mousePos);

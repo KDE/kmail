@@ -218,7 +218,7 @@ signals:
   void msgHeaderChanged(int);
 
   /** Emmited to display a message somewhere in a status line. */
-  void statusMsg(const char*);
+  void statusMsg(const QString&);
 
 
 protected:

@@ -70,8 +70,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   idx = mFolderTree->indexOfFolder(inboxFolder);
   if (idx>=0) mFolderTree->setCurrentItem(idx);
 
-  connect(msgSender, SIGNAL(statusMsg(const char*)),
-	  SLOT(statusMsg(const char*)));
+  connect(msgSender, SIGNAL(statusMsg(const QString&)),
+	  SLOT(statusMsg(const QString&)));
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -221,8 +221,8 @@ void KMMainWin::createWidgets(void)
 
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
-  connect(mMsgView, SIGNAL(statusMsg(const char*)),
-	  this, SLOT(statusMsg(const char*)));
+  connect(mMsgView, SIGNAL(statusMsg(const QString&)),
+	  this, SLOT(statusMsg(const QString&)));
   connect(mMsgView, SIGNAL(popupMenu(const char*,const QPoint&)),
 	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
   connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
@@ -277,7 +277,7 @@ void KMMainWin::statusBarChangeItem(int aId, const char* aText)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::statusMsg(const char* aText)
+void KMMainWin::statusMsg(const QString& aText)
 {
   mStatusBar->changeItem(aText, mMessageStatusId);
   kapp->flushX();

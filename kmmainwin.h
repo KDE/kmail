@@ -55,7 +55,7 @@ public slots:
   void slotCheckMail(); // sven moved here as public
 
   /** Output given message in the statusbar message field. */
-  void statusMsg(const char* text);
+  void statusMsg(const QString& text);
 
 protected:
   void setupMenuBar();

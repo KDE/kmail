@@ -168,7 +168,7 @@ public slots:
   void slotMarkAll();
 
   /** Change window title to given string. */
-  void slotUpdWinTitle(const char *);
+  void slotUpdWinTitle(const QString& );
 
   /** Append signature file to the end of the text in the editor. */
   void slotAppendSignature();

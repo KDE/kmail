@@ -152,8 +152,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   if(!mShowToolBar) enableToolBar(KToolBar::Hide);	
 
-  connect(&mEdtSubject,SIGNAL(textChanged(const char *)),
-	  SLOT(slotUpdWinTitle(const char *)));
+  connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
+	  SLOT(slotUpdWinTitle(const QString&)));
   connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(&mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookCc()));
   connect(&mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
@@ -1525,7 +1525,7 @@ void KMComposeWin::slotToDo()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotUpdWinTitle(const char *text)
+void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
   if (!text || *text=='\0')
        setCaption("("+QString(i18n("unnamed"))+")");
