@@ -30,7 +30,7 @@
 /* Swap bytes in 16 bit value.  */
 #ifdef bswap_16
 #define kmail_swap_16(x) bswap_16(x)
-#else 
+#else
 #define kmail_swap_16(x) \
      ((((x) >> 8) & 0xff) | (((x) & 0xff) << 8))
 #endif
@@ -161,6 +161,36 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 }
 
 
+void KMMsgBase::setEncryptionState( const char* status )
+{
+    if( status[0] == (char)KMMsgEncryptionStateUnknown )
+        setEncryptionState( KMMsgEncryptionStateUnknown );
+    else if( status[0] == (char)KMMsgNotEncrypted )
+        setEncryptionState( KMMsgNotEncrypted );
+    else if( status[0] == (char)KMMsgPartiallyEncrypted )
+        setEncryptionState( KMMsgPartiallyEncrypted );
+    else if( status[0] == (char)KMMsgFullyEncrypted )
+        setEncryptionState( KMMsgFullyEncrypted );
+    else
+        setEncryptionState( KMMsgEncryptionStateUnknown );
+}
+
+
+void KMMsgBase::setSignatureState( const char* status )
+{
+    if( status[0] == (char)KMMsgSignatureStateUnknown )
+        setSignatureState( KMMsgSignatureStateUnknown );
+    else if( status[0] == (char)KMMsgNotSigned )
+        setSignatureState( KMMsgNotSigned );
+    else if( status[0] == (char)KMMsgPartiallySigned )
+        setSignatureState( KMMsgPartiallySigned );
+    else if( status[0] == (char)KMMsgFullySigned )
+        setSignatureState( KMMsgFullySigned );
+    else
+        setSignatureState( KMMsgSignatureStateUnknown );
+}
+
+
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isUnread(void) const
 {
@@ -244,7 +274,7 @@ const QCString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
   QString result = _str;
   int len = result.length();
   for (int i = 0; i < len; i++)
-    if (result.at(i).unicode() >= 128) { 
+    if (result.at(i).unicode() >= 128) {
       result.at(i) = '?';
       all_ok = false;
     }
@@ -628,7 +658,7 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
          if (ok)
             return encoding;
        }
-       else 
+       else
        {
          QTextCodec *codec = KMMsgBase::codecForName(encoding);
          if (!codec) {
@@ -914,7 +944,7 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
             // We swap the result to host order.
             ret = kmail_swap_32(ret);
          }
-         
+
       }
       break;
     }
@@ -950,7 +980,7 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 #ifndef WORDS_BIGENDIAN
   // #warning Byte order is little endian (call swapEndian)
 #define SWAP_TO_NETWORK_ORDER(x) swapEndian(x)
-#else 
+#else
   // #warning Byte order is big endian
 #define SWAP_TO_NETWORK_ORDER(x)
 #endif
@@ -1007,4 +1037,4 @@ bool KMMsgBase::syncIndexString() const
   }
   return FALSE;
 }
-	
+

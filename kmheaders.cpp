@@ -72,6 +72,7 @@ QPixmap* KMHeaders::pixPartiallySigned = 0;
 QPixmap* KMHeaders::pixFullyEncrypted = 0;
 QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
 QPixmap* KMHeaders::pixFiller = 0;
+QPixmap* KMHeaders::pixUndefined = 0;
 QIconSet* KMHeaders::up = 0;
 QIconSet* KMHeaders::down = 0;
 bool KMHeaders::mTrue = true;
@@ -86,7 +87,7 @@ KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent,
 {
   dragPix = new QPixmap( DesktopIcon("message",
 				     KIcon::SizeMedium ) );
-  
+
   setPixmap( *dragPix );
 }
 
@@ -193,7 +194,7 @@ public:
     } else if(col == headers->paintInfo()->senderCol) {
 			if (qstricmp(headers->folder()->whoField(), "To")==0)
         tmp = mMsgBase->toStrip();
-      else 
+      else
         tmp = mMsgBase->fromStrip();
       if (tmp.isEmpty())
         tmp = i18n("Unknown");
@@ -246,7 +247,7 @@ public:
       int width = 0;
       int height = 0;
       for ( PixmapList::ConstIterator it = pixmaps.begin();
-          it != pixmaps.end(); ++it ) {
+            it != pixmaps.end(); ++it ) {
           width += (*it).width();
           height = QMAX( height, (*it).height() );
       }
@@ -310,6 +311,8 @@ public:
           pixmaps << *KMHeaders::pixFullyEncrypted;
       else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
           pixmaps << *KMHeaders::pixPartiallyEncrypted;
+      else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
+          pixmaps << *KMHeaders::pixUndefined;
       else
           pixmaps << *KMHeaders::pixFiller;
 
@@ -317,11 +320,14 @@ public:
           pixmaps << *KMHeaders::pixFullySigned;
       else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
           pixmaps << *KMHeaders::pixPartiallySigned;
+      else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
+          pixmaps << *KMHeaders::pixUndefined;
       else
           pixmaps << *KMHeaders::pixFiller;
 
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
+      qDebug( "pixmapMerge returned a pixmap with size %dx%d", mergedpix.width(), mergedpix.height() );
       return &mergedpix;
     }
     return NULL;
@@ -433,7 +439,7 @@ public:
       return ((KMHeaderItem *)this)->mKey =
 	generate_key(mMsgId, headers, headers->folder()->getMsgBase( mMsgId ),
 		     headers->paintInfo(), sortOrder);
-    }	
+    }
     return mKey;
   }
 
@@ -551,6 +557,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixFullyEncrypted = new QPixmap( UserIcon( "kmmsgfullyencrypted" ) );
     pixPartiallyEncrypted = new QPixmap( UserIcon( "kmmsgpartiallyencrypted" ) );
     pixFiller = new QPixmap( UserIcon( "kmmsgfiller" ) );
+    pixUndefined = new QPixmap( UserIcon( "kmundefined" ) );
     up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
@@ -658,8 +665,8 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-  
-    KMime::DateFormatter::FormatType t = 
+
+    KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
     mDate.setCustomFormat( config->readEntry("customDateFormat", QString::null ) );
     mDate.setFormat( t );
@@ -940,7 +947,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	  addColumn(colText, x);
 	else
 	  addColumn(colText);
-	  
+
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
 #ifdef SCORING
         mPaintInfo.scoreCol++;
@@ -1127,12 +1134,12 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
       if (mFolder->protocol() == "imap")
         ids.append(item->msgId());
-      else	
+      else
         mFolder->setStatus(item->msgId(), status);
     }
 
-  if ( !ids.empty() ) 
-    mFolder->setStatus(ids, status);	
+  if ( !ids.empty() )
+    mFolder->setStatus(ids, status);
 }
 
 
@@ -1188,8 +1195,8 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
     //    if ( p != msg->parent() ) {
     //      kdDebug() << p << " != " << msg->parent() << " for message "
     //		<< msg->subject() << ", " << msg->fromStrip() << endl;
-    //      
-    //    } 
+    //
+    //    }
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }
@@ -1330,7 +1337,7 @@ void KMHeaders::deleteMsg (int msgId)
     if (mFolder != trash)
     {
       folder = trash;
-    }	
+    }
 
   } else {
 
@@ -1339,11 +1346,11 @@ void KMHeaders::deleteMsg (int msgId)
       // move to trash folder
       folder = kernel->trashFolder();
     }
-  }	
-			
+  }
+
   // move messages
   moveMsgToFolder(folder, msgId);
-  
+
   mSortInfo.dirty = TRUE;
   mOwner->statusMsg("");
   //  triggerUpdate();
@@ -1513,12 +1520,12 @@ void KMHeaders::forwardMsg ()
       fwdMsg->setAutomaticFields(true);
       fwdMsg->setCharset("utf-8");
       fwdMsg->setBody(msgText);
-      
+
       for (KMMsgBase *mb = linklist.first(); mb; mb = linklist.next()) {
         KMMessage *thisMsg = static_cast<KMMessage *>(mb);
         fwdMsg->link(thisMsg, KMMsgStatusForwarded);
       }
-      
+
       kernel->kbp()->busy();
       win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
       win->setCharset("");
@@ -1892,9 +1899,9 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 	rc = destFolder->addMsg(newMsg, &index);
 	if (rc == 0 && index != -1)
 	    destFolder->unGetMsg( destFolder->count() - 1 );
-      }	
+      }
     }
-    
+
     if (!isMessage && list.isEmpty())
     {
       assert(idx != -1);
@@ -2588,7 +2595,7 @@ void KMHeaders::slotRMB()
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
   mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
 
-  bool out_folder = kernel->folderIsDraftOrOutbox(mFolder); 
+  bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
      mOwner->editAction->plug(menu);
   else {
@@ -2810,7 +2817,7 @@ bool KMHeaders::writeSortOrder()
     fwrite(&appended, sizeof(appended), 1, sortStream);
     fwrite(&discovered_count, sizeof(discovered_count), 1, sortStream);
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
-	
+
     QPtrStack<KMHeaderItem> items;
     {
       QPtrStack<QListViewItem> s;
@@ -2975,7 +2982,7 @@ public:
 };
 
 void KMSortCacheItem::updateSortFile(FILE *sortStream, bool waiting_for_parent)
-{	
+{
     if(mSortOffset == -1) {
 	fseek(sortStream, 0, SEEK_END);
 	mSortOffset = ftell(sortStream);
@@ -3051,7 +3058,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    fread(&appended, sizeof(appended), 1, sortStream);
 	    fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
 	    fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
-	
+
             if (sorted_count + discovered_count > mFolder->count()) { //sanity check
 		kdDebug(5006) << "Whoa.0! " << __FILE__ << ":" << __LINE__ << endl;
 		fclose(sortStream);
@@ -3214,7 +3221,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    msgs.insert(md5, sortCache[x]);
 	}
 	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
-	    replyToIdMD5 = mFolder->getMsgBase((*it)->id())->replyToIdMD5(); 
+	    replyToIdMD5 = mFolder->getMsgBase((*it)->id())->replyToIdMD5();
 	    if(!replyToIdMD5.isEmpty() && (i = msgs[replyToIdMD5])) {
 		i->addUnsortedChild((*it));
 		if(sortStream)
@@ -3245,11 +3252,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		  compare_KMSortCacheItem);
 	//merge two sorted lists of siblings
 	for(QPtrListIterator<KMSortCacheItem> it(*sorted);
-	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {	
+	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||
 		(ascending && (*it)->key() >= unsorted[unsorted_off]->key()) ||
-		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {		
+		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {
 		new_kci = (*it);
 		++it;
 	    } else {
@@ -3302,12 +3309,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		item = static_cast<KMHeaderItem*>(item->itemBelow());
 	    }
 	}
-	
+
 	if(first_unread == -1 ) {
 	    setMsgRead(mCurrentItem);
 	    setTopItemByIndex(mTopItem);
 	    setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
-	} else {	
+	} else {
 	    setMsgRead(first_unread);
 	    setCurrentItemByIndex(first_unread);
 	    makeHeaderVisible();

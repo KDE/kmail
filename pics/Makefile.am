@@ -8,7 +8,7 @@ data_DATA = green-bullet.png kmfldin.png kmfldout.png kmfolder.png \
 	feather_white.png pub_key_red.png pgp-keys.png \
 	kmfolderfull.png abup.png abdown.png kmmsgpartiallyencrypted.png \
 	kmmsgpartiallysigned.png kmmsgfiller.png kmmsgfullyencrypted.png \
-	kmmsgfullysigned.png
+	kmmsgfullysigned.png kmundefined.png
 
 
 datadir = $(kde_datadir)/kmail/pics

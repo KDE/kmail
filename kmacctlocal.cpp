@@ -187,6 +187,9 @@ void KMAcctLocal::processNewMail(bool)
     {
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
+      msg->setEncryptionState( msg->headerField( "X-KMail-EncryptionState" ).latin1() );
+      msg->setSignatureState( msg->headerField( "X-KMail-SignatureState" ).latin1() );
+      
       addedOk = processNewMsg(msg);
 
       if (addedOk)
@@ -209,7 +212,7 @@ void KMAcctLocal::processNewMail(bool)
     if (rc)
       KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
-    if ( num ) 
+    if ( num )
       statusMsg = i18n("Transmission completed, %n new message.",
 		       "Transmission completed, %n new messages.", num);
     else

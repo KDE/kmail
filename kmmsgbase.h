@@ -34,19 +34,19 @@ typedef enum
 /** Flags for the encryption state. */
 typedef enum
 {
-    KMMsgEncryptionStateUnknown=0,
-    KMMsgNotEncrypted=1,
-    KMMsgPartiallyEncrypted=2,
-    KMMsgFullyEncrypted=3
+    KMMsgEncryptionStateUnknown=' ',
+    KMMsgNotEncrypted='N',
+    KMMsgPartiallyEncrypted='P',
+    KMMsgFullyEncrypted='F'
 } KMMsgEncryptionState;
 
 /** Flags for the signature state. */
 typedef enum
 {
-    KMMsgSignatureStateUnknown=0,
-    KMMsgNotSigned=1,
-    KMMsgPartiallySigned=2,
-    KMMsgFullySigned=3
+    KMMsgSignatureStateUnknown=' ',
+    KMMsgNotSigned='N',
+    KMMsgPartiallySigned='P',
+    KMMsgFullySigned='F'
 } KMMsgSignatureState;
 
 
@@ -92,10 +92,12 @@ public:
 
   /** Set encryption status of the message. */
   virtual void setEncryptionState(const KMMsgEncryptionState status) { mEncryptionState = status; }
-
+    virtual void setEncryptionState( const char* status );
+    
   /** Set signature status of the message. */
   virtual void setSignatureState(const KMMsgSignatureState status) { mSignatureState = status; }
-
+    virtual void setSignatureState( const char* status );
+    
 
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;
@@ -155,7 +157,7 @@ public:
    * This function is a bit more tolerant, than QTextCodec::codecForName */
   static QTextCodec* codecForName(const QCString& _str);
 
-  /** Convert all non-ascii characters to question marks 
+  /** Convert all non-ascii characters to question marks
     * If ok is non-null, *ok will be set to true if all characters
     * where ascii, *ok will be set to false otherwise */
   static const QCString toUsAscii(const QString& _str, bool *ok=0);
@@ -235,7 +237,7 @@ public:
     MsgFilePart = 11
   };
   /** access to long msgparts */
-  unsigned long getLongPart(MsgPartType) const; 
+  unsigned long getLongPart(MsgPartType) const;
   /** access to string msgparts */
   QString getStringPart(MsgPartType) const;
   /** sync'ing just one KMMsgBase */

@@ -222,6 +222,8 @@ QCString KMMessage::asSendableString()
   msg.fromString(asString());
   msg.removeHeaderField("Status");
   msg.removeHeaderField("X-Status");
+  msg.removeHeaderField("X-KMail-EncryptionState");
+  msg.removeHeaderField("X-KMail-SignatureState");
   msg.removeHeaderField("X-KMail-Transport");
   msg.removeHeaderField("X-KMail-Identity");
   msg.removeHeaderField("X-KMail-Fcc");
@@ -239,10 +241,18 @@ void KMMessage::setStatusFields(void)
 
   str[0] = (char)status();
   str[1] = '\0';
-
   setHeaderField("Status", status()==KMMsgStatusNew ? "R " : "RO");
   setHeaderField("X-Status", str);
-}
+
+  str[0] = (char)encryptionState();
+  str[1] = '\0';
+  setHeaderField("X-KMail-EncryptionState", str);
+  
+  str[0] = (char)signatureState();
+  str[1] = '\0';
+  setHeaderField("X-KMail-SignatureState", str);
+  
+}       
 
 
 //----------------------------------------------------------------------------
@@ -294,9 +304,12 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
   mMsg->FromString((const char*)result);
   mMsg->Parse();
 
-  if (aSetStatus)
+  if (aSetStatus) {
     setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
-
+    setEncryptionState(headerField("X-KMail-EncryptionState").latin1());
+    setSignatureState(headerField("X-KMail-SignatureState").latin1());
+  }
+    
   mNeedsAssembly = FALSE;
     mDate = date();
 
@@ -347,7 +360,7 @@ QString KMMessage::formatString(const QString& aStr) const
 	   to have a long form of the date used? I don't
 	   like this change to a short XX/XX/YY date format.
 	   At least not for the default. -sanders */
-	result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized, 
+	result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized,
 						    date(), sReplyLanguage, false );
         break;
       case 'e':
@@ -904,7 +917,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   } else { // valid rx
     QString subj = subject();
     if ( rx.search( subj ) == 0 ) { // matches
-      
+
       recognized = true;
       if ( sReplaceSubjPrefix )
 	msg->setSubject( subj.replace( 0, rx.matchedLength(), "Re: " ) );
@@ -996,7 +1009,7 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setSubject(subject());
   msg->setFrom(from());
   msg->cleanupHeader();
-  
+
   // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
 
@@ -1104,7 +1117,7 @@ QCString KMMessage::createForwardBody(void)
     str = asQuotedString(s, "", QString::null, false, false);
     str += "\n-------------------------------------------------------\n";
   }
-  
+
   return str;
 }
 
@@ -1117,7 +1130,7 @@ KMMessage* KMMessage::createForward(void)
   int i;
 
   msg->initFromMessage(this);
-  
+
   QString st = QString::fromUtf8(createForwardBody());
   QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
   if (encoding.isEmpty()) encoding = "utf-8";
@@ -1319,8 +1332,8 @@ QString KMMessage::dateStr(void) const
 
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
-  
-  return KMime::DateFormatter::formatDate( static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )), 
+
+  return KMime::DateFormatter::formatDate( static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
 					   unixTime, general.readEntry( "customDateFormat" ) );
 }
 
@@ -2435,7 +2448,7 @@ QString KMMessage::generateMessageId( const QString& addr )
 
   QString msgIdSuffix;
   KConfigGroup general( kapp->config(), "General" );
-  
+
   if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
 
@@ -2861,13 +2874,13 @@ void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
   QString type = headerField("X-KMail-Link-Type");
   if (!type.isEmpty())
     type += ",";
-  
+
   message += QString::number(aMsg->getMsgSerNum());
   if (aStatus == KMMsgStatusReplied)
     type += "reply";
   else if (aStatus == KMMsgStatusForwarded)
     type += "forward";
-  
+
   setHeaderField("X-KMail-Link-Message", message);
   setHeaderField("X-KMail-Link-Type", type);
 }
