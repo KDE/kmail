@@ -267,7 +267,7 @@ namespace KMail {
     if ( strategy->showHeader( "status" ) )
     {
       KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-      KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
+      KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getFirstEmailAddress( message->from() ) );
       ::KIMProxy *imProxy = KMKernel::self()->imProxy();
       kabcUid = addresses[0].uid();
       presence = imProxy->presenceString( kabcUid );
@@ -461,7 +461,7 @@ namespace KMail {
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
+    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getFirstEmailAddress( message->from() ) );
 
     QString photoURL;
     int photoWidth = 60;

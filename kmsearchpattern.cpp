@@ -237,7 +237,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     if ( endOfHeader == DwString::npos )
       endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    // In case the searched header is at the beginning, we have to prepend 
+    // In case the searched header is at the beginning, we have to prepend
     // a newline - see the comment in KMSearchRuleString constructor
     DwString fakedHeaders( "\n" );
     size_t start = headerField->FindIn( fakedHeaders.append( headers ), 0, false );
@@ -399,7 +399,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
-      if ( !stdAb->findByEmail( KPIM::getEmailAddr( *it ) ).isEmpty() )
+      if ( !stdAb->findByEmail( KPIM::getEmailAddress( *it ) ).isEmpty() )
         return true;
     }
     return false;
@@ -412,7 +412,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
-      if ( stdAb->findByEmail( KPIM::getEmailAddr( *it ) ).isEmpty() )
+      if ( stdAb->findByEmail( KPIM::getEmailAddress( *it ) ).isEmpty() )
         return true;
     }
     return false;
@@ -425,7 +425,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
     for( QStringList::ConstIterator it = addressList.begin();
       it != addressList.end(); ++it ) {
-        KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddr( *it ) );
+        KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddress( *it ) );
 
           for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
               if ( (*itAd).hasCategory(category) )
@@ -442,7 +442,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
       for( QStringList::ConstIterator it = addressList.begin();
         it != addressList.end(); ++it ) {
-          KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddr( *it ) );
+          KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddress( *it ) );
 
             for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
                 if ( (*itAd).hasCategory(category) )

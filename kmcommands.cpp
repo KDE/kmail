@@ -503,7 +503,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KPIM::getEmailAddr(addr), addr ,
+  KAddrBookExternal::openEmail( KPIM::getEmailAddress(addr), addr ,
                                 parentWidget() );
 
   return OK;
@@ -677,7 +677,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   if ( !msg ) return;
   setDeletesItself( true );
   // If the mail has a serial number, operate on sernums, if it does not
-  // we need to work with the pointer, but can be reasonably sure it won't 
+  // we need to work with the pointer, but can be reasonably sure it won't
   // go away, since it'll be an encapsulated message or one that was opened
   // from an .eml file.
   if ( msg->getMsgSerNum() != 0 ) {
@@ -1279,7 +1279,7 @@ KMCommand::Result KMRedirectCommand::execute()
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() )
     return Failed;
-    
+
   RedirectDialog dlg( parentWidget(), "redirect", true,
                       kmkernel->msgSender()->sendImmediate() );
   if (dlg.exec()==QDialog::Rejected) return Failed;
@@ -1296,7 +1296,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride, 
+  KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride,
   const QTextCodec *codec )
   : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ),
     mHtmlLoadExtOverride( htmlLoadExtOverride ), mCodec( codec )
@@ -2549,28 +2549,29 @@ KMIMChatCommand::KMIMChatCommand( const KURL &url, KMMessage *msg )
 KMCommand::Result KMIMChatCommand::execute()
 {
   kdDebug( 5006 ) << k_funcinfo << " URL is: " << mUrl << endl;
+  QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( mUrl.path() ) ) ;
+  KABC::AddresseeList addressees = addressBook->findByEmail( KPIM::getEmailAddress( addr ) ) ;
 
   // start chat
-  if( addresses.count() == 1 ) {
-    kmkernel->imProxy()->chatWithContact( addresses[0].uid() );
+  if( addressees.count() == 1 ) {
+    kmkernel->imProxy()->chatWithContact( addressees[0].uid() );
     return OK;
   }
   else
   {
-    kdDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;
+    kdDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addressees.count() << endl;
 
     QString apology;
-    if ( addresses.isEmpty() )
+    if ( addressees.isEmpty() )
       apology = i18n( "There is no Address Book entry for this email address. Add them to the Address Book and then add instant messaging addresses using your preferred messaging client." );
     else
     {
       apology = i18n( "More than one Address Book entry uses this email address:\n %1\n it is not possible to determine who to chat with." );
       QStringList nameList;
-      KABC::AddresseeList::const_iterator it = addresses.begin();
-      KABC::AddresseeList::const_iterator end = addresses.end();
+      KABC::AddresseeList::const_iterator it = addressees.begin();
+      KABC::AddresseeList::const_iterator end = addressees.end();
       for ( ; it != end; ++it )
       {
           nameList.append( (*it).realName() );

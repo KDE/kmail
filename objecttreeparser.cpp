@@ -2,7 +2,7 @@
     objecttreeparser.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2004 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2002-2004 Klar√§lvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -1961,7 +1961,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     // extra hint for green case
                     // that email addresses in DN do not match fromAddress
                     QString greenCaseWarning;
-                    QString msgFrom( KPIM::getEmailAddr(fromAddress) );
+                    QString msgFrom( KPIM::getEmailAddress(fromAddress) );
                     QString certificate;
                     if( block.keyId.isEmpty() )
                         certificate = "certificate";
@@ -1994,7 +1994,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                 if( !bStart )
                                     greenCaseWarning.append(", <br />&nbsp; &nbsp;");
                                 bStart = false;
-                                greenCaseWarning.append( KPIM::getEmailAddr(*it) );
+                                greenCaseWarning.append( KPIM::getEmailAddress(*it) );
                             }
                         }
                     } else {

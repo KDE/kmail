@@ -17,15 +17,16 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
-#include <libemailfunctions/email.h>
 #include "kmkernel.h"
 #include "headerstrategy.h"
 #include "globalsettings.h"
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
+
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
+#include <libemailfunctions/email.h>
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
@@ -1730,7 +1731,7 @@ void KMMessage::setDate(const QCString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("To") );
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerField("To") );
 }
 
 
@@ -1749,7 +1750,7 @@ QString KMMessage::toStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyTo() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("Reply-To") );
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerField("Reply-To") );
 }
 
 
@@ -1772,7 +1773,7 @@ QString KMMessage::cc() const
 {
   // get the combined contents of all Cc headers (as workaround for invalid
   // messages with multiple Cc headers)
-  return normalizeAddressesAndDecodeIDNs( headerFields( "Cc" ).join( ", " ) );
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerFields( "Cc" ).join( ", " ) );
 }
 
 
@@ -1793,7 +1794,7 @@ QString KMMessage::ccStrip() const
 //-----------------------------------------------------------------------------
 QString KMMessage::bcc() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("Bcc") );
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerField("Bcc") );
 }
 
 
@@ -1827,7 +1828,7 @@ void KMMessage::setDrafts(const QString& aStr)
 QString KMMessage::who() const
 {
   if (mParent)
-    return normalizeAddressesAndDecodeIDNs( headerField(mParent->whoField().utf8()) );
+    return KPIM::normalizeAddressesAndDecodeIDNs( headerField(mParent->whoField().utf8()) );
   return from();
 }
 
@@ -1835,7 +1836,7 @@ QString KMMessage::who() const
 //-----------------------------------------------------------------------------
 QString KMMessage::from() const
 {
-  return normalizeAddressesAndDecodeIDNs( headerField("From") );
+  return KPIM::normalizeAddressesAndDecodeIDNs( headerField("From") );
 }
 
 
@@ -1854,12 +1855,6 @@ void KMMessage::setFrom(const QString& bStr)
 QString KMMessage::fromStrip() const
 {
   return decodeRFC2047String( stripEmailAddr( rawHeaderField("From") ) );
-}
-
-//-----------------------------------------------------------------------------
-QCString KMMessage::fromEmail() const
-{
-  return KPIM::getEmailAddr( from() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2170,7 +2165,7 @@ void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
   {
     QString value = bValue;
     if ( type == Address )
-      value = normalizeAddressesAndEncodeIDNs( value );
+      value = KPIM::normalizeAddressesAndEncodeIDNs( value );
 #if 0
     if ( type != Unstructured )
       kdDebug(5006) << "value: \"" << value << "\"" << endl;
@@ -3058,7 +3053,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   if( !msgIdSuffix.isEmpty() )
     msgIdStr += '@' + msgIdSuffix;
   else
-    msgIdStr += '.' + encodeIDN( addr );
+    msgIdStr += '.' + KPIM::encodeIDN( addr );
 
   msgIdStr += '>';
 
@@ -3161,129 +3156,6 @@ QCString KMMessage::lf2crlf( const QCString & src )
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::normalizedAddress( const QString & displayName,
-                                      const QString & addrSpec,
-                                      const QString & comment )
-{
-  if ( displayName.isEmpty() && comment.isEmpty() )
-    return addrSpec;
-  else if ( comment.isEmpty() )
-    return displayName + " <" + addrSpec + ">";
-  else if ( displayName.isEmpty() )
-    return comment + " <" + addrSpec + ">";
-  else
-    return displayName + " (" + comment + ") <" + addrSpec + ">";
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMessage::decodeIDN( const QString & addrSpec )
-{
-  const int atPos = addrSpec.findRev( '@' );
-  if ( atPos == -1 )
-    return QString::null;
-
-  QString idn = KIDNA::toUnicode( addrSpec.mid( atPos + 1 ) );
-  if ( idn.isEmpty() )
-    return QString::null;
-
-  return addrSpec.left( atPos + 1 ) + idn;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMessage::encodeIDN( const QString & addrSpec )
-{
-  const int atPos = addrSpec.findRev( '@' );
-  if ( atPos == -1 )
-    return addrSpec;
-
-  QString idn = KIDNA::toAscii( addrSpec.mid( atPos + 1 ) );
-  if ( idn.isEmpty() )
-    return addrSpec;
-
-  return addrSpec.left( atPos + 1 ) + idn;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMessage::normalizeAddressesAndDecodeIDNs( const QString & str )
-{
-//  kdDebug(5006) << "KMMessage::normalizeAddressesAndDecodeIDNs( \""
-//                << str << "\" )" << endl;
-  if( str.isEmpty() )
-    return str;
-
-  const QStringList addressList = KPIM::splitEmailAddrList( str );
-  QStringList normalizedAddressList;
-
-  QCString displayName, addrSpec, comment;
-
-  for( QStringList::ConstIterator it = addressList.begin();
-       ( it != addressList.end() );
-       ++it ) {
-    if( !(*it).isEmpty() ) {
-      if ( KMMessage::splitAddress( (*it).utf8(), displayName, addrSpec,
-                                    comment )
-           == AddressOk ) {
-
-        normalizedAddressList <<
-          normalizedAddress( QString::fromUtf8( displayName ),
-                             decodeIDN( QString::fromUtf8( addrSpec ) ),
-                             QString::fromUtf8( comment ) );
-      }
-      else {
-        kdDebug(5006) << "splitting address failed: " << *it << endl;
-      }
-    }
-  }
-/*
-  kdDebug(5006) << "normalizedAddressList: \""
-                << normalizedAddressList.join( ", " )
-                << "\"" << endl;
-*/
-  return normalizedAddressList.join( ", " );
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::normalizeAddressesAndEncodeIDNs( const QString & str )
-{
-  kdDebug(5006) << "KMMessage::normalizeAddressesAndEncodeIDNs( \""
-                << str << "\" )" << endl;
-  if( str.isEmpty() )
-    return str;
-
-  const QStringList addressList = KPIM::splitEmailAddrList( str );
-  QStringList normalizedAddressList;
-
-  QCString displayName, addrSpec, comment;
-
-  for( QStringList::ConstIterator it = addressList.begin();
-       ( it != addressList.end() );
-       ++it ) {
-    if( !(*it).isEmpty() ) {
-      if ( KMMessage::splitAddress( (*it).utf8(), displayName, addrSpec,
-                                    comment )
-           == AddressOk ) {
-
-        normalizedAddressList <<
-          normalizedAddress( QString::fromUtf8( displayName ),
-                             encodeIDN( QString::fromUtf8( addrSpec ) ),
-                             QString::fromUtf8( comment ) );
-      }
-      else {
-        kdDebug(5006) << "splitting address failed: " << *it << endl;
-      }
-    }
-  }
-
-  kdDebug(5006) << "normalizedAddressList: \""
-                << normalizedAddressList.join( ", " )
-                << "\"" << endl;
-  return normalizedAddressList.join( ", " );
-}
-
-//-----------------------------------------------------------------------------
 QString KMMessage::encodeMailtoUrl( const QString& str )
 {
   QString result;
@@ -3303,146 +3175,6 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
   return result;
 }
 
-
-//-----------------------------------------------------------------------------
-KMMessage::AddressParseResult KMMessage::splitAddress( const QCString& address,
-                                                       QCString & displayName,
-                                                       QCString & addrSpec,
-                                                       QCString & comment )
-{
-//  kdDebug(5006) << "KMMessage::splitAddress( " << address << " )" << endl;
-
-  displayName = "";
-  addrSpec = "";
-  comment = "";
-
-  if ( address.isEmpty() )
-    return AddressEmpty;
-
-  QCString result;
-
-  // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
-  // The purpose is to extract a displayable string from the mailboxes.
-  // Comments in the addr-spec are not handled. No error checking is done.
-
-  enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
-  bool inQuotedString = false;
-  int commentLevel = 0;
-
-  for ( char* p = address.data(); *p; ++p ) {
-    switch ( context ) {
-    case TopLevel : {
-      switch ( *p ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 displayName += *p;
-                 break;
-      case '(' : if ( !inQuotedString ) {
-                   context = InComment;
-                   commentLevel = 1;
-                 }
-                 else
-                   displayName += *p;
-                 break;
-      case '<' : if ( !inQuotedString ) {
-                   context = InAngleAddress;
-                 }
-                 else
-                   displayName += *p;
-                 break;
-      case '\\' : // quoted character
-                 displayName += *p;
-                 ++p; // skip the '\'
-                 if ( *p )
-                   displayName += *p;
-                 else
-                   return UnexpectedEnd;
-                 break;
-      case ',' : if ( !inQuotedString )
-                   return UnexpectedComma;
-                 else
-                   displayName += *p;
-                 break;
-      default :  displayName += *p;
-      }
-      break;
-    }
-    case InComment : {
-      switch ( *p ) {
-      case '(' : ++commentLevel;
-                 comment += *p;
-                 break;
-      case ')' : --commentLevel;
-                 if ( commentLevel == 0 ) {
-                   context = TopLevel;
-                   comment += ' '; // separate the text of several comments
-                 }
-                 else
-                   comment += *p;
-                 break;
-      case '\\' : // quoted character
-                 comment += *p;
-                 ++p; // skip the '\'
-                 if ( *p )
-                   comment += *p;
-                 else
-                   return UnexpectedEnd;
-                 break;
-      default :  comment += *p;
-      }
-      break;
-    }
-    case InAngleAddress : {
-      switch ( *p ) {
-      case '"' : inQuotedString = !inQuotedString;
-                 addrSpec += *p;
-                 break;
-      case '>' : if ( !inQuotedString ) {
-                   context = TopLevel;
-                 }
-                 else
-                   addrSpec += *p;
-                 break;
-      case '\\' : // quoted character
-                 addrSpec += *p;
-                 ++p; // skip the '\'
-                 if ( *p )
-                   addrSpec += *p;
-                 else
-                   return UnexpectedEnd;
-                 break;
-      default :  addrSpec += *p;
-      }
-      break;
-    }
-    } // switch ( context )
-  }
-  // check for errors
-  if ( inQuotedString )
-    return UnbalancedQuote;
-  if ( context == InComment )
-    return UnbalancedParens;
-  if ( context == InAngleAddress )
-    return UnclosedAngleAddr;
-
-  displayName = displayName.stripWhiteSpace();
-  comment = comment.stripWhiteSpace();
-  addrSpec = addrSpec.stripWhiteSpace();
-
-  if ( addrSpec.isEmpty() ) {
-    if ( displayName.isEmpty() )
-      return NoAddressSpec;
-    else {
-      addrSpec = displayName;
-      displayName.truncate( 0 );
-    }
-  }
-/*
-  kdDebug(5006) << "display-name : \"" << displayName << "\"" << endl;
-  kdDebug(5006) << "comment      : \"" << comment << "\"" << endl;
-  kdDebug(5006) << "addr-spec    : \"" << addrSpec << "\"" << endl;
-*/
-  return AddressOk;
-}
 
 //-----------------------------------------------------------------------------
 QCString KMMessage::stripEmailAddr( const QCString& aStr )
@@ -3839,11 +3571,12 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 QStringList KMMessage::stripAddressFromAddressList( const QString& address,
                                                     const QStringList& list )
 {
-  QStringList addresses = list;
-  QCString addrSpec = KPIM::getEmailAddr( address ).lower();
-  for( QStringList::Iterator it = addresses.begin();
+  QStringList addresses( list );
+  QString addrSpec( KPIM::getEmailAddress( address ) );
+  for ( QStringList::Iterator it = addresses.begin();
        it != addresses.end(); ) {
-    if( addrSpec == KPIM::getEmailAddr( *it ).lower() ) {
+    if ( kasciistricmp( addrSpec.utf8().data(),
+                        KPIM::getEmailAddress( *it ).utf8().data() ) == 0 ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3864,7 +3597,7 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
        it != addresses.end(); ) {
     kdDebug(5006) << "Check whether " << *it << " is one of my addresses"
                   << endl;
-    if( kmkernel->identityManager()->thatIsMe( KPIM::getEmailAddr( *it ).lower() ) ) {
+    if( kmkernel->identityManager()->thatIsMe( KPIM::getEmailAddress( *it ) ) ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3881,10 +3614,11 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
 bool KMMessage::addressIsInAddressList( const QString& address,
                                         const QStringList& addresses )
 {
-  QCString addrSpec = KPIM::getEmailAddr( address ).lower();
+  QString addrSpec = KPIM::getEmailAddress( address );
   for( QStringList::ConstIterator it = addresses.begin();
        it != addresses.end(); ++it ) {
-    if( addrSpec == KPIM::getEmailAddr( *it ).lower() )
+    if ( kasciistricmp( addrSpec.utf8().data(),
+                        KPIM::getEmailAddress( *it ).utf8().data() ) == 0 )
       return true;
   }
   return false;
@@ -4186,7 +3920,7 @@ DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpe
   // encapsulated message
   if ( part->Body().Message() &&
        part->Body().Message()->Body().FirstBodyPart() &&
-       (current = findDwBodyPart( part->Body().Message()->Body().FirstBodyPart(), 
+       (current = findDwBodyPart( part->Body().Message()->Body().FirstBodyPart(),
                                   partSpecifier )) )
   {
     return current;
@@ -4225,7 +3959,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       // update headers
       // get rid of EOL
       content.resize( content.length()-2 );
-      // we have to delete the fields first as they might have been created by 
+      // we have to delete the fields first as they might have been created by
       // an earlier call to DwHeaders::FieldBody
       mLastUpdated->Headers().DeleteAllFields();
       mLastUpdated->Headers().FromString( content );
@@ -4358,7 +4092,7 @@ QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
 //-----------------------------------------------------------------------------
 QCString KMMessage::mboxMessageSeparator()
 {
-  QCString str( fromEmail() );
+  QCString str( KPIM::getFirstEmailAddress( rawHeaderField("From") ) );
   if ( str.isEmpty() )
     str = "unknown@unknown.invalid";
   QCString dateStr( dateShortStr() );

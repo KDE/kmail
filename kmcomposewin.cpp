@@ -3477,7 +3477,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!saveInDrafts)
   {
-    if ( KPIM::getEmailAddr( from() ).isEmpty() ) {
+    if ( KPIM::getFirstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
         rethinkFields( false );
@@ -3885,7 +3885,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if( !ident.fullEmailAddr().isNull() )
     mEdtFrom->setText(ident.fullEmailAddr());
   // make sure the From field is shown if it does not contain a valid email address
-  if ( KPIM::getEmailAddr( from() ).isEmpty() )
+  if ( KPIM::getFirstEmailAddress( from() ).isEmpty() )
     mShowHeaders |= HDR_FROM;
   if ( mEdtReplyTo ) mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field under certain circomstances

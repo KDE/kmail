@@ -326,7 +326,6 @@ public:
   QString from() const;
   void setFrom(const QString& aStr);
   QString fromStrip() const;
-  QCString fromEmail() const;
 
   /** @return The addr-spec of either the Sender: (if one is given) or
    * the first addr-spec in From: */
@@ -613,35 +612,6 @@ public:
    */
   static QCString lf2crlf( const QCString & src );
 
-  /** Returns a normalized address built from the given parts. The normalized
-      address is of one the following forms:
-      - displayName (comment) <addrSpec>
-      - displayName <addrSpec>
-      - comment <addrSpec>
-      - addrSpec
-   */
-  static QString normalizedAddress( const QString & displayName,
-                                    const QString & addrSpec,
-                                    const QString & comment );
-
-  /** Decodes the punycode domain part of the given addr-spec if it's an IDN.
-   */
-  static QString decodeIDN( const QString & addrSpec );
-
-  /** Encodes the domain part of the given addr-spec in punycode if it's an
-      IDN.
-   */
-  static QString encodeIDN( const QString & addrSpec );
-
-  /** Normalizes all email addresses in the given list and decodes all IDNs.
-   */
-  static QString normalizeAddressesAndDecodeIDNs( const QString & str );
-
-  /** Normalizes all email addresses in the given list and encodes all IDNs
-      in punycode.
-   */
-  static QString normalizeAddressesAndEncodeIDNs( const QString & str );
-
   /** Encodes an email address as mailto URL
    */
   static QString encodeMailtoUrl( const QString& str );
@@ -649,21 +619,6 @@ public:
   /** Decodes a mailto URL
     */
   static QString decodeMailtoUrl( const QString& url );
-
-  enum AddressParseResult { AddressOk, AddressEmpty, NoAddressSpec,
-                            UnbalancedQuote, UnbalancedParens,
-                            UnclosedAngleAddr, UnexpectedComma,
-                            UnexpectedEnd };
-  /** Splits the given address into display name, email address and comment.
-      Returns AddressOk if no error was encountered. Otherwise an appropriate
-      error code is returned. In case of an error the values of displayName,
-      addrSpec and comment are undefined.
-
-   */
-  static AddressParseResult splitAddress( const QCString& address,
-                                          QCString & displayName,
-                                          QCString & addrSpec,
-                                          QCString & comment );
 
   /** This function generates a displayable string from a list of email
       addresses.
