@@ -244,8 +244,8 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
   /** dnd end */
 
   /** popup to switch columns */
-  header()->setClickEnabled(true);
-  header()->installEventFilter(this);
+/*  header()->setClickEnabled(true);
+  header()->installEventFilter(this);*/
   mPopup = new KPopupMenu;
   mPopup->insertTitle(i18n("Select columns"));
   mPopup->setCheckable(true);
@@ -1574,6 +1574,7 @@ void KMFolderTree::slotToggleTotalColumn()
   toggleColumn(total, true);
 }
 
+/*
 //-----------------------------------------------------------------------------
 bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
@@ -1585,6 +1586,7 @@ bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
   }
   return KMFolderTreeInherited::eventFilter(o, e);
 }
+*/
 
 #include "kmfoldertree.moc"
 

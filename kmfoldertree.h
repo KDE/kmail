@@ -248,7 +248,7 @@ protected:
   KMPaintInfo mPaintInfo;
 
   // filter some rmb-events
-  bool eventFilter(QObject*, QEvent*);
+//  bool eventFilter(QObject*, QEvent*);
 
   // ########### The Trolls may move this Drag and drop stuff to QScrollView
 private:
