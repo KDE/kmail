@@ -283,14 +283,16 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
                 int i = dispo.find("filename=", 0, false);
                 if( -1 < i ) {  //  123456789
                     QCString s = dispo.mid( i + 9 ).stripWhiteSpace();
-                    if( '\"' == s[0])
-                        s.remove( 0, 1 );
-                    if( '\"' == s[s.length()-1])
-                        s.truncate( s.length()-1 );
                     if( !s.isEmpty() ) {
-                        cntDesc  = "file: ";
-                        cntDesc += s;
-                        bOk = true;
+                        if( '\"' == s[0])
+                            s.remove( 0, 1 );
+                        if( '\"' == s[s.length()-1])
+                            s.truncate( s.length()-1 );
+                        if( !s.isEmpty() ) {
+                            cntDesc  = "file: ";
+                            cntDesc += s;
+                            bOk = true;
+                        }
                     }
                 }
             }
