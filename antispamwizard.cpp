@@ -596,11 +596,11 @@ ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
   // hint text
   QLabel *introText = new QLabel( this );
   introText->setText( i18n(
-    "<p>For these tools it's possible to let the "
-    "wizard create filter rules. KMail tried to find them "
-    "in the PATH of your system. The wizard doesn't allow "
-    "to create rules for tools which were not found. "
-    "This is to keep your configuration consistent and "
+    "<p>For these tools it is possible to let the "
+    "wizard create filter rules. KMail tried to find the tools "
+    "in the PATH of your system; the wizard does not allow you "
+    "to create rules for tools which were not found: "
+    "this is to keep your configuration consistent and "
     "to minimize the risk of unpredicted behavior.</p>"
     ) );
   grid->addWidget( introText, row++, 0 );

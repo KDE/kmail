@@ -89,7 +89,7 @@
   <Action name="encrypt_message" />
   <Action name="options_select_crypto" />
  </ToolBar>
- <ToolBar noMerge="1" name="htmlToolBar" ><text>Html Toolbar</text>
+ <ToolBar noMerge="1" name="htmlToolBar" ><text>HTML Toolbar</text>
   <Action name="text_list" />
   <Action name="text_font" />
   <Action name="text_size" />

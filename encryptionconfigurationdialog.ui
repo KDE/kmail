@@ -119,14 +119,14 @@ When this option is selected, you will be asked for each part of the message (i.
                         <cstring>dontEncryptRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Don't encrypt messages</string>
+                        <string>&amp;Do not encrypt messages</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check for not encrypting a message by default</string>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
-&lt;h1&gt;Don't Encrypt Messages&lt;/h1&gt;
+&lt;h1&gt;Do Not Encrypt Messages&lt;/h1&gt;
 If this option is selected, messages are not encrypted by default.
 &lt;p&gt;
 This is a default setting, you can still override it for each individual setting.

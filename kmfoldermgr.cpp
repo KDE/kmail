@@ -147,8 +147,8 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
     }
     if ( !info.isReadable() || !info.isWritable() ) {
       KMessageBox::sorry(0, i18n("The permissions of the folder '%1' are "
-                               "incorrect.\n"
-                               "Please make sure that you can view and modify "
+                               "incorrect;\n"
+                               "please make sure that you can view and modify "
                                "the content of this folder.")
                             .arg( mBasePath ) );
       ::exit(-1);
@@ -156,8 +156,8 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
    } else {
     // ~/Mail (or whatever the user specified) doesn't exist, create it
     if ( ::mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
-      KMessageBox::sorry(0, i18n("KMail couldn't create folder '%1'.\n"
-                                 "Please make sure that you can view and "
+      KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
+                                 "please make sure that you can view and "
                                  "modify the content of the folder '%2'.")
                             .arg( mBasePath ).arg( QDir::homeDirPath() ) );
       ::exit(-1);

@@ -85,10 +85,10 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	   this, SLOT(slotMimeTypeChanged(const QString&)) );
   glay->addWidget( mMimeType, 0, 1 );
 
-  msg = i18n("<qt><p>The <em>MIME type</em> of the file.</p>"
-	     "<p>Normally, you don't need to touch this setting, since the "
-	     "type of the file is automatically checked. But sometimes, %1 "
-	     "may not detect the type correctly. Here's where you can fix "
+  msg = i18n("<qt><p>The <em>MIME type</em> of the file:</p>"
+	     "<p>normally, you do not need to touch this setting, since the "
+	     "type of the file is automatically checked; but, sometimes, %1 "
+	     "may not detect the type correctly -- here is where you can fix "
 	     "that.</p></qt>").arg( kapp->aboutData()->programName() );
   QWhatsThis::add( mMimeType, msg );
 
@@ -97,10 +97,10 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   setSize( KIO::filesize_t(0) );
   glay->addWidget( mSize, 1, 1 );
 
-  msg = i18n("<qt><p>The size of the part.</p>"
-	     "<p>Sometimes, %1 will only give an estimated size here, "
-	     "because calculating the exact size would take too much time. "
-	     "When this is the case, it will be made visible by adding "
+  msg = i18n("<qt><p>The size of the part:</p>"
+	     "<p>sometimes, %1 will only give an estimated size here, "
+	     "because calculating the exact size would take too much time; "
+	     "when this is the case, it will be made visible by adding "
 	     "\"(est.)\" to the size displayed.</p></qt>")
     .arg( kapp->aboutData()->programName() );
   QWhatsThis::add( mSize, msg );
@@ -111,9 +111,9 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( label, 2, 0 );
   glay->addWidget( mFileName, 2, 1 );
 
-  msg = i18n("<qt><p>The file name of the part.</p>"
-	     "<p>Although this defaults to the name of the attached file, "
-	     "it doesn't specify the file to be attached. Rather, it "
+  msg = i18n("<qt><p>The file name of the part:</p>"
+	     "<p>although this defaults to the name of the attached file, "
+	     "it does not specify the file to be attached; rather, it "
 	     "suggests a file name to be used by the recipient's mail agent "
 	     "when saving the part to disk.</p></qt>");
   QWhatsThis::add( label, msg );
@@ -125,11 +125,11 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( label, 3, 0 );
   glay->addWidget( mDescription, 3, 1 );
 
-  msg = i18n("<qt><p>A description of the part.</p>"
-	     "<p>This is just an informational description of the part, "
-	     "much like the Subject is for the whole message. Most "
+  msg = i18n("<qt><p>A description of the part:</p>"
+	     "<p>this is just an informational description of the part, "
+	     "much like the Subject is for the whole message; most "
 	     "mail agents will show this information in their message "
-	     "previews, alongside the attachment's icon.</p></qt>");
+	     "previews alongside the attachment's icon.</p></qt>");
   QWhatsThis::add( label, msg );
   QWhatsThis::add( mDescription, msg );
 
@@ -140,12 +140,12 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addWidget( label, 4, 0 );
   glay->addWidget( mEncoding, 4, 1 );
 
-  msg = i18n("<qt><p>The transport encoding of this part.</p>"
-	     "<p>Normally, you don't need to change this, since %1 will use "
-	     "a decent default encoding, depending on the MIME type. Yet "
+  msg = i18n("<qt><p>The transport encoding of this part:</p>"
+	     "<p>normally, you do not need to change this, since %1 will use "
+	     "a decent default encoding, depending on the MIME type; yet, "
 	     "sometimes, you can significantly reduce the size of the "
 	     "resulting message, e.g. if a PostScript file doesn't contain "
-	     "binary data, but consists of pure text. In this case, choosing "
+	     "binary data, but consists of pure text -- in this case, choosing "
 	     "\"quoted-printable\" over the default \"base64\" will save up "
 	     "to 25% in resulting message size.</p></qt>")
     .arg( kapp->aboutData()->programName() );
@@ -158,8 +158,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   msg = i18n("<qt><p>Check this option if you want to suggest to the "
 	     "recipient the automatic (inline) display of this part in the "
-	     "message preview, instead of the default icon view.</p>"
-	     "<p>Technically, this is carried out by setting this part's "
+	     "message preview, instead of the default icon view;</p>"
+	     "<p>technically, this is carried out by setting this part's "
 	     "<em>Content-Disposition</em> header field to \"inline\" "
 	     "instead of the default \"attachment\".</p></qt>");
   QWhatsThis::add( mInline, msg );
@@ -169,8 +169,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addMultiCellWidget( mSigned, 6, 6, 0, 1 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
-	     "signed.</p>"
-	     "<p>The signature will be made with the key that you associated "
+	     "signed;</p>"
+	     "<p>the signature will be made with the key that you associated "
 	     "with the currently-selected identity.</p></qt>");
   QWhatsThis::add( mSigned, msg );
 
@@ -179,8 +179,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   glay->addMultiCellWidget( mEncrypted, 7, 7, 0, 1 );
 
   msg = i18n("<qt><p>Check this option if you want this message part to be "
-	     "encrypted.</p>"
-	     "<p>The part will be encrypted for the recipients of this "
+	     "encrypted;</p>"
+	     "<p>the part will be encrypted for the recipients of this "
 	     "message</p></qt>");
   QWhatsThis::add( mEncrypted, msg );
   // (row 8: spacer)

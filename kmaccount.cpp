@@ -55,7 +55,7 @@ KMPrecommand::~KMPrecommand()
 bool KMPrecommand::start()
 {
   bool ok = mPrecommandProcess.start( KProcess::NotifyOnExit );
-  if (!ok) KMessageBox::error(0, i18n("Couldn't execute precommand '%1'.")
+  if (!ok) KMessageBox::error(0, i18n("Could not execute precommand '%1'.")
     .arg(mPrecommand));
   return ok;
 }

@@ -392,7 +392,7 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
     QStringList errors = job->detailedErrorStrings();
     QString myError = "<qt><p><b>" + i18n("Error while uploading message")
       + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->name()).arg((*it).htmlURL())
-      + "</p><p>" + i18n("This could be because you don't have permission to do this. The error message from the server communication is here:") + "</p>";
+      + "</p><p>" + i18n("This could be because you do not have permission to do this; the error message from the server communication is here:") + "</p>";
     KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2], errors[0] );
     mAccount->removeJob(it);
     delete this;
@@ -435,7 +435,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       QStringList errors = job->detailedErrorStrings();
       QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
         + "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
-        + "</p><p>" + i18n("This could be because you don't have permission to do this or because the folder is already present on the server. The error message from the server communication is here:") + "</p>";
+        + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
       KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2],
                           errors[0] );
     }

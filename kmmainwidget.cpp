@@ -2614,7 +2614,7 @@ void KMMainWidget::setupActions()
     raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0, this,
         SLOT(slotHideAttachments()),
         actionCollection(), "view_attachments_hide" );
-    raction->setToolTip( i18n("Don't show attachments in the message viewer") );
+    raction->setToolTip( i18n("Do not show attachments in the message viewer") );
     raction->setExclusiveGroup( "view_attachments_group" );
     attachmentMenu->insert( raction );
 

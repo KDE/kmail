@@ -44,7 +44,7 @@
                         <enum>NoFocus</enum>
                     </property>
                     <property name="text">
-                        <string>&amp;Don't send certificates</string>
+                        <string>&amp;Do not send certificates</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Selects which certificates to send</string>
@@ -195,14 +195,14 @@ When this option is selected, you will be asked for each part of the message (i.
                         <cstring>dontSignRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Don'&amp;t sign messages</string>
+                        <string>Do no&amp;t sign messages</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check for not signing a message by default</string>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
-&lt;h1&gt;Don't Sign Messages&lt;/h1&gt;
+&lt;h1&gt;Do Not Sign Messages&lt;/h1&gt;
 If this option is selected, messages are not signed by default.
 &lt;p&gt;
 This is a default setting, you can still override it for each individual setting.

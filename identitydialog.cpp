@@ -94,9 +94,9 @@ namespace KMail {
     label = new QLabel( mNameEdit, i18n("&Your name:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Your name</h3>"
-               "<p>This field should have your name, as you'd like "
-               "it to appear in the email header that is sent out.</p>"
-               "<p>If you leave this blank, your real name won't "
+               "<p>This field should contain your name as you would like "
+               "it to appear in the email header that is sent out;</p>"
+               "<p>if you leave this blank your real name will not "
                "appear, only the email address.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mNameEdit, msg );
@@ -186,9 +186,9 @@ namespace KMail {
                                              "yourself.") );
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to sign messages and to encrypt messages to "
-               "yourself. You can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail won't be able "
-               "to cryptographically sign emails. Normal mail functions won't "
+               "yourself; you can also use GnuPG keys.</p>"
+               "<p>You can leave this blank, but KMail will not be able "
+               "to cryptographically sign emails; normal mail functions will not "
                "be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
@@ -288,8 +288,8 @@ namespace KMail {
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
                              i18n("The custom sent-mail folder for identity "
-                                  "\"%1\" doesn't exist (anymore). "
-                                  "Therefore the default sent-mail folder "
+                                  "\"%1\" does not exist (anymore); "
+                                  "therefore, the default sent-mail folder "
                                   "will be used.")
                              .arg( ident.identityName() ) ) )
       mFccCombo->setFolder( kmkernel->sentFolder() );
@@ -299,8 +299,8 @@ namespace KMail {
     if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
                              i18n("The custom drafts folder for identity "
-                                  "\"%1\" doesn't exist (anymore). "
-                                  "Therefore the default drafts folder "
+                                  "\"%1\" does not exist (anymore); "
+                                  "therefore, the default drafts folder "
                                   "will be used.")
                              .arg( ident.identityName() ) ) )
       mDraftsCombo->setFolder( kmkernel->draftsFolder() );
@@ -320,15 +320,15 @@ namespace KMail {
     if ( email.isEmpty() || atCount == 0 )
       KMessageBox::sorry( this, "<qt>"+
                           i18n("Your email address is not valid because it "
-                               "doesn't contain a <emph>@</emph>. "
-                               "You won't create valid messages if you don't "
+                               "does not contain a <emph>@</emph>: "
+                               "you will not create valid messages if you do not "
                                "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
     else if ( atCount > 1 ) {
       KMessageBox::sorry( this, "<qt>" +
                           i18n("Your email address is not valid because it "
-                               "contains more than one <emph>@</emph>. "
-                               "You won't create valid messages if you don't "
+                               "contains more than one <emph>@</emph>: "
+                               "you will not create valid messages if you do not "
                                "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
     }

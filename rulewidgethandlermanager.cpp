@@ -368,11 +368,11 @@ namespace {
     const char *displayName;
   } TextFunctions[] = {
     { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
-    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "doesn't contain" )   },
+    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
     { KMSearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
-    { KMSearchRule::FuncNotEqual,           I18N_NOOP( "doesn't equal" )     },
+    { KMSearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
     { KMSearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
-    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "doesn't match reg. expr." ) },
+    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) },
     { KMSearchRule::FuncIsInAddressbook,    I18N_NOOP( "is in address book" ) },
     { KMSearchRule::FuncIsNotInAddressbook, I18N_NOOP( "is not in address book" ) }
   };

@@ -287,7 +287,7 @@ int KMFolderCachedImap::rename( const QString& aName,
     return 0;
 
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    KMessageBox::error( 0, i18n("You can't rename a folder when a sync is in progress") );
+    KMessageBox::error( 0, i18n("You cannot rename a folder whilst a sync is in progress") );
     return -1;
   }
 

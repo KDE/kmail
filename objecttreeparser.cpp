@@ -561,7 +561,7 @@ namespace KMail {
                        .arg( cryptPlugLibName );
             break;
           case CANT_VERIFY_SIGNATURES:
-            errorMsg = i18n( "Crypto plug-in \"%1\" can't verify signatures." )
+            errorMsg = i18n( "Crypto plug-in \"%1\" cannott verify signatures." )
                        .arg( cryptPlugLibName );
             break;
           case NO_PLUGIN:
@@ -574,7 +574,7 @@ namespace KMail {
             break;
           }
           messagePart.errorText = i18n( "The message is signed, but the "
-                                        "validity of the signature can't be "
+                                        "validity of the signature cannot be "
                                         "verified.<br />"
                                         "Reason: %1" )
                                   .arg( errorMsg );
@@ -707,7 +707,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                      .arg( cryptPlugLibName );
       break;
     case CANT_DECRYPT:
-      aErrorText = i18n( "Crypto plug-in \"%1\" can't decrypt messages." )
+      aErrorText = i18n( "Crypto plug-in \"%1\" cannot decrypt messages." )
                      .arg( cryptPlugLibName );
       break;
     case NO_PLUGIN:

@@ -425,7 +425,7 @@ static bool connectToKOrganizer()
       findServiceFor( "DCOP/Organizer", QString::null,
                       QString::null, &error, &dcopService );
     if ( result != 0 ) {
-      kdDebug(5800) << "Couldn't connect to KOrganizer\n";
+      kdDebug(5800) << "Could not connect to KOrganizer\n";
       // TODO: You might want to show "error" (if not empty) here,
       // using e.g. KMessageBox
       return false;

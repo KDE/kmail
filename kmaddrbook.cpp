@@ -172,10 +172,10 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
     a.insertEmail( email, true );
 
     if ( !KMAddrBookExternal::addAddressee( a ) ) {
-      KMessageBox::error( parent, i18n("Can't save to addressbook.") );
+      KMessageBox::error( parent, i18n("Cannot save to addressbook.") );
     } else {
       QString text = i18n("<qt>The email address <b>%1</b> was added to your "
-                          "addressbook. You can add more information to this "
+                          "addressbook; you can add more information to this "
                           "entry by opening the addressbook.</qt>").arg( addr );
       KMessageBox::information( parent, text, QString::null, "addedtokabc" );
     }
@@ -234,18 +234,18 @@ bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *pa
 
   if ( addressees.isEmpty() ) {
     if ( !KMAddrBookExternal::addAddressee( addressee ) ) {
-      KMessageBox::error( parent, i18n("Can't save to addressbook.") );
+      KMessageBox::error( parent, i18n("Cannot save to addressbook.") );
       inserted = false;
     } else {
-      QString text = i18n("The VCard was added to your addressbook. "
-                          "You can add more information to this "
+      QString text = i18n("The VCard was added to your addressbook; "
+                          "you can add more information to this "
                           "entry by opening the addressbook.");
       KMessageBox::information( parent, text, QString::null, "addedtokabc" );
       inserted = true;
     }
   } else {
     QString text = i18n("The VCard's primary email address is already in "
-                        "your addressbook. However you may save the VCard "
+                        "your addressbook; however, you may save the VCard "
                         "into a file and import it into the addressbook "
                         "manually.");
     KMessageBox::information( parent, text );

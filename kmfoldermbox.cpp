@@ -737,8 +737,8 @@ int KMFolderMbox::createIndexFromContents()
   if (kmkernel->outboxFolder() == folder() && count() > 0)
     KMessageBox::queuedMessageBox(0, KMessageBox::Information,
                                   i18n("Your outbox contains messages which were "
-    "most likely not created by KMail.\nPlease remove them from there, if you "
-    "don't want KMail to send them."));
+    "most-likely not created by KMail;\nplease remove them from there if you "
+    "do not want KMail to send them."));
 
   if ( folder()->parent() )
       folder()->parent()->manager()->invalidateFolder( kmkernel->msgDict(), folder() );

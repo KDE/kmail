@@ -494,11 +494,11 @@ void MessageComposer::adjustCryptFlags()
         else
           ret = KMessageBox::questionYesNoCancel( mComposeWin,
                                                   i18n("<qt><p>You have a trusted OpenPGP key for every "
-                                                       "recipient of this message.</p>"
-                                                       "<p>Should this message be encrypted?</p></qt>"),
+                                                       "recipient of this message;</p>"
+                                                       "<p>should this message be encrypted?</p></qt>"),
                                                   i18n("Encrypt Message?"),
                                                   KGuiItem( i18n("&Encrypt") ),
-                                                  KGuiItem( i18n("&Don't Encrypt") ) );
+                                                  KGuiItem( i18n("&Do not Encrypt") ) );
         if( KMessageBox::Cancel == ret ) {
           mRc = false;
           return;
@@ -513,11 +513,11 @@ void MessageComposer::adjustCryptFlags()
         int ret =
           KMessageBox::warningYesNoCancel( mComposeWin,
                                            i18n("<qt><p>There are conflicting encryption "
-                                                "preferences!</p>"
-                                                "<p>Should this message be encrypted?</p></qt>"),
+                                                "preferences;</p>"
+                                                "<p>should this message be encrypted?</p></qt>"),
                                            i18n("Encrypt Message?"),
                                            KGuiItem( i18n("&Encrypt") ),
-                                           KGuiItem( i18n("&Don't Encrypt") ) );
+                                           KGuiItem( i18n("&Do not Encrypt") ) );
         if( KMessageBox::Cancel == ret ) {
           mRc = false;
           return;
@@ -1850,10 +1850,10 @@ void MessageComposer::pgpSignedMsg( QCString cText,
                               i18n("<qt>This message could not be signed "
                                    "because the OpenPGP key which should be "
                                    "used for signing messages with this "
-                                   "identity couldn't be found in your "
+                                   "identity could not be found in your "
                                    "keyring.<br><br>"
-                                   "You can change the OpenPGP key "
-                                   "which should be used with the current "
+                                   "You can change which OpenPGP key "
+                                   "should be used with the current "
                                    "identity in the identity configuration.</qt>"),
                               i18n("Missing Signing Key") );
           bSign = false;
@@ -1861,11 +1861,11 @@ void MessageComposer::pgpSignedMsg( QCString cText,
       } else {
         KMessageBox::sorry( mComposeWin,
                             i18n("<qt>This message could not be signed "
-                                 "because you didn't define the OpenPGP "
+                                 "because you did not define the OpenPGP "
                                  "key which should be used for signing "
                                  "messages with this identity.<br><br>"
-                                 "You can define the OpenPGP key "
-                                 "which should be used with the current "
+                                 "You can define which OpenPGP key "
+                                 "should be used with the current "
                                  "identity in the identity configuration.</qt>"),
                             i18n("Undefined Signing Key") );
         bSign = false;
@@ -1977,7 +1977,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
                                              .arg( txt1 ),
                                              i18n( "Certificate Warning" ),
                                              KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Don't Use Certificate") ) );
+                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
         if( ret == KMessageBox::No )
           bSign = false;
       }
@@ -2007,7 +2007,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
                                                .arg( txt1 ),
                                                i18n( "Certificate Warning" ),
                                                KGuiItem( i18n("&Use Certificate") ),
-                                               KGuiItem( i18n("&Don't Use Certificate") ) );
+                                               KGuiItem( i18n("&Do Not Use Certificate") ) );
           if( ret == KMessageBox::No )
             bSign = false;
         }
@@ -2038,7 +2038,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
                                                .arg( txt1 ),
                                                i18n( "Certificate Warning" ),
                                                KGuiItem( i18n("&Use Certificate") ),
-                                               KGuiItem( i18n("&Don't Use Certificate") ) );
+                                               KGuiItem( i18n("&Do Not Use Certificate") ) );
           if( ret == KMessageBox::No )
             bSign = false;
         }
@@ -2060,7 +2060,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
                                              .arg( txt1 ),
                                              i18n( "Certificate Warning" ),
                                              KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Don't Use Certificate") ) );
+                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
         if( ret == KMessageBox::No )
           bSign = false;
       }
@@ -2389,7 +2389,7 @@ bool MessageComposer::checkForEncryptCertificateExpiry( const QString& recipient
                                            .arg( txt1 ),
                                            captionWarn,
                                            KGuiItem( i18n("&Use Certificate") ),
-                                           KGuiItem( i18n("&Don't Use Certificate") ) );
+                                           KGuiItem( i18n("&Do Not Use Certificate") ) );
       if( ret == KMessageBox::No )
         bEncrypt = false;
     }
@@ -2428,7 +2428,7 @@ bool MessageComposer::checkForEncryptCertificateExpiry( const QString& recipient
                                              .arg( txt1 ),
                                              captionWarn,
                                              KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Don't Use Certificate") ) );
+                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
         if( ret == KMessageBox::No )
           bEncrypt = false;
       }

@@ -88,8 +88,8 @@ int KMFolderMaildir::open()
 
   if (canAccess() != 0) {
       KCursorSaver idle(KBusyPtr::idle());
-      KMessageBox::sorry(0, i18n("Error opening %1. Either this is not a valid "
-                                 "maildir folder or you don't have sufficient access permissions.")
+      KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
+                                 "maildir folder or you do not have sufficient access permissions.")
                          .arg(name()));
       return EPERM;
   }
@@ -100,7 +100,7 @@ int KMFolderMaildir::open()
     {
       QString str;
       mIndexStream = 0;
-      str = i18n("Folder `%1' changed. Recreating index.")
+      str = i18n("Folder `%1' changed; recreating index.")
 		  .arg(name());
       emit statusMsg(str);
     } else {
@@ -231,7 +231,7 @@ void KMFolderMaildir::sync()
 {
   if (mOpenCount > 0)
     if (!mIndexStream || fsync(fileno(mIndexStream))) {
-    kmkernel->emergencyExit( i18n("Couldn't sync maildir folder.") );
+    kmkernel->emergencyExit( i18n("Could not sync maildir folder.") );
     }
 }
 
@@ -826,8 +826,8 @@ int KMFolderMaildir::createIndexFromContents()
 
   if (kmkernel->outboxFolder() == folder() && count() > 0)
     KMessageBox::information(0, i18n("Your outbox contains messages which were "
-    "most likely not created by KMail.\nPlease remove them from there, if you "
-    "don't want KMail to send them."));
+    "most-likely not created by KMail;\nplease remove them from there if you "
+    "do not want KMail to send them."));
 
   needsCompact = true;
 

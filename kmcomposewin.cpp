@@ -1137,9 +1137,9 @@ void KMComposeWin::setupActions(void)
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
-  styleItems << i18n( "Bullet List (Disc)" );
-  styleItems << i18n( "Bullet List (Circle)" );
-  styleItems << i18n( "Bullet List (Square)" );
+  styleItems << i18n( "Bulleted List (Disc)" );
+  styleItems << i18n( "Bulleted List (Circle)" );
+  styleItems << i18n( "Bulleted List (Square)" );
   styleItems << i18n( "Ordered List (Decimal)" );
   styleItems << i18n( "Ordered List (Alpha lower)" );
   styleItems << i18n( "Ordered List (Alpha upper)" );
@@ -1721,8 +1721,8 @@ bool KMComposeWin::queryExit ()
 void KMComposeWin::addAttach(const KURL aUrl)
 {
   if ( !aUrl.isValid() ) {
-    KMessageBox::sorry( this, i18n( "<qt><p>KMail couldn't recognize the location of the attachment (%1).</p>"
-                                 "<p>You have to specify the full path if you wish to attach a file.</p></qt>" )
+    KMessageBox::sorry( this, i18n( "<qt><p>KMail could not recognize the location of the attachment (%1);</p>"
+                                 "<p>you have to specify the full path if you wish to attach a file.</p></qt>" )
                         .arg( aUrl.prettyURL() ) );
     return;
   }
@@ -2906,8 +2906,8 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
     int ret = KMessageBox::warningYesNoCancel(this,
-                                      i18n("<qt><p>Inline signing/encrypting HTML messages is not possible.</p>"
-                                           "<p>Do you want to delete your markup ?</p></qt>"),
+                                      i18n("<qt><p>Inline signing/encrypting of HTML messages is not possible;</p>"
+                                           "<p>do you want to delete your markup?</p></qt>"),
                                            i18n("Sign/Encrypt Message?"),
                                            KGuiItem( i18n("&Delete markup") ),
                                            KGuiItem( i18n("&Keep markup") ) );
@@ -3440,11 +3440,11 @@ void KMComposeWin::slotListAction( const QString& style )
 {
     if ( style == i18n( "Standard" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
-    else if ( style == i18n( "Bullet List (Disc)" ) )
+    else if ( style == i18n( "Bulleted List (Disc)" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDisc );
-    else if ( style == i18n( "Bullet List (Circle)" ) )
+    else if ( style == i18n( "Bulleted List (Circle)" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListCircle );
-    else if ( style == i18n( "Bullet List (Square)" ) )
+    else if ( style == i18n( "Bulleted List (Square)" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListSquare );
     else if ( style == i18n( "Ordered List (Decimal)" ))
        mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDecimal );

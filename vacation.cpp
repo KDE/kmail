@@ -310,9 +310,9 @@ namespace KMail {
 
     if ( mUrl.protocol() == "sieve" && !job->sieveCapabilities().isEmpty() &&
 	 !job->sieveCapabilities().contains("vacation") ) {
-      KMessageBox::sorry( 0, i18n("Your server didn't list \"vacation\" in "
-				  "it's list of supported Sieve extensions.\n"
-				  "Without it, KMail cannot install out of "
+      KMessageBox::sorry( 0, i18n("Your server did not list \"vacation\" in "
+				  "its list of supported Sieve extensions;\n"
+				  "without it, KMail cannot install out-of-"
 				  "office replies for you.\n"
 				  "Please contact you system administrator.") );
       emit result( false );

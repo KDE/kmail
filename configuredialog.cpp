@@ -1788,7 +1788,7 @@ static const EnumConfigEntry mimeTreeMode = {
 
 
 static const EnumConfigEntryItem readerWindowModes[] = {
-  { "hide", I18N_NOOP("&Don't show a message preview pane") },
+  { "hide", I18N_NOOP("&Do not show a message preview pane") },
   { "below", I18N_NOOP("Show the message preview pane belo&w the message list") },
   { "right", I18N_NOOP("Show the message preview pane ne&xt to the message list") }
 };
@@ -3505,12 +3505,12 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLoopOnGotoUnread = new QComboBox( false, this );
   label = new QLabel( mLoopOnGotoUnread,
-           i18n("to be continued with \"don't loop\", \"loop in current folder\", "
+           i18n("to be continued with \"do not loop\", \"loop in current folder\", "
                 "and \"loop in all folders\".",
                 "When trying to find unread messages:"), this );
   mLoopOnGotoUnread->insertStringList( QStringList()
       << i18n("continuation of \"When trying to find unread messages:\"",
-              "Don't Loop")
+              "Do not Loop")
       << i18n("continuation of \"When trying to find unread messages:\"",
               "Loop in Current Folder")
       << i18n("continuation of \"When trying to find unread messages:\"",
@@ -3616,7 +3616,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   msg = i18n( "what's this help",
 	    "<qt><p>When jumping to the next unread message, it may occur "
 	    "that no more unread messages are below the current message.</p>"
-	    "<p><b>Don't loop:</b> The search will stop at the last message in "
+	    "<p><b>Do not loop:</b> The search will stop at the last message in "
 	    "the current folder.</p>"
 	    "<p><b>Loop in current folder:</b> The search will continue at the "
 	    "top of the message list, but not go to another folder.</p>"

@@ -325,7 +325,7 @@ QWidget* StartupWizard::createIntroPage()
   QWidget* page = new QWidget(this, "intro_page");
   QBoxLayout* top = new QHBoxLayout( page );
   QTextBrowser* text = new QTextBrowser( page );
-  text->setText( i18n("<b>You don't seem to have any groupware folders "
+  text->setText( i18n("<b>You do not seem to have any groupware folders "
 		    "configured in KMail.</b><br>"
 		    "This is probably because you are running KMail for the first time, or "
 		    "because you have enabled the groupware functionality for the first time.<br>"
@@ -465,7 +465,7 @@ void StartupWizard::setLanguage( int language, bool guessed )
   if( guessed ) {
     mLanguageLabel->setText( i18n("The folders present indicates that you want to use the selected folder language"));
   } else {
-    mLanguageLabel->setText( i18n("The folder language can't be guessed, please select a language:"));
+    mLanguageLabel->setText( i18n("The folder language cannot be guessed, please select a language:"));
   }
 }
 

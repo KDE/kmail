@@ -284,7 +284,7 @@ void KMAcctExpPop::startJob() {
   if (!runPrecommand(precommand()))
     {
       KMessageBox::sorry(0,
-                         i18n("Couldn't execute precommand: %1").arg(precommand()),
+                         i18n("Could not execute precommand: %1").arg(precommand()),
                          i18n("KMail Error Message"));
       checkDone((idsOfMsgs.count() > 0), -1);
       return;
@@ -396,10 +396,10 @@ void KMAcctExpPop::slotJobFinished() {
     if (mLeaveOnServer && uidsOfMsgs.isEmpty() && uidsOfNextSeenMsgs.isEmpty()
       && !idsOfMsgs.isEmpty())
     {
-      KMessageBox::sorry(0, i18n("Your POP3 server doesn't support the UIDL "
-      "command. This command is required to determine in a reliable way, "
-      "which of the mails on the server KMail has already seen before.\n"
-      "The feature to leave the mails on the server will therefore not "
+      KMessageBox::sorry(0, i18n("Your POP3 server does not support the UIDL "
+      "command: this command is required to determine, in a reliable way, "
+      "which of the mails on the server KMail has already seen before;\n"
+      "the feature to leave the mails on the server will therefore not "
       "work properly."));
     }
     // An attempt to work around buggy pop servers, these seem to be popular.

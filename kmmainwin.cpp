@@ -213,7 +213,7 @@ bool KMMainWin::queryClose() {
 
   if (config->readBoolEntry("warn-before-expire", true)) {
     ret = KMessageBox::warningYesNo(KMainWindow::memberList->first(),
-			 str, i18n("Expire Old Messages?"), i18n("Expire"), i18n("Don't Expire"));
+			 str, i18n("Expire Old Messages?"), i18n("Expire"), i18n("Do not Expire"));
     if (ret == KMessageBox::Yes) {
       kmkernel->setCanExpire(true);
     }

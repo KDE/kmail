@@ -741,9 +741,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   mImap.titleLabel = new QLabel( page );
   if( connected )
-    mImap.titleLabel->setText( i18n("Account type: Disconnected Imap Account") );
+    mImap.titleLabel->setText( i18n("Account type: Disconnected IMAP Account") );
   else
-    mImap.titleLabel->setText( i18n("Account type: Imap Account") );
+    mImap.titleLabel->setText( i18n("Account type: IMAP Account") );
   QFont titleFont( mImap.titleLabel->font() );
   titleFont.setBold( true );
   mImap.titleLabel->setFont( titleFont );
@@ -1209,14 +1209,14 @@ void AccountDialog::slotPipeliningClicked()
   if (mPop.usePipeliningCheck->isChecked())
     KMessageBox::information(0,
       i18n("Please note that this feature can cause some POP3 servers "
-      "that don't support pipelining to send corrupted mails.\n"
-      "This is configurable, because some servers support pipelining "
-      "but don't announce their capabilities. To check if your POP3 server "
-      "announces pipelining support, use the \"Check What the Server "
-      "Supports\" button at the bottom of the dialog.\n"
-      "If your server doesn't announce it, but you want more speed then "
+      "that do not support pipelining to send corrupted mail;\n"
+      "this is configurable, though, because some servers support pipelining "
+      "but do not announce their capabilities. To check whether your POP3 server "
+      "announces pipelining support use the \"Check What the Server "
+      "Supports\" button at the bottom of the dialog;\n"
+      "if your server does not announce it, but you want more speed, then "
       "you should do some testing first by sending yourself a batch "
-      "of mails and downloading them."), QString::null,
+      "of mail and downloading it."), QString::null,
       "pipelining");
 }
 
