@@ -308,18 +308,6 @@ void KMMainWidget::readConfig(void)
         break;
     }
 
-    // workaround to support the old buggy way of saving the dimensions of the panes
-    if (mPanner1Sep[0] == 0) {
-      defaultSize = QSize(300,130);
-      siz = config->readSizeEntry("Panners", &defaultSize);
-      if (siz.isEmpty())
-        siz = QSize(100,100); // why not defaultSize?
-      mPanner2Sep[0] = siz.width();
-      mPanner1Sep[0] = siz.height();
-      mPanner2Sep[1] = height() - siz.width();
-      mPanner1Sep[1] = width() - siz.height();
-    }
-
     if (!mStartupDone ||
         oldWindowLayout != mWindowLayout ||
         oldShowMIMETreeMode != mShowMIMETreeMode )
@@ -682,7 +670,7 @@ void KMMainWidget::activatePanners(void)
         mPanner2->moveToLast( mMimePartTree );
         mPanner1->setSizes( mPanner1Sep );
         mPanner2->setSizes( mPanner2Sep );
-        mPanner3->setSizes( mPanner2Sep );
+        mPanner3->setSizes( mPanner3Sep );
         mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
         mPanner3->setResizeMode( mHeaders, QSplitter::KeepSize );
         break;
@@ -696,7 +684,7 @@ void KMMainWidget::activatePanners(void)
         mPanner1->moveToLast( mMsgView );
         mPanner1->setSizes( mPanner1Sep );
         mPanner2->setSizes( mPanner2Sep );
-        mPanner3->setSizes( mPanner2Sep );
+        mPanner3->setSizes( mPanner3Sep );
         mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
         mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
         mPanner3->setResizeMode( mMimePartTree, QSplitter::KeepSize );
