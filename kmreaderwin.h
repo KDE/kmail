@@ -298,7 +298,7 @@ protected:
 
 
   /** Parse given message and add it's contents to the reader window. */
-  virtual void parseMsg(KMMessage* msg);
+  virtual void parseMsg(KMMessage* msg, bool onlyProcessHeaders=false);
 
   /** Creates a nice mail header depending on the current selected
     header style. */

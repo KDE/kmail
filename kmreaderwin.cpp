@@ -672,12 +672,6 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
 
-                QCString rfc822headers
-                  ( curNode->dwPart() && curNode->dwPart()->hasHeaders()
-                  ? curNode->dwPart()->Headers().AsString().c_str()
-                  : "content-type=text/plain" );
-                QCString rfc822message( curNode->msgPart().bodyDecoded() );
-
                 // paint the frame
                 PartMetaData messagePart;
                 if( reader ) {
@@ -686,12 +680,21 @@ kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n"
                   messagePart.isEncapsulatedRfc822Message = true;
                   reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
                 }
+                QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
+                // display the headers of the encapsulated message
+                DwMessage* rfc822DwMessage = new DwMessage(); // will be deleted by c'tor of rfc822headers
+                rfc822DwMessage->FromString( rfc822messageStr );
+                rfc822DwMessage->Parse();
+                KMMessage rfc822message( rfc822DwMessage );
+                if( reader )
+                  reader->parseMsg( &rfc822message, true );
+                // display the body of the encapsulated message
                 insertAndParseNewChildNode( reader,
                                             &resultString,
                                             cryptPlugList,
                                             useThisCryptPlug,
                                             *curNode,
-                                            &*rfc822message,
+                                            &*rfc822messageStr,
                                             "encapsulated message" );
                 if( reader )
                   reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
@@ -1824,7 +1827,7 @@ void KMReaderWin::parseMsg(void)
                  "border-right-width: 0px; "
                  "padding: 2px; } \n" ) +
         QString( "tr.rfc822H { font-weight: bold; }\n" ) +
-        QString( "tr.rfc822B { font-weight: bold; }\n" ) +
+        QString( "tr.rfc822B { font-weight: normal; }\n" ) +
 
         QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
@@ -2327,13 +2330,28 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::parseMsg(KMMessage* aMsg)
+void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
 {
-  removeTempFiles();
+  QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg: ");
+  if( aMsg == mMsg )
+    s += "==";
+  else
+    s += "!=";
+  s += " mMsg, bool onlyProcessHeaders: ";
+  if( onlyProcessHeaders )
+    s += "true";
+  else
+    s += "false";
+  s += "\n#######\n#######";
+kdDebug(5006) << s << endl;
+
+  if( !onlyProcessHeaders )
+    removeTempFiles();
   KMMessagePart msgPart;
   int numParts;
   QCString type, subtype, contDisp;
   QByteArray str;
+  partNode* savedRootNode = 0;
 
   assert(aMsg!=NULL);
 
@@ -2385,7 +2403,12 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     mainBody = new DwBodyPart(aMsg->asDwString(), 0);
     mainBody->Parse();
   }
-  if( mRootNode ) delete mRootNode;
+  if( mRootNode ) {
+    if( onlyProcessHeaders )
+      savedRootNode = mRootNode;
+    else
+      delete mRootNode;
+  }
   mRootNode = new partNode( mainBody ? mainBody : 0,
                             mainType,
                             mainSubType );
@@ -2406,14 +2429,14 @@ kdDebug(5006) << "\n     ----->  First body part *was* found, filling the Mime P
     partNode* curNode = mRootNode->setFirstChild( new partNode(firstBodyPart) );
     curNode->buildObjectTree();
     // fill the MIME part tree viewer
-    if( mMimePartTree )
+    if( mMimePartTree && !onlyProcessHeaders )
       mRootNode->fillMimePartTree( 0,
                                    mMimePartTree,
                                    cntDesc,
                                    mainCntTypeStr,
                                    cntEnc,
                                    cntSize );
-  } else if( mMimePartTree ) {
+  } else if( mMimePartTree && !onlyProcessHeaders ) {
 kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" << endl;
     mRootNode->fillMimePartTree( 0,
                                  mMimePartTree,
@@ -2422,7 +2445,7 @@ kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" <<
                                  cntEnc,
                                  cntSize );
 kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tree" << endl;
-  } else {
+  } else if(  !onlyProcessHeaders ){
 kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root Node!" << endl;
   }
 
@@ -2449,11 +2472,12 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
 
 
   // show message content
-  parseObjectTree( this,
-                   0,
-                   mCryptPlugList,
-                   0,
-                   mRootNode );
+  if( !onlyProcessHeaders )
+    parseObjectTree( this,
+                     0,
+                     mCryptPlugList,
+                     0,
+                     mRootNode );
 
   // store encrypted/signed status information in the KMMessage
   //  - this can only be done *after* calling parseObjectTree()
@@ -2463,6 +2487,14 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   // remove temp. CryptPlugList
   if( tmpPlugList )
     delete mCryptPlugList;
+
+  // if necessary restore original mRootNode
+  if( savedRootNode ) {
+    if( mRootNode )
+      delete mRootNode;
+    mRootNode = savedRootNode;
+  }
+}
 
 
 
@@ -2588,7 +2620,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
       writeBodyStr(aMsg->bodyDecoded(), mCodec);
   }
 */
-}
+
 
 
 //-----------------------------------------------------------------------------
