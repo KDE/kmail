@@ -592,7 +592,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
 
   new RecipientsToolTip( view, mTotalLabel );
 
-  mDistributionListButton = new QPushButton( "Save List...", this );
+  mDistributionListButton = new QPushButton( i18n("Save List..."), this );
   topLayout->addWidget( mDistributionListButton );
   mDistributionListButton->hide();
   connect( mDistributionListButton, SIGNAL( clicked() ),
