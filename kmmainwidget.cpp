@@ -350,7 +350,9 @@ void KMMainWidget::readConfig(void)
     {
       // check mail on startup
       bool check = config->readBoolEntry("checkmail-startup", false);
-      if (check) slotCheckMail();
+      if (check)
+        // do it after building the kmmainwin, so that the progressdialog is available
+        QTimer::singleShot( 0, this, SLOT( slotCheckMail() ) );
     }
   }
 
