@@ -115,7 +115,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   if (!sMagic)
   {
     // initialize mime magic
-    sMagic = new KMimeMagic(kapp->kdedir() + "/share/magic");
+    sMagic = new KMimeMagic(kapp->kdedir() + "/share/mimelnk/magic");
     sMagic->setFollowLinks(TRUE);
   }
 

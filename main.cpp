@@ -84,14 +84,44 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 //-----------------------------------------------------------------------------
 void testDir( const char *_name )
 {
-    DIR *dp;
-    QString c = getenv( "HOME" );
-    c += _name;
-    dp = opendir( c.data() );
-    if ( dp == NULL )
-	::mkdir( c.data(), S_IRWXU );
-    else
-	closedir( dp );
+  DIR *dp;
+  QString c = getenv("HOME");
+  c += _name;
+  dp = opendir(c.data());
+  if (dp == NULL)
+    ::mkdir(c.data(), S_IRWXU);
+  else
+    closedir(dp);
+}
+
+
+//-----------------------------------------------------------------------------
+static void transferMail(void)
+{
+  QDir dir = QDir::home();
+  int rc;
+
+  // This function is for all the whiners who think that KMail is
+  // broken because they cannot read mail with pine and do not
+  // know how to fix this problem with a simple symbolic link  =;-)
+  if (!dir.cd("KMail")) return;
+
+  rc = KMsgBox::yesNo(NULL, app->appName()+" "+nls->translate("warning"),
+		      nls->translate(
+	    "The directory ~/KMail exists. From now on, KMail uses the\n"
+	    "directory ~/Mail for it's messages.\n"
+	    "KMail can move the contents of the directory ~/KMail into\n"
+	    "~/Mail, but this will replace existing files with the same\n"
+	    "name in the directory ~/Mail (e.g. inbox).\n\n"
+	    "Shall KMail move the mail folders now ?"),
+		      KMsgBox::QUESTION);
+  if (rc != 1) return;
+
+  dir.cd("/");  // otherwise we lock the directory
+  testDir("/Mail");
+  system("mv -f ~/KMail/* ~/Mail");
+  system("mv -f ~/KMail/.??* ~/Mail");
+  system("rmdir ~/KMail");
 }
 
 
@@ -119,9 +149,11 @@ static void init(int argc, char *argv[])
 
   identity = new KMIdentity;
 
+  transferMail();
+
   cfg->setGroup("General");
   foldersPath = cfg->readEntry("folders", 
-			       QDir::homeDirPath() + QString("/KMail"));
+			       QDir::homeDirPath() + QString("/Mail"));
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 
   folderMgr = new KMFolderMgr(foldersPath);

@@ -331,10 +331,10 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   }
 
   pos = beg;
-  for (beg=pos; *pos; pos++)
+  while (1)
   {
     ch = *pos;
-    if (ch=='\n')
+    if (ch=='\n' || ch=='\0')
     {
       *pos = '\0';
       line = strToHtml(beg);
@@ -348,13 +348,14 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       atStart = TRUE;
       lastQuoted = quoted;
       quoted = FALSE;
-      continue;
     }
-    if (ch > ' ' && atStart)
+    else if (ch > ' ' && atStart)
     {
       if (ch=='>' || ch==':' || ch=='|') quoted = TRUE;
       atStart = FALSE;
     }
+    if (!ch) break;
+    pos++;
   }
 }
 
@@ -460,13 +461,13 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   KMMessagePart msgPart;
 
   id = msgPartFromUrl(aUrl);
-  if (id < 0)
+  if (id <= 0)
   {
     emit statusMsg(aUrl);
   }
   else
   {
-    mMsg->bodyPart(id, &msgPart);
+    mMsg->bodyPart(id-1, &msgPart);
     emit statusMsg(msgPart.name());
   }
 }
@@ -482,7 +483,7 @@ void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
   {
     // clicked onto an attachment
     mAtmCurrent = id-1;
-    slotAtmSave();
+    slotAtmOpen();
   }
   else emit urlClicked(aUrl, aButton);
 }
@@ -514,9 +515,29 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmOpen()
 {
+  QString str, pname, cmd;
+  char* fileName;
+
   KMMessagePart msgPart;
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  
+
+  pname = msgPart.name();
+  if (pname.isEmpty()) pname="unnamed";
+  fileName = tempnam("/tmp", NULL);
+  strcat(fileName, "-");
+  strcat(fileName, (const char*)pname);
+
+  kbp->busy();
+  str = msgPart.bodyDecoded();
+  if (!kStringToFile(str, fileName, TRUE))
+    warning(nls->translate("Could not save temporary file %s"),
+	    (const char*)fileName);
+  kbp->idle();
+  cmd = "kfmclient openURL \"";
+  cmd += fileName;
+  cmd += "\"";
+  debug(cmd);
+  system(cmd);
 }
 
 
