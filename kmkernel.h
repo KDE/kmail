@@ -271,7 +271,7 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
-#if KDE_IS_VERSION( 3, 2, 0 )
+#if KDE_IS_VERSION( 3, 1, 92 )
   KSharedConfig::Ptr mConfig;
 #else
   static KConfig * myConfig;
