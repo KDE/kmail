@@ -22,26 +22,25 @@ Smtp::Smtp( const QString &from, const QStringList &to,
 	    unsigned short int port )
 {
     skipReadResponse = false;
-    socket = new QSocket( this );
-    connect ( socket, SIGNAL( readyRead() ),
+    mSocket = new QSocket( this );
+    connect ( mSocket, SIGNAL( readyRead() ),
 	      this, SLOT( readyRead() ) );
-    connect ( socket, SIGNAL( connected() ),
+    connect ( mSocket, SIGNAL( connected() ),
 	      this, SLOT( connected() ) );
-    connect ( socket, SIGNAL( error(int) ),
+    connect ( mSocket, SIGNAL( error(int) ),
 	      this, SLOT( socketError(int) ) );
 
     message = aMessage;
     
     this->from = from;
     rcpt = to;
-
-    state = Init;
+    state = smtpInit;
     command = "";
 
     emit status( i18n( "Connecting to %1" ).arg( server ) );
 
-    socket->connectToHost( server, port );
-    t = new QTextStream( socket );
+    mSocket->connectToHost( server, port );
+    t = new QTextStream( mSocket );
 }
 
 
@@ -49,8 +48,8 @@ Smtp::~Smtp()
 {
     if (t)
 	delete t;
-    if (socket)
-	delete socket;
+    if (mSocket)
+	delete mSocket;
 }
 
 
@@ -62,7 +61,7 @@ void Smtp::send( const QString &from, const QStringList &to,
     this->from = from;
     rcpt = to;
 
-    state = Mail;
+    state = smtpMail;
     command = "";
     readyRead();
 }
@@ -71,7 +70,7 @@ void Smtp::send( const QString &from, const QStringList &to,
 void Smtp::quit()
 {
     skipReadResponse = true;
-    state = Quit;
+    state = smtpQuit;
     command = "";
     readyRead();	
 }
@@ -79,13 +78,12 @@ void Smtp::quit()
 
 void Smtp::connected()
 {
-    emit status( i18n( "Connected to %1" ).arg( socket->peerName() ) );
+    emit status( i18n( "Connected to %1" ).arg( mSocket->peerName() ) );
 }
 
 void Smtp::socketError(int errorCode)
 {
     command = "CONNECT";
-    responseLine;
     switch ( errorCode ) {
         case QSocket::ErrConnectionRefused:
 	    responseLine = i18n( "Connection refused." );
@@ -110,65 +108,66 @@ void Smtp::readyRead()
 {
     if (!skipReadResponse) {
 	// SMTP is line-oriented
-	if ( !socket->canReadLine() )
+	if ( !mSocket->canReadLine() )
 	    return;
 
 	do {
-	    responseLine = socket->readLine();
+	    responseLine = mSocket->readLine();
 	    response += responseLine;
-	} while( socket->canReadLine() && responseLine[3] != ' ' );
+	} while( mSocket->canReadLine() && responseLine[3] != ' ' );
 	responseLine.truncate( 3 );
     }
     skipReadResponse = false;
 	
-    if ( state == Init && responseLine[0] == '2' ) {
+    if ( state == smtpInit && responseLine[0] == '2' ) {
 	// banner was okay, let's go on
 	command = "HELO there";
 	*t << "HELO there\r\n";
-	state = Mail;
-    } else if ( state == Mail && responseLine[0] == '2' ) {
+	state = smtpMail;
+    } else if ( state == smtpMail && responseLine[0] == '2' ) {
 	// HELO response was okay (well, it has to be)
 	command = "MAIL";
 	*t << "MAIL FROM: <" << from << ">\r\n";
-	state = Rcpt;
-    } else if ( state == Rcpt && responseLine[0] == '2' && (rcpt.begin() != rcpt.end())) {
+	state = smtpRcpt;
+    } else if ( state == smtpRcpt && responseLine[0] == '2' && (rcpt.begin() != rcpt.end())) {
 	command = "RCPT";
 	*t << "RCPT TO: <" << *(rcpt.begin()) << ">\r\n";
 	rcpt.remove( rcpt.begin() );
 	if (rcpt.begin() == rcpt.end())
-	    state = Data;
-    } else if ( state == Data && responseLine[0] == '2' ) {
+	    state = smtpData;
+    } else if ( state == smtpData && responseLine[0] == '2' ) {
 	command = "DATA";
 	*t << "DATA\r\n";
-	state = Body;
-    } else if ( state == Body && responseLine[0] == '3' ) {
+	state = smtpBody;
+    } else if ( state == smtpBody && responseLine[0] == '3' ) {
 	command = "DATA";
 	QString seperator = "";
 	if (message[message.length() - 1] != '\n')
 	    seperator = "\n";
 	*t << message << seperator << ".\r\n";
-	state = Success;
-    } else if ( state == Success && responseLine[0] == '2' ) {
+	state = smtpSuccess;
+    } else if ( state == smtpSuccess && responseLine[0] == '2' ) {
 	QTimer::singleShot( 0, this, SIGNAL(success()) );
-    } else if ( state == Quit && responseLine[0] == '2' ) {
+    } else if ( state == smtpQuit && responseLine[0] == '2' ) {
 	command = "QUIT";
 	*t << "QUIT\r\n";
 	// here, we just close.
-	state = Close;
+	state = smtpClose;
 	emit status( tr( "Message sent" ) );
-    } else if ( state == Close ) {
+    } else if ( state == smtpClose ) {
 	// we ignore it
-    } else {
-	state = Close;
+    } else { // error occurred
+	QTimer::singleShot( 0, this, SLOT(emitError()) );
+	state = smtpClose;
     }
 
     response = "";
 
-    if ( state == Close ) {
+    if ( state == smtpClose ) {
 	delete t;
 	t = 0;
-	delete socket;
-	socket = 0;
+	delete mSocket;
+	mSocket = 0;
 	QTimer::singleShot( 0, this, SLOT(deleteMe()) );
     }
 }

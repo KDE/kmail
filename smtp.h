@@ -43,20 +43,20 @@ private slots:
 
 private:
     enum State {
-	Init,
-	Mail,
-	Rcpt,
-	Data,
-	Body,
-	Success,
-	Quit,
-	Close
+	smtpInit,
+	smtpMail,
+	smtpRcpt,
+	smtpData,
+	smtpBody,
+	smtpSuccess,
+	smtpQuit,
+	smtpClose
     };
 
     QString message;
     QString from;
     QStringList rcpt;
-    QSocket *socket;
+    QSocket *mSocket;
     QTextStream * t;
     int state;
     QString response, responseLine;

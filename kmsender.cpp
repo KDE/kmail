@@ -272,11 +272,15 @@ void KMSender::doSendMsg()
     return;
   }
 
+  QString tf = mCurrentMsg->headerField("To");
+  qDebug( "alphato field %s", tf.latin1() );
+  qDebug( "KMComposeWin mMsg\n%s", mCurrentMsg->asString().latin1() );  
+  
   // start the sender process or initialize communication
   if (!mSendProcStarted)
   {
     kernel->serverReady (false); //sven - stop IPC
-    
+
     if (!labelDialog) {
       labelDialog = new QDialog(0, "sendinglabel", false, WDestructiveClose );
       label = new QLabel(labelDialog);
@@ -299,7 +303,7 @@ void KMSender::doSendMsg()
   }
 
   mMethodStr = transportString();
-  
+
   QString msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
   if (!msgTransport.isEmpty()  && (msgTransport != mMethodStr)) {
     if (mSendProcStarted && mSendProc) {
@@ -395,9 +399,8 @@ void KMSender::cleanup(void)
   mSendInProgress = FALSE;
   kernel->sentFolder()->close();
   kernel->outboxFolder()->close();
-  if (kernel->outboxFolder()->count()<0)
+  if (kernel->outboxFolder()->count()<0) 
     kernel->outboxFolder()->expunge();
-
   else kernel->outboxFolder()->compact();
 
   kernel->serverReady (true); // sven - enable ipc
@@ -450,7 +453,6 @@ void KMSender::slotIdle()
       }
   }
 
-
   // sending of message failed
   QString msg;
   QString errString;
@@ -458,7 +460,7 @@ void KMSender::slotIdle()
       errString = mMsgSendProc->message();
   else
       errString = mSendProc->message();
-  
+
   msg = i18n("Sending failed:\n%1\n"
         "The message will stay in the 'outbox' folder until you either\n"
         "fix the problem (e.g. a broken address) or remove the message\n"
@@ -824,7 +826,7 @@ bool KMSendSendmail::addOneRecipient(const QString aRcpt)
 
 //=============================================================================
 //=============================================================================
-KMSendSMTP::KMSendSMTP(KMSender* aSender, QString smtpHost, 
+KMSendSMTP::KMSendSMTP(KMSender* aSender, QString smtpHost,
 		       unsigned short int smtpPort ):
     KMSendSMTPInherited(aSender), mSmtpHost(smtpHost), mSmtpPort(smtpPort)
 {
@@ -846,8 +848,13 @@ void KMSendSMTP::start(void)
 //-----------------------------------------------------------------------------
 bool KMSendSMTP::finish(bool destructive)
 {
-  if (smtp)
+  if (smtp) {
+    disconnect( smtp, SIGNAL(error(const QString&, const QString&)),
+	        this, SLOT(smtpFailed(const QString&, const QString& )) );
+    disconnect( smtp, SIGNAL(success()),
+		this, SIGNAL(idle()) );
     smtp->quit();
+  }
   smtp = 0;
   if (destructive)
       delete this;
@@ -857,12 +864,13 @@ bool KMSendSMTP::finish(bool destructive)
 //-----------------------------------------------------------------------------
 void KMSendSMTP::abort()
 {
-  disconnect( smtp, SIGNAL(error(const QString&, const QString&)),
-	      this, SLOT(smtpFailed(const QString&, const QString& )) );
-  disconnect( smtp, SIGNAL(success()),
-	      this, SIGNAL(idle()) );
-  if (smtp)
+  if (smtp) {
+    disconnect( smtp, SIGNAL(error(const QString&, const QString&)),
+	        this, SLOT(smtpFailed(const QString&, const QString& )) );
+    disconnect( smtp, SIGNAL(success()),
+		this, SIGNAL(idle()) );
     smtp->quit();
+  }
   smtp = 0;
   idle();
 }
@@ -879,6 +887,10 @@ bool KMSendSMTP::send(KMMessage *msg)
 //-----------------------------------------------------------------------------
 bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
+  QString tf = aMsg->headerField("To");
+  qDebug( "smtpSend to field %s", tf.latin1() );
+  qDebug( "aMsg\n%s", aMsg->asString().latin1() );  
+
   QString str, msgStr, bccStr;
   KMIdentity ident( i18n( "Default" ));
   ident.readConfig();
@@ -898,6 +910,12 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
     aMsg->removeHeaderField("Bcc");
   }
 
+  if (recipients.isEmpty())
+      qDebug( "a recpt is empty" );
+  else
+      qDebug( "a recpt is not empty" );
+
+  
   msgStr = prepareStr(aMsg->asString(), TRUE );
   if (!smtp) {
       smtp = new Smtp( ident.emailAddr(), recipients,
