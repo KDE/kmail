@@ -222,7 +222,7 @@ void KMCommand::transferSelectedMsgs()
     if ( thisMsg->parent() && !thisMsg->isComplete() &&
          ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
     {
-      kdDebug(5006)<<"### INCOMPLETE with protocol = "<<thisMsg->parent()->protocol() <<endl;
+      kdDebug(5006)<<"### INCOMPLETE\n";
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;

@@ -151,7 +151,6 @@ public:
   virtual int create(bool imap = FALSE);
   virtual int compact();
   virtual bool isReadOnly() const;
-  virtual QCString protocol() const { return "search"; }
   virtual const KMMsgBase* getMsgBase(int idx) const;
   virtual KMMsgBase* getMsgBase(int idx);
   virtual int find(const KMMsgBase* msg) const;

@@ -85,8 +85,6 @@ public:
   /** Is the folder read-only? */
   virtual bool isReadOnly() const { return false; }
 
-  virtual QCString protocol() const { return "maildir"; }
-
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;

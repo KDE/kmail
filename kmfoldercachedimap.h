@@ -105,8 +105,6 @@ public:
   virtual imapState getSubfolderState() { return mSubfolderState; }
   virtual void setSubfolderState(imapState state) { mSubfolderState = state; }
 
-  virtual QCString protocol() const { return "cachedimap"; }
-
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }
   QString imapPath() { return mImapPath; }

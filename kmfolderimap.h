@@ -93,7 +93,6 @@ public:
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeImap; }
 
-  virtual QCString protocol() const { return "imap"; }
   virtual KMMessage* getMsg(int idx);
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }

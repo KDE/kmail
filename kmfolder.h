@@ -305,8 +305,6 @@ public:
   /** Type of the folder. Inherited. */
   const char* type() const;
 
-  QCString protocol() const;
-
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const;
 

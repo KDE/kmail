@@ -94,8 +94,6 @@ public:
 
   void setProcmailLockFileName( const QString& );
 
-  virtual QCString protocol() const { return "mbox"; }
-
   static QCString escapeFrom( const QCString & str );
 
 protected:

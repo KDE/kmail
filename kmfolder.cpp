@@ -457,11 +457,6 @@ const char* KMFolder::type() const
   return mStorage->type();
 }
 
-QCString KMFolder::protocol() const
-{
-  return mStorage->protocol();
-}
-
 bool KMFolder::hasAccounts() const
 {
   return mStorage->hasAccounts();
