@@ -538,7 +538,8 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   // iterate through this file until done
   while (!atEof)
   {
-    if (!f.readLine(line, MAX_LINE))
+    // if the end of the file has been reached or if there was an error
+    if ( f.atEnd() || ( -1 == f.readLine(line, MAX_LINE) ) )
       atEof = true;
 
     // are we done with this file?  if so, compile our info and store
