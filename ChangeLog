@@ -1,3 +1,8 @@
+1998-12-17  Juraj Bednar     <bednar@isternet.sk>
+
+        * Added the capatability to insert arbitary public keys from public
+          keyring. (PGP)
+
 1998-12-16  Stefan Taferner  <taferner@kde.org> (KMail-1.0.9)
 
 	* Switched busy pointer (if not animated) and hand cursor 
