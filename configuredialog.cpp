@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 /*
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
@@ -109,7 +108,8 @@ void ConfigureDialog::ApplicationLaunch::doIt( void )
   // alternative is to fork() twice, recursively,
   // but that is slower.
   signal(SIGCHLD, SIG_IGN);
-  system((const char *)mCmdline );
+  // FIXME use KShellProcess instead
+  system(mCmdline.latin1());
 }
 
 void ConfigureDialog::ApplicationLaunch::run( void )
@@ -1670,12 +1670,7 @@ void ConfigureDialog::setupNetworkPage( void )
     QListViewItem *listItem =
       new QListViewItem( mNetwork.accountList, top, a->name(), a->type() );
     if( a->folder() )
-    {
-      if (a->folder()->isSystemFolder())
-        listItem->setText( 2, i18n(a->folder()->name()) );
-      else
-        listItem->setText( 2, a->folder()->name() );
-    }
+      listItem->setText( 2, a->folder()->label() );
     top = listItem;
   }
 
@@ -1881,7 +1876,7 @@ void ConfigureDialog::setupComposerPage( void )
     state = config->readBoolEntry("replace-forward-prefix", true);
     mComposer.replaceForwardPrefixCheck->setChecked( state );
 
-    state = qstricmp( config->readEntry("signature"), "auto" ) == 0;
+    state = ( config->readEntry("signature").lower() == "auto" );
     mComposer.autoAppSignFileCheck->setChecked( state );
 
     state = config->readBoolEntry( "smart-quote", true );
@@ -2920,7 +2915,7 @@ QStringList ConfigureDialog::occupiedNames( void )
 
 void ConfigureDialog::slotAddAccount( void )
 {
-  KMAcctSelDlg accountSelectorDialog( this, i18n("Select Account") );
+  KMAcctSelDlg accountSelectorDialog( this );
   if( accountSelectorDialog.exec() != QDialog::Accepted )
   {
     return;
@@ -2978,12 +2973,7 @@ void ConfigureDialog::slotAddAccount( void )
       new QListViewItem(mNetwork.accountList, after,
 			account->name(), account->type());
     if( account->folder() )
-    {
-      if (account->folder()->isSystemFolder())
-        listItem->setText( 2, i18n(account->folder()->name()) );
-      else
-        listItem->setText( 2, account->folder()->name() );
-    }
+      listItem->setText( 2, account->folder()->label() );
 
     mNewAccounts.append( account );
   }
@@ -3061,12 +3051,7 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     listItem->setText( 0, account->name() );
     listItem->setText( 1, account->type() );
     if( account->folder() )
-    {
-      if (account->folder()->isSystemFolder())
-        listItem->setText( 2, i18n(account->folder()->name()) );
-      else
-        listItem->setText( 2, account->folder()->name() );
-    }
+      listItem->setText( 2, account->folder()->name() );
   }
   delete dialog;
 }
@@ -3913,9 +3898,9 @@ ConfigureTransportDialog::ConfigureTransportDialog(QWidget *parent, const char *
   sendmailLocationEdit->setText(kernel->msgSender()->mailer());
   // Reset the widgets based on passed in values.
   mTransport = transport;
-  if (mTransport && !mTransport.isEmpty()) {
+  if (!mTransport.isEmpty()) {
     if (mTransport.left(5) == "smtp:") {
-      int lastColon = mTransport.find(":", 7);
+      int lastColon = mTransport.findRev(':');
       smtpRadio->setChecked(true);
       smtpServerEdit->setText(mTransport.mid(7,lastColon - 7));
       smtpPortEdit->setText(mTransport.mid(lastColon + 1, mTransport.length()
