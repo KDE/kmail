@@ -1,3 +1,27 @@
+1999-01-29  Stefan Taferner  <taferner@kde.org> (KMail-1.0.15)
+
+	* Improved: email completion of composer (Ctrl-t) now
+	searches for appearance of given characters in addressbook's
+	list. Up to now only used beginning of string.
+
+	* Added missing i18n() around "Spellcheck complete" in
+	composer.
+
+	* Bugfix: Added %_ in composer settings, e.g. for indentation 
+	template, to add a space at the end. Added %f which expands
+	to the two first characters of the name in the email address.
+
+	* Bugfix: Indentation template (see composer settings) now 
+	supports the same wildcards as the other fields, e.g. "%f>%_"
+
+1999-01-28  Stefan Taferner  <taferner@kde.org>
+
+	* Bugfix: kmail hangs when sending large messages via
+	SMTP. Actually was a performance issue with QRegExp.
+	
+	* Bugfix: main window was hidden upon press of Ok button
+	in settings dialog.
+
 1999-01-25  Stefan Taferner  <taferner@kde.org>
 
 	* Bugfix: 'From' column did not update new text at

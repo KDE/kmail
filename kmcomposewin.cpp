@@ -1665,7 +1665,7 @@ void KMComposeWin::slotSpellcheck()
 void KMComposeWin::slotSpellcheckDone()
 {
   mSpellCheckInProgress=FALSE;
-  mStatusBar->changeItem("Spellcheck complete.",0);
+  mStatusBar->changeItem(i18n("Spellcheck complete."),0);
 
 }
 
@@ -1944,7 +1944,7 @@ void KMLineEdit::slotCompletion()
 {
   QString t;
   QString Name(name());
-  
+
   if (Name == "subjectLine")
   {
     mComposer->focusNextPrevEdit(this,TRUE);
@@ -1968,15 +1968,15 @@ void KMLineEdit::slotCompletion()
     prevAddr = s.left(n+1) + ' ';
     s = s.mid(n+1,255).stripWhiteSpace();
   }
-  s.append("*");
-  QRegExp regexp(s.data(), FALSE, TRUE);
+  //s.append("*");
+  //QRegExp regexp(s.data(), FALSE, TRUE);
   
   n=0;
-  
   for (const char *a=adb.first(); a; a=adb.next())
   {
-    t.setStr(a);
-    if (t.contains(regexp))
+    //t.setStr(a);
+    //if (t.contains(regexp))
+    if (QString(a).find(s,0,false) >= 0)
     {
       pop.insertItem(a);
       n++;

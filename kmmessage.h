@@ -269,6 +269,10 @@ public:
   static void readConfig(void);
 
 protected:
+  /** Convert wildcards into normal string */
+  const QString formatString(const QString);
+
+protected:
   DwMessage* mMsg;
   bool       mNeedsAssembly;
 };

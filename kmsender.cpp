@@ -396,10 +396,40 @@ bool KMSendProc::finish(void)
 //-----------------------------------------------------------------------------
 const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 {
-  QString str = aStr.copy();
+  QString str;
+  int num;
+  const char* pos;
+  char* dest;
 
-  str.replace(QRegExp("\\n\\."), "\n.."); 
-  if (toCRLF) str.replace(QRegExp("\\n"), "\r\n");
+  if (aStr.isEmpty()) return aStr;
+
+  for (num=0, pos=aStr.data(); *pos; pos++)
+  {
+    if (*pos=='\n')
+    {
+      num++;
+      if (pos[1]=='.') num++;
+    }
+  }
+  str.truncate(aStr.length() + num + 2);
+
+  // Convert LF to CR+LF and handle dots at beginning of line.
+  for (pos=aStr.data(), dest=(char*)str.data(); *pos; pos++)
+  {
+    if (*pos=='\n')
+    {
+      if (toCRLF) *dest++ = '\r';
+      *dest++ = *pos;
+      if (pos[1]=='.' && pos[2]<=' ')
+      {
+	pos++;
+	*dest++ = '.';
+	*dest++ = '.';
+      }
+    }
+    else *dest++ = *pos;
+  }
+  *dest = '\0';
 
   return str;
 }

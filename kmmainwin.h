@@ -101,7 +101,6 @@ protected slots:
   void slotUrlClicked(const char* url, int button);
   void slotCopyText();
   void slotMarkAll();
-  void slotPaletteChanged();
 
   /** etc. */
   void folderSelected(KMFolder*);

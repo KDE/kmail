@@ -124,7 +124,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
 
   config->setGroup("Fonts");
-  config->writeEntry("body-font", mBodyFont);
+  // config->writeEntry("body-font", mBodyFont);
   // config->writeEntry("fixed-font", mFixedFont);
 
   if (aWithSync) config->sync();

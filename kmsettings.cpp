@@ -429,7 +429,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   if (str.isEmpty()) str = i18n("Forwarded Message");
   phraseForwardEdit->setText(str);
 
-  indentPrefixEdit->setText(config->readEntry("indent-prefix", "> "));
+  indentPrefixEdit->setText(config->readEntry("indent-prefix", ">%_"));
 
   //---------- group appearance
   grp = new QGroupBox(i18n("Appearance"), tab);

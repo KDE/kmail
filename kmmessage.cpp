@@ -252,6 +252,64 @@ void KMMessage::fromString(const QString aStr, bool aSetStatus)
 
 
 //-----------------------------------------------------------------------------
+const QString KMMessage::formatString(const QString aStr)
+{
+  QString result, str;
+  const char* pos;
+  char ch, cstr[64];
+  time_t tm;
+  int i;
+
+  if (aStr.isEmpty()) return aStr;
+
+  for (pos=aStr.data(); *pos; )
+  {
+    ch = *pos++;
+    if (ch=='%')
+    {
+      ch = *pos++;
+      switch (ch)
+      {
+      case 'D':
+	tm = date();
+	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
+	result += cstr;
+	break;
+      case 'F':
+	result += stripEmailAddr(from());
+	break;
+      case 'f':
+	str = stripEmailAddr(from());
+	for (i=0; str[i]>' '; i++)
+	  ;
+	for (; str[i] && str[i]<=' '; i++)
+	  ;
+	result += str[0];
+	if (str[i]>' ') result += str[i];
+	else if (str[1]>' ') result += str[1];
+	break;
+      case 'S':
+	result += subject();
+	break;
+      case '_':
+	result += ' ';
+	break;
+      case '%':
+	result += '%';
+	break;
+      default:
+	result += '%';
+	result += ch;
+	break;
+      }
+    }
+    else result += ch;
+  }
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMessage::asQuotedString(const QString aHeaderStr,
 					const QString aIndentStr,
 					bool aIncludeAttach) const
@@ -260,46 +318,11 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
   QString nlIndentStr;
-  char   cstr[64];
-  char ch;
-  int i;
   bool isInline;
-  time_t tm;
+  int i;
 
-  nlIndentStr = "\n" + aIndentStr;
-
-  // insert fields into wildcards of header-string
-  headerStr = "";
-  for (i=0; (ch=aHeaderStr[i]) != '\0'; i++)
-  {
-    if (ch=='%')
-    {
-      i++;
-      ch = aHeaderStr[i];
-      switch (ch)
-      {
-      case 'D':
-	tm = date();
-	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
-	headerStr += cstr;
-	break;
-      case 'F':
-	headerStr += stripEmailAddr(from());
-	break;
-      case 'S':
-	headerStr += subject();
-	break;
-      case '%':
-	headerStr += '%';
-	break;
-      default:
-	headerStr += '%';
-	headerStr += ch;
-	break;
-      }
-    }
-    else headerStr += ch;
-  }
+  nlIndentStr = "\n" + formatString(aIndentStr);
+  headerStr = formatString(aHeaderStr);
 
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
@@ -1352,7 +1375,7 @@ void KMMessage::readConfig(void)
   sReplyStr = config->readEntry("phrase-reply",i18n("On %D, you wrote:"));
   sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
   sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
-  sIndentPrefixStr = config->readEntry("indent-prefix",">");
+  sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
 }
 
 #if defined CHARSETS

@@ -73,8 +73,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   connect(msgSender, SIGNAL(statusMsg(const char*)),
 	  SLOT(statusMsg(const char*)));
 
-  connect(kapp, SIGNAL(kdisplayPaletteChanged()), SLOT(slotPaletteChanged()));
-
   // must be the last line of the constructor:
   mStartupDone = TRUE;
 }
@@ -109,19 +107,19 @@ void KMMainWin::readPreConfig(void)
 void KMMainWin::readConfig(void)
 {
   KConfig *config = app->getConfig();
-  int w, h, folderIdx;
+  bool oldLongFolderList=false;
+  int w, h, folderIdx=0;
   QString str;
-  bool oldLongFolderList;
 
   if (mStartupDone)
   {
     folderIdx = mFolderTree->currentItem();
     writeConfig();
-    hide();
     oldLongFolderList = mLongFolderList;
     readPreConfig();
     if (oldLongFolderList != mLongFolderList)
     {
+      hide();
       if (mHorizPanner->parent()==this) delete mHorizPanner;
       else delete mVertPanner;
       readPreConfig();
@@ -934,14 +932,6 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
 		     SLOT(slotDeleteMsg()), Key_D);
     menu->popup(aPoint, 0);
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotPaletteChanged()
-{
-  debug("palette changed");
-  if (mHeaders) mHeaders->setPalette(*kapp->palette());
 }
 
 
