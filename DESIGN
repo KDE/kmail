@@ -277,17 +277,7 @@ Finally one has to remember FolderJob classes. These classes allow
 one to have asynchronous operations on KMFolder's. You simply create
 a Job on a heap, connect to one of its signals and wait till the job
 finishes. Folders serve as FolderJob's factories. For example to
-asynchronously expire messages in a folder you'd do:
-
-FolderJob *job = parentFolder->createJob( 0,
-	       	 			  FolderJob::tExpireMessages
-					  );
-
-job->start();
-
-In this example we ignore signals emitted by the message, in case you
-want to do something more interactive like retrieve the full message
-from a folder you'd have to do something like :
+retrieve the full message from a folder you'd have to do something like :
 
 FolderJob *job = folderParent->createJob( aMsg, tGetMessage );
 connect( job, SIGNAL(messageRetrieved(KMMessage*)),
