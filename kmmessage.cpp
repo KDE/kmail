@@ -1021,21 +1021,23 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       if( !mailingListPostAddress.isEmpty() )
         recipients = stripAddressFromAddressList( mailingListPostAddress,
                                                   recipients );
-        
     }
 
     // add From address to the list of recipients (or to the list of CC
     // recipients in case of a mailing list message ) if it's not already there
     if ( !from().isEmpty() ) {
-      if ( !mailingListPostAddress.isEmpty() ) {
-        ccRecipients += from();
-        kdDebug(5006) << "Added " << from() << " to the list of CC recipients"
-                      << endl;
-      }
-      else if ( !addressIsInAddressList( from(), recipients ) ) {
-        recipients += from();
-        kdDebug(5006) << "Added " << from() << " to the list of recipients"
-                      << endl;
+      if ( !addressIsInAddressList( from(), recipients ) ) {
+        if ( !mailingListPostAddress.isEmpty() ) {
+          ccRecipients += from();
+          kdDebug(5006) << "Added " << from()
+                        << " to the list of CC recipients"
+                        << endl;
+        }
+        else {
+          recipients += from();
+          kdDebug(5006) << "Added " << from() << " to the list of recipients"
+                        << endl;
+        }
       }
     }
 
