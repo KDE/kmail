@@ -706,7 +706,7 @@ void KMMainWin::setupStatusBar()
 
 void KMMainWin::quit()
 {
-  if((KMsgBox::yesNo(0,"KMail Confirm","Do you really want to quit?") ==2))
-    return;
+  //if((KMsgBox::yesNo(0,"KMail Confirm","Do you really want to quit?") ==2))
+  //  return;
   qApp->quit();
 }

@@ -531,9 +531,6 @@ void KMComposeWin::applyChanges(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
-  if(mEditor->isModified())
-    if((KMsgBox::yesNo(0,"KMail Confirm","Close unsend message?") == 2))
-      return;   
   writeConfig();
   KMComposeWinInherited::closeEvent(e);
 }
