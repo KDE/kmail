@@ -2012,6 +2012,13 @@ DwHeaders& KMMessage::headers(void)
 
 
 //-----------------------------------------------------------------------------
+void KMMessage::setNeedsAssembly(void)
+{
+  mNeedsAssembly = true;
+}
+
+
+//-----------------------------------------------------------------------------
 QCString KMMessage::body(void) const
 {
   DwString body = mMsg->Body().AsString();

@@ -332,8 +332,16 @@ public:
   /** add or change a parameter of the Content-Type field */
   virtual void setContentTypeParam(const QCString& attr, const QCString& val);
 
-  /** get the DwHeaders */
+  /** get the DwHeaders
+      (make sure to call setNeedsAssembly() function after directly
+       modyfying internal data like the headers) */
   virtual DwHeaders& headers(void);
+
+  /** tell the message that internal data were changed
+      (must be called after directly modifying message structures
+       e.g. when like changing header information by accessing
+       the header via headers() function) */
+  void setNeedsAssembly(void);
 
   /** Get or set the 'Content-Transfer-Encoding' header field
       The member functions that involve enumerated types (ints)

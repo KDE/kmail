@@ -1129,7 +1129,7 @@ kdDebug(5006) << "* model *" << endl;
 // - This is used to store the message in decrypted form.
 void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             NewByteArray& resultingData,
-                                            DwHeaders& rootHeaders,
+                                            KMMessage& theMessage,
                                             bool weAreReplacingTheRootNode,
                                             int recCount )
 {
@@ -1282,6 +1282,8 @@ kdDebug(5006) << "* model *" << endl;
         break;
     }
     
+    
+    DwHeaders& rootHeaders( theMessage.headers() );
     DwBodyPart * part = dataNode->dwPart() ? dataNode->dwPart() : 0;
     DwHeaders * headers( 
         (part && part->hasHeaders()) 
@@ -1302,10 +1304,16 @@ kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." 
         } else if( weAreReplacingTheRootNode && part->hasHeaders() ){
 kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
 kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
+kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;            
+kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;            
           rootHeaders.ContentType()             = headers->ContentType();
-          rootHeaders.ContentTransferEncoding() = headers->ContentTransferEncoding();
-          rootHeaders.ContentDescription()      = headers->ContentDescription();
-          rootHeaders.ContentDisposition()      = headers->ContentDisposition();
+          theMessage.setContentTransferEncodingStr( 
+              headers->HasContentTransferEncoding()
+            ? headers->ContentTransferEncoding().AsString().c_str()
+            : "" );
+          rootHeaders.ContentDescription() = headers->ContentDescription();
+          rootHeaders.ContentDisposition() = headers->ContentDisposition();
+          theMessage.setNeedsAssembly();
         }
       }
 
@@ -1329,7 +1337,7 @@ kdDebug(5006) << "--boundary" << endl;
           //       we set their doStoreHeaders to true.
           objectTreeToDecryptedMsg( curNode,
                                     resultingData,
-                                    rootHeaders,
+                                    theMessage,
                                     false,
                                     recCount + 1 );
           curNode = curNode->mNext;
@@ -1356,7 +1364,7 @@ kdDebug(5006) << "                      Root node will NOT be replaced." << endl
       // (e.g. decrypted data or embedded RfC 822 data)
       objectTreeToDecryptedMsg( dataNode,
                                 resultingData,
-                                rootHeaders,
+                                theMessage,
                                 rootNodeReplaceFlag,
                                 recCount + 1 );
     }
@@ -1405,6 +1413,7 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
 {
   mAutoDelete = false;
   mLastSerNum = 0;
+  mLastStatus = KMMsgStatusUnknown;
   mMsg = 0;
   mMsgBuf = 0;
   mMsgBufMD5 = "";
@@ -1841,6 +1850,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   mMsg = aMsg;
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
+  mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
   if (mMsg)
   {
     mMsg->setCodec(mCodec);
@@ -2807,36 +2817,59 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   //       This could be changed in the objectTreeToDecryptedMsg() function
   //       by deciding when (or when not, resp.) to set the 'dataNode' to
   //       something different than 'curNode'.
-  if(    !onlyProcessHeaders
-      && (aMsg == mMsg)
-      && (    (KMMsgFullyEncrypted == encryptionState)
-           || (KMMsgPartiallyEncrypted == encryptionState) )
-         // avoid endless recursions
-      && ( mIdOfLastViewedMessage != mMsg->msgId() ) ) {
+                                         
+  
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
+kdDebug(5006) << "(!onlyProcessHeaders) = "                        << (!onlyProcessHeaders) << endl;
+kdDebug(5006) << "(aMsg == mMsg) = "                               << (aMsg == mMsg) << endl;
+kdDebug(5006) << "   (KMMsgStatusUnknown == mLastStatus) = "           << (KMMsgStatusUnknown == mLastStatus) << endl;
+kdDebug(5006) << "|| (KMMsgStatusNew     == mLastStatus) = "           << (KMMsgStatusNew     == mLastStatus) << endl;
+kdDebug(5006) << "|| (KMMsgStatusUnread  == mLastStatus) = "           << (KMMsgStatusUnread  == mLastStatus) << endl;
+kdDebug(5006) << "(mIdOfLastViewedMessage != aMsg->msgId()) = "    << (mIdOfLastViewedMessage != aMsg->msgId()) << endl;
+kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
+kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
+         // only proceed if we were called the normal way - not by
+         // click in the MIME tree viewer
+  if(    !onlyProcessHeaders
+         // only proceed if we were called the normal way - not by
+         // double click on the message (==not running in a separate window)
+      && (aMsg == mMsg)
+         // only proceed if this message was not saved encryptedly before
+         // to make sure only *new* messages are saved in decrypted form
+      && (    (KMMsgStatusUnknown == mLastStatus)
+           || (KMMsgStatusNew     == mLastStatus)
+           || (KMMsgStatusUnread  == mLastStatus) )
+         // avoid endless recursions
+      && (mIdOfLastViewedMessage != aMsg->msgId())
+         // only proceed if this message is (at least partially) encrypted
+      && (    (KMMsgFullyEncrypted == encryptionState)
+           || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
+           
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
+    
     NewByteArray decryptedData;
     // note: The following call may change the message's headers.
-    objectTreeToDecryptedMsg( mRootNode, decryptedData, mMsg->headers() );
+    objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
     // add a NULL to the data
     decryptedData.appendNULL();
     QCString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
+
     if( !resultString.isEmpty() ) {
 kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
       // try this:
-      mMsg->setBody( resultString );
-      KMMessage* unencryptedMessage = new KMMessage( *mMsg );
+      aMsg->setBody( resultString );
+      KMMessage* unencryptedMessage = new KMMessage( *aMsg );
       // because this did not work:
       /*
-      DwMessage dwMsg( DwString( mMsg->asString() ) );
+      DwMessage dwMsg( DwString( aMsg->asString() ) );
       dwMsg.Body() = DwBody( DwString( resultString.data() ) );
       dwMsg.Body().Parse();
       KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
       */
 kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
-kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to mMsg" << endl;
-      mMsg->setUnencryptedMsg( unencryptedMessage );
+kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
+      aMsg->setUnencryptedMsg( unencryptedMessage );
       emitReplaceMsgByUnencryptedVersion = true;
     }
   }

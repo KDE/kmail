@@ -9,6 +9,7 @@
 #include <qcolor.h>
 #include <qstringlist.h>
 #include <cryptplugwrapper.h>
+#include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
 
 class KHTMLPart;
@@ -210,7 +211,7 @@ public:
     // - This is used to store the message in decrypted form.
     void objectTreeToDecryptedMsg( partNode* node,
                                    NewByteArray& resultingData,
-                                   DwHeaders& rootHeaders,
+                                   KMMessage& theMessage,
                                    bool weAreReplacingTheRootNode = false,
                                    int recCount = 0 );
 
@@ -424,6 +425,7 @@ protected:
   bool mMsgDisplay;
   bool mDelayedMarkAsRead;
   unsigned long mLastSerNum;
+  KMMsgStatus mLastStatus;
 
   int fntSize;
   bool mUseFixedFont;
