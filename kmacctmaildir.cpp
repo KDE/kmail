@@ -175,13 +175,6 @@ void KMAcctMaildir::processNewMail(bool)
 
   if (addedOk)
   {
-    rc = mailFolder.expunge();
-    if (rc)
-      KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
-                                     i18n( "<qt>Cannot remove mail from "
-                                           "mailbox <b>%1</b>:<br>%2</qt>" )
-                                     .arg( mailFolder.location() )
-                                     .arg( strerror( rc ) ) );
     KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
   }
   // else warning is written already
