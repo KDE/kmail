@@ -989,6 +989,8 @@ void KMMainWidget::slotRemoveFolder()
     }
     if (mFolder->folderType() == KMFolderTypeImap)
       kmkernel->imapFolderMgr()->remove(mFolder);
+    else if (mFolder->folderType() == KMFolderTypeCachedImap)
+      kmkernel->dimapFolderMgr()->remove(mFolder);
     else if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
