@@ -2114,16 +2114,18 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     }
   }
 
-  if (RFC2231encoded)
+  if (!name.isEmpty())
   {
-    DwParameter *nameParam;
-    nameParam = new DwParameter;
-    nameParam->SetAttribute("name*");
-    nameParam->SetValue(name.data());
-    headers.ContentType().AddParameter(nameParam);
-  } else {
-    if(!name.isEmpty())
+    if (RFC2231encoded)
+    {
+      DwParameter *nameParam;
+      nameParam = new DwParameter;
+      nameParam->SetAttribute("name*");
+      nameParam->SetValue(name.data());
+      headers.ContentType().AddParameter(nameParam);
+    } else {
       headers.ContentType().SetName(name.data());
+    }
   }
 
   if (!paramAttr.isEmpty())
