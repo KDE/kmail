@@ -113,7 +113,7 @@ public:
 };
 KMReaderWin::PartMetaData::PartMetaData()
 {
-    sigStatusFlags = 0;
+    sigStatusFlags = (CryptPlugWrapper::SigStatusFlags)0;
     isSigned = false;
     isGoodSignature = false;
     isEncrypted = false;
