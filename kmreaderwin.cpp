@@ -2167,7 +2167,8 @@ void KMReaderWin::parseMsg(void)
                  "padding: 2px; } \n" ) +
         QString( "tr.rfc822H { font-weight: bold; }\n" ) +
         QString( "tr.rfc822B { font-weight: normal; }\n" ) +
-
+        
+            
         QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpOk1F.name() ) +
@@ -2401,6 +2402,10 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
+        
+        // save extended signature status flags
+        messagePart.sigStatusFlags = ext.sigStatusFlags;
+        
         if( messagePart.status.isEmpty()
             && ext.status_text
             && *ext.status_text )
@@ -3228,8 +3233,6 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 result = "";   // do *not* return a default text here !
                 break;
             }
-            // return an invalid color: calling process will find out itself
-            frameColor = QColor();
         } else
         if( 0 <= cryptPlug->libName().find( "gpgme-smime",   0, false ) ) {
             // process status bits according to SigStatus_...
@@ -3237,6 +3240,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             
             if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
                 result = i18n("Sorry, no status information available.");
+                frameColor = yellow;
                 showKeyInfos = false;
             } else {
                 if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
@@ -3249,34 +3253,49 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                     // by definition does *not* show any key
                     // information but just states that things are OK.
                     //           (khz, according to LinuxTag 2002 meeting)
+                    frameColor = green;
                     showKeyInfos = false;
                 }
                 else {
+                    // we assume green, test for yellow or red (in this order!)
+                    frameColor = green;
                     QString result2;
-                    if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags )
-                        result2 = i18n("One key has been revoked.");
-                    if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags )
+                    if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags ){
+                        // still is green!
                         result2 = i18n("One key has expired.");
-                    if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags )
+                    }
+                    if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags ){
+                        // and still is green!
                         result2 = i18n("The signature has expired.");
+                    }
+                    
+                    // test for yellow:
                     if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
                         result2 = i18n("Can't verify: key missing.");
                         // if the signature certificate is missing
                         // we cannot show infos on it
                         showKeyInfos = false;
+                        frameColor = yellow;
                     }
-                    if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags )
+                    if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags ){
                         result2 = i18n("CRL not available.");
-                    if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags )
+                        frameColor = yellow;
+                    }
+                    if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags ){
                         result2 = i18n("Available CRL is too old.");
-                    if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags )
+                        frameColor = yellow;
+                    }
+                    if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags ){
                         result2 = i18n("A policy was not met.");
-                    if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ) {
+                        frameColor = yellow;
+                    }
+                    if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
                         result2 = i18n("A system error occured.");
                         // if a system error occured
                         // we cannot trust any information
                         // that was given back by the plug-in
                         showKeyInfos = false;
+                        frameColor = yellow;
                     }
                     if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
                         result2 = i18n("Internal system error #%1 occured.")
@@ -3285,17 +3304,17 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                         // we cannot trust any information
                         // that was given back by the plug-in
                         showKeyInfos = false;
+                        frameColor = yellow;
                     }
-
-                    if( CryptPlugWrapper::SigStatus_GREEN & statusFlags ) {
+                    
+                    // test for red:
+                    if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags ){
+                        // this is red!
+                        result2 = i18n("One key has been revoked.");
+                        frameColor = red;
+                    }
+                    if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
                         if( result2.isEmpty() )
-                            result = i18n("GOOD signature!");
-                        else
-                            result = i18n("Good signature.");
-                    }
-                    else if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
-                        if( result2.isEmpty() ) {
-                            result = i18n("BAD signature!");
                             // Note:
                             // Here we are work differently than KMail did before!
                             //
@@ -3309,23 +3328,28 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                             // any key/signature information at all!
                             //         (khz, according to LinuxTag 2002 meeting)
                             showKeyInfos = false;
-                        }
-                        else
-                            result = i18n("Bad signature.");
+                        frameColor = red;
                     }
                     else
                         result = "";
+                        
+                    if( green == frameColor ) {
+                        if( result2.isEmpty() )
+                            result = i18n("GOOD signature!");
+                        else
+                            result = i18n("Good signature.");
+                    } else if( red == frameColor ) {
+                        if( result2.isEmpty() )
+                            result = i18n("BAD signature!");
+                        else
+                            result = i18n("Bad signature.");
+                    } else
+                        result = "";
+                        
                     if( !result2.isEmpty() )
                         result += "<br />" + result2;
                 }
             }
-            // return the appropriate frame color
-            if( CryptPlugWrapper::SigStatus_RED & statusFlags )
-                frameColor = red;
-            else if( CryptPlugWrapper::SigStatus_GREEN & statusFlags )
-                frameColor = green;
-            else
-                frameColor = yellow;
         }
         /*
         // add i18n support for 3rd party plug-ins here:
@@ -3371,7 +3395,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
         // pending(khz): Implement usage of these for PGP sigs as well.
-        QColor frameColor;
+        QColor frameColor(black);
         bool showKeyInfos;
         QString statusStr = sigStatusToString( cryptPlug,
                                                block.status_code,
@@ -3381,19 +3405,23 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
         if( statusStr.isEmpty() )
             statusStr = block.status;
             
-            
-        if( frameColor.isValid() ) {
+
+        // Sorry for using 'black' as NULL color but .isValid()            
+        // checking with QColor default c'tor did not work for
+        // some reason.
+        if( black != frameColor ) {
         
             // new frame settings for CMS:
             
             // special color handling: S/MIME uses only green/yellow/red.
-            if( green == frameColor ) {
-                block.signClass = "signOkKeyOk";    
-            } else if( yellow == frameColor ) {
-                block.signClass = "signWarn";
-            } else { // by definition frame must be red then
-                block.signClass = "signErr";
-            }
+kdDebug(5006) << "2. setting CMS color" << endl;
+            if( green == frameColor )
+                block.signClass = "signOkKeyOk";//"signCMSGreen";    
+            else if( yellow == frameColor )
+                block.signClass = "signOkKeyBad";//"signCMSYellow";
+            else // by definition frame must be red then
+                block.signClass = "signErr";//"signCMSRed";
+
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
