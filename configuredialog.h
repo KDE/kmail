@@ -105,7 +105,9 @@ class IdentityList
     QStringList identities( void );
     IdentityEntry *get( const QString &identity );
  
-    void initialize( void );
+    void import( void ); // Load system settings 
+    void export( void ); // Save state to system
+
     void add( const IdentityEntry &entry );
     void add( const QString &identity, const QString &copyFrom );
     void update( const IdentityEntry &entry );
@@ -155,6 +157,7 @@ class ConfigureDialog : public KDialogBase
 
     struct IdentityWidget
     {
+      int            pageIndex;
       QComboBox      *identityCombo;
       QPushButton    *removeIdentityButton;
       QLineEdit      *nameEdit;
@@ -173,6 +176,7 @@ class ConfigureDialog : public KDialogBase
     };
     struct NetworkWidget
     {
+      int          pageIndex;
       QRadioButton *sendmailRadio;
       QRadioButton *smtpRadio;
       QPushButton  *sendmailChooseButton;
@@ -183,6 +187,10 @@ class ConfigureDialog : public KDialogBase
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
+
+      QComboBox    *sendMethodCombo;
+      QComboBox    *messagePropertyCombo;
+      QCheckBox    *confirmSendCheck;
     };
     struct AppearanceWidget
     {
@@ -190,6 +198,8 @@ class ConfigureDialog : public KDialogBase
       {
 	activeFontIndex = -1;
       }
+
+      int          pageIndex;
       QCheckBox    *customFontCheck;
       QLabel       *fontLocationLabel;
       QComboBox    *fontLocationCombo;
@@ -202,6 +212,7 @@ class ConfigureDialog : public KDialogBase
     };
     struct ComposerWidget
     {
+      int       pageIndex;
       QLineEdit *phraseReplyEdit;
       QLineEdit *phraseReplyAllEdit;
       QLineEdit *phraseForwardEdit;
@@ -222,6 +233,8 @@ class ConfigureDialog : public KDialogBase
       {
 	currentTagItem = 0;
       }
+
+      int           pageIndex;
       ListView      *tagList;
       QListViewItem *currentTagItem;
       QLineEdit     *tagNameEdit;
@@ -231,10 +244,12 @@ class ConfigureDialog : public KDialogBase
     };
     struct SecurityWidget
     {
+      int        pageIndex;
       KpgpConfig *pgpConfig;
     };
     struct MiscWidget
     {
+      int         pageIndex;
       QCheckBox   *emptyTrashCheck;
       QCheckBox   *sendOutboxCheck;
       QCheckBox   *sendReceiptCheck;
@@ -252,11 +267,27 @@ class ConfigureDialog : public KDialogBase
       QLabel      *mailCommandLabel;
     };
 
+    enum EPage
+    {
+      page_identity = 0,
+      page_network,
+      page_appearance,
+      page_composer,
+      page_mimeheader,
+      page_security,
+      page_misc,
+      page_max
+    };
+
   public:
     ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
     ~ConfigureDialog( void );
-
     void setup( void );
+
+  protected:
+    virtual void slotDefault( void );
+    virtual void slotOk( void );
+    virtual void slotApply( void );
 
   private:
     void makeIdentityPage( void );

@@ -925,7 +925,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   makeMimePage();
   makeSecurityPage();
   makeMiscPage();
-  setup();  
+  setup();
 }
 
 
@@ -939,6 +939,7 @@ void ConfigureDialog::makeIdentityPage( void )
   QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
 			  QPixmap(user_xpm) /*ListIcon("user")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mIdentity.pageIndex = pageIndex(page);
 
   QGridLayout *glay = new QGridLayout( topLevel, 11, 3 );
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
@@ -1026,49 +1027,84 @@ void ConfigureDialog::makeIdentityPage( void )
 }
 
 
+
 void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
 			  i18n("Setup for sending and receiving messages"),
 			  QPixmap(network_xpm) /*ListIcon("network")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mNetwork.pageIndex = pageIndex(page);
 
-  QButtonGroup *buttonProxy = new QButtonGroup( page );
-  buttonProxy->hide();
-  connect( buttonProxy, SIGNAL(clicked(int)), 
+  QTabWidget *tabWidget = new QTabWidget( page, "tab" );
+  topLevel->addWidget( tabWidget );
+  
+  QWidget *page1 = new QWidget( tabWidget );
+  tabWidget->addTab( page1, i18n("Sending Mail") );
+
+  QButtonGroup *buttonGroup = new QButtonGroup( page1 );
+  buttonGroup->hide();
+  connect( buttonGroup, SIGNAL(clicked(int)), 
 	   this, SLOT(slotSendmailType(int)) );
-
-  QButtonGroup *buttonGroup = new QButtonGroup(i18n("&Sending Mail"), page );
-  topLevel->addWidget(buttonGroup);
-  QGridLayout *glay = new QGridLayout(buttonGroup, 6, 4, spacingHint() );
+ 
+  QGridLayout *glay = new QGridLayout( page1, 5, 4, spacingHint() );
   glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
 
-  mNetwork.sendmailRadio = new QRadioButton( i18n("Sendmail"), buttonGroup );
-  buttonProxy->insert(mNetwork.sendmailRadio);
-  glay->addMultiCellWidget(mNetwork.sendmailRadio, 1, 1, 0, 3);
-  QLabel *label = new QLabel( i18n("Location:"), buttonGroup );
-  glay->addWidget( label, 2, 1 );
-  mNetwork.sendmailLocationEdit = new QLineEdit( buttonGroup );
-  glay->addWidget( mNetwork.sendmailLocationEdit, 2, 2 );
+  mNetwork.sendmailRadio = new QRadioButton( i18n("Sendmail"), page1 );
+  buttonGroup->insert(mNetwork.sendmailRadio);
+  glay->addMultiCellWidget(mNetwork.sendmailRadio, 0, 0, 0, 3);
+  QLabel *label = new QLabel( i18n("Location:"), page1 );
+  glay->addWidget( label, 1, 1 );
+  mNetwork.sendmailLocationEdit = new QLineEdit( page1 );
+  glay->addWidget( mNetwork.sendmailLocationEdit, 1, 2 );
   mNetwork.sendmailChooseButton = 
-    new QPushButton( i18n("Choose..."), buttonGroup );
+    new QPushButton( i18n("Choose..."), page1 );
   connect( mNetwork.sendmailChooseButton, SIGNAL(clicked()),
 	   this, SLOT(slotSendmailChooser()) );
   mNetwork.sendmailChooseButton->setAutoDefault( false );
-  glay->addWidget( mNetwork.sendmailChooseButton, 2, 3 );
+  glay->addWidget( mNetwork.sendmailChooseButton, 1, 3 );
 
-  mNetwork.smtpRadio = new QRadioButton( i18n("SMTP"), buttonGroup );
-  buttonProxy->insert(mNetwork.smtpRadio);
-  glay->addMultiCellWidget(mNetwork.smtpRadio, 3, 3, 0, 3); 
-  label = new QLabel( i18n("Server:"), buttonGroup );
+  mNetwork.smtpRadio = new QRadioButton( i18n("SMTP"), page1 );
+  buttonGroup->insert(mNetwork.smtpRadio);
+  glay->addMultiCellWidget(mNetwork.smtpRadio, 2, 2, 0, 3); 
+  label = new QLabel( i18n("Server:"), page1 );
+  glay->addWidget( label, 3, 1 );
+  mNetwork.smtpServerEdit = new QLineEdit( page1 );
+  glay->addWidget( mNetwork.smtpServerEdit, 3, 2 );
+  label = new QLabel( i18n("Port:"), page1 );
   glay->addWidget( label, 4, 1 );
-  mNetwork.smtpServerEdit = new QLineEdit( buttonGroup );
-  glay->addWidget( mNetwork.smtpServerEdit, 4, 2 );
-  label = new QLabel( i18n("Port:"), buttonGroup );
-  glay->addWidget( label, 5, 1 );
-  mNetwork.smtpPortEdit = new QLineEdit( buttonGroup );
-  glay->addWidget( mNetwork.smtpPortEdit, 5, 2 );
+  mNetwork.smtpPortEdit = new QLineEdit( page1 );
+  mNetwork.smtpPortEdit->setValidator( new QIntValidator(page1) );
+  glay->addWidget( mNetwork.smtpPortEdit, 4, 2 );
+
+  QWidget *page2 = new QWidget( tabWidget );
+  tabWidget->addTab( page2, i18n("Properties") );
+
+  glay = new QGridLayout( page2, 4, 3, spacingHint() );
+  glay->setColStretch( 2, 10 );
+
+  label = new QLabel( i18n("Default send method:"), page2 );
+  glay->addWidget( label, 0, 0 );
+  mNetwork.sendMethodCombo = new QComboBox( page2 );
+  mNetwork.sendMethodCombo->insertItem(i18n("Send now"));
+  mNetwork.sendMethodCombo->insertItem(i18n("Send later"));
+  glay->addWidget( mNetwork.sendMethodCombo, 0, 1 );
+
+  label = new QLabel( i18n("Message Property:"), page2 );
+  glay->addWidget( label, 1, 0 );
+  mNetwork.messagePropertyCombo = new QComboBox( page2 );
+  mNetwork.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
+  mNetwork.messagePropertyCombo->insertItem(
+    i18n("MIME Compilant (Quoted Printable)"));
+  glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
+  
+  mNetwork.confirmSendCheck = 
+    new QCheckBox(i18n("Confirm before send"), page2 );
+  glay->addMultiCellWidget( mNetwork.confirmSendCheck, 2, 2, 0, 1 );
+
+
+
+
 
 
   buttonGroup = new QButtonGroup(i18n("&Incoming Mail"), page );
@@ -1122,12 +1158,124 @@ void ConfigureDialog::makeNetworkPage( void )
 
 
 
+#if 0
+void ConfigureDialog::makeNetworkPage( void )
+{
+  QFrame *page = addPage( i18n("Network"),
+			  i18n("Setup for sending and receiving messages"),
+			  QPixmap(network_xpm) /*ListIcon("network")*/ );
+  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mNetwork.pageIndex = pageIndex(page);
+
+  QButtonGroup *buttonProxy = new QButtonGroup( page );
+  buttonProxy->hide();
+  connect( buttonProxy, SIGNAL(clicked(int)), 
+	   this, SLOT(slotSendmailType(int)) );
+
+  QButtonGroup *buttonGroup = new QButtonGroup(i18n("&Sending Mail"), page );
+  topLevel->addWidget(buttonGroup);
+  QGridLayout *glay = new QGridLayout(buttonGroup, 6, 4, spacingHint() );
+  glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+
+  mNetwork.sendmailRadio = new QRadioButton( i18n("Sendmail"), buttonGroup );
+  buttonProxy->insert(mNetwork.sendmailRadio);
+  glay->addMultiCellWidget(mNetwork.sendmailRadio, 1, 1, 0, 3);
+  QLabel *label = new QLabel( i18n("Location:"), buttonGroup );
+  glay->addWidget( label, 2, 1 );
+  mNetwork.sendmailLocationEdit = new QLineEdit( buttonGroup );
+  glay->addWidget( mNetwork.sendmailLocationEdit, 2, 2 );
+  mNetwork.sendmailChooseButton = 
+    new QPushButton( i18n("Choose..."), buttonGroup );
+  connect( mNetwork.sendmailChooseButton, SIGNAL(clicked()),
+	   this, SLOT(slotSendmailChooser()) );
+  mNetwork.sendmailChooseButton->setAutoDefault( false );
+  glay->addWidget( mNetwork.sendmailChooseButton, 2, 3 );
+
+  mNetwork.smtpRadio = new QRadioButton( i18n("SMTP"), buttonGroup );
+  buttonProxy->insert(mNetwork.smtpRadio);
+  glay->addMultiCellWidget(mNetwork.smtpRadio, 3, 3, 0, 3); 
+  label = new QLabel( i18n("Server:"), buttonGroup );
+  glay->addWidget( label, 4, 1 );
+  mNetwork.smtpServerEdit = new QLineEdit( buttonGroup );
+  glay->addWidget( mNetwork.smtpServerEdit, 4, 2 );
+  label = new QLabel( i18n("Port:"), buttonGroup );
+  glay->addWidget( label, 5, 1 );
+  mNetwork.smtpPortEdit = new QLineEdit( buttonGroup );
+  mNetwork.smtpPortEdit->setValidator( new QIntValidator(buttonGroup) );
+  glay->addWidget( mNetwork.smtpPortEdit, 5, 2 );
+
+
+  buttonGroup = new QButtonGroup(i18n("&Incoming Mail"), page );
+  topLevel->addWidget(buttonGroup, 10 );
+
+  glay = new QGridLayout( buttonGroup, 6, 2, spacingHint() );
+  glay->addColSpacing( 0, fontMetrics().maxWidth()*15 );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  glay->setColStretch( 0, 10 );
+  glay->setRowStretch( 5, 100 );
+
+  label = new QLabel( buttonGroup );
+  label->setText(i18n("Accounts:   (add at least one account!)"));
+  glay->addMultiCellWidget(label, 1, 1, 0, 1);
+  mNetwork.accountList = new ListView( buttonGroup, "accountList", 5 );
+  mNetwork.accountList->addColumn( i18n("Name") );
+  mNetwork.accountList->addColumn( i18n("Type") );
+  mNetwork.accountList->addColumn( i18n("Folder") );
+  mNetwork.accountList->setAllColumnsShowFocus( true );
+  mNetwork.accountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+  mNetwork.accountList->setSorting( -1 );
+  connect( mNetwork.accountList, SIGNAL(selectionChanged ()),
+	   this, SLOT(slotAccountSelected()) );
+  connect( mNetwork.accountList, SIGNAL(doubleClicked( QListViewItem *)),
+	   this, SLOT(slotModifySelectedAccount()) );
+  glay->addMultiCellWidget( mNetwork.accountList, 2, 5, 0, 0 );
+  
+  mNetwork.addAccountButton = 
+    new QPushButton( i18n("Add..."), buttonGroup );
+  mNetwork.addAccountButton->setAutoDefault( false );
+  connect( mNetwork.addAccountButton, SIGNAL(clicked()),
+	   this, SLOT(slotAddAccount()) );
+  glay->addWidget( mNetwork.addAccountButton, 2, 1 );
+  
+  mNetwork.modifyAccountButton = 
+    new QPushButton( i18n("Modify..."), buttonGroup );
+  mNetwork.modifyAccountButton->setAutoDefault( false );
+  mNetwork.modifyAccountButton->setEnabled( false );
+  connect( mNetwork.modifyAccountButton, SIGNAL(clicked()),
+	   this, SLOT(slotModifySelectedAccount()) );
+  glay->addWidget( mNetwork.modifyAccountButton, 3, 1 );
+
+  mNetwork.removeAccountButton 
+    = new QPushButton( i18n("Remove..."), buttonGroup );
+  mNetwork.removeAccountButton->setAutoDefault( false );
+  mNetwork.removeAccountButton->setEnabled( false );
+  connect( mNetwork.removeAccountButton, SIGNAL(clicked()),
+	   this, SLOT(slotRemoveSelectedAccount()) );
+  glay->addWidget( mNetwork.removeAccountButton, 4, 1 );
+}
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void ConfigureDialog::makeApperancePage( void )
 {
   QVBox *vbox = addVBoxPage( i18n("Appearance"), 
 			     i18n("Customize visual appearance"),
 			     QPixmap(appearance_xpm)); 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
+  mAppearance.pageIndex = pageIndex(vbox);
   
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("Fonts") );
@@ -1209,9 +1357,9 @@ void ConfigureDialog::makeApperancePage( void )
 void ConfigureDialog::makeComposerPage( void )
 { 
   QVBox *vbox = addVBoxPage( i18n("Composer"), i18n("Composer settings"), 
-			     QPixmap(composer_xpm) );
- 
+			     QPixmap(composer_xpm) ); 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
+  mComposer.pageIndex = pageIndex(vbox);
 
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("Phrases and Appearance") );
@@ -1314,6 +1462,7 @@ void ConfigureDialog::makeMimePage( void )
     i18n("Define custom mime header tags for outgoing emails"),
 			  QPixmap(mime_xpm) );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mMime.pageIndex = pageIndex(page);
   
   QLabel *label = new QLabel( page );
   label->setText(i18n("Define custom mime header tags for outgoing emails:"));
@@ -1372,6 +1521,7 @@ void ConfigureDialog::makeSecurityPage( void )
   QVBox *vbox = addVBoxPage( i18n("Security"), 
 			     i18n("Security Settings"),
 			     QPixmap(security_xpm) /*ListIcon("security")*/ );
+  mSecurity.pageIndex = pageIndex(vbox);
 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
   mSecurity.pgpConfig = new KpgpConfig(tabWidget);
@@ -1385,6 +1535,7 @@ void ConfigureDialog::makeMiscPage( void )
   QFrame *page = addPage( i18n("Miscellaneous"), i18n("Various settings"),
 			  ListIcon("misc") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mMisc.pageIndex = pageIndex(page);
 
   //---------- group: folders
   QGroupBox *group = new QGroupBox( i18n("&Folders"), page );
@@ -1484,7 +1635,7 @@ void ConfigureDialog::setup( void )
 
 void ConfigureDialog::setupIdentityPage( void )
 {
-  mIdentityList.initialize();
+  mIdentityList.import();
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
   slotIdentitySelectorChanged(); // This will trigger an update
 }
@@ -1689,6 +1840,74 @@ void ConfigureDialog::setupMiscPage( void )
   slotExternalEditorSelectionChanged();
   slotMailCommandSelectionChanged();
 }
+
+
+void ConfigureDialog::slotDefault( void )
+{
+  KMessageBox::sorry( this, i18n( "This feature is not working yet." ) );
+}
+
+
+void ConfigureDialog::slotOk( void )
+{
+  slotApply();
+  accept();
+}
+
+
+void ConfigureDialog::slotApply( void )
+{
+  /*
+  int activePage = activePageIndex();
+  if( activePage == mIdentity.pageIndex )
+  {
+    mIdentityList.export();
+  }
+  else if( activePage == mNetwork.pageIndex )
+  {
+    // Sending mail
+    if( mNetwork.sendmailRadio->isChecked() )
+    {
+      kernel->msgSender()->setMethod( KMSender::smMail );
+    }
+    else
+    {
+      kernel->msgSender()->setMethod( KMSender::smSMTP );
+    }  
+    kernel->msgSender()->setMailer(mNetwork.sendmailLocationEdit->text() );
+    kernel->msgSender()->setSmtpHost( mNetwork.smtpServerEdit->text() );
+    kernel->msgSender()->setSmtpPort( mNetwork.smtpPortEdit->text().toInt() );
+    //kernel->msgSender()->setSendImmediate(sendNow->isChecked());
+   //kernel->msgSender()->setSendQuotedPrintable(quotedPrintable->isChecked());
+    kernel->msgSender()->writeConfig(FALSE);
+  
+    // Incoming mail
+    kernel->acctMgr()->writeConfig(FALSE);
+  }
+  else if( activePage == mAppearance.pageIndex )
+  {
+    puts("APP");
+  }
+  else if( activePage == mComposer.pageIndex )
+  {
+    puts("COM");
+  }  
+  else if( activePage == mMime.pageIndex )
+  {
+    puts("MIME");
+  }  
+  else if( activePage == mSecurity.pageIndex )
+  {
+    puts("SEC");
+  } 
+  else if( activePage == mMisc.pageIndex )
+  {
+    puts("MISC");
+  }
+  */
+}
+
+
 
 
 
@@ -2463,7 +2682,7 @@ void IdentityList::remove( const QString &identity )
 
 
 
-void IdentityList::initialize()
+void IdentityList::import()
 {
   //
   // Pretty easy for now.
@@ -2481,6 +2700,26 @@ void IdentityList::initialize()
 
   add( entry );
 }
+
+
+void IdentityList::export()
+{
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
+  {
+    kernel->identity()->setFullName( e->fullName() );
+    kernel->identity()->setOrganization( e->organization() );
+    kernel->identity()->setEmailAddr( e->emailAddress() );
+    kernel->identity()->setReplyToAddr( e->replyToAddress() );
+    kernel->identity()->setSignatureFile( e->signatureFileName() );
+    if( 1 )
+    {
+      printf("TODO: Only the first identity can be saved\n");
+      break;
+    }
+  }
+  kernel->identity()->writeConfig(FALSE);
+}
+
 
 
 
@@ -2526,5 +2765,10 @@ void IdentityList::update( const IdentityEntry &entry )
     }
   }
 }
+
+
+
+
+
 
 
