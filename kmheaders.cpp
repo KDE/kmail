@@ -1080,7 +1080,7 @@ void KMHeaders::msgAdded(int id)
   CREATE_TIMER(msgAdded);
   START_TIMER(msgAdded);
 
-  assert( mFolder->getMsgBase( id ) ); // otherwise using count() above is wrong
+  assert( mFolder->getMsgBase( id ) ); // otherwise using count() is wrong
 
   /* Create a new KMSortCacheItem to be used for threading. */
   KMSortCacheItem *sci = new KMSortCacheItem;
@@ -1089,7 +1089,8 @@ void KMHeaders::msgAdded(int id)
     // make sure the id and subject dicts grow, if necessary
     if (mSortCacheItems.count() == (uint)mFolder->count()
         || mSortCacheItems.count() == 0) {
-      kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
+      kdDebug (5006) << "KMHeaders::msgAdded - Resizing id and subject trees of " << mFolder->label()
+       << ": before=" << mSortCacheItems.count() << " ,after=" << (mFolder->count()*2) << endl;
       mSortCacheItems.resize(mFolder->count()*2);
       mSubjectLists.resize(mFolder->count()*2);
     }
@@ -2997,8 +2998,9 @@ KMSortCacheItem* KMHeaders::findParentBySubject(KMSortCacheItem *item)
         for (QPtrListIterator<KMSortCacheItem> it2(*mSubjectLists[subjMD5]);
                 it2.current(); ++it2) {
             KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
+            if ( !mb ) return parent;
             // make sure it's not ourselves
-            if ( item == (*it2)) continue;
+            if ( item == (*it2) ) continue;
             int delta = msg->date() - mb->date();
             // delta == 0 is not allowed, to avoid circular threading
             // with duplicates.
