@@ -946,6 +946,14 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
     // Reply to mailing-list posting address
     toStr = parent()->mailingListPostAddress();
   }
+  else if (replyToList
+	   && headerField("List-Post").find("mailto:", 0, false) != -1 )
+  {
+    QString listPost = headerField("List-Post");
+    QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
+    if ( rx.search( listPost, 0 ) != -1 ) // matched
+      toStr = rx.cap(1) + "@" + rx.cap(2);
+  }
   else if (replyToAll)
   {
     QStringList recipients;
