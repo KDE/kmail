@@ -151,7 +151,7 @@ namespace KMail {
                "might want any emails sent to have your email in the "
                "<tt>From:</tt> field, but any responses to go to "
                "a group address.</p>"
-               "</p>If in doubt, leave this field blank.</p></qt>");
+               "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mReplyToEdit, msg );
 
