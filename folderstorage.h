@@ -308,21 +308,6 @@ public:
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != 0); }
 
-  /** Returns TRUE if this folder is associated with a mailing-list. */
-  void setMailingList(bool enabled)
-  { mMailingListEnabled = enabled; writeConfig(); }
-  bool isMailingList() const { return mMailingListEnabled; }
-
-  void setMailingListPostAddress(const QString &address)
-  { mMailingListPostingAddress = address; writeConfig(); }
-  QString mailingListPostAddress() const
-  { return mMailingListPostingAddress; }
-
-  void setMailingListAdminAddress(const QString &address)
-  { mMailingListAdminAddress = address; writeConfig(); }
-  QString mailingListAdminAddress() const
-  { return mMailingListAdminAddress; }
-
   void setIdentity(uint identity);
   uint identity() const { return mIdentity; }
 
@@ -503,9 +488,6 @@ protected:
   QString mWhoField, mUserWhoField;
   KMAcctList* mAcctList;
 
-  bool    mMailingListEnabled;
-  QString mMailingListPostingAddress;
-  QString mMailingListAdminAddress;
   uint    mIdentity;
 
   /** number of unread messages, -1 if not yet set */

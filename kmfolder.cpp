@@ -27,9 +27,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
-    mUseCustomIcons( false )
+    mUseCustomIcons( false ), mMailingListEnabled( false )
 {
-
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
   else if( aFolderType == KMFolderTypeImap )
@@ -95,8 +94,12 @@ void KMFolder::readConfig( KConfig* config )
   mNormalIconPath = config->readEntry("NormalIconPath" );
   mUnreadIconPath = config->readEntry("UnreadIconPath" );
 
+  mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
+  mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
+  mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
+
   if ( mUseCustomIcons )
-      emit iconsChanged();
+    emit iconsChanged();
 }
 
 void KMFolder::writeConfig( KConfig* config ) const
@@ -110,6 +113,10 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("UseCustomIcons", mUseCustomIcons);
   config->writeEntry("NormalIconPath", mNormalIconPath);
   config->writeEntry("UnreadIconPath", mUnreadIconPath);
+
+  config->writeEntry("MailingListEnabled", mMailingListEnabled);
+  config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
+  config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
 }
 
 KMFolderType KMFolder::folderType() const
@@ -464,32 +471,20 @@ bool KMFolder::hasAccounts() const
 
 void KMFolder::setMailingList( bool enabled )
 {
-  mStorage->setMailingList( enabled );
-}
-
-bool KMFolder::isMailingList() const
-{
-  return mStorage->isMailingList();
+  mMailingListEnabled = enabled;
+  mStorage->writeConfig();
 }
 
 void KMFolder::setMailingListPostAddress( const QString& address )
 {
-  mStorage->setMailingListPostAddress( address );
-}
-
-QString KMFolder::mailingListPostAddress() const
-{
-  return mStorage->mailingListPostAddress();
+  mMailingListPostingAddress = address;
+  mStorage->writeConfig();
 }
 
 void KMFolder::setMailingListAdminAddress( const QString& address )
 {
-  mStorage->setMailingListAdminAddress( address );
-}
-
-QString KMFolder::mailingListAdminAddress() const
-{
-  return mStorage->mailingListAdminAddress();
+  mMailingListAdminAddress = address;
+  mStorage->writeConfig();
 }
 
 void KMFolder::setIdentity( uint identity )

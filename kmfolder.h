@@ -310,13 +310,13 @@ public:
 
   /** Returns TRUE if this folder is associated with a mailing-list. */
   void setMailingList(bool enabled);
-  bool isMailingList() const;
+  bool isMailingList() const { return mMailingListEnabled; }
 
   void setMailingListPostAddress(const QString &address);
-  QString mailingListPostAddress() const;
+  QString mailingListPostAddress() const { return mMailingListPostingAddress; }
 
   void setMailingListAdminAddress(const QString &address);
-  QString mailingListAdminAddress() const;
+  QString mailingListAdminAddress() const { return mMailingListAdminAddress; }
 
   void setIdentity(uint identity);
   uint identity() const;
@@ -522,6 +522,11 @@ private:
   bool mUseCustomIcons;
   QString mNormalIconPath;
   QString mUnreadIconPath;
+
+  /** Mailing list attributes */
+  bool mMailingListEnabled;
+  QString mMailingListPostingAddress;
+  QString mMailingListAdminAddress;
 };
 
 #endif /*kmfolder_h*/

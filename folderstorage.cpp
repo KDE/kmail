@@ -73,7 +73,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mTotalMsgs      = -1;
   needsCompact    = FALSE;
   mConvertToUtf8  = FALSE;
-  mMailingListEnabled = FALSE;
   mCompactable     = TRUE;
   mNoContent      = FALSE;
   mRDict = 0;
@@ -819,9 +818,6 @@ void FolderStorage::readConfig()
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
-  mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
-  mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
-  mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
   mIdentity = config->readUnsignedNumEntry("Identity",0);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
   setUserWhoField( config->readEntry("WhoField"), false );
@@ -836,9 +832,6 @@ void FolderStorage::writeConfig()
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", countUnread());
   config->writeEntry("TotalMsgs", mTotalMsgs);
-  config->writeEntry("MailingListEnabled", mMailingListEnabled);
-  config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
-  config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Compactable", mCompactable);
   config->writeEntry("WhoField", mUserWhoField);
