@@ -1724,7 +1724,8 @@ int KMFolder::compact()
     }
     mi = (KMMsgInfo*)mMsgList[idx];
     msize = mi->msgSize();
-    mtext.resize(msize+2);
+    if (mtext.size() < msize + 2)
+      mtext.resize(msize+2);
     folder_offset = mi->folderOffset();
 
     //now we need to find the separator! grr...
@@ -1734,9 +1735,13 @@ int KMFolder::compact()
         rc = errno;
 	break;
       }
+      if (mtext.size() < 20)
+	mtext.resize(20);
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
 	if(!strncasecmp(mtext.data(), "from ", 5)) {
+	  if (mtext.size() < folder_offset)
+	      mtext.resize(folder_offset);
 	  if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
 	     !fread(mtext.data(), folder_offset, 1, mStream) ||
 	     !fwrite(mtext.data(), folder_offset, 1, tmpfile)) {
@@ -1756,6 +1761,8 @@ int KMFolder::compact()
 	}
 	if(last_crlf != -1) {
 	  int size = folder_offset - (i + last_crlf+1);
+	  if (mtext.size() < size)
+	      mtext.resize(size);
 	  if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
 	     !fread(mtext.data(), size, 1, mStream) ||
 	     !fwrite(mtext.data(), size, 1, tmpfile)) {
