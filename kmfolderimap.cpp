@@ -492,13 +492,16 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
         && (!(*it).inboxOnly || name == "INBOX"))
     {
-kdDebug() << "path = " << KURL(url).path() << endl;
       if (((*it).inboxOnly || KURL(url).path() == "/INBOX/") && name == "INBOX")
         mHasInbox = TRUE;
       else {
-        mSubfolderNames.append(name);
-        mSubfolderPaths.append(KURL(url).path());
-        mSubfolderMimeTypes.append(mimeType);
+        // Some servers send _lots_ of duplicates
+        if (mSubfolderNames.findIndex(name) == -1)
+        {
+          mSubfolderNames.append(name);
+          mSubfolderPaths.append(KURL(url).path());
+          mSubfolderMimeTypes.append(mimeType);
+        }
       }
 /*      static_cast<KMFolderTree*>((*it).parent->listView())
         ->addImapChildFolder((*it).parent, name, KURL(url).path(),
