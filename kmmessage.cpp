@@ -9,6 +9,7 @@
 #include "kmmsginfo.h"
 #include "kmreaderwin.h"
 #include <kpgp.h>
+#include <kdebug.h>
 
 #include "kmfolder.h"
 #include "kmundostack.h"
@@ -293,9 +294,6 @@ QString KMMessage::formatString(const QString& aStr) const
     } else
       result += ch;
   }
-
-  if (aStr[0] == '%') result[0] = result[0].upper();
-
   return result;
 }
 
@@ -649,7 +647,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     }
   }
 
-  QCString c = QString(headerStr + "\n" + result).utf8();
+  QCString c = QString(headerStr + result).utf8();
 
   return c;
 }
@@ -774,9 +772,10 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (replyToAll || replyToList || !mailingListStr.isEmpty())
     replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
+  replyStr += "\n\n";
 
   if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, true, allowDecryption));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, false, true, allowDecryption));
 
   QStringList::Iterator it;
   bool recognized = false;
@@ -971,12 +970,12 @@ KMMessage* KMMessage::createForward(void)
   msg->initHeader(id);
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
-    s = "\n\n----------  " + sForwardStr + "  ----------\n";
+    s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
     str = asQuotedString(s, "", QString::null, FALSE, false, false);
     str += "\n-------------------------------------------------------\n";
   } else {
-    s = "\n\n----------  " + sForwardStr + "  ----------\n";
+    s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += "Subject: " + subject() + "\n";
     s += "Date: " + dateStr() + "\n";
     s += "From: " + from() + "\n";
