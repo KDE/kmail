@@ -988,7 +988,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
           || showOnlyOneMimePart() )
 	{
 	  if( mReader ) {
-            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() && !label.isEmpty() ) {
+            bool bDrawFrame = !mReader->mIsFirstTextPart
+                              && !showOnlyOneMimePart()
+                              && !label.isEmpty();
+            if( bDrawFrame ) {
+              label = KMMessage::quoteHtmlChars( label, true );
+
               QString comment = curNode->msgPart().contentDescription();
               comment = KMMessage::quoteHtmlChars( comment, true );
 
@@ -1006,7 +1011,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
                          + KURL::encode_string( fileName ) + "\">"
                          + label + "</a>";
               else
-                htmlStr += KMMessage::quoteHtmlChars( label, true );
+                htmlStr += label;
               if( !comment.isEmpty() )
                 htmlStr += "<br>" + comment;
               htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
@@ -1128,7 +1133,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    if( !bDone )
 	      writeBodyString( cstr, curNode->trueFromAddress(),
 			       codecFor( curNode ), result );
-            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() && !label.isEmpty() ) {
+            if( bDrawFrame ) {
               htmlWriter()->queue( "</td></tr></table>" );
             }
             mReader->mIsFirstTextPart = false;
