@@ -178,7 +178,8 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
-  emit textChanged( folder->label() );
+  if ( folder != 0 )
+    emit textChanged( folder->label() );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
