@@ -945,7 +945,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   }
   
   destination.setPath("/send");
-  destination.setQuery(mQuery);
+  destination.setQuery(KURL::encode_string(mQuery));
 
   mQuery = "";
 
