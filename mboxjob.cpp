@@ -35,6 +35,7 @@
 #include "mboxjob.h"
 
 #include "kmfoldermbox.h"
+#include "kmfolder.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -74,7 +75,6 @@ MboxJob::execute()
 void
 MboxJob::expireMessages()
 {
-  int              days             = 0;
   int              maxUnreadTime    = 0;
   int              maxReadTime      = 0;
   const KMMsgBase *mb               = 0;
@@ -83,18 +83,15 @@ MboxJob::expireMessages()
   time_t           msgTime, maxTime = 0;
   QTime            t;
 
-  days = mParent->daysToExpire( mParent->getUnreadExpireAge(),
-                                mParent->getUnreadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
-    maxUnreadTime = time(0) - days * 3600 * 24;
+  int unreadDays, readDays;
+  mParent->folder()->daysToExpire( unreadDays, readDays );
+  if (unreadDays > 0) {
+    kdDebug(5006) << "deleting unread older than "<< unreadDays << " days" << endl;
+    maxUnreadTime = time(0) - unreadDays * 3600 * 24;
   }
-
-  days = mParent->daysToExpire( mParent->getReadExpireAge(),
-                                mParent->getReadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
-    maxReadTime = time(0) - days * 3600 * 24;
+  if (readDays > 0) {
+    kdDebug(5006) << "deleting read older than "<< unreadDays << " days" << endl;
+    maxReadTime = time(0) - unreadDays * 3600 * 24;
   }
 
   if ((maxUnreadTime == 0) && (maxReadTime == 0)) {

@@ -76,11 +76,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mMailingListEnabled = FALSE;
   mCompactable     = TRUE;
   mNoContent      = FALSE;
-  expireMessages = FALSE;
-  unreadExpireAge = 28;
-  unreadExpireUnits = expireNever;
-  readExpireAge = 14;
-  readExpireUnits = expireNever;
   mRDict = 0;
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
@@ -252,41 +247,6 @@ int FolderStorage::expungeOldMsg(int days)
   }
   return msgnb;
 }
-
-
-//-----------------------------------------------------------------------------
-/**
- * Return the number of days given some value, and the units for that
- * value. Currently, supported units are days, weeks and months.
- */
-int
-FolderStorage::daysToExpire(int number, ExpireUnits units) {
-  switch (units) {
-  case expireDays: // Days
-    return number;
-  case expireWeeks: // Weeks
-    return number * 7;
-  case expireMonths: // Months - this could be better rather than assuming 31day months.
-    return number * 31;
-  default: // this avoids a compiler warning (not handled enumeration values)
-    ;
-  }
-
-  return -1;
-
-}
-
-//-----------------------------------------------------------------------------
-/**
- * Expire old messages from this folder. Read and unread messages have
- * different expiry times. An expiry time of 0 or less is considered to
- * mean no-expiry. Also check the general 'expire' flag as well.
- */
-void FolderStorage::expireOldMessages() {
-  FolderJob *job = createJob( 0, FolderJob::tExpireMessages );
-  job->start();
-}
-
 
 //-----------------------------------------------------------------------------
 void FolderStorage::emitMsgAddedSignals(int idx)
@@ -859,12 +819,6 @@ void FolderStorage::readConfig()
   mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
   mIdentity = config->readUnsignedNumEntry("Identity",0);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
-
-  expireMessages = config->readBoolEntry("ExpireMessages", FALSE);
-  readExpireAge = config->readNumEntry("ReadExpireAge", 3);
-  readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
-  unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
-  unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
   setUserWhoField( config->readEntry("WhoField"), false );
 
   if( folder() ) folder()->readConfig( config );
@@ -882,11 +836,6 @@ void FolderStorage::writeConfig()
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Compactable", mCompactable);
-  config->writeEntry("ExpireMessages", expireMessages);
-  config->writeEntry("ReadExpireAge", readExpireAge);
-  config->writeEntry("ReadExpireUnits", readExpireUnits);
-  config->writeEntry("UnreadExpireAge", unreadExpireAge);
-  config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
   config->writeEntry("WhoField", mUserWhoField);
 
   // Write the KMFolder parts

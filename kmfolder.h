@@ -345,7 +345,7 @@ public:
   /**
    * Does this folder automatically expire old messages?
    */
-  bool isAutoExpire() const;
+  bool isAutoExpire() const { return mExpireMessages; }
 
   /**
    * Set the maximum age for unread messages in this folder.
@@ -377,25 +377,25 @@ public:
    * Get the age at which unread messages are expired.
    * Units are determined by getUnreadExpireUnits().
    */
-  int getUnreadExpireAge() const;
+  int getUnreadExpireAge() const { return mUnreadExpireAge; }
 
   /**
    * Get the age at which read messages are expired.
    * Units are determined by getReadExpireUnits().
    */
-  int getReadExpireAge() const;
+  int getReadExpireAge() const { return mReadExpireAge; }
 
   /**
    * Units getUnreadExpireAge() is returned in.
    * 1 = days, 2 = weeks, 3 = months.
    */
-  ExpireUnits getUnreadExpireUnits() const;
+  ExpireUnits getUnreadExpireUnits() const { return mUnreadExpireUnits; }
 
   /**
    * Units getReadExpireAge() is returned in.
    * 1 = days, 2 = weeks, 3 = months.
    */
-  ExpireUnits getReadExpireUnits() const;
+  ExpireUnits getReadExpireUnits() const { return mReadExpireUnits; }
 
   void expireOldMessages();
 
@@ -441,6 +441,8 @@ public:
       happens in place. Returns the length of the resulting string.
   */
   static size_t crlf2lf( char* str, const size_t strLen );
+
+  void daysToExpire( int& unreadDays, int& readDays );
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -504,6 +506,13 @@ private:
   KMFolderDir* mParent;
   KMFolderDir* mChild;
   bool mIsSystemFolder;
+
+  /** Support for automatic expiry of old messages */
+  bool         mExpireMessages;          // TRUE if old messages are expired
+  int          mUnreadExpireAge;         // Given in unreadExpireUnits
+  int          mReadExpireAge;           // Given in readExpireUnits
+  ExpireUnits  mUnreadExpireUnits;
+  ExpireUnits  mReadExpireUnits;
 
   /** Icon related variables */
   bool mUseCustomIcons;

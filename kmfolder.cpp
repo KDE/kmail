@@ -21,7 +21,11 @@
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
   : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 ),
-    mIsSystemFolder( false ), mUseCustomIcons( false )
+    mIsSystemFolder( false ),
+    mExpireMessages( false ), mUnreadExpireAge( 28 ),
+    mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
+    mReadExpireUnits( expireNever ),
+    mUseCustomIcons( false )
 {
 
   if( aFolderType == KMFolderTypeCachedImap )
@@ -79,6 +83,12 @@ KMFolder::~KMFolder()
 
 void KMFolder::readConfig( KConfig* config )
 {
+  mExpireMessages = config->readBoolEntry("ExpireMessages", false);
+  mReadExpireAge = config->readNumEntry("ReadExpireAge", 3);
+  mReadExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
+  mUnreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
+  mUnreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
+
   mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
   mNormalIconPath = config->readEntry("NormalIconPath" );
   mUnreadIconPath = config->readEntry("UnreadIconPath" );
@@ -89,6 +99,12 @@ void KMFolder::readConfig( KConfig* config )
 
 void KMFolder::writeConfig( KConfig* config ) const
 {
+  config->writeEntry("ExpireMessages", mExpireMessages);
+  config->writeEntry("ReadExpireAge", mReadExpireAge);
+  config->writeEntry("ReadExpireUnits", mReadExpireUnits);
+  config->writeEntry("UnreadExpireAge", mUnreadExpireAge);
+  config->writeEntry("UnreadExpireUnits", mUnreadExpireUnits);
+
   config->writeEntry("UseCustomIcons", mUseCustomIcons);
   config->writeEntry("NormalIconPath", mNormalIconPath);
   config->writeEntry("UnreadIconPath", mUnreadIconPath);
@@ -521,57 +537,64 @@ QString KMFolder::idString() const
 
 void KMFolder::setAutoExpire( bool enabled )
 {
-  mStorage->setAutoExpire( enabled );
-}
-
-bool KMFolder::isAutoExpire() const
-{
-  return mStorage->isAutoExpire();
+  if( enabled != mExpireMessages ) {
+    mExpireMessages = enabled;
+    mStorage->writeConfig();
+  }
 }
 
 void KMFolder::setUnreadExpireAge( int age )
 {
-  mStorage->setUnreadExpireAge( age );
+  if( age >= 0 && age != mUnreadExpireAge ) {
+    mUnreadExpireAge = age;
+    mStorage->writeConfig();
+  }
 }
 
 void KMFolder::setUnreadExpireUnits( ExpireUnits units )
 {
-  mStorage->setUnreadExpireUnits( units );
+  if (units >= expireNever && units < expireMaxUnits)
+    mUnreadExpireUnits = units;
 }
 
 void KMFolder::setReadExpireAge( int age )
 {
-  mStorage->setReadExpireAge( age );
+  if( age >= 0 && age != mReadExpireAge ) {
+    mReadExpireAge = age;
+    mStorage->writeConfig();
+  }
 }
 
 void KMFolder::setReadExpireUnits( ExpireUnits units )
 {
-  mStorage->setReadExpireUnits( units );
+  if (units >= expireNever && units <= expireMaxUnits)
+    mReadExpireUnits = units;
 }
 
-int KMFolder::getUnreadExpireAge() const
+static int daysToExpire( int number, ExpireUnits units )
 {
-  return mStorage->getUnreadExpireAge();
+  switch (units) {
+  case expireDays: // Days
+    return number;
+  case expireWeeks: // Weeks
+    return number * 7;
+  case expireMonths: // Months - this could be better rather than assuming 31day months.
+    return number * 31;
+  default: // this avoids a compiler warning (not handled enumeration values)
+    ;
+  }
+  return -1;
 }
 
-int KMFolder::getReadExpireAge() const
-{
-  return mStorage->getReadExpireAge();
-}
-
-ExpireUnits KMFolder::getUnreadExpireUnits() const
-{
-  return mStorage->getUnreadExpireUnits();
-}
-
-ExpireUnits KMFolder::getReadExpireUnits() const
-{
-  return mStorage->getReadExpireUnits();
+void KMFolder::daysToExpire(int& unreadDays, int& readDays) {
+  unreadDays = ::daysToExpire( getUnreadExpireAge(), getUnreadExpireUnits() );
+  readDays = ::daysToExpire( getReadExpireAge(), getReadExpireUnits() );
 }
 
 void KMFolder::expireOldMessages()
 {
-  mStorage->expireOldMessages();
+  FolderJob *job = createJob( 0, FolderJob::tExpireMessages );
+  job->start();
 }
 
 int KMFolder::writeIndex( bool createEmptyIndex )
