@@ -2502,7 +2502,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   vlay->addWidget( mPgpAutoSignatureCheck );
 
   mPgpAutoEncryptCheck =
-    new QCheckBox( i18n("Automatically encr&ypt messages if possible"), this );
+    new QCheckBox( i18n("Automatically encr&ypt messages whenever possible"), this );
   vlay->addWidget( mPgpAutoEncryptCheck );
 
   // a checkbutton for "word wrap" and a spinbox for the column in
