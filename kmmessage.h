@@ -88,23 +88,9 @@ public:
 
   /** Copy constructor. */
   KMMessage( const KMMessage& other );
-    //KMMessage( const KMMessage& other,
-    //           bool preserveArrivalTime=false  );
-    //  note: By setting preserveArrivalTime true you get
-    //        a message containing the arrival time of the
-    //        old one - this is useful if this new message
-    //        is to replace the old one in the same folder
-    // note2: temporarily uncommented this again (khz)
 
   /** Assignment operator. */
   const KMMessage& operator=( const KMMessage& other ) {
-    //const KMMessage& operator=( const KMMessage& other,
-    //                          bool preserveArrivalTime=false ) {
-    //  note: By setting preserveArrivalTime true you get
-    //        a message containing the arrival time of the
-    //        old one - this is useful if this new message
-    //        is to replace the old one in the same folder
-    // note2: temporarily uncommented this again (khz)
     if( &other == this )
       return *this;
     assign( other ); return *this;
