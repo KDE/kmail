@@ -214,8 +214,7 @@ int KMFolderCachedImap::readUidCache()
 
 int KMFolderCachedImap::writeUidCache()
 {
-  if( ( lastUid() == 0 || uidValidity().isEmpty() )
-      && uidValidity() != "INVALID" )
+  if( uidValidity().isEmpty() || uidValidity() == "INVALID" )
     // No info from the server yet
     return 0;
 
@@ -511,7 +510,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     open();
 
-    kdDebug(5006) << k_funcinfo << " making connection" << endl;
+    // kdDebug(5006) << k_funcinfo << " making connection" << endl;
     // Connect to the server (i.e. prepare the slave)
     ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
     if ( cs == ImapAccountBase::Error ) {
@@ -520,19 +519,17 @@ void KMFolderCachedImap::serverSyncInternal()
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
       emit folderComplete(this, FALSE);
       break;
-    } else if ( cs == ImapAccountBase::Connecting )
-    {
-      kdDebug(5006) << "makeConnection said Connecting, waiting for signal."
-                    << endl;
+    } else if ( cs == ImapAccountBase::Connecting ) {
+      // kdDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
       // We'll wait for the connectionResult signal from the account.
       connect( mAccount, SIGNAL( connectionResult(int) ),
                this, SLOT( slotConnectionResult(int) ) );
       break;
-    } else // Connected
-    {
-        kdDebug(5006) << "makeConnection said Connected, proceeding." << endl;
-        mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
-        // Fall through to next state
+    } else {
+      // Connected
+      // kdDebug(5006) << "makeConnection said Connected, proceeding." << endl;
+      mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+      // Fall through to next state
     }
   }
   case SYNC_STATE_CHECK_UIDVALIDITY:
@@ -1104,7 +1101,7 @@ bool KMFolderCachedImap::listDirectory()
   connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
           this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
 
-  return TRUE;
+  return true;
 }
 
 void KMFolderCachedImap::slotListResult(KIO::Job * job)
@@ -1138,6 +1135,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
           // This subfolder isn't present on the server
           kdDebug(5006) << node->name() << " isn't on the server." << endl;
           f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+          // TODO (Bo): Isn't this unnecessary? If it's a new folder, it was already uploaded
           if( !f->uidValidity().isEmpty() ) {
             // The folder have a uidValidity setting, so it has been on the
             // server before. Delete it locally.
@@ -1195,8 +1193,7 @@ void KMFolderCachedImap::listDirectory2() {
         }
       }
     } else {
-      // kdDebug(5006) << "node " << node->name() << " is a " << node->className() << endl;
-      if( node->isA("KMFolderCachedImap") )
+      if( static_cast<KMFolder*>(node)->folderType() == KMFolderTypeCachedImap )
         f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     }
 
