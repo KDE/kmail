@@ -134,6 +134,10 @@ KMFilterActionDict::KMFilterActionDict():
 }
 
 
+KMFilterActionDict::~KMFilterActionDict()
+{
+}
+
 //=============================================================================
 //
 //   Generic Filter  Action  Dialog
