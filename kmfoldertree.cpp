@@ -232,7 +232,7 @@ void KMFolderTree::readConfig (void)
     QPalette newPal = palette();
     newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
     setPalette( newPal );
-    mPaintInfo.colUnread = conf->readColorEntry("FollowedColor",&c2);
+    mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
   }
   else {
     mPaintInfo.colFore = c1;

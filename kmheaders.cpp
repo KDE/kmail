@@ -360,8 +360,8 @@ void KMHeaders::readConfig (void)
     QPalette newPal = palette();
     newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
     setPalette( newPal );
-    mPaintInfo.colNew = config->readColorEntry("LinkColor",&c2);
-    mPaintInfo.colUnread = config->readColorEntry("FollowedColor",&c3);
+    mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
+    mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
   }
   else {
     mPaintInfo.colFore = c1;

@@ -1228,6 +1228,10 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.fontLocationLabel = new QLabel( i18n("Location:"), page1 );
   hlay->addWidget( mAppearance.fontLocationLabel );
   mAppearance.fontLocationCombo = new QComboBox( page1 );
+  //
+  // If you add or remove entries to this list, make sure to revise 
+  // slotFontSelectorChanged(..) as well.
+  //
   QStringList fontStringList;
   fontStringList.append( i18n("Message Body") );
   fontStringList.append( i18n("Message List") );
@@ -2609,15 +2613,35 @@ void ConfigureDialog::slotCustomFontSelectionChanged( void )
 
 void ConfigureDialog::slotFontSelectorChanged( int index )
 {
+  if( index < 0 || index >= mAppearance.fontLocationCombo->count() )
+  {
+    return; // Should never happen, but it is better to check.
+  }
+
+  //
+  // Save current fontselector setting before we install the new
+  //
   if( mAppearance.activeFontIndex >= 0 )
   {
-    // Save prev setting
     mAppearance.fontString[mAppearance.activeFontIndex] = 
       kfontToStr( mAppearance.fontChooser->font() );
   }
-  mAppearance.activeFontIndex = QMAX( 0, index );
+  mAppearance.activeFontIndex = index;
+
+  //
+  // Display the new setting
+  //
   if( mAppearance.fontString[index].isEmpty() == false ) 
-    mAppearance.fontChooser->setFont( kstrToFont(mAppearance.fontString[index]));
+    mAppearance.fontChooser->setFont(kstrToFont(mAppearance.fontString[index]));
+  
+  #warning "espen: New Feature depending on a change in kdeui";
+  #warning "Either update kdeui (kfontdialog) or comment it out"
+  //
+  // Disable Family and Size list if we have selected a qoute font 
+  //
+  bool enable = index != 3 && index != 4 && index != 5;
+  mAppearance.fontChooser->enableColumn( 
+    KFontChooser::FamilyList|KFontChooser::SizeList, enable );
 }
 
 void ConfigureDialog::slotCustomColorSelectionChanged( void )

@@ -151,6 +151,8 @@ void KMReaderWin::readConfig(void)
   //    mViewer->setDefaultTextColors(c1,c2,c3);
   }
 
+  mRecyleQouteColors = config->readBoolEntry( "RecycleQuoteColors", false );
+
 #ifndef KRN
   int i, diff;
   fntSize = 0;
@@ -725,7 +727,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
       {
 	if( currQuoteLevel != prevQuoteLevel )
 	{
-	  line.prepend( mQuoteFontTag[currQuoteLevel] );
+	  line.prepend( mQuoteFontTag[currQuoteLevel%3] );
 	  if( prevQuoteLevel >= 0 )
 	  {
 	    line.prepend( "</font>" );
@@ -756,7 +758,10 @@ QString KMReaderWin::quotedHTML(const QString& s)
     {
       if( atStartOfLine == TRUE && (ch=='>' || /*ch==':' ||*/ ch=='|') )
       {
-	if( currQuoteLevel < 2 ) { currQuoteLevel += 1; }
+	if( mRecyleQouteColors == true || currQuoteLevel < 2 )
+	{
+	  currQuoteLevel += 1;
+	}
       } 
       else
       {
