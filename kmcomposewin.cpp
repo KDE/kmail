@@ -3543,7 +3543,7 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
     if (e->provides(MailListDrag::format()))
         e->accept(true);
     else
-        return KEdit::dragEnterEvent(e);
+        return KEdit::contentsDragEnterEvent(e);
 }
 
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
@@ -3551,7 +3551,7 @@ void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
     if (e->provides(MailListDrag::format()))
         e->accept();
     else
-        return KEdit::dragMoveEvent(e);
+        return KEdit::contentsDragMoveEvent(e);
 }
 
 void KMEdit::keyPressEvent( QKeyEvent* e )
@@ -3652,7 +3652,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         }
     }
     else {
-        return KEdit::dropEvent(e);
+        return KEdit::contentsDropEvent(e);
     }
 }
 
