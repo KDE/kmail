@@ -1439,6 +1439,7 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
       // try this:
       aMsg->setBody( resultString );
       KMMessage* unencryptedMessage = new KMMessage( *aMsg );
+      unencryptedMessage->setParent( 0 );
       // because this did not work:
       /*
       DwMessage dwMsg( DwString( aMsg->asString() ) );
