@@ -781,19 +781,21 @@ QString KpgpBase5::getAsciiPublicKey(QString _person) {
   QString toexec;
   toexec.sprintf("pgpk -xa \"%s\"", _person.data());
 
-  //debug("running %s", toexec.data());
   status = run(toexec.data());
   if(status == RUN_ERR) return 0;
-  //debug("okay");
 
   return output;
 }
 
 QString KpgpBase2::getAsciiPublicKey(QString _person) {
 
-  // FIX ME, HOW DO I EXTRACT PGP PUBLIC KEY ?
+  QString toexec;
+  toexec.sprintf("pgp -kxaf \"%s\"", _person.data());
 
-  return NULL;
+  status = run(toexec.data());
+  if(status == RUN_ERR) return 0;
+
+  return output;
 }
 
 int
