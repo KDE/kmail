@@ -1,5 +1,8 @@
 1999-01-29  Stefan Taferner  <taferner@kde.org> (KMail-1.0.15)
 
+	* Bugfix: fixed crash when dropping message on directory
+	entry in folder list.
+
 	* Improved: email completion of composer (Ctrl-t) now
 	searches for appearance of given characters in addressbook's
 	list. Up to now only used beginning of string.

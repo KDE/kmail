@@ -144,7 +144,7 @@ void KMFolderTree::doDropAction(KDNDDropZone* aDropZone)
   pos = mapFromGlobal(pos);
 
   toFld = (KMFolder*)mList.at(findItem(pos.y()));
-  if (!fromFld || !toFld) return;
+  if (!fromFld || !toFld || toFld->isDir()) return;
 
   fromFld->open();
   toFld->open();
