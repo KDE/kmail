@@ -160,7 +160,7 @@ public:
 
   virtual void load() = 0;
   virtual void save() = 0;
-  virtual void defaults() {};
+  virtual void defaults() {}
 
   /** Should return the help anchor for this page or tab */
   virtual QString helpAnchor() const = 0;
@@ -320,7 +320,7 @@ public:
   QString helpAnchor() const;
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 signals:
   void accountListChanged( const QStringList & );
@@ -390,7 +390,7 @@ public:
   QString helpAnchor() const;
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
   void installProfile( KConfig * profile );
 
@@ -416,7 +416,7 @@ public:
   QString helpAnchor() const;
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
   void installProfile( KConfig * profile );
 
@@ -434,7 +434,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
   void installProfile( KConfig * profile );
 
 protected: // data
@@ -454,7 +454,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
   void installProfile( KConfig * profile );
 
 protected: // methods
@@ -504,7 +504,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
   void installProfile( KConfig * profile );
 
 protected:
@@ -525,7 +525,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 protected slots:
   void slotNewLanguage();
@@ -557,7 +557,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 
 protected:
@@ -575,7 +575,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 protected slots:
   void slotVerifyCharset(QString&);
@@ -593,7 +593,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 protected slots:
   void slotMimeHeaderSelectionChanged();
@@ -622,7 +622,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 protected:
   QCheckBox   *mMissingAttachmentDetectionCheck;
@@ -667,7 +667,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
   void installProfile( KConfig * profile );
 
@@ -688,7 +688,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
   void installProfile( KConfig * profile );
 
 protected:
@@ -710,7 +710,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 private:
   Kleo::BackendConfigWidget * mBackendConfig;
@@ -750,7 +750,7 @@ public:
 
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
  QString helpAnchor() const;
 
 protected:
@@ -775,7 +775,7 @@ public:
   MiscPageGroupwareTab( QWidget * parent=0, const char * name=0 );
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
   QString helpAnchor() const;
 private:
   QCheckBox* mEnableGwCB;
