@@ -207,6 +207,8 @@ class RecipientsToolTip : public QToolTip
 
   protected:
     void maybeTip( const QPoint & p );
+
+    QString line( const Recipient & );
     
   private:
     RecipientsView *mView; 

@@ -515,19 +515,50 @@ RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
 {
 }
 
+QString RecipientsToolTip::line( const Recipient &r )
+{
+  QString txt = r.email();
+  txt.replace( "<", "&lt;" );
+  txt.replace( ">", "&gt;" );
+
+  return "&nbsp;&nbsp;" + txt + "<br/>";
+}
+
 void RecipientsToolTip::maybeTip( const QPoint & p )
 {
   QString text = "<qt>";
 
+  QString to;
+  QString cc;
+  QString bcc;
+
   Recipient::List recipients = mView->recipients();
   Recipient::List::ConstIterator it;
   for( it = recipients.begin(); it != recipients.end(); ++it ) {
-    text.append( (*it).email() + "<br/>" );
+    switch( (*it).type() ) {
+      case Recipient::To:
+        to += line( *it );
+        break;
+      case Recipient::Cc:
+        cc += line( *it );
+        break;
+      case Recipient::Bcc:
+        bcc += line( *it );
+        break;
+      default:
+        break;
+    }
   }
+
+  text += i18n("<b>To:</b><br/>") + to;
+  if ( !cc.isEmpty() ) text += i18n("<b>CC:</b><br/>") + cc;
+  if ( !bcc.isEmpty() ) text += i18n("<b>BCC:</b><br/>") + bcc;
 
   text.append( "</qt>" );
 
-  tip( QRect( p.x() - 20, p.y() - 20, 40, 40 ), text );
+  QRect geometry( p + QPoint( 2, 2 ), QPoint( 400, 100 ) );
+
+  tip( QRect( p.x() - 20, p.y() - 20, 40, 40 ), text, geometry );
 }
 
 
