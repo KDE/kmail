@@ -3,8 +3,16 @@
 #include "cryptplugwrapper.h"
 
 #include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
+
+
+
+
+#define FULLTEST false
+
+
 
 
 /*
@@ -48,6 +56,31 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     warnAddressNotInCertificateCB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) );
     pinEntryBG->setEnabled( cryptPlug->hasFeature( Feature_PinEntrySettings ) );
     saveMessagesBG->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesWithSigs ) );
+    
+    if( ! FULLTEST ){
+        askEachPartRB                ->hide(); // We won't implement that.
+        
+        dontSendCertificatesRB       ->hide(); // Will implement that later.
+        sendChainWithoutRootRB       ->hide(); // Will implement that later.
+        sendChainWithRootRB          ->hide(); // Will implement that later.
+        
+        warnCACertificateExpiresCB   ->hide(); // Will implement that later.
+        warnCACertificateExpiresSB   ->hide(); // Will implement that later.
+        warnRootCertificateExpiresCB ->hide(); // Will implement that later.
+        warnRootCertificateExpiresSB ->hide(); // Will implement that later.
+        warnAddressNotInCertificateCB->hide(); // Will implement that later.
+        
+        sendSigOpaqueRB              ->hide(); // Will implement that later.
+        
+        pinOncePerSessionRB          ->hide(); // Will implement that later.
+        pinAddCertificatesRB         ->hide(); // Will implement that later.
+        pinAlwaysWhenSigningRB       ->hide(); // Will implement that later.
+        pinIntervalRB                ->hide(); // Will implement that later.
+        pinIntervalSB                ->hide(); // Will implement that later.
+        
+        saveSentSigsCB               ->hide(); // We won't implement that.
+        saveMessagesBG               ->hide(); // We won't implement that.
+    }
 }
 
 #include "signatureconfigurationdialogimpl.moc"

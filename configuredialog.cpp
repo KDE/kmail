@@ -4040,8 +4040,11 @@ PluginPage::PluginPage( CryptPlugWrapperList* cryptPlugList,
     _encryptionPage = new EncryptionPage( this );
     addTab( _encryptionPage, i18n("&Encryption Configuration") );
 
-    _dirservicesPage = new DirServicesPage( this );
-    addTab( _dirservicesPage, i18n("&Directory Services") );
+// KHZ NO FULLTEST  _dirservicesPage = new DirServicesPage( this );
+// KHZ NO FULLTEST  addTab( _dirservicesPage, i18n("&Directory Services") );
+_dirservicesPage = new DirServicesPage( 0 );
+_dirservicesPage->hide();
+
 
     connect( mTabWidget, SIGNAL(currentChanged( QWidget * )),
              this, SLOT(slotCurrentPlugInTabPageChanged( QWidget * )) );
@@ -4508,7 +4511,7 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
                _signaturePage->sigDialog &&
                _signaturePage->sigDialog->signatureAlgorithmCO &&
                ( _signaturePage->sigDialog->signatureAlgorithmCO->currentText() ==
-                 "SHA-1" ) ) );
+                 "RSA + SHA-1" ) ) );
     kdDebug(5006) << "5) RET = " << ret << endl;
     if( !ret )
         return false;
@@ -4789,7 +4792,7 @@ void PluginPage::savePluginConfig( int pluginno )
     // Signature Settings group box
     QString sigAlgoStr = _signaturePage->sigDialog->signatureAlgorithmCO->currentText();
     SignatureAlgorithm sigAlgo = SignAlg_SHA1;
-    if( sigAlgoStr == "SHA-1" )
+    if( sigAlgoStr == "RSA + SHA-1" )
         sigAlgo = SignAlg_SHA1;
     else
         kdDebug(5006) << "Unknown signature algorithm " << sigAlgoStr << endl;

@@ -2,8 +2,17 @@
 #include "cryptplugwrapper.h"
 
 #include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
+
+
+
+
+#define FULLTEST false
+
+
+
 
 /*
  *  Constructs a EncryptionConfigurationDialogImpl which is a child of 'parent', with the
@@ -41,6 +50,23 @@ void EncryptionConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPl
     warnReceiverNotInCertificateCB->setEnabled( cryptPlug->hasFeature( Feature_WarnEncryptEmailNotInCertificate ) );
     saveMessagesBG->setEnabled( cryptPlug->hasFeature( Feature_StoreMessagesEncrypted ) );
     certificatePathCheckBG->setEnabled( cryptPlug->hasFeature( Feature_CheckCertificatePath ) );
+    
+    if( ! FULLTEST ) {
+        askEachPartRB                 ->hide(); // We won't implement that.
+        
+        warnCRLExpireCB               ->hide(); // Will implement that later.
+        warnCRLExpireSB               ->hide(); // Will implement that later.
+        
+        warnChainCertificateExpiresCB ->hide(); // Will implement that later.
+        warnChainCertificateExpiresSB ->hide(); // Will implement that later.
+        warnReceiverNotInCertificateCB->hide(); // Will implement that later.
+        
+        alwaysCheckRootRB             ->hide(); // Will implement that later.
+        
+        /*enable:*/
+        pathMayEndLocallyCB           ->setEnabled( true );
+        
+    }
 }
 
 #include "encryptionconfigurationdialogimpl.moc"
