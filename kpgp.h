@@ -11,6 +11,7 @@
 #include <qstrlist.h>
 #include <qdialog.h>
 #include <qwidget.h>
+#include <qcombobox.h>
 
 class QLineEdit;
 class QCursor;
@@ -205,7 +206,7 @@ private:
   QString getKey();
 
   QComboBox *combobox; 
-  QButton *button;
+  QPushButton *button;
   QCursor *cursor;
 };
 
