@@ -154,7 +154,7 @@ void RenameJob::execute()
       emit renameDone( mNewName, false );
       deleteLater();
       return;
-    } else if ( mOldName == mNewName ) {
+    } else if ( mOldName == mNewName || mOldImapPath == "/INBOX/" ) {
       emit renameDone( mNewName, true ); // noop
       deleteLater();
       return;
