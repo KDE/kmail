@@ -1554,7 +1554,7 @@ QString AppearancePage::title() {
 }
 
 const char * AppearancePage::iconName() {
-  return "appearance";
+  return "looknfeel";
 }
 
 QString AppearancePage::helpAnchor() const {
@@ -1957,7 +1957,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   populate( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
   vlay->addWidget( mMIMETreeModeGroup );
 
-  // "show reader window" radio buttons: 
+  // "show reader window" radio buttons:
   populate( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroup );
 
@@ -3904,7 +3904,7 @@ MiscPage::MiscPage( QWidget * parent, const char * name )
   mGroupwareTab = new GroupwareTab();
   addTab( mGroupwareTab, mGroupwareTab->title() );
 }
-  
+
 QString MiscPage::FolderTab::title() {
   return i18n("&Folders");
 }
