@@ -169,8 +169,9 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    len = mBody.size();
-    result.duplicate( mBody );
+    len = mBody.size() - 1;
+    result.resize(len);
+    if (len) memcpy(result.data(), mBody.data(), len);
     break;
   }
 // do this for cases where bodyDecoded instead of bodyDecodedText
