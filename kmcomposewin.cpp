@@ -3355,7 +3355,7 @@ void KMComposeWin::slotStatusMessage(const QString &message)
 void KMComposeWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config(), "Composer");
-  KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
+  KEditToolbar dlg(guiFactory(), this);
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
            SLOT(slotUpdateToolbars()) );
