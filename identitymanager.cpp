@@ -353,7 +353,7 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
   mShadowIdentities << other;
   KMIdentity & result = mShadowIdentities.last();
   result.setIsDefault( false ); // we don't want two default identities!
-  result.setUoid( kapp->random() ); // we don't want two identies w/ same UOID
+  result.setUoid( newUoid() ); // we don't want two identies w/ same UOID
   if ( !name.isNull() )
     result.setIdentityName( name );
   return result;
@@ -387,6 +387,34 @@ void IdentityManager::createDefaultIdentity() {
   }
   mShadowIdentities << KMIdentity( i18n("Default"), fullName/*, emailAddr*/ );
   mShadowIdentities.last().setIsDefault( true );
+  mShadowIdentities.last().setUoid( newUoid() );
+}
+
+int IdentityManager::newUoid()
+{
+  int uoid;
+
+  // determine the UOIDs of all saved identities
+  QValueList<uint> usedUOIDs;
+  for ( QValueList<KMIdentity>::ConstIterator it = mIdentities.begin() ;
+	it != mIdentities.end() ; ++it )
+    usedUOIDs << (*it).uoid();
+
+  if ( hasPendingChanges() ) {
+    // add UOIDs of all shadow identities. Yes, we will add a lot of duplicate
+    // UOIDs, but avoiding duplicate UOIDs isn't worth the effort.
+    for ( QValueList<KMIdentity>::ConstIterator it = mShadowIdentities.begin() ;
+          it != mShadowIdentities.end() ; ++it ) {
+      usedUOIDs << (*it).uoid();
+    }
+  }
+
+  usedUOIDs << 0; // no UOID must be 0 because this value always refers to the
+                  // default identity
+
+  do {
+    uoid = kapp->random();
+  } while ( usedUOIDs.find( uoid ) != usedUOIDs.end() );
 }
 
 #include "identitymanager.moc"

@@ -192,6 +192,9 @@ private:
   void readConfig();
   QStringList groupList() const;
   void createDefaultIdentity();
+
+  // returns a new Unique Object Identifier
+  int newUoid();
 };
 
 #endif // _KMAIL_IDENTITYMANAGER_H_
