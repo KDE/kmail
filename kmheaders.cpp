@@ -3169,14 +3169,16 @@ bool KMHeaders::readSortOrder(bool set_selection)
                if we are sorting descendingly and the sorted item is supposed
                to be sorted before the unsorted one do so. In the ascending 
                case we invert the logic for non top level items. */
-	    if(it.current() &&
-	       (!unsorted || unsorted_off >= unsorted_count 
+	    if( it.current() &&
+	       ( !unsorted || unsorted_off >= unsorted_count 
                 ||
-		( (ascending && !compare_toplevel ) 
-                  && (*it)->key() < unsorted[unsorted_off]->key()) 
+		( ( !ascending || (ascending && !compare_toplevel) ) 
+                  && (*it)->key() < unsorted[unsorted_off]->key() ) 
                 ||
-		( !ascending || compare_toplevel 
-                  && (*it)->key() >= unsorted[unsorted_off]->key()))) {
+		(  ascending && (*it)->key() >= unsorted[unsorted_off]->key() ) 
+		)
+	       ) 
+	    {
                 new_kci = (*it);
 		++it;
 	    } else {
