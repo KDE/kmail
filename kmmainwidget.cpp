@@ -3387,6 +3387,7 @@ void KMMainWidget::slotShortcutChanged( KMFolder *folder )
   KAction* action = 
     new KAction(actionlabel, folder->shortcut(), c, SLOT(start()), 
                 actionCollection(), normalizedName.local8Bit());
+  action->setIcon( folder->unreadIconPath() );
   c->setAction( action ); // will be deleted along with the command
 }
 
