@@ -301,7 +301,8 @@ int main(int argc, char *argv[])
   config.writeEntry("pid", getpid());
   config.writeEntry("hostname", hostName);
   config.sync();
-
+  
+  kapp->config()->setDollarExpansion( true );
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
