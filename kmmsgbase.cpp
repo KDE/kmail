@@ -363,7 +363,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-const char especials[16] = "()<>@,;:""/[]?.= "; 
+const char especials[17] = "()<>@,;:\"/[]?.= ";
 
 const QString KMMsgBase::encodeRFC2047String(const QString& _str)
 {
