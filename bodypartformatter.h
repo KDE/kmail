@@ -30,7 +30,7 @@
 */
 
 #ifndef __KMAIL_BODYPARTFORMATTER_H__
-#define __KMAIL_BODYPARTFORAMTTER_H__
+#define __KMAIL_BODYPARTFORMATTER_H__
 
 class partNode;
 
