@@ -555,6 +555,11 @@ void KMHeaders::readFolderConfig (void)
     setColumnWidth(mPaintInfo.sizeCol, x>0?x:10);
   }
 
+  if (mPaintInfo.showScore) {
+    int x = config->readNumEntry("ScoreWidth", 50);
+    setColumnWidth(mPaintInfo.scoreCol, x>0?x:10);
+  }
+
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
@@ -587,6 +592,10 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
   if (mPaintInfo.showSize)
     config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
+
+  if (mPaintInfo.showScore)
+      config->writeEntry("ScoreWidth", columnWidth(mPaintInfo.scoreCol));
+  
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
@@ -666,6 +675,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	mItems.resize( 0 );
       }
 
+      if (mScoringManager)
+        mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
+
+      mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
       readFolderConfig();
       mFolder->open();
 
@@ -675,9 +688,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
 
-    if (mScoringManager)
-      mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
-    
     updateMessageList();
 
     if (mFolder && !jumpToFirst)
@@ -753,13 +763,13 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       showingSize = false;
     }
 
-    mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
     if (mPaintInfo.showScore) { 
       colText = i18n( "Score" );
       if (showingScore) {
         setColumnText( mPaintInfo.scoreCol, colText);
       } else {
-        mPaintInfo.scoreCol = addColumn(colText, 80);
+        int x = config->readNumEntry("ScoreWidth", 50);
+        mPaintInfo.scoreCol = addColumn(colText, x>0?x:10);
         setColumnAlignment( mPaintInfo.scoreCol, AlignRight );
       }
       showingScore = true;
