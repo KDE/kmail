@@ -17,7 +17,6 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-#include <stdlib.h>
 #include <config.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
@@ -56,6 +55,7 @@ using KMail::SieveConfigEditor;
 #include "kmservertest.h"
 
 #include <cassert>
+#include <stdlib.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>	/* defines _PATH_MAILDIR */
