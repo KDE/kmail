@@ -95,6 +95,18 @@ namespace KMail {
     setSelectionModeExt( Single ); // ### Extended would be nicer...
   }
 
+  void IdentityListView::rename( QListViewItem * i, int col ) {
+    if ( col == 0 && isRenameable( col ) ) {
+      IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
+      if ( item ) {
+	KMIdentity & ident = item->identity();
+	if ( ident.isDefault() )
+	  item->setText( 0, ident.identityName() );
+      }
+    }
+    base::rename( i, col );
+  }
+
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {
     // disallow moving:
     return e->source() != viewport() && IdentityDrag::canDecode( e );
