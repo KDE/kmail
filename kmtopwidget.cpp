@@ -19,18 +19,22 @@
 #include "kmtopwidget.h"
 #include <kapp.h>
 
+int KMTopLevelWidget::sWindowCount = 0;
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):
   KMTopLevelWidgetInherited(aName)
 {
   initMetaObject();
+  sWindowCount++;
 }
 
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::~KMTopLevelWidget()
 {
+  sWindowCount--;
+  if (sWindowCount <= 0) kapp->quit();
 }
 
 

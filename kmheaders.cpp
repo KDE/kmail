@@ -277,6 +277,12 @@ void KMHeaders::headerClicked(int column)
   KMMsgBasePtr cur;
   const char* sortStr = "(unknown)";
   QString msg;
+  static bool working = FALSE;
+
+  if (working) return;
+  working = TRUE;
+
+  kbp->busy();
 
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
@@ -302,13 +308,12 @@ void KMHeaders::headerClicked(int column)
   else if (mSortCol==(int)KMMsgList::sfFrom) sortStr = i18n("sender");
   else if (mSortCol==(int)KMMsgList::sfStatus) sortStr = i18n("status");
 
-  if (mSortDescending) msg.sprintf(i18n("Sorting messages descending by %s"), sortStr);
+  if (mSortDescending) msg.sprintf(i18n("Sorting messages descending by %s"),
+				   sortStr);
   else msg.sprintf(i18n("Sorting messages ascending by %s"), sortStr);
   mOwner->statusMsg(msg);
 
-  kbp->busy();
   sort();
-  kbp->idle();
 
   if (cur) idx = mFolder->find(cur);
   else idx = 0;
@@ -317,6 +322,11 @@ void KMHeaders::headerClicked(int column)
   idx -= 3;
   if (idx < 0) idx = 0;
   setTopItem(idx);
+
+  mOwner->statusMsg(msg);
+  kapp->processEvents(200);
+  working = FALSE;
+  kbp->idle();
 }
 
 

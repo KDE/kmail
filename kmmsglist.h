@@ -72,6 +72,8 @@ public:
   int size(void) const { return ((int)KMMsgListInherited::size()); }
 
 protected:
+  friend int qsortCompFunc(const void* a, const void* b);
+
   /** Set mHigh to proper value */
   void rethinkHigh(void);
 

@@ -705,7 +705,7 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
   rc = addMsg(aMsg, aIndex_ret);
   close();
 
-  debug("KMFolder::moveMsg() rc=%i",rc);
+  // debug("KMFolder::moveMsg() rc=%i",rc);
   return rc;
 }
 

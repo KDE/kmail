@@ -120,6 +120,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
+  debug("~KMMainWin()");
+
   writeConfig();
 
   if (mHeaders)   delete mHeaders;

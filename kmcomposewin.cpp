@@ -185,6 +185,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
+  debug("~KMComposeWin()");
+
   writeConfig();
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
@@ -887,10 +889,13 @@ bool KMComposeWin::applyChanges(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
+  int rc;
+
   if(mEditor->isModified())
   {
-    if((KMsgBox::yesNo(0,i18n("KMail Confirm"),
-		       i18n("Close and discard\nedited message?")) == 2))
+    rc = KMsgBox::yesNo(0,i18n("KMail Confirm"),
+			i18n("Close and discard\nedited message?"));
+    if (rc != 1)
     {
       e->ignore();
       return;

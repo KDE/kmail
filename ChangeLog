@@ -1,3 +1,17 @@
+1998-10-08  Stefan Taferner  <taferner@kde.org> (KMail-1.0.5)
+
+	* Sorting messages: replaced sorting algorithm, which caused
+	random hangs, with stock qsort -- hopefully working now ;-)
+
+	* Fixed: folder list went out of scope (current item pointing to
+	nowhere) when folder was deleted.
+
+	* Composer: fixed broken confirm-close dialog.
+
+	* Increased version to better match upcoming Kde-1.1 release.
+
+	* Added call to kapp->quit() when last window is closed.
+
 1998-09-26  Stefan Taferner  <taferner@kde.org> (KMail-0.8.1)
 
 	* Fixed crash upon close of a main- or composer window.

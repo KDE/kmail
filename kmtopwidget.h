@@ -53,7 +53,11 @@ public:
     //  virtual bool close(bool forceKill=FALSE);
 
 protected:
-   virtual void closeEvent(QCloseEvent*);
+  virtual void closeEvent(QCloseEvent*);
+
+private:
+  // app->quit() is called when sWindowCount<=0 in destructor
+  static int sWindowCount;
 };
 
 #endif /*kmtopwidget_h*/

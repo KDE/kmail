@@ -28,8 +28,6 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   initMetaObject();
 
-  mLastIdx = -1;
-
   mDropZone = new KDNDDropZone(this, DndRawData);
   connect(mDropZone, SIGNAL(dropAction(KDNDDropZone*)),
 	  this, SLOT(doDropAction(KDNDDropZone*)));
@@ -120,6 +118,7 @@ void KMFolderTree::reload(void)
 void KMFolderTree::doFolderListChanged()
 {
   uint idx = currentItem();
+  debug("doFolderListChanged()");
   reload();
   if (idx >= 0 && idx < count()) setCurrentItem(idx);
 }
@@ -188,23 +187,20 @@ void KMFolderTree::doFolderSelected(int index, int)
 {
   KMFolder* folder;
 
-  if (index < 0 || index == mLastIdx) return;
-  mLastIdx = index;
+  if (index < 0) return;
 
   folder = (KMFolder*)mList.at(index);
-
-  printf("doFolderSelected\n");
   if(folder)
+  {
+    if (folder->isDir()) 
     {
-      if (folder->isDir()) 
-	{
-	  debug("Folder `%s' is a directory -> ignoring it.",
-		(const char*)folder->name());
-	  emit folderSelected(NULL);
-	}
-    
-      else emit folderSelected(folder);
+      debug("Folder `%s' is a directory -> ignoring it.",
+	    (const char*)folder->name());
+      emit folderSelected(NULL);
     }
+    
+    else emit folderSelected(folder);
+  }
 }
 
 

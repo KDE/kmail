@@ -652,8 +652,6 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   KMMessagePart msgPart;
 
   id = msgPartFromUrl(aUrl);
-
-  debug("id: %i",id);
   if (id <= 0)
   {
     emit statusMsg(aUrl);
