@@ -1061,7 +1061,6 @@ void AccountDialog::setupSettings()
     mImap.resourceCheck->setChecked( ai.resource() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
-    mImap.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
@@ -1402,7 +1401,6 @@ void AccountDialog::saveSettings()
     epa.setProgressDialogEnabled( mImap.progressDialogCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
-    epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     epa.setTrash( mImap.trashCombo->getFolder()->idString() );
