@@ -116,7 +116,7 @@ public:
   virtual int addMsg(KMMessage* msg, int* index_return = NULL);
 
   /** Remove (first occurance of) given message from the folder. */
-  virtual void removeMsg(int i);
+  virtual void removeMsg(int i, bool imapQuiet = FALSE);
   virtual void removeMsg(KMMsgBasePtr msg);
 
   /** Delete messages in the folder that are older than days. Return the

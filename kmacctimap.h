@@ -251,6 +251,13 @@ protected slots:
   /** Free the resources */
   void slotListResult(KIO::Job * job);
 
+  /** Retrieve the whole folder or only the changes */
+  void checkValidity(KMFolderTreeItem * fti);
+  void slotCheckValidityResult(KIO::Job * job);
+
+  /** Get the folder now (internal) */
+  void reallyGetFolder(KMFolderTreeItem * fti);
+
   /** Retrieve the next message */
   void getNextMessage(jobData & jd);
 
@@ -277,7 +284,7 @@ protected slots:
 
 public slots:
   /** Add the data a KIO::Job retrieves to the buffer */
-  void slotGetMessageData(KIO::Job * job, const QByteArray & data);
+  void slotSimpleData(KIO::Job * job, const QByteArray & data);
 };
 
 

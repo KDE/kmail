@@ -636,7 +636,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     QString extendedName;
     emit folderSelected(folder);
     if (fti->folder->account() && fti->mImapState
-      == KMFolderTreeItem::imapNoInformation)
+      != KMFolderTreeItem::imapInProgress)
         fti->folder->account()->getFolder(fti);
     if (folder && (folder->countUnread() > 0) ) {
       QString num;

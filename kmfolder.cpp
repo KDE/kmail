@@ -983,21 +983,20 @@ void KMFolder::removeMsg(KMMsgBasePtr aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::removeMsg(int idx)
+void KMFolder::removeMsg(int idx, bool imapQuiet)
 {
-  KMMsgBase* mb;
-
   //assert(idx>=0);
   if(idx < 0)
-    {
-      kdDebug() << "KMFolder::removeMsg() : idx < 0\n" << endl;
-      return;
-    }
-  QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
-  if (mAccount && !mb->isMessage()) readMsg(idx);
+  {
+    kdDebug() << "KMFolder::removeMsg() : idx < 0\n" << endl;
+    return;
+  }
+  KMMsgBase* mb = mMsgList[idx];
+  QString msgIdMD5 = mb->msgIdMD5();
+  if (mAccount && !imapQuiet && !mb->isMessage()) readMsg(idx);
   mb = mMsgList.take(idx);
 
-  if (mAccount)
+  if (mAccount && !imapQuiet)
   {
     KMMessage *msg = static_cast<KMMessage*>(mb);
     mAccount->deleteMessage(msg);

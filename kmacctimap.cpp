@@ -260,10 +260,62 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::checkValidity(KMFolderTreeItem * fti)
+{
+  jobData jd;
+  jd.parent = fti;
+  jd.total = 1; jd.done = 0;
+  KURL url = getUrl();
+  url.setPath(fti->folder->imapPath() + ";UID=0:0");
+  makeConnection();
+  KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
+  mapJobData.insert(job, jd);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotCheckValidityResult(KIO::Job *)));
+  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
+          SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotCheckValidityResult(KIO::Job * job)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  if (it == mapJobData.end()) return;
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    mapJobData.remove(it);
+    displayProgress();
+  } else {
+    QCString cstr((*it).data + '\0');
+    int a = cstr.find("X-uidValidity: ");
+    int  b = cstr.find("\r\n", a);
+    if ((*it).parent->folder->uidValidity() != 
+      QString(cstr.mid(a + 15, b - a - 15)))
+        (*it).parent->folder->expunge();
+    KMFolderTreeItem *fti = (*it).parent;
+    mapJobData.remove(it);
+    reallyGetFolder(fti);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::getFolder(KMFolderTreeItem * fti)
 {
-  if (fti->folder->count()) fti->folder->expunge();
   fti->mImapState = KMFolderTreeItem::imapInProgress;
+  if (!fti->folder->uidValidity().isEmpty()) checkValidity(fti);
+  else reallyGetFolder(fti);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::reallyGetFolder(KMFolderTreeItem * fti)
+{
   jobData jd;
   jd.parent = fti;
   jd.total = 1; jd.done = 0;
@@ -304,7 +356,7 @@ void KMAcctImap::getNextMessage(jobData & jd)
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotGetMessageResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          this, SLOT(slotGetMessageData(KIO::Job *, const QByteArray &)));
+          this, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
 }
 
 
@@ -321,12 +373,33 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
     mapJobData.remove(it);
     return;
   }
+  QString uids;
+  QStringList::Iterator uid;
+  // Check for already retrieved headers
+  if ((*it).parent->folder->count())
+  {
+    QCString cstr;
+    KMFolder *folder = (*it).parent->folder;
+    int idx = 0, a, b;
+    long int mailUid, serverUid;
+    uid = (*it).items.begin();
+    while (idx < folder->count() && uid != (*it).items.end())
+    {
+      folder->getMsgString(idx, cstr);
+      a = cstr.find("X-UID: ");
+      b = cstr.find("\n", a);
+      mailUid = cstr.mid(a + 7, b - a - 7).toLong();
+      serverUid = (*uid).toLong();
+      if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
+      else if (mailUid > serverUid) uid++;
+      else { idx++; uid = (*it).items.remove(uid); }
+    }
+  }
   jobData jd;
   jd.parent = (*it).parent;
-  jd.items = (*it).items;
+//  jd.items = (*it).items;
   jd.total = (*it).items.count(); jd.done = 0;
-  QString uids;
-  QStringList::ConstIterator uid = (*it).items.begin();
+  uid = (*it).items.begin();
   if (jd.total == 0)
   {
     (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
@@ -526,7 +599,7 @@ void KMImapJob::slotGetNextMessage()
   connect(mJob, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotGetMessageResult(KIO::Job *)));
   connect(mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          account, SLOT(slotGetMessageData(KIO::Job *, const QByteArray &)));
+          account, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   account->displayProgress();
 }
 
@@ -563,7 +636,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::slotGetMessageData(KIO::Job * job, const QByteArray & data)
+void KMAcctImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
