@@ -209,7 +209,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
   config.writeEntry("auth", mAuth);
-  config.writeEntry("pipelining", TRUE);
+  config.writeEntry("pipelining", mUsePipelining);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
