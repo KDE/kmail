@@ -1045,6 +1045,9 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
 
   comment = aMsgPart->contentDescription();
+  comment.replace(QRegExp("\""), "&quot;");
+  comment.replace(QRegExp("<"), "&lt;");
+  comment.replace(QRegExp(">"), "&gt;");
 
   fileName = aMsgPart->fileName();
   if (fileName.isEmpty()) fileName = aMsgPart->name();
