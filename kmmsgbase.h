@@ -265,7 +265,7 @@ public:
 
   /** Return a QTextCodec for the specified charset.
    * This function is a bit more tolerant, than QTextCodec::codecForName */
-  static QTextCodec* codecForName(const QCString& _str);
+  static const QTextCodec* codecForName(const QCString& _str);
 
   /** Convert all non-ascii characters to question marks
     * If ok is non-null, *ok will be set to true if all characters
@@ -283,14 +283,6 @@ public:
 
   /** Copy constructor that simply calls assign(). */
   KMMsgBase( const KMMsgBase& other );
-
-  /** En-/decode given string to/from quoted-printable. */
-  static QCString decodeQuotedPrintable(const QCString& str);
-  static QCString encodeQuotedPrintable(const QCString& str);
-
-  /** En/-decode given string to/from Base64. */
-  static QCString decodeBase64(const QCString& str);
-  static QCString encodeBase64(const QCString& str);
 
   /** Helper function for encodeRFC2047String */
   static QCString encodeRFC2047Quoted(const QCString& aStr, bool base64);
