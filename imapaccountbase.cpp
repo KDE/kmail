@@ -250,6 +250,7 @@ namespace KMail {
         checkDone( false, CheckCanceled );
         mPasswordDialogIsActive = false;
         mAskAgain = false;
+        emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
         return Error;
       }
       mPasswordDialogIsActive = false;
