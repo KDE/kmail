@@ -86,13 +86,19 @@
 #include <paths.h>
 #endif
 
-
-
-
-
-
-
-
+class KMReaderWin::PartMetaData {
+public:
+    bool isSigned;
+    bool isGoodSignature;
+    QString signClass;
+    QString signer;
+    QCString keyId;
+    Kpgp::Validity keyTrust;
+    QString status;
+    bool isEncrypted;
+    bool isDecryptable;
+    QString decryptionError;
+};
 
 // INTERIM SOLUTION variable
 //
@@ -526,9 +532,18 @@ if(data){
                     myBody->Parse();
                     partNode myBodyNode( true, myBody );
                     myBodyNode.buildObjectTree( false );
+		    
+		    // paint the frame
+		    PartMetaData messagePart;
+		    messagePart.isDecryptable = true;
+		    messagePart.isEncrypted = true;
+		    messagePart.isSigned = false;
+		    
+		    queueHtml( writeSigstatHeader( messagePart ) );
                     parseObjectTree( &myBodyNode, showOneMimePart,
                                                   keepEncryptions,
                                                   includeSignatures );
+		    queueHtml( writeSigstatFooter( messagePart ) );
                   }
                   else
                   {
@@ -1692,9 +1707,6 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
 {
   bool bIsOpaqueSigned = false;
 
-  if( data )
-    parseObjectTree( data );
-
   CryptPlugWrapper* cryptPlug = useThisCryptPlug ? useThisCryptPlug : mCryptPlugList->active();
   if( cryptPlug ) {
     if( data )
@@ -1705,19 +1717,11 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
                   << cryptPlug->libName() << endl;
 
-    bool oldCryptPlugActiveFlag;
-    if( !cryptPlug->active() ) {
-      if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
-        KMessageBox::sorry(this,
-          i18n("Crypto Plug-In \"%s"
-               "\" is not initialized.\n"
-               "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
+    if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
+        KMessageBox::sorry(this, i18n("Crypto Plug-In \"%1\" is not initialized.\n"
+				      "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
         return false;
-      }
-      oldCryptPlugActiveFlag = cryptPlug->active();
-      cryptPlug->setActive( true );
-    } else
-      oldCryptPlugActiveFlag = true;
+    }
 
     QCString cleartext;
     char* new_cleartext;
@@ -1798,9 +1802,31 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
 
     QString txt;
+    PartMetaData messagePart;
+    messagePart.isSigned = true;
+    messagePart.isGoodSignature = bSignatureOk;
+    messagePart.isEncrypted = false;
+    messagePart.isDecryptable = false;
+    messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
+    messagePart.status = sigMeta.status;
+
+    // only one signature supported
+    if (sigMeta.extended_info_count != 0) {
+	messagePart.keyId = sigMeta.extended_info[0].keyid;
+	messagePart.keyTrust = sigMeta.extended_info[0].validity;
+	messagePart.signer = sigMeta.extended_info[0].userid;
+	//blockMeta.signer = sigMeta.extended_info[0].name;
+	//blockMeta.signer += " <";
+	//blockMeta.signer += sigMeta.extended_info[0].email;
+	//blockMeta.signer += ">";
+    }
+
     QString unknown( i18n("(unknown)") );
     if( !data ){
       if( new_cleartext ) {
+	  
+	queueHtml( writeSigstatHeader( messagePart ) );
+
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
         deb += new_cleartext;
@@ -1810,7 +1836,12 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
                                     new_cleartext,
                                     "opaqued signed data" );
         delete new_cleartext;
-      } else {
+
+	queueHtml( writeSigstatFooter( messagePart ) );
+
+      } 
+      else 
+      {
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
         txt.append( "</h2></b>" );
@@ -1825,73 +1856,17 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
           txt.append( unknown );
         queueHtml(txt);
       }
+    } 
+    else 
+    {
+	queueHtml( writeSigstatHeader( messagePart ) );
+	parseObjectTree( data );
+	queueHtml( writeSigstatFooter( messagePart ) );
     }
 
-    if( bSignatureOk ) {
-      txt = "<hr><b>";
-      txt.append( i18n( "Signature is OK." ).local8Bit() );
-      txt.append( "</b><br>&nbsp;<br>" );
-      txt.append( i18n( "Status: " ).local8Bit() );
-      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
-        txt.append( "<i>" );
-        txt.append( sigMeta.status );
-        txt.append( "</i>" );
-      }
-      else
-        txt.append( unknown );
-      txt.append( "<br>&nbsp;<br>" );
-      txt.append( i18n( "Signature key information:" ).local8Bit() );
-      txt.append( "<br>" );
-      if( 0 < sigMeta.extended_info_count ) {
-        txt.append( "<table border=1><tr><td>" );
-        txt.append( i18n( "<u>created</u>" ).local8Bit() );
-        txt.append( "</td><td>" );
-        txt.append( i18n( "<u>status</u>" ).local8Bit() );
-        txt.append( "</td><td>" );
-        txt.append( i18n( "<u>fingerprint</u>" ).local8Bit() );
-        txt.append( "</td></tr>" );
-        for( int i=0; i<sigMeta.extended_info_count; ++i ) {
-          CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[i];
-          // soll:
-          // txt.append( QString("<tr><td>%1<td/><td>").arg( ext.creation_time ).latin1() );
-          // ist:
-             txt.append( "<tr><td><i>?</i></td>" );
+    //if (bSignatureOk)
+	cryptPlug->freeSignatureMetaData( &sigMeta );
 
-          txt.append( QString(    "<td><i>%1</i></td>").arg( ext.status_text ).latin1() );
-          txt.append( QString(    "<td><i>%1</i></td></tr>").arg( ext.fingerprint ).latin1() );
-        }
-        txt.append( "</table>" );
-      }
-      else
-        txt.append( unknown );
-      txt.append( "<br><u>Notation (XML):</u><br>" );
-      if( sigMeta.nota_xml && 0 < sigMeta.nota_xml ) {
-        txt.append( "<i><pre>" );
-        txt.append( sigMeta.nota_xml );
-        txt.append( "</pre></i>" );
-      }
-      else
-        txt.append( unknown );
-      cryptPlug->freeSignatureMetaData( &sigMeta );
-
-      queueHtml(txt);
-    }
-    else {
-      txt = "<hr><b><h2>";
-      txt.append( i18n( "Signature could <em>not</em> be verified!" ) );
-      txt.append( "</h2></b>" );
-      txt.append( "<br>&nbsp;<br>" );
-      txt.append( i18n( "Status: " ).local8Bit() );
-      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
-        txt.append( "<i>" );
-        txt.append( sigMeta.status );
-        txt.append( "</i>" );
-      }
-      else
-        txt.append( unknown );
-      queueHtml(txt);
-    }
-    cryptPlug->setActive( oldCryptPlugActiveFlag );
   } else {
     KMessageBox::information(this,
 			     i18n("problem: No Crypto Plug-Ins found.\n"
@@ -2427,6 +2402,137 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
   return headerStr;
 }
 
+//---------------------------------------------------
+
+QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
+{
+    QString signer = block.signer;
+
+    QString htmlStr;
+    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    
+    if( block.isEncrypted )
+    {
+	htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
+	    "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
+	if( block.isDecryptable )
+	    htmlStr += i18n("Encrypted message");
+	else
+	    htmlStr += QString("%1<br />%2")
+		.arg(i18n("Cannot decrypt message:"))
+		.arg(block.decryptionError);
+	htmlStr += "</td></tr><tr class=\"encrB\"><td>";
+    }
+    
+    if (block.isSigned) {
+
+	if (block.signer.isEmpty()) {
+	    block.signClass = "signWarn";
+	    htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+		"class=\"" + block.signClass + "\">"
+		"<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+	    htmlStr += i18n( "Message was signed with unknown key 0x%1." )
+		.arg( block.keyId );
+	    htmlStr += "<br />";
+	    htmlStr += i18n( "The validity of the signature can't be "
+			     "verified." );
+	    htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+
+	} 
+	else 
+	{
+	    // HTMLize the signer's user id and create mailto: link
+	    signer.replace( QRegExp("&"), "&amp;" );
+	    signer.replace( QRegExp("<"), "&lt;" );
+	    signer.replace( QRegExp(">"), "&gt;" );
+	    signer.replace( QRegExp("\""), "&quot;" );
+	    signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
+	    
+	    if (block.isGoodSignature) {
+		if( block.keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
+		    block.signClass = "signOkKeyBad";
+		else
+		    block.signClass = "signOkKeyOk";
+		htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+		    "class=\"" + block.signClass + "\">"
+		    "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+		if( !block.keyId.isEmpty() )
+		    htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
+			.arg( signer )
+			.arg( block.keyId );
+		else
+		    htmlStr += i18n( "Message was signed by %1." ).arg( signer );
+		htmlStr += "<br />";
+		
+		switch( block.keyTrust )
+		{
+		    case Kpgp::KPGP_VALIDITY_UNKNOWN:
+			htmlStr += i18n( "The signature is valid, but the key's "
+					 "validity is unknown." );
+			break;
+		    case Kpgp::KPGP_VALIDITY_MARGINAL:
+			htmlStr += i18n( "The signature is valid and the key is "
+					 "marginally trusted." );
+			break;
+		    case Kpgp::KPGP_VALIDITY_FULL:
+			htmlStr += i18n( "The signature is valid and the key is "
+					 "fully trusted." );
+			break;
+		    case Kpgp::KPGP_VALIDITY_ULTIMATE:
+			htmlStr += i18n( "The signature is valid and the key is "
+					 "ultimately trusted." );
+			break;
+		    default:
+			htmlStr += i18n( "The signature is valid, but the key is "
+					 "untrusted." );
+		}
+		htmlStr += "</td></tr>"
+		    "<tr class=\"" + block.signClass + "B\"><td>";
+	    } 
+	    else 
+	    {
+		block.signClass = "signErr";
+		htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+		    "class=\"" + block.signClass + "\">"
+		    "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+		if( !block.keyId.isEmpty() )
+		    htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
+			.arg( signer )
+			.arg( block.keyId );
+		else
+		    htmlStr += i18n( "Message was signed by %1." ).arg( signer );
+		htmlStr += "<br />";
+		htmlStr += i18n("Warning: The signature is bad.");
+		htmlStr += "</td></tr>"
+		    "<tr class=\"" + block.signClass + "B\"><td>";
+	    }
+	}
+    }
+	
+    return htmlStr;
+}
+
+QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
+{    
+    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+
+    QString htmlStr;
+
+    if (block.isSigned) {
+	htmlStr += "</td></tr><tr class=\"" + block.signClass + "H\">";
+	htmlStr += "<td dir=\"" + dir + "\">" +
+	    i18n( "End of signed message" ) +
+	    "</td></tr></table>";
+    }
+    
+    if (block.isEncrypted) {
+	htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
+		i18n( "End of encrypted message" ) +
+	    "</td></tr></table>";
+    }
+    
+    return htmlStr;
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
@@ -2446,188 +2552,110 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
   QStrList nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
-    bool isEncrypted = false, isSigned = false;
-    QString signer;
-    QPtrListIterator<Kpgp::Block> pbit( pgpBlocks );
+      bool isEncrypted = false, isSigned = false;
+      bool couldDecrypt = false;
+      QString signer;
+      QCString keyId;
+      QString decryptionError;
+      Kpgp::Validity keyTrust = Kpgp::KPGP_VALIDITY_FULL;
 
-    QStrListIterator npbit( nonPgpBlocks );
+      QPtrListIterator<Kpgp::Block> pbit( pgpBlocks );
 
-    for( ; *pbit != 0; ++pbit, ++npbit )
-    {
-      // insert the next Non-OpenPGP block
-      QCString str( *npbit );
-      if( !str.isEmpty() )
-        htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+      QStrListIterator npbit( nonPgpBlocks );
 
-      //htmlStr += "<br>";
-
-      Kpgp::Block* block = *pbit;
-      if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-          ( block->type() == Kpgp::ClearsignedBlock ) )
+      for( ; *pbit != 0; ++pbit, ++npbit )
       {
-        isPgpMessage = true;
-        if( block->type() == Kpgp::PgpMessageBlock )
-        {
-          emit noDrag();
-          // try to decrypt this OpenPGP block
-          bool couldDecrypt = block->decrypt();
-          isEncrypted = block->isEncrypted();
-          if( isEncrypted )
-          {
-            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
-                       "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
-            if( couldDecrypt )
-              htmlStr += i18n("Encrypted message");
-            else
-              htmlStr += QString("%1<br />%2")
-                .arg(i18n("Cannot decrypt message:"))
-                .arg(pgp->lastErrorMsg());
-            htmlStr += "</td></tr><tr class=\"encrB\"><td>";
-          }
-        }
-        else
-        {
-          // try to verify this OpenPGP block
-          block->verify();
-        }
+	  // insert the next Non-OpenPGP block
+	  QCString str( *npbit );
+	  if( !str.isEmpty() )
+	    htmlStr += quotedHTML( aCodec->toUnicode( str ) );
 
-        isSigned = block->isSigned();
-        if( isSigned )
-        {
-          signer = block->signatureUserId();
-          if( signer.isEmpty() )
-          {
-            signClass = "signWarn";
-            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                       "class=\"" + signClass + "\">"
-                       "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
-            htmlStr += i18n( "Message was signed with unknown key 0x%1." )
-                       .arg( block->signatureKeyId() );
-            htmlStr += "<br />";
-            htmlStr += i18n( "The validity of the signature can't be "
-                             "verified." );
-            htmlStr += "</td></tr><tr class=\"" + signClass + "B\"><td>";
-          }
-          else
-          {
-            goodSignature = block->goodSignature();
+	  //htmlStr += "<br>";
 
-            QCString keyId = block->signatureKeyId();
-            Kpgp::Validity keyTrust;
-            if( !keyId.isEmpty() )
-              keyTrust = pgp->keyTrust( keyId );
-            else
-              // This is needed for the PGP 6 support because PGP 6 doesn't
-              // print the key id of the signing key if the key is known.
-              keyTrust = pgp->keyTrust( signer );
+	  Kpgp::Block* block = *pbit;
+	  if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+	      ( block->type() == Kpgp::ClearsignedBlock ) )
+	  {
+	      isPgpMessage = true;
+	      if( block->type() == Kpgp::PgpMessageBlock )
+	      {
+		  emit noDrag();
+		  // try to decrypt this OpenPGP block
+		  couldDecrypt = block->decrypt();
+		  isEncrypted = block->isEncrypted();
+		  if (!couldDecrypt) {
+		    decryptionError = pgp->lastErrorMsg();
+		  }
+	      }
+	      else
+	      {
+		  // try to verify this OpenPGP block
+		  block->verify();
+	      }
 
-            // HTMLize the signer's user id and create mailto: link
-            signer.replace( QRegExp("&"), "&amp;" );
-            signer.replace( QRegExp("<"), "&lt;" );
-            signer.replace( QRegExp(">"), "&gt;" );
-            signer.replace( QRegExp("\""), "&quot;" );
-            signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
+	      isSigned = block->isSigned();
+	      if( isSigned )
+	      {
+		  signer = block->signatureUserId();
+		  if( !signer.isEmpty() )
+		  {
+		      goodSignature = block->goodSignature();
 
-            if( goodSignature )
-            {
-              if( keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
-                signClass = "signOkKeyBad";
-              else
-                signClass = "signOkKeyOk";
-              htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                         "class=\"" + signClass + "\">"
-                         "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
-              if( !keyId.isEmpty() )
-                htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
-                           .arg( signer )
-                           .arg( keyId );
-              else
-                htmlStr += i18n( "Message was signed by %1." ).arg( signer );
-              htmlStr += "<br />";
-              switch( keyTrust )
-              {
-              case Kpgp::KPGP_VALIDITY_UNKNOWN:
-                htmlStr += i18n( "The signature is valid, but the key's "
-                                 "validity is unknown." );
-                  break;
-              case Kpgp::KPGP_VALIDITY_MARGINAL:
-                htmlStr += i18n( "The signature is valid and the key is "
-                                 "marginally trusted." );
-                break;
-              case Kpgp::KPGP_VALIDITY_FULL:
-                htmlStr += i18n( "The signature is valid and the key is "
-                                 "fully trusted." );
-                break;
-              case Kpgp::KPGP_VALIDITY_ULTIMATE:
-                htmlStr += i18n( "The signature is valid and the key is "
-                                 "ultimately trusted." );
-                break;
-              default:
-                htmlStr += i18n( "The signature is valid, but the key is "
-                                 "untrusted." );
-              }
-              htmlStr += "</td></tr>"
-                         "<tr class=\"" + signClass + "B\"><td>";
-            }
-            else
-            {
-              signClass = "signErr";
-              htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-                         "class=\"" + signClass + "\">"
-                         "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
-              if( !keyId.isEmpty() )
-                htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
-                           .arg( signer )
-                           .arg( keyId );
-              else
-                htmlStr += i18n( "Message was signed by %1." ).arg( signer );
-              htmlStr += "<br />";
-              htmlStr += i18n("Warning: The signature is bad.");
-              htmlStr += "</td></tr>"
-                         "<tr class=\"" + signClass + "B\"><td>";
-            }
-          }
-        }
+		      keyId = block->signatureKeyId();
+		      if( !keyId.isEmpty() )
+			keyTrust = pgp->keyTrust( keyId );
+		      else
+			// This is needed for the PGP 6 support because PGP 6 doesn't
+			// print the key id of the signing key if the key is known.
+			keyTrust = pgp->keyTrust( signer );
+		  }
+	      }
 
-        htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+	      if( isSigned ) {
+		if( flagSigned )
+		  *flagSigned = true;
+	      }
+	      if( isEncrypted ) {
+		if( flagEncrypted )
+		  *flagEncrypted = true;
+	      }
 
-        if( isSigned ) {
-          htmlStr += "</td></tr><tr class=\"" + signClass + "H\">";
-          htmlStr += "<td dir=\"" + dir + "\">" +
-                     i18n( "End of signed message" ) +
-                     "</td></tr></table>";
-          if( flagSigned )
-            *flagSigned = true;
-        }
-        if( isEncrypted ) {
-          htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
-                     i18n( "End of encrypted message" ) +
-                     "</td></tr></table>";
-          if( flagEncrypted )
-            *flagEncrypted = true;
-        }
+	      PartMetaData messagePart;
+
+	      messagePart.isSigned = isSigned;
+	      messagePart.isGoodSignature = goodSignature;
+	      messagePart.isEncrypted = isEncrypted;
+	      messagePart.isDecryptable = couldDecrypt;
+	      messagePart.decryptionError = decryptionError;
+	      messagePart.signer = signer;
+	      messagePart.keyId = keyId;
+	      messagePart.keyTrust = keyTrust;
+
+	      htmlStr += writeSigstatHeader( messagePart );
+	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+	      htmlStr += writeSigstatFooter( messagePart );
+	  }
+	  else // block is neither message block nor clearsigned block
+	    htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
       }
-      else // block is neither message block nor clearsigned block
-        htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
-    }
 
-    // add the last Non-OpenPGP block
-    QCString str( nonPgpBlocks.last() );
-    if( !str.isEmpty() )
-      htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+      // add the last Non-OpenPGP block
+      QCString str( nonPgpBlocks.last() );
+      if( !str.isEmpty() )
+	  htmlStr += quotedHTML( aCodec->toUnicode( str ) );
   }
   else
-    htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );
+      htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );
 
   if( isPgpMessage )
   {
-    mColorBar->setEraseColor( cCBpgp );
-    mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
+      mColorBar->setEraseColor( cCBpgp );
+      mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
   }
   else
   {
-    mColorBar->setEraseColor( cCBplain );
-    mColorBar->setText(i18n("\nN\no\n \nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
+      mColorBar->setEraseColor( cCBplain );
+      mColorBar->setText(i18n("\nN\no\n \nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
   }
   queueHtml(htmlStr);
 }

@@ -320,11 +320,11 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
-//private:
-//  /** extracted parts from writeBodyStr() */
-//  class BlockMetaData;
-//  QString openMessageBlock(BlockMetaData& block);
-//  QString closeMessageBlock(BlockMetaData& block);
+private:
+  /** extracted parts from writeBodyStr() */
+  class PartMetaData;
+  QString writeSigstatHeader(PartMetaData& part);
+  QString writeSigstatFooter(PartMetaData& part);
 
 protected:
   bool mHtmlMail, mHtmlOverride;
