@@ -1539,9 +1539,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin() ; it != ac.attachments().end() ; ++it )
     addAttach( new KMMessagePart( (*it)->msgPart() ) );
 
-  kdDebug(5006) << endl << endl << "TEXTUAL CONTENT: " << endl << otp.textualContent() << endl;
   mEditor->setText( otp.textualContent() );
-
   mCharset = otp.textualContentCharset();
   if ( mCharset.isEmpty() )
     mCharset = mMsg->charset();
@@ -1557,7 +1555,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
           toggleMarkup( true );
 
   /* Handle the special case of non-mime mails */
-  if ( mMsg->numBodyParts() == 0 ) {
+  if ( mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty() ) {
     mCharset=mMsg->charset();
     if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
