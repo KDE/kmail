@@ -10,8 +10,6 @@
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
-#include "kmmainwin.h"
-
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
@@ -35,6 +33,7 @@ class IdentityManager;
 class KProcess;
 class KProgressDialog;
 class ConfigureDialog;
+class KMMainWin;
 
 class KMKernel : public QObject, virtual public KMailIface
 {

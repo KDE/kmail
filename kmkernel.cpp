@@ -20,6 +20,7 @@
 #include <kprogress.h>
 
 #include "kmreaderwin.h"
+#include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
