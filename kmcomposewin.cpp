@@ -1155,6 +1155,7 @@ void KMComposeWin::setupActions(void)
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+  slotSelectCryptoModule();
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
