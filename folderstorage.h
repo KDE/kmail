@@ -44,6 +44,8 @@
 #include "kmglobal.h"
 #include "folderjob.h"
 using KMail::FolderJob;
+#include "listjob.h"
+using KMail::ListJob;
 
 #include "mimelib/string.h"
 
@@ -395,6 +397,12 @@ public:
 
   /** false if index file is out of sync with mbox file */
   bool compactable() const { return mCompactable; }
+
+  /**
+   * List a directory
+   * returns false if the connection failed
+   */
+  virtual bool listDirectory(bool secondStep = false) = 0;  
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

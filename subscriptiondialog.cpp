@@ -35,6 +35,9 @@
 
 #include "subscriptiondialog.h"
 #include "kmmessage.h"
+#include "folderstorage.h"
+#include "listjob.h"
+using KMail::ListJob;
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -43,19 +46,13 @@
 namespace KMail {
 
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
-    KAccount * acct )
-  : KSubscription( parent, caption, acct, User1, QString::null, false )
+    KAccount *acct, QString startPath )
+  : KSubscription( parent, caption, acct, User1, QString::null, false ),
+    mStartPath( startPath )
 {
   // hide unneeded checkboxes
   hideTreeCheckbox();
   hideNewOnlyCheckbox();
-
-  // connect to folderlisting
-  ImapAccountBase* iaccount = static_cast<ImapAccountBase*>(acct);
-  connect(iaccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)),
-      this, SLOT(slotListDirectory(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)));
 
   // ok-button
   connect(this, SIGNAL(okClicked()), SLOT(slotSave()));
@@ -68,11 +65,11 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 }
 
 //------------------------------------------------------------------------------
-void SubscriptionDialog::slotListDirectory( QStringList subfolderNames,
-                                            QStringList subfolderPaths,
-                                            QStringList subfolderMimeTypes,
-                                            QStringList subfolderAttributes,
-                                            const ImapAccountBase::jobData & jobData )
+void SubscriptionDialog::slotListDirectory( QStringList& subfolderNames,
+                                            QStringList& subfolderPaths,
+                                            QStringList& subfolderMimeTypes,
+                                            QStringList& subfolderAttributes,
+                                            const ImapAccountBase::jobData& jobData )
 {
   mFolderNames = subfolderNames;
   mFolderPaths = subfolderPaths;
@@ -90,8 +87,6 @@ void SubscriptionDialog::slotListDirectory( QStringList subfolderNames,
 void SubscriptionDialog::createItems()
 {
   bool onlySubscribed = mJobData.onlySubscribed;
-  ImapAccountBase::ListType type = onlySubscribed ? 
-    ImapAccountBase::ListSubscribedNoCheck : ImapAccountBase::List;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
   GroupItem *parent = 0;
   uint done = 0;
@@ -195,7 +190,6 @@ void SubscriptionDialog::createItems()
         mItemDict.remove(info.path);
       
       mItemDict.insert(info.path, item);
-
       if (oldItem)
       {
         // move the old childs to the new item
@@ -217,26 +211,51 @@ void SubscriptionDialog::createItems()
         delete oldItem;
         itemsToMove.clear();
       }
+      // select the start item
+      if ( mFolderPaths[i] == mStartPath )
+      {
+        item->setSelected( true );
+        folderTree()->ensureItemVisible( item );
+      }
 
     } else if (onlySubscribed)
     {
       // find the item
-      if (mItemDict[mFolderPaths[i]])
-        (mItemDict[mFolderPaths[i]])->setOn(true);
+      if ( mItemDict[mFolderPaths[i]] )
+      {
+        GroupItem* item = mItemDict[mFolderPaths[i]];
+        item->setOn( true );
+      }
     }
   }
   if ( mJobData.inboxOnly ) 
   {
-    // list again with prefix
-    ai->listDirectory( ai->prefix(), type, true, 0, false, true );
+    // list again (secondStep=true) with prefix
+    ImapAccountBase::ListType type = ImapAccountBase::List;
+    if ( onlySubscribed )
+      type = ImapAccountBase::ListSubscribedNoCheck;
+    ListJob* job = new ListJob( 0, ai, type, true, true,
+        false, ai->prefix() );
+    connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
+            QStringList&, QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotListDirectory(QStringList&, QStringList&,
+            QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+    job->start();
   } else if (!onlySubscribed) 
   {
     // get subscribed folders
     // only do a complete listing (*) when the user did not enter a prefix
     // otherwise the complete listing will be done in second step
+    // we use the 'SubscribedNoCheck' feature so that the kioslave doesn't check
+    // for every folder if it actually exists
     bool complete = (ai->prefix() == "/") ? true : false;
-    ai->listDirectory( ai->prefix(), ImapAccountBase::ListSubscribedNoCheck, 
-        false, 0, false, complete );
+    ListJob* job = new ListJob( 0, ai, ImapAccountBase::ListSubscribedNoCheck,
+        false, complete, false, ai->prefix() );
+    connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
+            QStringList&, QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotListDirectory(QStringList&, QStringList&,
+            QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+    job->start();
   } else if (onlySubscribed) 
   {
     // activate buttons and stuff
@@ -303,8 +322,13 @@ void SubscriptionDialog::slotLoadFolders()
   // otherwise the complete listing will be done in second step
   bool complete = (ai->prefix() == "/") ? true : false;
   // get all folders
-  ai->listDirectory( ai->prefix(), ImapAccountBase::List, 
-      false, 0, true, complete );
+  ListJob* job = new ListJob( 0, ai, ImapAccountBase::List, false,
+      complete, false, ai->prefix() );
+  connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListDirectory(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+  job->start();
 }
 
 //------------------------------------------------------------------------------

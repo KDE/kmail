@@ -84,7 +84,7 @@ public:
   virtual void setContentState(imapState state) { mContentState = state; }
 
   virtual imapState getSubfolderState() { return mSubfolderState; }
-  virtual void setSubfolderState(imapState state) { mSubfolderState = state; }
+  virtual void setSubfolderState(imapState state);
 
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -131,10 +131,10 @@ public:
 
   /**
    * List a directory and add the contents to kmfoldermgr
-   * It uses the KMAcctImap->listDirectory to get the folders
+   * It uses a ListJob to get the folders
    * returns false if the connection failed
    */
-  bool listDirectory(bool secondStep = FALSE);
+  virtual bool listDirectory(bool secondStep = false);
 
   /**
    * Retrieve all mails in a folder
@@ -347,11 +347,11 @@ protected:
 protected slots:
 
   /**
-   * Connected to ImapAccountBase::receivedFolders
+   * Connected to ListJob::receivedFolders
    * creates/removes folders
    */
-  void slotListResult(QStringList, QStringList,
-      QStringList, QStringList, const ImapAccountBase::jobData &);
+  void slotListResult(QStringList&, QStringList&,
+      QStringList&, QStringList&, const ImapAccountBase::jobData& );
 
   /**
    * Retrieve the whole folder or only the changes

@@ -51,9 +51,20 @@ class ListJob : public FolderJob
 {
   Q_OBJECT
 public:
+  /**
+   * Create a new job
+   * @param storage the parent folder, either provide this or a path
+   * @param account the ImapAccountBase
+   * @param secondStep if this is the second listing (when a prefix is set)
+   * @param complete list all folders or only next level
+   * @param hasInbox if you already have an inbox
+   * @param path the listing path;
+   *             if empty the path of the folder will be taken
+   */ 
   ListJob( FolderStorage* storage, ImapAccountBase* account,
+           ImapAccountBase::ListType type,
            bool secondStep = false, bool complete = false, 
-           bool hasInbox = false );
+           bool hasInbox = false, QString path = QString::null );
 
   virtual ~ListJob();
 
@@ -77,59 +88,23 @@ protected slots:
    */ 
   void slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds );
 
+signals:
+  /**
+   * Emitted when new folders have been received
+   */
+  void receivedFolders( QStringList&, QStringList&,
+      QStringList&, QStringList&, const ImapAccountBase::jobData& );
+
 protected:
+  FolderStorage* mStorage;
   ImapAccountBase* mAccount;
+  ImapAccountBase::ListType mType;
   bool mHasInbox;
   bool mSecondStep;
   bool mComplete;
+  QString mPath;
   QStringList mSubfolderNames, mSubfolderPaths, 
               mSubfolderMimeTypes, mSubfolderAttributes;
-};
-
-//---------------------------------------------------------------------------//
-
-class ImapListJob : public ListJob
-{
-  Q_OBJECT
-public:
-  ImapListJob( KMFolderImap* folder, KMAcctImap* account,
-               bool secondStep = false, bool complete = false, 
-               bool hasInbox = false );
-  virtual ~ImapListJob();
-
-  virtual void execute();
-
-protected slots:
-  /**
-   * Reimplemented
-   */ 
-  void slotListResult( KIO::Job* job );
-
-private:
-  KMFolderImap* mFolder;
-};
-
-//---------------------------------------------------------------------------//
-
-class DImapListJob : public ListJob
-{
-  Q_OBJECT
-public:
-  DImapListJob( KMFolderCachedImap* folder, KMAcctCachedImap* account,
-                bool secondStep = false, bool complete = false, 
-                bool hasInbox = false );
-  virtual ~DImapListJob();
-
-  virtual void execute();
-
-protected slots:
-  /**
-   * Reimplemented
-   */ 
-  void slotListResult( KIO::Job* job );
-
-private:
-  KMFolderCachedImap* mFolder;
 };
 
 } // namespace

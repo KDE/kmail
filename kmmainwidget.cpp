@@ -3302,20 +3302,26 @@ void KMMainWidget::slotSubscriptionDialog()
   if (!mFolder) return;
 
   ImapAccountBase* account;
+  QString startPath;
   if (mFolder->folderType() == KMFolderTypeImap)
   {
+    startPath = static_cast<KMFolderImap*>(mFolder->storage())->imapPath(); 
     account = static_cast<KMFolderImap*>(mFolder->storage())->account();
   } else if (mFolder->folderType() == KMFolderTypeCachedImap)
   {
+    startPath = static_cast<KMFolderCachedImap*>(mFolder->storage())->imapPath();
     account = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
   } else
     return;
 
+  if ( !account ) return;
+
   SubscriptionDialog *dialog = new SubscriptionDialog(this,
       i18n("Subscription"),
-      account);
+      account, startPath);
+  // start a new listing
   if ( dialog->exec() )
-    account->listDirectory();
+    account->rootFolder()->listDirectory();
 }
 
 //-----------------------------------------------------------------------------

@@ -201,6 +201,13 @@ public slots:
   void startAutoScroll();
   void stopAutoScroll();
 
+  /** 
+   * Reset current folder and all childs 
+   * If no item is given we take the current one
+   * If startListing is true a folder listing is started
+   */
+  void slotResetFolderList( QListViewItem* item = 0, bool startList = true );
+
 protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */

@@ -31,6 +31,7 @@ using KMail::SieveConfig;
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwin.h"
+#include "folderstorage.h"
 #include "imapjob.h"
 using KMail::ImapJob;
 #include "progressmanager.h"
@@ -397,11 +398,18 @@ void KMAcctImap::readConfig(KConfig& config)
   }
 }
 
+//-----------------------------------------------------------------------------
 void KMAcctImap::slotMailCheckCanceled()
 {
   if( mMailCheckProgressItem )
     mMailCheckProgressItem->setComplete();
   cancelMailCheck();
+}
+
+//-----------------------------------------------------------------------------
+FolderStorage* KMAcctImap::rootFolder()
+{
+  return mFolder;
 }
 
 #include "kmacctimap.moc"

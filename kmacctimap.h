@@ -32,6 +32,7 @@ namespace KMail {
 namespace KIO {
   class Job;
 }
+class FolderStorage;
 
 //-----------------------------------------------------------------------------
 class KMAcctImap: public KMail::ImapAccountBase
@@ -91,6 +92,11 @@ public:
    * already properly set by the caller.
    */
   virtual void readConfig(KConfig& config);
+
+  /**
+   * Returns the root folder of this account
+   */ 
+  virtual FolderStorage* rootFolder();
 
 public slots:
   /**

@@ -36,6 +36,7 @@ class KMessage;
 class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
+class FolderStorage;
 template <typename T> class QValueVector;
 
 namespace KIO {
@@ -261,6 +262,11 @@ namespace KMail {
      * the protected virtual handleJobError with them. See below for details.
      */
     bool handleJobError( KIO::Job* job, const QString& context, bool abortSync = false );
+
+    /**
+     * Returns the root folder of this account
+     */ 
+    virtual FolderStorage* rootFolder() = 0;
 
   private slots:
     /**

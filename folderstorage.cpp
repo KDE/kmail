@@ -43,6 +43,8 @@
 #include "kmfoldermgr.h"
 #include "kmkernel.h"
 #include "kmcommands.h"
+#include "listjob.h"
+using KMail::ListJob;
 
 #include <klocale.h>
 #include <kconfig.h>

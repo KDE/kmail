@@ -43,9 +43,12 @@
 using namespace KMail;
 
 ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
-   bool secondStep, bool complete, bool hasInbox )
- : FolderJob( 0, tOther, storage->folder() ), mAccount( account ),
-   mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete )
+    ImapAccountBase::ListType type, 
+    bool secondStep, bool complete, bool hasInbox, QString path )
+ : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ), 
+   mStorage( storage ), mAccount( account ), mType( type ),  
+   mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete ), 
+   mPath( path )
 {
 }
 
@@ -55,10 +58,47 @@ ListJob::~ListJob()
 
 void ListJob::execute()
 {
-}
-
-void ListJob::doListing( const KURL& url, const ImapAccountBase::jobData& jd )
-{
+  if ( mAccount->makeConnection() == ImapAccountBase::Error )
+  {
+    delete this;
+    return;
+  }
+  // this is needed until we have a common base class for d(imap)
+  if ( mPath.isEmpty() )
+  {
+    if ( mStorage && mStorage->folderType() == KMFolderTypeImap ) {
+      mPath = static_cast<KMFolderImap*>(mStorage)->imapPath();
+    } else if ( mStorage && mStorage->folderType() == KMFolderTypeCachedImap ) {
+      mPath = static_cast<KMFolderCachedImap*>(mStorage)->imapPath();
+    } else {
+      kdError(5006) << "ListJob - no valid path and no folder given" << endl;
+      delete this;
+      return;
+    }
+  }
+  // create jobData
+  ImapAccountBase::jobData jd;
+  jd.total = 1; jd.done = 0;
+  jd.cancellable = true;
+  jd.createInbox = ( mSecondStep && !mHasInbox ) ? true : false;
+  jd.parent = mDestFolder;
+  jd.onlySubscribed = ( mType != ImapAccountBase::List );
+  jd.path = mPath;
+  // this is needed if you have a prefix
+  // as the INBOX is located in your root ("/") and needs a special listing
+  jd.inboxOnly = !mSecondStep && mAccount->prefix() != "/"
+    && mPath == mAccount->prefix() && !mHasInbox;
+  // make the URL
+  QString ltype = "LIST";
+  if ( mType == ImapAccountBase::ListSubscribed )
+    ltype = "LSUB";
+  else if ( mType == ImapAccountBase::ListSubscribedNoCheck )
+    ltype = "LSUBNOCHECK";
+  KURL url = mAccount->getUrl();
+  url.setPath( ( jd.inboxOnly ? QString("/") : mPath )
+      + ";TYPE=" + ltype
+      + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
+  // go
   KIO::SimpleJob *job = KIO::listDir( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
@@ -68,8 +108,27 @@ void ListJob::doListing( const KURL& url, const ImapAccountBase::jobData& jd )
       this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)) );
 }
 
-void ListJob::slotListResult( KIO::Job* )
+void ListJob::slotListResult( KIO::Job* job )
 {
+  ImapAccountBase::JobIterator it = mAccount->findJob( job );
+  if ( it == mAccount->jobsEnd() )
+  {
+    delete this;
+    return;
+  }
+  if ( job->error() )
+  {
+    mAccount->handleJobError( job, 
+        i18n( "Error while listing folder %1: " ).arg((*it).path),
+        true ); 
+  } else
+  {
+    // transport the information, include the jobData
+    emit receivedFolders( mSubfolderNames, mSubfolderPaths, 
+        mSubfolderMimeTypes, mSubfolderAttributes, *it );
+  }
+  mAccount->removeJob( it );
+  delete this;
 }
 
 void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
@@ -127,152 +186,6 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       }
     }
   }
-}
-
-
-//============================================================================//
-
-
-ImapListJob::ImapListJob( KMFolderImap* folder, KMAcctImap* account,
-    bool secondStep, bool complete, bool hasInbox )
- : ListJob( folder, account, secondStep, complete, hasInbox ), mFolder( folder )
-{
-}
-
-ImapListJob::~ImapListJob()
-{
-}
-
-void ImapListJob::execute()
-{
-  if ( mAccount->makeConnection() == ImapAccountBase::Error )
-  {
-    delete this;
-    return;
-  }
-  // (un)subscribed
-  ImapAccountBase::ListType type = ( mAccount->onlySubscribedFolders() ? 
-      ImapAccountBase::ListSubscribed : ImapAccountBase::List );
-  // create jobData
-  ImapAccountBase::jobData jd;
-  jd.total = 1; jd.done = 0;
-  jd.cancellable = true;
-  jd.createInbox = ( mSecondStep && !mHasInbox ) ? true : false;
-  jd.parent = mDestFolder;
-  jd.onlySubscribed = ( type != ImapAccountBase::List );
-  jd.path = mFolder->imapPath();
-  // this is needed if you have a prefix
-  // as the INBOX is located in your root ("/") and needs a special listing
-  jd.inboxOnly = !mSecondStep && mAccount->prefix() != "/"
-    && mFolder->imapPath() == mAccount->prefix() && !mHasInbox;
-  // make the URL
-  QString ltype = "LIST";
-  if ( type == ImapAccountBase::ListSubscribed )
-    ltype = "LSUB";
-  else if ( type == ImapAccountBase::ListSubscribedNoCheck )
-    ltype = "LSUBNOCHECK";
-  KURL url = mAccount->getUrl();
-  url.setPath( ( jd.inboxOnly ? QString("/") : mFolder->imapPath() )
-      + ";TYPE=" + ltype
-      + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
-
-  doListing( url, jd );
-}
-
-void ImapListJob::slotListResult( KIO::Job* job )
-{
-  ImapAccountBase::JobIterator it = mAccount->findJob( job );
-  if ( it == mAccount->jobsEnd() )
-  {
-    delete this;
-    return;
-  }
-  if ( job->error() )
-  {
-    mAccount->handleJobError( job, 
-        i18n( "Error while listing folder %1: " ).arg((*it).path),
-        true ); 
-  } else
-  {
-    // transport the information, include the jobData
-    //mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
-    //    mSubfolderMimeTypes, mSubfolderAttributes, *it );
-  }
-  mAccount->removeJob( it );
-  delete this;
-}
-
-
-//============================================================================//
-
-
-DImapListJob::DImapListJob( KMFolderCachedImap* folder, KMAcctCachedImap* account,
-    bool secondStep, bool complete, bool hasInbox )
- : ListJob( folder, account, secondStep, complete, hasInbox ), mFolder( folder )
-{
-}
-
-DImapListJob::~DImapListJob()
-{
-}
-
-void DImapListJob::execute()
-{
-  if ( mAccount->makeConnection() == ImapAccountBase::Error )
-  {
-    delete this;
-    return;
-  }
-  // (un)subscribed
-  ImapAccountBase::ListType type = ( mAccount->onlySubscribedFolders() ? 
-      ImapAccountBase::ListSubscribed : ImapAccountBase::List );
-  // create jobData
-  ImapAccountBase::jobData jd;
-  jd.total = 1; jd.done = 0;
-  jd.cancellable = true;
-  jd.createInbox = ( mSecondStep && !mHasInbox ) ? true : false;
-  jd.parent = mDestFolder;
-  jd.onlySubscribed = ( type != ImapAccountBase::List );
-  jd.path = mFolder->imapPath();
-  // this is needed if you have a prefix
-  // as the INBOX is located in your root ("/") and needs a special listing
-  jd.inboxOnly = !mSecondStep && mAccount->prefix() != "/"
-    && mFolder->imapPath() == mAccount->prefix() && !mHasInbox;
-  // make the URL
-  QString ltype = "LIST";
-  if ( type == ImapAccountBase::ListSubscribed )
-    ltype = "LSUB";
-  else if ( type == ImapAccountBase::ListSubscribedNoCheck )
-    ltype = "LSUBNOCHECK";
-  KURL url = mAccount->getUrl();
-  url.setPath( ( jd.inboxOnly ? QString("/") : mFolder->imapPath() )
-      + ";TYPE=" + ltype
-      + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
-
-  doListing( url, jd );
-}
-
-void DImapListJob::slotListResult( KIO::Job* job )
-{
-  ImapAccountBase::JobIterator it = mAccount->findJob( job );
-  if ( it == mAccount->jobsEnd() ) 
-  {
-    delete this;
-    return;
-  }
-  if ( job->error() )
-  {
-    mAccount->handleJobError( job, 
-        i18n( "Error while listing folder %1: " ).arg((*it).path),
-        true ); 
-  } else
-  {
-    // transport the information, include the jobData
-    //mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
-    //    mSubfolderMimeTypes, mSubfolderAttributes, *it );
-  }
-  mAccount->removeJob( it );
-  delete this;
 }
 
 #include "listjob.moc"

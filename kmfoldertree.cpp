@@ -942,6 +942,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     {
       folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in this Folder"), mMainWidget,
           SLOT(slotRefreshFolder()));
+      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh folder list"), this,
+          SLOT(slotResetFolderList()));
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
@@ -1381,34 +1383,7 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
-  if ( fti && fti->folder() &&
-       fti->folder()->folderType() == KMFolderTypeImap )
-  {
-    KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
-    if ( !fti->parent() ||
-         folder->account()->listOnlyOpenFolders() )
-    {
-      folder->setSubfolderState( KMFolderImap::imapNoInformation );
-    }
-    if ( !fti->parent() &&
-         folder->account()->listOnlyOpenFolders() )
-    {
-      // set all childs to noInformation so that it's possible to start
-      // a new listing
-      QListViewItemIterator it( item );
-      while ( it.current() )
-      {
-        KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
-        if ( fti && fti->folder() && fti->folder()->storage() )
-        {
-          KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
-          folder->setSubfolderState( KMFolderImap::imapNoInformation );
-        }
-        ++it;
-      }
-    }
-  }
+  slotResetFolderList( item, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -1620,6 +1595,23 @@ void KMFolderTree::createFolderList( QStringList *str,
     prefix.fill( ' ', 2 * fti->depth() );
     str->append(prefix + fti->text(0));
     folders->append(fti->folder());
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotResetFolderList( QListViewItem* item, bool startList )
+{
+  if ( !item )
+    item = currentItem();
+
+  KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>( item );
+  if ( fti && fti->folder() &&
+       fti->folder()->folderType() == KMFolderTypeImap )
+  {
+    KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
+    folder->setSubfolderState( KMFolderImap::imapNoInformation );
+    if ( startList )
+      folder->listDirectory();
   }
 }
 

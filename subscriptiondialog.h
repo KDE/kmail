@@ -37,6 +37,7 @@
 #include "imapaccountbase.h"
 
 class KMMessage;
+class FolderStorage;
 
 namespace KMail {
 
@@ -45,7 +46,8 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct );
+      SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct,
+         QString startPath = QString::null );
 
     protected:
       void findParentItem ( QString &name, QString &path, QString &compare,
@@ -55,8 +57,8 @@ namespace KMail {
       /**
        * get the listing from the imap-server
        */ 
-      void slotListDirectory(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &);
+      void slotListDirectory(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData &);
 
       /** 
        * called by Ok-button, saves the changes
@@ -87,7 +89,7 @@ namespace KMail {
       uint mCount;
       bool mCheckForExisting;
       QDict<GroupItem> mItemDict;
-
+      QString mStartPath;
   };
 
 } // namespace KMail

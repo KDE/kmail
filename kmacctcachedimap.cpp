@@ -395,4 +395,9 @@ void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
   killAllJobs( false );
 }
 
+FolderStorage* KMAcctCachedImap::rootFolder()
+{
+  return mFolder;
+}
+
 #include "kmacctcachedimap.moc"

@@ -111,7 +111,7 @@ public:
   virtual void setContentState(imapState state) { mContentState = state; }
 
   virtual imapState getSubfolderState() { return mSubfolderState; }
-  virtual void setSubfolderState(imapState state) { mSubfolderState = state; }
+  virtual void setSubfolderState(imapState state);
 
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }
@@ -187,9 +187,10 @@ public:
 
   /**
    * List a directory and add the contents to kmfoldermgr
+   * It uses a ListJob to get the folders
    * returns false if the connection failed
    */
-  bool listDirectory(bool secondStep = false);
+  virtual bool listDirectory(bool secondStep = false);
 
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
@@ -212,11 +213,11 @@ public:
 
 protected slots:
   /**
-   * Connected to ImapAccountBase::receivedFolders
+   * Connected to ListJob::receivedFolders
    * creates/removes folders
    */
-  void slotListResult(QStringList, QStringList,
-      QStringList, QStringList, const ImapAccountBase::jobData &);
+  void slotListResult(QStringList&, QStringList&,
+      QStringList&, QStringList&, const ImapAccountBase::jobData& );
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);

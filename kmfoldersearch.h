@@ -109,6 +109,13 @@ public:
 
   virtual void tryReleasingFolder(KMFolder* folder);
 
+  /**
+   * List a directory
+   * returns false if the connection failed
+   */
+  virtual bool listDirectory(bool secondStep = false) { 
+    Q_UNUSED(secondStep); return false; }  
+
 protected slots:
   // Reads search definition for this folder and creates a KMSearch
   bool readSearch();

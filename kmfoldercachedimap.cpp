@@ -51,6 +51,8 @@
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
+#include "listjob.h"
+using KMail::ListJob;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -1198,48 +1200,37 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
     emit folderComplete( this, false );
     return false;
   }
-
-  // connect to folderlisting
-  connect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)),
-      this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)));
-
-  // start a new listing for the root-folder
-  bool reset = ( mImapPath == mAccount->prefix() &&
-                !secondStep && !folder()->isSystemFolder() ) ? true : false;
-
+  // reset
+  if ( this == mAccount->rootFolder() )
+    mAccount->setHasInbox( false );
+    
   // get the folders
-  ImapAccountBase::ListType type =
-    (mAccount->onlySubscribedFolders() ? ImapAccountBase::ListSubscribed : ImapAccountBase::List);
-  mAccount->listDirectory(mImapPath, type,
-                          secondStep, folder(), reset);
+  ImapAccountBase::ListType type = ImapAccountBase::List;
+  if ( mAccount->onlySubscribedFolders() )
+    type = ImapAccountBase::ListSubscribed;
+  ListJob* job = new ListJob( this, mAccount, type, secondStep, 
+      false, mAccount->hasInbox() );
+  connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListResult(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)));  
+  job->start();
 
   return true;
 }
 
-void KMFolderCachedImap::slotListResult( QStringList folderNames,
-                                         QStringList folderPaths,
-                                         QStringList folderMimeTypes,
-                                         QStringList folderAttributes,
-                                         const ImapAccountBase::jobData & jobData )
+void KMFolderCachedImap::slotListResult( QStringList& folderNames,
+                                         QStringList& folderPaths,
+                                         QStringList& folderMimeTypes,
+                                         QStringList& folderAttributes,
+                                         const ImapAccountBase::jobData& jobData )
 {
   //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" << folderPaths << " mimeTypes=" << folderMimeTypes << endl;
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
   mSubfolderAttributes = folderAttributes;
-  if (jobData.parent) {
-    // the account is connected to several folders, so we
-    // have to sort out if this result is for us
-    if (jobData.parent != folder()) return;
-  }
-  // disconnect to avoid recursions
-  disconnect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)),
-      this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)));
-
+  
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
   // pass it to listDirectory2
@@ -1550,6 +1541,24 @@ void KMFolderCachedImap::newState( int progress, const QString& syncStatus )
     emit statusMsg( str );
   }
   progressItem->updateProgress();
+}
+
+void KMFolderCachedImap::setSubfolderState( imapState state )
+{
+  mSubfolderState = state;
+  if ( state == imapNoInformation && folder()->child() )
+  {
+    // pass through to childs
+    KMFolderNode* node; 
+    QPtrListIterator<KMFolderNode> it( *folder()->child() ); 
+    for ( ; (node = it.current()); ) 
+    { 
+      ++it; 
+      if (node->isDir()) continue; 
+      KMFolder *folder = static_cast<KMFolder*>(node); 
+      static_cast<KMFolderCachedImap*>(folder->storage())->setSubfolderState( state );
+    }
+  }
 }
 
 #include "kmfoldercachedimap.moc"

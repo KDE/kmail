@@ -36,6 +36,8 @@ using KMail::AttachmentStrategy;
 #include "progressmanager.h"
 using KMail::ProgressItem;
 using KMail::ProgressManager;
+#include "listjob.h"
+using KMail::ListJob;
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
@@ -536,46 +538,37 @@ bool KMFolderImap::listDirectory(bool secondStep)
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
     return false;
 
+  // reset
+  if ( this == mAccount->rootFolder() )
+  {
+    mAccount->setHasInbox( false );
+    setSubfolderState( imapNoInformation );
+  }
   mSubfolderState = imapInProgress;
 
-  // connect to folderlisting
-  connect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)),
-      this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)));
-
-  // start a new listing for the root-folder
-  bool reset = ( mImapPath == mAccount->prefix() &&
-                !secondStep && !folder()->isSystemFolder() ) ? true : false;
-
   // get the folders
-  ImapAccountBase::ListType type =
-    (mAccount->onlySubscribedFolders() ? ImapAccountBase::ListSubscribed : ImapAccountBase::List);
-  mAccount->listDirectory(mImapPath, type,
-                          secondStep, folder(), reset);
+  ImapAccountBase::ListType type = ImapAccountBase::List;
+  if ( mAccount->onlySubscribedFolders() )
+    type = ImapAccountBase::ListSubscribed;
+  ListJob* job = new ListJob( this, mAccount, type, secondStep,
+      false, mAccount->hasInbox() );
+  connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListResult(QStringList&, QStringList&,
+          QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+  job->start();
 
   return true;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotListResult( QStringList mSubfolderNames,
-                                   QStringList mSubfolderPaths,
-                                   QStringList mSubfolderMimeTypes,
-                                   QStringList mSubfolderAttributes,
-                                   const ImapAccountBase::jobData & jobData )
+void KMFolderImap::slotListResult( QStringList& mSubfolderNames,
+                                   QStringList& mSubfolderPaths,
+                                   QStringList& mSubfolderMimeTypes,
+                                   QStringList& mSubfolderAttributes,
+                                   const ImapAccountBase::jobData& jobData )
 {
-  if (jobData.parent) {
-    // the account is connected to several folders, so we
-    // have to sort out if this result is for us
-    if (jobData.parent != folder()) return;
-  }
-  // disconnect to avoid recursions
-  disconnect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)),
-      this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, QStringList, const ImapAccountBase::jobData &)));
-
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
   bool createInbox = jobData.createInbox;
@@ -1665,6 +1658,24 @@ void KMFolderImap::slotCompleteMailCheckProgress()
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->setComplete();
     mMailCheckProgressItem = 0;
+  }
+}
+
+void KMFolderImap::setSubfolderState( imapState state )
+{
+  mSubfolderState = state;
+  if ( state == imapNoInformation && folder()->child() )
+  {
+    // pass through to childs
+    KMFolderNode* node; 
+    QPtrListIterator<KMFolderNode> it( *folder()->child() ); 
+    for ( ; (node = it.current()); ) 
+    { 
+      ++it; 
+      if (node->isDir()) continue; 
+      KMFolder *folder = static_cast<KMFolder*>(node); 
+      static_cast<KMFolderImap*>(folder->storage())->setSubfolderState( state );
+    }
   }
 }
 

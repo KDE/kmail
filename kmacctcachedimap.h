@@ -155,6 +155,11 @@ public:
   void addLastUnreadMsgCount( const KMFolderCachedImap *folder,
                               int countLastUnread );
 
+  /**
+   * Returns the root folder of this account
+   */ 
+  virtual FolderStorage* rootFolder();  
+
 protected:
   friend class KMAcctMgr;
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
