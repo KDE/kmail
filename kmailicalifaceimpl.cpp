@@ -378,7 +378,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
   // add a first body part to be displayed by all mailer
-  // than cn NOT display Kolab data: no matter if these
+  // than can NOT display Kolab data: no matter if these
   // mailers are MIME compliant or not
   KMMessagePart firstPart;
   firstPart.setType(    DwMime::kTypeText     );
@@ -1043,9 +1043,15 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
 // this always returns false
 bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
 {
+  return isDefaultResourceFolder( folder ) ||
+    ( mUseResourceIMAP && folder && mExtraFolders.find( folder->location() )!=0 );
+}
+
+bool KMailICalIfaceImpl::isDefaultResourceFolder( KMFolder* folder ) const
+{
   return mUseResourceIMAP && folder &&
     ( folder == mCalendar || folder == mTasks || folder == mJournals ||
-      folder == mNotes || folder == mContacts || mExtraFolders.find( folder->location() )!=0 );
+      folder == mNotes || folder == mContacts );
 }
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const

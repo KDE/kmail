@@ -1288,7 +1288,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
           if( imapPath() == "/INBOX/" )
             mUidsForDownload << uid;
-        } 
+        }
         // Remember the highest uid and once the download is completed, update mLastUid
         if ( uid > mTentativeHighestUid )
           mTentativeHighestUid = uid;
@@ -1730,11 +1730,18 @@ void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
     FolderStorage::setContentsType( type );
     mContentsTypeChanged = true;
   }
+  const QString oldAnnotation = mAnnotationFolderType;
   // We want to store an annotation on the folder only if using the kolab storage.
-  if ( kmkernel->iCalIface().storageFormat( folder() ) == KMailICalIfaceImpl::StorageXML )
+  if ( kmkernel->iCalIface().storageFormat( folder() ) == KMailICalIfaceImpl::StorageXML ) {
     mAnnotationFolderType = s_contentsType2Annotation[mContentsType];
+    // The subtype is needed for outlook compatibility (https://intevation.de/roundup/kolab/issue406)
+    if ( kmkernel->iCalIface().isDefaultResourceFolder( folder() ) )
+      mAnnotationFolderType += ".default";
+  }
   else
     mAnnotationFolderType = QString::null;
+  if ( mAnnotationFolderType != oldAnnotation )
+    mContentsTypeChanged = true; // force a "set annotation" on next sync
 }
 
 void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
