@@ -380,6 +380,9 @@ void KMMainWin::createWidgets(void)
 		     mMsgView, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Key_Next),
 		     mMsgView, SLOT(slotScrollNext()));
+
+  // FIXME: these should be actions instead of hard-coded accels,
+  //  so that the M, C, and Delete keys are configurable.
   accel->connectItem(accel->insertItem(Key_M),
                      this, SLOT(slotMoveMsg()));
   accel->connectItem(accel->insertItem(Key_C),
@@ -397,20 +400,6 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
-
-  // GRMBL.. work around brokenness in KAction
-  // There are KActions created that defined the following
-  // four accelerators, but they were broken due to changes
-  // for KDE2.2
-  // This only affected some users not all.
-  accel->connectItem(accel->insertItem(Key_Plus),
-  		     this, SLOT(slotNextUnreadMessage()) );
-  accel->connectItem(accel->insertItem(Key_Minus),
-  		     this, SLOT(slotPrevUnreadMessage()) );
-  accel->connectItem(accel->insertItem(CTRL+Key_Plus),
-  		     mFolderTree, SLOT(nextUnreadFolder()) );
-  accel->connectItem(accel->insertItem(CTRL+Key_Minus),
-  		     mFolderTree, SLOT(prevUnreadFolder()) );
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
