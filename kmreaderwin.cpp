@@ -929,7 +929,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
     {
       int adj = (ch == '\n') ? 0 : 1;
       newlineCount ++;
-      line = strToHtml(s.mid(beg,pos-beg+adj),TRUE,TRUE);
+      line = strToHtml(s.mid(beg,pos-beg+adj),FALSE,TRUE);
       if( currQuoteLevel >= 0 )
       {
 	if( currQuoteLevel != prevQuoteLevel )
