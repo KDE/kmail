@@ -76,7 +76,8 @@ protected slots:
 
 protected:
   void setMode();
-  void setup();
+  void connectSingleItem();
+  void activateSingleItemMode();
 
   virtual bool eventFilter( QObject *, QEvent * );
 
