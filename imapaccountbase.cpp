@@ -457,6 +457,7 @@ namespace KMail {
       if ( mSlave ) {
         KIO::Scheduler::disconnectSlave(mSlave);
         mSlave = 0;
+        mSlaveConnected = false;
         /* As for the noop timer, we need to make sure this one is started
            again when a new slave goes up. */
         mIdleTimer.stop();
