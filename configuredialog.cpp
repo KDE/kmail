@@ -3278,7 +3278,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
   mExternalReferences = new QCheckBox( i18n("Allow mails to load e&xternal "
 					    "references from the net" ), group );
-  label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in EMail may "
+  label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
 			   "compromised by present and anticipated security "
 			   "exploits. Use \"What's this\" help (Shift-F1) for "
