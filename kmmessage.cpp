@@ -1744,8 +1744,10 @@ void KMMessage::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 QCString KMMessage::body(void) const
 {
-  QCString str;
-  str = mMsg->Body().AsString().c_str();
+  DwString body = mMsg->Body().AsString();
+  QCString str = body.c_str();
+  kdWarning( str.length() != body.length(), 5006 )
+    << "KMMessage::body(): body is binary but used as text!" << endl;
   return str;
 }
 
@@ -1753,10 +1755,9 @@ QCString KMMessage::body(void) const
 //-----------------------------------------------------------------------------
 QByteArray KMMessage::bodyDecodedBinary(void) const
 {
-  DwString dwsrc, dwstr;
-  QString result;
+  DwString dwstr;
+  DwString dwsrc = mMsg->Body().AsString();
 
-  dwsrc = mMsg->Body().AsString().c_str();
   switch (cte())
   {
   case DwMime::kCteBase64:
@@ -1770,7 +1771,7 @@ QByteArray KMMessage::bodyDecodedBinary(void) const
     break;
   }
 
-  int len=dwstr.size();
+  int len = dwstr.size();
   QByteArray ba(len);
   memcpy(ba.data(),dwstr.data(),len);
   return ba;
@@ -1780,23 +1781,53 @@ QByteArray KMMessage::bodyDecodedBinary(void) const
 //-----------------------------------------------------------------------------
 QCString KMMessage::bodyDecoded(void) const
 {
-  QByteArray raw(bodyDecodedBinary());
-  int len=raw.size();
-  QCString ba(len+1);
-  memcpy(ba.data(),raw.data(),len);
-  ba[len] = 0;
-  return ba;
+  DwString dwstr;
+  DwString dwsrc = mMsg->Body().AsString();
+
+  switch (cte())
+  {
+  case DwMime::kCteBase64:
+    DwDecodeBase64(dwsrc, dwstr);
+    break;
+  case DwMime::kCteQuotedPrintable:
+    DwDecodeQuotedPrintable(dwsrc, dwstr);
+    break;
+  default:
+    dwstr = dwsrc;
+    break;
+  }
+
+  unsigned int len = dwstr.size();
+  QCString result(len+1);
+  memcpy(result.data(),dwstr.data(),len);
+  result[len] = 0;
+  kdWarning(result.length() != len, 5006)
+    << "KMMessage::bodyDecoded(): body is binary but used as text!" << endl;
+  return result;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QCString& aStr)
 {
-  int len = aStr.length();
-  QByteArray ba(len);
-  if (len > 0)
-    memcpy(ba.data(),aStr.data(),len);
-  setBodyEncodedBinary(ba);
+  DwString dwSrc(aStr.data(), aStr.size()-1 /* not the trailing NUL */);
+  DwString dwResult;
+
+  switch (cte())
+  {
+  case DwMime::kCteBase64:
+    DwEncodeBase64(dwSrc, dwResult);
+    break;
+  case DwMime::kCteQuotedPrintable:
+    DwEncodeQuotedPrintable(dwSrc, dwResult);
+    break;
+  default:
+    dwResult = dwSrc;
+    break;
+  }
+
+  mMsg->Body().FromString(dwResult);
+  mNeedsAssembly = TRUE;
 }
 
 //-----------------------------------------------------------------------------
