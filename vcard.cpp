@@ -31,6 +31,7 @@
 #endif
 #include "vcard.h"
 #include <klocale.h>
+#include <qregexp.h>
 
 /*
 
