@@ -1537,11 +1537,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
 //-----------------------------------------------------------------------------
 QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 {
-  QString iStr, str;
+  QString str;
   QString result((QChar*)NULL, aStr.length() * 2);
   int pos;
   QChar ch;
-  int i, i1, x, len;
+  int i, x;
   bool startOfLine = true;
 
   for (pos = 0, x = 0; pos < (int)aStr.length(); pos++, x++)
@@ -1581,20 +1581,24 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
         continue;
       }
     }
-    if (ch=='&') result += "&amp;";
-    else if (ch=='<') result += "&lt;";
-    else if (ch=='>') result += "&gt;";
-    else if (ch=='\n') {
-      result += "<br>";
+    if (ch=='\n')
+    {
+      result += "<br />";
       startOfLine = true;
       x = -1;
+      continue;
     }
-    else if (ch=='&') result += "&amp;";
+    startOfLine = false;
+    if (ch=='&')
+      result += "&amp;";
+    else if (ch=='<')
+      result += "&lt;";
+    else if (ch=='>')
+      result += "&gt;";
     else if ((ch=='h' && aStr.mid(pos, 7) == "http://") ||
 	     (ch=='h' && aStr.mid(pos, 8) == "https://") ||
 	     (ch=='f' && aStr.mid(pos, 6) == "ftp://") ||
-	     (ch=='m' && aStr.mid(pos, 7) == "mailto:"
-              && (int)aStr.length() > pos+7 && aStr[pos+7] != ' '))
+	     (ch=='m' && aStr.mid(pos, 7) == "mailto:"))
 	     // note: no "file:" for security reasons
     {
       // handle cases like this: <link>http://foobar.org/</link>
@@ -1618,45 +1622,60 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
     }
     else if (ch=='@')
     {
-      int startpos = pos;
-      for (i=0; pos >= 0 && aStr[pos].unicode() < 128
+      // the following characters are allowed in a dot-atom (RFC 2822):
+      // a-z A-Z 0-9 . ! # $ % & ' * + - / = ? ^ _ ` { | } ~
+      const QString allowedSpecialChars = QString(".!#$%&'*+-/=?^_`{|}~");
+      QString iStr;
+      int len;
+      int atpos = pos;
+      // determine the local part of the email address
+      pos--;
+      while (pos >= 0 && aStr[pos].unicode() < 128
 	     && (aStr[pos].isLetterOrNumber()
-                 || QString("@._-*[]=+").find(aStr[pos]) != -1)
-	     && i<255; i++, pos--)
-	{
-	}
-      i1 = i;
-      pos++;
-      for (i=0; pos < (int)aStr.length() && aStr[pos].unicode() < 128
-             && (aStr[pos].isLetterOrNumber()
-                 || QString("@._-*[]=+").find(aStr[pos]) != -1)
-	     && i<255; i++, pos++)
+                 || allowedSpecialChars.find(aStr[pos]) != -1)
+	     && (atpos - pos) < 255)
       {
-	iStr += aStr[pos];
+        pos--;
+      }
+      pos++;
+      // we assume that an email address starts with a letter or a digit
+      while (allowedSpecialChars.find(aStr[pos]) != -1)
+      {
+        pos++;
+      }
+      // len is the length of the local part
+      len = atpos - pos;
+      iStr = aStr.mid( pos, len + 1 );
+      kdDebug(5006) << "local part of email address is: \"" << iStr << "\"\n";
+      // remove the local part from the result (as '&'s have been expanded to
+      // &amp; we have to take care of the 4 additional characters per '&')
+      result.truncate(result.length() - len - (iStr.contains('&')*4));
+      // determine the domain part of the email address
+      pos = atpos + 1;
+      while (pos < (int)aStr.length() && aStr[pos].unicode() < 128
+             && (aStr[pos].isLetterOrNumber()
+                 || allowedSpecialChars.find(aStr[pos]) != -1)
+	     && (pos - atpos + len) < 255)
+      {
+        pos++;
       }
       pos--;
-      len = iStr.length();
-      while (len>2 && QString("._-*()=+").find(aStr[pos]) != -1
-        && (pos > startpos))
+      // we assume that an email address ends with a letter or a digit
+      while (allowedSpecialChars.find(aStr[pos]) != -1)
       {
-	len--;
-	pos--;
+        pos--;
       }
-      iStr.truncate(len);
-      result.truncate(result.length() - i1 + 1);
+      iStr += aStr.mid( atpos + 1, pos - atpos );
 
-      if (iStr.length() >= 3 && iStr.contains("@") == 1 && iStr[0] != '@'
-        && iStr[iStr.length() - 1] != '@')
+      if (len > 0 && iStr[iStr.length() - 1] != '@')
       {
         iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
       }
       result += iStr;
-      iStr = "";
     }
-
-    else {
+    else
+    {
       result += ch;
-      startOfLine = false;
     }
   }
 
