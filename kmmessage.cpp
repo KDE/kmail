@@ -24,6 +24,7 @@ using KMail::ObjectTreeParser;
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
+#include "kcursorsaver.h"
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
@@ -1109,10 +1110,12 @@ KMMessage* KMMessage::createBounce( bool )
   if (senderStr.isEmpty())
   {
 #if ALLOW_GUI
-    if ( withUI )
+    if ( withUI ) {
+      const KCursorSaver saver( QCursor::ArrowCursor );
       KMessageBox::sorry(0 /*app-global modal*/,
 			 i18n("The message has no sender set"),
 			 i18n("Bounce Message"));
+    }
 #endif
     return 0;
   }
@@ -1128,7 +1131,8 @@ KMMessage* KMMessage::createBounce( bool )
   else receiver = KPIM::getEmailAddr(to());
 
 #if ALLOW_GUI
-  if ( withUI )
+  if ( withUI ) {
+    const KCursorSaver saver( QCursor::ArrowCursor );
     // No composer appears. So better ask before sending.
     if (KMessageBox::warningContinueCancel(0 /*app-global modal*/,
         i18n("Return the message to the sender as undeliverable?\n"
@@ -1140,6 +1144,7 @@ KMMessage* KMMessage::createBounce( bool )
     {
       return 0;
     }
+  }
 #endif
 
   KMMessage *msg = new KMMessage;
@@ -1299,12 +1304,14 @@ static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) )
       if ( mdnMessageBoxes[i].canDeny ) {
+	const KCursorSaver saver( QCursor::ArrowCursor );
 	int answer = QMessageBox::information( 0,
 			 i18n("Message Disposition Notification Request"),
 			 i18n( mdnMessageBoxes[i].text ),
 			 i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
 	return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
       } else {
+	const KCursorSaver saver( QCursor::ArrowCursor );
 	int answer = QMessageBox::information( 0,
 			 i18n("Message Disposition Notification Request"),
 			 i18n( mdnMessageBoxes[i].text ),
