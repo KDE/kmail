@@ -60,7 +60,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
   KIconLoader *loader = KGlobal::iconLoader();
 
   mDefaultIcon = loader->loadIcon("kmail", KIcon::Small);
-  this->setPixmap(mDefaultIcon);
+  setPixmap(mDefaultIcon);
   mParentVisible = true;
   mStep = 0;
 
@@ -89,9 +89,9 @@ void KMSystemTray::setMode(int newMode)
 
     mAnimating = false;
     mInverted = false;
-    if(this->isHidden())
+    if(isHidden())
     {
-      this->show();
+      show();
     } else
     {
       // Already visible, so there must be new mail.  Start mAnimating
@@ -105,7 +105,7 @@ void KMSystemTray::setMode(int newMode)
       mAnimating = false;
     } else
     {
-      this->hide();
+      hide();
     }
   }
 }
@@ -113,7 +113,7 @@ void KMSystemTray::setMode(int newMode)
 void KMSystemTray::startAnimation()
 {
   mAnimating = true;
-  this->clear();
+  clear();
   kdDebug(5006) << "Called start animate" << endl;
   slotAnimate();
 }
@@ -134,7 +134,7 @@ void KMSystemTray::slotAnimate()
     kdDebug(5006) << "User interrupted animation, poll" << endl;
 
     // Switch back to the default icon since animation is done
-    this->setPixmap(mDefaultIcon);
+    setPixmap(mDefaultIcon);
   }
 }
 
@@ -169,7 +169,7 @@ void KMSystemTray::switchIcon()
   if(mInverted) --mStep;
   else ++mStep;
 
-  this->setPixmap(icon);
+  setPixmap(icon);
 }
 
 /**
@@ -186,7 +186,7 @@ void KMSystemTray::foldersChanged()
 
   if(mMode == OnNewMail)
   {
-    this->hide();
+    hide();
   }
 
   /** Disconnect all previous connections */
@@ -240,7 +240,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   if( e->button() == RightButton )
   {
     KPopupMenu* popup = new KPopupMenu();
-    popup->insertTitle(*(this->pixmap()), "KMail");
+    popup->insertTitle(*pixmap(), "KMail");
     mPopupFolders.clear();
     mPopupFolders.resize(mFoldersWithUnread.count());
 
@@ -377,12 +377,9 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
     /** Make sure the icon will be displayed */
     if(mMode == OnNewMail)
-    {
-      if(this->isHidden()) this->show();
-    } else
-    {
-      if(!mAnimating) this->startAnimation();
-    }
+      if(isHidden()) show();
+    else
+      if(!mAnimating) startAnimation();
 
   } else
   {
@@ -398,15 +395,12 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
       if(mFoldersWithUnread.count() == 0)
       {
         mPopupFolders.clear();
-        this->disconnect(this, SLOT(selectedAccount(int)));
+        disconnect(this, SLOT(selectedAccount(int)));
 
         if(mMode == OnNewMail)
-        {
-          this->hide();
-        } else
-        {
+          hide();
+        else
           mAnimating = false;
-        }
       }
     }
   }
