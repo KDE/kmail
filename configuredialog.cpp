@@ -1464,7 +1464,7 @@ void ConfigureDialog::makeAppearancePage( void )
   hlay->addWidget( mAppearance.profileDeleteButton );
   hlay->addStretch(10);
   */
-  
+
   mAppearance.mListItemDefault =
     new QListViewItem( mAppearance.profileList,
     i18n("KMail Classic - KMail as you know it") );
@@ -1504,7 +1504,7 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.addressbookStrings.append( i18n("An alternative addressbook "
     "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
     "Requires the kdepim package to be installed."));
-  
+
   mAppearance.addressbookLabel = new QLabel( page5 );
   mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(0));
   vlay->addWidget( mAppearance.addressbookLabel );
@@ -1909,7 +1909,7 @@ void ConfigureDialog::setupAppearancePage( void )
   config.setGroup("General");
   state = config.readBoolEntry( "showMessageSize", false );
   mAppearance.messageSizeCheck->setChecked( state );
-  
+
   mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 0 )) ;
   mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 0 )) );
 }
@@ -2316,16 +2316,17 @@ void ConfigureDialog::slotDoApply( bool everything )
   {
     int numValidEntry = 0;
     int numEntry = mMime.tagList->childCount();
+    QListViewItem *item = mMime.tagList->firstChild();
     for (int i = 0; i < numEntry; i++)
     {
       config.setGroup(QString("Mime #%1").arg(i));
-      QListViewItem *item = mMime.tagList->firstChild();
       if( item->text(0).length() > 0 )
       {
 	config.writeEntry( "name",  item->text(0) );
 	config.writeEntry( "value", item->text(1) );
 	numValidEntry += 1;
       }
+      item = item->nextSibling();
     }
     config.setGroup("General");
     config.writeEntry("mime-header-count", numValidEntry );
