@@ -21,6 +21,7 @@ namespace KMail {
 
   class HtmlWriter {
   public:
+    virtual ~HtmlWriter() {}
     /** Signal the begin of stuff to write */
     virtual void begin() = 0;
     /** Signal the end of stuff to write. */
