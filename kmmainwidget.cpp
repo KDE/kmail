@@ -1758,6 +1758,8 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
        * since we append. Be safe and do find, though, just in case. */
       int newMsgIdx = mFolder->find( newMsg );
       Q_ASSERT( newMsgIdx != -1 );
+      /* we need this unget, to have the message displayed correctly initially */
+      mFolder->unGetMsg( newMsgIdx );
       int idx = mFolder->find( oldMsg );
       Q_ASSERT( idx != -1 );
       /* only select here, so the old one is not un-Gotten before, which would 
