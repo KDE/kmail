@@ -1699,12 +1699,11 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 // determined according to the contents of the subject itself. Since
 // the "Re:" and "Fwd:" prefixes would always cause the subject to be
 // considered left-to-right, they are ignored when determining its
-// direction. TODO: Implement this using the custom prefixes.
+// direction.
 
    QString subjectDir;
    if (!aMsg->subject().isEmpty()) {
-      subjectDir = (KMMsgBase::skipKeyword(aMsg->subject())
-                         .isRightToLeft()) ? "rtl" : "ltr";
+      subjectDir = ( aMsg->cleanSubject().isRightToLeft() ) ? "rtl" : "ltr";
    } else
       subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
 

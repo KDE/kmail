@@ -337,6 +337,10 @@ public:
   QString cleanSubject(const QStringList& prefixRegExps, bool replace,
 		       const QString& newPrefix) const;
 
+  /** Return this mails subject, with all "forward" and "reply"
+      prefixes removed */
+  QString cleanSubject() const;
+
   /** Return this mails subject, formatted for "forward" mails */
   QString forwardSubject() const;
 

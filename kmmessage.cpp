@@ -955,6 +955,11 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   return c;
 }
 
+QString KMMessage::cleanSubject() const {
+  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
+		       true, QString::null ).stripWhiteSpace();
+}
+
 QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace, const QString & newPrefix ) const {
   bool recognized = false;
   // construct a big regexp that
@@ -966,7 +971,7 @@ QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace
 		<< "\"" << endl;
   QRegExp rx( bigRegExp, false /*case insens.*/ );
   if ( !rx.isValid() ) {
-    kdDebug(5006) << "prefix regexp is invalid!" << endl;
+    kdWarning(5006) << "prefix regexp is invalid!" << endl;
     // try good ole Re/Fwd:
     recognized = subject().startsWith( newPrefix );
   } else { // valid rx
