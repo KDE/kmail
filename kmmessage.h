@@ -196,7 +196,7 @@ public:
   KMMessage* createDeliveryReceipt() const;
 
   /** Create a new message that is a MDN for this message, filling all
-      required felds with proper values. Th ereturned message is not
+      required fields with proper values. The returned message is not
       stored in any folder.
 
       @param a Use AutomaticAction for filtering and ManualAction for
@@ -590,7 +590,7 @@ public:
   DwMessage * getTopLevelPart() const { return mMsg; }
 
   /** Fill the KMMessagePart structure for a given DwBodyPart.
-      Iff withBody is false the body of the KMMessagePart will be left
+      If withBody is false the body of the KMMessagePart will be left
       empty and only the headers of the part will be filled in*/
   static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 		       bool withBody = true );
