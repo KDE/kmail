@@ -1143,7 +1143,7 @@ void KMMainWin::slotMailtoAddAddrBook()
     statusMsg(i18n("Address added to addressbook."));
   }
   else {
-    AddToKabDialog dialog(mUrlCurrent.url(), kernel->KABaddrBook(), this);
+    AddToKabDialog dialog(mUrlCurrent.path(), kernel->KABaddrBook(), this);
     dialog.exec();
   }
 }
