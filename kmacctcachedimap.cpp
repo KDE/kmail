@@ -161,10 +161,10 @@ void KMAcctCachedImap::displayProgress()
     it != mapJobData.end(); ++it)
   {
     total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
-    //done += (*it).done;
-    Q_ASSERT( (*it).parent );
     if( (*it).parent )
       done += static_cast<KMFolderCachedImap*>((*it).parent)->progress();
+    else
+      done += (*it).done;
   }
   if (total == 0) // can't happen
   {

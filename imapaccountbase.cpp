@@ -305,7 +305,7 @@ namespace KMail {
   void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
       bool secondStep, KMFolder* parent)
   {
-    if (makeConnection() != Connected) 
+    if (makeConnection() == Error) 
       return;
     // create jobData
     jobData jd;
