@@ -876,8 +876,8 @@ KpgpKey::getKey()
 
 static QLineEdit*
 createLabeledEntry(QWidget* parent, QGridLayout* grid,
-			       const char* aLabel,
-			       const char* aText,
+			       const QString& aLabel,
+			       const QString& aText,
 			       int gridy, int gridx)
 {
   QLabel* label = new QLabel(parent);
@@ -889,7 +889,7 @@ createLabeledEntry(QWidget* parent, QGridLayout* grid,
   label->setMinimumSize(label->size());
   grid->addWidget(label, gridy, gridx++);
 
-  if (aText) edit->setText(aText);
+  if (!aText.isNull()) edit->setText(aText);
   edit->setMinimumSize(100, label->height()+2);
   edit->setMaximumSize(1000, label->height()+2);
   grid->addWidget(edit, gridy, gridx++);
