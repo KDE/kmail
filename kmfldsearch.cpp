@@ -68,17 +68,17 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
   mLbxMatches->setSorting(-1);
   mLbxMatches->addColumn(i18n("Subject"), 150);
   mLbxMatches->addColumn(i18n("Sender"), 120);
-  mLbxMatches->addColumn(i18n("Date"), 80);
+  mLbxMatches->addColumn(i18n("Date"), 120);
 #define LOCATION_COLUMN 3
-  mLbxMatches->addColumn(i18n("Folder"), 200);
+  mLbxMatches->addColumn(i18n("Folder"), 100);
 
 #define MSGID_COLUMN 4
   //TODO: Use msgIDMD5, and create KMFolder::findIdMD5(QString) method
-  mLbxMatches->addColumn(i18n(""));
+  mLbxMatches->addColumn("");
   mLbxMatches->setColumnWidth( MSGID_COLUMN, 0 );
 
 #define FOLDERID_COLUMN 5
-  mLbxMatches->addColumn(i18n(""));
+  mLbxMatches->addColumn("");
   mLbxMatches->setColumnWidth( FOLDERID_COLUMN, 0 );
 
   mLbxMatches->setMinimumSize(300, 100);
@@ -365,7 +365,9 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   assert(aGrid!=NULL);
 
   mCbxField = new QComboBox(true, aParent);
-  mCbxField->insertItem("");
+  if( aRow > 1 ) {
+    mCbxField->insertItem("");
+  }
   mCbxField->insertItem("Subject");
   mCbxField->insertItem("From");
   mCbxField->insertItem("To");
@@ -418,7 +420,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
 {
   QString value;
 
-  if (mFieldIdx <= 0 || !aMsg) return true;
+  if (mField.isEmpty() || !aMsg) return true;
   value = aMsg->headerField(mField);
 
   switch(mFunc)
@@ -430,7 +432,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   case Contains:
     return (value.find(mValue) >= 0);
   case NotContains:
-    return (value.find(mValue) >= 0);
+    return (value.find(mValue) <= 0);
   case GreaterEqual: 
     return (stricmp(value, mValue) >= 0);
   case LessEqual: 
