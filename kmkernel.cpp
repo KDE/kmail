@@ -30,6 +30,7 @@
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
 #include <kabapi.h>
+#include <kwin.h>
 
 #include <X11/Xlib.h>
 
@@ -85,6 +86,7 @@ void KMKernel::openReader( KURL /*messageFile*/)
   else
     mWin = new KMMainWin;
   mWin->show();
+  KWin::setActiveWindow(mWin->winId());
   //and "Activate" by kwin?
 
   //if (!messageFile.isEmpty())
