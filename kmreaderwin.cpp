@@ -139,7 +139,7 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 
 void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 {  
-  mAttachmentStyle = aAttachmentStyle;
+  mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
   update();
 }
 
@@ -399,9 +399,9 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 //-----------------------------------------------------------------------------
 const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
 {
-  QString htmlStr, qpstr;
+  QString htmlStr, qpstr, iStr,tStr;
   char ch, *pos, str[256];
-  int i;
+  int i,t,i1;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeQuotedPrintableString(aStr);
   else qpstr = aStr;
@@ -425,6 +425,25 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
       htmlStr += str;
       htmlStr += "</A>";
     }
+    else if (ch=='@')
+      {
+	for (i=0; *pos && *pos > ' ' && i<255; i++, pos--);
+	i1 = i;
+	t = *pos++; // t is used to make the compiler shut up!
+	for (i=0; *pos && *pos > ' ' && i<255; i++, pos++)
+	  iStr += *pos;
+	t = *pos--; // t is used to make the compiler shut up!  
+	tStr = iStr.copy();
+	tStr.prepend("<A HREF=\"mailto:");
+	tStr += "\">";
+	tStr.append(iStr);
+	tStr += "</A>";
+	htmlStr.truncate(htmlStr.length() -i1);
+	htmlStr += tStr + " " ;
+	iStr = "";
+	tStr = "";
+      }	
+
     else htmlStr += ch;
   }
 
