@@ -708,8 +708,9 @@ void KMComposeWin::setupToolBar(void)
 void KMComposeWin::setupStatusBar(void)
 {
   mStatusBar = new KStatusBar(this);
-  mStatusBar->insertItem(QString(i18n("Column"))+":     ",2,true);
-  mStatusBar->insertItem(QString(i18n("Line"))+":     ",1,true);
+  mStatusBar->addWidget( new QLabel( mStatusBar, "" ), 1 );
+  mStatusBar->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
+  mStatusBar->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
   setStatusBar(mStatusBar);
 }
 
@@ -721,9 +722,9 @@ void KMComposeWin::updateCursorPosition()
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp = QString("%1: %2").arg(i18n("Line")).arg(line+1);
+  temp = QString(" %1: %2 ").arg(i18n("Line")).arg(line+1);
   mStatusBar->changeItem(temp,1);
-  temp = QString("%1: %2").arg(i18n("Column")).arg(col+1);
+  temp = QString(" %1: %2 ").arg(i18n("Column")).arg(col+1);
   mStatusBar->changeItem(temp,2);
 }
 
