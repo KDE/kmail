@@ -527,24 +527,8 @@ void KMReaderWin::clearCache()
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("Maildir support"),
-  I18N_NOOP("Distribution lists"),
-  I18N_NOOP("SMTP authentication"),
-  I18N_NOOP("SMTP over SSL/TLS"),
-  I18N_NOOP("Pipelining for POP3 "
-	    "(faster mail download on slow responding networks)"),
-  I18N_NOOP("Various improvements for IMAP"),
-  I18N_NOOP("On-demand downloading or deleting without downloading "
-	    "of big mails on a POP3 server"),
-  I18N_NOOP("Automatic configuration of POP3/IMAP/SMTP security features"),
-  I18N_NOOP("Automatic encoding selection for outgoing mails"),
-  I18N_NOOP("DIGEST-MD5 authentication"),
-  I18N_NOOP("Per-identity sent-mail and drafts folders"),
-  I18N_NOOP("Expiry of old messages"),
-  I18N_NOOP("Hotkey to temporary switch to fixed width fonts"),
-  I18N_NOOP("UTF-7 support"),
-  I18N_NOOP("Automatic encryption using OpenPGP"),
-  I18N_NOOP("Enhanced status reports for encrypted/signed messages"),
+  I18N_NOOP("Custom folder icons"),
+  I18N_NOOP("Custom date format"),
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -582,7 +566,7 @@ void KMReaderWin::displayAboutPage()
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
-    .arg("1.3").arg("2.2"); // prior KMail and KDE version
+    .arg("1.4").arg("3.0"); // prior KMail and KDE version
 
   QString featureItems;
   for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
