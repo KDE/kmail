@@ -501,7 +501,6 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Retr) {
     processRemainingQueuedMessagesAndSaveUidList();
-    kernel->folderMgr()->syncAllFolders();
 
     KURL url = getUrl();
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
@@ -558,6 +557,8 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   processMsgsTimer.stop();
 
   stage = Quit;
+  kernel->folderMgr()->syncAllFolders();
+
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
   if (!mUidlFinished) return;
