@@ -804,8 +804,10 @@ QString
 KpgpPass::getPassphrase(QWidget *parent)
 {
   KpgpPass kpgppass(parent, i18n("OpenPGP Security Check"));
-  kpgppass.exec();
-  return kpgppass.getPhrase().copy();
+  if (kpgppass.exec())
+    return kpgppass.getPhrase().copy();
+  else
+    return QString::null;
 }
 
 QString
