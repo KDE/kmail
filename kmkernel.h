@@ -10,8 +10,6 @@
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
-#include "kmgroupware.h"
-
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
@@ -45,6 +43,7 @@ class QTimer;
 class KProgress;
 class KPassivePopup;
 class KMMainWin;
+class KMGroupware;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -96,7 +95,7 @@ public:
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
-    int sendCertificate( const QString& to, const QByteArray& certData );
+  int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader();
   void compactAllFolders();
@@ -154,7 +153,7 @@ public:
   IdentityManager *identityManager();
   CryptPlugWrapperList * cryptPlugList() { return &mCryptPlugList; }
 
-  KMGroupware& groupware() { return mGroupware; }
+  KMGroupware& groupware();
 
   bool firstStart() { return the_firstStart; }
   QString previousVersion() { return the_previousVersion; }
@@ -277,7 +276,7 @@ private:
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
-  KMGroupware mGroupware;
+  KMGroupware * mGroupware;
   // temporary mainwin
   KMMainWin *mWin;
 };

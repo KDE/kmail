@@ -53,6 +53,7 @@
 #include <kwin.h>
 #include <ktip.h>
 #include "kmmainwidget.h"
+#include "kmgroupware.h"
 
 #include <X11/Xlib.h>
 #undef Unsorted
@@ -97,6 +98,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterActionDict = 0;
   the_msgSender = 0;
   mWin = 0;
+
+  mGroupware = new KMGroupware( this );
 
   mSystemTray = 0;
   mXmlGuiInstance = 0;
@@ -690,7 +693,7 @@ void KMKernel::init()
       cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
-  mGroupware.readConfigInternal();
+  mGroupware->readConfigInternal();
   // filterMgr->dump();
 #if 0 //disbabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
@@ -910,7 +913,7 @@ void KMKernel::cleanupLoop()
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
-  mGroupware.cleanup();
+  mGroupware->cleanup();
 
   folderMgr()->writeMsgDict(msgDict());
   imapFolderMgr()->writeMsgDict(msgDict());
@@ -1349,4 +1352,10 @@ KConfig* KMKernel::config()
 	myConfig = new KConfig( locateLocal( "config", "kmailrc" ) );
     return myConfig;
 }
+
+KMGroupware & KMKernel::groupware() {
+  assert( mGroupware );
+  return *mGroupware;
+}
+
 #include "kmkernel.moc"

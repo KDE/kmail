@@ -18,6 +18,7 @@
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
 #include "kmmainwidget.h"
+#include "kmgroupware.h"
 #include <X11/Xlib.h>
 #undef KeyPress
 
