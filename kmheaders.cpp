@@ -936,9 +936,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled(mFolder ?  
+    mOwner->editAction()->setEnabled(mFolder ?
         (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ? 
+    mOwner->replyListAction()->setEnabled(mFolder ?
         mFolder->isMailingListEnabled() : false);
     if (mFolder)
     {
@@ -988,7 +988,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   CREATE_TIMER(updateMsg);
   START_TIMER(updateMsg);
-  updateMessageList(true); 
+  updateMessageList(true);
   END_TIMER(updateMsg);
   SHOW_TIMER(updateMsg);
   makeHeaderVisible();
@@ -3431,6 +3431,8 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
       setCurrentItem( mItems[i] );
       setSelected( mItems[i], true );
       setSelectionAnchor( currentItem() );
+      highlightMessage( currentItem() );
+      ensureCurrentItemVisible();
       return;
     }
   }
