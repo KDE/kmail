@@ -137,13 +137,8 @@ public:
     setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
 
     if (mPaintInfo->showSize) {
-      QString msz;
-      QString blanks = " ";
-      long lmsz = mMsgBase->msgSize();
-      for(long i = lmsz; i < 100000000; i *= 10) 
-        blanks += " ";
-      msz.sprintf("%s%ld", blanks.ascii(), lmsz);
-      setText( mPaintInfo->sizeCol, msz);
+      QString sizeStr = QString( "%1" ).arg( mMsgBase->msgSize(), 9 );
+      setText( mPaintInfo->sizeCol, sizeStr );
     }
 
     mColor = &mPaintInfo->colFore;
