@@ -55,6 +55,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   stage = Idle;
   indexOfCurrentMsg = -1;
   processingDelay = 2*100;
+  mProcessing = false;
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
   ss = new QTimer();
   connect( ss, SIGNAL( timeout() ), this, SLOT( slotGetNextMsg() ));
@@ -389,6 +390,10 @@ void KMAcctExpPop::slotCancel()
 
 void KMAcctExpPop::slotProcessPendingMsgs()
 {
+  if (mProcessing) // not reentrant
+    return;
+  mProcessing = true;
+
   if ((stage != Idle) && (stage != Quit))
     KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024) );
 
@@ -407,6 +412,9 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   }
 
   while (cur != msgsAwaitingProcessing.end()) {
+    // note we can actually end up processing events in processNewMsg
+    // this happens when send receipts is turned on
+    // hence the check for re-entry at the start of this method.
     addedOk = processNewMsg(*cur); //added ok? Error displayed if not.
     if (!addedOk) {
       idsOfMsgsPendingDownload.clear();
@@ -425,6 +433,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   msgsAwaitingProcessing.clear();
   msgIdsAwaitingProcessing.clear();
   msgUidsAwaitingProcessing.clear();
+  mProcessing = false;
 }
 
 void KMAcctExpPop::startJob() {

@@ -129,6 +129,7 @@ protected:
   int processingDelay;
   int numMsgs, numBytes, numBytesRead;
   bool interactive;
+  bool mProcessing;
 
 protected slots:
   /** Messages are downloaded in the background and then once every x seconds
