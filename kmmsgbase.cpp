@@ -412,7 +412,11 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 {
-  DwString dwsrc(aStr.data());
+  QString bStr = aStr;
+  if (aStr.isNull())
+    bStr = "";
+
+  DwString dwsrc(bStr.data());
   DwString dwdest;
 
   DwDecodeQuotedPrintable(dwsrc, dwdest);
@@ -423,7 +427,11 @@ const QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.length());
+  QString bStr = aStr;
+  if (aStr.isNull())
+    bStr = "";
+
+  DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
   QString result;
 
@@ -436,7 +444,11 @@ const QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeBase64(const QString& aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.length());
+  QString bStr = aStr;
+  if (aStr.isNull())
+    bStr = "";
+
+  DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
   QString result;
 
@@ -449,7 +461,11 @@ const QString KMMsgBase::decodeBase64(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeBase64(const QString& aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.length());
+  QString bStr = aStr;
+  if (aStr.isNull())
+    bStr = "";
+
+  DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
   QString result;
 

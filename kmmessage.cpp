@@ -1474,8 +1474,11 @@ const QString KMMessage::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QString& aStr)
 {
-  int len = aStr.length();
-  DwString dwSrc(aStr.data(), len);
+  QString bStr = aStr;
+  if (aStr.isNull())
+    bStr = "";
+  int len = bStr.length();
+  DwString dwSrc(bStr.data(), len);
   DwString dwResult;
 
   switch (cte())
