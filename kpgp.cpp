@@ -16,19 +16,20 @@
 
 #include <qregexp.h>
 #include <qcursor.h>
+#include <qhbox.h> 
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qgroupbox.h>
 #include <qlayout.h>
-#include <qpushbutton.h>
 
 #include <kapp.h>
-#include <ksimpleconfig.h>
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <ksimpleconfig.h>
+
 
 Kpgp *Kpgp::kpgpObject = 0L;
 
@@ -765,39 +766,36 @@ Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
 //  widgets needed by kpgp
 //----------------------------------------------------------------------
 
-KpgpPass::KpgpPass(QWidget *parent, const char *name)
-  : QDialog(parent, 0, TRUE)
+KpgpPass::KpgpPass(QWidget *parent, const char *name, bool modal )
+  :KDialogBase( i18n("OpenPGP Security Check"), Yes, Yes, Yes, parent, name, 
+	       modal, true, i18n("&OK") )
 {
-  QPixmap pixm;
+  QHBox *hbox = makeHBoxMainWidget();
+  hbox->setSpacing( spacingHint() );
+  hbox->setMargin( marginHint() );
 
-  setCaption(name);
-  setFixedSize(264,80);
-  cursor = kapp->overrideCursor();
-  if(cursor != 0)
-    kapp->setOverrideCursor(QCursor(ibeamCursor));
-  this->setCursor(QCursor(ibeamCursor));
-  QLabel *text = new QLabel(i18n("Please enter your\nOpenPGP passphrase"),this);
-  text->move(56,4);
-  text->setAutoResize(TRUE);
-  QLabel *icon = new QLabel(this);
-  pixm = BarIcon("pgp-keys");
-  icon->setPixmap(pixm);
-  icon->move(4,8);
-  icon->resize(48,48);
+  QLabel *label = new QLabel(hbox);
+  label->setPixmap( BarIcon("pgp-keys") );
 
-  lineedit = new QLineEdit(this);
+  QWidget *rightArea = new QWidget( hbox );
+  QVBoxLayout *vlay = new QVBoxLayout( rightArea, 0, spacingHint() );
+  
+  label = new QLabel(i18n("Please enter your OpenPGP passphrase"),rightArea);
+  lineedit = new QLineEdit( rightArea );
   lineedit->setEchoMode(QLineEdit::Password);
-  lineedit->move(56, 8+text->size().height());
-  lineedit->resize(200, lineedit->size().height());
+  lineedit->setMinimumWidth( fontMetrics().maxWidth()*20 );
   lineedit->setFocus();
+  connect( lineedit, SIGNAL(returnPressed()), this, SLOT(slotOk()) );
 
-  connect(lineedit,SIGNAL(returnPressed()),this,SLOT(accept()) );
+  vlay->addWidget( label );
+  vlay->addWidget( lineedit );
+
+  disableResize();
 }
+
 
 KpgpPass::~KpgpPass()
 {
-  if(cursor != 0)
-    kapp->restoreOverrideCursor();
 }
 
 QString
@@ -816,40 +814,45 @@ KpgpPass::getPhrase()
   return lineedit->text();
 }
 
+
+
 // ------------------------------------------------------------------------
 
-KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
-  : QDialog(parent, 0, TRUE)
+KpgpKey::KpgpKey( QStrList *keys, QWidget *parent, const char *name, 
+		  bool modal ) 
+  :KDialogBase( i18n("Select key"), Yes, Yes, Yes, parent, name, modal, 
+		true, i18n("&Insert") )
 {
-  QPixmap pixm;
+  QHBox *hbox = new QHBox( this );
+  setMainWidget( hbox );
+  hbox->setSpacing( spacingHint() );
+  hbox->setMargin( marginHint() );
 
-  setCaption(name);
-  setFixedSize(350,110);
-  this->setCursor(QCursor(arrowCursor));
-  cursor = kapp->overrideCursor();
-  if(cursor != 0)
-    kapp->setOverrideCursor(QCursor(arrowCursor));
-  QLabel *text = new QLabel(i18n("Please select the public key to insert"),this);
-  text->move(56,4);
-  text->setAutoResize(TRUE);
-  QLabel *icon = new QLabel(this);
-  pixm = BarIcon("pgp-keys");
-  icon->setPixmap(pixm);
-  icon->move(4,8);
-  icon->resize(48,48);
+  QLabel *label = new QLabel(hbox);
+  label->setPixmap( BarIcon("pgp-keys") );
 
-  combobox = new QComboBox(FALSE, this, "combo");
-  if (keys==NULL) debug("keys = NULL");
-  combobox->insertStrList(keys);
-  combobox->move(56,40);
-  combobox->resize(290,20);
+  QWidget *rightArea = new QWidget( hbox );
+  QVBoxLayout *vlay = new QVBoxLayout( rightArea, 0, spacingHint() );
+  
+  label = new QLabel(i18n("Please select the public key to insert"),rightArea);
+  combobox = new QComboBox( FALSE, rightArea, "combo" );
   combobox->setFocus();
+  if( keys != 0 )
+  {
+    combobox->insertStrList(keys);
+  }
+  vlay->addWidget( label );
+  vlay->addWidget( combobox );
 
-  button = new QPushButton(i18n("&Insert"),this);
-  button->move(145,75);
 
-  connect(button,SIGNAL(clicked()),this,SLOT(accept()) );
+  setCursor( QCursor(arrowCursor) );
+  cursor = kapp->overrideCursor();
+  if( cursor != 0 )
+    kapp->setOverrideCursor( QCursor(arrowCursor) );
+
+  disableResize();
 }
+
 
 KpgpKey::~KpgpKey()
 {
@@ -857,13 +860,15 @@ KpgpKey::~KpgpKey()
     kapp->restoreOverrideCursor();
 }
 
+
 QString
 KpgpKey::getKeyName(QWidget *parent, const QStrList *keys)
 {
-  KpgpKey pgpkey(parent, i18n("Select key"), keys);
+  KpgpKey pgpkey( (QStrList*)keys, parent );
   pgpkey.exec();
   return pgpkey.getKey().copy();
 }
+
 
 QString
 KpgpKey::getKey()
@@ -873,82 +878,38 @@ KpgpKey::getKey()
 
 
 // ------------------------------------------------------------------------
-
-static QLineEdit*
-createLabeledEntry(QWidget* parent, QGridLayout* grid,
-			       const QString& aLabel,
-			       const QString& aText,
-			       int gridy, int gridx)
-{
-  QLabel* label = new QLabel(parent);
-  QLineEdit* edit = new QLineEdit(parent);
-
-  label->setText(aLabel);
-  label->adjustSize();
-  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
-  label->setMinimumSize(label->size());
-  grid->addWidget(label, gridy, gridx++);
-
-  if (!aText.isNull()) edit->setText(aText);
-  edit->setMinimumSize(100, label->height()+2);
-  edit->setMaximumSize(1000, label->height()+2);
-  grid->addWidget(edit, gridy, gridx++);
-
-  return edit;
-}
-
-
 KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
-  : QWidget(parent, name)
+  : QWidget(parent, name), pgp( Kpgp::getKpgp() )
 {
-  pgp = Kpgp::getKpgp();
+  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  
+  QGroupBox *group = new QGroupBox( i18n("Identity"), this );
+  topLayout->addWidget( group );
+  QGridLayout *glay = new QGridLayout( group, 2, 2,  KDialog::spacingHint() );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );  
 
-  QBoxLayout* box = new QBoxLayout(this, QBoxLayout::TopToBottom, 3);
+  QLabel *label = new QLabel( i18n("PGP User Identity:"), group );
+  pgpUserEdit = new QLineEdit( group );
+  pgpUserEdit->setText( pgp->user() );
+  glay->addWidget( label, 1, 0 );
+  glay->addWidget( pgpUserEdit, 1, 1 );
 
-  QGroupBox *grp = new QGroupBox(i18n("Identity"), this);
-  box->addWidget(grp);
+  group = new QGroupBox( i18n("Options"), this );
+  topLayout->addWidget( group );
+  QVBoxLayout *vlay = new QVBoxLayout( group, KDialog::spacingHint() );
+  vlay->addSpacing( fontMetrics().lineSpacing() );  
 
-  QGridLayout* grid = new QGridLayout(grp, 1, 2, 20, 6);
-
-  pgpUserEdit = createLabeledEntry(grp, grid,
-				   i18n("PGP User Identity:"),
-				   pgp->user(), 0, 0);
-
-  grid->setColStretch(0,1);
-  grid->setColStretch(1,10);
-  grid->activate();
-
-  QGroupBox *grp2 = new QGroupBox(i18n("Options"), this);
-  QGridLayout* grid2 = new QGridLayout(grp2, 2, 3, 20, 6);
-
-  storePass=new QCheckBox(
-	      i18n("Store passphrase"), grp2);
-  storePass->adjustSize();
-  storePass->setMinimumSize(storePass->sizeHint());
-  grid2->addMultiCellWidget(storePass, 0, 0, 0, 2);
-
-  encToSelf=new QCheckBox(
-	      i18n("Always encrypt to self"), grp2);
-  encToSelf->adjustSize();
-  encToSelf->setMinimumSize(encToSelf->sizeHint());
-  grid2->addMultiCellWidget(encToSelf, 1, 1, 0, 2);
-
-  grid2->setColStretch(0,0);
-  grid2->setColStretch(1,1);
-  grid2->setColStretch(2,0);
-  grid2->activate();
-
-  box->addWidget(grp2);
-
-  box->addStretch(10);
-  box->activate();
+  storePass = new QCheckBox( i18n("Store passphrase"), group );
+  encToSelf = new QCheckBox( i18n("Always encrypt to self"), group );
+  vlay->addWidget( storePass );
+  vlay->addWidget( encToSelf );
 
   // set default values
-  pgpUserEdit->setText(pgp->user());
-  storePass->setChecked(pgp->storePassPhrase());
-  encToSelf->setChecked(pgp->encryptToSelf());
-
+  pgpUserEdit->setText( pgp->user() );
+  storePass->setChecked( pgp->storePassPhrase() );
+  encToSelf->setChecked( pgp->encryptToSelf() );
 }
+
 
 KpgpConfig::~KpgpConfig()
 {
@@ -965,65 +926,49 @@ KpgpConfig::applySettings()
 }
 
 
-//-----------------------------------------------------------------------------
-#define KpgpDlgInherited QDialog
-KpgpSelDlg::KpgpSelDlg(QStrList aKeyList, const char *aCap):
-  KpgpDlgInherited(NULL, aCap, TRUE), mGrid(this, 2, 2),
-  mListBox(this),
-  mBtnOk(i18n("OK"),this),
-  mBtnCancel(i18n("Cancel"),this)
+
+// ------------------------------------------------------------------------
+KpgpSelDlg::KpgpSelDlg( const QStrList &aKeyList, const QString &recipent,
+			QWidget *parent, const char *name, bool modal )
+  :KDialogBase( parent, name, modal, i18n("PGP Key Selection"), Ok|Cancel, Ok)
 {
-  const char* key;
-  QString caption;
+  QFrame *page = makeMainWidget();
+  QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
+  
+  QLabel *label = new QLabel( page );
+  label->setText(i18n("Select public key for recipient \"%1\"").arg(recipent));
+  topLayout->addWidget( label );
 
-  caption=i18n("Select public key for recipient \"");
-  caption += aCap;
-  caption += i18n("\"");
+  mListBox = new QListBox( page );
+  mListBox->setMinimumHeight( fontMetrics().lineSpacing() * 7 );
+  mListBox->setMinimumWidth( fontMetrics().maxWidth() * 25 );
+  topLayout->addWidget( mListBox, 10 );
 
-  initMetaObject();
-
-  setCaption(aCap ? /*(const char *)*/caption : i18n("PGP Key Selection"));
-
-  /*assert(aKeyList != NULL);*/
   mKeyList = aKeyList;
-  mkey  = "";
+  mkey = "";
 
-  mBtnOk.adjustSize();
-  mBtnOk.setMinimumSize(mBtnOk.size());
-  mBtnCancel.adjustSize();
-  mBtnCancel.setMinimumSize(mBtnCancel.size());
-
-  mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 1);
-  mGrid.addWidget(&mBtnOk, 1, 0);
-  mGrid.addWidget(&mBtnCancel, 1, 1);
-
-  mGrid.setRowStretch(0,10);
-  mGrid.setRowStretch(1,0);
-  mGrid.setColStretch(0,10);
-  mGrid.setColStretch(1,10);
-  mGrid.activate();
-
-  connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
-  connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
-  connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
-
-  for (key=mKeyList.first(); key; key=mKeyList.next())
+  for( const char *key = mKeyList.first(); key!=0; key = mKeyList.next() )
   {
     //insert only real keys:
-    //    if (!(QString)key.contains("matching key"))
-	mListBox.insertItem(key);
+    //if (!(QString)key.contains("matching key"))
+    mListBox->insertItem(key);
   }
+  if( mListBox->count() > 0 )
+  {
+    mListBox->setCurrentItem(0);
+  } 
 }
+
 
 void KpgpSelDlg::slotOk()
 {
-  int idx = mListBox.currentItem();
-
-  if (idx>=0) mkey = mListBox.text(idx);
+  int idx = mListBox->currentItem();
+  if (idx>=0) mkey = mListBox->text(idx);
   else mkey = "";
 
   accept();
 }
+
 
 void KpgpSelDlg::slotCancel()
 {

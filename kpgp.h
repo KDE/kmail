@@ -22,6 +22,8 @@
 #include <qpushbt.h>
 #include <qlistbox.h>
 
+#include <kdialogbase.h>
+
 class QLineEdit;
 class QCursor;
 class QCheckBox;
@@ -186,86 +188,88 @@ private:
 };
 
 // -------------------------------------------------------------------------
-class KpgpPass : public QDialog
+/** the passphrase dialog */
+class KpgpPass : public KDialogBase
 {
   Q_OBJECT
 
-public:
-  /** the passphrase dialog */
-  KpgpPass(QWidget *parent = 0, const char *name = 0);
-  virtual ~KpgpPass();
+  public:
+    KpgpPass(QWidget *parent=0, const char *name=0, bool modal=true );
+    virtual ~KpgpPass();
 
-  static QString getPassphrase(QWidget *parent = 0);
+    static QString getPassphrase(QWidget *parent = 0);
 
-private:
-  QString getPhrase();
+  private:
+    QString getPhrase();
 
-  QLineEdit *lineedit; 
-  QCursor *cursor;
+  private:
+    QLineEdit *lineedit; 
 };
 
 // -------------------------------------------------------------------------
-class KpgpKey : public QDialog
+/** the passphrase dialog */
+class KpgpKey : public KDialogBase
 {
   Q_OBJECT
 
-public:
-  /** the passphrase dialog */
-  KpgpKey(QWidget *parent = 0, const char *name = 0, const QStrList *keys = NULL);
-  virtual ~KpgpKey();
+  public:
+    KpgpKey( QStrList *keys, QWidget *parent=0, const char *name=0, 
+	     bool modal=true );
+    virtual ~KpgpKey();
 
-  static QString getKeyName(QWidget *parent = 0, const QStrList *keys = NULL);
+    static QString getKeyName(QWidget *parent = 0, const QStrList *keys = 0 );
 
-private:
-  QString getKey();
+  private:
+    QString getKey();
 
-  QComboBox *combobox; 
-  QPushButton *button;
-  QCursor *cursor;
+  private:
+    QComboBox *combobox; 
+    QCursor *cursor;
 };
 
+
 // -------------------------------------------------------------------------
+/** a widget for configuring the pgp interface. Can be included into
+    a tabdialog. This widget by itself does not provide an apply/cancel
+    button mechanism. */
 class KpgpConfig : public QWidget
 {
   Q_OBJECT
 
-public:
-  /** a widget for configuring the pgp interface. Can be included into
-   a tabdialog. This widget by itself does not provide an apply/cancel
-   button mechanism. */
-  KpgpConfig(QWidget *parent = 0, const char *name = 0);
-  virtual ~KpgpConfig();
+  public:
+    KpgpConfig(QWidget *parent = 0, const char *name = 0);
+    virtual ~KpgpConfig();
 
-  virtual void applySettings();
+    virtual void applySettings();
        
-protected:
-  Kpgp *pgp;
-  QLineEdit *pgpUserEdit;
-  QCheckBox *storePass;
-  QCheckBox *encToSelf;
+  protected:
+    Kpgp *pgp;
+    QLineEdit *pgpUserEdit;
+    QCheckBox *storePass;
+    QCheckBox *encToSelf;
 
 };
  
 // -------------------------------------------------------------------------
-class KpgpSelDlg: public QDialog
+class KpgpSelDlg: public KDialogBase
 {
   Q_OBJECT
-public:
-  KpgpSelDlg(QStrList aKeyList, const char *caption=NULL);
-  virtual ~KpgpSelDlg() {};
 
-  virtual const QString key(void) const {return mkey;};
+  public:
+    KpgpSelDlg( const QStrList &keyList, const QString &recipent,
+		QWidget *parent=0, const char *name=0, bool modal=true );
+    virtual ~KpgpSelDlg() {};
 
-protected slots:
-  void slotOk();
-  void slotCancel();
+    virtual const QString key(void) const {return mkey;};
 
-protected:
-  QGridLayout mGrid;
-  QListBox mListBox;
-  QPushButton mBtnOk, mBtnCancel;
-  QString mkey;
-  QStrList mKeyList;
+  protected slots:
+    virtual void slotOk();
+    virtual void slotCancel();
+
+  private:
+    QListBox *mListBox;
+    QString  mkey;
+    QStrList mKeyList;
 };
 
 #endif
