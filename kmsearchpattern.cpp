@@ -232,7 +232,6 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
   const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : field().length() ) + 2 ; // +1 for ': '
 
   if ( headerField ) {
-    static const DwBoyerMoore lf( "\n" );
     static const DwBoyerMoore lflf( "\n\n" );
     static const DwBoyerMoore lfcrlf( "\n\r\n" );
 
@@ -241,29 +240,40 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
       endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
     size_t start = headerField->FindIn( headers, 0, false );
+    // if the header field doesn't exist then return false for positive
+    // functions and true for negated functions (e.g. "does not
+    // contain"); note that all negated string functions correspond
+    // to an odd value
     if ( start == DwString::npos )
-      return false;
+      return ( ( function() & 1 ) == 1 );
     start += headerLen;
-    size_t stop = lf.FindIn( aStr, start );
+    size_t stop = aStr.find( '\n', start );
     char ch = '\0';
     while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
-      stop = lf.FindIn( aStr, stop + 1 );
+      stop = aStr.find( '\n', stop + 1 );
     const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
     const QCString codedValue( aStr.data() + start, len + 1 );
-    const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace();
+    const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace(); // FIXME: This needs to be changed for IDN support.
     return matchesInternal( msgContents );
   } else if ( field() == "<recipients>" ) {
     static const DwBoyerMoore to("\nTo: ");
-    bool res = matches( aStr, msg, &to, 2 );
-    if ( !res ) {
-      static const DwBoyerMoore cc("\nCc: ");
-      res = matches( aStr, msg, &cc, 2 );
+    static const DwBoyerMoore cc("\nCc: ");
+    static const DwBoyerMoore bcc("\nBcc: ");
+    // <recipients> "contains" "foo" is true if any of the fields contains
+    // "foo", while <recipients> "does not contain" "foo" is true if none
+    // of the fields contains "foo"
+    if ( ( function() & 1 ) == 0 ) {
+      // positive function, e.g. "contains"
+      return ( matches( aStr, msg, &to, 2 ) ||
+               matches( aStr, msg, &cc, 2 ) ||
+               matches( aStr, msg, &bcc, 3 ) );
     }
-    if ( !res ) {
-      static const DwBoyerMoore bcc("\nBcc: ");
-      res = matches( aStr, msg, &bcc, 3 );
+    else {
+      // negated function, e.g. "does not contain"
+      return ( matches( aStr, msg, &to, 2 ) &&
+               matches( aStr, msg, &cc, 2 ) &&
+               matches( aStr, msg, &bcc, 3 ) );
     }
-    return res;
   } else {
     return KMSearchRule::matches( aStr, msg, aHeaderField, aHeaderLen );
   }
@@ -305,11 +315,10 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
 
     msgContents = msg->headerField("To");
     if ( !msg->headerField("Cc").compare( msg->cc() ) )
-      msgContents += msg->headerField("Cc");
+      msgContents += ", " + msg->headerField("Cc");
     else
-      msgContents += msg->cc();
-    msgContents += msg->headerField("Bcc");
-
+      msgContents += ", " + msg->cc();
+    msgContents += ", " + msg->headerField("Bcc");
   }  else {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
