@@ -155,38 +155,6 @@ private:
   KMFolderDialog* mDlg;
 };
 
-/**
- * "Old Message Expiry" tab in the folder dialog
- * Internal class, only used by KMFolderDialog
- */
-class FolderDiaExpiryTab : public FolderDiaTab
-{
-  Q_OBJECT
-
-public:
-  FolderDiaExpiryTab( KMFolderDialog* dlg,
-                      QWidget* parent, const char* name = 0 );
-
-  virtual void load();
-  virtual bool save();
-
-private slots:
-  void slotExpireFolder( bool );
-  void slotReadExpiryUnitChanged( int );
-  void slotUnreadExpiryUnitChanged( int );
-
-private:
-
-private:
-  QCheckBox    *mExpireFolderCheckBox;
-  KIntNumInput *mReadExpiryTimeNumInput, *mUnreadExpiryTimeNumInput;
-  QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
-  QRadioButton *mExpireActionDelete, *mExpireActionMove;
-  FolderRequester *mExpireToFolderComboBox;
-
-  KMFolderDialog* mDlg;
-};
-
 } // end of namespace KMail
 
 /**
