@@ -497,14 +497,14 @@ void KMFolderTree::reload(bool openFolders)
               this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
         } else {
           // others-only, imap doesn't need this because of the folderComplete-signal
-          disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*)),
+          disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
               this,SLOT(slotUpdateCounts(KMFolder*)));
-          connect(fti->folder(), SIGNAL(msgAdded(KMFolder*)),
+          connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
               this,SLOT(slotUpdateCounts(KMFolder*)));
         }
-        disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
+        disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*,Q_UINT32)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
-        connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
+        connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*,Q_UINT32)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
       }
       if (!openFolders)
