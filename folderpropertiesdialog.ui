@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>344</width>
-            <height>437</height>
+            <height>428</height>
         </rect>
     </property>
     <property name="caption">
@@ -543,27 +543,8 @@
                 </widget>
             </grid>
         </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer11</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>31</height>
-                </size>
-            </property>
-        </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>mIconsCheckBox</sender>
@@ -648,6 +629,7 @@
     <include location="global" impldecl="in declaration">qvaluelist.h</include>
     <include location="local" impldecl="in implementation">kmfolderdir.h</include>
     <include location="local" impldecl="in implementation">kmfolder.h</include>
+    <include location="global" impldecl="in implementation">kdialog.h</include>
     <include location="local" impldecl="in implementation">folderpropertiesdialog.ui.h</include>
 </includes>
 <forwards>
@@ -661,11 +643,8 @@
     <variable>KMFolderDir *mFolderDIr;</variable>
 </variables>
 <slots>
-    <slot access="protected">slotChangeIcon( QString icon )</slot>
+    <slot access="protected">slotChangeIcon( QString )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-</includehints>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>
