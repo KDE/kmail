@@ -162,7 +162,7 @@ KMailPart::~KMailPart()
     if (window->inherits("KMTopLevelWidget"))
       window->close(TRUE);
   }
-  kernel->cleanup();
+  kernel->notClosedByUser();
   delete kernel;
   KMail::cleanup();
 }
