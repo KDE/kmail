@@ -3,6 +3,8 @@
 
 //Factor byteswap stuff into one header file
 
+#include <config.h>
+
 #include "kmfoldersearch.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
@@ -26,7 +28,6 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <utime.h>
-#include <config.h>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -36,6 +37,7 @@
 // on platforms where bswap_NN happens to be a function instead of a define.
 
 /* Swap bytes in 32 bit value.  */
+#ifndef kmail_swap_32
 #ifdef bswap_32
 #define kmail_swap_32(x) bswap_32(x)
 #else
@@ -43,12 +45,13 @@
      ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |               \
       (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
 #endif
+#endif // kmail_swap_32
 
 // Current version of the .index.search files
-#define IDS_VERSION 1000
+#define IDS_SEARCH_VERSION 1000
 // The asterisk at the end is important
-#define IDS_HEADER "# KMail-Search-IDs V%d\n*"
-#define IDS_HEADER_LEN 30
+#define IDS_SEARCH_HEADER "# KMail-Search-IDs V%d\n*"
+#define IDS_SEARCH_HEADER_LEN 30
 
 
 KMSearch::KMSearch(QObject * parent, const char * name)
@@ -785,7 +788,7 @@ int KMFolderSearch::writeIndex( bool )
         truncate(QFile::encodeName(filename), 0);
         return -1;
     }
-    fprintf(tmpIndexStream, IDS_HEADER, IDS_VERSION);
+    fprintf(tmpIndexStream, IDS_SEARCH_HEADER, IDS_SEARCH_VERSION);
     Q_UINT32 byteOrder = 0x12345678;
     fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
 
@@ -837,8 +840,8 @@ bool KMFolderSearch::readIndex()
         return false;
 
     int version = 0;
-    fscanf(mIdsStream, IDS_HEADER, &version);
-    if (version != IDS_VERSION) {
+    fscanf(mIdsStream, IDS_SEARCH_HEADER, &version);
+    if (version != IDS_SEARCH_VERSION) {
         fclose(mIdsStream);
         mIdsStream = 0;
         return false;
@@ -955,7 +958,7 @@ void KMFolderSearch::fillDictFromIndex(KMMsgDict *)
 
 void KMFolderSearch::truncateIndex()
 {
-    truncate(QFile::encodeName(indexLocation()), IDS_HEADER_LEN);
+    truncate(QFile::encodeName(indexLocation()), IDS_SEARCH_HEADER_LEN);
 }
 
 void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
