@@ -856,7 +856,7 @@ void ConfigureDialog::makeAppearancePage( void )
   modeList.append( i18n("Followed URL Link") );
   modeList.append( i18n("New Message") );
   modeList.append( i18n("Unread Message") );
-  modeList.append( i18n("Flag Message") );
+  modeList.append( i18n("Flagged Message") );
 
   mAppearance.colorList = new ColorListBox( page2 );
   vlay->addWidget( mAppearance.colorList, 10 );
@@ -2094,6 +2094,7 @@ void ConfigureDialog::slotDoApply( bool everything )
        config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
        config.writeEntry("NewMessage",      mAppearance.colorList->color(7) );
        config.writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
+       config.writeEntry("FlagMessage",     mAppearance.colorList->color(9) );
     }
     bool recycleColors = mAppearance.recycleColorCheck->isChecked();
     config.writeEntry("RecycleQuoteColors", recycleColors );
