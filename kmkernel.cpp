@@ -135,6 +135,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
   KMComposeWin *cWin = new KMComposeWin(msg);
+  cWin->setCharset("", TRUE);
   if (cWin && !attachURL.isEmpty() && attachURL.isValid())
     cWin->addAttach(attachURL);
   if (hidden == 0)
@@ -166,6 +167,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
   KMComposeWin *cWin = new KMComposeWin(msg);
+  cWin->setCharset("", TRUE);
   if (!attachData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(attachName);
@@ -197,6 +199,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
   KMComposeWin *cWin = new KMComposeWin(msg);
+  cWin->setCharset("", TRUE);
   if (!hidden) cWin->show();
 
   return DCOPRef(cWin);
