@@ -490,6 +490,7 @@ protected:
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
+  bool mAtmModified;
 
   KMEdit* mEditor;
   QGridLayout* mGrid;

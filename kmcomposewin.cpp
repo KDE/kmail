@@ -107,6 +107,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
+  mAtmModified = FALSE;
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
   bAutoCharset = TRUE;
@@ -1275,6 +1276,7 @@ bool KMComposeWin::applyChanges(void)
   mEdtSubject->setEdited(FALSE);
   if (mTransport->lineEdit())
     mTransport->lineEdit()->setEdited(FALSE);
+  mAtmModified = FALSE;
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
   mMsg->cleanupHeader();
@@ -1289,7 +1291,7 @@ bool KMComposeWin::queryClose ()
 
   if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
      mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||
-     mEdtSubject->edited() ||
+     mEdtSubject->edited() || mAtmModified ||
      (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
   {
     rc = KMessageBox::warningYesNoCancel(this,
@@ -1512,6 +1514,7 @@ void KMComposeWin::removeAttach(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMComposeWin::removeAttach(int idx)
 {
+  mAtmModified = TRUE;
   mAtmList.remove(idx);
   delete mAtmItemList.take(idx);
 
@@ -1718,6 +1721,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     delete msgPart;
     return;
   }
+  mAtmModified = TRUE;
   if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
   // add the new attachment to the list
@@ -1902,6 +1906,7 @@ void KMComposeWin::slotAttachProperties()
   dlg.setMsgPart(msgPart);
   if (dlg.exec())
   {
+    mAtmModified = TRUE;
     // values may have changed, so recreate the listbox line
     msgPartToItem(msgPart, mAtmItemList.at(idx));
   }
