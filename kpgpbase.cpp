@@ -110,7 +110,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   pipe(pin);
   pipe(pout);
   pipe(perr);
-     
+
   QApplication::flushX();
   if(!(child_pid = fork()))
   {
@@ -118,7 +118,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     close(pin[1]);
     dup2(pin[0], 0);
     close(pin[0]);
-	  
+
     close(pout[0]);
     dup2(pout[1], 1);
     close(pout[1]);
@@ -126,20 +126,20 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     close(perr[0]);
     dup2(perr[1], 2);
     close(perr[1]);
-	
+
     execl("/bin/sh", "sh", "-c", cmd,  NULL);
     _exit(127);
-  }                
-     
+  }
+
   /*Only get here if we're the parent.*/
   close(pin[0]);
   close(pout[1]);
   close(perr[1]);
 
-  if (!input.isEmpty()) 
+  if (!input.isEmpty())
     write(pin[1], input.data(), input.length());
   close(pin[1]);
- 
+
   if (pout[0] >= 0)
   {
     while ((len=read(pout[0],str,1023))>0)
@@ -149,7 +149,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     }
    close(pout[0]);
   }
- 
+
   if (perr[0] >= 0)
   {
     while ((len=read(perr[0],str,1023))>0)
@@ -159,18 +159,18 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     }
     close(perr[0]);
   }
- 
+
   unsetenv("PGPPASSFD");
   if(passphrase)
     close(ppass[0]);
-     
+
   //printf("output = %s\n",output.data());
   //printf("info = %s\n",info.data());
 
   // we don't want a zombie, do we?  ;-)
   rc = waitpid(0/*child_pid*/, &status, 0);
   if (rc==-1) printf("waitpid: %s\n", strerror(errno));
-  
+
   return OK;
 }
 
@@ -494,7 +494,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     status |= ENCRYPTED;
     if( info.find("bad passphrase") != -1)
     {
-      if(passphrase != 0) 
+      if(passphrase != 0)
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
 	debug("KpgpBase: passphrase is bad");
@@ -721,30 +721,67 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
     bool bad = FALSE;
     unsigned int num = 0;
     QString badkeys = "";
-    while((index = info.find("Cannot find the public key",index)) 
-	  != -1)
+    if (info.find("Cannot find the public key") != -1)
     {
-      bad = TRUE;
-      index = info.find("'",index);
-      int index2 = info.find("'",index+1);
-      badkeys += info.mid(index, index2-index+1) + ", ";
-      num++;
+      index = 0;
+      num = 0;
+      while((index = info.find("Cannot find the public key",index))
+	    != -1)
+      {
+        bad = TRUE;
+        index = info.find("'",index);
+        int index2 = info.find("'",index+1);
+        if (num++)
+          badkeys += ", ";
+        badkeys += info.mid(index, index2-index+1);
+      }
+      if(bad)
+      {
+        badkeys.stripWhiteSpace();
+        if(num == _recipients->count())
+	  errMsg.sprintf("Could not find public keys matching the\n"
+        	         "userid(s) %s.\n"
+		         "Message is not encrypted.\n",
+		         (const char *)badkeys);
+        else
+          errMsg.sprintf("Could not find public keys matching the\n"
+		         "userid(s) %s. These persons won't be able\n"
+		         "to read the message.",
+		         (const char *)badkeys);
+        status |= MISSINGKEY;
+        status |= ERROR;
+      }
     }
-    if(bad)
+    if (info.find("skipping userid") != -1)
     {
-      badkeys.stripWhiteSpace();
-      if(num == _recipients->count())
-	errMsg.sprintf("Could not find public keys matching the\n" 
-		       "userid(s) %s.\n" 
-		       "Message is not encrypted.\n",
-		       (const char *)badkeys);
-      else
-	errMsg.sprintf("Could not find public keys matching the\n" 
-		       "userid(s) %s. These persons won't be able\n"
-		       "to read the message.",
-		       (const char *)badkeys);
-      status |= MISSINGKEY;
-      status |= ERROR;
+      index = 0;
+      num = 0;
+      while((index = info.find("skipping userid",index))
+	    != -1)
+      {
+        bad = TRUE;
+        int index2 = info.find("\n",index+16);
+        if (num++)
+          badkeys += ", ";
+        badkeys += info.mid(index+16, index2-index-16);
+        index = index2;
+      }
+      if(bad)
+      {
+        badkeys.stripWhiteSpace();
+        if(num == _recipients->count())
+	  errMsg.sprintf("Public keys not certified with trusted signature for\n"
+	                 "userid(s) %s.\n"
+		         "Message is not encrypted.\n",
+		         (const char *)badkeys);
+        else
+	  errMsg.sprintf("Public keys not certified with trusted signature for\n"
+		         "userid(s) %s. These persons won't be able\n"
+		         "to read the message.",
+		         (const char *)badkeys);
+        status |= BADKEYS;
+        status |= ERROR;
+      }
     }
   }
   if(passphrase != 0)
@@ -757,6 +794,7 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
     if( info.find("Bad pass phrase") != -1)
     {
       errMsg = i18n("Bad pass Phrase; couldn't sign");
+      status |= BADPHRASE;
       status |= ERR_SIGNING;
       status |= ERROR;
     }
@@ -1379,7 +1417,7 @@ KpgpBase6::pubKeys()
   int index, index2;
   int compatibleMode = 1;
 
-  cmd = "pgp +batchmode -kv -f \"\" ~/.pgp/pubring.pkr";
+  cmd = "pgp +batchmode -kv -f";
   status = run(cmd);
   if(status != OK) return 0;
 
@@ -1406,7 +1444,16 @@ KpgpBase6::pubKeys()
     {
       int index3;
       if (compatibleMode)
-        index3 = info.find("pub ",index);
+      {
+        int index_pub = info.find("pub ",index);
+        int index_sec = info.find("sec ",index);
+        if (index_pub < 0)
+          index3 = index_sec;
+        else if (index_sec < 0)
+          index3 = index_pub;
+        else
+          index3 = (index_pub < index_sec ? index_pub : index_sec);
+      }
       else
       {
         int index_rsa = info.find("RSA ",index);
