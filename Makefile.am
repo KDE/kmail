@@ -50,8 +50,6 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
 		kmgroupware.cpp folderstorage.cpp \
 		csshelper.cpp klistboxdialog.cpp \
-		signatureconfigurationdialog.ui \
-		encryptionconfigurationdialog.ui \
 		actionscheduler.cpp messageproperty.cpp \
 		kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp kmdict.cpp \
@@ -82,8 +80,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
 		attachmentcollector.cpp \
 		bodypartformatter.cpp bodypartformatterfactory.cpp \
-		partNode.cpp signatureconfigurationdialogimpl.cpp \
-		encryptionconfigurationdialogimpl.cpp mailsourceviewer.cpp \
+		partNode.cpp mailsourceviewer.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
 		kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
