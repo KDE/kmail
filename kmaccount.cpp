@@ -58,7 +58,7 @@ KMAccount::~KMAccount()
 //-----------------------------------------------------------------------------
 void KMAccount::setName(const QString& aName)
 {
-  mName = aName;
+  mName = (aName.isEmpty()) ? i18n("Unnamed") : aName;
 }
 
 
