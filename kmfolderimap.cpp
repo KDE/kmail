@@ -134,6 +134,7 @@ void KMFolderImap::writeConfig()
   config->writeEntry("ImapPath", mImapPath);
   config->writeEntry("NoContent", mNoContent);
   config->writeEntry("ReadOnly", mReadOnly);
+  KMFolderImapInherited::writeConfig();
 }
 
 //-----------------------------------------------------------------------------
