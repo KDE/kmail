@@ -86,6 +86,7 @@ void KMFolderDialog::slotOk()
   if (fldName.isEmpty()) fldName = i18n("unnamed");
   if (curFolder != 0)
     selectedFolderDir = mFolders.at(curFolder - 1)->createChildFolder();
+  debug( QString("%1").arg( curFolder ) + mFolders.at(curFolder - 1)->path());
 
   QString message = i18n( "Failed to create folder '" ) + 
     (const char*)fldName + 
@@ -127,7 +128,7 @@ void KMFolderDialog::slotOk()
   }
 
   if (!folder) {
-    folder = (KMAcctFolder*)folderMgr->createFolder(fldName, FALSE, mFolderDir );
+    folder = (KMAcctFolder*)folderMgr->createFolder(fldName, FALSE, selectedFolderDir );
   }
   else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
