@@ -26,18 +26,9 @@
 #include <kprocess.h>
 #include <kiconloader.h>
 
-//#include <qhbox.h>
 #include <qcombobox.h>
-//#include <qlineedit.h>
 #include <qvaluelist.h>
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
-
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h> //for alarm (sven)
-#include <sys/types.h>
-#include <sys/stat.h>
-
 
 
 //=============================================================================
