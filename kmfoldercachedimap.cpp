@@ -1592,7 +1592,8 @@ void KMFolderCachedImap::newState( int progress, const QString& syncStatus )
 {
   //kdDebug() << k_funcinfo << folder() << " " << mProgress << " " << syncStatus << endl;
   ProgressItem *progressItem = mAccount->mailCheckProgressItem();
-  progressItem->setCompletedItems( progress );
+  if( progressItem )
+    progressItem->setCompletedItems( progress );
   if ( !syncStatus.isEmpty() ) {
     QString str;
     // For a subfolder, show the label. But for the main folder, it's already shown.
@@ -1600,10 +1601,12 @@ void KMFolderCachedImap::newState( int progress, const QString& syncStatus )
       str = syncStatus;
     else
       str = QString( "%1: %2" ).arg( label() ).arg( syncStatus );
-    progressItem->setStatus( str );
+    if( progressItem )
+      progressItem->setStatus( str );
     emit statusMsg( str );
   }
-  progressItem->updateProgress();
+  if( progressItem )
+    progressItem->updateProgress();
 }
 
 void KMFolderCachedImap::setSubfolderState( imapState state )
