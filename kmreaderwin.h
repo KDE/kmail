@@ -9,7 +9,7 @@
 #include <qtimer.h>
 #include <qcolor.h>
 
-class KHTMLWidget;
+class KHTMLPart;
 class KMFolder;
 class KMMessage;
 class QFrame;
@@ -17,6 +17,11 @@ class QMultiLineEdit;
 class QScrollBar;
 class QString;
 class QTabDialog;
+
+namespace KParts
+{
+  struct URLArgs;
+}
 
 #define KMReaderWinInherited QWidget
 class KMReaderWin: public QWidget
@@ -51,7 +56,7 @@ public:
   AttachmentStyle attachmentStyle(void) const { return mAttachmentStyle;}
   virtual void setAttachmentStyle(int style);
 
-  /** Set the message that shall be shown. If NULL, an empty page is 
+  /** Set the message that shall be shown. If NULL, an empty page is
     displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
 
@@ -66,7 +71,7 @@ public:
 
   /** Print current message. */
   virtual void printMsg(void);
-  
+
   /** Return selected text */
   QString copyText();
 
@@ -88,15 +93,15 @@ signals:
 
   /** The user presses the right mouse button. 'url' may be NULL. */
   void popupMenu(const char* url, const QPoint& mousePos);
-                         
+
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const char* url, int button);
 
   /** The user wants to see the attachment which is message */
   void showAtmMsg (KMMessage *msg);
-                         
+
 public slots:
-    
+
   /* Refresh the reader window */
   void updateReaderWin();
 
@@ -110,7 +115,7 @@ public slots:
   void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
-  void slotUrlOpen(const QString &, const QString &, int button);
+  void slotUrlOpen(const KURL &url, const KParts::URLArgs &args);
 
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);
@@ -127,7 +132,7 @@ protected slots:
   void slotAtmProperties();
 
 protected:
-  /** Feeds the HTML viewer with the contents of the given message. 
+  /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
@@ -150,7 +155,7 @@ protected:
   /** Convert given string to HTML. Converts blanks and tabs at
     beginning of line to non-breakable spaces if preserveLeadingBlanks
     is TRUE. */
-  virtual const QString strToHtml(const QString str, 
+  virtual const QString strToHtml(const QString str,
 				  bool decodeQuotedPrintable=TRUE,
 				  bool preserveLeadingBlanks=FALSE) const;
 
@@ -180,7 +185,7 @@ protected:
   int mAtmInline;
   int mAtmCurrent;
   KMMessage *mMsg, *mMsgBuf;
-  KHTMLWidget *mViewer;
+  KHTMLPart *mViewer;
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
