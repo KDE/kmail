@@ -1068,4 +1068,47 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
 }
 
 
+//-----------------------------------------------------------------------------
+void KMFolderImap::processNewMail(bool)
+{
+  KURL url = mAccount->getUrl();
+  url.setPath(imapPath() + ";SECTION=UNSEEN");
+  mAccount->makeConnection();
+  KIO::SimpleJob *job = KIO::stat(url, FALSE);
+  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+  KMAcctImap::jobData jd;
+  KMAcctImap::initJobData(jd);
+  mAccount->mapJobData.insert(job, jd);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotStatResult(KIO::Job *)));
+  mAccount->displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotStatResult(KIO::Job * job)
+{
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    mAccount->mapJobData.find(job);
+  if (it == mAccount->mapJobData.end()) return;
+  mAccount->mapJobData.remove(it);
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
+  } else {
+    KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
+    for (KIO::UDSEntry::ConstIterator it = uds.begin(); it != uds.end(); it++)
+    {
+      if ((*it).m_uds == KIO::UDS_SIZE)
+      {
+        mUnreadMsgs = (*it).m_long;
+        emit numUnreadMsgsChanged( this );
+      }
+    }
+  }
+  mAccount->displayProgress();
+}
+
+
 #include "kmfolderimap.moc"

@@ -502,6 +502,24 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 }
 
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::processNewMail(bool interactive)
+{
+  if (!mFolder || !mFolder->child()) return;
+  QStringList strList;
+  QValueList<QGuardedPtr<KMFolder> > folderList;
+  kernel->imapFolderMgr()->createFolderList(&strList, &folderList,
+    mFolder->child(), QString::null, false);
+  QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  for (it = folderList.begin(); it != folderList.end(); it++)
+  {
+    KMFolder *folder = *it;
+    if (folder) static_cast<KMFolderImap*>(folder)->processNewMail(interactive);
+  }
+  emit finishedCheck(false);
+}
+
+
 //=============================================================================
 //
 //  Class  KMImapPasswdDialog

@@ -128,7 +128,7 @@ public:
   virtual QString type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
-  virtual void processNewMail(bool) { emit finishedCheck(false); }
+  virtual void processNewMail(bool);
   virtual void pseudoAssign(KMAccount*);
 
   struct jobData

@@ -62,6 +62,14 @@ public:
   virtual void createFolderList( QStringList *str,
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
+  /** Auxillary function to facilitate creating a list of formatted
+      folder names, suitable for showing in @ref QComboBox */
+  virtual void createFolderList( QStringList *str,
+ 				 QValueList<QGuardedPtr<KMFolder> > *folders,
+  				 KMFolderDir *adir,
+  				 const QString& prefix,
+				 bool i18nized=FALSE );
+
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */
   virtual void createI18nFolderList( QStringList *str,
@@ -94,14 +102,6 @@ protected:
 
   /** Auxillary function to facilitate removal of a folder directory */
   void removeDirAux(KMFolderDir* aFolderDir);
-
-  /** Auxillary function to facilitate creating a list of formatted
-      folder names, suitable for showing in @ref QComboBox */
-  virtual void createFolderList( QStringList *str,
- 				 QValueList<QGuardedPtr<KMFolder> > *folders,
-  				 KMFolderDir *adir,
-  				 const QString& prefix,
-				 bool i18nized=FALSE );
 
   QString mBasePath;
   KMFolderRootDir mDir;

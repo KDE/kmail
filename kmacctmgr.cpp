@@ -353,12 +353,12 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   cur = mAcctList.first();
   while (cur)
   {
-    if (cur->type() != "imap") x++;
+    x++;
     if (x > item) break;
     cur=mAcctList.next();
   }
 
-  if (cur->folder() == 0)
+  if (cur->type() != "imap" && cur->folder() == 0)
   {
     QString tmp;
     tmp = i18n("Account %1 has no mailbox defined!\n"

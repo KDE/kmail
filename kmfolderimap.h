@@ -157,6 +157,11 @@ public:
   void sendFolderComplete(bool success)
   { emit folderComplete(this, success); }
 
+  /**
+   * Refresh the number of unseen mails
+   */
+  void processNewMail(bool interactive);
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -251,6 +256,11 @@ protected slots:
    * Remove the folder also locally, if removing on the server succeeded
    */
   void slotRemoveFolderResult(KIO::Job *job);
+
+  /**
+   * Update the number of unseen messages
+   */
+  void slotStatResult(KIO::Job *job);
 
 protected:
   QString     mImapPath;
