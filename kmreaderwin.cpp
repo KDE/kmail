@@ -642,7 +642,8 @@ void KMReaderWin::updateReaderWin()
   {
     mColorBar->hide();
     mViewer->begin( KURL( "file:/" ) );
-    mViewer->write("<html><body" +
+    mViewer->write(("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+		    "Transitional//EN\">\n<html><body" +
 		   QString(" bgcolor=\"%1\"").arg(c4.name()));
 
     if (mBackingPixmapOn)
@@ -719,7 +720,9 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   QColorGroup cg = kapp->palette().active();
-  queueHtml("<html><head><style type=\"text/css\">" +
+  queueHtml(("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+	     "Transitional//EN\">\n<html><head><title></title>"
+	     "<style type=\"text/css\">" +
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
                            "color: #000000; background-color: #FFFFFF; }\n")
         .arg( mBodyFamily ).arg( fntSize )
@@ -1855,7 +1858,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       else
 	win->setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       win->mViewer->begin( KURL( "file:/" ) );
-      win->queueHtml("<html><head><style type=\"text/css\">" +
+      win->queueHtml(("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+		      "Transitional//EN\">\n<html><head><title></title>"
+		      "<style type=\"text/css\">" +
 		 QString("a { color: %1;").arg(win->c2.name()) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
@@ -1890,7 +1895,8 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       }
       // Just write the img tag to HTML:
       win->mViewer->begin( KURL( "file:/" ) );
-      win->mViewer->write("<html><body>");
+      win->mViewer->write(("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+			   "Transitional//EN\">\n<html><title></title><body>");
       QString linkName = QString("<img src=\"file:%1\" border=0>").arg(aFileName);
       win->mViewer->write(linkName);
       win->mViewer->write("</body></html>");
