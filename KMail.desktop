@@ -1,6 +1,6 @@
 [KDE Desktop Entry]
 Name=KMail
-Name[af]=KMAIL
+Name[af]=KPOS
 Name[eo]=Retpoŝto
 Name[fr]=Courrier électronique
 Name[hu]=KMail levelezőprogram
@@ -54,7 +54,7 @@ Comment[sk]=Klient elektronickej pošty
 Comment[sl]=Program za e-pošto
 Comment[sr]=Program za e-poštu
 Comment[sv]=E-postklient
-Comment[ta]=«ïºø ¸ÕÅ¢
+Comment[ta]=«ïºü ¸ÕÅ¢
 Comment[tr]=Posta İstemcisi
 Comment[uk]=Клієнт електронної пошти
 Comment[zh_CN.GB2312]=邮件程序
