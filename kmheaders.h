@@ -27,6 +27,7 @@ typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QValueList<Q_UINT32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
+enum LoopOnGotoUnreadValue { DontLoop = 0, LoopInCurrentFolder, LoopInAllFolders };
 
 /** The widget that shows the contents of folders */
 #define KMHeadersInherited KListView
@@ -134,8 +135,11 @@ public:
     is unset. */
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
-  void highlightMessage(QListViewItem*, bool markitread);
+  /** Return the config option LoopOnGotoUnread */
+  LoopOnGotoUnreadValue loopOnGotoUnread() { return mLoopOnGotoUnread; }
 
+  void highlightMessage(QListViewItem*, bool markitread);
+  
   /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );
 
@@ -183,10 +187,12 @@ public slots:
   void prevMessage();
   /** Same as prevMessage() but don't clear the current selection */
   void selectPrevMessage();
-  /** Make the nextUnread message header visible scrolling if necessary */
-  void nextUnreadMessage(bool acceptCurrent = false);
-  /** Make the previous message header visible scrolling if necessary */
-  void prevUnreadMessage();
+  /** Make the nextUnread message header visible scrolling if necessary, returning 
+    true if an unread message is found */
+  bool nextUnreadMessage(bool acceptCurrent = false);
+  /** Make the previous message header visible scrolling if necessary, returning
+    true if an unread message is found */
+  bool prevUnreadMessage();
   /** Don't show a drag cursor */
   void slotNoDrag();
   /** timer function to set the current time regularly */
@@ -350,7 +356,7 @@ private:
 
   KMime::DateFormatter mDate;
   /** value of config key Behaviour/LoopOnGotoUnread */
-  bool mLoopOnGotoUnread;
+  LoopOnGotoUnreadValue mLoopOnGotoUnread;
   bool mJumpToUnread;
 
   /** popup to switch columns */

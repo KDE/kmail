@@ -1715,12 +1715,22 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNextMessage()       { mHeaders->nextMessage(); }
-void KMMainWidget::slotNextUnreadMessage() { mHeaders->nextUnreadMessage(); }
+void KMMainWidget::slotNextUnreadMessage()
+{
+  if ( !mHeaders->nextUnreadMessage() )
+    if ( mHeaders->loopOnGotoUnread() == LoopInAllFolders )
+      mFolderTree->nextUnreadFolder(true);
+}
 void KMMainWidget::slotNextImportantMessage() {
   //mHeaders->nextImportantMessage();
 }
 void KMMainWidget::slotPrevMessage()       { mHeaders->prevMessage(); }
-void KMMainWidget::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
+void KMMainWidget::slotPrevUnreadMessage()
+{ 
+  if ( !mHeaders->prevUnreadMessage() )
+    if ( mHeaders->loopOnGotoUnread() == LoopInAllFolders )
+      mFolderTree->prevUnreadFolder();
+}
 void KMMainWidget::slotPrevImportantMessage() {
   //mHeaders->prevImportantMessage();
 }
@@ -2463,15 +2473,7 @@ void KMMainWidget::slotReadOn()
         mMsgView->slotJumpDown();
         return;
     }
-    int i = mHeaders->findUnread(true, -1, false, false);
-    if ( i < 0 ) // let's try from start, what gives?
-        i = mHeaders->findUnread(true, 0, false, true);
-    if ( i >= 0 ) {
-         mHeaders->setCurrentMsg(i);
-         mHeaders->ensureCurrentItemVisible();
-         return;
-    }
-    mFolderTree->nextUnreadFolder( true );
+    slotNextUnreadMessage();
 }
 
 void KMMainWidget::slotNextUnreadFolder() {
@@ -2611,10 +2613,11 @@ void KMMainWidget::updateMessageActions()
     viewSourceAction()->setEnabled( single_actions );
 
     bool mails = mFolder && mFolder->count();
+    bool enable_goto_unread = mails || (mHeaders->loopOnGotoUnread() == LoopInAllFolders);
     actionCollection()->action( "go_next_message" )->setEnabled( mails );
-    actionCollection()->action( "go_next_unread_message" )->setEnabled( mails );
+    actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );
-    actionCollection()->action( "go_prev_unread_message" )->setEnabled( mails );
+    actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );

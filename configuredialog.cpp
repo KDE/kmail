@@ -3574,10 +3574,22 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
   mWarnBeforeExpire =
     new QCheckBox( i18n("&Warn before expiring messages"), this );
   vlay->addWidget( mWarnBeforeExpire );
-  mLoopOnGotoUnread =
-    new QCheckBox( i18n("&Loop in the current folder when trying to find "
-			"unread messages"), this );
-  vlay->addWidget( mLoopOnGotoUnread );
+  // "when trying to find unread messages" combo + label: stretch 0
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mLoopOnGotoUnread = new QComboBox( false, this );
+  label = new QLabel( mLoopOnGotoUnread,
+           i18n("to be continued with \"don't loop\", \"loop in current folder\", "
+                "and \"loop in all folders\".",
+                "When trying to find unread messages:"), this );
+  mLoopOnGotoUnread->insertStringList( QStringList()
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Don't loop")
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Loop in current folder")
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Loop in all folders"));
+  hlay->addWidget( label );
+  hlay->addWidget( mLoopOnGotoUnread, 1 );
   mJumpToUnread =
     new QCheckBox( i18n("&Jump to first unread message when entering a "
 			"folder"), this );
@@ -3654,13 +3666,18 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
   QWhatsThis::add( label, msg );
 
   msg = i18n( "what's this help",
-	      "<qt><p>When jumping to the next unread message, it may occur "
-	      "that no more unread messages are below the current message.</p>"
-	      "<p>When this option is checked, the search will start at the "
-	      "top of the message list. Otherwise, it will do nothing.</p>"
-	      "<p>Similarly, when searching for the previous unread message, "
-	      "the search will start from the bottom of the message list if "
-	      "this option is checked.</p></qt>" );
+	    "<qt><p>When jumping to the next unread message, it may occur "
+	    "that no more unread messages are below the current message.</p>"
+	    "<p><b>Don't loop:</b> The search will stop at the last message in "
+	    "the current folder.</p>"
+	    "<p><b>Loop in current folder:</b> The search will continue at the "
+	    "top of the message list, but not go to another folder.</p>"
+	    "<p><b>Loop in all folders:</b> The search will continue at the top of "
+	    "the message list. If no unread messages are found it will then continue "
+	    "to the next folder.</p>"
+	    "<p>Similarly, when searching for the previous unread message, "
+	    "the search will start from the bottom of the message list and continue to "
+	    "the previous folder depending on which option is selected.</p></qt>" );
   QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
@@ -3675,7 +3692,8 @@ void FolderPage::setup() {
 						  kernel->inboxFolder()->idString() ) );
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
-  mLoopOnGotoUnread->setChecked( behaviour.readBoolEntry( "LoopOnGotoUnread", true ) );
+  // default = "Loop in current folder"
+  mLoopOnGotoUnread->setCurrentItem( behaviour.readNumEntry( "LoopOnGotoUnread", 1 ) );
   mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
   mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
   mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
@@ -3697,7 +3715,7 @@ void FolderPage::apply() {
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
-  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->isChecked() );
+  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->currentItem() );
   behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
   behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
   behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );

@@ -681,7 +681,8 @@ void KMHeaders::readConfig (void)
   // Behavior
   {
     KConfigGroupSaver saver(config, "Behaviour");
-    mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
+    mLoopOnGotoUnread = (LoopOnGotoUnreadValue)config->readNumEntry(
+            "LoopOnGotoUnread", LoopInCurrentFolder );
     mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
   }
 }
@@ -1876,18 +1877,21 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::nextUnreadMessage(bool acceptCurrent)
+bool KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
-  if ( !mFolder->countUnread() ) return;
+  if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(TRUE, -1, false, acceptCurrent);
-  if ( i < 0 && mLoopOnGotoUnread )
+  if ( i < 0 && mLoopOnGotoUnread != DontLoop )
   {
     KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
     if ( first )
       i = findUnread(TRUE, first->msgId(), false, acceptCurrent); // from top
   }
+  if ( i < 0 )
+    return false;
   setCurrentMsg(i);
   ensureCurrentItemVisible();
+  return true;
 }
 
 void KMHeaders::ensureCurrentItemVisible()
@@ -1898,17 +1902,20 @@ void KMHeaders::ensureCurrentItemVisible()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::prevUnreadMessage()
+bool KMHeaders::prevUnreadMessage()
 {
-  if ( !mFolder->countUnread() ) return;
+  if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(FALSE);
-  if ( i < 0 && mLoopOnGotoUnread ) {
+  if ( i < 0 && mLoopOnGotoUnread != DontLoop ) {
     KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
     if ( last )
       i = findUnread(FALSE, last->msgId() ); // from bottom
   }
+  if ( i < 0 )
+    return false;
   setCurrentMsg(i);
   ensureCurrentItemVisible();
+  return true;
 }
 
 

@@ -858,7 +858,7 @@ public:
 protected:
   QCheckBox    *mEmptyFolderConfirmCheck;
   QCheckBox    *mWarnBeforeExpire;
-  QCheckBox    *mLoopOnGotoUnread;
+  QComboBox    *mLoopOnGotoUnread;
   QCheckBox    *mJumpToUnread;
   QComboBox    *mMailboxPrefCombo;
   QCheckBox    *mCompactOnExitCheck;
