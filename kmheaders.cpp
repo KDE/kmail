@@ -19,6 +19,7 @@
 #include <kiconloader.h>
 #include <kapp.h>
 
+
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent, 
 		     const char *name) :
@@ -32,6 +33,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mOwner  = aOwner;
   mFolder = NULL;
   getMsgIndex = -1;
+  mSortField = KMMsgList::sfDate;
 
   setColumn(0, nls->translate("F"), 17, KMHeadersInherited::PixmapColumn);
   setColumn(1, nls->translate("Sender"), 200);
@@ -69,7 +71,41 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 //-----------------------------------------------------------------------------
 KMHeaders::~KMHeaders ()
 {
-  if (mFolder) mFolder->close();
+  if (mFolder)
+  {
+    writeFolderConfig();
+    mFolder->close();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::readFolderConfig (void)
+{
+  KConfig* config = app->getConfig();
+  assert(mFolder!=NULL);
+
+  config->setGroup("Folder-" + mFolder->name());
+  setColumnWidth(1, config->readNumEntry("SenderWidth", 200));
+  setColumnWidth(2, config->readNumEntry("SubjectWidth", 270));
+  setColumnWidth(3, config->readNumEntry("DateWidth", 300));
+  mSortField = (KMMsgList::SortField)
+		config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
+  mFolder->sort(mSortField);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::writeFolderConfig (void)
+{
+  KConfig* config = app->getConfig();
+  assert(mFolder!=NULL);
+
+  config->setGroup("Folder-" + mFolder->name());
+  config->writeEntry("SenderWidth", columnWidth(1));
+  config->writeEntry("SubjectWidth", columnWidth(2));
+  config->writeEntry("DateWidth", columnWidth(3));
+  config->writeEntry("SortColumn", (int)mSortField);
 }
 
 
@@ -79,6 +115,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mFolder) 
   {
     mFolder->close();
+    writeFolderConfig();
     disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
 	       this, SLOT(msgHeaderChanged(int)));
     disconnect(mFolder, SIGNAL(msgAdded(int)),
@@ -105,6 +142,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	    this, SLOT(msgChanged()));
     connect(mFolder, SIGNAL(statusMsg(const char*)),
 	    mOwner, SLOT(statusMsg(const char*)));
+    readFolderConfig();
     mFolder->open();
   }
 
@@ -164,21 +202,20 @@ void KMHeaders::msgHeaderChanged(int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::headerClicked(int column)
 {
-  KMMsgList::SortField sortField;
   int idx = currentItem();
   KMMsgBasePtr cur;
   
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
 
-  if (column==0)      sortField = KMMsgList::sfStatus;
-  else if (column==1) sortField = KMMsgList::sfFrom;
-  else if (column==2) sortField = KMMsgList::sfSubject;
-  else if (column==3) sortField = KMMsgList::sfDate;
+  if (column==0)      mSortField = KMMsgList::sfStatus;
+  else if (column==1) mSortField = KMMsgList::sfFrom;
+  else if (column==2) mSortField = KMMsgList::sfSubject;
+  else if (column==3) mSortField = KMMsgList::sfDate;
   else return;
 
   kbp->busy();
-  mFolder->sort(sortField);
+  mFolder->sort(mSortField);
   kbp->idle();
 
   if (cur) idx = mFolder->find(cur);

@@ -77,6 +77,7 @@ extern KMAddrBook *addrBook;
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
 #endif
 
+
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mMainWidget(this), 
@@ -367,9 +368,12 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotUndoEvent()), keys->undo());
   menu->insertSeparator();
 #endif //BROKEN
-  menu->insertItem(nls->translate("Cut"), this, SLOT(slotCut()));
-  menu->insertItem(nls->translate("Copy"), this, SLOT(slotCopy()));
-  menu->insertItem(nls->translate("Paste"), this, SLOT(slotPaste()));
+  menu->insertItem(nls->translate("Cut"), this, SLOT(slotCut()),
+		   keys->cut());
+  menu->insertItem(nls->translate("Copy"), this, SLOT(slotCopy()),
+		   keys->copy());
+  menu->insertItem(nls->translate("Paste"), this, SLOT(slotPaste()),
+		   keys->paste());
 #ifdef BROKEN
   menu->insertItem(nls->translate("Mark all"),this,
 		   SLOT(slotMarkAll()), CTRL + Key_A);

@@ -454,7 +454,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
   char ch, *pos, str[256];
   int i,i1, x;
 
-  if (aDecodeQP) qpstr = KMMsgBase::decodeQuotedPrintableString(aStr);
+  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC1522String(aStr);
   else qpstr = aStr;
 
   for (pos=qpstr.data(),x=0; *pos; pos++,x++)
@@ -462,9 +462,11 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     ch = *pos;
     if (aPreserveBlanks)
     {
-      if (ch==' ')
+      if (ch==' ' && pos[1]==' ')
       {
-	htmlStr += "&nbsp;";
+	htmlStr += " &nbsp;";
+	for (pos++, x++; pos[1]==' '; pos++, x++)
+	  htmlStr += "&nbsp;";
 	continue;
       }
       else if (ch=='\t')
@@ -476,7 +478,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	}
 	while((x&7) != 0);
       }
-      else aPreserveBlanks = FALSE;
+      // else aPreserveBlanks = FALSE;
     }
     if (ch=='<') htmlStr += "&lt;";
     else if (ch=='>') htmlStr += "&gt;";

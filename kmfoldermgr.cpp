@@ -30,7 +30,7 @@
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath):
-  KMFolderMgrInherited()
+  KMFolderMgrInherited(), mDir()
 {
   initMetaObject();
   assert(aBasePath != NULL);
@@ -74,6 +74,7 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 	    "KMail will create it now.");
     // dir.mkdir(mBasePath, TRUE);
     mkdir(mBasePath.data(), 0700);
+    mDir.setPath(mBasePath);
 
     fld.setName("inbox");
     fld.create();

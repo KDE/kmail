@@ -126,6 +126,10 @@ public:
   static const QString decodeBase64(const QString str);
   static const QString encodeBase64(const QString str);
 
+  /** This function handles both encodings described in RFC1522:
+    Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
+  static const QString decodeRFC1522String(const QString aStr);
+
 protected:
   KMFolder* mParent;
   unsigned long mFolderOffset, mMsgSize;

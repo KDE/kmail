@@ -126,11 +126,11 @@ void KMFolderTree::inSort(KMFolder* aFolder)
   for (i=0,cur=(KMFolder*)mList.first(); cur; cur=(KMFolder*)mList.next(),i++)
   {
     cmp = strcmp(aFolder->type(), cur->type());
-    if (!cmp) cmp = stricmp(aFolder->name(), cur->name());
+    if (!cmp) cmp = stricmp(aFolder->label(), cur->label());
     if (cmp < 0) break;
   }
 
-  str = QString("{") + aFolder->type() + "} " + aFolder->name();
+  str = QString("{") + aFolder->type() + "} " + aFolder->label();
   insertItem(str, i);
   mList.insert(i, aFolder);
 }

@@ -59,11 +59,13 @@ KMMessage::KMMessage(DwMessage* aMsg)
 const QString KMMessage::followup(void) const
 {
   DwHeaders& header = mMsg->Headers();
-  if (header.HasFollowupTo()) return header.FollowupTo().AsString().c_str();
+  if (header.HasFollowupTo())
+    return decodeRFC1522String(header.FollowupTo().AsString().c_str());
   else
   {
-      if (header.HasNewsgroups()) return header.Newsgroups().AsString().c_str();
-      else return "";
+    if (header.HasNewsgroups()) 
+      return decodeRFC1522String(header.Newsgroups().AsString().c_str());
+    else return "";
   }
 }
 
@@ -464,7 +466,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 //-----------------------------------------------------------------------------
 const QString KMMessage::dateStr(void) const
 {
-  return headerField("Date");
+  return headerField("Date").stripWhiteSpace();
 }
 
 
@@ -642,8 +644,11 @@ const QString KMMessage::headerField(const QString aName) const
 {
   DwHeaders& header = mMsg->Headers();
 
-  if (aName.isEmpty()) result = "";
-  else result = header.FieldBody((const char*)aName).AsString().c_str();
+  if (aName.isEmpty())
+    result = "";
+  else 
+    result = decodeRFC1522String(header.FieldBody((const char*)aName).
+                                 AsString().c_str());
   result.detach();
   return result;
 }
@@ -1107,7 +1112,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
   QString result, addr, tmp;
   const char *pos;
   char ch;
-  QString email = decodeQuotedPrintableString(aEmail);
+  QString email = decodeRFC1522String(aEmail);
 
   if (email.isEmpty()) return email;
 
@@ -1136,7 +1141,6 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
       addr[0] = '\0';
     }
   }
-  debug("KMMessage::emailAddrAsAnchor: %s", result.data());
   return result;
 }
 

@@ -123,7 +123,6 @@ bool KMSender::settingsOk(void) const
 //-----------------------------------------------------------------------------
 bool KMSender::send(KMMessage* aMsg, short sendNow)
 {
-
 #ifndef KRN
   int rc;
 
@@ -257,7 +256,9 @@ void KMSender::cleanup(void)
   mSendInProgress = FALSE;
   sentFolder->close();
   outboxFolder->close();
-  outboxFolder->expunge();
+  if (outboxFolder->count()<=0) outboxFolder->expunge();
+  else outboxFolder->compact();
+
   emit statusMsg(nls->translate("Done sending messages."));
 #endif
 }
@@ -371,8 +372,7 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 {
   QString str = aStr.copy();
 
-  str.replace(QRegExp("\\n\\."), "\n ."); 
-  str.replace(QRegExp("\\nFrom "), "\n>From "); 
+  str.replace(QRegExp("\\n\\."), "\n.."); 
   if (toCRLF) str.replace(QRegExp("\\n"), "\r\n");
 
   return str;

@@ -175,7 +175,8 @@ const QString KMMsgBase::asIndexString(void) const
 	      (const char*)decodeQuotedPrintableString(from()));
   len = str.length();
   for (i=0; i<len; i++)
-    if (str[i] < ' ') str[i] = ' ';
+    if (str[i] < ' ' && str[i] >= 0)
+      str[i] = ' ';
 
   return str;
 }
@@ -275,6 +276,89 @@ const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
+const QString KMMsgBase::decodeRFC1522String(const QString aStr)
+{
+  static QString result;
+  static QString illegal("()<>[]@,;:;\".");
+  static const QRegExp findRFC1522lf ("^[\n\r]+[ \t]*=?[qQbB]?");
+  static const QRegExp findlf ("\n");
+  int start, beg, p1, p2, end=0;
+  bool valid;
+  char encoding=0, c;
+
+  start = 0;
+  result = "";
+
+  while (1)
+  {
+    beg = aStr.find("=?", start);
+    if (beg < 0)
+    {
+      // no more suspicious string parts found -- done
+      result += aStr.mid(start, 32767);
+      break;
+    }
+    if (beg > start) result += aStr.mid(start, beg-start);
+    p1 = aStr.find("?", beg+2);
+    valid = TRUE;
+    if (p1>0) {
+       encoding = (aStr [p1+1]);
+       if (encoding=='q' || encoding=='b') 
+         encoding -= 32;
+       if ((encoding!='Q' && encoding!='B') || aStr [p1+2]!='?') {
+         valid = FALSE;
+       } else {
+         end = aStr.find("?=", p1+3);
+         if (end <= 0) 
+            valid = FALSE;
+       }
+    } else
+      valid = FALSE;
+    // RFC1522 states: No more than 75 characters
+    if (valid && (end-beg)>73)
+      valid = FALSE;
+    if (valid) {
+      // Check if characters are all legal according to RFC1522
+      for (p2 = beg; valid && p2 < end; p2++) {
+	c = aStr [p2];
+        if (illegal.find (c) > 0 || c <= ' ')
+          valid = FALSE;
+      }
+    }
+    if (!valid) {
+      result += "=?";
+      start += 2;
+      continue;
+    }
+    // Gosh! We *do* have a token
+    if (encoding=='Q') {
+      for (p2 = p1+3; p2 < end; p2++) {
+        if (aStr [p2] == '_') 
+           result += ' ';
+	else if (aStr [p2] != '=' || p2+3 > end) 
+	   result += aStr [p2];
+        else {
+           result += decodeQuotedPrintable(aStr.mid(p2,3).data());
+           p2 += 2;
+	}
+      }
+    } else {
+      result += decodeBase64(aStr.mid (p1+3, end-p1-3).data());
+    }
+    start = end+2;
+    if (aStr.mid(start,32768).find (findRFC1522lf)>=0) {
+      while (aStr[start]=='\r' || aStr[start]=='\n')
+        start++;
+      while (aStr[start]=='\t' || aStr[start]==' ')
+        start++;
+    }
+  }
+  result.replace (findlf, " ");
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
 {
   static QString result;
@@ -332,7 +416,7 @@ const QString KMMsgBase::decodeQuotedPrintable(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeQuotedPrintable(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.size(), 0, aStr.length());
+  DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
   QString result;
 
@@ -345,7 +429,7 @@ const QString KMMsgBase::encodeQuotedPrintable(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeBase64(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.size(), 0, aStr.length());
+  DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
   QString result;
 
@@ -358,7 +442,7 @@ const QString KMMsgBase::decodeBase64(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeBase64(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.size(), 0, aStr.length());
+  DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
   QString result;
 

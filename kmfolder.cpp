@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -199,6 +200,7 @@ void KMFolder::close(bool aForced)
   }
 
   unlock();
+  mMsgList.clear(TRUE);
 
   if (mStream) fclose(mStream);
   if (mIndexStream) fclose(mIndexStream);
@@ -221,13 +223,20 @@ int KMFolder::lock(void)
   mFilesLocked = FALSE;
 
   rc = fcntl(fileno(mStream), F_SETLK, F_WRLCK);
-  if (rc) return errno;
+  if (rc)
+  {
+    debug("Cannot lock folder `%s': %s", (const char*)location(),
+	  strerror(errno));
+    return errno;
+  }
 
   if (mIndexStream >= 0)
   {
     rc = fcntl(fileno(mIndexStream), F_SETLK, F_WRLCK);
     if (rc) 
     {
+      debug("Cannot lock index of folder `%s': %s", (const char*)location(),
+	    strerror(errno));
       rc = errno;
       rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
       return rc;
@@ -279,9 +288,10 @@ int KMFolder::createIndexFromContents(void)
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  QString subjStr, dateStr, fromStr, xmarkStr;
+  QString subjStr, dateStr, fromStr, xmarkStr, *lastStr=NULL;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
+  bool inHeader = TRUE;
   KMMsgInfo* mi;
   QString msgStr(256);
   QRegExp regexp(MSG_SEPERATOR_REGEX);
@@ -347,30 +357,56 @@ int KMFolder::createIndexFromContents(void)
 
       offs = ftell(mStream);
       num++;
+      inHeader = TRUE;
+      continue;
     }
-    else if ((needStatus & 1) && *line=='S' && strncmp(line, "Status: ", 8) == 0)
+    // Is this a long header line?
+    if (inHeader && (line[0]=='\t' || line[0]==' '))
+    {
+      i = 0;
+      while (line [i]=='\t' || line [i]==' ') i++;
+      if (line [i] < ' ' && line [i]>0) inHeader = FALSE;
+      else if (lastStr) *lastStr += line + i;
+    } 
+    else lastStr = NULL;
+
+    if (inHeader && (line [0]=='\n' || line [0]=='\r'))
+      inHeader = FALSE;
+    if (!inHeader) continue;
+
+    if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0 && 
+	isblank(line[7])) 
     {
       for(i=0; i<4 && line[i+8] > ' '; i++)
 	status[i] = line[i+8];
       status[i] = '\0';
       needStatus &= ~1;
     }
-    else if ((needStatus & 2) && *line=='X' && 
-	     strncmp(line, "X-Status: ", 10)==0)
+    else if ((needStatus & 2) && strncasecmp(line, "X-Status:", 9)==0 &&
+	     isblank(line[9]))
     {
       for(i=0; i<4 && line[i+10] > ' '; i++)
 	xstatus[i] = line[i+10];
       xstatus[i] = '\0';
       needStatus &= ~2;
     }
-    else if (*line=='X' && strncmp(line, "X-KMail-Mark: ", 14) == 0)
+    else if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
       xmarkStr = QString(line+14).copy();
-    else if (*line=='D' && strncmp(line, "Date: ", 6) == 0)
+    else if (strncasecmp(line,"Date:",5)==0 && isblank(line[5]))
+    {
       dateStr = QString(line+6).copy();
-    else if (*line=='F' && strncmp(line, "From: ", 6) == 0)
+      lastStr = &dateStr;
+    }
+    else if (strncasecmp(line,"From:",5)==0 && isblank(line[5]))
+    {
       fromStr = QString(line+6).copy();
-    else if (*line=='S' && strncmp(line, "Subject: ", 9) == 0)
+      lastStr = &fromStr;
+    }
+    else if (strncasecmp(line,"Subject:",8)==0 && isblank(line[8]))
+    {
       subjStr = QString(line+9).copy();
+      lastStr = &subjStr;
+    }
   }
 
   if (mAutoCreateIndex) writeIndex();
@@ -769,9 +805,13 @@ int KMFolder::compact(void)
   tempName = tempFolder->location();
   tempFolder->close(TRUE);
   close(TRUE);
+  mMsgList.clear(TRUE);
 
   _rename(tempName, location());
   _rename(tempFolder->indexLocation(), indexLocation());
+
+  // Now really free all memory
+  parent()->remove(tempFolder);
 
   if (openCount > 0)
   {

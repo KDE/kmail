@@ -122,6 +122,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
+  if (mHeaders)   delete mHeaders;
   if (mToolBar)   delete mToolBar;
   if (mMenuBar)   delete mMenuBar;
   if (mStatusBar) delete mStatusBar;
@@ -275,9 +276,13 @@ void KMMainWin::slotAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckMail() 
 {
+  bool rc;
+
   kbp->busy();
-  acctMgr->checkMail();
+  rc = acctMgr->checkMail();
   kbp->idle();
+
+  if (!rc) warning(nls->translate("No new mail available"));
 }
 
 

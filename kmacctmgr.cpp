@@ -53,7 +53,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  printf("writing config\n");
+  debug("writing config");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256);
@@ -75,7 +75,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  printf("Read config called\n");
+  debug("Read config called");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256), acctType, acctName;
@@ -102,19 +102,22 @@ void KMAcctMgr::readConfig(void)
   }
 }
 
+
+//-----------------------------------------------------------------------------
 bool KMAcctMgr::singleCheckMail(KMAccount *account)
 {
   bool hasNewMail = FALSE;
-  printf("singleCheckMail called!\n");
+  debug("singleCheckMail called!");
   kbp->busy();
   if (account->processNewMail())
-    {
-      hasNewMail = TRUE;
-      emit newMail(account);
-    }
+  {
+    hasNewMail = TRUE;
+    emit newMail(account);
+  }
   kbp->idle();
   return hasNewMail;
 }
+
 
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::create(const QString aType, const QString aName) 
@@ -181,6 +184,15 @@ bool KMAcctMgr::checkMail(void)
 {
   KMAccount* cur;
   bool hasNewMail = FALSE;
+  int num;
+
+  if (mAcctList.isEmpty())
+  {
+    warning(nls->translate("You need to add an account in the network\n"
+			   "section of the settings in order to\n"
+			   "receive mail."));
+    return FALSE;
+  }
 
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {

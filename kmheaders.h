@@ -93,6 +93,12 @@ protected:
     messages. */
   virtual int firstSelectedMsg(int id) const;
 
+  /** Read per-folder config options and apply them. */
+  virtual void readFolderConfig(void);
+
+  /** Write per-folder config options. */
+  virtual void writeFolderConfig(void);
+
 private:
   virtual void updateMessageList(void);
   KMFolder* mFolder;
@@ -100,6 +106,7 @@ private:
   int getMsgIndex;
   bool getMsgMulti;
   KMMessageList mSelMsgList;
+  KMMsgList::SortField mSortField;
 };
 
 #endif
