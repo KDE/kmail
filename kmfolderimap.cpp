@@ -1040,12 +1040,19 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
     mContentState = imapNoInformation;
-    emit folderComplete(this, FALSE);
-  } else if (lastSet) mContentState = imapFinished;
-  if (lastSet) quiet(false);
-  mAccount->removeJob(it);
-  if (!job->error() && lastSet)
-      emit folderComplete(this, TRUE);
+    quiet( false );
+    emit folderComplete(this, false);
+  }
+  else
+  {
+    if (lastSet)
+    {
+      mContentState = imapFinished;
+      quiet(false);
+      emit folderComplete(this, true);
+    }
+    mAccount->removeJob(it);
+  }
 
   mAccount->displayProgress();
 }
