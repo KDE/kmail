@@ -78,7 +78,7 @@ void KMFolderImap::close(bool aForced)
   if (mOpenCount <= 0 ) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if (mAccount) 
+  if (mAccount)
     mAccount->ignoreJobsForFolder( this );
   int idx = count();
   while (--idx >= 0) {
@@ -281,12 +281,12 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
     mAccount->tempOpenFolder(msgParent);
     if (msgParent->folderType() == KMFolderTypeImap)
     {
-      // make sure the messages won't be deleted while we work with them
-      for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
-        msg->setTransferInProgress(true);
-
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
       {
+        // make sure the messages won't be deleted while we work with them
+        for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+        msg->setTransferInProgress(true);
+
         if (this == msgParent)
         {
           // transfer the whole message, e.g. a draft-message is canceled and re-added to the drafts-folder
@@ -337,8 +337,10 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
           ++it;
           if (!canAddMsgNow(msg, aIndex_ret))
             msgList.remove(msg);
-          else
-            msg->setTransferInProgress(true);
+          else {
+	    if (!msg->transferInProgress())
+              msg->setTransferInProgress(true);
+	  }
         }
       }
     } // if imap
@@ -353,7 +355,8 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
       assert(idx != -1);
       msg = msgParent->getMsg(idx);
     }
-    msg->setTransferInProgress(true);
+    if (!msg->transferInProgress())
+      msg->setTransferInProgress(true);
     imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
     connect(imapJob, SIGNAL(messageStored(KMMessage*)),
         SLOT(addMsgQuiet(KMMessage*)));
