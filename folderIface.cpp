@@ -98,7 +98,8 @@ FolderIface::unreadIconPath() const
 int
 FolderIface::messages()
 {
-    return mFolder->count();
+  // if the folder isn't open then return the cached count
+  return mFolder->count( !mFolder->isOpened() );
 }
 
 int
