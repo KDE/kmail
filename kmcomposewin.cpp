@@ -1077,6 +1077,17 @@ bool KMComposeWin::applyChanges(void)
     } else
       body = codec->fromUnicode(str);
 
+    if (codec && codec->toUnicode(body) != str)
+    {
+      kernel->kbp()->idle();
+      if (KMessageBox::warningYesNo(0L,
+      i18n("Not all characters fit into the chosen"
+      " encoding.\nSend the message anyway?"),
+      i18n("Some characters will be lost"),
+      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
+        return FALSE;
+    }
+
     if (isQP)
       mMsg->setBodyEncoded(body);
     else
@@ -1114,6 +1125,17 @@ bool KMComposeWin::applyChanges(void)
       body = str.latin1();
     } else
       body = codec->fromUnicode(str);
+
+    if (codec && codec->toUnicode(body) != str)
+    {
+      kernel->kbp()->idle();
+      if (KMessageBox::warningYesNo(0L,
+      i18n("Not all characters fit into the chosen"
+      " encoding.\nSend the message anyway?"),
+      i18n("Some characters will be lost"),
+      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
+        return FALSE;
+    }
 
     bodyPart.setBodyEncoded(body);
     mMsg->addBodyPart(&bodyPart);
