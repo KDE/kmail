@@ -19,8 +19,9 @@
  *
  */
 
+// Add header files alphabetically
+
 #include <signal.h>
-#include <stdlib.h>
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
@@ -34,6 +35,7 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qregexp.h>
+#include <qspinbox.h>
 #include <qtabwidget.h> 
 #include <qvalidator.h> 
 #include <qvbox.h>
@@ -48,8 +50,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpgp.h>
+#include <ksimpleconfig.h>
+#include <kstddirs.h>
 
 
+
+#include "accountdialog.h"
 #include "colorlistbox.h"
 #include "configuredialog.h"
 #include "kfontutils.h"
@@ -59,8 +65,9 @@
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include "kmidentity.h"
+#include "kmmessage.h"
 #include "kmsender.h"
-#include "kmsettings.h"
+#include "kmtopwidget.h"
 
 #include "configuredialog.moc"
 
@@ -851,23 +858,23 @@ NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
   mLineEdit = new QLineEdit( page );
   glay->addWidget( mLineEdit, 0, 1 );
 
-  QButtonGroup *group = new QButtonGroup( page );
-  connect( group, SIGNAL(clicked(int)), this, SLOT(radioClicked(int)) );
-  group->hide();
+  QButtonGroup *buttonGroup = new QButtonGroup( page );
+  connect( buttonGroup, SIGNAL(clicked(int)), this, SLOT(radioClicked(int)) );
+  buttonGroup->hide();
 
   QRadioButton *radioEmpty = 
     new QRadioButton( i18n("With empty fields"), page );
-  group->insert(radioEmpty);
+  buttonGroup->insert(radioEmpty, Empty );
   glay->addMultiCellWidget( radioEmpty, 1, 1, 0, 1 );
 
   QRadioButton *radioControlCenter = 
     new QRadioButton( i18n("Use Control Center settings"), page );
-  group->insert(radioControlCenter);
+  buttonGroup->insert(radioControlCenter, ControlCenter );
   glay->addMultiCellWidget( radioControlCenter, 2, 2, 0, 1 );
 
   QRadioButton *radioDuplicate = 
     new QRadioButton( i18n("Duplicate existing identity"), page );
-  group->insert(radioDuplicate);
+  buttonGroup->insert(radioDuplicate, ExistingEntry );
   glay->addMultiCellWidget( radioDuplicate, 3, 3, 0, 1 );
 
   mComboLabel = new QLabel( i18n("Existing identities:"), page );
@@ -876,14 +883,38 @@ NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
   mComboBox = new QComboBox( false, page );
   glay->addWidget( mComboBox, 4, 1 );
 
-  group->setButton(0);
+  buttonGroup->setButton(0);
   radioClicked(0);
 }
 
 
+void NewIdentityDialog::slotOk( void )
+{
+  QString identity = identityText().stripWhiteSpace();
+  if( identity.isEmpty() == true )
+  {
+    KMessageBox::error( this, i18n("You must specify an identity") );
+    return;
+  }
+  
+  for( int i=0; i<mComboBox->count(); i++ )
+  {
+    if( identity == mComboBox->text(i) )
+    {
+      KMessageBox::error( this, i18n("The identity already exist") );
+      return;
+    }
+  }
+  accept();
+}
+
+
+
 void NewIdentityDialog::radioClicked( int id )
 {
-  bool state = id == 2;
+  mDuplicateMode = id;
+
+  bool state = mDuplicateMode == 2;
   mComboLabel->setEnabled( state );
   mComboBox->setEnabled( state );
 }
@@ -908,6 +939,13 @@ QString NewIdentityDialog::duplicateText( void )
 }
 
 
+int NewIdentityDialog::duplicateMode( void )
+{
+  return( mDuplicateMode );
+}
+
+
+
 
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, 
@@ -917,6 +955,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 {
   setHelp( "kmail/kmail.html", QString::null );
   setIconListAllVisible( true );
+  enableButton( Default, false ); 
 
   makeIdentityPage();
   makeNetworkPage();
@@ -925,7 +964,6 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   makeMimePage();
   makeSecurityPage();
   makeMiscPage();
-  setup();
 }
 
 
@@ -934,16 +972,28 @@ ConfigureDialog::~ConfigureDialog( void )
 }
 
 
+void ConfigureDialog::show( void )
+{
+  if( isVisible() == false )
+  {
+    setup();
+    showPage(0);
+  }
+  KDialogBase::show();
+}
+
+
 void ConfigureDialog::makeIdentityPage( void )
 {
   QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
-			  QPixmap(user_xpm) /*UserIcon("user")*/ );
+			  QPixmap(user_xpm) );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mIdentity.pageIndex = pageIndex(page);
 
-  QGridLayout *glay = new QGridLayout( topLevel, 11, 3 );
+  QGridLayout *glay = new QGridLayout( topLevel, 12, 3 );
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  glay->setRowStretch( 10, 10 );
+  glay->addRowSpacing( 6, spacingHint() );
+  glay->setRowStretch( 11, 10 );
   glay->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("Identity:"), page );
@@ -993,37 +1043,37 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.signatureFileRadio = 
     new QRadioButton( i18n("Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 6, 6, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 7, 7, 0, 2 );
 
   mIdentity.signatureFileLabel = new QLabel( i18n("Signature File:"), page );
-  glay->addWidget( mIdentity.signatureFileLabel, 7, 0 );
+  glay->addWidget( mIdentity.signatureFileLabel, 8, 0 );
   mIdentity.signatureFileEdit = new QLineEdit( page );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addWidget( mIdentity.signatureFileEdit, 7, 1 );
+  glay->addWidget( mIdentity.signatureFileEdit, 8, 1 );
   mIdentity.signatureBrowseButton = new QPushButton( i18n("Choose..."), page );
   connect( mIdentity.signatureBrowseButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureChooser()) );
   mIdentity.signatureBrowseButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureBrowseButton, 7, 2 );
+  glay->addWidget( mIdentity.signatureBrowseButton, 8, 2 );
 
   mIdentity.signatureExecCheck = 
     new QCheckBox( i18n("The file is a program"), page );
-  glay->addWidget( mIdentity.signatureExecCheck, 8, 1 );
+  glay->addWidget( mIdentity.signatureExecCheck, 9, 1 );
   mIdentity.signatureEditButton = new QPushButton( i18n("Edit File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureEditButton, 8, 2 );
+  glay->addWidget( mIdentity.signatureEditButton, 9, 2 );
 
   mIdentity.signatureTextRadio = 
     new QRadioButton( i18n("Specify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
-  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 9, 9, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 10, 10, 0, 2 );
 
   mIdentity.signatureTextEdit = new QMultiLineEdit( page );
   mIdentity.signatureTextEdit->setText("Does not work yet");
-  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 10, 10, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 11, 11, 0, 2 );
 }
 
 
@@ -1104,9 +1154,6 @@ void ConfigureDialog::makeNetworkPage( void )
 
 
 
-
-
-
   buttonGroup = new QButtonGroup(i18n("&Incoming Mail"), page );
   topLevel->addWidget(buttonGroup, 10 );
 
@@ -1155,117 +1202,6 @@ void ConfigureDialog::makeNetworkPage( void )
 	   this, SLOT(slotRemoveSelectedAccount()) );
   glay->addWidget( mNetwork.removeAccountButton, 4, 1 );
 }
-
-
-
-#if 0
-void ConfigureDialog::makeNetworkPage( void )
-{
-  QFrame *page = addPage( i18n("Network"),
-			  i18n("Setup for sending and receiving messages"),
-			  QPixmap(network_xpm) /*UserIcon("network")*/ );
-  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
-  mNetwork.pageIndex = pageIndex(page);
-
-  QButtonGroup *buttonProxy = new QButtonGroup( page );
-  buttonProxy->hide();
-  connect( buttonProxy, SIGNAL(clicked(int)), 
-	   this, SLOT(slotSendmailType(int)) );
-
-  QButtonGroup *buttonGroup = new QButtonGroup(i18n("&Sending Mail"), page );
-  topLevel->addWidget(buttonGroup);
-  QGridLayout *glay = new QGridLayout(buttonGroup, 6, 4, spacingHint() );
-  glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-
-  mNetwork.sendmailRadio = new QRadioButton( i18n("Sendmail"), buttonGroup );
-  buttonProxy->insert(mNetwork.sendmailRadio);
-  glay->addMultiCellWidget(mNetwork.sendmailRadio, 1, 1, 0, 3);
-  QLabel *label = new QLabel( i18n("Location:"), buttonGroup );
-  glay->addWidget( label, 2, 1 );
-  mNetwork.sendmailLocationEdit = new QLineEdit( buttonGroup );
-  glay->addWidget( mNetwork.sendmailLocationEdit, 2, 2 );
-  mNetwork.sendmailChooseButton = 
-    new QPushButton( i18n("Choose..."), buttonGroup );
-  connect( mNetwork.sendmailChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotSendmailChooser()) );
-  mNetwork.sendmailChooseButton->setAutoDefault( false );
-  glay->addWidget( mNetwork.sendmailChooseButton, 2, 3 );
-
-  mNetwork.smtpRadio = new QRadioButton( i18n("SMTP"), buttonGroup );
-  buttonProxy->insert(mNetwork.smtpRadio);
-  glay->addMultiCellWidget(mNetwork.smtpRadio, 3, 3, 0, 3); 
-  label = new QLabel( i18n("Server:"), buttonGroup );
-  glay->addWidget( label, 4, 1 );
-  mNetwork.smtpServerEdit = new QLineEdit( buttonGroup );
-  glay->addWidget( mNetwork.smtpServerEdit, 4, 2 );
-  label = new QLabel( i18n("Port:"), buttonGroup );
-  glay->addWidget( label, 5, 1 );
-  mNetwork.smtpPortEdit = new QLineEdit( buttonGroup );
-  mNetwork.smtpPortEdit->setValidator( new QIntValidator(buttonGroup) );
-  glay->addWidget( mNetwork.smtpPortEdit, 5, 2 );
-
-
-  buttonGroup = new QButtonGroup(i18n("&Incoming Mail"), page );
-  topLevel->addWidget(buttonGroup, 10 );
-
-  glay = new QGridLayout( buttonGroup, 6, 2, spacingHint() );
-  glay->addColSpacing( 0, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-  glay->setColStretch( 0, 10 );
-  glay->setRowStretch( 5, 100 );
-
-  label = new QLabel( buttonGroup );
-  label->setText(i18n("Accounts:   (add at least one account!)"));
-  glay->addMultiCellWidget(label, 1, 1, 0, 1);
-  mNetwork.accountList = new ListView( buttonGroup, "accountList", 5 );
-  mNetwork.accountList->addColumn( i18n("Name") );
-  mNetwork.accountList->addColumn( i18n("Type") );
-  mNetwork.accountList->addColumn( i18n("Folder") );
-  mNetwork.accountList->setAllColumnsShowFocus( true );
-  mNetwork.accountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
-  mNetwork.accountList->setSorting( -1 );
-  connect( mNetwork.accountList, SIGNAL(selectionChanged ()),
-	   this, SLOT(slotAccountSelected()) );
-  connect( mNetwork.accountList, SIGNAL(doubleClicked( QListViewItem *)),
-	   this, SLOT(slotModifySelectedAccount()) );
-  glay->addMultiCellWidget( mNetwork.accountList, 2, 5, 0, 0 );
-  
-  mNetwork.addAccountButton = 
-    new QPushButton( i18n("Add..."), buttonGroup );
-  mNetwork.addAccountButton->setAutoDefault( false );
-  connect( mNetwork.addAccountButton, SIGNAL(clicked()),
-	   this, SLOT(slotAddAccount()) );
-  glay->addWidget( mNetwork.addAccountButton, 2, 1 );
-  
-  mNetwork.modifyAccountButton = 
-    new QPushButton( i18n("Modify..."), buttonGroup );
-  mNetwork.modifyAccountButton->setAutoDefault( false );
-  mNetwork.modifyAccountButton->setEnabled( false );
-  connect( mNetwork.modifyAccountButton, SIGNAL(clicked()),
-	   this, SLOT(slotModifySelectedAccount()) );
-  glay->addWidget( mNetwork.modifyAccountButton, 3, 1 );
-
-  mNetwork.removeAccountButton 
-    = new QPushButton( i18n("Remove..."), buttonGroup );
-  mNetwork.removeAccountButton->setAutoDefault( false );
-  mNetwork.removeAccountButton->setEnabled( false );
-  connect( mNetwork.removeAccountButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveSelectedAccount()) );
-  glay->addWidget( mNetwork.removeAccountButton, 4, 1 );
-}
-#endif
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1354,20 +1290,19 @@ void ConfigureDialog::makeApperancePage( void )
 }
 
 
+
+
+
 void ConfigureDialog::makeComposerPage( void )
-{ 
-  QVBox *vbox = addVBoxPage( i18n("Composer"), i18n("Composer settings"), 
-			     QPixmap(composer_xpm) ); 
-  QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
-  mComposer.pageIndex = pageIndex(vbox);
+{
+  QFrame *page = addPage( i18n("Composer"),
+			  i18n("Phrases and general behavior"),
+			  QPixmap(composer_xpm) );
+  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
+  mComposer.pageIndex = pageIndex(page);
 
-  QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("Phrases and Appearance") );
-  QVBoxLayout *vlay = new QVBoxLayout( page1, spacingHint() );
-
-  
-  QGroupBox *group = new QGroupBox(i18n("Phrases"), page1 );
-  vlay->addWidget( group );
+  QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
+  topLevel->addWidget( group );
 
   QGridLayout *glay = new QGridLayout( group, 6, 2, spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
@@ -1396,64 +1331,31 @@ void ConfigureDialog::makeComposerPage( void )
   glay->addWidget( mComposer.phraseindentPrefixEdit, 5, 1 );
 
   mComposer.autoAppSignFileCheck =
-    new QCheckBox( i18n("Automatically append signature"), page1 );
-  vlay->addWidget( mComposer.autoAppSignFileCheck );
+    new QCheckBox( i18n("Automatically append signature"), page );
+  topLevel->addWidget( mComposer.autoAppSignFileCheck );
 
   mComposer.smartQuoteCheck =
-    new QCheckBox( i18n("Use smart qouting"), page1 );
-  vlay->addWidget( mComposer.smartQuoteCheck );
+    new QCheckBox( i18n("Use smart qouting"), page );
+  topLevel->addWidget( mComposer.smartQuoteCheck );
 
   mComposer.pgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically sign messages using PGP"), page1 );
-  vlay->addWidget( mComposer.pgpAutoSignatureCheck );
+    new QCheckBox( i18n("Automatically sign messages using PGP"), page );
+  topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
 
-  mComposer.monoSpaceFontCheck =
-    new QCheckBox(i18n("Use monospaced font") + QString(" (still broken)"),
-		  page1 );
-  vlay->addWidget( mComposer.monoSpaceFontCheck );
-
-  QHBoxLayout *hlay = new QHBoxLayout( vlay );
+  QHBoxLayout *hlay = new QHBoxLayout( topLevel );
   mComposer.wordWrapCheck =
-    new QCheckBox( i18n("Word wrap at column:"), page1 );
+    new QCheckBox( i18n("Word wrap at column:"), page );
   connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotWordWrapSelectionChanged()) );
   hlay->addWidget( mComposer.wordWrapCheck );
-  mComposer.wrapColumnEdit = new QLineEdit( page1 );
-  QIntValidator *intValidator = new QIntValidator( page1 );
-  intValidator->setRange(1,10000);
-  mComposer.wrapColumnEdit->setValidator( intValidator );
-  hlay->addWidget( mComposer.wrapColumnEdit, 0, AlignLeft );
+  mComposer.wrapColumnSpin = new QSpinBox( page );
+  mComposer.wrapColumnSpin->setRange( 1, 10000 );
+  hlay->addWidget( mComposer.wrapColumnSpin, 0, AlignLeft );
   hlay->addStretch(10);
 
-  vlay->addStretch(10);
-
-
-
-  QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("Sending Mail") );
-  glay = new QGridLayout( page2, 4, 3, spacingHint() );
-  glay->setColStretch( 2, 10 );
-
-  label = new QLabel( i18n("Default send method:"), page2 );
-  glay->addWidget( label, 0, 0 );
-  mComposer.sendMethodCombo = new QComboBox( page2 );
-  mComposer.sendMethodCombo->insertItem(i18n("Send now"));
-  mComposer.sendMethodCombo->insertItem(i18n("Send later"));
-  glay->addWidget( mComposer.sendMethodCombo, 0, 1 );
-
-  label = new QLabel( i18n("Message Property:"), page2 );
-  glay->addWidget( label, 1, 0 );
-  mComposer.messagePropertyCombo = new QComboBox( page2 );
-  mComposer.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
-  mComposer.messagePropertyCombo->insertItem(
-    i18n("MIME Compilant (Quoted Printable)"));
-  glay->addWidget( mComposer.messagePropertyCombo, 1, 1 );
-  
-  mComposer.confirmSendCheck = 
-    new QCheckBox(i18n("Confirm before send"), page2 );
-  glay->addMultiCellWidget( mComposer.confirmSendCheck, 2, 2, 0, 1 );
-
+  topLevel->addStretch(10);
 }
+
 
 
 void ConfigureDialog::makeMimePage( void )
@@ -1524,16 +1426,25 @@ void ConfigureDialog::makeSecurityPage( void )
   mSecurity.pageIndex = pageIndex(vbox);
 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
-  mSecurity.pgpConfig = new KpgpConfig(tabWidget);
-  tabWidget->addTab( mSecurity.pgpConfig, i18n("PGP") );
+  QWidget *page1 = new QWidget( tabWidget );
+  tabWidget->addTab( page1, i18n("PGP") );
+  QVBoxLayout *vlay = new QVBoxLayout( page1, spacingHint() );
 
+  mSecurity.pgpConfig = new KpgpConfig(page1);
+  vlay->addWidget( mSecurity.pgpConfig );
+  vlay->addStretch(10);
 }
 
+#include <kinstance.h>
+#include <kglobal.h>
 
 void ConfigureDialog::makeMiscPage( void )
 {
+  //KIconLoader *loader = instace->iconLoader();
+  ///KGlobal::instance()->iconLoader()
+
   QFrame *page = addPage( i18n("Miscellaneous"), i18n("Various settings"),
-			  UserIcon("misc") );
+    KGlobal::instance()->iconLoader()->loadIcon( "misc" ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMisc.pageIndex = pageIndex(page);
 
@@ -1635,7 +1546,8 @@ void ConfigureDialog::setup( void )
 
 void ConfigureDialog::setupIdentityPage( void )
 {
-  mIdentityList.import();
+  mIdentityList.importData();
+  mIdentity.identityCombo->clear();
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
   slotIdentitySelectorChanged(); // This will trigger an update
 }
@@ -1656,11 +1568,23 @@ void ConfigureDialog::setupNetworkPage( void )
   
   mNetwork.sendmailLocationEdit->setText( kernel->msgSender()->mailer() );
   mNetwork.smtpServerEdit->setText( kernel->msgSender()->smtpHost() );
-  mNetwork.smtpPortEdit->setText( QString().setNum(kernel->msgSender()->smtpPort()) );
+  mNetwork.smtpPortEdit->setText( 
+    QString().setNum(kernel->msgSender()->smtpPort()) );
+
+  KConfig &config = *kapp->config();
+  config.setGroup("Composer");
+
+  mNetwork.sendMethodCombo->setCurrentItem( 
+    kernel->msgSender()->sendImmediate() ? 0 : 1 ); 
+  mNetwork.messagePropertyCombo->setCurrentItem( 
+    kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
+  mNetwork.confirmSendCheck->setChecked( 
+    config.readBoolEntry( "confirm-before-send", false ) );
 
   mNetwork.accountList->clear();
   QListViewItem *top = 0;
-  for( KMAccount *a = kernel->acctMgr()->first(); a!=0; a = kernel->acctMgr()->next() )
+  for( KMAccount *a = kernel->acctMgr()->first(); a!=0; 
+       a = kernel->acctMgr()->next() )
   {
     QListViewItem *listItem = 
       new QListViewItem( mNetwork.accountList, top, a->name(), a->type() );
@@ -1671,6 +1595,11 @@ void ConfigureDialog::setupNetworkPage( void )
     top = listItem;
   }
 
+  QListViewItem *listItem = mNetwork.accountList->firstChild();
+  if( listItem != 0 )
+  {
+    mNetwork.accountList->setSelected( listItem, true );  
+  }
 }
 
 void ConfigureDialog::setupApperancePage( void )
@@ -1684,7 +1613,6 @@ void ConfigureDialog::setupApperancePage( void )
     config.readEntry("list-font", "helvetica-medium-r-12");
   mAppearance.fontString[2] = 
     config.readEntry("folder-font", "helvetica-medium-r-12");
-  slotFontSelectorChanged(0);
   mAppearance.fontString[3] = 
     config.readEntry("quote1-font", "helvetica-medium-r-12");
   mAppearance.fontString[4] = 
@@ -1695,6 +1623,7 @@ void ConfigureDialog::setupApperancePage( void )
   bool state = config.readBoolEntry("defaultFonts", false );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
   slotCustomFontSelectionChanged();
+  slotFontSelectorChanged(0);
 
   config.setGroup("Reader");
 
@@ -1733,7 +1662,6 @@ void ConfigureDialog::setupApperancePage( void )
   config.setGroup("Geometry");
   state = config.readBoolEntry( "longFolderList", false );
   mAppearance.longFolderCheck->setChecked( state );
-
 }
 
 
@@ -1767,21 +1695,13 @@ void ConfigureDialog::setupComposerPage( void )
 
   state = config.readBoolEntry( "pgp-auto-sign", false );
   mComposer.pgpAutoSignatureCheck->setChecked(state);
-  
-  state = stricmp(config.readEntry("font","variable"),"fixed") == 0;
-  mComposer.monoSpaceFontCheck->setChecked( state );
 
   state = config.readBoolEntry( "word-wrap", true );
   mComposer.wordWrapCheck->setChecked( state );
-  mComposer.wrapColumnEdit->setText( config.readEntry("break-at","78" ) );
+  
+  int value = config.readEntry("break-at","78" ).toInt();
+  mComposer.wrapColumnSpin->setValue( mComposer.wrapColumnSpin->bound(value) );
   slotWordWrapSelectionChanged(); 
-
-  mComposer.sendMethodCombo->setCurrentItem( 
-    kernel->msgSender()->sendImmediate() ? 0 : 1 ); 
-  mComposer.messagePropertyCombo->setCurrentItem( 
-    kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
-  state = config.readBoolEntry( "confirm-before-send", false );
-  mComposer.confirmSendCheck->setChecked( state );
 }
 
 void ConfigureDialog::setupMimePage( void )
@@ -1793,6 +1713,7 @@ void ConfigureDialog::setupMimePage( void )
   QListViewItem *top = 0;
 
   int count = config.readNumEntry( "mime-header-count", 0 );
+  mMime.tagList->clear();
   for(int i = 0; i < count; i++) 
   {
     config.setGroup( QString("Mime #%1").arg(i) );
@@ -1857,11 +1778,13 @@ void ConfigureDialog::slotOk( void )
 
 void ConfigureDialog::slotApply( void )
 {
-  /*
+  KConfig &config = *kapp->config();
+
   int activePage = activePageIndex();
   if( activePage == mIdentity.pageIndex )
   {
-    mIdentityList.export();
+    saveActiveIdentity(); // Copy from textfields into list
+    mIdentityList.exportData();
   }
   else if( activePage == mNetwork.pageIndex )
   {
@@ -1877,34 +1800,138 @@ void ConfigureDialog::slotApply( void )
     kernel->msgSender()->setMailer(mNetwork.sendmailLocationEdit->text() );
     kernel->msgSender()->setSmtpHost( mNetwork.smtpServerEdit->text() );
     kernel->msgSender()->setSmtpPort( mNetwork.smtpPortEdit->text().toInt() );
-    //kernel->msgSender()->setSendImmediate(sendNow->isChecked());
-   //kernel->msgSender()->setSendQuotedPrintable(quotedPrintable->isChecked());
+
+    bool sendNow = mNetwork.sendMethodCombo->currentItem() == 0;
+    kernel->msgSender()->setSendImmediate( sendNow );
+    bool quotedPrintable = mNetwork.messagePropertyCombo->currentItem() == 1;
+    kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
     kernel->msgSender()->writeConfig(FALSE);
-  
+    // Moved from composer page !
+    config.setGroup("Composer");
+    bool confirmBeforeSend = mNetwork.confirmSendCheck->isChecked();
+    config.writeEntry("confirm-before-send", confirmBeforeSend );
+
     // Incoming mail
     kernel->acctMgr()->writeConfig(FALSE);
   }
   else if( activePage == mAppearance.pageIndex )
   {
-    puts("APP");
+    slotFontSelectorChanged( mAppearance.activeFontIndex );
+
+    config.setGroup("Fonts");
+    bool defaultFonts = !mAppearance.customFontCheck->isChecked();
+    config.writeEntry("defaultFonts", defaultFonts );
+    config.writeEntry( "body-font",   mAppearance.fontString[0] );
+    config.writeEntry( "list-font",   mAppearance.fontString[1] );
+    config.writeEntry( "folder-font", mAppearance.fontString[2] );
+    config.writeEntry( "quote1-font", mAppearance.fontString[3] );
+    config.writeEntry( "quote2-font", mAppearance.fontString[4] );
+    config.writeEntry( "quote3-font", mAppearance.fontString[5] );
+
+    config.setGroup("Reader");
+    bool defaultColors = !mAppearance.customColorCheck->isChecked();
+    config.writeEntry("defaultColors", defaultColors );
+    config.writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
+    config.writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
+    config.writeEntry("QuoutedText1",    mAppearance.colorList->color(2) );
+    config.writeEntry("QuoutedText2",    mAppearance.colorList->color(3) );
+    config.writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
+    config.writeEntry("LinkColor",       mAppearance.colorList->color(5) );
+    config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
+
+    config.setGroup("Geometry");
+    bool longFolderList = mAppearance.longFolderCheck->isChecked();
+    config.writeEntry( "longFolderList", longFolderList );
   }
   else if( activePage == mComposer.pageIndex )
   {
-    puts("COM");
+    config.setGroup("KMMessage");
+    config.writeEntry("phrase-reply", 
+		      mComposer.phraseReplyEdit->text() );
+    config.writeEntry("phrase-reply-all", 
+		      mComposer.phraseReplyAllEdit->text() );
+    config.writeEntry("phrase-forward", 
+		      mComposer.phraseForwardEdit->text() );
+    config.writeEntry("indent-prefix", 
+		      mComposer.phraseindentPrefixEdit->text() );
+
+    config.setGroup("Composer");
+    bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
+    config.writeEntry("signature", autoSignature ? "auto" : "manual" );
+    config.writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
+    config.writeEntry("pgp-auto-sign", 
+		      mComposer.pgpAutoSignatureCheck->isChecked() );
+    config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
+    config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
   }  
   else if( activePage == mMime.pageIndex )
   {
-    puts("MIME");
+    int numValidEntry = 0;
+    int numEntry = mMime.tagList->childCount();
+    for (int i = 0; i < numEntry; i++) 
+    {
+      config.setGroup(QString("Mime #%1").arg(i));
+      QListViewItem *item = mMime.tagList->firstChild();
+      if( item->text(0).length() > 0 )
+      {
+	config.writeEntry( "name",  item->text(0) );
+	config.writeEntry( "value", item->text(1) );
+	numValidEntry += 1;
+      }
+    }
+    config.setGroup("General");
+    config.writeEntry("mime-header-count", numValidEntry );
   }  
   else if( activePage == mSecurity.pageIndex )
   {
-    puts("SEC");
+    mSecurity.pgpConfig->applySettings();
   } 
   else if( activePage == mMisc.pageIndex )
   {
-    puts("MISC");
+    config.setGroup("General");
+    config.writeEntry( "empty-trash-on-exit", 
+		       mMisc.emptyTrashCheck->isChecked() );
+    config.writeEntry( "sendOnCheck",
+		       mMisc.emptyTrashCheck->isChecked() );
+    config.writeEntry( "send-receipts", 
+		       mMisc.sendReceiptCheck->isChecked() );
+    config.writeEntry( "compact-all-on-exit", 
+		       mMisc.compactOnExitCheck->isChecked() );
+    config.writeEntry( "use-external-editor", 
+		       mMisc.externalEditorCheck->isChecked() ); 
+    config.writeEntry( "external-editor", 
+		       mMisc.externalEditorEdit->text() );
+    config.writeEntry( "beep-on-mail", 
+		       mMisc.beepNewMailCheck->isChecked() );
+    config.writeEntry( "msgbox-on-mail", 
+		       mMisc.showMessageBoxCheck->isChecked() );
+    config.writeEntry( "exec-on-mail", 
+		       mMisc.mailCommandCheck->isChecked() );
+    config.writeEntry( "exec-on-mail-cmd", 
+		       mMisc.mailCommandEdit->text() );
   }
-  */
+
+  //
+  // Always
+  //
+  config.setGroup("General");
+  config.writeEntry("first-start", false);
+  config.sync();
+
+  //
+  // Make other components read the new settings
+  //
+  KMMessage::readConfig();
+
+  QListIterator<KTMainWindow> it(*KTMainWindow::memberList);
+  for( it.toFirst(); it.current(); ++it )
+  {
+    if (it.current()->inherits("KMTopLevelWidget"))
+    {
+      ((KMTopLevelWidget*)it.current())->readConfig();
+    }
+  }
+
 }
 
 
@@ -1924,7 +1951,7 @@ void ConfigureDialog::saveActiveIdentity( void )
     entry->setSignatureFileName( mIdentity.signatureFileEdit->text() );
     entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
     entry->setSignatureFileIsAProgram(
-      mIdentity.signatureFileRadio->isChecked() );
+      mIdentity.signatureExecCheck->isChecked() );
     entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
   }
 }
@@ -1956,7 +1983,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.emailEdit->setText("");
     mIdentity.replytoEdit->setText("");
     mIdentity.signatureFileEdit->setText("");
-    mIdentity.signatureFileRadio->setChecked( false );
+    mIdentity.signatureExecCheck->setChecked( false );
     mIdentity.signatureTextEdit->setText( "" );
     useSignatureFile = true;
   }
@@ -1967,12 +1994,12 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.emailEdit->setText( entry->emailAddress() );
     mIdentity.replytoEdit->setText( entry->replyToAddress() );
     mIdentity.signatureFileEdit->setText( entry->signatureFileName() );
-    mIdentity.signatureFileRadio->setChecked(entry->signatureFileIsAProgram());
+    mIdentity.signatureExecCheck->setChecked(entry->signatureFileIsAProgram());
     mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
     useSignatureFile = entry->useSignatureFile();
   }
 
-  if( useSignatureFile = true )
+  if( useSignatureFile == true )
   {
     mIdentity.signatureFileRadio->setChecked(true);
     slotSignatureType(0);
@@ -2018,17 +2045,36 @@ void ConfigureDialog::slotNewIdentity( void )
     QString identityText = dialog->identityText().stripWhiteSpace();
     if( identityText.isEmpty() == false )
     {
+      //
+      // Add the new identity. Make sure the default identity is 
+      // first in the otherwise sorted list
+      //
       QString defaultIdentity = list.first();
       list.remove( defaultIdentity );
       list += identityText;
       list.sort();
       list.prepend( defaultIdentity );
 
+      //
+      // Set the modifiled list as the valid list in the combo and 
+      // make the new identity the current item.
+      //
       mIdentity.identityCombo->clear();
       mIdentity.identityCombo->insertStringList(list);
       mIdentity.identityCombo->setCurrentItem( list.findIndex(identityText) );
 
-      mIdentityList.add( identityText, dialog->duplicateText() );
+      if( dialog->duplicateMode() == NewIdentityDialog::ControlCenter )
+      {
+	mIdentityList.add( identityText, this, true );
+      }
+      else if( dialog->duplicateMode() == NewIdentityDialog::ExistingEntry )
+      {
+	mIdentityList.add( identityText, dialog->duplicateText() );
+      }
+      else
+      {
+	mIdentityList.add( identityText, this, false );
+      }
       slotIdentitySelectorChanged();
     }
   }
@@ -2242,8 +2288,6 @@ void ConfigureDialog::slotAccountSelected( void )
 }
 
 
-#include "accountdialog.h"
-
 
 void ConfigureDialog::slotAddAccount( void )
 {
@@ -2391,7 +2435,7 @@ void ConfigureDialog::slotCustomColorSelectionChanged( void )
 
 void ConfigureDialog::slotWordWrapSelectionChanged( void )
 {
-  mComposer.wrapColumnEdit->setEnabled(mComposer.wordWrapCheck->isChecked());
+  mComposer.wrapColumnSpin->setEnabled(mComposer.wordWrapCheck->isChecked());
 }
 
 
@@ -2541,9 +2585,11 @@ void ConfigureDialog::slotMailCommandChooser( void )
 }
 
 
-
-
-
+IdentityEntry::IdentityEntry( void )
+{
+  mSignatureFileIsAProgram = false;
+  mUseSignatureFile = true;
+}
 
 
 QString IdentityEntry::identity() const
@@ -2571,9 +2617,19 @@ QString IdentityEntry::replyToAddress() const
   return( mReplytoAddress );
 }
 
-QString IdentityEntry::signatureFileName() const 
+QString IdentityEntry::signatureFileName( bool exportIdentity ) const 
 {
-  return( mSignatureFileName );
+  if( exportIdentity == true && mSignatureFileIsAProgram == true )
+  {
+    printf("exportIdentity=%d\n", exportIdentity );
+    printf("mSignatureFileIsAProgram=%d\n", mSignatureFileIsAProgram );
+
+    return( mSignatureFileName + "|" );
+  }
+  else
+  {
+    return( mSignatureFileName );
+  }
 }
 
 QString IdentityEntry::signatureInlineText() const
@@ -2617,9 +2673,26 @@ void IdentityEntry::setReplyToAddress( const QString &replytoAddress )
   mReplytoAddress = replytoAddress;
 }
 
-void IdentityEntry::setSignatureFileName( const QString &signatureFileName )
+void IdentityEntry::setSignatureFileName( const QString &signatureFileName,
+					  bool importIdentity )
 {
-  mSignatureFileName = signatureFileName;
+  if( importIdentity == true )
+  {
+    if( signatureFileName.right(1) == "|" )
+    {
+      mSignatureFileName=signatureFileName.left(signatureFileName.length()-1);
+      setSignatureFileIsAProgram(true);
+    }
+    else
+    {
+      mSignatureFileName=signatureFileName;
+      setSignatureFileIsAProgram(false);
+    }
+  }
+  else
+  {
+    mSignatureFileName=signatureFileName;
+  }
 }
 
 void IdentityEntry::setSignatureInlineText( const QString &signatureInlineText)
@@ -2682,42 +2755,47 @@ void IdentityList::remove( const QString &identity )
 
 
 
-void IdentityList::import()
+void IdentityList::importData()
 {
   //
   // Pretty easy for now.
   //
   IdentityEntry entry;
-  entry.setIdentity( i18n("Default") );
+  entry.setIdentity( kernel->identity()->identity() );
   entry.setFullName( kernel->identity()->fullName() );
   entry.setOrganization( kernel->identity()->organization() );
   entry.setEmailAddress( kernel->identity()->emailAddr() );
   entry.setReplyToAddress( kernel->identity()->replyToAddr() );
-  entry.setSignatureFileName( kernel->identity()->signatureFile() );
-  entry.setSignatureInlineText( "" );
-  entry.setSignatureFileIsAProgram( false );
-  entry.setUseSignatureFile( true );
-
+  entry.setSignatureFileName( kernel->identity()->signatureFile(), true );
+  entry.setSignatureInlineText( kernel->identity()->signatureInlineText() );
+  entry.setUseSignatureFile( kernel->identity()->useSignatureFile() );
   add( entry );
 }
 
 
-void IdentityList::save()
+void IdentityList::exportData()
 {
+  int i=0;
   for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
   {
+    if( i == 1 )
+    {
+      QString msg = "Can only store one identity\n"
+	            "KMIdentity must be improved first";
+      KMessageBox::sorry( 0, msg );
+      break;
+    }
+    kernel->identity()->setIdentity( e->identity() );
     kernel->identity()->setFullName( e->fullName() );
     kernel->identity()->setOrganization( e->organization() );
     kernel->identity()->setEmailAddr( e->emailAddress() );
     kernel->identity()->setReplyToAddr( e->replyToAddress() );
-    kernel->identity()->setSignatureFile( e->signatureFileName() );
-    if( 1 )
-    {
-      printf("TODO: Only the first identity can be saved\n");
-      break;
-    }
+    kernel->identity()->setUseSignatureFile( e->useSignatureFile() );
+    kernel->identity()->setSignatureFile( e->signatureFileName(true) );
+    kernel->identity()->setSignatureInlineText( e->signatureInlineText() );
+    i++;
   }
-  kernel->identity()->writeConfig(FALSE);
+  kernel->identity()->writeConfig(true);
 }
 
 
@@ -2729,6 +2807,7 @@ void IdentityList::add( const IdentityEntry &entry )
   {
     return; // We can not have duplicates.
   }
+
   mList.append( new IdentityEntry(entry) );
 }
 
@@ -2751,6 +2830,53 @@ void IdentityList::add( const QString &identity, const QString &copyFrom )
   newEntry.setIdentity( identity );
   add( newEntry );
 }
+
+
+void IdentityList::add( const QString &identity, QWidget *parent, 
+			bool useControlCenter )
+{
+  if( get( identity ) != 0 )
+  {
+    return; // We can not have duplicates.
+  }
+
+  IdentityEntry newEntry;
+
+  newEntry.setIdentity( identity );
+  if( useControlCenter == true )
+  {
+    //
+    // The returned filename is empty if the file exists but 
+    // is not readable so we only have to test if the file exists.
+    //
+    QString configFileName = locate( "config", "emaildefaults" );
+    QFileInfo fileInfo(configFileName);
+    if( fileInfo.exists() == false )
+    {
+      QString msg = i18n(""
+        "The email configuration file could not be located.\n"
+	"You can create one in Control Center.\n\n"
+	"(Search for \"email\" in Control Center)");
+      KMessageBox::error( parent, msg );
+    }
+    else
+    {
+      KSimpleConfig config( configFileName, false );
+      config.setGroup("UserInfo");
+
+      newEntry.setFullName( config.readEntry( "FullName", "" ) );
+      newEntry.setEmailAddress( config.readEntry( "EmailAddress", "" ) );
+      newEntry.setOrganization( config.readEntry( "Organization", "" ) );
+      newEntry.setReplyToAddress( config.readEntry( "ReplyAddr", "" ) );
+    }
+  }
+  add( newEntry );
+}
+
+
+
+
+
 
 
 

@@ -26,6 +26,10 @@ public:
   /** Tests if there are enough values set to allow mailing */
   virtual bool mailingAllowed(void) const;
 
+  /** Identity/nickname fot this collection */
+  const QString identity(void) const { return mIdentity; }
+  virtual void setIdentity(const QString);
+
   /** Full name of the user */
   const QString fullName(void) const { return mFullName; }
   virtual void setFullName(const QString);
@@ -49,6 +53,14 @@ public:
   /** name of the signature file (with path) */
   const QString signatureFile(void) const { return mSignatureFile; }
   virtual void setSignatureFile(const QString);
+  
+  /** inline signature */
+  const QString signatureInlineText(void) const { return mSignatureInlineText;}
+  virtual void setSignatureInlineText(const QString);
+
+  /** Inline or signature from a file */
+  bool useSignatureFile(void) { return mUseSignatureFile; }
+  void setUseSignatureFile(bool);
 
   /** Returns the signature. This method also takes care of
     special signature files that are shell scripts and handles
@@ -57,8 +69,10 @@ public:
   virtual const QString signature(void) const;
 
 protected:
-  QString mFullName, mOrganization, mEmailAddr;
-  QString mReplyToAddr, mSignatureFile; 
+  QString mIdentity, mFullName, mOrganization, mEmailAddr;
+  QString mReplyToAddr, mSignatureFile;
+  QString mSignatureInlineText;
+  bool    mUseSignatureFile;
 };
 
 #endif /*kmidentity_h*/

@@ -10,8 +10,6 @@
 #include <qsplitter.h>
 #include <qtimer.h>
 
-#include "kmbroadcaststatus.h"
-
 #include <kconfig.h>
 #include <kapp.h>
 #include <kglobal.h>
@@ -26,6 +24,8 @@
 
 #include <kparts/browserextension.h>
 
+#include "configuredialog.h"
+#include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
@@ -358,20 +358,6 @@ void KMMainWin::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSettings()
 {
-  // markus: we write the Config here cause otherwise the
-  // geometry will be set to the value in the config.
-  // Problem arises when we change the geometry during the
-  // session are press the OK button in the settings. Then we
-  // lose the current geometry! Not anymore ;-)
-  writeConfig();
-  KMSettings dlg(this);
-  dlg.exec();
-}
-
-#include "configuredialog.h"
-
-void KMMainWin::slotNewSettings()
-{
   //
   // 2000-03-12 Espen Sand
   // New Settings Dialog
@@ -383,6 +369,27 @@ void KMMainWin::slotNewSettings()
   }
   dialog->show();
 }
+
+
+void KMMainWin::slotOldSettings()
+{
+  // markus: we write the Config here cause otherwise the
+  // geometry will be set to the value in the config.
+  // Problem arises when we change the geometry during the
+  // session are press the OK button in the settings. Then we
+  // lose the current geometry! Not anymore ;-)
+  writeConfig();
+  KMSettings dlg(this);
+  dlg.exec();
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -1107,10 +1114,10 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(i18n("Send &Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("&Settings..."), this,
+  fileMenu->insertItem("Settings...", this,
 		       SLOT(slotSettings()));
-  fileMenu->insertItem("Settings (new dialog)...", this,
-		       SLOT(slotNewSettings()));
+  //fileMenu->insertItem(i18n("&Settings (old dialog)..."), this,
+  //		       SLOT(slotOldSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this,
 		       SLOT(slotAddrBook()));
   fileMenu->insertItem(i18n("F&ilter..."), this,
@@ -1312,6 +1319,7 @@ void KMMainWin::setupStatusBar()
   mStatusBar = new KStatusBar(this);
 
   littleProgress = new KMLittleProgressDlg( mStatusBar );
+
   mStatusBar->addWidget( littleProgress, 0 , true );
   mMessageStatusId = 1;
   mStatusBar->insertItem(i18n(" Initializing..."), 1, 1 );

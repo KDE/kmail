@@ -21,6 +21,7 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
+class QButtonGroup;
 class QCheckBox;
 class QComboBox;
 class QLabel;
@@ -29,6 +30,7 @@ class QListViewItem;
 class QMultiLineEdit;
 class QPushButton;
 class QRadioButton;
+class QSpinBox;
 class KColorButton;
 class KFontChooser;
 class KpgpConfig;
@@ -43,19 +45,31 @@ class NewIdentityDialog : public KDialogBase
   Q_OBJECT
 
   public:
+    enum DuplicateMode
+    {
+      Empty = 0,
+      ControlCenter,
+      ExistingEntry
+    };
+      
     NewIdentityDialog( QWidget *parent=0, const char *name=0, bool modal=true);
     void setIdentities( const QStringList &list );
 
     QString identityText( void );
     QString duplicateText( void );
+    int     duplicateMode( void );
       
   private slots:
     void radioClicked( int id );
 
+  protected slots:
+    virtual void slotOk( void );
+
   private:
-    QLineEdit *mLineEdit; 
-    QLabel    *mComboLabel;
-    QComboBox *mComboBox;
+  int mDuplicateMode;
+    QLineEdit  *mLineEdit; 
+    QLabel     *mComboLabel;
+    QComboBox  *mComboBox;
 };
 
 
@@ -64,12 +78,13 @@ class NewIdentityDialog : public KDialogBase
 class IdentityEntry
 {
   public:
+    IdentityEntry( void );
     QString identity() const;
     QString fullName() const;
     QString organization() const;
     QString emailAddress() const;
     QString replyToAddress() const;
-    QString signatureFileName() const;
+    QString signatureFileName( bool exportIdentity = false ) const;
     QString signatureInlineText() const;
     bool    signatureFileIsAProgram() const;
     bool    useSignatureFile() const;
@@ -79,7 +94,8 @@ class IdentityEntry
     void setOrganization( const QString &organization );
     void setEmailAddress( const QString &emailAddress );
     void setReplyToAddress( const QString &replytoAddress );
-    void setSignatureFileName( const QString &signatureFileName );
+    void setSignatureFileName( const QString &signatureFileName, 
+			       bool importIdentity=false );
     void setSignatureInlineText( const QString &signatureInlineText );
     void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
     void setUseSignatureFile( bool useSignatureFile );
@@ -105,11 +121,12 @@ class IdentityList
     QStringList identities( void );
     IdentityEntry *get( const QString &identity );
  
-    void import( void ); // Load system settings 
-    void save( void ); // Save state to system
+    void importData( void ); // Load system settings 
+    void exportData( void ); // Save state to system
 
     void add( const IdentityEntry &entry );
     void add( const QString &identity, const QString &copyFrom );
+    void add( const QString &identity, QWidget *parent, bool useControlCenter);
     void update( const IdentityEntry &entry );
 
     void remove( const QString &identity );
@@ -187,7 +204,6 @@ class ConfigureDialog : public KDialogBase
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
-
       QComboBox    *sendMethodCombo;
       QComboBox    *messagePropertyCombo;
       QCheckBox    *confirmSendCheck;
@@ -220,12 +236,8 @@ class ConfigureDialog : public KDialogBase
       QCheckBox *autoAppSignFileCheck;
       QCheckBox *smartQuoteCheck;
       QCheckBox *pgpAutoSignatureCheck;
-      QCheckBox *monoSpaceFontCheck;
       QCheckBox *wordWrapCheck;
-      QLineEdit *wrapColumnEdit;
-      QComboBox *sendMethodCombo;
-      QComboBox *messagePropertyCombo;
-      QCheckBox *confirmSendCheck; 
+      QSpinBox  *wrapColumnSpin;
     };
     struct MimeWidget
     {
@@ -282,12 +294,13 @@ class ConfigureDialog : public KDialogBase
   public:
     ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
     ~ConfigureDialog( void );
-    void setup( void );
+    virtual void show( void );
 
   protected:
     virtual void slotDefault( void );
     virtual void slotOk( void );
     virtual void slotApply( void );
+    void setup( void );
 
   private:
     void makeIdentityPage( void );

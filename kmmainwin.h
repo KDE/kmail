@@ -87,7 +87,7 @@ protected slots:
   void slotHelp();
   void slotNewMailReader();
   void slotSettings();
-  void slotNewSettings(); // Test for new configure dialog
+  void slotOldSettings(); // To be removed
   void slotFilter();
   void slotAddrBook();
   void slotUnimplemented();

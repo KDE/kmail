@@ -41,6 +41,8 @@ void KMIdentity::readConfig(void)
 
   config->setGroup("Identity");
 
+  mIdentity = config->readEntry( "Identity", "unknown" );
+
   mFullName = config->readEntry("Name");
   if (mFullName.isEmpty())
   {
@@ -70,6 +72,8 @@ void KMIdentity::readConfig(void)
   mOrganization = config->readEntry("Organization");
   mReplyToAddr = config->readEntry("Reply-To Address");
   mSignatureFile = config->readEntry("Signature File");
+  mUseSignatureFile = config->readBoolEntry("UseSignatureFile", true );
+  mSignatureInlineText = config->readEntry("Inline Signature");
 }
 
 
@@ -79,11 +83,14 @@ void KMIdentity::writeConfig(bool aWithSync)
   KConfig* config = kapp->config();
   config->setGroup("Identity");
 
+  config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
   config->writeEntry("Organization", mOrganization);
   config->writeEntry("Email Address", mEmailAddr);
   config->writeEntry("Reply-To Address", mReplyToAddr);
   config->writeEntry("Signature File", mSignatureFile);
+  config->writeEntry("Inline Signature", mSignatureInlineText );
+  config->writeEntry("UseSignatureFile", mUseSignatureFile );
 
   if (aWithSync) config->sync();
 }
@@ -93,6 +100,13 @@ void KMIdentity::writeConfig(bool aWithSync)
 bool KMIdentity::mailingAllowed(void) const
 {
   return (!mFullName.isEmpty() && !mEmailAddr.isEmpty());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setIdentity(const QString str)
+{
+  mIdentity = str.copy();
 }
 
 
@@ -143,16 +157,37 @@ void KMIdentity::setSignatureFile(const QString str)
 
 
 //-----------------------------------------------------------------------------
+void KMIdentity::setSignatureInlineText(const QString str )
+{
+  mSignatureInlineText = str.copy();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setUseSignatureFile( bool flag )
+{
+  mUseSignatureFile = flag;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMIdentity::signature(void) const
 {
   QString result, sigcmd;
 
+  if( mUseSignatureFile == false ) { return mSignatureInlineText; }
+ 
   if (mSignatureFile.isEmpty()) return QString::null;
+
+  puts("AAAAAAAAAAAAA");
+  printf("NAME: %s\n", mSignatureFile.latin1() );
 
   if (mSignatureFile.right(1)=="|")
   {
     KTempFile tmpf;
     int rc;
+
+    puts("BBBBBBBBBBB");
 
     tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
