@@ -304,8 +304,9 @@ void KMMainWidget::readConfig(void)
        * as we have some dependencies in this widget
        * it's better to manage these here */
       // The columns are shown by default.
-      int unreadColumn = config->readNumEntry("UnreadColumn", -1);
-      int totalColumn = config->readNumEntry("TotalColumn", -1);
+
+      const int unreadColumn = config->readNumEntry("UnreadColumn", 1);
+      const int totalColumn = config->readNumEntry("TotalColumn", 2);
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
@@ -317,6 +318,9 @@ void KMMainWidget::readConfig(void)
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
       if (unreadColumn != -1 && unreadColumn > totalColumn)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+      mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+      mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
+      mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
 
       mFolderTree->updatePopup();
     }
@@ -2606,14 +2610,12 @@ void KMMainWidget::setupActions()
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_column" );
   mUnreadColumnToggle->setExclusiveGroup( "view_unread_group" );
-  mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
   unreadMenu->insert( mUnreadColumnToggle );
 
   mUnreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
   mUnreadTextToggle->setExclusiveGroup( "view_unread_group" );
-  mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
   unreadMenu->insert( mUnreadTextToggle );
 
   // toggle for total column
@@ -2622,7 +2624,6 @@ void KMMainWidget::setupActions()
 			       actionCollection(), "view_columns_total" );
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
-  mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
 
   (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
 			       i18n("Expand the current thread") ),
