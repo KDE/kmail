@@ -61,7 +61,7 @@ namespace KMail {
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
 		   << i18n("continuation of \"obtain signature text from\"",
-			   "Input Field Below") 
+			   "Input Field Below")
 		   << i18n("continuation of \"obtain signature text from\"",
 			   "File")
                    << i18n("continuation of \"obtain signature text from\"",
@@ -166,8 +166,8 @@ namespace KMail {
     int idx = 0;
     switch( type ) {
     case Signature::Inlined:     idx = 0; break;
-    case Signature::FromCommand: idx = 1; break;
-    case Signature::FromFile:	 idx = 2; break;
+    case Signature::FromFile:	 idx = 1; break;
+    case Signature::FromCommand: idx = 2; break;
     default:                     idx = 0; break;
     };
 
