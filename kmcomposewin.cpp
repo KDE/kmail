@@ -3614,7 +3614,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 void KMComposeWin::slotInsertFile()
 {
   KFileDialog fdlg(QString::null, QString::null, this, NULL, TRUE);
-  fdlg.setCaption(i18n("Include File"));
+  fdlg.setCaption(i18n("Insert File"));
   fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
     false, NULL, NULL, NULL);
   KComboBox *combo = fdlg.toolBar()->getCombo(4711);
@@ -4502,6 +4502,8 @@ void KMComposeWin::slotSpellcheckConfig()
   qtd.setCancelButton ();
 
   kwin.setIcons (qtd.winId(), kapp->icon(), kapp->miniIcon());
+  qtd.setCancelButton(i18n("&Cancel"));
+  qtd.setOkButton(i18n("&Ok"));
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();
