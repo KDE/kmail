@@ -627,7 +627,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       addDirectory( folder->child(), fti );
     // make sure that the folder-settings are correctly read on startup by calling listDirectory
     if (readIsListViewItemOpen(fti) &&
-	fti->folder() && fti->folder()->folderType() == KMFolderTypeImap)
+        fti->folder() && fti->folder()->folderType() == KMFolderTypeImap)
       slotFolderExpanded(fti);
   } // for-end
 }
@@ -1012,8 +1012,11 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
         i18n("Subscription"), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
-    folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget,
-            SLOT(slotRefreshFolder()));
+    if (!fti->folder()->noContent())
+    {
+      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget,
+          SLOT(slotRefreshFolder()));
+    }
 
   }
 
