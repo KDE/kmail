@@ -470,7 +470,7 @@ void KMFldSearch::slotAddMsg(int idx)
 	mFolders.append(pFolder);
 	pFolder->open();
     }
-    if(pFolder->type() == KFolderTreeItem::SentMail)
+    if(pFolder->whoField() == "To")
         from = msg->to();
     else
         from = msg->from();
