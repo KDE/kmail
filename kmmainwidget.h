@@ -233,6 +233,7 @@ protected slots:
   void slotCompose();
   void slotPostToML();
   void slotModifyFolder();
+  void slotFolderMailingListProperties();
   void slotExpireFolder();
   void slotExpireAll();
   void slotInvalidateIMAPFolders();
@@ -455,7 +456,7 @@ private:
 
   KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
-      *mMarkAllAsReadAction;
+      *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction;
   KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;

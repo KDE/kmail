@@ -32,9 +32,6 @@
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
-#include "mailinglist-magic.h"
-using KMail::MailingList;
-
 #include <kdialogbase.h>
 #include "configuredialog_p.h"
 #include <qvaluevector.h>
@@ -186,47 +183,6 @@ private:
   QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
   QRadioButton *mExpireActionDelete, *mExpireActionMove;
   FolderRequester *mExpireToFolderComboBox;
-
-  KMFolderDialog* mDlg;
-};
-
-/**
- * "Mailing List" tab in the folder dialog
- * Internal class, only used by KMFolderDialog
- */
-class FolderDiaMailingListTab : public FolderDiaTab
-{
-  Q_OBJECT
-
-public:
-  FolderDiaMailingListTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
-
-  virtual void load();
-  virtual bool save();
-
-private slots:
-  /*
-   * Detects mailing-list related stuff
-   */
-  void slotDetectMailingList();
-  void slotInvokeHandler();
-  void slotMLHandling( int element );
-  void slotHoldsML( bool holdsML );
-  void slotAddressChanged( int addr );
-
-private:
-  void fillMLFromWidgets();
-  void fillEditBox();
-
-  bool          mMLInfoChanged;
-  QCheckBox    *mHoldsMailingList;
-  QComboBox    *mMLHandlerCombo;
-  QPushButton  *mDetectButton;
-  QComboBox    *mAddressCombo;
-  int           mLastItem;
-  KEditListBox *mEditList;
-  QLabel       *mMLId;
-  MailingList   mMailingList;
 
   KMFolderDialog* mDlg;
 };

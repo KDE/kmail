@@ -85,6 +85,7 @@ using KMail::FilterLogDialog;
 #include <headerlistquicksearch.h>
 using KMail::HeaderListQuickSearch;
 #include "kmheaders.h"
+#include "mailinglistpropertiesdialog.h"
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -894,6 +895,18 @@ void KMMainWidget::slotPostToML()
   }
   else
     slotCompose();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotFolderMailingListProperties()
+{
+  if (!mFolderTree) return;
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( mFolderTree->currentItem() );
+  if ( !item ) return;
+  KMFolder* folder = item->folder();
+  if ( folder ) {
+    ( new KMail::MailingListFolderPropertiesDialog( this, folder ) )->show();
+  }
 }
 
 
@@ -2249,6 +2262,11 @@ void KMMainWidget::setupActions()
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
+  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"), 
+      "folder_mailinglist_properties", 0, this, SLOT( slotFolderMailingListProperties() ), 
+      actionCollection(), "folder_mailinglist_properties" );
+
+
   mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
@@ -2981,6 +2999,7 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mFolder && !mFolder->noContent();
   mModifyFolderAction->setEnabled( folderWithContent );
+  mFolderMailingListPropertiesAction->setEnabled( folderWithContent );
   mCompactFolderAction->setEnabled( folderWithContent );
 
   // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
