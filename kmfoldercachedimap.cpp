@@ -627,8 +627,11 @@ void KMFolderCachedImap::serverSyncInternal()
        // We haven't downloaded messages yet, so we need to build the map.
        if( uidMapDirty )
          reloadUidMap();
-       uploadFlags();
-      break;
+       // Upload flags, unless we know from the ACL that we're not allowed to do that
+       if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::WriteFlags ) ) {
+         uploadFlags();
+         break;
+       }
     }
     // Else carry on
   case SYNC_STATE_LIST_SUBFOLDERS:
