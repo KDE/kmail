@@ -3673,7 +3673,11 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
             if( isQuotedLine
                 && ( bot != lineText.length() )
                 && ( col >= int( bot ) ) ) {
-                QString newLine = text( line + 1 );
+
+		// The cursor position might have changed unpredictably if there was selected
+		// text which got replaced by a new line, so we query it again:
+		getCursorPosition( &line, &col );
+                QString newLine = text( line );
                 // remove leading white space from the new line and instead
                 // add the quote indicators of the previous line
                 unsigned int leadingWhiteSpaceCount = 0;
@@ -3683,12 +3687,12 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
                 }
                 newLine = newLine.replace( 0, leadingWhiteSpaceCount,
                                            lineText.left( bot ) );
-                removeParagraph( line + 1 );
-                insertParagraph( newLine, line + 1 );
+                removeParagraph( line );
+                insertParagraph( newLine, line );
                 // place the cursor at the begin of the new line since
                 // we assume that the user split the quoted line in order
                 // to add a comment to the first part of the quoted line
-                setCursorPosition( line + 1 , 0 );
+                setCursorPosition( line, 0 );
             }
         }
         else
