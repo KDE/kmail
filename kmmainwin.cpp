@@ -1999,6 +1999,7 @@ void KMMainWin::updateMessageMenu()
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
+    forwardAction->setEnabled( mass_actions ); 
     action( "apply_filters" )->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
@@ -2009,7 +2010,6 @@ void KMMainWin::updateMessageMenu()
     noQuoteReplyAction->setEnabled( single_actions );
     replyAllAction->setEnabled( single_actions );
     replyListAction->setEnabled( single_actions );
-    forwardAction->setEnabled( single_actions );
     redirectAction->setEnabled( single_actions );
     sendAgainAction->setEnabled( single_actions );
     printAction->setEnabled( single_actions );
