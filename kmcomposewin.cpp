@@ -1753,6 +1753,23 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
 
   if (body.isEmpty()) body = "\n"; // don't crash
 
+  // From RFC 3156:
+  //  Note: The accepted OpenPGP convention is for signed data to end
+  //  with a <CR><LF> sequence.  Note that the <CR><LF> sequence
+  //  immediately preceding a MIME boundary delimiter line is considered
+  //  to be part of the delimiter in [3], 5.1.  Thus, it is not part of
+  //  the signed data preceding the delimiter line.  An implementation
+  //  which elects to adhere to the OpenPGP convention has to make sure
+  //  it inserts a <CR><LF> pair on the last line of the data to be
+  //  signed and transmitted (signed message and transmitted message
+  //  MUST be identical).
+  // So make sure that the body ends with a <LF> if the message body
+  // is about to be signed with a crypto plugin.
+  if( doSign && mSelectedCryptPlug && ( body[body.length()-1] != '\n' ) ) {
+    kdDebug(5006) << "Added an <LF> on the last line" << endl;
+    body += "\n";
+  }
+
   // set the main headers
   theMessage.deleteBodyParts();
   theMessage.removeHeaderField("Content-Type");
