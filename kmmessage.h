@@ -47,7 +47,7 @@ class DwMediaType;
 class DwHeaders;
 
 #define KMMessageInherited KMMsgBase
-class KMMessage: private KMMsgBase
+class KMMessage: public KMMsgBase
 {
   friend class KMForwardCommand;    // needed for MIME Digest forward
 
