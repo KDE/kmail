@@ -1304,8 +1304,8 @@ bool KMComposeWin::queryClose ()
   {
     rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to discard the message or save it for later?"),
-           i18n("Discard or save message"),
-           i18n("Save as draft"),
+           i18n("Discard or Save Message"),
+           i18n("Save as Draft"),
 	   // i18n fix by mok: avoid clash with common_texts (breaks translation)
 	   i18n("discard message", "Discard") );
     if (rc == KMessageBox::Cancel)
@@ -1363,8 +1363,8 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       bool anyway = (KMessageBox::warningYesNo(0L,
       i18n("Not all characters fit into the chosen"
       " encoding.\nSend the message anyway?"),
-      i18n("Some characters will be lost"),
-      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
+      i18n("Some Characters Will Be Lost"),
+      i18n("Yes"), i18n("No, Let Me Change the Encoding") ) == KMessageBox::Yes);
       if (!anyway)
       {
         mEditor->setText(oldText);
@@ -2157,7 +2157,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      {
         mEdtSubject->setFocus();
         int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
-    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"), "no_subject_specified" );
+    		i18n("No Subject Specified"), i18n("Yes"), i18n("No, Let Me Specify the Subject"), "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
            return;
