@@ -445,8 +445,11 @@ void KMAcctExpPop::slotJobFinished() {
     debug( "stage == Quit" );
     job = 0L;
     stage = Idle;
-    KMBroadcastStatus::instance()->setStatusMsg( 
-		       i18n( "Transmission completed..." ));
+    if( idsOfMsgs.count() > 0 ) {
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 mails)...").arg(idsOfMsgs.count()));
+    } else {
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("No new mails."));
+    }
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );
     KMBroadcastStatus::instance()->reset();
 

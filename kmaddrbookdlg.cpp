@@ -38,6 +38,8 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   mGrid.setColStretch(0,10);
   mGrid.setColStretch(1,10);
   mGrid.activate();
+  
+  mListBox.setSelectionMode(QListBox::Multi);
 
   connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
   connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
@@ -47,6 +49,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   {
     mListBox.insertItem(addr);
   }
+  resize(300, 450);
 }
 
 
@@ -59,11 +62,19 @@ KMAddrBookSelDlg::~KMAddrBookSelDlg()
 //-----------------------------------------------------------------------------
 void KMAddrBookSelDlg::slotOk()
 {
-  int idx = mListBox.currentItem();
-
-  if (idx>=0) mAddress = mListBox.text(idx);
-  else mAddress = QString::null;
-
+  mAddress = QString::null;
+  unsigned int idx;
+  unsigned int count = 0;
+  for (idx = 0; idx < mListBox.count(); idx++)
+  {
+    if( mListBox.isSelected(idx) ) {
+      if( count > 0 ) {
+        mAddress += ", ";
+      }
+      mAddress += mListBox.text(idx);
+      count++;
+    }
+  }
   accept();
 }
 

@@ -10,10 +10,6 @@
 #include <paths.h>
 #endif
 
-#ifndef _PATH_TMP
-#define _PATH_TMP "/tmp/"
-#endif
-
 #include <kapp.h>
 #include <klocale.h>
 #include <kglobal.h>
