@@ -228,11 +228,20 @@ void KMSender::doSendMsg()
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
   {
-    if( mCurrentMsg->hasUnencryptedMsg() ) {
-kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg  by mCurrentMsg->unencryptedMsg()" << endl;
-      mCurrentMsg = mCurrentMsg->unencryptedMsg();
-    }
     mCurrentMsg->setTransferInProgress( FALSE );
+    if( mCurrentMsg->hasUnencryptedMsg() ) {
+kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
+      KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
+      mCurrentMsg->setTypeStr( newMsg.typeStr() );
+      mCurrentMsg->setSubtypeStr( newMsg.subtypeStr() );
+      QCString newDispo = newMsg.headerField("Content-Disposition").latin1();
+      mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
+      if( newDispo.isEmpty() )
+        mCurrentMsg->removeHeaderField( "Content-Disposition" );
+      else
+        mCurrentMsg->setHeaderField( "Content-Disposition", newDispo );
+      mCurrentMsg->setBody( newMsg.body() );
+    }
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
     const KMIdentity & id = kernel->identityManager()

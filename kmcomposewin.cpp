@@ -5,7 +5,7 @@
 // keep this in sync with the define in configuredialog.h
 #define DEFAULT_EDITOR_STR "kate %f"
 
-//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
+#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
 
 #undef GrayScale
 #undef Color
@@ -1713,7 +1713,7 @@ bool KMComposeWin::applyChanges(void)
       bool saveMessagesEncrypted = cryptPlug ? cryptPlug->saveMessagesEncrypted()
                                              : true;
                                              
-// note: The following define is specified on top of this file, to compile
+// note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01  
       {  
@@ -1723,9 +1723,9 @@ bool KMComposeWin::applyChanges(void)
         //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
         // --> Signed messages *must* be stored including the signature after sending.
         //     ( "Aufpraegen der Signatur" )
-        if(    cryptPlug 
+        if(  /*  cryptPlug 
             && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
-            && (    ( doEncrypt && saveMessagesEncrypted )
+            &&*/ (    ( doEncrypt && saveMessagesEncrypted )
                  || ( doSign    && ! saveSentSignatures    ) ) ){
         
           QString headTxt =
@@ -1753,9 +1753,11 @@ bool KMComposeWin::applyChanges(void)
 
       if(    ( doEncrypt && ! saveMessagesEncrypted )
           || ( doSign    && ! saveSentSignatures    ) ) {
-kdDebug(5006) << "\n     1. This message is going to be stored in decrypted form." << endl;
+kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
+        oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+        oldBodyPart.setCharset(mCharset);
+        oldBodyPart.setContentDisposition( "inline" );
         KMMessage* unencryptedMessage = new KMMessage( *mMsg );
-kdDebug(5006) << "\n     2. This message is going to be stored in decrypted form." << endl;
         bool bOk2 = encryptMessage( unencryptedMessage,
                                     recipientsWithoutBcc,
                                     doSign    && saveSentSignatures, 
@@ -1767,13 +1769,9 @@ kdDebug(5006) << "\n     2. This message is going to be stored in decrypted form
                                     earlyAddAttachments,
                                     allAttachmentsAreInBody,
                                     newBodyPart );
-kdDebug(5006) << "\n     3. This message is going to be stored in decrypted form." << endl;
         if( bOk2 ) {
-kdDebug(5006) << "\n     4. This message is going to be stored in decrypted form." << endl;
           unencryptedMessage->cleanupHeader();
-kdDebug(5006) << "\n     5. This message is going to be stored in decrypted form." << endl;
           mMsg->setUnencryptedMsg( unencryptedMessage );
-kdDebug(5006) << "\n     6. This message is going to be stored in decrypted form." << endl;
         }
       }
 
