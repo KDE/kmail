@@ -485,6 +485,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortInfo.dirty = TRUE;
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
+  mSortInfo.column = 0;
+  mSortInfo.ascending = false;
   mJumpToUnread = false;
   setLineWidth(0);
   // popup-menu
@@ -2289,7 +2291,7 @@ void KMHeaders::setSorting( int column, bool ascending )
   if (column != -1) {
     if (column != mSortCol)
       setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
-    if(column != mSortInfo.column || ascending != mSortInfo.ascending) { //dirtied
+    if(mSortInfo.dirty || column != mSortInfo.column || ascending != mSortInfo.ascending) { //dirtied
 	QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
 	mSortInfo.dirty = TRUE;
     }
@@ -2607,8 +2609,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
     if(sortStream) {
 	mSortInfo.fakeSort = 1;
-	int version;
-	fscanf(sortStream, KMAIL_SORT_HEADER, &version);
+	int version = 0;
+	if (fscanf(sortStream, KMAIL_SORT_HEADER, &version) != 1)
+		version = -1;
 	if(version == KMAIL_SORT_VERSION) {
 	  Q_INT32 byteOrder = 0;
 	  fread(&byteOrder, sizeof(byteOrder), 1, sortStream);
