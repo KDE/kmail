@@ -118,6 +118,14 @@ public:
   /** Returns contents of filter as string. */
   const QString asString(void) const;
 
+  /** 
+   * Called from the filter manager when a folder is removed.
+   * Tests if the folder aFolder is used in any action. Changes 
+   * to aNewFolder folder in this case. Returns TRUE if a change
+   * occured.
+   */
+  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+
 protected:
   QString         mName;
   KMFilterRule    mRuleA, mRuleB;

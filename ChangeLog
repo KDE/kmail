@@ -1,7 +1,14 @@
+1998-05-13  Stefan Taferner  <taferner@kde.org> (KMail-0.6.7)
+
+	* Filters: Bugfix: when deleting a folder that was the target
+	of a filter the next get-mails crashed.
+
+	* Filter Dialog: Deleting filter rules did not work. Fixed.
+
 1998-05-09  Markus Wuebben  <markus@kde.org>
 
 	* kmsettings.cpp (KMAccountSettings):
-	Fixed "Delete mail from server". The row was to low.
+	Fixed "Delete mail from server". The row was too low.
 	* kmmainwin.cpp
 	Added a single account mail check option.
 

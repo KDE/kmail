@@ -476,8 +476,8 @@ void KMFilterDlg::slotBtnDelete()
   int idx = mFilterList->currentItem();
   if (idx < 0) return;
 
-  filterMgr->remove(idx);
   mFilterList->removeItem(idx);
+  filterMgr->remove(idx);
 
   if (idx >= (int)filterMgr->count())
     idx = (int)filterMgr->count()-1;

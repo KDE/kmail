@@ -112,6 +112,19 @@ void KMFilterMgr::openDialog(void)
 
 
 //-----------------------------------------------------------------------------
+bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+{
+  KMFilter* filter;
+  bool rem = FALSE;
+
+  for (filter=first(); filter; filter=next())
+    if (filter->folderRemoved(aFolder, aNewFolder)) rem=TRUE;
+
+  return rem;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFilterMgr::dump(void)
 {
   KMFilter* filter;

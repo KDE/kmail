@@ -98,10 +98,23 @@ bool KMFilter::execActions(KMMessage* msg, bool& stopIt)
   bool stillOwner = TRUE;
   stopIt = FALSE;
 
-  for (i=0; !stopIt && mAction[i]; i++)
+  for (i=0; !stopIt && mAction[i] && i<=FILTER_MAX_ACTIONS; i++)
     if (!mAction[i]->process(msg,stopIt)) stillOwner = FALSE;
 
   return stillOwner;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMFilter::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+{
+  int  i;
+  bool rem = FALSE;
+
+  for (i=0; mAction[i] && i<=FILTER_MAX_ACTIONS; i++)
+    if (mAction[i]->folderRemoved(aFolder,aNewFolder)) rem=TRUE;
+
+  return rem;
 }
 
 

@@ -36,6 +36,11 @@ void KMFilterAction::applyParamWidgetValue(QWidget*)
 {
 }
 
+bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
+{
+  return FALSE;
+}
+
 
 
 //=============================================================================
@@ -57,10 +62,20 @@ public:
   virtual void applyParamWidgetValue(QWidget* paramWidget);
   virtual void argsFromString(const QString argsStr);
   virtual const QString argsAsString(void) const;
+  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
   static KMFilterAction* newAction(void);
 protected:
   KMFolder* mDest;
 };
+
+bool KMFilterActionMove::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+{
+  if (aFolder==mDest)
+  {
+    mDest = aNewFolder;
+  }
+  return TRUE;
+}
 
 KMFilterAction* KMFilterActionMove::newAction(void)
 {

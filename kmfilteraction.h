@@ -55,6 +55,13 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString(void) const = 0;
 
+  /** 
+   * Called from the filter when a folder is removed.
+   * Tests if the folder aFolder is used and changes to aNewFolder
+   * in this case. Returns TRUE if a change was made.
+   */
+  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction(void);
 };

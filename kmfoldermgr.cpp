@@ -22,6 +22,7 @@
 
 #include <qdir.h>
 #include <assert.h>
+#include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
@@ -146,9 +147,12 @@ KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
 void KMFolderMgr::remove(KMFolder* aFolder)
 {
   assert(aFolder != NULL);
+
   aFolder->remove();
   mDir.remove(aFolder);
   //mDir.reload();
+  if (filterMgr) filterMgr->folderRemoved(aFolder,NULL);
+
   emit changed();
 }
 
