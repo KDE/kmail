@@ -34,6 +34,7 @@
 #include <klocale.h>
 #include <kabapi.h>
 #include <kmessagebox.h>
+#include <kseparator.h>
 #include <kdebug.h>
 
 #include "kmmainwin.h"
@@ -178,14 +179,12 @@ void AddToKabDialog::newEntry()
   QWidget *mainwidget=new QWidget(&dialog);
   QGridLayout layout(mainwidget, 5, 2, KDialog::marginHint(),
 		     KDialog::spacingHint());
-  QFrame *frame;
   // -----
   layout.addWidget(new QLabel(i18n("Field"), mainwidget), row, 0);
   layout.addWidget(new QLabel(i18n("Content"), mainwidget), row, 1);
   ++row;
-  frame=new QFrame(mainwidget);
-  frame->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-  layout.addMultiCellWidget(frame, row, row, 0, 1);
+  KSeparator *sep = new KSeparator( KSeparator::HLine, mainwidget);
+  layout.addMultiCellWidget(sep, row, row, 0, 1);
   ++row;
   for(count=0; count<Size; ++count)
     {

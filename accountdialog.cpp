@@ -35,6 +35,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
+#include <kseparator.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -268,8 +269,7 @@ void AccountDialog::makeLocalAccountPage()
   QFont titleFont( mLocal.titleLabel->font() );
   titleFont.setBold( true );
   mLocal.titleLabel->setFont( titleFont );
-  QFrame *hline = new QFrame( page );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page );
@@ -383,8 +383,7 @@ void AccountDialog::makePopAccountPage()
   titleFont.setBold( true );
   mPop.titleLabel->setFont( titleFont );
   topLayout->addWidget( mPop.titleLabel );
-  QFrame *hline = new QFrame( page );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addWidget( hline );
 
   QTabWidget *tabWidget = new QTabWidget(page);
@@ -505,8 +504,7 @@ void AccountDialog::makeImapAccountPage()
   titleFont.setBold( true );
   mImap.titleLabel->setFont( titleFont );
   topLayout->addWidget( mImap.titleLabel );
-  QFrame *hline = new QFrame( page );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addWidget( hline );
 
   QTabWidget *tabWidget = new QTabWidget(page);

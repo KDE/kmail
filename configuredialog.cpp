@@ -70,7 +70,7 @@
 #include <kglobalsettings.h>
 #include <kscoring.h>
 #include <kscoringeditor.h>
-
+#include <kseparator.h>
 
 #include "accountdialog.h"
 #include "colorlistbox.h"
@@ -817,8 +817,7 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.unicodeFontCheck =
     new QCheckBox( i18n("Use un&icode font for messages"), page1 );
   vlay->addWidget( mAppearance.unicodeFontCheck );
-  QFrame *hline = new QFrame( page1 );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  KSeparator *hline = new KSeparator( KSeparator::HLine, page1);
   vlay->addWidget( hline );
   QHBoxLayout *hlay = new QHBoxLayout( vlay );
   mAppearance.fontLocationLabel = new QLabel( i18n("Location:"), page1 );
@@ -855,8 +854,7 @@ void ConfigureDialog::makeAppearancePage( void )
   connect( mAppearance.customColorCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotCustomColorSelectionChanged()) );
   vlay->addWidget( mAppearance.customColorCheck );
-  hline = new QFrame( page2 );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  hline = new KSeparator( KSeparator::HLine, page2);
   vlay->addWidget( hline );
 
   QStringList modeList;
@@ -1338,8 +1336,7 @@ void ConfigureDialog::makeMimePage( void )
 	   this, SLOT(slotCreateOwnMessageIdChanged()) );
   slotCreateOwnMessageIdChanged();
 
-  QFrame *hline = new QFrame( page );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLevel->addWidget( hline );
 
   QLabel *label = new QLabel( page );
