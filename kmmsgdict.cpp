@@ -452,6 +452,8 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
   off_t eof = ftell(fp);
   QString filename = getFolderIdsLocation(folder);
   truncate(filename.local8Bit(), eof);
+  fclose(rentry->fp);
+  rentry->fp = 0;
   
   return 0;
 }
@@ -461,8 +463,11 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
 int KMMsgDict::touchFolderIds(KMFolder *folder)
 {
   KMMsgDictREntry *rentry = openFolderIds(folder, false);
-  if (rentry)
+  if (rentry) {
     rentry->sync();
+    fclose(rentry->fp);
+    rentry->fp = 0;
+  }
   return 0;
 }
 
@@ -512,6 +517,8 @@ int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
   }
   
   rentry->sync();
+  fclose(rentry->fp);
+  rentry->fp = 0;
   
   return 0;
 }
