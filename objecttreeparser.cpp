@@ -463,15 +463,8 @@ public:
 	    mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
 	    mReader->mInlineImage = false;
 	  } else {
-	    bool isInlineSigned = processResult.isInlineSigned();
-	    bool isInlineEncrypted = processResult.isInlineEncrypted();
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    mReader->writeBodyStr(cstr,
-				 mReader->mCodec,
-				 curNode->trueFromAddress(),
-				 &isInlineSigned, &isInlineEncrypted);
-	    processResult.setIsInlineSigned( isInlineSigned );
-	    processResult.setIsInlineEncrypted( isInlineEncrypted );
+	    writeBodyString( cstr, curNode->trueFromAddress(), processResult );
 	  }
 	}
 	curNode->mWasProcessed = true;
@@ -1084,14 +1077,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  vCal.replace( '<',  "&lt;"   );
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
-		  bool isInlineSigned = result.isInlineSigned();
-		  bool isInlineEncrypted = result.isInlineEncrypted();
-		  mReader->writeBodyStr( vCal,
-					 mReader->mCodec,
-					 curNode->trueFromAddress(),
-					 &isInlineSigned, &isInlineEncrypted );
-		  result.setIsInlineSigned( isInlineSigned );
-		  result.setIsInlineEncrypted( isInlineEncrypted );
+		  writeBodyString( vCal, curNode->trueFromAddress(), result );
 		  mReader->queueHtml( postfix );
 		}
 	      }
@@ -1249,16 +1235,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		}
 	      }
 	    }
-	    if( !bDone ) {
-	      bool isInlineSigned = result.isInlineSigned();
-	      bool isInlineEncrypted = result.isInlineEncrypted();
-	      mReader->writeBodyStr( cstr.data(),
-				     mReader->mCodec,
-				     curNode->trueFromAddress(),
-				     &isInlineSigned, &isInlineEncrypted);
-	      result.setIsInlineSigned( isInlineSigned );
-	      result.setIsInlineEncrypted( isInlineEncrypted );
-	    }
+	    if( !bDone )
+	      writeBodyString( cstr.data(), curNode->trueFromAddress(), result );
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1418,16 +1396,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( !data )
 	    data = curNode->mChild;
 	  QCString cstr( data->msgPart().bodyDecoded() );
-	  if( mReader ) {
-	    bool isInlineSigned = result.isInlineSigned();
-	    bool isInlineEncrypted = result.isInlineEncrypted();
-	    mReader->writeBodyStr(cstr,
-				  mReader->mCodec,
-				  curNode->trueFromAddress(),
-				  &isInlineSigned, &isInlineEncrypted);
-	    result.setIsInlineSigned( isInlineSigned );
-	    result.setIsInlineEncrypted( isInlineEncrypted );
-	  }
+	  if( mReader )
+	    writeBodyString( cstr, curNode->trueFromAddress(), result );
 	  mResultString += cstr;
 	  bDone = true;
 	} else if( sign && data && plugFound ) {
@@ -1449,16 +1419,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       if( keepEncryptions ) {
 	curNode->setEncrypted( true );
 	QCString cstr( curNode->msgPart().bodyDecoded() );
-	if( mReader ) {
-	  bool isInlineSigned = result.isInlineSigned();
-	  bool isInlineEncrypted = result.isInlineEncrypted();
-	  mReader->writeBodyStr(cstr,
-				mReader->mCodec,
-				curNode->trueFromAddress(),
-				&isInlineSigned, &isInlineEncrypted);
-	  result.setIsInlineSigned( isInlineSigned );
-	  result.setIsInlineEncrypted( isInlineEncrypted );
-	}
+	if( mReader )
+	  writeBodyString ( cstr, curNode->trueFromAddress(), result );
 	mResultString += cstr;
 	bDone = true;
       } else if( curNode->mChild ) {
@@ -1687,16 +1649,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
 	  if( keepEncryptions ) {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    if( mReader ) {
-	      bool isInlineSigned = result.isInlineSigned();
-	      bool isInlineEncrypted = result.isInlineEncrypted();
-	      mReader->writeBodyStr(cstr,
-				    mReader->mCodec,
-				    curNode->trueFromAddress(),
-				    &isInlineSigned, &isInlineEncrypted);
-	      result.setIsInlineSigned( isInlineSigned );
-	      result.setIsInlineEncrypted( isInlineEncrypted );
-	    }
+	    if( mReader )
+	      writeBodyString( cstr, curNode->trueFromAddress(), result );
 	    mResultString += cstr;
 	    bDone = true;
 	  } else {
@@ -1922,14 +1876,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  vPart.replace( '<',  "&lt;"   );
 	  vPart.replace( '>',  "&gt;"   );
 	  vPart.replace( '\"', "&quot;" );
-	  bool isInlineSigned = result.isInlineSigned();
-	  bool isInlineEncrypted = result.isInlineEncrypted();
-	  mReader->writeBodyStr( vPart.latin1(),
-				 mReader->mCodec,
-				 curNode->trueFromAddress(),
-				 &isInlineSigned, &isInlineEncrypted );
-	  result.setIsInlineSigned( isInlineSigned );
-	  result.setIsInlineEncrypted( isInlineEncrypted );
+	  writeBodyString( vPart.latin1(), curNode->trueFromAddress(), result );
 	  mReader->queueHtml( postfix );
 	}
       }
@@ -1977,5 +1924,17 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return false;
   }
 
+
+  void ObjectTreeParser::writeBodyString( const QCString & bodyString,
+					  const QString & fromAddress,
+					  ProcessResult & result ) {
+    assert( mReader );
+    bool isInlineSigned = result.isInlineSigned();
+    bool isInlineEncrypted = result.isInlineEncrypted();
+    mReader->writeBodyStr( bodyString, mReader->mCodec, fromAddress,
+			   &isInlineSigned, &isInlineEncrypted );
+    result.setIsInlineSigned( isInlineSigned );
+    result.setIsInlineEncrypted( isInlineEncrypted );
+  }
 
 }; // namespace KMail

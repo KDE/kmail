@@ -174,6 +174,10 @@ namespace KMail {
 			   ProcessResult & result );
 
 
+    void writeBodyString( const QCString & bodyString,
+			  const QString & fromAddress,
+			  ProcessResult & result );
+
   private:
     KMReaderWin * mReader;
     QCString mResultString;
