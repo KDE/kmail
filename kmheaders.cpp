@@ -953,10 +953,14 @@ void KMHeaders::msgChanged()
   int i = topItemIndex();
   int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;
+  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+  	     this,SLOT(highlightMessage(QListViewItem*)));
   updateMessageList();
   setTopItemByIndex( i );
   setCurrentMsg(cur);
   setSelected( currentItem(), TRUE );
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	  this,SLOT(highlightMessage(QListViewItem*)));
 }
 
 
@@ -1847,15 +1851,7 @@ void KMHeaders::updateMessageList(bool set_selection)
     repaint();
     return;
   }
-#if 0
-  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-  	     this,SLOT(highlightMessage(QListViewItem*)));
-#endif
   readSortOrder(set_selection);
-#if 0
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-  	  this,SLOT(highlightMessage(QListViewItem*)));
-#endif
 }
 
 
