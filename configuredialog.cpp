@@ -21,7 +21,13 @@
 
 // Add header files alphabetically
 
+// This must be first
+#include <config.h>
+
 #include <signal.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
