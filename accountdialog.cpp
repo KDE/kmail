@@ -299,7 +299,7 @@ void AccountDialog::makeLocalAccountPage()
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
 
-  QButtonGroup *group = new QButtonGroup(i18n("Locking method"), page );
+  QButtonGroup *group = new QButtonGroup(i18n("Locking Method"), page );
   group->setColumnLayout(0, Qt::Horizontal);
   group->layout()->setSpacing( 0 );
   group->layout()->setMargin( 0 );
@@ -580,7 +580,7 @@ void AccountDialog::makePopAccountPage()
   vlay->addWidget( mPop.encryptionGroup );
 
   mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentication method"), page2 );
+    i18n("Authentication Method"), page2 );
   mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
@@ -727,7 +727,7 @@ void AccountDialog::makeImapAccountPage()
   vlay->addWidget( mImap.encryptionGroup );
 
   mImap.authGroup = new QButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentication method"), page2 );
+    i18n("Authentication Method"), page2 );
   mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
   mImap.authPlain = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),

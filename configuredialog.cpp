@@ -2177,7 +2177,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // The general options (were previously standalone, without button group
-  QVButtonGroup* generalOptionsVBG = new QVButtonGroup( i18n( "&General options" ), this );
+  QVButtonGroup* generalOptionsVBG = new QVButtonGroup( i18n( "&General Options" ), this );
   vlay->addWidget( generalOptionsVBG );
   generalOptionsVBG->layout()->setSpacing( KDialog::spacingHint() );
   
@@ -2195,7 +2195,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
                    generalOptionsVBG );
 
   // The window layout
-  QVGroupBox* visibleVBG = new QVGroupBox( i18n( "W&indow layout" ), this );
+  QVGroupBox* visibleVBG = new QVGroupBox( i18n( "W&indow Layout" ), this );
   mWindowLayoutVBG = new QButtonGroup( this );
   mWindowLayoutVBG->hide();
   mWindowLayoutVBG->setExclusive( true );
@@ -2230,7 +2230,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   
   // a button group for four radiobuttons (by default exclusive):
   mNestingPolicy =
-    new QVButtonGroup( i18n("Message header threading options"), this );
+    new QVButtonGroup( i18n("Message Header Threading Options"), this );
   mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
 
   mNestingPolicy->insert(
@@ -2248,7 +2248,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay->addWidget( mNestingPolicy );
 
   // a button group for three radiobuttons:
-  mDateDisplay = new QVButtonGroup( i18n( "Display of date" ), this );
+  mDateDisplay = new QVButtonGroup( i18n( "Display of Date" ), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
@@ -2987,7 +2987,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  group = new QVGroupBox( i18n("Repl&y subject prefixes"), this );
+  group = new QVGroupBox( i18n("Repl&y Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
@@ -3011,7 +3011,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 
 
-  group = new QVGroupBox( i18n("Forward subject prefixes"), this );
+  group = new QVGroupBox( i18n("Forward Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
@@ -3675,8 +3675,8 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   hlay->addWidget( mMailboxPrefCombo, 1 );
 
   // "On exit..." groupbox:
-  group = new QVGroupBox( i18n("On program exit, "
-			       "perform the following tasks"), this );
+  group = new QVGroupBox( i18n("On Program Exit, "
+			       "Perform the Following Tasks"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
   mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );

@@ -378,7 +378,7 @@ void KMTransportDialog::makeSmtpPage()
   vlay->addWidget( mSmtp.encryptionGroup );
  
   mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentication method"), page2 );
+    i18n("Authentication Method"), page2 );
   mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
     mSmtp.authGroup  );

@@ -306,7 +306,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       "what you want to do with them by checking the appropriate button.").arg(aAccount), w);
   vbl->addWidget(l);
 
-  QVGroupBox *upperBox = new QVGroupBox(i18n("Messages exceeding size"), w);
+  QVGroupBox *upperBox = new QVGroupBox(i18n("Messages Exceeding Size"), w);
   upperBox->hide();
   KMPopHeadersView *lv = new KMPopHeadersView(upperBox);
   vbl->addWidget(upperBox);
