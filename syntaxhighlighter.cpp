@@ -274,7 +274,7 @@ QString DictSpellChecker::spellKey()
     return key;
 }
 
-void DictSpellChecker::timerEvent(QTimerEvent)
+void DictSpellChecker::timerEvent(QTimerEvent*)
 {
     if (mSpell && mSpellKey != spellKey()) {
 	mSpellKey = spellKey();
