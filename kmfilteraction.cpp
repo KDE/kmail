@@ -124,7 +124,7 @@ void KMFilterActionWithUOID::argsFromString( const QString argsStr )
 
 const QString KMFilterActionWithUOID::argsAsString() const
 {
-  return QString().setNum( mParameter );
+  return QString::number( mParameter );
 }
 
 //=============================================================================
@@ -659,7 +659,7 @@ KMFilterActionIdentity::KMFilterActionIdentity()
 
 KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 {
-  msg->setHeaderField( "X-KMail-Identity", QString().setNum( mParameter ) );
+  msg->setHeaderField( "X-KMail-Identity", QString::number( mParameter ) );
   return GoOn;
 }
 

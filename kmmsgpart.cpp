@@ -312,7 +312,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 QString KMMessagePart::iconName(const QString& mimeType) const
 {
   QString fileName = KMimeType::mimeType(mimeType.isEmpty() ?
-    (mType + "/" + mSubtype).lower() : mimeType.lower())->icon(QString(),FALSE);
+    (mType + "/" + mSubtype).lower() : mimeType.lower())->icon(QString::null,FALSE);
   fileName = KGlobal::instance()->iconLoader()->iconPath( fileName,
     KIcon::Desktop );
   return fileName;
@@ -320,10 +320,8 @@ QString KMMessagePart::iconName(const QString& mimeType) const
 
 
 //-----------------------------------------------------------------------------
-int KMMessagePart::type(void) const
-{
-  int type = DwTypeStrToEnum(DwString(mType));
-  return type;
+int KMMessagePart::type() const {
+  return DwTypeStrToEnum(DwString(mType));
 }
 
 
@@ -333,14 +331,11 @@ void KMMessagePart::setType(int aType)
   DwString dwType;
   DwTypeEnumToStr(aType, dwType);
   mType = dwType.c_str();
-
 }
 
 //-----------------------------------------------------------------------------
-int KMMessagePart::subtype(void) const
-{
-  int subtype = DwSubtypeStrToEnum(DwString(mSubtype));
-  return subtype;
+int KMMessagePart::subtype() const {
+  return DwSubtypeStrToEnum(DwString(mSubtype));
 }
 
 
@@ -350,7 +345,6 @@ void KMMessagePart::setSubtype(int aSubtype)
   DwString dwSubtype;
   DwSubtypeEnumToStr(aSubtype, dwSubtype);
   mSubtype = dwSubtype.c_str();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -383,8 +377,7 @@ QCString KMMessagePart::contentTransferEncodingStr(void) const
 //-----------------------------------------------------------------------------
 int KMMessagePart::contentTransferEncoding(void) const
 {
-  int cte = DwCteStrToEnum(DwString(mCte));
-  return cte;
+  return DwCteStrToEnum(DwString(mCte));
 }
 
 
@@ -452,8 +445,7 @@ QString KMMessagePart::fileName(void) const
   if (endOfFilename < 0)
     endOfFilename = 32767;
 
-  QCString str;
-  str = mContentDisposition.mid(startOfFilename,
+  const QCString str = mContentDisposition.mid(startOfFilename,
                                 endOfFilename-startOfFilename+1)
                            .stripWhiteSpace();
 

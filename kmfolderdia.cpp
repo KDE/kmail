@@ -634,7 +634,7 @@ void KMFolderDialog::slotOk()
     else if (senderType->currentItem() == 2)
       mFolder->setUserWhoField("To");
     else
-      mFolder->setUserWhoField(QString());
+      mFolder->setUserWhoField(QString::null);
 
     if( bIsNewFolder )
       mFolder->close();

@@ -762,7 +762,7 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
                                true,
                                false );
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
-                << QString( curNode ? "text part found!\n" : "sorry, no text node!\n" ) << endl;
+                << ( curNode ? "text part found!\n" : "sorry, no text node!\n" ) << endl;
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->subType();
     // now parse the TEXT message part we want to quote
@@ -772,7 +772,7 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
     codec = curNode->msgPart().codec();
   }
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""
-                << QString( parsedString + "\"\n\n" ) << endl;
+                << parsedString + "\"\n\n" << endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -1670,7 +1670,7 @@ void KMMessage::initHeader( uint id )
   if (ident.isDefault())
     removeHeaderField("X-KMail-Identity");
   else
-    setHeaderField("X-KMail-Identity", QString().setNum( ident.uoid() ));
+    setHeaderField("X-KMail-Identity", QString::number( ident.uoid() ));
 
   if (ident.transport().isEmpty())
     removeHeaderField("X-KMail-Transport");
@@ -1716,7 +1716,7 @@ void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
   uint id = msg->identityUoid();
 
   if ( idHeaders ) initHeader(id);
-  else setHeaderField("X-KMail-Identity", QString().setNum(id));
+  else setHeaderField("X-KMail-Identity", QString::number(id));
   if (!msg->headerField("X-KMail-Transport").isEmpty())
     setHeaderField("X-KMail-Transport", msg->headerField("X-KMail-Transport"));
 }
@@ -2900,16 +2900,14 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 //-----------------------------------------------------------------------------
 void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 {
-  if( aPart ) {
-    // If the DwBodyPart was found get the header fields and body
-    DwBodyPart *part = dwBodyPart( aIdx );
-    if( part )
+  if ( !aPart )
+    return;
 
-    {
-      KMMessage::bodyPart(part, aPart);
-      if( aPart->name().isEmpty() )
-        aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
-    }
+  // If the DwBodyPart was found get the header fields and body
+  if ( DwBodyPart *part = dwBodyPart( aIdx ) ) {
+    KMMessage::bodyPart(part, aPart);
+    if( aPart->name().isEmpty() )
+      aPart->setName( i18n("Attachment: %1").arg( aIdx ) );
   }
 }
 
@@ -2926,123 +2924,125 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 {
   DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
 
-  if( aPart ) {
-    QCString charset  = aPart->charset();
-    QCString type     = aPart->typeStr();
-    QCString subtype  = aPart->subtypeStr();
-    QCString cte      = aPart->cteStr();
-    QCString contDesc = aPart->contentDescriptionEncoded();
-    QCString contDisp = aPart->contentDisposition();
-    QCString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
-    if (encoding.isEmpty()) encoding = "utf-8";
-    QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
-    bool RFC2231encoded = aPart->name() != QString(name);
-    QCString paramAttr  = aPart->parameterAttribute();
+  if ( !aPart )
+    return part;
 
-    DwHeaders& headers = part->Headers();
+  QCString charset  = aPart->charset();
+  QCString type     = aPart->typeStr();
+  QCString subtype  = aPart->subtypeStr();
+  QCString cte      = aPart->cteStr();
+  QCString contDesc = aPart->contentDescriptionEncoded();
+  QCString contDisp = aPart->contentDisposition();
+  QCString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
+  if (encoding.isEmpty()) encoding = "utf-8";
+  QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
+  bool RFC2231encoded = aPart->name() != QString(name);
+  QCString paramAttr  = aPart->parameterAttribute();
 
-    DwMediaType& ct = headers.ContentType();
-    if (!type.isEmpty() && !subtype.isEmpty())
-    {
-      ct.SetTypeStr(type.data());
-      ct.SetSubtypeStr(subtype.data());
-      if (!charset.isEmpty()){
-	DwParameter *param;
-	param=new DwParameter;
-	param->SetAttribute("charset");
-	param->SetValue(charset.data());
-	ct.AddParameter(param);
-      }
-    }
+  DwHeaders& headers = part->Headers();
 
-    QCString additionalParam = aPart->additionalCTypeParamStr();
-    if( !additionalParam.isEmpty() )
-    {
-      QCString parAV;
-      DwString parA, parV;
-      int iL, i1, i2, iM;
-      iL = additionalParam.length();
-      i1 = 0;
-      i2 = additionalParam.find(';', i1, false);
-      while ( i1 < iL )
-      {
-        if( -1 == i2 )
-          i2 = iL;
-        if( i1+1 < i2 ) {
-          parAV = additionalParam.mid( i1, (i2-i1) );
-          iM = parAV.find('=');
-          if( -1 < iM )
-          {
-            parA = parAV.left( iM );
-            parV = parAV.right( parAV.length() - iM - 1 );
-            if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
-            {
-              parV.erase( 0,  1);
-              parV.erase( parV.length()-1 );
-            }
-          }
-          else
-          {
-            parA = parAV;
-            parV = "";
-          }
-          DwParameter *param;
-          param = new DwParameter;
-          param->SetAttribute( parA );
-          param->SetValue(     parV );
-          ct.AddParameter( param );
-        }
-        i1 = i2+1;
-        i2 = additionalParam.find(';', i1, false);
-      }
-    }
-
-    if (RFC2231encoded)
-    {
-      DwParameter *nameParam;
-      nameParam = new DwParameter;
-      nameParam->SetAttribute("name*");
-      nameParam->SetValue(name.data(),true);
-      ct.AddParameter(nameParam);
-    } else {
-      if(!name.isEmpty())
-        ct.SetName(name.data());
-    }
-
-    if (!paramAttr.isEmpty())
-    {
-      QCString encoding = autoDetectCharset(charset, sPrefCharsets,
-        aPart->parameterValue());
-      if (encoding.isEmpty()) encoding = "utf-8";
-      QCString paramValue;
-      paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
-                                                  encoding);
-      DwParameter *param = new DwParameter;
-      if (aPart->parameterValue() != QString(paramValue))
-      {
-        param->SetAttribute((paramAttr + '*').data());
-	param->SetValue(paramValue.data(),true);
-      } else {
-        param->SetAttribute(paramAttr.data());
-	param->SetValue(paramValue.data());
-      }
+  DwMediaType& ct = headers.ContentType();
+  if (!type.isEmpty() && !subtype.isEmpty())
+  {
+    ct.SetTypeStr(type.data());
+    ct.SetSubtypeStr(subtype.data());
+    if (!charset.isEmpty()){
+      DwParameter *param;
+      param=new DwParameter;
+      param->SetAttribute("charset");
+      param->SetValue(charset.data());
       ct.AddParameter(param);
     }
-
-    if (!cte.isEmpty())
-      headers.Cte().FromString(cte);
-
-    if (!contDesc.isEmpty())
-      headers.ContentDescription().FromString(contDesc);
-
-    if (!contDisp.isEmpty())
-      headers.ContentDisposition().FromString(contDisp);
-
-    if (!aPart->body().isNull())
-      part->Body().FromString(aPart->body());
-    else
-      part->Body().FromString("");
   }
+
+  QCString additionalParam = aPart->additionalCTypeParamStr();
+  if( !additionalParam.isEmpty() )
+  {
+    QCString parAV;
+    DwString parA, parV;
+    int iL, i1, i2, iM;
+    iL = additionalParam.length();
+    i1 = 0;
+    i2 = additionalParam.find(';', i1, false);
+    while ( i1 < iL )
+    {
+      if( -1 == i2 )
+	i2 = iL;
+      if( i1+1 < i2 ) {
+	parAV = additionalParam.mid( i1, (i2-i1) );
+	iM = parAV.find('=');
+	if( -1 < iM )
+        {
+	  parA = parAV.left( iM );
+	  parV = parAV.right( parAV.length() - iM - 1 );
+	  if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
+          {
+	    parV.erase( 0,  1);
+	    parV.erase( parV.length()-1 );
+	  }
+	}
+	else
+        {
+	  parA = parAV;
+	  parV = "";
+	}
+	DwParameter *param;
+	param = new DwParameter;
+	param->SetAttribute( parA );
+	param->SetValue(     parV );
+	ct.AddParameter( param );
+      }
+      i1 = i2+1;
+      i2 = additionalParam.find(';', i1, false);
+    }
+  }
+
+  if (RFC2231encoded)
+  {
+    DwParameter *nameParam;
+    nameParam = new DwParameter;
+    nameParam->SetAttribute("name*");
+    nameParam->SetValue(name.data(),true);
+    ct.AddParameter(nameParam);
+  } else {
+    if(!name.isEmpty())
+      ct.SetName(name.data());
+  }
+
+  if (!paramAttr.isEmpty())
+  {
+    QCString encoding = autoDetectCharset(charset, sPrefCharsets,
+					  aPart->parameterValue());
+    if (encoding.isEmpty()) encoding = "utf-8";
+    QCString paramValue;
+    paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
+						encoding);
+    DwParameter *param = new DwParameter;
+    if (aPart->parameterValue() != QString(paramValue))
+    {
+      param->SetAttribute((paramAttr + '*').data());
+      param->SetValue(paramValue.data(),true);
+    } else {
+      param->SetAttribute(paramAttr.data());
+      param->SetValue(paramValue.data());
+    }
+    ct.AddParameter(param);
+  }
+
+  if (!cte.isEmpty())
+    headers.Cte().FromString(cte);
+
+  if (!contDesc.isEmpty())
+    headers.ContentDescription().FromString(contDesc);
+
+  if (!contDisp.isEmpty())
+    headers.ContentDisposition().FromString(contDisp);
+
+  if (!aPart->body().isNull())
+    part->Body().FromString(aPart->body());
+  else
+    part->Body().FromString("");
+
   return part;
 }
 

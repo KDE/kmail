@@ -559,9 +559,9 @@ protected:
     QString subject(void) const { return mEdtSubject->text(); }
     QString to(void) const { return mEdtTo->text(); }
     QString cc(void) const
-   { return (mEdtCc->isHidden()) ? QString() : mEdtCc->text(); }
+   { return (mEdtCc->isHidden()) ? QString::null : mEdtCc->text(); }
     QString bcc(void) const
-   { return (mEdtBcc->isHidden()) ? QString() : mEdtBcc->text(); }
+   { return (mEdtBcc->isHidden()) ? QString::null : mEdtBcc->text(); }
     QString from(void) const { return mEdtFrom->text(); }
     QString replyTo(void) const { return mEdtReplyTo->text(); }
 

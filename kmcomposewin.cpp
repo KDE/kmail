@@ -39,6 +39,8 @@ using KPIM::AddressesDialog;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
+#include <cryptplugwrapperlist.h>
+
 #include "klistboxdialog.h"
 
 #include <kcharsets.h>
@@ -1463,7 +1465,7 @@ bool KMComposeWin::applyChanges(void)
 
   if (id.isDefault())
     mMsg->removeHeaderField("X-KMail-Identity");
-  else mMsg->setHeaderField("X-KMail-Identity", QString().setNum( id.uoid() ));
+  else mMsg->setHeaderField("X-KMail-Identity", QString::number( id.uoid() ));
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
