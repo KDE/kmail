@@ -59,7 +59,7 @@ K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
-  KParts::ReadOnlyPart(parent, name), DCOPObject("KMailIface"),
+  DCOPObject("KMailIface"), KParts::ReadOnlyPart(parent, name), 
   mParentWidget( parentWidget )
 {
   kdDebug(5006) << "KMailPart()" << endl;
