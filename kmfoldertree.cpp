@@ -1546,11 +1546,6 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
     // toggle KPopupMenu
     mPopup->setItemChecked( mTotalPop, isTotalActive() );
 
-	// FIXME: Will not work with kmail part
-    if ( parentWidget()->parentWidget()->isA("KMMainWidget") )
-      static_cast<KMMainWidget*>(parentWidget()->parentWidget())
-        ->totalColumnToggle->setChecked( isTotalActive() );
-
   } else kdDebug(5006) << "unknown column:" << column << endl;
 
   // toggles the switches of the mainwin
