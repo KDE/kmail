@@ -107,71 +107,50 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
     }
 }
 
+//-----------------------------------------------------------------------------
 void KMMimePartTree::slotSaveAs()
 {
-    QPtrList<QListViewItem> selected = selectedItems();
-
-    Q_ASSERT( !selected.isEmpty() );
-    if ( selected.isEmpty() )
-        return;
-    if ( selected.count() == 1 )
-        saveOneFile( selected.first(), false );
-    else
-        saveMultipleFiles( selected, false );
+  saveSelectedBodyParts( false );
 }
 
+//-----------------------------------------------------------------------------
 void KMMimePartTree::slotSaveAsEncoded()
 {
-    QPtrList<QListViewItem> selected = selectedItems();
-
-    Q_ASSERT( !selected.isEmpty() );
-    if ( selected.isEmpty() )
-        return;
-    if ( selected.count() == 1 )
-        saveOneFile( selected.first(), true );
-    else
-        saveMultipleFiles( selected, true );
+  saveSelectedBodyParts( true );
 }
 
+//-----------------------------------------------------------------------------
+void KMMimePartTree::saveSelectedBodyParts( bool encoded )
+{
+  QPtrList<QListViewItem> selected = selectedItems();
+
+  Q_ASSERT( !selected.isEmpty() );
+  if ( selected.isEmpty() )
+    return;
+
+  QPtrListIterator<QListViewItem> it( selected );
+  QPtrList<partNode> parts;
+  while ( it.current() ) {
+    parts.append( static_cast<KMMimePartTreeItem *>(it.current())->node() );
+    ++it;
+  }
+  mReaderWin->setUpdateAttachment();
+  KMSaveAttachmentsCommand *command =
+    new KMSaveAttachmentsCommand( this, parts, mReaderWin->message(), encoded );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
 void KMMimePartTree::slotSaveAll()
 {
     if( childCount() == 0)
         return;
 
-    QPtrList<QListViewItem> items;
-    for ( QListViewItemIterator lit( firstChild() ); lit.current();  ++lit ) {
-        KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( lit.current() );
-        items.append( item );
-    }
-
-    saveMultipleFiles( items, false );
-}
-
-void KMMimePartTree::saveOneFile( QListViewItem* item, bool encoded )
-{
-    QPtrList<partNode> parts;
-    parts.append( static_cast<KMMimePartTreeItem *>(item)->node() );
     mReaderWin->setUpdateAttachment();
-    KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
-            mReaderWin->message(), encoded );
+    KMCommand *command =
+      new KMSaveAttachmentsCommand( this, mReaderWin->message() );
     command->start();
 }
-
-void KMMimePartTree::saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded )
-{
-    QPtrListIterator<QListViewItem> it( selected );
-    QPtrList<partNode> parts;
-    while ( it.current() )
-    {
-        parts.append( static_cast<KMMimePartTreeItem *>(it.current())->node() );
-        ++it;
-    }
-    mReaderWin->setUpdateAttachment();
-    KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
-            mReaderWin->message(), encoded );
-    command->start();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMimePartTree::setStyleDependantFrameWidth()
@@ -203,7 +182,7 @@ void KMMimePartTree::correctSize( QListViewItem * item )
 
   KIO::filesize_t totalSize = 0;
   QListViewItem * myChild = item->firstChild();
-  while ( myChild ) 
+  while ( myChild )
   {
     totalSize += static_cast<KMMimePartTreeItem*>(myChild)->origSize();
     myChild = myChild->nextSibling();
@@ -230,7 +209,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
   if( node )
     node->setMimePartTreeItem( this );
   setIconAndTextForType( mimetype );
-  if ( parent ) 
+  if ( parent )
     parent->correctSize(this);
 }
 
@@ -256,7 +235,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
   if( node )
     node->setMimePartTreeItem( this );
   setIconAndTextForType( mimetype );
-  if ( listView() ) 
+  if ( listView() )
     static_cast<KMMimePartTree*>(listView())->correctSize(this);
 }
 

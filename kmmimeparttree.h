@@ -40,8 +40,7 @@ protected:
       style */
   void setStyleDependantFrameWidth();
 
-  void saveOneFile( QListViewItem* item, bool encoded );
-  void saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded );
+  void saveSelectedBodyParts( bool encoded );
   void restoreLayoutIfPresent();
 
 protected:
