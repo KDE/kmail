@@ -39,6 +39,7 @@
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
+#include <kmimetype.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -1141,6 +1142,14 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file"))
   {
     statusMsg(i18n("Opening URL..."));
+    KMimeType::Ptr mime = KMimeType::findByURL( aUrl );
+    if (mime->name() == "application/x-desktop" ||
+        mime->name() == "application/x-executable" ||
+        mime->name() == "application/x-shellscript" )
+    {
+      if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
+        " '%1' ? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
+    }
     // -- David : replacement for KFM::openURL
     if ( !KOpenWithHandler::exists() )
       (void) new KFileOpenWithHandler();
