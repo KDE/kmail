@@ -1164,7 +1164,7 @@ void NetworkPage::SendingTab::slotAddTransport()
     assert( 0 );
   }
 
-  KMTransportDialog dialog( i18n("Add transport"), transportInfo, this );
+  KMTransportDialog dialog( i18n("Add Transport"), transportInfo, this );
 
   // create list of names:
   // ### move behind dialog.exec()?
@@ -1217,7 +1217,7 @@ void NetworkPage::SendingTab::slotModifySelectedTransport()
     if ( (*it)->name == item->text(0) ) break;
   if ( !it.current() ) return;
 
-  KMTransportDialog dialog( i18n("Modify transport"), (*it), this );
+  KMTransportDialog dialog( i18n("Modify Transport"), (*it), this );
 
   if ( dialog.exec() != QDialog::Accepted ) return;
 
@@ -1642,7 +1642,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
   QStringList accountNames = occupiedNames();
   accountNames.remove( account->name() );
 
-  AccountDialog dialog( i18n("Modify account"), account, this );
+  AccountDialog dialog( i18n("Modify Account"), account, this );
 
   if( dialog.exec() != QDialog::Accepted ) return;
 
@@ -2796,7 +2796,7 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
 void ComposerPage::PhrasesTab::slotNewLanguage()
 {
   NewLanguageDialog dialog( mLanguageList,
-			    dynamic_cast<QWidget*>(parent()), "new", true );
+			    dynamic_cast<QWidget*>(parent()), "New", true );
   int result = dialog.exec();
   if ( result == QDialog::Accepted ) slotAddNewLanguage( dialog.language() );
 }
