@@ -2296,7 +2296,7 @@ void KMMainWidget::setupActions()
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
-  mPreferHtmlLoadExtAction = new KToggleAction( i18n("Load e&xternal references"), 0, this,
+  mPreferHtmlLoadExtAction = new KToggleAction( i18n("Load E&xternal References"), 0, this,
 		      SLOT(slotOverrideHtmlLoadExt()), actionCollection(), "prefer_html_external_refs" );
 
   mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
