@@ -956,7 +956,8 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     kernel->msgDict()->getLocation(serNum, &folder, &idx);
     assert(folder && (idx != -1));
     assert(folder == aFolder);
-    assert(folder->isOpened());
+    if (!folder->isOpened())
+      return;
 
     if (folder->folderType() == KMFolderTypeImap) {
         // Unless there is a search currently running, add the message to
