@@ -85,6 +85,7 @@ private:
   QString mMailer;
   QString mSmtpHost;
   int mSmtpPort;
+  bool doSendSMTP(KMMessage *);
 };
 
 #endif /*kmsender_h*/

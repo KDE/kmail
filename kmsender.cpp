@@ -120,7 +120,20 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::sendSMTP(KMMessage* msg)
+bool KMSender::sendSMTP(KMMessage *msg)
+{
+  void (*oldHandler)(int);
+  bool result;
+
+  oldHandler = signal(SIGALRM, SIG_IGN);
+  result = doSendSMTP(msg);
+  signal(SIGALRM, oldHandler);
+
+  return result;
+}
+
+//-----------------------------------------------------------------------------
+bool KMSender::doSendSMTP(KMMessage* msg)
 {
   // $markus: I just could not resist implementing smtp suppport
   // This code just must be stable. I checked every darn return code!
