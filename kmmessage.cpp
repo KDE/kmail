@@ -784,6 +784,50 @@ const QString KMMessage::getRefStr()
 }
 
 
+KMMessage* KMMessage::createRedirect(void)
+{
+  KMMessage* msg = new KMMessage;
+  KMMessagePart msgPart;
+  QString str = "";
+  int i;
+
+  msg->setReplyTo(replyTo());
+  msg->setFrom(replyTo());
+
+  str = asQuotedString(str, "", FALSE, false);
+  msg->setBody(str);
+  if (numBodyParts() > 0)
+  {
+    msgPart.setBody(str);
+    msgPart.setTypeStr("text");
+    msgPart.setSubtypeStr("plain");
+    msg->addBodyPart(&msgPart);
+
+    for (i = 1; i < numBodyParts(); i++)
+    {
+      bodyPart(i, &msgPart);
+      if (stricmp(msgPart.contentDisposition(),"inline")!=0 ||
+	  (stricmp(msgPart.typeStr(),"text")!=0 &&
+	   stricmp(msgPart.typeStr(),"message")!=0))
+      {
+	msg->addBodyPart(&msgPart);
+      }
+    }
+  }
+
+#warning TODO: insert sender here
+  QString s_ad = " (redirected)";
+  QString subj = subject() + s_ad;
+  msg->setSubject(subj);
+#if defined CHARSETS
+  msg->setCharset(charset());
+#endif
+  setStatus(KMMsgStatusForwarded);
+
+  return msg;
+}
+
+
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createForward(void)
 {
@@ -810,11 +854,8 @@ KMMessage* KMMessage::createForward(void)
     str += "\n-------------------------------------------------------\n";
   }
 
-  if (numBodyParts() <= 0)
-  {
-    msg->setBody(str);
-  }
-  else
+  msg->setBody(str);
+  if (numBodyParts() > 0)
   {
     msgPart.setBody(str);
     msgPart.setTypeStr("text");

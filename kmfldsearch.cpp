@@ -7,6 +7,7 @@
 #include "kmmessage.h"
 #include "kmmainwin.h"
 
+#include <qmessagebox.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
@@ -14,11 +15,11 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <assert.h>
+#include <klocale.h>
 
 #include <kapp.h>
 #include <kbuttonbox.h>
-#include <ktablistbox.h>
-
+#include <qlistview.h>
 
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f): 
@@ -60,17 +61,21 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
   lbl->setAlignment(AlignRight|AlignVCenter);
   mGrid->addWidget(lbl, 0, 0);
 
-  mLbxMatches = new KTabListBox(this, "Search in Folders", 5);
-  mLbxMatches->setColumn(0, i18n("Subject"), 150);
-  mLbxMatches->setColumn(1, i18n("Sender"), 120);
-  mLbxMatches->setColumn(2, i18n("Date"), 80);
+  mLbxMatches = new QListView(this, "Search in Folders");
+  mLbxMatches->setSorting(-1);
+  mLbxMatches->addColumn(i18n("Subject"), 150);
+  mLbxMatches->addColumn(i18n("Sender"), 120);
+  mLbxMatches->addColumn(i18n("Date"), 80);
 #define LOCATION_COLUMN 3
-  mLbxMatches->setColumn(LOCATION_COLUMN, i18n("Folder"), 200);
-#define MSGID_COLUMN 3
-  mLbxMatches->setColumn(MSGID_COLUMN, i18n("Msg"), 20);
+  mLbxMatches->addColumn(i18n("Folder"), 200);
+
+#define MSGID_COLUMN 4
+  mLbxMatches->addColumn(i18n("Msg"));
   mLbxMatches->setMinimumSize(300, 100);
   mLbxMatches->setMaximumSize(2048, 2048);
   mLbxMatches->resize(300, 400);
+  connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
+	  this, SLOT(slotShowMsg(QListViewItem *)));
   //mLbxMatches->readConfig();
   mGrid->addMultiCellWidget(mLbxMatches, mNumRules+2, mNumRules+2, 0, 4);
 
@@ -107,28 +112,28 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
 //-----------------------------------------------------------------------------
 KMFldSearch::~KMFldSearch()
 {
-  mLbxMatches->writeConfig();
-  if (mMainWin) mMainWin->fldSearchDeleted();
+#warning Save QListView layout
+  //  mLbxMatches->writeConfig();
 }
 
 
 //-----------------------------------------------------------------------------
 QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
 {
-  QComboBox* cbx = new QComboBox(false, this);
-  KMFolderDir* fdir = &(folderMgr->dir());
-  KMFolder* cur;
-  int i, idx=0;
-
-  cbx->insertItem(i18n("All Folders"));
-
-  for (i=1,cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
-  {
-    cbx->insertItem(cur->name());
-    if (cur->name() == curFolder) idx=i;
-  }
-  if (idx>=0) cbx->setCurrentItem(idx);
-  return cbx;
+ QComboBox* cbx = new QComboBox(false, this);
+ QList<KMFolder> folders;
+ QStringList str;
+ 
+ kernel->folderMgr()->createFolderList( &str, &folders );
+ cbx->setFixedHeight(cbx->sizeHint().height());
+ 
+ cbx->insertItem("Search all folders");
+ QStringList::Iterator st;
+ for( st = str.begin(); st != str.end(); ++st)
+   cbx->insertItem(*st);
+ 
+#warning TODO: preselect current folder
+ return cbx; 
 }
 
 
@@ -137,9 +142,12 @@ void KMFldSearch::updStatus(void)
 {
   QString str;
 
-  if (!mSearching)
-    str = i18n("Done, %1 matches").arg(mNumMatches);
-  else
+  if (!mSearching) {
+    if(!mStopped)
+      str = i18n("Done, %1 matches").arg(mNumMatches);
+    else
+      str = i18n("Search cancelled, %1 matches so far").arg(mNumMatches);    
+  } else
     str = i18n("%1 matches, searching in %2")
 		.arg(mNumMatches)
 		.arg(mSearchFolder);
@@ -156,7 +164,8 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
   assert(aMsg!=NULL);
 
   for(i=0; matches && i<mNumRules; i++)
-    if (!mRules[i]->matches(aMsg)) matches = false;
+    if (!mRules[i]->matches(aMsg)) 
+      matches = false;
 
   return matches;
 }
@@ -170,7 +179,10 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
   QString str;
 
   assert(aFld!=NULL);
-
+  
+  mBtnSearch->setText("Stop");
+  mSearchFolder=aFld->name();
+  kapp->processEvents();
   if (aFld->open() != 0)
   {
     debug("Cannot open folder '%s'", (const char*)aFld->name());
@@ -183,12 +195,13 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
     msg = aFld->getMsg(i);
     if (msg && searchInMessage(msg))
     {
-      str.sprintf("%s\n%s\n%s\n%s", 
-		  (const char*)msg->subject(), 
-		  (const char*)msg->from(),
-		  (const char*)msg->dateStr(),
-		  (const char*)aFld->name());
-      mLbxMatches->insertItem(str);
+      (void)new QListViewItem(mLbxMatches,
+			      msg->subject(), 
+			      msg->from(),
+			      msg->dateStr(),
+			      aFld->name(),
+			      msg->id()
+			      );
       mNumMatches++;
       updStatus();
     }
@@ -199,22 +212,30 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
     }
   }
 
+  if(!mSearching)
+    // was stopped
+    mStopped = true;
+
+  updStatus();
+
   aFld->close();
+  mBtnSearch->setText("Search");
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::searchInAllFolders(void)
 {
-  KMFolderDir* fdir = &(folderMgr->dir());
-  KMFolder* cur;
+  QList<KMFolder> folders;
+  KMFolder *folder;
+  QStringList str;
 
-  for (cur=(KMFolder*)fdir->first(); 
-       mSearching && cur;
-       cur=(KMFolder*)fdir->next())
-  {
-    updStatus();
-    searchInFolder(cur);
+  kernel->folderMgr()->createFolderList( &str, &folders );
+  for(folder = folders.first(); folder != 0; folder = folders.next()) {
+    // Stop pressed?
+    if(!mSearching)
+      break;
+    searchInFolder(folder);
   }
 }
 
@@ -229,26 +250,29 @@ void KMFldSearch::slotSearch()
     mSearching = false;
     return;
   }
-
+  
+  mStopped = false;
   mNumMatches = 0;
   mSearching  = true;
 
   mBtnSearch->setCaption(i18n("Stop"));
-  mBtnClear->setEnabled(false);
-  mBtnClose->setEnabled(false);
+  enableGUI();
   mLbxMatches->clear();
   kapp->processEvents();
 
   for (i=0; i<mNumRules; i++)
     mRules[i]->prepare();
+  
+  if (mCbxFolders->currentItem() <= 0) 
+    searchInAllFolders();
+  else 
+    searchInFolder(kernel->folderMgr()->find(mCbxFolders->currentText()));
 
-  if (mCbxFolders->currentItem() <= 0) searchInAllFolders();
-  else searchInFolder(folderMgr->find(mCbxFolders->currentText()));
+  mSearching=false;
   updStatus();
 
   mBtnSearch->setCaption(i18n("Search"));
-  mBtnClear->setEnabled(true);
-  mBtnClose->setEnabled(true);
+  enableGUI();
 }
 
 
@@ -256,22 +280,32 @@ void KMFldSearch::slotSearch()
 void KMFldSearch::slotClose()
 {
   accept();
+  fprintf(stderr, "here\n");
+  delete this;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::slotShowMsg(int idx, int)
+void KMFldSearch::slotShowMsg(QListViewItem *item)
 {
   KMFolder* fld;
   KMMessage* msg;
 
-  if (idx < 0) return;
-  fld = folderMgr->find(lbxMatches->text(LOCATION_COLUMN));
-  if (!fld) return;
+  if(!item)
+    return;
+
+  QString fldName = item->text(LOCATION_COLUMN);
+  fld = kernel->folderMgr()->find(fldName);
+  if (!fld) 
+    return;
+
   mMainWin->folderSelected(fld);
-  msg = fld->getMessage(atoi(lbxMatches->text(MSGID_COLUMN)));
-  if (!msg) return;
+  msg = fld->getMsg(atoi(item->text(MSGID_COLUMN)));
+  if (!msg) 
+    return;
+
   mMainWin->slotMsgSelected(msg);
+  fprintf(stderr, "still here 3\n");
 }
 
 
@@ -284,6 +318,15 @@ void KMFldSearch::slotClear()
     mRules[i]->clear();
 
   mLbxMatches->clear();
+}
+
+void KMFldSearch::enableGUI() {
+  mBtnClose->setEnabled(!mSearching);
+  mBtnClear->setEnabled(!mSearching);
+  mCbxFolders->setEnabled(!mSearching);
+
+  for(int i = 0; i < mNumRules; i++)
+    mRules[i]->setEnabled(!mSearching);
 }
 
 
@@ -381,6 +424,12 @@ void KMFldSearchRule::clear(void)
   mEdtValue->setText("");  
 }
 
+
+void KMFldSearchRule::setEnabled(bool b) {
+  mCbxField->setEnabled(b);
+  mCbxFunc->setEnabled(b);
+  mEdtValue->setEnabled(b);
+}
 
 //-----------------------------------------------------------------------------
 #include "kmfldsearch.moc"

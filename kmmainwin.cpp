@@ -1,4 +1,13 @@
 // kmmainwin.cpp
+//#define MALLOC_DEBUG 1
+
+#include <kwin.h>
+#include <kmfldsearch.h>
+
+#ifdef MALLOC_DEBUG
+#include <qmessagebox.h>
+#include <malloc.h>
+#endif
 
 #undef Unsorted // X headers...
 #include <qdir.h>
@@ -55,12 +64,12 @@
 
 #include "kmmainwin.moc"
 
-
 //-----------------------------------------------------------------------------
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
   // must be the first line of the constructor:
+  searchWin = 0;
   mStartupDone = FALSE;
   QListViewItem* idx;
   mIntegrated  = TRUE;
@@ -102,9 +111,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
-  writeConfig();
+  writeConfig();      
   writeFolderConfig();
-
+      
   if (mHeaders)    delete mHeaders;
   if (mToolBar)    delete mToolBar;
   if (mMenuBar)    delete mMenuBar;
@@ -397,6 +406,24 @@ void KMMainWin::show()
 void KMMainWin::slotClose()
 {
   close(TRUE);
+}
+
+//-------------------------------------------------------------------------
+void KMMainWin::slotSearch() {
+  if(!searchWin) {
+    searchWin = new KMFldSearch(this, "Search", false);
+    connect(searchWin, SIGNAL(destroyed()),
+	    this, SLOT(slotsearchClosed()));
+  } 
+
+  searchWin->show();
+  KWin::setActiveWindow(searchWin->winId());
+}
+
+//-------------------------------------------------------------------------
+void KMMainWin::slotSearchClosed() {
+  if(searchWin)
+    searchWin = 0;
 }
 
 
@@ -734,6 +761,13 @@ void KMMainWin::slotForwardMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotRedirectMsg()
+{
+  mHeaders->redirectMsg();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotBounceMsg()
 {
   mHeaders->bounceMsg();
@@ -1065,9 +1099,10 @@ void KMMainWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoAddAddrBook()
 {
-  if (mUrlCurrent.isEmpty()) return;
-  kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
-  statusMsg(i18n("Address added to addressbook."));
+#warning mario: had to disable this for compile
+//    if (mUrlCurrent.isEmpty()) return;
+//    kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
+//    statusMsg(i18n("Address added to addressbook."));
 }
 
 
@@ -1142,6 +1177,8 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 		     SLOT(slotReplyAllToMsg()));
     menu->insertItem(i18n("&Forward..."), this,
 		     SLOT(slotForwardMsg()), Key_F);
+    menu->insertItem(i18n("R&edirect..."), this,
+		     SLOT(slotRedirectMsg()));
     menu->insertSeparator();
     menu->insertItem(i18n("&Move..."), this,
 		     SLOT(slotMoveMsg()), Key_M);
@@ -1262,6 +1299,9 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(i18n("New &Message"), this,
 			  SLOT(slotCompose()), KStdAccel::key(KStdAccel::New));
   messageMenu->insertSeparator();
+  messageMenu->insertItem(i18n("&Search"), this,
+			  SLOT(slotSearch()), Key_S);
+  messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Next"), mHeaders,
 			  SLOT(nextMessage()), Key_N);
   messageMenu->insertItem(i18n("Next unread"), mHeaders,
@@ -1277,6 +1317,8 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotReplyAllToMsg()), Key_A);
   messageMenu->insertItem(i18n("&Forward..."), this,
 			  SLOT(slotForwardMsg()), Key_F);
+  messageMenu->insertItem(i18n("R&edirect..."), this,
+			  SLOT(slotRedirectMsg()), Key_E);
   messageMenu->insertItem(i18n("&Bounce..."), this,
 			  SLOT(slotBounceMsg()));
   messageMenu->insertSeparator();
@@ -1350,6 +1392,13 @@ void KMMainWin::setupMenuBar()
 void KMMainWin::setupToolBar()
 {
   mToolBar = new KToolBar(this);
+
+#ifdef MALLOC_DEBUG
+  mToolBar->insertButton(BarIcon("filenew"), 0,
+			SIGNAL(clicked()), this,
+			SLOT(slotMemInfo()), TRUE,
+			i18n("Malloc info"));
+#endif
 
   mToolBar->insertButton(BarIcon("filenew"), 0,
 			SIGNAL(clicked()), this,
@@ -1532,4 +1581,37 @@ void KMMainWin::updateFolderMenu()
     mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (default)" ));
   else if (!mThreadPref && !mFolderThreadPref)
     mFolderMenu->changeItem(threadId, i18n( "Thread messages (override default)" ));
+}
+
+#ifdef MALLOC_DEBUG
+QString fmt(long n) {
+  char buf[32];
+
+  if(n > 1024*1024*1024)
+    sprintf(buf, "%0.2f GB", ((double)n)/1024.0/1024.0/1024.0);
+  else if(n > 1024*1024)
+    sprintf(buf, "%0.2f MB", ((double)n)/1024.0/1024.0);
+  else if(n > 1024)
+    sprintf(buf, "%0.2f KB", ((double)n)/1024.0);
+  else
+    sprintf(buf, "%ld Byte", n);
+  return QString(buf);
+}
+#endif
+
+void KMMainWin::slotMemInfo() {
+#ifdef MALLOC_DEBUG
+  struct mallinfo mi;
+
+  mi = mallinfo();
+  QString s = QString("\nMALLOC - Info\n\n"
+		      "Number of mmapped regions : %1\n"
+		      "Memory allocated in use   : %2\n"
+		      "Memory allocated, not used: %3\n"
+		      "Memory total allocated    : %4\n"
+		      "Max. freeable memory      : %5\n")
+    .arg(mi.hblks).arg(fmt(mi.uordblks)).arg(fmt(mi.fordblks))
+    .arg(fmt(mi.arena)).arg(fmt(mi.keepcost));
+  QMessageBox::information(0, "Malloc information", s);
+#endif
 }

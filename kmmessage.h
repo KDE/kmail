@@ -48,6 +48,15 @@ public:
     is not stored in any folder. Marks this message as replied. */
   virtual KMMessage* createReply(bool replyToAll=FALSE);
 
+  /** Create a new message that is a redirect to this message, filling all 
+    required header fields with the proper values. The returned message
+    is not stored in any folder. Marks this message as replied. 
+    Redirects differ from forwards so they are forwarded to some other
+    user, mail is not changed and the reply-to field is set to
+    the email adress of the original sender 
+   */
+  virtual KMMessage* createRedirect();
+
   /** Create a new message that is a forward of this message, filling all 
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */

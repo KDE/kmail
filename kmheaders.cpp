@@ -963,12 +963,28 @@ void KMHeaders::forwardMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyToMsg ()
+void KMHeaders::redirectMsg()
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
 
   if (!msg) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createRedirect());
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::replyToMsg ()
+{
+  KMComposeWin *win;
+  KMMessage *msg = currentMsg();
+
+  if (!msg) 
+    return;
 
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(FALSE), 

@@ -12,12 +12,13 @@ class QPushButton;
 class QComboBox;
 class QGridLayout;
 class KMFldSearchRule;
-class KTabListBox;
+class QListView;
 class KMFolder;
 class KMMessage;
 class QLabel;
 class KMMainWin;
-
+class KMFolderMgr;
+class QListViewItem;
 
 #define KMFldSearchInherited QDialog
 class KMFldSearch: public QDialog
@@ -28,13 +29,15 @@ public:
 	       bool modal=FALSE, WFlags f=0);
   virtual ~KMFldSearch();
 
-public slots:
+protected slots:
   virtual void slotClose();
   virtual void slotSearch();
   virtual void slotClear();
-  virtual void slotShowMsg(int,int);
+  virtual void slotShowMsg(QListViewItem *);
 
 protected:
+  void enableGUI();
+
   /** Create combo-box with list of folders */
   virtual QComboBox* createFolderCombo(const QString curFolder=0);
 
@@ -56,11 +59,11 @@ protected:
   QComboBox *mCbxFolders;
   QPushButton *mBtnSearch, *mBtnClear, *mBtnClose;
   KMFldSearchRule **mRules;
-  KTabListBox* mLbxMatches;
+  QListView* mLbxMatches;
   QLabel* mLblStatus;
   int mNumRules, mNumMatches;
   QString mSearchFolder;
-  bool mSearching;
+  bool mSearching, mStopped;
   KMMainWin* mMainWin;
 };
 
@@ -81,6 +84,8 @@ public:
 
   /** Prepare for search run. */
   virtual void prepare(void);
+
+  virtual void setEnabled(bool);
 
   enum Func { Contains=0, NotContains, Equal, NotEqual, LessEqual, 
 	      GreaterEqual };

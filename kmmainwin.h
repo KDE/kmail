@@ -23,6 +23,7 @@ class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMLittleProgressDlg;
+class KMFldSearch;
 
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -68,6 +69,8 @@ public:
 					QObject *receiver,
 					KMMenuToFolder *aMenuToFolder);
 
+  static void cleanup();
+
 public slots:
   virtual void show();
   virtual void hide();
@@ -76,6 +79,8 @@ public slots:
 
   /** Output given message in the statusbar message field. */
   void statusMsg(const QString& text);
+  void folderSelected(KMFolder*);
+  void slotMsgSelected(KMMessage*);
 
 protected:
   void setupMenuBar();
@@ -110,6 +115,7 @@ protected slots:
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotForwardMsg();
+  void slotRedirectMsg();
   void slotBounceMsg();
   void slotEditMsg();
   void slotDeleteMsg();
@@ -129,10 +135,11 @@ protected slots:
   void slotUrlClicked(const KURL &url, int button);
   void slotCopyText();
   void slotMarkAll();
+  void slotMemInfo();
+  void slotSearch();
+  void slotSearchClosed();
 
   /** etc. */
-  void folderSelected(KMFolder*);
-  void slotMsgSelected(KMMessage*);
   void slotMsgActivated(KMMessage*);
   void quit();
 
@@ -184,6 +191,7 @@ protected:
   bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref;
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
+  KMFldSearch *searchWin;
 };
 
 #endif

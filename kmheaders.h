@@ -85,6 +85,7 @@ public:
   virtual void forwardMsg();
   virtual void bounceMsg();
   virtual void replyToMsg();
+  virtual void redirectMsg();
   virtual void replyAllToMsg();
   virtual void resendMsg();
 
