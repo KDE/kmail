@@ -299,6 +299,10 @@ void AccountDialog::setupSettings()
       }
       i++;
     }
+
+    // -sanders hack for startup users. Must investigate this properly
+    if (folderCombo->count() == 0)
+      folderCombo->insertItem( "inbox" );
   }
 }
 
