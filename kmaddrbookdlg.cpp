@@ -7,7 +7,10 @@
 #include "kmrecentaddr.h"
 
 #include <assert.h>
+
 #include <qcheckbox.h>
+#include <qvbox.h>
+
 #include <kapp.h>
 #include <kglobal.h>
 #include <klineedit.h>
@@ -16,50 +19,32 @@
 #include <kabapi.h>
 
 //-----------------------------------------------------------------------------
-KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const QString& aCap):
-  KMAddrBookSelDlgInherited(0L, 0L, TRUE), mGrid(this, 3, 2),
-  mListBox(this),
-  mBtnOk(i18n("OK"),this),
-  mBtnCancel(i18n("Cancel"),this)
+KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, KMAddrBook* aAddrBook, const QString& aCap):
+  KDialogBase(parent, "addressbook", true,
+              aCap.isEmpty() ? i18n("Addressbook") : aCap,
+              Ok|Cancel, Ok, true)
 {
+  QVBox *page = makeVBoxMainWidget();
+
+  mListBox = new QListBox(page);
+  mCheckBox = new QCheckBox(i18n("Show &recent addresses"), page);
+
   QString addr;
-
-  setCaption(aCap.isNull() ? i18n("Addressbook") : aCap);
-
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
   mAddress  = QString::null;
 
-  mBtnOk.setDefault(true);
-  mCheckBox = new QCheckBox(i18n("Show &recent addresses"), this);
-
-  mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 1);
-  mGrid.addMultiCellWidget(mCheckBox, 1, 1, 0, 1, AlignVCenter);
-  mGrid.addWidget(&mBtnOk, 2, 0);
-  mGrid.addWidget(&mBtnCancel, 2, 1);
-
-  mGrid.addRowSpacing(1, mCheckBox->sizeHint().height() + 6);
+  mListBox->setSelectionMode(QListBox::Multi);
+  mListBox->setMinimumWidth(fontMetrics().maxWidth()*40);
+  mListBox->setMinimumHeight(fontMetrics().lineSpacing()*15);
   
-  mGrid.setRowStretch(0,10);
-  mGrid.setRowStretch(1,0);
-  mGrid.setRowStretch(2,0);
-  mGrid.setColStretch(0,10);
-  mGrid.setColStretch(1,10);
-  mGrid.activate();
-
-  mListBox.setSelectionMode(QListBox::Multi);
-
   readConfig();
 
-  connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
-  connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
-  connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
+  connect(mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(mCheckBox, SIGNAL(toggled(bool)), SLOT(toggleShowRecent(bool)));
 
   showAddresses(AddressBookAddresses |
                 (mCheckBox->isChecked() ? RecentAddresses : 0));
-
-  resize(350, 450);
 }
 
 
@@ -91,23 +76,23 @@ void KMAddrBookSelDlg::toggleShowRecent( bool on )
 
 void KMAddrBookSelDlg::showAddresses( int addressTypes )
 {
-  mListBox.clear();
+  mListBox->clear();
 
   if ( addressTypes & AddressBookAddresses ) {
     if (!KMAddrBookExternal::useKAB()) {
       QStringList::ConstIterator it = mAddrBook->begin();
       for ( ; it != mAddrBook->end(); ++it)
-        mListBox.insertItem(*it);
+        mListBox->insertItem(*it);
     }
     else {
       QStringList addresses;
       KabBridge::addresses(&addresses);
-      mListBox.insertStringList(addresses);
+      mListBox->insertStringList(addresses);
     }
   }
 
   if ( addressTypes & RecentAddresses )
-    mListBox.insertStringList( KMRecentAddresses::self()->addresses(), 0 );
+    mListBox->insertStringList( KMRecentAddresses::self()->addresses(), 0 );
 }
 
 
@@ -117,17 +102,17 @@ void KMAddrBookSelDlg::slotOk()
   mAddress = QString::null;
   unsigned int idx;
   unsigned int count = 0;
-  for (idx = 0; idx < mListBox.count(); idx++)
+  for (idx = 0; idx < mListBox->count(); idx++)
   {
-    if( mListBox.isSelected(idx) ) {
+    if( mListBox->isSelected(idx) ) {
       if( count > 0 ) {
         mAddress += ", ";
       }
-      mAddress += mListBox.text(idx);
+      mAddress += mListBox->text(idx);
       count++;
     }
   }
-  accept();
+  KDialogBase::slotOk();
 }
 
 
@@ -135,7 +120,7 @@ void KMAddrBookSelDlg::slotOk()
 void KMAddrBookSelDlg::slotCancel()
 {
   mAddress = QString::null;
-  reject();
+  KDialogBase::slotCancel();
 }
 
 

@@ -1470,7 +1470,7 @@ void KMComposeWin::removeAttach(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 {
-  KMAddrBookSelDlg dlg(kernel->addrBook());
+  KMAddrBookSelDlg dlg(this, kernel->addrBook());
   QString txt;
 
   //assert(aLineEdit!=NULL);

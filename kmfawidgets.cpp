@@ -10,6 +10,7 @@
 //#include <klocale.h>
 
 #include <qpushbutton.h>
+#include <qlayout.h>
 
 //=============================================================================
 //
@@ -35,7 +36,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
 
 void KMFilterActionWithAddressWidget::slotAddrBook()
 {
-  KMAddrBookSelDlg dlg( kernel->addrBook() );
+  KMAddrBookSelDlg dlg( this, kernel->addrBook() );
   QString txt;
 
   if ( dlg.exec() == QDialog::Rejected ) return;

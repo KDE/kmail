@@ -7,10 +7,7 @@
 
 #include <kdialogbase.h>
 
-#include <qdialog.h>
-#include <qpushbutton.h>
 #include <qlistbox.h>
-#include <qlayout.h>
 #include <qvaluelist.h> // for kab stuff
 
 class KMAddrBook;
@@ -20,14 +17,13 @@ class QCheckBox;
 class QStringList; // for kab stuff
 class KabKey; // for kab stuff
 
-#define KMAddrBookSelDlgInherited QDialog
-class KMAddrBookSelDlg: public QDialog
+class KMAddrBookSelDlg: public KDialogBase
 {
   Q_OBJECT
 public:
   enum { AddressBookAddresses = 1, RecentAddresses };
 
-  KMAddrBookSelDlg(KMAddrBook* addrBook, const QString& caption=QString::null);
+  KMAddrBookSelDlg(QWidget *parent, KMAddrBook* addrBook, const QString& caption=QString::null);
   virtual ~KMAddrBookSelDlg();
 
   /** returns selected address(es) or NULL if none was selected or the cancel
@@ -47,12 +43,10 @@ protected slots:
 protected:
   void showAddresses( int addressTypes );
 
-  KMAddrBook* mAddrBook;
-  QGridLayout mGrid;
-  QListBox mListBox;
-  QPushButton mBtnOk, mBtnCancel;
-  QCheckBox *mCheckBox;
-  QString mAddress;
+  KMAddrBook *mAddrBook;
+  QListBox   *mListBox;
+  QCheckBox  *mCheckBox;
+  QString     mAddress;
 };
 
 
