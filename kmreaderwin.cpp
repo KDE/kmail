@@ -2077,7 +2077,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
-        if( messagePart.status.isEmpty() )
+        if( messagePart.status.isEmpty()
+            && ext.status_text
+            && *ext.status_text )
           messagePart.status = ext.status_text;
         if( ext.keyid && *ext.keyid )
             messagePart.keyId = ext.keyid;
