@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
                    KMAIL_VERSION,
 		   I18N_NOOP("The KDE Email client."),
 		   KAboutData::License_GPL,
-                   I18N_NOOP("(c) 1997-2002, The KMail developers"),
+                   I18N_NOOP("(c) 1997-2003, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
   about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Maintainer"), "kloecker@kde.de" );
