@@ -1298,7 +1298,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     mFolderInfoMap.insert( folder, info );
 
     // Adjust the folder names of all foo.default folders.
-    // German users will get Kalender as the name of all default Calendar folders, 
+    // German users will get Kalender as the name of all default Calendar folders,
     // including their own, so that the default calendar folder of their Japanese
     // coworker appears as /user/hirohito/Kalender, although Hirohito sees his folder
     // in Japanese. On the server the folders are always in English.
@@ -1309,25 +1309,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
         folder->setLabel( localizedDefaultFolderName( contentsType ) );
     }
 
-    // avoid multiple connections
-    disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-                this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-                this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
-                this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-    disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
-                this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
-
-    // Listen to changes from the folder
-    connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-             this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-             this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    connect( folder, SIGNAL( expunged( KMFolder* ) ),
-             this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-    connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
-             this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+    connectFolder( folder );
   }
 
   subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
@@ -1464,6 +1446,13 @@ void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
     /* FIXME merge once we are back in HEAD. IMAP Resource still uses the other one. */
     subresourceAdded( contentsTypeStr, location );
   }
+}
+
+// Must only be connected to a signal from KMFolder!
+void KMailICalIfaceImpl::slotFolderRenamed()
+{
+  const KMFolder* folder = static_cast<const KMFolder *>( sender() );
+  slotFolderPropertiesChanged( const_cast<KMFolder*>( folder ) );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1746,6 +1735,12 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
   folder->open();
+  connectFolder( folder );
+  return folder;
+}
+
+void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
+{
   // avoid multiple connections
   disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
               this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1753,6 +1748,11 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
               this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
               this, SLOT( slotRefreshFolder( KMFolder* ) ) );
+  disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+              this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+  disconnect( folder, SIGNAL( nameChanged() ),
+              this, SLOT( slotFolderRenamed() ) );
+
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1760,8 +1760,10 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
            this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   connect( folder, SIGNAL( expunged( KMFolder* ) ),
            this, SLOT( slotRefreshFolder( KMFolder* ) ) );
-
-  return folder;
+  connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+           this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
+  connect( folder, SIGNAL( nameChanged() ),
+           this, SLOT( slotFolderRenamed() ) );
 }
 
 static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )

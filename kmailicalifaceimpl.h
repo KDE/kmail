@@ -198,17 +198,20 @@ public slots:
   void slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum );
   void slotRefresh( const QString& type);
 
-  // Called when a folder is made readonly or readwrite,
+  // Called when a folder is made readonly or readwrite, or renamed,
   // or any other similar change that affects the resources
   void slotFolderPropertiesChanged( KMFolder* folder );
 
 private slots:
   void slotRefreshFolder( KMFolder* );
   void slotCheckDone();
+  void slotFolderRenamed();
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( const char* typeString, KMail::FolderContentsType contentsType );
+
+  void connectFolder( KMFolder* folder );
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
