@@ -38,7 +38,7 @@ void KMIOStatus::update() {
 
 }
 
-void KMIOStatus::newMail(bool _newMail) {
+void KMIOStatus::newMail(bool /*_newMail*/) {
 
 }
 

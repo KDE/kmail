@@ -84,6 +84,9 @@ public slots:
   void prevMessage();
 
 protected:
+  
+  void makeHeaderVisible();
+
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);
 

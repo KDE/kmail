@@ -61,7 +61,7 @@ KMIOStatusWdg::~KMIOStatusWdg() {
 
 }
 
-void KMIOStatusWdg::newMail(bool _newMail) {
+void KMIOStatusWdg::newMail(bool /*_newMail*/) {
 
 }
 

@@ -463,6 +463,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
   int start, beg, mid, end;
 
   start = 0;
+  end = 0;
   result = "";
 
   while (1)

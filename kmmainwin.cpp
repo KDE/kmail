@@ -97,11 +97,12 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   readConfig();
 
-  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
-  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
-
   mVertPanner->activate(mHorizPanner, mMsgView);
   mHorizPanner->activate(mFolderTree, mHeaders);
+
+  // now adjust panner positions
+  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
 
   setupMenuBar();
   setupToolBar();

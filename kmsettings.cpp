@@ -418,7 +418,6 @@ void KMSettings::createTabMisc(QWidget *parent)
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
   QGridLayout* grid;
   QGroupBox* grp;
-  QLabel* lbl;
   KConfig* config = app->getConfig();
   QString str;
 

@@ -283,7 +283,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::applyFiltersOnMsg(int msgId)
+void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
 {
   KMMessage* msg;
   KMMessageList* msgList = selectedMsgs();
@@ -575,8 +575,10 @@ void KMHeaders::nextMessage()
 {
   int idx = currentItem();
 
-  if (idx < mFolder->count())
+  if (idx < mFolder->count()) {
     setCurrentItem(idx+1);
+    makeHeaderVisible();
+  }
 }
 
 
@@ -585,9 +587,20 @@ void KMHeaders::prevMessage()
 {
   int idx = currentItem();
 
-  if (idx > 0) 
-    setCurrentItem(idx-1);
+  if (idx > 0) {
+    setCurrentItem(idx-1); 
+    makeHeaderVisible();
+  }
 }  
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::makeHeaderVisible() {
+    if(currentItem() > lastRowVisible())
+      setTopItem(topItem() + currentItem() - lastRowVisible());
+    else if(currentItem() < topItem())
+      setTopItem(currentItem());  
+}
 
 
 //-----------------------------------------------------------------------------

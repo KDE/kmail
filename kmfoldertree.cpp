@@ -88,7 +88,6 @@ void KMFolderTree::reload(void)
   KMFolder* folder;
   QString str;
   bool upd = autoUpdate();
-  int i;
 
   setAutoUpdate(FALSE);
 

@@ -191,7 +191,7 @@ void KMMsgList::rethinkHigh(void)
 void KMMsgList::sort(SortField aField, bool aDescending)
 {
   int i, j;
-  KMMsgBasePtr ptrList[mHigh+1];
+  //  KMMsgBasePtr ptrList[mHigh+1];
   KMMsgBasePtr mb;
 
   if (mHigh < 2) return;
