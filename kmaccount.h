@@ -54,8 +54,8 @@ public:
     is already properly set by the caller. */
   virtual void writeConfig(KConfig& config);
 
-  /** Set/get interval for checking if new mail arrived. An interval
-    of zero (or less) disables the automatic checking. */
+  /** Set/get interval for checking if new mail arrived (in minutes). 
+    An interval of zero (or less) disables the automatic checking. */
   virtual void setCheckInterval(int aInterval);
   int checkInterval(void) const { return mInterval; }
 

@@ -131,50 +131,59 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder)
 {
+  int id;
   QString str;
   bool autoUpd = autoUpdate();
   setAutoUpdate(FALSE);
 
-  if (mFolder) 
+  if (mFolder && mFolder==aFolder)
   {
-    mFolder->markNewAsUnread();
-    mFolder->close();
-    writeFolderConfig();
-    disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
-	       this, SLOT(msgHeaderChanged(int)));
-    disconnect(mFolder, SIGNAL(msgAdded(int)),
-	       this, SLOT(msgAdded(int)));
-    disconnect(mFolder, SIGNAL(msgRemoved(int)),
-	       this, SLOT(msgRemoved(int)));
-    disconnect(mFolder, SIGNAL(changed()),
-	       this, SLOT(msgChanged()));
-    disconnect(mFolder, SIGNAL(statusMsg(const char*)), 
-	       mOwner, SLOT(statusMsg(const char*)));
+    id = currentItem();
+    updateMessageList();
+    setCurrentMsg(id);
   }
-
-  mFolder = aFolder;
-
-  if (mFolder)
+  else
   {
-    connect(mFolder, SIGNAL(msgHeaderChanged(int)), 
-	    this, SLOT(msgHeaderChanged(int)));
-    connect(mFolder, SIGNAL(msgAdded(int)),
-	    this, SLOT(msgAdded(int)));
-    connect(mFolder, SIGNAL(msgRemoved(int)),
-	    this, SLOT(msgRemoved(int)));
-    connect(mFolder, SIGNAL(changed()),
-	    this, SLOT(msgChanged()));
-    connect(mFolder, SIGNAL(statusMsg(const char*)),
-	    mOwner, SLOT(statusMsg(const char*)));
-    readFolderConfig();
-    mFolder->open();
+    if (mFolder) 
+    {
+      mFolder->markNewAsUnread();
+      mFolder->close();
+      writeFolderConfig();
+      disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
+		 this, SLOT(msgHeaderChanged(int)));
+      disconnect(mFolder, SIGNAL(msgAdded(int)),
+		 this, SLOT(msgAdded(int)));
+      disconnect(mFolder, SIGNAL(msgRemoved(int)),
+		 this, SLOT(msgRemoved(int)));
+      disconnect(mFolder, SIGNAL(changed()),
+		 this, SLOT(msgChanged()));
+      disconnect(mFolder, SIGNAL(statusMsg(const char*)), 
+		 mOwner, SLOT(statusMsg(const char*)));
+    }
+
+    mFolder = aFolder;
+
+    if (mFolder)
+    {
+      connect(mFolder, SIGNAL(msgHeaderChanged(int)), 
+	      this, SLOT(msgHeaderChanged(int)));
+      connect(mFolder, SIGNAL(msgAdded(int)),
+	      this, SLOT(msgAdded(int)));
+      connect(mFolder, SIGNAL(msgRemoved(int)),
+	      this, SLOT(msgRemoved(int)));
+      connect(mFolder, SIGNAL(changed()),
+	      this, SLOT(msgChanged()));
+      connect(mFolder, SIGNAL(statusMsg(const char*)),
+	      mOwner, SLOT(statusMsg(const char*)));
+      readFolderConfig();
+      mFolder->open();
+    }
+
+    updateMessageList();
+
+    if(count() > 0) setCurrentItem(0);
+    if (mFolder) nextUnreadMessage();
   }
-
-  updateMessageList();
-
-  if(count() > 0)
-    setCurrentItem(0);
-  if (mFolder) nextUnreadMessage();
 
   setAutoUpdate(autoUpd);
   if (autoUpd) repaint();
@@ -196,9 +205,11 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 void KMHeaders::msgChanged()
 {
   int i = topItem();
+  int cur = currentItem();
   if (!autoUpdate()) return;
   updateMessageList();
   setTopItem(i);
+  setCurrentMsg(cur);
 }
 
 
@@ -670,8 +681,7 @@ void KMHeaders::nextUnreadMessage()
       debug("KMHeaders::nextUnreadMessage(): idx=%i", idx);
       return;
     }
-  if(idx < 0)
-    setCurrentItem(0);
+  if(idx < 0) setCurrentMsg(0);
   for (i=idx+1; i<cnt; i++)
   {
     msgBase = mFolder->getMsgBase(i);

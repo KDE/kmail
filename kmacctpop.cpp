@@ -88,6 +88,78 @@ bool KMAcctPop::processNewMail(KMIOStatus *wid)
 
 
 //-----------------------------------------------------------------------------
+bool KMAcctPop::authenticate(DwPopClient& client)
+{
+  QString passwd;
+  const char* msg=0;
+  KMPasswdDialog* dlg;
+  bool opened = FALSE;
+  int replyCode;
+
+  if(mPasswd.isEmpty() || mLogin.isEmpty())
+    msg = i18n("Please set Password and Username");
+
+  passwd = decryptStr(mPasswd);
+  passwd.detach();
+
+  while (1)
+  {
+    if (msg)
+    {
+      dlg = new KMPasswdDialog(NULL, NULL, this, msg,
+			       mLogin, passwd);
+      if (!dlg->exec()) return FALSE;
+      delete dlg;
+      msg = 0;
+    }
+
+    // Some POP servers close the connection upon failed
+    // user/password. So we close the connection here to
+    // be sure that everything below runs as we expect it.
+    if (opened)
+    {
+      client.Quit();
+      client.Close();
+    }
+      
+    // Open connection to server
+    if (client.Open(mHost,mPort) != '+')
+      return popError("OPEN", client);
+    opened = TRUE;
+    app->processEvents();
+
+    // Send user name
+    replyCode = client.User((const char*)mLogin);
+    if (replyCode == '-')
+    {
+      msg = i18n("Incorrect Username");
+      continue;
+    }
+    else if (replyCode != '+')
+      return popError("USER", client);
+    app->processEvents();
+
+    // Send password
+    passwd = decryptStr(mPasswd);
+    passwd.detach();
+    replyCode = client.Pass((const char*)passwd);
+    if (replyCode == '-')
+    {
+      msg = i18n("Incorrect Password");
+      continue;
+    }
+    else if (replyCode != '+')
+      return popError("PASS", client);
+
+    // Ok, we are done
+    break;
+  }
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 {
   DwPopClient client;
@@ -105,86 +177,27 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
   // is everything specified ?
-
   app->processEvents();
 
   if (mHost.isEmpty() || mPort<=0)
   {
     warning(i18n("Please specify Host, Port  and\n"
-			   "destination folder in the settings\n"
-			   "and try again."));
+		 "destination folder in the settings\n"
+		 "and try again."));
     return FALSE;
   }
 
   client.SetReceiveTimeout(20);
 
-  passwd = mPasswd; 
-
-
-  if(passwd.isEmpty() || mLogin.isEmpty())
-  {
-    KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
-					   "Please set Password and Username",
-					   mLogin, decryptStr(passwd));
-    if(!d->exec())
-      return FALSE;
-    else
-    {
-      passwd = mPasswd; 
-    }
-  }
-  
-  // Now, we got to do something here. If you can resolve to the address
-  // but cannot connect to the server like on some of our uni-machines
-  // we end up with a lock up! Certainly not desirable!
-  if (client.Open(mHost,mPort) != '+')
-    return popError("OPEN", client);
-  
-  app->processEvents();
-
-  // It might not necessarly be a network error if User & Pass
-  // reply != +. It's more likely that the username or the passwd is wrong
-  while((replyCode = client.User(mLogin)) != '+')
-  {
-    if(replyCode == '-') 
-    {
-      KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
-					     "Incorrect Username",
-					     mLogin, decryptStr(passwd));
-      if(!d->exec())
-	return FALSE;
-      else
-      {
-	passwd = mPasswd;
-      }
-    }
-    else
-      return popError("USER", client);
-  }
-
-
-  while((replyCode =client.Pass(decryptStr(passwd))) != '+')
-  {
-    if(replyCode == '-') 
-    {
-      KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
-					     "Incorrect Password",
-					     mLogin, decryptStr(passwd));
-      if(!d->exec())
-	return FALSE;
-      else {
-	passwd = mPasswd;
-      }
-    }
-    else
-      return popError("PASS", client);
-  }
+  // Handle connect, user, and password.
+  if (!authenticate(client)) return FALSE;
 
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
 
-#ifdef DWPOPCLIENT_HAS_NO_LAST
+#ifndef DWPOPCLIENT_HAS_NO_LAST
+#warning "*** If client.Last() cannot be found then install the latest kdesupport"
   if (client.Last() != '+') return popError("LAST", client);
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d", dummyStr, &id);
@@ -313,18 +326,13 @@ void KMAcctPop::readConfig(KConfig& config)
 
   mLogin = config.readEntry("login", "");
   mStorePasswd = config.readNumEntry("store-passwd", TRUE);
-  if (mStorePasswd) 
-    mPasswd = config.readEntry("passwd");
-  else 
-    mPasswd = "";
+  if (mStorePasswd) mPasswd = config.readEntry("passwd");
+  else mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
-  mRetrieveAll = config.readNumEntry("retrieve-all", !mLeaveOnServer);
-
-  // quick fix for Kde-1.0 by Stefan:
-  mRetrieveAll = !mLeaveOnServer;
+  mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
 }
 
 
@@ -335,18 +343,14 @@ void KMAcctPop::writeConfig(KConfig& config)
 
   config.writeEntry("login", mLogin);
   config.writeEntry("store-passwd", mStorePasswd);
-  if (mStorePasswd)
-  {
-    // very primitive password encryption
-    config.writeEntry("passwd", mPasswd);
-  }
+  if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
 
   config.writeEntry("host", mHost);
   config.writeEntry("port", mPort);
   config.writeEntry("protocol", mProtocol);
-  config.writeEntry("leave-on-server",mLeaveOnServer);
-  config.writeEntry("retrieve-all",mRetrieveAll);
+  config.writeEntry("leave-on-server", mLeaveOnServer);
+  config.writeEntry("retrieve-all", mRetrieveAll);
 }
 
 
@@ -486,7 +490,7 @@ void KMPasswdDialog::slotOkPressed()
 {
   //kbp->busy();
   act->setLogin(usernameLEdit->text());
-  act->setPasswd(passwdLEdit->text());
+  act->setPasswd(passwdLEdit->text(), act->storePasswd());
   done(1);
 }
 
@@ -496,16 +500,3 @@ void KMPasswdDialog::slotCancelPressed()
   //kbp->busy();
   done(0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

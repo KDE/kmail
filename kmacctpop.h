@@ -10,6 +10,7 @@ class QLineEdit;
 class QPushButton;
 class DwPopClient;
 class KApplication;
+class DwPopClient;
 
 #define KMAcctPopInherited KMAccount
 
@@ -73,6 +74,10 @@ protected:
   /** Mail processing main worker method. */
   virtual bool doProcessNewMail(KMIOStatus *);
 
+  /** Authenticate at POP server. Returns TRUE on success and FALSE
+    on failure. Automatically asks for user/password if necessary. */
+  virtual bool authenticate(DwPopClient&);
+
   /** Display POP error message. Always returns FALSE to simplify the
     code in doProcessNewMail(). */
   virtual bool popError(const QString stage, DwPopClient&) const;
@@ -88,6 +93,7 @@ protected:
 };
 
 
+//-----------------------------------------------------------------------------
 class KMPasswdDialog : public QDialog
 {
   Q_OBJECT
@@ -96,6 +102,7 @@ public:
   KMPasswdDialog(QWidget *parent = NULL,const char *name= NULL,
 		 KMAcctPop *act=NULL, const char *caption=NULL,
 		 const char *login=NULL, QString passwd=NULL);
+
 private:
   QLineEdit *usernameLEdit;
   QLineEdit *passwdLEdit;

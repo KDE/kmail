@@ -898,21 +898,27 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);
 
-    chk = new QCheckBox(i18n("Delete mail from server"), this);
-    chk->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
-    grid->addMultiCellWidget(chk, 6, 7, 1, 2);
+    mChkDelete = new QCheckBox(i18n("Delete mail from server"), this);
+    mChkDelete->setMinimumSize(mChkDelete->sizeHint());
+    mChkDelete->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
+    grid->addMultiCellWidget(mChkDelete, 6, 6, 1, 2);
+
+    mChkRetrieveAll=new QCheckBox(i18n("Retrieve all mail from server"), this);
+    mChkRetrieveAll->setMinimumSize(mChkRetrieveAll->sizeHint());
+    mChkRetrieveAll->setChecked(((KMAcctPop*)mAcct)->retrieveAll());
+    grid->addMultiCellWidget(mChkRetrieveAll, 7, 7, 1, 2);
 
   }
-  else fatal("KMAccountSettings: unsupported account type");
+  else 
+  {
+    warning("KMAccountSettings: unsupported account type");
+    return;
+  }
 
-    intervalChk = new QCheckBox(i18n("Enable interval Mail checking"), this);
-  if(mAcct->checkInterval()<= 0)
-    intervalChk->setChecked(false);
-  else
-    intervalChk->setChecked(true);
-  grid->addMultiCellWidget(intervalChk, 8, 9, 1, 2);
-
-
+  mChkInterval = new QCheckBox(i18n("Enable interval Mail checking"), this);
+  mChkInterval->setMinimumSize(mChkInterval->sizeHint());
+  mChkInterval->setChecked(mAcct->checkInterval() > 0);
+  grid->addMultiCellWidget(mChkInterval, 8, 8, 1, 2);
 
   // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
@@ -928,7 +934,8 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctFolder = mAcct->folder();
   mFolders = new QComboBox(this);
   mFolders->insertItem(i18n("<none>"));
-  for (i=1, folder=(KMFolder*)fdir->first(); folder; folder=(KMFolder*)fdir->next())
+  for (i=1, folder=(KMFolder*)fdir->first(); folder; 
+       folder=(KMFolder*)fdir->next())
   {
     if (folder->isDir()) continue;
     mFolders->insertItem(folder->name());
@@ -961,7 +968,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   btnBox->setMaximumSize(2048, ok->size().height()+10);
   grid->addMultiCellWidget(btnBox, 14, 14, 0, 2);
 
-  resize(350,325);
+  resize(350,350);
   grid->activate();
   adjustSize();
   setMinimumSize(size());
@@ -996,8 +1003,7 @@ void KMAccountSettings::accept()
   else fld = NULL;
   mAcct->setFolder((KMFolder*)fld);
 
-  // Waiting for GUI
-  //((KMAcctPop*)mAcct)->setCheckInterval(...);
+  mAcct->setCheckInterval(mChkInterval->isChecked() ? 3 : 0);
 
   if (acctType == "local")
   {
@@ -1010,7 +1016,8 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
-    ((KMAcctPop*)mAcct)->setLeaveOnServer(!chk->isChecked());
+    ((KMAcctPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
+    ((KMAcctPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
   }
 
   acctMgr->writeConfig(TRUE);

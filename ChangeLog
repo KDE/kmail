@@ -1,3 +1,15 @@
+1998-11-15  Stefan Taferner  <taferner@kde.org> (KMail-1.0.7)
+
+	* Headers: now current message is not reset when reading mails
+	and checking for new messages meanwhile.
+
+	* Pop: added configuration option for leave-mail-on-server.
+
+	* Pop: Fixed problems in pop authentication code.
+
+	* Pop: Enabled POP3 LAST command which was commited to
+	kdesupport some time ago.
+
 1998-11-15  Alex Zepeda  <garbanzo@hooked.net>
 
 	* kfontutils.cpp (kfontToStr): Cast two const char *'s to char *'s as

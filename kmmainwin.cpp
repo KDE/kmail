@@ -280,7 +280,8 @@ void KMMainWin::slotCheckMail()
   bool rc;
 
 
- if(checkingMail) {
+ if(checkingMail) 
+ {
     KMsgBox::message(0,i18n("KMail error"),
 		     i18n("Already checking for mail!"));
     return;
@@ -296,7 +297,6 @@ void KMMainWin::slotCheckMail()
  
  if(mSendOnCheck) slotSendQueued();
  checkingMail = FALSE;
-
 }
 
 
