@@ -1864,9 +1864,9 @@ void KMReaderWin::slotDoAtmOpen()
   KURL::List lst;
   KURL url;
   bool autoDelete = true;
-  QString fname = createAtmFileLink(); 
+  QString fname = createAtmFileLink();
 
-  if ( fname == QString::null ) {
+  if ( fname.isNull() ) {
     autoDelete = false;
     fname = mAtmCurrentName;
   }
@@ -1887,9 +1887,9 @@ void KMReaderWin::slotAtmOpenWith()
     KURL::List lst;
     KURL url;
     bool autoDelete = true;
-    QString fname = createAtmFileLink(); 
+    QString fname = createAtmFileLink();
 
-    if ( fname == QString::null ) {
+    if ( fname.isNull() ) {
       autoDelete = false;
       fname = mAtmCurrentName;
     }
