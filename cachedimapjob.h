@@ -98,7 +98,6 @@ public:
 
 protected:
   virtual void execute();
-  virtual void expireMessages();
   void deleteMessages( const QString& uids );
   void expungeFolder();
   void checkUidValidity();
@@ -120,8 +119,6 @@ protected slots:
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
 
 private:
-  void init();
-
   KMFolderCachedImap *mFolder;
   KMAcctCachedImap   *mAccount;
   QValueList<KMFolderCachedImap*> mFolderList;

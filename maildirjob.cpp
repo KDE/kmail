@@ -35,7 +35,6 @@
 
 #include "kmfoldermaildir.h"
 #include "kmfolder.h"
-#include "globalsettings.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -105,6 +104,7 @@ void MaildirJob::startJob()
   case tExpireMessages:
     {
       expireMessages();
+      return;
     }
     break;
   case tCopyMessage:
@@ -119,64 +119,6 @@ void MaildirJob::startJob()
   //OK, we're done
   //delete this;
   deleteLater();
-}
-
-void
-MaildirJob::expireMessages()
-{
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  QValueList<int>  rmvMsgList;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-  QTime            t;
-
-  int unreadDays, readDays;
-  mParentFolder->folder()->daysToExpire( unreadDays, readDays );
-  if (unreadDays > 0) {
-    kdDebug(5006) << "deleting unread older than "<< unreadDays << " days" << endl;
-    maxUnreadTime = time(0) - unreadDays * 3600 * 24;
-  }
-  if (readDays > 0) {
-    kdDebug(5006) << "deleting read older than "<< readDays << " days" << endl;
-    maxReadTime = time(0) - readDays * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  t.start();
-  mParentFolder->open();
-  for( i=mParentFolder->count()-1; i>=0; i-- ) {
-    mb = mParentFolder->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-    if ( mb->isImportant()
-      && GlobalSettings::excludeImportantMailFromExpiry() )
-       continue;
-
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      mParentFolder->removeMsg( i );
-    }
-    if ( t.elapsed() >= 150 ) {
-      kapp->processEvents();
-      t.restart();
-    }
-  }
-  mParentFolder->close();
-
-  return;
 }
 
 }

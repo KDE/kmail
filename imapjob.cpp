@@ -37,7 +37,6 @@
 #include "kmfolderimap.h"
 #include "kmfolder.h"
 #include "kmmsgpart.h"
-#include "globalsettings.h"
 
 #include <kio/scheduler.h>
 #include <kdebug.h>
@@ -72,9 +71,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 
   if ( jt == tExpireMessages )
   {
-     expireMessages();
-     deleteLater();
-     return;
+    expireMessages();
+    return;
   }
 
   assert(jt == tGetMessage || folder);
@@ -578,59 +576,6 @@ void ImapJob::execute()
 void ImapJob::setParentFolder( const KMFolderImap* parent )
 {
   mParentFolder = const_cast<KMFolderImap*>( parent );
-}
-
-//-----------------------------------------------------------------------------
-void ImapJob::expireMessages()
-{
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-
-  int unreadDays, readDays;
-  mParentFolder->folder()->daysToExpire( unreadDays, readDays );
-  if (unreadDays > 0) {
-    kdDebug(5006) << "deleting unread older than "<< unreadDays << " days" << endl;
-    maxUnreadTime = time(0) - unreadDays * 3600 * 24;
-  }
-  if (readDays > 0) {
-    kdDebug(5006) << "deleting read older than "<< readDays << " days" << endl;
-    maxReadTime = time(0) - readDays * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  mParentFolder->open();
-  QPtrList<KMMessage> list;
-  for( i=mParentFolder->count()-1; i>=0; i-- ) {
-    mb = mParentFolder->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-    if ( mb->isImportant()
-      && GlobalSettings::excludeImportantMailFromExpiry() )
-       continue;
-
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      list.append( mParentFolder->getMsg( i ) );
-    }
-  }
-  mParentFolder->removeMsg( list );
-  mParentFolder->close();
-
-  return;
 }
 
 //-----------------------------------------------------------------------------

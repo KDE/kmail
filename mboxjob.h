@@ -49,7 +49,6 @@ public:
   virtual ~MboxJob();
 protected:
   void execute();
-  void expireMessages();
   void setParent( const KMFolderMbox *parent );
 protected slots:
   void startJob();

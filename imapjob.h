@@ -76,7 +76,6 @@ private slots:
 
 private:
   void execute();
-  void expireMessages();
   void init( JobType jt, QString sets, KMFolderImap *folder,
              QPtrList<KMMessage>& msgList );
   KIO::Job *mJob;

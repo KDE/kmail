@@ -50,7 +50,6 @@ public:
   void setParentFolder( const KMFolderMaildir* parent );
 protected:
   void execute();
-  void expireMessages();
 protected slots:
   void startJob();
 private:

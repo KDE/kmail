@@ -36,7 +36,6 @@
 
 #include "kmfoldermbox.h"
 #include "kmfolder.h"
-#include "globalsettings.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -69,67 +68,6 @@ void
 MboxJob::execute()
 {
   QTimer::singleShot( 0, this, SLOT(startJob()) );
-}
-
-
-//-----------------------------------------------------------------------------
-void
-MboxJob::expireMessages()
-{
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  QValueList<int>  rmvMsgList;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-  QTime            t;
-
-  int unreadDays, readDays;
-  mParent->folder()->daysToExpire( unreadDays, readDays );
-  if (unreadDays > 0) {
-    kdDebug(5006) << "deleting unread older than "<< unreadDays << " days" << endl;
-    maxUnreadTime = time(0) - unreadDays * 3600 * 24;
-  }
-  if (readDays > 0) {
-    kdDebug(5006) << "deleting read older than "<< readDays << " days" << endl;
-    maxReadTime = time(0) - readDays * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  t.start();
-  mParent->open();
-  for( i=mParent->count()-1; i>=0; i-- ) {
-    mb = mParent->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-
-    if ( mb->isImportant()
-      && GlobalSettings::excludeImportantMailFromExpiry() )
-       continue;
-
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      mParent->removeMsg( i );
-    }
-    if ( t.elapsed() >= 150 ) {
-      kapp->processEvents();
-      t.restart();
-    }
-  }
-  mParent->close();
-
-  return;
 }
 
 //-----------------------------------------------------------------------------
@@ -171,7 +109,7 @@ MboxJob::startJob()
     {
       expireMessages();
     }
-    break;
+    return;
   case tCopyMessage:
   case tCreateFolder:
   case tGetFolder:

@@ -162,7 +162,7 @@ protected:
   /**
    * Is used to implement asynchronous expiring of messages in folders.
    */
-  virtual void expireMessages()=0;
+  void expireMessages();
 
   QPtrList<KMMessage> mMsgList;
   JobType             mType;

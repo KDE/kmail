@@ -121,7 +121,7 @@ CachedImapJob::~CachedImapJob()
   mAccount->mJobList.remove(this);
 }
 
-void CachedImapJob::init()
+void CachedImapJob::execute()
 {
   mSentBytes = 0;
 
@@ -699,19 +699,6 @@ void CachedImapJob::slotListMessagesResult( KIO::Job * job )
 void CachedImapJob::setParentFolder( const KMFolderCachedImap* parent )
 {
   mParentFolder = const_cast<KMFolderCachedImap*>( parent );
-}
-
-
-void CachedImapJob::execute()
-{
-  init();
-}
-
-void CachedImapJob::expireMessages()
-{
-   MaildirJob *m = new MaildirJob(0, tExpireMessages, 0 );
-   m->setParentFolder( mParentFolder );
-   m->start();
 }
 
 }
