@@ -797,7 +797,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     job = 0;
     mSlave = 0;
     KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
-                          i18n("Invalid Response From Server"));.
+                          i18n("Invalid Response From Server"));
     return;
   }
 }
