@@ -1286,7 +1286,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder() && fti->folder()->protocol() == "imap")
+  if (fti && fti->folder() && fti->folder()->protocol() == "imap" &&
+      !fti->parent())
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
     if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
