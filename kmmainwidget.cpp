@@ -1023,9 +1023,16 @@ void KMMainWidget::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder()) return;
 
-  str = i18n("<qt>Are you sure you want to delete the folder "
+  if ( mFolder->folderType() == KMFolderTypeSearch ) {
+     str = i18n("<qt>Are you sure you want to delete the search folder "
+	     "<b>%1</b>? The messages displayed in it will not be deleted "
+             "if you do so, as they are stored in a different folder.</qt>")
+			     .arg(mFolder->label());
+  } else {
+    str = i18n("<qt>Are you sure you want to delete the folder "
 	     "<b>%1</b> and all its subfolders, discarding their contents?</qt>")
 			     .arg(mFolder->label());
+  }
 
   if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
                                          i18n("&Delete"))
