@@ -798,7 +798,7 @@ QString NetworkPage::iconLabel() {
 }
 
 QString NetworkPage::title() {
-  return i18n("Setup for sending and receiving messages");
+  return i18n("Setup for Sending and Receiving Messages");
 }
 
 const char * NetworkPage::iconName() {
@@ -3540,7 +3540,7 @@ const char * MiscPage::iconName() {
 }
 
 QString MiscPage::title() {
-  return i18n("Various settings that don't fit elsewhere");
+  return i18n("Various Settings That Don't Fit Elsewhere");
 }
 
 QString MiscPage::helpAnchor() {
