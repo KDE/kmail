@@ -180,8 +180,10 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
     warning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
-    if (!folder) fatal(i18n("Cannot create file `%s' in %s."),
-		       (const char*)aFolderName, (const char*)mBasePath);
+    if (!folder) {
+      KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
+      exit(-1);
+    }
 
     if (aFolderName == "inbox") {
       KMMessage *welcomeMessage;
