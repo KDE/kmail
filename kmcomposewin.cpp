@@ -2273,8 +2273,8 @@ void KMComposeWin::slotAppendSignature()
   {
     /* actually "\n-- \n" (note the space) is a convention for attaching
     signatures and we should respect it, unless the user has already done so. */
-    if (!sigText.startsWith("-- \n")) mEditor->insertLine("-- ", -1);
-    mEditor->insertLine(sigText, -1);
+    if (!sigText.startsWith("-- \n")) mEditor->append("-- ");
+    mEditor->append(sigText);
     mEditor->update();
     mEditor->setModified(mod);
   }
