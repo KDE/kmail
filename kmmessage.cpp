@@ -1790,7 +1790,7 @@ const QString KMMessage::stripEmailAddr(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
-  QString result, addr, tmp;
+  QString result, addr, tmp, tmp2;
   const char *pos;
   char ch;
   QString email = decodeRFC1522String(aEmail);
@@ -1806,14 +1806,18 @@ const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
     else if (ch == '&') addr += "&amp;";
     else if (ch != ',') addr += ch;
 
+    if (ch != ',')
+      tmp2 += ch;
+
     if (ch == ',' || !pos[1])
     {
       tmp = addr.copy();
       result += tmp.replace(QRegExp("\""),"");
       result = result.replace(QRegExp("\n"),"");
       result += "\">";
-      if (stripped) result += KMMessage::stripEmailAddr(aEmail);
+      if (stripped) result += KMMessage::stripEmailAddr(tmp2);
       else result += addr;
+      tmp2 = "";
       result += "</a>";
       if (ch == ',')
       {
