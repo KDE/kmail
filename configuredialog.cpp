@@ -384,7 +384,7 @@ NewLanguageDialog::NewLanguageDialog( QWidget *parent, const char *name,
   QHBoxLayout *hlay = new QHBoxLayout( page, 0, spacingHint() );
   QLabel *label = new QLabel( i18n("Language:"), page );
   hlay->addWidget( label );
-  mComboBox = new QComboBox( page );
+  mComboBox = new QComboBox( false, page );
   hlay->addWidget( mComboBox, 1 );
   QStringList langlist = KGlobal::dirs()->findAllResources( "locale",
                                "*/entry.desktop" );
