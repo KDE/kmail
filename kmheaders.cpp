@@ -1039,7 +1039,7 @@ void KMHeaders::msgAdded(int id)
 
   if (mNested != mNestedOverride) {
     // make sure the id and subject dicts grow, if necessary
-    if (mIdTree.count() <= (uint)mFolder->count()) {
+    if (mIdTree.count() == (uint)mFolder->count()) {
       kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
       mIdTree.resize(mFolder->count()*2);
       mMsgSubjects.resize(mFolder->count()*2);
