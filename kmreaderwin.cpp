@@ -102,11 +102,41 @@ public:
     QString decryptionError;
 };
 
-// INTERIM SOLUTION variable
+
+
 //
+// THIS IS AN INTERIM SOLUTION
 // TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
 //
 static CryptPlugWrapper* useThisCryptPlug = 0;
+
+bool foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
+                             QString libName,
+                             CryptPlugWrapper** useThisCryptPlug_ref,
+                             QWidget* parent,
+                             QString verboseName )
+{
+  if( plugins && useThisCryptPlug_ref ) {
+    *useThisCryptPlug_ref = 0;
+    CryptPlugWrapper* current;
+    QPtrListIterator<CryptPlugWrapper> it( *plugins );
+    while( ( current = it.current() ) ) {
+        ++it;
+        if( 0 <= current->libName().find( libName, 0, false ) ) {
+        *useThisCryptPlug_ref = current;
+        return true;
+        }
+    }
+  }
+  KMessageBox::information(parent,
+    i18n("problem: %1 Plug-In was not specified.\n"
+         "Use the 'Settings/Configure KMail / Plugins' dialog to specify the"
+         " Plug-In or ask your system administrator to do that for you.")
+         .arg(verboseName),
+         QString::null,
+         "cryptoPluginBox");
+  return false;
+}
 
 
 
@@ -393,6 +423,8 @@ kdDebug(5006) << "       SORRY, signed has NO children" << endl;
               else {
 kdDebug(5006) << "       signed has children" << endl;
 
+                bool plugFound = false;
+
                 /*
                   ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
                 */
@@ -402,50 +434,23 @@ kdDebug(5006) << "       signed has children" << endl;
                 if( sign ) {
 kdDebug(5006) << "       OpenPGP signature found" << endl;
                   data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-if(data){
-  CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-  while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "openpgp", 0, false ) ) {
-      useThisCryptPlug = current;
-//kdDebug(5006) << "\n\n\ngefunden1\n\n\n" << endl;
-      break;
-    }
-  }
-}
+                  if( data )
+                    plugFound = foundMatchingCryptPlug( mCryptPlugList, "openpgp", &useThisCryptPlug, this, "OpenPGP" );
                 }
                 else {
                   sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
                   if( sign ) {
 kdDebug(5006) << "       S/MIME signature found" << endl;
                     data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-if(data){
-  CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-  while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "smime", 0, false ) ) {
-      useThisCryptPlug = current;
-//kdDebug(5006) << "\n\n\ngefunden2\n\n\n" << endl;
-      break;
-    }
-  }
-}
+                    if( data )
+                      plugFound = foundMatchingCryptPlug( mCryptPlugList, "smime", &useThisCryptPlug, this, "S/MIME" );
                   }
                   else
                   {
 kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
                   }
                 }
+
                 /*
                   ---------------------------------------------------------------------------------------------------------------
                 */
@@ -461,7 +466,7 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                   QCString cstr( data->msgPart().bodyDecoded() );
                   writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
                   bDone = true;
-                } else if( sign && data ) {
+                } else if( sign && data && plugFound ) {
                   // Set the signature node to done to prevent it from being processed
                   // by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
                   sign->mWasProcessed = true;
@@ -482,51 +487,25 @@ kdDebug(5006) << "encrypted" << endl;
                 bDone = true;
               } else if( curNode->mChild ) {
 
+                bool plugFound = false;
+
                 /*
                   ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
                 */
                 partNode* data =
                   curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-if(data){
-  CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-  while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "openpgp", 0, false ) ) {
-      useThisCryptPlug = current;
-//kdDebug(5006) << "\n\n\ngefunden3\n\n\n" << endl;
-      break;
-    }
-  }
-}
+                if( data )
+                  plugFound = foundMatchingCryptPlug( mCryptPlugList, "openpgp", &useThisCryptPlug, this, "OpenPGP" );
                 if( !data ) {
                   data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-if(data){
-  CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-  while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "smime", 0, false ) ) {
-//kdDebug(5006) << "\n\n\ngefunden4\n\n\n" << endl;
-      useThisCryptPlug = current;
-      break;
-    }
-  }
-}
+                  if( data )
+                    plugFound = foundMatchingCryptPlug( mCryptPlugList, "smime", &useThisCryptPlug, this, "S/MIME" );
                 }
                 /*
                   ---------------------------------------------------------------------------------------------------------------
                 */
 
-                if( data ) {
+                if( data && plugFound ) {
                   curNode->setEncrypted( true );
                   QCString decryptedData;
                   if( okDecryptMIME( *data, decryptedData ) ) {
@@ -615,38 +594,24 @@ kdDebug(5006) << "octet stream" << endl;
                   writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
                   bDone = true;
                 } else {
-
-
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-CryptPlugWrapper* current;
-QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "openpgp", 0, false ) ) {
-        useThisCryptPlug = current;
-//kdDebug(5006) << "\n\n\ngefunden5\n\n\n" << endl;
-        break;
-    }
-}
-
-
-
-                  QCString decryptedData;
-                  if( okDecryptMIME( *curNode, decryptedData ) ) {
-                    DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), curNode->dwPart());
-                    myBody->Parse();
-                    partNode myBodyNode( true, myBody );
-                    myBodyNode.buildObjectTree( false );
-                    parseObjectTree( &myBodyNode, showOneMimePart,
-                                                  keepEncryptions,
-                                                  includeSignatures );
-                  }
-                  else
-                  {
-                    writeHTMLStr(mCodec->toUnicode( decryptedData ));
+                  /*
+                    ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
+                  */
+                  if( foundMatchingCryptPlug( mCryptPlugList, "openpgp", &useThisCryptPlug, this, "OpenPGP" ) ) {
+                    QCString decryptedData;
+                    if( okDecryptMIME( *curNode, decryptedData ) ) {
+                      DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), curNode->dwPart());
+                      myBody->Parse();
+                      partNode myBodyNode( true, myBody );
+                      myBodyNode.buildObjectTree( false );
+                      parseObjectTree( &myBodyNode, showOneMimePart,
+                                                    keepEncryptions,
+                                                    includeSignatures );
+                    }
+                    else
+                    {
+                      writeHTMLStr(mCodec->toUnicode( decryptedData ));
+                    }
                   }
                   bDone = true;
                 }
@@ -676,83 +641,65 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
 
                 if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
                   CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
+                  
+                  if( foundMatchingCryptPlug( mCryptPlugList, "smime", &useThisCryptPlug, this, "S/MIME" ) ) {
 
-                /*
-                  ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-                */
-
-
-// INTERIM SOLUTION
-//
-// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
-//
-CryptPlugWrapper* current;
-QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
-while( ( current = it.current() ) ) {
-    ++it;
-    if( 0 <= current->libName().find( "smime", 0, false ) ) {
-        useThisCryptPlug = current;
-//kdDebug(5006) << "\n\n\ngefunden6\n\n\n" << endl;
-        break;
-    }
-}
-
-                  DwHeaders& headers( curNode->dwPart()->Headers() );
-                  QCString ctypStr( headers.ContentType().AsString().c_str() );
-                  bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
-                  bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
+                    DwHeaders& headers( curNode->dwPart()->Headers() );
+                    QCString ctypStr( headers.ContentType().AsString().c_str() );
+                    bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
+                    bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 
 
-                  // Analyze "signTestNode" node to find/verify a signature.
-                  // If zero this verification was sucessfully done after
-                  // decrypting via recursion by insertAndParseNewChildNode().
-                  partNode* signTestNode = curNode;
+                    // Analyze "signTestNode" node to find/verify a signature.
+                    // If zero this verification was sucessfully done after
+                    // decrypting via recursion by insertAndParseNewChildNode().
+                    partNode* signTestNode = curNode;
 
 
-                  // We try decrypting the content
-                  // if we either *know* that it is an encrypted message part
-                  // or there is neither signed nor encrypted parameter.
-                  if( !isSigned ) {
-                    if( isEncrypted )
-                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
-                    else
-                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
-                    QCString decryptedData;
-                    if( okDecryptMIME( *curNode,
-                                       decryptedData,
-                                       false ) ) {
-                      kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
-                      isEncrypted = true;
-                      curNode->setEncrypted( true );
-                      insertAndParseNewChildNode( *curNode,
-                                                  &*decryptedData,
-                                                  "encrypted data" );
-                      if( curNode->mChild && curNode->mChild->isSigned() ) {
-                        isSigned = true;
-                        signTestNode = 0;
-                      } else
-                        signTestNode = curNode->mChild;
+                    // We try decrypting the content
+                    // if we either *know* that it is an encrypted message part
+                    // or there is neither signed nor encrypted parameter.
+                    if( !isSigned ) {
+                      if( isEncrypted )
+                        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
+                      else
+                        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
+                        QCString decryptedData;
+                        if( okDecryptMIME( *curNode,
+                                          decryptedData,
+                                          false ) ) {
+                        kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
+                        isEncrypted = true;
+                        curNode->setEncrypted( true );
+                        insertAndParseNewChildNode( *curNode,
+                                                    &*decryptedData,
+                                                    "encrypted data" );
+                        if( curNode->mChild && curNode->mChild->isSigned() ) {
+                          isSigned = true;
+                          signTestNode = 0;
+                        } else
+                          signTestNode = curNode->mChild;
+                      }
                     }
-                  }
 
-                  // We now try signature verification if necessarry.
-                  if( signTestNode ) {
-                    if( isSigned )
+                    // We now try signature verification if necessarry.
+                    if( signTestNode ) {
+                      if( isSigned )
                         kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
-                    else
+                      else
                         kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
-                    if(    writeOpaqueOrMultipartSignedData( 0, *signTestNode )
-                        && !isSigned ) {
+                      if(    writeOpaqueOrMultipartSignedData( 0, *signTestNode )
+                          && !isSigned ) {
                         kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
                         isSigned = true;
                         signTestNode->setSigned( true );
+                      }
                     }
+
+                    if( isSigned || isEncrypted )
+                      bDone = true;
                   }
-
-                  if( isSigned || isEncrypted )
-                    bDone = true;
-
                   useThisCryptPlug = oldUseThisCryptPlug;
                 }
               }
@@ -1976,9 +1923,10 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
 
   } else {
     KMessageBox::information(this,
-			     i18n("problem: No Crypto Plug-Ins found.\n"
-				  "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
-			     QString::null, "cryptoPluginBox");
+        i18n("problem: No Crypto Plug-Ins found.\n"
+             "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+             QString::null,
+             "cryptoPluginBox");
     queueHtml(i18n("<hr><b><h2>Signature could *not* be verified !</h2></b><br>"
                    "reason:<br><i>&nbsp; &nbsp; No Crypto Plug-Ins found.</i><br>"
                    "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invoking<br>&nbsp; &nbsp; the "
