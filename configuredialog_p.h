@@ -450,6 +450,12 @@ public:
   void apply();
   void installProfile( KConfig * profile );
 
+
+protected slots:
+  /** Used to switch the Layout preview items if Mime Tree Viewer is enabled
+      or disabled */
+  void showMIMETreeClicked( int id );
+
 protected:
   QCheckBox    *mShowColorbarCheck;
   QCheckBox    *mMessageSizeCheck;
@@ -466,7 +472,9 @@ protected:
     const char *  displayName;
     KMime::DateFormatter::FormatType dateDisplay;
   } dateDisplayConfig[ numDateDisplayConfig ];
-
+  
+private:
+  int mShowMIMETreeModeLastValue;
 };
 
 class AppearancePageProfileTab : public ConfigurationPage {

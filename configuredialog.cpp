@@ -2204,7 +2204,8 @@ AppearancePage::LayoutTab::dateDisplayConfig[] = {
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigurationPage( parent, name ),
+    mShowMIMETreeModeLastValue( -1 )
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
@@ -2290,6 +2291,9 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mShowMIMETreeMode->insert(
     new QRadioButton( i18n("Always"), mShowMIMETreeMode ), 2 );
 
+  connect( mShowMIMETreeMode, SIGNAL( clicked( int )),
+          this, SLOT( showMIMETreeClicked( int )) );
+
   // a button group for four radiobuttons (by default exclusive):
   mNestingPolicy =
     new QVButtonGroup( i18n("Message Header Threading Options"), this );
@@ -2361,6 +2365,30 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay->addStretch( 10 ); // spacer
 }
 
+void AppearancePageLayoutTab::showMIMETreeClicked( int id )
+{
+  if ( mShowMIMETreeModeLastValue != id ) {
+    mShowMIMETreeModeLastValue = id;
+    QString postfix;
+    switch ( id ) {
+    case 0:
+      postfix = "_no_mime";
+      break;
+    case 1:
+      postfix = "_smart_mime";
+      break;
+    case 2:
+      postfix = "";
+      break;
+    }
+    mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1"+postfix ) );
+    mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2"+postfix ) );
+    mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3"+postfix ) );
+    mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4"+postfix ) );
+    mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5"+postfix ) );
+  }
+}
+
 void AppearancePage::LayoutTab::setup() {
   KConfigGroup reader( kapp->config(), "Reader" );
   KConfigGroup geometry( kapp->config(), "Geometry" );
@@ -2380,6 +2408,8 @@ void AppearancePage::LayoutTab::setup() {
   int num = geometry.readNumEntry( "showMIME", 1 );
   if ( num < 0 || num > 2 ) num = 1;
   mShowMIMETreeMode->setButton( num );
+  showMIMETreeClicked( num );
+
 
   num = geometry.readNumEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
