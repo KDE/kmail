@@ -23,6 +23,15 @@
 #include "kmtopwidget.h"
 
 
+#ifndef KRN
+class _StringPair {
+ public:
+   QString name;
+   QString value;
+};
+#endif
+
+
 
 class QLineEdit;
 class QGridLayout;
@@ -341,6 +350,8 @@ protected:
 #ifndef KRN
   QString mExtEditor;
   bool useExtEditor;
+  QList<_StringPair> mCustHeaders;
+  bool mConfirmSend;
 #endif
   int mNumHeaders;
   int mLineBreak;

@@ -70,6 +70,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   createTabNetwork(this);
   createTabAppearance(this);
   createTabComposer(this);
+  createTabMime(this);
   createTabMisc(this);
   createTabPgp(this);
 }
@@ -177,10 +178,94 @@ QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
 
 
 //-----------------------------------------------------------------------------
+void KMSettings::createTabMime(QWidget* parent)
+{
+  QWidget *tab = new QWidget(parent);
+  QBoxLayout *box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 2);
+  QPushButton *bNew, *bDel;
+  QGroupBox *grp = new QGroupBox(i18n("Custom Tags"), tab);
+  QGridLayout *grid = new QGridLayout(grp, 8, 4, 20, 8);
+  QLabel *mhAbout = new QLabel(grp);  
+  QLabel *mhName = new QLabel(grp);  
+  QLabel *mhValue = new QLabel(grp);
+  KConfig* config = app->config();
+
+  curMHItem = NULL;    // not pointing to anything yet
+
+  box->addWidget(grp);
+
+  mhAbout->setText(i18n("Define custom mime header tags for outgoing emails:"));
+  mhAbout->setMinimumSize(mhAbout->size());
+  grid->addMultiCellWidget(mhAbout, 0, 0, 0, 3);
+
+  tagList = new QListView(grp, "LstTags");
+  tagList->addColumn(i18n("Name"), tagList->width()/2);
+  tagList->addColumn(i18n("Value"), tagList->width()/2);
+  tagList->setColumnWidthMode(0, QListView::Maximum);
+  tagList->setColumnWidthMode(1, QListView::Maximum);
+  tagList->setMultiSelection(false);
+  grid->addMultiCellWidget(tagList, 1, 4, 0, 3);
+  tagList->setMultiSelection(false);
+
+  connect(tagList,SIGNAL(selectionChanged()),this,SLOT(slotMHSelectionChanged()));
+
+  mhName->setText(i18n("Name:"));
+  mhName->setMinimumSize(mhName->size());
+  grid->addWidget(mhName, 5, 0);
+  tagNameEdit = new QLineEdit(grp);
+  tagNameEdit->setMinimumSize(100, mhName->height()+2);
+  tagNameEdit->setMaximumSize(1000, mhName->height()+2);
+  grid->addMultiCellWidget(tagNameEdit, 5, 5, 1, 3);
+  connect(tagNameEdit,SIGNAL(textChanged(const QString&)),this,SLOT(slotMHNameChanged(const QString&)));
+
+  mhValue->setText(i18n("Value:"));
+  mhValue->setMinimumSize(mhValue->size());
+  grid->addWidget(mhValue, 6, 0);
+  tagValueEdit = new QLineEdit(grp);
+  tagValueEdit->setMinimumSize(100, mhValue->height()+2);
+  tagValueEdit->setMaximumSize(1000, mhValue->height()+2);
+  grid->addMultiCellWidget(tagValueEdit, 6, 6, 1, 3);
+  connect(tagValueEdit,SIGNAL(textChanged(const QString&)),this,SLOT(slotMHValueChanged(const QString&)));
+
+  tagNameEdit->setEnabled(false);
+  tagValueEdit->setEnabled(false);
+
+  bNew = new QPushButton(i18n("&New"), grp);
+  grid->addWidget(bNew, 7, 2);
+  bDel = new QPushButton(i18n("D&elete"), grp);
+  grid->addWidget(bDel, 7, 3);
+
+  connect(bNew,SIGNAL(clicked()),this,SLOT(slotMHNew()));
+  connect(bDel,SIGNAL(clicked()),this,SLOT(slotMHDelete()));
+
+  // read in all the values
+  config->setGroup("General");
+  int count = config->readNumEntry("mime-header-count", 0);
+  for (int i = 0; i < count; i++) {
+    QString group, thisName, thisValue;
+    group.sprintf("Mime #%d", i);
+    config->setGroup(group);
+    thisName = config->readEntry("name", "");
+    thisValue = config->readEntry("value", "");
+    if (thisName.length() > 0) {
+      new QListViewItem(tagList, thisName, thisValue);
+    }
+  }
+
+  addTab(tab, i18n("Mime Headers"));
+  grid->activate();
+  grp->adjustSize();
+  box->addStretch(100);
+  box->activate();
+  tab->adjustSize();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 7, 3, 20, 6);
+  QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
@@ -589,6 +674,8 @@ void KMSettings::createTabComposer(QWidget *parent)
   quotedPrintable->setMinimumSize(quotedPrintable->sizeHint());
   connect(quotedPrintable,SIGNAL(clicked()),SLOT(slotQuotedPrintable()));
   grid->addWidget(quotedPrintable, 1, 2);
+  confirmSend = new QCheckBox(i18n("Confirm before send"), grp);
+  grid->addWidget(confirmSend, 2, 1);
   grid->activate();
 
   // set values
@@ -606,6 +693,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
   pgpAutoSign->setChecked(config->readBoolEntry("pgp-auto-sign",false));
   smartQuote->setChecked(config->readBoolEntry("smart-quote",true));
+  confirmSend->setChecked(config->readBoolEntry("confirm-before-send",false));
 
   i = msgSender->sendImmediate();
   sendNow->setChecked(i);
@@ -629,8 +717,8 @@ void KMSettings::createTabMisc(QWidget *parent)
 {
   QWidget *tab = new QWidget(parent);
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
-  QGridLayout* grid, *grid2;
-  QGroupBox* grp, *grp2;
+  QGridLayout* grid, *grid2, *grid3;
+  QGroupBox* grp, *grp2, *grp3;
 
   KConfig* config = app->config();
   QString str;
@@ -685,6 +773,34 @@ void KMSettings::createTabMisc(QWidget *parent)
   grid2->activate();
   
 
+  //---------- group: New Mail Notification
+  grp3 = new QGroupBox(i18n("New Mail Notification"), tab);
+  box->addWidget(grp3);
+  grid3 = new QGridLayout(grp3, 4, 2, 20, 6);
+
+  beepNotify = new QCheckBox(i18n("Beep on new mail"), grp3);
+  beepNotify->adjustSize();
+  beepNotify->setMinimumSize(beepNotify->sizeHint());
+  grid3->addMultiCellWidget(beepNotify, 0, 0, 0, 0);
+
+  msgboxNotify = new QCheckBox(i18n("Display message box on new mail"), grp3);
+  msgboxNotify->adjustSize();
+  msgboxNotify->setMinimumSize(msgboxNotify->sizeHint());
+  grid3->addMultiCellWidget(msgboxNotify, 1, 1, 0, 0);
+
+  execNotify = new QCheckBox(i18n("Execute command line on new mail"), grp3);
+  execNotify->adjustSize();
+  execNotify->setMinimumSize(execNotify->sizeHint());
+  grid3->addMultiCellWidget(execNotify, 2, 2, 0, 0);
+  connect(execNotify,SIGNAL(toggled(bool)),this,SLOT(slotExecOnMail(bool)));
+
+  mailNotifyEdit = new QLineEdit(grp3);
+  mailNotifyEdit->adjustSize();
+  grid3->addMultiCellWidget(mailNotifyEdit, 2, 2, 1, 1);
+
+  grid3->activate();
+
+
   //---------- set values
   config->setGroup("General");
   emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
@@ -693,6 +809,11 @@ void KMSettings::createTabMisc(QWidget *parent)
   sendReceipts->setChecked(config->readBoolEntry("send-receipts", true));
   useExternalEditor->setChecked(config->readBoolEntry("use-external-editor", false));  
   extEditorEdit->setText(config->readEntry("external-editor", ""));
+  beepNotify->setChecked(config->readBoolEntry("beep-on-mail", false));
+  msgboxNotify->setChecked(config->readBoolEntry("msgbox-on-mail", false));
+  execNotify->setChecked(config->readBoolEntry("exec-on-mail", false));
+  mailNotifyEdit->setText(config->readEntry("mail-notify-cmd", ""));
+  mailNotifyEdit->setEnabled(execNotify->isChecked());
 
   //---------- here we go
   box->addStretch(10);
@@ -841,6 +962,8 @@ void KMSettings::slotSendLater()
 //  FIXME:
 //  There is a problem here.  If an interactive console program is given,
 //  the program is stopped.  How do we work around this?
+//  FIXME:
+//  Use the KDE launching service instead
 //
 
 class ExtEditLaunch {
@@ -930,6 +1053,86 @@ void KMSettings::slotSigModify()
 
   
 }
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotMHValueChanged(const QString& x)
+{
+
+  curMHItem->setText(1, x);
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotMHNameChanged(const QString& x)
+{
+
+  curMHItem->setText(0, x);
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotMHSelectionChanged()
+{
+
+  // get text from the selection
+  curMHItem = tagList->selectedItem();
+
+  // put it in the entry fields
+  tagNameEdit->setText(curMHItem->text(0));
+  tagValueEdit->setText(curMHItem->text(1));
+
+  // enable them
+  tagNameEdit->setEnabled(true);
+  tagValueEdit->setEnabled(true);
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotMHNew()
+{
+
+  curMHItem = new QListViewItem(tagList, QString(""), QString(""));
+  tagNameEdit->setEnabled(true);
+  tagValueEdit->setEnabled(true);
+  tagList->setCurrentItem(curMHItem);
+  tagNameEdit->setFocus();
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotMHDelete()
+{
+
+  // Verify that it is selected
+  if (!curMHItem)
+    return;
+
+  // clear the entry fields
+  tagNameEdit->setText("");
+  tagValueEdit->setText("");
+  tagNameEdit->setEnabled(false);
+  tagValueEdit->setEnabled(false);
+
+  // Remove the item
+  tagList->takeItem(curMHItem);
+  curMHItem = NULL;
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotExecOnMail(bool x)
+{
+
+  mailNotifyEdit->setEnabled(x);
+
+}
+
 
 //-----------------------------------------------------------------------------
 void KMSettings::accountSelected(int,int)
@@ -1128,6 +1331,7 @@ void KMSettings::doApply()
   config->writeEntry("font", monospFont->isChecked()?"fixed":"variable");
   config->writeEntry("pgp-auto-sign", pgpAutoSign->isChecked());
   config->writeEntry("smart-quote", smartQuote->isChecked());
+  config->writeEntry("confirm-before-send", confirmSend->isChecked());
 
   //----- misc
   config->setGroup("General");
@@ -1138,6 +1342,31 @@ void KMSettings::doApply()
   config->writeEntry("send-receipts", sendReceipts->isChecked());
   config->writeEntry("external-editor", extEditorEdit->text());
   config->writeEntry("use-external-editor", useExternalEditor->isChecked());
+  config->writeEntry("beep-on-mail", beepNotify->isChecked());
+  config->writeEntry("msgbox-on-mail", msgboxNotify->isChecked());
+  config->writeEntry("exec-on-mail", execNotify->isChecked());
+  config->writeEntry("exec-on-mail-cmd", mailNotifyEdit->text());
+
+  //----- mime headers
+  int count = tagList->childCount();
+  int countDelta = 0;
+  for (int i = 0; i < count; i++) {
+    QString groupName;
+    QListViewItem *thisChild;
+
+    groupName.sprintf("Mime #%d", i); 
+    config->setGroup(groupName);
+    thisChild = tagList->firstChild();
+    if (thisChild->text(0) && strlen(thisChild->text(0)) > 0) {
+      config->writeEntry("name", thisChild->text(0));
+      config->writeEntry("value", thisChild->text(1));
+    } else {
+      countDelta++;
+    }
+    tagList->takeItem(thisChild);
+  }
+  config->setGroup("General");
+  config->writeEntry("mime-header-count", count - countDelta);
 
   //-----
   config->sync();

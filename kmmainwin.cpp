@@ -158,6 +158,12 @@ void KMMainWin::readConfig(void)
   mHeaders->readConfig();
   mFolderTree->readConfig();
 
+  config->setGroup("General");
+  mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
+  mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
+  mExecOnNew = config->readBoolEntry("exec-on-mail", false);
+  mNewMailCmd = config->readEntry("mail-notify-cmd", "");
+
   // Re-activate panners
   if (mStartupDone)
   {
@@ -471,6 +477,22 @@ void KMMainWin::slotCheckOneAccount(int item)
 }
 
 void KMMainWin::slotNewMail(KMAccount *) {
+
+  if (mBeepOnNew) {
+    KApplication::beep();
+  }
+
+  if (mExecOnNew) {
+    if (mNewMailCmd.length() > 0)
+      system((const char *)mNewMailCmd);
+  }
+
+  if (mBoxOnNew) {
+    KMessageBox::information(this, QString(i18n("New Mail")),
+                                   QString(i18n("You have new mail!")),
+                                   QString(i18n("&Ok")));
+  }  
+
   // Todo:
   // scroll mHeaders to show new items if current item would
   // still be visible

@@ -4,6 +4,7 @@
 #include <qtabdialog.h>
 #include <qstring.h>
 #include <qcheckbox.h>
+#include <qlistview.h>
 
 class KMAccount;
 class KMAccountSettings;
@@ -35,6 +36,7 @@ protected:
   virtual void createTabNetwork(QWidget*);
   virtual void createTabComposer(QWidget*);
   virtual void createTabMisc(QWidget*);
+  virtual void createTabMime(QWidget*);
   virtual void createTabAppearance(QWidget*);
   virtual void createTabPgp(QWidget *parent);
 
@@ -69,19 +71,29 @@ private slots:
   void slotFolderlistFontSelect();
   void slotDefaultColorSelect();
   void slotSigModify();
+  void slotMHNew();
+  void slotMHDelete();
+  void slotMHSelectionChanged();
+  void slotMHNameChanged(const QString& x);
+  void slotMHValueChanged(const QString& x);
+  void slotExecOnMail(bool x);
 
 private:
+  QListViewItem *curMHItem;
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
   QLineEdit *indentPrefixEdit, *wrapColumnEdit, *extEditorEdit;
+  QLineEdit *tagNameEdit, *tagValueEdit, *mailNotifyEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign, *smartQuote;
   QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts,
-    *compactOnExit, *useExternalEditor;
+    *compactOnExit, *useExternalEditor, *confirmSend, *beepNotify,
+    *execNotify, *msgboxNotify;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
   QRadioButton *allow8Bit, *quotedPrintable;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
+  QListView  *tagList;
   QPushButton *addButton,*modifyButton,*removeButton;
   QCheckBox *defaultFonts, *defaultColors;
   QLabel *bodyFontLabel, *listFontLabel, *folderListFontLabel;

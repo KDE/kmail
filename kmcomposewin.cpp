@@ -51,6 +51,7 @@
 #include <qpixmap.h>
 #include <qregexp.h>
 #include <qcursor.h>
+#include <qmessagebox.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -223,6 +224,9 @@ void KMComposeWin::readConfig(void)
   if (mLineBreak < 60)
     mLineBreak = 60;
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
+#ifndef KRN
+  mConfirmSend = config->readBoolEntry("confirm-before-send", false);
+#endif  
 
   config->setGroup("Reader");
   QColor c1=QColor(app->palette().normal().text());
@@ -258,6 +262,23 @@ void KMComposeWin::readConfig(void)
   config->setGroup("General");
   mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
   useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
+
+  int headerCount = config->readNumEntry("mime-header-count", 0);
+  mCustHeaders.clear();
+  mCustHeaders.setAutoDelete(true);
+  for (int i = 0; i < headerCount; i++) {
+    QString thisGroup;
+    _StringPair *thisItem = new _StringPair;
+    thisGroup.sprintf("Mime #%d", i);
+    config->setGroup(thisGroup);
+    thisItem->name = config->readEntry("name", "");
+    if ((thisItem->name).length() > 0) {
+      thisItem->value = config->readEntry("value", "");
+      mCustHeaders.append(thisItem);
+    } else {
+      delete thisItem;
+    }
+  }
 #endif
 
   config->setGroup("Fonts");
@@ -904,6 +925,16 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setHeaderField("X-PRIORITY", "2 (High)");
     mMsg->setHeaderField("Priority", "urgent");
   }
+
+#ifndef KRN
+  _StringPair *pCH;
+  for (pCH  = mCustHeaders.first();
+       pCH != NULL;
+       pCH  = mCustHeaders.next()) {
+    mMsg->setHeaderField(pCH->name, pCH->value);
+  }
+
+#endif
 
   if(mAtmList.count() <= 0)
   {
@@ -1681,6 +1712,31 @@ void KMComposeWin::doSend(int aSendNow)
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSend()
 {
+#ifndef KRN
+  if (mConfirmSend) {
+    switch(QMessageBox::information(&mMainWidget, 
+                                    i18n("Send Confirmation"), 
+                                    i18n("About to send email..."),
+                                    i18n("Send &Now"),
+                                    i18n("Send &Later"),
+                                    i18n("&Cancel"),
+                                    0,
+                                    2)) {
+    case 0:        // send now
+        doSend(TRUE);
+      break;
+    case 1:        // send later
+        doSend(FALSE);
+      break;
+    case 2:        // cancel
+      break;
+    default:
+      ;    // whoa something weird happened here!
+    }
+    return;
+  }
+#endif
+
   doSend();
 }
 

@@ -163,6 +163,8 @@ protected:
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
   bool          mSendOnCheck;
+  bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
+  QString       mNewMailCmd;
   int		mMessageStatusId;
   QValueList<int> *mHorizPannerSep, *mVertPannerSep;
   QString       mUrlCurrent;
