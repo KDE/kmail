@@ -1450,28 +1450,28 @@ void KMMainWin::setupToolBar()
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(UserIcon("checkmail"), 0,
+  mToolBar->insertButton(BarIcon("message_get"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new messages"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(UserIcon("filereply"), 0,
+  mToolBar->insertButton(BarIcon("message_reply"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(UserIcon("filereplyall"), 0,
+  mToolBar->insertButton(BarIcon("message_replyall"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(UserIcon("fileforward"), 0,
+  mToolBar->insertButton(BarIcon("message_forward"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(UserIcon("filedel2"), 0,
+  mToolBar->insertButton(BarIcon("message_delete"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
