@@ -25,6 +25,7 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <kcursor.h>
+#include <krun.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <qstring.h>
@@ -914,10 +915,9 @@ void KMReaderWin::slotAtmOpen()
   //umask(old_umask);
   //kbp->idle();
   //--- Sven's save attachments to /tmp end ---
-  cmd = "kfmclient openURL \'";
-  cmd += fileName;
-  cmd += "\'";
-  system(cmd);
+
+  // -- David : replacement for KFM::openURL
+  (void) new KRun(fileName);
 }
 
 

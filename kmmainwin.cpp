@@ -35,6 +35,7 @@
 #include <kiconloader.h>
 #include <kstdaccel.h>
 #include <knewpanner.h>
+#include <krun.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -788,7 +789,8 @@ void KMMainWin::slotUrlClicked(const char* aUrl, int)
 	   !strnicmp(aUrl, "file:", 5))
   {
     statusMsg(i18n("Opening URL..."));
-    system("kfmclient openURL \""+QString(aUrl)+"\"");
+    // -- David : replacement for KFM::openURL
+    (void) new KRun(aUrl);
   }
 }
 
