@@ -3500,20 +3500,20 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                                 block.creationTime.tm_mday );
                     if( dateOK && created.isValid() ) {
                         if( signer.isEmpty() )
-                            htmlStr += i18n( "Message was signed with unknown key 0x%1, created %2." )
+                            htmlStr += i18n( "Message was signed with key 0x%1, created %2." )
                                     .arg( keyWithURL ).arg( created.toString( Qt::LocalDate ) );
                         else
-                            htmlStr += i18n( "Message was signed by %1 with unknown key 0x%2, created %3." )
+                            htmlStr += i18n( "Message was signed by %1 with key 0x%2, created %3." )
                                     .arg( signer )
                                     .arg( keyWithURL )
                                     .arg( created.toString( Qt::LocalDate ) );
                     }
                     else {
                         if( signer.isEmpty() )
-                            htmlStr += i18n( "Message was signed with unknown key 0x%1." )
+                            htmlStr += i18n( "Message was signed with key 0x%1." )
                                     .arg( keyWithURL );
                         else
-                            htmlStr += i18n( "Message was signed by %1 with unknown key 0x%1." )
+                            htmlStr += i18n( "Message was signed by %1 with key 0x%1." )
                                     .arg( signer )
                                     .arg( keyWithURL );
                     }
