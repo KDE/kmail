@@ -313,7 +313,7 @@ void KMFilterListBox::createFilter( const QCString field, const QString value )
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
   
-  KMFilterActionDesc *desc = (*kernel->filterActionDict())["move to folder"];
+  KMFilterActionDesc *desc = (*kernel->filterActionDict())["transfer"];
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
