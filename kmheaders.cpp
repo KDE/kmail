@@ -120,19 +120,13 @@ public:
       fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
     else
       fromStr = KMMessage::stripEmailAddr(mMsgBase->from());
+
     if (fromStr.isEmpty()) fromStr = i18n("Unknown");
-    if (fromStr.isEmpty()) {
-      debug( QString("Null message %1").arg( mMsgId ) );
-    }
-    if (fromStr == i18n("Unknown")) {
-      debug( QString("Unknown message %1").arg( mMsgId ) );
-    }
-    setText( mPaintInfo->senderCol, fromStr.simplifyWhiteSpace() );
+    setText( mPaintInfo->senderCol, fromStr.stripWhiteSpace() );
 
     subjStr = mMsgBase->subject();
-
     if (subjStr.isEmpty()) subjStr = i18n("No Subject");
-    setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
+    setText( mPaintInfo->subCol, subjStr.stripWhiteSpace() );
 
     time_t mDate = mMsgBase->date();
     setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
