@@ -1737,6 +1737,8 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
   kdDebug(5006) << k_funcinfo << command->result() << endl;
   bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
+    // make sure the current item is shown
+    makeHeaderVisible();
 #if 0 // enable after the message-freeze
     BroadcastStatus::instance()->setStatusMsg(
        deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
