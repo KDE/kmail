@@ -1146,12 +1146,20 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
     KMFolder* trash = kernel->imapFolderMgr()->findIdString( trashStr );
     if (!trash) trash = kernel->trashFolder();
     if (srcFolder != trash)
+    {
       folder = trash;
+    } else {
+      // delete msg
+      headers->moveMsgToFolder(0);
+    }
   } else {
     if (srcFolder != kernel->trashFolder())
     {
       // move to trash folder
       folder = kernel->trashFolder();
+    } else {
+      // delete msg
+      headers->moveMsgToFolder(0);
     }
   }
 
