@@ -17,12 +17,8 @@ public:
   KMMsgInfo(KMFolder* parent, long off=0, short len=0);
   virtual ~KMMsgInfo();
 
-  /**
-   * parses an index string in the old style index file format.
-   * provided for compatibility purposes.
-   * @return whether the @param str could be parsed successfully
-   */
-  bool compat_fromOldIndexString(const QCString& str, bool toUtf8);
+  /* left for old style index files */
+  void compat_fromOldIndexString(const QCString& str, bool toUtf8);
 
 
   /** Initialize with given values and set dirty flag to FALSE. */
