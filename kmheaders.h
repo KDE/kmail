@@ -35,6 +35,8 @@ public:
     ~KMHeaderToFolderDrag() {};
 
     static bool canDecode( QDropEvent* e );
+protected:
+    static QPixmap *dragPix;
 };
 
 /** Information shared by all items in a list view */
