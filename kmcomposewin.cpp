@@ -34,6 +34,8 @@
 #include <kfiledialog.h>
 #include <kwm.h>
 #include <kglobal.h>
+#include <qmessagebox.h>
+
 #include <qtabdialog.h>
 #include <qlabel.h>
 #include <qlayout.h>
