@@ -123,19 +123,19 @@ int KMailApplication::newInstance()
   if (args->getOption("subject"))
   {
      mailto = true;
-     subj = args->getOption("subject");
+     subj = QString::fromLocal8Bit(args->getOption("subject"));
   }
 
   if (args->getOption("cc"))
   {
      mailto = true;
-     cc = args->getOption("cc");
+     cc = QString::fromLocal8Bit(args->getOption("cc"));
   }
 
   if (args->getOption("bcc"))
   {
      mailto = true;
-     bcc = args->getOption("bcc");
+     bcc = QString::fromLocal8Bit(args->getOption("bcc"));
   }
 
   if (args->getOption("msg"))
@@ -147,7 +147,7 @@ int KMailApplication::newInstance()
   if (args->getOption("body"))
   {
      mailto = true;
-     body = args->getOption("body");
+     body = QString::fromLocal8Bit(args->getOption("body"));
   }
 
   if (args->getOption("attach"))
