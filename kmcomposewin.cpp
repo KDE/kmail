@@ -239,13 +239,13 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
          "could not be processed correctly, the Plug-In might be damaged.\n"
          "PLEASE CONTACT YOUR SYSTEM ADMINISTRATOR");
   mErrorNoCryptPlugAndNoBuildIn =
-    i18n("No active Crypto Plug-In was found and the built-in OpenPGP code "
-         "did not run successfully.\n"
-         "You could do two things to change this:\n"
-         "* EITHER activate a Plug-In using the "
-         "'Settings/Configure KMail / Plug-In' dialog.\n"
-         "* OR specify traditional OpenPGP settings on the same dialog's "
-         "'Identity / Advanced' tab page.");
+    i18n("<p>No active Crypto Plug-In was found and the built-in OpenPGP code "
+         "did not run successfully.</p>"
+         "<p>You can do two things to change this:</p>"
+         "<ul><li><em>either</em> activate a Plug-In using the "
+         "Settings->Configure KMail->Plug-In dialog.</li>"
+         "<li><em>or</em> specify traditional OpenPGP settings on the same dialog's "
+         "Identity->Advanced tab.</li></ul>");
   mDone = true;
 }
 
@@ -1848,8 +1848,8 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
         newBodyPart.setBodyEncoded( block.text() );
       }
       else
-        KMessageBox::sorry(this,
-          i18n("Signing not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
+        KMessageBox::sorry(this, i18n("<qt><p>Signing not done.</p>%1</qt>")
+			   .arg( mErrorNoCryptPlugAndNoBuildIn ));
     }
   }
 
@@ -2012,7 +2012,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
         }
         else
           KMessageBox::sorry(this,
-            i18n("Encrypting not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
+            i18n("<qt><p>Encrypting not done.</p>%1</qt>").arg( mErrorNoCryptPlugAndNoBuildIn ));
       }
     }
   }
