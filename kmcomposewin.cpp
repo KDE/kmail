@@ -1836,19 +1836,8 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     innerBodyPart.setContentDisposition( "inline" );
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
-    innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
-    // if the signed body is 7bit and contains trailing spaces or a line begins
-    // with "From " it must be quoted-printable encoded (RFC 3156)
-    if( doSign &&
-        DwMime::kCte7bit == innerBodyPart.cte() &&
-        ( 0 <= body.find( " \n" ) ||              // trailing space
-          0 <= body.find( "\t\n" ) ||             // trailing tab
-          !qstrncmp( "From ", body.data(), 5 ) || // body begins with "From "
-          0 <= body.find( "\nFrom ") ) )  {       // a line begins with "From "
-      innerBodyPart.setCteStr( "quoted-printable" );
-      kdDebug(5006) << "Changed encoding of message body from 7 bit to "
-                    << "quoted-printable as required by RFC 3156." << endl;
-    }
+    innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign,
+                                     doSign);
     innerBodyPart.setCharset(mCharset);
     innerBodyPart.setBodyEncoded( body );
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
@@ -1878,10 +1867,10 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
           QCString cte = attachPart->cteStr().lower();
           if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
             QByteArray body = attachPart->bodyDecodedBinary();
-            attachPart->setCteStr( "quoted-printable" );
-            attachPart->setBodyEncodedBinary( body );
+            QValueList<int> dummy;
+            attachPart->setBodyAndGuessCte(body, dummy, false, bSign);
             kdDebug(5006) << "Changed encoding of message part from "
-                          << cte << " to quoted-printable" << endl;
+                          << cte << " to " << attachPart->cteStr() << endl;
           }
         }
         innerDwPart = theMessage.createDWBodyPart( attachPart );
@@ -1902,19 +1891,8 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   {
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
-    oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
-    // if the signed body is 7bit and contains trailing spaces or a line begins
-    // with "From " it must be quoted-printable encoded (RFC 3156)
-    if( doSign &&
-        DwMime::kCte7bit == oldBodyPart.cte() &&
-        ( 0 <= body.find( " \n" ) ||              // trailing space
-          0 <= body.find( "\t\n" ) ||             // trailing tab
-          !qstrncmp( "From ", body.data(), 5 ) || // body begins with "From "
-          0 <= body.find( "\nFrom ") ) )  {       // a line begins with "From "
-      oldBodyPart.setCteStr( "quoted-printable" );
-      kdDebug(5006) << "Changed encoding of message body from 7 bit to "
-                    << "quoted-printable as required by RFC 3156." << endl;
-    }
+    oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign,
+                                   doSign);
     oldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
@@ -2229,10 +2207,10 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             QCString cte = attachPart->cteStr().lower();
             if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
               QByteArray body = attachPart->bodyDecodedBinary();
-              attachPart->setCteStr( "quoted-printable" );
-              attachPart->setBodyEncodedBinary( body );
+              QValueList<int> dummy;
+              attachPart->setBodyAndGuessCte(body, dummy, false, true);
               kdDebug(5006) << "Changed encoding of message part from "
-                            << cte << " to quoted-printable" << endl;
+                            << cte << " to " << attachPart->cteStr() << endl;
             }
             DwBodyPart* innerDwPart = msg->createDWBodyPart( attachPart );
             innerDwPart->Assemble();

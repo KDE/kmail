@@ -2063,7 +2063,7 @@ QString KMMessage::replyToId(void) const
 
   // if we have found a good message id we can return immediately
   // We ignore mangled In-Reply-To headers which are created by a
-  // missconfigured Mutt. They look like this <"from foo"@bar.baz>, i.e.
+  // misconfigured Mutt. They look like this <"from foo"@bar.baz>, i.e.
   // they contain double quotes and spaces. We only check for '"'.
   if (!replyTo.isEmpty() && (replyTo[0] == '<') &&
       ( -1 == replyTo.find( '"' ) ) )
@@ -2464,109 +2464,98 @@ QCString KMMessage::bodyDecoded(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyAndGuessCte(const QByteArray& aBuf,
-                       QValueList<int> & allowedCte,
-                       bool allow8Bit )
+QValueList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
+                                                 bool allow8Bit,
+                                                 bool willBeSigned )
 {
-  allowedCte.clear();
-
-  CharFreq cf( aBuf ); // save to pass null arrays...
+  QValueList<int> allowedCtes;
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:
-    allowedCte << DwMime::kCte7bit;
+    allowedCtes << DwMime::kCte7bit;
+  case CharFreq::EightBitText:
     if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
+      allowedCtes << DwMime::kCte8bit;
   case CharFreq::SevenBitData:
     if ( cf.printableRatio() > 5.0/6.0 ) {
       // let n the length of data and p the number of printable chars.
       // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
       // => qp < base64 iff p > 5n/6.
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
+      allowedCtes << DwMime::kCteQp;
+      allowedCtes << DwMime::kCteBase64;
     } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitText:
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
+      allowedCtes << DwMime::kCteBase64;
+      allowedCtes << DwMime::kCteQp;
     }
     break;
   case CharFreq::EightBitData:
-    allowedCte << DwMime::kCteBase64;
+    allowedCtes << DwMime::kCteBase64;
     break;
   case CharFreq::None:
   default:
-      break;
+    // just nothing (avoid compiler warning)
+    ;
   }
 
+  // In the following cases only QP and Base64 are allowed:
+  // - the buffer will be OpenPGP/MIME signed and it contains trailing
+  //   whitespace (cf. RFC 3156)
+  // - a line starts with "From "
+  if ( ( willBeSigned && cf.hasTrailingWhitespace() ) ||
+       cf.hasLeadingFrom() ) {
+    allowedCtes.remove( DwMime::kCte8bit );
+    allowedCtes.remove( DwMime::kCte7bit );
+  }
+  
+  return allowedCtes;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
+                                    QValueList<int> & allowedCte,
+                                    bool allow8Bit,
+                                    bool willBeSigned )
+{
+  CharFreq cf( aBuf ); // it's safe to pass null arrays
+
+  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
+
+#ifndef NDEBUG
+  DwString dwCte;
+  DwCteEnumToStr(allowedCte[0], dwCte);
   kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
-        << cf.printableRatio() << " and I chose "
-        << allowedCte[0] << endl;
+                << cf.printableRatio() << " and I chose "
+                << dwCte.c_str() << endl;
+#endif
+
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncodedBinary( aBuf );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyAndGuessCte(const QCString& aBuf,
-                       QValueList<int> & allowedCte,
-                       bool allow8Bit )
+void KMMessage::setBodyAndGuessCte( const QCString& aBuf,
+                                    QValueList<int> & allowedCte,
+                                    bool allow8Bit,
+                                    bool willBeSigned )
 {
-  allowedCte.clear();
+  CharFreq cf( aBuf.data(), aBuf.length() ); // it's safe to pass null strings
 
-  CharFreq cf( aBuf.data(), aBuf.length() ); // save to pass null strings
+  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
-  switch ( cf.type() ) {
-  case CharFreq::SevenBitText:
-    allowedCte << DwMime::kCte7bit;
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-  case CharFreq::SevenBitData:
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      // let n the length of data and p the number of printable chars.
-      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
-      // => qp < base64 iff p > 5n/6.
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitText:
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitData:
-    allowedCte << DwMime::kCteBase64;
-    break;
-  case CharFreq::None:
-  default:
-    break;
-  }
-
+#ifndef NDEBUG
+  DwString dwCte;
+  DwCteEnumToStr(allowedCte[0], dwCte);
   kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
-        << cf.printableRatio() << " and I chose "
-        << allowedCte[0] << endl;
+                << cf.printableRatio() << " and I chose "
+                << dwCte.c_str() << endl;
+#endif
+
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncoded( aBuf );
 }
+
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QCString& aStr)

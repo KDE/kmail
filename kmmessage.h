@@ -28,6 +28,10 @@ class KMMessagePart;
 class KMMsgInfo;
 class KMHeaders;
 
+namespace KMime {
+  class CharFreq;
+}
+
 class DwBodyPart;
 class DwMediaType;
 class DwHeaders;
@@ -438,6 +442,13 @@ public:
   virtual void setBodyEncoded(const QCString& aStr);
   virtual void setBodyEncodedBinary(const QByteArray& aStr);
 
+  /** Returns a list of content-transfer-encodings that can be used with
+      the given result of the character frequency analysis of a message or
+      message part under the given restrictions. */
+  static QValueList<int> determineAllowedCtes( const KMime::CharFreq& cf,
+                                               bool allow8Bit,
+                                               bool willBeSigned );
+
   /** Sets body, encoded in the best fitting
     content-transfer-encoding, which is determined by character
     frequency count.
@@ -445,13 +456,16 @@ public:
     @param aBuf       input buffer
     @param allowedCte return: list of allowed cte's
     @param allow8Bit  whether "8bit" is allowed as cte.
+    @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
   */
-  virtual void setBodyAndGuessCte(const QByteArray& aBuf,
-                  QValueList<int>& allowedCte,
-                  bool allow8Bit=false);
-  virtual void setBodyAndGuessCte(const QCString& aBuf,
-                  QValueList<int>& allowedCte,
-                  bool allow8Bit=false);
+  virtual void setBodyAndGuessCte( const QByteArray& aBuf,
+                                   QValueList<int>& allowedCte,
+                                   bool allow8Bit = false,
+                                   bool willBeSigned = false );
+  virtual void setBodyAndGuessCte( const QCString& aBuf,
+                                   QValueList<int>& allowedCte,
+                                   bool allow8Bit = false,
+                                   bool willBeSigned = false );
 
   /** Returns a decoded version of the body from the current content transfer
       encoding. The first method returns a null terminated string, the second

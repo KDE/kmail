@@ -48,14 +48,17 @@ public:
       @param aBuf       input buffer
       @param allowedCte return: list of allowed cte's
       @param allow8Bit  whether "8bit" is allowed as cte.
+      @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
   */
   virtual void setBodyAndGuessCte(const QByteArray& aBuf,
 				  QValueList<int>& allowedCte,
-				  bool allow8Bit=false);
-  /* Same for text */
+				  bool allow8Bit = false,
+                                  bool willBeSigned = false);
+  /** Same for text */
   virtual void setBodyAndGuessCte(const QCString& aBuf,
 				  QValueList<int>& allowedCte,
-				  bool allow8Bit=false);
+				  bool allow8Bit = false,
+                                  bool willBeSigned = false);
 
   /** Sets body, encoded according to the content-transfer-encoding.
       BEWARE: The entire aStr is used including trailing 0 of text strings! */

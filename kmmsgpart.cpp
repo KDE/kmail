@@ -140,108 +140,46 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
 
 void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 				       QValueList<int> & allowedCte,
-				       bool allow8Bit )
+				       bool allow8Bit,
+                                       bool willBeSigned )
 {
-  allowedCte.clear();
-
   mBodyDecodedSize = aBuf.size();
 
   CharFreq cf( aBuf ); // save to pass null arrays...
 
-  switch ( cf.type() ) {
-  case CharFreq::SevenBitText:
-    allowedCte << DwMime::kCte7bit;
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-  case CharFreq::SevenBitData:
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      // let n the length of data and p the number of printable chars.
-      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
-      // => qp < base64 iff p > 5n/6.
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitText:
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitData:
-    allowedCte << DwMime::kCteBase64;
-    break;
-  case CharFreq::None:
-  default:
-      //just nothing
-      break;
-  }
+  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
+#ifndef NDEBUG
+  DwString dwCte;
+  DwCteEnumToStr(allowedCte[0], dwCte);
   kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
-	    << allowedCte[0] << endl;
+	    << dwCte.c_str() << endl;
+#endif
+
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncodedBinary( aBuf );
 }
 
 void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
 				       QValueList<int> & allowedCte,
-				       bool allow8Bit )
+				       bool allow8Bit,
+                                       bool willBeSigned )
 {
-  allowedCte.clear();
-
   mBodyDecodedSize = aBuf.length();
 
   CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass null strings
 
-  switch ( cf.type() ) {
-  case CharFreq::SevenBitText:
-    allowedCte << DwMime::kCte7bit;
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-  case CharFreq::SevenBitData:
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      // let n the length of data and p the number of printable chars.
-      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
-      // => qp < base64 iff p > 5n/6.
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitText:
-    if ( allow8Bit )
-      allowedCte << DwMime::kCte8bit;
-    if ( cf.printableRatio() > 5.0/6.0 ) {
-      allowedCte << DwMime::kCteQp;
-      allowedCte << DwMime::kCteBase64;
-    } else {
-      allowedCte << DwMime::kCteBase64;
-      allowedCte << DwMime::kCteQp;
-    }
-    break;
-  case CharFreq::EightBitData:
-    allowedCte << DwMime::kCteBase64;
-    break;
-  case CharFreq::None:
-  default:
-      //just nothing
-      break;
-  }
+  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
+#ifndef NDEBUG
+  DwString dwCte;
+  DwCteEnumToStr(allowedCte[0], dwCte);
   kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
-	    << allowedCte[0] << endl;
+	    << dwCte.c_str() << endl;
+#endif
+
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncoded( aBuf );
 }
