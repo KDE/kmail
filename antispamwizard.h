@@ -33,17 +33,17 @@
 
 #include <qcheckbox.h>
 #include <qdict.h>
-#include <qlabel.h>
 
 class KActionCollection;
 class KMFolderTree;
+class QLabel;
 
 namespace KMail {
 
   class SimpleFolderTree;
   class SpamToolConfig;
   typedef QValueList<SpamToolConfig> SpamToolConfigList;
-  
+
   class ASWizInfoPage;
   class ASWizProgramsPage;
   class ASWizRulesPage;
@@ -52,23 +52,23 @@ namespace KMail {
   /**
     @short KMail anti spam wizard.
     @author Andreas Gungl <a.gungl@gmx.de>
-   
+
     The wizard helps to create filter rules to let KMail operate
-    with external anti spam tools. The wizard tries to detect the 
+    with external anti spam tools. The wizard tries to detect the
     tools, but the user can overide the preselections.
     Then the user can decide what funtionality shall be supported
     by the created filter rules.
     The wizard will append the created filter rules after the
-    last existing rule to keep possible conflicts with existing 
+    last existing rule to keep possible conflicts with existing
     filter configurations minimal.
-    
+
     The configuration for the tools to get checked and set up
-    is read fro a config file. The structure of the file is as 
+    is read fro a config file. The structure of the file is as
     following:
     <pre>
     [General]
     tools=1
-    
+
     [Spamtool #1]
     VisibleName=&Spamassassin
     Executable=spamassassin -V
@@ -88,49 +88,49 @@ namespace KMail {
   class AntiSpamWizard : public KWizard
   {
     Q_OBJECT
-    
+
     public:
-      /** Constructor that needs to initialize from the main folder tree 
+      /** Constructor that needs to initialize from the main folder tree
         of KMail.
         @param parent The parent widget for the wizard.
         @param mainFolderTree The main folder tree from which the folders
-          are copied to allow the selection of a spam folder in a tree 
+          are copied to allow the selection of a spam folder in a tree
           within one of the wizard pages.
-        @param collection In this collection there the wizard will search 
+        @param collection In this collection there the wizard will search
           for the filter menu actions which get created for classification
           rules (to add them later to the main toolbar).
       */
       AntiSpamWizard( QWidget * parent, KMFolderTree * mainFolderTree,
                       KActionCollection * collection );
-    
+
     protected:
       /** Evaluate the settings made and create the appropriate filter rules. */
       void accept();
-      
+
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();
       /** Modify the status of the wizard to reflect the selected functionality. */
       void checkRulesSelections();
-      
+
     private:
       /* The pages in the wizard */
       ASWizInfoPage * infoPage;
       ASWizProgramsPage * programsPage;
       ASWizRulesPage * rulesPage;
-      
+
       /* The configured tools and it's settings to be used in the wizard. */
       SpamToolConfigList toolList;
-      
+
       /* The action collection where the filter menu action is searched in */
       KActionCollection * actionCollection;
   };
-  
-  
+
+
   //---------------------------------------------------------------------------
   /*
     Instances of this class store the settings for one tool as read from
-    the config file. Visible name and What's this text can not get 
+    the config file. Visible name and What's this text can not get
     translated!
   */
   class SpamToolConfig
@@ -141,19 +141,19 @@ namespace KMail {
                      QString detection, QString spam, QString ham,
                      QString header, QString pattern, bool regExp,
                      bool bayesFilter );
-      
-      QString getVisibleName() { return visibleName; };
-      QString getExecutable() { return executable; };
-      QString getWhatsThisText() { return whatsThisText; };
-      QString getFilterName() { return filterName; };
-      QString getDetectCmd() { return detectCmd; };
-      QString getSpamCmd() { return spamCmd; };
-      QString getHamCmd() { return hamCmd; };
-      QString getDetectionHeader() { return detectionHeader; };
-      QString getDetectionPattern() { return detectionPattern; };
-      bool isUseRegExp() { return useRegExp; };
-      bool useBayesFilter() { return supportsBayesFilter; };
-      
+
+      QString getVisibleName()  const { return visibleName; };
+      QString getExecutable() const { return executable; };
+      QString getWhatsThisText() const { return whatsThisText; };
+      QString getFilterName() const { return filterName; };
+      QString getDetectCmd() const { return detectCmd; };
+      QString getSpamCmd() const { return spamCmd; };
+      QString getHamCmd() const { return hamCmd; };
+      QString getDetectionHeader() const { return detectionHeader; };
+      QString getDetectionPattern() const { return detectionPattern; };
+      bool isUseRegExp() const { return useRegExp; };
+      bool useBayesFilter() const { return supportsBayesFilter; };
+
     private:
       // the name as shown by the checkbox in the dialog page
       QString visibleName;
@@ -180,57 +180,57 @@ namespace KMail {
   };
 
   //---------------------------------------------------------------------------
-  class ASWizInfoPage : public QWidget 
+  class ASWizInfoPage : public QWidget
   {
     public:
       ASWizInfoPage( QWidget *parent, const char *name );
-    
+
     private:
       QLabel *introText;
   };
-  
+
   //---------------------------------------------------------------------------
-  class ASWizProgramsPage : public QWidget 
+  class ASWizProgramsPage : public QWidget
   {
     Q_OBJECT
-    
+
     public:
-      ASWizProgramsPage( QWidget *parent, const char *name, 
+      ASWizProgramsPage( QWidget *parent, const char *name,
                          SpamToolConfigList &toolList );
 
-      bool isProgramSelected( QString visibleName );
-    
+      bool isProgramSelected( const QString &visibleName );
+
     private slots:
       void processSelectionChange();
-      
+
     signals:
       void selectionChanged();
-      
+
     private:
       QDict<QCheckBox> programDict;
   };
-  
+
   //---------------------------------------------------------------------------
-  class ASWizRulesPage : public QWidget 
+  class ASWizRulesPage : public QWidget
   {
     Q_OBJECT
-    
+
     public:
       ASWizRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
-    
-      bool pipeRulesSelected();
-      bool classifyRulesSelected();
-      bool moveRulesSelected();
-      
-      QString selectedFolderName();
+
+      bool pipeRulesSelected() const;
+      bool classifyRulesSelected() const;
+      bool moveRulesSelected() const;
+
+      QString selectedFolderName() const;
       void allowClassification( bool enabled );
-      
+
     private slots:
       void processSelectionChange();
-      
+
     signals:
       void selectionChanged();
-      
+
     private:
       QCheckBox * pipeRules;
       QCheckBox * classifyRules;
