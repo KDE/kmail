@@ -43,6 +43,7 @@ using namespace KPIM;
 #include <qbitmap.h>
 #include <qstyle.h>
 #include <qlistview.h>
+#include <qregexp.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -280,7 +281,7 @@ public:
       if (tmp.isEmpty())
         tmp = i18n("No Subject");
       else
-        tmp = tmp.simplifyWhiteSpace();
+        tmp.remove(QRegExp("[\r\n]"));
 
     } else if(col == headers->paintInfo()->dateCol) {
         tmp = headers->mDate.dateString( mMsgBase->date() );
