@@ -214,7 +214,7 @@ public:
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
     if (mMsgBase->isNew() || mMsgBase->isUnread()
-        || mMsgBase->isFlag() || mMsgBase->isWatched() ) {
+        || mMsgBase->isImportant() || mMsgBase->isWatched() ) {
       setOpen(true);
       KMHeaderItem * topOfThread = this;
       while(topOfThread->parent())
@@ -350,7 +350,7 @@ public:
       if(mMsgBase->isRead() || mMsgBase->isOld()) pixmaps << *KMHeaders::pixRead;
       if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
       if(mMsgBase->isDeleted()) pixmaps << *KMHeaders::pixDel;
-      if(mMsgBase->isFlag()) pixmaps << *KMHeaders::pixFlag;
+      if(mMsgBase->isImportant()) pixmaps << *KMHeaders::pixFlag;
       if(mMsgBase->isReplied()) pixmaps << *KMHeaders::pixRep;
       if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
       if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
@@ -401,7 +401,7 @@ public:
     // new overrides unread, and flagged overrides new.
     if (mMsgBase->isUnread()) color = (QColor*)(&headers->paintInfo()->colUnread);
     if (mMsgBase->isNew()) color = (QColor*)(&headers->paintInfo()->colNew);
-    if (mMsgBase->isFlag()) color = (QColor*)(&headers->paintInfo()->colFlag);
+    if (mMsgBase->isImportant()) color = (QColor*)(&headers->paintInfo()->colFlag);
 
     _cg.setColor( QColorGroup::Text, *color );
 

@@ -412,7 +412,7 @@ bool KMMsgBase::isSent(void) const
 }
 
 //-----------------------------------------------------------------------------
-bool KMMsgBase::isFlag(void) const
+bool KMMsgBase::isImportant(void) const
 {
   KMMsgStatus st = status();
   return (st & KMMsgStatusFlag);

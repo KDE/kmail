@@ -158,8 +158,8 @@ public:
   /** Returns TRUE if status is sent. */
   virtual bool isSent(void) const;
 
-  /** Returns TRUE if status is flag. */
-  virtual bool isFlag(void) const;
+  /** Returns TRUE if status is important. */
+  virtual bool isImportant(void) const;
 
   /** Returns TRUE if status is watched. */
   virtual bool isWatched(void) const;

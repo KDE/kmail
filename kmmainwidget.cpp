@@ -2902,13 +2902,13 @@ void KMMainWidget::updateMessageActions()
       mToggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
       mToggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
       mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
-      mToggleFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+      mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
       if (thread_actions) {
         mToggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
         mToggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
         mToggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
         mToggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
-        mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+        mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
         mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
         mIgnoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
       }
