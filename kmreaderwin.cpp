@@ -334,6 +334,8 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
 void KMReaderWin::initHtmlWidget(void)
 {
   mViewer = new KHTMLPart(this, "khtml");
+  // Let's better be paranoid and disable plugins (it defaults to enabled):
+  mViewer->enablePlugins(false);
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
 
