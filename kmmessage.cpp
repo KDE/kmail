@@ -85,6 +85,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg(0)
 {
+  mUnencryptedMsg = NULL;
   assign( other );
 }
 
