@@ -820,7 +820,7 @@ void KMComposeWin::setupActions(void)
                                      "unlock", 0,
                                      actionCollection(), "encrypt_message");
   signAction = new KToggleAction (i18n("Sign message"),
-                                  "feather_white", 0,
+                                  "signature", 0,
                                   actionCollection(), "sign_message");
 
   if(!Kpgp::getKpgp()->havePGP())
