@@ -1709,6 +1709,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
 
     kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
 
+    QString txt;
+    QString unknown( i18n("(unknown)") );
     if( !data ){
       if( new_cleartext ) {
         queueHtml( new_cleartext );
@@ -1718,14 +1720,26 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         kdDebug(5006) << deb << endl;
         delete new_cleartext;
         bIsOpaqueSigned = true;
+      } else {
+        txt = "<hr><b><h2>";
+        txt.append( i18n( "The crypto engine returned no cleartext data !" ) );
+        txt.append( "</h2></b>" );
+        txt.append( "<br>&nbsp;<br>" );
+        txt.append( i18n( "Status: " ).local8Bit() );
+        if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
+          txt.append( "<i>" );
+          txt.append( sigMeta.status );
+          txt.append( "</i>" );
+        }
+        else
+          txt.append( unknown );
+        queueHtml(txt);
       }
     }
 
     if( bSignatureOk ) {
-      QString txt;
-      QString unknown( i18n("(unknown)") );
       txt = "<hr><b>";
-      txt.append( i18n( "Signature is Ok." ).local8Bit() );
+      txt.append( i18n( "Signature is OK." ).local8Bit() );
       txt.append( "</b><br>&nbsp;<br>" );
       txt.append( i18n( "Status: " ).local8Bit() );
       if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
@@ -1773,7 +1787,19 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
       queueHtml(txt);
     }
     else {
-      queueHtml("<hr><b><h2>Signature could *not* be verified !</h2></b>");
+      txt = "<hr><b><h2>";
+      txt.append( i18n( "Signature could *not* be verified !" ) );
+      txt.append( "</h2></b>" );
+      txt.append( "<br>&nbsp;<br>" );
+      txt.append( i18n( "Status: " ).local8Bit() );
+      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
+        txt.append( "<i>" );
+        txt.append( sigMeta.status );
+        txt.append( "</i>" );
+      }
+      else
+        txt.append( unknown );
+      queueHtml(txt);
     }
     cryptPlug->setActive( oldCryptPlugActiveFlag );
   } else {
