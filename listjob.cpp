@@ -97,15 +97,17 @@ void ListJob::execute()
   jd.onlySubscribed = ( mType != ImapAccountBase::List );
   jd.path = mPath;
   QString status = mDestFolder ? mDestFolder->prettyURL() : QString::null;
-  jd.progressItem = ProgressManager::createProgressItem(
-      mParentProgressItem,
-      "ListDir" + ProgressManager::getUniqueID(),
-      status,
-      i18n("retrieving folders"),
-      false,
-      mAccount->useSSL() || mAccount->useTLS() );
   if ( mParentProgressItem )
+  {
+    jd.progressItem = ProgressManager::createProgressItem(
+        mParentProgressItem,
+        "ListDir" + ProgressManager::getUniqueID(),
+        status,
+        i18n("retrieving folders"),
+        false,
+        mAccount->useSSL() || mAccount->useTLS() );
     mParentProgressItem->setStatus( status );
+  }
 
   // this is needed if you have a prefix
   // as the INBOX is located in your root ("/") and needs a special listing
@@ -171,6 +173,8 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
     delete this;
     return;
   }
+  if( (*it).progressItem )
+    (*it).progressItem->setProgress( 50 );
   QString name;
   KURL url;
   QString mimeType;
