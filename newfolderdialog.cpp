@@ -60,7 +60,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 {
   setWFlags( getWFlags() | WDestructiveClose );
   if ( folder ) {
-    setCaption("New Subfolder of: " + folder->prettyURL() );
+    setCaption( i18n("New Subfolder of: %1").arg( folder->prettyURL() ) );
   }
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
