@@ -399,10 +399,6 @@ void KMAcctImap::setPrefixHook() {
 void KMAcctImap::readConfig(KConfig& config)
 {
   ImapAccountBase::readConfig( config );
-  if ( checkExclude() ) {
-    disconnect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
-        this, SLOT(slotUpdateFolderList()));
-  }
 }
 
 //-----------------------------------------------------------------------------

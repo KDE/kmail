@@ -1692,6 +1692,7 @@ int KMFolderImap::expungeContents()
   return rc;
 }
 
+//-----------------------------------------------------------------------------
 void
 KMFolderImap::setUserRights( unsigned int userRights )
 {
@@ -1699,6 +1700,7 @@ KMFolderImap::setUserRights( unsigned int userRights )
   kdDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
 }
 
+//-----------------------------------------------------------------------------
 void KMFolderImap::slotCompleteMailCheckProgress()
 {
   if ( mMailCheckProgressItem ) {
@@ -1707,6 +1709,7 @@ void KMFolderImap::slotCompleteMailCheckProgress()
   }
 }
 
+//-----------------------------------------------------------------------------
 void KMFolderImap::setSubfolderState( imapState state )
 {
   mSubfolderState = state;
@@ -1723,6 +1726,15 @@ void KMFolderImap::setSubfolderState( imapState state )
       static_cast<KMFolderImap*>(folder->storage())->setSubfolderState( state );
     }
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::setIncludeInMailCheck( bool check )
+{
+  bool changed = ( mCheckMail != check );
+  mCheckMail = check;
+  if ( changed )
+    account()->slotUpdateFolderList();
 }
 
 #include "kmfolderimap.moc"

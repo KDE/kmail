@@ -247,7 +247,7 @@ public:
    * If this folder should be included in new-mail-check
    */
   bool includeInMailCheck() { return mCheckMail; }
-  void setIncludeInMailCheck( bool check ) { mCheckMail = check; }
+  void setIncludeInMailCheck( bool check );
 
   /** Inherited */
   virtual int create(bool imap = FALSE);
