@@ -41,6 +41,7 @@
 #include <qstringlist.h>
 #include <qtextedit.h>
 #include <qvbox.h>
+#include <qwhatsthis.h>
 
 #include <errno.h>
 
@@ -72,11 +73,22 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogRuleEvaluation(void)) );
+  QWhatsThis::add( mLogRuleEvaluationBox, 
+      i18n( "You can control the feedback in the log concerning the "
+            "evaluation of the filter rules of applied filters. "
+            "Having this option checked will give detailed feedback "
+            "for each single filter rule. Alternativly, only "
+            "feedback about the result of the evaluation of all rules "
+            "of a single filter is given." ) );
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogState(void)) );
+  QWhatsThis::add( mLogActiveBox, 
+      i18n( "You can turn logging of filter activities on and off here. "
+            "Of course, log data is collected and shown only when logging "
+            "is turned on. " ) );
 
   QHBox * hbox = new QHBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
@@ -89,6 +101,13 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotChangeLogMemLimit(int)) );
+  QWhatsThis::add( mLogMemLimitSpin, 
+      i18n( "Collecting log data means an appropriate memory consumption "
+            "to be able to temporarily store those data. Here you can "
+            "limit the maximum amount of memory to be used for storing "
+            "log data. If the collected log data exceeds this limit, "
+            "the oldest data will be discarded until the limit is no "
+            "longer exceeded. " ) );
 
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)),
           this, SLOT(slotLogEntryAdded(QString)));
