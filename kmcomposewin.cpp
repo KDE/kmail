@@ -1725,15 +1725,7 @@ void KMComposeWin::slotAttachSave()
   if( url.isEmpty() )
     return;
 
-  if( !url.isLocalFile() )
-  {
-    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
-    return;
-  }
-
-  fileName = url.path();
-
-  kByteArrayToFile(msgPart->bodyDecodedBinary(), fileName, TRUE);
+  kernel->byteArrayToRemoteFile(msgPart->bodyDecodedBinary(), url);
 }
 
 

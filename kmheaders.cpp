@@ -1130,14 +1130,6 @@ void KMHeaders::saveMsg (int msgId)
   if( url.isEmpty() )
     return;
 
-  if( !url.isLocalFile() )
-  {
-    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
-    return;
-  }
-
-  QString fileName = url.path();
-
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
     str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
@@ -1145,10 +1137,9 @@ void KMHeaders::saveMsg (int msgId)
     str += "\n";
   }
 
-  if (kCStringToFile(str.latin1(), fileName, TRUE))
-    mOwner->statusMsg(i18n("Message(s) saved."));
-  else
-    mOwner->statusMsg(i18n("Failed to save message(s)."));
+  QByteArray ba = QCString(str);
+  ba.resize(ba.size() - 1);
+  kernel->byteArrayToRemoteFile(ba, url);
 }
 
 

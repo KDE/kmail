@@ -55,6 +55,14 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
 KMKernel::~KMKernel ()
 {
+  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.begin();
+  while ( it != mPutJobs.end() )
+  {
+    KIO::Job *job = it.key();
+    mPutJobs.remove( it );
+    job->kill();
+    it = mPutJobs.begin();
+  }
   mySelf = 0;
   kdDebug() << "KMKernel::~KMKernel" << endl;
 }
@@ -697,6 +705,45 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
   if (check)
     checkMail();
   //Anything else?
+}
+
+void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
+  bool overwrite)
+{
+  KIO::Job *job = KIO::put(aURL, -1, overwrite, FALSE);
+  putData pd; pd.url = aURL; pd.data = aData;
+  mPutJobs.insert(job, pd);
+  connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
+    SLOT(slotDataReq(KIO::Job*,QByteArray&)));
+  connect(job, SIGNAL(result(KIO::Job*)),
+    SLOT(slotResult(KIO::Job*)));
+}
+
+void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
+{
+  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(job);
+  assert(it != mPutJobs.end());
+  data = (*it).data;
+  (*it).data = QByteArray();
+}
+
+void KMKernel::slotResult(KIO::Job *job)
+{
+  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(job);
+  assert(it != mPutJobs.end());
+  if (job->error())
+  {
+    if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
+    {
+      if (KMessageBox::warningContinueCancel(0,
+        i18n("File %1 exists.\nDo you want to replace it?")
+        .arg((*it).url.prettyURL()), i18n("Save to file"), i18n("&Replace"))
+        == KMessageBox::Continue)
+        byteArrayToRemoteFile((*it).data, (*it).url, TRUE);
+    }
+    else job->showErrorDialog();
+  }
+  mPutJobs.remove(it);
 }
 
 KabAPI* KMKernel::KABaddrBook()

@@ -1695,19 +1695,9 @@ void KMReaderWin::slotAtmSave()
   if( url.isEmpty() )
     return;
 
-  if( !url.isLocalFile() )
-  {
-    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
-    return;
-  }
-
-  fileName = url.path();
   mSaveAttachDir = url.directory() + "/";
 
-  kernel->kbp()->busy();
-  if (!kByteArrayToFile(msgPart.bodyDecodedBinary(), fileName, TRUE))
-    KMessageBox::error(NULL, i18n("Could not save file"));
-  kernel->kbp()->idle();
+  kernel->byteArrayToRemoteFile(msgPart.bodyDecodedBinary(), url);
 }
 
 

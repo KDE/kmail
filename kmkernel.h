@@ -5,6 +5,7 @@
 #include <qstring.h>
 
 #include <kconfig.h>
+#include <kio/job.h>
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
@@ -65,6 +66,8 @@ public:
   void action (bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body, const KURL &attach,
                const KURL &messageFile);
+  void byteArrayToRemoteFile(const QByteArray&, const KURL&,
+    bool overwrite = FALSE);
 
   inline KMFolder *inboxFolder() { return the_inboxFolder; }
   inline KMFolder *outboxFolder() { return the_outboxFolder; }
@@ -88,6 +91,9 @@ public:
   inline bool checkingMail() { return the_checkingMail; }
   inline void setCheckingMail(bool flag) { the_checkingMail = flag; }
   inline void serverReady (bool flag) { the_server_is_ready = flag; }
+protected slots:
+  void slotDataReq(KIO::Job*,QByteArray&);
+  void slotResult(KIO::Job*);
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
@@ -104,6 +110,12 @@ private:
   KMAddrBook *the_addrBook;
   KabAPI *the_KAB_addrBook;
   KMSender *the_msgSender;
+  struct putData
+  {
+    KURL url;
+    QByteArray data;
+  };
+  QMap<KIO::Job *, putData> mPutJobs;
 
   QString the_previousVersion;  // previous KMail version. If different from current, 
                                 // the user has just updated. read from config
