@@ -23,6 +23,8 @@
 #include <kapp.h>
 #include <kiconloader.h>
 
+#include <config.h>
+
 /* TODO :
   --  When there is no output from PGP, a warning dialog should
       appear (when there's a problem now, the MESSAGE IS SENT
