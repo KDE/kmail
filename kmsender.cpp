@@ -703,7 +703,7 @@ bool KMSendSendmail::start(void)
 		"be resent.\n\n"
 	"The following transport protocol was used:\n  %2")
     .arg(str + "\n")
-    .arg("sendmail://");      
+    .arg("sendmail://");
     KMessageBox::information(0,msg);
     return FALSE;
   }
@@ -739,7 +739,6 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   *mMailerProc << mSender->mailer();
   addRecipients(aMsg->headerAddrField("To"));
   if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
-  if (!aMsg->bcc().isEmpty()) addRecipients(aMsg->headerAddrField("Bcc"));
 
   bccStr = aMsg->bcc();
   if (!bccStr.isEmpty())
