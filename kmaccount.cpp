@@ -204,9 +204,10 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 			       QString(strerror(rc)));
       return false;
     }
-    else return true;
+    int count = mFolder->count();
+    // If count == 1, the message is immediately displayed
+    if (count != 1) mFolder->unGetMsg(count - 1);
   }
-  // What now -  are we owner or not?
   return true; //Everything's fine - message has been added by filter  }
 }
 

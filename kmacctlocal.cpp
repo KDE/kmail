@@ -167,7 +167,9 @@ void KMAcctLocal::processNewMail(bool)
   {
 
     if (!addedOk) break;
-    if (KMBroadcastStatus::instance()->abortRequested()) break;
+
+    /* This causes mail eating
+    if (KMBroadcastStatus::instance()->abortRequested()) break; */
 
     QString statusMsg = statusMsgStub.arg(i);
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -179,13 +181,7 @@ void KMAcctLocal::processNewMail(bool)
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
       addedOk = processNewMsg(msg);
-      /*
-      if (msg->parent()) {
-	  int count = msg->parent()->count();
-	  if (count != 1 && msg->parent()->operator[](count - 1) == msg)
-	      msg->parent()->unGetMsg(count - 1);
-      }
-      */
+
       if (addedOk)
         hasNewMail = true;
     }
