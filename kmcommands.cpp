@@ -52,7 +52,6 @@
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -1876,14 +1875,14 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 {
   QPtrListIterator<partNode> itr( mAttachments );
 
-  KURL url, dirUrl;
+  QString dir, file;
   if ( mAttachments.count() > 1 )
   {
     // get the dir
     KFileDialog fdlg( QString::null, QString::null, parentWidget(), 0, true );
     fdlg.setMode( (unsigned int) KFile::Directory );
     if ( !fdlg.exec() ) return;
-    dirUrl = fdlg.selectedURL();
+    dir = fdlg.selectedURL().path();
   }
   else {
     // only one item, get the desired filename
@@ -1894,15 +1893,14 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
     if ( s.isEmpty() )
       s = "unnamed"; // ### this should probably be i18n'ed
-    url = KFileDialog::getSaveURL( s, QString::null, parentWidget(),
-                                   QString::null );
+    file = KFileDialog::getSaveFileName( s, QString::null, parentWidget(),
+                                         QString::null );
   }
 
   while ( itr.current() ) {
     QString s;
-    KURL curUrl;
-    if ( !dirUrl.isEmpty() ) {
-      curUrl = dirUrl;
+    QString filename;
+    if ( !dir.isEmpty() ) {
       s = (*itr)->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
       if ( s.isEmpty() )
         s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
@@ -1914,125 +1912,102 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         ++itr;
         continue;
       }
-      curUrl.setFileName( s );
-    } else 
-      curUrl = url;
+      filename = dir + "/" + s;
+    }
+    else
+      filename = file;
 
-    if( !curUrl.isEmpty() ) {
-      if( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
+    if( !filename.isEmpty() ) {
+      if( QFile::exists( filename ) ) {
         if( KMessageBox::warningYesNo( parentWidget(),
-                                       i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( curUrl.fileName() ),
+                                       i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s.isEmpty() ? filename : s ),
                                        i18n( "KMail Warning" ) ) ==
             KMessageBox::No ) {
           ++itr;
           continue;
         }
       }
-      saveItem( itr.current(), curUrl );
+      saveItem( itr.current(), filename );
     }
     ++itr;
   }
 }
 
-void KMSaveAttachmentsCommand::saveItem( partNode *node, const KURL& url )
+void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename )
 {
-  if ( !node || url.isEmpty() ) 
-    return;
+  if ( node && !filename.isEmpty() ) {
+    bool bSaveEncrypted = false;
+    bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
+    if( bEncryptedParts )
+      if( KMessageBox::questionYesNo( parentWidget(),
+                                      i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
+                                      i18n( "KMail Question" ) ) ==
+          KMessageBox::Yes )
+        bSaveEncrypted = true;
 
-  bool bSaveEncrypted = false;
-  bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
-  if( bEncryptedParts )
-    if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
-          i18n( "KMail Question" ) ) ==
-        KMessageBox::Yes )
-      bSaveEncrypted = true;
+    bool bSaveWithSig = true;
+    if( node->signatureState() != KMMsgNotSigned )
+      if( KMessageBox::questionYesNo( parentWidget(),
+                                      i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
+                                      i18n( "KMail Question" ) ) !=
+          KMessageBox::Yes )
+        bSaveWithSig = false;
 
-  bool bSaveWithSig = true;
-  if( node->signatureState() != KMMsgNotSigned )
-    if( KMessageBox::questionYesNo( parentWidget(),
-          i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
-          i18n( "KMail Question" ) ) !=
-        KMessageBox::Yes )
-      bSaveWithSig = false;
-
-  QFile *file;
-  KTempFile tf;
-  tf.setAutoDelete( true );
-  if ( url.isLocalFile() )
-  {
-    // save directly
-    file = new QFile( url.path() );
-    if ( !file->open( IO_WriteOnly ) )
-    {
-      KMessageBox::error( parentWidget(),
-          i18n( "%2 is detailed error description",
-            "Could not write the file %1:\n%2" )
-          .arg( url.path() )
-          .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
-          i18n( "KMail Error" ) );
-      return;
-    }
-    fchmod( file->handle(), S_IRUSR | S_IWUSR );
-    tf.close();
-  } else // write to tmpfile which is uploaded later
-    file = tf.file();
-
-  if ( mEncoded )
-  {
-    // This does not decode the Message Content-Transfer-Encoding
-    // but saves the _original_ content of the message part
-    QDataStream ds( file );
-    QCString cstr( node->msgPart().body() );
-    ds.writeRawBytes( cstr, cstr.size() );
-  }
-  else
-  {
-    QDataStream ds( file );
-    if( bSaveEncrypted || !bEncryptedParts) {
-      partNode *dataNode = node;
-      if( !bSaveWithSig ) {
-        if( DwMime::kTypeMultipart == node->type() &&
-            DwMime::kSubtypeSigned == node->subType() ){
-          // carefully look for the part that is *not* the signature part:
-          if( node->findType( DwMime::kTypeApplication,
-                DwMime::kSubtypePgpSignature,
-                TRUE, false ) ){
-            dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                DwMime::kSubtypePgpSignature,
-                TRUE, false );
-          }else if( node->findType( DwMime::kTypeApplication,
-                DwMime::kSubtypePkcs7Mime,
-                TRUE, false ) ){
-            dataNode = node->findTypeNot( DwMime::kTypeApplication,
-                DwMime::kSubtypePkcs7Mime,
-                TRUE, false );
-          }else{
-            dataNode = node->findTypeNot( DwMime::kTypeMultipart,
-                DwMime::kSubtypeUnknown,
-                TRUE, false );
+    QFile file( filename );
+    if( file.open( IO_WriteOnly ) ) {
+      fchmod( file.handle(), S_IRUSR | S_IWUSR );
+      if ( mEncoded )
+      {
+        // This does not decode the Message Content-Transfer-Encoding
+        // but saves the _original_ content of the message part
+        QDataStream ds( &file );
+        QCString cstr( node->msgPart().body() );
+        ds.writeRawBytes( cstr, cstr.size() );
+      }
+      else
+      {
+        QDataStream ds( &file );
+        if( bSaveEncrypted || !bEncryptedParts) {
+          partNode *dataNode = node;
+          if( !bSaveWithSig ) {
+            if( DwMime::kTypeMultipart == node->type() &&
+                DwMime::kSubtypeSigned == node->subType() ){
+              // carefully look for the part that is *not* the signature part:
+              if( node->findType( DwMime::kTypeApplication,
+                                  DwMime::kSubtypePgpSignature,
+                                  TRUE, false ) ){
+                dataNode = node->findTypeNot( DwMime::kTypeApplication,
+                                              DwMime::kSubtypePgpSignature,
+                                              TRUE, false );
+              }else if( node->findType( DwMime::kTypeApplication,
+                                        DwMime::kSubtypePkcs7Mime,
+                                  TRUE, false ) ){
+                dataNode = node->findTypeNot( DwMime::kTypeApplication,
+                                              DwMime::kSubtypePkcs7Mime,
+                                              TRUE, false );
+              }else{
+                dataNode = node->findTypeNot( DwMime::kTypeMultipart,
+                                              DwMime::kSubtypeUnknown,
+                                              TRUE, false );
+              }
+            }
           }
+          QByteArray cstr = dataNode->msgPart().bodyDecodedBinary();
+          size_t size = cstr.size();
+          if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
+            // convert CRLF to LF before writing text attachments to disk
+            size = KMFolder::crlf2lf( cstr.data(), size );
+          }
+          ds.writeRawBytes( cstr.data(), size );
         }
       }
-      QByteArray cstr = dataNode->msgPart().bodyDecodedBinary();
-      size_t size = cstr.size();
-      if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
-        // convert CRLF to LF before writing text attachments to disk
-        size = KMFolder::crlf2lf( cstr.data(), size );
-      }
-      ds.writeRawBytes( cstr.data(), size );
-    }
-  }
-  if ( !url.isLocalFile() )
-  {
-    // upload the tmp file
-    if ( !KIO::NetAccess::upload( tf.name(), url, parentWidget() ) )
-    {
+      file.close();
+    } else
       KMessageBox::error( parentWidget(),
-          i18n( "Could not write the file %1" )
-          .arg( url.fileName() ),
-          i18n( "KMail Error" ) );
-    }
+                          i18n( "%1 is detailed error description",
+                                "Could not write the file:\n%1" )
+                           .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
+                          i18n( "KMail Error" ) );
   }
 }
 
