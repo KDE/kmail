@@ -3928,7 +3928,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _signaturePage->sigDialog->dontSignRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown email sign setting" << endl;
+                    kdDebug( 5006 ) << "Unknown email sign setting" << endl;
                 };
                 _signaturePage->sigDialog->warnUnsignedCB->setChecked( wrapper->warnSendUnsigned() );
 
@@ -3947,7 +3947,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _signaturePage->sigDialog->sendChainWithRootRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown send certificate setting" << endl;                }
+                    kdDebug( 5006 ) << "Unknown send certificate setting" << endl;                }
 
                 // Signature Settings group box
                 SignatureAlgorithm sigAlgo = wrapper->signatureAlgorithm();
@@ -3957,7 +3957,7 @@ void PluginPage::slotPlugSelectionChanged()
                     sigAlgoStr = "SHA1";
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown signature algorithm" << endl;
+                    kdDebug( 5006 ) << "Unknown signature algorithm" << endl;
                 };
 
                 for( int i = 0;
@@ -3995,7 +3995,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _signaturePage->sigDialog->pinIntervalRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown pin request setting" << endl;
+                    kdDebug( 5006 ) << "Unknown pin request setting" << endl;
                 };
 
                 _signaturePage->sigDialog->pinIntervalSB->setValue( wrapper->numPINRequestsInterval() );
@@ -4017,7 +4017,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _encryptionPage->encDialog->dontEncryptRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown email encryption setting" << endl;
+                    kdDebug( 5006 ) << "Unknown email encryption setting" << endl;
                 };
                 _encryptionPage->encDialog->warnUnencryptedCB->setChecked( wrapper->warnSendUnencrypted() );
 
@@ -4034,7 +4034,7 @@ void PluginPage::slotPlugSelectionChanged()
                     encAlgoStr = "SHA-1";
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown encryption algorithm" << endl;
+                    kdDebug( 5006 ) << "Unknown encryption algorithm" << endl;
                 };
 
                 for( int i = 0;
@@ -4093,7 +4093,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _dirservicesPage->dirservDialog->dsOnlyCertRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown certificate source" << endl;
+                    kdDebug( 5006 ) << "Unknown certificate source" << endl;
                 }
 
                 // Local/Remote CRL group box
@@ -4108,7 +4108,7 @@ void PluginPage::slotPlugSelectionChanged()
                     _dirservicesPage->dirservDialog->dsOnlyCRLRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5007 ) << "Unknown certificate source" << endl;
+                    kdDebug( 5006 ) << "Unknown certificate source" << endl;
                 }
             }
         }
@@ -4392,7 +4392,7 @@ void PluginPage::savePluginConfig( int pluginno )
     if( sigAlgoStr == "SHA-1" )
         sigAlgo = SignAlg_SHA1;
     else
-        kdDebug(5007) << "Unknown signature algorithm " << sigAlgoStr << endl;
+        kdDebug(5006) << "Unknown signature algorithm " << sigAlgoStr << endl;
     wrapper->setSignatureAlgorithm( sigAlgo );
     config->writeEntry( "SigAlgo", sigAlgo );
 
@@ -4478,7 +4478,7 @@ void PluginPage::savePluginConfig( int pluginno )
     else if( encAlgoStr == "SHA-1" )
         encAlgo = EncryptAlg_SHA1;
     else
-        kdDebug(5007) << "Unknown encryption algorithm " << encAlgoStr << endl;
+        kdDebug(5006) << "Unknown encryption algorithm " << encAlgoStr << endl;
     wrapper->setEncryptionAlgorithm( encAlgo );
     config->writeEntry( "EncryptAlgo", encAlgo );
 
