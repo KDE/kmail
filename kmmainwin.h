@@ -21,11 +21,14 @@ class QListViewItem;
 class KMenuBar;
 class KToolBar;
 class KStatusBar;
+class KMCommand;
+class KMMetaFilterActionCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMLittleProgressDlg;
 class KMFldSearch;
+class KAction;
 class KToggleAction;
 class KActionMenu;
 class KSelectAction;
@@ -87,10 +90,10 @@ public:
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *forwardAttachedAction, *redirectAction,
     *trashAction, *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *viewSourceAction, *printAction, *sendAgainAction;
+    *viewSourceAction, *printAction, *sendAgainAction, *applyFiltersAction;
   KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
-    *moveActionMenu, *copyActionMenu;
+    *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
 
   /** we need to access those KToggleActions from the foldertree-popup */
   KToggleAction* unreadColumnToggle;
@@ -327,6 +330,10 @@ protected slots:
 
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
+  /** Create actions for marked filters */
+  void initializeFilterActions();
+  /** Plug filter actions into a popup menu */
+  void plugFilterActions(QPopupMenu*);
 
 protected:
   KRadioAction * actionForHeaderStyle(int);
@@ -388,6 +395,8 @@ protected:
   QPtrList<KMMessage> mSelectedMsgs;
 
   QGuardedPtr<KMail::Vacation> mVacation;
+  QPtrList<KAction> mFilterActions;
+  QPtrList<KMMetaFilterActionCommand> mFilterCommands;
 
 signals:
   void messagesTransfered(bool);

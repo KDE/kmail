@@ -47,7 +47,7 @@
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
-#include "kmcommands.h"
+#include "kmfilter.h"
 #include "kmfoldertree.h"
 #include "kmreaderwin.h"
 #include "kmfolderimap.h"
@@ -63,6 +63,7 @@
 #include "kmacctfolder.h"
 #include "kmmimeparttree.h"
 #include "kmundostack.h"
+#include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "vacation.h"
 using KMail::Vacation;
@@ -86,6 +87,8 @@ KMMainWin::KMMainWin(QWidget *) :
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
   mCountJobs = 0;
+  mFilterActions.setAutoDelete(true);
+  mFilterCommands.setAutoDelete(true);
 
   mPanner1Sep << 1 << 1;
   mPanner2Sep << 1 << 1 << 1;
@@ -108,6 +111,8 @@ KMMainWin::KMMainWin(QWidget *) :
 
   activatePanners();
 
+  connect( kernel->filterMgr(), SIGNAL(filterListUpdated()),
+	   this, SLOT(initializeFilterActions()) );
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
     slotIntro();
@@ -2510,8 +2515,14 @@ void KMMainWin::setupMenuBar()
   copyActionMenu = new KActionMenu( i18n("&Copy To" ),
                                     actionCollection(), "copy_to" );
 
-  (void) new KAction( i18n("Appl&y Filters"), "filter", CTRL+Key_J, this,
-		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
+  applyFiltersAction = new KAction( i18n("Appl&y Filters"), "filter",
+				    CTRL+Key_J, this,
+				    SLOT(slotApplyFilters()),
+				    actionCollection(), "apply_filters" );
+
+  applyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter Actions" ),
+					    actionCollection(),
+					    "apply_filter_actions" );
 
 
   //----- View Menu
@@ -2761,6 +2772,7 @@ void KMMainWin::setupMenuBar()
   connect( kernel->undoStack(),
       SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));  
 
+  initializeFilterActions();
   updateMessageActions();
 
 }
@@ -3020,6 +3032,9 @@ void KMMainWin::updateMessageActions()
             mlistFilterAction->setText( i18n( "Filter on Mailing-List %1..." ).arg( lname ) );
         }
     }
+
+    applyFiltersAction->setEnabled(count);
+    applyFilterActionsMenu->setEnabled(count);
 }
 
 //-----------------------------------------------------------------------------
@@ -3160,3 +3175,42 @@ void KMMainWin::slotChangeCaption(QListViewItem * i)
   setCaption( names.join("/") );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::initializeFilterActions()
+{
+  mFilterActions.clear();
+  mFilterCommands.clear();
+
+  for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
+	it.current() ; ++it )
+    if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
+      QCString filterName = "Filter Action " + (*it)->name().utf8();
+      if (action(filterName))
+	continue;
+      KMMetaFilterActionCommand * filterCommand =
+	new KMMetaFilterActionCommand(*it, mHeaders, this);
+      mFilterCommands.append(filterCommand);
+      QString as = i18n("Filter Action %1").arg((*it)->name());
+      mFilterActions.append( new KAction(as, 0, filterCommand,
+					 SLOT(start()), actionCollection(),
+					 filterName) );
+    }
+
+  applyFilterActionsMenu->popupMenu()->clear();
+  plugFilterActions(applyFilterActionsMenu->popupMenu());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::plugFilterActions(QPopupMenu *menu)
+{
+  if ( !menu ) return;
+
+  for (QPtrListIterator<KMFilter> it(*kernel->filterMgr()); it.current(); ++it)
+    if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
+      QCString filterName = "Filter Action " + (*it)->name().utf8();
+      KAction *filterAction = action(filterName);
+      if (filterAction)
+	filterAction->plug(menu);
+    }
+}

@@ -95,6 +95,7 @@
    <Action name="thread_status" />
    <Separator/>
    <Action name="apply_filters" />
+   <Action name="apply_filter_actions" />
   </Menu>
   <Menu name="tools">
    <Action name="search_messages" />
