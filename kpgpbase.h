@@ -42,8 +42,8 @@ public:
   virtual void writeConfig(bool sync = false);
 
   /** set and retrieve the message to handle */
-  virtual bool setMessage(const QString mess);
-  virtual QString message() const;
+  virtual bool setMessage(const QCString mess);
+  virtual QCString message() const;
 
   /** manipulating the message */
   virtual int encrypt(const QStrList *, bool = false) { return OK; };
@@ -84,8 +84,8 @@ protected:
 
   QString addUserId();
 
-  QString input;
-  QString output;
+  QCString input;
+  QCString output;
   QString info;
   QString errMsg;
   QString pgpUser;

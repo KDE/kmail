@@ -137,7 +137,7 @@ Kpgp::setStorePassPhrase(bool flag)
 
 
 bool
-Kpgp::setMessage(const QString mess)
+Kpgp::setMessage(const QCString mess)
 {
   int index;
   int retval = 0;
@@ -196,7 +196,7 @@ Kpgp::backmatter(void) const
   return back;
 }
 
-const QString
+const QCString
 Kpgp::message(void) const
 {
   return pgp->message();

@@ -50,7 +50,7 @@ KpgpBase::writeConfig(bool sync)
 
 
 bool
-KpgpBase::setMessage(const QString mess)
+KpgpBase::setMessage(const QCString mess)
 {
   int index;
 
@@ -66,7 +66,7 @@ KpgpBase::setMessage(const QString mess)
   return false;
 }
 
-QString
+QCString
 KpgpBase::message() const
 {
   // do we have a deciphered text?
@@ -328,8 +328,8 @@ KpgpBase::addUserId()
 void 
 KpgpBase::clear()
 {
-  input = QString::null;
-  output = QString::null;
+  input = QCString();
+  output = QCString();
   info = QString::null;
   errMsg = QString::null;
   signature = QString::null;

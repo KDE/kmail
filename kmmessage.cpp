@@ -570,6 +570,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                                         bool aStripSignature) const
 {
   QString result;
+  QCString cStr;
   QString headerStr;
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
@@ -595,14 +596,14 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   if (numBodyParts() == 0) {
     Kpgp* pgp = Kpgp::getKpgp();
     assert(pgp != NULL);
-    result = codec->toUnicode(bodyDecoded());
+    cStr = bodyDecoded();
 
-    pgp->setMessage(result);
+    pgp->setMessage(cStr);
     if(pgp->isEncrypted()) {
       pgp->decrypt();
-      result = pgp->message().stripWhiteSpace();
+      result = codec->toUnicode(pgp->message().stripWhiteSpace());
     } else
-      result = result.stripWhiteSpace();
+      result = codec->toUnicode(cStr.stripWhiteSpace());
 
     result.replace(reNL, '\n' + indentStr);
     result = indentStr + result + '\n';
@@ -625,10 +626,10 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
-          if ((pgp->setMessage(codec->toUnicode(msgPart.bodyDecoded()))) &&
+          if ((pgp->setMessage(msgPart.bodyDecoded())) &&
               (pgp->isEncrypted()) &&
               (pgp->decrypt())) {
-            part = pgp->message();
+            part = codec->toUnicode(pgp->message());
           } else {
             part = codec->toUnicode(msgPart.bodyDecoded());
             //	    debug ("part\n" + part ); inexplicably crashes -sanders

@@ -1061,32 +1061,11 @@ bool KMComposeWin::applyChanges(void)
 
     mMsg->setCteStr(isQP ? "quoted-printable": "8bit");
 
-    QString str = pgpProcessedMsg();
-    QCString body;
-    if (str.isNull()) return FALSE;
-
     if (mCharset == "default")
       mCharset = defaultCharset();
     mMsg->setCharset(mCharset);
-    str.truncate(str.length()); // to ensure str.size()==str.length()+1
-    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
-
-    if (codec == NULL) {
-      kdDebug() << "Something is wrong and I can not get a codec." << endl;
-      body = str.latin1();
-    } else
-      body = codec->fromUnicode(str);
-
-    if (codec && codec->toUnicode(body) != str)
-    {
-      kernel->kbp()->idle();
-      if (KMessageBox::warningYesNo(0L,
-      i18n("Not all characters fit into the chosen"
-      " encoding.\nSend the message anyway?"),
-      i18n("Some characters will be lost"),
-      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
-        return FALSE;
-    }
+    QCString body = pgpProcessedMsg();
+    if (body.isNull()) return FALSE;
 
     if (isQP)
       mMsg->setBodyEncoded(body);
@@ -1110,32 +1089,11 @@ bool KMComposeWin::applyChanges(void)
 
     bodyPart.setCteStr(isQP ? "quoted-printable": "8bit");
 
-    QString str = pgpProcessedMsg();
-    QCString body;
-    if (str.isNull()) return FALSE;
-
     if (mCharset == "default")
       mCharset = defaultCharset();
     bodyPart.setCharset(mCharset);
-    str.truncate(str.length()); // to ensure str.size()==str.length()+1
-    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
-
-    if (codec == NULL) {
-      kdDebug() << "Something is wrong and I can not get a codec." << endl;
-      body = str.latin1();
-    } else
-      body = codec->fromUnicode(str);
-
-    if (codec && codec->toUnicode(body) != str)
-    {
-      kernel->kbp()->idle();
-      if (KMessageBox::warningYesNo(0L,
-      i18n("Not all characters fit into the chosen"
-      " encoding.\nSend the message anyway?"),
-      i18n("Some characters will be lost"),
-      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
-        return FALSE;
-    }
+    QCString body = pgpProcessedMsg();
+    if (body.isNull()) return FALSE;
 
     bodyPart.setBodyEncoded(body);
     mMsg->addBodyPart(&bodyPart);
@@ -1185,7 +1143,7 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-const QString KMComposeWin::pgpProcessedMsg(void)
+const QCString KMComposeWin::pgpProcessedMsg(void)
 {
   Kpgp *pgp = Kpgp::getKpgp();
   bool doSign = signAction->isChecked();
@@ -1194,15 +1152,36 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   int index, lastindex;
   QStrList persons;
   QString text;
+  QCString cText;
 
   if (disableBreaking)
       text = mEditor->text();
   else
       text = mEditor->brokenText();
 
-  if (!doSign && !doEncrypt) return text;
+  text.truncate(text.length()); // to ensure text.size()==text.length()+1
+  QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
 
-  pgp->setMessage(text);
+  if (codec == NULL) {
+    kdDebug() << "Something is wrong and I can not get a codec." << endl;
+    cText = text.local8Bit();
+  } else
+    cText = codec->fromUnicode(text);
+
+  if (codec && codec->toUnicode(cText) != text)
+  {
+    kernel->kbp()->idle();
+    if (KMessageBox::warningYesNo(0L,
+    i18n("Not all characters fit into the chosen"
+    " encoding.\nSend the message anyway?"),
+    i18n("Some characters will be lost"),
+    i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::No)
+      return QCString();
+  }
+
+  if (!doSign && !doEncrypt) return cText;
+
+  pgp->setMessage(cText);
 
   if (!doEncrypt)
   {
@@ -1235,7 +1214,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   //qWarning(i18n("Error during PGP:") + QString("\n") +
   //	  pgp->lastErrorMsg());
 
-  return QString::null;
+  return QCString();
 }
 
 
@@ -1354,8 +1333,9 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setCharset(const QString& aCharset, bool forceDefault)
 {
-  if (forceDefault && mForceReplyCharset) mCharset = mDefCharset;
-    else mCharset = aCharset;
+  if ((forceDefault && mForceReplyCharset) || aCharset.isEmpty())
+    mCharset = mDefCharset;
+  else mCharset = aCharset;
   mMsg->setCharset(mCharset);
 
   QStringList encodings = encodingAction->items();

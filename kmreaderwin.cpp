@@ -831,7 +831,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr(const QString aStr)
+void KMReaderWin::writeBodyStr(const QCString aStr)
 {
   QString line, sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
@@ -842,7 +842,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   if (pgp->setMessage(aStr))
   {
     QString str = pgp->frontmatter();
-    if(!str.isEmpty()) htmlStr += quotedHTML(str);
+    if(!str.isEmpty()) htmlStr += mCodec->toUnicode(quotedHTML(str));
     htmlStr += "<br>";
     if (pgp->isEncrypted())
     {
@@ -885,11 +885,11 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     }
     if (pgpMessage)
     {
-      htmlStr += quotedHTML(pgp->message());
+      htmlStr += mCodec->toUnicode(quotedHTML(pgp->message()));
       htmlStr += QString("<br><b>%1</b><br><br>")
         .arg(i18n("End of pgp message"));
       str = pgp->backmatter();
-      if(!str.isEmpty()) htmlStr += quotedHTML(str);
+      if(!str.isEmpty()) htmlStr += mCodec->toUnicode(quotedHTML(str));
     } // if (!pgpMessage) then the message only looked similar to a pgp message
     else htmlStr = mCodec->toUnicode(quotedHTML(aStr));
   }
@@ -1408,9 +1408,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
   		 QString(" bgcolor=\"#%1\"").arg(win->colorToString(win->c4)) +
 		 ">" );
 
-      QString str = aMsgPart->bodyDecoded();
+      QCString str = aMsgPart->bodyDecoded();
       if (aHTML && (stricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
-	win->mViewer->write(str);
+	win->mViewer->write(win->codec()->toUnicode(str));
       else  // plain text
 	win->writeBodyStr(str);
       win->mViewer->write("</body></html>");

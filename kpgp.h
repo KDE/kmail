@@ -59,9 +59,9 @@ public:
     ----- END PGP ...
     backmatter()
     */
-  virtual bool setMessage(const QString mess);
+  virtual bool setMessage(const QCString mess);
   /** gets the de- (or en)crypted message */
-  virtual const QString message(void) const;
+  virtual const QCString message(void) const;
   /** gets the part before the decrypted message */
   virtual const QString frontmatter(void) const;
   /** gets the part after the decrypted message */

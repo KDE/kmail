@@ -338,7 +338,7 @@ protected:
 
 private:
   /** Get message including signing and encrypting it */
-  const QString pgpProcessedMsg(void);
+  const QCString pgpProcessedMsg(void);
 
   /** Test if string has any 8-bit characters */
   bool is8Bit(const QString str);
