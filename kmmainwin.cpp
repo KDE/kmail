@@ -929,8 +929,12 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
 
   if (mExecOnNew) {
     if (!mNewMailCmd.isEmpty()) {
+#if KDE_VERSION >= 305
       KProcess p;
       p.setUseShell(true);
+#else
+      KShellProcess p;
+#endif
       p << mNewMailCmd;
       p.start(KProcess::DontCare);
     }

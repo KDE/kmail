@@ -29,7 +29,9 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
+#if KDE_VERSION >= 305
   mPrecommandProcess.setUseShell(true);
+#endif
   mPrecommandProcess << precommand;
 
   connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),

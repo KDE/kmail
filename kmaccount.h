@@ -12,6 +12,7 @@
 #include <qsignal.h>
 #include <qguardedptr.h>
 #include <kprocess.h>
+#include <kdeversion.h>
 
 class KMAcctMgr;
 class KMFolder;
@@ -36,7 +37,11 @@ signals:
   void finished(bool);
 
 protected:
+#if KDE_VERSION >= 305
   KProcess mPrecommandProcess;
+#else
+  KShellProcess mPrecommandProcess;
+#endif
   QString mPrecommand;
 };
 
