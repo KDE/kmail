@@ -34,7 +34,6 @@
 
 class QLineEdit;
 class QPushButton;
-class KApplication;
 class KMMessage;
 class QTimer;
 class QDataStream;
@@ -149,6 +148,9 @@ public:
   /** Kill the slave if any jobs are active */
   void killAllJobs();
 
+  /** Set the account idle or busy */
+  void setIdle(bool aIdle) { mIdle = aIdle; }
+
   /** Delete a message */
   void deleteMessage(KMMessage * msg);
 
@@ -217,6 +219,8 @@ protected:
   bool    gotMsgs;
   bool    mProgressEnabled;
   int     mTotal;
+  bool    mIdle;
+  QTimer  mIdleTimer;
 
   KIO::Slave *mSlave;
   KIO::MetaData mSlaveConfig;
@@ -224,6 +228,9 @@ protected:
   QList<KMImapJob> mJobList;
 
 protected slots:
+  /** Send a NOOP command or log out when idle */
+  void slotIdleTimeout();
+
   /** Kills all jobs */
   void slotAbortRequested();
 

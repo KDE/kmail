@@ -64,6 +64,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
   mTotal = 0;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
+  connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
@@ -115,6 +116,7 @@ void KMAcctImap::init(void)
   mHiddenFolders = FALSE;
   mUseSSL = FALSE;
   mUseTLS = FALSE;
+  mIdle = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -196,6 +198,11 @@ void KMAcctImap::displayProgress()
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( mProgressEnabled );
   }
+  mIdle = FALSE;
+  if (mapJobData.isEmpty())
+    mIdleTimer.start(30000);
+  else
+    mIdleTimer.stop();
   int total = 0, done = 0;
   for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
     it != mapJobData.end(); it++)
@@ -211,6 +218,21 @@ void KMAcctImap::displayProgress()
   if (total > mTotal) mTotal = total;
   done += mTotal - total;
   KMBroadcastStatus::instance()->setStatusProgressPercent( 100*done / mTotal );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotIdleTimeout()
+{
+  if (mIdle)
+  {
+    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+    mSlave = NULL;
+    mIdleTimer.stop();
+  } else {
+    KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
+    KIO::Scheduler::assignJobToSlave(mSlave, job);
+  }
 }
 
 

@@ -745,7 +745,9 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (mLastItem && mLastItem != fti && mLastItem->folder
      && mLastItem->folder->account())
   {
-    mLastItem->folder->account()->killAllJobs();
+    KMAcctImap *act = mLastItem->folder->account();
+    act->killAllJobs();
+    act->setIdle(TRUE);
   }
   mLastItem = fti;
 
