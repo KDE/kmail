@@ -126,6 +126,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   : QWidget( parent ), mIsEmpty( true )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
+  topLayout->setSpacing( KDialog::spacingHint() );
   
   QStringList recipientTypes = Recipient::allTypeLabels();
 
