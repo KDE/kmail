@@ -2491,7 +2491,8 @@ void ComposerPage::GeneralTab::apply() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  general.writeEntry( "use-external-editor",mEditorRequester->url().isEmpty() ?  false : mExternalEditorCheck->isChecked() );
+  general.writeEntry( "use-external-editor", mExternalEditorCheck->isChecked()
+		                         && !mEditorRequester->url().isEmpty() );
   general.writeEntry( "external-editor", mEditorRequester->url() );
 
   bool autoSignature = mAutoAppSignFileCheck->isChecked();
