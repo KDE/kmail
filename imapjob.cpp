@@ -178,6 +178,7 @@ void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->parent());
+  if (msgParent) msgParent->open();
   KMAcctImap *account = msgParent->account();
   if ( msg->headerField("X-UID").isEmpty() )
   {
@@ -240,16 +241,20 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
+    if (parent) parent->close();
     deleteLater();
     return;
   }
   ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) return;
+  if ( it == account->jobsEnd() ) {
+    if (parent) parent->close();
+    return;
+  }
 
   if (job->error())
   {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
+    account->slotSlaveError( account->slave(), job->error(), job->errorText() );
+    if (parent) parent->close();
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -273,7 +278,6 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       account->removeJob(it);
       account->mJobList.remove(this);
   }
-  account->displayProgress();
   /* This needs to be emitted last, so the slots that are hooked to it
    * don't unGetMsg the msg before we have finished. */
   if ( mPartSpecifier.isEmpty() ||
@@ -284,6 +288,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     emit messageUpdated(msg, mPartSpecifier);
   }
   deleteLater();
+  if (parent) parent->close();
 }
 
 //-----------------------------------------------------------------------------
@@ -292,6 +297,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
   KMMessage *msg = mMsgList.first();
   if (!msg || !msg->parent() || !job) {
     deleteLater();
+    if (msg->parent()) msg->parent()->close();
     return;
   }
   KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
@@ -299,16 +305,21 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
+    if (parent) parent->close();
     deleteLater();
     return;
   }
   ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) return;
+  if ( it == account->jobsEnd() ) {
+    if (parent) parent->close();
+    return;
+  }
 
   if (job->error())
   {
     account->slotSlaveError( account->slave(), job->error(),
         job->errorText() );
+    if (parent) parent->close();
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -322,6 +333,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
       account->mJobList.remove(this);
   }
   deleteLater();
+  if (parent) parent->close();
 }
 
 //-----------------------------------------------------------------------------

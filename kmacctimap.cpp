@@ -207,6 +207,8 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
   {
     if ( it.current()->msgList().findRef( msg ) != -1 ) 
     {
+      // decrement the ref count of the folder for each job
+      if (msg->parent()) msg->parent()->close();
       ImapJob *job = it.current();
       if ( job->mJob )
       {
