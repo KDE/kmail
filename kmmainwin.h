@@ -180,6 +180,9 @@ protected slots:
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
 
+  /** Called from the "forward" tool button when clicked. */
+  void slotForward();
+
   /** forwarding */
   void slotForwardMsg();
   void slotForwardAttachedMsg();

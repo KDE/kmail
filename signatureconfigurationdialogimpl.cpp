@@ -38,6 +38,7 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     // enable and disable the various components depending on the
     // availability of a feature in the crypto plugin
     sendCertificatesBG->setEnabled( cryptPlug->hasFeature( Feature_SendCertificates ) );
+    sigCompoundModeBG->setEnabled( cryptPlug->hasFeature( Feature_SendCertificates ) );
     warnSignatureCertificateExpiresCB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) );
     warnSignatureCertificateExpiresSB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) );
     warnCACertificateExpiresCB->setEnabled( cryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) );

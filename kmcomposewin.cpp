@@ -78,6 +78,19 @@
 
 #include "kmcomposewin.moc"
 
+
+
+// function is here only temporarily - will be moved into certificate manager
+//-----------------------------------------------------------------------------
+QString normalizedDN( char* src )
+{
+  QString dest;
+
+  dest = src;
+  
+  return dest;
+}
+
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
                             KMMessage *aMsg, uint id )
@@ -2391,7 +2404,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
   if( cryptPlug ) {
     kdDebug() << "\nKMComposeWin::pgpSignedMsg calling CRYPTPLUG "
               << cryptPlug->libName() << endl;
-
+                  
+    bool isSMIME = (0 <= cryptPlug->libName().find( "smime", 0, false ));
     const char* cleartext   = cText;
     char* ciphertext  = 0;
     char* certificate = 0;
@@ -2417,7 +2431,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     QCString certFingerprint;
     if (findCertsOk && strlen( certificate ) ) {
 	kdDebug(5006) << "findCertificates() returned " << certificate << endl;
-	
+
 	// fill selection dialog listbox
         dialog.entriesLB->clear();
         int iA = 0;
@@ -2436,7 +2450,11 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 		    dialog.setCaption( caption );
 		}
 		certificate[iZ] = '\0';
-		QString s = &certificate[iA];
+		QString s;
+        if( isSMIME )
+          s = normalizedDN( &certificate[iA] );
+        else
+          s = &certificate[iA];
 		certificate[iZ] = c;
 		if( useDialog )
 		    dialog.entriesLB->insertItem( s );

@@ -4166,6 +4166,18 @@ void PluginPage::slotPlugSelectionChanged()
                 };
                 _signaturePage->sigDialog->warnUnsignedCB->setChecked( wrapper->warnSendUnsigned() );
 
+                // Compound Mode group box
+                switch( wrapper->signatureCompoundMode() ) {
+                case SignatureCompoundMode_Opaque:
+                    _signaturePage->sigDialog->sendSigOpaqueRB->setChecked( true );
+                    break;
+                case SignatureCompoundMode_Detached:
+                    _signaturePage->sigDialog->sendSigMultiPartRB->setChecked( true );
+                    break;
+                default:
+                    kdDebug( 5006 ) << "Unknown signature compound mode setting" << endl;
+                };
+
                 // Sending Certificates group box
                 switch( wrapper->sendCertificates() ) {
                 case SendCert_DontSend:
@@ -4381,6 +4393,17 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     ret &= ( wrapper->warnSendUnsigned() ==
              _signaturePage->sigDialog->warnUnsignedCB->isChecked() );
     kdDebug(5006) << "2) RET = " << ret << endl;
+    if( !ret )
+        return false;
+
+    ret &= ( ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_Opaque ) &&
+               _signaturePage->sigDialog->sendSigOpaqueRB->isChecked() ) ||
+             ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_Detached ) &&
+               _signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) ||
+             ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_undef ) &&
+               !_signaturePage->sigDialog->sendSigOpaqueRB->isChecked() &&
+               !_signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) );
+    kdDebug(5006) << "2b) RET = " << ret << endl;
     if( !ret )
         return false;
 
@@ -4637,6 +4660,18 @@ void PluginPage::savePluginConfig( int pluginno )
     bool warnSendUnsigned = _signaturePage->sigDialog->warnUnsignedCB->isChecked();
     wrapper->setWarnSendUnsigned( warnSendUnsigned );
     config->writeEntry( "WarnSendUnsigned", warnSendUnsigned );
+
+    // Signature Compound Mode group box
+    if( _signaturePage->sigDialog->sendSigOpaqueRB->isChecked() ) {
+        wrapper->setSignatureCompoundMode( SignatureCompoundMode_Opaque );
+        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_Opaque );
+    } else if( _signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) {
+        wrapper->setSignatureCompoundMode( SignatureCompoundMode_Detached);
+        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_Detached );
+    } else {
+        wrapper->setSignatureCompoundMode( SignatureCompoundMode_undef );
+        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_undef );
+    }
 
     // Sending Certificates group box
     if( _signaturePage->sigDialog->dontSendCertificatesRB->isChecked() ) {

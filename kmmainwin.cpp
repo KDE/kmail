@@ -1340,10 +1340,16 @@ void KMMainWin::slotReplyListToMsg()
 void KMMainWin::slotReallyReplyListToMsg(bool success)
 {
   disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyReplyListToMsg(bool)));
-  if (success) mHeaders->replyListToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
+	     this, SLOT(slotReallyReplyListToMsg(bool)));
+  if (success)
+    mHeaders->replyListToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
 }
 
+void KMMainWin::slotForward() {
+  // ### FIXME: remember the last used subaction and use that
+  // currently, we hard-code "as attachment".
+  slotForwardAttachedMsg();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
@@ -2395,6 +2401,9 @@ KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
 //-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
 {
+  KAction *action;
+  QString msg;
+
   //----- File Menu
   (void) new KAction( i18n("&New Mail Client..."), "window_new", 0,
 		      this, SLOT(slotNewMailReader()),
@@ -2508,14 +2517,26 @@ void KMMainWin::setupMenuBar()
   replyListAction = new KAction( i18n("Reply &List..."), "mail_replylist",
      Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
 
-  forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
-		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
+  KActionMenu * forwardMenu =
+    new KActionMenu( i18n("Message->","&Forward"), "mail_forward",
+		     actionCollection(), "message_forward" );
+  connect( forwardMenu, SIGNAL(activated()), this, SLOT(slotForward()) );
 
-  forwardAttachedAction = new KAction( i18n("For&ward as Attachment"), SHIFT+Key_F, this,
-		      SLOT(slotForwardAttachedMsg()), actionCollection(), "forward_attached" );
+  forwardAction = new KAction( i18n("&Inline..."), "mail_forward", Key_F, this,
+			       SLOT(slotForwardMsg()),
+			       actionCollection(), "message_forward_inline" );
+  forwardMenu->insert( forwardAction );
 
-  redirectAction = new KAction( i18n("Re&direct..."), Key_E, this,
-		      SLOT(slotRedirectMsg()), actionCollection(), "redirect" );
+  forwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+				       "mail_forward", SHIFT+Key_F, this,
+				       SLOT(slotForwardAttachedMsg()),
+				       actionCollection(), "message_forward_as_attachment" );
+  forwardMenu->insert( forwardAttachedAction );
+
+  redirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+				Key_E, this, SLOT(slotRedirectMsg()),
+				actionCollection(), "message_forward_redirect" );
+  forwardMenu->insert( redirectAction );
 
   bounceAction = new KAction( i18n("&Bounce..."), 0, this,
 		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
@@ -2569,8 +2590,6 @@ void KMMainWin::setupMenuBar()
                                    "mlist_filter");
   filterMenu->insert( mlistFilterAction );
 
-  KAction *action;
-  QString msg;
   //----- "Mark Message" submenu
   statusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
 				 actionCollection(), "set_status" );
@@ -3232,6 +3251,7 @@ void KMMainWin::updateMessageActions()
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
+    action( "message_forward" )->setEnabled( mass_actions );
     forwardAction->setEnabled( mass_actions );
     forwardAttachedAction->setEnabled( mass_actions );
 

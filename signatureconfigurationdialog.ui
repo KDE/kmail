@@ -536,6 +536,54 @@ It is recommended to leave this option turned on for maximum integrity.
                         <property name="spacing">
                             <number>6</number>
                         </property>
+
+
+                        <widget class="QButtonGroup">
+                            <property name="name">
+                                <cstring>sigCompoundModeBG</cstring>
+                            </property>
+                            <property name="title">
+                                <string>Signature compound mode:</string>
+                            </property>
+                            <hbox>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>sendSigOpaqueRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>opaque</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Signature and signed data encoded in one ASN.1 block.</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Opaque signed messages&lt;/h1&gt;
+When this option is selected, both the signature and the signed data will be encoded into one ASN.1 block. Messages will be readable only by Mail User Agents supporting ASN.1 decoding.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>sendSigMultiPartRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>detached</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>A Multipart/Signed holding Signature and signed data.</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Multipart detached signature&lt;/h1&gt;
+When this option is selected, the signature and the signed data will be separate parts of a Multipart/Signed message part. Signed message data will be readable even by Mail User Agents not supporting the signaturing algorithm and not supporting ASN.1 decoding.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+
+
                         <widget class="QButtonGroup">
                             <property name="name">
                                 <cstring>pinEntryBG</cstring>
