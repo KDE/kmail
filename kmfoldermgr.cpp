@@ -191,7 +191,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       welcomeMessage->setReplyTo(i18n("kmail@kde.org"));
       welcomeMessage->setFrom(i18n("KMail"));
       welcomeMessage->setSubject(i18n("Welcome to KMail!"));
-      welcomeMessage->setBody(_KM_WelcomeMsg);
+      welcomeMessage->setBody(i18n(KM_WelcomeMsg));
       welcomeMessage->setStatus(KMMsgStatusNew);
 
       switch(kernel->filterMgr()->process(welcomeMessage)) {

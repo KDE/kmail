@@ -10,9 +10,9 @@
 //  is created
 //
 
-static const QString _KM_WelcomeMsg =
+static const char *KM_WelcomeMsg =
 
-i18n(
+I18N_NOOP(
 "Welcome to KMail!\n"
 "\n"
 "KMail is an email client for the K Desktop Environment. "
