@@ -57,7 +57,7 @@ ProgressItem::~ProgressItem()
 
 void ProgressItem::setComplete()
 {
-   kdDebug(5006) << "ProgressItem::setComplete - " << label() << endl;
+//   kdDebug(5006) << "ProgressItem::setComplete - " << label() << endl;
    if ( !mCanceled )
      setProgress( 100 );
    if ( mChildren.isEmpty() ) {
