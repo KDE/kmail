@@ -29,6 +29,8 @@
     your version.
 */
 
+#include <config.h>
+
 #include "csshelper.h"
 
 #include "kmkernel.h"
