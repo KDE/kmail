@@ -92,6 +92,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( ilabel );
 
   mNormalIconButton = new KIconButton( iconGroup );
+  ilabel->setBuddy( mNormalIconButton );
   mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any, true );
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
@@ -106,6 +107,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( ilabel2 );
 
   mUnreadIconButton = new KIconButton( iconGroup );
+  ilabel2->setBuddy( mUnreadIconButton );
   mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
