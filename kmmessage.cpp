@@ -1179,6 +1179,12 @@ const QString KMMessage::fromStrip(void) const
   return stripEmailAddr(decodeRFC1522String(headerField("From")));
 }
 
+//-----------------------------------------------------------------------------
+const QString KMMessage::fromEmail(void) const
+{
+  return getEmailAddr(decodeRFC1522String(headerField("From")));
+}
+
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::subject(void) const
@@ -1814,6 +1820,27 @@ const QString KMMessage::stripEmailAddr(const QString& aStr)
     result = result.mid(1, result.length()-2);
   else if (result[0]=='(' && result[len-1]==')')
     result = result.mid(1, result.length()-2);
+  return result;
+}
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::getEmailAddr(const QString& aStr)
+{
+  int i, j, len;
+  QString result;
+  char endCh = '>';
+
+  i = aStr.find('<');
+  if (i<0)
+  {
+    i = aStr.find('(');
+    endCh = ')';
+  }
+  if (i<0) return aStr;
+  j = aStr.find(endCh,i+1);
+  if (j<0) return aStr;
+  len = j - (i + 1);
+  result = aStr.mid(i+1,len);
   return result;
 }
 
