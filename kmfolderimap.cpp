@@ -193,7 +193,7 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
 int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 {
-  KMMessage *aMsg = msgList.first();
+  KMMessage *aMsg = msgList.getFirst();
   KMFolder *msgParent = aMsg->parent();
 
   // make sure the messages won't be deleted while we work with them
@@ -246,8 +246,11 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
       else 
       {
         // different account, check if messages can be added
-        for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+        QPtrListIterator<KMMessage> it( msgList );
+        KMMessage *msg;
+        while ( (msg = it.current()) != 0 )
         {
+          ++it;
           if (!canAddMsgNow(msg, aIndex_ret))
             msgList.remove(msg);
         }
