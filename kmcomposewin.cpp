@@ -87,6 +87,7 @@ using KRecentAddress::RecentAddresses;
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qpopupmenu.h>
+#include <qwhatsthis.h>
 
 #include <mimelib/mimepp.h>
 #include <sys/stat.h>
@@ -164,6 +165,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QToolTip::add( mBtnTo, tip );
   QToolTip::add( mBtnCc, tip );
   QToolTip::add( mBtnReplyTo, tip );
+
+  QWhatsThis::add( mBtnIdentity, i18n("Remember this identity, so that it "
+    "will be used in future composer windows as well."));
+  QWhatsThis::add( mBtnFcc, i18n("Remember this folder for sent items, so "
+    "that it will be used in future composer windows as well."));
+  QWhatsThis::add( mBtnTransport, i18n("Remember this mail transport, so "
+    "that it will be used in future composer windows as well."));
 
   mSpellCheckInProgress=FALSE;
 
