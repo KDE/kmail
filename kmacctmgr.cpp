@@ -280,20 +280,9 @@ void KMAcctMgr::checkMail(bool _interactive)
 
   mTotalNewMailsArrived=0;
 
-  mAccountIt->toFirst();
-  while (TRUE)
-  {
+  for (mAccountIt->toFirst(); !mAccountIt->atLast(); ++(*mAccountIt))
     if (!mAccountIt->current()->checkExclude())
       singleCheckMail(mAccountIt->current(), _interactive);
-    if (mAccountIt->atLast()) break;
-    ++(*mAccountIt);
-  }
-
-  if (mTotalNewMailsArrived!=-1)
-    KMBroadcastStatus::instance()->setStatusMsg(
-	i18n("Transmission completed, %n new message.",
-	  "Transmission completed, %n new messages.", mTotalNewMailsArrived) );
-
 }
 
 
