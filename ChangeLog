@@ -1,3 +1,8 @@
+1998-10-31  Stefan Taferner  <taferner@kde.org> (KMail-1.0.6)
+
+	* Fixed: crash when fetching new mail and inbox folder
+	is not accessible.
+
 1998-10-21  Lars Knoll <knoll@mpi-hd.mpg.de>
 	* fixed a bug in the support for pgp-2.6
 

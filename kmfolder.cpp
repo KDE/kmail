@@ -124,7 +124,6 @@ int KMFolder::open(void)
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-
   assert(name() != "");
 
   mFilesLocked = FALSE;
@@ -133,6 +132,7 @@ int KMFolder::open(void)
   {
     debug("Cannot open folder `%s': %s", (const char*)location(), 
 	  strerror(errno));
+    mOpenCount = 0;
     return errno;
   }
 
@@ -717,13 +717,15 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   bool opened = FALSE;
   QString msgText;
   char endStr[3];
-  int idx;
+  int idx, rc;
   KMFolder* msgParent;
 
   if (!mStream)
   {
     opened = TRUE;
-    open();
+    rc = open();
+    debug("addMsg-open: %d", rc);
+    if (rc) return rc;
   }
 
   // take message out of the folder it is currently in, if any
