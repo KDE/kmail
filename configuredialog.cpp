@@ -660,7 +660,7 @@ void ConfigureDialog::makeIdentityPage( void )
 void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
-			  i18n("&Setup for sending and receiving messages"),
+			  i18n("Setup for sending and receiving messages"),
     KGlobal::instance()->iconLoader()->loadIcon( "network", KIcon::NoGroup,
     KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );

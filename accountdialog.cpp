@@ -443,8 +443,10 @@ void AccountDialog::makePopAccountPage()
   mPop.authAuto = new QRadioButton( i18n("Most secure method supported"),
     group );
   mPop.authUser = new QRadioButton( i18n("Clear text") , group );
+  mPop.authPlain = new QRadioButton( i18n("Please translate this "
+  "authentification method only, if you have a good reason", "PLAIN"), group );
+  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), group );
   mPop.authAPOP = new QRadioButton( i18n("APOP"), group );
-  mPop.authSASL = new QRadioButton( i18n("SASL (e.g. CRAM-MD5)"), group );
   topLayout->addMultiCellWidget( group, 8, 8, 0, 1 );
 
   mPop.storePasswordCheck =
@@ -573,11 +575,13 @@ void AccountDialog::makeImapAccountPage()
 
   group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page );
-  mImap.authAuto = new QRadioButton( i18n("&Clear text"), group );
+  mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
+  mImap.authPlain = new QRadioButton( i18n("Please translate this "
+  "authentification method only, if you have a good reason", "PLAIN"), group );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "&LOGIN"), group );
-  mImap.authCramMd5 = new QRadioButton( i18n("&CRAM-MD5"), group );
-  mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), group );
+  "authentification method only, if you have a good reason", "LOGIN"), group );
+  mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), group );
+  mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), group );
   topLayout->addMultiCellWidget( group, 12, 12, 0, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -637,10 +641,12 @@ void AccountDialog::setupSettings()
     mPop.precommand->setText( ap.precommand() );
     if (ap.auth() == "USER")
       mPop.authUser->setChecked( TRUE );
+    else if (ap.auth() == "PLAIN")
+      mPop.authPlain->setChecked( TRUE );
+    else if (ap.auth() == "CRAM-MD5")
+      mPop.authCRAM_MD5->setChecked( TRUE );
     else if (ap.auth() == "APOP")
       mPop.authAPOP->setChecked( TRUE );
-    else if (ap.auth() == "SASL")
-      mPop.authSASL->setChecked( TRUE );
     else mPop.authAuto->setChecked( TRUE );
 
     slotEnablePopInterval( interval >= 1 );
@@ -666,6 +672,8 @@ void AccountDialog::setupSettings()
       mImap.authCramMd5->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
       mImap.authAnonymous->setChecked( TRUE );
+    else if (ai.auth() == "PLAIN")
+      mImap.authPlain->setChecked( TRUE );
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
     else mImap.authAuto->setChecked( TRUE );
@@ -840,10 +848,12 @@ void AccountDialog::saveSettings()
     epa.setPrecommand( mPop.precommand->text() );
     if (mPop.authUser->isChecked())
       epa.setAuth("USER");
+    else if (mPop.authPlain->isChecked())
+      epa.setAuth("PLAIN");
+    else if (mPop.authCRAM_MD5->isChecked())
+      epa.setAuth("CRAM-MD5");
     else if (mPop.authAPOP->isChecked())
       epa.setAuth("APOP");
-    else if (mPop.authSASL->isChecked())
-      epa.setAuth("SASL");
     else epa.setAuth("AUTO");
   }
   else if( accountType == "imap" )
@@ -868,6 +878,8 @@ void AccountDialog::saveSettings()
       epa.setAuth("CRAM-MD5");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
+    else if (mImap.authPlain->isChecked())
+      epa.setAuth("PLAIN");
     else if (mImap.authLogin->isChecked())
       epa.setAuth("LOGIN");
     else epa.setAuth("*");

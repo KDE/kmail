@@ -73,8 +73,9 @@ class AccountDialog : public KDialogBase
       QCheckBox    *useTLSCheck;
       QRadioButton *authAuto;
       QRadioButton *authUser;
+      QRadioButton *authPlain;
+      QRadioButton *authCRAM_MD5;
       QRadioButton *authAPOP;
-      QRadioButton *authSASL;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;
@@ -101,6 +102,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *useSSLCheck;
       QCheckBox    *useTLSCheck;
       QRadioButton *authAuto;
+      QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
       QRadioButton *authAnonymous;

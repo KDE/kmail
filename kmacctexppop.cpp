@@ -556,7 +556,12 @@ void KMAcctExpPop::startJob() {
   stage = List;
   mSlaveConfig.clear();
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
-  if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
+  if (mAuth == "PLAIN" || mAuth == "CRAM-MD5")
+  {
+    mSlaveConfig.insert("auth", "SASL");
+    mSlaveConfig.insert("sasl", mAuth);
+  }
+  else if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
   url.setPath(QString("/index"));
   job = KIO::get( url.url(), false, false );
