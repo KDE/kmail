@@ -2170,7 +2170,7 @@ void ConfigureDialog::slotApply( void )
     for (it = mAccountsToDelete.begin(); it != mAccountsToDelete.end(); ++it )
       if ((it == 0) || (!kernel->acctMgr()->remove(*it)))
         KMessageBox::sorry( this,
-			    i18n("Unable to locate account ") + (*it)->name() );
+			    i18n("Unable to locate account %1").arg((*it)->name()) );
     mAccountsToDelete.clear();
 
     // Incoming mail
@@ -2912,8 +2912,7 @@ void ConfigureDialog::slotRemoveSelectedAccount( void )
   }
   if ( acct == 0 )
   {
-    KMessageBox::sorry( this,  i18n("Unable to locate account ")
-			+ listItem->text(0) );
+    KMessageBox::sorry( this,  i18n("Unable to locate account %1").arg(listItem->text(0)) );
     return;
   }
 
