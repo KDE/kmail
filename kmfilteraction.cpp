@@ -9,6 +9,7 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <qcombobox.h>
+#include <klocale.h>
 
 static QString resultStr;
 

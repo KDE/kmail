@@ -51,6 +51,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <klocale.h>
 
 #if defined CHARSETS
 #include <kcharsets.h>

@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
+#include <klocale.h>
 
 #ifndef isblank
 #  define isblank(x) ((x)==' '||(x)=='\t')

@@ -23,6 +23,7 @@ extern KBusyPtr *kbp;
 #include <qlayout.h>
 #include <unistd.h>
 #include <assert.h>
+#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------

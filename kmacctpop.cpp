@@ -22,6 +22,7 @@
 #include "kbusyptr.h"
 #include "kmacctfolder.h"
 #include "kmfiltermgr.h"
+#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------

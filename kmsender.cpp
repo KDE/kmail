@@ -33,6 +33,7 @@ extern KMIdentity *identity;
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <klocale.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <string.h>
 #include <kapp.h>
+#include <klocale.h>
 
 static const char* opConfigNames[] = 
   { "ignore", "and", "unless", "or", NULL };

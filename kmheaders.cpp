@@ -21,6 +21,7 @@
 #include "kfileio.h"
 #include "kmfiltermgr.h"
 #include "kfontutils.h"
+#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------

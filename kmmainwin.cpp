@@ -39,6 +39,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <klocale.h>
 
 #include "kmmainwin.moc"
 

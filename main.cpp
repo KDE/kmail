@@ -35,6 +35,7 @@
 //--- Sven's pseudo IPC&locking start ---
 #include "kfileio.h"
 #include "kwm.h"
+#include <klocale.h>
 //--- Sven's pseudo IPC&locking end ---
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;

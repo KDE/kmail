@@ -45,7 +45,8 @@
 #include <X11/Xatom.h>
 
 //--- Sven's save attachments to /tmp start ---
-#include <unistd.h>  // for access and getpid
+#include <unistd.h>
+#include <klocale.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
 #ifdef KRN

@@ -20,6 +20,7 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmmessage.h"
+#include <klocale.h>
 
 //----------------------
 #include "kmaccount.moc"

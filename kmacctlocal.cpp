@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <klocale.h>
 #ifdef __FreeBSD__
 #include <paths.h>	/* defines _PATH_MAILDIR */
 #endif

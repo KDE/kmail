@@ -28,6 +28,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <time.h>
+#include <klocale.h>
 
 #if ALLOW_GUI
 #include <qmultilinedit.h>
