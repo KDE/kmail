@@ -29,7 +29,7 @@ class QTabWidget;
 class QListBox;
 class QButtonGroup;
 class QRegExpValidator;
-class QVGroupBox;
+class QVBox;
 class KMFolderComboBox;
 class KMAccount;
 class KMTransportInfo;
@@ -880,7 +880,8 @@ private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
 
-  QVGroupBox* mBox;
+  QVBox* mBox;
+  QVBox* gBox;
 
   QComboBox* mLanguageCombo;
   KMFolderComboBox* mFolderCombo;

@@ -38,6 +38,7 @@
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include "kmgroupware.h"
+#include "kmailicalifaceimpl.h"
 #include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
@@ -78,6 +79,7 @@ using KMime::DateFormatter;
 #include <qvalidator.h>
 #include <qwhatsthis.h>
 #include <qvgroupbox.h>
+#include <qvbox.h>
 #include <qvbuttongroup.h>
 #include <qhbuttongroup.h>
 #include <qtooltip.h>
@@ -4000,24 +4002,21 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   : ConfigurationPage( parent, name )
 {
   QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay->setAutoAdd( true );
 
-  mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), this );
-  vlay->addWidget( mEnableGwCB );
+  // IMAP resource setup
+  QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
 
-  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP Resource functionality"), this );
-  vlay->addWidget( mEnableImapResCB );
+  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP Resource functionality"), b1 );
 
-  mBox = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
-  vlay->addWidget(mBox);
-
+  mBox = new QVBox( b1 );
+  mBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
 	   mBox, SLOT( setEnabled(bool) ) );
-
   QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"), mBox );
 
   mLanguageCombo = new QComboBox( false, mBox );
   languageLA->setBuddy( mLanguageCombo );
-
   QStringList lst;
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
@@ -4027,29 +4026,34 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
 
-  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "Automatic &Resource Management" ), this );
-  vlay->addWidget( resourceVGB );
-  resourceVGB->setEnabled( false ); // since !mEnableGwCB->isChecked()
-  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
-           resourceVGB, SLOT( setEnabled(bool) ) );
+  // Groupware functionality setup
+  b1 = new QVGroupBox( i18n("Groupware Options"), this );
 
+  mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
+  gBox = new QVBox( b1 );
+  gBox->setSpacing( KDialog::spacingHint() );
+  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
+	   gBox, SLOT( setEnabled(bool) ) );
+
+  mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
+  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+
+  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "Automatic &Resource Management" ), gBox );
   mAutoResCB = new QCheckBox( i18n( "&Automatically accept resource requests" ), resourceVGB );
   mAutoDeclConflCB = new QCheckBox( i18n( "A&utomatically decline conflicting requests" ), resourceVGB );
   mAutoDeclConflCB->setEnabled( false );
   connect( mAutoResCB, SIGNAL( toggled( bool ) ),
            mAutoDeclConflCB, SLOT( setEnabled( bool ) ) );
 
-  mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), mBox );
-  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
-
-  QLabel* dummy = new QLabel( this );
-  vlay->addWidget( dummy, 2 );
+  // Open space padding at the end
+  new QLabel( this );
 }
 
 void MiscPage::GroupwareTab::setup() {
   // Read the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
+  gBox->setEnabled( mEnableGwCB->isChecked() );
   mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
   mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
   mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
@@ -4082,12 +4086,13 @@ void MiscPage::GroupwareTab::apply() {
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
   irOptions.writeEntry( "Enabled", mEnableImapResCB->isChecked() );
   if ( mEnableImapResCB->isChecked() ) {
-    options.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
-    options.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
+    irOptions.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
+    irOptions.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
   }
 
-  // Make the groupware options read the config settings
+  // Make the groupware and resource options read the config settings
   kernel->groupware().readConfig();
+  kernel->iCalIface().readConfig();
 }
 
 
