@@ -3333,7 +3333,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addStretch( 10 ); // spacer
     
   // and now: adding QWhat'sThis all over the place:
-  msg = i18n( "<qt><p>EMails sometimes come in both formats. This options "
+  msg = i18n( "<qt><p>Emails sometimes come in both formats. This option "
 	      "controls whether you want the HTML part or the plain text "
 	      "part to be displayed.</p>"
 	      "<p>Displaying the HTML part makes the message look better, "
@@ -3341,9 +3341,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "being exploited.</p>"
 	      "<p>Displaying the plain text part loses much of the message's "
 	      "formatting, but makes it almost <em>impossible</em> "
-	      "to expolit security holes in the HTML renderer (Konqueror).</p>"
+	      "to exploit security holes in the HTML renderer (Konqueror).</p>"
 	      "<p>The option below guards against one common misuse of HTML "
-	      "mails. But it cannot guard against security issues that were "
+	      "mails, but it cannot guard against security issues that were "
 	      "not known at the time this version of KMail was written.</p>"
 	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
 	      "plain text.</p>"
