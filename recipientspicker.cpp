@@ -47,6 +47,8 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
   mDistributionList = list;
 
   mIcon = KGlobal::iconLoader()->loadIcon( "kdmconfig", KIcon::Small );
+
+  mKey = "D" + list->name();
 }
 
 void RecipientItem::setAddressee( const KABC::Addressee &a )
@@ -58,6 +60,8 @@ void RecipientItem::setAddressee( const KABC::Addressee &a )
     mIcon = img.smoothScale( 20, 20, QImage::ScaleMin );
   else
     mIcon = KGlobal::iconLoader()->loadIcon( "personal", KIcon::Small );
+
+  mKey = "A" + a.preferredEmail();
 }
 
 QPixmap RecipientItem::icon() const
@@ -134,11 +138,18 @@ QString RecipientsCollection::title() const
 void RecipientsCollection::addItem( RecipientItem *item )
 {
   mItems.append( item );
+
+  mKeyMap.insert( item->key(), item );
 }
 
 RecipientItem::List RecipientsCollection::items() const
 {
   return mItems;
+}
+
+bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
+{
+  return mKeyMap.find( item->key() ) != mKeyMap.end();
 }
 
 
@@ -334,7 +345,9 @@ void RecipientsPicker::insertRecentAddresses()
   for( it = recents.begin(); it != recents.end(); ++it ) {
     RecipientItem *item = new RecipientItem;
     item->setAddressee( *it );
-    mAllRecipients->addItem( item );
+    if ( !mAllRecipients->hasEquivalentItem( item ) ) {
+      mAllRecipients->addItem( item );
+    }
     collection->addItem( item );
   }
   

@@ -55,12 +55,16 @@ class RecipientItem
     QString name() const;
     QString email() const;
     
+    QString key() const { return mKey; }
+    
   private:
     KABC::Addressee mAddressee;
     KABC::DistributionList *mDistributionList;
     QString mType;
     
     QPixmap mIcon;
+    
+    QString mKey;
 };
 
 class RecipientViewItem : public KListViewItem
@@ -86,9 +90,12 @@ class RecipientsCollection
     
     RecipientItem::List items() const;
 
+    bool hasEquivalentItem( RecipientItem * ) const;
+
   private:
     QString mTitle;
     RecipientItem::List mItems;
+    QMap<QString, RecipientItem *> mKeyMap;
 };
 
 class SearchLine : public KListViewSearchLine
