@@ -799,7 +799,7 @@ void KMMainWin::slotExpireFolder()
 
   if (config->readBoolEntry("warn-before-expire")) {
     str = i18n("Are you sure you want to expire this folder \"%1\"?").arg(mFolder->label());
-    if (KMessageBox::warningContinueCancel(this, str, i18n("Expire folder"),
+    if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
   }
@@ -820,7 +820,7 @@ void KMMainWin::slotEmptyFolder()
     str = i18n("Are you sure you want to empty the folder \"%1\"?").arg(mFolder->label());
 
     if (KMessageBox::warningContinueCancel(this, str,
-                                          i18n("Empty folder"), i18n("&Empty") )
+                                          i18n("Empty Folder"), i18n("&Empty") )
        !=KMessageBox::Continue) return;
   }
 
@@ -877,7 +877,7 @@ void KMMainWin::slotRemoveFolder()
 	     "\"%1\" and all subfolders, discarding their contents?")
 			     .arg(mFolder->label());
 
-  if (KMessageBox::warningYesNo(this, str, i18n("Remove folder"),
+  if (KMessageBox::warningYesNo(this, str, i18n("Remove Folder"),
 				i18n("&Remove"), KStdGuiItem::cancel() )
       == KMessageBox::Yes)
   {
@@ -940,7 +940,7 @@ void KMMainWin::slotExpireAll() {
   if (config->readBoolEntry("warn-before-expire")) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire all old messages?"),
-			 i18n("Expire old messages?"), i18n("Expire"));
+			 i18n("Expire old Messages?"), i18n("Expire"));
     if (ret != KMessageBox::Continue) {
       return;
     }
@@ -1769,7 +1769,7 @@ void KMMainWin::slotUrlSave()
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("File %1 exists.\nDo you want to replace it?")
-        .arg(saveUrl.prettyURL()), i18n("Save to file"), i18n("&Replace"))
+        .arg(saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         != KMessageBox::Continue)
       return;
   }
@@ -2638,7 +2638,7 @@ bool KMMainWin::queryClose() {
 
   if (config->readBoolEntry("warn-before-expire")) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
-			 str, i18n("Expire old messages?"), i18n("Expire"));
+			 str, i18n("Expire old Messages?"), i18n("Expire"));
     if (ret == KMessageBox::Continue) {
       kernel->setCanExpire(true);
     }

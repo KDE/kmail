@@ -177,7 +177,7 @@ bool kBytesToFile(const char* aBuffer, int len,
       str = i18n("File %1 exists.\nDo you want to replace it?")
 		  .arg(aFileName);
       rc = KMessageBox::warningContinueCancel(0,
-	   str, i18n("Save to file"), i18n("&Replace"));
+	   str, i18n("Save to File"), i18n("&Replace"));
       if (rc != KMessageBox::Continue) return FALSE;
     }
     if (aBackup)
@@ -193,7 +193,7 @@ bool kBytesToFile(const char* aBuffer, int len,
 	rc = KMessageBox::warningContinueCancel(0,
 	     i18n("Failed to make a backup copy of %1.\nContinue anyway?")
 	     .arg(aFileName),
-             i18n("Save to file"), i18n("&Save"));
+             i18n("Save to File"), i18n("&Save"));
 	if (rc != KMessageBox::Continue) return FALSE;
       }
     }
