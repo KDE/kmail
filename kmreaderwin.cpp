@@ -504,10 +504,10 @@ void KMReaderWin::parseMsg(void)
         mMsg->bodyPart(0, &msgPart);
         encoding = msgPart.charset();
       }
-      if (encoding.isEmpty())
-        encoding = "iso8859-1";
-      mCodec = QTextCodec::codecForName(encoding);
     }
+    if (encoding.isEmpty())
+      encoding = "iso8859-1";
+    mCodec = QTextCodec::codecForName(encoding);
   }
 
   if (!mCodec)
