@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 
 //=============================================================================
@@ -81,7 +82,7 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
 
   fld->setSystemFolder(aSysFldr);
 
-  rc = fld->create();
+  rc = fld->create(mImap);
   if (rc)
   {
     QString wmsg = i18n("Error while creating file `%1':\n%2").arg(aFolderName).arg(strerror(rc));
