@@ -51,14 +51,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 KMKernel::~KMKernel ()
 {
   mySelf = 0;
-/*  delete the_undoStack;
-  delete the_folderMgr;
-  delete the_acctMgr;
-  delete the_filterMgr;
-  delete the_filterActionDict;
-  delete the_addrBook; */
   kdDebug() << "KMKernel::~KMKernel" << endl;
-
 }
 
 
@@ -182,39 +175,15 @@ bool readFolderMsgIds=false;
 
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
 
-<<<<<<< kmkernel.cpp
-    msgFile=fopen(msgUrl.path(),"rb");
-    if (msgFile==NULL) { return -2; }
-
-    fseek(msgFile,0,SEEK_END);
-    len=ftell(msgFile);
-    fseek(msgFile,0,SEEK_SET);
-
-    while(len>DCOPADDMSG_BUF) {
-      fread(buf,DCOPADDMSG_BUF,1,msgFile);
-      len-=DCOPADDMSG_BUF;
-      buf[DCOPADDMSG_BUF]='\0';
-      {QString bf(buf); bericht+=bf; }
-    }
-=======
     // This is a proposed change by Daniel Andor.
     // He proposed to change from the fopen(blah)
     // to a kFileToString(blah).
     // Although it assigns a QString to a QString,
     // because of the implicit sharing this poses
     // no memory or performance penalty.
->>>>>>> 1.31
 
-<<<<<<< kmkernel.cpp
-    fread(buf,len,1,msgFile);
-    buf[len]='\0';
-    {QString bf(buf); bericht+=bf; }
-=======
     bericht=kFileToString(msgUrl.path(),true,false);
     if (bericht.isNull()) { return -2; }
->>>>>>> 1.31
-
-    fclose(msgFile);
 
     KMMessage *M=new KMMessage();
     M->fromString(bericht);
