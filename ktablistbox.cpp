@@ -652,28 +652,29 @@ void KTabListBoxTable :: doItemSelection (QMouseEvent* e, int idx)
 void KTabListBoxTable :: mousePressEvent (QMouseEvent* e)
 {
   KTabListBox* owner = (KTabListBox*)parentWidget();
-  int idx;
+  int row, col;
 
-  idx = findRow(e->pos().y());
+  row = findRow(e->pos().y());
+  col = findCol(e->pos().x());
 
   if (e->button() == RightButton)
   {
     // handle popup menu
-    emit owner->popupMenu(idx, findCol(e->pos().x()));
+    if (row >= 0 && col >= 0) emit owner->popupMenu(row, col);
     return;
   }
   else if (e->button() == MidButton) return;
 
   // arm for possible dragging
   dragStartPos = e->pos();
-  dragCol = findCol(e->pos().x());
-  dragRow = findRow(e->pos().y());
+  dragCol = col;
+  dragRow = row;
 
   // handle item highlighting
-  if (idx >= 0 && owner->getItem(idx)->marked() < -1)
+  if (row >= 0 && owner->getItem(row)->marked() < -1)
   {
-    doItemSelection(e, idx);
-    selIdx = idx;
+    doItemSelection(e, row);
+    selIdx = row;
   }
   else selIdx = -1;
 }
