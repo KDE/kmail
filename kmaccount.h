@@ -187,6 +187,12 @@ public:
   void clearIntervals();
   void clearOldIntervals();
   void setIntervals( const QValueList<QPair<QDateTime, QDateTime> >& );
+
+  /**
+   * Set/Get if this account is currently checking mail
+   */ 
+  bool checkingMail() { return mCheckingMail; }
+  void setCheckingMail( bool checking ) { mCheckingMail = checking; }
     
 signals:
   virtual void finishedCheck(bool newMail);
@@ -231,7 +237,7 @@ protected:
   int mInterval;
   bool mResource;
   bool mExclude;
-  bool mCheckingMail;
+  bool mCheckingMail : 1;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
   QPtrList<FolderJob>  mJobList;

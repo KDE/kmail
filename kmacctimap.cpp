@@ -253,7 +253,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  emit newMailsProcessed(-1);
+  emit newMailsProcessed(0);
   if (!mFolder || !mFolder->child() ||
       !makeConnection())
   {

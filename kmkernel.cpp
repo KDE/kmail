@@ -154,10 +154,9 @@ KMKernel::~KMKernel ()
 /********************************************************************/
 /*             DCOP-callable, and command line actions              */
 /********************************************************************/
-void KMKernel::checkMail () //might create a new reader but won´t show!!
+void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  kdDebug(5006) << "KMKernel::checkMail called" << endl;
-  mainWin()->mainKMWidget()->slotCheckMail();
+  kernel->acctMgr()->checkMail(false);
 }
 
 QStringList KMKernel::accounts()
@@ -165,20 +164,13 @@ QStringList KMKernel::accounts()
   return kernel->acctMgr()->getAccounts();
 }
 
-void KMKernel::checkAccount (const QString &account) //might create a new reader but won´t show!!
+void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
 {
   kdDebug(5006) << "KMKernel::checkMail called" << endl;
 
-  if (!checkingMail())
-  {
-    setCheckingMail(true);
-
-    KMAccount* acct = kernel->acctMgr()->find(account);
-    if (acct)
-       kernel->acctMgr()->singleCheckMail(acct, false);
-
-    setCheckingMail(false);
-  }
+  KMAccount* acct = kernel->acctMgr()->find(account);
+  if (acct)
+    kernel->acctMgr()->singleCheckMail(acct, false);
 }
 
 void KMKernel::openReader()
@@ -647,7 +639,6 @@ void KMKernel::init()
   QString foldersPath;
   KConfig* cfg;
 
-  the_checkingMail = false;
   the_shuttingDown = false;
   the_server_is_ready = false;
 

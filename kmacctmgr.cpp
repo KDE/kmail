@@ -28,8 +28,6 @@
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
-  checking = false;
-  moreThanOneAccount = false;
   lastAccountChecked = 0;
   mTotalNewMailsArrived=0;
 }
@@ -105,80 +103,66 @@ void KMAcctMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 {
+  kdDebug(5006) << "singleCheckMail " << account->name() << endl;
   newMailArrived = false;
   interactive = _interactive;
 
-  if (!mAcctChecking.contains(account)) mAcctChecking.append(account);
+  // queue the account
+  mAcctChecking.append(account);
 
-  if (checking) {
-    if (mAcctChecking.count() > 1) moreThanOneAccount = true;
-//    sorryCheckAlreadyInProgress(_interactive);
-    return;
-  }
+  if (account->checkingMail()) return;
 
-//   if (account->folder() == 0)
-//   {
-//     QString tmp; //Unsafe
-//     tmp = i18n("Account %1 has no mailbox defined!\n"
-//  	        "Mail checking aborted.\n"
-// 	        "Check your account settings!")
-// 		.arg(account->name());
-//     KMessageBox::information(0,tmp);
-//     return;
-//   }
-
-  checking = true;
-
-  kdDebug(5006) << "checking mail, server busy" << endl;
-  kernel->serverReady (false);
   lastAccountChecked = 0;
 
   processNextCheck(false);
 }
 
+//-----------------------------------------------------------------------------
 void KMAcctMgr::processNextCheck(bool _newMail)
 {
+  kdDebug(5006) << "processNextCheck, remaining " << mAcctChecking.count() << endl;
   KMAccount *curAccount = 0;
   newMailArrived |= _newMail;
 
   if (lastAccountChecked)
+  {
+    kdDebug(5006) << "checked mail for account " << lastAccountChecked->name() << endl;
     disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
 		this, SLOT(processNextCheck(bool)) );
-
-  if (mAcctChecking.isEmpty() ||
-      (((curAccount = mAcctChecking.take(0)) == lastAccountChecked))) {
     kernel->filterMgr()->cleanup();
-    kdDebug(5006) << "checked mail, server ready" << endl;
-    kernel->serverReady (true);
-    checking = false;
-    if (mTotalNewMailsArrived > 0 && moreThanOneAccount)
+    lastAccountChecked->setCheckingMail(false);
+    if (mTotalNewMailsArrived > 0)
       KMBroadcastStatus::instance()->setStatusMsg(
-      i18n("Transmission completed, %n new message.",
-           "Transmission completed, %n new messages.", mTotalNewMailsArrived));
+      i18n("Transmission for account %1 completed, %n new message.",
+           "Transmission for account %1 completed, %n new messages.", mTotalNewMailsArrived)
+      .arg(lastAccountChecked->name()));
     emit checkedMail(newMailArrived, interactive);
-    moreThanOneAccount = false;
     mTotalNewMailsArrived = 0;
-    return;
   }
+  if (mAcctChecking.isEmpty()) return;
+  curAccount = mAcctChecking.take(0);
 
   connect( curAccount, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextCheck(bool)) );
 
   lastAccountChecked = curAccount;
 
-  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && curAccount->folder() == 0)
-    {
-      QString tmp; //Unsafe
-      tmp = i18n("Account %1 has no mailbox defined!\n"
-		 "Mail checking aborted.\n"
-		 "Check your account settings!")
-	         .arg(curAccount->name());
-      KMessageBox::information(0,tmp);
-      processNextCheck(false);
-    }
+  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && 
+      curAccount->folder() == 0)
+  {
+    QString tmp = i18n("Account %1 has no mailbox defined!\n"
+        "Mail checking aborted.\n"
+        "Check your account settings!")
+      .arg(curAccount->name());
+    KMessageBox::information(0,tmp);
+    processNextCheck(false);
+  }
 
-  kdDebug(5006) << "processing next mail check, server busy" << endl;
+  KMBroadcastStatus::instance()->setStatusMsg(
+      i18n("Checking account %1 for new mail").arg(curAccount->name()));
+  kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 
+  curAccount->setCheckingMail(true);
   curAccount->processNewMail(interactive);
 }
 
@@ -266,20 +250,6 @@ void KMAcctMgr::checkMail(bool _interactive)
 {
   newMailArrived = false;
 
-  if (checking) {
-#ifndef NDEBUG
-      kdDebug(5006) << "already checking mail" << endl;
-      if (lastAccountChecked)
-	  kdDebug(5006) << "currently checking " << lastAccountChecked->name() << endl;
-
-      KMAccount* cur;
-      for (cur=mAcctList.first(); cur; cur=mAcctList.next())
-	  kdDebug(5006) << "queued " << cur->name() << endl;
-#endif
-//      sorryCheckAlreadyInProgress(_interactive);
-      return;
-  }
-
   if (mAcctList.isEmpty())
   {
     KMessageBox::information(0,i18n("You need to add an account in the network "
@@ -333,18 +303,10 @@ QStringList  KMAcctMgr::getAccounts(bool noImap) {
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::intCheckMail(int item, bool _interactive) {
-
+void KMAcctMgr::intCheckMail(int item, bool _interactive) 
+{
   KMAccount* cur;
   newMailArrived = false;
-
-  if (mAcctList.isEmpty())
-  {
-    KMessageBox::information(0,i18n("You need to add an account in the network "
-				    "section of the settings in order to "
-				    "receive mail."));
-    return;
-  }
 
   int x = 0;
   cur = mAcctList.first();
@@ -355,17 +317,6 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
     cur=mAcctList.next();
   }
 
-  if (cur->type() != "imap" && cur->type() != "cachedimap" && cur->folder() == 0)
-  {
-    QString tmp;
-    tmp = i18n("Account %1 has no mailbox defined!\n"
-                     "Mail checking aborted.\n"
-                     "Check your account settings!")
-		.arg(cur->name());
-    KMessageBox::information(0,tmp);
-    return;
-  }
-
   singleCheckMail(cur, _interactive);
 }
 
@@ -373,20 +324,9 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 //-----------------------------------------------------------------------------
 void KMAcctMgr::addToTotalNewMailCount(int newmails)
 {
-  if ( newmails==-1 ) mTotalNewMailsArrived=-1;
-  if ( mTotalNewMailsArrived==-1 ) return;
-  mTotalNewMailsArrived+=newmails;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctMgr::sorryCheckAlreadyInProgress(bool aInteractive)
-{
-  if (aInteractive && lastAccountChecked)
-    KMessageBox::sorry(
-      0,
-      i18n( "Mail checking of the %1 account is already in progress."
-	  ).arg( lastAccountChecked->name() ));
+  if ( newmails == -1 ) mTotalNewMailsArrived = -1;
+  if ( mTotalNewMailsArrived == -1 ) mTotalNewMailsArrived = 0;
+  mTotalNewMailsArrived += newmails;
 }
 
 //-----------------------------------------------------------------------------

@@ -353,6 +353,12 @@ void KMMainWidget::readConfig(void)
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
 	mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
+    if (!mStartupDone)
+    {
+      // check mail on startup
+      bool check = config->readBoolEntry("checkmail-startup", false);
+      if (check) slotCheckMail();
+    }
   }
 
   // Re-activate panners
@@ -386,12 +392,6 @@ void KMMainWidget::readConfig(void)
     show();
     // sanders - Maybe this fixes a bug?
 
-    /* Old code
-    mMsgView->setMsg( mMsgView->msg(), TRUE );
-    mHeaders->setFolder(mFolder);
-    //    kernel->kbp()->idle(); //For symmetry
-    show();
-    */
   }
 }
 
@@ -853,38 +853,14 @@ void KMMainWidget::slotAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
- if(kernel->checkingMail())
- {
-    KMessageBox::information(this,
-		     i18n("Your mail is already being checked."));
-    return;
-  }
-
- kernel->setCheckingMail(true);
-
  kernel->acctMgr()->checkMail(true);
-
- kernel->setCheckingMail(false);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount(int item)
 {
-  if(kernel->checkingMail())
-  {
-    KMessageBox::information(this,
-		     i18n("Your mail is already being checked."));
-    return;
-  }
-
-  kernel->setCheckingMail(true);
-
-  //  kbp->busy();
   kernel->acctMgr()->intCheckMail(item);
-  // kbp->idle();
-
-  kernel->setCheckingMail(false);
 }
 
 //-----------------------------------------------------------------------------

@@ -328,6 +328,7 @@ protected:
   QCheckBox     *mSystrayCheck;
   QRadioButton  *mBlinkingSystray;
   QRadioButton  *mSystrayOnNew;
+  QCheckBox     *mCheckmailStartupCheck;
   QPushButton   *mOtherNewMailActionsButton;
 
   QValueList< QGuardedPtr<KMAccount> > mAccountsToDelete;

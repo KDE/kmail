@@ -228,10 +228,11 @@ namespace KMail {
     if (mCountRemainChecks == 0) {
       // all checks are done
       if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
-	emit finishedCheck(true);
-	mCountLastUnread = mCountUnread;
+        emit newMailsProcessed( mCountUnread ); 
+        emit finishedCheck(true);
+        mCountLastUnread = mCountUnread;
       } else {
-	emit finishedCheck(false);
+        emit finishedCheck(false);
       }
       mCountUnread = 0;
     }

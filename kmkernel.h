@@ -160,8 +160,6 @@ public:
   bool startingUp() { return the_startingUp; }
   void setStartingUp (bool flag) { the_startingUp = flag; }
   bool shuttingDown() { return the_shuttingDown; }
-  bool checkingMail() { return the_checkingMail; }
-  void setCheckingMail(bool flag) { the_checkingMail = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
   void notClosedByUser();
 
@@ -257,8 +255,6 @@ private:
   bool the_startingUp;
   /** are we going down? set from here */
   bool the_shuttingDown;
-  /** are we checking mail? set from... where the mail is checked */
-  bool the_checkingMail;
   /** are we in the middle of network operations (needed?) */
   bool the_server_is_ready;
   /** true unles kmail is closed by session management */

@@ -77,15 +77,11 @@ signals:
   void checkedMail(bool, bool);
 
 private:
-  void sorryCheckAlreadyInProgress(bool aInteractive);
-
   KMAcctList   mAcctList;
   KMAcctList   mAcctChecking;
   KMAccount *lastAccountChecked;
-  bool checking;
   bool newMailArrived;
   bool interactive;
-  bool moreThanOneAccount;
   int  mTotalNewMailsArrived;
 };
 

@@ -382,10 +382,7 @@ void KMAccount::precommandExited(bool success)
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
- if (mCheckingMail) return;
- mCheckingMail = TRUE;
- kernel->acctMgr()->singleCheckMail(this,false);
- mCheckingMail = FALSE;
+ kernel->acctMgr()->singleCheckMail(this, false);
 }
 
 //-----------------------------------------------------------------------------

@@ -1165,6 +1165,8 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   connect( mSystrayCheck, SIGNAL(toggled(bool)),
            bgroup, SLOT(setEnabled(bool)) );
 
+  mCheckmailStartupCheck = new QCheckBox( i18n("Check mail on startup"), group );
+
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
@@ -1397,6 +1399,7 @@ void NetworkPage::ReceivingTab::setup() {
   mSystrayCheck->setChecked( general.readBoolEntry("systray-on-mail", false) );
   mBlinkingSystray->setChecked( !general.readBoolEntry("systray-on-new", true) );
   mSystrayOnNew->setChecked( general.readBoolEntry("systray-on-new", true) );
+  mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
 }
 
 void NetworkPage::ReceivingTab::apply() {
@@ -1445,6 +1448,8 @@ void NetworkPage::ReceivingTab::apply() {
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
   general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
   general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
+
+  general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
 
   // Sync new IMAP accounts ASAP:
   for (it = newCachedImapAccounts.begin(); it != newCachedImapAccounts.end(); ++it ) {
