@@ -123,8 +123,17 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     mUnreadIconButton->setEnabled( false );
   }
 
-  connect( mIconsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotEnableIcons(bool)) );
-  connect( mNormalIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotChangeIcon(QString)) );
+  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+	   mNormalIconButton, SLOT(setEnabled(bool)) );
+  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+	   mUnreadIconButton, SLOT(setEnabled(bool)) );
+  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+	   ilabel, SLOT(setEnabled(bool)) );
+  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+	   ilabel2, SLOT(setEnabled(bool)) );
+
+  connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
+	   this, SLOT(slotChangeIcon(QString)) );
 
   //end icons group
   
@@ -186,8 +195,6 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QGridLayout *mlLayout = new QGridLayout(mlGroup->layout());
   mlLayout->setSpacing( 6 );
   holdsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup);
-  QObject::connect( holdsMailingList, SIGNAL(toggled(bool)),
-                    SLOT(slotHoldsML(bool)) );
   topLayout->addWidget( mlGroup );
   mlLayout->addMultiCellWidget(holdsMailingList, 0, 0, 0, 1);
 
@@ -203,6 +210,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   label->setBuddy( mailingListPostAddress );
   mlLayout->addWidget( mailingListPostAddress, 1, 1 );
   mailingListPostAddress->setEnabled(false);
+
+  connect( holdsMailingList, SIGNAL(toggled(bool)),
+	   mailingListPostAddress, SLOT(setEnabled(bool)) );
 
   //
   // Expiry data.
@@ -557,22 +567,6 @@ void KMFolderDialog::slotOk()
   KDialogBase::slotOk();
 }
 
-//-----------------------------------------------------------------------------
-void KMFolderDialog::slotHoldsML( bool holdsML )
-{
-  if ( holdsML )
-  {
-    mailingListPostAddress->setEnabled(true);
-//     mailingListAdminAddress->setEnabled(true);
-  }
-  else
-  {
-    mailingListPostAddress->setEnabled(false);
-//     mailingListAdminAddress->setEnabled(false);
-  }
-
-//  mailingListIdentity->setEnabled(holdsML);
-}
 
 /**
  * Called when the 'auto expire' toggle is clicked.
@@ -617,15 +611,6 @@ KMFolderDialog::slotUnreadExpiryUnitChanged( int value )
   unreadExpiryTime->setEnabled( value != 0 );
 }
 
-
-void 
-KMFolderDialog::slotEnableIcons( bool yes)
-{
-  mNormalIconButton->setEnabled( yes );
-  mUnreadIconButton->setEnabled( yes );
-  if ( folder ) 
-    folder->setUseCustomIcons( yes );
-}
 
 void 
 KMFolderDialog::slotChangeIcon( QString icon )
