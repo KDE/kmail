@@ -469,7 +469,7 @@ void KMFolderDialog::slotOk()
     if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
     else fldName = oldFldName;
     fldName.replace(QRegExp("/"), "");
-    fldName.replace(QRegExp("^\\."), "");
+    fldName.replace(QRegExp("^\\.*"), "");
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 
     if (mailboxType->currentItem() == 2) {
