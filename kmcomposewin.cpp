@@ -979,7 +979,7 @@ void KMComposeWin::setupActions(void)
   
   if( kernel->cryptPlugList() && kernel->cryptPlugList()->count() ){
     QStringList lst;
-    lst << i18n( "inline OpenPGP (builtin)" );
+    lst << i18n( "inline OpenPGP (built-in)" );
     CryptPlugWrapper* current;
     QPtrListIterator<CryptPlugWrapper> it( *kernel->cryptPlugList() );
     int idx=0;
