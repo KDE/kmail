@@ -892,7 +892,9 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("KMail can check your accounts for new mail on startup."),
   I18N_NOOP("Individual IMAP folders can be checked for new mail."),
   I18N_NOOP("Ignore Thread and Watch Thread."),
-  I18N_NOOP("Messages can have more than one status.")
+  I18N_NOOP("Messages can have more than one status."),
+  I18N_NOOP("More flexible layout (no message pane or panes side by side)"),
+  I18N_NOOP("Disconnected IMAP.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
