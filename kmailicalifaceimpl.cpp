@@ -52,7 +52,7 @@
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-    mUseResourceIMAP( false )
+    mUseResourceIMAP( false ), mFolderLanguage( 0 )
 {
   QObject* gw = &kernel->groupware();
   connect( gw, SIGNAL( signalRefresh( const QString& ) ),
@@ -258,24 +258,15 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
 
 // Global tables of foldernames is different languages
 // For now: 0->English, 1->German
-static QMap<KFolderTreeItem::Type,QString> folderNames[2];
+static QMap<KFolderTreeItem::Type,QString> folderNames[4];
 QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language ) const
 {
   static bool folderNamesSet = false;
   if( !folderNamesSet ) {
     folderNamesSet = true;
-    /*
-      Logical (enum)     English         German
-      ------------------------------------------------------
-      Contacts           Contacts        Kontakte
-      Calendar           Calendar        Kalender
-      Notes              Notes           Notizen
-      Tasks              Tasks           Aufgaben
-      Inbox              inbox           Posteingang
-      Outbox             outbox          Postausgang
-    */
     /* NOTE: If you add something here, you also need to update
        GroupwarePage in configuredialog.cpp */
+
     // English
     folderNames[0][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendar");
     folderNames[0][KFolderTreeItem::Tasks] = QString::fromLatin1("Tasks");
@@ -289,9 +280,23 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
     folderNames[1][KFolderTreeItem::Journals] = QString::fromLatin1("Journals");
     folderNames[1][KFolderTreeItem::Contacts] = QString::fromLatin1("Kontakte");
     folderNames[1][KFolderTreeItem::Notes] = QString::fromLatin1("Notizen");
+
+    // French
+    folderNames[2][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendrier");
+    folderNames[2][KFolderTreeItem::Tasks] = QString::fromLatin1("Tâches");
+    folderNames[2][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
+    folderNames[2][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
+    folderNames[2][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
+
+    // Dutch
+    folderNames[3][KFolderTreeItem::Calendar] = QString::fromLatin1("Agenda");
+    folderNames[3][KFolderTreeItem::Tasks] = QString::fromLatin1("Taken");
+    folderNames[3][KFolderTreeItem::Journals] = QString::fromLatin1("Logboek");
+    folderNames[3][KFolderTreeItem::Contacts] = QString::fromLatin1("Contactpersonen");
+    folderNames[3][KFolderTreeItem::Notes] = QString::fromLatin1("Notities");
   }
 
-  if( language == -1 || language > 1 ) return folderNames[mFolderLanguage][type];
+  if( language < 0 || language > 3 ) return folderNames[mFolderLanguage][type];
   else return folderNames[language][type];
 }
 
@@ -347,7 +352,7 @@ void KMailICalIfaceImpl::readConfig()
 
   // Read remaining options
   unsigned int folderLanguage = options.readNumEntry( "Folder Language", 0 );
-  if( folderLanguage > 1 ) folderLanguage = 0;
+  if( folderLanguage > 3 ) folderLanguage = 0;
   QString parentName = options.readEntry("Folder Parent");
 
   // Find the folder parent

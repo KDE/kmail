@@ -406,7 +406,7 @@ QWidget* StartupWizard::createLanguagePage()
   mLanguageCombo = new QComboBox( false, rightSide );
 
   QStringList lst;
-  lst << i18n("English") << i18n("German");
+  lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
 
   setLanguage( 0, false );
