@@ -571,6 +571,7 @@ void AccountDialog::makePopAccountPage()
     "authentification method only, if you have a good reason", "LOGIN"),
     mPop.authGroup );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), mPop.authGroup );
+  mPop.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mPop.authGroup );
   mPop.authAPOP = new QRadioButton( i18n("APOP"), mPop.authGroup );
   vlay->addWidget( mPop.authGroup );
 
@@ -689,6 +690,7 @@ void AccountDialog::makeImapAccountPage()
     "authentification method only, if you have a good reason", "LOGIN"),
     mImap.authGroup );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), mImap.authGroup );
+  mImap.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mImap.authGroup );
   mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), mImap.authGroup );
   vlay->addWidget( mImap.authGroup );
 
@@ -766,6 +768,8 @@ void AccountDialog::setupSettings()
       mPop.authLogin->setChecked( TRUE );
     else if (ap.auth() == "CRAM-MD5")
       mPop.authCRAM_MD5->setChecked( TRUE );
+    else if (ap.auth() == "DIGEST-MD5")
+      mPop.authDigestMd5->setChecked( TRUE );
     else if (ap.auth() == "APOP")
       mPop.authAPOP->setChecked( TRUE );
     else mPop.authUser->setChecked( TRUE );
@@ -794,6 +798,8 @@ void AccountDialog::setupSettings()
     else mImap.encryptionNone->setChecked( TRUE );
     if (ai.auth() == "CRAM-MD5")
       mImap.authCramMd5->setChecked( TRUE );
+    else if (ai.auth() == "DIGEST-MD5")
+      mImap.authDigestMd5->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
       mImap.authAnonymous->setChecked( TRUE );
     else if (ai.auth() == "PLAIN")
@@ -910,6 +916,7 @@ void AccountDialog::slotPopCapabilities(const QStringList &list)
   mPop.authPlain->setEnabled(list.findIndex("PLAIN") != -1);
   mPop.authLogin->setEnabled(list.findIndex("LOGIN") != -1);
   mPop.authCRAM_MD5->setEnabled(list.findIndex("CRAM-MD5") != -1);
+  mPop.authDigestMd5->setEnabled(list.findIndex("DIGEST-MD5") != -1);
   mPop.authAPOP->setEnabled(list.findIndex("APOP") != -1);
   checkHighest(mPop.encryptionGroup);
   checkHighest(mPop.authGroup);
@@ -928,6 +935,7 @@ void AccountDialog::slotImapCapabilities(const QStringList &list)
   mImap.authPlain->setEnabled(list.findIndex("AUTH=PLAIN") != -1);
   mImap.authLogin->setEnabled(list.findIndex("AUTH=LOGIN") != -1);
   mImap.authCramMd5->setEnabled(list.findIndex("AUTH=CRAM-MD5") != -1);
+  mImap.authDigestMd5->setEnabled(list.findIndex("AUTH=DIGEST-MD5") != -1);
   mImap.authAnonymous->setEnabled(list.findIndex("AUTH=ANONYMOUS") != -1);
   checkHighest(mImap.encryptionGroup);
   checkHighest(mImap.authGroup);
@@ -1019,6 +1027,8 @@ void AccountDialog::saveSettings()
       epa.setAuth("LOGIN");
     else if (mPop.authCRAM_MD5->isChecked())
       epa.setAuth("CRAM-MD5");
+    else if (mPop.authDigestMd5->isChecked())
+      epa.setAuth("DIGEST-MD5");
     else if (mPop.authAPOP->isChecked())
       epa.setAuth("APOP");
     else epa.setAuth("AUTO");
@@ -1042,6 +1052,8 @@ void AccountDialog::saveSettings()
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
     if (mImap.authCramMd5->isChecked())
       epa.setAuth("CRAM-MD5");
+    else if (mImap.authDigestMd5->isChecked())
+      epa.setAuth("DIGEST-MD5");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
     else if (mImap.authPlain->isChecked())

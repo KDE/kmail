@@ -94,6 +94,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCRAM_MD5;
+      QRadioButton *authDigestMd5;
       QRadioButton *authAPOP;
       QPushButton  *checkCapabilities;
       QCheckBox    *usePipeliningCheck;
@@ -129,6 +130,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
+      QRadioButton *authDigestMd5;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
     };

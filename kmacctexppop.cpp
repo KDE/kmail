@@ -568,7 +568,8 @@ void KMAcctExpPop::startJob() {
   mSlaveConfig.insert("progress", "off");
   mSlaveConfig.insert("pipelining", (mUsePipelining) ? "on" : "off");
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
-  if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5")
+  if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5" ||
+    mAuth == "DIGEST-MD5")
   {
     mSlaveConfig.insert("auth", "SASL");
     mSlaveConfig.insert("sasl", mAuth);
