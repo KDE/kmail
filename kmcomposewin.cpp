@@ -969,17 +969,32 @@ else
     if ((mCharset=="") || (mCharset == "default"))
       mCharset = defaultCharset();
 
+    QString bodyDecoded = mMsg->bodyDecoded();
+
+      Kpgp* pgp = Kpgp::getKpgp();
+      assert(pgp != NULL);
+
+      if (pgp->setMessage(QCString(bodyDecoded)))
+      {
+        QString str = pgp->frontmatter();
+        if ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())
+        {
+          str += pgp->message();
+          str += pgp->backmatter();
+          bodyDecoded = str;
+        }
+      }
+
 // Workaround for bug in QT-2.2.2
 if (mCharset == "utf-8")
-  mEditor->setText(QString::fromUtf8(mMsg->bodyDecoded()));
+  mEditor->setText(QString::fromUtf8(bodyDecoded));
 else
 {
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     if (codec) {
-      QString bodyDecoded = mMsg->bodyDecoded();
       mEditor->setText(codec->toUnicode(bodyDecoded));
     } else
-      mEditor->setText(QString::fromLocal8Bit(mMsg->bodyDecoded()));
+      mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
 }
   }
 
