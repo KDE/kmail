@@ -621,6 +621,7 @@ void KMMainWin::slotAddFolder()
       mFolderTree->setCurrentItem( qlvi );
     }
   }
+  delete d;
 }
 
 
@@ -737,6 +738,7 @@ void KMMainWin::slotModifyFolder()
       mHeaders->msgChanged();
     }
   }
+  delete d;
 }
 
 //-----------------------------------------------------------------------------

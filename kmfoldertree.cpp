@@ -884,6 +884,7 @@ void KMFolderTree::addChildFolder()
       blockSignals( false );
     }
   }
+  delete d;
   // update if added to root Folder
   if (!aFolder || aFolder->noContent()) {
      doFolderListChanged();
