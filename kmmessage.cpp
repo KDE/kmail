@@ -793,7 +793,8 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
         parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
     }
 
-    codec = this->codec();
+    if ( mOverrideCodec || !codec )
+      codec = this->codec();
 
     if( !parsedString.isEmpty() ) {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
