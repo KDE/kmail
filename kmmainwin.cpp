@@ -186,13 +186,13 @@ void KMMainWin::readConfig(void)
 
   config->setGroup("Geometry");
   mThreadPref = config->readBoolEntry( "nestedMessages", false );
-  str = config->readEntry("MainWin", "300,600");
+  str = config->readEntry("MainWin", "600,600");
   if (!str.isEmpty() && str.find(',')>=0)
   {
     sscanf(str,"%d,%d",&w,&h);
     resize(w,h);
   }
-  str = config->readEntry("Panners", "100,100");
+  str = config->readEntry("Panners", "300,130");
   if ((!str.isEmpty()) && (str.find(',')!=-1))
     sscanf(str,"%d,%d",&((*mHorizPannerSep)[0]),&((*mVertPannerSep)[0]));
   else
