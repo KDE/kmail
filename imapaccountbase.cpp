@@ -231,7 +231,9 @@ namespace KMail {
     if ( mSlave && mSlaveConnected ) return Connected;
     if ( mPasswordDialogIsActive ) return Connecting;
 
-    if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
+    if( mAskAgain || ( ( passwd().isEmpty() || login().isEmpty() ) && 
+                         auth() != "GSSAPI" ) ) {
+      
       Q_ASSERT( !mSlave ); // disconnected on 'wrong login' error already, or first try
       QString log = login();
       QString pass = passwd();

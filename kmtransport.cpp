@@ -485,6 +485,8 @@ void KMTransportDialog::makeSmtpPage()
     mSmtp.authGroup  );
   mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mSmtp.authGroup );
   mSmtp.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mSmtp.authGroup );
+  mSmtp.authNTLM = new QRadioButton( i18n("&NTLM"), mSmtp.authGroup );
+  mSmtp.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mSmtp.authGroup );
   vlay->addWidget( mSmtp.authGroup );
 
   vlay->addStretch();
@@ -529,6 +531,10 @@ void KMTransportDialog::setupSettings()
       mSmtp.authCramMd5->setChecked(TRUE);
     else if (mTransportInfo->authType == "DIGEST-MD5")
       mSmtp.authDigestMd5->setChecked(TRUE);
+    else if (mTransportInfo->authType == "NTLM")
+      mSmtp.authNTLM->setChecked(TRUE);
+    else if (mTransportInfo->authType == "GSSAPI")
+      mSmtp.authGSSAPI->setChecked(TRUE);
     else mSmtp.authPlain->setChecked(TRUE);
 
     slotRequiresAuthClicked();
@@ -561,7 +567,9 @@ void KMTransportDialog::saveSettings()
 
     mTransportInfo->authType = (mSmtp.authLogin->isChecked()) ? "LOGIN" :
     (mSmtp.authCramMd5->isChecked()) ? "CRAM-MD5" :
-    (mSmtp.authDigestMd5->isChecked()) ? "DIGEST-MD5" : "PLAIN";
+    (mSmtp.authDigestMd5->isChecked()) ? "DIGEST-MD5" : 
+    (mSmtp.authNTLM->isChecked()) ? "NTLM" : 
+    (mSmtp.authGSSAPI->isChecked()) ? "GSSAPI" : "PLAIN";
   }
 }
 
@@ -626,6 +634,8 @@ void KMTransportDialog::enableAuthMethods( unsigned int auth ) {
   mSmtp.authLogin->setEnabled( auth & LOGIN && !(auth & PLAIN));
   mSmtp.authCramMd5->setEnabled( auth & CRAM_MD5 );
   mSmtp.authDigestMd5->setEnabled( auth & DIGEST_MD5 );
+  mSmtp.authNTLM->setEnabled( auth & NTLM );
+  mSmtp.authGSSAPI->setEnabled( auth & GSSAPI );
 }
 
 unsigned int KMTransportDialog::authMethodsFromString( const QString & s ) {
@@ -640,6 +650,10 @@ unsigned int KMTransportDialog::authMethodsFromString( const QString & s ) {
       result |= CRAM_MD5;
     else if ( *it == "SASL/DIGEST-MD5" )
       result |= DIGEST_MD5;
+    else if ( *it == "SASL/NTLM" )
+      result |= NTLM;
+    else if ( *it == "SASL/GSSAPI" )
+      result |= GSSAPI;
   return result;
 }
 
@@ -654,6 +668,10 @@ unsigned int KMTransportDialog::authMethodsFromStringList( const QStringList & s
       result |= CRAM_MD5;
     else if ( *it == "DIGEST-MD5" )
       result |= DIGEST_MD5;
+    else if ( *it == "NTLM" )
+      result |= NTLM;
+    else if ( *it == "GSSAPI" )
+      result |= GSSAPI;
   return result;
 }
 

@@ -117,7 +117,8 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 {
   if (stage == Idle) {
 
-    if(mAskAgain || passwd().isEmpty() || mLogin.isEmpty()) {
+    if ( (mAskAgain || passwd().isEmpty() || mLogin.isEmpty()) &&
+      mAuth != "GSSAPI" ) {
       QString passwd = NetworkAccount::passwd();
       bool b = storePasswd();
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
@@ -351,7 +352,7 @@ MetaData KMAcctExpPop::slaveConfig() const {
   m.insert("progress", "off");
   m.insert("pipelining", (mUsePipelining) ? "on" : "off");
   if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5" ||
-      mAuth == "DIGEST-MD5") {
+      mAuth == "DIGEST-MD5" || mAuth == "NTLM" || mAuth == "GSSAPI") {
     m.insert("auth", "SASL");
     m.insert("sasl", mAuth);
   } else if ( mAuth == "*" )

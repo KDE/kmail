@@ -124,6 +124,8 @@ private:
     QRadioButton *authLogin;
     QRadioButton *authCramMd5;
     QRadioButton *authDigestMd5;
+    QRadioButton *authNTLM;
+    QRadioButton *authGSSAPI;
     QPushButton  *checkCapabilities;
     QCheckBox    *storePasswordCheck;
     QCheckBox    *specifyHostnameCheck;
@@ -155,6 +157,8 @@ private:
     PLAIN = 2,
     CRAM_MD5 = 4,
     DIGEST_MD5 = 8,
+    NTLM = 16,
+    GSSAPI = 32,
     AllAuth = 0xffffffff
   };
   unsigned int mAuthNone, mAuthSSL, mAuthTLS;

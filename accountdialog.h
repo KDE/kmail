@@ -114,7 +114,10 @@ class AccountDialog : public KDialogBase
       QRadioButton *authLogin;
       QRadioButton *authCRAM_MD5;
       QRadioButton *authDigestMd5;
+      QRadioButton *authNTLM;
+      QRadioButton *authGSSAPI;
       QRadioButton *authAPOP;
+
       QPushButton  *checkCapabilities;
       QCheckBox    *usePipeliningCheck;
       QCheckBox    *storePasswordCheck;
@@ -169,6 +172,8 @@ class AccountDialog : public KDialogBase
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
       QRadioButton *authDigestMd5;
+      QRadioButton *authGSSAPI;
+      QRadioButton *authNTLM;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
       KMFolderComboBox  *trashCombo;
@@ -237,6 +242,8 @@ class AccountDialog : public KDialogBase
       UIDL       = 256,
       STLS       = 512, // TLS for POP
       STARTTLS   = 512, // TLS for IMAP
+      GSSAPI     = 1024,
+      NTLM       = 2048,
       AllCapa    = 0xffffffff
     };
     unsigned int mCurCapa;

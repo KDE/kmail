@@ -730,7 +730,10 @@ void AccountDialog::makePopAccountPage()
     mPop.authGroup, "auth plain"  );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup, "auth cram-md5" );
   mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup, "auth digest-md5" );
+  mPop.authNTLM = new QRadioButton( i18n("&NTLM"), mPop.authGroup, "auth ntlm" );
+  mPop.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mPop.authGroup, "auth gssapi" );
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup, "auth apop" );
+
   vlay->addWidget( mPop.authGroup );
 
   vlay->addStretch();
@@ -954,6 +957,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
      mImap.authGroup );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mImap.authGroup );
   mImap.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mImap.authGroup );
+  mImap.authNTLM = new QRadioButton( i18n("&NTLM"), mImap.authGroup );
+  mImap.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mImap.authGroup );
   mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), mImap.authGroup );
   vlay->addWidget( mImap.authGroup );
 
@@ -1057,6 +1062,10 @@ void AccountDialog::setupSettings()
       mPop.authCRAM_MD5->setChecked( TRUE );
     else if (ap.auth() == "DIGEST-MD5")
       mPop.authDigestMd5->setChecked( TRUE );
+    else if (ap.auth() == "NTLM")
+      mPop.authNTLM->setChecked( TRUE );
+    else if (ap.auth() == "GSSAPI")
+      mPop.authGSSAPI->setChecked( TRUE );
     else if (ap.auth() == "APOP")
       mPop.authAPOP->setChecked( TRUE );
     else mPop.authUser->setChecked( TRUE );
@@ -1106,6 +1115,10 @@ void AccountDialog::setupSettings()
       mImap.authCramMd5->setChecked( TRUE );
     else if (ai.auth() == "DIGEST-MD5")
       mImap.authDigestMd5->setChecked( TRUE );
+    else if (ai.auth() == "NTLM")
+      mImap.authNTLM->setChecked( TRUE );
+    else if (ai.auth() == "GSSAPI")
+      mImap.authGSSAPI->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
       mImap.authAnonymous->setChecked( TRUE );
     else if (ai.auth() == "PLAIN")
@@ -1156,6 +1169,10 @@ void AccountDialog::setupSettings()
       mImap.authCramMd5->setChecked( TRUE );
     else if (ai.auth() == "DIGEST-MD5")
       mImap.authDigestMd5->setChecked( TRUE );
+    else if (ai.auth() == "GSSAPI")
+      mImap.authGSSAPI->setChecked( TRUE );
+    else if (ai.auth() == "NTLM")
+      mImap.authNTLM->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
       mImap.authAnonymous->setChecked( TRUE );
     else if (ai.auth() == "PLAIN")
@@ -1354,6 +1371,7 @@ void AccountDialog::slotCheckImapCapabilities()
 unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
 {
   unsigned int capa = 0;
+  kdDebug( 5006 ) << l << endl;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).upper();
     if ( cur == "PLAIN" )
@@ -1364,6 +1382,10 @@ unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l
       capa |= CRAM_MD5;
     else if ( cur == "DIGEST-MD5" )
       capa |= Digest_MD5;
+    else if ( cur == "NTLM" )
+      capa |= NTLM;
+    else if ( cur == "GSSAPI" )
+      capa |= GSSAPI;
     else if ( cur == "APOP" )
       capa |= APOP;
     else if ( cur == "PIPELINING" )
@@ -1408,6 +1430,8 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
   mPop.authLogin->setEnabled( capa & Login );
   mPop.authCRAM_MD5->setEnabled( capa & CRAM_MD5 );
   mPop.authDigestMd5->setEnabled( capa & Digest_MD5 );
+  mPop.authNTLM->setEnabled( capa & NTLM );
+  mPop.authGSSAPI->setEnabled( capa & GSSAPI );
   mPop.authAPOP->setEnabled( capa & APOP );
   if ( !( capa & Pipelining ) && mPop.usePipeliningCheck->isChecked() ) {
     mPop.usePipeliningCheck->setChecked( false );
@@ -1470,6 +1494,10 @@ unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & 
       capa |= CRAM_MD5;
     else if ( cur == "AUTH=DIGEST-MD5" )
       capa |= Digest_MD5;
+    else if ( cur == "AUTH=NTLM" )
+      capa |= NTLM;
+    else if ( cur == "AUTH=GSSAPI" )
+      capa |= GSSAPI;
     else if ( cur == "AUTH=ANONYMOUS" )
       capa |= Anonymous;
     else if ( cur == "STARTTLS" )
@@ -1508,6 +1536,8 @@ void AccountDialog::enableImapAuthMethods( unsigned int capa )
   mImap.authLogin->setEnabled( capa & Login );
   mImap.authCramMd5->setEnabled( capa & CRAM_MD5 );
   mImap.authDigestMd5->setEnabled( capa & Digest_MD5 );
+  mImap.authNTLM->setEnabled( capa & NTLM );
+  mImap.authGSSAPI->setEnabled( capa & GSSAPI );
   mImap.authAnonymous->setEnabled( capa & Anonymous );
 }
 
@@ -1603,6 +1633,10 @@ void AccountDialog::saveSettings()
       epa.setAuth("CRAM-MD5");
     else if (mPop.authDigestMd5->isChecked())
       epa.setAuth("DIGEST-MD5");
+    else if (mPop.authNTLM->isChecked())
+      epa.setAuth("NTLM");
+    else if (mPop.authGSSAPI->isChecked())
+      epa.setAuth("GSSAPI");
     else if (mPop.authAPOP->isChecked())
       epa.setAuth("APOP");
     else epa.setAuth("AUTO");
@@ -1647,6 +1681,10 @@ void AccountDialog::saveSettings()
       epa.setAuth("CRAM-MD5");
     else if (mImap.authDigestMd5->isChecked())
       epa.setAuth("DIGEST-MD5");
+    else if (mImap.authNTLM->isChecked())
+      epa.setAuth("NTLM");
+    else if (mImap.authGSSAPI->isChecked())
+      epa.setAuth("GSSAPI");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
     else if (mImap.authLogin->isChecked())
@@ -1698,6 +1736,10 @@ void AccountDialog::saveSettings()
       epa.setAuth("CRAM-MD5");
     else if (mImap.authDigestMd5->isChecked())
       epa.setAuth("DIGEST-MD5");
+    else if (mImap.authNTLM->isChecked())
+      epa.setAuth("NTLM");
+    else if (mImap.authGSSAPI->isChecked())
+      epa.setAuth("GSSAPI");
     else if (mImap.authAnonymous->isChecked())
       epa.setAuth("ANONYMOUS");
     else if (mImap.authLogin->isChecked())

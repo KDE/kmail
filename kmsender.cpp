@@ -1045,7 +1045,8 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   if (ti->auth)
   {
-    if(ti->user.isEmpty() || ti->passwd().isEmpty())
+    if( (ti->user.isEmpty() || ti->passwd().isEmpty()) && 
+      ti->authType != "GSSAPI" )
     {
       bool b = FALSE;
       int result;
