@@ -2887,25 +2887,25 @@ void KMMainWin::setupMenuBar()
   totalColumnToggle->setToolTip( msg );
   totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
 
-  (void)new KAction( KGuiItem( i18n("View->","Expand Thread"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
 			       i18n("Expand the current thread") ),
 		     Key_Period, this,
 		     SLOT(slotExpandThread()),
 		     actionCollection(), "expand_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Collapse Thread"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString::null,
 			       i18n("Collapse the current thread") ),
 		     Key_Comma, this,
 		     SLOT(slotCollapseThread()),
 		     actionCollection(), "collapse_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Expand All Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString::null,
 			       i18n("Expand all threads in the current folder") ),
 		     CTRL+Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
 		     actionCollection(), "expand_all_threads" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Collapse All Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString::null,
 			       i18n("Collapse all threads in the current folder") ),
 		     CTRL+Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
