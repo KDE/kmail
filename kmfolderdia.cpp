@@ -24,14 +24,14 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(KMAcctFolder* aFolder, QWidget *parent,
+KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
 			       const char *name) :
   KMFolderDialogInherited(parent, name, TRUE)
 {
   KMAccount* acct;
   QLabel *label;
 
-  folder = aFolder;
+  folder = (KMAcctFolder*)aFolder;
 
   label = new QLabel(this);
   label->setGeometry(20,20,40,25);
@@ -118,7 +118,7 @@ void KMFolderDialog::doAccept()
     fldName = nameEdit->text();
   else fldName = nls->translate("unnamed");
 
-  if (!folder) folder = folderMgr->createFolder(fldName);
+  if (!folder) folder = (KMAcctFolder*)folderMgr->createFolder(fldName);
   assert(folder != NULL);
 
   folder->clearAccountList();

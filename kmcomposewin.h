@@ -1,41 +1,26 @@
-// KMComposeWin header file
+/* KMComposeWin Header File
+ * Author: Markus Wuebben <markus.wuebben@kde.org>
+ */
 #ifndef __KMComposeWin
 #define __KMComposeWin
-#include <iostream.h>
-#include <qwidget.h>
-#include <qlined.h>
-#include <qmlined.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qlayout.h>
-#include <qgrpbox.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
-#include <qkeycode.h>
-#include <qaccel.h>
-#include <qprinter.h>
-#include <qregexp.h>
-#include <qlist.h>
-#include <qframe.h>
-#include <qevent.h>
-#include "KEdit.h"
-#include <ktopwidget.h>
-#include <kmenubar.h>
-#include <ktoolbar.h>
-#include <kapp.h>
-#include <kmsgbox.h>
-#include <ktablistbox.h>
-#include <kstatusbar.h>
-#include "kmmsgpart.h"
-#include "kmimemagic.h"
-#include <qpainter.h>
-#include <drag.h>
-#include <html.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
-class KMMessage;
+#include <ktopwidget.h>
+#include <qstring.h>
+
+class QLineEdit;
 class QGridLayout;
+class QStrList;
+class QFrame;
+class QPopupMenu;
+class KEdit;
+class KTabListBox;
+class KMMessage;
+class KMMessagePart;
+class KMimeMagic;
+class KDNDDropZone;
+class KToolBar;
+class KStatusBar;
+
 enum Action { actNoOp =0, actForward=1, actReply=2, actReplyAll=3 };
 
 
@@ -69,6 +54,8 @@ public:
     
   const char * replyToAddress()
     {return ReplyToAddress;}
+
+  KEdit * getEditor();
 
 private:
   KEdit *editor;
@@ -135,7 +122,8 @@ class KMComposeWin : public KTopLevelWidget
 
 public:
   KMComposeWin(QWidget *parent = 0, const char *name = 0, 
-	       QString emailAddress=0, KMMessage *message=0, Action action = actNoOp);
+	       QString emailAddress=0, KMMessage *message=0,
+	       Action action = actNoOp);
   virtual void show();
   QString encoding;
   friend class KMComposeView;  
@@ -143,6 +131,7 @@ protected:
   virtual void closeEvent(QCloseEvent *);
 private slots:
   void abort();
+  void aboutQt(); 
   void about();
   void invokeHelp();
   void toDo();
@@ -165,5 +154,4 @@ private:
 
 };
 #endif
-
 

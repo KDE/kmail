@@ -23,7 +23,7 @@
 #include <qdir.h>
 #include <assert.h>
 #include "kmfoldermgr.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 #include "kmglobal.h"
 #include <klocale.h>
 
@@ -98,30 +98,30 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 
 
 //-----------------------------------------------------------------------------
-KMAcctFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
+KMFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
 {
   return mDir.createFolder(fName, sysFldr);
 }
 
 
 //-----------------------------------------------------------------------------
-KMAcctFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
+KMFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
 {
   KMFolderNode* node;
 
   for (node=mDir.first(); node; node=mDir.next())
   {
     if (node->isDir() && foldersOnly) continue;
-    if (node->name()==folderName) return (KMAcctFolder*)node;
+    if (node->name()==folderName) return (KMFolder*)node;
   }
   return NULL;
 }
 
 
 //-----------------------------------------------------------------------------
-KMAcctFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
+KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
 {
-  KMAcctFolder* folder = find(aFolderName);
+  KMFolder* folder = find(aFolderName);
 
   if (!folder)
   {

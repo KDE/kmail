@@ -10,7 +10,7 @@
 #include <qstring.h>
 
 class KMMessage;
-class KMAcctFolder;
+class KMFolder;
 class KMFolderMgr;
 class KConfig;
 class KProcess;

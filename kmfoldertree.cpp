@@ -9,7 +9,7 @@
 #include "kmglobal.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 
 
 #include "kmfoldertree.moc"
@@ -82,7 +82,7 @@ KMFolderTree::~KMFolderTree()
 void KMFolderTree::reload(void)
 {
   KMFolderDir* fdir;
-  KMAcctFolder* folder;
+  KMFolder* folder;
   QString str;
   QString indent = "";
   bool upd = autoUpdate();
@@ -94,17 +94,11 @@ void KMFolderTree::reload(void)
 
   fdir = &folderMgr->dir();
 
-  for (folder = (KMAcctFolder*)fdir->first(); 
+  for (folder = (KMFolder*)fdir->first(); 
        folder != NULL;
-       folder = (KMAcctFolder*)fdir->next())
+       folder = (KMFolder*)fdir->next())
   {
-    str = indent.copy();
-
-    if (folder->isDir()) str += "{dir} ";
-    else if (folder->account()) str += "{in} ";
-    else str += QString("{") + folder->type() + "} ";
-
-    str += folder->name();
+    str = indent + "{" + folder->type() + "} " + folder->name();
     insertItem(str);
 
     mList.append(folder);
@@ -143,4 +137,20 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->writeEntry(name(), size().width());
 
   KMFolderTreeInherited::resizeEvent(e);
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolderTree::indexOfFolder(const KMFolder* folder) const
+{
+  KMFolderNodeList* list = (KMFolderNodeList*)&mList;
+  KMFolderNode* cur;
+  int i;
+
+  for (i=0, cur=list->first(); cur; cur=list->next())
+  {
+    if (cur == folder) return i;
+    i++;
+  }
+  return -1;
 }

@@ -18,13 +18,13 @@
 #include <klocale.h>
 #include <qlayout.h>
 #include <kmfoldermgr.h>
-#include <kmacctfolder.h>
+#include <kmfolder.h>
 
 #include "kmmainwin.h"
 #include "kmacctlocal.h"
 #include "kmacctpop.h"
 #include "kmacctmgr.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 #include "kmglobal.h"
 #include "kmsender.h"
 #include "ktablistbox.h"
@@ -588,7 +588,7 @@ void KMAccountSettings::accept()
   id = mFolders->currentItem();
   if (id > 0) fld = folderMgr->find(mFolders->currentText());
   else fld = NULL;
-  mAcct->setFolder((KMAcctFolder*)fld);
+  mAcct->setFolder((KMFolder*)fld);
 
   if (acctType == "local")
   {

@@ -1,4 +1,5 @@
-/* Mail folder that has a list of accounts with which it is associated
+/* Simple wrapper class that contains the kmail account handling
+ * stuff that is usually not required outside kmail.
  *
  * Author: Stefan Taferner <taferner@alpin.or.at>
  */
@@ -6,50 +7,30 @@
 #define kmacctfolder_h
 
 #include "kmfolder.h"
-#include "kmaccount.h"
 
-#define KMAcctFolderInherited KMFolder
+class KMAccount;
 
+/** WARNING: do not add virtual methods in this class. This class is
+  * used as a typecast for KMFolder only !!
+  */
 class KMAcctFolder: public KMFolder
 {
 public:
-  KMAcctFolder(KMFolderDir* parent=NULL, const char* name=NULL);
-  virtual ~KMAcctFolder();
-  virtual const char* type(void) const;
-
   /** Returns first account or NULL if no account is associated with this
       folder */
-  virtual KMAccount* account(void);
+  KMAccount* account(void);
 
   /** Returns next account or NULL if at the end of the list */
-  virtual KMAccount* nextAccount(void);
+  KMAccount* nextAccount(void);
 
   /** Add given account to the list */
-  virtual void addAccount(KMAccount*);
+  void addAccount(KMAccount*);
 
   /** Remove given account from the list */
-  virtual void removeAccount(KMAccount*);
+  void removeAccount(KMAccount*);
 
   /** Clear list of accounts */
-  virtual void clearAccountList(void);
-
-  /** Returns TRUE if the folder is a kmail system folder. These are
-    the folders 'outbox', 'sent', 'trash'. The name of these
-    folders is also nationalized in the folder display. */
-  bool isSystemFolder(void) const { return mIsSystemFolder; }
-  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
-
-  /** Returns the label of the folder for visualization. */
-  virtual const QString label(void) const;
-  void setLabel(const QString lbl) { mLabel = lbl; }
-
-protected:
-  virtual void readTocHeader(void);
-  virtual int createTocHeader(void);
-
-  KMAcctList mAcctList;
-  bool mIsSystemFolder;
-  QString mLabel;
+  void clearAccountList(void);
 };
 
 

@@ -41,7 +41,7 @@ public:
 
   /** Returns type of the folder (or folder node/dir). This type can be e.g.:
     "in" for folders that have at least one account associated
-         (this is hardcoded in KMAcctFolder::type()),
+         (this is hardcoded in KMFolder::type()),
     "out" for the outgoing mail queue of the KMSender object,
     "plain" for an ordinary folder,
     "dir" for a directory,

@@ -14,8 +14,11 @@ public:
   KMFolderTree(QWidget *parent=0, const char *name=0);
   virtual ~KMFolderTree();
 
-  // get/refresh the folder tree
+  // Get/refresh the folder tree
   virtual void reload(void);
+
+  // Find index of given folder. Returns -1 if not found
+  virtual int indexOfFolder(const KMFolder*) const;
 
 signals:
   void folderSelected(KMFolder*);

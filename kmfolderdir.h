@@ -7,7 +7,7 @@
 #include <qstring.h>
 #include "kmfoldernode.h"
 
-class KMAcctFolder;
+class KMFolder;
 
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
@@ -28,7 +28,7 @@ public:
   /** Create a mail folder in this directory with given name. If sysFldr==TRUE
    the folder is marked as a (KMail) system folder. 
    Returns Folder on success. */
-  virtual KMAcctFolder* createFolder(const char* folderName,
+  virtual KMFolder* createFolder(const char* folderName,
 				     bool sysFldr=FALSE);
 };
 

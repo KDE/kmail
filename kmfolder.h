@@ -1,21 +1,34 @@
 /* Local Mail folder
  *
  * Author: Stefan Taferner <taferner@alpin.or.at>
+ * This code is under GPL
  */
 #ifndef kmfolder_h
 #define kmfolder_h
 
 #include "kmfoldernode.h"
 #include "kmmsginfo.h"
+
 #include <stdio.h>
 #include <qarray.h>
+#include <qstring.h>
 
 typedef QArray<KMMessage> KMMessageList;
 
 class KMMessage;
 class KMFolderDir;
+class KMAcctList;
 
 #define KMFolderInherited KMFolderNode
+
+/* Mail folder.
+ *
+ * Accounts:
+ *   The accounts (of KMail) that are fed into the folder are
+ *   represented as the children of the folder. They are only stored here
+ *   during runtime to have a reference for which accounts point to a
+ *   specific folder.
+ */
 
 class KMFolder: public KMFolderNode
 {
@@ -32,7 +45,7 @@ public:
   const QString location(void) const;
 
   /** Returns full path to table of contents file */
-  const QString tocLocation(void) const;
+  const QString indexLocation(void) const;
 
   /** Read message at given index. Indexing starts at one to stay
     compatible with imap-lib */
@@ -83,21 +96,6 @@ public:
    others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
-  /** Try to lock the folder. The folder has to be open. Returns 0 
-    on success or an errno error code on failure. The toc file is
-    not locked. */
-  virtual int lock(bool sharedLock=FALSE);
-
-  /** Unlock a previously locked folder. */
-  virtual void unlock(void);
-
-  /** Read the toc header only such that possible header information 
-    (e.g. information about the associated accounts for KMAcctFolder)
-    is set. The folder is *not* open afterwards. This method does nothing
-    if the folder is already open and fails if the path was not set
-    with setPath. */
-  virtual int readHeader(void);
-
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the 
       c-library fopen call otherwise. */
@@ -118,16 +116,16 @@ public:
   virtual int sync(void);
 
   /** Returns TRUE if a table of contents file is automatically created. */
-  bool autoCreateToc(void) const { return mAutoCreateToc; }
+  bool autoCreateIndex(void) const { return mAutoCreateIndex; }
 
   /** Allow/disallow automatic creation of a table of contents file.
     Default is TRUE. */
-  virtual void setAutoCreateToc(bool);
+  virtual void setAutoCreateIndex(bool);
 
   /** Returns TRUE if the table of contents is dirty. This happens when
     a message is deleted from the folder. The toc will then be re-created
     when the folder is closed. */
-  bool tocDirty(void) const { return mTocDirty; }
+  bool dirty(void) const { return mDirty; }
 
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
@@ -150,6 +148,26 @@ public:
   /** Sort folder by given field. Actually sorts the index. */
   virtual void sort(KMFolder::SortField field=KMFolder::sfSubject);
 
+  /** Is the folder read-only? */
+  virtual bool isReadOnly(void) const { return !mFilesLocked; }
+
+  /** Returns TRUE if the folder is a kmail system folder. These are
+    the folders 'outbox', 'sent', 'trash'. The name of these
+    folders is nationalized in the folder display and they cannot have
+    accounts associated. Deletion is also forbidden. Etc. */
+  bool isSystemFolder(void) const { return mIsSystemFolder; }
+  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
+
+  /** Returns the label of the folder for visualization. */
+  virtual const QString label(void) const;
+  void setLabel(const QString lbl) { mLabel = lbl; }
+
+  /** Type of the folder. Inherited. */
+  virtual const char* type(void) const;
+
+  /** Returns TRUE if accounts are associated with this folder. */
+  bool hasAccounts(void) const { return (mAcctList != NULL); }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -167,6 +185,7 @@ signals:
   /** Status messages. */
   void statusMsg(const char*);
 
+
 protected:
   friend class KMMessage;
   friend int msgSortCompFunc(const void* a, const void* b);
@@ -174,42 +193,50 @@ protected:
   /** Called from KMMessage::setStatus(). Do not use directly. */
   virtual void setMsgStatus(KMMessage*, KMMessage::Status);
 
-  /** Read message from file. */
+  /** Load message from file. */
   virtual void readMsg(int msgNo);
 
-  /** Read table of contents file from messages file and fill the
-     message-info list mMsgList. */
-  virtual void readToc(void);
+  /** Read index file and fill the message-info list mMsgList. */
+  virtual void readIndex(void);
 
-  /** This method can be inherited to read a custom toc header. */
-  virtual void readTocHeader(void);
+  /** Read index header. Called from within readIndex(). */
+  virtual bool readIndexHeader(void);
 
-  /** Create table of contents file from messages file and fill the
-     message-info list mMsgList. Returns 0 on success and an errno 
-     value (see fopen) on failure. */
-  virtual int createTocFromContents(void);
+  /** Create index file from messages file and fill the message-info list 
+      mMsgList. Returns 0 on success and an errno value (see fopen) on 
+      failure. */
+  virtual int createIndexFromContents(void);
 
-  /** Completely (re)write table of contents file. */
-  virtual int writeToc(void);
-
-  /** This method can be inherited to create a custom toc header.
-     Returns zero on success and an errno value (see fopen) on failure.*/
-  virtual int createTocHeader(void);
+  /** Write index to index-file. Returns 0 on success and errno error on
+    failure. */
+  virtual int writeIndex(void);
 
   /** Remove msg-info from mMsgInfo array. */
   void removeMsgInfo(int id);
 
-  /** Change the Toc-dirty flag. */
-  void setTocDirty(bool f) { mTocDirty=f; }
+  /** Change the dirty flag. */
+  void setDirty(bool f) { mDirty=f; }
+
+  /** Lock mail folder files. Called by ::open(). Returns 0 on success and
+    an errno error code on failure. */
+  virtual int lock(void);
+
+  /** Unlock mail folder files. Called by ::close().  Returns 0 on success
+    and an errno error code on failure. */
+  virtual int unlock(void);
 
   FILE* mStream;	// file with the messages
-  FILE* mTocStream;	// table of contents file
+  FILE* mIndexStream;	// table of contents file
   int mMsgs, mUnreadMsgs, mActiveMsgs;
   KMMsgInfoList mMsgInfo; // list of toc entries, one per message
   int mOpenCount, mQuiet;
   unsigned long mHeaderOffset; // offset of header of toc file
-  bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
-  bool mTocDirty; // if the Toc is dirty it will be recreated upon close()
+  bool mAutoCreateIndex;  // is the automatic creation of a toc file allowed ?
+  bool mDirty; // if the index is dirty it will be recreated upon close()
+  bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
+  QString mLabel; // nationalized label or NULL (then name() should be used)
+  bool mIsSystemFolder;
+  KMAcctList* mAcctList;
 };
 
 #endif /*kmfolder_h*/

@@ -1,5 +1,6 @@
 // kmmainwin.cpp
 
+#include <errno.h>
 #include <qstring.h>
 #include <qpixmap.h>
 #include <qdir.h>
@@ -13,20 +14,19 @@
 #include <kshortcut.h>
 #include "knewpanner.h"
 
-#include "kmcomposewin.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
-#include "kmfolder.h"
-#include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmfoldertree.h"
 #include "kmheaders.h"
 #include "kmreaderwin.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmcomposewin.h"
+#include "kmglobal.h"
 
 #include "kmmainwin.moc"
 
@@ -264,7 +264,7 @@ void KMMainWin::doModifyFolder()
     return;
   }
 
-  d = new KMFolderDialog((KMAcctFolder*)mFolder, this);
+  d = new KMFolderDialog((KMFolder*)mFolder, this);
   d->setCaption(nls->translate("Modify Folder"));
   if (d->exec()) mFolderTree->reload();
   delete d;
@@ -373,7 +373,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 {
   kbp->busy();
 
-  mFolder = (KMAcctFolder*)aFolder;
+  mFolder = (KMFolder*)aFolder;
   mHeaders->setFolder(mFolder);
   mMsgView->clearCanvas();
 

@@ -1,23 +1,51 @@
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-#include <klocale.h>
-#include <unistd.h>
-#include <qfiledlg.h>
-#include <qaccel.h>
-#include <qlabel.h>
-#include "kmcomposewin.moc"
+#include "kmcomposewin.h"
+#include "KEdit.h"
+#include "kmglobal.h"
+#include "kmimemagic.h"
 #include "kmmainwin.h"
 #include "kmmessage.h"
-#include "kmglobal.h"
+#include "kmmsgpart.h"
 #include "kmsender.h"
+
+#include <drag.h>
+#include <html.h>
 #include <iostream.h>
-#include <qwidget.h>
+#include <kapp.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenubar.h>
+#include <kmsgbox.h>
+#include <kstatusbar.h>
+#include <ktablistbox.h>
+#include <ktoolbar.h>
+#include <mimelib/mimepp.h>
+#include <qaccel.h>
+#include <qbttngrp.h>
+#include <qevent.h>
+#include <qfiledlg.h>
+#include <qframe.h>
+#include <qgrpbox.h>
+#include <qkeycode.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlined.h>
+#include <qlist.h>
+#include <qmlined.h>
+#include <qpainter.h>
+#include <qpixmap.h>
+#include <qprinter.h>
+#include <qradiobt.h>
+#include <qregexp.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <mimelib/string.h>
-#include <mimelib/utility.h>
-#include <kiconloader.h>
+#include <unistd.h>
+
+#include "kmcomposewin.moc"
+
 
 //-----------------------------------------------------------------------------
 KMComposeView::KMComposeView(QWidget *parent, const char *name, 
@@ -69,6 +97,27 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   grid->addWidget(subjLEdit,2,1);
   
   editor = new KEdit(0,this);
+  QPopupMenu *p = new QPopupMenu();
+  p->insertItem (klocale->translate("Send now"),
+		 this,SLOT(slotSendNow()));
+  p->insertItem(klocale->translate("Send later"), 
+		this, SLOT(slotSendLater()));
+  p->insertSeparator(-1);
+  p->insertItem(klocale->translate("Cut"), 
+		this, SLOT(slotCutText()));
+  p->insertItem(klocale->translate("Copy"), 
+		this, SLOT(slotCopyText()));
+  p->insertItem(klocale->translate("Paste"),
+		this, SLOT(slotPasteText()));
+  p->insertItem(klocale->translate("Mark All"), 
+		this, SLOT(slotMarkAll()));
+  p->insertSeparator(-1);
+  p->insertItem(klocale->translate("Font"), 
+		this,SLOT(slotSelectFont()));
+  editor->installRBPopup(p);
+
+
+
   grid->addMultiCellWidget(editor,3,8,0,1);
   grid->setRowStretch(3,100);
 
@@ -100,8 +149,8 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   else if(message && action ==actReplyAll) replyAll();
 
   grid->activate();
-
-  parseConfiguration();	
+  
+  parseConfiguration();
   initKMimeMagic(); // Necessary for content Type parsing.
 }
 
@@ -109,7 +158,7 @@ void KMComposeView::initKMimeMagic()
 {
   // Magic file detection init
   QString mimefile = kapp->kdedir();
-  mimefile += "/share/mimelnk/magic";
+  mimefile += "/share/magic";
   magic = new KMimeMagic( mimefile );
   magic->setFollowLinks( TRUE );
 }
@@ -190,10 +239,6 @@ int KMComposeView::textLines()
 //-----------------------------------------------------------------------------
 void KMComposeView::slotPrintIt()
 {
-  // QPrinter is extremly broken. Even the Trolls admitted
-  // that. They said they would fix it in version 1.3.
-  // For now printing is crap.
-
   QPrinter *printer = new QPrinter();
   if ( printer->setup(this) ) {
     QPainter paint;
@@ -351,7 +396,7 @@ void KMComposeView::slotShowProperties()
 KMMessage * KMComposeView::prepareMessage()
 {
   // This function is -the- function. It is called before sending the message.
-  // Called from slotsendNow() and slotSendLater().
+  // Called from slotSendNow() and slotSendLater().
   // 1. It sets the necessary Message stuff.
   // 2a. If it is a simple text mail it sets msg's body.
   // 2b. It there are bodyParts to be added it creates the bodyParts
@@ -387,12 +432,12 @@ KMMessage * KMComposeView::prepareMessage()
     msg->setBody(temp); // a simple text message.
   else 
     {//	create bodyPart for editor text.
-     KMMessagePart *part = new KMMessagePart();
-     part->setCteStr("7-bit"); 
-     part->setTypeStr("Text");
-     part->setSubtypeStr("Plain");
-     part->setBody(temp);
-     msg->addBodyPart(part);
+      KMMessagePart *part = new KMMessagePart();
+      part->setCteStr("7-bit"); 
+      part->setTypeStr("Text");
+      part->setSubtypeStr("Plain");
+      part->setBody(temp);
+      msg->addBodyPart(part);
 
      // Since there is at least one more attachment create another bodypart
      QString atmntStr;
@@ -766,7 +811,7 @@ void KMComposeView::resizeEvent(QResizeEvent *)
 
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress,
+KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, 
 			   KMMessage *message, Action action) : 
   KTopLevelWidget(name)
 {
@@ -914,9 +959,11 @@ void KMComposeWin::setupMenuBar()
   menuBar->insertSeparator();
 
   QPopupMenu *hmenu = new QPopupMenu();
-  hmenu->insertItem(nls->translate("Help"),this,SLOT(invokeHelp()),ALT + Key_H);
+  hmenu->insertItem(nls->translate("Help"),this,SLOT(invokeHelp()),
+		    ALT + Key_H);
   hmenu->insertSeparator();
   hmenu->insertItem(nls->translate("About"),this,SLOT(about()));
+  hmenu->insertItem(nls->translate("About &Qt"),this,SLOT(aboutQt()));
   menuBar->insertItem(nls->translate("Help"),hmenu);
 
   setMenu(menuBar);
@@ -1000,12 +1047,35 @@ void KMComposeWin::toggleToolBar()
   repaint();
 }
 
+KEdit * KMComposeView::getEditor()
+{
+  return editor;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::abort()
 {
-  close();
+  QString str;
+  int result;
+
+  str =  "The composer may contain data\nthat will be lost if you ";
+  str += "close the window now.\nDo you wish to continue?\n";
+ 
+  if(!composeView->getEditor()->isModified())
+    {close();
+    return;
+    }
+  else
+    result = KMsgBox::yesNo(0,"KMail Message", str);
+
+  if(result==1)
+    close();
+  else
+    return;
 }
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::about()
 {  
   KMsgBox::message(this,nls->translate("About"),
@@ -1019,10 +1089,15 @@ void KMComposeWin::about()
 		   "This program is covered by the GPL.",1);
 }
 
+//----------------------------------------------------------------------------
+void KMComposeWin::aboutQt()
+{
+  QMessageBox::aboutQt(NULL,NULL);
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::invokeHelp()
 {
-
   KApplication::getKApplication()->invokeHTMLHelp("","");
 }
 
@@ -1048,12 +1123,12 @@ void KMComposeWin::closeEvent(QCloseEvent *e)
   KConfig *config = new KConfig();
   config = KApplication::getKApplication()->getConfig();
   config->setGroup("Settings");
-  config->writeEntry("ShowToolBar", toolBarStatus ? "yes" : "no");
+  
+ config->writeEntry("ShowToolBar", toolBarStatus ? "yes" : "no");
   config->writeEntry("Encoding",encoding);
   config->sync();
   delete this;
 }
-
 
 
 

@@ -1,7 +1,7 @@
 // kmfolderdir.cpp
 
 #include "kmfolderdir.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 
 #include <assert.h>
 #include <qdir.h>
@@ -57,14 +57,14 @@ KMFolderDir::~KMFolderDir()
 
 
 //-----------------------------------------------------------------------------
-KMAcctFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
+KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
 {
-  KMAcctFolder* fld;
+  KMFolder* fld;
   int rc;
 
   assert(aFolderName != NULL);
 
-  fld = new KMAcctFolder(this, aFolderName);
+  fld = new KMFolder(this, aFolderName);
   assert(fld != NULL);
 
   fld->setSystemFolder(aSysFldr);
@@ -104,7 +104,7 @@ bool KMFolderDir::reload(void)
 {
   QDir      dir;
   KMFolderDir* folderDir;
-  KMAcctFolder* folder;
+  KMFolder* folder;
   QFileInfo* fileInfo;
   QFileInfoList* fiList;
   QString fname;
@@ -143,8 +143,7 @@ bool KMFolderDir::reload(void)
 
     else // all other files are folders (at the moment ;-)
     {
-      folder = new KMAcctFolder(this, fname);
-      folder->readHeader();
+      folder = new KMFolder(this, fname);
       append(folder);
     }
   }

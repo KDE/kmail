@@ -16,7 +16,7 @@ class KMenuBar;
 class KToolBar;
 class KStatusBar;
 class KMMessage;
-class KMAcctFolder;
+class KMFolder;
 
 #define KMMainWinInherited KTopLevelWidget
 
@@ -90,7 +90,7 @@ protected:
   KMReaderView *mMsgView;
   KNewPanner   *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
-  KMAcctFolder *mFolder;
+  KMFolder *mFolder;
   bool		mIntegrated;
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;

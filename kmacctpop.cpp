@@ -316,7 +316,7 @@ void KMAcctPop::readConfig(KConfig& config)
 void KMAcctPop::writeConfig(KConfig& config)
 {
   QString cryptPasswd;
-  int i;
+  unsigned int i;
 
   KMAcctPopInherited::readConfig(config);
 
@@ -327,7 +327,7 @@ void KMAcctPop::writeConfig(KConfig& config)
     // very primitive password encryption
     for (i=0; i<mPasswd.length(); i++)
       cryptPasswd[i] = (char)((int)mPasswd[i] ^ 'F');
-    config.writeEntry("passwd", cryptPasswd);
+    config.writeEntry("passwd", mPasswd);
   }
   else config.writeEntry("passwd", "");
 

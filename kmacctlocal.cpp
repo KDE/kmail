@@ -58,7 +58,7 @@ bool KMAcctLocal::processNewMail(void)
 
   printf("processNewMail: %s\n", (const char*)location());
 
-  mailFolder.setAutoCreateToc(FALSE);
+  mailFolder.setAutoCreateIndex(FALSE);
   rc = mailFolder.open();
   if (rc)
   {

@@ -35,8 +35,8 @@ class KShortCut;
 extern KShortCut* keys;
 
 class KMFolder;
-class KMAcctFolder;
-extern KMAcctFolder* inboxFolder;
+class KMFolder;
+extern KMFolder* inboxFolder;
 extern KMFolder* outboxFolder;
 extern KMFolder* sentFolder;
 extern KMFolder* queuedFolder;

@@ -22,7 +22,7 @@
 #include "kmfoldertree.h"
 #include "kmheaders.h"
 #include "kmreaderwin.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 #include "kmmainwin.h"
 
 #include "kmmainview.moc"
@@ -147,7 +147,7 @@ void KMMainView::doModifyFolder()
     return;
   }
 
-  d = new KMFolderDialog((KMAcctFolder*)currentFolder, this);
+  d = new KMFolderDialog((KMFolder*)currentFolder, this);
   d->setCaption(nls->translate("Modify Folder"));
   if (d->exec()) folderTree->reload();
   delete d;
@@ -202,7 +202,7 @@ void KMMainView::folderSelected(KMFolder* aFolder)
   kbp->busy();
 
   if (currentFolder) currentFolder->close();
-  currentFolder = (KMAcctFolder*)aFolder;
+  currentFolder = (KMFolder*)aFolder;
   if (currentFolder) currentFolder->open();
 
   headers->setFolder(currentFolder);

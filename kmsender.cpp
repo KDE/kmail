@@ -4,7 +4,7 @@
 #include "kmfoldermgr.h"
 #include "kmmessage.h"
 #include "kmglobal.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 
 #include <kconfig.h>
 #include <kapp.h>

@@ -10,6 +10,7 @@
 #include "kmreaderwin.moc"
 #include "kmimemagic.h"
 #include <kiconloader.h>
+#include <qfiledlg.h>
 
 KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,KMFolder *f = 0)
 	:QWidget(parent,name)
@@ -43,7 +44,7 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
   messageCanvas->resize(parent->width()-16,parent->height()-110); //16
   connect(messageCanvas,SIGNAL(URLSelected(const char *,int)),this,
 	  SLOT(openURL(const char *,int)));
-  connect(messageCanvas,SIGNAL(popupMenu(const char *, const QPoint &)), 
+  connect(messageCanvas,SIGNAL(popupMenu(const char *, const QPoint &)),  
 	  SLOT(popupMenu(const char *, const QPoint &)));
   vert = new QScrollBar( 0, 110, 12, messageCanvas->height()-110, 0,
                         QScrollBar::Vertical, this, "vert" );
@@ -178,6 +179,7 @@ void KMReaderView::parseMessage(KMMessage *message)
   messageCanvas->write(dateStr);
   messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
 
+  printf("numBodyParts %i\n",message->numBodyParts());
   // Prepare text
   if((numParts = message->numBodyParts()) == 0)
     {text = message->body(&length);
@@ -243,40 +245,46 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 
   // ************* MimeMagic stuff end *****************//
 
+
+  if(type == "text" && pnumber ==0 ) // If first bodyPart && type=="text" 
+  // Then we do not want it do be displayed as an icon.
+    {text += "<br><hr><br>";
+    return text;
+    }
+
   printf("Debug :%i\n",isInline());
-  if(isInline()) // If we do not want the attachments to be displayed inline
-    return bodyPartIcon(type, subType, pnumstring);
+  if(isInline() == false) // If we do  not want the attachments to be displayed inline
+    return bodyPartIcon(type, subType, pnumstring, comment);
 
   if(type == "text")  // If content type is text.
   {
-    cout << "isText\n";
     if (text.length()/80 > MAX_LINES) // Check for max_lines.
     {
       temp.sprintf("The text attachment has more than %i lines.\n",MAX_LINES); 
       temp += "Do you wish the attachment to be displayed inline?";
-      if(KMsgBox::yesNo(0,"?",temp) == 0)
+      if(KMsgBox::yesNo(0,"?",temp) == 2)
 	// We want the icon to be displayed 
-	return bodyPartIcon(type, subType, pnumstring);
+	return bodyPartIcon(type, subType, pnumstring, comment);
     }
 
     text += "<BR><HR><BR>";
     return text;
   }
 
-  else if(type == "message")// If content type is message just display the text.
+  if(type == "message")// If content type is message just display the text.
   {
     text += "<br><hr><br>";
     return text;
   }
 
-  return bodyPartIcon(type, subType, pnumstring);
+  return bodyPartIcon(type, subType, pnumstring, comment);
 }
 
 
 QString KMReaderView::bodyPartIcon(QString type, QString subType,
-				   QString pnumstring)
+				   QString pnumstring, QString comment)
 {
-  QString text, icon, fileName, path, comment;
+  QString text, icon, fileName, path;
   QDir dir;
   
   path = KApplication::kdedir() + "/share/mimelnk/";
@@ -293,13 +301,9 @@ QString KMReaderView::bodyPartIcon(QString type, QString subType,
     if(icon.isEmpty()) // If no icon specified.
       icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
     else icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-    comment = config.readEntry("Comment");
   }
   else
-  {
     icon = KApplication::kdedir() + "/share/icons/unknown.xpm";
-    comment = type + "/" + subType;
-  }
 
   text = "<TABLE><TR><TD><A HREF=\"" + pnumstring + "\"><IMG SRC=" + 
          icon + ">" + comment + "</A></TD></TR></TABLE>" + "<BR><HR><BR>";
@@ -768,7 +772,7 @@ void KMReaderWin::setupMenuBar()
   menu = new QPopupMenu();
   menu->insertItem("Reply...",newView,SLOT(replyMessage()),ALT+Key_R);
   menu->insertItem("Reply all...", newView,SLOT(replyAll()),ALT+Key_A);
-  menu->insertItem("Forward ...",newView,SLOT(forwardMessage()),ALT+Key_F);
+  menu->insertItem("Forward ....",newView,SLOT(forwardMessage()),ALT+Key_F);
   menu->insertSeparator();
   menu->insertItem("Next...",newView,SLOT(nextMessage()),Key_Next);
   menu->insertItem("Previous...",newView,SLOT(previousMessage()),Key_Prior);
@@ -976,7 +980,6 @@ KMSource::KMSource(QWidget *parent=0, const char *name=0,QString text=0)
 	edit->setText(text);
 	edit->setReadOnly(TRUE);
 }
-
 
 
 

@@ -7,7 +7,7 @@
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
 #include "kmfoldermgr.h"
-#include "kmacctfolder.h"
+#include "kmfolder.h"
 #include "kmsender.h"
 #include "kbusyptr.h"
 #include "kmcomposewin.h"
@@ -24,7 +24,7 @@ KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
 KMSender* msgSender = NULL;
 KLocale* nls = NULL;
-KMAcctFolder* inboxFolder = NULL;
+KMFolder* inboxFolder = NULL;
 KMFolder* outboxFolder = NULL;
 KMFolder* queuedFolder = NULL;
 KMFolder* sentFolder = NULL;
@@ -104,10 +104,10 @@ static void init(int argc, char *argv[])
 			       QDir::homeDirPath() + QString("/KMail"));
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 
-  acctMgr   = new KMAcctMgr(acctPath);
   folderMgr = new KMFolderMgr(foldersPath);
+  acctMgr   = new KMAcctMgr(acctPath);
 
-  inboxFolder  = (KMAcctFolder*)folderMgr->findOrCreate(
+  inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
 				         cfg->readEntry("inboxFolder", "inbox"));
   outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   outboxFolder->setType("out");

@@ -9,7 +9,7 @@
 
 #include "kmfolderdir.h"
 
-class KMAcctFolder;
+class KMFolder;
 
 class KMFolderMgr
 {
@@ -28,15 +28,15 @@ public:
 
   /** Searches folder and returns it. Skips directories 
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
-  KMAcctFolder* find(const char* folderName, bool foldersOnly=TRUE);
+  KMFolder* find(const char* folderName, bool foldersOnly=TRUE);
 
   /** Uses find() to find given folder. If not found the folder is
     created. Directories are skipped. */
-  KMAcctFolder* findOrCreate(const char* folderName);
+  KMFolder* findOrCreate(const char* folderName);
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  KMAcctFolder* createFolder(const char* fName, bool sysFldr=FALSE);
+  KMFolder* createFolder(const char* fName, bool sysFldr=FALSE);
 
 protected:
   QString mBasePath;

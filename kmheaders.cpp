@@ -1,8 +1,8 @@
 // kmheaders.cpp
 
-#include "kmcomposewin.h"
-#include "kmheaders.h"
 #include "kmfolder.h"
+#include "kmheaders.h"
+#include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kbusyptr.h"
 #include "kmdragdata.h"
@@ -13,11 +13,12 @@
 #include <qstrlist.h>
 #include <klocale.h>
 #include <kiconloader.h>
-
+#include <kapp.h>
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0, const char *name=0) : 
-  KTabListBox(parent, name, 4)
+KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0, 
+		     const char *name=0) :
+  KMHeadersInherited(parent, name, 4)
 {
   QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
@@ -28,7 +29,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0, const char *name=0) :
   getMsgIndex = -1;
 
   //setNumCols(4);
-  setColumn(0, nls->translate("F"), 16, KTabListBox::PixmapColumn);
+  setColumn(0, nls->translate("F"), 16, KMHeadersInherited::PixmapColumn);
   setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 250);
   setColumn(3, nls->translate("Date"), 100);
@@ -98,8 +99,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
 
   updateMessageList();
-
-  if (mFolder) highlightMessage(0,3);
+  //if (mFolder) setCurrentItem(0);
 }
 
 
@@ -331,7 +331,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
     getMsgIndex = currentItem();
     for (i=0,high=numRows(); i<high; i++)
     {
-      if (itemList[i].isMarked())
+      if (itemList[i]->isMarked())
       {
 	getMsgIndex = i;
 	break;
@@ -345,7 +345,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
 
   if (getMsgMulti) for (getMsgIndex++; getMsgIndex < numRows(); getMsgIndex++)
   {
-    if (itemList[getMsgIndex].isMarked()) 
+    if (itemList[getMsgIndex]->isMarked()) 
       return mFolder->getMsg(getMsgIndex+1);
   }
 
@@ -393,7 +393,7 @@ void KMHeaders::changeItemPart (char c, int itemIndex, int column)
   str[0] = c;
   str[1] = '\0';
 
-  KTabListBox::changeItemPart((const char*)str, itemIndex, column);
+  KMHeadersInherited::changeItemPart((const char*)str, itemIndex, column);
 }
 
 
@@ -428,7 +428,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
 void KMHeaders::updateMessageList(void)
 {
   long i;
-  char hdr[256];
+  QString hdr;
   KMMessage::Status flag;
  
   clear();
@@ -440,7 +440,7 @@ void KMHeaders::updateMessageList(void)
   for (i=1; i<=mFolder->numMsgs(); i++)
   {
     flag = mFolder->msgStatus(i);
-    sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(i),
+    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(i),
 	    mFolder->msgSubject(i), mFolder->msgDate(i));
     insertItem(hdr);
 
@@ -450,8 +450,11 @@ void KMHeaders::updateMessageList(void)
 
   setAutoUpdate(TRUE);
   repaint();
-  sprintf(hdr, nls->translate("%d Messages, %d unread."),
-	  mFolder->numMsgs(), mFolder->numUnreadMsgs());
+
+  hdr.sprintf(nls->translate("%d Messages, %d unread."),
+	      mFolder->numMsgs(), mFolder->numUnreadMsgs());
+  if (mFolder->isReadOnly()) hdr += nls->translate("Folder is read-only.");
+
   mOwner->statusMsg(hdr);
   kbp->idle();
 }
@@ -467,7 +470,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   high = numRows()-1;
   for (i=0, from=-1; i<=high; i++)
   {
-    if (itemList[i].isMarked())
+    if (itemList[i]->isMarked())
     {
       from = i;
       break;
@@ -475,7 +478,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   }
   for (i=high-1, to=-1; i>=0; i--)
   {
-    if (itemList[i].isMarked())
+    if (itemList[i]->isMarked())
     {
       to = i;
       break;

@@ -10,6 +10,7 @@
 #include <kmsgbox.h>
 
 class KMAcctMgr;
+class KMFolder;
 class KMAcctFolder;
 class KConfig;
 
@@ -33,8 +34,8 @@ public:
 
   /** There can be exactly one folder that is fed by messages from an
     account. */
-  KMAcctFolder* folder(void) { return mFolder; }
-  virtual void setFolder(KMAcctFolder*);
+  KMFolder* folder(void) { return ((KMFolder*)mFolder); }
+  virtual void setFolder(KMFolder*);
 
   /** Process new mail for this account if one arrived. Returns TRUE if new
     mail has been found. Whether the mail is automatically loaded to
@@ -58,6 +59,12 @@ protected:
   KMAcctFolder* mFolder;
 };
 
-typedef QList<KMAccount> KMAcctList;
+
+class KMAcctList: public QList<KMAccount>
+{
+public:
+  virtual ~KMAcctList() {}
+  short _dummy; // some compilers fail otherwise
+};
 
 #endif /*kmaccount_h*/

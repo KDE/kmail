@@ -5,12 +5,11 @@
 
 #include <qdialog.h>
 
-class KMAccount;
-class KMAcctMgr;
 class KMAcctFolder;
 class QPushButton;
 class QLineEdit;
 class QListBox;
+class KMFolder;
 
 #define KMFolderDialogInherited QDialog
 
@@ -19,8 +18,7 @@ class KMFolderDialog : public QDialog
   Q_OBJECT
 
 public:
-  KMFolderDialog(KMAcctFolder* folder, QWidget *parent=0, 
-		 const char *name=0);
+  KMFolderDialog(KMFolder* folder, QWidget *parent=0, const char *name=0);
 
 private slots:
   void doAccept();

@@ -87,7 +87,8 @@ private slots:
         void saveURL(int);
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *,int);
-        QString bodyPartIcon(QString type, QString subtype, QString partNumStr);
+        QString bodyPartIcon(QString type, QString subtype, 
+			     QString partNumStr, QString);
 	QString decodeString(KMMessagePart*, QString); 
 	QString scanURL(QString);
                                                 

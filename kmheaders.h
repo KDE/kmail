@@ -3,11 +3,13 @@
 
 #include <qwidget.h>
 #include <qstrlist.h>
-#include "ktablistbox.h"
+#include <ktablistbox.h>
 
 class KMFolder;
 class KMMessage;
 class KMMainWin;
+
+#define KMHeadersInherited KTabListBox
 
 class KMHeaders : public KTabListBox {
   Q_OBJECT

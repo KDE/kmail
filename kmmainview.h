@@ -9,7 +9,7 @@
 class KMMainWin;
 class KPanner;
 class KMHeaders;
-class KMAcctFolder;
+class KMFolder;
 class KMReaderView;
 class KMFolderTree;
 class KMFolder;
@@ -53,7 +53,7 @@ private:
   KMReaderView *messageView;
   KPanner *horzPanner,*vertPanner;
   KMHeaders *headers;
-  KMAcctFolder *currentFolder;
+  KMFolder *currentFolder;
   bool Integrated;
 };
 

@@ -47,9 +47,9 @@ void KMAccount::setName(const QString& aName)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::setFolder(KMAcctFolder* aFolder)
+void KMAccount::setFolder(KMFolder* aFolder)
 {
-  mFolder = aFolder;
+  mFolder = (KMAcctFolder*)aFolder;
   debug("setFolder of %s to %s", (const char*)name(),
 	aFolder ? (const char*)aFolder->name() : "(null)");
 }
@@ -67,7 +67,7 @@ void KMAccount::readConfig(KConfig& config)
 
   if (!folderName.isEmpty())
   {
-    folder = folderMgr->find(folderName);
+    folder = (KMAcctFolder*)folderMgr->find(folderName);
     if (folder) 
     {
       mFolder = folder;
