@@ -147,7 +147,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
   KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
 
-  if (aAutoDecode) bod = bodyDecoded();
+  if (aAutoDecode) bod = QCString(bodyDecoded());
   else bod = mBody;
 
   mimetype = KMimeMagic::self()->findBufferType(bod, bod.length())->mimeType();

@@ -374,8 +374,8 @@ const QString KMMsgBase::decodeRFC1522String(const QString _str)
 	str = decodeBase64(str);
       }
       *pos = ch;
-      for (i=0; str[i]; i++)
-	*dest++ = str[i];
+      for (i=0; i < (int)str.length(); i++)
+	*dest++ = (char)(QChar)str[i];
 
       pos = end -1;
     }

@@ -274,7 +274,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       {
 	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	{
-	  str = msgPart.bodyDecoded();
+	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
 	  if (stricmp(subtype, "html")==0) mViewer->write(str);
@@ -848,7 +848,7 @@ void KMReaderWin::slotAtmView()
   }
 
   kbp->busy();
-  str = msgPart.bodyDecoded();
+  str = QCString(msgPart.bodyDecoded());
 
   edt->setCaption(i18n("View Attachment: ") + pname);
   edt->insertLine(str);

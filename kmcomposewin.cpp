@@ -1339,7 +1339,7 @@ void KMComposeWin::slotAttachView()
   if (pname.isEmpty()) pname="unnamed";
 
   kbp->busy();
-  str = msgPart->bodyDecoded();
+  str = QCString(msgPart->bodyDecoded());
 
   edt->setCaption(i18n("View Attachment: ") + pname);
   edt->insertLine(str);

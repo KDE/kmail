@@ -286,7 +286,7 @@ const QString KMMessage::formatString(const QString aStr) const
 	str = stripEmailAddr(from());
 	for (i=0; str[i]>' '; i++)
 	  ;
-	for (; str[i] && str[i]<=' '; i++)
+	for (; i < (int)str.length() && str[i] <= ' '; i++)
 	  ;
 	result += str[0];
 	if (str[i]>' ') result += str[i];
