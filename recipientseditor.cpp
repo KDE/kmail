@@ -374,7 +374,7 @@ void RecipientsView::calculateTotal()
   }
 
   if ( empty == 0 ) addLine();
-  
+
   emit totalChanged( count, mLines.count() );
 }
 
@@ -500,6 +500,23 @@ Recipient::List RecipientsView::recipients() const
   }
 
   return recipients;
+}
+
+void RecipientsView::removeRecipient( const QString & recipient,
+                                      Recipient::Type type )
+{
+  // search a line which matches recipient and type
+  QPtrListIterator<RecipientLine> it( mLines );
+  RecipientLine *line;
+  while( ( line = it.current() ) ) {
+    if ( ( line->recipient().email() == recipient ) &&
+         ( line->recipientType() == type ) ) {
+      break;
+    }
+    ++it;
+  }
+  if ( line )
+    line->clear();
 }
 
 void RecipientsView::setFocus()
@@ -754,9 +771,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
         .arg( r.count() ) );
       break;
     }
-    RecipientLine *line = mRecipientsView->emptyLine();
-    if ( !line ) line = mRecipientsView->addLine();
-    line->setRecipient( Recipient( *it, type ) );
+    addRecipient( *it, type );
   }
 }
 
@@ -776,6 +791,20 @@ QString RecipientsEditor::recipientString( Recipient::Type type )
   }
 
   return str;
+}
+
+void RecipientsEditor::addRecipient( const QString & recipient,
+                                     Recipient::Type type )
+{
+  RecipientLine *line = mRecipientsView->emptyLine();
+  if ( !line ) line = mRecipientsView->addLine();
+  line->setRecipient( Recipient( recipient, type ) );
+}
+
+void RecipientsEditor::removeRecipient( const QString & recipient,
+                                        Recipient::Type type )
+{
+  mRecipientsView->removeRecipient( recipient, type );
 }
 
 void RecipientsEditor::clear()

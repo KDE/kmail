@@ -167,6 +167,12 @@ class RecipientsView : public QScrollView
     
     Recipient::List recipients() const;
 
+    /** Removes the recipient provided it can be found and has the given type.
+        @param recipient The recipient(s) you want to remove.
+        @param type      The recipient type.
+    */
+    void removeRecipient( const QString & recipient, Recipient::Type type );
+
     void activateLine( RecipientLine * );
 
     void setFirstColumnWidth( int );
@@ -262,6 +268,18 @@ class RecipientsEditor : public QWidget
 
     void setRecipientString( const QString &, Recipient::Type );
     QString recipientString( Recipient::Type );
+
+    /** Adds a recipient (or multiple recipients) to one line of the editor.
+        @param recipient The recipient(s) you want to add.
+        @param type      The recipient type.
+    */
+    void addRecipient( const QString & recipient, Recipient::Type type );
+
+    /** Removes the recipient provided it can be found and has the given type.
+        @param recipient The recipient(s) you want to remove.
+        @param type      The recipient type.
+    */
+    void removeRecipient( const QString & recipient, Recipient::Type type );
 
     void setFirstColumnWidth( int );
 
