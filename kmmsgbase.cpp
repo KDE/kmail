@@ -7,6 +7,7 @@
 #include <kmfolder.h>
 #endif
 
+#include <ctype.h>
 
 #define NUM_STATUSLIST 7
 static KMMsgStatus sStatusList[NUM_STATUSLIST+1] = 
@@ -278,19 +279,95 @@ const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeRFC1522String(const QString aStr)
 {
+#ifndef BROKEN
+  static QString result;
+  char *pos, *dest, *beg, *end;
+  QString str;
+  char encoding;
+  bool valid;
+  int i;
+  
+  result.truncate(aStr.length());
+  for (pos=aStr.data(), dest=result.data(); *pos; pos++)
+  {
+    if (pos[0]!='=' || pos[1]!='?')
+    {
+      *dest++ = *pos;
+      continue;
+    }
+    beg = pos+2;
+    // search for end of encoded part
+    for (i=2, end=beg, valid=FALSE; *end && i<76; end++, i++)
+    {
+      if (end[0]=='?' && end[1]=='=')
+      {
+	valid = TRUE;
+	break;
+      }
+    }
+    if (valid)
+    {
+      end += 2; // end now points to the first char after the encoded string
+      pos = beg;
+      // parse charset name
+      while (pos<end && (*pos!='?' && (ispunct(*pos) || isalnum(*pos))))
+	pos++;
+      if (*pos != '?' || (end-pos) < 4) valid = FALSE;
+      else
+      {
+	// get encoding and check delimiting question marks
+	pos++;
+	encoding = toupper(*pos++);
+	if (*pos++ != '?' || (encoding!='Q' && encoding!='B'))
+	    valid = FALSE;
+      }
+    }
+    if (valid)
+    {
+      str = QString(pos, (int)(end - pos - 1));
+      if (encoding == 'Q')
+      {
+	// decode quoted printable text
+	str.detach();
+	for (i=str.length()-1; i>=0; i--)
+	  if (str[i]=='_') str[i]=' ';
+	str = decodeQuotedPrintable(str);
+      }
+      else
+      {
+	// decode base64 text
+	str = decodeBase64(str);
+      }
+      for (i=0; str[i]; i++)
+	*dest++ = str[i];
+
+      pos = end - 1;
+    }
+    else
+    {
+      result += "=?";
+      pos = beg - 1;
+    }
+  }
+  *dest = '\0';
+  return result;
+
+#else
   static QString result;
   static QString illegal("()<>[]@,;:;\".");
-  static const QRegExp findRFC1522lf ("^[\n\r]+[ \t]*=?[qQbB]?");
-  static const QRegExp findlf ("\n");
-  int start, beg, p1, p2, end=0;
+  static const QRegExp findRFC1522lf("^[\n\r]+[ \t]*=?[qQbB]?");
+  static const QRegExp findlf("\n");
+  int start, len, beg, p1, p2, end=0;
   bool valid;
   char encoding=0, c;
 
   start = 0;
   result = "";
+  len = aStr.length();
 
-  while (1)
+  while (start < len)
   {
+    printf("len=%d start=%d\n", len, start);
     beg = aStr.find("=?", start);
     if (beg < 0)
     {
@@ -301,60 +378,68 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
     if (beg > start) result += aStr.mid(start, beg-start);
     p1 = aStr.find("?", beg+2);
     valid = TRUE;
-    if (p1>0) {
-       encoding = (aStr [p1+1]);
-       if (encoding=='q' || encoding=='b') 
-         encoding -= 32;
-       if ((encoding!='Q' && encoding!='B') || aStr [p1+2]!='?') {
-         valid = FALSE;
-       } else {
+    if (p1>0)
+    {
+       encoding = (aStr[p1+1]);
+       if (encoding=='q' || encoding=='b') encoding -= 32;
+       if ((encoding!='Q' && encoding!='B') || aStr[p1+2]!='?') valid = FALSE;
+       else
+       {
          end = aStr.find("?=", p1+3);
-         if (end <= 0) 
-            valid = FALSE;
+         if (end <= 0) valid = FALSE;
        }
-    } else
-      valid = FALSE;
+    }
+    else valid = FALSE;
+
     // RFC1522 states: No more than 75 characters
-    if (valid && (end-beg)>73)
-      valid = FALSE;
-    if (valid) {
+    if (valid && (end-beg) > 73) valid = FALSE;
+    if (valid)
+    {
       // Check if characters are all legal according to RFC1522
-      for (p2 = beg; valid && p2 < end; p2++) {
-	c = aStr [p2];
-        if (illegal.find (c) > 0 || c <= ' ')
-          valid = FALSE;
+      for (p2 = beg; valid && p2 < end; p2++)
+      {
+	c = aStr[p2];
+        if (illegal.find(c) > 0 || c <= ' ') valid = FALSE;
       }
     }
-    if (!valid) {
+
+    if (!valid)
+    {
       result += "=?";
       start += 2;
       continue;
     }
+
     // Gosh! We *do* have a token
-    if (encoding=='Q') {
-      for (p2 = p1+3; p2 < end; p2++) {
-        if (aStr [p2] == '_') 
-           result += ' ';
-	else if (aStr [p2] != '=' || p2+3 > end) 
-	   result += aStr [p2];
-        else {
+    if (encoding=='Q')
+    {
+      for (p2 = p1+3; p2 < end; p2++)
+      {
+        if (aStr [p2] == '_') result += ' ';
+	else if (aStr [p2] != '=' || p2+3 > end) result += aStr [p2];
+        else
+	{
            result += decodeQuotedPrintable(aStr.mid(p2,3).data());
            p2 += 2;
 	}
       }
-    } else {
-      result += decodeBase64(aStr.mid (p1+3, end-p1-3).data());
-    }
-    start = end+2;
-    if (aStr.mid(start,32768).find (findRFC1522lf)>=0) {
-      while (aStr[start]=='\r' || aStr[start]=='\n')
-        start++;
-      while (aStr[start]=='\t' || aStr[start]==' ')
-        start++;
+    } 
+    else result += decodeBase64(aStr.mid (p1+3, end-p1-3).data());
+
+    start = end + 2;
+    if (aStr[start]=='\r' || aStr[start]=='\n')
+    {
+      p1 = start;
+      while (aStr[p1]=='\r' || aStr[p1]=='\n')
+	p1++;
+      while (aStr[p1]=='\t' || aStr[p1]==' ')
+	p1++;
+      if (aStr[p1]=='=' && aStr[p1+1]=='?') start = p1;
     }
   }
-  result.replace (findlf, " ");
+  result.replace(findlf, " ");
   return result;
+#endif
 }
 
 

@@ -165,14 +165,12 @@ void KMAccount::installTimer()
   {
     mTimer = new QTimer();
     connect(mTimer,SIGNAL(timeout()),SLOT(mailCheck()));
-    mTimer->start(mInterval*1000*60);
   }
   else
   {
     mTimer->stop();
-    printf("Starting old Timer with interval: %ld\n",mInterval*1000*60);
-    mTimer->start(mInterval*1000*60);
   }   
+  mTimer->start(mInterval*60000);
 }
 
 
