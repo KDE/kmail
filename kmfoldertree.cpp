@@ -601,14 +601,14 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
       //  warn user that going to next folder - but keep track of
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
-	if ( KMessageBox::warningContinueCancel( this,
-	   i18n( "Go to the next unread message in folder %1?" ).
-                                    arg( fti->folder->label() ) ,
+	if ( KMessageBox::questionYesNo( this,
+	   i18n( "Go to the next unread message in folder %1?" )
+                                    .arg( fti->folder->label() ),
 	   i18n( "Go to the next unread message" ),
-	   i18n("&Yes" ),
+	   KStdGuiItem::yes(), KStdGuiItem::no(), // defaults
            "AskNextFolder",
            false)
-           == KMessageBox::Cancel ) return true;
+           == KMessageBox::No ) return true;
       }
     }
     prepareItem( fti );
