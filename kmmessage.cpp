@@ -927,18 +927,10 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       // assume a Reply-To header mangling mailing list
       toStr = replyToStr;
     }
-    else if ( !to().isEmpty() ) {
-      // the mailing list address has to be in the To header
-      toStr = to();
-    }
     // strip all my addresses from the list of recipients
     QStringList recipients = splitEmailAddrList( toStr );
     toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
 
-    if ( toStr.isEmpty() ) {
-      // fallback to From if everything else fails
-      toStr = from();
-    }
     break;
   }
   case KMail::ReplyAll : {
