@@ -1123,7 +1123,7 @@ void KMReaderWin::readConfig(void)
 
   {
     KConfigGroupSaver saver(config, "Behaviour");
-    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", false);
+    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", true);
       mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
   }
 

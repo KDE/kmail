@@ -3865,7 +3865,7 @@ void MiscPage::FoldersTab::setup() {
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   mLoopOnGotoUnread->setChecked( behaviour.readBoolEntry( "LoopOnGotoUnread", true ) );
   mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
-  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", false ) );
+  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
   mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
