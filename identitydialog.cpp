@@ -47,12 +47,12 @@
 // other kdepim headers:
 // libkdepim
 #include <libkpimidentities/identity.h>
+#include <libkdepim/addresseelineedit.h>
 // libkleopatra:
 #include <ui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>
 
 // other KDE headers:
-#include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
@@ -302,7 +302,7 @@ namespace KMail {
 
     // "Reply-To Address" line edit and label:
     ++row;
-    mReplyToEdit = new KLineEdit( tab );
+    mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true, "mReplyToEdit" );
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( mReplyToEdit, i18n("&Reply-To address:"), tab);
     glay->addWidget( label , row, 0 );
@@ -321,7 +321,7 @@ namespace KMail {
 
     // "BCC addresses" line edit and label:
     ++row;
-    mBccEdit = new KLineEdit( tab );
+    mBccEdit = new KPIM::AddresseeLineEdit( tab, true, "mBccEdit" );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
     glay->addWidget( label, row, 0 );
@@ -331,6 +331,8 @@ namespace KMail {
                "be visible to other recipients.</p>"
                "<p>This is commonly used to send a copy of each sent message to "
                "another account of yours.</p>"
+               "<p>To specify more than one address, use a comma to seperate "
+               "the list of BCC recpients.</p>"
                "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );
