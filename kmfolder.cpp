@@ -53,7 +53,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   readExpireUnits = expireNever;
   mRDict = 0;
   mUseCustomIcons = false;
-  mDirtyTimer = new QTimer();
+  mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
 

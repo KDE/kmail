@@ -200,6 +200,7 @@ class AccountDialog : public KDialogBase
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
     KMail::SieveConfigEditor *mSieveConfigEditor;
+    QRegExpValidator *mValidator;
 };
 
 

@@ -233,6 +233,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
     mAccount(account), mSieveConfigEditor( 0 )
 {
+  mValidator = 0L;
   mServerTest = 0;
   setHelp("receiving-mail");
 
@@ -270,7 +271,10 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
+    delete mValidator;
+    mValidator = 0L;
     delete mServerTest;
+    mServerTest = 0L;
 }
 
 void AccountDialog::makeLocalAccountPage()
@@ -762,7 +766,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   mImap.hostEdit->setValidator(
-    new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
+        mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
   label->setBuddy( mImap.hostEdit );
   grid->addWidget( mImap.hostEdit, row, 1 );
 

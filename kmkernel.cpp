@@ -139,6 +139,10 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
+
+  delete mICalIface;
+  mICalIface = 0L;
+
   delete mMailService;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
@@ -962,6 +966,8 @@ void KMKernel::cleanupLoop()
   mConfigureDialog = 0;
   delete mWin;
   mWin = 0;
+  mCryptPlugList->setAutoDelete(true);
+  mCryptPlugList->clear();
   delete mCryptPlugList;
   mCryptPlugList = 0;
 

@@ -59,23 +59,23 @@ using KMail::MailSourceViewer;
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
-  :mParent( parent )
+  :mDeletesItself( false ), mParent( parent )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList )
-  :mParent( parent ), mMsgList( msgList )
+  :mDeletesItself( false ), mParent( parent ), mMsgList( msgList )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMsgBase *msgBase )
-  :mParent( parent )
+  :mDeletesItself( false ), mParent( parent )
 {
   mMsgList.append( msgBase );
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
-  :mParent( parent )
+  :mDeletesItself( false ), mParent( parent )
 {
   mMsgList.append( &msg->toMsgBase() );
 }
