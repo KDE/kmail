@@ -1113,7 +1113,10 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       iStr = "";
     }
 
-    else *htmlPos++ = ch;
+    else {
+      *htmlPos++ = ch;
+      startOfLine = false;
+    }
   }
 
   *htmlPos = '\0';
