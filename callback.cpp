@@ -69,10 +69,6 @@ bool Callback::mailICal( const QString& to, const QString iCal,
    * has been sent successfully. Set a link header which accomplishes that. */
   msg->link( mMsg, KMMsgStatusDeleted );
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
-  // cWin->setCharset( "", true );
-  cWin->slotWordWrapToggled( false );
-
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
@@ -83,7 +79,12 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     if( identity != KPIM::Identity::null )
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
+      msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
   }
+
+  KMComposeWin *cWin = new KMComposeWin(msg);
+  // cWin->setCharset( "", true );
+  cWin->slotWordWrapToggled( false );
 
   // TODO: These are no longer available. It was an internal
   // implementation detail of kmcomposewin, anyway. Please find
