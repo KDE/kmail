@@ -165,12 +165,12 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobal::generalFont().family();
   }
 
-  int fontsizes[7];
+  QValueList<int> fontsizes;
   mViewer->resetFontSizes();
   diff = fntSize - mViewer->fontSizes()[3];
   if (mViewer->fontSizes()[0]+diff > 0) {
     for (i=0;i<7; i++)
-      fontsizes[i] =  mViewer->fontSizes()[i] + diff;
+      fontsizes << mViewer->fontSizes()[i] + diff;
     mViewer->setFontSizes(fontsizes);
   }
 
