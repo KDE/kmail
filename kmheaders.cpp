@@ -72,7 +72,6 @@ QPixmap* KMHeaders::pixUndefinedSigned = 0;
 QPixmap* KMHeaders::pixFullyEncrypted = 0;
 QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
 QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
-QPixmap* KMHeaders::pixFiller = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
 
@@ -295,8 +294,6 @@ public:
               pixmaps << *KMHeaders::pixUndefinedEncrypted;
           else if( mMsgBase->encryptionState() == KMMsgEncryptionProblematic )
               pixmaps << *KMHeaders::pixEncryptionProblematic;
-          else
-              pixmaps << *KMHeaders::pixFiller;
 
           if( mMsgBase->signatureState() == KMMsgFullySigned )
               pixmaps << *KMHeaders::pixFullySigned;
@@ -306,8 +303,6 @@ public:
               pixmaps << *KMHeaders::pixUndefinedSigned;
           else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
               pixmaps << *KMHeaders::pixSignatureProblematic;
-          else
-              pixmaps << *KMHeaders::pixFiller;
       }
 
       static QPixmap mergedpix;
@@ -514,7 +509,6 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixFullyEncrypted = new QPixmap( UserIcon( "kmmsgfullyencrypted" ) );
     pixPartiallyEncrypted = new QPixmap( UserIcon( "kmmsgpartiallyencrypted" ) );
     pixUndefinedEncrypted = new QPixmap( UserIcon( "kmmsgundefinedencrypted" ) );
-    pixFiller = new QPixmap( UserIcon( "kmmsgfiller" ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
   }
@@ -3210,10 +3204,5 @@ bool KMHeaders::readSortOrder(bool set_selection)
     return TRUE;
 }
 
-
-
 //-----------------------------------------------------------------------------
 #include "kmheaders.moc"
-
-
-
