@@ -80,6 +80,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   mMsgBufMD5 = "";
   mMsgBufSize = -1;
   mMsgDisplay = TRUE;
+  mPrinting = FALSE;
 
   initHtmlWidget();
   readConfig();
@@ -368,7 +369,9 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     }
   }
 
-  QString str = QString("<span style=\"color:%1\">").arg( color.name() );
+  QString str;
+  if (mPrinting) str = QString("<span style=\"color:#000000\">");
+  else str = QString("<span style=\"color:%1\">").arg( color.name() );
   if( font.italic() ) { str += "<i>"; }
   if( font.bold() ) { str += "<b>"; }
   return( str );
@@ -676,55 +679,57 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("@media screen { body { font-family: \"%1\"; font-size: %2pt; "
-                         "color: #%3; background-color: #%4; } }\n")
-                 .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1)).arg(colorToString(c4)) +
-                 QString("@media print { body { font-family: \"%1\"; font-size: 6pt } }\n") +
-		 QString("a { color: #%1; ").arg(colorToString(c2)) +
-		 "text-decoration: none; }" + // just playing
-                 QString( "table.encr { background-color: #%1; "
-                          "border-width: 0px; }\n" )
-                 .arg( colorToString( cPgpEncrF ) ) +
-                 QString( "tr.encrH { background-color: #%1; "
-                          "font-weight: bold; }\n" )
-                 .arg( colorToString( cPgpEncrH ) ) +
-                 QString( "tr.encrB { background-color: #%1; }\n" )
-                 .arg( colorToString( cPgpEncrB ) ) +
-                 QString( "table.signOkKeyOk { background-color: #%1; "
-                          "border-width: 0px; }\n" )
-                 .arg( colorToString( cPgpOk1F ) ) +
-                 QString( "tr.signOkKeyOkH { background-color: #%1; "
-                          "font-weight: bold; }\n" )
-                 .arg( colorToString( cPgpOk1H ) ) +
-                 QString( "tr.signOkKeyOkB { background-color: #%1; }\n" )
-                 .arg( colorToString( cPgpOk1B ) ) +
-                 QString( "table.signOkKeyBad { background-color: #%1; "
-                          "border-width: 0px; }\n" )
-                 .arg( colorToString( cPgpOk0F ) ) +
-                 QString( "tr.signOkKeyBadH { background-color: #%1; "
-                          "font-weight: bold; }\n" )
-                 .arg( colorToString( cPgpOk0H ) ) +
-                 QString( "tr.signOkKeyBadB { background-color: #%1; }\n" )
-                 .arg( colorToString( cPgpOk0B ) ) +
-                 QString( "table.signWarn { background-color: #%1; "
-                          "border-width: 0px; }\n" )
-                 .arg( colorToString( cPgpWarnF ) ) +
-                 QString( "tr.signWarnH { background-color: #%1; "
-                          "font-weight: bold; }\n" )
-                 .arg( colorToString( cPgpWarnH ) ) +
-                 QString( "tr.signWarnB { background-color: #%1; }\n" )
-                 .arg( colorToString( cPgpWarnB ) ) +
-                 QString( "table.signErr { background-color: #%1; "
-                          "border-width: 0px; }\n" )
-                 .arg( colorToString( cPgpErrF ) ) +
-                 QString( "tr.signErrH { background-color: #%1; "
-                          "font-weight: bold; }\n" )
-                 .arg( colorToString( cPgpErrH ) ) +
-                 QString( "tr.signErrB { background-color: #%1; }\n" )
-                 .arg( colorToString( cPgpErrB ) ) +
+    ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: 12pt }\n")
+      : QString("body { font-family: \"%1\"; font-size: %2pt; "
+        "color: #%3; background-color: #%4; }\n")
+        .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1))
+        .arg(colorToString(c4))) +
+    ((mPrinting) ? QString("a { color: #000000; text-decoration: none }")
+      : QString("a { color: #%1; ").arg(colorToString(c2)) +
+        "text-decoration: none; }" + // just playing
+        QString( "table.encr { background-color: #%1; "
+                 "border-width: 0px; }\n" )
+        .arg( colorToString( cPgpEncrF ) ) +
+        QString( "tr.encrH { background-color: #%1; "
+                 "font-weight: bold; }\n" )
+        .arg( colorToString( cPgpEncrH ) ) +
+        QString( "tr.encrB { background-color: #%1; }\n" )
+        .arg( colorToString( cPgpEncrB ) ) +
+        QString( "table.signOkKeyOk { background-color: #%1; "
+                 "border-width: 0px; }\n" )
+        .arg( colorToString( cPgpOk1F ) ) +
+        QString( "tr.signOkKeyOkH { background-color: #%1; "
+                 "font-weight: bold; }\n" )
+        .arg( colorToString( cPgpOk1H ) ) +
+        QString( "tr.signOkKeyOkB { background-color: #%1; }\n" )
+        .arg( colorToString( cPgpOk1B ) ) +
+        QString( "table.signOkKeyBad { background-color: #%1; "
+                 "border-width: 0px; }\n" )
+        .arg( colorToString( cPgpOk0F ) ) +
+        QString( "tr.signOkKeyBadH { background-color: #%1; "
+                 "font-weight: bold; }\n" )
+        .arg( colorToString( cPgpOk0H ) ) +
+        QString( "tr.signOkKeyBadB { background-color: #%1; }\n" )
+        .arg( colorToString( cPgpOk0B ) ) +
+        QString( "table.signWarn { background-color: #%1; "
+                 "border-width: 0px; }\n" )
+        .arg( colorToString( cPgpWarnF ) ) +
+        QString( "tr.signWarnH { background-color: #%1; "
+                 "font-weight: bold; }\n" )
+        .arg( colorToString( cPgpWarnH ) ) +
+        QString( "tr.signWarnB { background-color: #%1; }\n" )
+        .arg( colorToString( cPgpWarnB ) ) +
+        QString( "table.signErr { background-color: #%1; "
+                 "border-width: 0px; }\n" )
+        .arg( colorToString( cPgpErrF ) ) +
+        QString( "tr.signErrH { background-color: #%1; "
+                 "font-weight: bold; }\n" )
+        .arg( colorToString( cPgpErrH ) ) +
+        QString( "tr.signErrB { background-color: #%1; }\n" )
+        .arg( colorToString( cPgpErrB ) )) +
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
-                 bkgrdStr + ">" );
+        ((mPrinting) ? QString("") : bkgrdStr + ">" ));
 
   if (!parent())
     setCaption(mMsg->subject());
@@ -1455,14 +1460,16 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 void KMReaderWin::printMsg(void)
 {
   if (!mMsg) return;
-  if (c4 == QColor(255,255,255)) { mViewer->view()->print(); return; }
 
-  QColor hold = c4;
-  c4 = QColor(255,255,255);
-  update(true);
-  mViewer->view()->print();
-  c4 = hold;
-  update(true);
+  if (mPrinting)
+    mViewer->view()->print();
+  else {
+    KMReaderWin printWin;
+    printWin.setPrinting(TRUE);
+    printWin.readConfig();
+    printWin.setMsg(mMsg, TRUE);
+    printWin.printMsg();
+  }
 }
 
 

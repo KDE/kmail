@@ -71,6 +71,9 @@ public:
   QTextCodec *codec(void) const { return mCodec; }
   virtual void setCodec(QTextCodec *codec);
 
+  /** Set printing mode */
+  virtual void setPrinting(bool enable) { mPrinting = enable; }
+
   /** Set the message that shall be shown. If NULL, an empty page is
     displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
@@ -266,6 +269,7 @@ protected:
 
   int fntSize;
   bool mUseFixedFont;
+  bool mPrinting;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
   QColor cPgpOk1F, cPgpOk1H, cPgpOk1B, // colors for PGP (Frame, Header, Body)
