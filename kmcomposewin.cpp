@@ -1138,6 +1138,14 @@ bool KMComposeWin::applyChanges(void)
 	mMsg->addBodyPart(msgPart);
   }
   if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
+  mEdtFrom.setEdited(FALSE);
+  mEdtReplyTo.setEdited(FALSE);
+  mEdtTo.setEdited(FALSE);
+  mEdtCc.setEdited(FALSE);
+  mEdtBcc.setEdited(FALSE);
+  mEdtSubject.setEdited(FALSE);
+  if (mTransport.lineEdit())
+    mTransport.lineEdit()->setEdited(FALSE);
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
   mMsg->cleanupHeader();
@@ -1150,7 +1158,10 @@ bool KMComposeWin::queryClose ()
 {
   int rc;
 
-  if(mEditor->isModified())
+  if(mEditor->isModified() || mEdtFrom.edited() || mEdtReplyTo.edited() ||
+     mEdtTo.edited() || mEdtCc.edited() || mEdtBcc.edited() ||
+     mEdtSubject.edited() || 
+     (mTransport.lineEdit() && mTransport.lineEdit()->edited()))
   {
     rc = KMessageBox::warningContinueCancel(this,
            i18n("Close and discard\nedited message?"),
@@ -2095,15 +2106,20 @@ void KMComposeWin::slotIdentityActivated(int)
     mMsg->setHeaderField("Organization", ident.organization());
 
   QString edtText = mEditor->text();
-  int pos = edtText.findRev(mOldSigText);
-  if ((pos > 0) && (pos + mOldSigText.length() == edtText.length())) {
-    bool mod = mEditor->isModified();
-    edtText.truncate(pos);
-    edtText.append(ident.signature());
-    mEditor->setText(edtText);
-    mEditor->setModified(mod);
-    mOldSigText = ident.signature();
+  int pos = edtText.findRev( "\n-- \n" + mOldSigText);
+
+  if (((pos >= 0) && (pos + mOldSigText.length() + 6 == edtText.length())) ||
+      (mOldSigText.isEmpty())) {
+    if (pos >= 0)
+      edtText.truncate(pos);
+    if (!ident.signature().isEmpty()) {
+      edtText.append( "\n-- \n" );
+      edtText.append( ident.signature() + "\n" );
+    }
+    mEditor->setText( edtText );
   }
+  mOldSigText = ident.signature();
+  mEditor->setModified(TRUE);
   mId = identStr;
 }
 
