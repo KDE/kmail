@@ -169,7 +169,7 @@ QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 5, 3, 20, 6);
+  QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
@@ -188,6 +188,7 @@ void KMSettings::createTabIdentity(QWidget* parent)
   grid->setColStretch(0,0);
   grid->setColStretch(1,1);
   grid->setColStretch(2,0);
+  grid->setRowStretch(5, 100);
 
   addTab(tab, i18n("Identity"));
   grid->activate();
@@ -237,6 +238,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   grid->setColStretch(1,1);
   grid->setColStretch(2,10);
   grid->setColStretch(3,0);
+  grid->setRowStretch(5, 100);
   grid->activate();
   bgrp->adjustSize();
 
@@ -282,9 +284,6 @@ void KMSettings::createTabNetwork(QWidget* parent)
   removeButton = createPushButton(grp, grid, i18n("Delete"), 3, 1);
   connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
   removeButton->setEnabled(FALSE);
-
-
-				
 
   grid->setColStretch(0, 10);
   grid->setColStretch(1, 0);

@@ -1,5 +1,7 @@
 1999-01-21  Stefan Taferner  <taferner@kde.org> (KMail-1.0.13)
 
+	* Fixed broken placement of contents in settings dialog.
+
 	* Filter Dialog: changed combo box style to new style.
 	Now it is possible to have more folders than the screen
 	is high and still select them in the filter dialog.
