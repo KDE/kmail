@@ -3578,7 +3578,7 @@ void KMComposeWin::slotTextColor()
 {
   QColor color = mEditor->color();
 
-  if ( KColorDialog::getColor( color ) ) {
+  if ( KColorDialog::getColor( color, this ) ) {
     toggleMarkup(true);
     mEditor->setColor( color );
   }
