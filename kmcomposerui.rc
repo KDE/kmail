@@ -65,7 +65,7 @@
   </Menu>
   <Menu name="settings" >
    <text>&amp;Settings</text>
-   <Action name="setup_spellchecker" />
+   <Action name="setup_spellchecker" append="save_merge"/>
   </Menu>
  </MenuBar>
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" ><text>Main Toolbar</text>

@@ -105,8 +105,8 @@
    <Action name="create_filter"/>
   </Menu>
   <Menu name="settings" >
-   <Action name="filter" />
-   <Action name="popFilter" />
+   <Action name="filter" append="save_merge"/>
+   <Action name="popFilter" append="save_merge"/>
   </Menu>
   <Menu name="help">
    <Action name="help_kmail_welcomepage"/>
