@@ -99,17 +99,24 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 {
+  DwString dwResult, dwSrc;
   int encoding = contentTransferEncoding();
+  int len;
 
   mBodySize = aStr.size();
 
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    mBody = KCodecs::quotedPrintableEncode(aStr);
-    break;
   case DwMime::kCteBase64:
-    mBody = KCodecs::base64Encode(aStr);
+    dwSrc = DwString(aStr.data(), aStr.size());
+    if (encoding == DwMime::kCteQuotedPrintable)
+      DwEncodeQuotedPrintable(dwSrc, dwResult);
+    else
+      DwEncodeBase64(dwSrc, dwResult);
+    len = dwResult.size();
+    mBody.truncate(len);
+    memcpy(mBody.data(), dwResult.data(), len);
     break;
   default:
     kdDebug(5006) << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
@@ -125,6 +132,7 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 //-----------------------------------------------------------------------------
 QByteArray KMMessagePart::bodyDecodedBinary(void) const
 {
+  DwString dwResult, dwSrc;
   QByteArray result;
   int encoding = contentTransferEncoding();
   int len;
@@ -132,23 +140,29 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    result = KCodecs::quotedPrintableDecode(QCString(mBody.data(), mBody.size() + 1));
-    break;
   case DwMime::kCteBase64:
-    KCodecs::base64Decode(mBody, result);
+    dwSrc = DwString(mBody.data(), mBody.size());
+    if (encoding == DwMime::kCteQuotedPrintable)
+      DwDecodeQuotedPrintable(dwSrc, dwResult);
+    else
+      DwDecodeBase64(dwSrc, dwResult);
+    len = dwResult.size();
+    result.resize(len);
+    memcpy(result.data(), dwResult.c_str(), len);
     break;
   default:
     kdDebug(5006) << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    result.duplicate(mBody);
+    len = mBody.size() - 1;
+    result.resize(len);
+    if (len) memcpy(result.data(), mBody.data(), len);
     break;
   }
 // do this for cases where bodyDecoded instead of bodyDecodedText
 // is called. This does not warrant a trailing 0 - realloc might
 // change the address. Maybe this is not really needed.
-  len = result.size();
   result.resize(len+1);
   result[len] = 0;
   result.resize(len);
