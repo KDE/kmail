@@ -5799,7 +5799,7 @@ void KMEdit::slotSpellDone()
   kdDebug(5006) << "spelling: delete SpellingFilter" << endl;
   delete mSpellingFilter;
   mSpellingFilter = 0;
-
+  mComposer->sujectLineWidget()->deselect();
   if (status == KSpell::Error)
   {
      KMessageBox::sorry(this, i18n("ISpell/Aspell could not be started. Please make sure you have ISpell or Aspell properly configured and in your PATH."));
