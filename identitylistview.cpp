@@ -54,8 +54,19 @@ namespace KMail {
     init( ident );
   }
 
+  void IdentityListViewItem::redisplay() {
+    init( identity() );
+  }
+
   void IdentityListViewItem::init( const KMIdentity & ident ) {
-    setText( 0, ident.identityName() );
+    if ( ident.isDefault() )
+      // Add "(Default)" to the end of the default identity's name:
+      setText( 0, i18n("%1: identity name. Used in the config "
+		       "dialog, section Identity, to indicate the "
+		       "default identity", "%1 (Default)")
+	       .arg( ident.identityName() ) );
+    else
+      setText( 0, ident.identityName() );
     setText( 1, ident.fullEmailAddr() );
   }
 
@@ -77,14 +88,15 @@ namespace KMail {
     setRenameable( 0 );
     setItemsRenameable( true );
     // setShowToolTips( true );
-    setItemsMovable( true );
+    setItemsMovable( false );
     setAllColumnsShowFocus( true );
     setSorting( -1 ); // disabled
     setSelectionModeExt( Single ); // ### Extended would be nicer...
   }
 
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {
-    return e->source() == viewport() || IdentityDrag::canDecode( e );
+    // disallow moving:
+    return e->source() != viewport() && IdentityDrag::canDecode( e );
   }
 
   QDragObject * IdentityListView::dragObject() {

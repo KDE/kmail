@@ -39,6 +39,7 @@ namespace KMail {
     uint uoid() const { return mUOID; }
     KMIdentity & identity() const;
     virtual void setIdentity( const KMIdentity & ident );
+    void redisplay();
   private:
     void init( const KMIdentity & ident );
 
@@ -53,7 +54,7 @@ namespace KMail {
     Q_OBJECT
   public:
     IdentityListView( QWidget * parent=0, const char * name=0 );
-    virtual ~IdentityListView();
+    virtual ~IdentityListView() {}
 
   protected:
     bool acceptDrag( QDropEvent * ) const;
