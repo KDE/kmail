@@ -2504,7 +2504,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }
 
   setCurrentItem( lvi );
-  if (e->button() == LeftButton) {
+  if ((e->button() == LeftButton) &&
+      !(e->state() & ControlButton) &&
+      !(e->state() & ShiftButton)) {
     mousePressed = TRUE;
     if (!(lvi->isSelected())) {
       clearSelection();
