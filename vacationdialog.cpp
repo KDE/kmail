@@ -3,13 +3,31 @@
 
     KMail, the KDE mail client.
     Copyright (c) 2002 Marc Mutz <mutz@kde.org>
+    Copyright (c) 2005 Klarälvdalens Datakonsult AB
 
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License,
-    version 2.0, as published by the Free Software Foundation.
+    KMail is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    KMail is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
     You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software Foundation,
-    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, US
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    In addition, as a special exception, the copyright holders give
+    permission to link the code of this program with any edition of
+    the Qt library by Trolltech AS, Norway (or with modified versions
+    of Qt that use the same license as Qt), and distribute linked
+    combinations including the two.  You must obey the GNU General
+    Public License in all respects for all of the code used other than
+    Qt.  If you modify this file, you may extend this exception to
+    your version of the file, but you are not obligated to do so.  If
+    you do not wish to do so, delete this exception statement from
+    your version.
 */
 
 #ifdef HAVE_CONFIG_H
@@ -35,6 +53,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <qcheckbox.h>
 #include <qlineedit.h>
 #include <qtextedit.h>
+#include <qvalidator.h>
 
 namespace KMail {
 
@@ -44,7 +63,7 @@ namespace KMail {
   {
     KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
 
-    static const int rows = 4;
+    static const int rows = 7;
     int row = -1;
 
     QGridLayout * glay = new QGridLayout( plainPage(), rows, 2, 0, spacingHint() );
@@ -81,7 +100,24 @@ namespace KMail {
     glay->addWidget( new QLabel( mMailAliasesEdit, i18n("&Send responses for these addresses:"), plainPage() ), row, 0 );
     glay->addWidget( mMailAliasesEdit, row, 1 );
 
-    // row 5 is for stretch.
+    // "Send responses also to SPAM mail" checkbox:
+    ++row;
+    mSpamCheck = new QCheckBox( i18n("React to spam"), plainPage(), "mSpamCheck" );
+    mSpamCheck->setChecked( false );
+    glay->addMultiCellWidget( mSpamCheck, row, row, 0, 1 );
+
+    //  domain checkbox and linedit:
+    ++row;
+    mDomainCheck = new QCheckBox( i18n("Only react to mail coming from domain"), plainPage(), "mDomainCheck" );
+    mDomainCheck->setChecked( false );
+    mDomainEdit = new QLineEdit( plainPage(), "mDomainEdit" );
+    mDomainEdit->setEnabled( false );
+    mDomainEdit->setValidator( new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), mDomainEdit ) );
+    glay->addWidget( mDomainCheck, row, 0 );
+    glay->addWidget( mDomainEdit, row, 1 );
+    connect( mDomainCheck, SIGNAL(toggled(bool)),
+             mDomainEdit, SLOT(setEnabled(bool)) );
+
     Q_ASSERT( row == rows - 1 );
   }
 
@@ -137,6 +173,24 @@ namespace KMail {
 
   void VacationDialog::setMailAliases( const QString & aliases ) {
     mMailAliasesEdit->setText( aliases );
+  }
+
+  QString VacationDialog::domainName() const {
+    return mDomainCheck->isChecked() ? mDomainEdit->text() : QString::null ;
+  }
+
+  void VacationDialog::setDomainName( const QString & domain ) {
+    mDomainEdit->setText( domain );
+    if ( !domain.isEmpty() )
+      mDomainCheck->setChecked( true );
+  }
+
+  bool VacationDialog::sendForSpam() const {
+    return mSpamCheck->isChecked();
+  }
+
+  void VacationDialog::setSendForSpam( bool enable ) {
+    mSpamCheck->setChecked( enable );
   }
 
 } // namespace KMail
