@@ -59,7 +59,7 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg( KMMessage* msg, int* index_return = 0 );
 
-  /** Open folder for access. Does not work if the parent is not set.
+  /** Open folder for access.
     Does nothing if the folder is already opened. To reopen a folder
     call close() first.
     Returns zero on success and an error code equal to the c-library
