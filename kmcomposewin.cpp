@@ -156,6 +156,9 @@ void KMComposeWin::readConfig(void)
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 80);
+  mBackColor = config->readEntry( "Back-Color");
+  mForeColor = config->readEntry( "Fore-Color");
+
 
   config->setGroup("Geometry");
   str = config->readEntry("composer", "480 510");
@@ -180,6 +183,14 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("headers", mShowHeaders);
   config->writeEntry("word-wrap",mWordWrap);
   config->writeEntry("break-at", mLineBreak);
+  str = "";
+  str.sprintf("#%02x%02x%02x", foreColor.red(), foreColor.green(),
+	      foreColor.blue());
+  config->writeEntry("Fore-Color",str);
+  str = "";
+  str.sprintf("#%02x%02x%02x", backColor.red(), backColor.green(),
+	      backColor.blue());
+  config->writeEntry("Back-Color",str);
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
@@ -374,10 +385,11 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(nls->translate("&Followup-To"), HDR_FOLLOWUP_TO); // for KRN
   mMenuBar->insertItem(nls->translate("&View"), menu);
 
-  //---------- Menu: Attach
   menu = new QPopupMenu();
   menu->insertItem(nls->translate("Append S&ignature"), this, 
 		   SLOT(slotAppendSignature()));
+  menu->insertItem(nls->translate("&Insert File"), this,
+		   SLOT(slotInsertFile()));
   menu->insertItem(nls->translate("&Attach..."), this, SLOT(slotAttachFile()));
   menu->insertSeparator();
   menu->insertItem(nls->translate("&Remove"), this, SLOT(slotAttachRemove()));
@@ -474,6 +486,30 @@ void KMComposeWin::setupEditor(void)
   }
 
   // Font setup
+
+
+  // Color setup
+  if( mForeColor.isEmpty())
+    mForeColor = "black";
+
+  if( mBackColor.isEmpty())
+    mBackColor = "white";
+
+  foreColor.setNamedColor(mForeColor);
+  backColor.setNamedColor(mBackColor);
+
+  QPalette myPalette = (mEditor->palette()).copy();
+  QColorGroup cgrp  = myPalette.normal();
+  QColorGroup ncgrp(foreColor,cgrp.background(),
+		    cgrp.light(),cgrp.dark(), cgrp.mid(), foreColor,
+		    backColor);
+  myPalette.setNormal(ncgrp);
+  myPalette.setDisabled(ncgrp);
+  myPalette.setActive(ncgrp);
+
+  mEditor->setPalette(myPalette);
+  mEditor->setBackgroundColor(backColor);
+  
 
 #ifdef BROKEN
   popup = new QPopupMenu();
@@ -680,10 +716,9 @@ void KMComposeWin::removeAttach(const QString aUrl)
   int idx;
   KMMessagePart* msgPart;
 
-  for(idx=0,msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next(),idx++)
-  {
-    if (msgPart->name() == aUrl)
-    {
+  for(idx=0,msgPart=mAtmList.first(); msgPart; 
+      msgPart=mAtmList.next(),idx++) {
+    if (msgPart->name() == aUrl) {
       removeAttach(idx);
       return;
     }
@@ -725,6 +760,39 @@ void KMComposeWin::slotAttachFile()
   addAttach(fileName);
 }
 
+
+void KMComposeWin::slotInsertFile()
+{
+  // Create File Dialog and return selected file
+
+  QString fileName;
+  QString strCopy;
+  char temp[256];
+  int col, line;
+  QFileDialog fdlg(".","*",this,NULL,TRUE);
+
+  fdlg.setCaption(nls->translate("Attach File"));
+  if (!fdlg.exec()) return;
+
+  fileName = fdlg.selectedFile();		
+  if(fileName.isEmpty()) return;
+
+  cout << fileName << endl;
+  QFile *f = new QFile(fileName);
+
+  if(!f->open(IO_ReadOnly))
+    return;
+
+  f->at(0);
+  while(!f->atEnd()) {
+    f->readLine(temp,255);
+    strCopy.append(temp);
+  }
+
+  mEditor->getCursorPosition(&line,&col);
+  mEditor->insertAt(strCopy, line ,col);
+  f->close();
+}  
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachPopupMenu(int index, int)
@@ -965,7 +1033,7 @@ void KMComposeWin::slotAppendSignature()
 
   if (!sigText.isEmpty())
   {
-    mEditor->insertLine("\n--\n", -1);
+    //    mEditor->insertLine("\n--\n", -1);
     mEditor->insertLine(sigText, -1);
     mEditor->toggleModified(mod);
   }
