@@ -32,6 +32,7 @@ KMAcctMgr::KMAcctMgr(): QObject()
   mAcctChecking.clear();
   mAcctTodo.clear();
   mTotalNewMailsArrived=0;
+  mDisplaySummary = false;
 }
 
 
@@ -145,11 +146,13 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   if (mAcctChecking.isEmpty())
   {
     // all checks finished, display summary
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        mTotalNewMailsArrived );
+    if ( mDisplaySummary )
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+          mTotalNewMailsArrived );
     emit checkedMail( newMailArrived, interactive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
     mTotalNewInFolder.clear();
+    mDisplaySummary = false;
   }
   if (mAcctTodo.isEmpty()) return;
 
@@ -300,12 +303,13 @@ void KMAcctMgr::checkMail(bool _interactive)
 				    "receive mail."));
     return;
   }
+  mDisplaySummary = true;
 
   mTotalNewMailsArrived=0;
   mTotalNewInFolder.clear();
 
   for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-	it.current() ; ++it )
+        it.current() ; ++it )
   {
     if (!it.current()->checkExclude())
       singleCheckMail(it.current(), _interactive);
@@ -362,6 +366,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
     if (x > item) break;
     cur=mAcctList.next();
   }
+  mDisplaySummary = false;
 
   singleCheckMail(cur, _interactive);
 }

@@ -102,6 +102,9 @@ private:
 
   // for detailed (per folder) new mail notification
   QMap<QString, int> mTotalNewInFolder;
+
+  // if a summary should be displayed
+  bool mDisplaySummary;
 };
 
 #endif /*kmacctmgr_h*/
