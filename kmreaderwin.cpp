@@ -758,10 +758,10 @@ void KMReaderWin::initHtmlWidget(void)
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen()));
+          SLOT(slotUrlOpen(const KURL &)));
   connect(mViewer->browserExtension(),
           SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen()));
+          SLOT(slotUrlOpen(const KURL &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
@@ -2097,8 +2097,10 @@ void KMReaderWin::slotUrlCopy()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen()
+void KMReaderWin::slotUrlOpen( const KURL &url )
 {
+  if ( !url.isEmpty() )
+    mUrlClicked = url;
   KMCommand *command = new KMUrlOpenCommand( mUrlClicked, this );
   command->start();
 }

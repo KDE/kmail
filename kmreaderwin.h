@@ -1,4 +1,5 @@
-// Header for kmreaderwin the kmail reader -*- c++ -*-
+// -*- mode: C++; c-file-style: "gnu" -*-
+// Header for kmreaderwin the kmail reader
 // written by Markus Wuebben <markus.wuebben@kde.org>
 
 #ifndef KMREADERWIN_H
@@ -302,8 +303,7 @@ public slots:
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
   void slotUrlCopy();
-  /** Open URL in mUrlCurrent using Kfm. */
-  void slotUrlOpen();
+  void slotUrlOpen( const KURL &url = 0 );
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
