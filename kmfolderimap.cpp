@@ -277,10 +277,14 @@ int KMFolderImap::rename( const QString& newName, KMFolderDir */*aParent*/ )
   src.setPath( imapPath() );
   KURL dst( mAccount->getUrl() );
   dst.setPath( path );
+  // hack to transport the new name
+  ImapAccountBase::jobData jd;
+  jd.path = newName;
   KIO::SimpleJob *job = KIO::rename( src, dst, true );
   kdDebug(5006)<< "KMFolderImap::rename - " << src.prettyURL()
            << " |=> " << dst.prettyURL()
            << endl;
+  mAccount->insertJob( job, jd );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   connect( job, SIGNAL(result(KIO::Job*)),
            SLOT(slotRenameResult(KIO::Job*)) );
@@ -291,18 +295,17 @@ int KMFolderImap::rename( const QString& newName, KMFolderDir */*aParent*/ )
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotRenameResult( KIO::Job *job )
 {
-   KIO::SimpleJob* sj = static_cast<KIO::SimpleJob*>(job);
+  ImapAccountBase::JobIterator it = mAccount->findJob( job );
+  if ( it == mAccount->jobsEnd() ) return;
+  KIO::SimpleJob* sj = static_cast<KIO::SimpleJob*>(job);
   if ( job->error() ) {
     setImapPath( sj->url().path() );
     mAccount->handleJobError( job, i18n("Error while renaming a folder.") );
     return;
   }
-  QString path = imapPath();
-  int i = path.findRev( '.' );
-  path = path.mid( ++i );
-  path.remove( '/' );
-  KMFolderMbox::rename( path );
+  KMFolderMbox::rename( (*it).path );
   kmkernel->folderMgr()->contentsChanged();
+  mAccount->removeJob(it);
 }
 
 //-----------------------------------------------------------------------------
