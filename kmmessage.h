@@ -108,7 +108,7 @@ public:
   const KMMsgBase & toMsgBase() const { return *this; }
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
-  bool isMessage(void) const;
+  bool isMessage() const;
 
   /** @return whether the priority: or x-priority headers indicate
        that this message should be considered urgent
@@ -142,13 +142,13 @@ public:
   }
 
   /** Mark the message as deleted */
-  void del(void) { setStatus(KMMsgStatusDeleted); }
+  void del() { setStatus(KMMsgStatusDeleted); }
 
   /** Undelete the message. Same as touch */
-  void undel(void) { setStatus(KMMsgStatusOld); }
+  void undel() { setStatus(KMMsgStatusOld); }
 
   /** Touch the message - mark it as read */
-  void touch(void) { setStatus(KMMsgStatusOld); }
+  void touch() { setStatus(KMMsgStatusOld); }
 
   /** Create a new message that is a reply to this message, filling all
       required header fields with the proper values. The returned message
@@ -173,12 +173,12 @@ public:
   KMMessage* createBounce( bool withUI );
 
   /** Create the forwarded body for the message. */
-  QCString createForwardBody(void);
+  QCString createForwardBody();
 
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
-  KMMessage* createForward(void);
+  KMMessage* createForward();
 
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The
@@ -213,7 +213,7 @@ public:
       string copy.
   */
   const DwString& asDwString() const;
-  const DwMessage *asDwMessage(void);
+  const DwMessage *asDwMessage();
 
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
@@ -244,10 +244,10 @@ public:
   void removePrivateHeaderFields();
 
   /** Return reference to Content-Type header for direct manipulation. */
-  DwMediaType& dwContentType(void);
+  DwMediaType& dwContentType();
 
   /** Return header as string. */
-  QString headerAsString(void) const;
+  QString headerAsString() const;
 
   /** Returns a decoded body part string to be further processed
     by function asQuotedString().
@@ -258,27 +258,6 @@ public:
                                           QCString& parsedString,
                                           const QTextCodec*& codec,
                                           bool& isHTML ) const;
-
-  /** Returns message body with quoting header and indented by the
-    given indentation string. This is suitable for including the message
-    in another message of for replies, forwards. The header string is
-    a template where the following fields are replaced with the
-    corresponding values:
-    <pre>
-	%D: date of this message
-	%S: subject of this message
-	%F: sender (from) of this message
-	%%: a single percent sign
-    </pre>
-    No attachments are handled if includeAttach is false.
-    The signature is stripped if aStripSignature is true and
-    smart quoting is turned on. Signed or encrypted texts
-    get converted to plain text when allowDecryption is true. */
-  QCString asQuotedString(const QString& headerStr,
-                                  const QString& indentStr,
-                                  const QString& selection=QString::null,
-                                  bool aStripSignature=true,
-                                  bool allowDecryption=true) const;
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
@@ -298,7 +277,7 @@ public:
 
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc:
     field. */
-  void cleanupHeader(void);
+  void cleanupHeader();
 
   /** Set fields that are either automatically set (Message-id)
     or that do not change from one message to another (MIME-Version).
@@ -308,56 +287,56 @@ public:
   void setAutomaticFields(bool isMultipart=FALSE);
 
   /** Get or set the 'Date' header field */
-  QString dateStr(void) const;
-  QCString dateShortStr(void) const;
-  QString dateIsoStr(void) const;
-  time_t date(void) const;
+  QString dateStr() const;
+  QCString dateShortStr() const;
+  QString dateIsoStr() const;
+  time_t date() const;
   void setDate(const QCString& str);
   void setDate(time_t aUnixTime);
 
   /** Set the 'Date' header field to the current date. */
-  void setDateToday(void);
+  void setDateToday();
 
   /** Get or set the 'To' header field */
-  QString to(void) const;
+  QString to() const;
   void setTo(const QString& aStr);
-  QString toStrip(void) const;
+  QString toStrip() const;
 
   /** Get or set the 'ReplyTo' header field */
-  QString replyTo(void) const;
+  QString replyTo() const;
   void setReplyTo(const QString& aStr);
   void setReplyTo(KMMessage*);
 
   /** Get or set the 'Cc' header field */
-  QString cc(void) const;
+  QString cc() const;
   void setCc(const QString& aStr);
-  QString ccStrip(void) const;
+  QString ccStrip() const;
 
   /** Get or set the 'Bcc' header field */
-  QString bcc(void) const;
+  QString bcc() const;
   void setBcc(const QString& aStr);
 
   /** Get or set the 'Fcc' header field */
-  QString fcc(void) const;
+  QString fcc() const;
   void setFcc(const QString& aStr);
 
   /** Get or set the 'Drafts' folder */
-  QString drafts(void) const { return mDrafts; }
+  QString drafts() const { return mDrafts; }
   void setDrafts(const QString& aStr);
 
   /** Get or set the 'From' header field */
-  QString from(void) const;
+  QString from() const;
   void setFrom(const QString& aStr);
-  QString fromStrip(void) const;
-  QCString fromEmail(void) const;
+  QString fromStrip() const;
+  QCString fromEmail() const;
 
   /** Get or set the 'Who' header field. The actual field that is
       returned depends on the contents of the owning folders whoField().
       Usually this is 'From', but it can also contain 'To'. */
-  QString who(void) const;
+  QString who() const;
 
   /** Get or set the 'Subject' header field */
-  QString subject(void) const;
+  QString subject() const;
   void setSubject(const QString& aStr);
 
   /** Calculate strippedSubject */
@@ -398,13 +377,13 @@ public:
   QString replySubject() const;
 
   /** Get or set the 'X-Mark' header field */
-  QString xmark(void) const;
+  QString xmark() const;
   void setXMark(const QString& aStr);
 
   /** Get or set the 'In-Reply-To' header field */
-  QString replyToId(void) const;
+  QString replyToId() const;
   void setReplyToId(const QString& aStr);
-  QString replyToIdMD5(void) const;
+  QString replyToIdMD5() const;
 
   /** Get the second to last id from the References header
       field. If outgoing messages are not kept in the same
@@ -438,16 +417,16 @@ public:
   bool subjectIsPrefixed() const;
   
   /** Get or set the 'Message-Id' header field */
-  QString msgId(void) const;
+  QString msgId() const;
   void setMsgId(const QString& aStr);
-  QString msgIdMD5(void) const;
+  QString msgIdMD5() const;
 
   /** Get or set the references for this message */
   QString references() const;
   void setReferences(const QCString& aStr);
 
   /** Returns the message ID, useful for followups */
-  QCString id(void) const;
+  QCString id() const;
 
   /** Returns the message serial number. */
   unsigned long getMsgSerNum() const;
@@ -474,13 +453,13 @@ public:
   /** Get or set the 'Content-Type' header field
       The member functions that involve enumerated types (ints)
       will work only for well-known types or subtypes. */
-  QCString typeStr(void) const;
-  int type(void) const;
+  QCString typeStr() const;
+  int type() const;
   void setTypeStr(const QCString& aStr);
   void setType(int aType);
   /** Subtype */
-  QCString subtypeStr(void) const;
-  int subtype(void) const;
+  QCString subtypeStr() const;
+  int subtype() const;
   void setSubtypeStr(const QCString& aStr);
   void setSubtype(int aSubtype);
   /** add or change a parameter of a DwMediaType field */
@@ -499,20 +478,20 @@ public:
       (must be called after directly modifying message structures
        e.g. when like changing header information by accessing
        the header via headers() function) */
-  void setNeedsAssembly(void);
+  void setNeedsAssembly();
 
   /** Get or set the 'Content-Transfer-Encoding' header field
       The member functions that involve enumerated types (ints)
       will work only for well-known encodings. */
-  QCString contentTransferEncodingStr(void) const;
-  int  contentTransferEncoding(void) const;
+  QCString contentTransferEncodingStr() const;
+  int  contentTransferEncoding() const;
   void setContentTransferEncodingStr(const QCString& aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  QCString cteStr(void) const { return contentTransferEncodingStr(); }
-  int cte(void) const { return contentTransferEncoding(); }
+  QCString cteStr() const { return contentTransferEncodingStr(); }
+  int cte() const { return contentTransferEncoding(); }
   void setCteStr(const QCString& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
@@ -526,7 +505,7 @@ public:
   QString bodyToUnicode(const QTextCodec* codec=0) const;
 
   /** Get the message body. Does not decode the body. */
-  QCString body(void) const;
+  QCString body() const;
 
   /** Set the message body. Does not encode the body. */
   void setBody(const QCString& aStr);
@@ -568,12 +547,12 @@ public:
   /** Returns a decoded version of the body from the current content transfer
       encoding. The first method returns a null terminated string, the second
       method is meant for binary data, not null is appended */
-  QCString bodyDecoded(void) const;
-  QByteArray bodyDecodedBinary(void) const;
+  QCString bodyDecoded() const;
+  QByteArray bodyDecodedBinary() const;
 
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */
-  int numBodyParts(void) const;
+  int numBodyParts() const;
 
   /** Return the first DwBodyPart matching a given Content-Type
       or zero, if no found. */
@@ -616,11 +595,11 @@ public:
   void addBodyPart(const KMMessagePart* aPart);
 
   /** Delete all body parts. */
-  void deleteBodyParts(void);
+  void deleteBodyParts();
 
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
-  void setStatusFields(void);
+  void setStatusFields();
 
   /** Generates the Message-Id. It uses either the Message-Id suffix
    * defined by the user or the given email address as suffix. The address
@@ -711,17 +690,17 @@ public:
 
 
   /** Get the default message charset.*/
-  static QCString defaultCharset(void);
+  static QCString defaultCharset();
 
   /** Get a list of preferred message charsets.*/
-  static const QStringList &preferredCharsets(void);
+  static const QStringList &preferredCharsets();
 
   /** Replaces every occurrence of "${foo}" in @p s with @ref
       headerField("foo") */
   QString replaceHeadersInString( const QString & s ) const;
 
   /** Get the message charset.*/
-  QCString charset(void) const;
+  QCString charset() const;
 
   /** Set the message charset. */
   void setCharset(const QCString& aStr);
@@ -753,7 +732,7 @@ public:
 
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
-  static void readConfig(void);
+  static void readConfig();
 
   /** Creates reference string for reply to messages.
    *  reference = original first reference + original last reference + original msg-id
@@ -761,27 +740,27 @@ public:
   QCString getRefStr() const;
 
   /** Get/set offset in mail folder. */
-  off_t folderOffset(void) const { return mFolderOffset; }
+  off_t folderOffset() const { return mFolderOffset; }
   void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
 
   /** Get/set filename in mail folder. */
-  QString fileName(void) const { return mFileName; }
+  QString fileName() const { return mFileName; }
   void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
 
   /** Get/set size of message in the folder including the whole header in
       bytes. Can be 0, if the message is not in a folder.
       The setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
-  size_t msgSize(void) const { return mMsgSize; }
+  size_t msgSize() const { return mMsgSize; }
   void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
   /** Unlike the above function this works also, if the message is not in a
       folder */
-  size_t msgLength(void) const
+  size_t msgLength() const
     { return (mMsgLength) ? mMsgLength : mMsgSize; }
   void setMsgLength(size_t sz) { mMsgLength = sz; }
 
   /** Status of the message. */
-  KMMsgStatus status(void) const { return mStatus; }
+  KMMsgStatus status() const { return mStatus; }
   /** Set status and mark dirty. */
   void setStatus(const KMMsgStatus status, int idx = -1);
   void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
@@ -818,6 +797,31 @@ public:
   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
 
 private:
+  /** Returns message body with quoting header and indented by the
+    given indentation string. This is suitable for including the message
+    in another message of for replies, forwards. The header string is
+    a template where the following fields are replaced with the
+    corresponding values:
+    <pre>
+	%D: date of this message
+	%S: subject of this message
+	%F: sender (from) of this message
+	%%: a single percent sign
+    </pre>
+    No attachments are handled if includeAttach is false.
+    The signature is stripped if aStripSignature is true and
+    smart quoting is turned on. Signed or encrypted texts
+    get converted to plain text when allowDecryption is true. */
+  QString asQuotedString( const QString & headerStr,
+			  const QString & indentStr,
+			  const QString & selection=QString::null,
+			  bool aStripSignature=true,
+			  bool allowDecryption=true) const;
+
+  /** Return the textual content of the message as plain text,
+      converting HTML to plain text if necessary. */
+  QString asPlainText( bool stripSignature, bool allowDecryption ) const;
+
   void assign( const KMMessage& other );
 
   QString mDrafts;

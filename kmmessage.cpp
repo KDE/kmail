@@ -136,7 +136,7 @@ void KMMessage::setReferences(const QCString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::id(void) const
+QCString KMMessage::id() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
@@ -222,7 +222,7 @@ KMMessage::~KMMessage()
 
 
 //-----------------------------------------------------------------------------
-bool KMMessage::isMessage(void) const
+bool KMMessage::isMessage() const
 {
   return TRUE;
 }
@@ -251,7 +251,7 @@ const DwString& KMMessage::asDwString() const
 }
 
 //-----------------------------------------------------------------------------
-const DwMessage *KMMessage::asDwMessage(void)
+const DwMessage *KMMessage::asDwMessage()
 {
   if (mNeedsAssembly)
   {
@@ -300,24 +300,21 @@ void KMMessage::removePrivateHeaderFields() {
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setStatusFields(void)
+void KMMessage::setStatusFields()
 {
-  char str[3];
+  char str[2] = { 0, 0 };
 
-  setHeaderField("Status", status() & KMMsgStatusNew ? "R \0" : "RO\0");
+  setHeaderField("Status", status() & KMMsgStatusNew ? "R" : "RO");
   setHeaderField("X-Status", statusToStr(status()));
 
   str[0] = (char)encryptionState();
-  str[1] = '\0';
   setHeaderField("X-KMail-EncryptionState", str);
 
   str[0] = (char)signatureState();
-  str[1] = '\0';
   //kdDebug(5006) << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
   str[0] = static_cast<char>( mdnSentState() );
-  str[1] = '\0';
   setHeaderField("X-KMail-MDN-Sent", str);
 
   // We better do the assembling ourselves now to prevent the
@@ -330,7 +327,7 @@ void KMMessage::setStatusFields(void)
 
 
 //----------------------------------------------------------------------------
-QString KMMessage::headerAsString(void) const
+QString KMMessage::headerAsString() const
 {
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
@@ -341,7 +338,7 @@ QString KMMessage::headerAsString(void) const
 
 
 //-----------------------------------------------------------------------------
-DwMediaType& KMMessage::dwContentType(void)
+DwMediaType& KMMessage::dwContentType()
 {
   return mMsg->Headers().ContentType();
 }
@@ -628,35 +625,30 @@ static bool flushPart(QString &msg, QStringList &part,
    return appendEmptyLine;
 }
 
-static void stripSignature(QString& msg, bool clearSigned)
-{
-  if (clearSigned)
-  {
-    msg = msg.left(msg.findRev(QRegExp("\\n--\\s?\\n")));
-  }
+static QString stripSignature( const QString & msg, bool clearSigned ) {
+  if ( clearSigned )
+    return msg.left( msg.findRev( QRegExp( "\n--\\s?\n" ) ) );
   else
-  {
-    msg = msg.left(msg.findRev("\n-- \n"));
-  }
+    return msg.left( msg.findRev( "\n-- \n" ) );
 }
 
-static void smartQuote( QString &msg, int maxLength )
+static QString smartQuote( const QString & msg, int maxLength )
 {
   QStringList part;
   QString oldIndent;
   bool firstPart = true;
 
 
-  QStringList lines = QStringList::split('\n', msg, true);
+  const QStringList lines = QStringList::split('\n', msg, true);
 
-  msg = QString::null;
-  for(QStringList::Iterator it = lines.begin();
+  QString result;
+  for(QStringList::const_iterator it = lines.begin();
       it != lines.end();
-      it++)
+      ++it)
   {
      QString line = *it;
 
-     QString indent = splitLine( line );
+     const QString indent = splitLine( line );
 
      if ( line.isEmpty())
      {
@@ -679,7 +671,7 @@ static void smartQuote( QString &msg, int maxLength )
         {
            QStringList::Iterator it2 = part.fromLast();
            while( (it2 != part.end()) && (*it2).isEmpty())
-             it2--;
+             --it2;
 
            if ((it2 != part.end()) && ((*it2).endsWith(":")))
            {
@@ -687,22 +679,23 @@ static void smartQuote( QString &msg, int maxLength )
               part.remove(it2);
            }
         }
-        if (flushPart( msg, part, oldIndent, maxLength))
+        if (flushPart( result, part, oldIndent, maxLength))
         {
            if (oldIndent.length() > indent.length())
-              msg += indent + '\n';
+              result += indent + '\n';
            else
-              msg += oldIndent + '\n';
+              result += oldIndent + '\n';
         }
         if (!fromLine.isEmpty())
         {
-           msg += fromLine;
+           result += fromLine;
         }
         oldIndent = indent;
      }
      part.append(line);
   }
-  flushPart( msg, part, oldIndent, maxLength);
+  flushPart( result, part, oldIndent, maxLength);
+  return result;
 }
 
 
@@ -753,121 +746,120 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::asQuotedString( const QString& aHeaderStr,
-                                    const QString& aIndentStr,
-                                    const QString& selection /* = QString::null */,
-                                    bool aStripSignature /* = true */,
-                                    bool allowDecryption /* = true */) const
-{
+
+QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) const {
+  QCString parsedString;
+  bool isHTML = false;
+  const QTextCodec * codec = 0;
+
+  if ( numBodyParts() == 0 ) {
+    DwBodyPart * mainBody = 0;
+    DwBodyPart * firstBodyPart = getFirstDwBodyPart();
+    if ( !firstBodyPart ) {
+      mainBody = new DwBodyPart( asDwString(), 0 );
+      mainBody->Parse();
+    }
+    parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, codec,
+			       isHTML );
+  } else {
+    DwBodyPart * dwPart = getFirstDwBodyPart();
+    if ( dwPart )
+      parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
+  }
+
+  if ( mOverrideCodec || !codec )
+    codec = this->codec();
+
+  if ( parsedString.isEmpty() )
+    return QString::null;
+
+  bool clearSigned = false;
   QString result;
-  QString headerStr;
-  QString indentStr;
 
-  indentStr = formatString(aIndentStr);
-  headerStr = formatString(aHeaderStr);
+  // decrypt
+  if ( allowDecryption ) {
+    QPtrList<Kpgp::Block> pgpBlocks;
+    QStrList nonPgpBlocks;
+    if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
+						    pgpBlocks,
+						    nonPgpBlocks ) ) {
+      // Only decrypt/strip off the signature if there is only one OpenPGP
+      // block in the message
+      if ( pgpBlocks.count() == 1 ) {
+	Kpgp::Block * block = pgpBlocks.first();
+	if ( block->type() == Kpgp::PgpMessageBlock ||
+	     block->type() == Kpgp::ClearsignedBlock ) {
+	  if ( block->type() == Kpgp::PgpMessageBlock ) {
+	    // try to decrypt this OpenPGP block
+	    block->decrypt();
+	  } else {
+	    // strip off the signature
+	    block->verify();
+	    clearSigned = true;
+	  }
 
-  // Quote message. Do not quote mime message parts that are of other
-  // type than "text".
-  if( !selection.isEmpty() ) {
-    result = selection;
-  }
-  else {
-    QCString parsedString;
-    bool isHTML = false;
-    bool clearSigned = false;
-    const QTextCodec * codec = 0;
-
-    if( numBodyParts() == 0 ) {
-      DwBodyPart * mainBody = 0;
-      DwBodyPart * firstBodyPart = getFirstDwBodyPart();
-      if( !firstBodyPart ) {
-        mainBody = new DwBodyPart(((KMMessage*)this)->asDwString(), 0);
-	mainBody->Parse();
+	  result = codec->toUnicode( nonPgpBlocks.first() )
+	         + codec->toUnicode( block->text() )
+	         + codec->toUnicode( nonPgpBlocks.last() );
+	}
       }
-      parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, codec,
-                                 isHTML );
     }
-    else {
-      DwBodyPart *dwPart = getFirstDwBodyPart();
-      if( dwPart )
-        parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
-    }
-
-    if ( mOverrideCodec || !codec )
-      codec = this->codec();
-
-    if( !parsedString.isEmpty() ) {
-      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-      Q_ASSERT(pgp != 0);
-
-      QPtrList<Kpgp::Block> pgpBlocks;
-      QStrList nonPgpBlocks;
-      if( allowDecryption &&
-          Kpgp::Module::prepareMessageForDecryption( parsedString,
-                                                     pgpBlocks,
-                                                     nonPgpBlocks ) )
-      {
-        // Only decrypt/strip off the signature if there is only one OpenPGP
-        // block in the message
-        if( pgpBlocks.count() == 1 )
-        {
-          Kpgp::Block* block = pgpBlocks.first();
-          if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-              ( block->type() == Kpgp::ClearsignedBlock ) )
-          {
-            if( block->type() == Kpgp::PgpMessageBlock ) {
-              // try to decrypt this OpenPGP block
-              block->decrypt();
-            }
-            else {
-              // strip off the signature
-              block->verify();
-              clearSigned = true;
-            }
-
-            result = codec->toUnicode( nonPgpBlocks.first() )
-                   + codec->toUnicode( block->text() )
-                   + codec->toUnicode( nonPgpBlocks.last() );
-          }
-        }
-      }
-      if( result.isEmpty() )
-        result = codec->toUnicode( parsedString );
-    }
-
-    if( !result.isEmpty() && mDecodeHTML && isHTML ) {
-      KHTMLPart htmlPart;
-      htmlPart.setOnlyLocalReferences( true );
-      htmlPart.setMetaRefreshEnabled( false );
-      htmlPart.setPluginsEnabled( false );
-      htmlPart.setJScriptEnabled( false );
-      htmlPart.setJavaEnabled( false );
-      htmlPart.begin();
-      htmlPart.write( result );
-      htmlPart.end();
-      htmlPart.selectAll();
-      result = htmlPart.selectedText();
-    }
-
-    if( aStripSignature )
-      stripSignature( result, clearSigned );
   }
+
+  if ( result.isEmpty() ) {
+    result = codec->toUnicode( parsedString );
+    if ( result.isEmpty() )
+      return result;
+  }
+
+  // html -> plaintext conversion, if necessary:
+  if ( isHTML && mDecodeHTML ) {
+    KHTMLPart htmlPart;
+    htmlPart.setOnlyLocalReferences( true );
+    htmlPart.setMetaRefreshEnabled( false );
+    htmlPart.setPluginsEnabled( false );
+    htmlPart.setJScriptEnabled( false );
+    htmlPart.setJavaEnabled( false );
+    htmlPart.begin();
+    htmlPart.write( result );
+    htmlPart.end();
+    htmlPart.selectAll();
+    result = htmlPart.selectedText();
+  }
+
+  // strip the signature (footer):
+  if ( aStripSignature )
+    return stripSignature( result, clearSigned );
+  else
+    return result;
+}
+
+QString KMMessage::asQuotedString( const QString& aHeaderStr,
+				   const QString& aIndentStr,
+				   const QString& selection /* = QString::null */,
+				   bool aStripSignature /* = true */,
+				   bool allowDecryption /* = true */) const
+{
+  QString content = selection.isEmpty() ?
+    asPlainText( aStripSignature, allowDecryption ) : selection ;
 
   // Remove blank lines at the beginning:
-  // 1. find first non space, non linebreak character
-  int i = result.find( QRegExp( "[^\\s]" ) );
-  // 2. find the start of the current line
-  i = result.findRev( "\n", i );
-  if( i >= 0 )
-    result.remove( 0, (uint)i );
+  const int firstNonWS = content.find( QRegExp( "\\S" ) );
+  const int lineStart = content.findRev( '\n', firstNonWS );
+  if ( lineStart >= 0 )
+    content.remove( 0, static_cast<unsigned int>( lineStart ) );
 
-  result.replace( "\n", '\n' + indentStr );
-  result = indentStr + result + '\n';
+  const QString indentStr = formatString( aIndentStr );
 
-  if( sSmartQuote )
-    smartQuote( result, sWrapCol );
+  content.replace( '\n', '\n' + indentStr );
+  content.prepend( indentStr );
+  content += '\n';
 
-  return QString( headerStr + result ).utf8();
+  const QString headerStr = formatString( aHeaderStr );
+  if ( sSmartQuote )
+    return headerStr + smartQuote( content, sWrapCol );
+  else
+    return headerStr + content;
 }
 
 //-----------------------------------------------------------------------------
@@ -1096,7 +1088,7 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       msg->setBody( cStr );
     }else{
       msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection,
-				  sSmartQuote, allowDecryption));
+				  sSmartQuote, allowDecryption).utf8());
     }
   }
 
@@ -1138,7 +1130,7 @@ QCString KMMessage::getRefStr() const
 }
 
 
-KMMessage* KMMessage::createRedirect(void)
+KMMessage* KMMessage::createRedirect()
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
@@ -1150,8 +1142,7 @@ KMMessage* KMMessage::createRedirect(void)
   /// ###        as the original message
   /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
 
-  QString st = QString::fromUtf8(asQuotedString("", "", QString::null,
-    false, false));
+  QString st = asQuotedString("", "", QString::null, false, false);
   QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
   if (encoding.isEmpty()) encoding = "utf-8";
   QCString str = codecForName(encoding)->fromUnicode(st);
@@ -1271,7 +1262,7 @@ KMMessage* KMMessage::createBounce( bool )
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::createForwardBody(void)
+QCString KMMessage::createForwardBody()
 {
   QString s;
   QCString str;
@@ -1279,7 +1270,7 @@ QCString KMMessage::createForwardBody(void)
   if (sHeaderStrategy == HeaderStrategy::all()) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
-    str = asQuotedString(s, "", QString::null, false, false);
+    str = asQuotedString(s, "", QString::null, false, false).utf8();
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1292,7 +1283,7 @@ QCString KMMessage::createForwardBody(void)
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", QString::null, false, false);
+    str = asQuotedString(s, "", QString::null, false, false).utf8();
     str += "\n-------------------------------------------------------\n";
   }
 
@@ -1300,7 +1291,7 @@ QCString KMMessage::createForwardBody(void)
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward(void)
+KMMessage* KMMessage::createForward()
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
@@ -1653,7 +1644,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 
   receiptTo = headerField("Disposition-Notification-To");
   if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
-  receiptTo.replace(QRegExp("\\n"),"");
+  receiptTo.remove( '\n' );
 
   receipt = new KMMessage;
   receipt->initFromMessage(this);
@@ -1754,7 +1745,7 @@ void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::cleanupHeader(void)
+void KMMessage::cleanupHeader()
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field = header.FirstField();
@@ -1797,7 +1788,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::dateStr(void) const
+QString KMMessage::dateStr() const
 {
   KConfigGroup general( KMKernel::config(), "General" );
   DwHeaders& header = mMsg->Headers();
@@ -1815,7 +1806,7 @@ QString KMMessage::dateStr(void) const
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::dateShortStr(void) const
+QCString KMMessage::dateShortStr() const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1833,7 +1824,7 @@ QCString KMMessage::dateShortStr(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::dateIsoStr(void) const
+QString KMMessage::dateIsoStr() const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1848,7 +1839,7 @@ QString KMMessage::dateIsoStr(void) const
 
 
 //-----------------------------------------------------------------------------
-time_t KMMessage::date(void) const
+time_t KMMessage::date() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsUnixTime();
@@ -1857,7 +1848,7 @@ time_t KMMessage::date(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setDateToday(void)
+void KMMessage::setDateToday()
 {
   struct timeval tval;
   gettimeofday(&tval, 0);
@@ -1892,7 +1883,7 @@ void KMMessage::setDate(const QCString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::to(void) const
+QString KMMessage::to() const
 {
   return headerField("To");
 }
@@ -1905,13 +1896,13 @@ void KMMessage::setTo(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::toStrip(void) const
+QString KMMessage::toStrip() const
 {
   return decodeRFC2047String( stripEmailAddr( rawHeaderField("To") ) );
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::replyTo(void) const
+QString KMMessage::replyTo() const
 {
   return headerField("Reply-To");
 }
@@ -1932,7 +1923,7 @@ void KMMessage::setReplyTo(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::cc(void) const
+QString KMMessage::cc() const
 {
   return headerField("Cc");
 }
@@ -1946,14 +1937,14 @@ void KMMessage::setCc(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::ccStrip(void) const
+QString KMMessage::ccStrip() const
 {
   return decodeRFC2047String( stripEmailAddr( rawHeaderField("Cc") ) );
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::bcc(void) const
+QString KMMessage::bcc() const
 {
   return headerField("Bcc");
 }
@@ -1966,7 +1957,7 @@ void KMMessage::setBcc(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::fcc(void) const
+QString KMMessage::fcc() const
 {
   return headerField( "X-KMail-Fcc" );
 }
@@ -1986,7 +1977,7 @@ void KMMessage::setDrafts(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::who(void) const
+QString KMMessage::who() const
 {
   if (mParent)
     return headerField(mParent->whoField().utf8());
@@ -1995,7 +1986,7 @@ QString KMMessage::who(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::from(void) const
+QString KMMessage::from() const
 {
   return headerField("From");
 }
@@ -2013,20 +2004,20 @@ void KMMessage::setFrom(const QString& bStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::fromStrip(void) const
+QString KMMessage::fromStrip() const
 {
   return decodeRFC2047String( stripEmailAddr( rawHeaderField("From") ) );
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::fromEmail(void) const
+QCString KMMessage::fromEmail() const
 {
   return getEmailAddr(headerField("From"));
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::subject(void) const
+QString KMMessage::subject() const
 {
   return headerField("Subject");
 }
@@ -2041,7 +2032,7 @@ void KMMessage::setSubject(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::xmark(void) const
+QString KMMessage::xmark() const
 {
   return headerField("X-KMail-Mark");
 }
@@ -2056,7 +2047,7 @@ void KMMessage::setXMark(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::replyToId(void) const
+QString KMMessage::replyToId() const
 {
   int leftAngle, rightAngle;
   QString replyTo, references;
@@ -2159,7 +2150,7 @@ void KMMessage::setReplyToId(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::msgId(void) const
+QString KMMessage::msgId() const
 {
   QString msgId = headerField("Message-Id");
 
@@ -2279,7 +2270,7 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::typeStr(void) const
+QCString KMMessage::typeStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().AsString().c_str();
@@ -2288,7 +2279,7 @@ QCString KMMessage::typeStr(void) const
 
 
 //-----------------------------------------------------------------------------
-int KMMessage::type(void) const
+int KMMessage::type() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().Type();
@@ -2316,7 +2307,7 @@ void KMMessage::setType(int aType)
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::subtypeStr(void) const
+QCString KMMessage::subtypeStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().SubtypeStr().c_str();
@@ -2325,7 +2316,7 @@ QCString KMMessage::subtypeStr(void) const
 
 
 //-----------------------------------------------------------------------------
-int KMMessage::subtype(void) const
+int KMMessage::subtype() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().Subtype();
@@ -2387,7 +2378,7 @@ void KMMessage::setContentTypeParam(const QCString& attr, const QCString& val)
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::contentTransferEncodingStr(void) const
+QCString KMMessage::contentTransferEncodingStr() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
@@ -2397,7 +2388,7 @@ QCString KMMessage::contentTransferEncodingStr(void) const
 
 
 //-----------------------------------------------------------------------------
-int KMMessage::contentTransferEncoding(void) const
+int KMMessage::contentTransferEncoding() const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
@@ -2431,14 +2422,14 @@ DwHeaders& KMMessage::headers() const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setNeedsAssembly(void)
+void KMMessage::setNeedsAssembly()
 {
   mNeedsAssembly = true;
 }
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::body(void) const
+QCString KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
   QCString str = body.c_str();
@@ -2449,7 +2440,7 @@ QCString KMMessage::body(void) const
 
 
 //-----------------------------------------------------------------------------
-QByteArray KMMessage::bodyDecodedBinary(void) const
+QByteArray KMMessage::bodyDecodedBinary() const
 {
   DwString dwstr;
   DwString dwsrc = mMsg->Body().AsString();
@@ -2475,7 +2466,7 @@ QByteArray KMMessage::bodyDecodedBinary(void) const
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::bodyDecoded(void) const
+QCString KMMessage::bodyDecoded() const
 {
   DwString dwstr;
   DwString dwsrc = mMsg->Body().AsString();
@@ -2666,7 +2657,7 @@ void KMMessage::setMultiPartBody( const QCString & aStr ) {
 // this is support structure for traversing tree without recursion
 
 //-----------------------------------------------------------------------------
-int KMMessage::numBodyParts(void) const
+int KMMessage::numBodyParts() const
 {
   int count = 0;
   DwBodyPart* part = getFirstDwBodyPart();
@@ -2957,7 +2948,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::deleteBodyParts(void)
+void KMMessage::deleteBodyParts()
 {
   mMsg->Body().DeleteBodyParts();
 }
@@ -3604,59 +3595,54 @@ QCString KMMessage::getEmailAddr(const QString& aStr)
 QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 {
   QString result;
+#if QT_VERSION >= 0x030200
+  result.reserve( 6*str.length() ); // maximal possible length
+# define ADD(x) (void)(x) // noop
+#else
   int resultLength = 0;
   result.setLength( 6*str.length() ); // maximal possible length
+# define ADD(x) resultLength += (x);
+#endif
 
-  QChar ch;
-
-  for( unsigned int i = 0; i < str.length(); ++i ) {
-    ch = str[i];
-    if( '<' == ch ) {
-      result[resultLength++] = '&';
-      result[resultLength++] = 'l';
-      result[resultLength++] = 't';
-      result[resultLength++] = ';';
-    }
-    else if ( '>' == ch ) {
-      result[resultLength++] = '&';
-      result[resultLength++] = 'g';
-      result[resultLength++] = 't';
-      result[resultLength++] = ';';
-    }
-    else if( '&' == ch ) {
-      result[resultLength++] = '&';
-      result[resultLength++] = 'a';
-      result[resultLength++] = 'm';
-      result[resultLength++] = 'p';
-      result[resultLength++] = ';';
-    }
-    else if( '"' == ch ) {
-      result[resultLength++] = '&';
-      result[resultLength++] = 'q';
-      result[resultLength++] = 'u';
-      result[resultLength++] = 'o';
-      result[resultLength++] = 't';
-      result[resultLength++] = ';';
-    }
-    else if( '\n' == ch ) {
-      if( !removeLineBreaks ) {
-        result[resultLength++] = '<';
-        result[resultLength++] = 'b';
-        result[resultLength++] = 'r';
-        result[resultLength++] = ' ';
-        result[resultLength++] = '/';
-        result[resultLength++] = '>';
+  for( unsigned int i = 0; i < str.length(); ++i )
+    switch ( str[i].latin1() ) {
+    case '<':
+      result += "&lt;";
+      ADD(4);
+      break;
+    case '>':
+      result += "&gt;";
+      ADD(4);
+      break;
+    case '&':
+      result += "&amp;";
+      ADD(5);
+      break;
+    case '"':
+      result += "&quot;";
+      ADD(6);
+      break;
+    case '\n':
+      if ( !removeLineBreaks ) {
+	result += "<br>";
+	ADD(4);
       }
-    }
-    else if( '\r' == ch ) {
+      break;
+    case '\r':
       // ignore CR
+      break;
+    default:
+      result += str[i];
+      ADD(1);
     }
-    else {
-      result[resultLength++] = ch;
-    }
-  }
+
+#if QT_VERSION >= 0x030200
+  result.squeeze();
+#else
   result.truncate( resultLength ); // get rid of the undefined junk
+#endif
   return result;
+#undef ADD
 }
 
 //-----------------------------------------------------------------------------
@@ -3878,24 +3864,27 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
   if ( loginName.isEmpty() )
     return QString();
 
-  char hostname[100];
-  gethostname( hostname, 100 );
+  char hostnameC[256];
+  // null terminate this C string
+  hostnameC[255] = '\0';
+  // set the string to 0 length if gethostname fails
+  if ( gethostname( hostnameC, 255 ) )
+    hostnameC[0] = '\0';
   QString address = loginName;
-  address += "@";
-  address += QCString( hostname, 100 );
+  address += '@';
+  address += QString::fromLocal8Bit( hostnameC );
 
   // try to determine the real name
-  passwd *pw = getpwnam( loginName.local8Bit() );
-  if ( pw ) {
-    QString fullName = QString::fromLocal8Bit( pw->pw_gecos );
-    int first_comma = fullName.find( ',' );
-    if ( first_comma > 0 ) {
-      fullName = fullName.left( first_comma );
-    }
+  if ( passwd * pw = getpwnam( loginName.local8Bit() ) ) {
+    QString fullName = QString::fromLocal8Bit( pw->pw_gecos ).simplifyWhiteSpace();
+    const int first_comma = fullName.find( ',' );
+    if ( first_comma > 0 )
+      fullName.truncate( first_comma );
     if ( fullName.find( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) != -1 )
-      address = "\"" + fullName + "\" <" + address + ">";
+      address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
+	      + "\" <" + address + '>';
     else
-      address = fullName + " <" + address + ">";
+      address = fullName + " <" + address + '>';
   }
 
   return address;
@@ -3914,7 +3903,7 @@ void KMMessage::setTransferInProgress( bool value, bool force )
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::readConfig(void)
+void KMMessage::readConfig()
 {
   KConfig *config=KMKernel::config();
   KConfigGroupSaver saver(config, "General");
@@ -3983,7 +3972,7 @@ const QStringList &KMMessage::preferredCharsets()
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::charset(void) const
+QCString KMMessage::charset() const
 {
   DwMediaType &mType=mMsg->Headers().ContentType();
   mType.Parse();
