@@ -609,7 +609,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mFilterMenu->insert( mListFilterAction );
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
-			Key_X, this, SLOT(slotToggleFixedFont()),
+			0, this, SLOT(slotToggleFixedFont()),
 			ac, "toggle_fixedfont" );
 
   mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,

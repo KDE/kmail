@@ -694,7 +694,7 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
   if (!newMail)
     return;
 
-  KNotifyClient::event("new-mail-arrived", i18n("New mail arrived"));
+  KNotifyClient::event(winId(), "new-mail-arrived", i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
@@ -1815,7 +1815,7 @@ void KMMainWidget::setupActions()
   //----- Edit Menu
   trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
-                             "D;Delete", this, SLOT(slotTrashMsg()),
+                             Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
   deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
@@ -1827,11 +1827,11 @@ void KMMainWidget::setupActions()
   findInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
-  (void) new KAction( i18n("Select &All Messages"), Key_K, this,
+  (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   (void) new KAction( i18n("Select Message &Text"),
-		      KStdAccel::shortcut(KStdAccel::SelectAll), mMsgView,
+		      CTRL+SHIFT+Key_A, mMsgView,
 		      SLOT(selectAll()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
