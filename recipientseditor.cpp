@@ -26,6 +26,7 @@
 
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
+#include "kmcomposewin.h"
 
 #include <kdebug.h>
 #include <kinputdialog.h>
@@ -123,15 +124,27 @@ RecipientLine::RecipientLine( QWidget *parent )
   mCombo->insertStringList( recipientTypes );
   topLayout->addWidget( mCombo );
 
-  mEdit = new QLineEdit( this );
+  mEdit = new KMLineEdit( true, this );
   topLayout->addWidget( mEdit );
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
   connect( mEdit, SIGNAL( textChanged( const QString & ) ),
     SLOT( checkEmptyState( const QString & ) ) );
+  connect( mEdit, SIGNAL( focusUp() ), SLOT( slotFocusUp() ) );
+  connect( mEdit, SIGNAL( focusDown() ), SLOT( slotFocusDown() ) );
 
   kdDebug() << "HEIGHT: " << mEdit->minimumSizeHint().height() << endl;
 
   mCombo->setFixedHeight( mEdit->minimumSizeHint().height() );
+}
+
+void RecipientLine::slotFocusUp()
+{
+  emit upPressed( this );
+}
+
+void RecipientLine::slotFocusDown()
+{
+  emit downPressed( this );
 }
 
 void RecipientLine::checkEmptyState( const QString &text )

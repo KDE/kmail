@@ -4601,6 +4601,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
       !completionBox()->isVisible())
   {
     emit focusDown();
+    AddresseeLineEdit::keyPressEvent(e);    
     return;
   }
   if (e->key() == Key_Up)

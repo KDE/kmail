@@ -30,7 +30,7 @@
 class RecipientsPicker;
 
 class QComboBox;
-class QLineEdit;
+class KMLineEdit;
 class QLabel;
 
 class Recipient
@@ -90,10 +90,12 @@ class RecipientLine : public QWidget
   protected slots:
     void slotReturnPressed();
     void checkEmptyState( const QString & );
+    void slotFocusUp();
+    void slotFocusDown();
 
   private:
     QComboBox *mCombo;
-    QLineEdit *mEdit;
+    KMLineEdit *mEdit;
     bool mIsEmpty;
 };
 
