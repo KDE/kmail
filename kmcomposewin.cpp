@@ -30,6 +30,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
+#include <kkeydialog.h>
 #include <kdebug.h>
 
 #ifndef KRN
@@ -144,7 +145,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 #endif
 {
   //setWFlags( WType_TopLevel | WStyle_Dialog );
-
   mDone = false;
   mGrid = NULL;
   mAtmListBox = NULL;
@@ -181,10 +181,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   setupStatusBar();
   setupEditor();
   setupActions();
-  if(mShowToolBar)
-    toolBar()->show();
-  else
-    toolBar()->hide();
 
   connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
@@ -277,7 +273,6 @@ void KMComposeWin::readConfig(void)
 
   config->setGroup("Composer");
   mAutoSign = config->readEntry("signature","auto") == "auto";
-  mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
@@ -388,7 +383,6 @@ void KMComposeWin::writeConfig(void)
 
   config->setGroup("Composer");
   config->writeEntry("signature", mAutoSign?"auto":"manual");
-  config->writeEntry("show-toolbar", mShowToolBar);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
   config->writeEntry("sticky-transport", mBtnTransport.isChecked());
@@ -734,14 +728,11 @@ void KMComposeWin::setupActions(void)
                                               "confirm_delivery");
   confirmReadAction = new KToggleAction (i18n("Confirm &read"), 0,
                                          actionCollection(), "confirm_read");
-  (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
-                      actionCollection(), "setup_spellchecker");
 #if defined CHARSETS
   (void) new KAction (i18n("&Charsets..."), 0, this, SLOT(slotConfigureCharsets()),
                       actionCollection(), "charsets");
 #endif
 
-  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   //these are checkable!!!
   allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
@@ -803,8 +794,12 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-
-
+  KStdAction::showToolbar(this, SLOT(slotToggleToolBar()), actionCollection());
+  KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()), actionCollection());
+  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
+                      actionCollection(), "setup_spellchecker");
 
   encryptAction = new KToggleAction (i18n("Encrypt message"),
                                      "pub_key_red", 0,
@@ -2341,6 +2336,22 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::slotToggleToolBar()
+{
+  if(toolBar("mainToolBar")->isVisible())
+    toolBar("mainToolBar")->hide();
+  else
+    toolBar("mainToolBar")->show();
+}
+
+void KMComposeWin::slotToggleStatusBar()
+{
+  if (statusBar()->isVisible())
+    statusBar()->hide();
+  else
+    statusBar()->show();
+}
+
 void KMComposeWin::slotEditToolbars()
 {
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
@@ -2349,6 +2360,11 @@ void KMComposeWin::slotEditToolbars()
   {
     createGUI("kmcomposerui.rc");
   }
+}
+
+void KMComposeWin::slotEditKeys()
+{
+  KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
 }
 
 

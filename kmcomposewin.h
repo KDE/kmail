@@ -203,7 +203,13 @@ public slots:
 
   void slotSpellcheck(); // Check spelling of text.
   void slotSpellcheckConfig();
+
+  // XML-GUI stuff
+  void slotToggleToolBar();
+  void slotToggleStatusBar();
   void slotEditToolbars();
+  void slotEditKeys();
+  
   void readConfig(void); // Read settings from app's config file.
   
   void slotUpdWinTitle(const QString& ); // Change window title to given string.
@@ -356,7 +362,7 @@ protected:
   QListView *mAtmListBox;
   QList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
-  bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
+  bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
   long mShowHeaders;
   QString mDefEncoding;
 #ifndef KRN
