@@ -84,7 +84,8 @@ bool Callback::mailICal( const QString& to, const QString iCal,
       msg->setBcc( "" );
   }
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMComposeWin *cWin = new KMComposeWin();
+  cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->slotWordWrapToggled( false );
 
