@@ -161,7 +161,9 @@ void KMGroupware::readConfig()
   internalCreateKOrgPart();
 
   // Make KOrganizer re-read everything
-  emit signalRefreshAll();
+  emit signalRefresh( "Calendar" );
+  emit signalRefresh( "Task" );
+  slotNotesFolderChanged();
 }
 
 //-----------------------------------------------------------------------------

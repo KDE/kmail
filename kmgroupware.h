@@ -41,7 +41,7 @@ public:
   virtual ~KMGroupware();
 
   ///////////////////////////////////
-  // New interface for storage!
+  // Resource IMAP interface
   bool addIncidence( const QString& type, 
 		     const QString& uid, 
 		     const QString& ical );
@@ -61,6 +61,7 @@ private slots:
   void slotIncidenceDeleted( KMFolder*, Q_UINT32 );
   
   //////////////////////////////////
+
 public:
 
   /**
@@ -196,9 +197,6 @@ protected:
 
 signals:
   void signalSetKroupwareCommunicationEnabled( QObject* );
-
-  // Make KOrganizer read everything from scratch
-  void signalRefreshAll();
 
   /** Initialize Groupware with a list of Notes entries */
   void signalRefreshNotes( const QStringList& );
