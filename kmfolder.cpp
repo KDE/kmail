@@ -1295,6 +1295,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   }
 
   aMsg->setStatusFields();
+  if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
+    aMsg->removeHeaderField("Content-Type");        // the line above
   msgText = aMsg->asString();
   msgText.replace(QRegExp("\nFrom "),"\n>From ");
   len = msgText.length();
