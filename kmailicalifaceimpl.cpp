@@ -1473,12 +1473,21 @@ void KMailICalIfaceImpl::readConfig()
 
 
   // Make KOrganizer re-read everything
+#if 0 // old way, not enough finegrained (and most resources don't call doOpen, so they miss the subresources anyway)
   slotRefresh( "Calendar" );
   slotRefresh( "Task" );
   slotRefresh( "Journal" );
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
-
+#else
+  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location() );
+  // This also shows that we might even get rid of the mCalendar etc. special
+  // case and just use ExtraFolder for all
+#endif
   reloadFolderTree();
 }
 
