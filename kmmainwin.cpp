@@ -12,7 +12,6 @@
 #include <kiconloader.h>
 #include <kshortcut.h>
 
-#include "util.h"
 #include "kmcomposewin.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
@@ -25,6 +24,8 @@
 #include "kmmainview.h"
 
 #include "kmmainwin.moc"
+
+static int windowCount = 0;
 
 
 //-----------------------------------------------------------------------------

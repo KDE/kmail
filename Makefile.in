@@ -104,7 +104,7 @@ MOC	=	@MOC@
 bin_PROGRAMS = kmail
 
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
-		kmsettings.cpp util.cpp kmaccount.cpp kmheaders.cpp \
+		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
 		ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
@@ -131,7 +131,7 @@ DEFS = @DEFS@ -I. -I$(srcdir) -I..
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
 kmail_OBJECTS =  kmmainwin.o kmfolderdia.o kmfoldertree.o kmsettings.o \
-util.o kmaccount.o kmheaders.o ktablistbox.o kmcomposewin.o kmfolder.o \
+kmaccount.o kmheaders.o ktablistbox.o kmcomposewin.o kmfolder.o \
 kmmessage.o kmreaderwin.o kbusyptr.o kalarmtimer.o KEdit.o kmmsgpart.o \
 kmmsginfo.o kmacctmgr.o main.o kmmainview.o kmacctfolder.o \
 kmacctlocal.o kmacctpop.o kmfolderdir.o kmfoldermgr.o kmfoldernode.o \
@@ -156,7 +156,7 @@ DEP_FILES =  .deps/KEdit.P .deps/kalarmtimer.P .deps/kbusyptr.P \
 .deps/kmfoldertree.P .deps/kmheaders.P .deps/kmmainview.P \
 .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsginfo.P .deps/kmmsgpart.P \
 .deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
-.deps/ktablistbox.P .deps/main.P .deps/util.P
+.deps/ktablistbox.P .deps/main.P
 CXXMKDEP = $(CXX) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
 SOURCES = $(kmail_SOURCES)
 OBJECTS = $(kmail_OBJECTS)

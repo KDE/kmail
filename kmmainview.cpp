@@ -9,7 +9,6 @@
 #include <kpanner.h>
 #include <klocale.h>
 
-#include "util.h"
 #include "kmcomposewin.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
@@ -114,7 +113,9 @@ void KMMainView::doAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainView::doCheckMail() 
 {
+  kbp->busy();
   acctMgr->checkMail();
+  kbp->idle();
 }
 
 
@@ -149,9 +150,11 @@ void KMMainView::doModifyFolder()
 //-----------------------------------------------------------------------------
 void KMMainView::doEmptyFolder()
 {
+  kbp->busy();
   currentFolder->expunge();
   currentFolder->open();
   headers->setFolder(currentFolder);
+  kbp->idle();
 }
 
 

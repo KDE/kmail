@@ -1,4 +1,5 @@
 // kmsettings.cpp
+
 #include <qdir.h>
 #include <qlabel.h>
 #include <qpushbt.h>
@@ -17,7 +18,6 @@
 #include <klocale.h>
 #include <qlayout.h>
 
-#include "util.h"
 #include "kmmainwin.h"
 #include "kmacctlocal.h"
 #include "kmacctpop.h"

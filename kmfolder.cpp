@@ -622,13 +622,15 @@ int KMFolder::expunge(void)
   close(TRUE);
 
   if (mAutoCreateToc) truncate(p+"/."+name(), mHeaderOffset);
+  else unlink(p+"/."+name());
+
   rc = truncate(p+"/"+name(), 0);
   if (rc) return rc;
 
   mMsgInfo.truncate(INIT_MSGS);
   mMsgs = 0;
 
-  if (!mQuiet) emit msg(mMsgs);
+  if (!mQuiet) emit changed();
 
   return 0;
 }

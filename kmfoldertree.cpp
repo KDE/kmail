@@ -2,7 +2,6 @@
 #include <qfileinf.h>
 #include <qpixmap.h>
 #include <kapp.h>
-#include "util.h"
 #include "kmglobal.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
