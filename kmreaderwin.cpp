@@ -735,7 +735,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
       }
       else if( prevQuoteLevel >= 0 )
       {
-	line.prepend( "</font>" );
+	line.prepend( "</font><BR>\n" ); // Added extra BR to work around bug
 	prevQuoteLevel = -1;
       }
 
