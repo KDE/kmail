@@ -184,8 +184,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
-  debug("~KMComposeWin()");
-
   writeConfig();
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
@@ -739,6 +737,25 @@ void KMComposeWin::setupEditor(void)
 connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
+{
+  int maxLineLength = 0;
+  int curPos;
+  int oldPos = 0;
+  if (mEditor->QMultiLineEdit::wordWrap() == QMultiLineEdit::FixedColumnWidth) {
+    for (curPos = 0; curPos < (int)body.length(); ++curPos)
+	if (body[curPos] == '\n') {
+	  if ((curPos - oldPos) > maxLineLength)
+	    maxLineLength = curPos - oldPos;
+	  oldPos = curPos;
+	}
+    if ((curPos - oldPos) > maxLineLength)
+      maxLineLength = curPos - oldPos;
+    if (mEditor->wrapColumnOrWidth() < maxLineLength) // column
+      mEditor->setWrapColumnOrWidth(maxLineLength);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
@@ -768,6 +785,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   num = mMsg->numBodyParts();
   if (num > 0)
   {
+    QString bodyDecoded;
     mMsg->bodyPart(0, &bodyPart);
 
 #if defined CHARSETS
@@ -786,7 +804,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
     // FIXME: We might need a QTextCodec here
 #endif
-    mEditor->setText(QString(bodyPart.bodyDecoded()));
+    bodyDecoded = QString(bodyPart.bodyDecoded());
+    verifyWordWrapLengthIsAdequate(bodyDecoded);
+    mEditor->setText(bodyDecoded);
     mEditor->insertLine("\n", -1);
 
     for(i=1; i<num; i++)
@@ -814,7 +834,11 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     Editor->setText(QString(mMsg->bodyDecoded()));
   }
 #else
-  else mEditor->setText(QString(mMsg->bodyDecoded()));
+  else {
+    QString bodyDecoded = QString(mMsg->bodyDecoded());
+    verifyWordWrapLengthIsAdequate(bodyDecoded);    
+    mEditor->setText(bodyDecoded);
+  }
 #endif
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();
@@ -1225,10 +1249,13 @@ void KMComposeWin::slotAttachFile()
   fdlg.setCaption(i18n("Attach File"));
   if (!fdlg.exec()) return;
 
-  mPathAttach = fdlg.dirPath().copy();
+  // Fixme! Changes in kfiledialog broke me
+  //  mPathAttach = fdlg.dirPath().copy();
 
   fileName = fdlg.selectedFile();
   if(fileName.isEmpty()) return;
+  if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
+    mPathAttach = fileName.left(fileName.findRev("/")); // KFileDialog::dirPath()
 
   addAttach(fileName);
   mEditor->setModified(TRUE);
@@ -1247,10 +1274,14 @@ void KMComposeWin::slotInsertFile()
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
-  mPathAttach = fdlg.dirPath().copy();
+  // Fixme! Changes in kfiledialog broke me.
+  //  mPathAttach = fdlg.dirPath().copy();
 
   fileName = fdlg.selectedFile();
   if (fileName.isEmpty()) return;
+
+  if (fileName.findRev("/") > 0)                        // Temporary workaround for missing
+    mPathAttach = fileName.left(fileName.findRev("/")); // KFileDialog::dirPath()
 
   str = kFileToString(fileName, TRUE, TRUE);
   if (str.isEmpty()) return;
@@ -1661,7 +1692,9 @@ void KMComposeWin::slotAppendSignature()
   if (sigFileName.isEmpty())
   {
     // open a file dialog and let the user choose manually
-    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
+    // Fixme! Changes to kfiledialog broke this
+    //    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
+    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE);
     dlg.setCaption(i18n("Choose Signature File"));
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();

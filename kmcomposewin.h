@@ -126,6 +126,10 @@ public:
   /** Write settings to app's config file. */
   virtual void writeConfig(void);
 
+  /** If necessary increases the word wrap of the editor so that it will
+      not wrap the body string */
+  void verifyWordWrapLengthIsAdequate(const QString&);
+
   /** Set the message the composer shall work with. This discards
     previous messages without calling applyChanges() on them before. */
   virtual void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE);
