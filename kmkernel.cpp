@@ -836,6 +836,14 @@ void KMKernel::initFolders(KConfig* cfg)
   the_outboxFolder->setSystemFolder(TRUE);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString::null );
+  /* Nuke the oubox's index file, to make sure that no ghost messages are in
+   * it from a previous crash. Ghost messages happen in the outbox because it
+   * the only folder where messages enter and leave within 5 seconds, which is
+   * the leniency period for index invalidation. Since the number of mails in
+   * this folder is expected to be very small, we can live with regenerating
+   * the index on each start to be on the save side. */
+  if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
+    unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
   the_outboxFolder->open();
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
