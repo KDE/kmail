@@ -338,7 +338,7 @@ void KMMainWin::createWidgets(void)
 
   QString charset("iso8859-1");
   mCodec = KGlobal::charsets()->codecForName(charset);
-  
+
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
@@ -1547,11 +1547,17 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
   KMFolder* folder;
 
   if (move)
+  {
+    disconnect(menu, SIGNAL(activated(int)), receiver,
+           SLOT(moveSelectedToFolder(int)));
     connect(menu, SIGNAL(activated(int)), receiver,
-	    SLOT(moveSelectedToFolder(int)));
-  else
+             SLOT(moveSelectedToFolder(int)));
+  } else {
+    disconnect(menu, SIGNAL(activated(int)), receiver,
+           SLOT(copySelectedToFolder(int)));
     connect(menu, SIGNAL(activated(int)), receiver,
-	    SLOT(copySelectedToFolder(int)));
+             SLOT(copySelectedToFolder(int)));
+  }
   for (folderNode = aFolderDir->first();
        folderNode != NULL;
        folderNode = aFolderDir->next())
