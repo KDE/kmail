@@ -44,6 +44,7 @@
 #include <qregexp.h>
 #include <qscrollbar.h>
 #include <qimage.h>
+#include <kaction.h>
 
 // for selection
 #include <X11/X.h>
