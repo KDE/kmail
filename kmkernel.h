@@ -297,6 +297,7 @@ protected slots:
 
 signals:
   void configChanged();
+  void showMailCalled();
 
 private:
   void openReader( bool onlyCheck );

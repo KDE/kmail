@@ -688,6 +688,8 @@ DCOPRef KMKernel::getFolder( const QString& vpath )
 
 bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
 {
+  emit showMailCalled();
+
   KMMainWidget *mainWidget = 0;
   if (KMainWindow::memberList) {
     KMainWindow *win = 0;
