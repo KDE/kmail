@@ -73,6 +73,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mConvertToUtf8  = FALSE;
   mCompactable     = TRUE;
   mNoContent      = FALSE;
+  mNoChildren     = FALSE;
   mRDict = 0;
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),

@@ -111,6 +111,13 @@ public:
   virtual void setNoContent(bool aNoContent)
     { mNoContent = aNoContent; }
 
+  /** Returns, if the folder can't have children */
+  virtual bool noChildren() const { return mNoChildren; }
+
+  /** Specify, that the folder can't have children */
+  virtual void setNoChildren(bool aNoChildren)
+    { mNoChildren = aNoChildren; }
+
   /** Read message at given index. Indexing starts at zero */
   virtual KMMessage* getMsg(int idx);
 
@@ -489,6 +496,7 @@ protected:
   /** false if index file is out of sync with mbox file */
   bool mCompactable;
   bool mNoContent;
+  bool mNoChildren;
   bool mConvertToUtf8;
 
   /** Points at the reverse dictionary for this folder. */

@@ -201,6 +201,16 @@ void KMFolder::setNoContent( bool aNoContent )
   mStorage->setNoContent( aNoContent );
 }
 
+bool KMFolder::noChildren() const
+{
+  return mStorage->noChildren();
+}
+
+void KMFolder::setNoChildren( bool aNoChildren )
+{
+  mStorage->setNoChildren( aNoChildren );
+}
+
 KMMessage* KMFolder::getMsg( int idx )
 {
   return mStorage->getMsg( idx );

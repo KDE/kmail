@@ -226,14 +226,13 @@ void KMFolderTreeItem::properties()
 
   KMFolderDialog *props;
 
-  props = new KMFolderDialog( mFolder, mFolder->parent(), 0,
+  props = new KMFolderDialog( mFolder, mFolder->parent(), listView(),
                               i18n("Properties of Folder %1").arg( mFolder->label() ) );
   props->exec();
   //Nothing here the above exec() may actually delete this KMFolderTreeItem
   return;
 }
 
-//-----------------------------------------------------------------------------
 //=============================================================================
 
 
@@ -326,43 +325,6 @@ bool KMFolderTree::event(QEvent *e)
      return true;
   }
   return KListView::event(e);
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::createFolderList(QStringList *str,
-  QValueList<QGuardedPtr<KMFolder> > *folders)
-{
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
-    KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
-    if ( !fti || !fti->folder() )
-      continue;
-
-    QString prefix;
-    prefix.fill( ' ', 2 * fti->depth() );
-    str->append(prefix + fti->text(0));
-    if (fti->folder()->noContent()) folders->append(0);
-    else folders->append(fti->folder());
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::createImapFolderList(KMFolderImap *aFolder, QStringList *names,
-  QStringList *urls, QStringList *mimeTypes)
-{
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
-    KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
-    if ( !fti || !fti->folder() )
-      continue;
-
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
-    if ( folder != aFolder )
-      continue;
-
-    names->append(fti->text(0));
-    urls->append(folder->imapPath());
-    mimeTypes->append((folder->noContent()) ? "inode/directory" :
-          (fti->isExpandable()) ? "message/directory" : "message/digest");
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -988,9 +950,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         folderMenu->insertItem(SmallIcon("mail_send"),
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
-    if ((!fti->folder()->isSystemFolder() &&
-         (fti->folder()->folderType() != KMFolderTypeSearch)) ||
-        fti->folder()->folderType() == KMFolderTypeImap)
+    if (!fti->folder()->noChildren())
     {
       folderMenu->insertItem(SmallIcon("folder_new"),
                              i18n("&New Subfolder..."), this,
@@ -1051,7 +1011,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     }
   }
 
-  if (fti->folder() && !fti->folder()->noContent())
+  if (fti->folder() && fti->parent())
   {
     folderMenu->insertSeparator();
     folderMenu->insertItem(SmallIcon("configure"),
@@ -1123,7 +1083,7 @@ void KMFolderTree::addChildFolder()
     dir = fti->folder()->child();
 
   KMFolderDialog *d =
-    new KMFolderDialog(0, dir, mMainWidget, i18n("Create Subfolder") );
+    new KMFolderDialog(0, dir, this, i18n("Create Subfolder") );
 
   if (d->exec()) /* fti may be deleted here */ {
     QListViewItem *qlvi = indexOfFolder( aFolder );
@@ -1632,6 +1592,36 @@ void KMFolderTree::slotCheckMail()
   {
     KMAccount* acct = static_cast<KMFolderImap*>(folder->storage())->account();
     kmkernel->acctMgr()->singleCheckMail(acct, true);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::createFolderList( QStringList *str, 
+                                     QValueList<QGuardedPtr<KMFolder> > *folders,
+                                     bool localFolders, 
+                                     bool imapFolders, 
+                                     bool dimapFolders,
+                                     bool searchFolders,
+                                     bool includeNoContent,
+                                     bool includeNoChildren )
+{
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) 
+  {
+    KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (!fti || !fti->folder()) continue;
+    // type checks
+    KMFolder* folder = fti->folder();
+    if (!imapFolders && folder->type() == KMFolderTypeImap) continue;
+    if (!dimapFolders && folder->type() == KMFolderTypeCachedImap) continue;
+    if (!localFolders && (folder->type() == KMFolderTypeMbox || 
+                          folder->type() == KMFolderTypeMaildir)) continue;
+    if (!searchFolders && folder->type() == KMFolderTypeSearch) continue;
+    if (!includeNoContent && folder->noContent()) continue;
+    if (!includeNoChildren && folder->noChildren()) continue;
+    QString prefix;
+    prefix.fill( ' ', 2 * fti->depth() );
+    str->append(prefix + fti->text(0));
+    folders->append(fti->folder());
   }
 }
 

@@ -627,6 +627,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       {
         f->setAccount(mAccount);
         f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+        f->setNoChildren(mSubfolderMimeTypes[i] == "message/digest");
         f->setImapPath(mSubfolderPaths[i]);
         if (mSubfolderMimeTypes[i] == "message/directory" ||
             mSubfolderMimeTypes[i] == "inode/directory")

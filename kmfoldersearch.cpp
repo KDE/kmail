@@ -348,6 +348,7 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
     mInvalid = false;
     mUnlinked = true;
     mTempOpened = false;
+    setNoChildren(true);
 
     //Hook up some slots for live updating of search folders
     //TODO: Optimize folderInvalidated, folderAdded, folderRemoved

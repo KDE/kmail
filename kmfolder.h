@@ -105,6 +105,12 @@ public:
   /** Specify, that the folder can't contain mails. */
   void setNoContent(bool aNoContent);
 
+  /** Returns, if the folder can't have children */
+  bool noChildren() const;
+
+  /** Specify, that the folder can't have children */
+  void setNoChildren(bool aNoChildren);
+
   /** Read message at given index. Indexing starts at zero */
   KMMessage* getMsg(int idx);
 

@@ -748,7 +748,7 @@ void KMMainWidget::slotAddFolder()
   KMFolderDialog *d;
 
   d = new KMFolderDialog(0, &(kmkernel->folderMgr()->dir()),
-			 this, i18n("Create Folder"));
+			 mFolderTree, i18n("Create Folder"));
   if (d->exec()) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );

@@ -803,6 +803,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_outboxFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
   }
+  the_outboxFolder->setNoChildren(true);
 
   the_outboxFolder->setType("Out");
   the_outboxFolder->setSystemFolder(TRUE);

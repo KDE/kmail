@@ -10,6 +10,7 @@
 #include "kmkernel.h"
 #include "kmcommands.h"
 #include "mailinglist-magic.h"
+#include "kmfoldertree.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -39,7 +40,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
                KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   mFolder( aFolder ),
-  mFolderDir( aFolderDir )
+  mFolderDir( aFolderDir ),
+  mParent( aParent )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
@@ -171,52 +173,23 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   QStringList str;
   if( !mFolder ) {
     // new folder can be subfolder of any other folder
-    kmkernel->folderMgr()->createI18nFolderList( &str, &mFolders  );
-    kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-    kmkernel->dimapFolderMgr()->createI18nFolderList( &str, &mFolders  );
+    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, true, true,
+                                                          true, false, true, false);
   }
   else if( mFolder->folderType() != KMFolderTypeImap
            && mFolder->folderType() != KMFolderTypeCachedImap ) {
     // already existant local folder can only be moved locally
-    kmkernel->folderMgr()->createI18nFolderList( &str, &mFolders  );
+    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, true, false,
+                                                          false, false, true, false);
   }
   else {
     // already existant IMAP folder can't be moved, but we add all
     // IMAP folders so that the correct parent folder can be shown
-    kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-    kmkernel->dimapFolderMgr()->createI18nFolderList( &str, &mFolders );
+    static_cast<KMFolderTree*>(mParent)->createFolderList(&str, &mFolders, false, true,
+                                                          true, false, true, false);
   }
 
-  // remove the local system folders from the list of parent folders because
-  // they can't have child folders
-  if( !mFolder || ( mFolder->folderType() != KMFolderTypeImap
-                    && mFolder->folderType() != KMFolderTypeCachedImap ) ) {
-    QGuardedPtr<KMFolder> curFolder;
-    QValueListIterator<QGuardedPtr<KMFolder> > folderIt = mFolders.begin();
-    QStringList::Iterator strIt = str.begin();
-    while( folderIt != mFolders.end() ) {
-      curFolder = *folderIt;
-      kdDebug(5006) << "Looking at folder '" << curFolder->label() << "'"
-                    << " and corresponding string '" << (*strIt) << "'"
-                    << endl;
-      if( curFolder->isSystemFolder()
-          && curFolder->folderType() != KMFolderTypeImap
-          && curFolder->folderType() != KMFolderTypeCachedImap ) {
-        kdDebug(5006) << "Removing folder '" << curFolder->label() << "'"
-                      << endl;
-        folderIt = mFolders.remove( folderIt );
-        kdDebug(5006) << "Removing string '" << (*strIt) << "'"
-                      << endl;
-        strIt = str.remove( strIt );
-      }
-      else {
-        ++folderIt;
-        ++strIt;
-      }
-    }
-  }
-
-  str.prepend( i18n( "Top Level" ) );
+  str.prepend( i18n( "Local Folders" ) );
 
   mBelongsToComboBox->insertStringList( str );
   // we want to know if the activated changes
@@ -350,11 +323,11 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
 
   if( mFolderDir ) {
     // search the parent folder of the folder
-    kdDebug(5006) << "search the parent folder of the folder" << endl;
+//    kdDebug(5006) << "search the parent folder of the folder" << endl;
     QValueListConstIterator<QGuardedPtr<KMFolder> > it;
     int i = 1;
     for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
-      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
+//      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
       if( (*it)->child() == mFolderDir ) {
         parentFolder = *it;
         mBelongsToComboBox->setCurrentItem( i );
@@ -413,7 +386,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
 //----------------------------------------------------------------------------
 void KMFolderDialog::createMLTab()
 {
-  if ( !mFolder || mFolder->isSystemFolder() ) {
+ if ( mFolder && mFolder->noContent() ) {
     return;
   }
 
@@ -513,13 +486,13 @@ void KMFolderDialog::createMLTab()
   QObject::connect( mAddressCombo, SIGNAL(activated(int)),
                     SLOT(slotAddressChanged(int)) );
 
-  mMailingList = mFolder->mailingList();
+  if (mFolder) mMailingList = mFolder->mailingList();
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
   mMLHandlerCombo->setCurrentItem( mMailingList.handler() );
   mEditList->insertStringList( mMailingList.postURLS().toStringList() );
 
   mAddressCombo->setCurrentItem( mLastItem );
-  mHoldsMailingList->setChecked( mFolder->isMailingListEnabled() );
+  mHoldsMailingList->setChecked( mFolder && mFolder->isMailingListEnabled() );
 }
 
 //-----------------------------------------------------------------------------
@@ -705,7 +678,7 @@ void KMFolderDialog::slotOk()
   if( mFolder )
   {
     // settings for mailingList
-    mFolder->setMailingListEnabled( mHoldsMailingList->isChecked() );
+    mFolder->setMailingListEnabled( mHoldsMailingList && mHoldsMailingList->isChecked() );
     fillMLFromWidgets();
     mFolder->setMailingList( mMailingList );
     mFolder->setIdentity( mIdentityComboBox->currentIdentity() );

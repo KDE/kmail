@@ -97,6 +97,7 @@ protected:
   KEditListBox *mEditList;
   QLabel       *mMLId;
   MailingList   mMailingList;
+  QWidget *mParent;
 };
 
 #endif /*__KMFOLDERDIA*/

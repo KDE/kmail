@@ -109,13 +109,15 @@ public:
   /** Find index of given folder. Returns 0 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);
 
-  /** Create a list of all folders */
-  virtual void createFolderList(QStringList * str,
-    QValueList<QGuardedPtr<KMFolder> > * folders);
-
-  /** Create a list of all IMAP folders of a given account */
-  void createImapFolderList(KMFolderImap *folder, QStringList *names,
-    QStringList *urls, QStringList *mimeTypes);
+  /** create a folderlist */
+  void createFolderList( QStringList *str,
+                         QValueList<QGuardedPtr<KMFolder> > *folders,
+                         bool localFolders=true,
+                         bool imapFolders=true,
+                         bool dimapFolders=true,
+                         bool searchFolders=false,
+                         bool includeNoContent=true,
+                         bool includeNoChildren=true );
 
   /** Read config options. */
   virtual void readConfig(void);
