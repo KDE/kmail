@@ -2232,7 +2232,7 @@ void KMMainWin::setupMenuBar()
                              actionCollection(), "move_to_trash" );
 
   deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
-                              SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+                              SLOT(slotDeleteMsg()), actionCollection(), "delete_message" );
 
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
