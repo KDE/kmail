@@ -1342,6 +1342,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMessage *msg )
   :mDestFolder( destFolder )
 {
+  setDeletesItself( true );
   mMsgList.append( &msg->toMsgBase() );
 }
 
