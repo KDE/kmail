@@ -234,28 +234,29 @@ int main(int argc, char *argv[])
                    I18N_NOOP("(c) 1997-2002, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
-  about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current release coordinator"), "haeckel@kde.org" );
-  about.addAuthor( "Don Sanders", I18N_NOOP("Core developer and former maintainer"), "sanders@kde.org" );
+  about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Maintainer"), "kloecker@kde.de" );
+  about.addAuthor( "Don Sanders", I18N_NOOP("Adopter and co-maintainer"), "sanders@kde.org" );
   about.addAuthor( "Stefan Taferner ", I18N_NOOP("Original author"), "taferner@kde.org" );
-  about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Encryption"), "kloecker@kde.de" );
+  about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Former maintainer"), "haeckel@kde.org" );
+  about.addAuthor( "Carsten Burghardt", I18N_NOOP("Core developer"), "carsten.burghardt@web.de" );
   about.addAuthor( "Marc Mutz", I18N_NOOP("Core developer"), "mutz@kde.org" );
   about.addAuthor( "Daniel Naber", I18N_NOOP("Documentation"), "daniel.naber@t-online.de" );
-  about.addAuthor( "Andreas Gungl", I18N_NOOP("Encryption"), "a.gungl@gmx.de" );
+  about.addAuthor( "Zack Rusin", I18N_NOOP("Core developer"), "zack@kde.org" );
 
   about.addAuthor( "Toyohiro Asukai", 0, "toyohiro@ksmplus.com" );
   about.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
-  about.addAuthor( "Carsten Burghardt", 0, "carsten.burghardt@web.de" );
   about.addAuthor( "Steven Brown", 0, "swbrown@ucsd.edu" );
   about.addAuthor( "Matthias Kalle Dalheimer", 0, "kalle@kde.org" );
   about.addAuthor( "Cristi Dumitrescu", 0, "cristid@chip.ro" );
   about.addAuthor( "Philippe Fremy", 0, "pfremy@chez.com" );
   about.addAuthor( "Kurt Granroth", 0, "granroth@kde.org" );
+  about.addAuthor( "Andreas Gungl", I18N_NOOP("PGP 6 support and further enhancements of the encryption support"), "a.gungl@gmx.de" );
   about.addAuthor( "Heiko Hund", 0, "heiko@ist.eigentlich.net" );
   about.addAuthor( "Igor Janssen", 0, "rm@linux.ru.net" );
   about.addAuthor( "Matt Johnston", 0, "matt@caifex.org" );
   about.addAuthor( "Christer Kaivo-oja", 0, "whizkid@telia.com" );
-  about.addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
-  about.addAuthor( "J. Nick Koston", 0, "bdraco@darkorb.net" );
+  about.addAuthor( "Lars Knoll", I18N_NOOP("Original encryption support\nPGP 2 and PGP 5 support"), "knoll@kde.org" );
+  about.addAuthor( "J. Nick Koston", I18N_NOOP("GnuPG support"), "bdraco@darkorb.net" );
   about.addAuthor( "Stephan Kulow", 0, "coolo@kde.org" );
   about.addAuthor( "Guillaume Laurent", 0, "glaurent@telegraph-road.org" );
   about.addAuthor( "Sam Magnuson", 0, "sam@trolltech.com" );
@@ -267,10 +268,8 @@ int main(int argc, char *argv[])
   about.addAuthor( "Sven Radej", 0, "radej@kde.org" );
   about.addAuthor( "Mark Roberts", 0, "mark@taurine.demon.co.uk" );
   about.addAuthor( "Wolfgang Rohdewald", 0, "wrohdewald@dplanet.ch" );
-  about.addAuthor( "Zack Rusin", 0, "zack@kde.org" );
   about.addAuthor( "Espen Sand", 0, "espen@kde.org" );
   about.addAuthor( "Aaron J. Seigo", 0, "aseigo@olympusproject.org" );
-  about.addAuthor( "Jan Simonson", 0, "jan@simonson.pp.se" );
   about.addAuthor( "George Staikos", 0, "staikos@kde.org" );
   about.addAuthor( "Jason Stephenson", 0, "panda@mis.net" );
   about.addAuthor( "Jacek Stolarczyk", 0, "jacek@mer.chemia.polsl.gliwice.pl" );
@@ -280,12 +279,13 @@ int main(int argc, char *argv[])
   about.addAuthor( "Wynn Wilkes", 0, "wynnw@calderasystems.com" );
   about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
   about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
-  about.addAuthor( "Thorsten Zachmann", 0, "t.zachmann@zagge.de" );
   about.addAuthor( "Karl-Heinz Zimmer", 0, "khz@kde.org" );
 
   about.addCredit( "Bernhard Reiter", 0, "bernhard@intevation.de" );
+  about.addCredit( "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"), "jan@simonson.pp.se" );
   about.addCredit( "Jan-Oliver Wagner", 0, "jan@intevation.de" );
-  about.addCredit( "Wolfgang Westphal", 0, "wolfgang.westphal@gmx.de" );
+  about.addCredit( "Wolfgang Westphal", I18N_NOOP("multiple encryption keys per address"), "wolfgang.westphal@gmx.de" );
+  about.addCredit( "Thorsten Zachmann", I18N_NOOP("POP filters"), "t.zachmann@zagge.de" );
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
