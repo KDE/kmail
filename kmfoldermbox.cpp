@@ -778,7 +778,8 @@ static size_t unescapeFrom( char* str, size_t strLen ) {
   return d - str;
 }
 
-static QCString escapeFrom( const QCString & str ) {
+//static
+QCString KMFolderMbox::escapeFrom( const QCString & str ) {
   const unsigned int strLen = str.length();
   if ( strLen <= STRDIM("From ") )
     return str;

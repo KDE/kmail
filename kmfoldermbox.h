@@ -94,6 +94,8 @@ public:
 
   virtual QCString protocol() const { return "mbox"; }
 
+  static QCString escapeFrom( const QCString & str );
+
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier ) const;
