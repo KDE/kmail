@@ -287,7 +287,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       result += *pos;
     }
   }
-  return result.replace(QRegExp("\n[ \t]"),"");
+  return result.replace(QRegExp("\n[ \t]")," ");
 }
 
 
