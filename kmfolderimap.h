@@ -316,6 +316,7 @@ protected:
   bool        mHasInbox;
   bool        mIsSelected;
   bool        mCheckFlags;
+  bool        mReadOnly;
   QGuardedPtr<KMAcctImap> mAccount;
 };
 

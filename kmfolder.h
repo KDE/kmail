@@ -528,7 +528,7 @@ protected:
   QString mIdentity;
 
   /** number of unread messages, -1 if not yet set */
-  int mUnreadMsgs;
+  int mUnreadMsgs, mGuessedUnreadMsgs;
   bool mWriteConfigEnabled;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact;

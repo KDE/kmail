@@ -74,6 +74,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mAcctList       = NULL;
   mDirty          = FALSE;
   mUnreadMsgs      = -1;
+  mGuessedUnreadMsgs = -1;
   needsCompact    = FALSE;
   mChild          = 0;
   mConvertToUtf8  = FALSE;
@@ -1050,6 +1051,8 @@ QString KMFolder::label() const
 //-----------------------------------------------------------------------------
 int KMFolder::countUnread()
 {
+  if (mGuessedUnreadMsgs > -1)
+    return mGuessedUnreadMsgs;
   if (mUnreadMsgs > -1)
     return mUnreadMsgs;
 

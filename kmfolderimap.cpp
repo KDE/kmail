@@ -54,6 +54,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
     mLabel = i18n("inbox");
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
+  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
 }
 
 KMFolderImap::~KMFolderImap()
@@ -63,6 +64,7 @@ KMFolderImap::~KMFolderImap()
   config->writeEntry("UidValidity", mUidValidity);
   config->writeEntry("ImapPath", mImapPath);
   config->writeEntry("NoContent", mNoContent);
+  config->writeEntry("ReadOnly", mReadOnly);
 
   if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
 }
@@ -541,11 +543,15 @@ kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
 ulong KMFolderImap::lastUid()
 {
   if (mLastUid) return mLastUid;
-  if (count() < 1) return 0;
-  bool unget = !isMessage(count() - 1);
-  KMMessage *msg = getMsg(count() - 1);
-  mLastUid = msg->headerField("X-UID").toULong();
-  if (unget) unGetMsg(count() - 1);
+  open();
+  if (count() > 0)
+  {
+    bool unget = !isMessage(count() - 1);
+    KMMessage *msg = getMsg(count() - 1);
+    mLastUid = msg->headerField("X-UID").toULong();
+    if (unget) unGetMsg(count() - 1);
+  }
+  close();
   return mLastUid;
 }
 
@@ -567,9 +573,14 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
-    int  b = cstr.find("\r\n", a);
-		QString uidv;
-		if ( (b - a - 15) >= 0 ) uidv = cstr.mid(a + 15, b - a - 15);
+    int b = cstr.find("\r\n", a);
+    QString uidv;
+    if ( (b - a - 15) >= 0 ) uidv = cstr.mid(a + 15, b - a - 15);
+    a = cstr.find("X-Access: ");
+    b = cstr.find("\r\n", a);
+    QString access;
+    if ( (b - a - 10) >= 0 ) access = cstr.mid(a + 10, b - a - 10);
+    mReadOnly = access == "Read only";
     QString startUid;
     if (uidValidity() != uidv)
     {
@@ -587,6 +598,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
 //-----------------------------------------------------------------------------
 void KMFolderImap::getFolder()
 {
+  mGuessedUnreadMsgs = -1;
   if (mNoContent) return;
   mImapState = imapInProgress;
   checkValidity();
@@ -673,7 +685,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       if (mailUid < serverUid) removeMsg(idx, TRUE);
       else if (mailUid == serverUid)
       {
-        getMsgBase(idx)->setStatus(flagsToStatus(serverFlags, false));
+        if (!mReadOnly)
+          getMsgBase(idx)->setStatus(flagsToStatus(serverFlags, false));
         idx++;
         uid = (*it).items.remove(uid);
       }
@@ -1422,7 +1435,10 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
 void KMFolderImap::processNewMail(bool)
 {
   KURL url = mAccount->getUrl();
-  url.setPath(imapPath() + ";SECTION=UNSEEN");
+  if (mReadOnly)
+    url.setPath(imapPath() + ";SECTION=UIDNEXT");
+  else
+    url.setPath(imapPath() + ";SECTION=UNSEEN");
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -1452,7 +1468,13 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
     {
       if ((*it).m_uds == KIO::UDS_SIZE)
       {
-        mUnreadMsgs = (*it).m_long;
+        if (mReadOnly)
+        {
+          mGuessedUnreadMsgs = countUnread() + (*it).m_long - lastUid() - 1;
+          if (mGuessedUnreadMsgs < 0) mGuessedUnreadMsgs = 0;
+        } else {
+          mGuessedUnreadMsgs = (*it).m_long;
+        }
         emit numUnreadMsgsChanged( this );
       }
     }
