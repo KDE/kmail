@@ -95,6 +95,7 @@ using KMail::TeeHtmlWriter;
 #include <kprocess.h>
 #include <kdialog.h>
 #include <kaction.h>
+#include <kiconloader.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -1454,10 +1455,10 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   mAtmCurrent = id;
   mAtmCurrentName = name;
   KPopupMenu *menu = new KPopupMenu();
-  menu->insertItem(i18n("Open"), 1);
+  menu->insertItem(SmallIcon("fileopen"),i18n("Open"), 1);
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("View"), 3);
-  menu->insertItem(i18n("Save As..."), 4);
+  menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
   menu->insertItem(i18n("Properties"), 5);
   connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
   menu->exec( p ,0 );

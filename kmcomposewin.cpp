@@ -75,6 +75,7 @@ using KRecentAddress::RecentAddresses;
 #include <kaction.h>
 #include <kdirwatch.h>
 #include <kstdguiitem.h>
+#include <kiconloader.h>
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -2315,7 +2316,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
      mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
      mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-     mSaveAsId = mAttachMenu->insertItem( i18n("Save As..."), this,
+     mSaveAsId = mAttachMenu->insertItem( SmallIcon("filesaveas"), i18n("Save As..."), this,
                                           SLOT( slotAttachSave() ) );
      mPropertiesId = mAttachMenu->insertItem( i18n("Properties"), this,
                                               SLOT( slotAttachProperties() ) );

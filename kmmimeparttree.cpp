@@ -96,7 +96,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
 
         QPopupMenu* popup = new QPopupMenu;
-        popup->insertItem( i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
+        popup->insertItem( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
         popup->insertItem( i18n( "Save as &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
         popup->insertItem( i18n( "Save All Attachments..." ), this,
