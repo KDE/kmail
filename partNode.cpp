@@ -47,9 +47,11 @@ void partNode::buildObjectTree( bool processSiblings )
         if( this == curNode && !processSiblings )
             return;
         // store next node
-        if( curNode && curNode->dwPart() ) {
-            curNode = curNode->setNext( new partNode( curNode->dwPart()->Next() ) );
-        }
+        if( curNode && curNode->dwPart() && curNode->dwPart()->Next() ) {
+            partNode* nextNode = new partNode( curNode->dwPart()->Next() );
+            curNode = curNode->setNext( nextNode );
+        } else
+            curNode = 0;
     }
 }
 
@@ -108,24 +110,25 @@ KMMsgSignatureState  partNode::overallSignatureState() const
             myState = KMMsgNotSigned;
     }
     // siblings are tested allways
-    if( mNext )
+    if( mNext ) {
         otherState = mNext->overallSignatureState();
-    switch( otherState ) {
-    case KMMsgSignatureStateUnknown:
-        break;
-    case KMMsgNotSigned:
-        if( myState == KMMsgFullySigned )
+        switch( otherState ) {
+        case KMMsgSignatureStateUnknown:
+            break;
+        case KMMsgNotSigned:
+            if( myState == KMMsgFullySigned )
+                myState = KMMsgPartiallySigned;
+            else if( myState != KMMsgPartiallySigned )
+                myState = KMMsgNotSigned;
+            break;
+        case KMMsgPartiallySigned:
             myState = KMMsgPartiallySigned;
-        else if( myState != KMMsgPartiallySigned )
-            myState = KMMsgNotSigned;
-        break;
-    case KMMsgPartiallySigned:
-        myState = KMMsgPartiallySigned;
-        break;
-    case KMMsgFullySigned:
-        if( myState != KMMsgFullySigned )
-            myState = KMMsgPartiallySigned;
-        break;
+            break;
+        case KMMsgFullySigned:
+            if( myState != KMMsgFullySigned )
+                myState = KMMsgPartiallySigned;
+            break;
+        }
     }
 
 kdDebug(5006) << "\n\n  KMMsgSignatureState: " << myState << endl;
