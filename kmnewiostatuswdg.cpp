@@ -51,7 +51,7 @@ void KMIOStatusWdg::prepareTransmission(QString host, task _t) {
 
   setHost(host);
   setTask(_t);
-  msgLbl->setText( i18n("Preparing transmission from %1...").arg(host) );
+  msgLbl->setText( i18n("Preparing transmission from \"%1\"...").arg(host) );
 
 }
 

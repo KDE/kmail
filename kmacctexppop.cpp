@@ -443,7 +443,7 @@ void KMAcctExpPop::startJob() {
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   KMBroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from %1...").arg(mHost));
+	i18n("Preparing transmission from \"%1\"...").arg(mName));
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
 

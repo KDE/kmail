@@ -115,7 +115,7 @@ void KMAcctLocal::processNewMail(bool)
 
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from %1...").arg(mailFolder.name()));
+	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
   // run the precommand
   if (!runPrecommand(precommand()))
