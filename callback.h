@@ -33,6 +33,8 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
+#include <qstring.h>
+
 class KMMessage;
 
 namespace KMail {
@@ -49,6 +51,9 @@ public:
 
   /** Mail something */
   bool mail() const;
+
+  /** Get the receiver of the mail */
+  QString receiver() const;
 
 private:
   KMMessage* mMsg;

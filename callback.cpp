@@ -31,7 +31,14 @@
 */
 
 #include "callback.h"
+#include "kmidentity.h"
+#include "kmkernel.h"
+#include "kmmessage.h"
+#include "identitymanager.h"
+#include "kmmainwin.h"
 
+#include <kinputdialog.h>
+#include <klocale.h>
 #include <kdebug.h>
 
 using namespace KMail;
@@ -45,4 +52,29 @@ bool Callback::mail() const
 {
   kdDebug(5006) << "bool Callback::mail() const: NYI\n";
   return false;
+}
+
+QString Callback::receiver() const
+{
+  KMIdentity ident =
+    kmkernel->identityManager()->identityForAddress( mMsg->to() );
+
+  if( ident != KMIdentity::null )
+    // That was easy
+    return ident.emailAddr();
+
+  QStringList addrs = KMMessage::splitEmailAddrList( mMsg->to() );
+  if( addrs.count() == 1 )
+    // Don't ask the user to choose between 1 items
+    return addrs[0];
+
+  bool ok;
+  QString receiver =
+    KInputDialog::getItem( i18n( "Select Address" ),
+                           i18n( "None of your identities match the receiver "
+                                 "of this message,<br> please choose which "
+                                 "of the following addresses is yours:" ),
+                           addrs, 0, FALSE, &ok, kmkernel->mainWin() );
+  if( !ok ) return QString::null;
+  return receiver;
 }
