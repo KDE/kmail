@@ -80,10 +80,6 @@ bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
   return FALSE;
 }
 
-bool KMFilterAction::identityRenamed( const QString & , const QString & ) {
-  return false;
-}
-
 int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 {
   return kernel->filterMgr()->tempOpenFolder(aFolder);
