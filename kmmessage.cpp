@@ -990,7 +990,8 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 {
   DwHeaders& header = mMsg->Headers();
   header.MimeVersion().FromString("1.0");
-  header.MessageId().CreateDefault();
+  if (!QString(QTextCodec::locale()).contains("tr_TR")) // crashes otherwise
+    header.MessageId().CreateDefault();
 
   if (aIsMulti || numBodyParts() > 1)
   {
