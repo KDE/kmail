@@ -3881,6 +3881,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
   close();
+  return true;
 }
 
 
