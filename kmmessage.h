@@ -419,10 +419,7 @@ protected:
     /** Convert wildcards into normal string */
     QString formatString(const QString&) const;
 
-    /** Contains the name of the Fcc folder */
-    QString mFcc;
-    
-		QString mDrafts;
+    QString mDrafts;
 
 protected:
     DwMessage* mMsg;

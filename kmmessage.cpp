@@ -1364,26 +1364,14 @@ void KMMessage::setBcc(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::fcc(void) const
 {
-    // we return whatever has something: variable or header. We
-    // do it because if the message was in the Outbox, it'd lost
-    // the contents of the variable but the header remains.
-    QString tmp = headerField( "X-KMail-Fcc" );
-    if ( tmp.isEmpty() )
-        return mFcc;
-    return tmp;
+  return headerField( "X-KMail-Fcc" );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setFcc(const QString& aStr)
 {
-  kdDebug(5006) << "KMMessage::setFcc: setting mFcc to " << aStr << endl;
-  // we keep this information in the header _and_ in a member variable
-  // because eventually the message may be put in the outbox where the
-  // variable will be lost. OTOH, when we send the message to the
-  // filter, this header will disappear so we must have a variable.
-  mFcc = aStr;
-  setHeaderField( "X-KMail-Fcc", mFcc );
+  setHeaderField( "X-KMail-Fcc", aStr );
 }
 
 //-----------------------------------------------------------------------------
