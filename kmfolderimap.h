@@ -193,8 +193,9 @@ public:
 
   /**
    * Refresh the number of unseen mails
+   * Returns false in an error condition
    */
-  void processNewMail(bool interactive);
+  bool processNewMail(bool interactive);
 
   /**
    * Tell the folder, this it is selected and shall also display new mails,

@@ -594,16 +594,20 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity()
 {
-  kdDebug(5006) << "KMFolderImap::checkValidity of: " << fileName() << endl;
+  kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
   if (!mAccount->makeConnection())
   {
+    kdWarning(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     return;
   }
   // Only check once at a time.
-  if (mCheckingValidity) return;
+  if (mCheckingValidity) {
+    kdDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
+    return;
+  }
   ImapAccountBase::jobData jd( url.url(), this );
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -1361,22 +1365,34 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::processNewMail(bool)
+bool KMFolderImap::processNewMail(bool)
 {
    // a little safety
-  if ( !mAccount ) return;
+  if ( !mAccount ) {
+    kdWarning(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
+    return false;
+  }
+  if (imapPath().isEmpty()) {
+    kdWarning(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
+    kmkernel->imapFolderMgr()->remove(this);
+    return false;
+  }
   KURL url = mAccount->getUrl();
   if (mReadOnly)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
   else
     url.setPath(imapPath() + ";SECTION=UNSEEN");
-  if (!mAccount->makeConnection()) return;
+  if (!mAccount->makeConnection()) {
+    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
+    return false;
+  }
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url());
   mAccount->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           SLOT(slotStatResult(KIO::Job *)));
+  return true;
 }
 
 
@@ -1404,9 +1420,9 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
         } else {
           mGuessedUnreadMsgs = (*it).m_long;
         }
-        emit numUnreadMsgsChanged( this );
       }
     }
+    emit numUnreadMsgsChanged( this );
   }
   mAccount->displayProgress();
 }

@@ -315,7 +315,14 @@ void KMAcctImap::processNewMail(bool interactive)
         else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
-          imapFolder->processNewMail(interactive);
+          bool ok = imapFolder->processNewMail(interactive);
+          if (!ok) 
+          {
+            // there was an error so cancel
+            mCountRemainChecks--;
+            // just in case the folder is gone
+            slotUpdateFolderList();
+          }
         }
       }
     }
