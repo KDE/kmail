@@ -54,6 +54,12 @@ Script=kmail-upd-identities.pl,perl
 Id=3.1-use-identity-uoids
 File=kmailrc
 Script=kmail-3.1-use-UOID-for-identities.pl,perl
+# update new mail notification settings
+Id=3.1-new-mail-notification
+File=kmailrc,kmail.eventsrc
+Group=General,new-mail-arrived
+Options=overwrite
+Script=kmail-3.1-update-new-mail-notification-settings.pl,perl
 #
 # Important notice:
 # If you add updates here, keep this text below them.

@@ -78,6 +78,9 @@ using KMime::DateFormatter;
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kwin.h>
+#if KDE_VERSION >= 306
+#include <knotifydialog.h>
+#endif
 
 // Qt headers:
 #include <qvalidator.h>
@@ -1127,29 +1130,16 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 
   // "beep on new mail" check box:
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
+  mBeepNewMailCheck->setSizePolicy( QSizePolicy::MinimumExpanding,
+                                    QSizePolicy::Fixed  );
 
   // "display message box" check box:
-  mShowMessageBoxCheck = new QCheckBox(i18n("D&isplay message box"), group );
+  mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
+  mOtherNewMailActionsButton->setSizePolicy( QSizePolicy::Fixed,
+                                             QSizePolicy::Fixed  );
 
-  // "Execute command" check box:
-  mMailCommandCheck = new QCheckBox( i18n("E&xecute command line"), group );
-
-  // HBox layout for the "specify command" line:
-  QHBox *hbox = new QHBox( group );
-
-  // command line requester (stretch 1) and label (stretch 0):
-  QLabel *label = new QLabel( i18n("S&pecify command:"), hbox );
-  mMailCommandRequester = new KURLRequester( hbox );
-  label->setBuddy( mMailCommandRequester );
-  mMailCommandRequester->setEnabled( false );
-  label->setEnabled( false ); // b/c !mMailCommandCheck->isChecked()
-
-  // Connections that {en,dis}able the "specify command" according to
-  // the state of the "Execute command" check box:
-  connect( mMailCommandCheck, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
-  connect( mMailCommandCheck, SIGNAL(toggled(bool)),
-	   mMailCommandRequester, SLOT(setEnabled(bool)) );
+  connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
+	   this, SLOT(slotEditNotifications()) );
 }
 
 
@@ -1346,6 +1336,14 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 }
 
 
+void NetworkPage::ReceivingTab::slotEditNotifications()
+{
+#if KDE_VERSION >= 306
+  KNotifyDialog::configure(this);
+#endif
+}
+
+
 void NetworkPage::ReceivingTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
 
@@ -1367,9 +1365,6 @@ void NetworkPage::ReceivingTab::setup() {
   }
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
-  mShowMessageBoxCheck->setChecked( general.readBoolEntry("msgbox-on-mail", false) );
-  mMailCommandCheck->setChecked( general.readBoolEntry("exec-on-mail", false) );
-  mMailCommandRequester->setURL( general.readEntry("exec-on-mail-cmd", ""));
 
 }
 
@@ -1410,9 +1405,6 @@ void NetworkPage::ReceivingTab::apply() {
   // Save Mail notification settings
   KConfigGroup general( kapp->config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
-  general.writeEntry( "msgbox-on-mail", mShowMessageBoxCheck->isChecked() );
-  general.writeEntry( "exec-on-mail", mMailCommandCheck->isChecked() );
-  general.writeEntry( "exec-on-mail-cmd", mMailCommandRequester->url() );
 }
 
 void NetworkPage::ReceivingTab::dismiss() {

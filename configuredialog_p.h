@@ -314,6 +314,7 @@ protected slots:
   void slotAddAccount();
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
+  void slotEditNotifications();
 
 protected:
   QStringList occupiedNames();
@@ -323,9 +324,7 @@ protected:
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
-  QCheckBox     *mShowMessageBoxCheck;
-  QCheckBox     *mMailCommandCheck;
-  KURLRequester *mMailCommandRequester;
+  QPushButton   *mOtherNewMailActionsButton;
 
   QValueList< QGuardedPtr<KMAccount> > mAccountsToDelete;
   QValueList< QGuardedPtr<KMAccount> > mNewAccounts;
