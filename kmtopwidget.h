@@ -51,6 +51,9 @@ public:
     is opened. Returns TRUE if the widget was closed, otherwise 
     FALSE. Call with forceKill==TRUE to delete the widget also. */
   virtual bool close(bool forceKill=FALSE);
+
+protected:
+  virtual void closeEvent(QCloseEvent*);
 };
 
 #endif /*kmtopwidget_h*/

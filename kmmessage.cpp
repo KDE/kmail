@@ -1223,7 +1223,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
       tmp = addr.copy();
       result += tmp.replace(QRegExp("\""),"");
       result += "\">";
-      if (stripped) result += KMMessage::stripEmailAddr(addr);
+      if (stripped) result += KMMessage::stripEmailAddr(aEmail);
       else result += addr;
       result += "</A>";
       if (ch == ',')

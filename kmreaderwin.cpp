@@ -312,18 +312,25 @@ void KMReaderWin::writeMsgHeader(void)
   switch (mHeaderStyle)
   {
   case HdrBrief:
-    mViewer->write("<B>" + strToHtml(mMsg->subject()) + "</B> (" +
-		   KMMessage::emailAddrAsAnchor(mMsg->from()) + ", " +
-		   strToHtml(mMsg->dateShortStr()) + ")<BR><BR>");
+    mViewer->write("<FONT SIZE=+1><B>" + strToHtml(mMsg->subject()) + 
+		   "</B></FONT>&nbsp; (" +
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
+    if (!mMsg->cc().isEmpty())
+      mViewer->write(i18n("Cc: ")+
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
+    mViewer->write(strToHtml(mMsg->dateShortStr()) + ")<BR>");
     break;
 
   case HdrStandard:
     mViewer->write("<FONT SIZE=+1><B>" +
 		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
     mViewer->write(i18n("From: ") +
-		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
     mViewer->write(i18n("To: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
+                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>");
+    if (!mMsg->cc().isEmpty())
+      mViewer->write(i18n("Cc: ")+
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ") +
@@ -334,15 +341,15 @@ void KMReaderWin::writeMsgHeader(void)
 
   case HdrFancy:
     mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + mPicsDir +
-		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+1>");
-    mViewer->write(strToHtml(mMsg->subject()) + "</FONT><BR>");
+		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+2>");
+    mViewer->write(strToHtml(mMsg->subject()) + "</FONT></B><BR>");
     mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
     mViewer->write(i18n("To: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>");
     mViewer->write(i18n("Date: ")+
 		   strToHtml(mMsg->dateStr()) + "<BR>");
 #ifdef KRN
@@ -358,18 +365,18 @@ void KMReaderWin::writeMsgHeader(void)
 		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
     mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
     mViewer->write(i18n("To: ")+
-                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
+                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>");
     if (!mMsg->bcc().isEmpty())
       mViewer->write(i18n("Bcc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->bcc()) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->bcc(),FALSE) + "<BR>");
     if (!mMsg->replyTo().isEmpty())
       mViewer->write(i18n("Reply to: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->replyTo()) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ")+
@@ -389,6 +396,7 @@ void KMReaderWin::writeMsgHeader(void)
   default:
     warning("Unsupported header style %d", mHeaderStyle);
   }
+  mViewer->write("<P>");
 }
 
 
