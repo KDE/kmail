@@ -261,6 +261,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     {
       result += LWSP_buffer + pos[0];
       LWSP_buffer = 0;
+      lastWasEncodedWord = FALSE;
       continue;
     }
     // found possible encoded-word
