@@ -29,6 +29,7 @@
 #include "interfaces/htmlwriter.h"
 #include "htmlstatusbar.h"
 #include "csshelper.h"
+#include "bodypartformatter.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -222,39 +223,43 @@ namespace KMail {
       if ( !curNode->mWasProcessed ) {
 	bool bDone = false;
 
-	switch ( curNode->type() ){
-	case DwMime::kTypeText:
-	  bDone = processTextType( curNode->subType(), curNode,
-				   processResult );
-	  break;
-	case DwMime::kTypeMultipart:
-	  bDone = processMultiPartType( curNode->subType(), curNode,
-					processResult );
-	  break;
-	case DwMime::kTypeMessage:
-	  bDone = processMessageType( curNode->subType(), curNode,
-				      processResult );
-	  break;
-	case DwMime::kTypeApplication:
-	  bDone = processApplicationType( curNode->subType(), curNode,
+	if ( const BodyPartFormatter * bpf
+	     = BodyPartFormatter::createFor( curNode->type(), curNode->subType() ) ) {
+	  kdDebug() << "Hit BodyPartFormatter!" << endl;
+	  bDone = bpf->process( this, curNode, processResult );
+	} else {
+	  switch ( curNode->type() ){ // this is going to die soon! (mmutz)
+	  case DwMime::kTypeText:
+	    kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (text/*)!!!" << endl;
+	    break;
+	  case DwMime::kTypeMultipart:
+	    bDone = processMultiPartType( curNode->subType(), curNode,
 					  processResult );
-	  break;
-	case DwMime::kTypeImage:
-	  bDone = processImageType( curNode->subType(), curNode,
-				    processResult );
-	  break;
-	case DwMime::kTypeAudio:
-	  bDone = processAudioType( curNode->subType(), curNode,
-				    processResult );
-	  break;
-	case DwMime::kTypeVideo:
-	  bDone = processVideoType( curNode->subType(), curNode,
-				    processResult );
-	  break;
-	case DwMime::kTypeModel:
-	  bDone = processModelType( curNode->subType(), curNode,
-				    processResult );
-	  break;
+	    break;
+	  case DwMime::kTypeMessage:
+	    bDone = processMessageType( curNode->subType(), curNode,
+					processResult );
+	    break;
+	  case DwMime::kTypeApplication:
+	    kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (application/*)!!!" << endl;
+	    break;
+	  case DwMime::kTypeImage:
+	    bDone = processImageType( curNode->subType(), curNode,
+				      processResult );
+	    break;
+	  case DwMime::kTypeAudio:
+	    bDone = processAudioType( curNode->subType(), curNode,
+				      processResult );
+	    break;
+	  case DwMime::kTypeVideo:
+	    bDone = processVideoType( curNode->subType(), curNode,
+				      processResult );
+	    break;
+	  case DwMime::kTypeModel:
+	    bDone = processModelType( curNode->subType(), curNode,
+				      processResult );
+	    break;
+	  }
 	}
 
 	if ( !bDone
@@ -785,6 +790,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   return bOk ? fname : QString::null;
 }
 
+#if 0
   bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
 					  ProcessResult & result ) {
     kdDebug(5006) << "* text *" << endl;
@@ -819,6 +825,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       return processTextPlainSubtype( curNode, result );
     }
   }
+#endif
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
@@ -1501,6 +1508,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return true;
   }
 
+#if 0
   bool ObjectTreeParser::processApplicationType( int subtype, partNode * curNode,
 						 ProcessResult & result ) {
     kdDebug(5006) << "* application *" << endl;
@@ -1525,6 +1533,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       return false;
     }
   }
+#endif
 
   bool ObjectTreeParser::processApplicationPostscriptSubtype( partNode *, ProcessResult & ) {
     // showing PostScript inline can be used for a DoS attack;

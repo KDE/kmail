@@ -179,7 +179,8 @@ namespace KMail {
 			bool& passphraseError,
 			QString& aErrorText );
 
-    bool processTextType( int subtype, partNode * node, ProcessResult & result );
+  public:// (during refectoring)
+    //bool processTextType( int subtype, partNode * node, ProcessResult & result );
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
     bool processTextVCalSubtype( partNode * node, ProcessResult & result );
@@ -217,6 +218,7 @@ namespace KMail {
     bool processModelType( int subtype, partNode * node, ProcessResult & result );
 
 
+  private:
     void writeBodyString( const QCString & bodyString,
 			  const QString & fromAddress,
 			  const QTextCodec * codec,
