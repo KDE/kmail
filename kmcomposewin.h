@@ -218,6 +218,8 @@ public slots:
   void slotAddrBookFrom();
   void slotAddrBookReplyTo();
 
+  void slotCleanSpace();
+
   /** Check spelling of text. */
   void slotSpellcheck();
   void slotSpellcheckConfig();

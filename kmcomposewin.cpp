@@ -497,24 +497,26 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotUndoEvent()), KStdAccel::undo());
   menu->insertSeparator();
 #endif //BROKEN
-  menu->insertItem(i18n("Undo"),mEditor,
+  menu->insertItem(i18n("Und&o"),mEditor,
 		   SLOT(undo()), KStdAccel::undo());
-  menu->insertItem(i18n("Redo"),mEditor,
+  menu->insertItem(i18n("Re&do"),mEditor,
 		   SLOT(redo()), KStdAccel::redo());
   menu->insertSeparator();
-  menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
-  menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
-  menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
-  menu->insertItem(i18n("Mark all"),this,
+  menu->insertItem(i18n("C&ut"), this, SLOT(slotCut()), KStdAccel::cut());
+  menu->insertItem(i18n("&Copy"), this, SLOT(slotCopy()), KStdAccel::copy());
+  menu->insertItem(i18n("&Paste"), this, SLOT(slotPaste()), KStdAccel::paste());
+  menu->insertItem(i18n("Select &All"),this,
 		   SLOT(slotMarkAll()));
   menu->insertSeparator();
-  menu->insertItem(i18n("Find..."), this,
+  menu->insertItem(i18n("&Find..."), this,
 		   SLOT(slotFind()), KStdAccel::find());
-  menu->insertItem(i18n("Replace..."), this,
+  menu->insertItem(i18n("&Replace..."), this,
 		   SLOT(slotReplace()), KStdAccel::replace());
   menu->insertSeparator();
   menu->insertItem(i18n("&Spellcheck..."), this,
 		   SLOT(slotSpellcheck()));
+  menu->insertItem(i18n("Cl&ean Spaces"), this,
+		   SLOT(slotCleanSpace()));
   mMenuBar->insertItem(i18n("&Edit"),menu);
 
   //---------- Menu: Options
@@ -1719,6 +1721,14 @@ void KMComposeWin::slotAppendSignature()
 void KMComposeWin::slotHelp()
 {
   app->invokeHTMLHelp("","");
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotCleanSpace()
+{
+  if (!mEditor) return;
+
+  mEditor->cleanWhiteSpace();
 }
 
 
