@@ -253,12 +253,12 @@ int KMFolder::writeIndex()
   Q_UINT32 byteOrder = 0x12345678;
   Q_UINT32 sizeOfLong = sizeof(long);
 
-  Q_UINT32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong); 
+  Q_UINT32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong);
   char pad_char = '\0';
   fwrite(&pad_char, sizeof(pad_char), 1, tmpIndexStream);
   fwrite(&header_length, sizeof(header_length), 1, tmpIndexStream);
 
-  // Write header 
+  // Write header
   fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
   fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
 
@@ -269,7 +269,7 @@ int KMFolder::writeIndex()
     if (!(msgBase = mMsgList[i])) continue;
     buffer = msgBase->asIndexString(len);
     fwrite(&len,sizeof(len), 1, tmpIndexStream);
-	
+
     off_t tmp = ftell(tmpIndexStream);
     msgBase->setIndexOffset(tmp);
     msgBase->setIndexLength(len);
@@ -352,7 +352,7 @@ bool KMFolder::readIndexHeader(int *gv)
       fread(&header_length, sizeof(header_length), 1, mIndexStream);
       if (header_length > 0xFFFF)
          header_length = kmail_swap_32(header_length);
-      
+
       off_t endOfHeader = ftell(mIndexStream) + header_length;
 
       bool needs_update = true;
@@ -362,7 +362,7 @@ bool KMFolder::readIndexHeader(int *gv)
          fread(&byteOrder, sizeof(byteOrder), 1, mIndexStream);
          mIndexSwapByteOrder = (byteOrder == 0x78563412);
          header_length -= sizeof(byteOrder);
-      
+
          if (header_length >= sizeof(sizeOfLong))
          {
             fread(&sizeOfLong, sizeof(sizeOfLong), 1, mIndexStream);
@@ -401,7 +401,7 @@ bool KMFolder::readIndex()
   int version;
 
   mDirty = false;
-  
+
   if (!readIndexHeader(&version)) return false;
 
   mUnreadMsgs = 0;
@@ -423,8 +423,8 @@ bool KMFolder::readIndex()
       if(fseek(mIndexStream, len, SEEK_CUR))
         break;
       mi = new KMMsgInfo(this, offs, len);
-    } 
-    else 
+    }
+    else
     {
       QCString line(MAX_LINE);
       fgets(line.data(), MAX_LINE, mIndexStream);
@@ -437,7 +437,7 @@ bool KMFolder::readIndex()
       }
       mi = new KMMsgInfo(this);
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
-    }	
+    }
     if(!mi)
       break;
 
@@ -729,7 +729,7 @@ void KMFolder::expireOldMessages() {
     }
   }
   close();
-  
+
   return;
 }
 
@@ -816,7 +816,7 @@ void KMFolder::removeMsg(int idx, bool)
   needsCompact=true; // message is taken from here - needs to be compacted
 
   if (mb->status()==KMMsgStatusUnread ||
-      mb->status()==KMMsgStatusNew || 
+      mb->status()==KMMsgStatusNew ||
       (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
@@ -846,7 +846,7 @@ KMMessage* KMFolder::take(int idx)
   QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
   msg = (KMMessage*)mMsgList.take(idx);
   if (msg->status()==KMMsgStatusUnread ||
-      msg->status()==KMMsgStatusNew || 
+      msg->status()==KMMsgStatusNew ||
       (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
@@ -910,12 +910,12 @@ KMMessage* KMFolder::getMsg(int idx)
       }
   }
   msg->setEnableUndo(undo);
-  
+
   if (msg->getMsgSerNum() == 0) {
     msg->setMsgSerNum(kernel->msgDict()->insert(0, msg, idx));
     kdDebug(5006) << "Serial number generated for message in folder " << label() << endl;
   }
-  
+
   return msg;
 #endif
 
@@ -1091,7 +1091,7 @@ int KMFolder::remove()
   if (kernel->msgDict()) kernel->msgDict()->removeFolderIds(this);
   unlink(indexLocation().local8Bit() + ".sorted");
   unlink(indexLocation().local8Bit());
-  
+
   int rc = removeContents();
   if (rc) return rc;
 
@@ -1113,10 +1113,10 @@ int KMFolder::expunge()
   kernel->msgDict()->removeFolderIds(this);
   if (mAutoCreateIndex) truncate(indexLocation().local8Bit(), mHeaderOffset);
   else unlink(indexLocation().local8Bit());
-  
+
   int rc = expungeContents();
   if (rc) return rc;
-  
+
   mDirty = FALSE;
   needsCompact = false; //we're cleared and truncated no need to compact
 
@@ -1268,9 +1268,9 @@ void KMFolder::iconsFromPath()
   tmp1Valid = !tmp1.isNull();
   tmp2Valid = !tmp2.isNull();
 
-  if ( tmp1Valid || tmp2Valid) { //we have a valid pixmap  
+  if ( tmp1Valid || tmp2Valid) { //we have a valid pixmap
     // NOTE: can qpixmap constructors throw/fail?
-    if ( tmp1Valid ) { 
+    if ( tmp1Valid ) {
       delete mNormalIcon;
       mNormalIcon = new QPixmap(tmp1);
     }
@@ -1303,6 +1303,8 @@ void KMFolder::readConfig()
   mUseCustomIcons = config->readBoolEntry("UseCustomIcons", FALSE );
   mNormalIconPath = config->readEntry("NormalIconPath");
   mUnreadIconPath = config->readEntry("UnreadIconPath");
+  if ( mUseCustomIcons )
+      mNeedsRepainting = true;
   iconsFromPath();
 
   expireMessages = config->readBoolEntry("ExpireMessages", FALSE);
@@ -1310,7 +1312,7 @@ void KMFolder::readConfig()
   readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
   unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
-	setUserWhoField( config->readEntry("WhoField") );
+  setUserWhoField( config->readEntry("WhoField") );
 }
 
 //-----------------------------------------------------------------------------
@@ -1443,7 +1445,7 @@ void KMFolder::setRDict(KMMsgDictREntry *rentry) {
   if (rentry == mRDict)
 	return;
   KMMsgDict::deleteRentry(mRDict);
-  mRDict = rentry; 
+  mRDict = rentry;
 }
 
 //-----------------------------------------------------------------------------
@@ -1452,7 +1454,7 @@ void KMFolder::setStatus(QValueList<int>& ids, KMMsgStatus status)
   for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
     KMFolder::setStatus(*it, status);
-  }  
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1478,8 +1480,8 @@ void KMFolder::setUserWhoField(const QString &whoField)
     const KMIdentity & identity =
       kernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
-    if ( mIsSystemFolder && protocol() != "imap" ) 
-    {	
+    if ( mIsSystemFolder && protocol() != "imap" )
+    {
       // local system folders
       if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
       if ( this == kernel->outboxFolder() || this == kernel->sentFolder() || this == kernel->draftsFolder() ) mWhoField = "To";
@@ -1487,9 +1489,9 @@ void KMFolder::setUserWhoField(const QString &whoField)
     } else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
       // drafts or sent of the identity
       mWhoField = "To";
-    } else { 
+    } else {
       mWhoField = "From";
-    }	
+    }
 
   } else if ( whoField == "From" || whoField == "To" ) {
 
