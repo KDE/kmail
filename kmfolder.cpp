@@ -714,6 +714,7 @@ void KMFolder::removeMsg(int idx)
   QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
   mb = mMsgList.take(idx);
   mDirty = TRUE;
+  needsCompact=true; // message is taken from here - needs to be compacted
 
   if (mb->status()==KMMsgStatusUnread ||
       mb->status()==KMMsgStatusNew) {
