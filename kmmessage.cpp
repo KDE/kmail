@@ -4175,7 +4175,9 @@ DwBodyPart* KMMessage::findDwBodyPart( const QString & partSpecifier )
 void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & data)
 {
   DwString content( data.data(), data.size() );
-  if (numBodyParts() > 0 && partSpecifier != "0")
+  if ( numBodyParts() > 0 && 
+       partSpecifier != "0" && 
+       partSpecifier != "TEXT" )
   {
     QString specifier = partSpecifier;
     if ( partSpecifier.endsWith(".HEADER") ||

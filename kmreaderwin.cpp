@@ -1558,7 +1558,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     // clicked onto an attachment
     mAtmCurrent = id;
     mAtmCurrentName = aUrl.path();
-    slotAtmLoadPart( 1 );
+    slotAtmOpen();
   }
   else {
 //      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
@@ -1827,6 +1827,8 @@ void KMReaderWin::slotAtmOpen()
   // TODO: show full path for Service, not only name
   QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(mAtmCurrentName)))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
+  // remember for slotDoAtmOpen
+  mOffer = offer;
   QString question;
   QString open_text;
   QString filenameText = msgPart.fileName();
@@ -1843,30 +1845,43 @@ void KMReaderWin::slotAtmOpen()
       i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
       QString::fromLatin1("askSave")+ mimetype ); // dontAskAgainName
   if( choice == KMessageBox::Yes ) {		// Save
-    slotAtmSave();
+    slotAtmLoadPart( 4 );
   } else if( choice == KMessageBox::No ) {	// Open
-    if ( offer ) {
-      // There's a default service for this kind of file - use it
-      KURL::List lst;
-      KURL url;
-      url.setPath(mAtmCurrentName);
-      lst.append(url);
-      KRun::run(*offer, lst);
+
+    // this load-part is duplicated from slotAtmLoadPart but is needed here 
+    // to first display the choice before the attachment is actually downloaded
+    if ( node && !node->msgPart().isComplete() )
+    {
+      // load the part
+      mAtmUpdate = true;
+      KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
+      connect( command, SIGNAL( partsRetrieved() ),
+          this, SLOT( slotDoAtmOpen() ) );
+      command->start();
     } else {
-      // There's no know service that handles this type of file, so open
-      // the "Open with..." dialog.
-      KURL::List lst;
-      KURL url;
-      url.setPath(mAtmCurrentName);
-      lst.append(url);
-      KRun::displayOpenWithDialog(lst);
+      slotDoAtmOpen();
     }
+
   } else {					// Cancel
     kdDebug(5006) << "Canceled opening attachment" << endl;
   }
 
 }
 
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotDoAtmOpen()
+{
+  if ( mOffer ) {
+    // There's a default service for this kind of file - use it
+    KURL::List lst;
+    KURL url;
+    url.setPath(mAtmCurrentName);
+    lst.append(url);
+    KRun::run(*mOffer, lst);
+  } else {
+    slotAtmOpenWith();
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmOpenWith()

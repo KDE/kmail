@@ -8,6 +8,7 @@
 #include <qtimer.h>
 #include <qstringlist.h>
 #include <kurl.h>
+#include <kservice.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "iobserver.h"
@@ -291,6 +292,7 @@ public slots:
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
+  void slotDoAtmOpen();
   void slotAtmOpenWith();
   void slotAtmView();
   void slotAtmSave();
@@ -398,6 +400,7 @@ private:
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
+  KService::Ptr mOffer;
 };
 
 
