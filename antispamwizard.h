@@ -116,7 +116,7 @@ namespace KMail {
       /** Evaluate the settings made and create the appropriate filter rules. */
       void accept();
       /** Check for the availability of an executible along the PATH */
-      int checkForProgram( QString executable );
+      int checkForProgram( const QString &executable );
       /**
         Instances of this class store the settings for one tool as read from
         the config file. Visible name and What's this text can not get

@@ -439,7 +439,7 @@ void AntiSpamWizard::checkToolAvailability()
 }
 
 
-int AntiSpamWizard::checkForProgram( QString executable )
+int AntiSpamWizard::checkForProgram( const QString &executable )
 {
   kdDebug(5006) << "Testing for executable:" << executable << endl;
   KProcess process;
