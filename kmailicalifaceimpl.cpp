@@ -1621,7 +1621,9 @@ void KMailICalIfaceImpl::readConfig()
   if ( mNotes->folderType() == KMFolderTypeCachedImap )
     static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
 
-  // BEGIN TILL CHECKME
+  // BEGIN TILL TODO The below only uses the dimap folder manager, which 
+  // will fail for all other folder types. Adjust.
+ 
   kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
   kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
@@ -1646,9 +1648,8 @@ void KMailICalIfaceImpl::readConfig()
   mExtraFolders.remove( mContacts->location() );
   mExtraFolders.remove( mNotes->location() );
 
+  // END TILL TODO
 
-
-  // END TILL CHECKME
   // Make KOrganizer re-read everything
 #if 0 // old way, not enough finegrained (and most resources don't call doOpen, so they miss the subresources anyway)
   slotRefresh( "Calendar" );
