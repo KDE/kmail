@@ -1849,10 +1849,34 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
       else
       {
         QDataStream ds( &file );
-        if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
-          QByteArray cstr = node->msgPart().bodyDecodedBinary();
+        if( bSaveEncrypted || !bEncryptedParts) {
+          partNode *dataNode = node;
+          if( !bSaveWithSig ) {
+            if( DwMime::kTypeMultipart == node->type() &&
+                DwMime::kSubtypeSigned == node->subType() ){
+              // carefully look for the part that is *not* the signature part:
+              if( node->findType( DwMime::kTypeApplication,
+                                  DwMime::kSubtypePgpSignature,
+                                  TRUE, false ) ){
+                dataNode = node->findTypeNot( DwMime::kTypeApplication,
+                                              DwMime::kSubtypePgpSignature,
+                                              TRUE, false );
+              }else if( node->findType( DwMime::kTypeApplication,
+                                        DwMime::kSubtypePkcs7Mime,
+                                  TRUE, false ) ){
+                dataNode = node->findTypeNot( DwMime::kTypeApplication,
+                                              DwMime::kSubtypePkcs7Mime,
+                                              TRUE, false );
+              }else{
+                dataNode = node->findTypeNot( DwMime::kTypeMultipart,
+                                              DwMime::kSubtypeUnknown,
+                                              TRUE, false );
+              }
+            }
+          }
+          QByteArray cstr = dataNode->msgPart().bodyDecodedBinary();
           size_t size = cstr.size();
-          if ( node->msgPart().type() == DwMime::kTypeText ) {
+          if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
             // convert CRLF to LF before writing text attachments to disk
             size = KMFolder::crlf2lf( cstr.data(), size );
           }
