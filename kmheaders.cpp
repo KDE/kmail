@@ -415,9 +415,8 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 300));
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
-  mSortCol += mPaintInfo.flagCol;
   mSortDescending = (mSortCol < 0);
-  mSortCol = abs(mSortCol);
+  mSortCol = abs(mSortCol) - 1;
 
   mTopItem = config->readNumEntry("Top", 0);
   mCurrentItem = config->readNumEntry("Current", 0);
@@ -434,7 +433,8 @@ void KMHeaders::readFolderConfig (void)
 void KMHeaders::writeFolderConfig (void)
 {
   KConfig* config = kapp->config();
-  int mSortColAdj = mSortCol - mPaintInfo.flagCol;
+  int mSortColAdj = mSortCol + 1;
+
   assert(mFolder!=NULL);
   int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = mFolder->path().right( pathLen );
