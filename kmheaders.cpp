@@ -203,7 +203,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	setMsgRead(mCurrentItem);
 	setTopItem(mTopItem);
 	setCurrentItem(mCurrentItem);
-	updateItem(mCurrentItem, TRUE);
       }
     }
     else setCurrentItem(0);
@@ -223,6 +222,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   setAutoUpdate(autoUpd);
   if (autoUpd) repaint();
+
+  if (mCurrentItem>=0) updateItem(mCurrentItem, TRUE);
 }
 
 
@@ -404,7 +405,7 @@ void KMHeaders::setMsgRead (int msgId)
   {
     st = msg->status();
     if (st==KMMsgStatusNew || st==KMMsgStatusUnread ||
-	st==KMMsgStatusRead)
+	st==KMMsgStatusRead || st==KMMsgStatusOld)
     {
       msg->setStatus(KMMsgStatusOld);
     }
