@@ -178,10 +178,6 @@ public:
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);
 
-  /** Returns FALSE, if the message has to be retrieved from an IMAP account
-   * first. In this case this function does this and cares for the rest */
-  bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
-
   /** Remove (first occurrence of) given message from the folder. */
   void removeMsg(int i, bool imapQuiet = FALSE);
   void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);

@@ -324,11 +324,6 @@ void KMFolder::emitMsgAddedSignals( int idx )
   mStorage->emitMsgAddedSignals( idx );
 }
 
-bool KMFolder::canAddMsgNow( KMMessage* aMsg, int* aIndex_ret )
-{
-  return mStorage->canAddMsgNow( aMsg, aIndex_ret );
-}
-
 void KMFolder::removeMsg( int i, bool imapQuiet )
 {
   mStorage->removeMsg( i, imapQuiet );
