@@ -1023,13 +1023,13 @@ void KMKernel::init()
 #endif
 
   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+           this, SIGNAL( folderRemoved(KMFolder*) ) );
   connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+           this, SIGNAL( folderRemoved(KMFolder*) ) );
   connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+           this, SIGNAL( folderRemoved(KMFolder*) ) );
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+           this, SIGNAL( folderRemoved(KMFolder*) ) );
 
   mBackgroundTasksTimer = new QTimer( this );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
@@ -1677,11 +1677,6 @@ KMMainWidget *KMKernel::getKMMainWidget()
   }
   delete l;
   return 0;
-}
-
-void KMKernel::slotFolderRemoved( KMFolder * aFolder )
-{
-  if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
 }
 
 void KMKernel::slotRunBackgroundTasks() // called regularly by timer
