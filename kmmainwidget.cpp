@@ -15,6 +15,8 @@
 #undef Unsorted // X headers...
 #include <qaccel.h>
 #include <qlayout.h>
+#include <qhbox.h>
+#include <qvbox.h>
 
 #include <kopenwith.h>
 
@@ -32,6 +34,7 @@
 #include <ktip.h>
 #include <knotifydialog.h>
 #include <kstandarddirs.h>
+#include <klistviewsearchline_pimcopy.h>
 #include <dcopclient.h>
 
 #include "globalsettings.h"
@@ -463,7 +466,16 @@ void KMMainWidget::createWidgets(void)
 #ifndef NDEBUG
   headerParent->dumpObjectTree();
 #endif
-  mHeaders = new KMHeaders(this, headerParent, "headers");
+  mSearchAndHeaders = new QVBox( headerParent );
+  QHBox *search = new QHBox( mSearchAndHeaders );
+  new QLabel(i18n("Quick Search: "), search );
+  mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
+  new KPIM::KListViewSearchLine( search, mHeaders, "headers quick search line" );
+  new QLabel(i18n(" Show only mails with status: "), search );
+  // FIXME hook up to real status widget once that is back in
+  QComboBox *cb = new QComboBox(search, "quick search status combo box");
+  cb->insertItem("any status" );
+
   mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
     connect(mHeaders, SIGNAL(selected(KMMessage*)),
@@ -574,7 +586,7 @@ void KMMainWidget::activatePanners(void)
         mMsgView, SLOT( slotCopySelectedText() ));
   }
   if ( mLongFolderList ) {
-    mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
     if (mMsgView) {
       mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
       mPanner2->moveToLast( mMsgView );
@@ -584,11 +596,11 @@ void KMMainWidget::activatePanners(void)
     mPanner1->setSizes( mPanner1Sep );
     mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
     mPanner2->setSizes( mPanner2Sep );
-    mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
+    mPanner2->setResizeMode( mSearchAndHeaders, QSplitter::KeepSize );
   } else /* !mLongFolderList */ {
     mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-    mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-    mPanner2->moveToLast( mHeaders );
+    mSearchAndHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mPanner2->moveToLast( mSearchAndHeaders );
     mPanner1->moveToFirst( mPanner2 );
     if (mMsgView) {
       mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
@@ -1156,10 +1168,6 @@ void KMMainWidget::slotEditMsg()
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
 }
-
-
-
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotResendMsg()

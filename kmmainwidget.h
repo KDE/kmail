@@ -10,6 +10,7 @@
 
 #include <kurl.h>
 #include <qlistview.h>
+#include <qvbox.h>
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
@@ -401,6 +402,7 @@ private:
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
+  QVBox        *mSearchAndHeaders;
   KMFolder     *mFolder;
   const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
