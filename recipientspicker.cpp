@@ -216,15 +216,15 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   buttonLayout->addStretch( 1 );
 
-  mToButton = new QPushButton( i18n("Add As To"), this );
+  mToButton = new QPushButton( i18n("Add as To"), this );
   buttonLayout->addWidget( mToButton );
   connect( mToButton, SIGNAL( clicked() ), SLOT( slotToClicked() ) );
 
-  mCcButton = new QPushButton( i18n("Add As CC"), this );
+  mCcButton = new QPushButton( i18n("Add as CC"), this );
   buttonLayout->addWidget( mCcButton );
   connect( mCcButton, SIGNAL( clicked() ), SLOT( slotCcClicked() ) );
 
-  mBccButton = new QPushButton( i18n("Add As BCC"), this );
+  mBccButton = new QPushButton( i18n("Add as BCC"), this );
   buttonLayout->addWidget( mBccButton );
   connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
   // BCC isn't commonly used, so hide it for now
