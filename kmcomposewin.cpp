@@ -1245,7 +1245,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   //assert(newMsg!=0);
   if(!newMsg)
     {
-      kdDebug(5006) << "KMComposeWin::setMsg() : newMsg == 0!\n" << endl;
+      kdDebug(5006) << "KMComposeWin::setMsg() : newMsg == 0!" << endl;
       return;
     }
   mMsg = newMsg;
