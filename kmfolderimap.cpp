@@ -1209,8 +1209,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
           KMMsgMetaData *md =  mMetaDataMap[id];
           msg->setStatus( md->status() );
           if ( md->serNum() != 0 )
-	    msg->setMsgSerNum( md->serNum() );
-	  mMetaDataMap.remove( id );
+            msg->setMsgSerNum( md->serNum() );
+          mMetaDataMap.remove( id );
           delete md;
         }
         // Merge with the flags from the server.
