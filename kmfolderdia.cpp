@@ -859,10 +859,14 @@ bool FolderDiaGeneralTab::save()
       }
     }
   }
-  // Renamed an existing folder?
-  if ( !mDlg->isNewFolder() && oldFldName != fldName ) {
+  // Renamed an existing folder? We don't check for oldName == newName on 
+  // purpose here. The folder might be pending renaming on the next dimap
+  // sync already, in which case the old name would still be around and
+  // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
+  // fail. Therefor let the folder sort it out itself, whether the rename is
+  // a noop or not.
+  if ( !mDlg->isNewFolder() ) {
     mDlg->folder()->rename(fldName);
-    kmkernel->folderMgr()->contentsChanged();
   }
 
   KMFolder* folder = mDlg->folder();
