@@ -1693,10 +1693,10 @@ bool KMFolderImap::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotStatResult(KIO::Job * job)
 {
+  slotCompleteMailCheckProgress();
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   mAccount->removeJob(it);
-  slotCompleteMailCheckProgress();
   if (job->error())
   {
     mAccount->handleJobError( job, i18n("Error while getting folder information.") );
