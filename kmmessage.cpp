@@ -3100,9 +3100,16 @@ void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec,
     browser->setFont(KGlobalSettings::fixedFont());
 
   // Well, there is no widget to be seen here, so we have to use QCursor::pos()
-  int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
-  browser->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
-	      2*QApplication::desktop()->screenGeometry(scnum).height()/3);
+  // Update: (GS) I'm not going to make this code behave according to Xinerama
+  //         configuration because this is quite the hack.
+  if (QApplication::desktop()->isVirtualDesktop()) {
+    int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
+    browser->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
+                  2*QApplication::desktop()->screenGeometry(scnum).height()/3);
+  } else {
+    browser->resize(QApplication::desktop()->geometry().width()/2,
+                  2*QApplication::desktop()->geometry().height()/3);
+  }
   browser->show();
 
 #else //not ALLOW_GUI
