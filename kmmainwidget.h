@@ -344,6 +344,7 @@ protected:
 
 signals:
   void messagesTransfered(bool);
+  void captionChangeRequest( const QString & caption );
 };
 
 #endif

@@ -57,6 +57,8 @@ KMMainWin::KMMainWin(QWidget *)
 	  this, SLOT(statusMsg(const QString&)));
   connect(mKMMainWidget->messageView(), SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
+  connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
+	  SLOT(setCaption(const QString&)) );
 }
 
 KMMainWin::~KMMainWin()

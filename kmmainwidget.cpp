@@ -2744,7 +2744,7 @@ void KMMainWidget::slotChangeCaption(QListViewItem * i)
   QStringList names;
   for ( QListViewItem * item = i ; item ; item = item->parent() )
     names.prepend( item->text(0) );
-  setCaption( names.join("/") );
+  emit captionChangeRequest( names.join( "/" ) );
 }
 
 //-----------------------------------------------------------------------------
