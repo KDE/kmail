@@ -128,7 +128,8 @@ public:
     if (mPaintInfo->flagCol >= 0)
       setText( mPaintInfo->flagCol, " " + QString( QChar( (char)flag )));
 
-    if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder())
+    if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder()
+        || mFolder == kernel->draftsFolder())
       fromStr = mMsgBase->toStrip();
     else
       fromStr = mMsgBase->fromStrip();
