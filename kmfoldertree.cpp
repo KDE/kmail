@@ -1151,7 +1151,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 	  menu->insertItem( i18n("Move"), DRAG_MOVE, 1 );
 	  menu->insertSeparator();
 	  menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
-	  int id = menu->exec( mapToGlobal(e->pos()), 0 );
+	  int id = menu->exec( QCursor::pos(), 0 );
 	  switch(id) {
 	  case DRAG_COPY:
 	    emit folderDropCopy(fti->folder);
