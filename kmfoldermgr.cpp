@@ -121,7 +121,11 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
   if (!aFolderDir)
     fldDir = &mDir;
   fld = fldDir->createFolder(fName, sysFldr);
-  if (fld) emit changed();
+  if (fld) {
+    emit changed();
+    if (kernel->filterMgr())
+      kernel->filterMgr()->folderCreated(fld);
+  }
 
   return fld;
 }

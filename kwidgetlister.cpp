@@ -1,0 +1,155 @@
+// kwidgetliaster.cpp
+// A class to show multiple widgets in rows
+// and allowing to add and remove them at/from the end.
+// Author: Marc Mutz <Marc@Mutz.com>
+
+#include "kwidgetlister.h"
+
+#include <klocale.h>
+#include <kdebug.h>
+
+#include <qpushbutton.h>
+#include <qlayout.h>
+#include <qhbox.h>
+
+#include <assert.h>
+
+KWidgetLister::KWidgetLister( int minWidgets, int maxWidgets, QWidget *parent, const char* name )
+  : QWidget( parent, name )
+{
+  kdDebug() << "KWidgetLister::KWidgetLister entered" << endl;
+
+  mWidgetList.setAutoDelete(TRUE);
+
+  mMinWidgets = QMAX( minWidgets, 1 );
+  mMaxWidgets = QMAX( maxWidgets, mMinWidgets + 1 );
+
+  //--------- the button box
+  mLayout = new QVBoxLayout(this, 0, 4);
+  mButtonBox = new QHBox(this);
+  mLayout->addWidget( mButtonBox );
+
+  mBtnMore = new QPushButton( i18n("more widgets","More"), mButtonBox );
+  mButtonBox->setStretchFactor( mBtnMore, 0 );
+
+  mBtnFewer = new QPushButton( i18n("fewer widgets","Fewer"), mButtonBox );
+  mButtonBox->setStretchFactor( mBtnFewer, 0 );
+
+  QWidget *spacer = new QWidget( mButtonBox );
+  mButtonBox->setStretchFactor( spacer, 1 );
+
+  mBtnClear = new QPushButton( i18n("clear widgets","Clear"), mButtonBox );
+  mButtonBox->setStretchFactor( mBtnClear, 0 );
+
+  //---------- connect everything
+  connect( mBtnMore, SIGNAL(clicked()),
+	   this, SLOT(slotMore()) );
+  connect( mBtnFewer, SIGNAL(clicked()),
+	   this, SLOT(slotFewer()) );
+  connect( mBtnClear, SIGNAL(clicked()),
+	   this, SLOT(slotClear()) );
+
+  enableControls();
+  kdDebug() << "KWidgetLister::KWidgetLister left" << endl;
+}
+
+KWidgetLister::~KWidgetLister()
+{
+}
+
+void KWidgetLister::slotMore()
+{
+  kdDebug() << "KWidgetLister::slotMore" << endl;
+  // the class should make certain that slotMore can't
+  // be called when mMaxWidgets are on screen.
+  assert( (int)mWidgetList.count() < mMaxWidgets );
+
+  addWidgetAtEnd();
+  //  adjustSize();
+  enableControls();
+}
+
+void KWidgetLister::slotFewer()
+{
+  kdDebug() << "KWidgetLister::slotFewer" << endl;
+  // the class should make certain that slotFewer can't
+  // be called when mMinWidgets are on screen.
+  assert( (int)mWidgetList.count() > mMinWidgets );
+
+  removeLastWidget();
+  //  adjustSize();
+  enableControls();
+}
+
+void KWidgetLister::slotClear()
+{
+  kdDebug() << "KWidgetLister::slotClear" << endl;
+  setNumberOfShownWidgetsTo( mMinWidgets );
+
+  // clear remaining widgets
+  QListIterator<QWidget> it( mWidgetList );
+  for ( it.toFirst() ; it.current() ; ++it )
+    clearWidget( (*it) );
+
+  //  adjustSize();
+  enableControls();
+}
+
+void KWidgetLister::addWidgetAtEnd()
+{
+  kdDebug() << "KWidgetLister::addWidgetAtEnd" << endl;
+  QWidget *w = this->createWidget(this);
+
+  mLayout->insertWidget( mLayout->findWidget( mButtonBox ), w );
+  mWidgetList.append( w );
+  w->show();
+}
+
+void KWidgetLister::removeLastWidget()
+{
+  kdDebug() << "KWidgetLister::removeLastWidget" << endl;
+  // The layout will take care that the
+  // widget is removed from screen, too.
+  mWidgetList.removeLast();
+}
+
+void KWidgetLister::clearWidget( QWidget* /*aWidget*/ )
+{
+}
+
+QWidget* KWidgetLister::createWidget( QWidget* parent )
+{
+  kdDebug() << "WRONG!!!!!!!" << endl;
+  return new QWidget( parent );
+}
+
+void KWidgetLister::setNumberOfShownWidgetsTo( int aNum )
+{
+  kdDebug() << "KWidgetLister::setNumberOfShownWidgetsTo: " << aNum << endl;
+  kdDebug() << "KWidgetLister: current number: " << mWidgetList.count() << endl;
+  int superfluousWidgets = QMAX( (int)mWidgetList.count() - aNum, 0 );
+  int missingWidgets     = QMAX( aNum - (int)mWidgetList.count(), 0 );
+
+  kdDebug() << "KWidgetLister: superfluousWidgets == " << superfluousWidgets << endl;
+  kdDebug() << "KWidgetLister: missingWidgets == " << missingWidgets << endl;
+
+
+  // remove superfluous widgets
+  for ( ; superfluousWidgets ; superfluousWidgets-- )
+    removeLastWidget();
+
+  // add missing widgets
+  for ( ; missingWidgets ; missingWidgets-- )
+    addWidgetAtEnd();
+}
+
+void KWidgetLister::enableControls()
+{
+  kdDebug() << "KWidgetLister::enableControls" << endl;
+  int count = mWidgetList.count();
+  bool isMaxWidgets = ( count >= mMaxWidgets );
+  bool isMinWidgets = ( count <= mMinWidgets );
+
+  mBtnMore->setEnabled( !isMaxWidgets );
+  mBtnFewer->setEnabled( !isMinWidgets );
+}

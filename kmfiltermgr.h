@@ -6,9 +6,11 @@
 #ifndef kmfiltermgr_h
 #define kmfiltermgr_h
 
-#include <qlist.h>
 #include "kmfolder.h"
 #include "kmfilter.h"
+
+#include <qlist.h>
+#include <qguardedptr.h>
 
 class KMFilterDlg;
 
@@ -27,7 +29,10 @@ public:
 
   /** Open an edit dialog. */
   virtual void openDialog( QWidget *parent );
-  virtual void createFilter( const QString &field, const QString &value );
+
+  /** Open an edit dialog, create a new filter and preset the first
+      rule with "field equals value" */
+  virtual void createFilter( const QString field, const QString value );
 
   /** Process given message by applying the filter rules one by one.
     Returns 2 if a critical error occurred (eg out of disk space)
@@ -48,6 +53,13 @@ public:
     Returns returncode from KMFolder::open() call. */
   virtual int tempOpenFolder(KMFolder* aFolder);
 
+  /** Called at the beginning of an filter list update. Currently a
+      no-op */
+  void beginUpdate() {}
+
+  /** Called at the end of an filter list update. Currently a no-op */
+  void endUpdate() {}
+
   /** Output all rules to stdout */
   virtual void dump(void);
 
@@ -57,16 +69,12 @@ public:
     occured. */
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
-protected:
-  friend class KMFilterMgrDlg;
-
-
-public slots:
-    /** Connected to the dialog to detect when it ha been destroyed */
-    void dialogDestroyed();
+  /** Called from the folder manager when a new folder has been
+      created. Forwards this to the filter dialog if that is open. */
+  virtual void folderCreated(KMFolder*) {}
 
 private:
-  KMFilterDlg* mEditDialog;
+  QGuardedPtr<KMFilterDlg> mEditDialog;
   QList<KMFolder> mOpenFolders;
 };
 

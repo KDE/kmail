@@ -23,6 +23,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmfiltermgr.h"
+#include "kmfilteraction.h"
 #include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"

@@ -1,57 +1,74 @@
 // kmfilteraction.cpp
 // The process methods really should use an enum instead of an int
 // -1 -> status unchanged, 0 -> success, 1 -> failure, 2-> critical failure
+// (GoOn),                 (Ok),         (ErrorButGoOn), (CriticalError)
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include "kmfilteraction.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
-#include "kmglobal.h"
 #include "kmsender.h"
 #include "kmidentity.h"
 #include "kfileio.h"
-#include <kapp.h>
+
 #include <kstddirs.h>
 #include <kconfig.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qguardedptr.h>
 #include <ktempfile.h>
 #include <kdebug.h>
+#include <klocale.h>
+
+#include <qcombobox.h>
+#include <qlineedit.h>
 
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h> //for alarm (sven)
-#include <klocale.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static QString resultStr;
 
 
-//-----------------------------------------------------------------------------
-KMFilterAction::KMFilterAction(const char* name):
-  KMFilterActionInherited(NULL, name)
+//=============================================================================
+//
+// KMFilterAction
+//
+//=============================================================================
+
+KMFilterAction::KMFilterAction( const char* aName, const QString aLabel )
 {
+  mName = aName;
+  mLabel = aLabel;
 }
 
 KMFilterAction::~KMFilterAction()
 {
 }
 
-KMFilterAction* KMFilterAction::newAction(void)
+KMFilterAction* KMFilterAction::newAction()
 {
-  return NULL;
+  return 0;
 }
 
-QWidget* KMFilterAction::createParamWidget(KMGFilterDlg*)
+QWidget* KMFilterAction::createParamWidget(QWidget* parent) const
 {
-  return NULL;
+  return new QWidget(parent);
 }
 
 void KMFilterAction::applyParamWidgetValue(QWidget*)
+{
+}
+
+void KMFilterAction::setParamWidgetValue( QWidget * ) const
+{
+}
+
+void KMFilterAction::clearParamWidget( QWidget * ) const
 {
 }
 
@@ -66,6 +83,231 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 }
 
 
+//=============================================================================
+//
+// KMFilterActionWithString
+//
+//=============================================================================
+
+KMFilterActionWithNone::KMFilterActionWithNone( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel )
+{
+}
+
+
+//=============================================================================
+//
+// KMFilterActionWithString
+//
+//=============================================================================
+
+KMFilterActionWithString::KMFilterActionWithString( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel )
+{
+}
+
+QWidget* KMFilterActionWithString::createParamWidget( QWidget* parent ) const
+{
+  QLineEdit *le = new QLineEdit(parent);
+  le->setText( mParameter );
+  return le;
+}
+
+void KMFilterActionWithString::applyParamWidgetValue( QWidget* paramWidget )
+{
+  mParameter = ((QLineEdit*)paramWidget)->text();
+}
+
+void KMFilterActionWithString::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  ((QLineEdit*)paramWidget)->setText( mParameter );
+}
+
+void KMFilterActionWithString::clearParamWidget( QWidget* paramWidget ) const
+{
+  ((QLineEdit*)paramWidget)->clear();
+}
+
+void KMFilterActionWithString::argsFromString( const QString argsStr )
+{
+  mParameter = argsStr;
+}
+
+const QString KMFilterActionWithString::argsAsString() const
+{
+  return mParameter;
+}
+
+//=============================================================================
+//
+// class KMFilterActionWithStringList
+//
+//=============================================================================
+
+KMFilterActionWithStringList::KMFilterActionWithStringList( const char* aName, const QString aLabel )
+  : KMFilterActionWithString( aName, aLabel )
+{
+}
+
+QWidget* KMFilterActionWithStringList::createParamWidget( QWidget* parent ) const
+{
+  QComboBox *cb = new QComboBox( FALSE, parent );
+  cb->insertStringList( mParameterList );
+  setParamWidgetValue( cb );
+  return cb;
+}
+
+void KMFilterActionWithStringList::applyParamWidgetValue( QWidget* paramWidget )
+{
+  mParameter = ((QComboBox*)paramWidget)->currentText();
+}
+
+void KMFilterActionWithStringList::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+}
+
+void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) const
+{
+  ((QComboBox*)paramWidget)->setCurrentItem(0);
+}
+
+void KMFilterActionWithStringList::argsFromString( const QString argsStr )
+{
+  int idx = mParameterList.findIndex( argsStr );
+  mParameter = *mParameterList.at( idx >= 0 ? idx : 0 );
+}
+
+
+//=============================================================================
+//
+// class KMFilterActionWithFolder
+//
+//=============================================================================
+
+KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel )
+{
+  mFolder = 0;
+  kernel->folderMgr()->createI18nFolderList( &mFolderNames, &mFolderList );
+}
+
+QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
+{
+  QComboBox *cb = new QComboBox( FALSE, parent );
+  cb->insertStringList( mFolderNames );
+  setParamWidgetValue( cb );
+  return cb;
+}
+
+void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
+{
+  // let's hope that QValueListIterator::operator*(QValueList::end()) == NULL.
+  mFolder = *mFolderList.at( ((QComboBox*)paramWidget)->currentItem() );
+}
+
+void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  int idx = mFolderList.findIndex( mFolder );
+  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+}
+
+void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
+{
+  ((QComboBox*)paramWidget)->setCurrentItem( 0 );
+}
+
+void KMFilterActionWithFolder::argsFromString( const QString argsStr )
+{
+  mFolder = kernel->folderMgr()->findIdString( argsStr );
+}
+
+const QString KMFilterActionWithFolder::argsAsString() const
+{
+  QString result;
+  if ( mFolder )
+    result = mFolder->idString();
+  else
+    result = "";
+  return result;
+}
+
+bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
+{
+  if ( aFolder == mFolder ) {
+    mFolder = aNewFolder;
+    return TRUE;
+  } else
+    return FALSE;
+}
+
+//=============================================================================
+//
+// class KMFilterActionWithAddress
+//
+//=============================================================================
+
+KMFilterActionWithAddress::KMFilterActionWithAddress( const char* aName, const QString aLabel )
+  : KMFilterActionWithString( aName, aLabel )
+{
+}
+
+QWidget* KMFilterActionWithAddress::createParamWidget( QWidget* parent ) const
+{
+  // later on this will be replaced with a line edit alongside an
+  // "..." button that calls the address book.
+  return KMFilterActionWithString::createParamWidget( parent );
+}
+
+void KMFilterActionWithAddress::applyParamWidgetValue( QWidget* paramWidget )
+{
+  KMFilterActionWithString::applyParamWidgetValue( paramWidget );
+}
+
+void KMFilterActionWithAddress::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  KMFilterActionWithString::setParamWidgetValue( paramWidget );
+}
+
+void KMFilterActionWithAddress::clearParamWidget( QWidget* paramWidget ) const
+{
+  KMFilterActionWithString::clearParamWidget( paramWidget );
+}
+
+//=============================================================================
+//
+// class KMFilterActionWithCommand
+//
+//=============================================================================
+
+KMFilterActionWithCommand::KMFilterActionWithCommand( const char* aName, const QString aLabel )
+  : KMFilterActionWithString( aName, aLabel )
+{
+}
+
+QWidget* KMFilterActionWithCommand::createParamWidget( QWidget* parent ) const
+{
+  return KMFilterActionWithString::createParamWidget( parent );
+}
+
+void KMFilterActionWithCommand::applyParamWidgetValue( QWidget* paramWidget )
+{
+  KMFilterActionWithString::applyParamWidgetValue( paramWidget );
+}
+
+void KMFilterActionWithCommand::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  KMFilterActionWithString::setParamWidgetValue( paramWidget );
+}
+
+void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
+{
+  KMFilterActionWithString::clearParamWidget( paramWidget );
+}
+
+
+
 
 //=============================================================================
 //
@@ -73,117 +315,178 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 //
 //=============================================================================
 
+#ifndef KMFILTERACTION_NO_BOUNCE
 //=============================================================================
+// KMFilterActionBounce - bounce
+// Return mail as undelivered.
+//=============================================================================
+class KMFilterActionBounce : public KMFilterActionWithNone
+{
+public:
+  KMFilterActionBounce();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionBounce::newAction(void)
+{
+  return (new KMFilterActionBounce);
+}
+
+KMFilterActionBounce::KMFilterActionBounce()
+  : KMFilterActionWithNone( "bounce", i18n("bounce") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg, bool& ) const
+{
+  return ErrorButGoOn;
+}
+#endif
+
+//=============================================================================
+// KMFilterActionSetTransport - set transport to...
+// Specify mail transport (smtp server) to be used when replying to a message
+//=============================================================================
+class KMFilterActionTransport: public KMFilterActionWithString
+{
+public:
+  KMFilterActionTransport();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionTransport::newAction(void)
+{
+  return (new KMFilterActionTransport);
+}
+
+KMFilterActionTransport::KMFilterActionTransport()
+  : KMFilterActionWithString( "set transport", i18n("set transport to") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg, bool& ) const
+{
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
+  msg->setHeaderField( "X-KMail-Transport", mParameter );
+  return GoOn;
+}
+
+
+//=============================================================================
+// KMFilterActionReplyTo - set Reply-To to
+// Set the Reply-to header in a message
+//=============================================================================
+class KMFilterActionReplyTo: public KMFilterActionWithString
+{
+public:
+  KMFilterActionReplyTo();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionReplyTo::newAction(void)
+{
+  return (new KMFilterActionReplyTo);
+}
+
+KMFilterActionReplyTo::KMFilterActionReplyTo()
+  : KMFilterActionWithString( "set Reply-To", i18n("set Reply-To to") )
+{
+  mParameter = "";
+}
+
+KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg, bool& ) const
+{
+  msg->setHeaderField( "Reply-To", mParameter );
+  return GoOn;
+}
+
+
+
+//=============================================================================
+// KMFilterActionIdentity - set identity to
+// Specify Identity to be used when replying to a message
+//=============================================================================
+class KMFilterActionIdentity: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionIdentity();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  static KMFilterAction* newAction();
+};
+
+KMFilterAction* KMFilterActionIdentity::newAction()
+{
+  return (new KMFilterActionIdentity);
+}
+
+KMFilterActionIdentity::KMFilterActionIdentity()
+  : KMFilterActionWithStringList( "set identity", i18n("set identity to") )
+{
+  mParameterList = KMIdentity::identities();
+  mParameter = *mParameterList.at(0);
+}
+
+KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg, bool& ) const
+{
+  msg->setHeaderField( "X-KMail-Identity", mParameter );
+  return GoOn;
+}
+
+//=============================================================================
+// KMFilterActionMove - move to folder
 // Move message to another mail folder
 //=============================================================================
-class KMFilterActionMove: public KMFilterAction
+class KMFilterActionMove: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionMove();
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString &argsStr);
-  virtual QString argsAsString(void) const;
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
   static KMFilterAction* newAction(void);
-protected:
-  QGuardedPtr<KMFolder> mDest;
-  QValueList<QGuardedPtr<KMFolder> > gfolders;
 };
-
-bool KMFilterActionMove::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
-{
-  if (aFolder==mDest)
-  {
-    mDest = aNewFolder;
-  }
-  return TRUE;
-}
 
 KMFilterAction* KMFilterActionMove::newAction(void)
 {
   return (new KMFilterActionMove);
 }
 
-QString KMFilterActionMove::label(void) const
+KMFilterActionMove::KMFilterActionMove()
+  : KMFilterActionWithFolder( "transfer", i18n("move to folder") )
 {
-  return i18n("transfer");
 }
 
-KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
+KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg, bool&stopIt) const
 {
-  mDest = NULL;
-}
+  if ( !mFolder )
+    return ErrorButGoOn;
 
-int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
-{
-  if (!mDest) return 1;
-  KMFilterAction::tempOpenFolder(mDest);
-  if (msg->parent())
-    return 0;
-  if (mDest->moveMsg(msg) == 0)
-    return 0; // ok, added
-  else
-  {
-    kdDebug() << "KMfilteraction - couldn't move msg" << endl;
+  KMFilterAction::tempOpenFolder( mFolder );
+
+  if ( msg->parent() )
+    return Finished; // the message already has a parent??? so what?
+  if ( mFolder->moveMsg(msg) == 0 )
+    return Finished; // ok, added
+  else {
+    kdDebug() << "KMfilterAction - couldn't move msg" << endl;
     stopIt = TRUE;
-    return 2; // critical error: couldn't add
+    return CriticalError; // critical error: couldn't add
   }
 }
 
-QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
-{
-  QString name;
-  QComboBox* cbx;
-  QStringList str;
-
-  gfolders.clear();
-
-  kernel->folderMgr()->createI18nFolderList( &str, &gfolders );
-  cbx = aParent->createFolderCombo( &str, &gfolders, mDest );
-
-  return cbx;
-}
-
-void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QComboBox* cbx = (QComboBox*)aParamWidget;
-  if ((cbx->currentItem() >= 0) && (cbx->currentItem() < (int)gfolders.count()))
-    mDest = (*gfolders.at(cbx->currentItem()));
-  else
-    mDest = 0;
-}
-
-void KMFilterActionMove::argsFromString(const QString &argsStr)
-{
-  mDest = (KMFolder*)kernel->folderMgr()->findIdString(argsStr);
-}
-
-QString KMFilterActionMove::argsAsString(void) const
-{
-  if (mDest) resultStr = mDest->idString();
-  else resultStr = "";
-  return resultStr;
-}
 
 //=============================================================================
+// KMFilterActionForward - forward to
 // Forward message to another user
 //=============================================================================
-class KMFilterActionForward: public KMFilterAction
+class KMFilterActionForward: public KMFilterActionWithAddress
 {
 public:
   KMFilterActionForward();
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString& argsStr);
-  virtual QString argsAsString(void) const;
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
   static KMFilterAction* newAction(void);
-protected:
-  QString mTo;
 };
 
 KMFilterAction* KMFilterActionForward::newAction(void)
@@ -191,83 +494,87 @@ KMFilterAction* KMFilterActionForward::newAction(void)
   return (new KMFilterActionForward);
 }
 
-QString KMFilterActionForward::label(void) const
-{
-  return i18n("forward to");
-}
-
-KMFilterActionForward::KMFilterActionForward(): KMFilterAction("forward")
+KMFilterActionForward::KMFilterActionForward()
+  : KMFilterActionWithAddress( "forward", i18n("forward to") )
 {
 }
 
-int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
+KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/) const
 {
   KMMessage* msg;
-  if (mTo.isEmpty()) return 1;
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
+
   msg = aMsg->createForward();
-  msg->setTo(mTo);
-  if (!kernel->msgSender()->send(msg))
-  {
-    kdDebug() << "KMFilterActionForward: could not forward message (sending failed)" << endl;
-    return 1; // error: couldn't send
+  msg->setTo( mParameter );
+
+  if ( !kernel->msgSender()->send(msg) ) {
+    kdDebug() << "KMFilterAction: could not forward message (sending failed)" << endl;
+    return ErrorButGoOn; // error: couldn't send
   }
-  return -1;
+  return GoOn;
 }
 
-QWidget* KMFilterActionForward::createParamWidget(KMGFilterDlg* aParent)
-{
-  QLineEdit* edt;
-  edt = aParent->createEdit(mTo);
-  return edt;
-}
-
-void KMFilterActionForward::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QLineEdit* w = (QLineEdit*)aParamWidget;
-  mTo = w->text();
-}
-
-void KMFilterActionForward::argsFromString(const QString &argsStr)
-{
-  mTo = argsStr;
-}
-
-QString KMFilterActionForward::argsAsString(void) const
-{
-  return mTo;
-}
 
 //=============================================================================
-// Execute a shell command
+// KMFilterActionRedirect - redirect to
+// Redirect message to another user
 //=============================================================================
-class KMFilterActionExec:public KMFilterAction
+class KMFilterActionRedirect: public KMFilterActionWithAddress
 {
 public:
-  KMFilterActionExec(const char* name = "execute");
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString &argsStr);
-  virtual QString argsAsString(void) const;
+  KMFilterActionRedirect();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionRedirect::newAction(void)
+{
+  return (new KMFilterActionRedirect);
+}
+
+KMFilterActionRedirect::KMFilterActionRedirect()
+  : KMFilterActionWithAddress( "redirect", i18n("redirect to") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg, bool& /*stop*/) const
+{
+  KMMessage* msg;
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
+
+  msg = aMsg->createRedirect();
+  msg->setTo( mParameter );
+
+  if ( !kernel->msgSender()->send(msg) ) {
+    kdDebug() << "KMFilterAction: could not redirect message (sending failed)" << endl;
+    return ErrorButGoOn; // error: couldn't send
+  }
+  return GoOn;
+}
+
+
+//=============================================================================
+// KMFilterActionExec - execute command
+// Execute a shell command
+//=============================================================================
+class KMFilterActionExec : public KMFilterActionWithCommand
+{
+public:
+  KMFilterActionExec(const char* aName, const QString aLabel );
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
   static KMFilterAction* newAction(void);
   static void dummySigHandler(int);
-protected:
-  QString mCmd;
 };
 
 KMFilterAction* KMFilterActionExec::newAction(void)
 {
-  return (new KMFilterActionExec);
+  return (new KMFilterActionExec(0,0)); // ###
 }
 
-QString KMFilterActionExec::label(void) const
-{
-  return i18n("execute");
-}
-
-KMFilterActionExec::KMFilterActionExec(const char* aName)
-  : KMFilterAction(aName)
+KMFilterActionExec::KMFilterActionExec(const char* aName, const QString aLabel )
+  : KMFilterActionWithCommand( aName ? aName : "execute" , aLabel ? aLabel : i18n("execute command") )
 {
 }
 
@@ -275,17 +582,20 @@ void KMFilterActionExec::dummySigHandler(int)
 {
 }
 
-int KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/)
+KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/) const
 {
+  // should use K{,Shell}Process....
   void (*oldSigHandler)(int);
   int rc;
-  if (mCmd.isEmpty()) return 1;
-  QString fullCmd = mCmd + " ";
+  if (mParameter.isEmpty()) return ErrorButGoOn;
+  QString fullCmd = mParameter + " ";
   QList<KTempFile> atmList;
   KMMessagePart msgPart;
   int i, nr;
   while (fullCmd.contains("%"))
   {
+    // this code seems broken for commands that
+    // specify e.g. %2 before %1. (mmutz)
     i = fullCmd.find("%") + 1;
     nr = fullCmd.mid(i, fullCmd.find(" ", i) - i).toInt();
     aMsg->bodyPart(nr, &msgPart);
@@ -293,7 +603,7 @@ int KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/)
     atmList.append( atmTempFile );
     atmTempFile->setAutoDelete( true );
     kByteArrayToFile(msgPart.bodyDecodedBinary(), atmTempFile->name(),
-      false, false, false);
+		     false, false, false);
     fullCmd = fullCmd.arg( atmTempFile->name() );
   }
   oldSigHandler = signal(SIGALRM, &KMFilterActionExec::dummySigHandler);
@@ -302,45 +612,27 @@ int KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/)
   alarm(0);
   signal(SIGALRM, oldSigHandler);
   if (rc & 255)
-    return 1;
+    return ErrorButGoOn;
   else
-    return -1;
+    return GoOn;
 }
 
-QWidget* KMFilterActionExec::createParamWidget(KMGFilterDlg* aParent)
-{
-  QLineEdit* edt;
-  edt = aParent->createEdit(mCmd);
-  return edt;
-}
+// support suspended until proted to KProcess.
+#define KMFILTERACTIONEXTFILTER_IS_BROKEN
 
-void KMFilterActionExec::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QLineEdit* w = (QLineEdit*)aParamWidget;
-  mCmd = w->text();
-}
-
-void KMFilterActionExec::argsFromString(const QString &argsStr)
-{
-  mCmd = argsStr;
-}
-
-QString KMFilterActionExec::argsAsString(void) const
-{
-  return mCmd;
-}
+#ifndef KMFILTERACTIONEXTFILTER_IS_BROKEN
 
 //=============================================================================
+// KMFilterActionExtFilter - use external filter app
 // External message filter: executes a shell command with message
 // on stdin; altered message is expected on stdout.
 //=============================================================================
 class KMFilterActionExtFilter: public KMFilterActionExec
 {
 public:
-  KMFilterActionExtFilter(const char* name = "filter app");
-  virtual QString label(void) const;
+  KMFilterActionExtFilter();
+  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
   static KMFilterAction* newAction(void);
-  virtual int process(KMMessage* msg, bool& stopIt);
 };
 
 KMFilterAction* KMFilterActionExtFilter::newAction(void)
@@ -348,19 +640,15 @@ KMFilterAction* KMFilterActionExtFilter::newAction(void)
   return (new KMFilterActionExtFilter);
 }
 
-QString KMFilterActionExtFilter::label(void) const
-{
-  return i18n("filter app");
-}
-
-KMFilterActionExtFilter::KMFilterActionExtFilter(const char* aName)
-  : KMFilterActionExec(aName)
+KMFilterActionExtFilter::KMFilterActionExtFilter()
+  : KMFilterActionExec( "filter app", i18n("use external filter app") )
 {
 }
 
-int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
+KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop) const
 {
-  int rc=0, len;
+  int len;
+  ReturnCode rc=Ok;
   QString msgText, origCmd;
   char buf[8192];
   FILE *fh;
@@ -368,7 +656,7 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   KTempFile inFile(locateLocal("tmp", "kmail-filter"), "in");
   KTempFile outFile(locateLocal("tmp", "kmail-filter"), "out");
 
-  if (mCmd.isEmpty()) return 1;
+  if (mParameter.isEmpty()) return ErrorButGoOn;
 
   // write message to file
   fh = inFile.fstream();
@@ -384,10 +672,10 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   if (ok)
   {
     // execute filter
-    origCmd = mCmd;
-    mCmd = mCmd + " <" + inFile.name() + " >" + outFile.name();
+    origCmd = mParameter;
+    mParameter += " <" + inFile.name() + " >" + outFile.name();
     rc = KMFilterActionExec::process(aMsg, stop);
-    mCmd = origCmd;
+    mParameter = origCmd;
 
     // read altered message
     fh = fopen(outFile.name(), "r");
@@ -413,202 +701,7 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   return rc;
 }
 
-//=============================================================================
-// Specify Identity to be used when replying to a message
-//=============================================================================
-class KMFilterActionIdentity: public KMFilterAction
-{
-public:
-  KMFilterActionIdentity();
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString &argsStr);
-  virtual QString argsAsString(void) const;
-  static KMFilterAction* newAction(void);
-protected:
-  QStringList ids;
-  QString id;
-};
-
-KMFilterAction* KMFilterActionIdentity::newAction(void)
-{
-  return (new KMFilterActionIdentity);
-}
-
-QString KMFilterActionIdentity::label(void) const
-{
-  return i18n("set identity");
-}
-
-KMFilterActionIdentity::KMFilterActionIdentity(): KMFilterAction("set identity")
-{
-  id = i18n( "Default" );
-}
-
-int KMFilterActionIdentity::process(KMMessage* msg, bool& )
-{
-  msg->setHeaderField( "X-KMail-Identity", id );
-  return -1;
-}
-
-QWidget* KMFilterActionIdentity::createParamWidget(KMGFilterDlg* aParent)
-{
-  QStringList ids = KMIdentity::identities();
-  QComboBox *cbx = aParent->createCombo( &ids, id );
-
-  return cbx;
-}
-
-void KMFilterActionIdentity::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QComboBox* cbx = (QComboBox*)aParamWidget;
-  id = cbx->currentText();
-}
-
-void KMFilterActionIdentity::argsFromString(const QString &argsStr)
-{
-  if (argsStr.isEmpty())
-    id = i18n( "Default" );
-  else
-    id = argsStr;
-}
-
-QString KMFilterActionIdentity::argsAsString(void) const
-{
-  if (id == i18n( "Default" ))
-    return "";
-  else
-    return id;
-}
-
-
-//=============================================================================
-// Specify mail transport (smtp server) to be used when replying to a message
-//=============================================================================
-class KMFilterActionTransport: public KMFilterAction
-{
-public:
-  KMFilterActionTransport();
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString& argsStr);
-  virtual QString argsAsString(void) const;
-  static KMFilterAction* newAction(void);
-protected:
-  QString mTransport;
-};
-
-KMFilterAction* KMFilterActionTransport::newAction(void)
-{
-  return (new KMFilterActionTransport);
-}
-
-QString KMFilterActionTransport::label(void) const
-{
-  return i18n("set transport");
-}
-
-KMFilterActionTransport::KMFilterActionTransport(): KMFilterAction("set transport")
-{
-  mTransport = kernel->msgSender()->transportString();
-}
-
-int KMFilterActionTransport::process(KMMessage* msg, bool& )
-{
-  msg->setHeaderField( "X-KMail-Transport", mTransport );
-  return -1;
-}
-
-QWidget* KMFilterActionTransport::createParamWidget(KMGFilterDlg* aParent)
-{
-  QLineEdit* edt;
-  edt = aParent->createEdit(mTransport);
-  return edt;
-}
-
-void KMFilterActionTransport::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QLineEdit* w = (QLineEdit*)aParamWidget;
-  mTransport = w->text();
-}
-
-void KMFilterActionTransport::argsFromString(const QString &argsStr)
-{
-  mTransport = argsStr;
-}
-
-QString KMFilterActionTransport::argsAsString(void) const
-{
-  return mTransport;
-}
-
-
-//=============================================================================
-// Set the Reply-to header in a message
-//=============================================================================
-class KMFilterActionReplyTo: public KMFilterAction
-{
-public:
-  KMFilterActionReplyTo();
-  virtual QString label(void) const;
-  virtual int process(KMMessage* msg, bool& stopIt);
-  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
-  virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString &argsStr);
-  virtual QString argsAsString(void) const;
-  static KMFilterAction* newAction(void);
-protected:
-  QString mReplyTo;
-};
-
-KMFilterAction* KMFilterActionReplyTo::newAction(void)
-{
-  return (new KMFilterActionReplyTo);
-}
-
-QString KMFilterActionReplyTo::label(void) const
-{
-  return i18n("set Reply-To");
-}
-
-KMFilterActionReplyTo::KMFilterActionReplyTo(): KMFilterAction("set Reply-To")
-{
-  mReplyTo = "";
-}
-
-int KMFilterActionReplyTo::process(KMMessage* msg, bool& )
-{
-  msg->setHeaderField( "Reply-To", mReplyTo );
-  return -1;
-}
-
-QWidget* KMFilterActionReplyTo::createParamWidget(KMGFilterDlg* aParent)
-{
-  QLineEdit* edt;
-  edt = aParent->createEdit(mReplyTo);
-  return edt;
-}
-
-void KMFilterActionReplyTo::applyParamWidgetValue(QWidget* aParamWidget)
-{
-  QLineEdit* w = (QLineEdit*)aParamWidget;
-  mReplyTo = w->text();
-}
-
-void KMFilterActionReplyTo::argsFromString(const QString &argsStr)
-{
-  mReplyTo = argsStr;
-}
-
-QString KMFilterActionReplyTo::argsAsString(void) const
-{
-  return mReplyTo;
-}
-
+#endif
 
 
 //=============================================================================
@@ -618,130 +711,40 @@ QString KMFilterActionReplyTo::argsAsString(void) const
 //=============================================================================
 void KMFilterActionDict::init(void)
 {
-  mList.setAutoDelete(true);
-  insert("transfer", i18n("transfer"),
-	 KMFilterActionMove::newAction);
-  insert("set identity", i18n("set identity"),
-	 KMFilterActionIdentity::newAction);
-  insert("set transport", i18n("set transport"),
-	 KMFilterActionTransport::newAction);
-  insert("set Reply-To", i18n("set Reply-To"),
-	 KMFilterActionReplyTo::newAction);
-  insert("forward", i18n("forward to"),
-         KMFilterActionForward::newAction);
-  insert("execute", i18n("execute"),
-         KMFilterActionExec::newAction);
-  insert("filter app", i18n("filter app"),
-         KMFilterActionExtFilter::newAction);
+  insert( KMFilterActionMove::newAction );
+  insert( KMFilterActionIdentity::newAction );
+  insert( KMFilterActionTransport::newAction );
+  insert( KMFilterActionReplyTo::newAction );
+  insert( KMFilterActionForward::newAction );
+  insert( KMFilterActionRedirect::newAction );
+#ifndef KMFILTERACTION_NO_BOUNCE
+  insert( KMFilterActionBounce::newAction );
+#endif
+  insert( KMFilterActionExec::newAction );
+#ifndef KMFILTERACTIONEXTFILTER_IS_BROKEN
+  insert( KMFilterActionExtFilter::newAction );
+#endif
   // Register custom filter actions below this line.
 }
-
-KMFilterActionDict::KMFilterActionDict(): mList()
+// The int in the QDict constructor (23) must be a prime
+// and should be greater than the double number of KMFilterAction types
+KMFilterActionDict::KMFilterActionDict()
+  : QDict<KMFilterActionDesc>(23)
 {
+  mList.setAutoDelete(TRUE);
   init();
 }
 
-KMFilterActionDict::~KMFilterActionDict()
+void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
 {
-}
-
-void KMFilterActionDict::insert(const QString &aName, const QString &aLabel,
-				KMFilterActionNewFunc aFunc)
-{
+  KMFilterAction *action = aNewFunc();
   KMFilterActionDesc* desc = new KMFilterActionDesc;
-  desc->name = aName;
-  desc->label = aLabel;
-  desc->func = aFunc;
-  mList.append(desc);
+  desc->name = action->name();
+  desc->label = action->label();
+  desc->create = aNewFunc;
+  QDict<KMFilterActionDesc>::insert( desc->name, desc );
+  QDict<KMFilterActionDesc>::insert( desc->label, desc );
+  mList.append( desc );
+  delete action;
 }
 
-KMFilterAction* KMFilterActionDict::create(const QString &name)
-{
-  KMFilterActionDesc* desc = find(name);
-  if (desc) return desc->func();
-  return NULL;
-}
-
-int KMFilterActionDict::indexOf(const QString &aName)
-{
-  KMFilterActionDesc* desc;
-  int i;
-
-  for (i=0,desc=mList.first(); desc; i++,desc=mList.next())
-    if (desc->name==aName) return i;
-  return -1;
-}
-
-QString KMFilterActionDict::labelOf(const QString &aName)
-{
-  KMFilterActionDesc* desc = find(aName);
-  if (desc) return desc->label;
-  return "";
-}
-
-QString KMFilterActionDict::nameOf(const QString &aLabel)
-{
-  KMFilterActionDesc* desc;
-  for (desc=mList.first(); desc; desc=mList.next())
-    if (desc->label==aLabel) return desc->name;
-  return "";
-}
-
-KMFilterActionDesc* KMFilterActionDict::find(const QString &aName)
-{
-  KMFilterActionDesc* desc;
-  for (desc=mList.first(); desc; desc=mList.next())
-    if (desc->name==aName) return desc;
-  return NULL;
-}
-
-QString KMFilterActionDict::first(void)
-{
-  KMFilterActionDesc* desc = mList.first();
-  if (!desc) return "";
-  return desc->name;
-}
-
-QString KMFilterActionDict::next(void)
-{
-  KMFilterActionDesc* desc = mList.next();
-  if (!desc) return "";
-  return desc->name;
-}
-
-QString KMFilterActionDict::currentName(void)
-{
-  return mList.current()->name;
-}
-
-QString KMFilterActionDict::currentLabel(void)
-{
-  return mList.current()->label;
-}
-
-KMFilterAction* KMFilterActionDict::currentCreate(void)
-{
-  return mList.current()->func();
-}
-
-
-//=============================================================================
-//
-//   Generic Filter  Action  Dialog
-//
-//=============================================================================
-KMGFilterDlg::KMGFilterDlg(QWidget* parent, const char* name, bool modal,
-			   WFlags f):
-  KMGFilterDlgInherited(parent, name, modal, f)
-{
-  initMetaObject();
-}
-
-//-----------------------------------------------------------------------------
-KMGFilterDlg::~KMGFilterDlg()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-#include "kmfilteraction.moc"

@@ -45,7 +45,13 @@ void KMFilterMgr::readConfig(void)
     grpName.sprintf("Filter #%d", i);
     config->setGroup(grpName);
     filter = new KMFilter(config);
-    append(filter);
+    filter->purify();
+    if ( filter->isEmpty() ) {
+      kdDebug() << "KMFilter::readConfig: filter\n" << filter->asString()
+		<< "is empty!" << endl;
+      delete filter;
+    } else
+      append(filter);
   }
 }
 
@@ -55,18 +61,21 @@ void KMFilterMgr::writeConfig(bool withSync)
 {
   KConfig* config = kapp->config();
   QString grpName;
-  KMFilter* filter;
-  int i;
+  int i = 0;
 
-  config->setGroup("General");
-  config->writeEntry("filters", count());
-
-  for (i=0, filter=first(); filter; filter=next(), i++)
-  {
-    grpName.sprintf("Filter #%d", i);
-    config->setGroup(grpName);
-    filter->writeConfig(config);
+  QListIterator<KMFilter> it(*this);
+  it.toFirst();
+  while ( it.current() ) {
+    if ( !(*it)->isEmpty() ) {
+      grpName.sprintf("Filter #%d", i);
+      config->setGroup(grpName);
+      (*it)->writeConfig(config);
+      ++i;
+    }
+    ++it;
   }
+  config->setGroup("General");
+  config->writeEntry("filters", i);
 
   if (withSync) config->sync();
 }
@@ -78,23 +87,25 @@ int KMFilterMgr::process(KMMessage* msg)
   KMFilter* filter;
   bool stopIt = FALSE;
   int status = -1;
-  int result;
+  KMFilter::ReturnCode result;
 
   for (filter=first(); !stopIt && filter; filter=next())
   {
-    if (!filter->matches(msg)) continue;
+    if (!filter->pattern()->matches(msg)) continue;
     //    kdDebug() << "KMFilterMgr: filter " << filter->name().data() << " matches message " << //    msg->subject().data() << endl;
     //    if (status < 0)
     //      status = 0;
     result = filter->execActions(msg, stopIt);
-    if (result == 2) { // Critical error
+
+    switch ( result ) {
+    case KMFilter::CriticalError:
+      // Critical error
       status = 2;
       break;
+    case KMFilter::MsgExpropriated:
+      if (status < 0)  // Message saved in a folder
+	status = 0;
     }
-    else if (result == 1) // Message not saved
-      status = 1;
-    else if ((result == 0) && (status < 0))  // Message saved in a folder
-      status = 0;
   }
 
   if (status < 0) // No filters matched, keep copy of message
@@ -130,13 +141,6 @@ int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::dialogDestroyed()
-{
-  mEditDialog = NULL;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMFilterMgr::openDialog( QWidget *parent )
 {
   if( !mEditDialog )
@@ -153,7 +157,7 @@ void KMFilterMgr::openDialog( QWidget *parent )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::createFilter( const QString &field, const QString &value )
+void KMFilterMgr::createFilter( const QString field, const QString value )
 {
   openDialog( 0 );
   mEditDialog->createFilter( field, value );

@@ -1,785 +1,656 @@
 // kmfilterdlg.cpp
-
-#include <qfiledialog.h>
+// Author: Marc Mutz <Marc@Mutz.com>
+// based on work by Stefan Taferner <taferner@kde.org>
+// This code is under the GPL
 
 #include "kmfilterdlg.h"
+#include "kmsearchpatternedit.h"
+#include "kmsearchpattern.h"
 #include "kmfilter.h"
+#include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmglobal.h"
-#include "kmfolder.h"
-#include "kmfolderdir.h"
-#include "kmfoldermgr.h"
+//#include "kmfolder.h"
+//#include "kmfolderdir.h"
+//#include "kmfoldermgr.h"
 
-#include <kapp.h>
 #include <kdebug.h>
-#include <kbuttonbox.h>
-#include <qbuttongroup.h>
-#include <qframe.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
+#include <klocale.h>
+#include <klineeditdlg.h>
+#include <kiconloader.h>
+
 #include <qlayout.h>
+#include <qlabel.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
-#include <qradiobutton.h>
 #include <qcombobox.h>
-#include <qlineedit.h>
+#include <qwidgetstack.h>
+
 #include <assert.h>
-#include <qstrlist.h>
-#include <klocale.h>
-#include <kwin.h>
 
-static QStringList sFilterOpList, sFilterFuncList, sFilterFieldList,
-                sFilterActionList;
+// The anchor of the filter dialog's help.
+const QString KMFilterDlgHelpAnchor( "FILTERS_ID" );
 
 //=============================================================================
-KMFaComboBox::KMFaComboBox(QWidget* p, const char* n):
-  KMFaComboBoxInherited(false, p, n)
+//
+// class KMFilterDlg (the filter dialog)
+//
+//=============================================================================
+
+KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
+  : KDialogBase( parent, name, FALSE /* modality */,
+		 i18n("Filter Rules") /* caption*/,
+		 Help|Ok|Apply|Cancel /* button mask */,
+		 Ok /* default btn */, FALSE /* separator */)
 {
-  initMetaObject();
-  connect(this, SIGNAL(activated(int)), SLOT(slotSelected(int)));
+  kdDebug() << "KMFilterDlg::KMFilterDlg: entered" << endl;
+
+  setHelp( KMFilterDlgHelpAnchor );
+
+  QWidget *w = new QWidget(this);
+  setMainWidget(w);
+  QHBoxLayout *hbl = new QHBoxLayout( w, 0, spacingHint() );
+
+  mFilterList = new KMFilterListBox( i18n("Available Filters"), w);
+  hbl->addWidget( mFilterList, 1 /*stretch*/ );
+
+  QVBoxLayout *vbl = new QVBoxLayout( w, 0, spacingHint() );
+  hbl->addLayout( vbl, 2 );
+
+  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w );
+  vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
+
+  QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), w );
+  mActionLister = new KMFilterActionWidgetLister( agb );
+  vbl->addWidget( agb, 0, Qt::AlignTop );
+  // spacer:
+  vbl->addStretch( 1 );
+  
+  // load the filter parts into the edit widgets
+  connect( mFilterList, SIGNAL(filterSelected(KMFilter*)),
+	   this, SLOT(slotFilterSelected(KMFilter*)) );
+  
+  // reset the edit widgets
+  connect( mFilterList, SIGNAL(resetWidgets()),
+	   mPatternEdit, SLOT(reset()) );
+  connect( mFilterList, SIGNAL(resetWidgets()),
+	   mActionLister, SLOT(reset()) );
+  
+  // support auto-naming the filter
+  connect( mPatternEdit, SIGNAL(maybeNameChanged()),
+	   mFilterList, SLOT(slotUpdateFilterName()) );
+
+  // apply changes on 'Apply'
+  connect( this, SIGNAL(applyClicked()),
+	   mFilterList, SLOT(slotApplyFilterChanges()) );
+
+  // apply changes on 'OK'
+  connect( this, SIGNAL(okClicked()),
+	   mFilterList, SLOT(slotApplyFilterChanges()) );
+  
+  // destruct the dialog on OK, close and Cancel
+  connect( this, SIGNAL(finished()),
+	   this, SLOT(slotDelayedDestruct()) );
+
+  adjustSize();
+
+  // load the filter list (emits filterSelected())
+  mFilterList->loadFilterList();
+
+  kdDebug() << "KMFilterDlg::KMFilterDlg: left" << endl;
 }
 
-void KMFaComboBox::slotSelected(int idx)
+void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 {
-  emit selectType(this, idx);
+  assert( aFilter );
+  kdDebug() << "KMFilterDlg::slotFilterSelected" << endl;
+  mPatternEdit->setSearchPattern( aFilter->pattern() );
+  mActionLister->setActionList( aFilter->actions() );
 }
 
 
 //=============================================================================
-KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
-  KMFilterDlgInherited(parent, name, FALSE)
+//
+// class KMFilterListBox (the filter list manipulator)
+//
+//=============================================================================
+
+KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const char* name )
+  : QGroupBox( 1, Horizontal, title, parent, name )
 {
-  KButtonBox *buttonBox;
-  QPushButton *btnHelp;
-  QGridLayout *fgrid, *grid, *agrid;
-  int h, w, i;
-  QSize sz;
-  updown_move_semaphore = 1;
+  mFilterList.setAutoDelete(TRUE);
+  mIdxSelItem = -1;
 
-  initMetaObject();
+  //----------- the list box
+  mListBox = new QListBox(this);
+  
+  //----------- the first row of buttons
+  QHBox *hb = new QHBox(this);
+  mBtnUp = new QPushButton( QString::null, hb );
+  mBtnUp->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
+  mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
+  mBtnDown = new QPushButton( QString::null, hb );
+  mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
+  mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
+  
+  //----------- the second row of buttons
+  hb = new QHBox(this);
+  mBtnNew = new QPushButton( QString::null, hb );
+  mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
+  mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
+  mBtnDelete = new QPushButton( QString::null, hb );
+  mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
+  mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
+  mBtnRename = new QPushButton( i18n("Rename"), hb );
 
-  grid  = new QGridLayout(this, 4, 2, 4, 4);
-  mFilter = 0;
+  //----------- now connect everything
+  connect( mListBox, SIGNAL(highlighted(int)),
+	   this, SLOT(slotSelected(int)) );
+  connect( mBtnUp, SIGNAL(clicked()),
+	   this, SLOT(slotUp()) );
+  connect( mBtnDown, SIGNAL(clicked()),
+	   this, SLOT(slotDown()) );
+  connect( mBtnNew, SIGNAL(clicked()),
+	   this, SLOT(slotNew()) );
+  connect( mBtnDelete, SIGNAL(clicked()),
+	   this, SLOT(slotDelete()) );
+  connect( mBtnRename, SIGNAL(clicked()),
+	   this, SLOT(slotRename()) );
 
-  setCaption(i18n("Filter Rules"));
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
+  // the dialog should call loadFilterList()
+  // when all signals are connected.
+}
 
-  mFilterList = new QListBox(this);
-  mFilterList->setMinimumSize(100, 200);
-  grid->addMultiCellWidget(mFilterList, 0, 2, 0, 0);
-  connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
 
-  initLists();
+void KMFilterListBox::createFilter( const QString field, const QString value )
+{
+  KMSearchRule *newRule = new KMSearchRule();
+  newRule->init( field, KMSearchRule::FuncEquals, value );
+  
+  KMFilter *newFilter = new KMFilter();
+  newFilter->pattern()->append( newRule );
+  newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
+  
+  KMFilterActionDesc *desc = (*kernel->filterActionDict())["move to folder"];
+  if ( desc )
+    newFilter->actions()->append( desc->create() );
 
-  //---------- static filter fields
-  fgrid = new QGridLayout(3, 3, 4);
-  grid->addLayout(fgrid, 0, 1);
-
-  mRuleFuncA = new QComboBox(false, this);
-  sz = mRuleFuncA->sizeHint();
-  w = sz.width();
-  h = sz.height();
-  mCbxHeight = h;
-  mRuleFuncA->setMinimumSize(110, h);
-  mRuleFuncA->setMaximumSize(32767, h);
-  mRuleFuncA->insertStringList(sFilterFuncList);
-  fgrid->addWidget(mRuleFuncA, 0, 1);
-
-  mRuleFuncB = new QComboBox(false, this);
-  mRuleFuncB->setMinimumSize(110, h);
-  mRuleFuncB->setMaximumSize(32767, h);
-  mRuleFuncB->insertStringList(sFilterFuncList);
-  fgrid->addWidget(mRuleFuncB, 2, 1);
-
-  mRuleFieldA = new QComboBox(true, this);
-  mRuleFieldA->insertStringList(sFilterFieldList);
-  mRuleFieldA->setMinimumSize(100, h);
-  mRuleFieldA->setMaximumSize(32767, h);
-  fgrid->addWidget(mRuleFieldA, 0, 0);
-
-  mRuleFieldB = new QComboBox(true, this);
-  mRuleFieldB->insertStringList(sFilterFieldList);
-  mRuleFieldB->setMinimumSize(100, h);
-  mRuleFieldB->setMaximumSize(32767, h);
-  fgrid->addWidget(mRuleFieldB, 2, 0);
-
-  mRuleValueA = new QLineEdit(this);
-  mRuleValueA->adjustSize();
-  mRuleValueA->setMinimumSize(80, mRuleValueA->sizeHint().height());
-  fgrid->addWidget(mRuleValueA, 0, 2);
-
-  mRuleValueB = new QLineEdit(this);
-  mRuleValueB->adjustSize();
-  mRuleValueB->setMinimumSize(80, mRuleValueB->sizeHint().height());
-  fgrid->addWidget(mRuleValueB, 2, 2);
-
-  mRuleOp = new QComboBox(false, this);
-  mRuleOp->insertStringList(sFilterOpList);
-  mRuleOp->setMinimumSize(50, h);
-  mRuleOp->setMaximumSize(32767, h);
-  fgrid->addMultiCellWidget(mRuleOp, 1, 1, 0, 1);
-
-  //---------- filter action area
-  agrid = new QGridLayout(FILTER_MAX_ACTIONS, 3, 4);
-  grid->addLayout(agrid, 1, 1);
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-  {
-    mFaType[i] = new KMFaComboBox(this);
-    mFaType[i]->insertStringList(sFilterActionList);
-    mFaType[i]->setMinimumSize(80, h);
-    mFaType[i]->setMaximumSize(32767, h);
-    agrid->addWidget(mFaType[i], i, 0);
-    connect(mFaType[i], SIGNAL(selectType(KMFaComboBox*, int)),
-	    SLOT(slotActionTypeSelected(KMFaComboBox*,int)));
-
-    mFaBtnDetails[i] = 0;
-    mFaField[i] = 0;
-  }
-  mActLineHeight = mFaType[0]->size().height();
-
-  //---------- button area
-  buttonBox = new KButtonBox(this, Horizontal, 0, 2);
-  grid->addMultiCellWidget(buttonBox, 3, 3, 0, 1);
-
-  mBtnUp = buttonBox->addButton(i18n("Up"));
-  connect(mBtnUp,SIGNAL(clicked()),SLOT(slotBtnUp()));
-
-  mBtnDown  = buttonBox->addButton(i18n("Down"));
-  connect(mBtnDown,SIGNAL(clicked()),SLOT(slotBtnDown()));
-
-  mBtnNew = buttonBox->addButton(i18n("New"));
-  connect(mBtnNew,SIGNAL(clicked()),SLOT(slotBtnNew()));
-
-  mBtnDelete = buttonBox->addButton(i18n("Delete"));
-  connect(mBtnDelete,SIGNAL(clicked()),SLOT(slotBtnDelete()));
-
-  buttonBox->addStretch();
-  mBtnOk = buttonBox->addButton(i18n("OK"));
-  connect(mBtnOk,SIGNAL(clicked()),SLOT(slotBtnOk()));
-
-  mBtnCancel = buttonBox->addButton(i18n("Cancel"));
-  connect(mBtnCancel,SIGNAL(clicked()),SLOT(slotBtnCancel()));
-
-  buttonBox->addStretch();
-  btnHelp = buttonBox->addButton(i18n("Help"));
-  connect(btnHelp,SIGNAL(clicked()),SLOT(slotBtnHelp()));
-
-  buttonBox->layout();
-  buttonBox->setMaximumSize(32767, buttonBox->sizeHint().height());
-  buttonBox->setMinimumSize(buttonBox->sizeHint());
-
-  //----------
-  grid->setRowStretch(0, 2);
-  grid->setRowStretch(1, 10);
-  grid->setRowStretch(2, 2);
-  grid->setColStretch(0, 10);
-  grid->setColStretch(1, 20);
-  grid->setRowStretch(3, 100);
-  grid->activate();
-
-  /*
+  insertFilter( newFilter );
   enableControls();
-  resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
-  show();
-  */
-
-  reloadFilterList();
-
-  mCurFilterIdx = -1;
-  if(mFilterList->count() > 0)
-    mFilterList->setCurrentItem(0);
-
-  enableControls();
-  resize(static_cast<int>(buttonBox->sizeHint().width()*1.2),
-	 sizeHint().height());
-  show();
-
 }
 
-
-//-----------------------------------------------------------------------------
-KMFilterDlg::~KMFilterDlg()
+void KMFilterListBox::slotUpdateFilterName()
 {
-  //
-  // Espen 2000-05-21: Would be better to send a signal but I can't
-  // get it to work here.
-  //
-  kernel->filterMgr()->dialogDestroyed();
-}
+  KMSearchPattern *p = mFilterList.at(mIdxSelItem)->pattern();
+  if ( !p ) return;
 
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::reloadFilterList(void)
-{
-  KMFilter* filter;
-  int i, num;
-
-  mFilterList->clear();
-
-  num = kernel->filterMgr()->count();
-  for (i=0; i<num; i++)
-  {
-    filter = kernel->filterMgr()->at(i);
-    if (!filter) continue;
-    mFilterList->insertItem(filter->name());
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::clear(void)
-{
-  int i;
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-  {
-    if (mFaBtnDetails[i])
-    {
-      delete mFaBtnDetails[i];
-      mFaBtnDetails[i] = 0;
-    }
-    if (mFaField[i])
-    {
-      delete mFaField[i];
-      mFaField[i] = 0;
-    }
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::showFilter(KMFilter* aFilter)
-{
-  int i, w;
-  KMFilterAction* action;
-  QWidget* pwidg;
-  QSize sz;
-
-  assert(aFilter!=0); // Important assert
-  disconnect(mRuleFieldA, SIGNAL(textChanged(const QString&)),
-	     this, SLOT(updateCurFilterName(const QString&)));
-  disconnect(mRuleValueA, SIGNAL(textChanged(const QString&)),
-	     this, SLOT(updateCurFilterName(const QString&)));
-  clear();
-
-  mRuleOp->setCurrentItem((int)aFilter->oper());
-
-  i = indexOfRuleField(aFilter->ruleA().field());
-  if (i < 0)
-  {
-    mRuleFieldA->changeItem(aFilter->ruleA().field(),0);
-    i = 0;
-  }
-  else mRuleFieldA->changeItem(" ",0);
-  mRuleFieldA->setCurrentItem(i);
-  mRuleFuncA->setCurrentItem((int)aFilter->ruleA().function());
-  mRuleValueA->setText(aFilter->ruleA().contents());
-
-  i = indexOfRuleField(aFilter->ruleB().field());
-  if (i < 0)
-  {
-    mRuleFieldB->changeItem(aFilter->ruleB().field(),0);
-    i = 0;
-  }
-  else mRuleFieldB->changeItem(" ",0);
-  mRuleFieldB->setCurrentItem(i);
-  mRuleFuncB->setCurrentItem((int)aFilter->ruleB().function());
-  mRuleValueB->setText(aFilter->ruleB().contents());
-
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-  {
-    action = aFilter->action(i);
-    if (mFaField[i]) delete mFaField[i];
-    mFaField[i] = 0;
-
-    if (!action) mFaType[i]->setCurrentItem(0);
+  QString shouldBeName = p->name();
+  QString displayedName = mListBox->text( mIdxSelItem );
+  
+  if ( shouldBeName.stripWhiteSpace().isEmpty() || shouldBeName[0] == '<' ) {
+    // auto-naming of patterns
+    if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
+      shouldBeName = QString( "<%1>:%2" ).arg( p->first()->field() ).arg( p->first()->contents() );
     else
-    {
-      mFaType[i]->setCurrentItem(1+kernel->filterActionDict()->indexOf(action->name()));
-      pwidg = action->createParamWidget(this);
-      mFaField[i] = pwidg;
-      if (pwidg)
-      {
-	QPoint pos = mFaType[i]->pos();
-	pos.setX(pos.x() + mFaType[i]->width() + 4);
-        w = width() - pos.x();
-        if (w > 300) w = 300;
-        sz.setWidth(w);
-        sz.setHeight(pwidg->height());
-        pwidg->resize(sz);
-	pwidg->move(pos);
-	pwidg->show();
-      }
-    }
+      shouldBeName = "<" + i18n("unnamed") + ">";
+    p->setName( shouldBeName );
   }
 
-  mFilter = aFilter;
-  mCurFilterIdx = mFilterList->currentItem();
-  connect(mRuleFieldA, SIGNAL(textChanged(const QString&)),
-	  this, SLOT(updateCurFilterName(const QString&)));
-  connect(mRuleValueA, SIGNAL(textChanged(const QString&)),
-	  this, SLOT(updateCurFilterName(const QString&)));
+  if ( displayedName == shouldBeName ) return;
+
+  mListBox->blockSignals(TRUE);
+  mListBox->changeItem( shouldBeName, mIdxSelItem );
+  mListBox->blockSignals(FALSE);
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::resizeEvent(QResizeEvent *qre)
+void KMFilterListBox::slotApplyFilterChanges()
 {
-  kdDebug() << "KMFilterDlg::resizeEvent" << endl;
-  kdDebug() << QString( "width %1" ).arg( qre->size().width() ) << endl;
-  int i, w;
-  QWidget* pwidg;
-  QSize sz;
+  setEnabled( FALSE );
 
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-    if (mFaField[i]) {
-      pwidg = mFaField[i];
-      QPoint pos = mFaType[i]->pos();
-      pos.setX(pos.x() + mFaType[i]->width() + 4);
-      w = qre->size().width() - pos.x();
-      if (w > 300) w = 300;
-      sz.setWidth(w);
-      sz.setHeight(pwidg->height());
-      pwidg->resize(sz);
-      pwidg->move(pos);
-      kdDebug() << QString( "posx %1" ).arg( pos.x() ) << endl;
-    }
-}
+  // unselect all filters:
+  mListBox->selectAll( FALSE );
+  // maybe QListBox doesn't emit selected(-1) on unselect,
+  // so we make sure the edit widgets receive an equivalent:
+  emit resetWidgets();
+  mIdxSelItem = -1;
 
-//-----------------------------------------------------------------------------
-QString KMFilterDlg::ruleFieldToEnglish(const QString & i18nVal)
-{
-  if (i18nVal == i18n("<message>")) return QString("<message>");
-  if (i18nVal == i18n("<body>")) return QString("<body>");
-  if (i18nVal == i18n("<any header>")) return QString("<any header>");
-  if (i18nVal == i18n("<To or Cc>")) return QString("<To or Cc>");
-  return i18nVal;
-}
+  // by now all edit widgets should have written back
+  // their widget's data into our filter list.
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::applyFilterChanges(void)
-{
-  KMFilterAction* action;
-  int i;
+  KMFilterMgr *fm = kernel->filterMgr();
 
-  if (!mFilter || !updown_move_semaphore) return;
+  // block attemts to use filters (currently a no-op)
+  fm->beginUpdate();
+  fm->clear();
 
-  mFilter->ruleA().init(ruleFieldToEnglish(mRuleFieldA->currentText()),
-			(KMFilterRule::Function)mRuleFuncA->currentItem(),
-			mRuleValueA->text());
-  mFilter->ruleB().init(ruleFieldToEnglish(mRuleFieldB->currentText()),
-			(KMFilterRule::Function)mRuleFuncB->currentItem(),
-			mRuleValueB->text());
-  mFilter->setOper((KMFilter::Operator)mRuleOp->currentItem());
-
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-  {
-    action = mFilter->action(i);
-    if (!action) continue;
-    action->applyParamWidgetValue(mFaField[i]);
+  QListIterator<KMFilter> it( mFilterList );
+  for ( it.toFirst() ; it.current() ; ++it ) {
+    KMFilter *f = new KMFilter( (*it) ); // deep copy
+    f->purify();
+    if ( !f->isEmpty() )
+      // the filter is valid:
+      fm->append( f );
+    else
+      // the filter is invalid:
+      delete f;
   }
+  
+  // allow usage of the filters agin.
+  fm->endUpdate();
+  setEnabled( TRUE );
+
+  fm->writeConfig();
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::updateCurFilterName(const QString &/*text*/)
+void KMFilterListBox::slotSelected( int aIdx )
 {
-  if (mCurFilterIdx < 0)
-    return;
-  mFilter->setName(QString("<") + mRuleFieldA->currentText() + ">:"
-		   + mRuleValueA->text());
-  QObject::disconnect(mFilterList,SIGNAL(highlighted(int)),this,SLOT(slotFilterSelected(int)));
-  mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
-  connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
-}
-
-//-----------------------------------------------------------------------------
-bool KMFilterDlg::testOpts(const QWidget* w) const
-{
-  if (!w) kdDebug() << "KMFilterDlg: no widget given" << endl;
-  return (w!=0);
-}
-
-//-----------------------------------------------------------------------------
-QPushButton* KMFilterDlg::createDetailsButton(void)
-{
-  QPushButton* btn;
-
-  btn = mFaBtnDetails[mGridRow];
-  if (!btn)
-  {
-    btn = new QPushButton("...", this);
-    mFaBtnDetails[mGridRow] = btn;
-  }
-  return btn;
-}
-
-//-----------------------------------------------------------------------------
-QLineEdit* KMFilterDlg::createEdit(const QString &aTxt)
-{
-  QLineEdit* edt = new QLineEdit(this);
-
-  edt->setText(aTxt);
-  return edt;
-}
-
-//-----------------------------------------------------------------------------
-QComboBox* KMFilterDlg::createFolderCombo( QStringList *str,
-				  QValueList< QGuardedPtr<KMFolder> > *folders,
-				  QGuardedPtr<KMFolder> curFolder )
-{
-  QComboBox* cbx = new QComboBox(false, this);
-  int i=0,idx=-1;
-
-  cbx->setFixedHeight(mCbxHeight);
-
-  QStringList::Iterator st;
-  for( st = str->begin(); st != str->end(); ++st)
-    cbx->insertItem(*st);
-
-  QGuardedPtr<KMFolder> folder;
-  while (folders->at(i) != folders->end()) {
-    folder = *folders->at(i);
-    if (folder == curFolder)
-      idx = i;
-    ++i;
-  }
-  if (idx>=0) cbx->setCurrentItem(idx);
-  return cbx;
-}
-
-//-----------------------------------------------------------------------------
-QComboBox* KMFilterDlg::createCombo( QStringList *str,
-				     QString curItem )
-{
-  QComboBox* cbx = new QComboBox(false, this);
-  cbx->setFixedHeight(mCbxHeight);
-
-  QStringList::Iterator st;
-  for( st = str->begin(); st != str->end(); ++st) {
-    cbx->insertItem(*st);
-    if (*st == curItem)
-      cbx->setCurrentItem( cbx->count() - 1 );
-  }
-
-  return cbx;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
-{
-  KMFilterAction* action;
-  QWidget* widg;
-  QPoint pos;
-  QSize sz;
-  int i, w;
-
-  if (!mFilter) return;
-
-  for (i=FILTER_MAX_ACTIONS-1; i>0; i--)
-    if (cbx == mFaType[i]) break;
-  if (i < 0) return;
-
-  if (mFaField[i]) delete mFaField[i];
-  mFaField[i] = 0;
-  mGridRow = i;
-
-  if (mFilter->action(i)) delete mFilter->action(i);
-  action = kernel->filterActionDict()->create(
-              kernel->filterActionDict()->nameOf(*(sFilterActionList.at(idx))));
-  mFilter->setAction(i, action);
-  if (!action || idx < 0)
-  {
-    kdDebug() << "no action selected" << endl;
-    return;
-  }
-
-  widg = action->createParamWidget(this);
-  mFaField[i] = widg;
-  if (!widg) return;
-
-  pos = mFaType[i]->pos();
-  pos.setX(pos.x() + mFaType[idx]->width() + 4);
-  widg->move(pos);
-  w = width() - pos.x();
-  if (w > 300) w = 300;
-  sz.setWidth(w);
-  sz.setHeight(widg->height());
-  widg->resize(sz);
-  widg->show();
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotFilterSelected(int idx)
-{
-  KMFilter* filter;
-
-  kdDebug() << QString( "mCurFilterIdx %1 idx %2" ).arg( mCurFilterIdx ).arg( idx ) << endl;
-  if (mCurFilterIdx == idx)
-    return;
-
-  if (mFilter) applyFilterChanges();
-  if ((uint)idx < kernel->filterMgr()->count())
-  {
-    filter = kernel->filterMgr()->at(idx);
-    if (filter) showFilter(filter);
-  }
+  kdDebug() << "KMFilterListBox: slotSelected( " << aIdx << " )" << endl;
+  //  if ( mIdxSelItem == aIdx ) return;
+  mIdxSelItem = aIdx;
+  // QList::at(i) will return NULL if i is out of range.
+  KMFilter *f = mFilterList.at(aIdx);
+  if ( f )
+    emit filterSelected( f );
   else
-  {
-    clear();
-    mFilter = 0;
+    emit resetWidgets();
+  enableControls();
+}
+
+void KMFilterListBox::slotNew()
+{
+  // just insert a new filter.
+  insertFilter( new KMFilter() );
+  enableControls();
+}
+
+void KMFilterListBox::slotDelete()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug() << "KMFilterListBox::slotDelete called while no filter is selected, ignoring." << endl;
+    return;
   }
+  
+  int oIdxSelItem = mIdxSelItem;
+  mIdxSelItem = -1;
+  // unselect all
+  mListBox->selectAll(FALSE);
+  // broadcast that all widgets let go
+  // of the filter
+  emit resetWidgets();
+
+  // remove the filter from both the filter list...
+  mFilterList.remove( oIdxSelItem );
+  // and the listbox
+  mListBox->removeItem( oIdxSelItem );
+
+  int count = (int)mListBox->count();
+  // and set the new current item.
+  if ( count > oIdxSelItem )
+    // oIdxItem is still a valid index
+    mListBox->setSelected( oIdxSelItem, TRUE );
+  else if ( (int)mListBox->count() )
+    // oIdxSelIdx is no longer valid, but the
+    // list box isn't empty
+    mListBox->setSelected( count - 1, TRUE );
+  // the list is empty - keep index -1
+
   enableControls();
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnUp()
+void KMFilterListBox::slotUp()
 {
-  int idx = mFilterList->currentItem();
-  KMFilter* filter;
-
-  if (idx < 1) return;
-  applyFilterChanges();
-  mCurFilterIdx = -1;
-  updown_move_semaphore = 0;
-
-  filter = kernel->filterMgr()->take(idx);
-  assert(filter != 0);
-  kernel->filterMgr()->insert(idx-1, filter);
-
-  // This next line is to work around a QT 2.0 CVS bug
-  // If it is omitted the listbox is refreshed incorrectly
-  // and looks like it contains duplicate highlighted items
-  mFilterList->setCurrentItem(idx-1);
-  mFilterList->removeItem(idx);
-  mFilterList->insertItem(filter->name(), idx-1);
-  mFilterList->setCurrentItem(idx-1);
-
-  enableControls();
-  updown_move_semaphore = 1;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnDown()
-{
-  int idx = mFilterList->currentItem();
-  KMFilter* filter;
-
-  if (idx < 0 || idx >= (int)mFilterList->count()-1) return;
-  applyFilterChanges();
-  mCurFilterIdx = -1;
-
-  updown_move_semaphore = 0;
-
-  filter = kernel->filterMgr()->take(idx);
-  assert(filter != 0);
-  kernel->filterMgr()->insert(idx+1, filter);
-
-  mFilterList->removeItem(idx);
-  mFilterList->insertItem(filter->name(), idx+1);
-  mFilterList->setCurrentItem(idx+1);
-
-  enableControls();
-  updown_move_semaphore = 1;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnNew()
-{
-  int idx;
-  KMFilter* filter = new KMFilter;
-  filter->setName(i18n("Unnamed"));
-  applyFilterChanges();
-  mCurFilterIdx = -1;
-
-  idx = mFilterList->currentItem();
-  if (idx >= 0) kernel->filterMgr()->insert(idx, filter);
-  else kernel->filterMgr()->append(filter);
-  idx = kernel->filterMgr()->find(filter);
-  mFilterList->insertItem(filter->name(), idx);
-  mFilterList->setCurrentItem(idx);
-  slotFilterSelected(idx);
-  enableControls();
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnDelete()
-{
-  int idx = mFilterList->currentItem();
-  if (idx < 0) return;
-
-  mFilter = 0;
-  mCurFilterIdx = -1;
-
-  QObject::disconnect(mFilterList,SIGNAL(highlighted(int)),this,SLOT(slotFilterSelected(int)));
-  mFilterList->removeItem(idx);
-  kernel->filterMgr()->remove(idx);
-
-  if (idx >= (int)kernel->filterMgr()->count())
-    idx = (int)kernel->filterMgr()->count()-1;
-
-  if (idx >= 0) {
-    mFilterList->setCurrentItem(idx);
-    // workaround QT bug where current item is not selected
-    // after item is deleted
-    mFilterList->setSelected(idx, TRUE);
+  if ( mIdxSelItem < 0 ) {
+    kdDebug() << "KMFilterListBox::slotUp called while no filter is selected, ignoring." << endl;
+    return;
   }
+  if ( mIdxSelItem == 0 ) {
+    kdDebug() << "KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring." << endl;
+    return;
+  }
+
+  swapNeighbouringFilters( mIdxSelItem, mIdxSelItem - 1 );
+  enableControls();
+}
+
+void KMFilterListBox::slotDown()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug() << "KMFilterListBox::slotDown called while no filter is selected, ignoring." << endl;
+    return;
+  }
+  if ( mIdxSelItem == (int)mListBox->count() - 1 ) {
+    kdDebug() << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
+    return;
+  }
+  
+  swapNeighbouringFilters( mIdxSelItem, mIdxSelItem + 1);
+  enableControls();
+}
+
+void KMFilterListBox::slotRename()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug() << "KMFilterListBox::slotRename called while no filter is selected, ignoring." << endl;
+    return;
+  }
+
+  bool okPressed = FALSE;
+  KMFilter *filter = mFilterList.at( mIdxSelItem );
+
+  // enableControls should make sure this method is
+  // never called when no filter is selected.
+  assert( filter );
+
+  QString newName = KLineEditDlg::getText
+    (
+     i18n("Rename filter \"%1\" to:").arg( filter->pattern()->name() ) /*label*/,
+     filter->pattern()->name() /* initial value */,
+     &okPressed, 0 /* parent */
+     );
+
+  if ( !okPressed ) return;
+
+  if ( newName.isEmpty() )
+    // bait for slotUpdateFilterName to
+    // use automatic naming again.
+    filter->pattern()->setName( "<>" );
   else
-    mCurFilterIdx = -1;
+    filter->pattern()->setName( newName );
 
-  enableControls();
-  connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
-  slotFilterSelected( idx ); // workaround another QT bug
+  slotUpdateFilterName();
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnOk()
+void KMFilterListBox::enableControls()
 {
-  if (mFilter) applyFilterChanges();
-  kernel->filterMgr()->writeConfig();
+  bool theFirst = ( mIdxSelItem == 0 );
+  bool theLast = ( mIdxSelItem >= (int)mFilterList.count() - 1 );
+  bool aFilterIsSelected = ( mIdxSelItem >= 0 );
 
-  KMFilterDlgInherited::close();
+  mBtnUp->setEnabled( aFilterIsSelected && !theFirst );
+  mBtnDown->setEnabled( aFilterIsSelected && !theLast );
+  mBtnDelete->setEnabled( aFilterIsSelected );
+  mBtnRename->setEnabled( aFilterIsSelected );
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnCancel()
+void KMFilterListBox::loadFilterList()
 {
-  kernel->filterMgr()->readConfig();
-  KMFilterDlgInherited::close();
-}
+  assert(mListBox);
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::closeEvent( QCloseEvent *e )
-{
-  kernel->filterMgr()->readConfig();
-  KMFilterDlgInherited::closeEvent(e);
-}
+  setEnabled(FALSE);
+  // we don't want the insertion to
+  // cause flicker in the edit widgets.
+  blockSignals(TRUE);
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::slotBtnHelp()
-{
-  kapp->invokeHelp("FILTERS_ID");
-}
+  // clear both lists
+  mFilterList.clear();
+  mListBox->clear();
 
-//-----------------------------------------------------------------------------
-int KMFilterDlg::indexOfRuleField(const QString &aName) const
-{
-  int i;
-
-  for (i=sFilterFieldList.count()-1; i>=0; i--)
-  {
-    if (*(sFilterFieldList.at(i))==i18n(aName)) break;
+  QListIterator<KMFilter> it( *kernel->filterMgr() );
+  for ( it.toFirst() ; it.current() ; ++it ) {
+    mFilterList.append( new KMFilter( *it ) ); // deep copy
+    mListBox->insertItem( (*it)->pattern()->name() );
   }
-  return i;
+
+  blockSignals(FALSE);
+  setEnabled(TRUE);
+
+  // select topmost item
+  if ( mListBox->count() )
+    mListBox->setSelected( 0, TRUE );
+  else {
+    emit resetWidgets();
+    mIdxSelItem = -1;
+  }
 }
 
-//-----------------------------------------------------------------------------
-void KMFilterDlg::initLists()
+void KMFilterListBox::insertFilter( KMFilter* aFilter )
 {
-  QString name;
+  // must be really a filter...
+  assert( aFilter );
 
-  //---------- initialize list of filter actions
-  if (sFilterActionList.count() <= 0)
-  {
-    sFilterActionList.append(i18n("<nothing>"));
-    for (name=kernel->filterActionDict()->first(); !name.isEmpty();
-	 name=kernel->filterActionDict()->next())
-    {
-      sFilterActionList.append(kernel->filterActionDict()->currentLabel());
+  // if mIdxSelItem < 0, QListBox::insertItem will append.
+  mListBox->insertItem( aFilter->pattern()->name(), mIdxSelItem );
+  if ( mIdxSelItem < 0 ) {
+    // none selected -> append
+    mFilterList.append( aFilter );
+    mListBox->setSelected( mListBox->count() - 1, TRUE );
+    //    slotSelected( mListBox->count() - 1 );
+  } else {
+    // insert just before selected
+    mFilterList.insert( mIdxSelItem, aFilter );
+    mListBox->setSelected( mIdxSelItem, TRUE );
+    //    slotSelected( mIdxSelItem );
+  }
+}
+
+void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
+{
+  // must be neighbours...
+  assert( untouchedOne - movedOne == 1 || movedOne - untouchedOne == 1 );
+
+  // untouchedOne is at idx. to move it down(up),
+  // remove item at idx+(-)1 w/o deleting it.
+  QListBoxItem *item = mListBox->item( movedOne );
+  mListBox->takeItem( item );
+  // now selected item is at idx(idx-1), so
+  // insert the other item at idx, ie. above(below).
+  mListBox->insertItem( item, untouchedOne );
+
+  KMFilter* filter = mFilterList.take( movedOne );
+  mFilterList.insert( untouchedOne, filter );
+
+  mIdxSelItem += movedOne - untouchedOne;
+}
+
+
+
+//=============================================================================
+//
+// class KMFilterActionWidget
+//
+//=============================================================================
+
+KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
+  : QHBox( parent, name )
+{
+  kdDebug() << "KMFilterActionWidget::KMFilterActionWidget entered" << endl;
+  int i;
+  mActionList.setAutoDelete(TRUE);
+
+  mComboBox = new QComboBox( FALSE, this );
+  assert( mComboBox );
+  mWidgetStack = new QWidgetStack(this);
+  assert( mWidgetStack );
+
+  setSpacing( 4 );
+  
+  QListIterator<KMFilterActionDesc> it ( kernel->filterActionDict()->list() );
+  for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
+    //create an instance:
+    KMFilterAction *a = (*it)->create();
+    // append to the list of actions:
+    mActionList.append( a );
+    // add parameter widget to widget stack:
+    mWidgetStack->addWidget( a->createParamWidget( mWidgetStack ), i );
+    // add (i18n-ized) name to combo box
+    mComboBox->insertItem( (*it)->label );
+  }
+  // widget for the case where no action is selected.
+  mWidgetStack->addWidget( new QLabel( i18n("Please select an action."), mWidgetStack ), i );
+  mWidgetStack->raiseWidget(i);
+  mComboBox->insertItem( " " ); 
+  mComboBox->setCurrentItem(i);
+
+  // layout management:
+  // o the combo box is not to be made larger than it's sizeHint(),
+  //   the parameter widget should grow instead.
+  // o the whole widget takes all space horizontally, but is fixed vertically.
+  mComboBox->adjustSize();
+  mComboBox->setSizePolicy( QSizePolicy( QSizePolicy::Maximum, QSizePolicy::Fixed ) );
+  setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
+  updateGeometry();
+
+  // now connect the combo box and the widget stack
+  connect( mComboBox, SIGNAL(activated(int)),
+	   mWidgetStack, SLOT(raiseWidget(int)) );
+
+  kdDebug() << "KMFilterActionWidget::KMFilterActionWidget left" << endl;
+}
+
+void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
+{
+  if ( aAction )
+    kdDebug() << "KMFilterActionWidget: setAction called for action:\nLabel: "
+	      << aAction->label() << "\nName: " << aAction->name()
+	      << "\nParam: " << aAction->argsAsString() << endl;
+  else
+    kdDebug() << "KMfilterActionWidget: setAction called for NULL action!" << endl;
+
+  int i=0;
+  bool found = FALSE;
+  int count = mComboBox->count() - 1 ; // last entry is the empty one
+  QString label = ( aAction ) ? aAction->label() : QString::null ;
+
+  kdDebug() << "  searching for label == \"" << label << "\"" << endl;
+
+  // find the index of typeOf(aAction) in mComboBox
+  // and clear the other widgets on the way.
+  for ( ; i < count ; i++ ) 
+    if ( aAction && mComboBox->text(i) == label ) {
+      //...set the parameter widget to the settings
+      // of aAction...
+      kdDebug() << "***> setting widget " << i << " (" 
+		<< mComboBox->text(i) << ")" << endl;
+      aAction->setParamWidgetValue( mWidgetStack->widget(i) );
+      //...and show the correct entry of
+      // the combo box
+      mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
+      mWidgetStack->raiseWidget(i);
+      found = TRUE;
+    } else { // clear the parameter widget
+      kdDebug() << "---> clearing widget " << i << " (" 
+		<< mComboBox->text(i) << ")" << endl;
+      mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
+    }
+  if ( found ) return;
+
+  kdDebug() << "<--- not found!" << endl;
+  // not found, so set the empty widget
+  mComboBox->setCurrentItem( count ); // last item
+  mWidgetStack->raiseWidget( count) ;
+}
+
+KMFilterAction * KMFilterActionWidget::action()
+{
+  kdDebug() << "KMFilterActionWidget::action" << endl;
+  // look up the action description via the label
+  // returned by QComboBox::currentText()...
+  KMFilterActionDesc *desc = (*kernel->filterActionDict())[ mComboBox->currentText() ];
+  if ( desc ) {
+    // ...create an instance...
+    KMFilterAction *fa = desc->create();
+    if ( fa ) {
+      // ...and apply the setting of the parameter widget.
+      fa->applyParamWidgetValue( mWidgetStack->visibleWidget() );
+      return fa;
     }
   }
-
-  //---------- initialize list of filter functions
-  if (sFilterOpList.count() <= 0)
-  {
-    sFilterOpList.append(i18n("ignore"));
-    sFilterOpList.append(i18n("and"));
-    sFilterOpList.append(i18n("unless"));
-    sFilterOpList.append(i18n("or"));
-  }
-
-  //---------- initialize list of filter operators
-  if (sFilterFuncList.count() <= 0)
-  {
-    sFilterFuncList.append(i18n("equals"));
-    sFilterFuncList.append(i18n("not equal"));
-    sFilterFuncList.append(i18n("contains"));
-    sFilterFuncList.append(i18n("doesn't contain"));
-    sFilterFuncList.append(i18n("regular expression"));
-  }
-
-  //---------- initialize list of filter operators
-  if (sFilterFieldList.count() <= 0)
-  {
-    sFilterFieldList.append(" ");
-    // also see KMFilterRule::matches() and KMFilterDlg::ruleFieldToEnglish()
-    // if you change the following strings!
-    sFilterFieldList.append(i18n("<message>"));
-    sFilterFieldList.append(i18n("<body>"));
-    sFilterFieldList.append(i18n("<any header>"));
-    sFilterFieldList.append(i18n("<To or Cc>"));
-    sFilterFieldList.append("Subject");
-    sFilterFieldList.append("From");
-    sFilterFieldList.append("To");
-    sFilterFieldList.append("Cc");
-    sFilterFieldList.append("Reply-To");
-    sFilterFieldList.append("Organization");
-    sFilterFieldList.append("Resent-From");
-    sFilterFieldList.append("X-Loop");
-  }
+  
+  return 0;
 }
 
-void KMFilterDlg::enableControls()
+//=============================================================================
+//
+// class KMFilterActionWidgetLister (the filter action editor)
+//
+//=============================================================================
+
+KMFilterActionWidgetLister::KMFilterActionWidgetLister( QWidget *parent, const char* name )
+  : KWidgetLister( 1, FILTER_MAX_ACTIONS, parent, name )
 {
-  bool upEnabled = FALSE;
-  bool downEnabled = FALSE;
-  bool deleteEnabled = FALSE;
-  int i;
-
-  if (mFilterList->count() > 0)
-    deleteEnabled = TRUE;
-  if (deleteEnabled && (mFilterList->currentItem() != 0))
-    upEnabled = TRUE;
-  if (deleteEnabled &&
-      (mFilterList->currentItem() != (int)mFilterList->count() - 1))
-    downEnabled = TRUE;
-  mBtnUp->setEnabled( upEnabled );
-  mBtnDown->setEnabled( downEnabled );
-  mBtnDelete->setEnabled( deleteEnabled );
-
-  for (i=0; i<FILTER_MAX_ACTIONS; i++)
-    if (mFaType[i])
-      mFaType[i]->setEnabled( deleteEnabled );
-  mRuleFieldA->setEnabled( deleteEnabled );
-  mRuleFieldB->setEnabled( deleteEnabled );
-  mRuleFuncA->setEnabled( deleteEnabled );
-  mRuleFuncB->setEnabled( deleteEnabled );
-  mRuleValueA->setEnabled( deleteEnabled );
-  mRuleValueB->setEnabled( deleteEnabled );
-  mRuleOp->setEnabled( deleteEnabled );
+  kdDebug() << "KMFilterActionWidgetLister::KMFilterActionWidgetLister" << endl;
+  mActionList = 0;
 }
 
-
-//-----------------------------------------------------------------------------
-void KMFilterDlg::createFilter(const QString &field, const QString &value)
+KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 {
-  int idx;
-  KMFilter* filter = new KMFilter;
-  filter->setName(i18n("Unnamed"));
-  filter->ruleA().init( field, KMFilterRule::FuncEquals, value );
-  applyFilterChanges();
-  mCurFilterIdx = -1;
-
-  idx = mFilterList->currentItem();
-  if (idx >= 0) kernel->filterMgr()->insert(idx, filter);
-  else kernel->filterMgr()->append(filter);
-  idx = kernel->filterMgr()->find(filter);
-  mFilterList->insertItem(filter->name(), idx);
-  mFilterList->setCurrentItem(idx);
-  slotFilterSelected(idx);
-  updateCurFilterName( "" );
-  mFaType[0]->setCurrentItem( 1 ); //transfer type
-  slotActionTypeSelected( mFaType[0], 1 );
-  enableControls();
 }
 
+void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
+{
+  assert ( aList );
+  kdDebug() << "KMFilterActionWidgetLister::setActionList called with a list containing "
+	    << aList->count() << " items" << endl;
 
-//-----------------------------------------------------------------------------
-#include "kmfilterdlg.moc"
+  if ( mActionList )
+    regenerateActionListFromWidgets();
+
+  mActionList = aList;
+
+  ((QWidget*)parent())->setEnabled( TRUE );
+
+  if ( aList->count() == 0 ) {
+    slotClear();
+    return;
+  }
+
+  int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
+  if ( superfluousItems > 0 ) {
+    kdDebug() << "KMFilterActionWidgetLister: Clipping action list to "
+	      << mMaxWidgets << " items!" << endl;
+
+    for ( ; superfluousItems ; superfluousItems-- )
+      mActionList->removeLast();
+  }
+
+  // set the right number of widgets
+  setNumberOfShownWidgetsTo( mActionList->count() );
+
+  // load the actions into the widgets
+  QListIterator<KMFilterAction> aIt( *mActionList );
+  QListIterator<QWidget> wIt( mWidgetList );
+  for ( aIt.toFirst(), wIt.toFirst() ;
+	aIt.current() && wIt.current() ; ++aIt, ++wIt ) {
+    kdDebug() << "about to call setAction for action: " 
+	      << (*aIt)->label() << " " << (*aIt)->argsAsString() << endl;
+    ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
+  }
+}
+
+void KMFilterActionWidgetLister::reset()
+{
+  if ( mActionList )
+    regenerateActionListFromWidgets();
+
+  mActionList = 0;
+  slotClear();
+  ((QWidget*)parent())->setEnabled( FALSE );
+}
+
+QWidget* KMFilterActionWidgetLister::createWidget( QWidget *parent )
+{
+  return new KMFilterActionWidget(parent);
+}
+
+void KMFilterActionWidgetLister::clearWidget( QWidget *aWidget )
+{
+  if ( aWidget )
+    ((KMFilterActionWidget*)aWidget)->setAction(0);
+}
+
+void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
+{
+  kdDebug() << "KMFilterActionWidgetLister::regenerateActionListFromWidgets" << endl;
+  if ( !mActionList ) return;
+
+  mActionList->clear();
+
+  QListIterator<QWidget> it( mWidgetList );
+  for ( it.toFirst() ; it.current() ; ++it ) {
+    KMFilterAction *a = ((KMFilterActionWidget*)(*it))->action();
+    if ( a )
+      mActionList->append( a );
+  }
+    
+}
+
