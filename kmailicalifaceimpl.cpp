@@ -127,41 +127,46 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& ical )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << type << ", "
-            << uid << ", " << ical << " )" << endl;
+                << uid << ", " << ical << " )" << endl;
 
   if( !mUseResourceIMAP )
     return false;
 
+  // Find the folder
+  KMFolder* f = folderFromType( type, folder );
+  if( !f ) {
+    kdError(5006) << "addIncidence(" << type << "," << folder << ") : Not an IMAP resource folder" << endl;
+    return false;
+  }
+  if ( storageFormat( f ) != StorageIcalVcard ) {
+    kdError(5006) << "addIncidence(" << type << "," << folder << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return false;
+  }
+
   bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
+  // Make a new message for the incidence
+  KMMessage* msg = new KMMessage();
+  msg->initHeader();
+  msg->setType( DwMime::kTypeText );
+  if( f == mContacts ) {
+    msg->setSubtype( DwMime::kSubtypeXVCard );
+    msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+    msg->setSubject( "vCard " + uid );
+  } else {
+    msg->setSubtype( DwMime::kSubtypeVCal );
+    msg->setHeaderField("Content-Type",
+                        "text/calendar; method=REQUEST; charset=\"utf-8\"");
+    msg->setSubject( "iCal " + uid );
+  }
+  msg->setBodyEncoded( ical.utf8() );
 
-  // Find the folder
-  KMFolder* f = folderFromType( type, folder );
-  if( f && storageFormat( f ) == StorageIcalVcard ) {
-    // Make a new message for the incidence
-    KMMessage* msg = new KMMessage();
-    msg->initHeader();
-    msg->setType( DwMime::kTypeText );
-    if( f == mContacts ) {
-      msg->setSubtype( DwMime::kSubtypeXVCard );
-      msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
-      msg->setSubject( "vCard " + uid );
-    } else {
-      msg->setSubtype( DwMime::kSubtypeVCal );
-      msg->setHeaderField("Content-Type",
-                          "text/calendar; method=REQUEST; charset=\"utf-8\"");
-      msg->setSubject( "iCal " + uid );
-    }
-    msg->setBodyEncoded( ical.utf8() );
+  // Mark the message as read and store it in the folder
+  msg->touch();
+  f->addMsg( msg );
 
-    // Mark the message as read and store it in the folder
-    msg->touch();
-    f->addMsg( msg );
-
-    rc = true;
-  } else
-    kdError(5006) << "Not an IMAP resource folder" << endl;
+  rc = true;
 
   mResourceQuiet = quiet;
   return rc;
@@ -367,17 +372,23 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   kdDebug(5006) << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
             << uid << " )" << endl;
 
+  // Find the folder
+  KMFolder* f = folderFromType( type, folder );
+
+  if( !f ) {
+    kdError(5006) << "deleteIncidence(" << type << "," << folder << ") : Not an IMAP resource folder" << endl;
+    return false;
+  }
+  if ( storageFormat( f ) != StorageIcalVcard ) {
+    kdError(5006) << "deleteIncidence(" << type << "," << folder << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return false;
+  }
+
   bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  // Find the folder
-  KMFolder* f = folderFromType( type, folder );
-  if( f && storageFormat( f ) == StorageIcalVcard ) {
-    rc = deleteIncidence( folder, uid, 0 );
-  }
-  else
-    kdError(5006) << "Not an IMAP resource folder" << endl;
+  rc = deleteIncidence( folder, uid, 0 );
 
   mResourceQuiet = quiet;
   return rc;
@@ -392,16 +403,23 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
 
   kdDebug(5006) << "KMailICalIfaceImpl::deleteIncidenceKolab( "
                 << resource << ", " << sernum << ")\n";
+
+  // Find the folder
+  KMFolder* f = findResourceFolder( resource );
+  if( !f ) {
+    kdError(5006) << "deleteIncidenceKolab(" << resource << ") : Not an IMAP resource folder" << endl;
+    return false;
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "deleteIncidenceKolab(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return false;
+  }
+
   bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  // Find the folder
-  KMFolder* f = kmkernel->findFolderById( resource );
-  if( f && storageFormat( f ) == StorageXML )
-    rc = deleteIncidence( *f, "", sernum );
-  else
-    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+  rc = deleteIncidence( *f, "", sernum );
 
   mResourceQuiet = quiet;
   return rc;
@@ -419,15 +437,22 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   QStringList ilist;
 
   KMFolder* f = folderFromType( type, folder );
-  if( f && storageFormat( f ) == StorageIcalVcard ) {
-    f->open();
-    QString s;
-    for( int i=0; i<f->count(); ++i ) {
-      bool unget = !f->isMessage(i);
-      if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) )
-        ilist << s;
-      if( unget ) f->unGetMsg(i);
-    }
+  if( !f ) {
+    kdError(5006) << "incidences(" << type << "," << folder << ") : Not an IMAP resource folder" << endl;
+    return ilist;
+  }
+  if ( storageFormat( f ) != StorageIcalVcard ) {
+    kdError(5006) << "incidences(" << type << "," << folder << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return ilist;
+  }
+
+  f->open();
+  QString s;
+  for( int i=0; i<f->count(); ++i ) {
+    bool unget = !f->isMessage(i);
+    if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) )
+      ilist << s;
+    if( unget ) f->unGetMsg(i);
   }
 
   return ilist;
@@ -448,37 +473,42 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
                 << resource << " )" << endl;
 
   KMFolder* f = findResourceFolder( resource );
-  if( f && storageFormat( f ) == StorageXML ) {
-    f->open();
-    QString s;
-    for( int i=0; i<f->count(); ++i ) {
-      bool unget = !f->isMessage(i);
-      KMMessage* msg = f->getMsg( i );
-      if( msg ){
-        const int iSlash = mimetype.find('/');
-        const QCString sType    = mimetype.left( iSlash   ).latin1();
-        const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
-        if( sType.isEmpty() || sSubtype.isEmpty() ){
-          kdError(5006) << mimetype << " not an type/subtype combination" << endl;
+  if( !f ) {
+    kdError(5006) << "incidencesKolab(" << resource << ") : Not an IMAP resource folder" << endl;
+    return aMap;
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "incidencesKolab(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return aMap;
+  }
+
+  f->open();
+  QString s;
+  for( int i=0; i<f->count(); ++i ) {
+    bool unget = !f->isMessage(i);
+    KMMessage* msg = f->getMsg( i );
+    if( msg ){
+      const int iSlash = mimetype.find('/');
+      const QCString sType    = mimetype.left( iSlash   ).latin1();
+      const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+      if( sType.isEmpty() || sSubtype.isEmpty() ){
+        kdError(5006) << mimetype << " not an type/subtype combination" << endl;
+      }else{
+        const int msgType    = DwTypeStrToEnum(   DwString(sType));
+        const int msgSubtype = DwSubtypeStrToEnum(DwString(sSubtype));
+        DwBodyPart* dwPart = msg->findDwBodyPart( msgType,
+                                                  msgSubtype );
+        if( dwPart ){
+          KMMessagePart msgPart;
+          KMMessage::bodyPart(dwPart, &msgPart);
+          aMap.insert(msg->getMsgSerNum(), msgPart.body());
         }else{
-          const int msgType    = DwTypeStrToEnum(   DwString(sType));
-          const int msgSubtype = DwSubtypeStrToEnum(DwString(sSubtype));
-          DwBodyPart* dwPart = msg->findDwBodyPart( msgType,
-                                                    msgSubtype );
-          if( dwPart ){
-            KMMessagePart msgPart;
-            KMMessage::bodyPart(dwPart, &msgPart);
-            aMap.insert(msg->getMsgSerNum(), msgPart.body());
-          }else{
-            // This is *not* an error: it may be that not all of the messages
-            // have a message part that is matching the wanted MIME type
-          }
+          // This is *not* an error: it may be that not all of the messages
+          // have a message part that is matching the wanted MIME type
         }
-        if( unget ) f->unGetMsg(i);
       }
+      if( unget ) f->unGetMsg(i);
     }
-  }else{
-    kdError(5006) << resource << " not such IMAP folder found" << endl;
   }
   return aMap;
 }
@@ -581,27 +611,31 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     return false;
 
   kdDebug(5006) << "Update( " << type << ", " << folder << ", " << uid << ")\n";
-  bool rc = true;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
-  if( f && storageFormat( f ) == StorageIcalVcard ) {
-    KMMessage* msg = findMessageByUID( uid, f );
-    if( msg ) {
-      // Message found - update it
-      deleteMsg( msg );
-      addIncidence( type, folder, uid, entry );
-      rc = true;
-    } else {
-      kdDebug(5006) << type << " not found, cannot update uid " << uid << endl;
-      // Since it doesn't seem to be there, save it instead
-      addIncidence( type, folder, uid, entry );
-    }
+  if( !f ) {
+    kdError(5006) << "update(" << type << "," << folder << ") : Not an IMAP resource folder" << endl;
+    return false;
+  }
+  if ( storageFormat( f ) != StorageIcalVcard ) {
+    kdError(5006) << "update(" << type << "," << folder << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return false;
+  }
+
+  bool rc = true;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+  KMMessage* msg = findMessageByUID( uid, f );
+  if( msg ) {
+    // Message found - update it
+    deleteMsg( msg );
+    addIncidence( type, folder, uid, entry );
+    rc = true;
   } else {
-    kdError(5006) << "Not an IMAP resource folder" << endl;
-    rc = false;
+    kdDebug(5006) << type << " not found, cannot update uid " << uid << endl;
+    // Since it doesn't seem to be there, save it instead
+    addIncidence( type, folder, uid, entry );
   }
 
   mResourceQuiet = quiet;
@@ -613,6 +647,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      const QStringList& attachments,
                                      const QStringList& deletedAttachments )
 {
+  Q_UINT32 rc = 0;
+
   // This finds the message with serial number "id", sets the
   // xml attachment to hold the contents of "xml", and updates all
   // attachments.
@@ -626,48 +662,52 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   // number, and the mail is just added instead. In this case
   // the deletedAttachments can be forgotten.
   if( !mUseResourceIMAP )
-    return false;
+    return rc;
 
   kdDebug(5006) << "KMailICalIfaceImpl::update( " << resource << ", " << sernum << " )\n";
 
-  Q_UINT32 rc = 0;
+  // Find the folder
+  KMFolder* f = findResourceFolder( resource );
+  if( !f ) {
+    kdError(5006) << "update(" << resource << ") : Not an IMAP resource folder" << endl;
+    return rc;
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "update(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return rc;
+  }
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  // Find the folder
-  KMFolder* f = findResourceFolder( resource );
   kdDebug(5006) << "Updating in folder " << f << endl;
-  if( f && storageFormat( f ) == StorageXML ){
-    KMMessage* msg = 0;
-    if ( sernum != 0 )
-      msg = findMessageBySerNum( sernum, f );
-    if ( msg ) {
-      // Message found - update it:
+  KMMessage* msg = 0;
+  if ( sernum != 0 )
+    msg = findMessageBySerNum( sernum, f );
+  if ( msg ) {
+    // Message found - update it:
 
-      // Delete some attachments according to list
-      for( QStringList::ConstIterator it = deletedAttachments.begin();
-          it != deletedAttachments.end();
-          ++it ){
-        if( !deleteAttachment( *msg, *it ) ){
-          // Note: It is _not_ an error if an attachment was already deleted.
-        }
+    // Delete some attachments according to list
+    for( QStringList::ConstIterator it = deletedAttachments.begin();
+         it != deletedAttachments.end();
+         ++it ){
+      if( !deleteAttachment( *msg, *it ) ){
+        // Note: It is _not_ an error if an attachment was already deleted.
       }
-
-      // Add all attachments by reading them from their temp. files
-      for( QStringList::ConstIterator it2 = attachments.begin();
-          it2 != attachments.end();
-          ++it2 ){
-        if( !updateAttachment( *msg, *it2 ) ){
-          kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
-          break;
-        }
-      }
-    }else{
-      // Message not found - store it newly
-      rc = addIncidence( *f, attachments );
     }
-  }else
-    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+
+    // Add all attachments by reading them from their temp. files
+    for( QStringList::ConstIterator it2 = attachments.begin();
+         it2 != attachments.end();
+         ++it2 ){
+      if( !updateAttachment( *msg, *it2 ) ){
+        kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
+        break;
+      }
+    }
+  }else{
+    // Message not found - store it newly
+    rc = addIncidence( *f, attachments );
+  }
 
   mResourceQuiet = quiet;
   return rc;
@@ -681,10 +721,21 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
   // temp file and returns a URL to it. It's up to the resource
   // to delete the tmp file later.
   if( !mUseResourceIMAP )
-    return false;
+    return KURL();
 
   kdDebug(5006) << "KMailICalIfaceImpl::getAttachment( "
                 << resource << ", " << sernum << ", " << filename << " )\n";
+
+  // Find the folder
+  KMFolder* f = findResourceFolder( resource );
+  if( !f ) {
+    kdError(5006) << "getAttachment(" << resource << ") : Not an IMAP resource folder" << endl;
+    return KURL();
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "getAttachment(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return KURL();
+  }
 
   KURL url;
 
@@ -692,48 +743,43 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  // Find the folder
-  KMFolder* f = kmkernel->findFolderById( resource );
-  if( f && storageFormat( f ) == StorageXML ){
-    KMMessage* msg = findMessageBySerNum( sernum, f );
-    if( msg ) {
-      // Message found - look for the attachment:
+  KMMessage* msg = findMessageBySerNum( sernum, f );
+  if( msg ) {
+    // Message found - look for the attachment:
 
-      // quickly searching for our message part: since Kolab parts are
-      // top-level parts we do *not* have to travel into embedded multiparts
-      DwBodyPart* part = msg->getFirstDwBodyPart();
-      while( part ){
-        if( filename == part->partId() ){
-          // Save the xml file. Will be deleted at the end of this method
-          KMMessagePart aPart;
-          msg->bodyPart( part, &aPart );
-          QByteArray rawData( aPart.bodyDecodedBinary() );
+    // quickly searching for our message part: since Kolab parts are
+    // top-level parts we do *not* have to travel into embedded multiparts
+    DwBodyPart* part = msg->getFirstDwBodyPart();
+    while( part ){
+      if( filename == part->partId() ){
+        // Save the xml file. Will be deleted at the end of this method
+        KMMessagePart aPart;
+        msg->bodyPart( part, &aPart );
+        QByteArray rawData( aPart.bodyDecodedBinary() );
 
-          KTempFile file;
-          file.setAutoDelete( true );
-          QTextStream* stream = file.textStream();
-          stream->setEncoding( QTextStream::UnicodeUTF8 );
-          stream->writeRawBytes( rawData.data(), rawData.size() );
-          file.close();
+        KTempFile file;
+        file.setAutoDelete( true );
+        QTextStream* stream = file.textStream();
+        stream->setEncoding( QTextStream::UnicodeUTF8 );
+        stream->writeRawBytes( rawData.data(), rawData.size() );
+        file.close();
 
-          // Compose the return value
-          url.setPath( file.name() );
-          url.setFileEncoding( "UTF-8" );
+        // Compose the return value
+        url.setPath( file.name() );
+        url.setFileEncoding( "UTF-8" );
 
-          bOK = true;
-          break;
-        }
-        part = part->Next();
+        bOK = true;
+        break;
       }
-
-      if( !bOK ){
-        kdDebug(5006) << "Attachment " << filename << " not found." << endl;
-      }
-    }else{
-      kdDebug(5006) << "Message not found." << endl;
+      part = part->Next();
     }
-  }else
-    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+
+    if( !bOK ){
+      kdDebug(5006) << "Attachment " << filename << " not found." << endl;
+    }
+  }else{
+    kdDebug(5006) << "Message not found." << endl;
+  }
 
   mResourceQuiet = quiet;
   return url;
@@ -1262,6 +1308,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   } else {
     QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
     info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
+
+    //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
   }
 
   if( folder->canAccess() != 0 ) {
