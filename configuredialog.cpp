@@ -2792,7 +2792,6 @@ void ConfigureDialog::slotModifySelectedAccount( void )
       return;
     }
   }
-      KMessageBox::sorry( this, i18n("XXXXXXXXXXXXXXXX") );
 
   QStringList accountNames = occupiedNames();
   accountNames.remove( account->name() );
