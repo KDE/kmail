@@ -166,11 +166,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
-  mEdtFrom = new KMLineEdit(this,false,mMainWidget);
-  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget);
-  mEdtTo = new KMLineEdit(this,true,mMainWidget);
-  mEdtCc = new KMLineEdit(this,true,mMainWidget);
-  mEdtBcc = new KMLineEdit(this,true,mMainWidget);
+  mEdtFrom = new KMLineEdit(this,false,mMainWidget, "fromLine");
+  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget, "replyToLine");
+  mEdtTo = new KMLineEdit(this,true,mMainWidget, "toLine");
+  mEdtCc = new KMLineEdit(this,true,mMainWidget, "ccLine");
+  mEdtBcc = new KMLineEdit(this,true,mMainWidget, "bccLine");
   mEdtSubject = new KMLineEditSpell(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
   mDictionaryLabel = new QLabel( mMainWidget );
