@@ -941,7 +941,7 @@ void KMKernel::cleanupImapFolders()
     } else {
       static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->removeRightAway();
       the_dimapFolderMgr->remove(static_cast<KMFolder*>(node));
-      node = the_imapFolderMgr->dir().first();
+      node = the_dimapFolderMgr->dir().first();
     }
   }
 
