@@ -1,5 +1,9 @@
 1998-09-26  Stefan Taferner  <taferner@kde.org> (KMail-0.8.1)
 
+	* Fixed crash upon close of a main- or composer window.
+	Bug seems to be introduced by changed behaviour of KTMainWindow.
+	Still KMail crashes when you click on any message afterwards.
+
 	* Addressbook: finally fixed bug in not reading last line.
 	Thanks to all who reported!
 

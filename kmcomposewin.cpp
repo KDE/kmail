@@ -92,6 +92,7 @@ WindowList* windowList=new WindowList;
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
 #endif
 
+QString KMComposeWin::mPathAttach = 0;
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),

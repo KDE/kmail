@@ -43,7 +43,7 @@ void KMTopLevelWidget::closeEvent(QCloseEvent* e)
   {
     writeConfig();
     e->ignore();
-    delete this;
+    //delete this;
   }
 }
 
