@@ -2098,7 +2098,6 @@ void ConfigureDialog::slotNewIdentity( void )
     QString identityText = dialog->identityText().stripWhiteSpace();
     if( identityText.isEmpty() == false )
     {
-	qDebug( "Here we are %d", list.count() );
       if (list.count() == 1)
 	  secondIdentity = true;
 	
