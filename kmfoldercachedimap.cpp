@@ -771,6 +771,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
+      newState( mProgress, i18n( "Retrieving permissions" ) );
       mAccount->getACL( folder(), mImapPath );
       connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
