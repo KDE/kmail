@@ -1537,7 +1537,7 @@ bool KMComposeWin::applyChanges(void)
       innerBodyPart.setBodyEncoded( body );
       DwBodyPart* innerDwPart = mMsg->createDWBodyPart( &innerBodyPart );
       innerDwPart->Assemble();
-      body  = "\n--";
+      body  = "--";
       body +=     boundaryCStr;
       body +=                 "\n";
       body += innerDwPart->AsString().c_str();
