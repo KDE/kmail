@@ -362,8 +362,6 @@ private:
   QPtrList<KMMessage> mSelMsgList;
   KMHeaderItem* mPrevCurrent;
 
-  /** For shift selection */
-  QListViewItem *mBeginSelection, *mEndSelection;
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
 

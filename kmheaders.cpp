@@ -551,7 +551,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   noRepaint = false;
   getMsgIndex = -1;
   mTopItem = 0;
-  setMultiSelection( true );
+  setSelectionMode( QListView::Extended );
   setAllColumnsShowFocus( true );
   mNested = false;
   nestingPolicy = OpenUnread;
@@ -632,9 +632,6 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
   resetCurrentTime();
-
-  mBeginSelection = 0;
-  mEndSelection = 0;
 
   mSubjectLists.setAutoDelete( true );
 }
@@ -2197,9 +2194,6 @@ void KMHeaders::updateMessageList(bool set_selection)
 // Ctrl+Key_Next, Ctrl+Key_Prior, these events change the current item but do
 // not change the selection state.
 //
-// See contentsMousePressEvent below for a description of mouse selection
-// behaviour.
-//
 // Exception: When shift selecting either with mouse or key press the reader
 // window is updated regardless of whether of not the selection has changed.
 void KMHeaders::keyPressEvent( QKeyEvent * e )
@@ -2258,81 +2252,49 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
   slotRMB();
 }
 
-
 //-----------------------------------------------------------------------------
-// KMail mouse selection - simple description
-// Normal click - select and make current just this item  unselect all others
-// Shift click  - select all items from current item to clicked item
-//                can be used multiple times
-// Cntrl click -  select this item in addition to current selection make this
-//                item the current item.
 void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
   // This slot isn't called anymore if the RMB is pressed (Qt 3.0.1)
   //kdDebug(5006) << "MB pressed: " << e->button() << endl;
-  mBeginSelection = currentItem();
   mPressPos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
-
-  if (!lvi) {
-    KListView::contentsMousePressEvent(e);
-    return;
-  }
-  // Check if our item is the parent of a closed thread and if so, if the root
-  // decoration of the item was clicked (i.e. the +/- sign) which would expand
-  // the thread. In that case, deselect all children, so opening the thread
-  // doesn't cause a flicker.
-  if (e->button() == LeftButton && !lvi->isOpen()) {
-    bool rootDecoClicked =
-         ( mPressPos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
+  if (lvi) {
+    // Check if our item is the parent of a closed thread and if so, if the root
+    // decoration of the item was clicked (i.e. the +/- sign) which would expand
+    // the thread. In that case, deselect all children, so opening the thread
+    // doesn't cause a flicker.
+    if (e->button() == LeftButton && !lvi->isOpen()) {
+      bool rootDecoClicked =
+        ( mPressPos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
           treeStepSize() * ( lvi->depth() + ( rootIsDecorated() ? 1 : 0) ) + itemMargin() )
-      && ( mPressPos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );
-    if (rootDecoClicked) {
-      clearSelection();
-      lvi->setSelected( true );
+        && ( mPressPos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );
+      if (rootDecoClicked) {
+        clearSelection();
+        lvi->setSelected( true );
+      }
     }
+    highlightMessage( lvi );
+    if ((e->button() == LeftButton) )
+      mMousePressed = true;
   }
-
-  setCurrentItem( lvi );
-  if ((e->button() == LeftButton) &&
-      !(e->state() & ControlButton) &&
-      !(e->state() & ShiftButton)) {
-    mMousePressed = true;
-    if (!(lvi->isSelected())) {
-      clearSelection();
-      KListView::contentsMousePressEvent(e);
-    } else {
-      KListView::contentsMousePressEvent(e);
-      setSelected(lvi, true);
-    }
-  }
-  else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
-    if (!shiftSelection( mBeginSelection, lvi ))
-      shiftSelection( lvi, mBeginSelection );
-    mMousePressed = true;
-  }
-  else if ((e->button() == LeftButton) && (e->state() & ControlButton)) {
-    setSelected( lvi, !lvi->isSelected() );
-    mMousePressed = true;
-  }
+  KListView::contentsMousePressEvent(e);
 }
 
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
-  QListViewItem *mEndSelection = itemAt( contentsToViewport( e->pos() ));
+  QListViewItem *currentItem = itemAt( contentsToViewport( e->pos() ));
 
   if ((e->button() == LeftButton)
       && !(e->state() & ControlButton)
       && !(e->state() & ShiftButton)) {
-    clearSelectionExcept( mEndSelection );
+    clearSelectionExcept( currentItem );
   }
 
   if (e->button() != RightButton)
     KListView::contentsMouseReleaseEvent(e);
 
-  mBeginSelection = 0;
-  mEndSelection = 0;
   mMousePressed = false;
 }
 
