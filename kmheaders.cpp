@@ -696,11 +696,11 @@ void KMHeaders::msgRemoved(int id, QString msgId)
 
   delete mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
+    //    debug( QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()));
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
   }
   mItems.resize( mItems.size() - 1 );
-  triggerUpdate();
 }
 
 
@@ -729,9 +729,11 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
 {
+  KMMsgBase* msgBase;
   KMMessage* msg;
+  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
   KMMessageList* msgList = selectedMsgs();
-  int idx, cur = firstSelectedMsg();
   int topX = contentsX();
   int topY = contentsY();
 
@@ -747,7 +749,12 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
       next = next->itemAbove();
   }
 
-  for (idx=cur, msg=msgList->first(); msg; msg=msgList->next()) {
+  clearSelection();
+
+  for (msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+    int idx = mFolder->find(msgBase);
+    assert(idx != -1);
+    msg = mFolder->getMsg(idx);
     int filterResult;
     KMFolder *parent = msg->parent();
     if (parent)
@@ -764,10 +771,9 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     if (!msg->parent()) {
       parent->addMsg( msg );
     }
+    if (msg->parent()) // unGet this msg
+      msg->parent()->unGetMsg( msg->parent()->count() -1 );
   }
-  
-  if (cur > (int)mItems.size()) cur = mItems.size()-1;
-  clearSelection();
   
   setContentsPos( topX, topY );
   if (next) {
@@ -779,6 +785,8 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     emit selected( 0 );
 
   makeHeaderVisible();
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	  this,SLOT(highlightMessage(QListViewItem*)));
 }
 
 
@@ -998,7 +1006,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessageList* msgList;
   KMMessage *msg;
-  KMMsgBase *curMsg = 0;
+  KMMsgBase *msgBase, *curMsg = 0;
   int top, rc;
   bool doUpd;
 
@@ -1034,12 +1042,18 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     viewport()->setUpdatesEnabled(FALSE);
   }
 
-  for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
+  for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
-    kernel->undoStack()->pushAction( msg, mFolder );
+    int idx = mFolder->find(msgBase);
+    assert(idx != -1);
+    msg = mFolder->getMsg(idx);
+
     if (destFolder) {
-      // "deleting" messages means moving them into the trash folder
       rc = destFolder->moveMsg(msg);
+      if (rc == 0) {
+	KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
+	kernel->undoStack()->pushAction( mb, mFolder );
+      }
     }
     else
     {
@@ -1081,10 +1095,17 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 void KMHeaders::undo()
 {
   KMMessage *msg;
+  KMMsgBase *mb;
   KMFolder *folder;
-  if (kernel->undoStack()->popAction(msg, folder))
+  if (kernel->undoStack()->popAction(mb, folder))
   {
+    if (mb->parent()) {
+      int idx = mb->parent()->find(mb);
+      assert(idx != -1);
+      msg = mb->parent()->getMsg( idx );
      folder->moveMsg( msg );     
+      folder->unGetMsg( folder->count() - 1 );
+    }
   }
   else 
   {
@@ -1105,6 +1126,7 @@ void KMHeaders::copySelectedToFolder(int menuId )
 void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessageList* msgList;
+  KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
   int top, rc;
 
@@ -1115,13 +1137,19 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
   destFolder->open();
   msgList = selectedMsgs(msgId);
-  for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
+  for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
+    int idx = mFolder->find(msgBase);
+    assert(idx != -1);
+    msg = mFolder->getMsg(idx);
+
     newMsg = new KMMessage;
     newMsg->fromString(msg->asString());
     assert(newMsg != NULL);
 
     rc = destFolder->addMsg(newMsg);
+    destFolder->unGetMsg( destFolder->count() - 1 );
+    mFolder->unGetMsg( idx );
   }
   destFolder->close();
   kernel->kbp()->idle();
@@ -1144,11 +1172,15 @@ void KMHeaders::setCurrentMsg(int cur)
 //-----------------------------------------------------------------------------
 KMMessageList* KMHeaders::selectedMsgs(int idx)
 {
-  KMMessage* msg;
+  QListViewItem *qitem;
 
   mSelMsgList.clear();
-  for (msg=getMsg(idx); msg; msg=getMsg())
-    mSelMsgList.append(msg);
+  for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
+    if (qitem->isSelected()) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
+      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
+      mSelMsgList.append(msgBase);
+    }
 
   return &mSelMsgList;
 }

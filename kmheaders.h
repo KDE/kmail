@@ -20,7 +20,7 @@ class KMHeaderItem;
 class QPixmap;
 class QIconSet;
 
-typedef QList<KMMessage> KMMessageList;
+typedef QList<KMMsgBase> KMMessageList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 // A special drag class for header list to folder tree DnD operations
