@@ -159,7 +159,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
   mLogin = config.readEntry("login", "");
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
-  mStorePasswd = config.readNumEntry("store-passwd", TRUE);
+  mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
   mHost = config.readEntry("host");
