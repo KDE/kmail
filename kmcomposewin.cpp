@@ -919,10 +919,11 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
 
   if(mEditor->isModified())
   {
-    rc = QMessageBox::information(0,i18n("KMail Confirm"),
+    rc = QMessageBox::information(this,i18n("Confirmation"),
 				  i18n("Close and discard\nedited message?"),
-				  i18n("Close"));
-    if (rc != 1)
+				  i18n( "Yes" ), 
+				  i18n( "No" ), 0, 0, 1);
+    if (rc == 1)
     {
       e->ignore();
       return;

@@ -401,7 +401,7 @@ static void transferMail(void)
 	    "name in the directory ~/Mail (e.g. inbox).\n\n"
 	    "Shall KMail move the mail folders now ?"),
 		      i18n("Yes"), i18n("No"));
-  if (rc != 1) return;
+  if (rc == 1) return;
 
   dir.cd("/");  // otherwise we lock the directory
   testDir("/Mail");
@@ -714,7 +714,6 @@ main(int argc, char *argv[])
       KGlobal::dirs()->
 	addResourceType("kmail_pic", 
 			KStandardDirs::kde_default("data") + "kmail/pics/");
-
       app = new KApplication(argc, argv, "kmail"); // clear arg list
       argc--;
       argv++;

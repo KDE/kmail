@@ -29,7 +29,6 @@
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <qmessagebox.h>
 
 Kpgp *Kpgp::kpgpObject = 0L;
 
@@ -289,7 +288,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
 				     i18n("Continue"), i18n("Cancel"));
-      if(ret == 2) return false;
+      if(ret == 1) return false;
     }
     else if(!noKeyFor.isEmpty())
     {
@@ -311,7 +310,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
       aStr += i18n("decrypt the message.");
       int ret = QMessageBox::warning(0,i18n("PGP Warning"), aStr,
 			       i18n("Continue"), i18n("Cancel"));
-      if(ret == 2) return false;
+      if(ret == 1) return false;
     }
   }
 
@@ -327,8 +326,8 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 					"leave the message unsigned, "
 					"or cancel sending the message?"),
 				   i18n("Retry"), i18n("Continue"), i18n("Cancel"));
-    if(ret == 3) return false;
-    if(ret == 2) sign = false;
+    if(ret == 2) return false;
+    if(ret == 1) sign = false;
     // ok let's try once again...
     status = doEncSign(persons, sign);
   }
@@ -342,19 +341,19 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     ret = QMessageBox::warning(0,i18n("PGP Warning"),
 			      aStr, i18n("Encrypt"),
 			       i18n("Continue"), i18n("Cancel"));
-    if(ret == 3) return false;
-    if(ret == 2)
+    if(ret == 2) return false;
+    if(ret == 1)
     {
       pgp->clearOutput();
       return true;
     }
-    if(ret == 1) status = doEncSign(persons, sign, true);
+    if(ret == 0) status = doEncSign(persons, sign, true);
   }
   if( status & KpgpBase::MISSINGKEY)
   {
     aStr = pgp->lastErrorMessage();
     aStr += "\n";
-    aStr += i18n("Do you wan't to leave the message as is,\n"
+    aStr += i18n("Do you want to leave the message as is,\n"
 		 "or cancel the message?");
     ret = QMessageBox::information(0,i18n("PGP Warning"),
 				   aStr,	
