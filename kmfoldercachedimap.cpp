@@ -127,7 +127,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mUserRights( 0 ), mSilentUpload( false ),
-    mFolderRemoved( false ), mResync( false ),
+    mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false )
 {
@@ -184,7 +184,7 @@ void KMFolderCachedImap::readConfig()
     kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
 
   KMFolderMaildir::readConfig();
-  
+
   mStatusChangedLocally =
     config->readBoolEntry( "StatusChangedLocally", false );
 
@@ -480,7 +480,6 @@ void KMFolderCachedImap::serverSync( bool recurse )
 #endif
   mTentativeHighestUid = 0; // reset, last sync could have been canceled
 
-  mResync = false;
   serverSyncInternal();
 }
 
@@ -759,14 +758,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // Wrap up the 'download emails' stage. We always end up at 95 here.
     mProgress = 95;
 
-    if( mResync ) {
-      // Some conflict have been resolved, so restart the sync
-      mResync = false;
-      mSyncState = SYNC_STATE_INITIAL;
-      serverSyncInternal();
-      break;
-    } else
-      mSyncState = SYNC_STATE_GET_ANNOTATIONS;
+    mSyncState = SYNC_STATE_GET_ANNOTATIONS;
 
   case SYNC_STATE_GET_ANNOTATIONS:
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
@@ -1118,13 +1110,8 @@ bool KMFolderCachedImap::deleteMessages()
     newState( mProgress, i18n("Deleting removed messages from server"));
     QStringList sets = KMFolderImap::makeSets( uidsForDeletionOnServer, true );
     uidsForDeletionOnServer.clear();
-    if( sets.count() > 1 ) {
-      // Rerun the sync until the messages are all deleted
-      mResync = true;
-    }
-    //kdDebug(5006) << "Deleting " << sets.front() << " from server folder " << imapPath() << endl;
-    CachedImapJob *job = new CachedImapJob( sets.front(), CachedImapJob::tDeleteMessage,
-                                                this );
+    kdDebug(5006) << "Deleting " << sets.count() << " sets of messages from server folder " << imapPath() << endl;
+    CachedImapJob *job = new CachedImapJob( sets, CachedImapJob::tDeleteMessage, this );
     connect( job, SIGNAL( result(KMail::FolderJob *) ),
              this, SLOT( slotDeleteMessagesResult(KMail::FolderJob *) ) );
     job->start();

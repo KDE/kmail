@@ -184,9 +184,6 @@ public:
   virtual int createIndexFromContents()
     { return KMFolderMaildir::createIndexFromContents(); }
 
-  // Mark for resync
-  void resync() { mResync = true; }
-
   //virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
 
   /**
@@ -394,7 +391,6 @@ private:
 
   bool mSilentUpload;
   bool mFolderRemoved;
-  bool mResync;
   //bool mHoldSyncs;
   bool mRecurse;
   bool mCreateInbox;
