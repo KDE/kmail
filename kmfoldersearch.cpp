@@ -357,7 +357,7 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     connect(kernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
-	    this, SLOT(proxyHeaderChanged(KMFolder*,int)));
+	    this, SLOT(propogateHeaderChanged(KMFolder*,int)));
 
     connect(kernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
 	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
@@ -372,7 +372,7 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     connect(kernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
-	    this, SLOT(proxyHeaderChanged(KMFolder*,int)));
+	    this, SLOT(propogateHeaderChanged(KMFolder*,int)));
 }
 
 KMFolderSearch::~KMFolderSearch()
@@ -967,7 +967,7 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     QTimer::singleShot(0, this, SLOT(executeSearch()));
 }
 
-void KMFolderSearch::proxyHeaderChanged(KMFolder *folder, int idx)
+void KMFolderSearch::propogateHeaderChanged(KMFolder *folder, int idx)
 {
     int pos = 0;
     if (!search() && !readSearch())
