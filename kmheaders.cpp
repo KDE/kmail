@@ -1690,7 +1690,7 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
 {
-  KMMessageList msgList = *selectedMsgs(true);
+  KMMessageList msgList = *selectedMsgs();
   if ( !destFolder &&     // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          ( msgList.count() == 1 )
@@ -1704,6 +1704,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
   // remember the message to select afterwards
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+
+  msgList = *selectedMsgs(true);
 
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
   command->start();
