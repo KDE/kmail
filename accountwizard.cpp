@@ -49,6 +49,7 @@
 
 #include "globalsettings.h"
 #include "kmkernel.h"
+#include "kmmessage.h"
 #include "kmservertest.h"
 #include "kmtransport.h"
 #include "libkpimidentities/identity.h"
