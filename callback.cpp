@@ -77,8 +77,11 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->addAttach( msgPart );
 
   cWin->slotWordWrapToggled( false );
-  cWin->mNeverSign = true;
-  cWin->mNeverEncrypt = true;
+  // TODO: These are no longer available. It was an internal
+  // implementation detail of kmcomposewin, anyway. Please find
+  // another way...
+  //cWin->mNeverSign = true;
+  //cWin->mNeverEncrypt = true;
 
   // This is commented out, since there is no other visual indication of
   // the fact that a message has been sent. Also, there is no way
@@ -99,10 +102,10 @@ QString Callback::receiver() const
 
   mReceiverSet = true;
 
-  KPIM::Identity ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForAddress( mMsg->to() );
 
-  if( ident != KPIM::Identity::null ) {
+  if( !ident.isNull() ) {
     // That was easy
     mReceiver = ident.emailAddr();
   } else {
