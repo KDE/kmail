@@ -12,6 +12,7 @@ Comment=A bodypart formatter plugin for application/octet-stream
 Comment[da]=Et bodypart formateringsplugin for application/octet-stream
 Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
 Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
+Comment[it]=Un plugin per formattare application/octet-stream
 Comment[nl]=Een opmaakplugin voor application/octet-stream
 Comment[sl]=Oblikovni vstavek za application/octet-stream
 Comment[sv]=Ett insticksprogram för brevtextformatering av application/octet-stream
