@@ -927,8 +927,6 @@ void KMKernel::cleanupLoop()
     if (!folder || folder->isDir()) continue;
     folder->close(TRUE);
   }
-  delete the_msgDict;
-  the_msgDict = 0;
   delete the_msgIndex;
   the_msgIndex = 0;
   delete the_folderMgr;
@@ -937,6 +935,8 @@ void KMKernel::cleanupLoop()
   the_imapFolderMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
+  delete the_msgDict;
+  the_msgDict = 0;
   delete the_kbp;
   the_kbp = 0;
   delete mConfigureDialog;
