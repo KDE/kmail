@@ -1048,9 +1048,8 @@ void KMMainWin::slotEmptyFolder()
   {
     str = i18n("Are you sure you want to empty the folder \"%1\"?").arg(mFolder->label());
 
-    if (KMessageBox::warningYesNo(this, str, i18n("Empty Folder"),
-				  i18n("&Empty"), KStdGuiItem::cancel() )
-        !=KMessageBox::Yes) return;
+    if (KMessageBox::warningContinueCancel(this, str, i18n("Empty Folder"), i18n("&Empty"))
+        !=KMessageBox::Continue) return;
   }
 
   if (mFolder->protocol() == "imap")
@@ -1106,9 +1105,8 @@ void KMMainWin::slotRemoveFolder()
 	     "\"%1\" and all subfolders, discarding their contents?")
 			     .arg(mFolder->label());
 
-  if (KMessageBox::warningYesNo(this, str, i18n("Remove Folder"),
-				i18n("&Remove"), KStdGuiItem::cancel() )
-      == KMessageBox::Yes)
+  if (KMessageBox::warningContinueCancel(this, str, i18n("Remove Folder"), i18n("&Remove"))
+      == KMessageBox::Continue)
   {
     if (mFolder->hasAccounts())
     {
