@@ -1,12 +1,12 @@
 
-data_DATA = green-bullet.png kmfldin.png kmfldout.png kmfolder.png \
-	kminsorgmsg.png kmmsgdel.png kmmsgnew.png kmmsgunseen.png \
-	kmmsgold.png kmmsgreplied.png kmtrash.png red-bullet.png \
+data_DATA = green-bullet.png kmfldin.png kmfldout.png \
+	kmmsgdel.png kmmsgnew.png kmmsgunseen.png \
+	kmmsgold.png kmmsgreplied.png red-bullet.png \
 	kmmsgforwarded.png kmmsgqueued.png kmmsgsent.png \
 	kmmsgflag.png kmfldsent.png closed.png green-bullet.png \
 	stopwatch.xbm stopwatchMask.xbm kdelogo.png \
 	feather_white.png pub_key_red.png pgp-keys.png \
-	kmfolderfull.png abup.png abdown.png kmmsgpartiallyencrypted.png \
+	abup.png abdown.png kmmsgpartiallyencrypted.png \
 	kmmsgpartiallysigned.png kmmsgfiller.png kmmsgfullyencrypted.png \
 	kmmsgfullysigned.png kmundefined.png kmailwindowlayout1.png \
 	kmailwindowlayout2.png kmailwindowlayout3.png kmailwindowlayout4.png \
