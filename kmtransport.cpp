@@ -320,7 +320,7 @@ void KMTransportDialog::makeSmtpPage()
  
   QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
   mSmtp.checkCapabilities =
-    new QPushButton( i18n("Check, what the server supports"), page2 );
+    new QPushButton( i18n("Check what the server supports"), page2 );
   connect(mSmtp.checkCapabilities, SIGNAL(clicked()),
     SLOT(slotCheckSmtpCapabilities()));
   buttonLay->addWidget( mSmtp.checkCapabilities );
