@@ -108,9 +108,12 @@ void lockOrDie() {
   bool first_instance = false;
   if ( oldPid == -1 )
       first_instance = true;
+  // check if the lock file is stale by trying to see if 
+  // the other pid is currently running.
+  // Not 100% correct but better safe than sorry
   else if (hostName == oldHostName && oldPid != getpid()) {
       if ( kill(oldPid, 0) == -1 )
-          first_instance |= ( errno == ESRCH );
+          first_instance = ( errno == ESRCH );
   }
 
   if ( !first_instance )
