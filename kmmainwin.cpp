@@ -1400,6 +1400,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 
     msg = new KMMessage;
     msg->initHeader(id);
+    msg->setCharset("utf-8");
     msg->setTo(aUrl.path());
     QString query=aUrl.query();
     while (!query.isEmpty()) {
@@ -1422,6 +1423,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     }
 
     win = new KMComposeWin(msg,id);
+    win->setCharset("", TRUE);
     win->show();
   }
   else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
@@ -1455,9 +1457,11 @@ void KMMainWin::slotMailtoCompose()
   if ( mFolder )
     id = mFolder->identity();
   msg->initHeader(id);
+  msg->setCharset("utf-8");
   msg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(msg,id);
+  win->setCharset("", TRUE);
   win->show();
 }
 
