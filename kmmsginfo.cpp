@@ -17,13 +17,14 @@ public:
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
 	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
 	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
-       SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
-       STRIPPEDSUBJECT_SET = 0x8000,
+	SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
+	STRIPPEDSUBJECT_SET = 0x8000,
 
 	ALL_SET = 0xFFFF, NONE_SET = 0x0000
     };
     uint modifiers;
-    QString subject, from, to, replyToIdMD5, replyToAuxIdMD5, strippedSubjectMD5, msgIdMD5, xmark, file;
+    QString subject, from, to, replyToIdMD5, replyToAuxIdMD5,
+            strippedSubjectMD5, msgIdMD5, xmark, file;
     off_t folderOffset;
     size_t msgSize;
     time_t date;
@@ -38,10 +39,10 @@ public:
 	    modifiers |= SUBJECT_SET;
 	    subject = other.subject;
 	}
-       if (other.modifiers & STRIPPEDSUBJECT_SET) {
-           modifiers |= STRIPPEDSUBJECT_SET;
-           strippedSubjectMD5 = other.strippedSubjectMD5;
-       }
+	if (other.modifiers & STRIPPEDSUBJECT_SET) {
+	    modifiers |= STRIPPEDSUBJECT_SET;
+	    strippedSubjectMD5 = other.strippedSubjectMD5;
+	}
 	if (other.modifiers & FROM_SET) {
 	    modifiers |= FROM_SET;
 	    from = other.from;
@@ -58,10 +59,10 @@ public:
 	    modifiers |= REPLYTO_SET;
 	    replyToIdMD5 = other.replyToIdMD5;
 	}
-       if (other.modifiers & REPLYTOAUX_SET) {
-           modifiers |= REPLYTOAUX_SET;
-           replyToAuxIdMD5 = other.replyToAuxIdMD5;
-       }
+	if (other.modifiers & REPLYTOAUX_SET) {
+	    modifiers |= REPLYTOAUX_SET;
+	    replyToAuxIdMD5 = other.replyToAuxIdMD5;
+	}
 
 	if(other.modifiers & MSGID_SET) {
 	    modifiers |= MSGID_SET;
@@ -173,8 +174,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
 		     KMMsgStatus aStatus, const QCString& aXMark,
-                    const QCString& replyToId, const QCString& replyToAuxId,
-                    const QCString& msgId,
+		     const QCString& replyToId, const QCString& replyToAuxId,
+		     const QCString& msgId,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
 		     KMMsgMDNSentState mdnSentState,
@@ -207,8 +208,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
 		     KMMsgStatus aStatus, const QCString& aXMark,
-                    const QCString& replyToId, const QCString& replyToAuxId,
-                    const QCString& msgId,
+		     const QCString& replyToId, const QCString& replyToAuxId,
+		     const QCString& msgId,
 		     const QCString& aFileName,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
@@ -216,9 +217,9 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     unsigned long aMsgSize)
 {
   // use the "normal" init for most stuff
-  init(aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, replyToAuxId,
-                 msgId, encryptionState, signatureState, mdnSentState,
-                 (unsigned long)0, aMsgSize);
+  init( aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, replyToAuxId,
+        msgId, encryptionState, signatureState, mdnSentState,
+        (unsigned long)0, aMsgSize );
   kd->file = aFileName;
 }
 
@@ -275,26 +276,26 @@ QString KMMsgInfo::replyToIdMD5(void) const
 }
 
 //-----------------------------------------------------------------------------
-QString KMMsgInfo::replyToAuxIdMD5(void) const
+QString KMMsgInfo::replyToAuxIdMD5() const
 {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::REPLYTOAUX_SET)
-       return kd->replyToAuxIdMD5;
-    return getStringPart(MsgReplyToAuxIdMD5Part);
+    if( kd && kd->modifiers & KMMsgInfoPrivate::REPLYTOAUX_SET )
+	return kd->replyToAuxIdMD5;
+    return getStringPart( MsgReplyToAuxIdMD5Part );
 }
 
 //-----------------------------------------------------------------------------
-QString KMMsgInfo::strippedSubjectMD5(void) const
+QString KMMsgInfo::strippedSubjectMD5() const
 {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET)
-       return kd->strippedSubjectMD5;
-    return getStringPart(MsgStrippedSubjectMD5Part);
+    if( kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET )
+	return kd->strippedSubjectMD5;
+    return getStringPart( MsgStrippedSubjectMD5Part );
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgInfo::subjectIsPrefixed(void) const
+bool KMMsgInfo::subjectIsPrefixed() const
 {
-    return !(strippedSubjectMD5() == KMMessagePart::encodeBase64(subject()));
+    return strippedSubjectMD5() != KMMessagePart::encodeBase64( subject() );
 }
 
 //-----------------------------------------------------------------------------
@@ -347,35 +348,34 @@ void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
     mDirty = TRUE;
 }
 
-//-----------------------------------------------------------------------------
-void KMMsgInfo::setReplyToAuxIdMD5(const QString& aReplyToAuxIdMD5)
-{
-    if (aReplyToAuxIdMD5 == replyToAuxIdMD5())
-       return;
 
-    if (!kd)
-       kd = new KMMsgInfoPrivate;
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setReplyToAuxIdMD5( const QString& aReplyToAuxIdMD5 )
+{
+    if( aReplyToAuxIdMD5 == replyToAuxIdMD5() )
+	return;
+
+    if( !kd )
+	kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::REPLYTOAUX_SET;
     kd->replyToAuxIdMD5 = aReplyToAuxIdMD5;
     mDirty = TRUE;
 }
 
 
-
 //-----------------------------------------------------------------------------
 void KMMsgInfo::initStrippedSubjectMD5()
 {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET)
-       return;
-    QString rawSubject = KMMessage::stripOffPrefixes(subject());
-    QString subjectMD5 = KMMessagePart::encodeBase64(rawSubject);
-    if (!kd)
-       kd = new KMMsgInfoPrivate;
+    if( kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET )
+	return;
+    QString rawSubject = KMMessage::stripOffPrefixes( subject() );
+    QString subjectMD5 = KMMessagePart::encodeBase64( rawSubject );
+    if( !kd )
+	kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::STRIPPEDSUBJECT_SET;
     kd->strippedSubjectMD5 = subjectMD5;
     mDirty = TRUE;
 }
-
 
 
 //-----------------------------------------------------------------------------

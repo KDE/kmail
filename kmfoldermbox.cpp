@@ -585,10 +585,10 @@ int KMFolderMbox::createIndexFromContents()
 	{
 	  if ((replyToIdStr.isEmpty() || (replyToIdStr[0] != '<'))  &&
 	      !referencesStr.isEmpty() && referencesStr[0] == '<') {
-	      // use the last reference, instead of missing In-Reply-To
-	      int leftAngle = referencesStr.findRev( '<' );
-	      if (leftAngle != -1)
-		  replyToIdStr = referencesStr.mid(leftAngle);
+            // use the last reference, instead of missing In-Reply-To
+            int leftAngle = referencesStr.findRev( '<' );
+            if (leftAngle != -1)
+              replyToIdStr = referencesStr.mid(leftAngle);
 	  }
 
 	  mi = new KMMsgInfo(this);
@@ -606,7 +606,7 @@ int KMFolderMbox::createIndexFromContents()
 	  needStatus = 3;
 	  xmarkStr = "";
 	  replyToIdStr = "";
-         replyToAuxIdStr = "";
+	  replyToAuxIdStr = "";
 	  referencesStr = "";
 	  msgIdStr = "";
 	  dateStr = "";
@@ -680,7 +680,7 @@ int KMFolderMbox::createIndexFromContents()
       replyToAuxIdStr = referencesStr;
       rightAngle = referencesStr.find( '>' );
       if (rightAngle != -1)
-         replyToAuxIdStr.truncate( rightAngle + 1 );
+        replyToAuxIdStr.truncate( rightAngle + 1 );
 
     }
     else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {

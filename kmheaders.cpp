@@ -2387,34 +2387,35 @@ bool KMHeaders::writeSortOrder()
     }
 
     if(mIdTree.isEmpty()) {
-	for(int x = 0; x < mFolder->count(); x++) {
-	    QString md5;
-	    if(mItems[x]) {
-	       KMMsgBase *mb = mFolder->getMsgBase(x);
-               md5 = mb->msgIdMD5();
-               if (!md5.isEmpty() && !mIdTree[md5])
-		  mIdTree.insert(md5, mItems[x]);
-	    }
-	}
+      for(int x = 0; x < mFolder->count(); x++) {
+        QString md5;
+        if(mItems[x]) {
+          KMMsgBase *mb = mFolder->getMsgBase(x);
+          md5 = mb->msgIdMD5();
+          if (!md5.isEmpty() && !mIdTree[md5])
+            mIdTree.insert(md5, mItems[x]);
+        }
+      }
     }
+
     QDict<KMHeaderItem> msgSubjects(mFolder->count()*2);
     for(int x = 0; x < mFolder->count(); x++) {
-       if(mItems[x]) {
-           QString subjMD5;
-           KMMsgBase *mb = mFolder->getMsgBase(x);
-           subjMD5 = mb->strippedSubjectMD5();
-           if (subjMD5.isEmpty()) {
-               mb->initStrippedSubjectMD5();
-               subjMD5 = mb->strippedSubjectMD5();
-           }
-           if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
-               QString replyToIdMD5 = mb->replyToIdMD5();
-               QString replyToAuxIdMD5 = mb->replyToAuxIdMD5();
-               if ( (replyToIdMD5.isEmpty() || !mIdTree[replyToIdMD5])
+      if(mItems[x]) {
+        QString subjMD5;
+        KMMsgBase *mb = mFolder->getMsgBase(x);
+        subjMD5 = mb->strippedSubjectMD5();
+        if (subjMD5.isEmpty()) {
+          mb->initStrippedSubjectMD5();
+          subjMD5 = mb->strippedSubjectMD5();
+        }
+        if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
+          QString replyToIdMD5 = mb->replyToIdMD5();
+          QString replyToAuxIdMD5 = mb->replyToAuxIdMD5();
+          if ( (replyToIdMD5.isEmpty() || !mIdTree[replyToIdMD5])
                && (replyToAuxIdMD5.isEmpty() || !mIdTree[replyToAuxIdMD5]) )
-                   msgSubjects.insert(subjMD5, mItems[x]);
-           }
-       }
+            msgSubjects.insert(subjMD5, mItems[x]);
+        }
+      }
     }
 
     KMMsgBase *kmb;
@@ -2425,34 +2426,35 @@ bool KMHeaders::writeSortOrder()
       int parent_id = -2; //no parent, top level
       KMHeaderItem *p = NULL;
       if(!replymd5.isEmpty())
-         p = mIdTree[replymd5];
+        p = mIdTree[replymd5];
 
       if (!p) {
-         // If we dont have a replyToId, or if we have one and the
-         // corresponding message is not in this folder, as happens
-         // if you keep your outgoing messages in an OUTBOX, for
-         // example, try the list of references, because the second
-         // to last will likely be in this folder. replyToAuxIdMD5 ontains
-         // the second to last one.
-         QString  ref = kmb->replyToAuxIdMD5();
-         if (!ref.isEmpty())
-             p = mIdTree[ref];
+        // If we dont have a replyToId, or if we have one and the
+        // corresponding message is not in this folder, as happens
+        // if you keep your outgoing messages in an OUTBOX, for
+        // example, try the list of references, because the second
+        // to last will likely be in this folder. replyToAuxIdMD5 ontains
+        // the second to last one.
+        QString  ref = kmb->replyToAuxIdMD5();
+        if (!ref.isEmpty())
+          p = mIdTree[ref];
       }
       // still no parent, let's try by subject
       // Force unprefixed subjects that would be threaded by subject
       // to the top level.
       if (!p && kmb->subjectIsPrefixed()) {
-	  QString subjMD5 = kmb->strippedSubjectMD5();
-	  if (!subjMD5.isEmpty())
-	      p = msgSubjects[subjMD5];
+        QString subjMD5 = kmb->strippedSubjectMD5();
+        if (!subjMD5.isEmpty()) {
+          p = msgSubjects[subjMD5];
+        }
       }
-      if (p) {
-	  parent_id = p->mMsgId;
-	  if (parent_id == i->mMsgId)
-	      parent_id = -1;
-      } else {
-	  parent_id = -1;
+      if( p ) {
+        parent_id = p->mMsgId;
+        if (parent_id == i->mMsgId)
+          parent_id = -1;
       }
+      else
+        parent_id = -1;
 
       internalWriteItem(sortStream, mFolder, i->mMsgId, parent_id,
 			i->key(mSortCol, !mSortDescending), FALSE);
@@ -2606,7 +2608,6 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
 	ret = -ret;
     return ret;
 }
-
 
 
 bool KMHeaders::readSortOrder(bool set_selection)
@@ -2812,72 +2813,71 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if (appended && threaded && !unparented.isEmpty()) {
 	CREATE_TIMER(reparent);
 	START_TIMER(reparent);
-       // Build two dictionaries, one with all messages and their ids, and
-       // one with the md5 hashes of the subject stripped of prefixes such as
-       // Re: or similar.
+	// Build two dictionaries, one with all messages and their ids, and
+	// one with the md5 hashes of the subject stripped of prefixes such as
+	// Re: or similar.
 	QDict<KMSortCacheItem> msgs(mFolder->count() * 2);
-       QDict<KMSortCacheItem> msgSubjects(mFolder->count() * 2);
+	QDict<KMSortCacheItem> msgSubjects(mFolder->count() * 2);
 	for(int x = 0; x < mFolder->count(); x++) {
-           KMMsgBase *mi = mFolder->getMsgBase(x);
-           QString md5 = mi->msgIdMD5();
-           if(!md5.isEmpty())
+	    KMMsgBase *mi = mFolder->getMsgBase(x);
+	    QString md5 = mi->msgIdMD5();
+	    if(!md5.isEmpty())
 	    msgs.insert(md5, sortCache[x]);
 	}
-       for(int x = 0; x < mFolder->count(); x++) {
-           KMMsgBase *mi = mFolder->getMsgBase(x);
-           QString subjMD5 = mi->strippedSubjectMD5();
-           if (subjMD5.isEmpty()) {
-               mFolder->getMsgBase(x)->initStrippedSubjectMD5();
-               subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
-           }
-           // The first message with a certain subject is where we want to
-           // thread the other messages with the same suject below. Only keep
-           // that in the dict. Also only accept messages which would not
-           // otherwise be threaded by IDs as top level messages to avoid
-           // circular threading.
-           if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
-               QString replyToIdMD5 = mi->replyToIdMD5();
-               QString replyToAuxIdMD5 = mi->replyToAuxIdMD5();
-               if ( (replyToIdMD5.isEmpty() || !msgs.find(replyToIdMD5))
-               && (replyToAuxIdMD5.isEmpty() || !msgs.find(replyToAuxIdMD5)) )
-                   msgSubjects.insert(subjMD5, sortCache[x]);
-           }
-       }
+	for(int x = 0; x < mFolder->count(); x++) {
+	    KMMsgBase *mi = mFolder->getMsgBase(x);
+	    QString subjMD5 = mi->strippedSubjectMD5();
+	    if (subjMD5.isEmpty()) {
+		mFolder->getMsgBase(x)->initStrippedSubjectMD5();
+		subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
+	    }
+	    // The first message with a certain subject is where we want to
+	    // thread the other messages with the same suject below. Only keep
+	    // that in the dict. Also only accept messages which would not
+	    // otherwise be threaded by IDs as top level messages to avoid 
+	    // circular threading.
+	    if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
+		QString replyToIdMD5 = mi->replyToIdMD5();
+		QString replyToAuxIdMD5 = mi->replyToAuxIdMD5();
+		if ( (replyToIdMD5.isEmpty() || !msgs.find(replyToIdMD5))
+		&& (replyToAuxIdMD5.isEmpty() || !msgs.find(replyToAuxIdMD5)) )
+		    msgSubjects.insert(subjMD5, sortCache[x]);
+	    }
+	}
 	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
-           KMSortCacheItem *parent=NULL;
-           KMMsgBase *msg =  mFolder->getMsgBase((*it)->id());
-           QString replyToIdMD5 = msg->replyToIdMD5();
-           if(!replyToIdMD5.isEmpty())
-               parent = msgs[replyToIdMD5];
-           if (!parent) {
-               // If we dont have a replyToId, or if we have one and the
-               // corresponding message is not in this folder, as happens
-               // if you keep your outgoing messages in an OUTBOX, for
-               // example, try the list of references, because the second
-               // to last will likely be in this folder. replyToAuxIdMD5
-               // contains the second to last one.
-               QString  ref = msg->replyToAuxIdMD5();
-               if (!ref.isEmpty())
-                   parent = msgs[ref];
-           }
-           if (!parent && msg->subjectIsPrefixed()) {
-             // Still no parent, let's try by subject, but only if the
-             // subject is prefixed. This is necessary to make for
-             // example cvs commit mailing lists work as expected without
-             // having to turn threading off alltogether.
-             // If we have a parent, make sure it's not ourselves
-             QString subjMD5 = msg->strippedSubjectMD5();
-             if (!subjMD5.isEmpty()) {
-               parent = msgSubjects[subjMD5];
-             }
-           }
-           // If we have a parent, make sure it's not ourselves.
-           if ( parent && (parent != (*it)) ) {
-               parent->addUnsortedChild((*it));
+	    KMSortCacheItem *parent=NULL;
+	    KMMsgBase *msg =  mFolder->getMsgBase((*it)->id());
+	    QString replyToIdMD5 = msg->replyToIdMD5();
+	    if(!replyToIdMD5.isEmpty())
+		parent = msgs[replyToIdMD5];
+	    if (!parent) {
+		// If we dont have a replyToId, or if we have one and the
+		// corresponding message is not in this folder, as happens
+		// if you keep your outgoing messages in an OUTBOX, for
+		// example, try the list of references, because the second
+		// to last will likely be in this folder. replyToAuxIdMD5
+		// contains the second to last one.
+		QString  ref = msg->replyToAuxIdMD5();
+		if (!ref.isEmpty())
+		    parent = msgs[ref];
+	    }
+	    if (!parent && msg->subjectIsPrefixed()) {
+	        // Still no parent. Let's try by subject, but only if the
+                // subject is prefixed. This is necessary to make for 
+                // example cvs commit mailing lists work as expected without 
+                // having to turn threading off alltogether.
+	        QString subjMD5 = msg->strippedSubjectMD5();
+	        if (!subjMD5.isEmpty()) {
+		    parent = msgSubjects[subjMD5];
+	        }
+	    }
+	    // If we have a parent, make sure it's not ourselves
+	    if ( parent && (parent != (*it)) ) {
+		parent->addUnsortedChild((*it));
 		if(sortStream)
 		    (*it)->updateSortFile(sortStream, mFolder);
-           } else {
-               //oh well we tried, to the root with you!
+	    } else {
+		//oh well we tried, to the root with you!
 		root.addUnsortedChild((*it));
 	    }
 	}

@@ -148,9 +148,9 @@ public:
   virtual QString toStrip(void) const = 0;
   virtual QString replyToIdMD5(void) const = 0;
   virtual QString msgIdMD5(void) const = 0;
-  virtual QString replyToAuxIdMD5(void) const = 0;
-  virtual QString strippedSubjectMD5(void) const = 0;
-  virtual bool subjectIsPrefixed(void) const = 0;
+  virtual QString replyToAuxIdMD5() const = 0;
+  virtual QString strippedSubjectMD5() const = 0;
+  virtual bool subjectIsPrefixed() const = 0;
   virtual time_t date(void) const = 0;
   virtual QString dateStr(void) const;
   virtual QString xmark(void) const = 0;

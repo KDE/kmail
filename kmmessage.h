@@ -393,16 +393,16 @@ public:
 
       using replyToAuxIdMD5
     */
-  virtual QString replyToAuxIdMD5(void) const;
+  virtual QString replyToAuxIdMD5() const;
 
   /**
     Get a hash of the subject with all prefixes such as Re: removed.
     Used for threading.
   */
-  virtual QString strippedSubjectMD5(void) const;
+  virtual QString strippedSubjectMD5() const;
 
   /** Is the subject prefixed by Re: or similar? */
-  virtual bool subjectIsPrefixed(void) const;
+  virtual bool subjectIsPrefixed() const;
   
   /** Get or set the 'Message-Id' header field */
   virtual QString msgId(void) const;
@@ -410,7 +410,7 @@ public:
   virtual QString msgIdMD5(void) const;
 
   /** Get or set the references for this message */
-  virtual QString references(void) const;
+  virtual QString references() const;
   virtual void setReferences(const QCString& aStr);
 
   /** Returns the message ID, useful for followups */

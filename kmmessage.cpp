@@ -2137,52 +2137,51 @@ QString KMMessage::replyToIdMD5(void) const
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::references(void) const
+QString KMMessage::references() const
 {
-    int leftAngle, rightAngle;
-    QString  references = headerField("References");
+  int leftAngle, rightAngle;
+  QString references = headerField( "References" );
 
-    // keep the last two entries for threading
-    leftAngle = references.findRev( '<' );
-    leftAngle = references.findRev( '<', leftAngle-1 );
-    if (leftAngle != -1)
-       references = references.mid( leftAngle );
-    rightAngle = references.findRev( '>' );
-    if (rightAngle != -1)
-       references.truncate( rightAngle + 1 );
+  // keep the last two entries for threading
+  leftAngle = references.findRev( '<' );
+  leftAngle = references.findRev( '<', leftAngle - 1 );
+  if( leftAngle != -1 )
+    references = references.mid( leftAngle );
+  rightAngle = references.findRev( '>' );
+  if( rightAngle != -1 )
+    references.truncate( rightAngle + 1 );
 
-    if (!references.isEmpty() && references[0] == '<')
-       return references;
-    else
-       return "";
+  if( !references.isEmpty() && references[0] == '<' )
+    return references;
+  else
+    return QString::null;
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::replyToAuxIdMD5(void) const
+QString KMMessage::replyToAuxIdMD5() const
 {
-    int rightAngle;
-    QString  result = references();
-    // references contains two items, use the first one
-    // (the second to last reference)
-    rightAngle = result.find( '>' );
-    if (rightAngle != -1)
-       result.truncate (rightAngle+1);
+  int rightAngle;
+  QString result = references();
+  // references contains two items, use the first one
+  // (the second to last reference)
+  rightAngle = result.find( '>' );
+  if( rightAngle != -1 )
+    result.truncate( rightAngle + 1 );
 
-    return KMMessagePart::encodeBase64( result );
+  return KMMessagePart::encodeBase64( result );
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::strippedSubjectMD5(void) const
+QString KMMessage::strippedSubjectMD5() const
 {
-    QString  result = stripOffPrefixes(subject());
-    return KMMessagePart::encodeBase64( result );
+  QString result = stripOffPrefixes( subject() );
+  return KMMessagePart::encodeBase64( result );
 }
 
 //-----------------------------------------------------------------------------
-bool KMMessage::subjectIsPrefixed(void) const
+bool KMMessage::subjectIsPrefixed() const
 {
-    return !(strippedSubjectMD5() == KMMessagePart::encodeBase64(subject()));
-
+  return strippedSubjectMD5() != KMMessagePart::encodeBase64( subject() );
 }
 
 //-----------------------------------------------------------------------------
