@@ -283,9 +283,11 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
       if ( const Codec * codec = Codec::codecForName( cteStr() ) )
         // Nice: we can use the convenience function :-)
         result = codec->decode( mBody );
-      else
+      else {
         kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
                         << "'. Assuming binary." << endl;
+        result.duplicate(mBody);
+      }
   }
 
   assert( mBodyDecodedSize < 0
