@@ -2694,7 +2694,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
   QString linkName = linkFile->name();
   delete linkFile;
 
-  if ( link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {
+  if ( ::link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {
     return linkName; // success
   }
   return QString::null;
