@@ -1028,7 +1028,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       // Merge with the flags from the server.
       flagsToStatus((KMMsgBase*)msg, flags);
       // set the correct size
-      msg->setMsgSize( msg->headerField("X-Length").toUInt() );
+      msg->setMsgLength( msg->headerField("X-Length").toUInt() );
       close();
 
       if (count() > 1) unGetMsg(count() - 1);
@@ -1050,7 +1050,6 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
-       ( msg->msgSize() > 5000 || msg->msgSize() < 600 ) && // the lower bound is for msgs with unknown total size
        ( msg->signatureState() == KMMsgNotSigned || 
          msg->signatureState() == KMMsgSignatureStateUnknown ) )
   {
