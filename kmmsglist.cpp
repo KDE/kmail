@@ -23,7 +23,7 @@ KMMsgList::~KMMsgList()
 //-----------------------------------------------------------------------------
 void KMMsgList::clear(bool doDelete)
 {
-  KMMsgBasePtr msg;
+  KMMsgBasePtr msg = 0;
   long i;
 
   for (i=mHigh-1; i>=0; i--)
