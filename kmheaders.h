@@ -163,6 +163,9 @@ public:
 
   void highlightMessage(QListViewItem*, bool markitread);
 
+  // return a string relativ to the current time
+  static QString fancyDate( time_t otime );
+
 signals:
   // emitted when the list view item corresponding to this message
   // has been selected
@@ -202,6 +205,8 @@ public slots:
   void prevUnreadMessage();
   // Don't show a drag cursor
   void slotNoDrag();
+  // timer function to set the current time regularly
+  void resetCurrentTime();
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
@@ -301,6 +306,11 @@ private:
 
   bool mousePressed;             // Drag and drop support
   QPoint presspos;              // ditto
+
+  // cached values for fancyDate
+  static QDateTime *now;
+  static time_t now_time;
+
 };
 
 #endif

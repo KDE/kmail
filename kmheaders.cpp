@@ -154,7 +154,6 @@ public:
 		QListViewItem::setOpen( false );
   }
 
-
   QString text( int col) const
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
@@ -185,9 +184,7 @@ public:
 	tmp = tmp.simplifyWhiteSpace();
 
     } else if(col == headers->paintInfo()->dateCol) {
-      time_t mDate = mMsgBase->date();
-      tmp = QString( ctime( &mDate )).stripWhiteSpace();
-
+        tmp = KMHeaders::fancyDate( mMsgBase->date() );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
         tmp.setNum(mMsgBase->msgSize());
@@ -402,6 +399,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   	  this,SLOT(selectMessage(QListViewItem*)));
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
+  resetCurrentTime();
 
   beginSelection = 0;
   endSelection = 0;
@@ -595,7 +593,7 @@ void KMHeaders::writeFolderConfig (void)
 
   if (mPaintInfo.showScore)
       config->writeEntry("ScoreWidth", columnWidth(mPaintInfo.scoreCol));
-  
+
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
@@ -763,7 +761,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       showingSize = false;
     }
 
-    if (mPaintInfo.showScore) { 
+    if (mPaintInfo.showScore) {
       colText = i18n( "Score" );
       if (showingScore) {
         setColumnText( mPaintInfo.scoreCol, colText);
@@ -1888,6 +1886,63 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   setFolderInfoStatus();
 }
 
+QDateTime *KMHeaders::now = 0;
+time_t KMHeaders::now_time = 0;
+
+QString KMHeaders::fancyDate( time_t otime )
+{
+   if ( otime <= 0 )
+        return i18n( "unknown" );
+
+    if ( !now ) {
+        time( &now_time );
+        now = new QDateTime();
+        now->setTime_t( now_time );
+    }
+
+    QDateTime old;
+    old.setTime_t( otime );
+
+    // not more than an hour in the future
+    if ( now_time + 60 * 60 >= otime ) {
+        time_t diff = now_time - otime;
+
+        if ( diff < 24 * 60 * 60 ) {
+            if ( old.date().year() == now->date().year() &&
+                 old.date().dayOfYear() == now->date().dayOfYear() )
+                return i18n( "Today %1" ).arg( KGlobal::locale()->
+                                               formatTime( old.time(), true ) );
+        }
+        if ( diff < 2 * 24 * 60 * 60 ) {
+            QDateTime yesterday( now->addDays( -1 ) );
+            if ( old.date().year() == yesterday.date().year() &&
+                 old.date().dayOfYear() == yesterday.date().dayOfYear() )
+                return i18n( "Yesterday %1" ).arg( KGlobal::locale()->
+                                                   formatTime( old.time(), true) );
+        }
+        for ( int i = 3; i < 7; i++ )
+            if ( diff < i * 24 * 60 * 60 ) {
+                QDateTime weekday( now->addDays( -i + 1 ) );
+                if ( old.date().year() == weekday.date().year() &&
+                     old.date().dayOfYear() == weekday.date().dayOfYear() )
+                    return i18n( "1. weekday, 2. time", "%1 %2" ).
+                        arg( KGlobal::locale()->weekDayName( old.date().dayOfWeek() ) ).
+                        arg( KGlobal::locale()->
+                             formatTime( old.time(), true) );
+            }
+    }
+
+    return KGlobal::locale()->
+        formatDateTime( old );
+}
+
+void KMHeaders::resetCurrentTime()
+{
+    delete now;
+    now = 0;
+    now_time = 0;
+    QTimer::singleShot( 1000, this, SLOT( resetCurrentTime() ) );
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::selectMessage(QListViewItem* lvi)
@@ -2121,11 +2176,11 @@ KMHeaders::messageScore(int msgId)
               << endl;
     return 0;
   }
-  
+
   QCString cStr;
 
   folder()->getMsgString(msgId, cStr);
-      
+
   if (!cStr) {
     kdDebug() << "KMFolder::scoreMessages() : Skipping msg" << endl;
     return 0;
@@ -2136,7 +2191,7 @@ KMHeaders::messageScore(int msgId)
   mScoringManager->applyRules(smsg);
 
   return smsg.score();
-  
+
 }
 
 
