@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-#include <qfiledlg.h>
+#include <kfiledialog.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -87,10 +87,12 @@ void KMReaderWin::readConfig(void)
 							SmartAttmnt);
 #ifdef KRN
   config->setGroup("ArticleListOptions");
+#endif
   QColor c1=QColor("black");
   QColor c2=QColor("blue");
   QColor c3=QColor("red");
   QColor c4=QColor("white");
+
   mViewer->setDefaultBGColor(config->readColorEntry("BackgroundColor",&c4));
   mViewer->setDefaultTextColors(config->readColorEntry("ForegroundColor",&c1)
                                 ,config->readColorEntry("LinkColor",&c2)
@@ -100,7 +102,6 @@ void KMReaderWin::readConfig(void)
                                            QString("helvetica").data()));
   mViewer->setFixedFont(config->readEntry("FixedFont",
                                         QString("courier").data()));
-#endif
 
 }
 
@@ -772,7 +773,7 @@ void KMReaderWin::slotAtmSave()
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   
   fileName = msgPart.name();
-  fileName = QFileDialog::getSaveFileName(NULL, "*", this);
+  fileName = KFileDialog::getSaveFileName(NULL, "*", this);
   if(fileName.isEmpty()) return;
 
   kbp->busy();
