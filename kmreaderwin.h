@@ -103,13 +103,13 @@ public slots:
   void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
-  void slotUrlOpen(const char* url, int button);
+  void slotUrlOpen(QString , int button);
 
   /** The mouse has moved on or off an URL. */
-  void slotUrlOn(const char* url);
+  void slotUrlOn(QString url);
 
   /** The user presses the right mouse button on an URL. */
-  void slotUrlPopup(const char* url, const QPoint& mousePos);
+  void slotUrlPopup(QString , const QPoint& mousePos);
 
 protected slots:
   /** Some attachment operations. */

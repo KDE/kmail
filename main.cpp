@@ -453,7 +453,7 @@ static void init(int& argc, char *argv[])
 
   keys = new KStdAccel(cfg);
 
-  oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
+  //oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 
   QDir dir;
   QString d = KApplication::localkdedir();
@@ -535,7 +535,7 @@ static void cleanup(void)
   if (folderMgr) delete folderMgr;
   if (kbp) delete kbp;
 
-  qInstallMsgHandler(oldMsgHandler);
+  //qInstallMsgHandler(oldMsgHandler);
   app->getConfig()->sync();
   //--- Sven's save attachments to /tmp start ---
   //debug ("cleaned");

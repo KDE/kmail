@@ -206,12 +206,12 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setDefaultBGColor(pal->normal().background());
   mViewer->setDefaultTextColor(app->textColor, app->);
   */
-  connect(mViewer,SIGNAL(URLSelected(const char *,int)),this,
-          SLOT(slotUrlOpen(const char *,int)));
-  connect(mViewer,SIGNAL(onURL(const char *)),this,
-          SLOT(slotUrlOn(const char *)));
-  connect(mViewer,SIGNAL(popupMenu(const char *, const QPoint &)),  
-          SLOT(slotUrlPopup(const char *, const QPoint &)));
+  connect(mViewer,SIGNAL(URLSelected(QString ,int)),this,
+	  SLOT(slotUrlOpen(QString ,int)));
+  connect(mViewer,SIGNAL(onURL(QString)),this,
+	  SLOT(slotUrlOn(QString)));
+  connect(mViewer,SIGNAL(popupMenu(QString , const QPoint &)),  
+	  SLOT(slotUrlPopup(QString, const QPoint &)));
   connect(mViewer,SIGNAL(textSelected(bool)), 
           SLOT(slotTextSelected(bool)));
 
@@ -873,7 +873,7 @@ void KMReaderWin::closeEvent(QCloseEvent *e)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOn(const char* aUrl)
+void KMReaderWin::slotUrlOn(QString aUrl)
 {
   int id;
   KMMessagePart msgPart;
@@ -895,7 +895,7 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
+void KMReaderWin::slotUrlOpen(QString aUrl, int aButton)
 {
   int id;
 
@@ -911,7 +911,7 @@ void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
+void KMReaderWin::slotUrlPopup(QString aUrl, const QPoint& aPos)
 {
   KMMessagePart msgPart;
   int id;
