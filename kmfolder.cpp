@@ -1921,8 +1921,11 @@ void KMFolder::setProcmailLockFileName( const QString &fname )
   mProcmailLockFileName = fname;
 }
 
-bool
-KMFolder::updateIndexStreamPtr(bool just_close)
+#ifdef HAVE_MMAP
+bool KMFolder::updateIndexStreamPtr(bool just_close)
+#else
+bool KMFolder::updateIndexStreamPtr(bool)
+#endif
 {
 #ifdef HAVE_MMAP
     if(just_close) {

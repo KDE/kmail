@@ -727,8 +727,6 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, boo
 
   // write message to file
   QString msgText, tempFileName;
-  FILE *fh;
-  bool ok = TRUE;
 
   tempFileName = inFile->name();
   kCStringToFile( aMsg->asString().data(), tempFileName,

@@ -2550,7 +2550,6 @@ static void internalWriteItem(FILE *sortStream, int msgid, int parent_id,
 
 bool KMHeaders::writeSortOrder()
 {
-  int rc = 0;
   if (mSortInfo.removed)
     return TRUE; // Need serial ids to optimize this out
   QString sortFile = KMAIL_SORT_FILE(mFolder);

@@ -450,7 +450,8 @@ void KMReaderWin::displayAboutPage()
     i18n("<p>Some of the new features in this release of KMail include "
     "(compared to KMail 1.2, which is part of KDE 2.1):</p>\n"
     "<ul>\n"
-    "<li>IMAP support</li>\n"
+    "<li>IMAP support including SSL and TLS</li>\n"
+    "<li>SSL and TLS support for POP3</li>\n"
     "<li>Non-blocking sending</li>\n"
     "<li>Performance improvements for huge folders</li>\n"
     "<li>Message scoring</li>\n"
@@ -466,8 +467,6 @@ void KMReaderWin::displayAboutPage()
     "<li>Better procmail support via the local account</li>\n"
     "<li>Messages can be flagged</li>\n"
     "<li>Read the new messages by only hitting the space key</li>\n"
-    "<li>SSL and TLS support for POP3</li>\n"
-    "<li>SSL support for IMAP</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
