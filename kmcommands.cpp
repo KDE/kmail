@@ -531,7 +531,8 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   while ( it.current() ) {
     mMsgList.append( (*it)->getMsgSerNum() );
     mTotalSize += (*it)->msgSize();
-    (*it)->parent()->open();
+    if ((*it)->parent() != 0)
+      (*it)->parent()->open();
     ++it;
   }
   mMsgListIndex = 0;
