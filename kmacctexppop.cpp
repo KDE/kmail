@@ -115,10 +115,9 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
   setHost(acct->host());
   setPort(acct->port());
   setLogin(acct->login());
-  setPasswd(acct->passwd());
   setUseSSL(acct->useSSL());
   setStorePasswd(acct->storePasswd());
-  setPasswd(acct->passwd());
+  setPasswd(acct->passwd(), acct->storePasswd());
   setLeaveOnServer(acct->leaveOnServer());
   setRetrieveAll(acct->retrieveAll());
   setPrecommand(acct->precommand());
