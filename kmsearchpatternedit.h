@@ -54,7 +54,7 @@ public:
       0, resets itself, taks user input, but does essentially
       nothing. If you pass 0, you should probably disable it. */
   void setRule( KMSearchRule* aRule );
-  /** Return a reference to the currently worked-on @ref KMSearchRule. */
+  /** Return a reference to the currently-worked-on @ref KMSearchRule. */
   KMSearchRule* rule() const;
   /** Resets the rule currently worked on and updates the widget
       accordingly. */
@@ -140,7 +140,7 @@ private:
     operates directly on a shallow(!) copy of the search rule. So
     while you actually don't really need @ref searchPattern, because
     you can always store a pointer to the current pattern yourself,
-    you must not modify the currently worked-on pattern yourself while
+    you must not modify the currently-worked-on pattern yourself while
     this widget holds a reference to it. The only exceptions are:
 
     @li If you edit a derived class, you can change aspects of the

@@ -171,7 +171,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   msg = i18n("<qt><p>Check this option if you want this message part to be "
 	     "signed.</p>"
 	     "<p>The signature will be made with the key that you associated "
-	     "with the currently selected identity.</p></qt>");
+	     "with the currently-selected identity.</p></qt>");
   QWhatsThis::add( mSigned, msg );
 
   // row 7: "Encrypt" checkbox:
