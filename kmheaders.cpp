@@ -3374,7 +3374,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
         unlink(QFile::encodeName(sortFile));
         kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
         kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-        kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+        //kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     if(sortStream)
         fclose(sortStream);

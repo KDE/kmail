@@ -1683,12 +1683,12 @@ KMainWindow* KMKernel::mainWin()
 
 
 /**
- * Emptyies al the trash folders
+ * Empties all trash folders
  */
 void KMKernel::slotEmptyTrash()
 {
   QString title = i18n("Empty Trash");
-  QString text = i18n("Are you sure you want to empty the trash?");
+  QString text = i18n("Are you sure you want to empty the trash folders of all accounts?");
   if (KMessageBox::warningContinueCancel(0, text, title,
                                          KStdGuiItem::cont(), "confirm_empty_trash")
       != KMessageBox::Continue)
@@ -1699,6 +1699,10 @@ void KMKernel::slotEmptyTrash()
   for (KMAccount* acct = acctMgr()->first(); acct; acct = acctMgr()->next())
   {
     KMFolder* trash = folderMgr()->findIdString(acct->trash());
+    if (!trash)
+      trash = imapFolderMgr()->findIdString(acct->trash());
+    if (!trash)
+      trash = dimapFolderMgr()->findIdString(acct->trash());
     if (trash)
     {
       trash->expunge();

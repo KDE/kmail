@@ -1562,4 +1562,15 @@ QValueList<ulong> KMFolderImap::splitSets(const QString uids)
   return uidlist;
 }
 
+//-----------------------------------------------------------------------------
+int KMFolderImap::expungeContents()
+{
+  int rc = KMFolderMbox::expungeContents();
+  if (autoExpunge())
+    expungeFolder(this, true);
+  getFolder();
+
+  return rc;
+}
+
 #include "kmfolderimap.moc"

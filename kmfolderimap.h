@@ -320,7 +320,10 @@ protected:
   
   void getMessagesResult(KIO::Job * job, bool lastSet);
 
-  QString mUidValidity;
+  /** Called by KMFolder::expunge() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int expungeContents();
 
 protected slots:
 
@@ -386,6 +389,8 @@ protected:
   bool	      mCheckMail : 1;
   QGuardedPtr<KMAcctImap> mAccount;
   QIntDict<ulong> uidmap;
+  QString mUidValidity;
+
 private:
   bool        mCheckingValidity;
   QDict<KMMsgMetaData> mMetaDataMap;

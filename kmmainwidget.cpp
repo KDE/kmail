@@ -2128,7 +2128,7 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotInvalidateIMAPFolders()),
 		      actionCollection(), "file_invalidate_imap_cache" );
 
-  (void) new KAction( i18n("Empty &Trash"), 0,
+  (void) new KAction( i18n("Empty All &Trash Folders"), 0,
 		      KMKernel::self(), SLOT(slotEmptyTrash()),
 		      actionCollection(), "empty_trash" );
 
