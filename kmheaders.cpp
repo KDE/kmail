@@ -1220,7 +1220,7 @@ void KMHeaders::forwardMsg ()
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
           msgText += thisMsg->asString();
           msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", QString::null, FALSE, false));
+            "", QString::null, FALSE, false, false));
           msgText += "\n-------------------------------------------------------\n";
         } else {
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
@@ -1231,7 +1231,7 @@ void KMHeaders::forwardMsg ()
 	  if (!thisMsg->cc().isEmpty()) msgText += "Cc: " + thisMsg->cc() + "\n";
           msgText += "\n";
           msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", QString::null, FALSE, false));
+            "", QString::null, FALSE, false, false));
           msgText += "\n-------------------------------------------------------\n";
         }
       }

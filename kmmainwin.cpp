@@ -970,7 +970,7 @@ void KMMainWin::slotEditMsg()
   KMComposeWin *win = new KMComposeWin;
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
 		    this, SLOT( slotMessageQueuedOrDrafted()) );
-  win->setMsg(msg,FALSE);
+  win->setMsg(msg,FALSE, TRUE);
   win->setFolder(mFolder);
   win->show();
 }

@@ -902,7 +902,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
+void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecryption)
 {
   KMMessagePart bodyPart, *msgPart;
   int i, num;
@@ -979,7 +979,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
       Kpgp* pgp = Kpgp::getKpgp();
       assert(pgp != NULL);
 
-      if (pgp->setMessage(QCString(bodyDecoded)))
+      if (allowDecryption && pgp->setMessage(QCString(bodyDecoded)))
       {
         QString str = pgp->frontmatter();
         if ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())

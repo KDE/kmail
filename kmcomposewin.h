@@ -161,7 +161,7 @@ public:
 
   /** Set the message the composer shall work with. This discards
     previous messages without calling applyChanges() on them before. */
-   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE);
+   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE, bool allowDecryption=FALSE);
 
   /** Returns message of the composer. To apply the user changes to the
     message, call applyChanges() first. */

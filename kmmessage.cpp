@@ -522,7 +522,8 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                                    const QString& aIndentStr,
                                    const QString& selection,
                                    bool aIncludeAttach,
-                                   bool aStripSignature) const
+                                   bool aStripSignature,
+                                   bool allowDecryption) const
 {
   QString result;
   QCString cStr;
@@ -549,18 +550,22 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
   if (numBodyParts() == 0 || selection != QString::null ) {
-    Kpgp* pgp = Kpgp::getKpgp();
-    assert(pgp != NULL);
-    cStr = bodyDecoded();
-
-    pgp->setMessage(cStr);
     if( selection != QString::null ) {
       result = selection;
-    } else if(pgp->isEncrypted()) {
-      pgp->decrypt();
-      result = codec->toUnicode(pgp->message());
     } else {
-      result = codec->toUnicode(cStr);
+      cStr = bodyDecoded();
+      Kpgp* pgp = Kpgp::getKpgp();
+      assert(pgp != NULL);
+
+      if(allowDecryption && (pgp->setMessage(cStr) &&
+        ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())))
+      {
+        result = codec->toUnicode(pgp->frontmatter())
+               + codec->toUnicode(pgp->message())
+               + codec->toUnicode(pgp->backmatter());
+      } else {
+        result = codec->toUnicode(cStr);
+      }
     }
 
     // Remove blank lines at the beginning
@@ -590,10 +595,12 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
-          if ((pgp->setMessage(msgPart.bodyDecoded())) &&
-              (pgp->isEncrypted()) &&
-              (pgp->decrypt())) {
-            part = codec->toUnicode(pgp->message());
+          if (allowDecryption && ((pgp->setMessage(msgPart.bodyDecoded())) &&
+             ((pgp->isEncrypted()) && (pgp->decrypt()) || pgp->isSigned())))
+          {
+            part = codec->toUnicode(pgp->frontmatter())
+                 + codec->toUnicode(pgp->message())
+                 + codec->toUnicode(pgp->backmatter());
           } else {
             part = codec->toUnicode(msgPart.bodyDecoded());
             //	    debug ("part\n" + part ); inexplicably crashes -sanders
@@ -612,7 +619,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           result += "\n" + indentStr;
           result += inlineHeaderStr;
           result += QString::fromUtf8(inlineMsg.asQuotedString("", indentStr, selection,
-            TRUE, FALSE));
+            TRUE, FALSE, allowDecryption));
         } else
           isInline = FALSE;
       }
@@ -640,7 +647,8 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection, bool noQuote)
+KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection,
+                                                                                bool noQuote, bool allowDecryption)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
@@ -758,7 +766,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
   else replyStr = sReplyStr;
 
   if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, true, allowDecryption));
 
   QStringList::Iterator it;
   bool recognized = false;
@@ -955,7 +963,7 @@ KMMessage* KMMessage::createForward(void)
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";
     s += headerAsString();
-    str = asQuotedString(s, "", QString::null, FALSE, false);
+    str = asQuotedString(s, "", QString::null, FALSE, false, false);
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";
@@ -965,7 +973,7 @@ KMMessage* KMMessage::createForward(void)
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", QString::null, FALSE, false);
+    str = asQuotedString(s, "", QString::null, FALSE, false, false);
     str += "\n-------------------------------------------------------\n";
   }
 

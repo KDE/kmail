@@ -48,7 +48,9 @@ public:
   /** Create a new message that is a reply to this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as replied. */
-  virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE, QString selection=QString::null, bool noQuote=FALSE);
+  virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE,
+                                                 QString selection=QString::null, bool noQuote=FALSE,
+                                                 bool allowDecryption=TRUE);
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message
@@ -89,12 +91,14 @@ public:
 	%%: a single percent sign
     No attachments are handled if includeAttach is false.
     The signature is stripped if aStripSignature is true and
-    smart quoting is turned on. */
+    smart quoting is turned on. Signed or encrypted texts
+    get converted to plain text when allowDecryption is true. */
   virtual QCString asQuotedString(const QString& headerStr,
                                   const QString& indentStr,
                                   const QString& selection=QString::null,
                                   bool includeAttach=true,
-                                  bool aStripSignature=true) const;
+                                  bool aStripSignature=true,
+                                  bool allowDecryption=true) const;
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
