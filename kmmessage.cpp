@@ -1711,6 +1711,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
   // If the DwBodyPart was found get the header fields and body
   if (part)
   {
+    aPart->setName("");
     headers = &part->Headers();
 
     // Content-type
