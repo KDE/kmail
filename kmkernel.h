@@ -19,7 +19,6 @@ class KMUndoStack;
 class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
-class KabAPI;
 class KMSender;
 class KMIdentity;
 class KMKernel;
@@ -115,7 +114,6 @@ public:
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
   inline KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
-  KabAPI *KABaddrBook();
   inline KMSender *msgSender() { return the_msgSender; }
   inline KMMsgDict *msgDict() { return the_msgDict; }
 
@@ -150,7 +148,6 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
-  KabAPI *the_KAB_addrBook;
   KMSender *the_msgSender;
   KMMsgDict *the_msgDict;
   struct putData

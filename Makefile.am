@@ -2,7 +2,7 @@ KDE_CXXFLAGS = $(USE_RTTI) -DQT_NO_COMPAT
 
 SUBDIRS = . about pics profiles
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
-LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la $(LIB_KAB) -lkabc
+LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la -lkabc
 
 bin_PROGRAMS = kmail
 
@@ -28,7 +28,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmscoring.cpp kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
-		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
+		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		mailinglist-magic.cpp kmrecentaddr.cpp kmacctmaildir.cpp \

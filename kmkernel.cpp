@@ -64,7 +64,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterMgr = 0;
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
-  the_KAB_addrBook = 0;
   the_msgSender = 0;
   the_msgDict = 0;
 
@@ -541,7 +540,6 @@ void KMKernel::init()
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
-  the_KAB_addrBook  = 0;
 
   initFolders(cfg);
   the_acctMgr->readConfig();
@@ -816,24 +814,6 @@ void KMKernel::slotResult(KIO::Job *job)
     else job->showErrorDialog();
   }
   mPutJobs.remove(it);
-}
-
-KabAPI* KMKernel::KABaddrBook()
-{
-  if (the_KAB_addrBook)
-    return the_KAB_addrBook;
-
-  the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
-  if(KABaddrBook()->init()!=AddressBook::NoError)
-  { // this connects to the default address book and opens it:
-    kdDebug(5006) << "Error initializing the connection to your KAB address book." << endl;
-    the_KAB_addrBook=0;
-  }
-  else {
-    kdDebug(5006) << "KMKernel::init: KabApi initialized." << endl;
-  }
-
-  return the_KAB_addrBook;
 }
 
 void KMKernel::notClosedByUser()

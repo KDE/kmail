@@ -76,16 +76,9 @@ void KMAddrBookSelDlg::showAddresses( int addressTypes )
   mListBox->clear();
 
   if ( addressTypes & AddressBookAddresses ) {
-    if (KMAddrBookExternal::useKABC()) {
-      QStringList addresses;
-      KabcBridge::addresses(&addresses);
-      mListBox->insertStringList(addresses);
-    }
-    else if (KMAddrBookExternal::useKAB()) {
-      QStringList addresses;
-      KabBridge::addresses(&addresses);
-      mListBox->insertStringList(addresses);
-    }
+    QStringList addresses;
+    KabcBridge::addresses(&addresses);
+    mListBox->insertStringList(addresses);
   }
   mListBox->sort();
 

@@ -15,143 +15,15 @@
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 
-#include "kmkernel.h" // for KabBridge
-#include "kmmessage.h" // for KabBridge
+#include "kmkernel.h" // for KabcBridge
+#include "kmmessage.h" // for KabcBridge
 #include "kmaddrbookdlg.h" // for kmaddrbookexternal
 #include <krun.h> // for kmaddrbookexternal
 #include <kprocess.h>
-#include "addtoaddressbook.h"
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
 
-//-----------------------------------------------------------------------------
-void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
-{
-  QString addr;
-  QString email;
-  KabKey key;
-  AddressBook::Entry entry;
-  if (keys)
-    keys->clear();
-  int num = kernel->KABaddrBook()->addressbook()->noOfEntries();
-
-  for (int i = 0; i < num; ++i) {
-    if (AddressBook::NoError !=
-	kernel->KABaddrBook()->addressbook()->getKey( i, key ))
-      continue;
-    if (AddressBook::NoError !=
-	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
-      continue;
-    unsigned int emails_count;
-    for( emails_count = 0; emails_count < entry.emails.count(); emails_count++ ) {
-      if (!entry.emails[emails_count].isEmpty()) {
-	if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
-	  addr = "";
-	else { /* do we really need quotes around this name ? */
-	  if (entry.fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-		addr = "\"" + entry.fn + "\" ";
-	  else
-		addr = entry.fn + " ";
-	}
-	email = entry.emails[emails_count];
-	if (!addr.isEmpty() && (email.find( "<" ) == -1)
-	    && (email.find( ">" ) == -1)
-	    && (email.find( "," ) == -1))
-	    addr += "<" + email + ">";
-	else
-	    addr += email;
-	addr.stripWhiteSpace();
-	result->append( addr );
-	if (keys)
-	  keys->append( key );
-      }
-    }
-  }
-}
-
-QString KabBridge::fn(QString address)
-{
-  return KMMessage::stripEmailAddr( address );
-}
-
-QString KabBridge::email(QString address)
-{
-  int i = address.find( "<" );
-  if (i < 0)
-    return "";
-  int j = address.find( ">", i );
-  if (j < 0)
-    return "";
-  return address.mid( i + 1, j - i - 1 );
-}
-
-bool KabBridge::add(QString address, KabKey &kabkey)
-{
-  AddressBook::Entry entry;
-  if (entry.emails.count() < 1)
-    entry.emails.append( "" );
-  entry.emails[0] = email(address);
-  entry.fn = fn(address);
-
-  if (kernel->KABaddrBook()->addressbook()->add( entry, kabkey, true ) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: operation insert.0" << endl;
-    return false;
-  }
-  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: opeation insert.1" << endl;
-    return false;
-  }
-  return true;
-}
-
-bool KabBridge::remove(KabKey kabKey)
-{
-  if (kernel->KABaddrBook()->addressbook()->remove( kabKey ) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: operation remove.0" << endl;
-    return false;
-  }
-
-  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: operation remove.1" << endl;
-    return false;
-  }
-  return true;
-}
-
-bool KabBridge::replace(QString address, KabKey kabKey)
-{
-  AddressBook::Entry old;
-  if (AddressBook::NoError !=
-      kernel->KABaddrBook()->addressbook()->getEntry( kabKey, old )) {
-    kdDebug(5006) << "Error occurred trying to update database: operation replace.0" << endl;
-    return false;
-  }
-
-  if (old.emails.count() < 1)
-    old.emails.append( "" );
-  old.emails[0] = email(address);
-  old.fn = fn(address);
-
-  if (kernel->KABaddrBook()->addressbook()->change( kabKey, old ) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: operation replace.1" << endl;
-    return false;
-  }
-
-  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
-      AddressBook::NoError) {
-    kdDebug(5006) << "Error occurred trying to update database: operation replace.2" << endl;
-    return false;
-  }
-  return true;
-}
-
-//-----------------------------------------------------------------------------
 void KabcBridge::addresses(QStringList* result) // includes lists
 {
   QString addr, email;
@@ -279,32 +151,37 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 }
 
 //-----------------------------------------------------------------------------
-void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
-  if (useKABC())
+void KMAddrBookExternal::addEmail(QString addr, QWidget *) {
+  if (useKAddressbook())
   {
     KRun::runCommand( "kaddressbook -a \"" + addr.replace(QRegExp("\""), "")
       + "\"" );
     return;
   }
-  AddToKabDialog dialog(addr, kernel->KABaddrBook(), parent);
-  dialog.exec();
+  
+  // TODO: Start a simple add-to-addressbook-dialog, or just add the address
+  // silently to kabc.
 }
 
 void KMAddrBookExternal::launch(QWidget *) {
-  KConfig *config = kapp->config();
-  KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 3);
-  switch (ab)
-  {
-  case 0:
+// Reenable selection, when kab is ported to libkabc.
+// It might be better to remove the useK* functions and to check the config
+// file directly, as they aren't used anywhere else.
+// It might also be better to write a string for identifying the addressbook
+// instead of a number as it is done now.
+    KRun::runCommand("kaddressbook");  
+#if 0
+  if ( useKab() ) {
     KRun::runCommand("kab");
-    break;
-  default:
+  } else if ( useKAddressbook() ) {
     KRun::runCommand("kaddressbook");
+  } else {
+    // TODO: some default action, e.g. a simple address book dialog.
   }
+#endif
 }
 
-bool KMAddrBookExternal::useKAB()
+bool KMAddrBookExternal::useKab()
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
@@ -312,7 +189,7 @@ bool KMAddrBookExternal::useKAB()
   return (ab == 0);
 }
 
-bool KMAddrBookExternal::useKABC()
+bool KMAddrBookExternal::useKAddressbook()
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");

@@ -2973,20 +2973,11 @@ void KMLineEdit::loadAddresses()
     for ( ; it != recent.end(); ++it )
         s_completion->addItem( *it );
 
-    if (KMAddrBookExternal::useKABC()) {
-        QStringList addresses;
-        KabcBridge::addresses(&addresses);
-        QStringList::Iterator it = addresses.begin();
-        for (; it != addresses.end(); ++it)
-            s_completion->addItem( *it );	
-    }
-    else if (KMAddrBookExternal::useKAB()) {
-        QStringList addresses;
-        KabBridge::addresses(&addresses);
-        QStringList::Iterator it = addresses.begin();
-        for (; it != addresses.end(); ++it)
-            s_completion->addItem( *it );
-    }
+    QStringList addresses;
+    KabcBridge::addresses(&addresses);
+    QStringList::Iterator it2 = addresses.begin();
+    for (; it2 != addresses.end(); ++it2)
+    	s_completion->addItem( *it2 );	    
 }
 
 

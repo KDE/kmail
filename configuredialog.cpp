@@ -3456,26 +3456,35 @@ MiscPage::MiscPage( QWidget * parent, const char * name )
   mFoldersTab = new FoldersTab();
   addTab( mFoldersTab, mFoldersTab->title() );
 
+// Disabled until kab is ported to libkabc.
+#if 0
   //
   // "Addressbook" tab:
   //
   mAddressbookTab = new AddressbookTab();
   addTab( mAddressbookTab, mAddressbookTab->title() );
+#endif
 }
 
 void MiscPage::setup() {
   mFoldersTab->setup();
+#if 0
   mAddressbookTab->setup();
+#endif
 }
 
 void MiscPage::installProfile( KConfig * profile ) {
   mFoldersTab->installProfile( profile );
+#if 0
   mAddressbookTab->installProfile( profile );
+#endif
 }
 
 void MiscPage::apply() {
   mFoldersTab->apply();
+#if 0
   mAddressbookTab->apply();
+#endif
 }
 
 
@@ -3613,10 +3622,12 @@ static const struct {
   const char * label;
   const char * description;
 } addressBooks[] = {
+#if 0
   { I18N_NOOP("KAB"),
     I18N_NOOP("The KDE Address Book graphical interface (KAB) using the "
 	      "standard KDE Address Book (KAB) database. Requires the "
 	      "kdeutils package to be installed.") },
+#endif
   { I18N_NOOP("KAddressbook"),
     I18N_NOOP("The new KDE Address Book graphical interface "
 	      "(KAddressbook) using the standard KDE Address Book (KAB) "
