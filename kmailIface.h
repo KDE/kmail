@@ -86,23 +86,26 @@ k_dcop:
      @param filename the file in which to store the addresses
   */
   virtual void requestAddresses( QString filename ) = 0;
-    
+
   /**
      Locks the Contacts folder against changes from outside a DCOP
      call.
   */
   virtual bool lockContactsFolder() = 0;
-    
+
   /**
      Unlocks the Contacts folder.
   */
   virtual bool unlockContactsFolder() = 0;
-    
+
   /**
      Stores the addresses found in the specified file in the
      Contacts folder.
   */
   virtual bool storeAddresses( QString addresses, QStringList delUIDs ) = 0;
+
+  virtual QStringList folderList() const =0;
+  virtual DCOPRef getFolder( const QString& vpath ) =0;
 };
 
 #endif
