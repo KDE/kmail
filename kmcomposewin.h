@@ -287,15 +287,8 @@ private:
   virtual const QString pgpProcessedMsg(void);
   
 #if defined CHARSETS  
-  /** Convert message text for editing.
-      Converts message to mComposeCharset charset (if neccessary).*/
-  QString convertToLocal(const QString str);
-  
   /** Converts message text for sending. */
-  QString convertToSend(const QString str);
- 
-  /** Converts message text for sending. */
-  void transcodeMessageTo(const QString newCharset);
+  void convertToSend(const QString str);
  
   /** Test if string has any 8-bit characters */
   bool is8Bit(const QString str);

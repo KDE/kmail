@@ -8,7 +8,7 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
-#include <kapp.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcharsets.h>
@@ -33,7 +33,7 @@ int i;
     QBoxLayout *mainl=new QVBoxLayout(this);
     QBoxLayout *buttonsl=new QHBoxLayout();
     QBoxLayout *optl=new QHBoxLayout();
-    KCharsets *charsets=kapp->getCharsets();
+    KCharsets *charsets=KGlobal::charsets();
     
       
     QLabel *l=new QLabel(i18n("Message charset"),this,"l1");
@@ -43,10 +43,9 @@ int i;
     messageCharset=new QComboBox(this,"c1");
     mainl->addWidget(messageCharset);
     
-    QStrList lst=charsets->registered();
+    QStringList lst=charsets->availableCharsetNames();
     messageCharset->insertItem( "default" );
-    for(const char *chset=lst.first();chset;chset=lst.next())
-      messageCharset->insertItem( chset );
+    messageCharset->insertStringList( lst );
     int n=messageCharset->count();  
     for(i=0;i<n;i++)
       if (!stricmp(messageCharset->text(i),message)){
@@ -61,10 +60,9 @@ int i;
     composerCharset=new QComboBox(this,"c2");
     mainl->addWidget(composerCharset);
     
-    QStrList lst1=charsets->displayable();
+    QStringList lst1=charsets->availableCharsetNames();
     composerCharset->insertItem( "default" );
-    for(const char *chset=lst1.first();chset;chset=lst1.next())
-      composerCharset->insertItem( chset );
+    composerCharset->insertStringList( lst );
     n=composerCharset->count();  
     for(i=0;i<n;i++)
       if (!stricmp(composerCharset->text(i),composer)){

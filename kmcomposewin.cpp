@@ -224,7 +224,7 @@ void KMComposeWin::readConfig(void)
   mQuoteUnknownCharacters = config->readNumEntry("quote-unknown",0);
   
   str = config->readEntry("default-charset", "");
-  if (str.isNull() || str=="default" || !KCharset(str).ok())
+  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
       mDefaultCharset="default";
   else
       mDefaultCharset=str;
@@ -232,7 +232,7 @@ void KMComposeWin::readConfig(void)
   debug("Default charset: %s", (const char*)mDefaultCharset);
       
   str = config->readEntry("composer-charset", "");
-  if (str.isNull() || str=="default" || !KCharset(str).isDisplayable())
+  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
       mDefComposeCharset="default";
   else
       mDefComposeCharset=str;
@@ -746,16 +746,17 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     if (mCharset==""){
       mComposeCharset=mDefComposeCharset;
       if (mComposeCharset=="default"
-                        && KCharset(mDefaultCharset).isDisplayable())
+                        && KGlobal::charsets()->isAvailable(mDefaultCharset))
         mComposeCharset=mDefaultCharset;
     }	
-    else if (KCharset(mCharset).isDisplayable()) mComposeCharset=mCharset;
+    else if (KGlobal::charsets()->isAvailable(mCharset)) 
+      mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
-    mEditor->setText(convertToLocal(bodyPart.bodyDecoded()));
-#else   
-    mEditor->setText(QString(bodyPart.bodyDecoded()));
+
+    // FIXME: We might need a QTextCodec here
 #endif
+    mEditor->setText(QString(bodyPart.bodyDecoded()));
     mEditor->insertLine("\n", -1);
 
     for(i=1; i<num; i++)
@@ -772,13 +773,15 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     if (mCharset==""){
       mComposeCharset=mDefComposeCharset;
       if (mComposeCharset=="default"
-                        && KCharset(mDefaultCharset).isDisplayable())
+                        && KGlobal::charsets()->isAvailable(mDefaultCharset))
         mComposeCharset=mDefaultCharset;
     }	
-    else if (KCharset(mCharset).isDisplayable()) mComposeCharset=mCharset;
+    else if (KGlobal::charsets()->isAvailable(mCharset)) 
+      mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
-    mEditor->setText(convertToLocal(mMsg->bodyDecoded()));
+    // FIXME: QTextCodec needed?
+    mEditor->setText(QString(mMsg->bodyDecoded()));
   }  
 #else  
   else mEditor->setText(QString(mMsg->bodyDecoded()));
@@ -844,34 +847,28 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setTypeStr("text");
       mMsg->setSubtypeStr("plain");
       mMsg->setCteStr("quoted-printable");
-#if defined CHARSETS      
-      str=convertToSend(pgpProcessedMsg());
-      if (str.isNull()) return FALSE;
-      cout<<"Setting charset to: "<<mCharset<<"\n";
-      mMsg->setCharset(mCharset);
-      mMsg->setBodyEncoded(str);
-#else
       str = pgpProcessedMsg();
       if (str.isNull()) return FALSE;
+#if defined CHARSETS      
+      convertToSend(str);
+      cout<<"Setting charset to: "<<mCharset<<"\n";
+      mMsg->setCharset(mCharset);
+#endif
       mMsg->setBodyEncoded(str);
-#endif      
     }
     else
     {
       mMsg->setTypeStr("text");
       mMsg->setSubtypeStr("plain");
       mMsg->setCteStr("8bit");
-#if defined CHARSETS      
-      str=convertToSend(pgpProcessedMsg());
-      if (str.isNull()) return FALSE;
-      cout<<"Setting charset to: "<<mCharset<<"\n";
-      mMsg->setCharset(mCharset);
-      mMsg->setBody(str);
-#else      
       str = pgpProcessedMsg();
       if (str.isNull()) return FALSE;
+#if defined CHARSETS      
+      convertToSend(str);
+      cout<<"Setting charset to: "<<mCharset<<"\n";
+      mMsg->setCharset(mCharset);
+#endif
       mMsg->setBody(str);
-#endif      
     }
   }
   else 
@@ -892,7 +889,7 @@ bool KMComposeWin::applyChanges(void)
     str = pgpProcessedMsg();
     if (str.isNull()) return FALSE;
 #if defined CHARSETS      
-    str=convertToSend(str);
+    convertToSend(str);
     cout<<"Setting charset to: "<<mCharset<<"\n";
     mMsg->setCharset(mCharset);
 #endif      
@@ -1710,8 +1707,6 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
 #if defined CHARSETS
   mCharset=message;
   m7BitAscii=ascii;
-  if (composer!=mComposeCharset && quote)
-     transcodeMessageTo(composer);
   mComposeCharset=composer;
   mQuoteUnknownCharacters=quote;
   if (def)
@@ -1742,85 +1737,33 @@ bool KMComposeWin::is8Bit(const QString str)
   return FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
-QString KMComposeWin::convertToLocal(const QString str)
-{
-  if (m7BitAscii && !is8Bit(str)) return str.copy();
-  KCharset destCharset;
-  KCharset srcCharset;
-  if (mCharset=="")
-  {
-     if (mDefaultCharset=="default") mCharset=klocale->charset();
-     else mCharset=mDefaultCharset;
-  }   
-  srcCharset=mCharset; 
-  if (mComposeCharset=="default") destCharset=klocale->charset();
-  else destCharset=mComposeCharset;
-  if (srcCharset==destCharset) return str.copy();
-  int flags=mQuoteUnknownCharacters?KCharsetConverter::OUTPUT_AMP_SEQUENCES:0;
-  KCharsetConverter conv(srcCharset,destCharset,flags);
-  KCharsetConversionResult result=conv.convert(str);
-  return result.copy();			  
-}
-
-//-----------------------------------------------------------------------------
-QString KMComposeWin::convertToSend(const QString str)
+void KMComposeWin::convertToSend(const QString str)
 {
   cout<<"Converting to send...\n";
   if (m7BitAscii && !is8Bit(str))
   { 
     mCharset="us-ascii";
-    return str.copy();
+    return;
   }
   if (mCharset=="")
   {
      if (mDefaultCharset=="default") 
-          mCharset=klocale->charset();
+          mCharset=KGlobal::charsets()->charsetForLocale();
      else mCharset=mDefaultCharset;
   }   
   cout<<"mCharset: "<<mCharset<<"\n";
-  KCharset srcCharset;
-  KCharset destCharset(mCharset);
-  if (mComposeCharset=="default") srcCharset=klocale->charset();
-  else srcCharset=mComposeCharset;
-  cout<<"srcCharset: "<<srcCharset<<"\n";
-  if (srcCharset==destCharset) return str.copy();
-  int flags=mQuoteUnknownCharacters?KCharsetConverter::INPUT_AMP_SEQUENCES:0;
-  KCharsetConverter conv(srcCharset,destCharset,flags);
-  KCharsetConversionResult result=conv.convert(str);
-  return result.copy();			  
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::transcodeMessageTo(const QString charset)
-{
-
-  cout<<"Transcoding message...\n";
-  QString inputStr=mEditor->text();
-  KCharset srcCharset;
-  KCharset destCharset(charset);
-  if (mComposeCharset=="default") srcCharset=klocale->charset();
-  else srcCharset=mComposeCharset;
-  cout<<"srcCharset: "<<srcCharset<<"\n";
-  if (srcCharset==destCharset) return;
-  int flags=mQuoteUnknownCharacters?KCharsetConverter::AMP_SEQUENCES:0;
-  KCharsetConverter conv(srcCharset,destCharset,flags);
-  KCharsetConversionResult result=conv.convert(inputStr);
-  mComposeCharset=charset;
-  mEditor->setText(result.copy());			  
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEditCharset()
 {
   QFont fnt=mSavedEditorFont;
-  KCharset kcharset;
-  if (mComposeCharset=="default") kcharset=klocale->charset();
-  else if (mComposeCharset!="") kcharset=mComposeCharset;
-  cout<<"Setting font to: "<<kcharset.name()<<"\n";
-  mEditor->setFont(kcharset.setQFont(fnt));
+  if (mComposeCharset=="default") 
+    mComposeCharset=KGlobal::charsets()->charsetForLocale();
+  cout<<"Setting font to: "<<mComposeCharset<<"\n";
+  KGlobal::charsets()->setQFont(fnt, mComposeCharset);
+  mEditor->setFont(fnt);
 }
 #endif //CHARSETS
 
