@@ -27,6 +27,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kmpgpwrap.cpp \
 		kfileio.cpp kmaddrbook.cpp \
+		signatureconfigurator.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \

@@ -49,9 +49,8 @@
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "kmkernel.h"
-
-#include "qlineedit.h"
-#include "qobjectlist.h"
+#include "signatureconfigurator.h"
+using KMail::SignatureConfigurator;
 
 // other kdenetwork headers:
 #include <kpgp.h>
@@ -86,6 +85,8 @@
 #include <qlabel.h>
 #include <qtextcodec.h>
 #include <qheader.h>
+#include <qlineedit.h>
+#include <qobjectlist.h>
 
 // added for CRYPTPLUG
 #include <qvariant.h>   // first for gcc 2.7.2
@@ -100,7 +101,7 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
-#include <qfiledialog.h>
+//#include <qfiledialog.h>
 #include "cryptplugwrapperlist.h"
 #include "cryptplugwrapper.h"
 #include "signatureconfigurationdialog.h"
@@ -353,10 +354,10 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 {
   // temp. vars:
   QGridLayout *glay;
-  QVBoxLayout *vlay;
   QHBoxLayout *hlay;
   QPushButton *button;
-  QWidget     *tab, *page;
+  QWidget     *tab;
+  int row;
 
   //
   // the identity selector:
@@ -432,82 +433,68 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   //
   // Tab Widget: Advanced
   //
+  row = -1;
   tab = new QWidget( tabWidget );
   tabWidget->addTab( tab, i18n("Ad&vanced") );
-  glay = new QGridLayout( tab, 8, 4, KDialog::spacingHint() );
-  glay->setMargin( KDialog::marginHint() );
+  glay = new QGridLayout( tab, 7, 2, KDialog::marginHint(), KDialog::spacingHint() );
   // the last (empty) row takes all the remaining space
-  glay->setRowStretch( 8-1, 1 );
+  glay->setRowStretch( 7-1, 1 );
   glay->setColStretch( 1, 1 );
 
   // "Reply-To Address" line edit and label:
-  int row = 0; // this will make it a lot easier to insert/move rows
+  ++row;
   mReplyToEdit = new QLineEdit( tab );
-  glay->addMultiCellWidget( mReplyToEdit, row, row, 1, 3 );
+  glay->addWidget( mReplyToEdit, row, 1 );
   glay->addWidget( new QLabel( mReplyToEdit,
 			       i18n("Re&ply-To address:"), tab ), row, 0 );
 
   // "BCC addresses" line edit and label:
   row++;
   mBccEdit = new QLineEdit( tab );
-  glay->addMultiCellWidget( mBccEdit, row, row, 1, 3 );
+  glay->addWidget( mBccEdit, row, 1 );
   glay->addWidget( new QLabel( mBccEdit,
 			       i18n("&BCC addresses:"), tab ), row, 0 );
 
   // "OpenPGP Key" requester and label:
-  row++;
-  // the label
-  glay->addWidget( new QLabel( button, i18n("OpenPGP &key:"), tab ), row, 0 );
-  // the Key Id label
-  mPgpIdentityLabel = new QLabel( tab );
-  mPgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  glay->addWidget( mPgpIdentityLabel, row, 1 );
-  // the Clear button
-  button = new QPushButton( tab );
-  // change the size policy in order to make this button use the same vertical
-  // space as the Change button
-  button->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
-                                      QSizePolicy::Minimum ) );
-  button->setPixmap( SmallIcon( "clear_left" ) );
-  button->setAutoDefault( false );
-  QToolTip::add( button, i18n( "Clear" ) );
-  glay->addWidget( button, row, 2 );
-  connect( button, SIGNAL( clicked() ),
-           mPgpIdentityLabel, SLOT( clear() ) );
-  // the Change button
-  button = new QPushButton( i18n("Chang&e..."), tab );
-  button->setAutoDefault( false );
-  glay->addWidget( button, row, 3 );
-  connect( button, SIGNAL(clicked()),
-           this, SLOT(slotChangeDefaultPGPKey()) );
-  QWhatsThis::add( mPgpIdentityLabel,
+  ++row;
+  mPgpKeyRequester = new Kpgp::SecretKeyRequester( tab );
+  mPgpKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
+  mPgpKeyRequester->setDialogCaption( i18n("Your OpenPGP Key") );
+  mPgpKeyRequester->setDialogMessage( i18n("Select the OpenPGP key which "
+					   "should be used to sign your "
+					   "messages and when encrypting to "
+					   "yourself.") );
+  QWhatsThis::add( mPgpKeyRequester,
 		   i18n("<qt><p>The OpenPGP key you choose here will be used "
 			"to sign messages and to encrypt messages to "
 			"yourself.</p></qt>") );
 
+  glay->addWidget( new QLabel( mPgpKeyRequester, i18n("OpenPGP &key:"), tab ), row, 0 );
+  glay->addWidget( mPgpKeyRequester, row, 1 );
+  
   // "Sent-mail Folder" combo box and label:
-  row++;
+  ++row;
   mFccCombo = new KMFolderComboBox( tab );
   mFccCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mFccCombo, row, row, 1, 3 );
+  glay->addWidget( mFccCombo, row, 1 );
   glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
 		   row, 0 );
 
   // "Drafts Folder" combo box and label:
-  row++;
+  ++row;
   mDraftsCombo = new KMFolderComboBox( tab );
   mDraftsCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mDraftsCombo, row, row, 1, 3 );
+  glay->addWidget( mDraftsCombo, row, 1 );
   glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts fo&lder:"), tab ),
 		   row, 0 );
 
   // "Special transport" combobox and label:
-  row++;
+  ++row;
   mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
   glay->addWidget( mTransportCheck, row, 0 );
   mTransportCombo = new QComboBox( true, tab );
   mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-  glay->addMultiCellWidget( mTransportCombo, row, row, 1, 3 );
+  glay->addWidget( mTransportCombo, row, 1 );
   connect( mTransportCheck, SIGNAL(toggled(bool)),
 	   mTransportCombo, SLOT(setEnabled(bool)) );
 
@@ -516,84 +503,9 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   //
   // Tab Widget: Signature
   //
-  tab = new QWidget( tabWidget );
-  tabWidget->addTab( tab, i18n("&Signature") );
-  vlay = new QVBoxLayout( tab, KDialog::marginHint(), KDialog::spacingHint() );
-
-  // "enable signatue" checkbox:
-  mSignatureEnabled = new QCheckBox( i18n("&Enable signature"), tab );
-  vlay->addWidget( mSignatureEnabled );
-
-  // "obtain signature text from" combo and label:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mSignatureSourceCombo = new QComboBox( false, tab );
-  mSignatureSourceCombo->setEnabled( false ); // since !mSignatureEnabled->isChecked()
-  mSignatureSourceCombo->insertStringList(
-     QStringList() << i18n("continuation of \"obtain signature text from\"",
-			   "file")
-                   << i18n("continuation of \"obtain signature text from\"",
-			   "output of command")
-		   << i18n("continuation of \"obtain signature text from\"",
-			   "input field below") );
-  QLabel* label = new QLabel( mSignatureSourceCombo,
-			      i18n("Obtain signature &text from"), tab );
-  label->setEnabled( false ); // since !mSignatureEnabled->isChecked()
-  hlay->addWidget( label );
-  hlay->addWidget( mSignatureSourceCombo, 1 );
-
-  // widget stack that is controlled by the source combo:
-  QWidgetStack *widgetStack = new QWidgetStack( tab );
-  widgetStack->setEnabled( false ); // since !mSignatureEnabled->isChecked()
-  vlay->addWidget( widgetStack, 1 );
-  connect( mSignatureSourceCombo, SIGNAL(highlighted(int)),
-	   widgetStack, SLOT(raiseWidget(int)) );
-  // connects for the enabling of the widgets depending on
-  // signatureEnabled:
-  connect( mSignatureEnabled, SIGNAL(toggled(bool)),
-	   mSignatureSourceCombo, SLOT(setEnabled(bool)) );
-  connect( mSignatureEnabled, SIGNAL(toggled(bool)),
-	   widgetStack, SLOT(setEnabled(bool)) );
-  connect( mSignatureEnabled, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
-  // The focus might be still in the widget that is disabled
-  connect( mSignatureEnabled, SIGNAL(clicked()),
-           mSignatureEnabled, SLOT(setFocus()) );
-
-  // page 0: "signature file" requester, label, "edit file" button:
-  page = new QWidget( widgetStack );
-  widgetStack->addWidget( page, 0 ); // force sequential numbers (play safe)
-  vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mSignatureFileRequester = new KURLRequester( page );
-  hlay->addWidget( new QLabel( mSignatureFileRequester,
-			       i18n("S&pecify file:"), page ) );
-  hlay->addWidget( mSignatureFileRequester, 1 );
-  mSignatureFileRequester->button()->setAutoDefault( false );
-  connect( mSignatureFileRequester, SIGNAL(textChanged(const QString &)),
-	   this, SLOT(slotEnableSignatureEditButton(const QString &)) );
-  mSignatureEditButton = new QPushButton( i18n("Edit &File"), page );
-  connect( mSignatureEditButton, SIGNAL(clicked()),
-	   this, SLOT(slotSignatureEdit()) );
-  mSignatureEditButton->setAutoDefault( false );
-  hlay->addWidget( mSignatureEditButton, 0 );
-  vlay->addStretch( 1 ); // spacer
-
-  // page 1: "signature command" requester and label:
-  page = new QWidget( widgetStack );
-  widgetStack->addWidget( page, 1 ); // force sequential numbers (play safe)
-  vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mSignatureCommandRequester = new KURLRequester( page );
-  hlay->addWidget( new QLabel( mSignatureCommandRequester,
-			       i18n("S&pecify command:"), page ) );
-  hlay->addWidget( mSignatureCommandRequester, 1 );
-  mSignatureCommandRequester->button()->setAutoDefault( false );
-  vlay->addStretch( 1 ); // spacer
-
-  // page 2: input field for direct entering:
-  mSignatureTextEdit = new QMultiLineEdit( widgetStack );
-  widgetStack->addWidget( mSignatureTextEdit, 2 );
-  widgetStack->raiseWidget( 0 ); // since mSignatureSourceCombo->currentItem() == 0
+  mSignatureConfigurator = new SignatureConfigurator( tabWidget );
+  mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
+  tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
 }
 
 void IdentityPage::setup()
@@ -635,7 +547,7 @@ void IdentityPage::saveActiveIdentity()
   ident.setOrganization( mOrganizationEdit->text() );
   ident.setEmailAddr( mEmailEdit->text() );
   // "Advanced" tab:
-  ident.setPgpIdentity( mPgpIdentityLabel->text().local8Bit() );
+  ident.setPgpIdentity( mPgpKeyRequester->keyIDs().first() );
   ident.setReplyToAddr( mReplyToEdit->text() );
   ident.setBcc( mBccEdit->text() );
   ident.setTransport( ( mTransportCheck->isChecked() ) ?
@@ -646,25 +558,7 @@ void IdentityPage::saveActiveIdentity()
                    mDraftsCombo->getFolder()->idString() : QString::null );
 
   // "Signature" tab:
-  if ( !mSignatureEnabled->isChecked() ) {
-    // disabled signature:
-    ident.setSignature( Signature() );
-  } else {
-    switch ( mSignatureSourceCombo->currentItem() ) {
-    case 0: // signature from file
-      ident.setSignature( Signature( mSignatureFileRequester->url(), false ) );
-      break;
-    case 1: // signature from command
-      ident.setSignature( Signature( mSignatureCommandRequester->url(), true ) );
-      break;
-    case 2: // inline specified
-      ident.setSignature( Signature( mSignatureTextEdit->text() ) );
-      break;
-    default:
-      kdFatal(5006) << "IdentityPage: mSignatureSourceCombo->currentItem() > 2"
-		    << endl;
-    }
-  }
+  ident.setSignature( mSignatureConfigurator->signature() );
 }
 
 
@@ -692,7 +586,7 @@ void IdentityPage::setIdentityInformation( const QString &identity )
   mOrganizationEdit->setText( ident.organization() );
   mEmailEdit->setText( ident.emailAddr() );
   // "Advanced" tab:
-  mPgpIdentityLabel->setText( ident.pgpIdentity() );
+  mPgpKeyRequester->setKeyIDs( Kpgp::KeyIDList() << ident.pgpIdentity() );
   mReplyToEdit->setText( ident.replyToAddr() );
   mBccEdit->setText( ident.bcc() );
   mTransportCheck->setChecked( !ident.transport().isEmpty() );
@@ -708,9 +602,10 @@ void IdentityPage::setIdentityInformation( const QString &identity )
     if ( folder )
       mFccCombo->setFolder( ident.fcc() );
     else {
-      KMessageBox::sorry( this, i18n("The sent-mail folder of this identity "
-                                     "doesn't exist. Therefore the default "
-                                     "sent-mail folder will be used.") );
+      KMessageBox::sorry( this, i18n("The custom sent-mail folder for identity "
+				     "\"%1\" doesn't exist (anymore). "
+				     "Therefore the default sent-mail folder "
+				     "will be used.") );
       mFccCombo->setFolder( kernel->sentFolder() );
     }
   }
@@ -724,41 +619,15 @@ void IdentityPage::setIdentityInformation( const QString &identity )
     if ( folder )
       mDraftsCombo->setFolder( ident.drafts() );
     else {
-      KMessageBox::sorry( this, i18n("The drafts folder of this identity "
-                                     "doesn't exist. Therefore the default "
-                                     "drafts folder will be used.") );
+      KMessageBox::sorry( this, i18n("The custom drafts folder for identity "
+				     "\"%1\" doesn't exist (anymore). "
+				     "Therefore the default drafts folder "
+				     "will be used.") );
       mDraftsCombo->setFolder( kernel->draftsFolder() );
     }
   }
   // "Signature" tab:
-  Signature & sig = ident.signature();
-  mSignatureEnabled->setChecked( sig.type() != Signature::Disabled );
-  if ( sig.type() == Signature::Inlined )
-    mSignatureTextEdit->setText( sig.text() );
-  else
-    mSignatureTextEdit->clear();
-  if ( sig.type() == Signature::FromFile )
-    mSignatureFileRequester->setURL( sig.url() );
-  else
-    mSignatureFileRequester->clear();
-  if ( sig.type() == Signature::FromCommand )
-    mSignatureCommandRequester->setURL( sig.url() );
-  else
-    mSignatureCommandRequester->clear();
-  switch( sig.type() ) {
-  case Signature::Disabled:
-    mSignatureSourceCombo->setCurrentItem( 0 );
-    break;
-  case Signature::Inlined:
-    mSignatureSourceCombo->setCurrentItem( 2 );
-    break;
-  case Signature::FromFile:
-    mSignatureSourceCombo->setCurrentItem( 0 );
-    break;
-  case Signature::FromCommand:
-    mSignatureSourceCombo->setCurrentItem( 1 );
-    break;
-  }
+  mSignatureConfigurator->setSignature( ident.signature() );
 }
 
 
@@ -894,22 +763,6 @@ void IdentityPage::slotIdentitySelectorChanged()
   mSetAsDefaultButton->setEnabled( idx != 0 );
 }
 
-void IdentityPage::slotChangeDefaultPGPKey()
-{
-  Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-
-  if ( !pgp ) return;
-
-  QCString keyID = mPgpIdentityLabel->text().local8Bit();
-  keyID = pgp->selectSecretKey( i18n("Your OpenPGP Key"),
-                                i18n("Select the OpenPGP key which should be "
-                                     "used to sign your messages and when "
-                                     "encrypting to yourself."),
-                                keyID );
-  if ( !keyID.isEmpty() )
-    mPgpIdentityLabel->setText( keyID );
-}
-
 void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
 {
   // save old setting:
@@ -921,51 +774,6 @@ void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
   mTransportCombo->setEditText( content );
 }
 
-void IdentityPage::slotEnableSignatureEditButton( const QString &filename )
-{
-  mSignatureEditButton->setDisabled( filename.stripWhiteSpace().isEmpty() );
-}
-
-
-void IdentityPage::slotSignatureEdit()
-{
-  QString fileName = mSignatureFileRequester->url().stripWhiteSpace();
-  // slotEnableSignatureEditButton should make sure this assert is
-  // never hit:
-  assert( !fileName.isEmpty() );
-
-  QFileInfo fileInfo( fileName );
-  if( fileInfo.isDir() )
-  {
-    // ### hmmm.... How can we prevent this error in the first place?
-    QString msg = i18n("You have specified a directory\n\n%1").arg(fileName);
-    KMessageBox::error( this, msg );
-    return;
-  }
-
-  if( !fileInfo.exists() )
-  {
-    // Create the file first
-    QFile file( fileName );
-    if( !file.open( IO_ReadWrite ) )
-    {
-      // ###FIXME: Tell the user what went wrong!
-      QString msg = i18n("Unable to create new file at\n\n%1").arg(fileName);
-      KMessageBox::error( this, msg );
-      return;
-    }
-  }
-
-  QString cmdline = QString::fromLatin1(DEFAULT_EDITOR_STR);
-
-  // Don't break for filenames containing "$ etc.:
-  fileName.replace( QRegExp(QString::fromLatin1("'")),
-		    QString::fromLatin1("\\'") );
-  QString argument = QString::fromLatin1("'%1'").arg( fileName );
-  ApplicationLaunch kl( cmdline.replace( QRegExp(QString::fromLatin1("\\%f")),
-					 argument ) );
-  kl.run();
-}
 
 
 // *************************************************************

@@ -128,7 +128,7 @@ namespace KMail {
     ++pageno;
     mTextEdit = new QTextEdit( widgetStack );
     widgetStack->addWidget( mTextEdit, pageno );
-    mTextEdit->setCurrentFont( KGlobalSettings::fixedFont() );
+    mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrap( QTextEdit::NoWrap );
     mTextEdit->setTextFormat( Qt::PlainText );
 

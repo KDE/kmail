@@ -47,6 +47,10 @@ class SimpleStringListEditor;
 class KConfig;
 namespace Kpgp {
   class Config;
+  class SecretKeyRequester;
+};
+namespace KMail {
+  class SignatureConfigurator;
 };
 
 class NewIdentityDialog : public KDialogBase
@@ -208,9 +212,6 @@ protected slots:
   void slotRemoveIdentity();
   void slotSetAsDefault();
   void slotIdentitySelectorChanged();
-  void slotChangeDefaultPGPKey();
-  void slotSignatureEdit();
-  void slotEnableSignatureEditButton( const QString &filename );
 
 protected: // methods
   void updateCombo( uint newCurrentItem=0 );
@@ -235,18 +236,15 @@ protected: // data members
   // "advanced" tab:
   QLineEdit        *mReplyToEdit;
   QLineEdit        *mBccEdit;
-  QLabel           *mPgpIdentityLabel;
+  Kpgp::SecretKeyRequester
+                   *mPgpKeyRequester;
   KMFolderComboBox *mFccCombo;
   KMFolderComboBox *mDraftsCombo;
   QCheckBox        *mTransportCheck;
   QComboBox        *mTransportCombo; // should be a KMTransportCombo...
   // "signature" tab:
-  QCheckBox        *mSignatureEnabled;
-  QComboBox        *mSignatureSourceCombo;
-  KURLRequester    *mSignatureFileRequester;
-  QPushButton      *mSignatureEditButton;
-  KURLRequester    *mSignatureCommandRequester;
-  QMultiLineEdit   *mSignatureTextEdit;
+  KMail::SignatureConfigurator
+                   *mSignatureConfigurator;
 };
 
 

@@ -13,6 +13,9 @@
 class KMIdentity;
 class KConfigBase;
 class IdentityList;
+namespace KMail {
+  class SignatureConfigurator;
+}
 
 /**
  * @short abstraction of a signature (aka "footer").
@@ -20,7 +23,7 @@ class IdentityList;
  */
 class Signature {
   friend class KMIdentity;
-  friend class IdentityPage; // until we have a better mechanism to configure the sig
+  friend class KMail::SignatureConfigurator;
 public:
   /** Type of signature (ie. way to obtain the signature text) */
   enum Type { Disabled = 0, Inlined = 1, FromFile = 2, FromCommand = 3 };
