@@ -88,7 +88,7 @@ struct LanguageItem
 		const QString & indentPrefix=QString::null ) :
     mLanguage( language ), mReply( reply ), mReplyAll( replyAll ),
     mForward( forward ), mIndentPrefix( indentPrefix ) {}
-  
+
   QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
 };
 
@@ -260,20 +260,20 @@ class NetworkPageSendingTab : public ConfigurationPage {
   Q_OBJECT
 public:
   NetworkPageSendingTab( QWidget * parent=0, const char * name=0 );
-    
+
   // no icon:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
-  
+
 signals:
   void transportListChanged( const QStringList & );
-  
+
 protected slots:
   void slotTransportSelected();
   void slotAddTransport();
@@ -281,7 +281,7 @@ protected slots:
   void slotRemoveSelectedTransport();
   void slotTransportUp();
   void slotTransportDown();
-  
+
 protected:
   ListView    *mTransportList;
   QPushButton *mModifyTransportButton;
@@ -292,9 +292,9 @@ protected:
   QCheckBox   *mSendOutboxCheck;
   QComboBox   *mSendMethodCombo;
   QComboBox   *mMessagePropertyCombo;
-  
+
   QPtrList< KMTransportInfo > mTransportInfoList;
-  
+
 };
 
 
@@ -302,18 +302,18 @@ class NetworkPageReceivingTab : public ConfigurationPage {
   Q_OBJECT
 public:
   NetworkPageReceivingTab( QWidget * parent=0, const char * name=0 );
-  
+
   // no icon:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
   void dismiss(); // needed for account list cleanup
-  
+
 signals:
   void accountListChanged( const QStringList & );
 
@@ -334,7 +334,7 @@ protected:
   QCheckBox     *mShowMessageBoxCheck;
   QCheckBox     *mMailCommandCheck;
   KURLRequester *mMailCommandRequester;
-  
+
   QValueList< QGuardedPtr<KMAccount> > mAccountsToDelete;
   QValueList< QGuardedPtr<KMAccount> > mNewAccounts;
   struct ModifiedAccountsType {
@@ -388,14 +388,14 @@ public:
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
   void installProfile( KConfig * profile );
-  
+
 protected slots:
   void slotFontSelectorChanged( int );
 
@@ -406,7 +406,7 @@ protected:
   QCheckBox    *mCustomFontCheck;
   QComboBox    *mFontLocationCombo;
   KFontChooser *mFontChooser;
-  
+
   int          mActiveFontIndex;
   QFont        mFont[10];
 };
@@ -419,14 +419,14 @@ public:
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
   void installProfile( KConfig * profile );
-  
+
 protected:
   QCheckBox    *mCustomColorCheck;
   ColorListBox *mColorList;
@@ -437,18 +437,18 @@ class AppearancePageLayoutTab : public ConfigurationPage {
   Q_OBJECT
 public:
   AppearancePageLayoutTab( QWidget * parent=0, const char * name=0 );
-  
+
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
 
   void setup();
   void apply();
   void installProfile( KConfig * profile );
-  
+
 protected:
   QCheckBox    *mLongFolderCheck;
   QCheckBox    *mShowColorbarCheck;
@@ -456,7 +456,7 @@ protected:
   QCheckBox    *mNestedMessagesCheck;
   QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
-  
+
   enum { numDateDisplayConfig = 4 };
   static const struct dateDisplayConfigType {
     const char *  displayName;
@@ -469,20 +469,20 @@ class AppearancePageProfileTab : public ConfigurationPage {
   Q_OBJECT
 public:
   AppearancePageProfileTab( QWidget * parent=0, const char * name=0 );
-  
+
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
-  
+
 signals:
   void profileSelected( KConfig * profile );
-  
+
 protected:
   KListView   *mListView;
   QStringList mProfileList;
@@ -492,7 +492,7 @@ class AppearancePage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
   AppearancePage( QWidget * parent=0, const char * name=0 );
-  
+
   static QString iconLabel();
   static QString title();
   static const char * iconName();
@@ -515,7 +515,7 @@ signals:
 
 protected:
   FontsTab   *mFontsTab;
-  ColorsTab  *mColorsTab; 
+  ColorsTab  *mColorsTab;
   LayoutTab  *mLayoutTab;
   ProfileTab *mProfileTab;
 };
@@ -564,10 +564,10 @@ public:
 
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
-  
+
 protected slots:
   void slotNewLanguage();
   void slotRemoveLanguage();
@@ -585,7 +585,7 @@ protected:
   QLineEdit        *mPhraseReplyAllEdit;
   QLineEdit        *mPhraseForwardEdit;
   QLineEdit        *mPhraseIndentPrefixEdit;
-  
+
   int              mActiveLanguageItem;
   LanguageItemList mLanguageList;
 };
@@ -594,17 +594,17 @@ class ComposerPageSubjectTab : public ConfigurationPage {
   Q_OBJECT
 public:
   ComposerPageSubjectTab( QWidget * parent=0, const char * name=0 );
-  
+
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
-  
+
 
 protected:
   SimpleStringListEditor *mReplyListEditor;
@@ -635,7 +635,7 @@ protected:
   SimpleStringListEditor *mCharsetListEditor;
   QCheckBox              *mKeepReplyCharsetCheck;
 };
-  
+
 class ComposerPageHeadersTab : public ConfigurationPage {
   Q_OBJECT
 public:
@@ -644,20 +644,20 @@ public:
   // no icons:
   static QString iconLabel() { return QString::null; }
   static const char * iconName() { return 0; }
-  
+
   static QString title();
   static QString helpAnchor();
-  
+
   void setup();
   void apply();
-  
+
 protected slots:
   void slotMimeHeaderSelectionChanged();
   void slotMimeHeaderNameChanged( const QString & );
   void slotMimeHeaderValueChanged( const QString & );
   void slotNewMimeHeader();
   void slotRemoveMimeHeader();
-  
+
 protected:
   QCheckBox   *mCreateOwnMessageIdCheck;
   QLineEdit   *mMessageIdSuffixEdit;
@@ -669,7 +669,7 @@ protected:
   QLabel      *mTagNameLabel;
   QLabel      *mTagValueLabel;
 };
-  
+
 class ComposerPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
@@ -844,6 +844,9 @@ public:
     void apply();
     void installProfile( KConfig* profile );
 
+private slots:
+    void slotStartCertManager();
+
 private:
     PluginPage* _pluginPage;
     QComboBox* plugListBoxCertConf;
@@ -987,7 +990,7 @@ public:
 protected:
   virtual void resizeEvent( QResizeEvent *e );
   virtual void showEvent( QShowEvent *e );
-  
+
 private:
   int mVisibleItem;
 };

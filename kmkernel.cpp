@@ -252,6 +252,8 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
   kdDebug(5006) << "KMKernel::sendCertificate called" << endl;
 
+  kdDebug(5006) << "data size = " << certData.count() << endl;
+  
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -261,6 +263,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 
   KMComposeWin *cWin = new KMComposeWin(0, msg);
   cWin->setCharset("", TRUE);
+  cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName("smime.p10");

@@ -1282,7 +1282,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setFcc( f->idString() );
 
   // set the correct drafts folder
-  mMsg->setDrafts( id.drafts() );	
+  mMsg->setDrafts( id.drafts() );
 
   if (id.isDefault())
     mMsg->removeHeaderField("X-KMail-Identity");
@@ -1313,7 +1313,7 @@ bool KMComposeWin::applyChanges(void)
   bool bOk = true;
 
   bool isQP = kernel->msgSender()->sendQuotedPrintable();
-    
+
   bool doSign    = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
   // make sure we have a valid CryptPlugList
@@ -1323,7 +1323,7 @@ bool KMComposeWin::applyChanges(void)
     KConfig *config = KGlobal::config();
     mCryptPlugList->loadFromConfig( config );
   }
-  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
 
 
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
@@ -1375,6 +1375,8 @@ bool KMComposeWin::applyChanges(void)
     // preprocess the body text
     QCString body = breakLinesAndApplyCodec();
 
+    qDebug( "***body = %s", body.data() );
+    
     if (body.isNull()) return FALSE;
 
     if (body.isEmpty()) body = "\n"; // don't crash
@@ -1682,7 +1684,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
 
       // encrypt the message
       bOk = block.encrypt( recipients, pgpUserId, doSign, mCharset );
-            
+
       if( bOk ) {
         newBodyPart.setBodyEncodedBinary( block.text() );
         if( newBodyPart.name().isEmpty() )
@@ -2098,7 +2100,8 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
   if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
      mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||
      mEdtSubject->edited() || mAtmModified ||
-     (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
+     (mTransport->lineEdit() && mTransport->lineEdit()->edited()) ||
+     bAlwaysSend )
   {
     // Provide a local scope for newText.
     QString newText;
@@ -3449,12 +3452,12 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       draftsFolder = kernel->draftsFolder();
     } else {
       draftsFolder->open();
-    }	
+    }
     kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
     if (imapDraftsFolder)
       kdDebug(5006) << "saveindrafts: imapdrafts="
 		    << imapDraftsFolder->name() << endl;
-		
+
     sentOk = !(draftsFolder->addMsg(mMsg));
     if (imapDraftsFolder)
     {
@@ -3922,6 +3925,15 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 	if (mMsg) mMsg->setParent(NULL);
 }
 
+
+
+void KMComposeWin::slotSetAlwaysSend( bool bAlways )
+{
+    bAlwaysSend = bAlways;
+}
+
+
+
 //=============================================================================
 //
 //   Class  KMLineEdit
@@ -4260,7 +4272,7 @@ void KMLineEdit::loadAddresses()
     KabcBridge::addresses(&addresses);
     QStringList::Iterator it2 = addresses.begin();
     for (; it2 != addresses.end(); ++it2) {
-    	s_completion->addItem( *it2 );	
+    	s_completion->addItem( *it2 );
     }
 }
 
@@ -4516,3 +4528,5 @@ void KMEdit::slotSpellDone()
      emit spellcheck_done( KS_CANCEL );
   }
 }
+
+

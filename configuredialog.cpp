@@ -155,7 +155,7 @@ ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
   // settings...
   connect( mNetworkPage, SIGNAL(transportListChanged(const QStringList &)),
 	   mIdentityPage, SLOT(slotUpdateTransportCombo(const QStringList &)) );
-  
+
   // Appearance Page:
   page = addPage( AppearancePage::iconLabel(), AppearancePage::title(),
 		  loadIcon( AppearancePage::iconName() ) );
@@ -315,7 +315,7 @@ void ConfigureDialog::apply( bool everything ) {
   QPtrListIterator<KMainWindow> it( *KMainWindow::memberList );
   for ( it.toFirst() ; it.current() ; ++it )
     // ### FIXME: use dynamic_cast.
-    if ( (*it)->inherits( "KMTopLevelWidget" ) ) 
+    if ( (*it)->inherits( "KMTopLevelWidget" ) )
       ((KMTopLevelWidget*)(*it))->readConfig();
   kernel->kbp()->idle();
 }
@@ -394,7 +394,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   hlay->addWidget( mRenameButton );
   hlay->addWidget( mRemoveButton );
   hlay->addWidget( mSetAsDefaultButton );
-  
+
   //
   // Tab Widget: General
   //
@@ -464,7 +464,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   button = new QPushButton( i18n("Chang&e..."), tab );
   button->setAutoDefault( false );
   glay->addWidget( button, 1, 3 );
-  connect( button, SIGNAL(clicked()), 
+  connect( button, SIGNAL(clicked()),
            this, SLOT(slotChangeDefaultPGPKey()) );
   QWhatsThis::add( mPgpIdentityLabel,
 		   i18n("<qt><p>The OpenPGP key you choose here will be used "
@@ -661,7 +661,7 @@ void IdentityPage::setIdentityInformation( const QString &identity )
   mActiveIdentity = identity;
 
   KMIdentity & ident = kernel->identityManager()->identityForName( identity );
-  
+
   //
   // 2. Display the new settings
   //
@@ -851,7 +851,7 @@ void IdentityPage::slotIdentitySelectorChanged()
 void IdentityPage::slotChangeDefaultPGPKey()
 {
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-  
+
   if ( !pgp ) return;
 
   QCString keyID = mPgpIdentityLabel->text().local8Bit();
@@ -1003,9 +1003,9 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   QGridLayout *glay;
   QPushButton *button;
   QGroupBox   *group;
-  
+
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-  // label: zero stretch ### FIXME more 
+  // label: zero stretch ### FIXME more
   vlay->addWidget( new QLabel( i18n("Outgoing accounts (add at least one):"), this ) );
 
   // hbox layout: stretch 10, spacing inherited from vlay
@@ -1203,7 +1203,7 @@ void NetworkPage::SendingTab::slotAddTransport()
   (void) new QListViewItem( mTransportList, lastItem, transportInfo->name,
 			    typeDisplayName );
 
-  // notify anyone who cares:  
+  // notify anyone who cares:
   emit transportListChanged( transportNames );
 }
 
@@ -1229,7 +1229,7 @@ void NetworkPage::SendingTab::slotModifySelectedTransport()
   for ( jt.toFirst() ; jt.current() ; ++jt )
     if ( jt != it )
       transportNames << (*jt)->name;
-    else 
+    else
       entryLocation = transportNames.count();
   assert( entryLocation >= 0 );
 
@@ -1294,7 +1294,7 @@ void NetworkPage::SendingTab::slotTransportUp()
   if ( above->itemAbove() )
     // not first:
     above->setText( 1, ti->type );
-  else 
+  else
     // first:
     above->setText( 1, i18n("%1: type of transport. Result used in "
 			    "Configure->Network->Sending listview, \"type\" "
@@ -1370,7 +1370,7 @@ void NetworkPage::SendingTab::setup() {
     mTransportList->setCurrentItem( listItem );
     mTransportList->setSelected( listItem, true );
   }
-  
+
   mSendMethodCombo->setCurrentItem(
 		kernel->msgSender()->sendImmediate() ? 0 : 1 );
   mMessagePropertyCombo->setCurrentItem(
@@ -1392,7 +1392,7 @@ void NetworkPage::SendingTab::apply() {
   QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( int i = 1 ; it.current() ; ++it, ++i )
     (*it)->writeConfig(i);
-  
+
   // Save common options:
   general.writeEntry( "sendOnCheck", mSendOutboxCheck->isChecked() );
   kernel->msgSender()->setSendImmediate(
@@ -1583,12 +1583,12 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
   QListViewItem *after = mAccountList->firstChild();
   while ( after && after->nextSibling() )
     after = after->nextSibling();
-  
+
   QListViewItem *listItem =
     new QListViewItem( mAccountList, after, account->name(), account->type() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
-  
+
   mNewAccounts.append( account );
 }
 
@@ -1614,7 +1614,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
 	account = *it;
 	break;
       }
-    
+
     if ( !account ) {
       account = kernel->acctMgr()->find( listItem->text(0) );
       if( !account ) {
@@ -1647,7 +1647,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
   if( dialog.exec() != QDialog::Accepted ) return;
 
   account->setName( uniqueName( accountNames, account->name() ) );
-  
+
   listItem->setText( 0, account->name() );
   listItem->setText( 1, account->type() );
   if( account->folder() )
@@ -1785,7 +1785,7 @@ void NetworkPage::ReceivingTab::dismiss() {
 
   // cancel deletion of accounts:
   mAccountsToDelete.clear();
-  
+
   mNewAccounts.clear(); // ### Why that? didn't we just delete all items?
   mModifiedAccounts.clear(); // ### see above...
 }
@@ -1820,7 +1820,7 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   //
   mFontsTab = new FontsTab();
   addTab( mFontsTab, mFontsTab->title() );
-  
+
   //
   // "Colors" tab:
   //
@@ -1838,7 +1838,7 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   //
   mProfileTab = new ProfileTab();
   addTab( mProfileTab, mProfileTab->title() );
-  
+
   connect( mProfileTab, SIGNAL(profileSelected(KConfig*)),
 	   this, SIGNAL(profileSelected(KConfig*)) );
 }
@@ -1872,7 +1872,7 @@ QString AppearancePage::FontsTab::title() {
 QString AppearancePage::FontsTab::helpAnchor() {
   return QString::fromLatin1("configure-appearance-fonts");
 }
-  
+
 static const struct {
   const char * configName;
   const char * displayName;
@@ -1963,7 +1963,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
   } else if ( mActiveFontIndex > 0 )
     mFont[ mActiveFontIndex ] = mFontChooser->font();
   mActiveFontIndex = index;
-  
+
 
   // Display the new setting:
   mFontChooser->setFont( mFont[index], fontNames[index].onlyFixed );
@@ -1981,7 +1981,7 @@ void AppearancePage::FontsTab::setup() {
   for ( int i = 0 ; i < numFontNames ; i++ )
     mFont[i] = fonts.readFontEntry( fontNames[i].configName,
       (fontNames[i].onlyFixed) ? &fixedFont : &mFont[0] );
-  
+
   mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentItem( 0 );
   // ### FIXME: possible Qt bug: setCurrentItem doesn't emit activated(int).
@@ -1990,7 +1990,7 @@ void AppearancePage::FontsTab::setup() {
 
 void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
   KConfigGroup fonts( profile, "Fonts" );
-  
+
   // read fonts that are defined in the profile:
   bool needChange = false;
   for ( int i = 0 ; i < numFontNames ; i++ )
@@ -2003,7 +2003,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
   if ( needChange && mFontLocationCombo->currentItem() > 0 )
     mFontChooser->setFont( mFont[ mFontLocationCombo->currentItem() ],
       fontNames[ mFontLocationCombo->currentItem() ].onlyFixed );
-  
+
   if ( fonts.hasKey( "defaultFonts" ) )
     mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts" ) );
 }
@@ -2014,7 +2014,7 @@ void AppearancePage::FontsTab::apply() {
   // read the current font (might have been modified)
   if ( mActiveFontIndex >= 0 )
     mFont[ mActiveFontIndex ] = mFontChooser->font();
-  
+
   bool customFonts = mCustomFontCheck->isChecked();
   fonts.writeEntry( "defaultFonts", !customFonts );
   for ( int i = 0 ; i < numFontNames ; i++ )
@@ -2033,7 +2033,7 @@ QString AppearancePage::ColorsTab::helpAnchor() {
   return QString::fromLatin1("configure-appearance-colors");
 }
 
-  
+
 static const struct {
   const char * configName;
   const char * displayName;
@@ -2093,7 +2093,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
 
 void AppearancePage::ColorsTab::setup() {
   KConfigGroup reader( kapp->config(), "Reader" );
-  
+
   mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readBoolEntry( "RecycleQuoteColors", false ) );
 
@@ -2125,12 +2125,12 @@ void AppearancePage::ColorsTab::setup() {
 
 void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
   KConfigGroup reader( profile, "Reader" );
-  
+
   if ( reader.hasKey( "defaultColors" ) )
     mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors" ) );
   if ( reader.hasKey( "RecycleQuoteColors" ) )
     mRecycleColorCheck->setChecked( reader.readBoolEntry( "RecycleQuoteColors" ) );
-  
+
   for ( int i = 0 ; i < numColorNames ; i++ )
     if ( reader.hasKey( colorNames[i].configName ) )
       mColorList->setColor( i, reader.readColorEntry( colorNames[i].configName ) );
@@ -2138,7 +2138,7 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
 
 void AppearancePage::ColorsTab::apply() {
   KConfigGroup reader( kapp->config(), "Reader" );
-  
+
   bool customColors = mCustomColorCheck->isChecked();
   reader.writeEntry( "defaultColors", !customColors );
 
@@ -2211,7 +2211,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   // a button group for three radiobuttons:
   mDateDisplay = new QVButtonGroup( i18n( "Display of date" ), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
-  
+
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
     if ( dateDisplayConfig[i].dateDisplay == KMime::DateFormatter::Custom ) {
       QRadioButton *b = new QRadioButton( i18n(dateDisplayConfig[i].displayName),
@@ -2250,7 +2250,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
       QObject::connect( b, SIGNAL(toggled(bool)), le, SLOT(setEnabled(bool)) );
     } else {
       mDateDisplay->insert( new QRadioButton( i18n(dateDisplayConfig[i].displayName)
-					      .arg( KMime::DateFormatter::formatCurrentDate( 
+					      .arg( KMime::DateFormatter::formatCurrentDate(
                                                          dateDisplayConfig[i].dateDisplay ) ),
 					                 mDateDisplay ), i );
       }
@@ -2281,7 +2281,7 @@ void AppearancePage::LayoutTab::setup() {
       if ( dateDisplay == KMime::DateFormatter::Custom ) {
 	QObjectListIt it( *mDateDisplay->queryList( "QLineEdit" ) );
 	static_cast<QLineEdit*>(it.current())->setText( general.readEntry( "customDateFormat", QString::null) );
-      } 
+      }
       mDateDisplay->setButton( i );
       break;
     }
@@ -2411,7 +2411,7 @@ AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char
   hlay->addStretch(10);
   */
 }
-  
+
 void AppearancePage::ProfileTab::setup() {
   mListView->clear();
   // find all profiles (config files named "profile-xyz-rc"):
@@ -2419,7 +2419,7 @@ void AppearancePage::ProfileTab::setup() {
   mProfileList = KGlobal::dirs()->findAllResources( "appdata",
 						    profileFilenameFilter );
 
-  kdDebug(5006) << "Profile manager: found " << mProfileList.count() 
+  kdDebug(5006) << "Profile manager: found " << mProfileList.count()
 		<< " profiles:" << endl;
 
   // build the list and populate the list view:
@@ -2661,7 +2661,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap" ) );
   if ( composer.hasKey( "break-at" ) )
     mWrapColumnSpin->setValue( composer.readNumEntry( "break-at" ) );
-  
+
   if ( general.hasKey( "use-external-editor" )
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor" ) );
@@ -2784,7 +2784,7 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
   int index = mActiveLanguageItem;
   if (index == -1) return;
   assert( 0 <= index && index < (int)mLanguageList.count() );
-  
+
   LanguageItem &l = *mLanguageList.at( index );
 
   l.mReply = mPhraseReplyEdit->text();
@@ -2873,7 +2873,7 @@ void ComposerPage::PhrasesTab::setup() {
 
   if ( currentNr >= num || currentNr < 0 )
     currentNr = 0;
- 
+
   mPhraseLanguageCombo->setCurrentItem( currentNr );
   mActiveLanguageItem = currentNr;
   setLanguageItemInformation( currentNr );
@@ -2936,7 +2936,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 				i18n("A&dd..."), i18n("Re&move"),
 				QString::null,
 				i18n("Enter new reply prefix:") );
-  
+
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck =
      new QCheckBox( i18n("Replace recognized prefi&x with Re:"), group );
@@ -2975,19 +2975,19 @@ void ComposerPage::SubjectTab::setup() {
   mReplyListEditor->setStringList( prefixList );
 
   mReplaceReplyPrefixCheck->setChecked( composer.readBoolEntry("replace-reply-prefix", true ) );
-  
+
   prefixList = composer.readListEntry( "forward-prefixes", ',' );
   if ( prefixList.isEmpty() )
     prefixList << QString::fromLatin1("Fwd:");
   mForwardListEditor->setStringList( prefixList );
-  
+
   mReplaceForwardPrefixCheck->setChecked( composer.readBoolEntry( "replace-forward-prefix", true ) );
 }
 
 void ComposerPage::SubjectTab::apply() {
   KConfigGroup composer( kapp->config(), "Composer" );
 
-  
+
   composer.writeEntry( "reply-prefixes", mReplyListEditor->stringList() );
   composer.writeEntry( "forward-prefixes", mForwardListEditor->stringList() );
   composer.writeEntry( "replace-reply-prefix",
@@ -3273,7 +3273,7 @@ void ComposerPage::HeadersTab::apply() {
 		      mCreateOwnMessageIdCheck->isChecked() );
   general.writeEntry( "myMessageIdSuffix",
 		      mMessageIdSuffixEdit->text() );
-      
+
   int numValidEntries = 0;
   QListViewItem * item = mTagList->firstChild();
   for ( ; item ; item = item->itemBelow() )
@@ -3393,10 +3393,10 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 			    "\"What's this\" help (Shift-F1) for more.</qt>" ),
 		      group );
   label->setAlignment( WordBreak);
-  
+
   vlay->addWidget( group );
   vlay->addStretch( 10 ); // spacer
-    
+
   // and now: adding QWhat'sThis all over the place:
   msg = i18n( "<qt><p>Emails sometimes come in both formats. This option "
 	      "controls whether you want the HTML part or the plain text "
@@ -3445,7 +3445,7 @@ void SecurityPage::GeneralTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup reader( kapp->config(), "Reader" );
 
-  
+
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
   mSendReceiptCheck->setChecked( general.readBoolEntry( "send-receipts", false ) );
@@ -3583,7 +3583,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
     new QCheckBox( i18n("Co&nfirm before emptying folders"), this );
-  vlay->addWidget( mEmptyFolderConfirmCheck );  
+  vlay->addWidget( mEmptyFolderConfirmCheck );
   mWarnBeforeExpire =
     new QCheckBox( i18n("&Warn before expiring messages"), this );
   vlay->addWidget( mWarnBeforeExpire );
@@ -3606,7 +3606,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 		  "directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
-  
+
   // "On exit..." groupbox:
   group = new QVGroupBox( i18n("On program exit, "
 			       "perform the following tasks"), this );
@@ -3650,7 +3650,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 void MiscPage::FoldersTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup behaviour( kapp->config(), "Behaviour" );
-  
+
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
@@ -3660,7 +3660,7 @@ void MiscPage::FoldersTab::setup() {
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
-  mMailboxPrefCombo->setCurrentItem( num ); 
+  mMailboxPrefCombo->setCurrentItem( num );
 }
 
 void MiscPage::FoldersTab::apply() {
@@ -4867,11 +4867,40 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
     _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
   KSeparator *hline = new KSeparator( KSeparator::HLine, this);
   vlay->addWidget( hline );
+
+  
+#ifdef CERTIFICATE_HANDLING_IN_KMAIL  
   certDialog = new CertificateHandlingDialogImpl( this, "CertificateHandlingDialogImpl" );
   if ( certDialog ) {
     vlay->addWidget( certDialog );
     vlay->addStretch(10);
   }
+#else
+  certDialog = 0;
+  
+  QPushButton* startCertManagerPB = new QPushButton( i18n( "&Start Certificate Manager" ), this, "startcertmanagerpb" );
+  connect( startCertManagerPB, SIGNAL( clicked() ),
+           this, SLOT( slotStartCertManager() ) );
+  startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );
+  vlay->addWidget( startCertManagerPB, 0, AlignCenter | AlignVCenter );
+#endif
+}
+
+
+void CertificatesPage::slotStartCertManager()
+{
+    KProcess certManagerProc; // save to create on the heap, since
+                              // there is no parent
+    certManagerProc << "certmanager";
+    certManagerProc << _pluginPage->mCryptPlugList->active()->displayName();
+    certManagerProc << _pluginPage->mCryptPlugList->active()->libName();
+    
+    if( !certManagerProc.start( KProcess::DontCare ) )
+        KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
+                            i18n( "KMail Error" ) );
+
+    // process continues to run even after the KProcess object goes
+    // out of scope here, since it is started in DontCare run mode.
 }
 
 
