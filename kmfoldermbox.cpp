@@ -52,7 +52,7 @@ KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
 {
   mStream         = 0;
   mFilesLocked    = false;
-  mLockType       = None;
+  mLockType       = lock_none;
 }
 
 
@@ -383,7 +383,7 @@ int KMFolderMbox::lock()
       }
       break;
 
-    case None:
+    case lock_none:
     default:
       break;
   }
@@ -470,7 +470,7 @@ int KMFolderMbox::unlock()
       }
       break;
 
-    case None:
+    case lock_none:
     default:
       rc = 0;
       break;

@@ -23,7 +23,7 @@ typedef enum
     procmail_lockfile,
     mutt_dotlock,
     mutt_dotlock_privileged,
-    None
+    lock_none
 } LockType;
 
 /*

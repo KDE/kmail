@@ -232,7 +232,7 @@ void KMAcctLocal::readConfig(KConfig& config)
   else if( locktype == "mutt_dotlock_privileged" )
     mLock = mutt_dotlock_privileged;
   else if( locktype == "none" )
-    mLock = None;
+    mLock = lock_none;
   else mLock = FCNTL;
 }
 
@@ -248,7 +248,7 @@ void KMAcctLocal::writeConfig(KConfig& config)
   if (mLock == procmail_lockfile) st = "procmail_lockfile";
   else if (mLock == mutt_dotlock) st = "mutt_dotlock";
   else if (mLock == mutt_dotlock_privileged) st = "mutt_dotlock_privileged";
-  else if (mLock == None) st = "none";
+  else if (mLock == lock_none) st = "none";
   config.writeEntry("LockType", st);
 
   if (mLock == procmail_lockfile) {

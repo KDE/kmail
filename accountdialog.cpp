@@ -64,7 +64,6 @@ using KMail::SieveConfigEditor;
 #ifndef _PATH_MAILDIR
 #define _PATH_MAILDIR "/var/spool/mail"
 #endif
-#undef None
 
 class ProcmailRCParser
 {
@@ -985,7 +984,7 @@ void AccountDialog::setupSettings()
       mLocal.procmailLockFileName->setEditText(acctLocal->procmailLockFileName());
     } else if (acctLocal->mLock == FCNTL)
       mLocal.lockFcntl->setChecked(true);
-    else if (acctLocal->mLock == None)
+    else if (acctLocal->mLock == lock_none)
       mLocal.lockNone->setChecked(true);
 
     mLocal.intervalSpin->setValue( QMAX(1, interval) );
@@ -1338,7 +1337,7 @@ void AccountDialog::saveSettings()
         acctLocal->setProcmailLockFileName(mLocal.procmailLockFileName->currentText());
       }
       else if (mLocal.lockNone->isChecked())
-        acctLocal->setLockType(None);
+        acctLocal->setLockType(lock_none);
       else acctLocal->setLockType(FCNTL);
     }
 
