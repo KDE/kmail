@@ -1393,10 +1393,14 @@ void KMMainWin::setupMenuBar()
 		      actionCollection(), "check_mail" );
 
   KActionMenu *actActionMenu = new
-    KActionMenu( i18n("Check Mail in"), actionCollection(), "check_mail_in" );
+    KActionMenu( i18n("Check Mail in"), "mail_get", actionCollection(),
+				   	"check_mail_in" );
 
+  connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
+  
   actMenu = actActionMenu->popupMenu();
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
+  connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
   (void) new KAction( i18n("&Send Queued"), 0, this,
 		      SLOT(slotSendQueued()), actionCollection(), "send_queued");
@@ -1563,9 +1567,6 @@ void KMMainWin::setupMenuBar()
  		      SLOT(slotFilter()), actionCollection(), "filter" );
 
   createGUI( "kmmainwin.rc", false );
-
-  QObject::connect( guiFactory()->container("file", this),
-		    SIGNAL( aboutToShow() ), this, SLOT( getAccountMenu() ));
 
   QObject::connect( guiFactory()->container("folder", this),
 		    SIGNAL( aboutToShow() ), this, SLOT( updateFolderMenu() ));
