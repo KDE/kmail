@@ -109,6 +109,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
+  bAutoCharset = TRUE;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
   disableBreaking = false;
@@ -1545,10 +1546,10 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if ((mCharset == "us-ascii" && i == 0) ||
-     (i != 0 && KGlobal::charsets()->codecForName(
+    if (i > 0 && ((mCharset == "us-ascii" && i == 1) ||
+     (i != 1 && KGlobal::charsets()->codecForName(
       KGlobal::charsets()->encodingForName(*it))
-      == KGlobal::charsets()->codecForName(mCharset)))
+      == KGlobal::charsets()->codecForName(mCharset))))
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();
