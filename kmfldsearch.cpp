@@ -68,7 +68,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   lbl->setAlignment(AlignRight|AlignVCenter);
   mGrid->addWidget(lbl, 0, 0);
 
-  mChkSubFolders = new QCheckBox(i18n("i&nclude sub-folders"), this);
+  mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), this);
   mChkSubFolders->setChecked(true);
   mGrid->addWidget(mChkSubFolders, 0, 3);
 
