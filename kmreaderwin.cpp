@@ -1376,7 +1376,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       int startpos = pos;
       for (i=0; pos >= 0 && aStr[pos].unicode() < 128
 	     && (aStr[pos].isLetterOrNumber()
-                 || QString("@._-*[]=").find(aStr[pos]) != -1)
+                 || QString("@._-*[]=+").find(aStr[pos]) != -1)
 	     && i<255; i++, pos--)
 	{
 	}
@@ -1384,14 +1384,14 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       pos++;
       for (i=0; pos < (int)aStr.length() && aStr[pos].unicode() < 128
              && (aStr[pos].isLetterOrNumber()
-                 || QString("@._-*[]=").find(aStr[pos]) != -1)
+                 || QString("@._-*[]=+").find(aStr[pos]) != -1)
 	     && i<255; i++, pos++)
       {
 	iStr += aStr[pos];
       }
       pos--;
       len = iStr.length();
-      while (len>2 && QString("._-*()=").find(aStr[pos]) != -1
+      while (len>2 && QString("._-*()=+").find(aStr[pos]) != -1
         && (pos > startpos))
       {
 	len--;
