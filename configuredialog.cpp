@@ -2056,7 +2056,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain new, unread "
-			   "or important &messages"), mNestingPolicy ), 3 );
+			   "or important &messages and open watched threads."), 
+                      mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
 

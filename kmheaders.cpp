@@ -138,7 +138,8 @@ public:
     }
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-    if (mMsgBase->isNew() || mMsgBase->isUnread() || mMsgBase->isFlag()) {
+    if (mMsgBase->isNew() || mMsgBase->isUnread() 
+        || mMsgBase->isFlag() || mMsgBase->isWatched() ) {
       setOpen(true);
       KMHeaderItem * topOfThread = this;
       while(topOfThread->parent())
