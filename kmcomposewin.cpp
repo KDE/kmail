@@ -359,8 +359,8 @@ void KMComposeWin::readConfig(void)
 
   if ((mLineBreak == 0) || (mLineBreak > 78))
     mLineBreak = 78;
-  if (mLineBreak < 60)
-    mLineBreak = 60;
+  if (mLineBreak < 30)
+    mLineBreak = 30;
   mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
   mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
@@ -2614,6 +2614,7 @@ void KMComposeWin::slotToggleStatusBar()
 
 void KMComposeWin::slotEditToolbars()
 {
+  saveMainWindowSettings(kapp->config(), "Composer");
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -2625,6 +2626,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
+  applyMainWindowSettings(kapp->config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 

@@ -2270,6 +2270,7 @@ void KMMainWin::slotToggleStatusBar()
 
 void KMMainWin::slotEditToolbars()
 {
+  saveMainWindowSettings(kapp->config(), "MainWindow");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -2281,6 +2282,7 @@ void KMMainWin::slotEditToolbars()
 void KMMainWin::slotUpdateToolbars()
 {
   createGUI("kmmainwin.rc");
+  applyMainWindowSettings(kapp->config(), "MainWindow");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
