@@ -493,7 +493,7 @@ kdDebug(5006) << "default " << endl;
                   (reader->mAttachmentStyle == IconicAttmnt &&
                    reader->mIsFirstTextPart) || showOneMimePart )
               {
-                reader->mIsFirstTextPart = false;
+                if (reader) reader->mIsFirstTextPart = false;
                 if( reader && curNode->isAttachment() && !showOneMimePart )
                   reader->queueHtml("<br><hr><br>");
                 if( reader )
