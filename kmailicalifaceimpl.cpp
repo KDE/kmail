@@ -1056,7 +1056,7 @@ bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
   if( mUseResourceIMAP && folder ) {
-    if( folder == mCalendar || folder == mContacts 
+    if( folder == mCalendar || folder == mContacts
         || folder == mNotes || folder == mTasks
         || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
       KMail::FolderContentsType ct = folder->storage()->contentsType();
@@ -1357,26 +1357,31 @@ void KMailICalIfaceImpl::readConfig()
   KMFolderNode* node;
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Calendar, folderLanguage ) );
   if( !node || node->isDir() ) {
+    kdDebug() << "Calendar folder not found in " << parentName << endl;
     makeSubFolders = true;
     mCalendar = 0;
   }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks, folderLanguage ) );
   if( !node || node->isDir() ) {
+    kdDebug() << "Tasks folder not found in " << parentName << endl;
     makeSubFolders = true;
     mTasks = 0;
   }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals, folderLanguage ) );
   if( !node || node->isDir() ) {
+    kdDebug() << "Journals folder not found in " << parentName << endl;
     makeSubFolders = true;
     mJournals = 0;
   }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts, folderLanguage ) );
   if( !node || node->isDir() ) {
+    kdDebug() << "Contacts folder not found in " << parentName << endl;
     makeSubFolders = true;
     mContacts = 0;
   }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Notes, folderLanguage ) );
   if( !node || node->isDir() ) {
+    kdDebug() << "Notes folder not found in " << parentName << endl;
     makeSubFolders = true;
     mNotes = 0;
   }
