@@ -2442,24 +2442,24 @@ KMCommand::Result KMIMChatCommand::execute()
   else
   {
     kdDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;
-    
+
     QString apology;
-    if ( addresses.count() == 0 )
-        apology = i18n( "There is no Address Book entry for this email address.  Add them to the Address Book and then add instant messaging addresses using your preferred messaging client." );
+    if ( addresses.isEmpty() )
+      apology = i18n( "There is no Address Book entry for this email address.  Add them to the Address Book and then add instant messaging addresses using your preferred messaging client." );
     else
     {
-        apology = i18n( "More than one Address Book entry uses this email address:\n %1\n It isn't possible to determine who to chat with." );
-        QStringList nameList;
-        KABC::AddresseeList::const_iterator it = addresses.begin();
-        KABC::AddresseeList::const_iterator end = addresses.end();
-        for ( ; it != end; ++it )
-        {
-            nameList.append( (*it).realName() );
-        }
-        QString names = nameList.join( QString::fromLatin1( ",\n" ) );
-        apology = apology.arg( names );
+      apology = i18n( "More than one Address Book entry uses this email address:\n %1\n It isn't possible to determine who to chat with." );
+      QStringList nameList;
+      KABC::AddresseeList::const_iterator it = addresses.begin();
+      KABC::AddresseeList::const_iterator end = addresses.end();
+      for ( ; it != end; ++it )
+      {
+          nameList.append( (*it).realName() );
+      }
+      QString names = nameList.join( QString::fromLatin1( ",\n" ) );
+      apology = apology.arg( names );
     }
-    
+
     KMessageBox::sorry( parentWidget(), apology );
     return Failed;
   }
