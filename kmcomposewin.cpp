@@ -1589,7 +1589,9 @@ void KMComposeWin::slotAttachView()
 
   edt->setCaption(i18n("View Attachment: ") + pname);
   edt->insertLine(str);
+  edt->setCursorPosition(0,0);
   edt->setReadOnly(TRUE);
+  edt->resize(500,400);
   edt->show();
 
   kernel->kbp()->idle();
