@@ -204,11 +204,18 @@ namespace KMail {
       node->setProcessed( false );
     }
 
-    ProcessResult processResult;
+    for ( ; node ; node = node->mNext ) {
+      ProcessResult processResult;
 
-    // process all mime parts that are not covered by one of the CRYPTPLUGs
-    if ( !node->mWasProcessed ) { // ### (mmutz) this conditional screams to be a guard clause!
-
+      if ( node->mWasProcessed ) {
+	// ### (mmutz) I think this is a bug if node->mWasProcessed is
+	// true from the beginning (_can_ it?), then any crypto state is
+	// reset. I therefore believe that this code should be inside the
+	// corresponding conditional above:
+	processResult.adjustCryptoStatesOfNode( node );
+	continue;
+      }
+	
       const BodyPartFormatter * bpf
 	= BodyPartFormatter::createFor( node->type(), node->subType() );
       kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
@@ -218,21 +225,13 @@ namespace KMail {
 	defaultHandling( node, processResult );
 
       node->mWasProcessed = true;
+
+      // adjust signed/encrypted flags if inline PGP was found
+      processResult.adjustCryptoStatesOfNode( node );
+
+      if ( showOnlyOneMimePart() )
+	break;
     }
-    // adjust signed/encrypted flags if inline PGP was found
-
-    // ### (mmutz) I think this is a bug if node->mWasProcessed is
-    // true from the beginning (_can_ it?), then any crypto state is
-    // reset. I therefore believe that this code should be inside the
-    // corresponding conditional above:
-    processResult.adjustCryptoStatesOfNode( node );
-    // end of ###
-
-    // parse the siblings (children are parsed in the 'multipart' case terms)
-    // ### FIXME (mmutz): use iteration instead of recursion!
-    if ( !showOnlyOneMimePart() && node->mNext )
-      parseObjectTree( node->mNext );
-
   }
 
   void ObjectTreeParser::defaultHandling( partNode * node, ProcessResult & result ) {
