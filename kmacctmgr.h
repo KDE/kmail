@@ -101,12 +101,18 @@ private:
   bool newMailArrived;
   bool interactive;
   int  mTotalNewMailsArrived;
+  int  mMaxConnectionsPerHost;
 
   // for detailed (per folder) new mail notification
   QMap<QString, int> mTotalNewInFolder;
 
+  // for restricting number of concurrent connections to the same server
+  QMap<QString, int> mServerConnections;
+  QString hostForAccount(const KMAccount *acct) const;
+
   // if a summary should be displayed
   bool mDisplaySummary;
+
 };
 
 #endif /*kmacctmgr_h*/
