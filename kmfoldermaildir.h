@@ -73,6 +73,20 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
+  /** Create the necessary folders for a maildir folder. Usually you will
+      want to use create() instead.
+
+      @param folderPath the full path of the folder as returned by location()
+      @return 0 on success and an error code (cf. man 3 errno) otherwise
+   */
+  static int createMaildirFolders( const QString & folderPath );
+
+  static QString constructValidFileName( const QString & filename = QString(),
+                                         KMMsgStatus status = KMMsgStatusNew );
+
+  static bool removeFile( const QString & folderPath,
+                          const QString & filename );
+
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
@@ -117,8 +131,8 @@ protected:
    * Internal helper called by addMsg. If stripUid is true it will remove any
    * uid headers and uid index setting before writing. KMFolderCachedImap needs this
    * but can't do it itself, since the final take() which removes the original mail
-   * from the source folder, in moves, needs to happen after the adding, for safety 
-   * reasons, but needs the uid, in case the source folder was an imap folder, to 
+   * from the source folder, in moves, needs to happen after the adding, for safety
+   * reasons, but needs the uid, in case the source folder was an imap folder, to
    * delete the original.
    * TODO: Avoid this by moving the take() out of the addMsg() methods and moving it
    * into the KMMoveCommand, where it can safely happen at a much higher level. */
@@ -126,7 +140,6 @@ protected:
 
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
-  QString constructValidFileName(QString& file, KMMsgStatus status);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo* mi);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, QString& aFileName, KMMsgStatus status);
   bool removeFile(const QString& filename);
@@ -137,7 +150,7 @@ private:
       Returns IndexOk if the index is not older than the contents.
   */
   virtual IndexStatus indexStatus();
-  
+
   QStrList mIdxToFileList;
   int mIdxCount;
 };
