@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
    Boston, MA 02111-1307, USA.
 */
-#ifndef __KMSUBSCRIPTION
-#define __KMSUBSCRIPTION
+#ifndef __SUBSCRIPTION
+#define __SUBSCRIPTION
 
 #include <ksubscription.h>
 
@@ -24,31 +24,35 @@
 
 class KMMessage;
 
-class KMSubscription : public KSubscription
-{
-  Q_OBJECT
+namespace KMail {
 
-  public:
-    KMSubscription( QWidget *parent, const QString &caption, KAccount* acct );
+  class Subscription : public KSubscription
+  {
+    Q_OBJECT
 
-  public slots:
-    /**
-     * get the listing from the imap-server
-     */ 
-    void slotListDirectory(QStringList, QStringList,
-        QStringList, KMAcctImap::jobData);
+    public:
+      Subscription( QWidget *parent, const QString &caption, KAccount* acct );
 
-    /** 
-     * called by Ok-button, saves the changes
-     */ 
-    void slotSave();
+      public slots:
+        /**
+         * get the listing from the imap-server
+         */ 
+        void slotListDirectory(QStringList, QStringList,
+            QStringList, KMAcctImap::jobData);
 
-  protected slots:
-    /**
-     * Loads the folders
-     */ 
-    void slotLoadFolders();
+      /** 
+       * called by Ok-button, saves the changes
+       */ 
+      void slotSave();
 
-};
+      protected slots:
+        /**
+         * Loads the folders
+         */ 
+        void slotLoadFolders();
+
+  };
+
+}; // namespace KMail
 
 #endif

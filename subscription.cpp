@@ -1,5 +1,5 @@
 /*
-    kmsubscription.cpp
+    subscription.cpp
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -10,7 +10,7 @@
     Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, US
 */
 
-#include "kmsubscription.h"
+#include "subscription.h"
 #include "kmmessage.h"
 
 #include <klocale.h>
@@ -18,7 +18,9 @@
 
 #include <qpushbutton.h>
 
-KMSubscription::KMSubscription( QWidget *parent, const QString &caption,
+namespace KMail {
+
+Subscription::Subscription( QWidget *parent, const QString &caption,
     KAccount * acct )
   : KSubscription( parent, caption, acct, User1, QString::null, false )
 {
@@ -44,7 +46,7 @@ KMSubscription::KMSubscription( QWidget *parent, const QString &caption,
 }
 
 //------------------------------------------------------------------------------
-void KMSubscription::slotListDirectory( QStringList mSubfolderNames, 
+void Subscription::slotListDirectory( QStringList mSubfolderNames, 
                                         QStringList mSubfolderPaths, 
                                         QStringList mSubfolderMimeTypes,
                                         KMAcctImap::jobData jobData )
@@ -139,7 +141,7 @@ void KMSubscription::slotListDirectory( QStringList mSubfolderNames,
 }
 
 //------------------------------------------------------------------------------
-void KMSubscription::slotSave()
+void Subscription::slotSave()
 {
   // subscribe
   QListViewItemIterator it(subView);
@@ -159,7 +161,7 @@ void KMSubscription::slotSave()
 }
 
 //------------------------------------------------------------------------------
-void KMSubscription::slotLoadFolders()
+void Subscription::slotLoadFolders()
 {
   folderTree()->clear();
   KMAcctImap* ai = static_cast<KMAcctImap*>(account());
@@ -168,4 +170,6 @@ void KMSubscription::slotLoadFolders()
   ai->listDirectory(ai->prefix(), true);
 }
 
-#include "kmsubscription.moc"
+};
+
+#include "subscription.moc"

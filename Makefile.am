@@ -68,7 +68,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
 		kmcommands.cpp transportmanager.cpp kmreadermainwin.cpp \
 		kmstartup.cpp folderpropertiesdialog.ui \
-		kmsubscription.cpp
+		subscription.cpp
 #  kmail_part.cpp kmmainwidget.cpp kmmsgindex.cpp kmfolderindex.cpp kmfoldersearch.cpp 
 
 METASOURCES = AUTO
