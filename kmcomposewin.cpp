@@ -5762,7 +5762,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotSpellResult(const QString &)
+void KMEdit::slotSpellResult(const QString &s)
 {
   spellcheck_stop();
 
@@ -5773,8 +5773,8 @@ void KMEdit::slotSpellResult(const QString &)
       {
           //stop spell check
           spellLineEdit = false;
-          //todo
-          //mComposer->sujectLineWidget()->text()
+          if( s != mComposer->sujectLineWidget()->text() )
+              mComposer->sujectLineWidget()->setText( s );
       }
       else
       {
