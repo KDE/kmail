@@ -5819,7 +5819,9 @@ void KMEdit::slotSpellDone()
   {
       if( spellLineEdit )
           spellcheck();
+#if KDE_IS_VERSION( 3, 1, 90 )
       else if( status == KSpell::FinishedNoMisspellingsEncountered )
           KMessageBox::information( this, i18n("No misspellings encountered"));
+#endif
   }
 }

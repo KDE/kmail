@@ -16,11 +16,17 @@
 #include <qfont.h>
 #include <qptrlist.h>
 
-#include <keditcl.h>
 #include <klineedit.h>
 #include <kio/job.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
+#if !KDE_IS_VERSION( 3, 1, 90 )
+#define private protected
+#include <keditcl.h>
+#undef private
+#else
+#include <keditcl.h>
+#endif
 
 #include <kpgp.h>
 
