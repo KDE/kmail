@@ -841,6 +841,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
 
   mMailerProc->clearArguments();
   *mMailerProc << mMailer;
+  *mMailerProc << "-i";
   aMsg->removeHeaderField("X-KMail-Identity");
   addRecipients(aMsg->headerAddrField("To"));
   if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
@@ -852,7 +853,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
     aMsg->removeHeaderField("Bcc");
   }
 
-  mMsgStr = prepareStr(aMsg->asString());
+  mMsgStr = aMsg->asString();
   if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
 
   if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
