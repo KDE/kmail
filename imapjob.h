@@ -55,7 +55,7 @@ class AttachmentStrategy;
 class ImapJob : public FolderJob
 {
   Q_OBJECT
-  friend class KMAcctImap;
+  friend class ::KMAcctImap;
 
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,

@@ -41,7 +41,7 @@ namespace KMail {
 class MboxJob : public FolderJob
 {
   Q_OBJECT
-  friend class KMFolderMbox;
+  friend class ::KMFolderMbox;
 public:
   MboxJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
   MboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
