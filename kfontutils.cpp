@@ -36,7 +36,7 @@ static char fontStr[256];
 //-----------------------------------------------------------------------------
 const char* kfontToStr(const QFont& aFont)
 {
-  char *weightStr, *slantStr, *charsetStr;
+  char *weightStr, *charsetStr;
   int enc, i;
   QFont::Weight weight;
   QFont::CharSet charset;
@@ -48,7 +48,7 @@ const char* kfontToStr(const QFont& aFont)
   else if (weight == QFont::Black) weightStr = "black";
   else weightStr = "normal";
 
-  slantStr = aFont.italic() ? (char *)"i" : (char *)"r";
+  const char* slantStr = aFont.italic() ? "i" : "r";
 
   charset = aFont.charSet();
   if (charset == QFont::AnyCharSet)
