@@ -1463,8 +1463,9 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  KMCommand *command = new KMPrintCommand( this, mHeaders->currentMsg(),
-      htmlOverride );
+  KMCommand *command = 
+    new KMPrintCommand( this, mHeaders->currentMsg(),
+                        htmlOverride, mCodec );
   command->start();
 }
 

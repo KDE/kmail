@@ -94,7 +94,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride() );
+      mReaderWin->htmlOverride(), mReaderWin->overrideCodec() );
   command->start();
 }
 
