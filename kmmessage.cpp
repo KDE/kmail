@@ -4364,7 +4364,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( part->hasHeaders() &&
        part->Headers().HasContentDisposition() &&
        !part->Headers().ContentDisposition().Filename().empty() &&
-       QCString(part->Headers().ContentDisposition().Filename().c_str()).lower() != cSMIMEData )
+       0 != qstricmp(part->Headers().ContentDisposition().Filename().c_str(), cSMIMEData ))
   {
     setStatus( KMMsgStatusHasAttach );
     return;
