@@ -148,12 +148,12 @@ void KMLittleProgressDlg::setMode() {
 
 void KMLittleProgressDlg::slotJustPercent( unsigned long _percent )
 {
-  m_pProgressBar->setProgress( _percent );
+  m_pProgressBar->setValue( _percent );
 }
 
 void KMLittleProgressDlg::slotClean()
 {
-  m_pProgressBar->setProgress( 0 );
+  m_pProgressBar->setValue( 0 );
   m_pLabel->clear();
 
   mode = None;
