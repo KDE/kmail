@@ -385,7 +385,8 @@ void KMail::FolderDiaACLTab::load()
   // To know which one it is, we currently have a hidden config option,
   // but the default value is determined from the current user's own id.
   QString defaultFormat = "fullemail";
-  if ( mImapAccount->login().find('@') == -1 )
+  // warning mImapAccount can be 0 if creating a subsubsubfolder with dimap...  (bug?)
+  if ( mImapAccount && mImapAccount->login().find('@') == -1 )
     defaultFormat = "username"; // no @ found, so we assume it's just the username
   KConfigGroup configGroup( kmkernel->config(), "IMAP" );
   QString str = configGroup.readEntry( "UserIdFormat", defaultFormat );
