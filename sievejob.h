@@ -43,8 +43,8 @@ namespace KMail {
   public:
     enum Existence { DontKnow, Yes, No };
 
-    static SieveJob * put( const KURL & dest,
-			   const QString & script, bool activate );
+    static SieveJob * put( const KURL & dest, const QString & script,
+			   bool makeActive, bool wasActive );
     static SieveJob * get( const KURL & src );
 
     void kill( bool quiet=true );

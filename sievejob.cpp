@@ -203,9 +203,12 @@ namespace KMail {
   }
 
   SieveJob * SieveJob::put( const KURL & dest, const QString & script,
-			    bool activate ) {
+			    bool makeActive, bool wasActive ) {
     QValueStack<Command> commands;
-    commands.push( activate ? Activate : Deactivate );
+    if ( makeActive )
+      commands.push( Activate );
+    if ( wasActive )
+      commands.push( Deactivate );
     commands.push( Put );
     return new SieveJob( dest, script, commands );
   }

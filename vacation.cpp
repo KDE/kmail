@@ -38,7 +38,7 @@ using KMail::SieveJob;
 namespace KMail {
 
   Vacation::Vacation( QObject * parent, const char * name )
-    : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 )
+    : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false )
   {
     mUrl = findURL();
     kdDebug(5006) << "Vacation: found url \"" << mUrl.url() << "\"" << endl;
@@ -51,8 +51,8 @@ namespace KMail {
   }
 
   Vacation::~Vacation() {
-    if ( mSieveJob ) mSieveJob->kill();
-    delete mDialog;
+    if ( mSieveJob ) mSieveJob->kill(); mSieveJob = 0;
+    delete mDialog; mDialog = 0;
     kdDebug(5006) << "~Vacation()" << endl;
   }
 
@@ -168,6 +168,7 @@ namespace KMail {
 					"the parameters for the autoreplies.\n"
 					"Default values will be used." ) );
 
+    mWasActive = active;
     mDialog->setActivateVacation( active );
     mDialog->setReturnDate( returnDate );
     mDialog->setNotificationInterval( notificationInterval );
@@ -188,7 +189,7 @@ namespace KMail {
     kdDebug(5006) << "script:" << endl << script << endl;
 
     // and commit the dialog's settings to the server:
-    mSieveJob = SieveJob::put( mUrl, script, active );
+    mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );
     connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotPutResult(KMail::SieveJob*,bool,const QString&,bool)) );
 

@@ -63,6 +63,7 @@ namespace KMail {
     KURL mUrl;
     // GUI:
     KMail::VacationDialog * mDialog;
+    bool mWasActive;
   };
 
 }; // namespace KMail
