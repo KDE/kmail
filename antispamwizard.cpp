@@ -233,7 +233,7 @@ void AntiSpamWizard::accept()
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
         pipeFilterPattern->setName( (*it).getFilterName() );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                   KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+                                   KMSearchRule::FuncIsLessOrEqual, "256000" ) );
         pipeFilter->setApplyOnOutbound( FALSE);
         pipeFilter->setApplyOnInbound();
         pipeFilter->setApplyOnExplicit();
