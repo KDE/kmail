@@ -63,7 +63,11 @@ namespace KMail {
 
   QString DictionaryComboBox::currentDictionary() const
   {
-    return mDictionaries[ currentItem() ];
+    QString dict = mDictionaries[ currentItem() ];
+    if ( dict.isEmpty() )
+      return "<default>";
+    else
+      return dict;
   }
 
   void DictionaryComboBox::setCurrentByDictionaryName( const QString & name )
@@ -85,6 +89,15 @@ namespace KMail {
   void DictionaryComboBox::setCurrentByDictionary( const QString & dictionary )
   {
     if ( !dictionary.isEmpty() ) {
+      // first handle the special case of the default dictionary
+      if ( dictionary == "<default>" ) {
+        if ( 0 != currentItem() ) {
+          setCurrentItem( 0 );
+          slotDictionaryChanged( 0 );
+        }
+        return;
+      }
+
       int i = 0;
       for ( QStringList::ConstIterator it = mDictionaries.begin();
             it != mDictionaries.end();
