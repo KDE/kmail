@@ -155,13 +155,6 @@ namespace KMail {
     DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
     myBody->Parse();
 
-    if ( myBody->hasHeaders() ) {
-      DwText& desc = myBody->Headers().ContentDescription();
-      desc.FromString( cntDesc );
-      desc.SetModified();
-      myBody->Headers().Parse();
-    }
-
     if ( ( !myBody->Body().FirstBodyPart() ||
            myBody->Body().AsString().length() == 0 ) &&
          startNode.dwPart() &&
@@ -169,11 +162,15 @@ namespace KMail {
          startNode.dwPart()->Body().Message()->Body().FirstBodyPart() )
     {
       // if encapsulated imap messages are loaded the content-string is not complete
-      // so we need to keep the child dwparts by copying them to the new dwpart
-      myBody->Body().AddBodyPart(
-          startNode.dwPart()->Body().Message()->Body().FirstBodyPart() );
-      myBody->Body().FromString(
-          startNode.dwPart()->Body().Message()->Body().FirstBodyPart()->Body().AsString() );
+      // so we need to keep the child dwparts
+      myBody = new DwBodyPart( *(startNode.dwPart()->Body().Message()) );
+    }
+
+    if ( myBody->hasHeaders() ) {
+      DwText& desc = myBody->Headers().ContentDescription();
+      desc.FromString( cntDesc );
+      desc.SetModified();
+      myBody->Headers().Parse();
     }
 
     partNode* parentNode = &startNode;
