@@ -870,6 +870,16 @@ void KMComposeWin::setupActions(void)
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
+  (void) new KAction (i18n("Paste as &Quotation"),0,this,SLOT( slotPasteAsQuotation()),
+                      actionCollection(), "paste_quoted");
+
+  (void) new KAction(i18n("Add &Quote Characters"), 0, this,
+              SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
+
+  (void) new KAction(i18n("&Remove Quote Characters"), 0, this,
+              SLOT(slotRemoveQuotes()), actionCollection(), "tools_unquote");
+
+
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
@@ -4383,6 +4393,91 @@ void KMComposeWin::slotUpdateFont()
   mEditor->setFont( fixedFontAction && (fixedFontAction->isChecked())
     ? mFixedFont : mBodyFont );
 }
+
+QString KMComposeWin::quotePrefixName() const
+{
+    if ( !msg() )
+        return QString::null;
+
+    KConfig *config=KMKernel::config();
+    KConfigGroupSaver saver(config, "General");
+
+    int languageNr = config->readNumEntry("reply-current-language",0);
+    config->setGroup( QString("KMMessage #%1").arg(languageNr) );
+
+    QString quotePrefix = config->readEntry("indent-prefix", ">%_");
+    quotePrefix = msg()->formatString(quotePrefix);
+    return quotePrefix;
+}
+
+void KMComposeWin::slotPasteAsQuotation()
+{
+    if( mEditor->hasFocus() && msg())
+    {
+        QString quotePrefix = quotePrefixName();
+        QString s = QApplication::clipboard()->text();
+        if (!s.isEmpty()) {
+            for (int i=0; (uint)i<s.length(); i++) {
+                if ( s[i] < ' ' && s[i] != '\n' && s[i] != '\t' )
+                    s[i] = ' ';
+            }
+            s.prepend(quotePrefix);
+            s.replace(QRegExp("\n"),"\n"+quotePrefix);
+            mEditor->insert(s);
+        }
+    }
+}
+
+
+void KMComposeWin::slotAddQuotes()
+{
+    if( mEditor->hasFocus()&&msg())
+    {
+        if ( mEditor->hasMarkedText()) {
+            QString s =  mEditor->markedText();
+            QString quotePrefix = quotePrefixName();
+            s.prepend(quotePrefix);
+            s.replace(QRegExp("\n"),"\n"+quotePrefix);
+            mEditor->insert(s);
+        } else {
+            int l =  mEditor->currentLine();
+            int c =  mEditor->currentColumn();
+            QString s =  mEditor->textLine(l);
+            s.prepend("> ");
+            mEditor->insertLine(s,l);
+            mEditor->removeLine(l+1);
+            mEditor->setCursorPosition(l,c+2);
+        }
+    }
+}
+
+
+void KMComposeWin::slotRemoveQuotes()
+{
+    if( mEditor->hasFocus()&&msg())
+    {
+        QString quotePrefix = quotePrefixName();
+        if (mEditor->hasMarkedText()) {
+            QString s = mEditor->markedText();
+            QString quotePrefix = quotePrefixName();
+            if (s.left(2) == quotePrefix )
+                s.remove(0,2);
+            s.replace(QRegExp("\n"+quotePrefix),"\n");
+            mEditor->insert(s);
+        } else {
+            int l = mEditor->currentLine();
+            int c = mEditor->currentColumn();
+            QString s = mEditor->textLine(l);
+            if (s.left(2) == quotePrefix) {
+                s.remove(0,2);
+                mEditor->insertLine(s,l);
+                mEditor->removeLine(l+1);
+                mEditor->setCursorPosition(l,c-2);
+            }
+        }
+    }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()

@@ -297,6 +297,7 @@ public:
     * in lowercase.
     */
    static QString prettyMimeType( const QString& type );
+    QString quotePrefixName() const;
 
 public slots:
   /**
@@ -322,6 +323,10 @@ public slots:
   void slotCut();
   void slotCopy();
   void slotPaste();
+    void slotPasteAsQuotation();
+    void slotAddQuotes();
+    void slotRemoveQuotes();
+
   void slotMarkAll();
 
   void slotFolderRemoved(KMFolder*);
