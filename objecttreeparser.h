@@ -18,14 +18,12 @@
 #define _KMAIL_OBJECTTREEPARSER_H_
 
 #include <cryptplugwrapper.h>
+#include <qcstring.h>
 
 class KMReaderWin;
-class QCString;
 class QString;
 class QWidget;
 class partNode;
-template <typename T> class QMemArray;
-typedef QMemArray<char> QByteArray;
 
 namespace KMail {
 
@@ -34,12 +32,13 @@ namespace KMail {
     ObjectTreeParser( KMReaderWin * reader );
     virtual ~ObjectTreeParser();
 
+    QCString resultString() const { return mResultString; }
+
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"
     //  and it will be replaced once KMime is alive.
-    void parseObjectTree( QCString * resultStringPtr,
-			  CryptPlugWrapper * useThisCryptPlug, partNode * node,
+    void parseObjectTree( CryptPlugWrapper * useThisCryptPlug, partNode * node,
 			  bool showOneMimePart=false,
 			  bool keepEncryptions=false,
 			  bool includeSignatures=true );
@@ -62,8 +61,7 @@ namespace KMail {
         3. Insert the respective entries in the Mime Tree Viewer.
         3. Parse the 'node' to display the content. */
     //  Function will be replaced once KMime is alive.
-    void insertAndParseNewChildNode( QCString * resultString,
-				     CryptPlugWrapper * useThisCryptPlug,
+    void insertAndParseNewChildNode( CryptPlugWrapper * useThisCryptPlug,
 				     partNode & node,
 				     const char * content,
 				     const char * cntDesc,
@@ -78,8 +76,7 @@ namespace KMail {
 
         Returns whether a signature was found or not: use this to
         find out if opaque data is signed or not. */
-    bool writeOpaqueOrMultipartSignedData( QCString * resultString,
-					   CryptPlugWrapper * useThisCryptPlug,
+    bool writeOpaqueOrMultipartSignedData( CryptPlugWrapper * useThisCryptPlug,
 					   partNode * data,
 					   partNode & sign,
 					   const QString & fromAddress,
@@ -106,6 +103,7 @@ namespace KMail {
 
   private:
     KMReaderWin * mReader;
+    QCString mResultString;
   };
 
 }; // namespace KMail

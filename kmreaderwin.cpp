@@ -1596,7 +1596,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   // show message content
   if( !onlyProcessHeaders ) {
     ObjectTreeParser otp( this );
-    otp.parseObjectTree( 0, 0, mRootNode );
+    otp.parseObjectTree( 0, mRootNode );
   }
 
   // store encrypted/signed status information in the KMMessage

@@ -87,7 +87,7 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
           mReaderWin->update( true ); // Force update
         else {
           ObjectTreeParser otp( mReaderWin );
-	  otp.parseObjectTree( 0, 0, i->node(), true );
+	  otp.parseObjectTree( 0, i->node(), true );
 	}
     }
 }
@@ -165,7 +165,7 @@ void KMMimePartTree::slotSaveAs()
                     ds.writeRawBytes( cstr, cstr.size() );
                 } else {
                     ObjectTreeParser otp( mReaderWin );
-		    otp.parseObjectTree( 0, 0,
+		    otp.parseObjectTree( 0,
 					 mCurrentContextMenuItem->node(),
 					 true,
 					 bSaveEncrypted,

@@ -192,8 +192,7 @@ public:
 
 
 
-  void ObjectTreeParser::insertAndParseNewChildNode( QCString* resultStringPtr,
-						     CryptPlugWrapper*     useThisCryptPlug,
+  void ObjectTreeParser::insertAndParseNewChildNode( CryptPlugWrapper*     useThisCryptPlug,
 						     partNode& startNode,
 						     const char* content,
 						     const char* cntDesc,
@@ -235,15 +234,13 @@ public:
 		    << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
     }
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
-    parseObjectTree( resultStringPtr,
-		     useThisCryptPlug,
+    parseObjectTree( useThisCryptPlug,
 		     newNode );// showOneMimePart, keepEncryptions, includeSignatures );
     kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
   }
 
 
-  void ObjectTreeParser::parseObjectTree( QCString* resultStringPtr,
-					  CryptPlugWrapper*     useThisCryptPlug,
+  void ObjectTreeParser::parseObjectTree( CryptPlugWrapper* useThisCryptPlug,
 					  partNode* node,
 					  bool showOneMimePart,
 					  bool keepEncryptions,
@@ -259,10 +256,6 @@ public:
     if( mReader && mReader->mUseGroupware )
       emit mReader->signalGroupwareShow( false );
 
-    // Use this string to return the first readable part's content.
-    // - This is used to retrieve the quotable text for reply-to...
-    QCString dummyStr;
-    QCString& resultString( resultStringPtr ? *resultStringPtr : dummyStr);
     /*
     // Use this array to return the complete data that were in this
     // message parts - *after* all encryption has been removed that
@@ -404,7 +397,7 @@ public:
               kdDebug(5006) << "html" << endl;
             QCString cstr( curNode->msgPart().bodyDecoded() );
 	    //resultingRawData += cstr;
-            resultString = cstr;
+            mResultString = cstr;
             if( !mReader ) {
               bDone = true;
             } else if( mReader->mAttachmentStyle == KMReaderWin::InlineAttmnt ||
@@ -494,7 +487,7 @@ public:
                       }
                     }
                   }
-                  resultString = vCal;
+                  mResultString = vCal;
                 }
               }
               param = param->Next();
@@ -575,8 +568,7 @@ public:
 			// at least one message found: build a mime tree
 			digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
 			digestHeaderStr += cstr.mid( 0, thisDelim );
-			insertAndParseNewChildNode( &resultString,
-						    useThisCryptPlug,
+			insertAndParseNewChildNode( useThisCryptPlug,
 						    *curNode,
 						    &*digestHeaderStr,
 						    "Digest Header", true );
@@ -614,8 +606,7 @@ public:
 			      subject.truncate( thisEoL );
 			  }
 			  kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
-			  insertAndParseNewChildNode( &resultString,
-						      useThisCryptPlug,
+			  insertAndParseNewChildNode( useThisCryptPlug,
 						      *curNode,
 						      &*partStr,
 						      subject, true );
@@ -643,8 +634,7 @@ public:
 			  thisDelim = thisDelim+1;
 			partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
 			partStr += cstr.mid( thisDelim );
-			insertAndParseNewChildNode( &resultString,
-						    useThisCryptPlug,
+			insertAndParseNewChildNode( useThisCryptPlug,
 						    *curNode,
 						    &*partStr,
 						    "Digest Footer", true );
@@ -659,7 +649,7 @@ public:
 					curNode->trueFromAddress(),
 					&isInlineSigned, &isInlineEncrypted);
 	      }
-	      resultString = cstr;
+	      mResultString = cstr;
 	      bDone = true;
 	    }
 	  }
@@ -685,8 +675,7 @@ public:
 		  // Kroupware message found,
 		  // we ignore the plain text but process the calendar part.
 		  dataPlain->mWasProcessed = true;
-		  parseObjectTree( &resultString,
-				   useThisCryptPlug,
+		  parseObjectTree( useThisCryptPlug,
 				   dataCal,
 				   false,
 				   keepEncryptions,
@@ -699,8 +688,7 @@ public:
 		    // encoded Kroupware message found,
 		    // we ignore the plain text but process the MS-TNEF part.
 		    dataPlain->mWasProcessed = true;
-		    parseObjectTree( &resultString,
-				     useThisCryptPlug,
+		    parseObjectTree( useThisCryptPlug,
 				     dataTNEF,
 				     false,
 				     keepEncryptions,
@@ -710,8 +698,7 @@ public:
 		}
 	      }
 	      if( !bDone ) {
-		parseObjectTree( &resultString,
-				 useThisCryptPlug,
+		parseObjectTree( useThisCryptPlug,
 				 curNode->mChild,
 				 false,
 				 keepEncryptions,
@@ -732,8 +719,7 @@ public:
 	      if( !mReader || (mReader->htmlMail() && dataHtml) ) {
 		if( dataPlain )
 		  dataPlain->mWasProcessed = true;
-		parseObjectTree( &resultString,
-				 useThisCryptPlug,
+		parseObjectTree( useThisCryptPlug,
 				 dataHtml,
 				 false,
 				 keepEncryptions,
@@ -742,16 +728,14 @@ public:
 	      else if( !mReader || (!mReader->htmlMail() && dataPlain) ) {
 		if( dataHtml )
 		  dataHtml->mWasProcessed = true;
-		parseObjectTree( &resultString,
-				 useThisCryptPlug,
+		parseObjectTree( useThisCryptPlug,
 				 dataPlain,
 				 false,
 				 keepEncryptions,
 				 includeSignatures );
 	      }
 	      else
-		parseObjectTree( &resultString,
-				 useThisCryptPlug,
+		parseObjectTree( useThisCryptPlug,
 				 curNode->mChild,
 				 true,
 				 keepEncryptions,
@@ -828,14 +812,13 @@ public:
 				       mReader->mCodec,
 				       curNode->trueFromAddress(),
 				       &isInlineSigned, &isInlineEncrypted);
-		resultString += cstr;
+		mResultString += cstr;
 		bDone = true;
 	      } else if( sign && data && plugFound ) {
 		// Set the signature node to done to prevent it from being processed
 		// by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
 		sign->mWasProcessed = true;
-		writeOpaqueOrMultipartSignedData( &resultString,
-						  useThisCryptPlug,
+		writeOpaqueOrMultipartSignedData( useThisCryptPlug,
 						  data,
 						  *sign,
 						  curNode->trueFromAddress() );
@@ -856,7 +839,7 @@ public:
 				     mReader->mCodec,
 				     curNode->trueFromAddress(),
 				     &isInlineSigned, &isInlineEncrypted);
-	      resultString += cstr;
+	      mResultString += cstr;
 	      bDone = true;
 	    } else if( curNode->mChild ) {
 
@@ -887,8 +870,7 @@ public:
 	      if( data ) {
 		if( data->mChild ) {
 		  kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-		  parseObjectTree( &resultString,
-				   useThisCryptPlug,
+		  parseObjectTree( useThisCryptPlug,
 				   data->mChild,
 				   false,
 				   keepEncryptions,
@@ -941,8 +923,7 @@ public:
 		    // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
 		    //
 		    if( signatureFound ){
-		      writeOpaqueOrMultipartSignedData( &resultString,
-							useThisCryptPlug,
+		      writeOpaqueOrMultipartSignedData( useThisCryptPlug,
 							0,
 							*curNode,
 							curNode->trueFromAddress(),
@@ -952,8 +933,7 @@ public:
 							false );
 		      curNode->setSigned( true );
 		    }else{
-		      insertAndParseNewChildNode( &resultString,
-						  useThisCryptPlug,
+		      insertAndParseNewChildNode( useThisCryptPlug,
 						  *curNode,
 						  &*decryptedData,
 						  "encrypted data" );
@@ -975,7 +955,7 @@ public:
 		      if( passphraseError )
 			mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
 		    }
-		    resultString += decryptedData;
+		    mResultString += decryptedData;
 		  }
 		  data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
 		  bDone = true;
@@ -993,8 +973,7 @@ public:
           //  Multipart object not processed yet?  Just parse the children!
           if( !bDone ){
             if( curNode && curNode->mChild ) {
-              parseObjectTree( &resultString,
-                               useThisCryptPlug,
+              parseObjectTree( useThisCryptPlug,
                                curNode->mChild,
                                false,
                                keepEncryptions,
@@ -1016,8 +995,7 @@ public:
 
 	    if( curNode->mChild ) {
 	      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-	      parseObjectTree( &resultString,
-			       useThisCryptPlug,
+	      parseObjectTree( useThisCryptPlug,
 			       curNode->mChild );
 	      bDone = true;
 	      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
@@ -1044,8 +1022,7 @@ public:
 	      if( mReader )
 		mReader->parseMsg( &rfc822message, true );
 	      // display the body of the encapsulated message
-	      insertAndParseNewChildNode( &resultString,
-					  useThisCryptPlug,
+	      insertAndParseNewChildNode( useThisCryptPlug,
 					  *curNode,
 					  &*rfc822messageStr,
 					  "encapsulated message" );
@@ -1083,8 +1060,7 @@ public:
 	    kdDebug(5006) << "octet stream" << endl;
 	    if( curNode->mChild ) {
 	      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-	      parseObjectTree( &resultString,
-			       useThisCryptPlug,
+	      parseObjectTree( useThisCryptPlug,
 			       curNode->mChild );
 	      bDone = true;
 	      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
@@ -1103,7 +1079,7 @@ public:
 					 mReader->mCodec,
 					 curNode->trueFromAddress(),
 					 &isInlineSigned, &isInlineEncrypted);
-		  resultString += cstr;
+		  mResultString += cstr;
 		  bDone = true;
 		} else {
 		  /*
@@ -1138,8 +1114,7 @@ public:
 								       curNode->trueFromAddress() ) );
 		      }
 		      // fixing the missing attachments bug #1090-b
-		      insertAndParseNewChildNode( &resultString,
-						  useThisCryptPlug,
+		      insertAndParseNewChildNode( useThisCryptPlug,
 						  *curNode,
 						  &*decryptedData,
 						  "encrypted data" );
@@ -1159,7 +1134,7 @@ public:
 			if( passphraseError )
 			  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
 		      }
-		      resultString += decryptedData;
+		      mResultString += decryptedData;
 		    }
 		  }
 		  bDone = true;
@@ -1181,8 +1156,7 @@ public:
 	    kdDebug(5006) << "pkcs7 mime" << endl;
 	    if( curNode->mChild ) {
 	      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-	      parseObjectTree( &resultString,
-			       useThisCryptPlug,
+	      parseObjectTree( useThisCryptPlug,
 			       curNode->mChild );
 	      bDone = true;
 	      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
@@ -1243,8 +1217,7 @@ public:
 			mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
 								       useThisCryptPlug,
 								       curNode->trueFromAddress() ) );
-		      insertAndParseNewChildNode( &resultString,
-						  useThisCryptPlug,
+		      insertAndParseNewChildNode( useThisCryptPlug,
 						  *curNode,
 						  &*decryptedData,
 						  "encrypted data" );
@@ -1283,8 +1256,7 @@ public:
 		    else
 		      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 		    
-		    bool sigFound = writeOpaqueOrMultipartSignedData( &resultString,
-								      useThisCryptPlug,
+		    bool sigFound = writeOpaqueOrMultipartSignedData( useThisCryptPlug,
 								      0,
 								      *signTestNode,
 								      curNode->trueFromAddress(),
@@ -1345,7 +1317,7 @@ public:
 		mReader->queueHtml( postfix );
 	      }
 	    }
-	    resultString = vPart.latin1();
+	    mResultString = vPart.latin1();
 	    bDone = true;
 	  }
             break;
@@ -1446,8 +1418,7 @@ public:
       }
       // parse the siblings (children are parsed in the 'multipart' case terms)
       if( !showOneMimePart && curNode && curNode->mNext )
-	parseObjectTree( &resultString,
-			 useThisCryptPlug,
+	parseObjectTree( useThisCryptPlug,
 			 curNode->mNext,
 			 showOneMimePart,
 			 keepEncryptions,
@@ -1481,8 +1452,7 @@ public:
   //////////////////
   //////////////////
 
-  bool ObjectTreeParser::writeOpaqueOrMultipartSignedData( QCString* resultString,
-						      CryptPlugWrapper* useThisCryptPlug,
+  bool ObjectTreeParser::writeOpaqueOrMultipartSignedData( CryptPlugWrapper* useThisCryptPlug,
 						      partNode* data,
 						      partNode& sign,
 						      const QString& fromAddress,
@@ -1710,8 +1680,7 @@ public:
 	    kdDebug(5006) << deb << endl;
 	  }
 
-	  insertAndParseNewChildNode( resultString,
-				      useThisCryptPlug,
+	  insertAndParseNewChildNode( useThisCryptPlug,
 				      sign,
 				      doCheck ? new_cleartext : cleartextData->data(),
 				      "opaqued signed data" );
@@ -1747,8 +1716,7 @@ public:
 	  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
 							 useThisCryptPlug,
 							 fromAddress ) );
-	parseObjectTree( resultString,
-			 useThisCryptPlug,
+	parseObjectTree( useThisCryptPlug,
 			 data );
 	if( mReader )
 	  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
