@@ -368,8 +368,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if ((mMsgBuf == mMsg) && // caution mMsgBuf could be a dangling pointer
-      (!mMsgBuf || !mMsg || (mMsgBufMD5 == mMsg->msgIdMD5())))
+  if (mMsg && (mMsgBufMD5 == mMsg->msgIdMD5()))
     return;
 
   mMsgBuf = mMsg;
