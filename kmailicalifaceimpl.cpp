@@ -74,3 +74,5 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( const QString& folder, const QStr
   arg << folder << uid;
   emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
 }
+
+#include "kmailicalifaceimpl.moc"
