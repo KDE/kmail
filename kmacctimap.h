@@ -281,7 +281,8 @@ class KMImapPasswdDialog : public QDialog
 public:
   KMImapPasswdDialog(QWidget *parent = 0,const char *name= 0,
                      KMAcctImap *act=0, const QString &caption=QString::null,
-                     const char *login=0, const QString &passwd=QString::null);
+                     const QString &login=QString::null,
+                     const QString &passwd=QString::null);
 
 private:
   QLineEdit *usernameLEdit;

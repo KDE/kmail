@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 /**
  * kmacctimap.cpp
  *
@@ -350,7 +349,7 @@ void KMAcctImap::slotCheckValidityResult(KIO::Job * job)
     mapJobData.remove(it);
     displayProgress();
   } else {
-    QCString cstr((*it).data + '\0');
+    QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
     if ((*it).parent->folder->uidValidity() !=
@@ -532,7 +531,7 @@ void KMAcctImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
   assert(it != mapJobData.end());
-  (*it).cdata += QCString(data + "\0");
+  (*it).cdata += QCString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
   if (pos > 0)
   {
@@ -678,12 +677,12 @@ KMImapJob::KMImapJob(KMMessage *msg, JobType jt, KMFolder* folder)
     KMAcctImap::jobData jd;
     jd.parent = NULL; mOffset = 0;
     jd.total = 1; jd.done = 0;
-    QCString urlStr("C" + url.url());
+    QCString urlStr("C" + url.url().utf8());
     QByteArray data;
     QBuffer buff(data);
     buff.open(IO_WriteOnly | IO_Append);
     buff.writeBlock(urlStr.data(), urlStr.size());
-    urlStr = destUrl.url();
+    urlStr = destUrl.url().utf8();
     buff.writeBlock(urlStr.data(), urlStr.size());
     buff.close();
     account->makeConnection();
@@ -939,7 +938,7 @@ void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
   KURL url = getUrl();
   if (!msg || !msg->parent()) return;
   url.setPath(msg->parent()->imapPath() + ";UID=" + msg->headerField("X-UID"));
-  QCString urlStr("S" + url.url());
+  QCString urlStr("S" + url.url().utf8());
   QByteArray data;
   QBuffer buff(data);
   buff.open(IO_WriteOnly | IO_Append);
@@ -1160,9 +1159,10 @@ void KMAcctImap::setAuth(const QString& aAuth)
 //=============================================================================
 
 KMImapPasswdDialog::KMImapPasswdDialog(QWidget *parent, const char *name,
-			             KMAcctImap *account ,
+			             KMAcctImap *account,
 				     const QString &caption,
-			             const char *login, const QString &passwd)
+			             const QString &login,
+                                     const QString &passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you
@@ -1234,7 +1234,7 @@ KMImapPasswdDialog::KMImapPasswdDialog(QWidget *parent, const char *name,
   connect(cancel, SIGNAL(pressed()),
 	  this, SLOT(slotCancelPressed()));
 
-  if(strlen(login) > 0)
+  if(!login.isEmpty())
     passwdLEdit->setFocus();
   else
     usernameLEdit->setFocus();
