@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="14" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="15" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -34,6 +34,7 @@
    <Action name="options_select_crypto" />
    <Action name="charsets" />
    <Action name="wordwrap" />
+   <Action name="options_auto_spellchecking" />
   </Menu>
   <Menu noMerge="1" name="view" >
    <text>&amp;View</text>
@@ -85,9 +86,10 @@
   <Action name="edit_copy" />
   <Action name="edit_paste" />
   <Separator/>
-  <Action name="spellcheck" />
   <Action name="addressbook" />
   <Action name="attach" />
+  <Separator/>
+  <Action name="options_auto_spellchecking" />
   <Separator/>
   <Action name="sign_message" />
   <Action name="encrypt_message" />
