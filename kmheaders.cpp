@@ -1734,8 +1734,14 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
 void KMHeaders::slotMoveCompleted( KMCommand *command )
 {
   kdDebug(5006) << k_funcinfo << command->result() << endl;
+  bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
-    KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
+#if 0 // enable after the message-freeze
+    KMBroadcastStatus::instance()->setStatusMsg(
+       deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
+#else
+    if ( !deleted ) KMBroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved successfully" ) );
+#endif
   } else {
     /* The move failed or the user canceled it; reset the state of all
      * messages involved and repaint.
@@ -1756,10 +1762,21 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
       }
     }
     triggerUpdate();
+#if 0 // enable after the message-freeze
     if ( command->result() == KMCommand::Failed )
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
+      KMBroadcastStatus::instance()->setStatusMsg(
+           deleted ? i18nTODO("Deleting messages failed.") : i18nTODO("Moving messages failed.") );
     else
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
+      KMBroadcastStatus::instance()->setStatusMsg(
+           deleted ? i18nTODO("Deleting messages canceled.") : i18nTODO("Moving messages canceled.") );
+#else
+    if ( !deleted ) {
+      if ( command->result() == KMCommand::Failed )
+        KMBroadcastStatus::instance()->setStatusMsg( i18n("Moving messages failed.") );
+      else
+        KMBroadcastStatus::instance()->setStatusMsg( i18n("Moving messages canceled.") );
+    }
+#endif
   }
 }
 
