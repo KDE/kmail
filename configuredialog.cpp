@@ -1437,7 +1437,10 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 
 void NetworkPage::ReceivingTab::slotEditNotifications()
 {
-  KNotifyDialog::configure(this);
+  if(kmkernel->xmlGuiInstance())
+    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
+  else
+    KNotifyDialog::configure(this);
 }
 
 void NetworkPage::ReceivingTab::setup() {

@@ -751,7 +751,12 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
   if (!newMail)
     return;
 
-  KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
+  if(kmkernel->xmlGuiInstance()) {
+    KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
+    KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
+  }
+  else
+    KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
@@ -2703,7 +2708,10 @@ void KMMainWidget::setupStatusBar()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-  KNotifyDialog::configure(this);
+  if(kmkernel->xmlGuiInstance())
+    KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
+  else
+    KNotifyDialog::configure(this);
 }
 
 void KMMainWidget::slotEditKeys()
