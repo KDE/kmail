@@ -3886,6 +3886,10 @@ KMAtmListViewItem::KMAtmListViewItem(QListView *parent) :
 
 KMAtmListViewItem::~KMAtmListViewItem()
 {
+  delete mCBEncrypt;
+  mCBEncrypt = 0;
+  delete mCBSign;
+  mCBSign = 0;
 }
 
 void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
