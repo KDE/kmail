@@ -7,6 +7,7 @@
 #ifndef KRN
 #include "kmglobal.h"
 #include "kmmainwin.h"
+#else
 #endif
 
 #include "kmimemagic.h"
@@ -59,8 +60,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   mPicsDir = app->kdedir()+"/share/apps/kmail/pics/";
   mMsg = NULL;
 
-  readConfig();
   initHtmlWidget();
+  readConfig();
 }
 
 
@@ -80,6 +81,23 @@ void KMReaderWin::readConfig(void)
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							IconicAttmnt);
+#ifdef KRN
+  config->setGroup("ArticleListOptions");
+  QColor c1=QColor("black");
+  QColor c2=QColor("blue");
+  QColor c3=QColor("red");
+  QColor c4=QColor("white");
+  mViewer->setDefaultBGColor(config->readColorEntry("BackgroundColor",&c4));
+  mViewer->setDefaultTextColors(config->readColorEntry("ForegroundColor",&c1)
+                                ,config->readColorEntry("LinkColor",&c2)
+                                ,config->readColorEntry("FollowedColor",&c3));
+  mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
+  mViewer->setStandardFont(config->readEntry("StandardFont",
+                                           QString("helvetica").data()));
+  mViewer->setFixedFont(config->readEntry("FixedFont",
+                                        QString("courier").data()));
+#endif
+
 }
 
 

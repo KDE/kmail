@@ -2,7 +2,18 @@
 
 #include "kmmsgpartdlg.h"
 #include "kmmsgpart.h"
+
+#ifndef KRN
 #include "kmglobal.h"
+#endif
+
+#ifdef KRN
+#include <klocale.h>
+#include "kbusyptr.h"
+extern KLocale *nls;
+extern KBusyPtr *kbp;
+#endif
+
 #include "kbusyptr.h"
 #include <klocale.h>
 #include <qcombo.h>

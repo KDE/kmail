@@ -1,10 +1,14 @@
 // kmsender.cpp
 
-#include "kmsender.h"
+
+#ifndef KRN
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmglobal.h"
 #include "kmfolder.h"
+#endif
+
+#include "kmsender.h"
+#include "kmmessage.h"
 #include "kmidentity.h"
 #include "kmiostatusdlg.h"
 
@@ -13,6 +17,14 @@
 #include <kprocess.h>
 #include <klocale.h>
 #include <qregexp.h>
+
+#ifdef KRN
+#include <kapp.h>
+#include <klocale.h>
+extern KApplication *app;
+extern KLocale *nls;
+extern KMIdentity *identity;
+#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -106,6 +118,8 @@ bool KMSender::settingsOk(void) const
 //-----------------------------------------------------------------------------
 bool KMSender::send(KMMessage* aMsg, short sendNow)
 {
+
+#ifndef KRN
   int rc;
 
   assert(aMsg != NULL);
@@ -133,12 +147,16 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   outboxFolder->close();
 
   return rc;
+#else
+  return true;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
 {
+#ifndef KRN
   if (!settingsOk()) return FALSE;
 
   if (mSendInProgress)
@@ -163,12 +181,16 @@ bool KMSender::sendQueued(void)
   // start sending the messages
   doSendMsg();
   return TRUE;
+#else
+  return TRUE;
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg(void)
 {
+#ifndef KRN
   assert(mSendProc != NULL);
 
   // Move previously sent message to folder "sent"
@@ -215,12 +237,14 @@ void KMSender::doSendMsg(void)
   }
   // Do *not* add code here, after send(). It can happen that this method
   // is called recursively if send() emits the idle signal directly.
+#endif
 }
 
 
 //-----------------------------------------------------------------------------
 void KMSender::cleanup(void)
 {
+#ifndef KRN
   assert(mSendProc!=NULL);
 
   if (mSendProcStarted) mSendProc->finish();
@@ -230,6 +254,7 @@ void KMSender::cleanup(void)
   outboxFolder->close();
   outboxFolder->expunge();
   emit statusMsg(nls->translate("Done sending messages."));
+#endif
 }
 
 

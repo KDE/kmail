@@ -50,6 +50,7 @@ extern KApplication *app;
 extern KBusyPtr *kbp;
 extern KRNSender *msgSender;
 extern KMIdentity *identity;
+extern KMAddrBook *addrBook;
 #define aboutText "KRN"
 /* end added for KRN */
 #else
