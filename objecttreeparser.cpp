@@ -1523,6 +1523,7 @@ public:
 	  }
 	}
 
+#ifndef NDEBUG
 	QCString deb;
 	deb =  "\n\nS I G N A T U R E = ";
 	if( signatureIsBinary )
@@ -1536,6 +1537,7 @@ public:
 	deb += cleartext;
 	deb += "\"  <--  E N D    O F    C O N T E N T\n\n";
 	kdDebug(5006) << deb << endl;
+#endif
       }
 
       struct CryptPlugWrapper::SignatureMetaData localSigMeta;
