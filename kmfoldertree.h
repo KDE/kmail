@@ -4,7 +4,9 @@
 #include <qwidget.h>
 #include <qlistview.h>
 #include <qtimer.h>
+#include <qheader.h>
 #include <klocale.h>
+#include <kpopupmenu.h>
 
 // Fixme! A temporary dependency
 #include "kmheaders.h" // For KMHeaderToFolderDrag & KMPaintInfo
@@ -19,7 +21,6 @@ class CryptPlugWrapperList;
 
 class KMFolderTreeItem : public QListViewItem
 {
- 
 public:
   KMFolder* folder;
   QString unread;
@@ -56,7 +57,11 @@ public:
 
   void paintCell( QPainter * p, const QColorGroup & cg,
                   int column, int width, int align ); 
+
   virtual QString key( int, bool ) const;
+
+  virtual int compare( QListViewItem * i, int col, bool ascending ) const; 
+
 };
 
 
@@ -78,7 +83,7 @@ public:
   void writeConfig();
 
   /** Get/refresh the folder tree */
-  virtual void reload(void);
+  virtual void reload(bool openFolders = false);
 
   /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, QListViewItem* parent );
@@ -113,6 +118,23 @@ public:
   bool checkUnreadFolder(KMFolderTreeItem* ftl, bool confirm);
 
   KMFolder *currentFolder() const;
+
+  enum ColumnMode {unread=15, total=16};
+
+  /** toggles the unread and total columns on/off */
+  void toggleColumn(int column, bool openFolders = false);
+
+  /** returns true when the column is active */
+  bool isUnreadActive() { return unreadIsActive; }
+  bool isTotalActive() { return totalIsActive; }
+
+  /** returns the current column number (section) */
+  int getUnreadColumnNumber() { return header()->mapToSection(unreadIndex); }
+  int getTotalColumnNumber() { return header()->mapToSection(totalIndex); }
+
+  /** returns the current column number (section) */
+  int getUnreadColumIndex() { return unreadIndex; }
+  int getTotalColumnIndex() { return totalIndex; }
 
 signals:
   /** The selected folder has changed */
@@ -172,6 +194,15 @@ protected slots:
   /** Tell the folder to refresh the contents on the next expansion */
   void slotFolderCollapsed( QListViewItem * item );
 
+  /** Update the total and unread columns (if available) */
+  void slotUpdateCounts(KMFolder * folder);
+  void slotUpdateCounts(KMFolderImap * folder, bool success = true);
+  void slotUpdateOneCount();
+
+  /** slots for the unread/total-popup */
+  void slotToggleUnreadColumn();
+  void slotToggleTotalColumn();
+
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
@@ -208,6 +239,7 @@ protected:
   virtual void contentsMousePressEvent( QMouseEvent * e );
   virtual void contentsMouseReleaseEvent( QMouseEvent * e );
   virtual void contentsMouseMoveEvent( QMouseEvent* e );
+
   /** Drag and drop variables */
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
@@ -215,12 +247,28 @@ protected:
   QTimer autoopen_timer;
   KMPaintInfo mPaintInfo;
 
+  // filter some rmb-events
+  bool eventFilter(QObject*, QEvent*);
+
   // ########### The Trolls may move this Drag and drop stuff to QScrollView
 private:
     QTimer autoscroll_timer;
     int autoscroll_time;
     int autoscroll_accel;
     CryptPlugWrapperList * mCryptPlugList;
+
+    /** unread and total column */
+    bool unreadIsActive;
+    bool totalIsActive;
+    QListViewItemIterator mUpdateIterator;
+    int unreadIndex; 
+    int totalIndex;
+
+    /** popup for unread/total */
+    KPopupMenu* mPopup;
+    int mUnreadPop;
+    int mTotalPop;
+
 public slots:
     void startAutoScroll();
     void stopAutoScroll();

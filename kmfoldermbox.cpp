@@ -812,6 +812,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
     else ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
+  ++mTotalMsgs;
 
   // store information about the position in the folder file in the message
   aMsg->setParent(this);
@@ -872,9 +873,10 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
-  if (!mQuiet)
+  if (!mQuiet) {
     emit msgAdded(idx);
-  else
+    emit msgAdded(this);
+  } else
     mChanged = TRUE;
 
   if (opened) close();

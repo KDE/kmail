@@ -95,6 +95,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mDirty          = FALSE;
   mUnreadMsgs      = -1;
   mGuessedUnreadMsgs = -1;
+  mTotalMsgs      = -1;
   needsCompact    = FALSE;
   mChild          = 0;
   mConvertToUtf8  = FALSE;
@@ -402,6 +403,7 @@ bool KMFolder::readIndex()
   if (!readIndexHeader(&version)) return false;
 
   mUnreadMsgs = 0;
+  mTotalMsgs = 0;
   mHeaderOffset = ftell(mIndexStream);
 
   mMsgList.clear();
@@ -466,6 +468,7 @@ bool KMFolder::readIndex()
     mDirty = TRUE;
     writeIndex();
   }
+  mTotalMsgs = mMsgList.count();
   return true;
 }
 
@@ -811,10 +814,12 @@ void KMFolder::removeMsg(int idx, bool)
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
+  --mTotalMsgs;
 
-  if (!mQuiet)
+  if (!mQuiet) {
     emit msgRemoved(idx, msgIdMD5);
-  else
+    emit msgRemoved(this);
+  } else
     mChanged = TRUE;
 }
 
@@ -839,12 +844,14 @@ KMMessage* KMFolder::take(int idx)
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
+  --mTotalMsgs;
   msg->setParent(NULL);
   mDirty = TRUE;
   needsCompact=true; // message is taken from here - needs to be compacted
-  if (!mQuiet)
+  if (!mQuiet) {
     emit msgRemoved(idx,msgIdMD5);
-  else
+    emit msgRemoved(this);
+  } else
     mChanged = TRUE;
 
   return msg;
@@ -1111,6 +1118,7 @@ int KMFolder::expunge()
   }
 
   mUnreadMsgs = 0;
+  mTotalMsgs = 0;
   emit numUnreadMsgsChanged( this );
   if (mAutoCreateIndex)
     writeConfig();
@@ -1138,6 +1146,15 @@ QString KMFolder::label() const
   return name();
 }
 
+int KMFolder::count(bool cache) const
+{
+  if (cache && mTotalMsgs != -1)
+  {
+    return mTotalMsgs;
+  } else {
+    return mMsgList.count();
+  }
+}
 
 //-----------------------------------------------------------------------------
 int KMFolder::countUnread()
@@ -1266,6 +1283,8 @@ void KMFolder::readConfig()
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
+  if (mTotalMsgs == -1)
+    mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
   mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
   mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
   mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
@@ -1293,6 +1312,7 @@ void KMFolder::writeConfig()
   KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
+  config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);

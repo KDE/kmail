@@ -5,10 +5,10 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include <kpopupmenu.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
+#include <kaction.h>
 
 #include <kdebug.h>
 
@@ -17,8 +17,8 @@
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
+#include "kmmainwin.h"
 #include "cryptplugwrapperlist.h"
-#include <qpopupmenu.h>
 #include <X11/Xlib.h>
 QPixmap* KMFolderTree::pixDir = 0;
 QPixmap* KMFolderTree::pixNode = 0;
@@ -69,7 +69,10 @@ void KMFolderTreeItem::paintCell( QPainter * p, const QColorGroup & cg,
 
   QString t = text( column );
   if ( !t.isEmpty() ) {
-    if( folder && (folder->countUnreadRecursive() > 0) ) {
+    // use a bold-font for the folder- and the unread-columns
+    if ( folder && (folder->countUnreadRecursive() > 0) &&
+       (column == 0 || column == static_cast<KMFolderTree*>(listView())->getUnreadColumIndex()) ) 
+    {
       QFont f = p->font();
       f.setWeight(QFont::Bold);
       p->setFont(f);
@@ -89,10 +92,16 @@ void KMFolderTreeItem::paintCell( QPainter * p, const QColorGroup & cg,
 
 
 //-----------------------------------------------------------------------------
-// Make sure system folders come first when sorting
-// (or last when sorting in descending order)
-QString KMFolderTreeItem::key( int, bool ) const
+// Implement the sorting of the folders
+QString KMFolderTreeItem::key(int column, bool) const
 {
+  if (column > 0) return text(column);
+
+  // root-folder
+  if (!folder)
+    return "\t6" + text(0).lower();
+
+  // make sure system folders come first when sorting
   if (folder->isSystemFolder())
   {
     if (folder->label() == i18n("inbox"))
@@ -106,13 +115,45 @@ QString KMFolderTreeItem::key( int, bool ) const
     if (folder->label() == i18n("drafts"))
       return "\t4";
   }
-  if (folder->protocol() == "imap")
+  // then all other local mail-folders
+  if (folder->protocol() != "imap")
     return "\t5" + folder->label();
+
+  // the imap-folders
+  if (folder->protocol() == "imap")
+    return "\t6" + folder->label();
+
+  // fallback
   return text(0).lower();
 }
 
+//-----------------------------------------------------------------------------
+int KMFolderTreeItem::compare( QListViewItem * i, int col, bool ascending ) const 
+{
+  if (col == 0) 
+  {
+    // sort by folder
+    return key(col, ascending).localeAwareCompare( i->key(col, ascending) );
+  }
+  else 
+  {
+    // sort by unread or total-column
+    int a = 0, b = 0; 
+    if (!text(col).isNull() && text(col) != "-") 
+      a = text(col).toInt();
+    if (!i->text(col).isNull() && i->text(col) != "-") 
+      b = i->text(col).toInt();
+    
+    if ( a == b )
+      return 0;
+    else 
+      return (a < b ? -1 : 1);
+  }
+}
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
 void KMFolderTree::drawContentsOffset( QPainter * p, int ox, int oy,
                                        int cx, int cy, int cw, int ch )
 {
@@ -134,12 +175,17 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
   oldSelected = 0;
   oldCurrent = 0;
   mLastItem = NULL;
-
+  totalIsActive = false;
+  unreadIsActive = false;
+  unreadIndex = -1;
+  totalIndex = -1;
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
   setSelectionMode( Extended );
+  setAllColumnsShowFocus(true);
+  setShowSortIndicator(true);
 
   connect(&mUpdateTimer, SIGNAL(timeout()),
           this, SLOT(delayedUpdate()));
@@ -156,8 +202,7 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
 
   readConfig();
 
-  addColumn( i18n("Folders"), 400 );
-  setShowSortIndicator(TRUE);
+  addColumn( i18n("Folder"), 400 );
 
   if (!pixmapsLoaded)
   {
@@ -177,10 +222,10 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
   reload();
   cleanupConfigFile();
 
+  /** Drag and drop hover opening and autoscrolling support */
   setAcceptDrops( TRUE );
   viewport()->setAcceptDrops( TRUE );
 
-  // Drag and drop hover opening and autoscrolling support
   connect( &autoopen_timer, SIGNAL( timeout() ),
 	   this, SLOT( openFolder() ) );
 
@@ -196,8 +241,19 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
   connect( this, SIGNAL( collapsed( QListViewItem* ) ),
            this, SLOT( slotFolderCollapsed( QListViewItem* ) ) );
+  /** dnd end */
+
+  /** popup to switch columns */
+  header()->setClickEnabled(true);
+  header()->installEventFilter(this);
+  mPopup = new KPopupMenu;
+  mPopup->insertTitle(i18n("Select columns"));
+  mPopup->setCheckable(true);
+  mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
+  mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
 }
 
+//-----------------------------------------------------------------------------
 bool KMFolderTree::event(QEvent *e)
 {
   if (e->type() == QEvent::ApplicationPaletteChange)
@@ -379,7 +435,7 @@ void KMFolderTree::writeConfig()
 
 //-----------------------------------------------------------------------------
 // Reload the tree of items in the list view
-void KMFolderTree::reload(void)
+void KMFolderTree::reload(bool openFolders)
 {
   KMFolderDir* fdir;
   QString str;
@@ -410,16 +466,79 @@ void KMFolderTree::reload(void)
   fdir = &kernel->imapFolderMgr()->dir();
   addDirectory(fdir, root);
 
+  if (openFolders)
+  {
+    // we open all folders to update the count
+    mUpdateIterator = QListViewItemIterator (this);
+    QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
+  }
+  
   QListViewItemIterator jt( this );
-  while (jt.current()) {
+
+  while (jt.current()) 
+  {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
     if (fti && fti->folder)
+    {
+      // first disconnect before each connect to make sure we don't call it twice
+      disconnect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+	      this,SLOT(refresh(KMFolder*)));
       connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 	      this,SLOT(refresh(KMFolder*)));
+      if (totalIsActive || unreadIsActive)
+      {
+        // we want to be noticed of changes to update the unread/total columns
+        disconnect(fti->folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        connect(fti->folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        if (fti->folder->protocol() == "imap") 
+        {
+          // imap-only
+          disconnect(fti->folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+              this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+          connect(fti->folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+              this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+        }
+        disconnect(fti->folder, SIGNAL(msgRemoved(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        connect(fti->folder, SIGNAL(msgRemoved(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        disconnect(fti->folder, SIGNAL(msgAdded(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        connect(fti->folder, SIGNAL(msgAdded(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+      }
+      if (!openFolders)
+        slotUpdateCounts(fti->folder);
+    }
     ++jt;
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
   refresh(0);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotUpdateOneCount() 
+{
+  if ( !mUpdateIterator.current() ) return;
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(mUpdateIterator.current());
+  ++mUpdateIterator;
+  if ( !fti->folder ) {
+    // next one please
+    QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
+    return;
+  }
+ 
+  kdDebug() << "slotUpdateOneCount:" << fti->folder->label() << endl;
+  // open the folder and update the count
+  bool open = fti->folder->isOpened();
+  if (!open) fti->folder->open();
+  slotUpdateCounts(fti->folder);
+  // restore previous state
+  if (!open) fti->folder->close();
+  
+  QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -490,11 +609,15 @@ void KMFolderTree::delayedUpdate()
       continue;
     }
 
-    QString extendedName;
+    QString extendedName, num;
     if (fti->folder->countUnread() > 0) {
-      QString num;
-	num.setNum(fti->folder->countUnread());
-      extendedName = " (" + num + ")";
+      num.setNum(fti->folder->countUnread());
+      if (unreadIsActive)
+      {
+        fti->setText(unreadIndex, num);
+        extendedName = "";
+      } else
+        extendedName = " (" + num + ")";
       if (!fti->folder->isSystemFolder())
 	fti->setPixmap( 0, ((fti->folder->unreadIcon()) ? *(fti->folder->unreadIcon()) : (*pixFull)) );
     }
@@ -729,23 +852,16 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     emit folderSelected(0); // Root has been selected
   }
   else {
-    QString extendedName;
     emit folderSelected(folder);
-    if (fti->folder->protocol() == "imap")
+    if (folder->protocol() == "imap")
     {
       KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder);
       imap_folder->setSelected(TRUE);
       if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
         imap_folder->getFolder();
-    }
-    if (folder && (folder->countUnread() > 0) ) {
-      QString num;
-      num.setNum(folder->countUnread());
-      extendedName = " (" + num + ")";
-    }
-    if (extendedName != fti->unread) {
-      fti->unread = extendedName;
-      fti->repaint();
+    } else {
+      // we don't need this for imap-folders because they're updated with the folderComplete-signal
+      slotUpdateCounts(folder);
     }
   }
 }
@@ -759,7 +875,6 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->writeEntry(name(), size().width());
 
   KMFolderTreeInherited::resizeEvent(e);
-  setColumnWidth( 0, visibleWidth() - 1 );
 }
 //-----------------------------------------------------------------------------
 QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
@@ -791,7 +906,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!fti )
     return;
 
-  QPopupMenu *folderMenu = new QPopupMenu;
+  KPopupMenu *folderMenu = new KPopupMenu;
+  if (fti->folder) folderMenu->insertTitle(fti->folder->label());
 
   if ((!fti->folder || (fti->folder->noContent()
     && fti->parent() == firstChild())))
@@ -1331,6 +1447,144 @@ void KMFolderTree::slotAccountDeleted(KMFolderImap *aFolder)
   }
 }
 
+
+void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
+{
+  if (success) slotUpdateCounts(static_cast<KMFolder*>(folder));
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotUpdateCounts(KMFolder * folder)
+{
+  QListViewItem * current;
+
+  if (folder) current = indexOfFolder(folder);
+  else current = currentItem();
+
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(current);
+  // sanity check
+  if (!fti || !fti->folder) return;
+
+  QString extendedName, num;
+  int count = 0;
+  if (unreadIsActive)
+  {
+    // unread-column is active
+    if (folder->noContent()) // always empty
+      num = QString::null;
+    else if (fti->folder->countUnread() == 0)
+      num = "-";
+    else
+      num.setNum(fti->folder->countUnread());
+
+    fti->setText(unreadIndex, num);
+    extendedName = "";
+
+  } else if (fti->folder->countUnread() > 0)
+  {
+    // "classic"-way
+    num.setNum(fti->folder->countUnread());
+    extendedName = " (" + num + ")";
+  }
+  if (extendedName != fti->unread) 
+  {
+    // repaint on change
+    fti->unread = extendedName;
+    fti->repaint();
+  }
+  if (totalIsActive)
+  {
+    // get the total-count
+    if (fti->folder->isOpened())
+      count = fti->folder->count();
+    else 
+      count = fti->folder->count(true); // count with caching
+    
+    if (fti->folder->noContent())
+      num = QString::null;
+    else if (count == 0)
+      num = "-";
+    else
+      num.setNum(count);
+
+    fti->setText(totalIndex, num);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::toggleColumn(int column, bool openFolders)
+{
+  if (column == unread)
+  {
+    // switch unread
+    if (unreadIsActive)
+    {
+      removeColumn( unreadIndex );
+      if (totalIsActive && totalIndex > unreadIndex) --totalIndex;
+      unreadIndex = -1;
+      unreadIsActive = false;
+      reload();
+    } else {
+      unreadIndex = addColumn( i18n("Unread"), 70 );
+      unreadIsActive = true;
+      setColumnAlignment( unreadIndex, Qt :: AlignRight);
+      reload();
+    }
+    // toggle KPopupMenu and KToggleAction
+    mPopup->setItemChecked( mUnreadPop, unreadIsActive );
+    if ( parentWidget()->parentWidget()->isA("KMMainWin") )
+      static_cast<KMMainWin*>(parentWidget()->parentWidget())
+        ->unreadColumnToggle->setChecked( unreadIsActive );
+
+  } else if (column == total) {	
+    // switch total
+    if (totalIsActive)
+    {
+      removeColumn( totalIndex );
+      if (unreadIsActive && totalIndex < unreadIndex) --unreadIndex;
+      totalIndex = -1;
+      totalIsActive = false;
+      reload();
+    } else {
+      totalIndex = addColumn( i18n("Total"), 70 );
+      totalIsActive = true;
+      setColumnAlignment( totalIndex, Qt :: AlignRight);
+      reload(openFolders);
+    }
+    // toggle KPopupMenu and KToggleAction
+    mPopup->setItemChecked( mTotalPop, totalIsActive );
+    if ( parentWidget()->parentWidget()->isA("KMMainWin") )
+      static_cast<KMMainWin*>(parentWidget()->parentWidget())
+        ->totalColumnToggle->setChecked( totalIsActive );
+
+  } else kdDebug(5006) << "unknown column:" << column << endl;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotToggleUnreadColumn()
+{
+  toggleColumn(unread);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotToggleTotalColumn()
+{
+  // activate the total-column and force the folders to be opened
+  toggleColumn(total, true);
+}
+
+//-----------------------------------------------------------------------------
+bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
+{
+  if (e->type() == QEvent::MouseButtonPress &&
+      dynamic_cast<QMouseEvent*>(e)->button() == RightButton)
+  {
+    mPopup->popup( mapToGlobal( header()->geometry().bottomRight() ) );
+    return true;
+  }
+  return KMFolderTreeInherited::eventFilter(o, e);
+}
 
 #include "kmfoldertree.moc"
 

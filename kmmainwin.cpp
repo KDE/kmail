@@ -13,6 +13,7 @@
 #include <qmap.h>
 #include <qvaluelist.h>
 #include <qtextcodec.h>
+#include <qheader.h>
 
 #include <kopenwith.h>
 
@@ -293,6 +294,35 @@ void KMMainWin::readConfig(void)
       (*mPanner1Sep)[1] = width() - siz.height();
     }
 
+    if (!mStartupDone)
+    {
+      /** unread / total columns */
+
+      // get the number (aka section) of the column; -1 is de-activated
+      int unreadColumn = config->readNumEntry("UnreadColumn", -1); 
+      int totalColumn = config->readNumEntry("TotalColumn", -1);
+
+      // activate them
+      if (unreadColumn != -1) { 
+        slotToggleUnreadColumn();
+        mFolderTree->setColumnWidth(mFolderTree->getUnreadColumnNumber(), config->readNumEntry("UnreadColumnWidth"));
+      }
+      if (totalColumn != -1) {
+        slotToggleTotalColumn();
+        mFolderTree->setColumnWidth(mFolderTree->getTotalColumnNumber(), config->readNumEntry("TotalColumnWidth"));
+      }
+      // get the correct order back
+      if (totalColumn < unreadColumn && totalColumn != -1)
+        mFolderTree->header()->moveSection(2, 1);
+
+      // resize the folder column
+      int foldercolumnsize = config->readNumEntry("FolderColumnWidth", -1);
+      if (foldercolumnsize == -1) // first start
+        foldercolumnsize = config->readNumEntry("FolderPaneWidth", 160);
+      mFolderTree->setColumnWidth(0, foldercolumnsize);
+
+      /** unread/total end */
+    }
   }
 
   mMsgView->readConfig();
@@ -410,6 +440,23 @@ void KMMainWin::writeConfig(void)
         config->writeEntry( "HeaderPaneWidth", mPanner2->sizes()[1] );
         break;
     }
+
+    // width of the folder-column (needed if unread/total-column is active
+    config->writeEntry("FolderColumnWidth", mFolderTree->columnWidth(0));
+    // save the state of the unread/total-columns
+    if (mFolderTree->isUnreadActive())
+    {
+      config->writeEntry("UnreadColumn", mFolderTree->getUnreadColumnNumber());
+      config->writeEntry("UnreadColumnWidth", mFolderTree->columnWidth(mFolderTree->getUnreadColumnNumber()));
+    } else 
+      config->writeEntry("UnreadColumn", -1);
+
+    if (mFolderTree->isTotalActive())
+    {
+      config->writeEntry("TotalColumn", mFolderTree->getTotalColumnNumber());
+      config->writeEntry("TotalColumnWidth", mFolderTree->columnWidth(mFolderTree->getTotalColumnNumber()));
+    } else 
+      config->writeEntry("TotalColumn", -1);
   }
 
 
@@ -1398,6 +1445,17 @@ void KMMainWin::slotToggleFixedFont()
   mMsgView->slotToggleFixedFont();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotToggleUnreadColumn()
+{
+  mFolderTree->toggleColumn(KMFolderTree::unread);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotToggleTotalColumn()
+{
+  mFolderTree->toggleColumn(KMFolderTree::total);
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMoveMsg()
@@ -2606,6 +2664,22 @@ void KMMainWin::setupMenuBar()
   raction = actionForAttachmentStyle( mMsgView->attachmentStyle() );
   if ( raction )
     raction->setChecked( true );
+
+  unreadColumnToggle = new KToggleAction( i18n("View->", "&Unread Column"), 0, this,
+			       SLOT(slotToggleUnreadColumn()),
+			       actionCollection(), "view_columns_unread" );
+  msg = i18n("Toggle display of column showing the "
+	     "number of unread messages in folders.");
+  unreadColumnToggle->setToolTip( msg );
+  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+
+  totalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
+			       SLOT(slotToggleTotalColumn()),
+			       actionCollection(), "view_columns_total" );
+  msg = i18n("Toggle display of column showing the "
+	     "total number of messages in folders.");
+  totalColumnToggle->setToolTip( msg );
+  totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
 
   toggleFixFontAction = new KToggleAction( i18n("Fixed Font &Widths"),
 			0, this, SLOT(slotToggleFixedFont()),

@@ -167,7 +167,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
   if (folder) kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) folder->take(folder->find(aMsg));
   delete aMsg;
-  if (mIsSelected) getFolder();
+  getFolder();
 }
 
 //-----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
   if (folder) folder->take(msgList);
   msgList.setAutoDelete(true);
   msgList.clear();
-  if (mIsSelected) getFolder();
+  getFolder();
 }
 
 //-----------------------------------------------------------------------------
@@ -1400,7 +1400,6 @@ void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids)
 
 void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent)
 {
-  int idx = -1;
   KMMessage *msg = NULL;
 
   if (!msgParent) msgParent = msgList.first()->parent();

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui >
-<kpartgui version="30" name="kmmainwin" >
+<kpartgui version="31" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -37,10 +37,10 @@
    <Action name="view_headers"/>
    <Action name="view_attachments"/>
    <Separator/>
-   <Action name="toggle_fixedfont"/>
+   <Action name="view_columns_unread"/>
+   <Action name="view_columns_total"/>
    <Separator/>
-   <Action name="toggle_unreadcolumn"/>
-   <Action name="toggle_totalcolumn"/>
+   <Action name="toggle_fixedfont"/>
    <Separator/>
    <Action name="view_source"/>
   </Menu>

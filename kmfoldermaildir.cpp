@@ -351,6 +351,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
       ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
+  ++mTotalMsgs;
 
   // store information about the position in the folder file in the message
   aMsg->setParent(this);
@@ -405,9 +406,10 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   if (index_return)
     *index_return = idx;
 
-  if (!mQuiet)
+  if (!mQuiet) {
     emit msgAdded(idx);
-  else
+    emit msgAdded(this);
+  } else
     mChanged = TRUE;
 
   needsCompact = true;

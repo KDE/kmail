@@ -99,6 +99,7 @@ public:
 					QPopupMenu *menu);
 
   static void cleanup();
+
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *forwardAttachedAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
@@ -107,6 +108,10 @@ public:
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu;
   CryptPlugWrapperList mCryptPlugList;
+
+  /** we need to access those KToggleActions from the foldertree-popup */
+  KToggleAction* unreadColumnToggle;
+  KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
 
@@ -223,6 +228,8 @@ protected slots:
   void slotSetThreadStatusFlag();
   void slotShowMsgSrc();
   void slotToggleFixedFont();
+  void slotToggleUnreadColumn();
+  void slotToggleTotalColumn();
   void slotBriefHeaders();
   void slotFancyHeaders();
   void slotStandardHeaders();

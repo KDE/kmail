@@ -159,7 +159,7 @@ public:
   virtual int find(const QString& msgIdMD5) const;
 
   /** Number of messages in this folder. */
-  virtual int count() const { return mMsgList.count(); }
+  virtual int count(bool cache = false) const;
 
   /** Number of new or unread messages in this folder. */
   virtual int countUnread();
@@ -460,9 +460,11 @@ signals:
 
   /** Emitted when a message is removed from the folder. */
   void msgRemoved(int,QString);
+  void msgRemoved(KMFolder*);
 
   /** Emitted when a message is added from the folder. */
   void msgAdded(int);
+  void msgAdded(KMFolder*);
 
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(int);
@@ -564,6 +566,7 @@ protected:
   
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
+  int mTotalMsgs;
   bool mWriteConfigEnabled;
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact;
