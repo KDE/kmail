@@ -119,24 +119,40 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
     }
     return NoAction;
   } else {
-    if (!aSet) {
+    if ( aSet == NoSet ) {
       kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
 		    << endl;
       return 1;
     }
 
-    bool stopIt = FALSE;
+    bool stopIt = false;
     int status = -1;
- 
+    bool msgTaken = false; // keep track of whether we removeMsg'ed already
+
+    KMFolder * parent=0;
+
     QPtrListIterator<KMFilter> it(*this);
-    for (it.toFirst() ; !stopIt && it.current() ; ++it)
-    {
+    for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
+
       if ( ( (aSet&Outbound) && (*it)->applyOnOutbound() ) ||
   	   ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ||
 	   ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
+	// filter is applicable
 
-        if ((*it)->pattern()->matches(msg)) {
+        if ( (*it)->pattern()->matches( msg ) ) {
+	  // filter matches
 
+	  // remove msg from parent in case we want to move it; make
+	  // sure we only do these things once:
+	  if ( !msgTaken ) {
+	    parent = msg->parent();
+	    if ( parent )
+	      parent->removeMsg( msg );
+	    msg->setParent( 0 );
+	    msgTaken = true;
+	  }
+
+	  // execute actions:
 	  switch ( (*it)->execActions(msg, stopIt) ) {
 	  case KMFilter::CriticalError:
 	    // Critical error - immediate return
@@ -151,6 +167,10 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
         }
       }
     }
+
+    // readd the message if it wasn't moved:
+    if ( msgTaken && parent && !msg->parent() )
+      parent->addMsg( msg );
 
     if (status < 0) // No filters matched, keep copy of message
       status = 1;

@@ -1020,12 +1020,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 //-----------------------------------------------------------------------------
 int KMHeaders::slotFilterMsg(KMMessage *msg)
 {
-  int filterResult;
-  KMFolder *parent = msg->parent();
-  if (parent)
-    parent->removeMsg( msg );
-  msg->setParent(0);
-  filterResult = kernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
+  int filterResult = kernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
     perror("Critical error: Unable to process messages (out of space?)");
@@ -1033,11 +1028,18 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
   	i18n("Critical error: Unable to process messages (out of space?)"));
     return 2;
   }
-  if (!msg->parent()) {
-    parent->addMsg( msg );
+  if (msg->parent()) { // unGet this msg
+    int idx = -1;
+    KMFolder * p = 0;
+    kernel->msgDict()->getLocation( msg, &p, &idx );
+    //    if ( p != msg->parent() ) {
+    //      kdDebug() << p << " != " << msg->parent() << " for message "
+    //		<< msg->subject() << ", " << msg->fromStrip() << endl;
+    //      
+    //    } 
+    assert( p == msg->parent() ); assert( idx >= 0 );
+    p->unGetMsg( idx );
   }
-  if (msg->parent()) // unGet this msg
-    msg->parent()->unGetMsg( msg->parent()->count() -1 );
   return filterResult;
 }
 

@@ -213,12 +213,6 @@ void KMSender::doSendMsg()
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
-    // Filters assume that the message has no parent
-    KMFolder *parent = mCurrentMsg->parent();
-    if ( parent )
-      parent->removeMsg( mCurrentMsg );
-    mCurrentMsg->setParent(0);
-
     QString msgIdentity = mCurrentMsg->headerField( "X-KMail-Identity" );
 		if (msgIdentity.isEmpty()) msgIdentity = i18n("Default");
     kdDebug(5006) << "KMSender::doSendMsg: msgIdentity = " << msgIdentity << endl;
@@ -268,11 +262,15 @@ void KMSender::doSendMsg()
     default:
       break;
     }
-    if (!mCurrentMsg->parent())
-      parent->addMsg( mCurrentMsg );
     setStatusByLink( mCurrentMsg );
-    if (mCurrentMsg->parent() && !imapSentFolder) // unGet this message
+    if (mCurrentMsg->parent() && !imapSentFolder) {
+      // for speed optimization, this code assumes that mCurrentMsg is the
+      // last one in it's parent folder; make sure that's really the case:
+      assert( mCurrentMsg->parent()->find( mCurrentMsg )
+	      == mCurrentMsg->parent()->count() - 1 );
+       // unGet this message:
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
+    }
 
     mCurrentMsg = 0;
   }
