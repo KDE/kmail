@@ -92,6 +92,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
   bbox = new KButtonBox(this, KButtonBox::VERTICAL);
   mGrid->addMultiCellWidget(bbox, 0, mNumRules-1, 4, 4);
   mBtnSearch = bbox->addButton(i18n("Search"));
+  mBtnSearch->setDefault(true);
   connect(mBtnSearch, SIGNAL(clicked()), SLOT(slotSearch()));
   mBtnClear  = bbox->addButton(i18n("Clear"));
   connect(mBtnClear, SIGNAL(clicked()), SLOT(slotClear()));
@@ -392,7 +393,9 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mEdtValue = new QLineEdit(aParent);
   mEdtValue->setMinimumSize(mCbxFunc->sizeHint());
   mEdtValue->setMaximumSize(1024, mCbxFunc->sizeHint().height());
-
+  if( aRow == 1 ) {
+	mEdtValue->setFocus();
+  }
   aGrid->addWidget(mCbxField, aRow, aCol);
   aGrid->addWidget(mCbxFunc,  aRow, aCol+1);
   aGrid->addWidget(mEdtValue, aRow, aCol+2);
