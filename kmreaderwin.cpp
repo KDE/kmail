@@ -831,7 +831,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   case HdrAll:
-    str = strToHtml(mMsg->headerAsString());
+    str = strToHtml(mMsg->headerAsString(), false, true);
     mViewer->write(str);
     mViewer->write("\n<br>\n");
     if (vcpartnum >= 0) {
@@ -1151,6 +1151,8 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	  x++;
 	}
 	while((x&7) != 0);
+        x--;
+        continue;
       }
     }
     if (ch=='<') HTML_ADD("&lt;", 4);
@@ -1158,6 +1160,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     else if (ch=='\n') {
       HTML_ADD("<br>", 4);
       startOfLine = true;
+      x = 0;
     }
     else if (ch=='&') HTML_ADD("&amp;", 5);
     else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
