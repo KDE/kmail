@@ -43,6 +43,7 @@
 #include "kcursorsaver.h"
 #include "kleo_util.h"
 
+#include <libemailfunctions/email.h>
 #include <ui/keyselectiondialog.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/keylistjob.h>
@@ -386,18 +387,8 @@ namespace {
 } // anon namespace
 
 static QString canonicalAddress( const QString & _address ) {
-  int openAngle, atSign, closeAngle;
-
-  const QString address = _address.simplifyWhiteSpace().stripWhiteSpace();
-
-  // just leave pure e-mail address.
-  if((openAngle = address.find('<')) != -1)
-    if((atSign = address.find('@',openAngle+1)) != -1)
-      if((closeAngle = address.find('>',atSign+1)) != -1)
-	return address.mid(openAngle+1,closeAngle-openAngle-1);
-
-  if((atSign = address.find('@')) == -1)
-  {
+  const QString address = KPIM::getEmailAddress( _address );
+  if ( address.find('@') == -1 ) {
     // local address
     //char hostname[1024];
     //gethostname(hostname,1024);
@@ -405,12 +396,7 @@ static QString canonicalAddress( const QString & _address ) {
     return address + "@localdomain";
   }
   else
-  {
-    int index1 = address.findRev(' ',openAngle);
-    int index2 = address.find(' ',openAngle);
-    if(index2 == -1) index2 = address.length();
-    return address.mid(index1+1 ,index2-index1-1);
-  }
+    return address;
 }
 
 
@@ -1461,7 +1447,7 @@ Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferenc
     // insert into map and grab resulting iterator
     pos = d->mContactPreferencesMap.insert(
       Private::ContactPreferencesMap::value_type( address, pref ) ).first;
-    
+
   }
   return (*pos).second;
 }
