@@ -28,7 +28,9 @@ static QStringList sFilterFieldList, sFilterFuncList;
 //=============================================================================
 
 KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly)
-  : QHBox(parent,name), mRegExpEditDialog(0)
+  : QHBox(parent,name), 
+    mRuleEditBut(0),
+    mRegExpEditDialog(0)
 {
   initLists( headersOnly ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
@@ -107,7 +109,7 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   mRuleFunc->setCurrentItem( (int)aRule->function() );
   mRuleValue->setText( aRule->contents() );
 
-  if (mRegExpEditDialog)
+  if (mRuleEditBut)
     functionChanged( (int)aRule->function() );
 
   blockSignals(FALSE);
