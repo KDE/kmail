@@ -123,7 +123,7 @@ KMMainWin::~KMMainWin()
     searchWin->close();
   writeConfig();
   writeFolderConfig();
-  
+
   saveMainWindowSettings(kapp->config(), "Main Window");
   kapp->config()->sync();
 
@@ -545,7 +545,7 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
     text.truncate( text.length() - 1);
 
-  // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks), 
+  // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
   // but this code would double the size of the satus bar if the user hovers
   // over an <foo@bar.com>-style email address :-(
 //  text.replace(QRegExp("&"), "&amp;");
@@ -581,13 +581,13 @@ void KMMainWin::slotClose()
 //-------------------------------------------------------------------------
 void KMMainWin::slotSearch()
 {
-  if(!searchWin) 
+  if(!searchWin)
   {
     searchWin = new KMFldSearch(this, "Search", mFolder, false);
     connect(searchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
   }
-  else 
+  else
   {
     searchWin->activateFolder(mFolder);
   }
@@ -598,14 +598,14 @@ void KMMainWin::slotSearch()
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotSearchClosed() 
+void KMMainWin::slotSearchClosed()
 {
   searchWin = 0;
 }
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotFind() 
+void KMMainWin::slotFind()
 {
   if( mMsgView )
     mMsgView->slotFind();
@@ -968,7 +968,7 @@ void KMMainWin::slotExpireAll() {
   KConfigGroupSaver saver(config, "General");
 
   if (config->readBoolEntry("warn-before-expire")) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire all old messages?"),
 			 i18n("Expire old messages?"), i18n("Expire"));
     if (ret != KMessageBox::Continue) {
@@ -1129,13 +1129,13 @@ void KMMainWin::slotEditMsg(KMMessage* msg)
     // transfer the message first
     kdDebug(5006) << "slotEditMsg: transfer message" << endl;
     if (msg->transferInProgress()) return;
-    msg->setTransferInProgress(TRUE);		
+    msg->setTransferInProgress(TRUE);
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotEditMsg(KMMessage*)));
-    return;				
+    return;
   }
-		
+
   mFolder->removeMsg(msg);
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
   mHeaders->highlightMessage(mHeaders->currentItem(), true);
@@ -1161,6 +1161,7 @@ void KMMainWin::slotResendMsg()
 void KMMainWin::slotDeleteMsg()
 {
   mHeaders->deleteMsg();
+  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
@@ -1283,7 +1284,7 @@ void KMMainWin::slotSetHeaderStyle(int id)
     mViewMenu->setItemChecked(id, TRUE);
     return;
   }
-  
+
   if (id >= 5+KMReaderWin::IconicAttmnt && id <= 5+KMReaderWin::InlineAttmnt)
   {
     mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
@@ -1351,7 +1352,7 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 {
   KMFolder *folder;
   int index;
-  
+
   kernel->msgDict()->getLocation(aMsg, &folder, &index);
   if (!folder)
     return 0;
@@ -1364,14 +1365,14 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 
   KMMsgBase *msgBase = folder->getMsg(index);
   KMMessage *msg = static_cast<KMMessage *>(msgBase);
-  
+
   // setting current message only if we actually have to
   unsigned long curMsgSerNum = 0;
   if (mHeaders->currentMsg())
     curMsgSerNum = mHeaders->currentMsg()->getMsgSerNum();
   if (curMsgSerNum != msg->getMsgSerNum())
     mHeaders->setCurrentMsg(index);
-  
+
   return msg;
 }
 
@@ -1550,12 +1551,12 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotMsgActivated(KMMessage*)));
-    return;				
+    return;
   }
 
   if (kernel->folderIsDraftOrOutbox(mFolder))
   {
-    slotEditMsg(); 
+    slotEditMsg();
 		return;
   }
 
@@ -2408,12 +2409,12 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 					 KMMenuToFolder *aMenuToFolder,
 					 QPopupMenu *menu )
 {
-  while ( menu->count() ) 
+  while ( menu->count() )
   {
     QPopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
     if (popup)
       delete popup;
-    else        
+    else
       menu->removeItemAt( 0 );
   }
 
@@ -2475,7 +2476,7 @@ void KMMainWin::updateMessageMenu()
     folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
     updateMessageActions();
 }
-    
+
 void KMMainWin::startUpdateMessageActionsTimer()
 {
     menutimer->stop();
@@ -2529,7 +2530,7 @@ void KMMainWin::updateMessageActions()
 
     bool single_actions = count == 1;
     filterMenu->setEnabled( single_actions );
-    editAction->setEnabled( single_actions && 
+    editAction->setEnabled( single_actions &&
       kernel->folderIsDraftOrOutbox(mFolder));
     bounceAction->setEnabled( single_actions );
     replyAction->setEnabled( single_actions );
@@ -2635,7 +2636,7 @@ bool KMMainWin::queryClose() {
   int           num = 0;
 
   kernel->setCanExpire(false);
-  for (kmWin = KMainWindow::memberList->first(); kmWin; 
+  for (kmWin = KMainWindow::memberList->first(); kmWin;
        kmWin = KMainWindow::memberList->next()) {
     if (kmWin->isA("KMMainWin")) {
       num++;
@@ -2652,7 +2653,7 @@ bool KMMainWin::queryClose() {
   }
 
   if (config->readBoolEntry("warn-before-expire")) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 str, i18n("Expire old messages?"), i18n("Expire"));
     if (ret == KMessageBox::Continue) {
       kernel->setCanExpire(true);
