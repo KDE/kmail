@@ -372,6 +372,8 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(folderSelected(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
+  connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
+          this, SLOT(slotCopyMsgToFolder(KMFolder*)));
 }
 
 
@@ -866,6 +868,12 @@ void KMMainWin::slotMoveMsg()
 void KMMainWin::slotMoveMsgToFolder( KMFolder *dest)
 {
   mHeaders->moveMsgToFolder(dest);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCopyMsgToFolder( KMFolder *dest)
+{
+  mHeaders->copyMsgToFolder(dest);
 }
 
 //-----------------------------------------------------------------------------

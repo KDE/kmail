@@ -130,6 +130,7 @@ protected slots:
   void slotPrintMsg();
   void slotMoveMsg();
   void slotMoveMsgToFolder( KMFolder *dest);
+  void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
   void slotApplyFilters();

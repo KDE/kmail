@@ -55,6 +55,9 @@ signals:
   /* Messages have been dropped onto a folder */
   void folderDrop(KMFolder*);
 
+  /* Messages have been dropped onto a folder with Ctrl */
+  void folderDropCopy(KMFolder*);
+
 protected slots:
   void doFolderSelected(QListViewItem*);
 

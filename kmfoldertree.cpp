@@ -800,7 +800,10 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         QString str;
 	KMFolderTreeItem *fti = dynamic_cast<KMFolderTreeItem*>(item);
 	if (fti && (fti != oldSelected) && (fti->folder))
-	  emit folderDrop(fti->folder);
+        {
+          if (e->action() == QDropEvent::Copy) emit folderDropCopy(fti->folder);
+	  if (e->action() == QDropEvent::Move) emit folderDrop(fti->folder);
+        }
 	e->accept();
     } else
       e->ignore();
