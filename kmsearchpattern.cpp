@@ -128,7 +128,7 @@ bool KMSearchRule::matches(const DwString &aStr, KMMessage &msg,
 	else
 	    len = stop - start;
 	QCString codedValue(aStr.data() + start, len + 1);
-	msgContents = KMMsgBase::decodeRFC2047String(codedValue);
+	msgContents = KMMsgBase::decodeRFC2047String(codedValue).stripWhiteSpace();
 	return matches( false, 0, 0, msgContents );
     } else if (mField == "<recipients>") {
 	bool res;
