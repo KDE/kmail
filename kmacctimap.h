@@ -115,7 +115,7 @@ public:
   virtual void setHiddenFolders(bool);
 
   /** List a directory and add the contents to a KMFolderTreeItem */
-  void listDirectory(KMFolderTreeItem * fti);
+  void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
 
   /** Retrieve all mails in a folder */
   void getFolder(KMFolderTreeItem * fti);
@@ -146,6 +146,7 @@ public:
     QStringList items;
     KMFolderTreeItem *parent;
     int total, done;
+    bool inboxOnly;
   };
   QMap<KIO::Job *, jobData> mapJobData;
 

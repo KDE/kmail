@@ -169,16 +169,15 @@ void KMAcctImap::displayProgress()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::listDirectory(KMFolderTreeItem * fti)
+void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
-  if (fti->folder->imapPath() == mPrefix)
-    static_cast<KMFolderTree*>(fti->listView())
-    ->addImapChildFolder(fti, "INBOX", FALSE, TRUE);
   jobData jd;
   jd.parent = fti;
   jd.total = 1; jd.done = 0;
+  jd.inboxOnly = !secondStep && mPrefix != "/"
+    && fti->folder->imapPath() == mPrefix;
   KURL url = getUrl();
-  url.setPath(fti->folder->imapPath());
+  url.setPath((jd.inboxOnly) ? QString("/") : fti->folder->imapPath());
   KIO::Job *job = KIO::listDir(url, FALSE);
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -194,6 +193,7 @@ void KMAcctImap::slotListResult(KIO::Job * job)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   assert(it != mapJobData.end());
   if (job->error()) job->showErrorDialog();
+  if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
   mapJobData.remove(it);
 }
 
@@ -217,12 +217,12 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
         mimeType = (*eIt).m_str;
     }
     if ((mimeType == "inode/directory" || mimeType == "message/digest")
-        && name != ".." && name != "INBOX"
-        && (mHiddenFolders || name.at(0) != '.'))
+        && name != ".." && (mHiddenFolders || name.at(0) != '.')
+        && (!(*it).inboxOnly || name == "INBOX"))
     {
       static_cast<KMFolderTree*>((*it).parent->listView())
       ->addImapChildFolder((*it).parent, name, mimeType == "inode/directory",
-      FALSE);
+      (*it).inboxOnly);
     }
   }
   static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();
@@ -362,6 +362,7 @@ void KMAcctImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     KMFolder *kf = (*it).parent->folder;
     kf->addMsg(msg);
     if (kf->count() > 1) kf->unGetMsg(kf->count() - 1);
+    if (kf->count() % 100 == 0) { kf->quiet(FALSE); kf->quiet(TRUE); }
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
@@ -614,7 +615,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
-  mPrefix = config.readEntry("prefix");
+  mPrefix = config.readEntry("prefix", "/");
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
 }
 

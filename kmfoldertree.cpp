@@ -135,7 +135,7 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     fti->folder->remove();
     fti->folder->create();
   }
-  if (noPrefix && name == "INBOX")
+  if ((noPrefix || item->folder->imapPath() == "/") && name == "INBOX")
   {
     fti->folder->setLabel(i18n("inbox"));
     fti->folder->setSystemFolder( TRUE );
