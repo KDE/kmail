@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 

@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 /*
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org

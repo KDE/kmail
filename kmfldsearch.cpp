@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 // kmfldsearch.cpp
 // TODO: Add search in subfolder checkbox
 // TODO: Use msgIdMD5 in MSGID_COLUMN

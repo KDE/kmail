@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 // KMail Account
 
 #include <stdlib.h>

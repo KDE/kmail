@@ -1,3 +1,5 @@
+#undef QT_NO_ASCII_CAST
+#undef QT_NO_COMPAT
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>

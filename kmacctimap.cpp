@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 /**
  * kmacctimap.cpp
  *

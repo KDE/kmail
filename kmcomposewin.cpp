@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.

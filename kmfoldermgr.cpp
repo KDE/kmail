@@ -1,3 +1,5 @@
+#undef QT_NO_ASCII_CAST
+#undef QT_NO_COMPAT
 // kmfoldermgr.cpp
 // $Id$
 
