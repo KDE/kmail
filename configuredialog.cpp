@@ -4120,7 +4120,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   // Second possibility in the widgetstack: a combo showing the list of accounts
   // This is used with the kolab xml storage since the groupware folders
   // are always under the inbox.
-  mAccountCombo = new KMail::AccountComboBox( true /*needs inbox*/, mBox );
+  mAccountCombo = new KMail::AccountComboBox( mBox );
   mFolderComboStack->addWidget( mAccountCombo, 1 );
   QToolTip::add( mAccountCombo, toolTip );
   QWhatsThis::add( mAccountCombo, whatsThis );
@@ -4270,8 +4270,8 @@ void MiscPage::GroupwareTab::save() {
     // Inbox folder of the selected account
     KMAccount* acct = mAccountCombo->currentAccount();
     if (  acct ) {
-      folderId = QString( ".%1.directory/INBOX" ).arg(  acct->id() );
-      GlobalSettings::setTheIMAPResourceAccount(  acct->id() );
+      folderId = QString( ".%1.directory/INBOX" ).arg( acct->id() );
+      GlobalSettings::setTheIMAPResourceAccount( acct->id() );
     }
   }
 

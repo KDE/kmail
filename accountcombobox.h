@@ -42,8 +42,7 @@ class AccountComboBox : public QComboBox
   Q_OBJECT
 
 public:
-  /// @param needsInbox if true,
-  AccountComboBox( bool needsInbox, QWidget* parent, const char* name = 0 );
+  AccountComboBox( QWidget* parent, const char* name = 0 );
 
   void setCurrentAccount( KMAccount* account );
   KMAccount* currentAccount() const;
@@ -52,8 +51,6 @@ private slots:
   void slotRefreshAccounts();
 private:
   QValueList<KMAccount *> applicableAccounts() const;
-
-  bool mNeedsInbox;
 };
 
 
