@@ -582,7 +582,6 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
 //  kdDebug(5006) << name() << ": " << subfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
 //    << ", createinbox:" << createInbox << ", hasinbox:" << mAccount->hasInbox() << endl;
 
-
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
   if (it_inboxOnly) {
@@ -631,6 +630,12 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       f->setAccount(mAccount);
       f->setImapPath("/INBOX/");
       f->folder()->setLabel(i18n("inbox"));
+      for (uint i = 0; i < subfolderNames.count(); i++)
+      {
+        if ( subfolderNames[i] == "INBOX" &&
+             subfolderPaths[i] == "/INBOX/" )
+          f->setNoChildren( subfolderMimeTypes[i] == "message/digest" );
+      }
       if (!node) f->close();
       // so we have an INBOX
       mAccount->setHasInbox( true );
