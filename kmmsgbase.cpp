@@ -212,7 +212,8 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   const int maxLen=200;
   int i;
 
-  if (aStr.find("=?") < 0) return QString::fromLocal8Bit(aStr);
+  if (aStr.find("=?") < 0)
+    return QString::fromLocal8Bit(aStr).replace(QRegExp("\n[\t ]")," ");
 
   for (pos=aStr.data(); *pos; pos++)
   {

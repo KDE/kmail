@@ -1275,7 +1275,7 @@ void KMMessage::setDate(const QCString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::to(void) const
 {
-  return headerField("To").simplifyWhiteSpace();
+  return headerField("To");
 }
 
 
@@ -1294,7 +1294,7 @@ QString KMMessage::toStrip(void) const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyTo(void) const
 {
-  return headerField("Reply-To").simplifyWhiteSpace();
+  return headerField("Reply-To");
 }
 
 
@@ -1315,7 +1315,7 @@ void KMMessage::setReplyTo(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 QString KMMessage::cc(void) const
 {
-  return headerField("Cc").simplifyWhiteSpace();
+  return headerField("Cc");
 }
 
 
@@ -1329,7 +1329,7 @@ void KMMessage::setCc(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::bcc(void) const
 {
-  return headerField("Bcc").simplifyWhiteSpace();
+  return headerField("Bcc");
 }
 
 
@@ -1355,7 +1355,7 @@ QString KMMessage::who(void) const
 //-----------------------------------------------------------------------------
 QString KMMessage::from(void) const
 {
-  return headerField("From").simplifyWhiteSpace();
+  return headerField("From");
 }
 
 
@@ -1386,7 +1386,7 @@ QCString KMMessage::fromEmail(void) const
 //-----------------------------------------------------------------------------
 QString KMMessage::subject(void) const
 {
-  return headerField("Subject").simplifyWhiteSpace();
+  return headerField("Subject");
 }
 
 
