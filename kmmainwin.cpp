@@ -1633,7 +1633,7 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
   unsigned long curMsgSerNum = 0;
   if (mHeaders->currentMsg())
     curMsgSerNum = mHeaders->currentMsg()->getMsgSerNum();
-  if (curMsgSerNum != msg->getMsgSerNum())
+  if (msg && curMsgSerNum != msg->getMsgSerNum())
     mHeaders->setCurrentMsg(index);
 
   return msg;
