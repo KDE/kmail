@@ -33,9 +33,9 @@
 #define __KDEPIM__KMAIL__STL_UTIL_H__
 
 template <typename T>
-static inline void DeleteAndSetToZero( const T* & t ) {
-  delete t; t = 0;
-}
+struct DeleteAndSetToZero {
+  void operator()( const T * t ) { delete t; t = 0; }
+};
 
 template <typename T>
 static inline void deleteAll( T & c ) {
