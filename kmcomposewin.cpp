@@ -503,6 +503,7 @@ void KMComposeWin::readConfig(void)
   mEdtTo->setCompletionMode( (KGlobalSettings::Completion) mode );
   mEdtCc->setCompletionMode( (KGlobalSettings::Completion) mode );
   mEdtBcc->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mHtmlMarkup = config->readBoolEntry("html-markup", false);
 
   readColorConfig();
 
@@ -616,6 +617,7 @@ void KMComposeWin::writeConfig(void)
         mTransportHistory.prepend(mTransport->currentText());
     config->writeEntry("transport-history", mTransportHistory );
     config->writeEntry("use-fixed-font", mUseFixedFont );
+    config->writeEntry("html-markup", mHtmlMarkup);
   }
 
   {
@@ -1037,7 +1039,6 @@ void KMComposeWin::setupActions(void)
   markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this,
                                     SLOT(slotToggleMarkup()),
                       actionCollection(), "html");
-  markupAction->setChecked(mUseHTMLEditor);
 
   mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
@@ -1210,7 +1211,6 @@ void KMComposeWin::setupActions(void)
   actionFormatColor = new KAction( i18n( "Text Color..." ), "colorize", 0,
                                      this, SLOT( slotTextColor() ),
                                      actionCollection(), "format_color");
-
 
   createGUI("kmcomposerui.rc");
 }
@@ -3219,6 +3219,7 @@ void KMComposeWin::slotCleanSpace()
 void KMComposeWin::slotToggleMarkup()
 {
  if ( markupAction->isChecked() ) {
+    mHtmlMarkup = true;
     toolBar("htmlToolBar")->show();
    // markup will be toggled as soon as markup is actually used
    fontChanged( mEditor->currentFont().family() ); // set buttons in correct position
@@ -3236,7 +3237,8 @@ void KMComposeWin::toggleMarkup(bool markup)
   if ( markup ) {
     if ( !mUseHTMLEditor ) {
     kdDebug(5006) << "setting RichText editor" << endl;
-    mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    mUseHTMLEditor = true;
+    mHtmlMarkup = true; // set it directly to true. setColor hits another toggleMarkup
 
     // set all highlighted text caused by spelling back to black
     int paraFrom, indexFrom, paraTo, indexTo;
@@ -3256,6 +3258,7 @@ void KMComposeWin::toggleMarkup(bool markup)
   }
   else if ( mUseHTMLEditor ) {
     kdDebug(5006) << "setting PlainText editor" << endl;
+    mHtmlMarkup = false;
     mUseHTMLEditor = false;
     mEditor->setTextFormat(Qt::PlainText);
     QString text = mEditor->text();
@@ -3267,6 +3270,7 @@ void KMComposeWin::toggleMarkup(bool markup)
   }
   else if ( !markup && !mUseHTMLEditor )
     {
+      mHtmlMarkup = false;
       toolBar("htmlToolBar")->hide();
     }
 }
@@ -3296,6 +3300,14 @@ void KMComposeWin::slotSpellcheck()
   mEditor->spellcheck();
 }
 
+void KMComposeWin::polish()
+{
+  markupAction->setChecked(mHtmlMarkup);
+  if (mHtmlMarkup)
+    toolBar("htmlToolBar")->show();
+  else
+    toolBar("htmlToolBar")->hide();
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone(int result)

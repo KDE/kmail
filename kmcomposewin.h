@@ -356,6 +356,7 @@ public:
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
 public slots:
+  void polish();
   /**
    * Actions:
    */
@@ -742,7 +743,6 @@ protected:
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
-  bool mUseHTMLEditor;
   bool mUseExtEditor;
   QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
@@ -751,6 +751,8 @@ protected:
   int mLineBreak;
   int mWordWrap;
   bool mUseFixedFont;
+  bool mUseHTMLEditor;
+  bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
   //  QList<QLineEdit> mEdtList;
   QPtrList<QWidget> mEdtList;
