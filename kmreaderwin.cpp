@@ -609,7 +609,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
-  delete mHtmlWriter;
+  delete mHtmlWriter; mHtmlWriter = 0;
   if (mAutoDelete) delete message();
   delete mRootNode;
   removeTempFiles();
