@@ -839,18 +839,18 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
+  attachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
+                           SLOT(slotInsertPublicKey()),
+                           actionCollection(), "attach_public_key");
+  attachMPK = new KAction (i18n("Attach My &Public Key"), 0, this,
+                           SLOT(slotInsertMyPublicKey()),
+                           actionCollection(), "attach_my_public_key");
   (void) new KAction (i18n("&Attach..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
-  (void) new KAction (i18n("Attach &Public Key..."), 0, this,
-                      SLOT(slotInsertPublicKey()),
-                      actionCollection(), "attach_public_key");
-  KAction *attachMPK = new KAction (i18n("Attach My &Public Key"), 0, this,
-                                    SLOT(slotInsertMyPublicKey()),
-                                    actionCollection(), "attach_my_public_key");
-  KAction *attachPK = new KAction (i18n("&Remove"), 0, this,
-                                   SLOT(slotAttachRemove()),
-                                   actionCollection(), "remove");
+  (void) new KAction (i18n("&Remove"), 0, this,
+                      SLOT(slotAttachRemove()),
+                      actionCollection(), "remove");
   (void) new KAction (i18n("&Save..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
@@ -874,14 +874,32 @@ void KMComposeWin::setupActions(void)
                                   "signature", 0,
                                   actionCollection(), "sign_message");
 
-  if(!Kpgp::getKpgp()->havePGP())
+  // get PGP user id for the chosen identity
+  QString pgpUserId;
+  QString identStr = i18n( "Default" );
+  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
+    identStr = mId;
+  }
+  KMIdentity ident(identStr);
+  ident.readConfig();
+  pgpUserId = ident.pgpIdentity();
+
+  if(!Kpgp::getKpgp()->usePGP())
   {
     attachPK->setEnabled(false);
     attachMPK->setEnabled(false);
     encryptAction->setEnabled(false);
+    encryptAction->setChecked(false);
     signAction->setEnabled(false);
-  } else
-  signAction->setChecked(mAutoPgpSign);
+    signAction->setChecked(false);
+  }
+  else if (pgpUserId.isEmpty()) {
+    attachMPK->setEnabled(false);
+    signAction->setEnabled(false);
+    signAction->setChecked(false);
+  }
+  else
+    signAction->setChecked(mAutoPgpSign);
 
   createGUI("kmcomposerui.rc");
 
@@ -1002,6 +1020,24 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
       if (mBtnIdentity.isChecked()) slotIdentityActivated(i);
       break;
     }
+
+  // get PGP user id for the currently selected identity
+  KMIdentity ident(mIdentity.currentText());
+  ident.readConfig();
+  QString pgpUserId = ident.pgpIdentity();
+
+  if(Kpgp::getKpgp()->usePGP()) {
+    if (pgpUserId.isEmpty()) {
+      attachMPK->setEnabled(false);
+      signAction->setEnabled(false);
+      signAction->setChecked(false);
+    }
+    else {
+      attachMPK->setEnabled(true);
+      signAction->setEnabled(true);
+      signAction->setChecked(mAutoPgpSign);
+    }
+  }
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport.isChecked() && !transport.isEmpty())
@@ -2372,6 +2408,24 @@ void KMComposeWin::slotIdentityActivated(int)
     mEditor->setText( edtText );
   }
   mOldSigText = ident.signature();
+  
+  // disable certain actions if there is no PGP user identity set
+  // for this profile
+  if (ident.pgpIdentity().isEmpty()) {
+    attachMPK->setEnabled(false);
+    signAction->setEnabled(false);
+    signAction->setChecked(false);
+  }
+  else {
+    attachMPK->setEnabled(true);
+    // don't change the state of the sign button if the button
+    // was already enabled for the former identity
+    if (!signAction->isEnabled()) {
+      signAction->setEnabled(true);
+      signAction->setChecked(mAutoPgpSign);
+    }
+  }
+
   mEditor->setModified(TRUE);
   mId = identStr;
 }

@@ -414,6 +414,8 @@ protected:
   QString mId, mOldSigText;
   QStringList mTransportHistory;
 
+  KAction *attachPK, *attachMPK;
+
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
