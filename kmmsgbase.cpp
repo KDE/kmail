@@ -675,6 +675,8 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
        QCString encoding = (*it).latin1();
        if (encoding == "locale")
           encoding = QCString(kernel->networkCodec()->mimeName()).lower();
+       if (text.isEmpty())
+         return encoding;
        if (encoding == "us-ascii") {
          bool ok;
          (void) KMMsgBase::toUsAscii(text, &ok);
