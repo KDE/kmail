@@ -643,6 +643,8 @@ void KMComposeWin::deadLetter()
     return;
   }
   KMMessage *msg = mComposedMessages.first();
+  if ( !msg )
+    return;
   QCString msgStr = msg->asString();
   QCString fname = getenv("HOME");
   fname += "/dead.letter.tmp";
