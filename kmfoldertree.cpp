@@ -370,9 +370,11 @@ void KMFolderTree::reload(void)
 
   writeConfig();
 
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
+  if (fti && fti->folder && fti->folder->account()) emit folderSelected(0);
   QListViewItemIterator it( this );
   while (it.current()) {
-    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder)
       disconnect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 		 this,SLOT(refresh(KMFolder*)));

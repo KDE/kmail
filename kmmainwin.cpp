@@ -1040,7 +1040,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
     return;
 
   kernel->kbp()->busy();
-  if (!aFolder)
+  if (!aFolder && mFolderTree->currentItem() == mFolderTree->firstChild())
   {
     mMsgView->setMsg(0,TRUE);
     if (mLongFolderList) mHeaders->hide();
