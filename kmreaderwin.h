@@ -110,6 +110,9 @@ public:
   /** Display the about page instead of a message */
   void displayAboutPage();
 
+  /** Sets the correct font (required after the charset has changed) */
+  void adjustFontSize();
+
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay() { mMsgDisplay = TRUE; }
 

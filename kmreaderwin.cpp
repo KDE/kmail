@@ -429,6 +429,7 @@ void KMReaderWin::displayAboutPage()
   QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset());
   if (codec) mViewer->setCharset(codec->name(), true);
     else mViewer->setCharset(KGlobal::locale()->charset(), true);
+  adjustFontSize();
   mViewer->write(content.arg(
     i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
@@ -511,6 +512,22 @@ QString KMReaderWin::colorToString(const QColor& c)
 			 c.blue(), 16 ).mid(1);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::adjustFontSize()
+{
+  QValueList<int> fontsizes;
+  int i, diff;
+  mViewer->resetFontSizes();
+  diff = fntSize - mViewer->fontSizes()[3];
+  if (mViewer->fontSizes()[0]+diff > 0) {
+    for (i=0;i<7; i++)
+      fontsizes << mViewer->fontSizes()[i] + diff;
+    mViewer->setFontSizes(fontsizes);
+  }
+}
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
@@ -552,15 +569,7 @@ void KMReaderWin::parseMsg(void)
       mViewer->setCharset("iso10646-1", true);
     else mViewer->setCharset(mCodec->name(), true);
 
-  QValueList<int> fontsizes;
-  int i, diff;
-  mViewer->resetFontSizes();
-  diff = fntSize - mViewer->fontSizes()[3];
-  if (mViewer->fontSizes()[0]+diff > 0) {
-    for (i=0;i<7; i++)
-      fontsizes << mViewer->fontSizes()[i] + diff;
-    mViewer->setFontSizes(fontsizes);
-  }
+  adjustFontSize();
 
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +
