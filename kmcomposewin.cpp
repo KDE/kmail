@@ -1045,6 +1045,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
     mTransport->setEditText( transport );
 
+  if (!mBtnFcc->isChecked() && !mMsg->fcc().isEmpty())
+    mFcc->setFolder(mMsg->fcc());
+
   num = mMsg->numBodyParts();
 
   if (num > 0)
@@ -2411,10 +2414,7 @@ void KMComposeWin::slotIdentityActivated(int)
       if ( ident.fcc().isEmpty() )
           ident.setFcc( kernel->sentFolder()->idString() );
 
-      kdDebug(5006) << "KMComposeWin::slotIdentityActivated: mFcc->count() = " << mFcc->count() << endl;
-
-      QString theFcc = ident.fcc();
-      mFcc->setFolder( theFcc );
+      mFcc->setFolder( ident.fcc() );
   }
 
   if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||
