@@ -7,6 +7,7 @@
 #include <qwidget.h>
 #include <qdialog.h>
 #include <qtimer.h>
+#include <qcolor.h>
 
 class KHTMLWidget;
 class KMFolder;
@@ -174,6 +175,8 @@ protected:
   virtual void makeAttachDir(void);
 
 protected:
+  QString colorToString(const QColor&);
+
   int mAtmInline;
   int mAtmCurrent;
   KMMessage *mMsg, *mMsgBuf;
@@ -187,6 +190,10 @@ protected:
   bool mBackingPixmapOn;
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
+
+  int fntSize;
+  QString mBodyFamily;
+  QColor c1, c2, c3, c4;
 };
 
 
