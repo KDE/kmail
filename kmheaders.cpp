@@ -1522,7 +1522,7 @@ void KMHeaders::setFolderInfoStatus ()
 {
   QString str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
     .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
-  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
+  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.").prepend(' ');
   KMBroadcastStatus::instance()->setStatusMsg(str);
 }
 

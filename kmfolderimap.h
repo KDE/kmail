@@ -269,6 +269,9 @@ public:
    */
   void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; } 
 
+  /// Is the folder readonly?
+  bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 

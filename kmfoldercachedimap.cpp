@@ -1002,9 +1002,17 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
   (*it).cdata += QCString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
   if (pos > 0) {
-    int p = (*it).cdata.find("\r\nX-uidValidity:");
-    if (p != -1)
-      setUidValidity((*it).cdata.mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
+    int a = (*it).cdata.find("\r\nX-uidValidity:");
+    if (a != -1) {
+      int b = (*it).cdata.find("\r\n", a + 17);
+      setUidValidity((*it).cdata.mid(a + 17, b - a - 17));
+    }
+    a = (*it).cdata.find("\r\nX-Access:");
+    if (a != -1) {
+      int b = (*it).cdata.find("\r\n", a + 12);
+      QString access = (*it).cdata.mid(a + 12, b - a - 12);
+      mReadOnly = access == "Read only";
+    }
     (*it).cdata.remove(0, pos);
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
