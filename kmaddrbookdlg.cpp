@@ -90,6 +90,7 @@ void KMAddrBookSelDlg::showAddresses( int addressTypes )
       mListBox->insertStringList(addresses);
     }
   }
+  mListBox->sort();
 
   if ( addressTypes & RecentAddresses )
     mListBox->insertStringList( KMRecentAddresses::self()->addresses(), 0 );
