@@ -352,7 +352,8 @@ void KMMainWidget::readConfig(void)
 
   if (mMsgView)
     mMsgView->readConfig();
-  slotSetEncoding();
+
+  readCurrentOverrideCodec();
 
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
@@ -675,7 +676,7 @@ void KMMainWidget::activatePanners(void)
 void KMMainWidget::slotSetEncoding()
 {
   GlobalSettings::setOverrideCharacterEncoding( 
-      KGlobal::charsets()->encodingForName( mEncoding->currentText()).latin1() );
+      KGlobal::charsets()->encodingForName( mEncoding->currentText() ) );
     if (mEncoding->currentItem() == 0) // Auto
     {
       mCodec = 0;
@@ -2375,22 +2376,8 @@ void KMMainWidget::setupActions()
   //----- Message-Encoding Submenu
   mEncoding = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0, this,
 		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
-  QStringList encodings = KMMsgBase::supportedEncodings(FALSE);
-  encodings.prepend( i18n( "Auto" ) );
-  mEncoding->setItems( encodings );
-  mEncoding->setCurrentItem(0);
 
-  QStringList::Iterator it;
-  int i = 0;
-  for( it = encodings.begin(); it != encodings.end(); ++it)
-  {
-    if ( KGlobal::charsets()->encodingForName(*it ) == GlobalSettings::overrideCharacterEncoding() )
-    {
-      mEncoding->setCurrentItem( i );
-      break;
-    }
-    i++;
-  }
+  readCurrentOverrideCodec();
 
   mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
@@ -2723,6 +2710,27 @@ void KMMainWidget::setupActions()
 
   updateMessageActions();
 }
+
+void KMMainWidget::readCurrentOverrideCodec()
+{
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  encodings.prepend( i18n( "Auto" ) );
+  mEncoding->setItems( encodings );
+  mEncoding->setCurrentItem(0);
+  QStringList::ConstIterator it( encodings.begin() );
+  QStringList::ConstIterator end( encodings.end() );
+  int i = 0;
+  for( ; it != end; ++it)
+  {
+    if ( KGlobal::charsets()->encodingForName(*it ) == GlobalSettings::overrideCharacterEncoding() )
+    {
+      mEncoding->setCurrentItem( i );
+      break;
+    }
+    i++;
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()

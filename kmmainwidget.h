@@ -145,6 +145,8 @@ public:
 
   void modifyFolder( KMFolderTreeItem* folderItem );
 
+  void readCurrentOverrideCodec();
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash
