@@ -190,12 +190,18 @@ QTextCodec* KMMsgBase::codecForName(const QCString& _str)
 
 
 //-----------------------------------------------------------------------------
-const QCString KMMsgBase::toUsAscii(const QString& _str)
+const QCString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
 {
-    QString result = _str;
+  bool all_ok =true;
+  QString result = _str;
   int len = result.length();
   for (int i = 0; i < len; i++)
-    if (result.at(i).unicode() >= 128) result.at(i) = '?';
+    if (result.at(i).unicode() >= 128) { 
+      result.at(i) = '?';
+      all_ok = false;
+    }
+  if (ok)
+    *ok = all_ok;
   return result.latin1();
 }
 

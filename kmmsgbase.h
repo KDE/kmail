@@ -117,8 +117,10 @@ public:
    * This function is a bit more tolerant, than QTextCodec::codecForName */
   static QTextCodec* codecForName(const QCString& _str);
 
-  /** Convert all non-ascii characters to question marks */
-  static const QCString toUsAscii(const QString& _str);
+  /** Convert all non-ascii characters to question marks 
+    * If ok is non-null, *ok will be set to true if all characters
+    * where ascii, *ok will be set to false otherwise */
+  static const QCString toUsAscii(const QString& _str, bool *ok=0);
 
   /** Return a list of the supported encodings */
   static QStringList supportedEncodings(bool usAscii);
