@@ -2354,7 +2354,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
 	   mEditorRequester, SLOT(setEnabled(bool)) );
 
-  label = new QLabel( i18n("\"%f\" will be replaced with the "
+  label = new QLabel( i18n("%f will be replaced with the "
 			   "filename to edit."), group );
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
@@ -2673,11 +2673,11 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 1, string list editor:
   SimpleStringListEditor::ButtonCode buttonCode =
-    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add|SimpleStringListEditor::Remove );
+    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
   mReplyListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
 				i18n("A&dd..."), i18n("Re&move"),
-				QString::null,
+				i18n("Mod&ify..."),
 				i18n("Enter new reply prefix:") );
 
   // row 2: "replace [...]" check box:
@@ -2687,7 +2687,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 
 
-  group = new QVGroupBox( i18n("Forward Subject Prefixes"), this );
+  group = new QVGroupBox( i18n("For&ward Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
@@ -2699,7 +2699,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   mForwardListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
 				i18n("Add..."),
-				i18n("Remo&ve"), QString::null,
+				i18n("Remo&ve"),
+                                i18n("Modify..."),
 				i18n("Enter new forward prefix:") );
 
   // row 3: "replace [...]" check box:
@@ -3079,11 +3080,11 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
   vlay->addWidget( label );
 
   SimpleStringListEditor::ButtonCode buttonCode =
-    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add|SimpleStringListEditor::Remove );
+    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
   mAttachWordsListEditor =
     new SimpleStringListEditor( this, 0, buttonCode,
                                 i18n("A&dd..."), i18n("Re&move"),
-                                QString::null,
+                                i18n("Mod&ify..."),
                                 i18n("Enter new key word:") );
   vlay->addWidget( mAttachWordsListEditor );
 
