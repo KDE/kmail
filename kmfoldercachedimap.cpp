@@ -145,6 +145,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
     config->writeEntry("NoContent", mNoContent);
     config->writeEntry("ReadOnly", mReadOnly);
     config->writeEntry("ContentsTypeChanged", mContentsTypeChanged);
+    config->writeEntry("Annotation-FolderType", mAnnotationFolderType );
 
     writeUidCache();
   }
@@ -179,6 +180,8 @@ void KMFolderCachedImap::readConfig()
 
   // Must be done afterwards since FolderStorage::readConfig sets mContentsTypeChanged
   mContentsTypeChanged = config->readBoolEntry( "ContentsTypeChanged", false );
+
+  mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
 }
 
 void KMFolderCachedImap::remove()
@@ -789,25 +792,28 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ANNOTATIONS:
 
     mSyncState = SYNC_STATE_SET_ACLS;
-    if( mAccount->hasAnnotationSupport() && mContentsTypeChanged ) {
+    if( mAccount->hasAnnotationSupport() ) {
       newState( mProgress, i18n("Setting annotations"));
       // If in the future we want to set more annotations, we should then write
       // a multiSetAnnotation job in annotationjobs.*
       KURL url = mAccount->getUrl();
       url.setPath( imapPath() );
       QMap<QString, QString> attributes;
-      QString annotation = s_contentsType2Annotation[mContentsType];
-      attributes.insert( "value.shared", annotation );
-      kdDebug(5006) << "Setting annotation for " << label() << " to " << annotation << endl;
-      KIO::SimpleJob* job =
-        AnnotationJobs::setAnnotation( mAccount->slave(), url, KOLAB_FOLDERTYPE, attributes );
-      ImapAccountBase::jobData jd( url.url(), folder() );
-      jd.cancellable = true; // we can always do so later
-      mAccount->insertJob(job, jd);
+      if ( mContentsTypeChanged && !mAnnotationFolderType.isEmpty() ) {
+        attributes.insert( "value.shared", mAnnotationFolderType );
+        kdDebug(5006) << "Setting annotation for " << label() << " to " << mAnnotationFolderType << endl;
+      }
+      if ( !attributes.isEmpty() ) {
+        KIO::SimpleJob* job =
+          AnnotationJobs::setAnnotation( mAccount->slave(), url, KOLAB_FOLDERTYPE, attributes );
+        ImapAccountBase::jobData jd( url.url(), folder() );
+        jd.cancellable = true; // we can always do so later
+        mAccount->insertJob(job, jd);
 
-      connect(job, SIGNAL(result(KIO::Job *)),
-              SLOT(slotSetAnnotationResult(KIO::Job *)));
-      break;
+        connect(job, SIGNAL(result(KIO::Job *)),
+                SLOT(slotSetAnnotationResult(KIO::Job *)));
+        break;
+      }
     }
 
   case SYNC_STATE_SET_ACLS:
@@ -1677,6 +1683,11 @@ void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
     FolderStorage::setContentsType( type );
     mContentsTypeChanged = true;
   }
+  // We want to store an annotation on the folder only if using the kolab storage.
+  if ( kmkernel->iCalIface().storageFormat( folder() ) == KMailICalIfaceImpl::StorageXML  )
+    mAnnotationFolderType = s_contentsType2Annotation[mContentsType];
+  else
+    mAnnotationFolderType = QString::null;
 }
 
 void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )

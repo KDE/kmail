@@ -840,6 +840,9 @@ public:
   void save();
   void defaults() {}
   QString helpAnchor() const;
+
+private slots:
+  void slotStorageFormatChanged( int );
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
@@ -847,6 +850,7 @@ private:
   QWidget* mBox;
   QVBox* gBox;
 
+  QComboBox* mStorageFormatCombo;
   QComboBox* mLanguageCombo;
   KMFolderComboBox* mFolderCombo;
   QCheckBox* mHideGroupwareFolders;

@@ -3982,16 +3982,37 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mBox = new QWidget( b1 );
-  QGridLayout* grid = new QGridLayout( mBox, 3, 2, 0, KDialog::spacingHint() );
+  QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
   grid->setColStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
 	   mBox, SLOT( setEnabled(bool) ) );
+
+  QLabel* storageFormatLA = new QLabel( i18n("&Format used for the groupware folders:"),
+                                        mBox );
+  QString toolTip = i18n( "Choose the format to use to store the contents of the groupware folders." );
+  QString whatsThis = i18n( GlobalSettings::self()
+        ->theIMAPResourceStorageFormatItem()->whatsThis().utf8() );
+  grid->addWidget( storageFormatLA, 0, 0 );
+  QToolTip::add( storageFormatLA, toolTip );
+  QWhatsThis::add( storageFormatLA, whatsThis );
+  mStorageFormatCombo = new QComboBox( false, mBox );
+  storageFormatLA->setBuddy( mStorageFormatCombo );
+  QStringList formatLst;
+  formatLst << i18n("Standard (Ical / Vcard)") << i18n("Kolab (XML)");
+  mStorageFormatCombo->insertStringList( formatLst );
+  grid->addWidget( mStorageFormatCombo, 0, 1 );
+  QToolTip::add( mStorageFormatCombo, toolTip );
+  QWhatsThis::add( mStorageFormatCombo, whatsThis );
+  connect( mStorageFormatCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotStorageFormatChanged( int ) ) );
+
   QLabel* languageLA = new QLabel( i18n("&Language of the groupware folders:"),
                                    mBox );
-  QString toolTip = i18n( "Set the language of the folder names" );
-  QString whatsThis = i18n( GlobalSettings::self()
+
+  toolTip = i18n( "Set the language of the folder names" );
+  whatsThis = i18n( GlobalSettings::self()
         ->theIMAPResourceFolderLanguageItem()->whatsThis().utf8() );
-  grid->addWidget( languageLA, 0, 0 );
+  grid->addWidget( languageLA, 1, 0 );
   QToolTip::add( languageLA, toolTip );
   QWhatsThis::add( languageLA, whatsThis );
   mLanguageCombo = new QComboBox( false, mBox );
@@ -3999,7 +4020,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QStringList lst;
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
-  grid->addWidget( mLanguageCombo, 0, 1 );
+  grid->addWidget( mLanguageCombo, 1, 1 );
   QToolTip::add( mLanguageCombo, toolTip );
   QWhatsThis::add( mLanguageCombo, whatsThis );
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
@@ -4009,12 +4030,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
     new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
   toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().utf8() );
-  grid->addWidget( subfolderLA, 1, 0 );
+  grid->addWidget( subfolderLA, 2, 0 );
   QToolTip::add( subfolderLA, toolTip );
   QWhatsThis::add( subfolderLA, whatsThis );
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
-  grid->addWidget( mFolderCombo, 1, 1 );
+  grid->addWidget( mFolderCombo, 2, 1 );
   QToolTip::add( mFolderCombo, toolTip );
   QWhatsThis::add( mFolderCombo, whatsThis );
   connect( mFolderCombo, SIGNAL( activated( int ) ),
@@ -4022,7 +4043,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
-  grid->addMultiCellWidget( mHideGroupwareFolders, 2, 2, 0, 1 );
+  grid->addMultiCellWidget( mHideGroupwareFolders, 3, 3, 0, 1 );
   QToolTip::add( mHideGroupwareFolders,
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
@@ -4071,6 +4092,8 @@ void MiscPage::GroupwareTab::load() {
   mHideGroupwareFolders->setChecked( GlobalSettings::hideGroupwareFolders() );
   int i = GlobalSettings::theIMAPResourceFolderLanguage();
   mLanguageCombo->setCurrentItem(i);
+  i = GlobalSettings::theIMAPResourceStorageFormat();
+  mStorageFormatCombo->setCurrentItem(i);
 
   QString folderId( GlobalSettings::theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -4088,6 +4111,8 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::setGroupwareLegacyMangleFromToHeaders(
         mLegacyMangleFromTo->isChecked() );
 
+  GlobalSettings::setTheIMAPResourceStorageFormat( mStorageFormatCombo->currentItem() );
+
   // Write the IMAP resource config
   GlobalSettings::setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
 
@@ -4100,6 +4125,10 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::setTheIMAPResourceFolderParent( folder? folder->idString(): "" );
 }
 
+void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
+{
+  mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
+}
 
 #undef DIM
 

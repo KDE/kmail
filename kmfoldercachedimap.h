@@ -338,6 +338,7 @@ private:
   imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
+  QString     mAnnotationFolderType;
 
   bool        mHasInbox;
   bool        mIsSelected;

@@ -634,6 +634,10 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
 static QMap<KFolderTreeItem::Type,QString> folderNames[4];
 QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language ) const
 {
+  // With the XML storage, folders are always (internally) named in English
+  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
+    language = 0;
+
   static bool folderNamesSet = false;
   if( !folderNamesSet ) {
     folderNamesSet = true;
@@ -811,6 +815,8 @@ void KMailICalIfaceImpl::readConfig()
   const bool hideFolders = GlobalSettings::hideGroupwareFolders();
   unsigned int folderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
   if( folderLanguage > 3 ) folderLanguage = 0;
+  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
+    folderLanguage = 0; // xml storage -> English
   QString parentName = GlobalSettings::theIMAPResourceFolderParent();
 
   // Find the folder parent
@@ -896,6 +902,12 @@ void KMailICalIfaceImpl::readConfig()
   mContacts = initFolder( KFolderTreeItem::Contacts, "GCo", KMail::ContentsTypeContact );
   mNotes    = initFolder( KFolderTreeItem::Notes, "GNo", KMail::ContentsTypeNote );
 
+  mCalendar->setLabel( i18n( "Calendar" ) );
+  mTasks->setLabel( i18n( "Tasks" ) );
+  mJournals->setLabel( i18n( "Journal" ) );
+  mContacts->setLabel( i18n( "Contacts" ) );
+  mNotes->setLabel( i18n( "Notes" ) );
+
   // Connect the expunged signal
   connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
   connect( mTasks,    SIGNAL( expunged() ), this, SLOT( slotRefreshTasks() ) );
@@ -930,6 +942,9 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  FolderInfo info;
+
   // Find the folder
   KMFolder* folder = 0;
   KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
@@ -941,6 +956,14 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
     if( mFolderType == KMFolderTypeImap )
       static_cast<KMFolderImap*>( folder->storage() )->
         createFolder( folderName( itemType ) );
+
+    // Groupware folder created, use the global setting for storage format
+    info.mStorageFormat = GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+    configGroup.writeEntry( folder->idString() + "-storageFormat",
+                            info.mStorageFormat == StorageXML ? "xml" : "icalvcard" );
+  } else {
+    QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
+    info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
   }
 
   if( folder->canAccess() != 0 ) {
@@ -950,6 +973,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   }
   folder->setType( typeString );
   folder->storage()->setContentsType( contentsType );
+  mFolderInfoMap.insert( folder, info );
 
   folder->setSystemFolder( true );
   folder->open();
@@ -1060,5 +1084,13 @@ static void vPartMicroParser( const QString& str, QString& s )
   s.truncate(0);
 }
 
+
+KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* folder ) const
+{
+  FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() )
+    return (*it).mStorageFormat;
+  return StorageIcalVcard;
+}
 
 #include "kmailicalifaceimpl.moc"

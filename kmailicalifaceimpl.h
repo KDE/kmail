@@ -148,6 +148,18 @@ public:
   /** Called when a folders contents have changed */
   void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
+  /// The format of the mails containing other contents than actual mail
+  /// (like contacts, calendar etc.)
+  /// This is currently either ical/vcard, or XML.
+  /// The imap resource uses this folder if ical/vcard storage,
+  /// the kolab resource uses this folder if xml storage.
+  /// For actual mail folders this simply to know which resource handles it
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
+
+  /// @return the storage format of a given folder
+  StorageFormat storageFormat( KMFolder* folder ) const;
+
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();
@@ -181,9 +193,17 @@ private:
   QGuardedPtr<KMFolder> mJournals;
 
   // The extra IMAP resource folders
-  // Key: folder location. Data: struct with folder and contentsType.
+  // Key: folder location. Data: folder.
   class ExtraFolder;
   QDict<ExtraFolder> mExtraFolders;
+
+  // More info for each folder we care about (mContacts etc. as well as the extra folders)
+  struct FolderInfo {
+    StorageFormat mStorageFormat;
+  };
+  // The storage format used for each folder that we care about
+  typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
+  FolderInfoMap mFolderInfoMap;
 
   unsigned int mFolderLanguage;
 
