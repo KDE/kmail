@@ -1528,12 +1528,14 @@ void KMHeaders::updateMessageList(void)
       mItems[i] = 0;
 
     clear();
-    mTree.setAutoDelete( true );
-    mTree.resize( 2*mFolder->count() );
-    mTreeSeen.resize( 2*mFolder->count() );
-    mTreeToplevel.resize( 2*mFolder->count() );
     mIdTree.clear();
-    mIdTree.resize( 2*mFolder->count() );
+    mTree.setAutoDelete( true );
+    if (mTree.size() < 2*mFolder->count()) {
+      mTree.resize( 2*mFolder->count() );
+      mTreeSeen.resize( 2*mFolder->count() );
+      mTreeToplevel.resize( 2*mFolder->count() );
+      mIdTree.resize( 2*mFolder->count() );
+    }
 
     // Create an entry in mTree (the msgId -> list of children map)
     // for each message
