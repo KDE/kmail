@@ -32,6 +32,9 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "folderstorage.h"
+#include "kmfolder.h"
+#include "progressmanager.h"
+using KPIM::ProgressManager;
 
 #include <kdebug.h>
 #include <kurl.h>
@@ -44,11 +47,12 @@ using namespace KMail;
 
 ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
     ImapAccountBase::ListType type,
-    bool secondStep, bool complete, bool hasInbox, const QString& path )
+    bool secondStep, bool complete, bool hasInbox, const QString& path,
+    KPIM::ProgressItem* item )
  : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
    mStorage( storage ), mAccount( account ), mType( type ),
    mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete ),
-   mPath( path )
+   mPath( path ), mParentProgressItem( item )
 {
 }
 
@@ -92,6 +96,17 @@ void ListJob::execute()
   jd.parent = mDestFolder;
   jd.onlySubscribed = ( mType != ImapAccountBase::List );
   jd.path = mPath;
+  QString status = mDestFolder ? mDestFolder->prettyURL() : QString::null;
+  jd.progressItem = ProgressManager::createProgressItem(
+      mParentProgressItem,
+      "ListDir" + ProgressManager::getUniqueID(),
+      status,
+      i18n("retrieving folders"),
+      false,
+      mAccount->useSSL() || mAccount->useTLS() );
+  if ( mParentProgressItem )
+    mParentProgressItem->setStatus( status );
+
   // this is needed if you have a prefix
   // as the INBOX is located in your root ("/") and needs a special listing
   jd.inboxOnly = !mSecondStep && mAccount->prefix() != "/"

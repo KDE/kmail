@@ -426,6 +426,7 @@ private:
   QDict<KMMsgMetaData> mMetaDataMap;
   bool        mAlreadyRemoved;
   ProgressItem *mMailCheckProgressItem;
+  ProgressItem *mListDirProgressItem;
 };
 
 #endif // kmfolderimap_h

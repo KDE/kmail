@@ -63,6 +63,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mAlreadyRemoved = false;
   mHasChildren = ChildrenUnknown;
   mMailCheckProgressItem = 0;
+  mListDirProgressItem = 0;
 
   connect (this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
            this, SLOT( slotCompleteMailCheckProgress()) );
@@ -540,7 +541,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
     kdDebug(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
     return false;
   }
-
+  
   // reset
   if ( this == mAccount->rootFolder() )
   {
@@ -555,7 +556,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
   ListJob* job = new ListJob( this, mAccount, type, secondStep,
-      false, mAccount->hasInbox() );
+      false, mAccount->hasInbox(), QString::null, account()->listDirProgressItem() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -579,6 +580,12 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
   bool createInbox = jobData.createInbox;
 //  kdDebug(5006) << name() << ": " << subfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
 //    << ", createinbox:" << createInbox << ", hasinbox:" << mAccount->hasInbox() << endl;
+
+  // update progress
+  account()->listDirProgressItem()->incCompletedItems();
+  account()->listDirProgressItem()->updateProgress();
+  account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
+  
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
   if (it_inboxOnly) {
@@ -696,6 +703,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
   // now others should react on the changes
   kmkernel->imapFolderMgr()->quiet(false);
   emit directoryListingFinished( this );
+  account()->listDirProgressItem()->setComplete();
 }
 
 //-----------------------------------------------------------------------------

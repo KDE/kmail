@@ -27,6 +27,7 @@
 #include "networkaccount.h"
 
 #include <qtimer.h>
+#include <qguardedptr.h>
 #include <kio/global.h>
 
 class KMAcctMgr;
@@ -42,12 +43,14 @@ template <typename T> class QValueVector;
 namespace KIO {
   class Job;
 }
+
 namespace KPIM {
   class ProgressItem;
 }
 
 namespace KMail {
 
+  using KPIM::ProgressItem;
   struct ACLListEntry;
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
@@ -250,6 +253,11 @@ namespace KMail {
      */
     virtual FolderStorage* rootFolder() = 0;
 
+    /**
+     * Progress item for listDir
+     */ 
+    ProgressItem* listDirProgressItem();
+
   private slots:
     /**
      * is called when the changeSubscription has finished
@@ -288,12 +296,13 @@ namespace KMail {
     /**
      * Kills all jobs
      */
-    void slotAbortRequested();
+    void slotAbortRequested( ProgressItem* );
 
-   /**
-    * Only delete information about the job
-    */
+    /**
+     * Only delete information about the job
+     */
     void slotSimpleResult(KIO::Job * job);
+
   protected:
 
   /**
@@ -361,7 +370,7 @@ namespace KMail {
     // the current message for the bodystructure
     KMMessage* mCurrentMsg;
 
-    ProgressItem* mProgressItem;
+    QGuardedPtr<ProgressItem> mListDirProgressItem;
 
   signals:
     /**

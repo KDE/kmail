@@ -145,7 +145,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
     connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-              account, SLOT( slotAbortRequested() ) );
+              account, SLOT( slotAbortRequested( ProgressItem* ) ) );
     KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;

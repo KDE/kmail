@@ -42,6 +42,10 @@ namespace KIO {
   class Job;
 }
 
+namespace KPIM {
+  class ProgressItem;
+}
+
 namespace KMail {
 
 /**
@@ -60,11 +64,13 @@ public:
    * @param hasInbox if you already have an inbox
    * @param path the listing path;
    *             if empty the path of the folder will be taken
+   * @param item a parent ProgressItem
    */
   ListJob( FolderStorage* storage, ImapAccountBase* account,
            ImapAccountBase::ListType type,
            bool secondStep = false, bool complete = false, 
-           bool hasInbox = false, const QString& path = QString::null );
+           bool hasInbox = false, const QString& path = QString::null,
+           KPIM::ProgressItem* item = 0 );
 
   virtual ~ListJob();
 
@@ -110,6 +116,7 @@ protected:
   QString mPath;
   QStringList mSubfolderNames, mSubfolderPaths, 
               mSubfolderMimeTypes, mSubfolderAttributes;
+  KPIM::ProgressItem* mParentProgressItem;            
 };
 
 } // namespace

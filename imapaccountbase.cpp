@@ -36,6 +36,8 @@ using KMail::SieveConfig;
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmmsgpart.h"
+#include "acljobs.h"
+#include "kmfoldercachedimap.h"
 #include "bodyvisitor.h"
 using KMail::BodyVisitor;
 #include "imapjob.h"
@@ -43,7 +45,6 @@ using KMail::ImapJob;
 #include "protocols.h"
 #include "progressmanager.h"
 using KPIM::ProgressManager;
-using KPIM::ProgressItem;
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -62,8 +63,6 @@ using KIO::PasswordDialog;
 //using KIO::Scheduler; // use FQN below
 
 #include <qregexp.h>
-#include "acljobs.h"
-#include "kmfoldercachedimap.h"
 #include <qstylesheet.h>
 
 namespace KMail {
@@ -92,7 +91,7 @@ namespace KMail {
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
       mSlaveConnected( false ),
-      mProgressItem( 0 )
+      mListDirProgressItem( 0 )
   {
     mPort = imapDefaultPort;
     mBodyPartList.setAutoDelete(true);
@@ -464,8 +463,10 @@ namespace KMail {
       }
   }
 
-  void ImapAccountBase::slotAbortRequested()
+  void ImapAccountBase::slotAbortRequested( KPIM::ProgressItem* item )
   {
+    if ( item )
+      item->setComplete();
     killAllJobs();
   }
 
@@ -832,6 +833,26 @@ namespace KMail {
     }
     mapJobData.remove( it );
   }
+  
+  //-----------------------------------------------------------------------------
+  KPIM::ProgressItem* ImapAccountBase::listDirProgressItem()
+  {
+    if ( !mListDirProgressItem )
+    {
+      mListDirProgressItem = ProgressManager::createProgressItem(
+          "ListDir" + name(),
+          name(),
+          i18n("retrieving folders"),
+          true,
+          useSSL() || useTLS() );
+      connect ( mListDirProgressItem,
+          SIGNAL( progressItemCanceled( ProgressItem* ) ),
+          this,
+          SLOT( slotAbortRequested( ProgressItem* ) ) );
+    }
+    return mListDirProgressItem;
+  }
+  
 } // namespace KMail
 
 #include "imapaccountbase.moc"
