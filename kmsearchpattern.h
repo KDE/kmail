@@ -7,10 +7,11 @@
 
 #include <qptrlist.h>
 #include <qstring.h>
+#include <mimelib/string.h>
 
 class KMMessage;
 class KConfig;
-
+class DwBoyerMoore;
 
 
 // maximum number of filter rules per filter
@@ -19,7 +20,7 @@ class KConfig;
 /** Incoming mail is sent through the list of mail filter
     rules before it is placed in the associated mail folder (usually "inbox").
     This class represents one mail filter rule.
-    
+
     @short This class represents one search pattern rule.
 */
 class KMSearchRule
@@ -32,17 +33,17 @@ public:
       Also, it is assumed that these functions come in pairs of logical
       opposites (ie. "=" <-> "!=", ">" <-> "<=", etc.).
   */
-  enum Function { FuncContains=0, FuncContainsNot, 
+  enum Function { FuncContains=0, FuncContainsNot,
 		  FuncEquals, FuncNotEqual,
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
 		  FuncIsLess, FuncIsGreaterOrEqual };
-  
+
   /** Constructor. Initializes the field and the value to the empty
       string and the function to @p FuncEquals. Use @ref init to set
       other data.*/
   KMSearchRule();
-  
+
   /** Initialize the rule.
       @param field
       The header field to search or one of the pseudo-headers, see @ref field.
@@ -67,6 +68,11 @@ public:
       @return TRUE if the rule matched, FALSE otherwise.
   */
   bool matches(const KMMessage* msg) const;
+
+  /** Optimized version tries to match the rule against the given @ref DwString.
+      @return TRUE if the rule matched, FALSE otherwise.
+  */
+  bool matches(const DwString& str, KMMessage& msg, DwBoyerMoore *headerField = 0, int headerLen = -1) const;
 
   /** Initialize the object from a given config file. The group must
       be preset. @p aIdx is an identifier that is used to distinguish
@@ -93,7 +99,7 @@ public:
 
   /** Set filter function. */
   void setFunction( Function aFunction ) { mFunction = aFunction; }
-  
+
   /** Return message header field name (without the trailing ':').
       There are also five pseudo-headers:
       @li <message>: Try to match against the whole message.
@@ -108,12 +114,16 @@ public:
       colon ':') */
   void setField( const QCString aField ) { mField = aField; }
 
+  /** Returns true if the rule only depends on fields stored in
+      a KMFolder index, otherwise returns false. */
+  bool requiresBody() const { return true; }
+
   /** Return the value. This can be either a substring to search for in
       or a regexp pattern to match against the header. */
   const QString contents() const { return mContents; }
   /** Set the value. */
   void setContents( const QString aContents ) { mContents = aContents; }
-  
+
   /** Returns the rule as string. For debugging.*/
   const QString asString() const;
 
@@ -123,11 +133,12 @@ protected:
   QCString  mField;
   Function mFunction;
   QString  mContents;
+  DwBoyerMoore *mBmHeaderField, *mBmEndHeaders1, *mBmEndHeaders2, *mBmEndHeader;
 };
 
 
 /** This class is an abstraction of a search over messages.  It is
-    intended to be used inside a @ref KFilter (which adds 
+    intended to be used inside a @ref KFilter (which adds
     @ref KFilterAction's), as well as in @ref KMSearch. It can read
     and write itself into a @ref KConfig group and there is a
     constructor, mainly used by @ref KMFilter to initialize from a
@@ -177,6 +188,7 @@ public:
       @return TRUE if the match was successful, FALSE otherwise.
   */
   virtual bool matches( const KMMessage* msg ) const;
+  virtual bool matches( const DwString &str ) const;
 
   /** Removes all empty rules from the list. You should call this
       method whenever the user had had control of the rules outside of
@@ -205,14 +217,13 @@ public:
   */
   virtual void readConfig( KConfig *config );
   /** Writes itself into @p config. The group has to be preset. Tries
-      to delete old-style keys by overwriting them with the null
-      QString. 
+      to delete old-style keys by overwriting them with QString::null.
 
       Derived classes reimplementing writeConfig() should also call this
       method, or else the rules will not be stored.
   */
   virtual void writeConfig( KConfig *config ) const;
-  
+
   /** Get the name of the search pattern. */
   const QString name() const { return mName; }
   /** Set the name of the search pattern. @ref KMFilter uses this to
@@ -229,7 +240,7 @@ public:
 
   /** Overloaded assignment operator. Makes a deep copy. */
   KMSearchPattern& operator=( const KMSearchPattern & aPattern );
-  
+
 private:
   /** Tries to import a legacy search pattern, ie. one that still has
       e.g. the @p unless or @p ignore operator which were useful as

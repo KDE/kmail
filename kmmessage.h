@@ -170,6 +170,7 @@ public:
 			QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
+  virtual void fromDwString(const DwString& str, bool setStatus=FALSE);
   virtual void fromString(const QCString& str, bool setStatus=FALSE);
 
   /** Return the entire message contents in the DwString. This function
