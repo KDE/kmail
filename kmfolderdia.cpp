@@ -497,7 +497,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     }
   }
 
-  if ( parentFolder ) {
+  else if ( parentFolder ) {
     // new folder
     initializeWithValuesFromFolder( parentFolder );
 
