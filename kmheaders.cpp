@@ -2526,7 +2526,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1001
+#define KMAIL_SORT_VERSION 1002
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
@@ -2657,7 +2657,7 @@ bool KMHeaders::writeSortOrder()
 void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {      
+  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {
     KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
     int parent_id = -2; //no parent, top level
     if(khi->parent())
