@@ -425,8 +425,9 @@ void KMMsgPartDialogCompat::applyChanges()
 
     cDisp += " filename";
     if ( name != QString( encName ) )
-      cDisp += '*';
-    cDisp += "=\"" + encName + '"';
+      cDisp += "*=" + encName;
+    else
+      cDisp += "=\"" + encName + '"';
     mMsgPart->setContentDisposition( cDisp );
   }
 
