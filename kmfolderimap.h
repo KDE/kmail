@@ -89,9 +89,8 @@ public:
   void setImapPath(const QString &path) { mImapPath = path; }
   QString imapPath() { return mImapPath; }
 
-  /** The next predicted UID of the folder */
-  void setUidNext(const QString &uidNext) { mUidNext = uidNext; }
-  QString uidNext() { return mUidNext; }
+  /** The highest UID in the folder */
+  ulong lastUid();
 
   /** The uidvalidity of the last update */
   void setUidValidity(const QString &validity) { mUidValidity = validity; }
@@ -271,11 +270,12 @@ protected slots:
 
 protected:
   QString     mImapPath;
-  QString     mUidNext;
+  ulong       mLastUid;
   imapState   mImapState;
   QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
   bool        mHasInbox;
   bool        mIsSelected;
+  bool        mCheckFlags;
   QGuardedPtr<KMAcctImap> mAccount;
 };
 

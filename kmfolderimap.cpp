@@ -42,6 +42,8 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   mImapState = imapNoInformation;
   mAccount = NULL;
   mIsSelected = FALSE;
+  mLastUid = 0;
+  mCheckFlags = TRUE;
 
   KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
@@ -139,6 +141,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
     deleteMessage(msg);
   }
 
+  mLastUid = 0;
   KMFolderImapInherited::removeMsg(idx);
 }
 
@@ -200,6 +203,7 @@ KMMessage* KMFolderImap::take(int idx)
   KMMessage *msg = static_cast<KMMessage*>(mb);
   deleteMessage(msg);
 
+  mLastUid = 0;
   return KMFolderImapInherited::take(idx);
 }
 
@@ -386,6 +390,19 @@ kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
 
 
 //-----------------------------------------------------------------------------
+ulong KMFolderImap::lastUid()
+{
+  if (mLastUid) return mLastUid;
+  if (count() < 1) return 0;
+  bool unget = !isMessage(count() - 1);
+  KMMessage *msg = getMsg(count() - 1);
+  mLastUid = msg->headerField("X-UID").toULong();
+  if (unget) unGetMsg(count() - 1);
+  return mLastUid;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
 kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
@@ -400,30 +417,21 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
     mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
   } else {
-    QString startUid = uidNext();
-    setUidNext("");
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
 		QString uidv;
 		if ( (b - a - 15) >= 0 ) uidv = cstr.mid(a + 15, b - a - 15);
+    QString startUid;
     if (uidValidity() != uidv)
     {
       expunge();
-      startUid = "";
     } else {
-      int p = cstr.find("\r\nX-UidNext:");
-      if (p != -1) setUidNext(cstr
-        .mid(p + 13, cstr.find("\r\n", p+1) - p - 13));
-			kdDebug(5006) << "uidnext = " << uidNext() << endl;
-   	}
-    mAccount->mapJobData.remove(it);
-    if (startUid.isEmpty() || startUid != uidNext())
-      reallyGetFolder(startUid);
-    else {
-      mImapState = imapFinished;
-      mAccount->displayProgress();
+      if (!mCheckFlags)
+        startUid = QString::number(lastUid() + 1);
     }
+    mAccount->mapJobData.remove(it);
+    reallyGetFolder(startUid);
   }
 }
 
@@ -514,6 +522,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mAccount->mapJobData.remove(it);
     return;
   }
+  mCheckFlags = FALSE;
   QStringList::Iterator uid;
   quiet(TRUE);
   // Check for already retrieved headers
@@ -662,9 +671,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     int p = (*it).cdata.find("\r\nX-uidValidity:");
     if (p != -1) setUidValidity((*it).cdata
       .mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
-    p = (*it).cdata.find("\r\nX-UidNext:");
-    if (p != -1) setUidNext((*it).cdata
-      .mid(p + 13, (*it).cdata.find("\r\n", p+1) - p - 13));
     (*it).cdata.remove(0, pos);
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
@@ -674,11 +680,13 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     KMMessage *msg = new KMMessage;
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
-    if (flags & 8) delete msg;
+    ulong uid = msg->headerField("X-UID").toULong();
+    if (flags & 8 || uid <= lastUid()) delete msg;
     else {
       msg->setStatus(flagsToStatus(flags));
       KMFolderImapInherited::addMsg(msg, NULL);
       if (count() > 1) unGetMsg(count() - 1);
+      mLastUid = uid;
 /*      if ((*it).total > 20 &&
         ((*it).done + 1) * 5 / (*it).total > (*it).done * 5 / (*it).total)
       {

@@ -427,7 +427,6 @@ void KMAcctImap::killAllJobs()
     {
       KMFolderImap *fld = (*it).parent;
       fld->setImapState(KMFolderImap::imapFinished);
-      fld->setUidNext("");
       fld->sendFolderComplete(FALSE);
       fld->quiet(FALSE);
     }
