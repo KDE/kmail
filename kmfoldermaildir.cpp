@@ -456,7 +456,7 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
-  assert(mi!=NULL && !mi->isMessage());
+  assert(mi!=NULL);
 
   QString abs_file(location() + "/cur/");
   abs_file += mi->fileName();
