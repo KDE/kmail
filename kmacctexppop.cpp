@@ -133,7 +133,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
       }
     }
 
-    QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" + 
+    QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
 				       mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
@@ -405,6 +405,9 @@ void KMAcctExpPop::slotJobFinished() {
       "The feature to leave the mails on the server will therefore not "
       "work properly."));
     }
+    // An attempt to work around buggy pop servers, these seem to be popular.
+    if (uidsOfNextSeenMsgs.isEmpty())
+	uidsOfNextSeenMsgs = uidsOfSeenMsgs;
 
     //check if filter on server
     if (mFilterOnServer == true) {
@@ -634,7 +637,7 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   if (!mUidlFinished) return;
   QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
 				     mHost + ":" + QString("%1").arg(mPort) );
-				     
+				
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   config.writeEntry( "downloadLater", headerLaterUids );
