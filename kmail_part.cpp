@@ -70,6 +70,11 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
   // Check that all updates have been run on the config file:
   KMail::checkConfigUpdates();
+
+  // Make sure that the KNotify Daemon is running (this is necessary for people
+  // using KMail without KDE)
+  KNotifyClient::startDaemon();
+
   KMail::lockOrDie();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
