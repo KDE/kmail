@@ -1154,30 +1154,30 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-	KMFolder* folder = NULL;
-	if (mFolder->protocol() == "imap")
-	{
-		KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
-		KMFolder* trash = kernel->imapFolderMgr()->findIdString(fi->account()->trash());
-		if (!trash) trash = kernel->trashFolder();
-		if (mFolder != trash)
-		{
-			folder = trash;
-		}	
+  KMFolder* folder = NULL;
+  if (mFolder->protocol() == "imap")
+  {
+    KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
+    KMFolder* trash = kernel->imapFolderMgr()->findIdString(fi->account()->trash());
+    if (!trash) trash = kernel->trashFolder();
+    if (mFolder != trash)
+    {
+      folder = trash;
+    }	
 
-	} else {
+  } else {
 
-  	if (mFolder != kernel->trashFolder())
-  	{
-			// move to trash folder
-			folder = kernel->trashFolder();
-		}
-	}	
+    if (mFolder != kernel->trashFolder())
+    {
+      // move to trash folder
+      folder = kernel->trashFolder();
+    }
+  }	
 			
   // move messages
   moveMsgToFolder(folder, msgId);
   
-   mSortInfo.dirty = TRUE;
+  mSortInfo.dirty = TRUE;
   mOwner->statusMsg("");
   //  triggerUpdate();
 }
