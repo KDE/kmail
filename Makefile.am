@@ -100,7 +100,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		keyresolver.cpp globalsettings.kcfgc \
 		regexplineedit.cpp rulewidgethandlermanager.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
-		pluginloaderbase.cpp partnodebodypart.cpp \
+		partnodebodypart.cpp \
 		expirejob.cpp compactionjob.cpp jobscheduler.cpp callback.cpp \
 		listjob.cpp \
 		composercryptoconfiguration.ui \

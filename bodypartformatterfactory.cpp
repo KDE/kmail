@@ -39,7 +39,7 @@ using namespace KMail::BodyPartFormatterFactoryPrivate;
 #include "urlhandlermanager.h"
 
 // libkdepim
-#include <pluginloader.h>
+#include <libkdepim/pluginloader.h>
 
 // KDE
 #include <kdebug.h>
