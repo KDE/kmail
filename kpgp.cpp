@@ -565,24 +565,61 @@ Kpgp::executePGP(QString cmd, int *in, int *out, int *err)
 // check if pgp installed
 // currently only supports 2.6.x
 // And now 5.x at alpha stage ;-). Please test ! I'll do too. - Juraj
-bool 
+bool
 Kpgp::checkForPGP(void)
 {
-  /* Check for pgp 5.0i */
-  int rc = system("pgpe -h 2>/dev/null >/dev/null");
+  // get path
+  QString path;
+  QStrList pSearchPaths;
+  int index = 0;
+  int lastindex = -1;
 
-  flagNoPGP = FALSE;
+  flagNoPGP = TRUE;
 
-  if (!((rc != -1) && (rc != 127))) 
+  path = getenv("PATH");
+  while((index = path.find(":",lastindex+1)) != -1)
   {
-    /* Oh no ! PGP 5.x not found. Check for 2.6.x instead */
-    flagPgp50 = FALSE;
-    rc = system("pgp -h 2>/dev/null >/dev/null");
-    if ((rc != -1) && (rc != 127)) 
-       flagNoPGP = TRUE;
-  } else flagPgp50 = TRUE;
+    pSearchPaths.append(path.mid(lastindex+1,index-lastindex-1));
+    lastindex = index;
+  }
+  if(lastindex != (int)path.size() - 2)
+    pSearchPaths.append( path.mid(lastindex+1,path.size()-lastindex-1) );
 
-  return flagNoPGP;
+  QStrListIterator it(pSearchPaths);
+
+  // first search for pgp5.0
+  while ( it.current() )
+  {
+    path = it.current();
+    path += "/pgpe";
+    if ( !access( path, X_OK ) )
+    {
+      flagPgp50 = TRUE;
+      flagNoPGP = FALSE;
+      debug("Kpgp: found pgp5.0");
+      return TRUE;
+    }
+    ++it;
+  }
+
+  // lets try pgp2.6.x
+  it.toFirst();
+  while ( it.current() )
+  {
+    path = it.current();
+    path += "/pgp";
+    if ( !access( path, X_OK ) )
+    {
+      flagPgp50 = FALSE;
+      flagNoPGP = FALSE;
+      debug("Kpgp: found pgp2.6.x");
+      return TRUE;
+    }
+    ++it;
+  }
+  
+  debug("Kpgp: didn't find pgp");
+  return FALSE;
 }
 
 bool
