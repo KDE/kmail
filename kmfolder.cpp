@@ -1209,12 +1209,12 @@ int KMFolder::countUnread()
 {
   register int  i;
 
-  if (unreadMsgs != -1)
+  if (unreadMsgs > -1)
     return unreadMsgs;
 
   readConfig();
 
-  if (unreadMsgs != -1)
+  if (unreadMsgs > -1)
     return unreadMsgs;
 
   open();
@@ -1243,8 +1243,9 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   int deltaUnread = newUnread - oldUnread;
 
   if (deltaUnread != 0) {
-     unreadMsgs += deltaUnread;
-     emit numUnreadMsgsChanged( this );
+    mDirty = TRUE;
+    unreadMsgs += deltaUnread;
+    emit numUnreadMsgsChanged( this );
   }
 }
 
