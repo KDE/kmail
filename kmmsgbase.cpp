@@ -474,7 +474,7 @@ QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
   for (unsigned int i = 0; i < aStr.length(); i++)
   {
     ch = aStr.at(i);
-    if (ch >= 128 || ch == '_' || especials.find(ch) != -1)
+    if ( ch >= 128 || ch == '_' || especials.find(ch) != -1 || ch < 32 )
     {
       result += '=';
       hex = ((ch & 0xF0) >> 4) + 48;
@@ -520,7 +520,8 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
     {
       if (!breakLine && (_str.at(p) == ' ' || dontQuote.find(_str.at(p)) != -1))
         start = p + 1;
-      if (_str.at(p).unicode() >= 128 || _str.at(p) < ' ') break;
+      if (_str.at(p).unicode() >= 128 || _str.at(p).unicode() < 32)
+        break;
       p++;
     }
     if (breakLine || p < _str.length())
