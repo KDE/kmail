@@ -404,6 +404,7 @@ void KMSystemTray::showKMail()
     KWin::activateWindow( mainWin->winId() );
     mParentVisible = true;
   }
+  kmkernel->raise();
 
   //Fake that the folders have changed so that the icon status is correct
   foldersChanged();

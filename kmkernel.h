@@ -285,6 +285,8 @@ public:
   /** @return a list of all folders from all folder managers. */
   QValueList< QGuardedPtr<KMFolder> > allFolders();
 
+  void raise();
+
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter

@@ -725,6 +725,11 @@ DCOPRef KMKernel::getFolder( const QString& vpath )
   return DCOPRef();
 }
 
+void KMKernel::raise()
+{
+  emit showMailCalled();
+}
+
 bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
 {
   emit showMailCalled();
