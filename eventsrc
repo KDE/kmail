@@ -10,6 +10,7 @@ Comment[xx]=xxKMailxx
 [new-mail-arrived]
 Name=New Mail Arrived
 Name[bg]=Имате ново писмо
+Name[bs]=Stigla vam je nova pošta
 Name[ca]=Ha arribat correu nou
 Name[cs]=Přišla nová pošta
 Name[da]=Ny post ankommet
@@ -36,6 +37,7 @@ Name[xx]=xxNew Mail Arrivedxx
 Name[zh_CN]=新邮件到达
 Comment=New mail arrived
 Comment[bg]=Имате ново писмо
+Comment[bs]=Stigla vam je nova pošta
 Comment[ca]=Ha arribat correu nou
 Comment[cs]=Přišla nová pošta
 Comment[da]=Ny post ankommet
