@@ -261,6 +261,7 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
     setStatus(headerField("Status"), headerField("X-Status"));
 
   mNeedsAssembly = FALSE;
+  KMMessageInherited::setDate(date());
 }
 
 
