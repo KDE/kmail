@@ -90,6 +90,7 @@ void KMMainWin::htmlStatusMsg(const QString& aText)
 
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
+  if ( !statusBar() || !littleProgress) return;
   QString text = " " + aText + " ";
   int statusWidth = statusBar()->width() - littleProgress->width()
     - fontMetrics().maxWidth();
