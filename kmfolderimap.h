@@ -78,8 +78,12 @@ class KMFolderImap : public KMFolderMbox
 
 public:
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
-  virtual imapState getImapState() { return mImapState; }
-  virtual void setImapState(imapState state) { mImapState = state; }
+
+  virtual imapState getContentState() { return mContentState; }
+  virtual void setContentState(imapState state) { mContentState = state; }
+
+  virtual imapState getSubfolderState() { return mSubfolderState; }
+  virtual void setSubfolderState(imapState state) { mSubfolderState = state; }
 
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -311,7 +315,7 @@ protected slots:
 protected:
   QString     mImapPath;
   ulong       mLastUid;
-  imapState   mImapState;
+  imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
   bool        mHasInbox;
   bool        mIsSelected;

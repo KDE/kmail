@@ -38,7 +38,8 @@
 KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   : KMFolderImapInherited(aParent, aName)
 {
-  mImapState = imapNoInformation;
+  mContentState = imapNoInformation;
+  mSubfolderState = imapNoInformation;
   mAccount = NULL;
   mIsSelected = FALSE;
   mLastUid = 0;
@@ -351,7 +352,7 @@ void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
   kdDebug(5006) << "KMFolderImap::listDirectory " << label() << ", "
     << secondStep << endl;
-  mImapState = imapInProgress;
+  mSubfolderState = imapInProgress;
   KMAcctImap::jobData jd;
   jd.parent = this;
   jd.total = 1; jd.done = 0;
@@ -392,7 +393,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
-  mImapState = imapFinished;
+  mSubfolderState = imapFinished;
   bool it_inboxOnly = (*it).inboxOnly;
   mAccount->mapJobData.remove(it);
   if (!job->error())
@@ -601,10 +602,11 @@ void KMFolderImap::getFolder()
   mGuessedUnreadMsgs = -1;
   if (mNoContent)
   {
+    mContentState = imapFinished;
     emit folderComplete(this, true);
     return;
   }
-  mImapState = imapInProgress;
+  mContentState = imapInProgress;
   checkValidity();
 }
 
@@ -706,7 +708,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   if (jd.total == 0)
   {
     quiet(FALSE);
-    mImapState = imapFinished;
+    mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
@@ -833,9 +835,9 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-    mImapState = imapNoInformation;
+    mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
-  } else mImapState = imapFinished;
+  } else mContentState = imapFinished;
   quiet(FALSE);
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();

@@ -840,7 +840,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       }
       KMBroadcastStatus::instance()->setStatusMsg( msg );
       KMBroadcastStatus::instance()->setStatusProgressPercent(
-        numBytesRead * 100 / numBytesToRead );
+        (numBytesToRead == 0) ? 50  // We never know what the server tells us
+        : (numBytesRead * 100 / numBytesToRead) );
     }
     return;
   }

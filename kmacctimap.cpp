@@ -106,7 +106,11 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   killAllJobs();
   if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
   mSlave = NULL;
-  if (mFolder) mFolder->setImapState(KMFolderImap::imapNoInformation);
+  if (mFolder)
+  {
+    mFolder->setContentState(KMFolderImap::imapNoInformation);
+    mFolder->setSubfolderState(KMFolderImap::imapNoInformation);
+  }
   assert(account->type() == "imap");
   KMAcctImap *acct = static_cast<KMAcctImap*>(account);
   setName(acct->name());
@@ -428,7 +432,8 @@ void KMAcctImap::killAllJobs()
     if ((*it).parent)
     {
       KMFolderImap *fld = (*it).parent;
-      fld->setImapState(KMFolderImap::imapFinished);
+      fld->setContentState(KMFolderImap::imapNoInformation);
+      fld->setSubfolderState(KMFolderImap::imapNoInformation);
       fld->sendFolderComplete(FALSE);
       fld->quiet(FALSE);
     }
@@ -499,7 +504,7 @@ void KMAcctImap::processNewMail(bool interactive)
     if (folder && !folder->noContent())
     {
       KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder);
-      if (imapFolder->getImapState() != KMFolderImap::imapInProgress)
+      if (imapFolder->getContentState() != KMFolderImap::imapInProgress)
       {
         if (imapFolder->isSelected())
           imapFolder->getFolder();

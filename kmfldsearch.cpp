@@ -255,10 +255,12 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
              this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
+  mFetchingInProgress--;
   
   if (success)
   {
-    searchInFolder(folder);
+    searchInFolder(folder, mChkSubFolders->isChecked(), FALSE);
+    if (mFetchingInProgress == 0) searchDone();
   }
   else 
   {
@@ -270,8 +272,26 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive)
+void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
+  bool fetchHeaders)
 {
+  if (fetchHeaders && aFld->protocol() == "imap")
+  {
+    KMFolder *fld = aFld;
+    KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fld);
+    if (imap_folder &&
+        imap_folder->getContentState() == KMFolderImap::imapNoInformation)
+    {
+      mFetchingInProgress++;
+      imap_folder->open();
+      connect(imap_folder,
+              SIGNAL(folderComplete(KMFolderImap *, bool)),
+              SLOT(slotFolderComplete(KMFolderImap *, bool)));
+      imap_folder->getFolder();
+      return;
+    }
+  }
+
   KMMessage* msg=0;
   int i, num, upd;
   QString str;
@@ -345,8 +365,6 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive)
   updStatus();
 
   aFld->close();
-  if (aFld->protocol() == "imap") 
-    searchDone();
 
   if (!recursive)
     return;
@@ -428,6 +446,7 @@ void KMFldSearch::slotSearch()
   mStopped = false;
   mNumMatches = 0;
   mSearching = true;
+  mFetchingInProgress = 0;
 
   mBtnSearch->setEnabled(false);
   mBtnStop->setEnabled(true);
@@ -452,25 +471,10 @@ void KMFldSearch::slotSearch()
       return;
     }
 
-    if (folder->protocol() == "imap")
-    {
-      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
-      if (imap_folder &&
-          imap_folder->getImapState()== KMFolderImap::imapNoInformation)
-      {
-        imap_folder->open();
-        connect(imap_folder,
-                SIGNAL(folderComplete(KMFolderImap *, bool)),
-                SLOT(slotFolderComplete(KMFolderImap *, bool)));
-        imap_folder->getFolder();
-        return;
-      }
-    }
-
     searchInFolder(folder, mChkSubFolders->isChecked());
   }
 
-  searchDone();
+  if (!mFetchingInProgress) searchDone();
 }
 
 //-----------------------------------------------------------------------------
