@@ -15,9 +15,10 @@ class KMFolder;
 class KMMsgInfo
 {
   friend class KMFolder;
+  friend class KMMessage;
 
 public:
-  KMMsgInfo() { mMsg=NULL; }
+  KMMsgInfo() { mMsg=NULL; mDirty=FALSE; }
 
   /** Delete message info object and message object if set. */
   ~KMMsgInfo();
@@ -44,8 +45,6 @@ public:
   /** The status is only a copy of the status in the message and does not
     need to be up to date if the message is loaded */
   KMMessage::Status status(void) { return mStatus; }
-  void setStatus(KMMessage::Status);
-  void setStatus(const char*);
 
   /** Pointer to the message object if loaded. */
   KMMessage* msg(void) { return mMsg; }
@@ -56,11 +55,39 @@ public:
   /** Delete message if any and set pointer to NULL. */
   void deleteMsg(void);
 
+  /** The index contains the important header fields. So it is not
+   necessary to parse the contents in order to display the list of
+   messages. */
+  const char* subject(void) const { return mSubject; }
+  const char* from(void) const { return mFrom; }
+  const char* date(void) const { return mDate; }
+
+  /** Returns TRUE if message info changed since last folder-sync. */
+  bool dirty(void) const { return mDirty; }
+
 protected:
+  /** Set status and mark as dirty. */
+  void setStatus(KMMessage::Status);
+  void setStatus(const char*);
+
+  /** Set subject/from/date and mark as dirty. */
+  void setSubject(const char*);
+  void setFrom(const char*);
+  void setDate(const char*);
+  
+  void stripBlanks(char*,int);
+  void setDirty(bool df) { mDirty = df; }
+
+  // Size of the toc line in bytes.
+  static int recSize(void) { return 220; }
+
   KMMessage::Status mStatus;
   unsigned long     mOffset;
   unsigned long     mSize;
   KMMessage*        mMsg;
+  char              mSubject[80], mFrom[60], mDate[60];
+  unsigned long	    mTocOffset; // offset of this record in toc file
+  bool              mDirty;
 };
 
 typedef QArray<KMMsgInfo> KMMsgInfoList;

@@ -141,7 +141,7 @@ void KMMainView::doModifyFolder()
 
   d = new KMFolderDialog((KMAcctFolder*)currentFolder, this);
   d->setCaption(nls->translate("Modify Folder"));
-  d->exec();
+  if (d->exec()) folderTree->reload();
   delete d;
 }
 
@@ -189,6 +189,8 @@ void KMMainView::doRemoveFolder()
 //-----------------------------------------------------------------------------
 void KMMainView::folderSelected(KMFolder* aFolder)
 {
+  kbp->busy();
+
   if (currentFolder) currentFolder->close();
   currentFolder = (KMAcctFolder*)aFolder;
   if (currentFolder) currentFolder->open();
@@ -196,6 +198,8 @@ void KMMainView::folderSelected(KMFolder* aFolder)
   headers->setFolder(currentFolder);
 
   if (horzPanner) messageView->clearCanvas();
+
+  kbp->idle();
 }
 
 

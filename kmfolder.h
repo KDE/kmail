@@ -108,6 +108,14 @@ public:
     process, whether there are others using it or not. */
   virtual int remove(void);
 
+  /** Delete contents of folder. Forces a close and does not open the
+    folder again. Returns errno(3) error code or zero on success. */
+  virtual int expunge(void);
+
+  /** Sync all TOC-changes to file. Returns zero on success and an errno
+    on failure. */
+  virtual int sync(void);
+
   /** Returns TRUE if a table of contents file is automatically created. */
   bool autoCreateToc(void) const { return mAutoCreateToc; }
 
@@ -115,17 +123,25 @@ public:
     Default is TRUE. */
   virtual void setAutoCreateToc(bool);
 
+  /** Returns TRUE if the table of contents is dirty. This happens when
+    a message is deleted from the folder. The toc will then be re-created
+    when the folder is closed. */
+  bool tocDirty(void) const { return mTocDirty; }
+
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
 
-  /** Delete contents of folder. Forces a close and does not open the
-    folder again. Returns errno(3) error code or zero on success. */
-  virtual int expunge(void);
+  /** Return "Subject:" of given message without reading the message.*/
+  virtual const char* msgSubject(int msgId) const;
 
-  //---| yet not implemented (and maybe not needed) are: |-------------------
-  virtual int rename(const char* fileName);
-  virtual long status(long/* = SA_MESSAGES | SA_RECENT | SA_UNSEEN*/);
-  virtual void ping();
+  /** Return "Date:" of given message without reading the message.*/
+  virtual const char* msgDate(int msgId) const;
+
+  /** Return "From:" of given message without reading the message.*/
+  virtual const char* msgFrom(int msgId) const;
+
+  /** Return "Status:" of given message without reading the message.*/
+  virtual KMMessage::Status msgStatus(int msgId) const;
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -144,27 +160,36 @@ signals:
 protected:
   friend class KMMessage;
 
-  // Called from KMMessage::setStatus(). Do not use directly. */
+  /** Called from KMMessage::setStatus(). Do not use directly. */
   virtual void setMsgStatus(KMMessage*, KMMessage::Status);
 
-  // read message from file
+  /** Read message from file. */
   virtual void readMsg(int msgNo);
 
-  /* read table of contents file from messages file and fill the
+  /** Read table of contents file from messages file and fill the
      message-info list mMsgList. */
   virtual void readToc(void);
 
-  /* This method can be inherited to read a custom toc header. */
+  /** This method can be inherited to read a custom toc header. */
   virtual void readTocHeader(void);
 
-  /* Create table of contents file from messages file and fill the
+  /** Create table of contents file from messages file and fill the
      message-info list mMsgList. Returns 0 on success and an errno 
      value (see fopen) on failure. */
-  virtual int createToc(void);
+  virtual int createTocFromContents(void);
 
-  /* This method can be inherited to create a custom toc header.
+  /** Completely (re)write table of contents file. */
+  virtual int writeToc(void);
+
+  /** This method can be inherited to create a custom toc header.
      Returns zero on success and an errno value (see fopen) on failure.*/
   virtual int createTocHeader(void);
+
+  /** Remove msg-info from mMsgInfo array. */
+  void removeMsgInfo(int id);
+
+  /** Change the Toc-dirty flag. */
+  void setTocDirty(bool f) { mTocDirty=f; }
 
   FILE* mStream;	// file with the messages
   FILE* mTocStream;	// table of contents file
@@ -173,6 +198,7 @@ protected:
   int mOpenCount, mQuiet;
   unsigned long mHeaderOffset;
   bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
+  bool mTocDirty; // if the Toc is dirty it will be recreated upon close()
 };
 
 #endif /*kmfolder_h*/

@@ -51,6 +51,10 @@ void KMHeaders::setFolder (KMFolder *f)
   {
     disconnect(folder, SIGNAL(msgHeaderChanged(int)),
 	       this, SLOT(msgHeaderChanged(int)));
+    disconnect(folder, SIGNAL(msgAdded(int)),
+	       this, SLOT(msgAdded(int)));
+    disconnect(folder, SIGNAL(msgRemoved(int)),
+	       this, SLOT(msgRemoved(int)));
     disconnect(folder, SIGNAL(changed()),
 	       this, SLOT(msgChanged()));
   }
@@ -61,6 +65,10 @@ void KMHeaders::setFolder (KMFolder *f)
   {
     connect(folder, SIGNAL(msgHeaderChanged(int)), 
 	    this, SLOT(msgHeaderChanged(int)));
+    connect(folder, SIGNAL(msgAdded(int)),
+	    this, SLOT(msgAdded(int)));
+    connect(folder, SIGNAL(msgRemoved(int)),
+	    this, SLOT(msgRemoved(int)));
     connect(folder, SIGNAL(changed()),
 	    this, SLOT(msgChanged()));
   }
@@ -77,17 +85,29 @@ void KMHeaders::msgChanged()
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::msgAdded(int id)
+{
+  insertItem("", id-1);
+  msgHeaderChanged(id);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::msgRemoved(int id)
+{
+  removeItem(id-1);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(int msgId)
 {
   char hdr[256];
-  KMMessage* msg = folder->getMsg(msgId);
   KMMessage::Status flag;
 
-  if (!msg) return;
-
-  flag = msg->status();
-  sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, msg->from(), msg->subject(), 
-	  msg->dateStr());
+  flag = folder->msgStatus(msgId);
+  sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, folder->msgFrom(msgId), 
+	  folder->msgSubject(msgId), folder->msgDate(msgId));
   changeItem(hdr, msgId-1);
 
   if (flag==KMMessage::stNew) changeItemColor(darkRed, msgId-1);
@@ -112,12 +132,23 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
+  QList<KMMessage> msgList;
   KMMessage* msg;
-  int rc;
+  int rc, num;
 
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {    
+  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
+    msgList.append(msg);
+  unmarkAll();
+
+  if (num > 3) setAutoUpdate(FALSE);
+
+  for (msg=msgList.first(); msg; msg=msgList.next())
     rc = trashFolder->moveMsg(msg);
+
+  if (num > 3)
+  {
+    setAutoUpdate(TRUE);
+    repaint();
   }
 }
 
@@ -309,10 +340,9 @@ void KMHeaders::updateMessageList(void)
 
   for (i = 1; i <= folder->numMsgs(); i++)
   {
-    msg  = folder->getMsg(i);
-    flag = msg->status();
-    sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, msg->from(), msg->subject(), 
-    	    msg->dateStr());
+    flag = folder->msgStatus(i);
+    sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, folder->msgFrom(i),
+	    folder->msgSubject(i), folder->msgDate(i));
     insertItem(hdr);
 
     if (flag==KMMessage::stNew) changeItemColor(darkRed);

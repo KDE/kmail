@@ -77,7 +77,11 @@ KMMessage* KMMessage::reply(void)
 {
   KMMessage* msg = new KMMessage;
 
-  warning("KMMessage::reply()\nneeds implementation !");
+
+
+
+
+  debug("KMMessage::reply() needs implementation !");
 
   return msg;
 }

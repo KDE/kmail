@@ -58,15 +58,20 @@ void KMAcctFolder::addAccount(KMAccount* aAcct)
 
   mAcctList.append(aAcct);
   aAcct->setFolder(this);
+  mTocDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAcctFolder::clearAccountList(void)
 {
+  KMAccount* acct;
+
+  for (acct=mAcctList.first(); acct; acct=mAcctList.next())
+    acct->setFolder(NULL);
   mAcctList.clear();
-  debug ("KMAcctFolder::clearAccountList():\n"
-	   "unregister folders in accounts here !");
+
+  mTocDirty = TRUE;
 }
 
 
@@ -77,6 +82,7 @@ void KMAcctFolder::removeAccount(KMAccount* aAcct)
 
   mAcctList.remove(aAcct);
   aAcct->setFolder(NULL);
+  mTocDirty = TRUE;
 }
 
 

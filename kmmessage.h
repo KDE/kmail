@@ -141,6 +141,8 @@ public:
   /** Append a body part to the message. */
   virtual void addBodyPart(const KMMessagePart* aPart);
 
+  /** Owning folder or NULL if none. */
+  KMFolder* owner(void) const { return mOwner; }
 
 protected:
   void setOwner(KMFolder*);

@@ -97,6 +97,9 @@ static void init(int argc, char *argv[])
   }
   fld->setLabel(nls->translate("trash"));
   trashFolder = (KMFolder*)fld;
+  trashFolder->setAutoCreateToc(FALSE);
+  trashFolder->open(); // otherwise we have to open/close the folder for
+                       // each and every delete.
 
   msgSender = new KMSender(folderMgr);
 }
@@ -106,6 +109,8 @@ static void init(int argc, char *argv[])
 static void cleanup(void)
 {
   app->getConfig()->sync();
+
+  trashFolder->close();
 
   qInstallMsgHandler(oldMsgHandler);
 

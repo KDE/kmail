@@ -66,11 +66,11 @@ bool KMAcctLocal::processNewMail(void)
   mFolder->open();
 
   num = mailFolder.numMsgs();
-  printf("%d messages in %s\n", num, (const char*)location());
+  debug("%d messages in %s", num, (const char*)location());
 
-  for (i=1; i<=num; i++)
+  for (i=num-1; i>=1; i--)
   {
-    debug(QString("processing message ")+i);
+    debug("processing message %d", i);
     msg = mailFolder.getMsg(i);
     mailFolder.detachMsg(i);
     if (msg) 
