@@ -140,6 +140,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
   connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
+  connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
+
 #endif
   KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmmainwin.rc" );
@@ -178,8 +180,18 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
+  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >( mainWidget->folderTree()->currentItem() );
+
   if ( folder != 0 )
     emit textChanged( folder->label() );
+
+  QPixmap pix;
+  if ( fti->normalIcon() != 0 )
+    pix = *fti->normalIcon();
+  else
+    pix = QPixmap();
+
+  emit iconChanged( pix );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)

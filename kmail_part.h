@@ -67,6 +67,7 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
 
   signals:
     void textChanged( const QString& );
+    void iconChanged( const QPixmap& );
 
   protected:
     virtual bool openFile();
