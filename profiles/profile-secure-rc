@@ -1,6 +1,8 @@
 [KMail Profile]
 name=Most secure
+name[xx]=xx
 desc=Sets all neccesary options to achive maximum security
+desc[xx]=xx
 
 [Composer]
 pgp-auto-sign=true

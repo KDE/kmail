@@ -1,6 +1,8 @@
 [KMail Profile]
 name=Default
+name[xx]=xx
 desc=Standard profile
+desc[xx]=xx
 
 [Reader]
 BackgroundColor=255,255,255

@@ -1,6 +1,8 @@
 [KMail Profile]
 name=High contrast
+name[xx]=xx
 desc=Increased font sizes for visually impaired users
+desc[xx]=xx
 
 [Reader]
 BackgroundColor=250,235,215

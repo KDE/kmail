@@ -1,6 +1,8 @@
 [KMail Profile]
 name=Purist
+name[xx]=xx
 desc=Most features turned off, KDE global settings are used
+desc[xx]=xx
 
 [Reader]
 defaultColors=true
