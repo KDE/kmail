@@ -1726,35 +1726,44 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     fdlg.setMode( (unsigned int) KFile::Directory );
     if ( !fdlg.exec() ) return;
     dir = fdlg.selectedURL().path();
-  } else
-  {
+  }
+  else {
     // only one item, get the desired filename
     // replace all ':' with '_' because ':' isn't allowed on FAT volumes
-    const QString s = itr.current()->msgPart().fileName().replace( ':', '_' );
-    file = KFileDialog::getSaveFileName( s, QString::null, mParent, QString::null );
+    QString s =
+      (*itr)->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+    if ( s.isEmpty() )
+      s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
+    if ( s.isEmpty() )
+      s = "unnamed"; // ### this should probably be i18n'ed
+    file = KFileDialog::getSaveFileName( s, QString::null, mParent,
+                                         QString::null );
   }
 
   while ( itr.current() ) {
-    QString s = itr.current()->msgPart().fileName();
-    // Check if it has the Content-Disposition... filename: header
-    // to make sure it's an actual attachment
-    // we can't do the check earlier as we first need to load the mimeheader
-    // for imap attachments to do this check
-    if ( s.isEmpty() ) {
-      ++itr;
-      continue;
-    }
-
+    QString s;
     QString filename;
-    if ( !dir.isEmpty() )
+    if ( !dir.isEmpty() ) {
+      s = (*itr)->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+      if ( s.isEmpty() )
+        s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
+      // Check if it has the Content-Disposition... filename: header
+      // to make sure it's an actual attachment
+      // we can't do the check earlier as we first need to load the mimeheader
+      // for imap attachments to do this check
+      if ( s.isEmpty() ) {
+        ++itr;
+        continue;
+      }
       filename = dir + "/" + s;
+    }
     else
       filename = file;
 
     if( !filename.isEmpty() ) {
       if( QFile::exists( filename ) ) {
         if( KMessageBox::warningYesNo( mParent,
-                                       i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
+                                       i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s.isEmpty() ? filename : s ),
                                        i18n( "KMail Warning" ) ) ==
             KMessageBox::No ) {
           ++itr;
