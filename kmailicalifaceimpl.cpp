@@ -47,6 +47,7 @@
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"
+#include "kmgroupware.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -539,7 +540,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   QString s;
   for( int i=0; i<f->count(); ++i ) {
     bool unget = !f->isMessage(i);
-    if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) )
+    if( vPartFoundAndDecoded( f->getMsg( i ), s ) )
       ilist << s;
     if( unget ) f->unGetMsg(i);
   }
@@ -929,7 +930,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     switch( format ) {
     case StorageIcalVcard:
       // Read the iCal or vCard
-      ok = KMGroupware::vPartFoundAndDecoded( msg, s );
+      ok = vPartFoundAndDecoded( msg, s );
       break;
     case StorageXML:
       // Read the XML from the attachment with the given mimetype
@@ -971,7 +972,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     QString uid( "UID" );
     switch( storageFormat( folder ) ) {
     case StorageIcalVcard:
-        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+        if( vPartFoundAndDecoded( msg, s ) ) {
             vPartMicroParser( s, uid );
             ok = true;
         }
@@ -1141,7 +1142,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
     KMMessage* msg = folder->getMsg( i );
     if( msg ) {
       QString vCal;
-      if( KMGroupware::vPartFoundAndDecoded( msg, vCal ) ) {
+      if( vPartFoundAndDecoded( msg, vCal ) ) {
         QString msgUid( "UID" );
         vPartMicroParser( vCal, msgUid );
         if( msgUid == uid )

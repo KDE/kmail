@@ -19,7 +19,8 @@ libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 	../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
 	../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
 	../libksieve/libksieve.la \
-	../certmanager/lib/libkleopatra.la
+	../certmanager/lib/libkleopatra.la \
+        ../libkcal/libkcal.la
 
 kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
