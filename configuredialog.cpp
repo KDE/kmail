@@ -1861,7 +1861,7 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.nestedMessagesCheck->setChecked( state );
 
   config.setGroup("Reader");
-  state = config.readBoolEntry( "htmlMail", true );
+  state = config.readBoolEntry( "htmlMail", false );
   mAppearance.htmlMailCheck->setChecked( !state );
 
   config.setGroup("General");

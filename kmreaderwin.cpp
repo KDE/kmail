@@ -149,7 +149,7 @@ void KMReaderWin::readConfig(void)
     mBackingPixmapOn = TRUE;
 
   config->setGroup("Reader");
-  mHtmlMail = config->readBoolEntry( "htmlMail", true );
+  mHtmlMail = config->readBoolEntry( "htmlMail", false );
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",

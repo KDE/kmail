@@ -198,7 +198,7 @@ void KMMainWin::readConfig(void)
   }
 
   config->setGroup("Reader");
-  mHtmlPref = config->readBoolEntry( "htmlMail", true );
+  mHtmlPref = config->readBoolEntry( "htmlMail", false );
 
   config->setGroup("Geometry");
   mThreadPref = config->readBoolEntry( "nestedMessages", false );
