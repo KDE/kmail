@@ -164,6 +164,11 @@ void TransactionItem::slotItemCanceled()
   item()->cancel();
 }
 
+void TransactionItem::slotDelete()
+{
+  delete this;
+}
+
 
 
 ProgressDialog::ProgressDialog( QWidget* parent, const char* name, bool modal, WFlags fl )
@@ -269,13 +274,14 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
 {
    TransactionItem *ti = mTransactionsToListviewItems[ item ];
    if ( ti ) {
+     ti->setStatus(i18n("Completed"));
      mTransactionsToListviewItems.remove( item );
-     delete ti;
+     QTimer::singleShot( 5000, ti, SLOT( slotDelete() ) );
    }
    mListView->slotAdjustGeometry();
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.size() == 0 )
-     QTimer::singleShot( 3000, this, SLOT( slotHide() ) );
+     QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
 }
 
 void ProgressDialog::slotTransactionCanceled( ProgressItem * )
@@ -308,7 +314,6 @@ void ProgressDialog::slotTransactionLabel( ProgressItem *item,
      ti->setLabel( label );
    }
 }
-
 
 void ProgressDialog::slotHide()
 {

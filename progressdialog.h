@@ -82,6 +82,7 @@ public:
   ProgressItem* item() const { return mItem; }
 
 public slots:
+  void slotDelete();
   void slotItemCanceled();
 
 protected:
