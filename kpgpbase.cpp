@@ -489,7 +489,7 @@ KpgpBaseG::decrypt(const char *passphrase)
   }
 
   if ((info.find("secret key not available") != -1)
-      || (info.find("key not found") != -1))
+      || ((info.find("key not found") != -1) && (info.find("Can't check signature") == -1)))
   {
     //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
@@ -532,9 +532,10 @@ KpgpBaseG::decrypt(const char *passphrase)
   {
     //kdDebug() << "KpgpBase: message is signed" << endl;
     status |= SIGNED;
-    if( info.find("Key matching expected") != -1)
+    if ((info.find("Key matching expected") != -1)
+        || (info.find("Can't check signature") != -1))
     {
-      index = info.find("Key ID ",index);
+      index = info.find("key ID ",index);
       signatureID = info.mid(index+7,8);
       signature = i18n("unknown key ID ") + signatureID + " ";
       status |= UNKNOWN_SIG;
