@@ -1999,7 +1999,7 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.emptyTrashCheck->setChecked( state );
   state = config->readBoolEntry("keep-small-trash", true);
   mMisc.keepSmallTrashCheck->setChecked( state );
-  int num = config->readNumEntry("small-trash-size", 1);
+  int num = config->readNumEntry("small-trash-size", 10);
   mMisc.smallTrashSizeSpin->setValue( num );
   state = config->readBoolEntry("remove-old-mail-from-trash", true);
   mMisc.removeOldMailCheck->setChecked( state );
