@@ -1733,18 +1733,18 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
     if (aUrl.protocol() == "mailto")
     {
       // popup on a mailto URL
-      menu->insertItem(i18n("Send to..."), this,
+      menu->insertItem(i18n("Send To..."), this,
                        SLOT(slotMailtoCompose()));
       if ( mMsgCurrent ) {
-        menu->insertItem(i18n("Send reply to..."), this,
+        menu->insertItem(i18n("Send Reply To..."), this,
                          SLOT(slotMailtoReply()));
-        menu->insertItem(i18n("Forward to..."), this,
+        menu->insertItem(i18n("Forward To..."), this,
                          SLOT(slotMailtoForward()));
         menu->insertSeparator();
       }
-      menu->insertItem(i18n("Add to addressbook"), this,
+      menu->insertItem(i18n("Add to Addressbook"), this,
 		       SLOT(slotMailtoAddAddrBook()));
-      menu->insertItem(i18n("Copy to clipboard"), this,
+      menu->insertItem(i18n("Copy to Clipboard"), this,
 		       SLOT(slotUrlCopy()));
     }
     else
@@ -1752,9 +1752,9 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
       // popup on a not-mailto URL
       menu->insertItem(i18n("Open URL..."), this,
 		       SLOT(slotUrlOpen()));
-      menu->insertItem(i18n("Save Link as..."), this,
+      menu->insertItem(i18n("Save Link As..."), this,
                        SLOT(slotUrlSave()));
-      menu->insertItem(i18n("Copy to clipboard"), this,
+      menu->insertItem(i18n("Copy to Clipboard"), this,
 		       SLOT(slotUrlCopy()));
     }
   }
@@ -2247,9 +2247,9 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
   {
       int menuId;
       if (move)
-          menuId = menu->insertItem(i18n("Move to this folder"));
+          menuId = menu->insertItem(i18n("Move to This Folder"));
       else
-          menuId = menu->insertItem(i18n("Copy to this folder"));
+          menuId = menu->insertItem(i18n("Copy to This Folder"));
       aMenuToFolder->insert( menuId, fti->folder );
       menu->insertSeparator();
   }
