@@ -117,7 +117,6 @@ CachedImapJob::CachedImapJob( JobType type, KMFolderCachedImap* folder )
 
 CachedImapJob::~CachedImapJob()
 {
-  mAccount->displayProgress();
   mAccount->mJobList.remove(this);
 }
 
