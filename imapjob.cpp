@@ -299,7 +299,7 @@ void ImapJob::slotGetNextMessage()
                           true,
                           account->useSSL() || account->useTLS() );
   connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-            account, SLOT( slotAbortRequested() ) );
+            account, SLOT( slotAbortRequested( ProgressItem* ) ) );
   jd.progressItem->setTotalItems( jd.total );
 
   KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );
