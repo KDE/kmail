@@ -41,7 +41,6 @@ class QPushButton;
 class QLineEdit;
 class QListBox;
 class QComboBox;
-class QGroupBox;
 class KMFolder;
 class KMFolderTreeItem;
 class KMFolderDir;
@@ -134,7 +133,6 @@ private:
 private:
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;
-  QGroupBox *mIncidencesForGroup;
   QComboBox *mIncidencesForComboBox;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;

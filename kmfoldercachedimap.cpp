@@ -379,7 +379,9 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 int KMFolderCachedImap::rename( const QString& aName,
                                 KMFolderDir* /*aParent*/ )
 {
-  if ( aName == name() )
+  QString oldName = mAccount->renamedFolder( imapPath() );
+  if ( oldName.isEmpty() ) oldName = name();
+  if ( aName == oldName )
     // Stupid user trying to rename it to it's old name :)
     return 0;
 
@@ -390,8 +392,15 @@ int KMFolderCachedImap::rename( const QString& aName,
   }
 
   // Make the change appear to the user with setLabel, but we'll do the change
-  // on the server during the next sync.
-  mAccount->addRenamedFolder( imapPath(), folder()->label(), aName );
+  // on the server during the next sync. The name() is the name at the time of
+  // the last sync. Only rename if the new one is different. If it's the same, 
+  // don't rename, but also make sure the rename is reset, in the case of
+  // A -> B -> A renames.
+  if ( name() != aName )
+    mAccount->addRenamedFolder( imapPath(), folder()->label(), aName );
+  else
+    mAccount->removeRenamedFolder( imapPath() );
+
   folder()->setLabel( aName );
   emit nameChanged(); // for kmailicalifaceimpl
 
@@ -676,8 +685,9 @@ void KMFolderCachedImap::serverSyncInternal()
   {
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
     // Returns the new name if the folder was renamed, empty otherwise.
+    bool isResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( folder() );
     QString newName = mAccount->renamedFolder( imapPath() );
-    if ( !newName.isEmpty() ) {
+    if ( !newName.isEmpty() && !folder()->isSystemFolder() && !isResourceFolder ) {
       newState( mProgress, i18n("Renaming folder") );
       CachedImapJob *job = new CachedImapJob( newName, CachedImapJob::tRenameFolder, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );

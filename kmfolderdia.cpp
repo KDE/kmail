@@ -431,9 +431,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   // or if it's set to calendar or task (existing folder)
   if ( ( GlobalSettings::theIMAPResourceStorageFormat() ==
          GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
-       ( mContentsComboBox ||
-         ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
-                               || mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeTask ) ) ) ) {
+      mContentsComboBox ) {
     QHBoxLayout *relevanceLayout = new QHBoxLayout( topLayout );
     relevanceLayout->setSpacing( 6 );
 
@@ -462,8 +460,10 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
     mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
 
-    //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
-    //          this, SLOT( slotIncidencesForChanged( int ) ) );
+    if ( mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeCalendar
+      && mDlg->folder()->storage()->contentsType() != KMail::ContentsTypeTask ) {
+      mIncidencesForComboBox->setEnabled( false );
+    }
   } else {
     mIncidencesForComboBox = 0;
   }
@@ -537,9 +537,9 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
     KMessageBox::information( this, message );
   }
 
-  if ( mIncidencesForGroup )
-    mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
-                                     type == KMail::ContentsTypeTask );
+  if ( mIncidencesForComboBox )
+      mIncidencesForComboBox->setEnabled( type == KMail::ContentsTypeCalendar ||
+                                          type == KMail::ContentsTypeTask );
 }
 
 //-----------------------------------------------------------------------------
@@ -620,8 +620,13 @@ bool FolderDiaGeneralTab::save()
     // make sure everything is on disk, connected slots will call readConfig()
     // when creating a new folder.
     folder->storage()->writeConfig();
-
-    if ( !oldFldName.isEmpty() && ( oldFldName != fldName ) )
+    // Renamed an existing folder? We don't check for oldName == newName on 
+    // purpose here. The folder might be pending renaming on the next dimap
+    // sync already, in which case the old name would still be around and
+    // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
+    // fail. Therefor let the folder sort it out itself, whether the rename is
+    // a noop or not.
+    if ( !oldFldName.isEmpty() )
     {
       kmkernel->folderMgr()->renameFolder( folder, fldName );
     } else {
