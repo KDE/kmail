@@ -65,7 +65,7 @@ void KMMessagePart::setBody(const QString aStr)
 // Returns Base64 encoded MD5 digest of a QString
 QString KMMessagePart::encodeBase64(const QString& aStr)
 {
-  char *c = aStr.data();
+  char *c = const_cast<char *>(aStr.data());
   unsigned char digest[16];
   Bin_MD5Context ctx;
   DwString dwResult, dwSrc;
