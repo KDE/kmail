@@ -1807,9 +1807,9 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     mAtmCurrentName = url.path();
     KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
-    menu->insertItem(i18n("Open with..."), this, SLOT(slotAtmOpenWith()));
+    menu->insertItem(i18n("Open With..."), this, SLOT(slotAtmOpenWith()));
     menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
-    menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
+    menu->insertItem(i18n("Save As..."), this, SLOT(slotAtmSave()));
     menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));
     menu->exec(aPos,0);
@@ -2023,7 +2023,7 @@ void KMReaderWin::slotAtmOpen()
   QString mimetype = KMimeType::findByURL(KURL(mAtmCurrentName))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
   QString question;
-  QString open_text = i18n("Open");
+  QString open_text = i18n("&Open");
   QString filenameText = msgPart.fileName();
   if (filenameText.isEmpty()) filenameText = msgPart.name();
   if ( offer ) {
@@ -2031,12 +2031,12 @@ void KMReaderWin::slotAtmOpen()
       .arg(offer->name());
   } else {
     question = i18n("Open attachment '%1'?").arg(filenameText);
-    open_text = i18n("Open With...");
+    open_text = i18n("&Open With...");
   }
   question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
   // TODO: buttons don't have the correct order, but "Save" should be default
   int choice = KMessageBox::warningYesNoCancel(this, question,
-      i18n("Open Attachment?"), i18n("Save to Disk"), open_text);
+      i18n("Open Attachment?"), i18n("&Save to Disk"), open_text);
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmSave();
   } else if( choice == KMessageBox::No ) {	// Open
