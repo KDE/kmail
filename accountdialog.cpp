@@ -37,6 +37,7 @@
 #include <knuminput.h>
 #include <kseparator.h>
 #include <kapplication.h>
+#include <kmessagebox.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -1237,6 +1238,12 @@ void AccountDialog::slotImapEncryptionChanged(int id)
 
 void AccountDialog::slotCheckPopCapabilities()
 {
+  if ( mPop.hostEdit->text().isEmpty() || mPop.portEdit->text().isEmpty() )
+  {
+     KMessageBox::sorry( this, i18n( "Please specify a server and port on "
+              "the General tab first." ) );
+     return;
+  }
   delete mServerTest;
   mServerTest = new KMServerTest("pop3", mPop.hostEdit->text(),
     mPop.portEdit->text().toInt());
@@ -1248,6 +1255,12 @@ void AccountDialog::slotCheckPopCapabilities()
 
 void AccountDialog::slotCheckImapCapabilities()
 {
+  if ( mImap.hostEdit->text().isEmpty() || mImap.portEdit->text().isEmpty() )
+  {
+     KMessageBox::sorry( this, i18n( "Please specify a server and port on "
+              "the General tab first." ) );
+     return;
+  }
   delete mServerTest;
   mServerTest = new KMServerTest("imap", mImap.hostEdit->text(),
     mImap.portEdit->text().toInt());
