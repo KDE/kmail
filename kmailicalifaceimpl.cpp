@@ -300,7 +300,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
   msg->setSubject( "[kolab data]" );
-  msg->setCharset( "8bit" );
+  msg->setCharset( "utf-8" );
   msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
     msg->setNeedsAssembly();
     msg->setAutomaticFields( true );
