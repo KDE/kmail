@@ -543,9 +543,10 @@ void ConfigureDialog::makeIdentityPage( void )
   hlay->addWidget( mIdentity.removeIdentityButton );
   */
 
-  QLabel *label = new QLabel( i18n("Identity:"), page );
+  QLabel *label = new QLabel( i18n("&Identity:"), page );
   glay->addWidget( label, 0, 0 );
   mIdentity.identityCombo = new QComboBox( false, page );
+  label->setBuddy( mIdentity.identityCombo );
   connect( mIdentity.identityCombo, SIGNAL(activated(int)),
 	   this, SLOT(slotIdentitySelectorChanged()) );
   glay->addMultiCellWidget( mIdentity.identityCombo, 0, 0, 1, 2 );
@@ -716,22 +717,24 @@ void ConfigureDialog::makeNetworkPage( void )
   glay = new QGridLayout( page2, 4, 3, spacingHint() );
   glay->setColStretch( 2, 10 );
 
-  label = new QLabel( i18n("Default send method:"), page2 );
+  label = new QLabel( i18n("&Default send method:"), page2 );
   glay->addWidget( label, 0, 0 );
   mNetwork.sendMethodCombo = new QComboBox( page2 );
-  mNetwork.sendMethodCombo->insertItem(i18n("Send &now"));
-  mNetwork.sendMethodCombo->insertItem(i18n("Send &later"));
+  label->setBuddy( mNetwork.sendMethodCombo );
+  mNetwork.sendMethodCombo->insertItem(i18n("Send now"));
+  mNetwork.sendMethodCombo->insertItem(i18n("Send later"));
   glay->addWidget( mNetwork.sendMethodCombo, 0, 1 );
 
-  label = new QLabel( i18n("Message Property:"), page2 );
+  label = new QLabel( i18n("Message &Property:"), page2 );
   glay->addWidget( label, 1, 0 );
   mNetwork.messagePropertyCombo = new QComboBox( page2 );
+  label->setBuddy( mNetwork.messagePropertyCombo );
   mNetwork.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
   mNetwork.messagePropertyCombo->insertItem(
     i18n("MIME Compliant (Quoted Printable)"));
   glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
 
- label = new QLabel( i18n("Precomman&d:"), page2 );
+ label = new QLabel( i18n("Pr&ecommand:"), page2 );
   glay->addWidget( label, 2, 0 );
   mNetwork.precommandEdit = new QLineEdit( page2 );
   label->setBuddy(mNetwork.precommandEdit);
@@ -941,7 +944,7 @@ void ConfigureDialog::makeAppearancePage( void )
   vlay = new QVBoxLayout( page4, spacingHint() );
 
   QLabel *label = new QLabel( page4 );
-  label->setText(i18n("Select a GUI profile"));
+  label->setText(i18n("&Select a GUI profile:"));
   vlay->addWidget( label );
 
   mAppearance.profileList = new ListView( page4, "tagList" );
@@ -949,6 +952,7 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.profileList->setAllColumnsShowFocus( true );
   mAppearance.profileList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mAppearance.profileList->setSorting( -1 );
+  label->setBuddy( mAppearance.profileList );
   vlay->addWidget( mAppearance.profileList, 1 );
 
   /* not implemented (yet?)
@@ -984,18 +988,29 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page5, i18n("&Addressbook") );
   vlay = new QVBoxLayout( page5, spacingHint() );
 
+  label = new QLabel( i18n("&Choose Addressbook:"), page5 );
+  vlay->addWidget( label );
+
   mAppearance.addressbookCombo = new QComboBox( page5 );
+  label->setBuddy( mAppearance.addressbookCombo );
   QStringList abStringList;
   abStringList.append( i18n("Traditional KMail") );
   abStringList.append( i18n("Traditional KMail interface using KAB database") );
   abStringList.append( i18n("KAB") );
   abStringList.append( i18n("Abbrowser") );
-  mAppearance.addressbookCombo->insertStringList(abStringList);
+  mAppearance.addressbookCombo->insertStringList( abStringList );
   vlay->addWidget( mAppearance.addressbookCombo );
   vlay->addSpacing( spacingHint() );
 
   connect( mAppearance.addressbookCombo, SIGNAL(activated(int) ),
 	   this, SLOT(slotAddressbookSelectorChanged(int)) );
+
+  QGroupBox *descrbox = new QGroupBox( i18n("Description"), page5 );
+  vlay->addWidget( descrbox );
+
+  QVBoxLayout *grpLay = new QVBoxLayout( descrbox, KDialogBase::spacingHint());
+  grpLay->addSpacing( fontMetrics().lineSpacing() );
+
 
   mAppearance.addressbookStrings.clear();
   mAppearance.addressbookStrings.append( i18n("The traditional KMail graphical "
@@ -1009,9 +1024,11 @@ void ConfigureDialog::makeAppearancePage( void )
     "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
     "Requires the kdepim package to be installed."));
 
-  mAppearance.addressbookLabel = new QLabel( page5 );
+  mAppearance.addressbookLabel = new QLabel( descrbox );
+
+  grpLay->addWidget( mAppearance.addressbookLabel );
+
   mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(0));
-  vlay->addWidget( mAppearance.addressbookLabel );
   vlay->addStretch(10);
 
   // Score
@@ -1053,9 +1070,10 @@ void ConfigureDialog::makeComposerPage( void )
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
   glay->addMultiCellWidget( label, 1, 1, 0, 1 );
-  label = new QLabel( i18n("Language:"), group );
+  label = new QLabel( i18n("&Language:"), group );
   glay->addWidget( label, 2, 0 );
   mComposer.phraseLanguageCombo = new LanguageComboBox( false, group );
+  label->setBuddy( mComposer.phraseLanguageCombo );
   glay->addWidget( mComposer.phraseLanguageCombo, 2, 1 );
   mComposer.LanguageList = NULL;
   QHBoxLayout *languageHlay = new QHBoxLayout( 0, 0, spacingHint() );
