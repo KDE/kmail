@@ -46,6 +46,9 @@ class KMIOStatus : public QWidget
   /** Tell widget that the tranmission has been completed **/
   virtual void transmissionCompleted();
 
+  /** Tell widget that new mail arrived / has to be sent or not
+  virtual void newMail(bool);	
+
  private slots:
   virtual void abortPressed();
 

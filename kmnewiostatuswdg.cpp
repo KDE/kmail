@@ -54,6 +54,10 @@ KMIOStatusWdg::~KMIOStatusWdg() {
 
 }
 
+void KMIOStatusWdg::newMail(bool _newMail) {
+
+}
+
 void KMIOStatusWdg::updateProgressBar(int index ,int of) {
 
   float value;

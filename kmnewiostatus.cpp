@@ -38,6 +38,10 @@ void KMIOStatus::update() {
 
 }
 
+void KMIOStatus::newMail(bool _newMail) {
+
+}
+
 KMIOStatus::task KMIOStatus::Task() {
 
   return _task;

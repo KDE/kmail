@@ -31,6 +31,9 @@ class KMIOStatusWdg : public KMIOStatus
   /** Tell widget that the tranmission has been completed **/
   void transmissionCompleted();
 
+  /** Tell widget if mail has to be sent or arrived or not **/
+  void newMail(bool);
+
  private slots:
   void abortPressed();
   void update();
