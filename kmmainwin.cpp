@@ -28,6 +28,9 @@
 #include <knotifyclient.h>
 #include <kdebug.h>
 #include <kapplication.h>
+#include <kfiledialog.h>
+#include <kio/netaccess.h>
+#include <kio/job.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -1690,6 +1693,33 @@ void KMMainWin::slotUrlOpen()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotUrlSave()
+{
+  if (mUrlCurrent.isEmpty()) return;
+  KURL saveUrl = KFileDialog::getSaveURL(mUrlCurrent.fileName(), QString::null,
+    this);
+  if (saveUrl.isEmpty()) return;
+  if (KIO::NetAccess::exists(saveUrl))
+  {
+    if (KMessageBox::warningContinueCancel(0,
+        i18n("File %1 exists.\nDo you want to replace it?")
+        .arg(saveUrl.prettyURL()), i18n("Save to file"), i18n("&Replace"))
+        != KMessageBox::Continue)
+      return;
+  }
+  KIO::Job *job = KIO::file_copy(mUrlCurrent, saveUrl, -1, true);
+  connect(job, SIGNAL(result(KIO::Job*)), SLOT(slotUrlSaveResult(KIO::Job*)));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUrlSaveResult(KIO::Job *job)
+{
+  if (job->error()) job->showErrorDialog();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu * menu = new KPopupMenu;
@@ -1722,6 +1752,8 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
       // popup on a not-mailto URL
       menu->insertItem(i18n("Open URL..."), this,
 		       SLOT(slotUrlOpen()));
+      menu->insertItem(i18n("Save Link as..."), this,
+                       SLOT(slotUrlSave()));
       menu->insertItem(i18n("Copy to clipboard"), this,
 		       SLOT(slotUrlCopy()));
     }

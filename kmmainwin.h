@@ -31,6 +31,11 @@ class KToggleAction;
 class KActionMenu;
 class KSelectAction;
 
+namespace KIO
+{
+  class Job;
+}
+
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
@@ -217,6 +222,10 @@ protected slots:
 
   /** Open URL in mUrlCurrent using Kfm. */
   void slotUrlOpen();
+
+  /** Save the page to a file */
+  void slotUrlSave();
+  void slotUrlSaveResult(KIO::Job*);
 
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
