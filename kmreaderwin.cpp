@@ -3106,12 +3106,12 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 	      isSigned = block->isSigned();
 	      if( isSigned )
 	      {
+                  keyId = block->signatureKeyId();
 		  signer = block->signatureUserId();
 		  if( !signer.isEmpty() )
 		  {
 		      goodSignature = block->goodSignature();
 
-		      keyId = block->signatureKeyId();
 		      if( !keyId.isEmpty() )
 			keyTrust = pgp->keyTrust( keyId );
 		      else
