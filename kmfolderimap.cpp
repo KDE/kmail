@@ -238,7 +238,7 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  if (folder) kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
+  if (folder) kernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) {
     int idx = folder->find( aMsg );
     if ( idx != -1 )
@@ -254,9 +254,12 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
 {
   KMFolder *folder = msgList.first()->parent();
+  int undoId = -1;
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
-    kernel->undoStack()->pushAction( msg->getMsgSerNum(), folder, this );
+    if ( undoId == -1 )
+      undoId = kernel->undoStack()->newUndoAction( folder, this );
+    kernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
   }
   if (folder) folder->take(msgList);
   msgList.setAutoDelete(true);

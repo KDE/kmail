@@ -32,9 +32,10 @@ class KMMsgBase;
 class KMUndoInfo
 {
 public:
-   ulong serNum;
-   KMFolder *folder;
-   KMFolder *destFolder;
+  int               id;
+  QValueList<ulong> serNums;
+  KMFolder         *srcFolder;
+  KMFolder         *destFolder;
 };
 
 class KMUndoStack : public QObject
@@ -42,17 +43,22 @@ class KMUndoStack : public QObject
   Q_OBJECT
 
 public:
-   KMUndoStack(int size);
+  KMUndoStack(int size);
 
-   void clear();
-   int size() const { return mStack.count(); }
-   void pushAction(ulong serNum, KMFolder *folder, KMFolder* destFolder);
-   void msgDestroyed( KMMsgBase *msg);
-   void folderDestroyed( KMFolder *folder);
-   bool popAction(ulong &serNum, KMFolder *&folder, KMFolder *&destFolder);
+  void clear();
+  int  size() const { return mStack.count(); }
+  int  newUndoAction( KMFolder* srcFolder, KMFolder* destFolder );
+  void addMsgToAction( int undoId, ulong serNum );
+  void undo();
+
+  void pushSingleAction(ulong serNum, KMFolder *folder, KMFolder* destFolder);
+  void msgDestroyed( KMMsgBase *msg);
+  void folderDestroyed( KMFolder *folder);
 protected:
-   QPtrList<KMUndoInfo> mStack;
-   int mSize;
+  QPtrList<KMUndoInfo> mStack;
+  int mSize;
+  int mLastId;
+  KMUndoInfo *mCachedInfo;
 
 signals:
    void undoStackChanged();

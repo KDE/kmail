@@ -1081,7 +1081,7 @@ void KMCopyCommand::execute()
       if (srcFolder && !newMsg->isComplete())
       {
         // will be closed in reallyAddCopyOfMsg
-        mDestFolder->open(); 
+        mDestFolder->open();
 	newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
@@ -1148,6 +1148,7 @@ void KMMoveCommand::execute()
   int rc = 0;
   int index;
   QPtrList<KMMessage> list;
+  int undoId = -1;
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)
@@ -1168,8 +1169,9 @@ void KMMoveCommand::execute()
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
           if (undo)
           {
-              kernel->undoStack()->pushAction( mb->getMsgSerNum(), srcFolder,
-                                               mDestFolder );
+            if ( undoId == -1 )
+              undoId = kernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
+            kernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
         }
       }

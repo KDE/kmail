@@ -365,7 +365,7 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
   unGetMsg(index);
   if (undo)
   {
-    kernel->undoStack()->pushAction( serNum, folder, this );
+    kernel->undoStack()->pushSingleAction( serNum, folder, this );
   }
 }
 

@@ -1616,27 +1616,7 @@ bool KMHeaders::canUndo() const
 //-----------------------------------------------------------------------------
 void KMHeaders::undo()
 {
-  KMMessage *msg;
-  ulong serNum;
-  int idx = -1;
-  KMFolder *folder, *curFolder, *oldCurFolder;
-  if (kernel->undoStack()->popAction(serNum, folder, oldCurFolder))
-  {
-    kernel->msgDict()->getLocation(serNum, &curFolder, &idx);
-    if (idx == -1 || curFolder != oldCurFolder)
-      return;
-    curFolder->open();
-    msg = curFolder->getMsg( idx );
-    folder->moveMsg( msg );
-    if (folder->count() > 1)
-      folder->unGetMsg( folder->count() - 1 );
-    curFolder->close();
-  }
-  else
-  {
-    // Sorry.. stack is empty..
-    KMessageBox::sorry(this, i18n("There is nothing to undo!"));
-  }
+  kernel->undoStack()->undo();
 }
 
 //-----------------------------------------------------------------------------
