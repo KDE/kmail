@@ -39,6 +39,7 @@
 #include "kmsender.h"
 #include "kmtopwidget.h"
 #include "kmtransport.h"
+#include "kmfoldermgr.h"
 
 
 // other kdenetwork headers:
@@ -2242,7 +2243,34 @@ void AppearancePage::LayoutTab::apply() {
 
   reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
   geometry.writeEntry( "longFolderList", mLongFolderCheck->isChecked() );
-  geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
+
+  if (geometry.readBoolEntry( "nestedMessages", false )
+    != mNestedMessagesCheck->isChecked())
+  {
+    if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
+      "threading setting will override all folder specific values."),
+      QString::null, QString::null, "threadOverride")
+      == KMessageBox::Continue)
+    {
+      geometry.writeEntry( "nestedMessages",
+        mNestedMessagesCheck->isChecked() );
+      QStringList names;
+      QValueList<QGuardedPtr<KMFolder> > folders;
+      kernel->folderMgr()->createFolderList(&names, &folders);
+      kernel->imapFolderMgr()->createFolderList(&names, &folders);
+      for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
+        it != folders.end(); ++it)
+      {
+        if (*it)
+        {
+          KConfigGroupSaver saver(kapp->config(),
+            "Folder-" + (*it)->idString());
+          kapp->config()->writeEntry("threadMessagesOverride", false);
+        }
+      }
+    }
+  }
+
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
@@ -3361,7 +3389,29 @@ void SecurityPage::GeneralTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup reader( kapp->config(), "Reader" );
 
-  reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
+  if (reader.readBoolEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
+  {
+    if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
+      "HTML setting will override all folder specific values."), QString::null,
+      QString::null, "htmlMailOverride") == KMessageBox::Continue)
+    {
+      reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
+      QStringList names;
+      QValueList<QGuardedPtr<KMFolder> > folders;
+      kernel->folderMgr()->createFolderList(&names, &folders);
+      kernel->imapFolderMgr()->createFolderList(&names, &folders);
+      for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
+        it != folders.end(); ++it)
+      {
+        if (*it)
+        {
+          KConfigGroupSaver saver(kapp->config(),
+            "Folder-" + (*it)->idString());
+          kapp->config()->writeEntry("htmlMailOverride", false);
+        }
+      }
+    }
+  }
   reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
   general.writeEntry( "send-receipts", mSendReceiptCheck->isChecked() );
 }

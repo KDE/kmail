@@ -617,14 +617,15 @@ void KMHeaders::reset(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::refreshNestedState(void)
 {
-  bool oldState = mNested;
+  bool oldState = mNested != mNestedOverride;
   int oldNestPolicy = nestingPolicy;
   KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
 
   nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
-  if ((nestingPolicy!=oldNestPolicy)||(oldState != mNested))
+  if ((nestingPolicy != oldNestPolicy) ||
+    (oldState != (mNested != mNestedOverride)))
   {
     setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
     reset();
@@ -766,7 +767,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       // Not very nice, but if we go from nested to non-nested
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
-      if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
+      if (mNested != mNestedOverride) {
 	clear();
 	mItems.resize( 0 );
       }
@@ -785,7 +786,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       END_TIMER(kmfolder_open);
       SHOW_TIMER(kmfolder_open);
 
-      if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
+      if (mNested != mNestedOverride) {
 	clear();
 	mItems.resize( 0 );
       }
@@ -908,7 +909,7 @@ void KMHeaders::msgAdded(int id)
   KMMsgBase* mb = mFolder->getMsgBase( id );
   assert(mb != NULL); // otherwise using count() above is wrong
 
-  if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
+  if (mNested != mNestedOverride) {
     QString msgId = mb->msgIdMD5();
     if (msgId.isNull())
       msgId = "";
@@ -2617,7 +2618,7 @@ bool KMHeaders::writeSortOrder()
     fprintf(sortStream, KMAIL_SORT_HEADER, KMAIL_SORT_VERSION);
     //magic header information
     int column = mSortCol, ascending=!mSortDescending;
-    int threaded = (mNested && !mNestedOverride) || (!mNested && mNestedOverride);
+    int threaded = (mNested != mNestedOverride);
     int discovered_count = 0, sorted_count=0, appended=0;
     fwrite(&column, sizeof(column), 1, sortStream);
     fwrite(&ascending, sizeof(ascending), 1, sortStream);
@@ -2865,8 +2866,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		fclose(sortStream);
 		sortStream = NULL;
 	    }
-	    else if(!(threaded && ((mNested && !mNestedOverride) || (!mNested && mNestedOverride))) ||
-	       (threaded && !((mNested && !mNestedOverride) || (!mNested && mNestedOverride))) ||
+	    else if ((threaded != (mNested != mNestedOverride)) ||
 	       sorted_count <= mFolder->count())  {
 
 		//Hackyness to work around qlistview problems
@@ -2973,7 +2973,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mSortInfo.dirty = TRUE;
 	mSortInfo.column = column = mSortCol;
 	mSortInfo.ascending = ascending = !mSortDescending;
-	threaded = ((mNested && !mNestedOverride) || (!mNested && mNestedOverride));
+	threaded = (mNested != mNestedOverride);
 	sorted_count = discovered_count = appended = 0;
 	KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
     }
