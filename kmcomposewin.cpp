@@ -58,7 +58,8 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 
 }
 
-
+KMComposeView::~KMComposeView()
+{}
 // ******************  Public slots *************
 
 void KMComposeView::printIt()
@@ -444,6 +445,7 @@ void KMComposeView::find()
 
 void KMComposeView::detachFile(int index, int col)
 {
+	col = col;
 	printf("Detaching file at index : %i\n",index);
 	attachmentList.remove(index);
 	attWidget->removeItem(index);

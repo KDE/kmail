@@ -1,5 +1,4 @@
 // KMComposeWin header file
-
 #ifndef __KMComposeWin
 #define __KMComposeWin
 #include <iostream.h>
@@ -43,6 +42,7 @@ class KMComposeView : public QWidget
 	Q_OBJECT
 public:
 	KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0, Message *message=0, int action =0);
+	~KMComposeView();
 	KEdit *editor;
 private:
 	QLineEdit *fromLEdit;
@@ -112,7 +112,6 @@ protected:
 	virtual void closeEvent(QCloseEvent *);
 friend class KMComposeView;
 };
-
 #endif
 
 
