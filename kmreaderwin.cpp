@@ -1928,17 +1928,18 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mDelayedMarkTimer.stop();
 
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
-  
+
   // assume if a serial number exists it can be used to find the assoc KMMessage
   if (!mLastSerNum)
     mMessage = aMsg;
   else
     mMessage = 0;
   if (message() != aMsg) {
-    mMessage = aMsg;  
+    mMessage = aMsg;
     mLastSerNum = 0; // serial number was invalid
+    Q_ASSERT(0);
   }
-      
+
   mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
   if (aMsg)
   {
