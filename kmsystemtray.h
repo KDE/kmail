@@ -26,6 +26,8 @@
 #include <qpixmap.h>
 #include <qimage.h>
 
+#include <time.h>
+
 class KMFolder;
 class KMMainWidget;
 class QMouseEvent;
@@ -39,7 +41,7 @@ class QPoint;
 class KMSystemTray : public KSystemTray
 {
   Q_OBJECT
-  public:
+public:
   /** construtor */
   KMSystemTray(QWidget* parent=0, const char *name=0);
   /** destructor */
@@ -56,6 +58,7 @@ private slots:
   void updateNewMessageNotification(KMFolder * folder);
   void foldersChanged();
   void selectedAccount(int);
+  void updateNewMessages();
 
 protected:
   void mousePressEvent(QMouseEvent *);
@@ -84,6 +87,9 @@ private:
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
+  QMap<KMFolder*, bool> mPendingUpdates;
+  QTimer *mUpdateTimer;
+  time_t mLastUpdate;
 };
 
 #endif

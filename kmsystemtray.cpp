@@ -16,15 +16,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 #include "kmsystemtray.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
+#include "kmacctmgr.h"
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -66,6 +65,10 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
   setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
 
+  mLastUpdate = time( 0 );
+  mUpdateTimer = new QTimer( this, "systraytimer" );
+  connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
+
   mDefaultIcon = loadIcon( "kmail" );
   mLightIconImage = loadIcon( "kmaillight" ).convertToImage();
 
@@ -91,6 +94,9 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
   connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+
+  connect( kmkernel->acctMgr(), SIGNAL( checkedMail(bool, bool) ),
+           SLOT( updateNewMessages() ) );
 }
 
 void KMSystemTray::buildPopupMenu()
@@ -448,11 +454,28 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
     return;
   }
 
+  mPendingUpdates[ fldr ] = true;
+  if ( time( 0 ) - mLastUpdate > 2 ) {
+    mUpdateTimer->stop();
+    updateNewMessages();
+  }
+  else {
+    mUpdateTimer->start(150, true);
+  }
+}
+
+void KMSystemTray::updateNewMessages()
+{
+  for ( QMap<KMFolder*, bool>::Iterator it = mPendingUpdates.begin();
+        it != mPendingUpdates.end(); ++it)
+  {
+  KMFolder *fldr = it.key();
+
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
 
   QMap<QGuardedPtr<KMFolder>, int>::Iterator it =
-  mFoldersWithUnread.find(fldr);
+      mFoldersWithUnread.find(fldr);
   bool unmapped = (it == mFoldersWithUnread.end());
 
   /** If the folder is not mapped yet, increment count by numUnread
@@ -481,7 +504,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   if(unmapped)
   {
     /** Spurious notification, ignore */
-    if(unread == 0) return;
+    if(unread == 0) continue;
 
     /** Make sure the icon will be displayed */
     if(mMode == OnNewMail)
@@ -513,6 +536,8 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
     }
   }
 
+  }
+  mPendingUpdates.clear();
   updateCount();
 
   /** Update tooltip to reflect count of unread messages */
@@ -520,6 +545,8 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   QToolTip::add(this, i18n("There is 1 unread message.",
                            "There are %n unread messages.",
                            mCount));
+
+  mLastUpdate = time( 0 );
 }
 
 /**
