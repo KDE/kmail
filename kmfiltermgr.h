@@ -9,13 +9,13 @@
 #include "kmfolder.h"
 #include "kmfilter.h"
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qguardedptr.h>
 
 class KMFilterDlg;
 
-#define KMFilterMgrInherited QList<KMFilter>
-class KMFilterMgr: public QList<KMFilter>
+#define KMFilterMgrInherited QPtrList<KMFilter>
+class KMFilterMgr: public QPtrList<KMFilter>
 {
 public:
   KMFilterMgr();
@@ -83,7 +83,7 @@ public:
 
 private:
   QGuardedPtr<KMFilterDlg> mEditDialog;
-  QList<KMFolder> mOpenFolders;
+  QPtrList<KMFolder> mOpenFolders;
 };
 
 #endif /*kmfiltermgr_h*/

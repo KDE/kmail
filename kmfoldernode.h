@@ -8,7 +8,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <qlist.h>
+#include <qptrlist.h>
 
 class KMFolderDir;
 
@@ -67,7 +67,7 @@ protected:
   bool mDir;
 };
 
-typedef QList<KMFolderNode> KMFolderNodeList;
+typedef QPtrList<KMFolderNode> KMFolderNodeList;
 
 
 #endif /*kmfoldernode_h*/

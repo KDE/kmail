@@ -253,7 +253,7 @@ const QString KMSearchRule::asString() const
 //==================================================
 
 KMSearchPattern::KMSearchPattern( KConfig *config )
-  : QList<KMSearchRule>()
+  : QPtrList<KMSearchRule>()
 {
   setAutoDelete(TRUE);
   if (config)
@@ -265,7 +265,7 @@ KMSearchPattern::KMSearchPattern( KConfig *config )
 
 bool KMSearchPattern::matches( const KMMessage *msg ) const
 {
-  QListIterator<KMSearchRule> it(*this);
+  QPtrListIterator<KMSearchRule> it(*this);
   switch (mOperator ) {
     case OpAnd: // all rules must match
       for ( it.toFirst() ; it.current() ; ++it )
@@ -284,7 +284,7 @@ bool KMSearchPattern::matches( const KMMessage *msg ) const
 
 void KMSearchPattern::purify()
 {
-  QListIterator<KMSearchRule> it(*this);
+  QPtrListIterator<KMSearchRule> it(*this);
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() ) {
@@ -374,7 +374,7 @@ void KMSearchPattern::writeConfig( KConfig *config ) const
   config->writeEntry("name", mName );
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
-  QListIterator<KMSearchRule> it(*this);
+  QPtrListIterator<KMSearchRule> it(*this);
   for ( i=0, it.toFirst() ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it ) {
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
@@ -399,7 +399,7 @@ const QString KMSearchPattern::asString() const
   result += ( mOperator == OpOr ) ? "any" : "all";
   result += " of the following:\n";
 
-  QListIterator<KMSearchRule> it( *this );
+  QPtrListIterator<KMSearchRule> it( *this );
   for ( it.toFirst() ; it.current() ; ++it )
     result += (*it)->asString() + "\n";
 
@@ -411,7 +411,7 @@ KMSearchPattern& KMSearchPattern::operator=( const KMSearchPattern & aPattern )
   setOp( aPattern.op() );
   setName( aPattern.name() );
   
-  QListIterator<KMSearchRule> it( aPattern );
+  QPtrListIterator<KMSearchRule> it( aPattern );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMSearchRule *r = new KMSearchRule;
     r->init( (*it) ); // deep copy

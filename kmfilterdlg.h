@@ -15,7 +15,7 @@
 #include <qgroupbox.h>
 #include <qhbox.h>
 #include <qstring.h>
-#include <qlist.h>
+#include <qptrlist.h>
 
 class KMSearchPatternEdit;
 class QListBox;
@@ -114,7 +114,7 @@ protected slots:
 
 protected:
   /** The deep copy of the filter list. */
-  QList<KMFilter> mFilterList;
+  QPtrList<KMFilter> mFilterList;
   /** The listbox displaying the filter list. */
   QListBox *mListBox;
   /** The various action buttons. */
@@ -171,7 +171,7 @@ private:
       subclass. The only reason that these 'slave' actions exist is
       that they are 'forced' to create parameter widgets for the
       widget stack and to clear them on @ref setAction. */
-  QList<KMFilterAction> mActionList;
+  QPtrList<KMFilterAction> mActionList;
   /** The combo box that contains the labels of all @ref KMFilterActions.
       It's @p activated(int) signal is internally
       connected to the @p raiseWidget(int) slot of @p mWidgetStack. */
@@ -189,7 +189,7 @@ public:
 
   virtual ~KMFilterActionWidgetLister();
 
-  void setActionList( QList<KMFilterAction> * aList );
+  void setActionList( QPtrList<KMFilterAction> * aList );
 
 public slots:
   void reset();
@@ -200,7 +200,7 @@ protected:
 
 private:
   void regenerateActionListFromWidgets();
-  QList<KMFilterAction> *mActionList;
+  QPtrList<KMFilterAction> *mActionList;
 
 };
 

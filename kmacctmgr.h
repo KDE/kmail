@@ -6,7 +6,7 @@
 #define kmacctmgr_h
 
 #include <qobject.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qstring.h>
 #include <qdir.h>
 #include <qfile.h>
@@ -72,8 +72,8 @@ signals:
 
 private:
   KMAcctList   mAcctList;
-  QListIterator< KMAccount > *mAccountIt;
-  QList< KMAccount > *mAcctChecking;
+  QPtrListIterator< KMAccount > *mAccountIt;
+  QPtrList< KMAccount > *mAcctChecking;
   KMAccount *lastAccountChecked;
   bool checking;
   bool newMailArrived;

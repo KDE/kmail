@@ -137,7 +137,7 @@ bool KMFolderDir::reload(void)
   QFileInfo* fileInfo;
   QFileInfoList* fiList;
   QStringList diList;
-  QList<KMFolder> folderList;
+  QPtrList<KMFolder> folderList;
   QString fname;
   QString fldPath;
 

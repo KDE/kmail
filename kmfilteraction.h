@@ -10,7 +10,7 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdict.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
 
@@ -444,7 +444,7 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QPtrList<KTempFile> & aTempFileList  ) const;
 
 };
 
@@ -490,16 +490,16 @@ public:
 
   /** Overloaded member function, provided for convenience. Thin
       wrapper around @ref QDict::insert and @ref
-      QList::insert. Inserts the resulting @ref KMFilterActionDesc
+      QPtrList::insert. Inserts the resulting @ref KMFilterActionDesc
       thrice: First with the name, then with the label as key into the
-      @ref @QDict, then into the @ref QList. For that, it creates an
+      @ref @QDict, then into the @ref QPtrList. For that, it creates an
       instance of the action internally and deletes it again after
       querying it for name and label. */
   void insert(KMFilterActionNewFunc aNewFunc);
 
   /** Provides read-only access to a list of all known filter
       actions. */
-  const QList<KMFilterActionDesc>& list() const { return mList; }
+  const QPtrList<KMFilterActionDesc>& list() const { return mList; }
 
 protected:
   /** Populate the dictionary with all known @ref KMFilterAction
@@ -507,7 +507,7 @@ protected:
   virtual void init(void);
 
 private:
-  QList<KMFilterActionDesc> mList;
+  QPtrList<KMFilterActionDesc> mList;
 };
 
 #endif /*kmfilteraction_h*/

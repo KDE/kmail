@@ -2,7 +2,6 @@
 #define __KMFOLDERDIA
 
 #include <kdialogbase.h>
-#include <qlist.h>
 
 class KMAcctFolder;
 class QCheckBox;

@@ -5,7 +5,7 @@
 #ifndef _kmsearchpattern_h_
 #define _kmsearchpattern_h_
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qstring.h>
 
 class KMMessage;
@@ -133,19 +133,19 @@ protected:
     constructor, mainly used by @ref KMFilter to initialize from a
     preset KConfig-Group.
 
-    From a class hierarchy point of view, it is a @ref QList of @ref
+    From a class hierarchy point of view, it is a @ref QPtrList of @ref
     KMSearchRule's that adds the boolean operators (see @ref Operator)
     'and' and 'or' that connect the rules logically, and has a name
     under which it could be stored in the config file.
 
-    As a @ref QList with autoDelete enabled, it assumes that it is the
+    As a @ref QPtrList with autoDelete enabled, it assumes that it is the
     central repository for the rules it contains. So if you want to
     reuse a rule in another pattern, make a deep copy of that rule.
 
     @short An abstraction of a search over messages.
     @author Marc Mutz <Marc@Mutz.com>
 */
-class KMSearchPattern : public QList<KMSearchRule>
+class KMSearchPattern : public QPtrList<KMSearchRule>
 {
 
 public:
@@ -161,7 +161,7 @@ public:
       sufficient initialization. Unmodified, such a pattern will fail
       to match any @ref KMMessage. You can query for such an empty
       rule by using @ref isEmpty, which is inherited from @ref
-      QList. */
+      QPtrList. */
   KMSearchPattern( KConfig* config=0 );
 
   /** Destructor. Deletes all stored rules! */

@@ -28,8 +28,8 @@
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
-  mAccountIt = new QListIterator<KMAccount>(mAcctList);
-  mAcctChecking = new QList<KMAccount>();
+  mAccountIt = new QPtrListIterator<KMAccount>(mAcctList);
+  mAcctChecking = new QPtrList<KMAccount>();
   checking = false;
   lastAccountChecked = 0;
 }

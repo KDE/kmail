@@ -425,7 +425,7 @@ int KMFolder::reduceSize( int aSize )
 {
   kdDebug(5006) << "Reducing folder to size of " << aSize << " Mo" << endl;
   QSortedList<KMMsgBase> * slice=0L;
-  QList< QSortedList<KMMsgBase> > sliceArr;
+  QPtrList< QSortedList<KMMsgBase> > sliceArr;
   KMMsgBase* mb;
   ulong folderSize, msgSize, sliceSize, firstSliceSize, lastSliceSize, size;
   int sliceIndex;
@@ -864,7 +864,7 @@ int KMFolder::countUnreadRecursive()
   if (!dir)
     return count;
 
-  QListIterator<KMFolderNode> it(*dir);
+  QPtrListIterator<KMFolderNode> it(*dir);
   for ( ; it.current(); ++it )
     if (!it.current()->isDir()) {
       folder = static_cast<KMFolder*>(it.current());

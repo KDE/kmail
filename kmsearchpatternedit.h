@@ -10,7 +10,7 @@
 
 #include <qhbox.h>
 #include <qgroupbox.h>
-#include <qlist.h>
+#include <qptrlist.h>
 
 class QPushButton;
 class QVBoxLayout;
@@ -96,7 +96,7 @@ public:
 
   virtual ~KMSearchRuleWidgetLister();
 
-  void setRuleList( QList<KMSearchRule> * aList );
+  void setRuleList( QPtrList<KMSearchRule> * aList );
 
 public slots:
   void reset();
@@ -107,7 +107,7 @@ protected:
 
 private:
   void regenerateRuleListFromWidgets();
-  QList<KMSearchRule> *mRuleList;
+  QPtrList<KMSearchRule> *mRuleList;
 };
 
 

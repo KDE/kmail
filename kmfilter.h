@@ -10,7 +10,7 @@
 
 #include "kmsearchpattern.h"
 
-#include <qlist.h>
+#include <qptrlist.h>
 
 class QString;
 class KConfig;
@@ -88,7 +88,7 @@ public:
   /** Provides a reference to the internal action list. If your used
       the @p setAction() and @p action() functions before, please
       convert to using myFilter->actions()->at() and friends now. */
-  QList<KMFilterAction>* actions() { return &mActions; }
+  QPtrList<KMFilterAction>* actions() { return &mActions; }
 
   /** Provides a reference to the internal pattern. If you used the
       @p matches() function before, please convert to using
@@ -141,7 +141,7 @@ private:
   bool bApplyOnOutbound;
   bool bStopProcessingHere;
   KMSearchPattern mPattern;
-  QList<KMFilterAction> mActions;
+  QPtrList<KMFilterAction> mActions;
 };
 
 #endif /*kmfilter_h*/

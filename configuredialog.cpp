@@ -2498,7 +2498,7 @@ void ConfigureDialog::slotDoApply( bool everything )
   //
   KMMessage::readConfig();
   kernel->kbp()->busy(); // this can take some time when a large folder is open
-  QListIterator<KMainWindow> it(*KMainWindow::memberList);
+  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
   for( it.toFirst(); it.current(); ++it )
   {
     if (it.current()->inherits("KMTopLevelWidget"))

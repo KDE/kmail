@@ -324,7 +324,7 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithString::clearParamWidget( paramWidget );
 }
 
-QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile> & aTempFileList ) const
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QPtrList<KTempFile> & aTempFileList ) const
 {
   QString result = mParameter;
   QValueList<int> argList;
@@ -1137,7 +1137,7 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  QList<KTempFile> atmList;
+  QPtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
 
   Q_ASSERT( aMsg );
@@ -1194,7 +1194,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
   outFile->setAutoDelete(TRUE);
   outFile->close();
 
-  QList<KTempFile> atmList;
+  QPtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
   atmList.append( inFile );
   atmList.append( outFile );

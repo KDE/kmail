@@ -1796,7 +1796,7 @@ int KMMessage::numBodyParts(void) const
 {
   int count = 0;
   DwBodyPart* part = mMsg->Body().FirstBodyPart();
-  QList< DwBodyPart > parts;
+  QPtrList< DwBodyPart > parts;
   QString mp = "multipart";
 
   while (part)
@@ -1830,7 +1830,7 @@ int KMMessage::numBodyParts(void) const
 void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 {
   DwBodyPart *part, *curpart;
-  QList< DwBodyPart > parts;
+  QPtrList< DwBodyPart > parts;
   QString mp = "multipart";
   DwHeaders* headers;
   int curIdx = 0;

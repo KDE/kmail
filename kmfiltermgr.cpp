@@ -63,7 +63,7 @@ void KMFilterMgr::writeConfig(bool withSync)
   QString grpName;
   int i = 0;
 
-  QListIterator<KMFilter> it(*this);
+  QPtrListIterator<KMFilter> it(*this);
   it.toFirst();
   while ( it.current() ) {
     if ( !(*it)->isEmpty() ) {
@@ -94,7 +94,7 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
   int status = -1;
   KMFilter::ReturnCode result;
 
-  QListIterator<KMFilter> it(*this);
+  QPtrListIterator<KMFilter> it(*this);
   for (it.toFirst() ; !stopIt && it.current() ; ++it)
   {
     if ( aSet&All
@@ -129,7 +129,7 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::cleanup(void)
 {
-  QListIterator<KMFolder> it(mOpenFolders);
+  QPtrListIterator<KMFolder> it(mOpenFolders);
   for ( it.toFirst() ; it.current() ; ++it )
     (*it)->close();
   mOpenFolders.clear();
@@ -178,7 +178,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
   bool rem = FALSE;
 
-  QListIterator<KMFilter> it(*this);
+  QPtrListIterator<KMFilter> it(*this);
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->folderRemoved(aFolder, aNewFolder) ) rem=TRUE;
 
@@ -189,7 +189,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::dump(void)
 {
-  QListIterator<KMFilter> it(*this);
+  QPtrListIterator<KMFilter> it(*this);
   for ( it.toFirst() ; it.current() ; ++it )
   {
     kdDebug(5006) << (*it)->asString() << endl;

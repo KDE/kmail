@@ -27,7 +27,6 @@
 #include <kdebug.h>
 
 #include "kmglobal.h"
-#include "kmdragdata.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
 #include "kmfolderimap.h"

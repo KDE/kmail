@@ -196,7 +196,7 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 {
 }
 
-void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
+void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 {
   assert ( aList );
 
@@ -227,8 +227,8 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
   setNumberOfShownWidgetsTo( QMAX((int)mRuleList->count(),mMinWidgets) );
 
   // load the actions into the widgets
-  QListIterator<KMSearchRule> rIt( *mRuleList );
-  QListIterator<QWidget> wIt( mWidgetList );
+  QPtrListIterator<KMSearchRule> rIt( *mRuleList );
+  QPtrListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
     ((KMSearchRuleWidget*)(*wIt))->setRule( (*rIt) );
@@ -266,7 +266,7 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 
   mRuleList->clear();
 
-  QListIterator<QWidget> it( mWidgetList );
+  QPtrListIterator<QWidget> it( mWidgetList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMSearchRule *r = ((KMSearchRuleWidget*)(*it))->rule();
     if ( r )

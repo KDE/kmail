@@ -34,7 +34,6 @@
 #include "kmheaders.h"
 #include "kmmessage.h"
 #include "kbusyptr.h"
-#include "kmdragdata.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
@@ -2732,7 +2731,7 @@ class KMSortCacheItem {
     int mId, mSortOffset;
     QString mKey;
 
-    QList<KMSortCacheItem> mSortedChildren;
+    QPtrList<KMSortCacheItem> mSortedChildren;
     int mUnsortedCount, mUnsortedSize;
     KMSortCacheItem **mUnsortedChildren;
 
@@ -2747,7 +2746,7 @@ public:
     inline KMSortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
     inline bool hasChildren() const
 	{ return mSortedChildren.count() || mUnsortedCount; }
-    inline const QList<KMSortCacheItem> *sortedChildren() const
+    inline const QPtrList<KMSortCacheItem> *sortedChildren() const
 	{ return &mSortedChildren; }
     inline KMSortCacheItem **unsortedChildren(int &count) const
 	{ count = mUnsortedCount; return mUnsortedChildren; }
@@ -2822,7 +2821,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     root.setId(-666); //mark of the root!
 
     //threaded cases
-    QList<KMSortCacheItem> unparented;
+    QPtrList<KMSortCacheItem> unparented;
     mIdTree.clear();
     if (mIdTree.size() < 2*(unsigned)mFolder->count())
 	mIdTree.resize( 2*mFolder->count() );
@@ -3008,7 +3007,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    if(md5.isEmpty()) continue;
 	    msgs.insert(md5, sortCache[x]);
 	}
-	for(QListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
+	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
 	    i = msgs[mFolder->getMsgBase((*it)->id())->replyToIdMD5()];
 	    if(i) {
 		i->addUnsortedChild((*it));
@@ -3032,14 +3031,14 @@ bool KMHeaders::readSortOrder(bool set_selection)
     s.enqueue(&root);
     do {
 	i = s.dequeue();
-	const QList<KMSortCacheItem> *sorted = i->sortedChildren();
+	const QPtrList<KMSortCacheItem> *sorted = i->sortedChildren();
 	int unsorted_count, unsorted_off=0;
 	KMSortCacheItem **unsorted = i->unsortedChildren(unsorted_count);
 	if(unsorted)
 	    qsort(unsorted, unsorted_count, sizeof(KMSortCacheItem *), //sort
 		  compare_KMSortCacheItem);
 	//merge two sorted lists of siblings
-	for(QListIterator<KMSortCacheItem> it(*sorted);
+	for(QPtrListIterator<KMSortCacheItem> it(*sorted);
 	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {	
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||

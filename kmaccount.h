@@ -6,7 +6,7 @@
 #define kmaccount_h
 
 #include <qstring.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qtimer.h>
 #include <qsignal.h>
@@ -165,7 +165,7 @@ private:
 };
 
 
-class KMAcctList: public QList<KMAccount>
+class KMAcctList: public QPtrList<KMAccount>
 {
 public:
   virtual ~KMAcctList() {}

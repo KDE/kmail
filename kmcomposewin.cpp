@@ -64,7 +64,7 @@
 #include <qtabdialog.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qregexp.h>
@@ -1824,7 +1824,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 int KMComposeWin::currentAttachmentNum()
 {
   int idx = -1;
-  QListIterator<QListViewItem> it(mAtmItemList);
+  QPtrListIterator<QListViewItem> it(mAtmItemList);
   for ( int i = 0; it.current(); ++it, ++i )
     if (*it == mAtmListBox->currentItem()) {
       idx = i;

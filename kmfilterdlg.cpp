@@ -365,7 +365,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   fm->beginUpdate();
   fm->clear();
 
-  QListIterator<KMFilter> it( mFilterList );
+  QPtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMFilter *f = new KMFilter( (*it) ); // deep copy
     f->purify();
@@ -391,7 +391,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 void KMFilterListBox::slotSelected( int aIdx )
 {
   mIdxSelItem = aIdx;
-  // QList::at(i) will return NULL if i is out of range.
+  // QPtrList::at(i) will return NULL if i is out of range.
   KMFilter *f = mFilterList.at(aIdx);
   if ( f )
     emit filterSelected( f );
@@ -532,7 +532,7 @@ void KMFilterListBox::loadFilterList()
   mFilterList.clear();
   mListBox->clear();
 
-  QListIterator<KMFilter> it( *kernel->filterMgr() );
+  QPtrListIterator<KMFilter> it( *kernel->filterMgr() );
   for ( it.toFirst() ; it.current() ; ++it ) {
     mFilterList.append( new KMFilter( *it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
@@ -612,7 +612,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   setSpacing( 4 );
   
-  QListIterator<KMFilterActionDesc> it ( kernel->filterActionDict()->list() );
+  QPtrListIterator<KMFilterActionDesc> it ( kernel->filterActionDict()->list() );
   for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
     //create an instance:
     KMFilterAction *a = (*it)->create();
@@ -707,7 +707,7 @@ KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 {
 }
 
-void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
+void KMFilterActionWidgetLister::setActionList( QPtrList<KMFilterAction> *aList )
 {
   assert ( aList );
 
@@ -736,8 +736,8 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
   setNumberOfShownWidgetsTo( mActionList->count() );
 
   // load the actions into the widgets
-  QListIterator<KMFilterAction> aIt( *mActionList );
-  QListIterator<QWidget> wIt( mWidgetList );
+  QPtrListIterator<KMFilterAction> aIt( *mActionList );
+  QPtrListIterator<QWidget> wIt( mWidgetList );
   for ( aIt.toFirst(), wIt.toFirst() ;
 	aIt.current() && wIt.current() ; ++aIt, ++wIt )
     ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
@@ -770,7 +770,7 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 
   mActionList->clear();
 
-  QListIterator<QWidget> it( mWidgetList );
+  QPtrListIterator<QWidget> it( mWidgetList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMFilterAction *a = ((KMFilterActionWidget*)(*it))->action();
     if ( a )

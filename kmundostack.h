@@ -21,7 +21,7 @@
 #ifndef _KMUNDOSTACK_H_
 #define _KMUNDOSTACK_H_
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qstring.h>
 
 class KMFolder;
@@ -48,7 +48,7 @@ public:
    void folderDestroyed( KMFolder *folder);
    bool popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder);
 protected:
-   QList<KMUndoInfo> mStack;
+   QPtrList<KMUndoInfo> mStack;
    int mSize;
 };
 

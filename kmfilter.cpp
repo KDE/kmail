@@ -47,7 +47,7 @@ KMFilter::KMFilter( KMFilter * aFilter )
     bApplyOnOutbound = aFilter->applyOnOutbound();
     bStopProcessingHere = aFilter->stopProcessingHere();
     
-    QListIterator<KMFilterAction> it( *aFilter->actions() );
+    QPtrListIterator<KMFilterAction> it( *aFilter->actions() );
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
       if ( desc ) {
@@ -70,7 +70,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
-  QListIterator<KMFilterAction> it( mActions );
+  QPtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
 
     kdDebug(5006) << "####### KMFilter::process: going to apply action "
@@ -108,7 +108,7 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 {
   bool rem = FALSE;
 
-  QListIterator<KMFilterAction> it( mActions );
+  QPtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->folderRemoved( aFolder, aNewFolder ) )
       rem = TRUE;
@@ -192,7 +192,7 @@ void KMFilter::writeConfig(KConfig* config) const
   QString key;
   int i;
 
-  QListIterator<KMFilterAction> it( mActions );
+  QPtrListIterator<KMFilterAction> it( mActions );
   for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
     config->writeEntry( key.sprintf("action-name-%d", i),
 			(*it)->name() );
@@ -206,7 +206,7 @@ void KMFilter::purify()
 {
   mPattern.purify();
 
-  QListIterator<KMFilterAction> it( mActions );
+  QPtrListIterator<KMFilterAction> it( mActions );
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() )
@@ -222,7 +222,7 @@ const QString KMFilter::asString() const
 
   result += mPattern.asString();
 
-  QListIterator<KMFilterAction> it( mActions );
+  QPtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it ) {
     result += "    action: ";
     result += (*it)->label();
