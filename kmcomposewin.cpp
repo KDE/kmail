@@ -525,18 +525,19 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotAppendSignature()));
   menu->insertItem(i18n("&Insert File"), this,
 		   SLOT(slotInsertFile()));
+
   menu->insertItem(i18n("&Attach..."), this, SLOT(slotAttachFile()));
   menu->insertSeparator();
-  int id= menu->insertItem(i18n("Insert &Public Key"), this,
+  int id= menu->insertItem(i18n("Attach &Public Key"), this,
 		    SLOT(slotInsertPublicKey()));
-  int id1=menu->insertItem(i18n("Insert My &Public Key"), this,
+  int id1=menu->insertItem(i18n("Attach My &Public Key"), this,
 		    SLOT(slotInsertMyPublicKey()));
 
   if(!Kpgp::getKpgp()->havePGP())
-   {
-   menu->setItemEnabled(id, false);
-   menu->setItemEnabled(id1, false);
-   }
+  {
+      menu->setItemEnabled(id, false);
+      menu->setItemEnabled(id1, false);
+  }
 
   menu->insertSeparator();
   menu->insertItem(i18n("&Remove"), this, SLOT(slotAttachRemove()));
@@ -1227,20 +1228,39 @@ void KMComposeWin::slotInsertFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
 {
-  QString str;
-  int col, line;
-  
-  str=Kpgp::getKpgp()->getAsciiPublicKey(mMsg->from());
+  QString str, name;
+  KMMessagePart* msgPart;
 
-  mEditor->getCursorPosition(&line, &col);
-  mEditor->insertAt(str, line, col);
-}  
+  // load the file
+  kbp->busy();
+  str=Kpgp::getKpgp()->getAsciiPublicKey(mMsg->from());
+  if (str.isNull())
+  {
+    kbp->idle();
+    return;
+  }
+
+  // create message part
+  msgPart = new KMMessagePart;
+  msgPart->setName(i18n("my pgp key"));
+  msgPart->setCteStr(mDefEncoding);
+  msgPart->setTypeStr("application");
+  msgPart->setSubtypeStr("pgp-keys");
+  msgPart->setBodyEncoded(str);
+  msgPart->setContentDisposition("attachment; filename=public_key.asc");
+
+  // add the new attachment to the list
+  addAttach(msgPart);
+  rethinkFields(); //work around initial-size bug in Qt-1.32
+
+  kbp->idle();
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  QString str;
-  int col, line;
+  QString str, name;
+  KMMessagePart* msgPart;
   Kpgp *pgp;
 
   pgp=Kpgp::getKpgp();
@@ -1248,10 +1268,20 @@ void KMComposeWin::slotInsertPublicKey()
   str=pgp->getAsciiPublicKey(
          KpgpKey::getKeyName(this, pgp->keys()));
 
-  mEditor->getCursorPosition(&line, &col);
-  mEditor->insertAt(str, line, col);
-}
+  // create message part
+  msgPart = new KMMessagePart;
+  msgPart->setName(i18n("pgp key"));
+  msgPart->setCteStr(mDefEncoding);
+  msgPart->setTypeStr("application");
+  msgPart->setSubtypeStr("pgp-keys");
+  msgPart->setBodyEncoded(str);
+  msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
+  // add the new attachment to the list
+  addAttach(msgPart);
+  rethinkFields(); //work around initial-size bug in Qt-1.32
+
+}
 
 
 //-----------------------------------------------------------------------------

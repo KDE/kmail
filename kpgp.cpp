@@ -754,7 +754,7 @@ KpgpPass::getPhrase()
 
 // ------------------------------------------------------------------------
 
-KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
+KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
   : QDialog(parent, 0, TRUE)
 {
   KIconLoader* loader = kapp->getIconLoader();
@@ -795,7 +795,7 @@ KpgpKey::~KpgpKey()
 }
 
 QString 
-KpgpKey::getKeyName(QWidget *parent, QStrList *keys = NULL)
+KpgpKey::getKeyName(QWidget *parent, const QStrList *keys = NULL)
 {
   KpgpKey pgpkey(parent, i18n("Select key"), keys);
   pgpkey.exec();
