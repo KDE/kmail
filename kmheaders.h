@@ -9,6 +9,7 @@
 class KMFolder;
 class KMMessage;
 class KMMainWin;
+class QPalette;
 
 typedef QList<KMMessage> KMMessageList;
 
@@ -69,6 +70,8 @@ public:
 
   /** Read config options. */
   virtual void readConfig(void);
+
+  virtual void setPalette(const QPalette&);
 
 signals:
   virtual void selected(KMMessage *);

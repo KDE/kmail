@@ -1,3 +1,8 @@
+1999-01-25  Stefan Taferner  <taferner@kde.org>
+
+	* Bugfix: 'From' column did not update new text at
+	first.
+
 1999-01-23  Stefan Taferner  <taferner@kde.org> (KMail-1.0.14)
 
 	* New feature: layout can now be switched between

@@ -73,6 +73,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   connect(msgSender, SIGNAL(statusMsg(const char*)),
 	  SLOT(statusMsg(const char*)));
 
+  connect(kapp, SIGNAL(kdisplayPaletteChanged()), SLOT(slotPaletteChanged()));
+
   // must be the last line of the constructor:
   mStartupDone = TRUE;
 }
@@ -932,6 +934,14 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
 		     SLOT(slotDeleteMsg()), Key_D);
     menu->popup(aPoint, 0);
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotPaletteChanged()
+{
+  debug("palette changed");
+  if (mHeaders) mHeaders->setPalette(*kapp->palette());
 }
 
 

@@ -5,6 +5,8 @@
 #include "kmcomposewin.h"
 #include <kfiledialog.h>
 #include <drag.h>
+#include <qpalette.h>
+#include <qcolor.h>
 
 #include <kapp.h>
 #include <kiconloader.h>
@@ -207,9 +209,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     else setCurrentItem(0);
   }
 
-  setAutoUpdate(autoUpd);
-  if (autoUpd) repaint();
-
   if (mFolder)
   {
     if (stricmp(mFolder->whoField(), "To")==0)
@@ -221,6 +220,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
     mOwner->statusMsg(str);
   }
+
+  setAutoUpdate(autoUpd);
+  if (autoUpd) repaint();
 }
 
 
@@ -900,6 +902,20 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 void KMHeaders::sort(void)
 {
   mFolder->sort((KMMsgList::SortField)mSortCol, mSortDescending);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::setPalette(const QPalette& p)
+{
+  QColor c = kapp->windowColor;
+
+  debug("KMHeaders::setPalette(): %d %d %d", c.red(), c.green(), c.blue());
+
+  KMHeadersInherited::setPalette(*kapp->palette());
+  lbox.setPalette(p);
+  lbox.setBackgroundColor(c);
+  lbox.repaint(TRUE);
 }
 
 
