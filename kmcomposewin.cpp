@@ -833,7 +833,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
-  fixedFontAction = new KToggleAction( i18n("Fixed Font &Widths"), 0, this,
+  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
 
   //these are checkable!!!

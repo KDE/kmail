@@ -2904,8 +2904,8 @@ void KMMainWin::setupMenuBar()
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
-  toggleFixFontAction = new KToggleAction( i18n("Fixed Font &Widths"),
-			0, this, SLOT(slotToggleFixedFont()),
+  toggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
+			Key_X, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
 
   viewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
