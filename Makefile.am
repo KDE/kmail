@@ -1,6 +1,6 @@
 KDE_CXXFLAGS = $(USE_RTTI) -DQT_NO_COMPAT
 
-SUBDIRS = . about pics profiles icons_everaldo
+SUBDIRS = . about pics profiles
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
 LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la -lkabc
 
@@ -69,14 +69,15 @@ apps_DATA = KMail.desktop
 
 EXTRA_DIST = KMail.desktop
 
+KDE_ICON = AUTO
+
 rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc eventsrc
 
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl \
-		kmail-3.1-use-UOID-for-identities.pl \
-		kmail-3.1-update-new-mail-notification-settings.pl
+		kmail-3.1-use-UOID-for-identities.pl
 
 tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
