@@ -17,7 +17,6 @@
 #include "kmfiltermgr.h"
 
 #include "kmsender.h"
-#include "kmmessage.h"
 #include "kmidentity.h"
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"

@@ -36,13 +36,9 @@
 #include "kbusyptr.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
-#include "kmfolder.h"
-#include "kmfoldermgr.h"
-#include "kmheaders.h"
 #include "kmsender.h"
 #include "kmtopwidget.h"
 #include "kmtransport.h"
-#include "kmfoldercombobox.h"
 
 
 // other kdenetwork headers:
@@ -57,7 +53,6 @@
 #include <knuminput.h>
 #include <kfontdialog.h>
 #include <klineeditdlg.h>
-#include <klocale.h>
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
 #include <kurlrequester.h>
@@ -67,14 +62,11 @@
 
 // Qt headers:
 #include <qregexp.h>
-#include <qcheckbox.h>
 #include <qtabwidget.h>
-#include <qvbox.h>
 #include <qwhatsthis.h>
 #include <qwidgetstack.h>
 #include <qvgroupbox.h>
 #include <qvbuttongroup.h>
-#include <qlistbox.h>
 
 // other headers:
 

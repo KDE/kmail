@@ -2,16 +2,11 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
 
-#include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfilterdlg.h"
-#include "kmmessage.h"
 
 //todo
-#include <kdebug.h>
 
 
 //-----------------------------------------------------------------------------

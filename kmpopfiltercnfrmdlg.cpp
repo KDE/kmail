@@ -13,10 +13,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlist.h>
-#include <qstring.h>
-#include <qiconset.h>
-#include <qpixmap.h>
 #include <qheader.h>
 #include <qcheckbox.h>
 #include <qvgroupbox.h>

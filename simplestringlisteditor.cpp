@@ -17,12 +17,10 @@
 #include "simplestringlisteditor.h"
 
 #include <klineeditdlg.h>
-#include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
 

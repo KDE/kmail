@@ -5,7 +5,6 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
-#include "kmfiltermgr.h"
 
 
 #include <assert.h>

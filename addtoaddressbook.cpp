@@ -32,7 +32,6 @@
 #include <kseparator.h>
 #include <kdebug.h>
 
-#include "kmmainwin.h"
 #include "addtoaddressbook.h"
 #include <qpushbutton.h>
 #include <qlabel.h>

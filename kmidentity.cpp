@@ -6,7 +6,6 @@
 #include "kmfoldermgr.h"
 #include <kdebug.h>
 
-#include <kconfig.h>
 #include <kapplication.h>
 
 #include <pwd.h>

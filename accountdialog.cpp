@@ -20,7 +20,6 @@
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
-#include <qcombobox.h>
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
@@ -43,7 +42,6 @@
 #include "kmacctmgr.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
-#include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
 

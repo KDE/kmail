@@ -14,7 +14,6 @@
 
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
-#include "kmmessage.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmfiltermgr.h"
@@ -35,7 +34,6 @@
 #include <X11/Xlib.h>
 #include <kapplication.h>
 
-#include <qmutex.h>
 
 KMKernel *KMKernel::mySelf = 0;
 

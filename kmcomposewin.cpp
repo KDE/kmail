@@ -18,23 +18,19 @@
 #include <kpgp.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
-#include "kmfolder.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
 
 #include <kaction.h>
-#include <kglobalsettings.h>
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
-#include <kstdaccel.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
-#include <kmimetype.h>
 #include <kdebug.h>
 
 #include "kmmainwin.h"

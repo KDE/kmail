@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include <qclipboard.h>
-#include <qlabel.h>
 //#include <qlayout.h>
 #include <qhbox.h>
 #include <kaction.h>
@@ -29,7 +28,6 @@
 
 #include "kmversion.h"
 #include "kmglobal.h"
-#include "kmmainwin.h"
 
 #include "kmmessage.h"
 #include "kmmsgpart.h"

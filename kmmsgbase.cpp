@@ -9,7 +9,6 @@
 #include <qregexp.h>
 #include <kmfolder.h>
 #include <kmheaders.h>
-#include <kmkernel.h>
 #include <kmmsgdict.h>
 
 #include <ctype.h>

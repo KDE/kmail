@@ -34,7 +34,6 @@
 #include <kio/scheduler.h>
 
 #include <qbuffer.h>
-#include <qregexp.h>
 
 KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   : KMFolderImapInherited(aParent, aName)

@@ -1,12 +1,8 @@
 /* kmail folder-list combo-box */
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
-#include <qcombobox.h>
-#include <qstringlist.h>
-#include <qguardedptr.h>
 
 #include "kmfoldercombobox.h"
-#include "kmkernel.h"
 #include "kmfoldermgr.h"
 
 //-----------------------------------------------------------------------------

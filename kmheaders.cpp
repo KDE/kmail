@@ -22,7 +22,6 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 
-#include <kio/global.h>
 
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
@@ -33,7 +32,6 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmundostack.h"
-#include "kmreaderwin.h"
 #include "kmmsgdict.h"
 #ifdef SCORING
 #include "kmscoring.h"

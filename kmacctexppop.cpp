@@ -9,13 +9,11 @@
 #include <unistd.h>
 #include <signal.h>
 #include <mimelib/mimepp.h>
-#include <kmmessage.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
 
-#include "kmfiltermgr.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include "kmbroadcaststatus.h"

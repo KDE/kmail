@@ -8,7 +8,6 @@
 #endif
 
 #include "kmfilteraction.h"
-#include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
@@ -24,7 +23,6 @@
 #include <klocale.h>
 #include <kprocess.h>
 
-#include <qcombobox.h>
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
 #include <qlayout.h>

@@ -3,7 +3,6 @@
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 #define ALLOW_GUI 1
-#include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"

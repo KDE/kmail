@@ -18,8 +18,6 @@
 // other KDE headers:
 #include <kemailsettings.h> // for IdentityEntry::fromControlCenter()
 #include <kmtransport.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 

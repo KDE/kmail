@@ -3,8 +3,6 @@
 
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
-#include "kmkernel.h"
-#include "kmmsgbase.h"
 #include "kmmsgdict.h"
 
 #include <qfileinfo.h>

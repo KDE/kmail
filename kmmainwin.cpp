@@ -10,7 +10,6 @@
 #undef Unsorted // X headers...
 #include <qaccel.h>
 #include <qregexp.h>
-#include <qaccel.h>
 
 
 #include <kopenwith.h>
@@ -22,7 +21,6 @@
 #include <kaction.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
-#include <kstdguiitem.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
@@ -53,7 +51,6 @@
 
 #include <assert.h>
 #include <kstatusbar.h>
-#include <qpopupmenu.h>
 #include <kpopupmenu.h>
 
 #include "kmmainwin.moc"

@@ -3,7 +3,6 @@
 #include "kmmsgpartdlg.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmmsgbase.h"
 
 #include "kmglobal.h"
 
