@@ -2126,17 +2126,6 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
 
-  if (sentOk)
-  {
-    KMRecentAddresses::self()->add( bcc() );
-    KMRecentAddresses::self()->add( cc() );
-    KMRecentAddresses::self()->add( to() );
-
-    mAutoDeleteMsg = FALSE;
-    mFolder = NULL;
-    close();
-  }
-
   // Warning this is an ugly hack but it covers all the changes needed
   // with minimal code changes.  If you want to add more warning boxes
   // (say if the From: field is empty), then you will need to modify this.
@@ -2145,6 +2134,18 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       mEdtTo.setFocus();
     else
       mEdtSubject.setFocus();
+  }
+
+  if (sentOk)
+  {
+    KMRecentAddresses::self()->add( bcc() );
+    KMRecentAddresses::self()->add( cc() );
+    KMRecentAddresses::self()->add( to() );
+
+    mAutoDeleteMsg = FALSE;
+    mFolder = NULL;
+    hide();
+    delete this;
   }
 
   busy = false;
