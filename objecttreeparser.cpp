@@ -139,6 +139,7 @@ namespace KMail {
 
     if ( ( !myBody->Body().FirstBodyPart() || 
            myBody->Body().AsString().length() == 0 ) &&
+         startNode.dwPart() &&
          startNode.dwPart()->Body().Message() &&
          startNode.dwPart()->Body().Message()->Body().FirstBodyPart() ) 
     {
@@ -677,7 +678,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       deb += "[binary data]";
     else {
       deb += "\"";
-      deb += ciphertext;
+      deb += cipherStr;
       deb += "\"";
     }
     deb += "\n\n";
@@ -693,7 +694,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                   << cryptPlugLibName << endl;
     int errId = 0;
     char* errTxt = 0;
-    bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext,
+    bDecryptionOk = cryptPlug->decryptAndCheckMessage( cipherStr.data(),
                                                        cipherIsBinary,
                                                        cipherLen,
                                                        &cleartext,
@@ -719,7 +720,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                    + i18n("Error: %1").arg( aErrorText );
     }
     delete errTxt;
-    delete cleartext;
+    delete[] cleartext;
   }
   else {
     decryptedData = "<div style=\"text-align:center; padding:20pt;\">"
