@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
+#include <kdebug.h>
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
@@ -35,6 +36,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
   mQuiet = 0;
   mChanged = FALSE;
   setBasePath(aBasePath);
+  mRemoveOrig = 0;
 }
 
 
@@ -307,26 +309,54 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::remove(KMFolder* aFolder)
 {
-  assert(aFolder != 0);
-
+  if (!aFolder) return;
+  // remember the original folder to trigger contentsChanged later
+  if (!mRemoveOrig) mRemoveOrig = aFolder;
+  if (aFolder->child())
+  {
+    // call remove for every child
+    KMFolderNode* node; 
+    QPtrListIterator<KMFolderNode> it(*aFolder->child()); 
+    for ( ; (node = it.current()); ) 
+    { 
+      ++it; 
+      if (node->isDir()) continue; 
+      KMFolder *folder = static_cast<KMFolder*>(node); 
+      remove(folder);
+    }
+  }
   emit folderRemoved(aFolder);
-  removeFolderAux(aFolder);
-
-  contentsChanged();
+  removeFolder(aFolder);
 }
 
-void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
+void KMFolderMgr::removeFolder(KMFolder* aFolder)
 {
+  connect(aFolder, SIGNAL(removed(KMFolder*, bool)),
+      this, SLOT(removeFolderAux(KMFolder*, bool)));
+  aFolder->remove();
+}
+
+void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
+{
+  if (!success) {
+    mRemoveOrig = 0;
+    return;
+  }
+
   KMFolderDir* fdir = aFolder->parent();
   KMFolderNode* fN;
-  for (fN = fdir->first(); fN != 0; fN = fdir->next())
+  for (fN = fdir->first(); fN != 0; fN = fdir->next()) {
     if (fN->isDir() && (fN->name() == "." + aFolder->fileName() + ".directory")) {
       removeDirAux(static_cast<KMFolderDir*>(fN));
       break;
     }
-  aFolder->remove();
+  }
   aFolder->parent()->remove(aFolder);
-  //  mDir.remove(aFolder);
+  if (aFolder == mRemoveOrig) {
+    // call only if we're removing the original parent folder
+    contentsChanged();
+    mRemoveOrig = 0;
+  }
   if (kmkernel->filterMgr()) kmkernel->filterMgr()->folderRemoved(aFolder,0);
 }
 
@@ -334,13 +364,6 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
 {
   QDir dir;
   QString folderDirLocation = aFolderDir->path();
-  KMFolderNode* fN;
-  for (fN = aFolderDir->first(); fN != 0; fN = aFolderDir->first()) {
-    if (fN->isDir())
-      removeDirAux(static_cast<KMFolderDir*>(fN));
-    else
-      removeFolderAux(static_cast<KMFolder*>(fN));
-  }
   aFolderDir->clear();
   aFolderDir->parent()->remove(aFolderDir);
   dir.rmdir(folderDirLocation);

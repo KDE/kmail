@@ -252,7 +252,7 @@ public:
     of the folder in memory. Note that the folder is closed during this
     process, whether there are others using it or not.
     @see KMFolder::removeContents */
-  int remove();
+  void remove();
 
   /** Delete entire folder. Forces a close *but* opens the
     folder again afterwards. Returns errno(3) error code or zero on
@@ -503,6 +503,9 @@ signals:
 
   // Emitted by KMFolderCachedIMAP to signal syncing
   void syncRunning( KMFolder*, bool );
+
+  /** Emitted when a folder was removed */
+  void removed(KMFolder*, bool);
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */

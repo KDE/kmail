@@ -116,7 +116,7 @@ public:
   virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
   /** Remove the IMAP folder on the server and if successful also locally */
-  virtual void removeOnServer();
+  virtual void remove();
 
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge();
@@ -263,6 +263,12 @@ public:
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
 
+  /** 
+   * Mark the folder as already removed from the server 
+   * If the folder is removed the server will not be queried anymore
+   */
+  void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; } 
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -383,6 +389,7 @@ protected:
 private:
   bool        mCheckingValidity;
   QDict<KMMsgMetaData> mMetaDataMap;
+  bool        mAlreadyRemoved;
 };
 
 #endif // kmfolderimap_h

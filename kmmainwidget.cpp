@@ -1006,7 +1006,7 @@ void KMMainWidget::slotRemoveFolder()
       }
     }
     if (mFolder->folderType() == KMFolderTypeImap)
-      static_cast<KMFolderImap*>(mFolder->storage())->removeOnServer();
+      kmkernel->imapFolderMgr()->remove(mFolder);
     else if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else

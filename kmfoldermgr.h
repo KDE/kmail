@@ -115,6 +115,9 @@ public slots:
   void compactAll();
   void expireAll();
 
+  /** Called from KMFolder::remove when the folderstorage was removed */
+  void removeFolderAux(KMFolder* obsoleteFolder, bool success);
+
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook
     where clients like the KMFolderTree tree-view can connect. The signal
@@ -152,7 +155,7 @@ protected:
   void compactAllAux(KMFolderDir* dir);
 
   /** Auxillary function to facilitate removal of a folder */
-  void removeFolderAux(KMFolder* aFolder);
+  void removeFolder(KMFolder* aFolder);
 
   /** Auxillary function to facilitate removal of a folder directory */
   void removeDirAux(KMFolderDir* aFolderDir);
@@ -161,6 +164,7 @@ protected:
   KMFolderRootDir mDir;
   int mQuiet;
   bool mChanged;
+  KMFolder* mRemoveOrig;
 };
 
 #endif /*kmfoldermgr_h*/

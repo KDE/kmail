@@ -166,7 +166,8 @@ void KMFolderTreeItem::init()
     setType(Root);
   else if (mFolder->isSystemFolder()) {
     if (mFolder == kmkernel->inboxFolder()
-        || mFolder->folderType() == KMFolderTypeImap)
+        || mFolder->folderType() == KMFolderTypeImap
+        || mFolder->folderType() == KMFolderTypeCachedImap)
       setType(Inbox);
     else if (mFolder == kmkernel->outboxFolder())
       setType(Outbox);

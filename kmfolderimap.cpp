@@ -54,6 +54,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mCheckFlags = TRUE;
   mCheckMail = TRUE;
   mCheckingValidity = FALSE;
+  mAlreadyRemoved = false;
 
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
@@ -78,7 +79,7 @@ KMFolderImap::~KMFolderImap()
        ongoing operations and reset mailcheck if we were deleted during an
        ongoing mailcheck of our account. Not very gracefull, but safe, and the 
        only way I can see to reset the account state cleanly. */
-    if ( mAccount->checkingMail() ) {
+    if ( mAccount->checkingMail( folder() ) ) {
        mAccount->killAllJobs();
     }
   }
@@ -173,12 +174,20 @@ void KMFolderImap::writeConfig()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::removeOnServer()
+void KMFolderImap::remove()
 {
+  if (mAlreadyRemoved) {
+    // override
+    FolderStorage::remove();
+    return;
+  }
   KURL url = mAccount->getUrl();
   url.setPath(imapPath());
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+  if ( mAccount->makeConnection() == ImapAccountBase::Error )
+  {
+    emit removed(folder(), false);
     return;
+  }
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url());
@@ -197,9 +206,10 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
+    emit removed(folder(), false);
   } else {
     mAccount->displayProgress();
-    kmkernel->imapFolderMgr()->remove( folder() );
+    FolderStorage::remove();
   }
 }
 
@@ -578,7 +588,10 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
           && mSubfolderNames.findIndex(node->name()) == -1)
       {
         kdDebug(5006) << node->name() << " disappeared." << endl;
-        kmkernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
+        // remove the folder without server round trip
+        KMFolder* fld = static_cast<KMFolder*>(node);
+        static_cast<KMFolderImap*>(fld->storage())->setAlreadyRemoved(true);
+        kmkernel->imapFolderMgr()->remove(fld);
         node = folder()->child()->first();
       }
       else node = folder()->child()->next();

@@ -79,6 +79,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( syncRunning( KMFolder*, bool ) ),
            SIGNAL( syncRunning( KMFolder*, bool ) ) );
+  connect( mStorage, SIGNAL( removed( KMFolder*, bool ) ),
+           SIGNAL( removed( KMFolder*, bool ) ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   mStorage->readConfig();
@@ -414,9 +416,9 @@ int KMFolder::create( bool imap )
   return mStorage->create( imap );
 }
 
-int KMFolder::remove()
+void KMFolder::remove()
 {
-  return mStorage->remove();
+  mStorage->remove();
 }
 
 int KMFolder::expunge()

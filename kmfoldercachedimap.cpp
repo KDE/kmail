@@ -123,9 +123,11 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
-  if (aName == "INBOX" && mImapPath == "/INBOX/")
+  if (QString(aName).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     mLabel = i18n("inbox");
+    // for the icon
+    folder->setSystemFolder(true);
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
@@ -156,10 +158,9 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
-int KMFolderCachedImap::remove()
+void KMFolderCachedImap::remove()
 {
   mFolderRemoved = true;
-  int rc = KMFolderMaildir::remove();
 
   if( mRemoveRightAway ) {
     // This is the account folder of an account that was just removed
@@ -175,8 +176,7 @@ int KMFolderCachedImap::remove()
     // from the cache or if it's new on the server. The file is removed
     // during the sync
   }
-
-  return rc;
+  FolderStorage::remove();
 }
 
 QString KMFolderCachedImap::uidCacheLocation() const

@@ -530,6 +530,14 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+  bool ImapAccountBase::checkingMail( KMFolder *folder )
+  {
+    if (checkingMail() && mFoldersQueuedForChecking.contains(folder))
+      return true;
+    return false;
+  }
+
+  //-----------------------------------------------------------------------------
   void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg,
                                              const AttachmentStrategy *as )
   {

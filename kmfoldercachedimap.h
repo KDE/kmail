@@ -87,7 +87,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
 
   /** Remove this folder */
-  virtual int remove();
+  virtual void remove();
 
   /** Synchronize this folder and it's subfolders with the server */
   virtual void serverSync( bool suppressDialog );

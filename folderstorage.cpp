@@ -638,7 +638,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
 
 
 //-----------------------------------------------------------------------------
-int FolderStorage::remove()
+void FolderStorage::remove()
 {
   assert(!folder()->name().isEmpty());
 
@@ -650,10 +650,9 @@ int FolderStorage::remove()
   unlink(QFile::encodeName(indexLocation()));
 
   int rc = removeContents();
-  if (rc) return rc;
 
   needsCompact = false; //we are dead - no need to compact us
-  return 0;
+  emit removed(folder(), (rc ? false : true));
 }
 
 

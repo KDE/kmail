@@ -185,6 +185,14 @@ class AttachmentStrategy;
 	void processNewMailSingleFolder(KMFolder* folder);
 
     /**
+     * Check whether we're checking for new mail
+     * and the folder is included
+     */ 
+    bool checkingMail( KMFolder *folder );
+
+    bool checkingMail() { return NetworkAccount::checkingMail(); }
+
+    /**
      * Set whether the current listDirectory should create an INBOX
      */
     bool createInbox() { return mCreateInbox; }
