@@ -55,7 +55,7 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
   {
     makeLocalAccountPage();
   }
-  else if( accountType == "pop" || accountType == "experimental pop" )
+  else if( accountType == "pop" || accountType == "advanced pop" )
   {
     makePopAccountPage();
   }
@@ -122,13 +122,15 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.folderCombo = new QComboBox( false, page );
   topLayout->addWidget( mLocal.folderCombo, 7, 1 );
 
+  /* -sanders Probably won't support this way, use filters insteada
   label = new QLabel( i18n("Default identity:"), page );
   topLayout->addWidget( label, 8, 0 );
   mLocal.identityCombo = new QComboBox( false, page );
   topLayout->addWidget( mLocal.identityCombo, 8, 1 );
+  */
 
   label->setEnabled(false);
-  mLocal.identityCombo->setEnabled(false);
+  //mLocal.identityCombo->setEnabled(false);
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -219,14 +221,14 @@ void AccountDialog::makePopAccountPage()
   topLayout->addWidget( label, 13, 0 );
   mPop.folderCombo = new QComboBox( false, page );
   topLayout->addWidget( mPop.folderCombo, 13, 1 );
-
+  /*
   label = new QLabel( i18n("Default identity:"), page );
   topLayout->addWidget( label, 14, 0 );
   mPop.identityCombo = new QComboBox( false, page );
   topLayout->addWidget( mPop.identityCombo, 14, 1 );
-
+  */
   label->setEnabled(false);
-  mPop.identityCombo->setEnabled(false);
+  //  mPop.identityCombo->setEnabled(false);
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -248,7 +250,7 @@ void AccountDialog::setupSettings()
 
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
-    mLocal.identityCombo->insertStringList( mIdentityList );
+    //    mLocal.identityCombo->insertStringList( mIdentityList );
   }
   else
   {
@@ -267,7 +269,7 @@ void AccountDialog::setupSettings()
     
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
-    mPop.identityCombo->insertStringList( mIdentityList );
+    //    mPop.identityCombo->insertStringList( mIdentityList );
   }
 
   KMFolderDir *fdir = (KMFolderDir*)&kernel->folderMgr()->dir();
@@ -324,7 +326,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( folder );
 
   }
-  else if( accountType == "pop" || accountType == "experimental pop" )
+  else if( accountType == "pop" || accountType == "advanced pop" )
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ? 
