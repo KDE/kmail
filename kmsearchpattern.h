@@ -201,11 +201,6 @@ public:
 
       Derived classes reimplementing readConfig() should also call this
       method, or else the rules will not be loaded.
-
-      NOTE: I don't know yet if calling
-      Kconfig::writeEntry("key",QString()) makes the key go away in
-      the on-disk file. I haven't found another possible way to delete
-      old keys.
   */
   void readConfig( const KConfig * config );
   /** Writes itself into @p config. The group has to be preset. Tries
