@@ -54,7 +54,10 @@ private slots:
   /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
   void slotPutMessageResult( KIO::Job *job );
+  void slotPutMessageInfoData(KIO::Job *, const QString &data);
+  /** result of a copy-operation */
   void slotCopyMessageResult( KIO::Job *job );
+  void slotCopyMessageInfoData(KIO::Job *, const QString &data);
 private:
   void execute();
   void expireMessages();

@@ -69,6 +69,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<KMM
         SLOT(slotPutMessageResult(KIO::Job *)));
     connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
         SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)));
+    connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
+        SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)));
     account->displayProgress();
   }
   else if (jt == tCopyMessage || jt == tMoveMessage )
@@ -259,6 +261,79 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
   account->displayProgress();
   if (account->slave()) account->mJobList.remove(this);
   deleteLater();
+}
+
+//-----------------------------------------------------------------------------
+void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
+{
+  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder);
+  KMAcctImap *account = imapFolder->account();
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    account->mapJobData.find(job);
+  if (it == account->mapJobData.end()) return;
+
+  if (data.find("UID") != -1)
+  {
+    // split
+    QString oldUid = data.section(' ', 1, 1);
+    QString newUid = data.section(' ', 2, 2);
+
+    // get lists of uids
+    QValueList<int> olduids = KMFolderImap::splitSets(oldUid);
+    QValueList<int> newuids = KMFolderImap::splitSets(newUid);
+
+    int index = -1;
+    if ( !(*it).msgList.isEmpty() )
+    {
+      KMMessage * msg;
+      for ( msg = (*it).msgList.first(); msg; msg = (*it).msgList.next() )
+      {
+        uint uid = msg->headerField("X-UID").toInt();
+        index = olduids.findIndex(uid);
+        if (index > -1)
+        {
+          // found, get the new uid
+          const ulong * sernum = (ulong *)msg->getMsgSerNum();
+          imapFolder->insertUidSerNumEntry(newuids[index], sernum);
+        }
+      }
+    } else if (mMsgList.first()) {
+      uint uid = mMsgList.first()->headerField("X-UID").toInt();
+      index = olduids.findIndex(uid);
+      if (index > -1)
+      {
+        // found, get the new uid
+        const ulong * sernum = (ulong *)mMsgList.first()->getMsgSerNum();
+        imapFolder->insertUidSerNumEntry(newuids[index], sernum);
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
+{
+  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder);
+  KMAcctImap *account = imapFolder->account();
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    account->mapJobData.find(job);
+  if (it == account->mapJobData.end()) return;
+  if (data.find("UID") != -1)
+  {
+    int uid = (data.right(data.length()-4)).toInt();
+
+    if ( !(*it).msgList.isEmpty() )
+    {
+      const ulong * sernum = (ulong *)(*it).msgList.last()->getMsgSerNum();
+      kdDebug() << "insert sernum " << (*it).msgList.last()->getMsgSerNum() << " for " << uid << endl;
+      imapFolder->insertUidSerNumEntry(uid, sernum);
+    } else if (mMsgList.first())
+    {
+      const ulong * sernum = (ulong *)mMsgList.first()->getMsgSerNum();
+      kdDebug() << "insert sernum " << mMsgList.first()->getMsgSerNum() << " for " << uid << endl;
+      imapFolder->insertUidSerNumEntry(uid, sernum);
+    }
+  }
 }
 
 
