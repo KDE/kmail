@@ -91,6 +91,7 @@ bool LinkLocator::atUrl() const
   QChar ch = mText[mPos];
   return (ch=='h' && mText.mid(mPos, 7) == "http://") ||
          (ch=='h' && mText.mid(mPos, 8) == "https://") ||
+         (ch=='v' && mText.mid(mPos, 6) == "vnc://") ||
          (ch=='f' && ( mText.mid(mPos, 6) == "ftp://" || mText.mid(mPos, 7) == "ftps://") ) ||
          (ch=='s' && mText.mid(mPos, 7) == "sftp://") ||
          (ch=='m' && mText.mid(mPos, 7) == "mailto:") ||
@@ -107,6 +108,7 @@ bool LinkLocator::isEmptyUrl(const QString& url)
          url == "ftp://" ||
          url == "ftps://" ||
          url == "sftp://" ||
+         url == "vnc://" ||
          url == "mailto" ||
          url == "www" ||
          url == "ftp";

@@ -2158,7 +2158,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
   }
   else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
 	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file") ||
-           (aUrl.protocol() == "help"))
+           (aUrl.protocol() == "help") || (aUrl.protocol() == "vnc"))
   {
     statusMsg(i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( aUrl );
