@@ -206,6 +206,8 @@ void SubscriptionDialog::createItems()
         {
           oldItem->takeItem(cur);
           item->insertItem(cur);
+          if ( cur->isSelected() ) // we have new parents so open them
+            folderTree()->ensureItemVisible( cur );
           ++it;
         }
         delete oldItem;
