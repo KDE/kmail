@@ -40,7 +40,7 @@ class KMailBrowserExtension;
 class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;
-class KMLittleProgressDlg;
+class StatusbarProgressWidget;
 class KMFolder;
 class KMFolderTreeItem;
 
@@ -102,7 +102,7 @@ public:
 
 private:
   KMailPart *mParent;
-  KMLittleProgressDlg *mLittleProgress;
+  StatusbarProgressWidget *mLittleProgress;
 };
 
 #endif

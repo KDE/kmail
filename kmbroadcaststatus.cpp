@@ -1,8 +1,7 @@
 /* Authors: Don Sanders <sanders@kde.org>
 
    Copyright (C) 2000 Don Sanders <sanders@kde.org>
-   Includes KMLittleProgressDlg which is based on KIOLittleProgressDlg
-   by Matt Koss <koss@miesto.sk>
+
 
    License GPL
 */
@@ -11,29 +10,14 @@
 #include <config.h>
 #endif
 
-#include "kmbroadcaststatus.h"
-#include "kmbroadcaststatus.moc"
-
-#include "ssllabel.h"
-using KMail::SSLLabel;
-#include "progressmanager.h"
-using KMail::ProgressItem;
-using KMail::ProgressManager;
-
-#include <kprogress.h>
-#include <kiconloader.h>
-#include <kdebug.h>
-
-
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qtooltip.h>
-#include <klocale.h>
-#include <qlayout.h>
-#include <qwidgetstack.h>
 #include <qdatetime.h>
-#include <kmkernel.h> // for the progress dialog
-#include "kmmainwidget.h"
+
+#include <klocale.h>
+#include <kglobal.h>
+
+#include "kmbroadcaststatus.h"
+
+
 
 //-----------------------------------------------------------------------------
 KMBroadcastStatus* KMBroadcastStatus::instance_ = 0;
@@ -196,177 +180,5 @@ void KMBroadcastStatus::requestAbort()
   abortRequested_ = true;
   emit signalAbortRequested();
 }
+#include "kmbroadcaststatus.moc"
 
-
-//-----------------------------------------------------------------------------
-KMLittleProgressDlg::KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* parent, bool button )
-  : QFrame( parent ), m_mainWidget( mainWidget ), mCurrentItem( 0 )
-{
-  m_bShowButton = button;
-  int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
-  box = new QHBoxLayout( this, 0, 0 );
-
-  m_pButton = new QPushButton( this );
-  m_pButton->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
-                                         QSizePolicy::Minimum ) );
-  m_pButton->setPixmap( SmallIcon( "up" ) );
-  box->addWidget( m_pButton  );
-  stack = new QWidgetStack( this );
-  stack->setMaximumHeight( fontMetrics().height() );
-  box->addWidget( stack );
-
-  m_sslLabel = new SSLLabel( this );
-  box->addWidget( m_sslLabel );
-
-  QToolTip::add( m_pButton, i18n("Open detailed progress dialog") );
-
-  m_pProgressBar = new KProgress( this );
-  m_pProgressBar->setLineWidth( 1 );
-  m_pProgressBar->setFrameStyle( QFrame::Box );
-  m_pProgressBar->installEventFilter( this );
-  m_pProgressBar->setMinimumWidth( w );
-  stack->addWidget( m_pProgressBar, 1 );
-
-  m_pLabel = new QLabel( "", this );
-  m_pLabel->setAlignment( AlignHCenter | AlignVCenter );
-  m_pLabel->installEventFilter( this );
-  m_pLabel->setMinimumWidth( w );
-  stack->addWidget( m_pLabel, 2 );
-  m_pButton->setMaximumHeight( fontMetrics().height() );
-  setMinimumWidth( minimumSizeHint().width() );
-
-  mode = None;
-  setMode();
-
-  connect( m_pButton, SIGNAL( clicked() ),
-           mainWidget, SLOT( slotToggleProgressDialog() ) );
-
-  connect ( ProgressManager::instance(), SIGNAL( progressItemAdded( ProgressItem * ) ),
-            this, SLOT( slotProgressItemAdded( ProgressItem * ) ) );
-  connect ( ProgressManager::instance(), SIGNAL( progressItemCompleted( ProgressItem * ) ),
-            this, SLOT( slotProgressItemCompleted( ProgressItem * ) ) );
-
-  connect ( mainWidget, SIGNAL( progressDialogVisible( bool )),
-            this, SLOT( slotProgressDialogVisible( bool ) ) );
-}
-
-void KMLittleProgressDlg::slotProgressItemAdded( ProgressItem *item )
-{
-  if ( item->parent() ) return; // we are only interested in top level items
-  if ( mCurrentItem ) {
-    disconnect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
-                 this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
-  }
-  mCurrentItem = item;
-  connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
-            this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
-  if ( mode == None ) {
-    mode = Progress;
-    setMode();
-  }
-}
-
-void KMLittleProgressDlg::slotProgressItemCompleted( ProgressItem *item )
-{
-  if ( mCurrentItem == item )
-    mCurrentItem = 0;
-  if ( ProgressManager::instance()->isEmpty() ) {
-    // Done. In 5s the progress-widget will close, then we can clean up the statusbar
-    QTimer::singleShot( 5000, this, SLOT( slotClean() ) );
-  }
-}
-
-void KMLittleProgressDlg::slotProgressItemProgress( ProgressItem *item, unsigned int value )
-{
-  Q_ASSERT( item == mCurrentItem); // the only one we should be connected to
-  m_pProgressBar->setValue( value );
-}
-
-void KMLittleProgressDlg::slotSetSSL( bool ssl )
-{
-  m_sslLabel->setEncrypted( ssl );
-}
-
-void KMLittleProgressDlg::setMode() {
-  switch ( mode ) {
-  case None:
-    if ( m_bShowButton ) {
-      m_pButton->hide();
-    }
-    m_sslLabel->setState( SSLLabel::Done );
-    // show the empty label in order to make the status bar look better
-    stack->show();
-    stack->raiseWidget( m_pLabel );
-    break;
-
-#if 0
-  case Clean:
-    if ( m_bShowButton ) {
-      m_pButton->hide();
-    }
-    m_sslLabel->setState( SSLLabel::Clean );
-    // show the empty label in order to make the status bar look better
-    stack->show();
-    stack->raiseWidget( m_pLabel );
-    break;
-#endif
-
-  case Label:
-    if ( m_bShowButton ) {
-      m_pButton->show();
-    }
-    m_sslLabel->setState( m_sslLabel->lastState() );
-    stack->show();
-    stack->raiseWidget( m_pLabel );
-    break;
-
-  case Progress:
-    stack->show();
-    stack->raiseWidget( m_pProgressBar );
-    if ( m_bShowButton ) {
-      m_pButton->show();
-    }
-    m_sslLabel->setState( m_sslLabel->lastState() );
-    break;
-  }
-}
-
-void KMLittleProgressDlg::slotClean()
-{
-  // check if a new item showed up since we started the timer. If not, clear
-  if ( ProgressManager::instance()->isEmpty() ) {
-    m_pProgressBar->setValue( 0 );
-    m_pLabel->clear();
-    mode = None;
-    setMode();
-  }
-}
-
-bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
-{
-  if ( ev->type() == QEvent::MouseButtonPress ) {
-    QMouseEvent *e = (QMouseEvent*)ev;
-
-    if ( e->button() == LeftButton && mode != None ) {    // toggle view on left mouse button
-      // Consensus seems to be that we should show/hide the fancy dialog when the user
-      // clicks anywhere in the small one.
-      m_mainWidget->slotToggleProgressDialog();
-      return true;
-    }
-  }
-  return false;
-}
-
-void KMLittleProgressDlg::slotProgressDialogVisible( bool b )
-{
-  // Hide the progress bar when the detailed one is showing
-  if ( b ) {
-    mode = Label;
-    m_pButton->setPixmap( SmallIcon( "down" ) );
-  } else {
-    if ( mode == Label )  // not if None already
-      mode = Progress;
-    m_pButton->setPixmap( SmallIcon( "up" ) );
-  }
-  setMode();
-}

@@ -100,7 +100,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
 		pluginloaderbase.cpp partnodebodypart.cpp \
 		expirejob.cpp jobscheduler.cpp callback.cpp \
-		overlaywidget.cpp progressmanager.cpp progressdialog.cpp
+		overlaywidget.cpp progressmanager.cpp progressdialog.cpp \
+		statusbarprogresswidget.cpp
 
 kmail_SOURCES = main.cpp
 

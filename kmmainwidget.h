@@ -40,7 +40,7 @@ class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMFldSearch;
-class KMLittleProgressDlg;
+class StatusbarProgressWidget;
 class KMSystemTray;
 
 template <typename T> class QValueList;
@@ -134,7 +134,7 @@ public:
 
   void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
-  KMLittleProgressDlg* progressDialog() const;
+  StatusbarProgressWidget* progressDialog() const;
 
   void toggleSystray(bool enabled, int mode);
 
@@ -461,7 +461,7 @@ private:
 
   QTimer *menutimer;
 
-  KMLittleProgressDlg *mLittleProgress;
+  StatusbarProgressWidget *mLittleProgress;
   ProgressDialog *mProgressDialog;
 
   QPtrList<KMMessage> mSelectedMsgs;

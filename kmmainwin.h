@@ -10,7 +10,7 @@
 #include "qstring.h"
 
 class KMMainWidget;
-class KMLittleProgressDlg;
+class StatusbarProgressWidget;
 
 class KMMainWin : public KMainWindow
 {
@@ -22,7 +22,7 @@ public:
   KMMainWin(QWidget *parent = 0);
   virtual ~KMMainWin();
   KMMainWidget *mainKMWidget() const { return mKMMainWidget; };
-  KMLittleProgressDlg* progressDialog() const { return littleProgress; }
+  StatusbarProgressWidget* progressDialog() const { return littleProgress; }
 
   /** Read configuration options after widgets are created. */
   virtual void readConfig(void);
@@ -48,7 +48,7 @@ protected slots:
 private:
   KMMainWidget *mKMMainWidget;
   QString      mLastStatusMsg;
-  KMLittleProgressDlg *littleProgress;
+  StatusbarProgressWidget *littleProgress;
   int mMessageStatusId;
 };
 

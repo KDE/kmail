@@ -40,6 +40,7 @@
 #include "globalsettings.h"
 #include "kcursorsaver.h"
 #include "kmbroadcaststatus.h"
+#include "statusbarprogresswidget.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
@@ -1595,7 +1596,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
     folderSelected( aFolder, false );
 }
 
-KMLittleProgressDlg* KMMainWidget::progressDialog() const
+StatusbarProgressWidget* KMMainWidget::progressDialog() const
 {
     return mLittleProgress;
 }
@@ -2780,7 +2781,7 @@ void KMMainWidget::setupStatusBar()
   //we want to export to the part.
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *bar =  mainWin ? mainWin->statusBar() : 0;
-  mLittleProgress = new KMLittleProgressDlg( this, bar );
+  mLittleProgress = new StatusbarProgressWidget( this, bar );
   mLittleProgress->show();
 
   /* Create a progress dialog and hide it. */

@@ -8,21 +8,9 @@
 #ifndef __km_broadcast_status_h
 #define __km_broadcast_status_h
 
-#include <qwidget.h>
-#include <qframe.h>
+#include <qobject.h>
+#include <qmap.h>
 
-class KMMainWidget;
-class KProgress;
-class QPushButton;
-class QWidgetStack;
-class QBoxLayout;
-class QLabel;
-namespace KMail {
-  class SSLLabel;
-  class ProgressItem;
-}
-using KMail::SSLLabel;
-using KMail::ProgressItem;
 #undef None
 
 /** When KMail is running it is possible to have multiple KMMainWin open
@@ -104,47 +92,6 @@ protected:
   QMap<QString,unsigned long> ids;
 };
 
-/** A specialized progress widget class, heavily based on
-    kio_littleprogress_dlg (it looks similar) */
-class KMLittleProgressDlg : public QFrame {
 
-  Q_OBJECT
-
-public:
-
-  KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* parent, bool button = true );
-
-public slots:
-
-  void slotClean();
-  void slotSetSSL( bool );
-
-  void slotProgressItemAdded( ProgressItem *i );
-  void slotProgressItemCompleted( ProgressItem *i );
-  void slotProgressItemProgress( ProgressItem *i, unsigned int value );
-
-protected slots:
-  void slotProgressDialogVisible( bool );
-
-protected:
-  KMMainWidget* m_mainWidget;
-  KProgress* m_pProgressBar;
-  QLabel* m_pLabel;
-  SSLLabel* m_sslLabel;
-  QPushButton* m_pButton;
-
-  enum Mode { None, Label, Progress };
-
-  uint mode;
-  bool m_bShowButton;
-
-  void setMode();
-
-
-  virtual bool eventFilter( QObject *, QEvent * );
-  QBoxLayout *box;
-  QWidgetStack *stack;
-  ProgressItem *mCurrentItem;
-};
 
 #endif

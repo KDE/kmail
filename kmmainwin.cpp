@@ -8,6 +8,7 @@
 #include "kmkernel.h"
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
+#include "statusbarprogresswidget.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
 #include <kapplication.h>
