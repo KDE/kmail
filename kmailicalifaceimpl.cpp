@@ -1362,27 +1362,27 @@ void KMailICalIfaceImpl::readConfig()
   // Make sure the folder parent has the subdirs
   bool makeSubFolders = false;
   KMFolderNode* node;
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Calendar ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Calendar, folderLanguage ) );
   if( !node || node->isDir() ) {
     makeSubFolders = true;
     mCalendar = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks, folderLanguage ) );
   if( !node || node->isDir() ) {
     makeSubFolders = true;
     mTasks = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals, folderLanguage ) );
   if( !node || node->isDir() ) {
     makeSubFolders = true;
     mJournals = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts, folderLanguage ) );
   if( !node || node->isDir() ) {
     makeSubFolders = true;
     mContacts = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Notes ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Notes, folderLanguage ) );
   if( !node || node->isDir() ) {
     makeSubFolders = true;
     mNotes = 0;
