@@ -58,7 +58,7 @@ K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
-  DCOPObject("KMailIface"), KParts::ReadOnlyPart(parent, name),
+  DCOPObject("KMailIface"), KPIM::Part(parent, name),
   mParentWidget( parentWidget )
 {
   kdDebug(5006) << "KMailPart()" << endl;
@@ -93,6 +93,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
   kmsetSignalHandler(kmsignalHandler);
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+
+  connect( kmailKernel, SIGNAL( showMailCalled() ), SIGNAL( raise() ) );
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget(parentWidget, widgetName);
@@ -236,6 +238,7 @@ QWidget* KMailPart::parentWidget() const
 {
   return mParentWidget;
 }
+
 
 KMailBrowserExtension::KMailBrowserExtension(KMailPart *parent) :
   KParts::BrowserExtension(parent, "KMailBrowserExtension")
