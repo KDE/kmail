@@ -1346,9 +1346,11 @@ KMMainWin* KMKernel::mainWin()
         kmWin = KMainWindow::memberList->next())
       if (kmWin->isA("KMMainWin")) break;
   }
-  if (kmWin && kmWin->isA("KMMainWin")) {
+  if (kmWin) {
     return (KMMainWin *) kmWin;
   } else {
+    // There is not a single KMMainWin. Create one. Should
+    // not happen.
     mWin = new KMMainWin;
     return mWin;
   }
