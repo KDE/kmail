@@ -9,7 +9,6 @@ Name[lv]=KPasts
 Name[sv]=Kmail
 Name[ta]=Kஅஞ்சல்
 Name[th]=จัดการจดหมาย - K
-Name[xx]=xxKMailxx
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
