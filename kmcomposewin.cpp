@@ -2014,8 +2014,8 @@ void KMComposeWin::slotAppendSignature()
   if( !sigText.isEmpty() )
   {
     /* actually "\n-- \n" (note the space) is a convention for attaching
-    signatures and we should respect it: */
-    mEditor->insertLine("-- ", -1);
+    signatures and we should respect it, unless the user has already done so. */
+    if (!sigText.startsWith("-- \n")) mEditor->insertLine("-- ", -1);
     mEditor->insertLine(sigText, -1);
     mEditor->update();
     mEditor->setModified(mod);
@@ -2183,7 +2183,8 @@ void KMComposeWin::slotIdentityActivated(int)
     if (pos >= 0)
       edtText.truncate(pos);
     if (!ident.signature().isEmpty()) {
-      edtText.append( "\n-- \n" );
+      edtText.append( "\n" );
+      if (!ident.signature().startsWith("-- \n")) edtText.append( "-- \n" );
       edtText.append( ident.signature() );
     }
     mEditor->setText( edtText );

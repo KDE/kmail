@@ -239,6 +239,7 @@ void KMMainWin::readConfig(void)
   mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
   mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
+  mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
 
   // Re-activate panners
   if (mStartupDone)
@@ -673,6 +674,15 @@ void KMMainWin::slotEmptyFolder()
   KMMessage* msg;
 
   if (!mFolder) return;
+
+  if (mConfirmEmpty)
+  {
+    str = i18n("Are you sure you want to empty the folder \"%1\"?").arg(mFolder->label());
+
+    if (KMessageBox::warningContinueCancel(this, str,
+                                          i18n("Empty folder"), i18n("&Empty") )
+       !=KMessageBox::Continue) return;
+  }
 
   mMsgView->clearCache();
 
@@ -1395,7 +1405,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Empty"), 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  removeFolderAction = new KAction( i18n("&Remove..."), 0, this,
+  removeFolderAction = new KAction( i18n("&Remove"), 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
   preferHtmlAction = new KToggleAction( i18n("Prefer HTML to plain text"), 0, this,

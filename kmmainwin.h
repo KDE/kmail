@@ -202,6 +202,7 @@ protected:
   bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
+  bool          mConfirmEmpty;
   QString       mNewMailCmd;
   int		mMessageStatusId;
   QValueList<int> *mHorizPannerSep, *mVertPannerSep;

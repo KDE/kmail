@@ -358,6 +358,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox   *sendOutboxCheck;
       QCheckBox   *sendReceiptCheck;
       QCheckBox   *compactOnExitCheck;
+      QCheckBox   *emptyFolderConfirmCheck;
       QCheckBox   *externalEditorCheck;
       QLineEdit   *externalEditorEdit;
       QPushButton *externalEditorChooseButton;

@@ -1245,6 +1245,9 @@ void ConfigureDialog::makeMiscPage( void )
   mMisc.compactOnExitCheck =
     new QCheckBox(i18n("Compact all folders on exit"), group );
   vlay->addWidget( mMisc.compactOnExitCheck );
+  mMisc.emptyFolderConfirmCheck =
+    new QCheckBox(i18n("Confirm before emptying folders"), group );
+  vlay->addWidget( mMisc.emptyFolderConfirmCheck );
 
   //---------- group: External editor
   group = new QGroupBox( i18n("&External Editor"), page );
@@ -1628,6 +1631,8 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.sendReceiptCheck->setChecked( state );
   state = config.readBoolEntry("compact-all-on-exit", true );
   mMisc.compactOnExitCheck->setChecked( state );
+  state = config.readBoolEntry("confirm-before-empty", true );
+  mMisc.emptyFolderConfirmCheck->setChecked( state );
   state = config.readBoolEntry( "use-external-editor", false );
   mMisc.externalEditorCheck->setChecked( state );
   mMisc.externalEditorEdit->setText( config.readEntry("external-editor", "") );
@@ -2009,6 +2014,8 @@ void ConfigureDialog::slotDoApply( bool everything )
 		       mMisc.sendReceiptCheck->isChecked() );
     config.writeEntry( "compact-all-on-exit",
 		       mMisc.compactOnExitCheck->isChecked() );
+    config.writeEntry( "confirm-before-empty",
+                       mMisc.emptyFolderConfirmCheck->isChecked() );           
     config.writeEntry( "use-external-editor",
 		       mMisc.externalEditorCheck->isChecked() );
     config.writeEntry( "external-editor",
