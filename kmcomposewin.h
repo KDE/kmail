@@ -219,6 +219,9 @@ public:
     void spellCheckDone( const QString &s );
     void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
     void spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos);
+
+ signals:
+  void subjectTextSpellChecked();
 };
 
 
@@ -356,6 +359,10 @@ public:
     QString quotePrefixName() const;
 
     KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
+  void setSubjectTextWasSpellChecked( bool _spell ) {
+    mSubjectTextWasSpellChecked = _spell;
+  }
+  bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
 public slots:
   /**
    * Actions:
@@ -417,6 +424,7 @@ public slots:
    */
   void slotSpellcheck();
   void slotSpellcheckConfig();
+  void slotSubjectTextSpellChecked();
 
   /**
    * Change crypto plugin to be used for signing/encrypting messages,
@@ -790,6 +798,8 @@ protected:
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
+
+  bool mSubjectTextWasSpellChecked;
 
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );

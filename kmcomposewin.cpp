@@ -115,6 +115,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mUseHTMLEditor( false ),
     mId( id ), mComposer( 0 ), mNeverSign( false ), mNeverEncrypt( false )
 {
+  mSubjectTextWasSpellChecked = false;
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
@@ -241,7 +242,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   // html-toolbar always default off
   toolBar("htmlToolBar")->hide();
 
-
+  connect( mEdtSubject, SIGNAL( subjectTextSpellChecked() ),
+           SLOT( slotSubjectTextSpellChecked() ) );
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
           SLOT(slotUpdWinTitle(const QString&)));
   connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
@@ -3213,6 +3215,11 @@ void KMComposeWin::toggleMarkup(bool markup)
     }
 }
 
+void KMComposeWin::slotSubjectTextSpellChecked()
+{
+  mSubjectTextWasSpellChecked = true;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
@@ -3223,7 +3230,7 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 void KMComposeWin::slotSpellcheck()
 {
   if (mSpellCheckInProgress) return;
-
+  mSubjectTextWasSpellChecked = false;
   mSpellCheckInProgress=TRUE;
   /*
     connect (mEditor, SIGNAL (spellcheck_progress (unsigned)),
@@ -4032,6 +4039,7 @@ void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &
         setSelection ( pos, old.length() );
         insert( corr );
         setSelection ( pos, corr.length() );
+        emit subjectTextSpellChecked();
     }
 }
 
@@ -4508,7 +4516,7 @@ void KMEdit::slotSpellResult(const QString &s)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellDone()
 {
-    kdDebug(5006)<<" void KMEdit::slotSpellDone()**********************************************\n";
+    kdDebug(5006)<<" void KMEdit::slotSpellDone()\n";
   KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
@@ -4536,7 +4544,7 @@ void KMEdit::slotSpellDone()
   {
       if( mSpellLineEdit )
           spellcheck();
-      else if( status == KSpell::FinishedNoMisspellingsEncountered )
+      else if( !mComposer->subjectTextWasSpellChecked() && status == KSpell::FinishedNoMisspellingsEncountered )
           KMessageBox::information( topLevelWidget(),
                                     i18n("No misspellings encountered.") );
   }
