@@ -84,9 +84,9 @@ KMMessage::KMMessage(DwMessage* aMsg)
 }
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(const KMMessage& other) : 
-    KMMessageInherited( other ), 
-    ISubject(), 
+KMMessage::KMMessage(const KMMessage& other) :
+    KMMessageInherited( other ),
+    ISubject(),
     mMsg(0)
 {
   mUnencryptedMsg = 0;
@@ -775,8 +775,6 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
     parsedString = otp.resultString();
     codec = curNode->msgPart().codec();
   }
-  kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""
-                << parsedString + "\"\n\n" << endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -2759,7 +2757,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
     {
       curpart = parts.getLast();
       parts.removeLast();
-    } 
+    }
     if (curpart)
       curpart = curpart->Next();
   }
@@ -3065,7 +3063,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 
   if (aPart->decodedSize() > 0)
     part->SetBodySize( aPart->decodedSize() );
-  
+
   return part;
 }
 
@@ -3758,18 +3756,18 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
   if (numBodyParts() > 0 && partSpecifier != "0")
   {
     QString specifier = partSpecifier;
-    if ( partSpecifier.endsWith(".HEADER") || 
+    if ( partSpecifier.endsWith(".HEADER") ||
          partSpecifier.endsWith(".MIME") ) {
       // get the parent bodypart
       specifier = partSpecifier.section( '.', 0, -2 );
     }
     kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
-    
+
     // search for the bodypart
     mLastUpdated = findDwBodyPart( specifier );
-    if (!mLastUpdated) 
-    { 
-      kdWarning(5006) << "KMMessage::updateBodyPart - can not find part " 
+    if (!mLastUpdated)
+    {
+      kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "
         << partSpecifier << endl;
       return;
     }
@@ -3813,7 +3811,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
         part = part->Parent();
       }
     }
-    
+
   } else
   {
     // update text-only messages
