@@ -85,7 +85,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   setMainWidget(page);
   QGridLayout *topLayout = new QGridLayout( page, 3 /*rows*/, 3 /*cols*/, 0, spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "&User Identifier" ), page );
+  QLabel *label = new QLabel( i18n( "&User identifier:" ), page );
   topLayout->addWidget( label, 0, 0 );
 
   mUserIdLineEdit = new KLineEdit( page );

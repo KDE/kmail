@@ -281,7 +281,7 @@ namespace KMail {
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
     mPreferredCryptoMessageFormat->insertStringList( l );
     label = new QLabel( mPreferredCryptoMessageFormat,
-			i18n("Preferred Crypto Message Format:"), tab );
+			i18n("Preferred crypto message format:"), tab );
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPreferredCryptoMessageFormat, row, 1 );
@@ -476,7 +476,7 @@ namespace KMail {
       return KDialogBase::slotOk();
 
     if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
-					     i18n("EMail Address not Found in Key/Certificates"),
+					     i18n("EMail Address Not Found in Key/Certificates"),
 					     KStdGuiItem::cont(), "warn_email_not_in_certificate" )
 	 == KMessageBox::Continue )
       return KDialogBase::slotOk();
