@@ -1544,11 +1544,11 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       return true;
     }
 
-    kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
     CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
     if (    curNode->mRoot
 	    && DwMime::kTypeMultipart    == curNode->mRoot->type()
 	    && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
+      kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       curNode->setEncryptionState( KMMsgFullyEncrypted );
       curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
       if ( keepEncryptions() ) {
@@ -1607,9 +1607,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	if ( mReader )
 	  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       }
+      return true;
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
-    return true;
+    return false;
   }
 
   bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * curNode, ProcessResult & ) {
