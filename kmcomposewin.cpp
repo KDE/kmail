@@ -707,7 +707,8 @@ void KMComposeWin::setupToolBar(void)
 void KMComposeWin::setupStatusBar(void)
 {
   mStatusBar = new KStatusBar(this);
-  mStatusBar->setInsertOrder(KStatusBar::RightToLeft);
+#warning rwilliams: statusbar
+  //mStatusBar->setInsertOrder(KStatusBar::RightToLeft);
   mStatusBar->insertItem(QString(i18n("Column"))+":     ",2);
   mStatusBar->insertItem(QString(i18n("Line"))+":     ",1);
   mStatusBar->insertItem("  ",0);

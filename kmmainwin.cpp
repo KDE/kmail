@@ -1323,9 +1323,10 @@ void KMMainWin::setupStatusBar()
   mStatusBar = new KStatusBar(this);
 
   littleProgress = new KMLittleProgressDlg( mStatusBar );
-  mStatusBar->insertWidget( littleProgress, littleProgress->width()+20 , 0 );
+#warning rwilliams:  fix status bar
+//  mStatusBar->insertWidget( littleProgress, littleProgress->width()+20 , 0 );
   mMessageStatusId = statusBarAddItem(i18n("Initializing..."));
-  mStatusBar->enable(KStatusBar::Show);
+//  mStatusBar->enable(KStatusBar::Show);
   littleProgress->show();
   connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
 	   littleProgress, SLOT(slotEnable( bool )));
