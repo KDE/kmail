@@ -949,7 +949,7 @@ void KMComposeWin::setupActions(void)
 
   mLastEncryptActionState =
     ( cryptPlug && EncryptEmail_EncryptAll == cryptPlug->encryptEmail() );
-  mLastSignActionState = 
+  mLastSignActionState =
     (    (!cryptPlug && mAutoPgpSign)
       || ( cryptPlug && SignEmail_SignAll == cryptPlug->signEmail()) );
 
@@ -1306,7 +1306,7 @@ bool KMComposeWin::applyChanges(void)
 {
   QString str, atmntStr;
   QString temp, replyAddr;
-  
+
   //assert(mMsg!=NULL);
   if(!mMsg)
   {
@@ -1404,7 +1404,7 @@ bool KMComposeWin::applyChanges(void)
         doSignCompletely = false;
     }
   }
-  
+
   bool bOk = true;
 
   if( !doSignCompletely ) {
@@ -1424,7 +1424,7 @@ bool KMComposeWin::applyChanges(void)
                      " you wanted to be warned not to send unsigned messages!") )
             + "<br>&nbsp;<br><b>"
             + i18n("Sign all parts of this message?")
-            + i18n("</b></qt>") ) );
+            + "</b></qt>" ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1437,7 +1437,7 @@ bool KMComposeWin::applyChanges(void)
       // pending (who ever wants to implement it)
     }
   }
-  
+
   if( bOk && !doEncryptCompletely ) {
     if( cryptPlug ) {
       // note: only ask for encrypting if "Warn me" flag is set! (khz)
@@ -1455,7 +1455,7 @@ bool KMComposeWin::applyChanges(void)
                      " you wanted to be warned not to send unencrypted messages!") )
             + "<br>&nbsp;<br><b>"
             + i18n("Encrypt all parts of this message?")
-            + i18n("</b></qt>") ) );
+            + "</b></qt>" ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1463,16 +1463,16 @@ bool KMComposeWin::applyChanges(void)
           doEncryptCompletely = true;
         }
       }
-      
+
       /*
       note: Processing the cryptPlug->encryptEmail() flag here would
-            be absolutely wrong: this is used for specifying 
+            be absolutely wrong: this is used for specifying
                 if messages should be encrypted 'in general'.
             --> This sets the initial state of a freshly started Composer.
             --> This does *not* mean overriding user setting made while
                 editing in that composer window!         (khz, 2002/06/26)
       */
-               
+
     } else if( mAutoPgpEncrypt && !pgpUserId.isEmpty() ) {
       // determine the complete list of recipients
       QString _to = to().simplifyWhiteSpace();
@@ -1495,7 +1495,7 @@ bool KMComposeWin::applyChanges(void)
       { // the user wants to be asked or has to be asked
         kernel->kbp()->idle();
         int ret = KMessageBox::questionYesNo( this,
-                                      "Should this message be encrypted?" );
+                                      i18n("Should this message be encrypted?") );
         kernel->kbp()->busy();
         doEncrypt = ( KMessageBox::Yes == ret );
       }
@@ -1503,28 +1503,28 @@ bool KMComposeWin::applyChanges(void)
       { // warn the user that there are conflicting encryption preferences
         int ret =
           KMessageBox::warningYesNoCancel( this,
-                                      "There are conflicting encryption "
+                                      i18n("There are conflicting encryption "
                                       "preferences!\n\n"
-                                      "Should this message be encrypted?" );
+                                      "Should this message be encrypted?") );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         doEncrypt = ( ret == KMessageBox::Yes );
       }
     }
   }
-  
+
   // This c-string (init empty here) is set by *first* testing of expiring
   // signature certificate and stops us from repeatedly asking same questions.
   QCString signCertFingerprint;
-  
+
   // note: Must create extra message *before* calling compose on mMsg.
   KMMessage* extraMessage = new KMMessage( *mMsg );
-  
+
   if( bOk )
     bOk = composeMessage( cryptPlug, pgpUserId,
                           *mMsg, doSign, doEncrypt, false,
                           signCertFingerprint );
-    
+
   if( bOk ) {
     bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
                                         : true;
@@ -1535,7 +1535,7 @@ bool KMComposeWin::applyChanges(void)
     kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
-#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01  
+#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01
     // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
     // of german government:
     // --> Encrypted messages *must* be stored in unencrypted form after sending.
@@ -1544,7 +1544,7 @@ bool KMComposeWin::applyChanges(void)
     //     ( "Aufpraegen der Signatur" )
     // So we provide the user with a non-deactivateble warning and let her/him
     // choose to obey the rules or to ignore them explicitely.
-    if(    cryptPlug 
+    if(    cryptPlug
         && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
         && (    ( doEncrypt && saveMessagesEncrypted )
             || ( doSign    && ! saveSentSignatures    ) ) ){
@@ -1559,11 +1559,11 @@ bool KMComposeWin::applyChanges(void)
         i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
       QString question =
         i18n("Store message in the recommended way?");
-      
-      
-      
-      
-      
+
+
+
+
+
             saveSentSignatures    = true;
       /*
       if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
@@ -1603,9 +1603,9 @@ bool KMComposeWin::applyChanges(void)
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
       extraMessage->cleanupHeader();
       mMsg->setUnencryptedMsg( extraMessage );
-    }  
+    }
   }
-      
+
   if( bOk ) {
     if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
     mEdtFrom->setEdited(FALSE);
@@ -1637,7 +1637,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                    bool ignoreBcc,
                                    QCString& signCertFingerprint )
 {
-  bool bOk = true;  
+  bool bOk = true;
   // create informative header for those that have no mime-capable
   // email client
   theMessage.setBody( "This message is in MIME format." );
@@ -1862,7 +1862,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
       _to += cc().simplifyWhiteSpace();
     }
     QStringList recipientsWithoutBcc = KMMessage::splitEmailAddrList(_to);
-    
+
     // run encrypting(s) for Bcc recipient(s)
     if( doEncrypt && !ignoreBcc && !theMessage.bcc().isEmpty() ) {
       QStringList bccRecips = KMMessage::splitEmailAddrList( theMessage.bcc() );
@@ -1930,11 +1930,11 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
     kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == NULL!\n" << endl;
     return FALSE;
   }
-  
+
   // This c-string (init empty here) is set by *first* testing of expiring
   // encryption certificate: stops us from repeatedly asking same questions.
   QCString encryptCertFingerprints;
-  
+
   bool bOk = true;
   // encrypt message
   if( doEncrypt ) {
@@ -1946,7 +1946,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
       delete dwPart;
     } else
       innerContent = encodedBody;
-    
+
     // now do the encrypting:
     {
       if( cryptPlug ) {
@@ -2599,9 +2599,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
   if( cryptPlug ) {
     kdDebug(5006) << "\nKMComposeWin::pgpSignedMsg calling CRYPTPLUG "
                   << cryptPlug->libName() << endl;
-                  
+
     bool bSign = true;
-    
+
     if( signCertFingerprint.isEmpty() ){
         int certSize = 0;
         QByteArray certificate;
@@ -2614,7 +2614,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
         kdDebug(5006) << "\n\nRetrieving keys for: " << from() << endl;
         char* certificatePtr = 0;
-        bool findCertsOk = cryptPlug->findCertificates( 
+        bool findCertsOk = cryptPlug->findCertificates(
                                             &(*signer),
                                             &certificatePtr,
                                             &certSize,
@@ -2763,7 +2763,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
         const char* cleartext = cText;
         char* ciphertext  = 0;
-    
+
 //#define KHZ_TEST
 #ifdef KHZ_TEST
         QFile fileS( "testdat_sign.input" );
@@ -2826,7 +2826,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 if( errTxt )
                   error += errTxt;
                 else
-                  error += "[unknown error]";
+                  error += i18n("[unknown error]");
                 KMessageBox::sorry(this,
                   i18n("<b>This message could not be signed!</b><br>&nbsp;<br>"
                       "The Crypto Plug-In %1<br>"
@@ -2897,7 +2897,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
     const char* cleartext  = cText;
     const char* ciphertext = 0;
 
-    
+
     if( encryptCertFingerprints.isEmpty() ){
 
       QString selectedCert;
@@ -2952,7 +2952,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
               kdDebug(5006) << "\n\nnext try: Retrieving keys for: " << addressee << endl;
               certSize = 0;
               char* certificatePtr = 0;
-              findCertsOk = cryptPlug->findCertificates( 
+              findCertsOk = cryptPlug->findCertificates(
                                             &(*addressee),
                                             &certificatePtr,
                                             &certSize,
@@ -3092,10 +3092,10 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         if( !bEncrypt )  break;
 
       }
-    
+
     } // if( encryptCertFingerprints.isEmpty() )
-    
-      
+
+
     // Actually do the encryption, if the plugin supports this
     size_t cipherLen;
     if ( bEncrypt ) {
@@ -3118,7 +3118,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         if( errTxt )
           error += errTxt;
         else
-          error += "[unknown error]";
+          error += i18n("[unknown error]");
         KMessageBox::sorry(this,
           i18n("<b>This message could not be encrypted!</b><br>&nbsp;<br>"
               "The Crypto Plug-In %1<br>"
@@ -3220,7 +3220,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       kernel->kbp()->idle();
       int ret =
         KMessageBox::questionYesNo( this,
-                                    "Should this message be encrypted?" );
+                                    i18n("Should this message be encrypted?") );
       kernel->kbp()->busy();
       doEncrypt = ( ret == KMessageBox::Yes );
     }
@@ -3229,9 +3229,9 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       kernel->kbp()->idle();
       int ret =
         KMessageBox::warningYesNoCancel( this,
-                                         "There are conflicting encryption "
+                                         i18n("There are conflicting encryption "
                                          "preferences!\n"
-                                         "Should this message be encrypted?" );
+                                         "Should this message be encrypted?") );
       kernel->kbp()->busy();
       if( ret == KMessageBox::Cancel )
         return QCString();
@@ -3781,7 +3781,7 @@ int KMComposeWin::currentAttachmentNum()
 void KMComposeWin::slotAttachProperties()
 {
   CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
-  
+
   int idx = currentAttachmentNum();
 
   if (idx < 0) return;
@@ -3854,7 +3854,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, "Save Attachment As");
+  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, i18n("Save Attachment As"));
 
   if( url.isEmpty() )
     return;
@@ -4568,7 +4568,7 @@ void KMComposeWin::slotUpdateToolbars()
 void KMComposeWin::slotEditKeys()
 {
   KKeyDialog::configure( actionCollection()
-#if KDE_VERSION >= 306 
+#if KDE_VERSION >= 306
 			 , false /*don't allow one-letter shortcuts*/
 #endif
 			 );

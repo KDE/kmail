@@ -351,7 +351,7 @@ bool KMAcctImap::makeConnection()
   mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
   if (!mSlave)
   {
-    KMessageBox::error(0, QString("Could not start process for %1.")
+    KMessageBox::error(0, i18n("Could not start process for %1.")
       .arg(getUrl().protocol()));
     return FALSE;
   }
@@ -370,13 +370,13 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if ( !errorDialogIsActive )
   {
     errorDialogIsActive = true;
-    if ( KMessageBox::messageBox(0, KMessageBox::Error, 
+    if ( KMessageBox::messageBox(0, KMessageBox::Error,
           KIO::buildErrorString(errorCode, errorMsg),
           i18n("Error")) == KMessageBox::Ok )
     {
       errorDialogIsActive = false;
     }
-  } else 
+  } else
     kdDebug() << "suppressing error:" << errorMsg << endl;
   killAllJobs();
 }
@@ -429,9 +429,9 @@ void KMAcctImap::slotIdleTimeout()
     {
       QByteArray packedArgs;
       QDataStream stream( packedArgs, IO_WriteOnly);
-    
+
       stream << (int) 'N';
-    
+
       KIO::SimpleJob *job = KIO::special(getUrl(), packedArgs, FALSE);
       KIO::Scheduler::assignJobToSlave(mSlave, job);
       connect(job, SIGNAL(result(KIO::Job *)),
@@ -503,7 +503,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
   }
   if (job->error())
   {
-    if (!quiet) slotSlaveError(mSlave, job->error(), 
+    if (!quiet) slotSlaveError(mSlave, job->error(),
         job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
   }

@@ -119,7 +119,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
-      this, SLOT(slotChangeCaption(QListViewItem*)));  
+      this, SLOT(slotChangeCaption(QListViewItem*)));
 
   if ( kernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -925,8 +925,8 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
 
   if (mBoxOnNew && !mbNewMBVisible) {
     mbNewMBVisible = true;
-    KMessageBox::information(this, QString(i18n("You have new mail!")),
-                                   QString(i18n("New Mail")));
+    KMessageBox::information(this, i18n("You have new mail!"),
+                                   i18n("New Mail"));
     mbNewMBVisible = false;
   }
 
@@ -3677,6 +3677,6 @@ void KMMainWin::slotChangeCaption(QListViewItem * i)
   QStringList names;
   for ( QListViewItem * item = i ; item ; item = item->parent() )
     names.prepend( item->text(0) );
-  setCaption( names.join("/") );  
+  setCaption( names.join("/") );
 }
 

@@ -2424,7 +2424,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       cleartext = data->dwPart()->AsString().c_str();
     else
       new_cleartext = 0;
-    
+
 // #define KHZ_TEST
 #ifdef KHZ_TEST
     QFile fileD0( "testdat_xx-0" );
@@ -4664,7 +4664,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->mViewer->write(linkName);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
-      win->setCaption(i18n("View Attachment: ") + pname);
+      win->setCaption(i18n("View Attachment: %1").arg(pname));
       win->show();
     } else {
       QMultiLineEdit *medit = new QMultiLineEdit();
