@@ -143,7 +143,6 @@ void ExpireJob::done()
   mTimer.stop();
 
   QString str;
-  FolderStorage* storage = mSrcFolder->storage();
   bool moving = false;
 
   if ( !mRemovedMsgs.isEmpty() ) {
@@ -192,14 +191,17 @@ void ExpireJob::done()
   if ( !str.isEmpty() )
     KMBroadcastStatus::instance()->setStatusMsg( str );
 
-  storage->close();
-  mFolderOpen = false;
-  if ( !moving )
+  if ( !moving ) {
+    mSrcFolder->storage()->close();
+    mFolderOpen = false;
     delete this;
+  }
 }
 
 void ExpireJob::slotMessagesMoved( KMCommand::Result result )
 {
+  mSrcFolder->storage()->close();
+  mFolderOpen = false;
   QString msg;
   switch ( result ) {
   case KMCommand::OK:
