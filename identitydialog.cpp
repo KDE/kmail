@@ -58,7 +58,7 @@ namespace KMail {
     int row;
     QGridLayout * glay;
     QString msg;
-    
+
     //
     // Tab Widget: General
     //
@@ -147,7 +147,7 @@ namespace KMail {
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPgpKeyRequester, row, 1 );
-  
+
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccCombo = new KMFolderComboBox( tab );
@@ -275,7 +275,7 @@ namespace KMail {
     mTransportCombo->clear();
     mTransportCombo->insertStringList( sl );
     // restore saved setting:
-    mTransportCombo->setEditText( content );    
+    mTransportCombo->setEditText( content );
   };
 
 };

@@ -24,7 +24,6 @@
 
 #include <kdialogbase.h>
 #include <qptrlist.h>
-
 class QWidget;
 class KConfig;
 

@@ -111,6 +111,7 @@ using KMime::DateFormatter;
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
 #endif
 
+
 // little helper:
 static inline QPixmap loadIcon( const char * name ) {
   return KGlobal::instance()->iconLoader()
@@ -1132,14 +1133,34 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
   mBeepNewMailCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                  QSizePolicy::Fixed ) );
+  // "Systray" notification check box
+  mSystrayCheck = new QCheckBox( i18n("S&ystem tray notification"), group );
+
+  // System tray modes
+  QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray modes"), group);
+  bgroup->setColumnLayout(0, Qt::Horizontal);
+  bgroup->layout()->setSpacing( 0 );
+  bgroup->layout()->setMargin( 0 );
+  QGridLayout *bgroupLayout = new QGridLayout( bgroup->layout() );
+  bgroupLayout->setAlignment( Qt::AlignTop );
+  bgroupLayout->setSpacing( 6 );
+  bgroupLayout->setMargin( 11 );
+
+  mBlinkingSystray = new QRadioButton( i18n("Always show system tray"), bgroup);
+  bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
+
+  mSystrayOnNew = new QRadioButton( i18n("Show system tray on new mail"), bgroup);
+  bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
+
+  connect( mSystrayCheck, SIGNAL(toggled(bool)),
+           bgroup, SLOT(setEnabled(bool)) );
 
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
                                                           QSizePolicy::Fixed ) );
-
   connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
-	   this, SLOT(slotEditNotifications()) );
+           this, SLOT(slotEditNotifications()) );
 }
 
 
@@ -1335,14 +1356,12 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
     mAccountList->setSelected( item, true );
 }
 
-
 void NetworkPage::ReceivingTab::slotEditNotifications()
 {
 #if KDE_VERSION >= 306
   KNotifyDialog::configure(this);
 #endif
 }
-
 
 void NetworkPage::ReceivingTab::setup() {
   KConfigGroup general( KMKernel::config(), "General" );
@@ -1366,6 +1385,9 @@ void NetworkPage::ReceivingTab::setup() {
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
 
+  mSystrayCheck->setChecked( general.readBoolEntry("systray-on-mail", false) );
+  mBlinkingSystray->setChecked( !general.readBoolEntry("systray-on-new", true) );
+  mSystrayOnNew->setChecked( general.readBoolEntry("systray-on-new", true) );
 }
 
 void NetworkPage::ReceivingTab::apply() {
@@ -1405,6 +1427,8 @@ void NetworkPage::ReceivingTab::apply() {
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
+  general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
+  general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
 }
 
 void NetworkPage::ReceivingTab::dismiss() {
@@ -1848,13 +1872,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   // "show colorbar" check box:
   mShowColorbarCheck = new QCheckBox( i18n("Show HTML status &bar"), this );
   vlay->addWidget( mShowColorbarCheck );
-
   vlay->addWidget( new QLabel( i18n("<qt><p>Below, you can change the "
 				    "arrangement of KMail's window components "
 				    "(folder list, message list, reader pane "
 				    "and the optional MIME tree).</p></qt>"),
 			       this ) );
-
   // The window layout
   mWindowLayoutBG = new QHButtonGroup( i18n("&Window Layout"), this );
   mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
@@ -1981,7 +2003,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom (Shift+F1 for help)"), KMime::DateFormatter::Custom }
+  { I18N_NOOP("C&ustom (shift + F1 for help)"), KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
@@ -2325,7 +2347,6 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   mHeadersTab = new HeadersTab();
   addTab( mHeadersTab, mHeadersTab->title() );
 }
-
 
 QString ComposerPage::GeneralTab::title() {
   return i18n("&General");
@@ -3296,36 +3317,36 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   msg = i18n( "<qt><h3>Message Dispositon Notification Policy</h3>"
 	      "<p>MDNs are a generalization of what is commonly called \"read"
-	      "   receipt\". The message author requests a disposition"
-	      "   notification to be sent and the receiver's mail program"
-	      "   generates a reply from which the author can learn what"
-	      "   happened to his message. Common disposition types include"
-	      "   \"displayed\" (i.e. read), \"deleted\" and \"dispatched\""
-	      "   (i.e. e.g. forwarded).</p>"
-	      "<p>The following options are available to control KMail's"
-	      "   sending of MDNs:</p>"
-	      "<ul>"
-	      "<li><em>Ignore</em>: Ignores any request for disposition"
-	      "    notifications. No MDN will ever be sent automatically"
-	      "    (recommended).</li>"
-	      "<li><em>Ask</em>: Answers requests only after asking the user"
-	      "    for permission. This way, you can send MDNs for selected"
-	      "    messages while denying or ignoring them for others.</li>"
-	      "<li><em>Deny</em>: Always sends a \"denied\" notification. This"
-	      "    is only <em>slightly</em> better than always sending MDNs."
-	      "    The author will still know that the messages has been acted"
-	      "    upon, he just cannot tell whether it was deleted or read"
-	      "    etc.</li>"
-	      "<li><em>Always send</em>: Always sends the requested"
-	      "    disposition notification. That means that the author of the"
-	      "    message gets to know when the message was acted upon and,"
-	      "    in addition, what happened to it (displayed, deleted,"
-	      "    etc.). This option is strongly discouraged, but since it"
-	      "    makes much sense e.g. for customer relationship management,"
-	      "    it has been made available.</li>"
-	      "</ul></qt>" );
+ 	      "   receipt\". The message author requests a disposition"
+ 	      "   notification to be sent and the receiver's mail program"
+ 	      "   generates a reply from which the author can learn what"
+ 	      "   happened to his message. Common disposition types include"
+ 	      "   \"displayed\" (i.e. read), \"deleted\" and \"dispatched\""
+ 	      "   (i.e. e.g. forwarded).</p>"
+ 	      "<p>The following options are available to control KMail's"
+ 	      "   sending of MDNs:</p>"
+ 	      "<ul>"
+ 	      "<li><em>Ignore</em>: Ignores any request for disposition"
+ 	      "    notifications. No MDN will ever be sent automatically"
+ 	      "    (recommended).</li>"
+ 	      "<li><em>Ask</em>: Answers requests only after asking the user"
+ 	      "    for permission. This way, you can send MDNs for selected"
+ 	      "    messages while denying or ignoring them for others.</li>"
+ 	      "<li><em>Deny</em>: Always sends a \"denied\" notification. This"
+ 	      "    is only <em>slightly</em> better than always sending MDNs."
+ 	      "    The author will still know that the messages has been acted"
+ 	      "    upon, he just cannot tell whether it was deleted or read"
+ 	      "    etc.</li>"
+ 	      "<li><em>Always send</em>: Always sends the requested"
+ 	      "    disposition notification. That means that the author of the"
+ 	      "    message gets to know when the message was acted upon and,"
+ 	      "    in addition, what happened to it (displayed, deleted,"
+ 	      "    etc.). This option is strongly discouraged, but since it"
+ 	      "    makes much sense e.g. for customer relationship management,"
+ 	      "    it has been made available.</li>"
+ 	      "</ul></qt>" );
   for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
-    QWhatsThis::add( mMDNGroup->find( i ), msg );
+      QWhatsThis::add( mMDNGroup->find( i ), msg );
 
 }
 
@@ -3333,7 +3354,6 @@ void SecurityPage::GeneralTab::setup() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
-
 
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
@@ -3344,6 +3364,7 @@ void SecurityPage::GeneralTab::setup() {
   num = mdn.readNumEntry( "quote-message", 0 );
   if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
   mOrigQuoteGroup->setButton( num );
+
 }
 
 void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -3356,18 +3377,18 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
   if ( reader.hasKey( "htmlLoadExternal" ) )
     mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal" ) );
   if ( general.hasKey( "send-receipts" ) )
-    mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts" ) );
+      mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts" ) );
   if ( mdn.hasKey( "default-policy" ) ) {
-    int num = mdn.readNumEntry( "default-policy" );
-    if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
-    mMDNGroup->setButton( num );
+      int num = mdn.readNumEntry( "default-policy" );
+      if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
+      mMDNGroup->setButton( num );
   }
   if ( mdn.hasKey( "quote-message" ) ) {
-    int num = mdn.readNumEntry( "quote-message" );
-    if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
-    mOrigQuoteGroup->setButton( num );
+      int num = mdn.readNumEntry( "quote-message" );
+      if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
+      mOrigQuoteGroup->setButton( num );
   }
-};
+}
 
 void SecurityPage::GeneralTab::apply() {
   KConfigGroup general( KMKernel::config(), "General" );
@@ -3641,7 +3662,6 @@ void FolderPage::apply() {
   else
     general.writeEntry( "when-to-expire", expireManual );
 }
-
 
 QString SecurityPage::CryptPlugTab::title() {
   return i18n("Crypto Plugi&ns");

@@ -148,7 +148,10 @@ public:
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
 
-  /** 
+  void setConfigureShortcut( bool aShort ) { bConfigureShortcut = aShort; }
+  bool configureShortcut() const { return bConfigureShortcut; }
+
+  /**
    * Called from the filter manager when a folder is moved.
    * Tests if the folder aFolder is used in any action. Changes it
    * to aNewFolder folder in this case.
@@ -175,6 +178,7 @@ private:
   bool bApplyOnOutbound : 1;
   bool bApplyOnExplicit : 1;
   bool bStopProcessingHere : 1;
+  bool bConfigureShortcut : 1;
 };
 
 #endif /*kmfilter_h*/

@@ -133,31 +133,31 @@ KMTransportSelDlg::KMTransportSelDlg( QWidget *parent, const char *name,
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
- 
+
   QButtonGroup *group = new QButtonGroup( i18n("Transport"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
- 
+
   topLayout->addWidget( group, 10 );
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint()*2, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
- 
+
   QRadioButton *radioButton1 = new QRadioButton( i18n("SM&TP"), group );
   vlay->addWidget( radioButton1 );
   QRadioButton *radioButton2 = new QRadioButton( i18n("&Sendmail"), group );
   vlay->addWidget( radioButton2 );
- 
+
   vlay->addStretch( 10 );
- 
+
   radioButton1->setChecked(true); // Pop is most common ?
   buttonClicked(0);
 }
- 
+
 void KMTransportSelDlg::buttonClicked( int id )
 {
   mSelectedButton = id;
 }
- 
- 
+
+
 int KMTransportSelDlg::selected( void ) const
 {
   return mSelectedButton;
@@ -173,14 +173,14 @@ KMTransportDialog::KMTransportDialog( const QString & caption,
   assert(transportInfo != 0);
   mServerTest = 0;
   mTransportInfo = transportInfo;
- 
+
   if( transportInfo->type == QString::fromLatin1("sendmail") )
   {
     makeSendmailPage();
   } else {
     makeSmtpPage();
   }
- 
+
   setupSettings();
 }
 
@@ -194,7 +194,7 @@ void KMTransportDialog::makeSendmailPage()
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
- 
+
   mSendmail.titleLabel = new QLabel( page );
   mSendmail.titleLabel->setText( i18n("Transport: Sendmail") );
   QFont titleFont( mSendmail.titleLabel->font() );
@@ -203,7 +203,7 @@ void KMTransportDialog::makeSendmailPage()
   topLayout->addWidget( mSendmail.titleLabel );
   KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addWidget( hline );
- 
+
   QGridLayout *grid = new QGridLayout( topLayout, 3, 3, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 2, 10 );
@@ -242,7 +242,7 @@ void KMTransportDialog::makeSmtpPage()
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
- 
+
   mSmtp.titleLabel = new QLabel( page );
   mSmtp.titleLabel->setText( i18n("Transport: SMTP") );
   QFont titleFont( mSmtp.titleLabel->font() );
@@ -251,18 +251,18 @@ void KMTransportDialog::makeSmtpPage()
   topLayout->addWidget( mSmtp.titleLabel );
   KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addWidget( hline );
- 
+
   QTabWidget *tabWidget = new QTabWidget(page);
   topLayout->addWidget( tabWidget );
- 
+
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
- 
+
   QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
- 
+
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, 0, 0 );
   mSmtp.nameEdit = new QLineEdit( page1 );
@@ -271,7 +271,7 @@ void KMTransportDialog::makeSmtpPage()
                        "referring to this server."));
   label->setBuddy( mSmtp.nameEdit );
   grid->addWidget( mSmtp.nameEdit, 0, 1 );
- 
+
   label = new QLabel( i18n("&Host:"), page1 );
   grid->addWidget( label, 3, 0 );
   mSmtp.hostEdit = new QLineEdit( page1 );
@@ -301,7 +301,7 @@ void KMTransportDialog::makeSmtpPage()
                        "Leave it empty if no command should be run."));
   label->setBuddy(mSmtp.precommand);
   grid->addWidget( mSmtp.precommand, 5, 1 );
-          
+
   QFrame* line = new QFrame( page1 );
   line->setFrameStyle( QFrame::HLine | QFrame::Plain );
   grid->addMultiCellWidget( line, 6, 6, 0, 1 );
@@ -316,7 +316,7 @@ void KMTransportDialog::makeSmtpPage()
   connect(mSmtp.authCheck, SIGNAL(clicked()),
           SLOT(slotRequiresAuthClicked()));
   grid->addMultiCellWidget( mSmtp.authCheck, 7, 7, 0, 1 );
- 
+
   mSmtp.loginLabel = new QLabel( i18n("&Login:"), page1 );
   grid->addWidget( mSmtp.loginLabel, 8, 0 );
   mSmtp.loginEdit = new QLineEdit( page1 );
@@ -325,7 +325,7 @@ void KMTransportDialog::makeSmtpPage()
                   i18n("The user name to send to the server "
                        "for authorization"));
   grid->addWidget( mSmtp.loginEdit, 8, 1 );
- 
+
   mSmtp.passwordLabel = new QLabel( i18n("P&assword:"), page1 );
   grid->addWidget( mSmtp.passwordLabel, 9, 0 );
   mSmtp.passwordEdit = new QLineEdit( page1 );
@@ -346,12 +346,12 @@ void KMTransportDialog::makeSmtpPage()
                   "considered secure from decryption efforts "
                   "if access to the configuration file is obtained."));
   grid->addMultiCellWidget( mSmtp.storePasswordCheck, 10, 10, 0, 1 );
- 
+
   line = new QFrame( page1 );
   line->setFrameStyle( QFrame::HLine | QFrame::Plain );
   grid->addMultiCellWidget( line, 11, 11, 0, 1 );
 
-  mSmtp.specifyHostnameCheck = 
+  mSmtp.specifyHostnameCheck =
     new QCheckBox( i18n("Sen&d custom hostname to server"), page1 );
   grid->addMultiCellWidget( mSmtp.specifyHostnameCheck, 12, 12, 0, 1 );
   QWhatsThis::add(mSmtp.specifyHostnameCheck,
@@ -387,7 +387,7 @@ void KMTransportDialog::makeSmtpPage()
   connect(mSmtp.encryptionGroup, SIGNAL(clicked(int)),
     SLOT(slotSmtpEncryptionChanged(int)));
   vlay->addWidget( mSmtp.encryptionGroup );
- 
+
   mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
@@ -399,7 +399,7 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mSmtp.authGroup );
   mSmtp.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mSmtp.authGroup );
   vlay->addWidget( mSmtp.authGroup );
- 
+
   vlay->addStretch();
 
   QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
@@ -482,7 +482,7 @@ void KMTransportDialog::slotSendmailChooser()
 {
   KFileDialog dialog("/", QString::null, this, 0, true );
   dialog.setCaption(i18n("Choose sendmail Location") );
- 
+
   if( dialog.exec() == QDialog::Accepted )
   {
     KURL url = dialog.selectedURL();
@@ -490,13 +490,13 @@ void KMTransportDialog::slotSendmailChooser()
     {
       return;
     }
- 
+
     if( url.isLocalFile() == false )
     {
       KMessageBox::sorry( 0, i18n( "Only local files allowed." ) );
       return;
     }
- 
+
     mSendmail.locationEdit->setText( url.path() );
   }
 }

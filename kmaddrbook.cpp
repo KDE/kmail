@@ -139,15 +139,15 @@ QString KabcBridge::expandDistributionLists(QString recipients)
           passwd *pw = getpwnam(username.local8Bit());
           if (pw)
           {
-              QString fn = QString::fromLocal8Bit(pw->pw_gecos);
-	      int first_comma = fn.find(',');
-	      if (first_comma > 0) {
-		fn = fn.left(first_comma);
-	      }
-              if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-                receiver = "\"" + fn + "\" <" + receiver + ">";
-              else
-                receiver = fn + " <" + receiver + ">";
+            QString fn = QString::fromLocal8Bit(pw->pw_gecos);
+            int first_comma = fn.find(',');
+            if (first_comma > 0) {
+              fn = fn.left(first_comma);
+            }
+            if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
+              receiver = "\"" + fn + "\" <" + receiver + ">";
+            else
+              receiver = fn + " <" + receiver + ">";
           }
         }
         expRecipients += receiver;

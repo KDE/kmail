@@ -39,7 +39,7 @@ KMDisplayVCard::~KMDisplayVCard() {
  
 
 void KMDisplayVCard::setVCard(VCard *vc) {
-  if (_vc) delete _vc;
+  delete _vc;
   _vc = vc;
 }
   

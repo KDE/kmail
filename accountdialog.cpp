@@ -268,7 +268,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
-  delete mServerTest;
+    delete mServerTest;
 }
 
 void AccountDialog::makeLocalAccountPage()

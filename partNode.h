@@ -1,6 +1,4 @@
 /*
-  $Id$
-
   a node in a MIME tree.
 
   Copyright (C) 2002 by Klarälvdalens Datakonsult AB
