@@ -53,6 +53,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   mFolder = 0;
   mCountUnread = 0;
   mCountLastUnread = 0;
+  mCountRemainChecks = 0;  
   errorDialogIsActive = false;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
