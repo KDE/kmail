@@ -102,7 +102,7 @@ protected:
   KMAcctImap(KMAcctMgr* owner, const QString& accountName);
 
   QPtrList<KMail::ImapJob> mJobList;
-  KMFolderImap *mFolder;
+  QGuardedPtr<KMFolderImap> mFolder;
   QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
 
 protected slots:
