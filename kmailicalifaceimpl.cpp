@@ -633,8 +633,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   KMFolder* f = findResourceFolder( resource );
   kdDebug(5006) << "Updating in folder " << f << endl;
   if( f && storageFormat( f ) == StorageXML ){
-    KMMessage* msg = findMessageBySerNum( sernum, f );
-    if( msg ) {
+    KMMessage* msg;
+    if( sernum != 0 && ( msg = findMessageBySerNum( sernum, f ) ) ) {
       // Message found - update it:
 
       // Delete some attachments according to list
