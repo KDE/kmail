@@ -433,13 +433,13 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if ( isICalInvitation && bcc.isEmpty() )
       msg->setBcc( "" );
     if ( isICalInvitation &&
-	options.readBoolEntry( "LegacyBodyInvites", false ) ) {
+        options.readBoolEntry( "LegacyBodyInvites", false ) ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       msg->setHeaderField( "Content-Type",
-			   QString( "text/calendar; method=%1; "
+                           QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
-			   arg( attachParamValue ) );
+                           arg( attachParamValue ) );
 
       // Don't show the composer window, if the automatic sending is checked
       iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
@@ -455,14 +455,15 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->setParameter( attachParamAttr, attachParamValue );
       msgPart->setContentDisposition( attachContDisp );
       if( !attachCharset.isEmpty() ) {
-	// kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
+        // kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
         // << attachCharset << endl;
-	msgPart->setCharset( attachCharset );
+        msgPart->setCharset( attachCharset );
       }
     }
   }
 
-  KMComposeWin *cWin = new KMComposeWin( msg );
+  KMComposeWin *cWin = new KMComposeWin();
+  cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
