@@ -1116,6 +1116,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   readFolderConfig();
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder( mFolder, jumpToUnread );
+  updateMessageMenu();   
   kernel->kbp()->idle();
 }
 
