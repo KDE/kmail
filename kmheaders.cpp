@@ -1302,6 +1302,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
               this, SLOT(highlightMessage(QListViewItem*)));
 
   KMHeaderItem *removedItem = mItems[id];
+  if (!removedItem) return;
   KMHeaderItem *curItem = currentHeaderItem();
 
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
