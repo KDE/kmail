@@ -1624,6 +1624,10 @@ void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelected()
 {
+  // opencount--
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
+    mFolder->close();
+  
   folderSelected( mFolder );
 }
 
