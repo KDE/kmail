@@ -2217,7 +2217,7 @@ void KMComposeWin::slotAppendSignature()
       return;
     }
     QString sigFileName = url.path();
-    sigText = kFileToString(sigFileName, TRUE);
+    sigText = QString::fromLocal8Bit(kFileToString(sigFileName, TRUE));
     ident.setSignatureFile(sigFileName);
     ident.writeConfig(true);
   }
