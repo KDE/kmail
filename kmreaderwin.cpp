@@ -44,6 +44,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
+//--- Sven's save attachments to /tmp start ---
+#include <unistd.h>  // for access and getpid
+//--- Sven's save attachments to /tmp end ---
 
 #ifdef KRN
 extern KApplication *app;
@@ -519,8 +522,53 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
   label = aMsgPart->name();
   comment = aMsgPart->contentDescription();
-  href.sprintf("part://%i", aPartNum+1);
+  
+//--- Sven's save attachments to /tmp start ---
+  QString fname("/tmp/kmail");
+  fname.sprintf ("/tmp/kmail%d", getpid());
+  bool ok = true;
 
+  if (access(fname.data(), W_OK) != 0) // Not there or not writable
+    if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
+      ok=false; //failed create
+
+  if (ok)
+  {
+    fname.sprintf("%s/part%d", fname.data(), aPartNum+1);
+    if (access(fname.data(), W_OK) != 0) // Not there or not writable
+      if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
+	ok = false; //failed create
+  }
+
+  if (ok)
+  {
+    if (aMsgPart->name().isEmpty())
+      fname += "/unnamed";
+    else
+    {
+      fname = fname + "/" + aMsgPart->name();
+      // remove quotes from the filename so that the shell does not get confused
+      int c = 0;
+      while ((c = fname.find('"', c)) >= 0)
+	fname.remove(c, 1);
+
+      c = 0;
+      while ((c = fname.find('\'', c)) >= 0)
+	fname.remove(c, 1);
+    }
+
+    if (!kStringToFile(aMsgPart->bodyDecoded(), fname, false, false, false))
+      ok = false;
+  }
+  if (ok)
+  {
+    href.sprintf("file:%s", fname.data());
+    //debug ("Wrote attachment to %s", href.data());
+  }
+  else
+//--- Sven's save attachments to /tmp end ---
+  href.sprintf("part://%i", aPartNum+1);
+  
   iconName = aMsgPart->iconName();
   if (iconName.left(11)=="unknown.xpm")
   {
@@ -643,6 +691,21 @@ void KMReaderWin::printMsg(void)
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const char* aUrl)
 {
+  //--- Sven's save attachments to /tmp start ---
+  if (!aUrl || !mMsg) return -1;
+  
+  QString url;
+  url.sprintf("file:/tmp/kmail%d/part", getpid());
+  int s = url.length();
+  if (strncmp(aUrl, url.data(), s) == 0)
+  {
+    url = aUrl;
+    int i = url.findRev('/');
+    url = url.mid(s,i-s);
+    //debug ("Url num = %s", url.data());
+    return atoi(url.data());
+  }
+  //--- Sven's save attachments to /tmp end ---
   if (!aUrl || !mMsg || strncmp(aUrl,"part://",7)) return -1;
   return (aUrl ? atoi(aUrl+7) : 0);
 }
@@ -791,16 +854,20 @@ void KMReaderWin::slotAtmOpen()
 
   pname = msgPart.name();
   if (pname.isEmpty()) pname="unnamed";
-  tmpName = tempnam(NULL, NULL);
-  if (!tmpName)
-  {
-    warning(i18n("Could not create temporary file"));
-    return;
-  }
-  fileName = tmpName;
-  free(tmpName);
-  fileName += '-';
-  fileName += pname;
+  //--- Sven's save attachments to /tmp start ---
+  // Sven added:
+  fileName.sprintf ("/tmp/kmail%d/part%d/%s", getpid(), mAtmCurrent+1, pname.data());
+  // Sven commented out:
+  //tmpName = tempnam(NULL, NULL);
+  //if (!tmpName)
+  //{
+  //  warning(i18n("Could not create temporary file"));
+  //  return;
+  //}
+  //fileName = tmpName;
+  //free(tmpName);
+  //fileName += '-';
+  //fileName += pname;
 
   // remove quotes from the filename so that the shell does not get confused
   c = 0;
@@ -810,15 +877,17 @@ void KMReaderWin::slotAtmOpen()
   c = 0;
   while ((c = fileName.find('\'', c)) >= 0)
     fileName.remove(c, 1);
-
-  kbp->busy();
-  str = msgPart.bodyDecoded();
-  old_umask = umask(077);
-  if (!kStringToFile(str, fileName, TRUE))
-    warning(i18n("Could not save temporary file %s"),
-	    (const char*)fileName);
-  umask(old_umask);
-  kbp->idle();
+  
+  // Sven commented out:
+  //kbp->busy();
+  //str = msgPart.bodyDecoded();
+  //old_umask = umask(077);
+  //if (!kStringToFile(str, fileName, TRUE))
+  //  warning(i18n("Could not save temporary file %s"),
+  //	    (const char*)fileName);
+  //umask(old_umask);
+  //kbp->idle();
+  //--- Sven's save attachments to /tmp end ---
   cmd = "kfmclient openURL \'";
   cmd += fileName;
   cmd += "\'";

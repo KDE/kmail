@@ -370,6 +370,12 @@ static void cleanup(void)
 
   qInstallMsgHandler(oldMsgHandler);
   app->getConfig()->sync();
+  //--- Sven's save attachments to /tmp start ---
+  //debug ("cleaned");
+  QString cmd;
+  cmd.sprintf("rm -rf /tmp/kmail%d", getpid());
+  system (cmd.data()); // delete your owns only
+  //--- Sven's save attachments to /tmp end ---
 }
 
 
