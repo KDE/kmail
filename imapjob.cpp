@@ -210,8 +210,10 @@ ImapJob::~ImapJob()
     if ( account &&  mJob ) {
       ImapAccountBase::JobIterator it = account->findJob( mJob );
       if ( it != account->jobsEnd() ) {
-        if( (*it).progressItem )
+        if( (*it).progressItem ) {
           (*it).progressItem->setComplete();
+          (*it).progressItem = 0;
+        }
         if ( !(*it).msgList.isEmpty() ) {
           for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
             mit.current()->setTransferInProgress( false );
@@ -230,8 +232,10 @@ ImapJob::~ImapJob()
       if ( account && mJob ) {
         ImapAccountBase::JobIterator it = account->findJob( mJob );
         if ( it != account->jobsEnd() ) {
-          if( (*it).progressItem )
+          if( (*it).progressItem ) {
             (*it).progressItem->setComplete();
+            (*it).progressItem = 0;
+          }
           if ( !(*it).msgList.isEmpty() ) {
             for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
               mit.current()->setTransferInProgress( false );
