@@ -50,9 +50,6 @@ public:
     if id>count() the last message is shown. */
   virtual void setCurrentMsg(int msgId);
 
-  /** Provide information about number of messages in a folder */
-  void setFolderInfoStatus();
-
   /** Get a list of all items in the current thread */
   QPtrList<QListViewItem> currentThread() const;
 
@@ -209,6 +206,9 @@ public slots:
 
   /** switch size-column */
   void slotToggleSizeColumn();
+
+  /** Provide information about number of messages in a folder */
+  void setFolderInfoStatus();
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,

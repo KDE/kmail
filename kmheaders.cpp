@@ -823,6 +823,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     // WABA: Make sure that no KMReaderWin is still using a msg
     // from this folder, since it's msg's are about to be deleted.
       highlightMessage(0, false);
+
+      disconnect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+          this, SLOT(setFolderInfoStatus()));
+
       mFolder->markNewAsUnread();
       writeFolderConfig();
       disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
@@ -861,6 +865,8 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	      this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
 	      mOwner, SLOT(statusMsg(const QString&)));
+      connect(aFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+          this, SLOT(setFolderInfoStatus()));
 
       // Not very nice, but if we go from nested to non-nested
       // in the folderConfig below then we need to do this otherwise
