@@ -162,7 +162,11 @@ void NewFolderDialog::slotOk()
     }
   }
 
-  KMFolderDir *selectedFolderDir = mFolder->createChildFolder();
+  // default parent is Top Level local folders
+  KMFolderDir * selectedFolderDir = &(kmkernel->folderMgr()->dir());
+  // we got a parent, let's use that
+  if ( mFolder )
+    selectedFolderDir = mFolder->createChildFolder();
 
   // check if the folder already exists
   if( selectedFolderDir->hasNamedFolder( fldName )
