@@ -59,16 +59,11 @@ public:
   virtual ~KMGroupware();
 
 signals:
-  void incidenceAdded( KMFolder* folder, const QString& ical );
-  void incidenceDeleted( KMFolder* folder, const QString& uid );
-
   /** Make the IMAP resource re-read all of the given type */
   void signalRefresh( const QString& type);
 
 private slots:
   // internal slots for new interface
-  void slotIncidenceAdded( KMFolder*, Q_UINT32 );
-  void slotIncidenceDeleted( KMFolder*, Q_UINT32 );
   void slotRefreshCalendar();
   void slotRefreshTasks();
 

@@ -87,9 +87,16 @@ public:
   static void deleteMsg( KMMessage* msg );
 
 public slots:
-  void slotIncidenceAdded( KMFolder* folder, const QString& ical );
-  void slotIncidenceDeleted( KMFolder* folder, const QString& uid );
+  void slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum );
+  void slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum );
   void slotRefresh( const QString& type);
+
+private slots:
+  void slotRefreshCalendar();
+  void slotRefreshTasks();
+  void slotRefreshJournals();
+  void slotRefreshContacts();
+  void slotRefreshNotes();
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */

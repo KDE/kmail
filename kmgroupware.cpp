@@ -37,7 +37,6 @@
 #include "kmgroupwarefuncs.h"
 #include "kmcommands.h"
 #include "kmfolderindex.h"
-#include "kmmsgdict.h"
 #include "kmkernel.h"
 #include "objecttreeparser.h"
 #include "kmailicalifaceimpl.h"
@@ -542,47 +541,6 @@ void internal_directlySendMessage(KMMessage* msg)
   win.mNeverEncrypt = true;
   win.slotSendNow();
   //mMainWin->slotCompose( msgNew, 0 );
-}
-
-void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
-{
-  if( !kernel->iCalIface().isResourceImapFolder( folder ) ) {
-    kdError() << "Not a groupware folder" << endl;
-    return;
-  }
-
-  int i = 0;
-  KMFolder* aFolder = 0;
-  KMKernel::self()->msgDict()->getLocation( sernum, &aFolder, &i );
-  assert( folder == aFolder );
-
-  bool unget = !folder->isMessage( i );
-  QString s;
-  if( vPartFoundAndDecoded( folder->getMsg( i ), s ) )
-    emit incidenceAdded( folder, s );
-  if( unget ) folder->unGetMsg(i);
-}
-
-void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
-{
-  if( !kernel->iCalIface().isResourceImapFolder( folder ) ) {
-    kdError() << "Not a groupware folder" << endl;
-    return;
-  }
-
-  int i = 0;
-  KMFolder* aFolder = 0;
-  KMKernel::self()->msgDict()->getLocation( sernum, &aFolder, &i );
-  assert( folder == aFolder );
-
-  bool unget = !folder->isMessage( i );
-  QString s;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-    QString uid( "UID" );
-    vPartMicroParser( s.utf8(), uid );
-    emit incidenceDeleted( folder, uid );
-  }
-  if( unget ) folder->unGetMsg(i);
 }
 
 void KMGroupware::slotRefreshCalendar()

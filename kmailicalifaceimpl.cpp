@@ -28,6 +28,7 @@
 #include "kmfoldermgr.h"
 #include "kmcommands.h"
 #include "kmfolderindex.h"
+#include "kmmsgdict.h"
 
 #include <mimelib/enum.h>
 
@@ -54,11 +55,6 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mUseResourceIMAP( false )
 {
   QObject* gw = &kernel->groupware();
-  connect( gw, SIGNAL( incidenceAdded( const QString&, const QString& ) ),
-	   this, SLOT( slotIncidenceAdded( const QString&, const QString& ) ) );
-
-  connect( gw, SIGNAL( incidenceDeleted( const QString&, const QString& ) ),
-	   this, SLOT( slotIncidenceDeleted( const QString&, const QString& ) ) );
   connect( gw, SIGNAL( signalRefresh( const QString& ) ),
 	   this, SLOT( slotRefresh( const QString& ) ) );
 }
@@ -130,29 +126,60 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
 }
 
 // KMail added a file to one of the groupware folders
-void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder, const QString& ical )
+void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
+					     Q_UINT32 sernum )
 {
   QString type = icalFolderType( folder );
-  if( !type.isNull() ) {
+  if( type.isNull() ) {
+    kdError() << "Not an IMAP resource folder" << endl;
+    return;
+  }
+
+  int i = 0;
+  KMFolder* aFolder = 0;
+  kernel->msgDict()->getLocation( sernum, &aFolder, &i );
+  assert( folder == aFolder );
+
+  bool unget = !folder->isMessage( i );
+  QString ical;
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
     QByteArray data;
     QDataStream arg(data, IO_WriteOnly );
     arg << type << ical;
     kdDebug() << "Emitting DCOP signal incidenceAdded( " << type << ", " << ical << " )" << endl;
     emitDCOPSignal( "incidenceAdded(QString,QString)", data );
   }
+  if( unget ) folder->unGetMsg(i);
+
 }
 
 // KMail deleted a file
-void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder, const QString& uid )
+void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
+					       Q_UINT32 sernum )
 {
   QString type = icalFolderType( folder );
-  if( !type.isNull() ) {
+  if( type.isNull() ) {
+    kdError() << "Not a groupware folder" << endl;
+    return;
+  }
+
+  int i = 0;
+  KMFolder* aFolder = 0;
+  kernel->msgDict()->getLocation( sernum, &aFolder, &i );
+  assert( folder == aFolder );
+
+  bool unget = !folder->isMessage( i );
+  QString ical;
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
+    QString uid( "UID" );
+    vPartMicroParser( ical.utf8(), uid );
     QByteArray data;
     QDataStream arg(data, IO_WriteOnly );
     arg << type << uid;
     kdDebug() << "Emitting DCOP signal incidenceDeleted( " << type << ", " << uid << " )" << endl;
     emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
   }
+  if( unget ) folder->unGetMsg(i);
 }
 
 // KMail orders a refresh
@@ -391,6 +418,8 @@ void KMailICalIfaceImpl::readConfig()
   connect( mJournals, SIGNAL( expunged() ), this, SLOT( slotRefreshJournals() ) );
   connect( mContacts, SIGNAL( expunged() ), this, SLOT( slotRefreshContacts() ) );
   connect( mNotes,    SIGNAL( expunged() ), this, SLOT( slotRefreshNotes() ) );
+
+  // Bad hack
   connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
 
   // Make KOrganizer re-read everything
@@ -402,6 +431,12 @@ void KMailICalIfaceImpl::readConfig()
 
   kernel->groupware().reloadFolderTree();
 }
+
+void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }
+void KMailICalIfaceImpl::slotRefreshTasks() { slotRefresh( "Task" ); }
+void KMailICalIfaceImpl::slotRefreshJournals() { slotRefresh( "Journal" ); }
+void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
+void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
 
 KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
 					  const char* typeString )
