@@ -121,9 +121,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 
 
 
-  cout << "MPassw0: " << mPasswd << endl;
   passwd = decryptStr(mPasswd); // passwd encrypted
-  cout << "en0: " << passwd << endl;
 
   if(passwd.isEmpty() || mLogin.isEmpty())
   {
@@ -136,11 +134,9 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     {
       //mPasswd = encryptStr(mPasswd); 
       passwd = decryptStr(mPasswd); // encrypted
-      cout << "encr: " << passwd << endl;
       //passwd = decryptStr(passwd);
     }
   }
-  cout << "1: " << passwd << endl;
   
   // Now, we got to do something here. If you can resolve to the address
   // but cannot connect to the server like on some of our uni-machines
@@ -173,9 +169,6 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   }
 
 
-  cout << "here: " << passwd << endl;
-  cout << "here2: " << decryptStr(passwd) << endl;
-
   while((replyCode =client.Pass(decryptStr(passwd))) != '+')
   {
     if(replyCode == '-') 
@@ -194,7 +187,6 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     else
       return popError("PASS", client);
   }
-  cout << "after pass\n";
 
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
