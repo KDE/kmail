@@ -235,6 +235,17 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   return lst;
 }
 
+bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
+                                           const QString& resource )
+{
+  KMFolder* f = folderFromType( type, resource );
+  if ( !f )
+    // Definitely not writable
+    return false;
+
+  return !f->isReadOnly();
+}
+
 bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
                                  const QStringList& entries )
 {

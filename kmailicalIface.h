@@ -46,6 +46,8 @@ k_dcop:
   virtual QStringList incidences( const QString& type,
                                   const QString& folder ) = 0;
   virtual QStringList subresources( const QString& type ) = 0;
+  virtual bool isWritableFolder( const QString& type,
+                                 const QString& resource ) = 0;
 
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...

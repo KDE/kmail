@@ -52,22 +52,24 @@ class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
 public:
   KMailICalIfaceImpl();
 
-  virtual bool addIncidence( const QString& type, const QString& folder,
-                             const QString& uid, const QString& ical );
-  virtual bool deleteIncidence( const QString& type, const QString& folder,
-                                const QString& uid );
-  virtual QStringList incidences( const QString& type, const QString& folder );
+  bool addIncidence( const QString& type, const QString& folder,
+                     const QString& uid, const QString& ical );
+  bool deleteIncidence( const QString& type, const QString& folder,
+                        const QString& uid );
+  QStringList incidences( const QString& type, const QString& folder );
 
-  virtual QStringList subresources( const QString& type );
+  QStringList subresources( const QString& type );
+
+  bool isWritableFolder( const QString& type, const QString& resource );
 
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
-  virtual bool update( const QString& type, const QString& folder,
-                       const QStringList& entries );
+  bool update( const QString& type, const QString& folder,
+               const QStringList& entries );
 
   // Update a single entry in the storage layer
-  virtual bool update( const QString& type, const QString& folder,
-                       const QString& uid, const QString& entry );
+  bool update( const QString& type, const QString& folder,
+               const QString& uid, const QString& entry );
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
