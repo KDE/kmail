@@ -700,7 +700,7 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
     "the responsivness of KMail because anti-spam/virus tool "
     "operations are usually time consuming. Please consider "
     "deleting the filter rules created by the wizard to get "
-    "back to the former behaviour."
+    "back to the former behavior."
     ) );
   grid->addWidget( mIntroText, 0, 0 );
 
