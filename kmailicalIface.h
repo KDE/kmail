@@ -63,11 +63,13 @@ k_dcop:
   // Update a single entry in the storage layer
   virtual bool update( const QString& type, const QString& folder,
                        const QString& uid, const QString& entry ) = 0;
-  // Update a kolab storage entry
-  virtual bool update( const QString& resource,
-                       Q_UINT32 sernum,
-                       const QStringList& attachments,
-                       const QStringList& deletedAttachments ) = 0;
+
+  /// Update a kolab storage entry. Returns the new mail serial number,
+  /// or 0 if something went wrong
+  virtual Q_UINT32 update( const QString& resource,
+                           Q_UINT32 sernum,
+                           const QStringList& attachments,
+                           const QStringList& deletedAttachments ) = 0;
 
   virtual bool deleteIncidenceKolab( const QString& resource,
                                      Q_UINT32 sernum ) = 0;

@@ -441,10 +441,10 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   return rc;
 }
 
-bool KMailICalIfaceImpl::update( const QString& resource,
-                                 Q_UINT32 sernum,
-                                 const QStringList& attachments,
-                                 const QStringList& deletedAttachments )
+Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
+                                     Q_UINT32 sernum,
+                                     const QStringList& attachments,
+                                     const QStringList& deletedAttachments )
 {
   kdError(5006) << "NYI: KMailICalIfaceImpl::update()\n";
 
@@ -461,7 +461,7 @@ bool KMailICalIfaceImpl::update( const QString& resource,
   // number, and the mail should just be added instead. In this case
   // the deletedAttachments can be forgotten.
   // TODO: khz
-  return false;
+  return 0;
 }
 
 KURL KMailICalIfaceImpl::getAttachment( const QString& resource,

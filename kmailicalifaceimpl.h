@@ -72,11 +72,11 @@ public:
   bool update( const QString& type, const QString& folder,
                const QString& uid, const QString& entry );
 
-  // Update a kolab storage entry
-  bool update( const QString& resource,
-               Q_UINT32 sernum,
-               const QStringList& attachments,
-               const QStringList& deletedAttachments );
+  /// Update a kolab storage entry. Returns the new mail serial number,
+  /// or 0 if something went wrong
+  Q_UINT32 update( const QString& resource, Q_UINT32 sernum,
+                   const QStringList& attachments,
+                   const QStringList& deletedAttachments );
 
   bool deleteIncidenceKolab( const QString& resource,
                              Q_UINT32 sernum );
