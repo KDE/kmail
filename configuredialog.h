@@ -302,6 +302,7 @@ private:
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
+      QComboBox    *mailboxPrefCombo;
       // "New Mail Notification" group box:
       QCheckBox   *beepNewMailCheck;
       QCheckBox   *showMessageBoxCheck;

@@ -8,6 +8,7 @@
 #include <qgroupbox.h>
 #include <qregexp.h>
 
+#include <kapp.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
@@ -74,8 +75,13 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QLabel *label_type = new QLabel( i18n("Mailbox Format:" ), mtGroup );
   ml->addWidget( label_type );
   mailboxType = new QComboBox(mtGroup);
-  mailboxType->insertItem("mbox (default)", 0);
+  mailboxType->insertItem("mbox", 0);
   mailboxType->insertItem("maildir", 1);
+  {
+    KConfig *config = kapp->config();
+    KConfigGroupSaver saver(config, "General");
+    mailboxType->setCurrentItem(config->readNumEntry("default-mailbox-format", 0));
+  }
   if (aFolder) mailboxType->setEnabled(false);
   ml->addWidget( mailboxType );
   ml->addStretch( 1 );
