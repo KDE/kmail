@@ -945,7 +945,7 @@ void KMComposeWin::updateCursorPosition()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor(void)
 {
-  QPopupMenu* menu;
+  //QPopupMenu* menu;
   mEditor->setModified(FALSE);
   QFontMetrics fm(mBodyFont);
   mEditor->setTabStopWidth(fm.width(QChar(' ')) * 8);
@@ -964,6 +964,8 @@ void KMComposeWin::setupEditor(void)
   // Font setup
   slotUpdateFont();
 
+  /* installRBPopup() is broken in kdelibs, we should wait for
+	  the new klibtextedit (dnaber, 2002-01-01)
   menu = new QPopupMenu(this);
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
@@ -982,6 +984,7 @@ void KMComposeWin::setupEditor(void)
   menu->insertSeparator();
   menu->insertItem(i18n("Fixed font widths"), this, SLOT(slotUpdateFont()));
   mEditor->installRBPopup(menu);
+  */
   updateCursorPosition();
   connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
 }
