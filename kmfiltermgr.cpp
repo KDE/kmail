@@ -84,15 +84,17 @@ int KMFilterMgr::process(KMMessage* msg)
     if (!filter->matches(msg)) continue;
     //    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
     //    msg->subject().data());
-    if (status < 0)
-      status = 0;
+    //    if (status < 0)
+    //      status = 0;
     result = filter->execActions(msg, stopIt);
     if (result == 2) { // Critical error
       status = 2;
       break;
     }
-    else if (result == 1) // Small problem encountered, keep copy of message
+    else if (result == 1) // Message not saved
       status = 1;
+    else if ((result == 0) && (status < 0))  // Message saved in a folder
+      status = 0;
   }
 
   if (status < 0) // No filters matched, keep copy of message

@@ -198,7 +198,7 @@ int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
     debug("KMFilterActionForward: could not forward message (sending failed)");
     return 1; // error: couldn't send
   }
-  return 0;
+  return -1;
 }
  
 QWidget* KMFilterActionForward::createParamWidget(KMGFilterDlg* aParent)
@@ -271,10 +271,10 @@ int KMFilterActionExec::process(KMMessage* /*aMsg*/, bool& /*stop*/)
   rc = system(mCmd);
   alarm(0);
   signal(SIGALRM, oldSigHandler);
-  if (rc & 255) // sanders: I don't get this it seems to be the wrong way
-    return 0;   //          around to me.
+  if (rc & 255)
+    return 1; 
   else
-    return 1;
+    return -1;
 }
 
 QWidget* KMFilterActionExec::createParamWidget(KMGFilterDlg* aParent)
@@ -331,7 +331,7 @@ KMFilterAction* KMFilterActionSkip::newAction(void)
 int KMFilterActionSkip::process(KMMessage*, bool& stopIt)
 {
   stopIt = TRUE;
-  return 1;
+  return -1;
 }
 
 void KMFilterActionSkip::argsFromString(const QString)
@@ -380,7 +380,7 @@ KMFilterActionIdentity::KMFilterActionIdentity(): KMFilterAction("set identity")
 int KMFilterActionIdentity::process(KMMessage* msg, bool& )
 {
   msg->setHeaderField( "X-KMail-Identity", id );
-  return 0;
+  return -1;
 }
 
 QWidget* KMFilterActionIdentity::createParamWidget(KMGFilterDlg* aParent)
