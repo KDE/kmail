@@ -208,8 +208,6 @@ void FolderStorage::quiet(bool beQuiet)
 
 //-----------------------------------------------------------------------------
 
-// Needed to use QSortedList in reduceSize()
-
 /** Compare message's date. This is useful for message sorting */
 int operator<( KMMsgBase & m1, KMMsgBase & m2 )
 {
