@@ -59,7 +59,7 @@ using namespace KMail;
 
 ExpireJob::ExpireJob( KMFolder* folder, bool immediate )
  : FolderJob( 0, tOther, folder ), mTimer( this ), mCurrentIndex( 0 ),
-   mImmediate( immediate ), mFolderOpen( false )
+   mImmediate( immediate ), mFolderOpen( false ), mMoveToFolder( 0 )
 {
   mSrcFolder = folder;
   mCancellable = true;
@@ -140,8 +140,11 @@ void ExpireJob::slotDoWork()
 
 void ExpireJob::done()
 {
+  mTimer.stop();
+
   QString str;
   FolderStorage* storage = mSrcFolder->storage();
+  bool moving = false;
 
   if ( !mRemovedMsgs.isEmpty() ) {
     int count = mRemovedMsgs.count();
@@ -153,15 +156,18 @@ void ExpireJob::done()
                     << mSrcFolder->location()
                     << " " << count << " messages to remove." << endl;
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
+      connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
+               this, SLOT( slotMessagesMoved( KMCommand::Result ) ) );
       cmd->start();
+      moving = true;
       str = i18n( "Removing 1 old message from folder %1...",
                   "Removing %n old messages from folder %1...", count )
             .arg( mSrcFolder->label() );
     } else {
       // Expire by moving
-      KMFolder *moveToFolder =
+      mMoveToFolder =
         kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
-      if ( !moveToFolder ) {
+      if ( !mMoveToFolder ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found" )
               .arg( mSrcFolder->label(), mSrcFolder->expireToFolderId() );
@@ -170,13 +176,16 @@ void ExpireJob::done()
         kdDebug(5006) << "ExpireJob: finished expiring in folder "
                       << mSrcFolder->location() << " "
                       << mRemovedMsgs.count() << " messages to move to "
-                      << moveToFolder->label() << endl;
-        KMMoveCommand* cmd = new KMMoveCommand( moveToFolder, mRemovedMsgs );
+                      << mMoveToFolder->label() << endl;
+        KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
+        connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
+                 this, SLOT( slotMessagesMoved( KMCommand::Result ) ) );
         cmd->start();
+        moving = true;
         str = i18n( "Moving 1 old message from folder %1 to folder %2...",
                     "Moving %n old messages from folder %1 to folder %2...",
                     count )
-              .arg( mSrcFolder->label(), moveToFolder->label() );
+              .arg( mSrcFolder->label(), mMoveToFolder->label() );
       }
     }
   }
@@ -185,7 +194,52 @@ void ExpireJob::done()
 
   storage->close();
   mFolderOpen = false;
-  delete this;
+  if ( !moving )
+    delete this;
+}
+
+void ExpireJob::slotMessagesMoved( KMCommand::Result result )
+{
+  QString msg;
+  switch ( result ) {
+  case KMCommand::OK:
+    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+      msg = i18n( "Removed 1 old message from folder %1.",
+                  "Removed %n old messages from folder %1.",
+                  mRemovedMsgs.count() )
+            .arg( mSrcFolder->label() );
+    }
+    else {
+      msg = i18n( "Moved 1 old message from folder %1 to folder %2.",
+                  "Moved %n old messages from folder %1 to folder %2.",
+                  mRemovedMsgs.count() )
+            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+    }
+    break;
+  case KMCommand::Failed:
+    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+      msg = i18n( "Removing old messages from folder %1 failed." )
+            .arg( mSrcFolder->label() );
+    }
+    else {
+      msg = i18n( "Moving old messages from folder %1 to folder %2 failed." )
+            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+    }
+    break;
+  case KMCommand::Canceled:
+    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+      msg = i18n( "Removing old messages from folder %1 was canceled." )
+            .arg( mSrcFolder->label() );
+    }
+    else {
+      msg = i18n( "Moving old messages from folder %1 to folder %2 was "
+                  "canceled." )
+            .arg( mSrcFolder->label(), mMoveToFolder->label() );
+    }
+  }
+  KMBroadcastStatus::instance()->setStatusMsg( msg );
+
+  deleteLater();
 }
 
 #include "expirejob.moc"

@@ -1,4 +1,4 @@
-/**
+/** -*- mode: C++ -*-
  * Copyright (c) 2004 David Faure <faure@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 
 #include "jobscheduler.h"
 #include "folderjob.h"
+#include "kmcommands.h"
 
 namespace KMail {
 
@@ -45,6 +46,7 @@ public:
 
 private slots:
   void slotDoWork();
+  void slotMessagesMoved( KMCommand::Result result );
 
 private:
   void done();
@@ -57,6 +59,7 @@ private:
   int mMaxReadTime;
   bool mImmediate;
   bool mFolderOpen;
+  KMFolder *mMoveToFolder;
 };
 
 /// A scheduled "expire mails in this folder" task.
