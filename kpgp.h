@@ -7,7 +7,7 @@
  * @author "J. Nick Koston" <bdraco@the.system.is.halted.net> 
  *
  * PGP6 and other enhancements
- * @author Andreas Gungl <Andreas.Gungl@osp-dd.de>
+ * @author Andreas Gungl <a.gungl@gmx.de>
  */
 #ifndef KPGP_H
 #define KPGP_H
@@ -194,7 +194,7 @@ class KpgpPass : public KDialogBase
   Q_OBJECT
 
   public:
-    KpgpPass(QWidget *parent=0, const char *name=0, bool modal=true );
+    KpgpPass(QWidget *parent=0, const QString &name=QString::null, bool modal=true );
     virtual ~KpgpPass();
 
     static QString getPassphrase(QWidget *parent = 0);

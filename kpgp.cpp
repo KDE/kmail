@@ -490,6 +490,9 @@ Kpgp::getPublicKey(QString _person)
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
     if(str.contains(adress)) return str;
 
+  // reread the database, because key wasn't found...
+  publicKeys = pgp->pubKeys();
+
   // FIXME: let user set the key/ get from keyserver
   // now check if the address contains the key
   adress = _person.lower();
@@ -765,9 +768,9 @@ Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
 //  widgets needed by kpgp
 //----------------------------------------------------------------------
 
-KpgpPass::KpgpPass(QWidget *parent, const char *name, bool modal )
-  :KDialogBase( i18n("OpenPGP Security Check"), Yes, Yes, Yes, parent, name, 
-	       modal, true, i18n("&OK") )
+KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal )
+  :KDialogBase( parent, name, modal, i18n("OpenPGP Security Check"), 
+                Ok|Cancel )
 {
   QHBox *hbox = makeHBoxMainWidget();
   hbox->setSpacing( spacingHint() );
