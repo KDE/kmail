@@ -22,6 +22,7 @@
 
 #include <kdebug.h>
 #include <kio/global.h>
+#include <kdebug.h>
 
 class KMMimePartTreeItem;
 class KMMimePartTree;
@@ -145,14 +146,18 @@ public:
         delete( mNext );
     }
 
+#ifndef NDEBUG
     void dump( int chars=0 ) const {
-      kdDebug() << QString().fill( ' ', chars ) << "+ "
+      kdDebug(5006) << QString().fill( ' ', chars ) << "+ "
 		<< typeString() << '/' << subTypeString() << endl;
       if ( mChild )
 	mChild->dump( chars + 1 );
       if ( mNext )
 	mNext->dump( chars );
     }
+#else
+    void dump( int chars=0 ) const { (void)chars; }
+#endif
 
     void buildObjectTree( bool processSiblings=true );
 
