@@ -292,7 +292,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   KWM::setMiniIcon(winId(), kapp->miniIcon());
   setCaption(caption);  
 
-  QGridLayout *gl = new QGridLayout(this, 4, 2, 10);
+  QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
 
   QPixmap pix(locate("data", QString::fromLatin1("kdeui/pics/keys.png")));
   if(!pix.isNull()) {
@@ -307,26 +307,34 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
 		 this);
   l->setFixedSize(l->sizeHint());
   gl->addWidget(l, 0, 1);
+
+  l = new QLabel(i18n("Server:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 1, 0);
+  
+  l = new QLabel(act->host(), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 1, 1);
   
   l = new QLabel(i18n("Login Name:"), this);
   l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 1, 0);
+  gl->addWidget(l, 2, 0);
 
   usernameLEdit = new QLineEdit(login, this);
   usernameLEdit->setFixedHeight(usernameLEdit->sizeHint().height());
   usernameLEdit->setMinimumWidth(usernameLEdit->sizeHint().width());
-  gl->addWidget(usernameLEdit, 1, 1);
+  gl->addWidget(usernameLEdit, 2, 1);
 
   l = new QLabel(i18n("Password:"), this);
   l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 2, 0);  
+  gl->addWidget(l, 3, 0);  
 
   passwdLEdit = new QLineEdit(this,"NULL");
   passwdLEdit->setEchoMode(QLineEdit::Password);
   passwdLEdit->setText(passwd);
   passwdLEdit->setFixedHeight(passwdLEdit->sizeHint().height());
   passwdLEdit->setMinimumWidth(passwdLEdit->sizeHint().width());
-  gl->addWidget(passwdLEdit, 2, 1);
+  gl->addWidget(passwdLEdit, 3, 1);
   connect(passwdLEdit, SIGNAL(returnPressed()),
 	  SLOT(slotOkPressed()));
 
@@ -336,7 +344,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   ok->setDefault(true);
   cancel = bbox->addButton(i18n("Cancel"));
   bbox->layout();
-  gl->addMultiCellWidget(bbox, 3, 3, 0, 1);
+  gl->addMultiCellWidget(bbox, 4, 4, 0, 1);
 
   connect(ok, SIGNAL(pressed()),
 	  this, SLOT(slotOkPressed()));
