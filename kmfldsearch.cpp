@@ -35,11 +35,12 @@
 
 #include <kaction.h>
 #include <kapplication.h>
+#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kfiledialog.h>
+#include <klineedit.h>
 #include <kstatusbar.h>
 #include <kstdaction.h>
 #include <kwin.h>
@@ -612,12 +613,12 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   assert(aGrid!=NULL);
 
   mRow = aRow;
-  mCbxField = new QComboBox(true, aParent);
+  mCbxField = new KComboBox(true, aParent);
   insertFieldItems(TRUE);
   mCbxField->setMinimumSize(mCbxField->sizeHint());
   mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
 
-  mCbxFunc = new QComboBox(false, aParent);
+  mCbxFunc = new KComboBox(false, aParent);
   mCbxFunc->insertItem(i18n("contains"));
   mCbxFunc->insertItem(i18n("doesn't contain"));
   mCbxFunc->insertItem(i18n("equals"));
@@ -627,7 +628,7 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mCbxFunc->setMinimumSize(mCbxFunc->sizeHint());
   mCbxFunc->setMaximumSize(1024, mCbxFunc->sizeHint().height());
 
-  mEdtValue = new QLineEdit(aParent);
+  mEdtValue = new KLineEdit(aParent);
   mEdtValue->setMinimumSize(mCbxFunc->sizeHint());
   mEdtValue->setMaximumSize(1024, mCbxFunc->sizeHint().height());
   
