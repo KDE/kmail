@@ -795,12 +795,8 @@ void KMReaderWin::readConfig(void)
   // action is initialized in the main window
   mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  setHeaderStyle( (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy) );
-  for (int ehs = HdrFancy-1; ehs < HdrAll;ehs++) {
-    mShowAllHeaders[ehs] = config->readBoolEntry("showAllHeaders_"+QString::number(ehs+1), ehs+1 == HdrAll);
-    mHeadersHide[ehs] = config->readListEntry("hideExtraHeaders_"+QString::number(ehs+1));
-    mHeadersShow[ehs] = config->readListEntry("showExtraHeaders_"+QString::number(ehs+1));
-  }
+  setHeaderStyleAndStrategy( KMail::HeaderStyle::create( config->readEntry( "header-style", "fancy" ) ),
+			     HeaderStrategy::create( config->readEntry( "header-set-displayed", "rich" ) ) );
 
   mAttachmentStrategy =
     AttachmentStrategy::create( config->readEntry( "attachment-strategy" ) );
@@ -856,7 +852,10 @@ void KMReaderWin::writeConfig(bool aWithSync)
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   config->writeEntry( "useFixedFont", mUseFixedFont );
-  config->writeEntry("hdr-style", (int)mHeaderStyle);
+  if ( headerStyleNew() )
+    config->writeEntry( "header-style", headerStyleNew()->name() );
+  if ( headerStrategy() )
+    config->writeEntry( "header-set-displayed", headerStrategy()->name() );
   if ( attachmentStrategy() )
     config->writeEntry("attachment-strategy",attachmentStrategy()->name());
   if (aWithSync) config->sync();
@@ -976,52 +975,15 @@ void KMReaderWin::initHtmlWidget(void)
 }
 
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
-{
-  if ( aHeaderStyle == mHeaderStyle ) return;
-  mHeaderStyle = aHeaderStyle;
-
-  switch ( mHeaderStyle ) {
-  case HdrBrief:
-    setHeaderStrategy( HeaderStrategy::brief() );
-    setHeaderStyleNew( KMail::HeaderStyle::brief() );
-    break;
-  case HdrStandard:
-    setHeaderStrategy( HeaderStrategy::standard() );
-    setHeaderStyleNew( KMail::HeaderStyle::plain() );
-    break;
-  case HdrLong:
-    setHeaderStrategy( HeaderStrategy::rich() );
-    setHeaderStyleNew( KMail::HeaderStyle::plain() );
-    break;
-  default:
-  case HdrFancy:
-    setHeaderStrategy( HeaderStrategy::rich() );
-    setHeaderStyleNew( KMail::HeaderStyle::fancy() );
-    break;
-  case HdrAll:
-    setHeaderStrategy( HeaderStrategy::all() );
-    setHeaderStyleNew( KMail::HeaderStyle::plain() );
-    break;
-  }
-
-  writeConfig(true);   // added this so we can forward w/ full headers
-}
-
-
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart() ;
   update( true );
 }
 
-void KMReaderWin::setHeaderStrategy( const HeaderStrategy * strategy ) {
-  mHeaderStrategy = strategy ? strategy : HeaderStrategy::standard() ;
-  update( true );
-}
-
-void KMReaderWin::setHeaderStyleNew( const KMail::HeaderStyle * style ) {
+void KMReaderWin::setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
+					     const HeaderStrategy * strategy ) {
   mHeaderStyleNew = style ? style : KMail::HeaderStyle::fancy() ;
+  mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich() ;
   update( true );
 }
 

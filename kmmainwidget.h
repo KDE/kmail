@@ -37,14 +37,15 @@ template <typename T, typename S> class QMap;
 template <typename T> class QGuardedPtr;
 
 
-namespace KIO
-{
+namespace KIO {
   class Job;
 }
 
 namespace KMail {
   class Vacation;
   class AttachmentStrategy;
+  class HeaderStrategy;
+  class HeaderStyle;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -288,7 +289,8 @@ protected slots:
 protected:
   KActionCollection * actionCollection() { return mActionCollection; }
 
-  KRadioAction * actionForHeaderStyle(int);
+  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+				       const KMail::HeaderStrategy * );
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
 
 protected:

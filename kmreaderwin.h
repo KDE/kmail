@@ -92,24 +92,18 @@ public:
   /** Builds the font tag that will be used for quouted lines */
   QString quoteFontTag( int quoteLevel );
 
-  /** Style of the message header. */
-  enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
-                     HdrAll=5 };
-
-  /** Get/set the message header style. */
-  HeaderStyle headerStyle(void) const { return mHeaderStyle; }
-  virtual void setHeaderStyle(HeaderStyle style);
-
   const KMail::HeaderStyle * headerStyleNew() const {
     return mHeaderStyleNew;
   }
-  void setHeaderStyleNew( const KMail::HeaderStyle * style ) ;
+  /** Set the header style and strategy. We only want them to be set
+      together. */
+  void setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
+				  const KMail::HeaderStrategy * strategy );
 
-  /** Get/set the message header strategy. */
+  /** Getthe message header strategy. */
   const KMail::HeaderStrategy * headerStrategy() const {
     return mHeaderStrategy;
   }
-  void setHeaderStrategy( const KMail::HeaderStrategy * strategy );
 
   /** Get/set the message attachment strategy. */
   const KMail::AttachmentStrategy * attachmentStrategy() const {
@@ -417,10 +411,6 @@ protected:
   QHBox *mBox;
   QLabel *mColorBar;
   KHTMLPart *mViewer;
-  HeaderStyle mHeaderStyle;
-  bool mShowAllHeaders[HdrAll];
-  QStringList mHeadersHide[HdrAll];
-  QStringList mHeadersShow[HdrAll];
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyleNew;

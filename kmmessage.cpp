@@ -22,6 +22,8 @@ using KMail::ObjectTreeParser;
 #include "kmidentity.h"
 #include "kmkernel.h"
 #include "identitymanager.h"
+#include "headerstrategy.h"
+using KMail::HeaderStrategy;
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -70,7 +72,7 @@ static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
 
 QString KMMessage::sForwardStr = "";
-int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
+const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
@@ -1285,7 +1287,7 @@ QCString KMMessage::createForwardBody(void)
   QString s;
   QCString str;
 
-  if (sHdrStyle == KMReaderWin::HdrAll) {
+  if (sHeaderStrategy == HeaderStrategy::all()) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
     str = asQuotedString(s, "", QString::null, false, false);
@@ -3514,7 +3516,7 @@ void KMMessage::readConfig(void)
 
   { // area for config group "Reader"
     KConfigGroupSaver saver(config, "Reader");
-    sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
+    sHeaderStrategy = HeaderStrategy::create( config->readEntry( "header-set-displayed", "rich" ) );
   }
 }
 

@@ -30,7 +30,11 @@ class KMHeaders;
 
 namespace KMime {
   class CharFreq;
-}
+};
+
+namespace KMail {
+  class HeaderStrategy;
+};
 
 class DwBodyPart;
 class DwMediaType;
@@ -697,7 +701,7 @@ protected:
   mutable bool       mNeedsAssembly;
   bool mIsComplete, mDecodeHTML;
   int mTransferInProgress;
-  static int sHdrStyle;
+  static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
   const QTextCodec* mCodec;
 

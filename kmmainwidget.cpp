@@ -72,6 +72,10 @@ using KMail::Vacation;
 using KMail::SubscriptionDialog;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
+#include "headerstrategy.h"
+using KMail::HeaderStrategy;
+#include "headerstyle.h"
+using KMail::HeaderStyle;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1382,37 +1386,57 @@ void KMMainWidget::slotViewChange()
 }
 
 
-void KMMainWidget::slotBriefHeaders() {
-  mMsgView->setHeaderStyle( KMReaderWin::HdrBrief );
+void KMMainWidget::slotFancyHeaders() {
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::fancy(),
+				       HeaderStrategy::rich() );
 }
 
-void KMMainWidget::slotFancyHeaders() {
-  mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
+void KMMainWidget::slotBriefHeaders() {
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::brief(),
+				       HeaderStrategy::brief() );
 }
 
 void KMMainWidget::slotStandardHeaders() {
-  mMsgView->setHeaderStyle( KMReaderWin::HdrStandard );
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::plain(),
+				       HeaderStrategy::standard());
 }
 
 void KMMainWidget::slotLongHeaders() {
-  mMsgView->setHeaderStyle( KMReaderWin::HdrLong );
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::plain(),
+				       HeaderStrategy::rich() );
 }
 
 void KMMainWidget::slotAllHeaders() {
-  mMsgView->setHeaderStyle( KMReaderWin::HdrAll );
+  mMsgView->setHeaderStyleAndStrategy( HeaderStyle::plain(),
+				       HeaderStrategy::all() );
 }
 
 void KMMainWidget::slotCycleHeaderStyles() {
-  KMReaderWin::HeaderStyle style = mMsgView->headerStyle();
-  if ( style == KMReaderWin::HdrAll ) // last, go to top again:
-    mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
-  else {
-    style = KMReaderWin::HeaderStyle((int)style+1);
-    mMsgView->setHeaderStyle( KMReaderWin::HeaderStyle(style) );
+  const HeaderStrategy * strategy = mMsgView->headerStrategy();
+  const HeaderStyle * style = mMsgView->headerStyleNew();
+
+  const char * actionName = 0;
+  if ( style == HeaderStyle::fancy() ) {
+    slotBriefHeaders();
+    actionName = "view_headers_brief";
+  } else if ( style == HeaderStyle::brief() ) {
+    slotStandardHeaders();
+    actionName = "view_headers_standard";
+  } else if ( style == HeaderStyle::plain() ) {
+    if ( strategy == HeaderStrategy::standard() ) {
+      slotLongHeaders();
+      actionName = "view_headers_long";
+    } else if ( strategy == HeaderStrategy::rich() ) {
+      slotAllHeaders();
+      actionName = "view_headers_all";
+    } else if ( strategy == HeaderStrategy::all() ) {
+      slotFancyHeaders();
+      actionName = "view_headers_fancy";
+    }
   }
-  KRadioAction * action = actionForHeaderStyle( mMsgView->headerStyle() );
-  assert( action );
-  action->setChecked( true );
+
+  if ( actionName )
+    static_cast<KRadioAction*>( actionCollection()->action( actionName ) )->setChecked( true );
 }
 
 
@@ -1841,19 +1865,19 @@ void KMMainWidget::getAccountMenu()
 }
 
 // little helper function
-KRadioAction * KMMainWidget::actionForHeaderStyle( int style ) {
+KRadioAction * KMMainWidget::actionForHeaderStyle( const HeaderStyle * style, const HeaderStrategy * strategy ) {
   const char * actionName = 0;
-  switch( style ) {
-  case KMReaderWin::HdrFancy:
-    actionName = "view_headers_fancy"; break;
-  case KMReaderWin::HdrBrief:
-    actionName = "view_headers_brief"; break;
-  case KMReaderWin::HdrStandard:
-    actionName = "view_headers_standard"; break;
-  case KMReaderWin::HdrLong:
-    actionName = "view_headers_long"; break;
-  case KMReaderWin::HdrAll:
-    actionName = "view_headers_all"; break;
+  if ( style == HeaderStyle::fancy() )
+    actionName = "view_headers_fancy";
+  else if ( style == HeaderStyle::brief() )
+    actionName = "view_headers_brief";
+  else if ( style == HeaderStyle::plain() ) {
+    if ( strategy == HeaderStrategy::standard() )
+      actionName = "view_headers_standard";
+    else if ( strategy == HeaderStrategy::rich() )
+      actionName = "view_headers_long";
+    else if ( strategy == HeaderStrategy::all() )
+      actionName = "view_headers_all";
   }
   if ( actionName )
     return static_cast<KRadioAction*>(actionCollection()->action(actionName));
@@ -2187,7 +2211,7 @@ void KMMainWidget::setupActions()
   headerMenu->insert( raction );
 
   // check the right one:
-  raction = actionForHeaderStyle( mMsgView->headerStyle() );
+  raction = actionForHeaderStyle( mMsgView->headerStyleNew(), mMsgView->headerStrategy() );
   if ( raction )
     raction->setChecked( true );
 
