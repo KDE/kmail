@@ -392,8 +392,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       kdDebug() << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
-  if (!force && aMsg && mMsg == aMsg)
-    return;
+  //if (!force && aMsg && mMsg == aMsg)
+  //  return;
 
   kdDebug() << "Not equal" << endl;
 
