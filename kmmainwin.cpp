@@ -1374,6 +1374,8 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
                      win, SLOT(slotScrollDown()));
   accel->connectItem(accel->insertItem(Key_Prior),
                      win, SLOT(slotScrollPrior()));
+  accel->connectItem(accel->insertItem(Key_Next),
+                     win, SLOT(slotScrollNext()));
   //accel->connectItem(accel->insertItem(Key_S),
   //                   win, SLOT(slotCopyMsg()));
   win->show();
