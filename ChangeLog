@@ -1,6 +1,6 @@
 1998-03-09  Stefan Taferner  <taferner@kde.org>
 
-	* Reader: "_" was not considered part of a smart-detected email
+	* Reader: '_' was not considered part of a smart-detected email
 	address (auto detection of @).
 
 	* Reader: attachments of type message/rfc822 are now shown
