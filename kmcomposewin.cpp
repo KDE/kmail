@@ -1127,6 +1127,15 @@ void KMComposeWin::setupActions(void)
                              "options_select_crypto" );
     mCryptoModuleAction->setItems( lst );
     mCryptoModuleAction->setCurrentItem( idx );
+
+    // Set last chosen one if possible
+    QString last = composerConfig.readEntry( "CryptPlug" );
+    if ( !last.isEmpty() )
+      for ( int i=0; i<lst.count(); ++i )
+        if ( last == lst[i] ) {
+          mCryptoModuleAction->setCurrentItem( i );
+          break;
+        }
   }
 
   QStringList styleItems;
@@ -1686,6 +1695,13 @@ void KMComposeWin::slotComposerDone( bool rc )
   emit applyChangesDone( rc );
   delete mComposer;
   mComposer = 0;
+
+  if ( mCryptoModuleAction ) {
+    // Write the chosen crypt module
+    KConfigGroup composerConfig( KMKernel::config(), "Composer" );
+    composerConfig.writeEntry( "CryptPlug",
+                               mCryptoModuleAction->currentText() );
+  }
 }
 
 QCString KMComposeWin::pgpIdentity() const
