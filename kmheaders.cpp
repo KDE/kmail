@@ -2592,34 +2592,34 @@ bool KMHeaders::writeSortOrder()
 
     KMMsgBase *kmb;
     while(KMHeaderItem *i = items.pop()) {
-      kmb = mFolder->getMsgBase( i->mMsgId );
-
-      assert(kmb); // I have seen 0L come out of this, called from
-                   // KMHeaders::setFolder(0xgoodpointer, false);
-      QString replymd5 = kmb->replyToIdMD5();
-      QString replyToAuxId = kmb->replyToAuxIdMD5();
       int parent_id = -2; //no parent, top level
-      KMSortCacheItem *p = NULL;
-      if(!replymd5.isEmpty())
-        p = mSortCacheItems[replymd5];
+      if (threaded) {
+        kmb = mFolder->getMsgBase( i->mMsgId );
+        assert(kmb); // I have seen 0L come out of this, called from
+                   // KMHeaders::setFolder(0xgoodpointer, false);
+        QString replymd5 = kmb->replyToIdMD5();
+        QString replyToAuxId = kmb->replyToAuxIdMD5();
+        KMSortCacheItem *p = NULL;
+        if(!replymd5.isEmpty())
+          p = mSortCacheItems[replymd5];
 
-      if (p)
-        parent_id = p->id();
-      else
-        parent_id = -1;
-      // We now have either found a parent, or set it to -1, which means that
-      // it will be reevaluated when a message is added, for example. If there
-      // is no replyToId and no replyToAuxId and the message is not prefixed,
-      // this message is top level, and will always be, so no need to
-      // reevaluate it.
-      if (replymd5.isEmpty()
-          && replyToAuxId.isEmpty()
-          && !kmb->subjectIsPrefixed() )
-              parent_id = -2;
-      // FIXME also mark messages with -1 as -2 a certain amount of time after
-      // their arrival, since it becomes very unlikely that a new parent for
-      // them will show up. (Ingo suggests a month.) -till
-
+        if (p)
+          parent_id = p->item()->msgId();
+        else
+          parent_id = -1;
+        // We now have either found a parent, or set it to -1, which means that
+        // it will be reevaluated when a message is added, for example. If there
+        // is no replyToId and no replyToAuxId and the message is not prefixed,
+        // this message is top level, and will always be, so no need to
+        // reevaluate it.
+        if (replymd5.isEmpty()
+            && replyToAuxId.isEmpty()
+            && !kmb->subjectIsPrefixed() )
+          parent_id = -2;
+        // FIXME also mark messages with -1 as -2 a certain amount of time after
+        // their arrival, since it becomes very unlikely that a new parent for
+        // them will show up. (Ingo suggests a month.) -till
+      }
       internalWriteItem(sortStream, mFolder, i->mMsgId, parent_id,
 			i->key(mSortCol, !mSortDescending), FALSE);
       //double check for magic headers
