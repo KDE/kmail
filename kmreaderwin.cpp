@@ -141,6 +141,8 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
   }
 
   bool isImage = false;
+  bool isInlineSigned = false;
+  bool isInlineEncrypted = false;
 
   if( node ) {
     partNode* curNode = node;
@@ -243,7 +245,7 @@ kdDebug(5006) << "enriched " << endl;
 kdDebug(5006) << "plain " << endl;
           default: {
 kdDebug(5006) << "default " << endl;
-              writeBodyStr(curNode->msgPart().bodyDecoded().data(), mCodec);
+              writeBodyStr(curNode->msgPart().bodyDecoded().data(), mCodec, &isInlineSigned, &isInlineEncrypted);
               bDone = true;
             }
             break;
@@ -381,7 +383,7 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                   if( !data )
                     data = curNode->mChild;
                   QCString cstr( data->msgPart().bodyDecoded() );
-                  writeBodyStr(cstr, mCodec);
+                  writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
                   bDone = true;
                 } else if( sign && data ) {
                   sign->mWasProcessed = true; // Set the signature node to done to prevent it from being processed
@@ -398,7 +400,7 @@ kdDebug(5006) << "encrypted" << endl;
               if( keepEncryptions ) {
                 curNode->setEncrypted( true );
                 QCString cstr( curNode->msgPart().bodyDecoded() );
-                writeBodyStr(cstr, mCodec);
+                writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
                 bDone = true;
               } else if( curNode->mChild ) {
 
@@ -524,7 +526,7 @@ kdDebug(5006) << "octet stream" << endl;
                 curNode->setEncrypted( true );
                 if( keepEncryptions ) {
                   QCString cstr( curNode->msgPart().bodyDecoded() );
-                  writeBodyStr(cstr, mCodec);
+                  writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
                   bDone = true;
                 } else {
 
@@ -745,7 +747,7 @@ kdDebug(5006) << "* model *" << endl;
             inlineImage = false;
         } else {
           QCString cstr( curNode->msgPart().bodyDecoded() );
-          writeBodyStr(cstr, mCodec);
+          writeBodyStr(cstr, mCodec, &isInlineSigned, &isInlineEncrypted);
         }
       }
       curNode->mWasProcessed = true;
@@ -755,6 +757,11 @@ kdDebug(5006) << "* model *" << endl;
       parseObjectTree( curNode->mNext, showOneMimePart,
                                        keepEncryptions,
                                        includeSignatures );
+    // adjust signed/encrypted flags if inline PGP was found
+    if( isInlineSigned )
+      curNode->setSigned( true );
+    if( isInlineEncrypted )
+      curNode->setEncrypted( true );
   }
 
   if( showOneMimePart ) {
@@ -2277,7 +2284,8 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
+void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
+                                bool* flagSigned, bool* flagEncrypted )
 {
   QString line, htmlStr;
   QString signClass;
@@ -2436,14 +2444,20 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
         htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 
-        if( isSigned )
+        if( isSigned ) {
           htmlStr += "</td></tr><tr class=\"" + signClass + "H\"><td>" +
                      i18n( "End of signed message" ) +
                      "</td></tr></table>";
-        if( isEncrypted )
+          if( flagSigned )
+            *flagSigned = true;
+        }
+        if( isEncrypted ) {
           htmlStr += "</td></tr><tr class=\"encrH\"><td>" +
                      i18n( "End of encrypted message" ) +
                      "</td></tr></table>";
+          if( flagEncrypted )
+            *flagEncrypted = true;
+        }
       }
       else // block is neither message block nor clearsigned block
         htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );

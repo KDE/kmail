@@ -255,7 +255,9 @@ protected:
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
-  virtual void writeBodyStr(const QCString bodyString, QTextCodec *aCodec);
+  virtual void writeBodyStr( const QCString bodyString, QTextCodec *aCodec,
+                             bool* isSigned = 0,
+                             bool* isEncrypted = 0 );
 
   /** Feeds the HTML widget with the contents of the given HTML message-body
     string. May contain body parts. */
