@@ -413,47 +413,43 @@ void KMMainWin::createWidgets(void)
   		     mFolderTree, SLOT(prevUnreadFolder()) );
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  KAction *nextUnreadFolderAction = new KAction(
+  new KAction(
     i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,
     SLOT(nextUnreadFolder()), actionCollection(), "next_unread_folder");
 
-  KAction *prevUnreadFolderAction = new KAction(
+  new KAction(
    i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,
    SLOT(prevUnreadFolder()), actionCollection(), "prev_unread_folder");
 
-  KAction *nextFolderAction = new KAction(
+  new KAction(
    i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
 
-  KAction *prevFolderAction = new KAction(
+  new KAction(
    i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
 
-  KAction *selectCurrentFolderAction = new KAction(
+  new KAction(
    i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
 
-  KAction *expandCurrentThread
-    = new KAction( i18n("Expand Thread"), Key_Period, this,
+  new KAction( i18n("Expand Thread"), Key_Period, this,
 		   SLOT(slotExpandThread()),
 		   actionCollection(), "expand_thread" );
 
-  KAction *collapseCurrentThread
-    = new KAction( i18n("Collapse Thread"), Key_Comma, this,
+  new KAction( i18n("Collapse Thread"), Key_Comma, this,
 		   SLOT(slotCollapseThread()),
 		   actionCollection(), "collapse_thread" );
 
-  KAction *expandAllThreads
-    = new KAction( i18n("Expand All Threads"), CTRL+Key_Period, this,
+  new KAction( i18n("Expand All Threads"), CTRL+Key_Period, this,
 		   SLOT(slotExpandAllThreads()),
 		   actionCollection(), "expand_all_threads" );
 
-  KAction *collapseAllThreads
-    = new KAction( i18n("Collapse All Threads"), CTRL+Key_Comma, this,
+  new KAction( i18n("Collapse All Threads"), CTRL+Key_Comma, this,
 		   SLOT(slotCollapseAllThreads()),
 		   actionCollection(), "collapse_all_threads" );
 
-  KAction *readOnAction = new KAction( i18n( "Move to the next unread text" ),
+  new KAction( i18n( "Move to the next unread text" ),
                                        Key_Space, this,  SLOT( slotReadOn() ),
                                        actionCollection(), "read_on" );
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
