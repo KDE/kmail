@@ -462,6 +462,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
+  cWin->setSigningAndEncryptionDisabled( isICalInvitation 
+      && GlobalSettings::legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
