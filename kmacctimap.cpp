@@ -359,9 +359,10 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   {
     // all checks are done
     mCountLastUnread = 0; // => mCountUnread - mCountLastUnread == new count
-    // when we check only one folder (=selected) then do not display a summary
-    // as the normal status message is better
-    ImapAccountBase::postProcessNewMail( !mCheckingSingleFolder );
+    // when we check only one folder (=selected) and we have new mails
+    // then do not display a summary as the normal status message is better
+    bool showStatus = ( mCheckingSingleFolder && mCountUnread > 0 ) ? false : true;
+    ImapAccountBase::postProcessNewMail( showStatus );
     mUnreadBeforeCheck.clear();
     mCheckingSingleFolder = false;
   }
