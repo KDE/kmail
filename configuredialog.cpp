@@ -2180,18 +2180,18 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   QVButtonGroup* generalOptionsVBG = new QVButtonGroup( i18n( "&General Options" ), this );
   vlay->addWidget( generalOptionsVBG );
   generalOptionsVBG->layout()->setSpacing( KDialog::spacingHint() );
-  
-  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), 
+
+  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"),
                                       generalOptionsVBG );
 
-  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), 
+  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"),
                                      generalOptionsVBG );
 
   mCryptoIconsCheck = new QCheckBox( i18n( "Show cr&ypto icons" ),
                                      generalOptionsVBG );
-  
+
   mNestedMessagesCheck =
-    new QCheckBox( i18n("&Thread list of message headers"), 
+    new QCheckBox( i18n("&Thread list of message headers"),
                    generalOptionsVBG );
 
   // The window layout
@@ -2201,7 +2201,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mWindowLayoutVBG->setExclusive( true );
   vlay->addWidget( visibleVBG );
   visibleVBG->layout()->setSpacing( KDialog::spacingHint() );
-  
+
   QHBox* layoutHB = new QHBox( visibleVBG );
   layoutHB->layout()->setSpacing( KDialog::spacingHint() );
   mLayout1PB = new QPushButton( layoutHB );
@@ -2224,10 +2224,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
   mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
   mLayout4PB->setToggleButton( true );
-  
-  mShowMIMETreeCB = new QCheckBox( i18n( "Show &MIME tree" ), 
+
+  mShowMIMETreeCB = new QCheckBox( i18n( "Show &MIME tree" ),
                                    visibleVBG );
-  
+
   // a button group for four radiobuttons (by default exclusive):
   mNestingPolicy =
     new QVButtonGroup( i18n("Message Header Threading Options"), this );
@@ -2308,7 +2308,7 @@ void AppearancePage::LayoutTab::setup() {
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
   mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", true ) );
-  
+
 
   int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
   if( windowLayout < 0 || windowLayout > 3 )
@@ -2316,7 +2316,7 @@ void AppearancePage::LayoutTab::setup() {
   mWindowLayoutVBG->setButton( windowLayout );
   bool showMIME = geometry.readBoolEntry( "showMIME", true );
   mShowMIMETreeCB->setChecked( showMIME );
-  
+
   int num = geometry.readNumEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
@@ -2350,20 +2350,20 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
 
   if( general.hasKey( "showCryptoIcons" ) )
       mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons" ) );
-  
+
   if( geometry.hasKey( "windowLayout" ) ) {
       int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
       if( windowLayout < 0 || windowLayout > 3 )
           windowLayout = 0;
       mWindowLayoutVBG->setButton( windowLayout );
   }
-  
+
   if( geometry.hasKey( "showMIME" ) ) {
       bool showMIME = geometry.readBoolEntry( "showMIME", true );
       mShowMIMETreeCB->setChecked( showMIME );
   }
 
-  
+
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readNumEntry( "nestingPolicy" );
     if ( num < 0 || num > 3 ) num = 3;
@@ -2418,12 +2418,12 @@ void AppearancePage::LayoutTab::apply() {
   geometry.writeEntry( "windowLayout",
                        mWindowLayoutVBG->id( mWindowLayoutVBG->selected() ) );
   geometry.writeEntry( "showMIME", mShowMIMETreeCB->isChecked() );
-  
+
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
-  
+
   int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
   // check bounds:
   if ( dateDisplayID < 0 || dateDisplayID > numDateDisplayConfig - 1 )
@@ -4930,8 +4930,6 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
   plugListBoxCertConf = new QComboBox( this, "plugListBoxCertConf" );
   hlay->addWidget( new QLabel( plugListBoxCertConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
   hlay->addWidget( plugListBoxCertConf, 2 );
-  connect( plugListBoxCertConf, SIGNAL( activated( int ) ),
-    _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
   KSeparator *hline = new KSeparator( KSeparator::HLine, this);
   vlay->addWidget( hline );
 
@@ -4959,8 +4957,8 @@ void CertificatesPage::slotStartCertManager()
     KProcess certManagerProc; // save to create on the heap, since
                               // there is no parent
     certManagerProc << "certmanager";
-    certManagerProc << _pluginPage->mCryptPlugList->active()->displayName();
-    certManagerProc << _pluginPage->mCryptPlugList->active()->libName();
+    certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->displayName();
+    certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->libName();
 
     if( !certManagerProc.start( KProcess::DontCare ) )
         KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
