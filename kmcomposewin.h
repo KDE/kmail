@@ -51,8 +51,8 @@ class KMEdit: public KEdit
 {
   Q_OBJECT
 public:
-  KMEdit(KApplication *a=NULL,QWidget *parent=NULL,KMComposeWin* composer=NULL,
-	 const char *name=NULL, const char *filename=NULL);
+  KMEdit(QWidget *parent=NULL,KMComposeWin* composer=NULL,
+	 const char *name=NULL);
   virtual ~KMEdit();
 
   /**

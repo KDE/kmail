@@ -10,6 +10,7 @@
 #include <qheader.h>
 #include <qdragobject.h>
 #include <kimgio.h>
+#include <kmessagebox.h>
 
 #include <kapp.h>
 #include <kglobal.h>

@@ -2,8 +2,10 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
+#include <qdir.h>
 #include <qprinter.h>
 #include <qcombobox.h>
+
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -33,6 +35,7 @@
 #include <kfiledialog.h>
 #include <kwm.h>
 #include <kglobal.h>
+#include <kmessagebox.h>
 
 #include <qtabdialog.h>
 #include <qlabel.h>
@@ -688,23 +691,23 @@ void KMComposeWin::updateCursorPosition()
 void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
-  mEditor = new KMEdit(kapp, &mMainWidget, this);
-  mEditor->toggleModified(FALSE);
+  mEditor = new KMEdit(&mMainWidget, this);
+  mEditor->setModified(FALSE);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
-  mEditor->setWordWrap( false );
-  mEditor->setFillColumnMode(0,FALSE);
-
-  mEditor->QMultiLineEdit::setWordWrap( QMultiLineEdit::FixedColumnWrap );
-  mEditor->setWrapColumnOrWidth(80);
-
-  /*
-  // Word wrapping setup
-  mEditor->setWordWrap(mWordWrap);
   if (mWordWrap && (mLineBreak > 0))
-    mEditor->setFillColumnMode(mLineBreak,TRUE);
-  else mEditor->setFillColumnMode(0,FALSE);
-  */
+  {
+    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWrap );
+    mEditor->setWrapColumnOrWidth(mLineBreak);
+  }
+  else if (mWordWrap)
+  {
+    mEditor->setWordWrap( QMultiLineEdit::DynamicWrap );
+  }
+  else
+  {
+    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+  }
 
   // Font setup
   mEditor->setFont(mBodyFont);
@@ -812,7 +815,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 #endif
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();
-  mEditor->toggleModified(FALSE);
+  mEditor->setModified(FALSE);
 
 #if defined CHARSETS
   setEditCharset();
@@ -925,7 +928,7 @@ bool KMComposeWin::applyChanges(void)
     for (msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next())
 	mMsg->addBodyPart(msgPart);
   }
-  if (!mAutoDeleteMsg) mEditor->toggleModified(FALSE);
+  if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
   mMsg->cleanupHeader();
@@ -1226,7 +1229,7 @@ void KMComposeWin::slotAttachFile()
   if(fileName.isEmpty()) return;
 
   addAttach(fileName);
-  mEditor->toggleModified(TRUE);
+  mEditor->setModified(TRUE);
 }
 
 
@@ -1406,7 +1409,7 @@ void KMComposeWin::slotAttachRemove()
   if (idx >= 0)
   {
     removeAttach(idx);
-    mEditor->toggleModified(TRUE);
+    mEditor->setModified(TRUE);
   }
 }
 
@@ -1671,7 +1674,7 @@ void KMComposeWin::slotAppendSignature()
   {
     mEditor->insertLine("--", -1);
     mEditor->insertLine(sigText, -1);
-    mEditor->toggleModified(mod);
+    mEditor->setModified(mod);
   }
 }
 
@@ -2040,9 +2043,9 @@ void KMComposeWin::slotSpellcheckConfig()
 //   Class  KMEdit
 //
 //=============================================================================
-KMEdit::KMEdit(KApplication *a,QWidget *parent, KMComposeWin* composer,
-	       const char *name, const char *filename):
-  KMEditInherited(a, parent, name, filename)
+KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
+	       const char *name):
+  KMEditInherited(parent, name)
 {
   initMetaObject();
   mComposer = composer;
