@@ -10,6 +10,7 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
+#include "kmacctcachedimap.h"
 #include "kmbroadcaststatus.h"
 #include "kmkernel.h"
 #include "kmfiltermgr.h"
@@ -164,7 +165,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   lastAccountChecked = curAccount;
 
-  if (curAccount->type() != "imap" && curAccount->folder() == 0)
+  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && curAccount->folder() == 0)
     {
       QString tmp; //Unsafe
       tmp = i18n("Account %1 has no mailbox defined!\n"
@@ -178,6 +179,11 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   kdDebug(5006) << "processing next mail check, server busy" << endl;
 
   curAccount->processNewMail(interactive);
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctMgr::singleInvalidateIMAPFolders(KMAccount *account) {
+  account->invalidateIMAPFolders();
 }
 
 //-----------------------------------------------------------------------------
@@ -196,6 +202,9 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 
   else if (aType == "imap")
     act = new KMAcctImap(this, aName);
+
+  else if (aType == "cachedimap")
+    act = new KMAcctCachedImap(this, aName);
 
   if (act)
   {
@@ -292,6 +301,20 @@ void KMAcctMgr::checkMail(bool _interactive)
 }
 
 
+void KMAcctMgr::invalidateIMAPFolders()
+{
+  if (mAcctList.isEmpty()) {
+    KMessageBox::information(0,i18n("You need to add an account in the network"
+                                   "section of the settings in order to "
+                                   "receive mail."));
+    return;
+  }
+
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
+    singleInvalidateIMAPFolders(it.current());
+}
+
+
 //-----------------------------------------------------------------------------
 QStringList  KMAcctMgr::getAccounts(bool noImap) {
 
@@ -331,7 +354,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
     cur=mAcctList.next();
   }
 
-  if (cur->type() != "imap" && cur->folder() == 0)
+  if (cur->type() != "imap" && cur->type() != "cachedimap" && cur->folder() == 0)
   {
     QString tmp;
     tmp = i18n("Account %1 has no mailbox defined!\n"

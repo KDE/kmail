@@ -1099,6 +1099,8 @@ void KMMainWin::slotRemoveFolder()
     }
     if (mFolder->protocol() == "imap")
       static_cast<KMFolderImap*>(mFolder)->removeOnServer();
+    else if (mFolder->protocol() == "cachedimap")
+      kernel->imapFolderMgr()->remove(mFolder);
     else
       kernel->folderMgr()->remove(mFolder);
   }

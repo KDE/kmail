@@ -31,11 +31,13 @@
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
+#include "kmfoldercachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmacctmgr.h"
+#include "kmacctcachedimap.h"
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
 #include "kfileio.h"
@@ -667,7 +669,7 @@ void KMKernel::cleanupImapFolders()
   while (node)
   {
     if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
-        && acct->type() == "imap"))
+			  && ( acct->type() == "imap"| acct->type() == "cachedimap" )) )
     {
       node = the_imapFolderMgr->dir().next();
     } else {
@@ -677,17 +679,37 @@ void KMKernel::cleanupImapFolders()
   }
   KMFolderImap *fld;
   KMAcctImap *imapAcct;
+  KMFolderCachedImap *cfld;
+  KMAcctCachedImap *cachedImapAcct;
   the_imapFolderMgr->quiet(TRUE);
+
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
-    if (acct->type() != "imap") continue;
-    fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(acct->name(), FALSE));
-    fld->setNoContent(TRUE);
-    imapAcct = static_cast<KMAcctImap*>(acct);
-    fld->setAccount(imapAcct);
-    imapAcct->setImapFolder(fld);
-    fld->close();
+    if (acct->type() == "imap") {
+      fld = static_cast<KMFolderImap*>(the_imapFolderMgr
+				       ->findOrCreate(acct->name(), FALSE));
+      fld->setNoContent(TRUE);
+      imapAcct = static_cast<KMAcctImap*>(acct);
+      fld->setAccount(imapAcct);
+      imapAcct->setImapFolder(fld);
+      fld->close();
+    } else if (acct->type() == "cachedimap" ) {
+      cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->find(acct->name()));
+      if (cfld == 0) {
+	// Folder doesn't exist yet
+	cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
+	if (!cfld) {
+	  KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_imapFolderMgr->basePath())));
+	  exit(-1);
+	}
+      }
+
+      //cfld->setNoContent(TRUE);
+      cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
+      cfld->setAccount(cachedImapAcct);
+      cachedImapAcct->setImapFolder(cfld);
+      cfld->close();
+    }
   }
   the_imapFolderMgr->quiet(FALSE);
 }

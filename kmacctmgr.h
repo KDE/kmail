@@ -54,10 +54,14 @@ public:
   /** Processes all accounts looking for new mail */
   virtual void checkMail(bool _interactive = true);
 
+  /** Delete all IMAP folders and resync them */
+  void invalidateIMAPFolders();
+
   QStringList getAccounts(bool noImap = false);
 
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
+  virtual void singleInvalidateIMAPFolders(KMAccount *);
 
   virtual void intCheckMail(int, bool _interactive = true);
   virtual void processNextCheck(bool _newMail);

@@ -129,6 +129,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
+      QCheckBox    *progressDialogCheck;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -169,7 +170,7 @@ class AccountDialog : public KDialogBase
     void makeLocalAccountPage();
     void makeMaildirAccountPage();
     void makePopAccountPage();
-    void makeImapAccountPage();
+    void makeImapAccountPage(bool cached = false);
     void setupSettings();
     void saveSettings();
     void checkHighest(QButtonGroup *);

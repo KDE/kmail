@@ -34,9 +34,9 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
-		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
+		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
-		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
+		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \

@@ -49,7 +49,7 @@ void KMFolderTreeItem::init()
 
   if (mFolder->protocol() == "imap")
     setProtocol(Imap);
-  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir")
+  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir" || mFolder->protocol() == "cachedimap")
     setProtocol(Local);
   else
     setProtocol(NONE);
@@ -947,7 +947,13 @@ void KMFolderTree::addChildFolder()
     if (!fti->folder()->createChildFolder())
       return;
 
-  KMFolderDir *dir = &(kernel->folderMgr()->dir());
+  KMFolderDir *dir;
+  if( fti->folder() && fti->folder()->protocol() == "cachedimap" ) {
+    dir = &(kernel->imapFolderMgr()->dir());
+  } else {
+    dir = &(kernel->folderMgr()->dir());
+  }
+
   if (fti->folder())
     dir = fti->folder()->child();
 

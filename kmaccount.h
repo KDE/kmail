@@ -19,6 +19,7 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMMessage;
+class KMFolderChachedImap;
 
 
 class KMPrecommand : public QObject
@@ -51,6 +52,7 @@ class KMAccount: public QObject
   Q_OBJECT
   friend class KMAcctMgr;
   friend class KMFolderJob;
+  friend class KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
   virtual ~KMAccount();
@@ -166,6 +168,11 @@ public:
   static QString decryptStr(const QString& inStr) { return  encryptStr(inStr); }
 
   static QString importPassword(const QString &);
+
+  /**
+   * If this account is a disconnected IMAP account, invalidate it.
+   */
+  virtual void invalidateIMAPFolders();
 
 signals:
   virtual void finishedCheck(bool newMail);

@@ -384,6 +384,11 @@ QString KMAccount::importPassword(const QString &aStr)
   return encryptStr(result);
 }
 
+void KMAccount::invalidateIMAPFolders()
+{
+  // Default: Don't do anything. The IMAP account will handle it
+}
+
 void KMAccount::pseudoAssign( const KMAccount * a ) {
   if ( !a ) return;
 
