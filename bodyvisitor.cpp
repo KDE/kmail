@@ -39,6 +39,8 @@ namespace KMail {
     mBasicList += "APPLICATION/PGP";
     mBasicList += "APPLICATION/PGP-ENCRYPTED";
     mBasicList += "APPLICATION/PKCS7-SIGNATURE";
+    // groupware
+    mBasicList += "APPLICATION/MS-TNEF";
   }
 
   //-----------------------------------------------------------------------------

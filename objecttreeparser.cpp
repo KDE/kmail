@@ -1665,7 +1665,8 @@ namespace KMail {
 					"groupware",
 					"msTNEF.raw",
 					theBody ) );
-    if ( !fname.isEmpty() ) {
+    if ( !fname.isEmpty() &&
+         theBody.size() > 0 ) {
       QString vPart( curNode->msgPart().bodyDecoded() );
       QString prefix;
       QString postfix;
@@ -1674,13 +1675,13 @@ namespace KMail {
       //    or preserves the old data (if no vPart can be created)
       // 2. generates text preceding to / following to the vPart
       bool bVPartCreated =
-	kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
+        kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
                                           prefix, postfix );
       if ( bVPartCreated && !showOnlyOneMimePart() ) {
-	htmlWriter()->queue( prefix );
-	writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
-			 codecFor( curNode ), result );
-	htmlWriter()->queue( postfix );
+        htmlWriter()->queue( prefix );
+        writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
+            codecFor( curNode ), result );
+        htmlWriter()->queue( postfix );
         return true;
       }
     }
