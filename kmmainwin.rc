@@ -59,6 +59,15 @@
    <Action name="encoding" />
    <Separator/>
    <Action name="edit" />
+   <Menu name="set_status" >
+    <text>Set status</text>
+    <Action name="status_new" />
+    <Action name="status_unread" />
+    <Action name="status_read" />
+    <Action name="status_replied" />
+    <Action name="status_queued" />
+    <Action name="status_sent" />
+   </Menu>
    <Action name="set_status" />
    <Action name="move_to" />
    <Action name="copy_to" />

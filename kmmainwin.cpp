@@ -998,10 +998,41 @@ void KMMainWin::slotSelectMessage(KMMessage* msg)
   }
 }
 
+
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatus(int id)
+void KMMainWin::slotSetMsgStatusNew()
 {
-  mHeaders->setMsgStatus((KMMsgStatus)id);
+  mHeaders->setMsgStatus(KMMsgStatusNew);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusUnread()
+{
+  mHeaders->setMsgStatus(KMMsgStatusUnread);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusRead()
+{
+  mHeaders->setMsgStatus(KMMsgStatusRead);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusReplied()
+{
+  mHeaders->setMsgStatus(KMMsgStatusReplied);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusQueued()
+{
+  mHeaders->setMsgStatus(KMMsgStatusQueued);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusSent()
+{
+  mHeaders->setMsgStatus(KMMsgStatusSent);
 }
 
 
@@ -1386,17 +1417,19 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Edi&t..."), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
-  KActionMenu *setStatusAction = new KActionMenu( i18n("Set status" ),
-					     actionCollection(), "set_status" );
-  QPopupMenu *msgStatusMenu = setStatusAction->popupMenu();
-  connect(msgStatusMenu, SIGNAL(activated(int)), this,
-	  SLOT(slotSetMsgStatus(int)));
-  msgStatusMenu->insertItem(i18n("New"), (int)KMMsgStatusNew);
-  msgStatusMenu->insertItem(i18n("Unread"), (int)KMMsgStatusUnread);
-  msgStatusMenu->insertItem(i18n("Read"), (int)KMMsgStatusOld);
-  msgStatusMenu->insertItem(i18n("Replied"), (int)KMMsgStatusReplied);
-  msgStatusMenu->insertItem(i18n("Queued"), (int)KMMsgStatusQueued);
-  msgStatusMenu->insertItem(i18n("Sent"), (int)KMMsgStatusSent);
+  //----- Set status submenu
+  (void) new KAction( i18n("New"), 0, this,
+    SLOT(slotSetMsgStatusNew()), actionCollection(), "status_new");
+  (void) new KAction( i18n("Unread"), 0, this,
+    SLOT(slotSetMsgStatusUnread()), actionCollection(), "status_unread");
+  (void) new KAction( i18n("Read"), 0, this,
+    SLOT(slotSetMsgStatusRead()), actionCollection(), "status_read");
+  (void) new KAction( i18n("Replied"), 0, this,
+    SLOT(slotSetMsgStatusReplied()), actionCollection(), "status_replied");
+  (void) new KAction( i18n("Queued"), 0, this,
+    SLOT(slotSetMsgStatusQueued()), actionCollection(), "status_queued");
+  (void) new KAction( i18n("Sent"), 0, this,
+    SLOT(slotSetMsgStatusSent()), actionCollection(), "status_sent");
 
   KActionMenu *moveActionMenu = new KActionMenu( i18n("&Move to" ),
 					     actionCollection(), "move_to" );

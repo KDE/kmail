@@ -136,7 +136,12 @@ protected slots:
   void slotCopyMsg();
   void slotResendMsg();
   void slotApplyFilters();
-  void slotSetMsgStatus(int);
+  void slotSetMsgStatusNew();
+  void slotSetMsgStatusUnread();
+  void slotSetMsgStatusRead();
+  void slotSetMsgStatusReplied();
+  void slotSetMsgStatusQueued();
+  void slotSetMsgStatusSent();
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
   void slotSetEncoding();
