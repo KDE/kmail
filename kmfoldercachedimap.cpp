@@ -1292,7 +1292,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
           if( imapPath() == "/INBOX/" )
             mUidsForDownload << uid;
-        }
+        } 
         // Remember the highest uid and once the download is completed, update mLastUid
         if ( uid > mTentativeHighestUid )
           mTentativeHighestUid = uid;
