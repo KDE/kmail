@@ -203,15 +203,10 @@ const QString KMIdentity::signature(void) const
  
   if (mSignatureFile.isEmpty()) return QString::null;
 
-  puts("AAAAAAAAAAAAA");
-  printf("NAME: %s\n", mSignatureFile.latin1() );
-
   if (mSignatureFile.right(1)=="|")
   {
     KTempFile tmpf;
     int rc;
-
-    puts("BBBBBBBBBBB");
 
     tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
