@@ -129,6 +129,9 @@ public slots:
 protected:
   virtual bool eventFilter(QObject*, QEvent*);
   virtual void dropEvent(QDropEvent *e);
+  virtual void paste();
+  virtual void insert(const QString &t);
+  virtual void mouseReleaseEvent( QMouseEvent * e );
   void doCompletion(bool ctrlT);
   KMComposeWin* mComposer;
 
@@ -141,6 +144,7 @@ private:
 
   QString m_previousAddresses;
   bool m_useCompletion;
+  bool m_smartPaste;
 
   static bool s_addressesDirty;
   static KCompletion *s_completion;

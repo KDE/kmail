@@ -2582,6 +2582,7 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
 {
   mComposer = composer;
   m_useCompletion = useCompletion;
+  m_smartPaste = false;
 
   if ( !s_completion ) {
       s_completion = new KCompletion();
@@ -2661,6 +2662,14 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
       }
       return FALSE;
     }
+    if (k->state()==ControlButton && k->key() == Key_V)
+    {
+      if (m_useCompletion)
+         m_smartPaste = true;
+      paste();
+      m_smartPaste = false;
+      return TRUE;
+    }
     if (k->key() == Key_Up)
     {
       mComposer->focusNextPrevEdit(this,FALSE); // Go up
@@ -2677,6 +2686,76 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
   return KMLineEditInherited::eventFilter(o, e);
 }
 
+void KMLineEdit::mouseReleaseEvent( QMouseEvent * e )
+{
+   if (m_useCompletion && (e->button() == MidButton))
+   {
+      m_smartPaste = true;
+      cursorAtEnd();
+      KMLineEditInherited::mouseReleaseEvent(e);
+      m_smartPaste = false;
+      return;
+   }
+   KMLineEditInherited::mouseReleaseEvent(e);
+}
+
+void KMLineEdit::insert(const QString &t)
+{
+    if (!m_smartPaste)
+    {
+       KMLineEditInherited::insert(t);
+       return;
+    }
+    QString newText = t.stripWhiteSpace();
+    if (newText.isEmpty())
+       return;
+
+    QString contents = text();
+    int start_sel = 0;
+    int end_sel = 0;
+    int pos = cursorPosition();
+    if (getSelection(&start_sel, &end_sel))
+    {
+       // Cut away the selection.
+       if (pos > end_sel)
+          pos -= (end_sel - start_sel);
+       else if (pos > start_sel)
+          pos = start_sel;
+       contents = contents.left(start_sel) + contents.right(end_sel+1);
+    }
+
+    int eot = contents.length();
+    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
+    if (eot == 0)
+    {
+       contents = QString::null;
+    }
+    else if (pos >= eot)
+    {
+       if (contents[eot-1] == ',')
+          eot--;
+       contents.truncate(eot);
+       contents += ", ";
+       pos = eot+2;
+    }
+
+    if (newText.startsWith("mailto:"))
+    {
+       KURL u(newText);
+       newText = u.path();
+    }
+    contents = contents.left(pos)+newText+contents.mid(pos);
+    setText(contents);
+    setCursorPosition(pos+newText.length());
+}
+
+void KMLineEdit::paste()
+{
+    if (m_useCompletion)
+       m_smartPaste = true;
+    KMLineEditInherited::paste();
+    m_smartPaste = false;
+}
 
 //-----------------------------------------------------------------------------
 void KMLineEdit::cursorAtEnd()
@@ -2858,7 +2937,12 @@ void KMLineEdit::dropEvent(QDropEvent *e)
     }
     setText(ct);
   }
-  else QLineEdit::dropEvent(e);
+  else {
+    if (m_useCompletion)
+       m_smartPaste = true;
+    QLineEdit::dropEvent(e);
+    m_smartPaste = false;
+  } 
 }
 
 
