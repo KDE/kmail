@@ -58,7 +58,6 @@
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctImapInherited(aOwner, aAccountName)
 {
-  initMetaObject();
 
   init();
   mSlave = NULL;

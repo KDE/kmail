@@ -14,7 +14,6 @@ KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name,
   :KMIOStatus(parent,name) {
 
 
-  initMetaObject();
 // GS - not sure how to do this yet with KWin
 //  KWM::setDecoration(winId(), KWM::normalDecoration | KWM::noFocus);
   abortPressedBool = false;

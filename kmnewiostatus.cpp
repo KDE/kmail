@@ -9,7 +9,6 @@
 KMIOStatus::KMIOStatus(QWidget *parent, const char *name) 
   :QWidget(parent, name) {
 
-  initMetaObject();
 
 }
 

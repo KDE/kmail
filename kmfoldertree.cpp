@@ -185,7 +185,6 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   oldCurrent = 0;
   mLastItem = NULL;
 
-  initMetaObject();
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);

@@ -84,7 +84,6 @@ const int KMReaderWin::delay = 150;
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   :KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose)
 {
-  initMetaObject();
 
   mAutoDelete = FALSE;
   mMsg = 0;

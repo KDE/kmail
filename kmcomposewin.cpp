@@ -2551,7 +2551,6 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 	       const char *name):
   KMEditInherited(parent, name)
 {
-  initMetaObject();
   mComposer = composer;
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );

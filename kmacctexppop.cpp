@@ -40,7 +40,6 @@
 KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctExpPopInherited(aOwner, aAccountName)
 {
-  initMetaObject();
 
   mUseSSL = FALSE;
   mStorePasswd = FALSE;

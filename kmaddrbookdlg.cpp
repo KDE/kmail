@@ -19,7 +19,6 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
 {
   QString addr;
 
-  initMetaObject();
   setCaption(aCap ? QString(aCap) : i18n("Addressbook"));
 
   assert(aAddrBook != NULL);

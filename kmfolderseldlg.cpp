@@ -26,7 +26,6 @@ KMFolderSelDlg::KMFolderSelDlg(QString caption):
   QBoxLayout* bbox = new QHBoxLayout(0);
   QGuardedPtr<KMFolder> cur;
 
-  initMetaObject();
 
   setCaption(caption);
 

@@ -33,7 +33,6 @@
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 {
-  initMetaObject();
   assert(aOwner != NULL);
 
   mOwner  = aOwner;

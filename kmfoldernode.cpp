@@ -7,7 +7,6 @@
 KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
 //: KMFolderNodeInherited(aParent)
 {
-  initMetaObject();
 
   mType = "node";
   mName = aName;

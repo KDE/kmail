@@ -15,7 +15,6 @@ KMIOStatusDlg::KMIOStatusDlg(const char* aCap):
 {
   int y, h, w;
 
-  initMetaObject();
 
   mLblTask = new QLabel("M", this);
   mLblTask->adjustSize();

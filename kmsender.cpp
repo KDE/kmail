@@ -568,7 +568,6 @@ QString KMSender::transportString(void) const
 //=============================================================================
 KMSendProc::KMSendProc(KMSender* aSender): QObject()
 {
-  initMetaObject();
   mSender = aSender;
   preSendInit();
   mMsg = i18n("operation aborted by user.");
@@ -680,7 +679,6 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
 KMSendSendmail::KMSendSendmail(KMSender* aSender, QString mailer):
   KMSendSendmailInherited(aSender), mMailer(mailer)
 {
-  initMetaObject();
   mMailerProc = NULL;
 }
 

@@ -35,7 +35,6 @@
 KMFolderMgr::KMFolderMgr(const QString& aBasePath):
   KMFolderMgrInherited(), mDir()
 {
-  initMetaObject();
 
   setBasePath(aBasePath);
 }

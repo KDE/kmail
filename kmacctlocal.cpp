@@ -36,7 +36,6 @@
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
-  initMetaObject();
   mLock = procmail_lockfile;
 }
 

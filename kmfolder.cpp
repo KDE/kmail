@@ -68,7 +68,6 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   //-- in case that the compiler has problems with the static version above:
   //msgSepLen = strlen(MSG_SEPERATOR_START);
 
-  initMetaObject();
 
   mStream         = NULL;
   mIndexStream    = NULL;
