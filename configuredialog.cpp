@@ -361,7 +361,7 @@ void ConfigureDialog::makeIdentityPage( void )
   hlay->addWidget( newButton );
   hlay->addWidget( mIdentity.renameIdentityButton );
   hlay->addWidget( mIdentity.removeIdentityButton );
-
+  
   //
   // Tab Widget: General
   //
@@ -414,7 +414,7 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.pgpIdentityLabel = new QLabel( page );
   mIdentity.pgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
   glay->addWidget( mIdentity.pgpIdentityLabel, 1, 1 );
-  connect( changeKey, SIGNAL(clicked()),
+  connect( changeKey, SIGNAL(clicked()), 
            this, SLOT(slotChangeDefaultPGPKey()) );
   QWhatsThis::add(mIdentity.pgpIdentityLabel,
                   i18n("<qt><p>The PGP key you choose here will be used "
@@ -731,7 +731,7 @@ void ConfigureDialog::makeNetworkPage( void )
 
   // HBox layout for the "specify command" line:
   QHBox *hbox = new QHBox( group );
-
+  
 
   // command line edit (stretch 1) and label (stretch 0):
   QLabel *label =
@@ -1349,11 +1349,10 @@ void ConfigureDialog::makeComposerPage( void )
   connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
   button->setAutoDefault( false );
   glay->addWidget( button, 0, 2 );
-  buttonRemoveHeader = new QPushButton(i18n("&Remove"), page );
-  buttonRemoveHeader->setEnabled(false);
-  connect( buttonRemoveHeader, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()) );
-  buttonRemoveHeader->setAutoDefault( false );
-  glay->addWidget( buttonRemoveHeader, 1, 2 );
+  button = new QPushButton(i18n("&Remove"), page );
+  connect( button, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()) );
+  button->setAutoDefault( false );
+  glay->addWidget( button, 1, 2 );
 
   // "name" and "value" line edits and labels:
   mComposer.tagNameEdit = new QLineEdit( page );
@@ -1900,7 +1899,7 @@ void ConfigureDialog::setupComposerPage( void )
     {
        if (*it == "locale")
          *it = QString("%1 (locale)").arg(QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower());
-    }
+    }  
     mComposer.charsetListBox->clear();
     mComposer.charsetListBox->insertStringList( charsets );
     mComposer.charsetListBox->setCurrentItem( 0 );
@@ -2401,14 +2400,14 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry("force-reply-charset",
 			 !mComposer.forceReplyCharsetCheck->isChecked() );
     }
-
+    
     { // "headers" tab:
       KConfigGroupSaver saver(config, "General");
       config->writeEntry( "createOwnMessageIdHeaders",
 			  mComposer.createOwnMessageIdCheck->isChecked() );
       config->writeEntry( "myMessageIdSuffix",
 			  mComposer.messageIdSuffixEdit->text() );
-
+      
       int numValidEntry = 0;
       int numEntry = mComposer.tagList->childCount();
       QListViewItem *item = mComposer.tagList->firstChild();
@@ -2543,7 +2542,7 @@ void ConfigureDialog::saveActiveIdentity()
   } else {
     // not enabled - fake empty data file:
     entry.setSignatureFileName( QString::null );
-    entry.setUseSignatureFile( false );
+    entry.setUseSignatureFile( true );
     entry.setSignatureFileIsAProgram( false );
   }
   entry.setSignatureInlineText( mIdentity.signatureTextEdit->text() );
@@ -2703,7 +2702,7 @@ void ConfigureDialog::slotRenameIdentity()
   do {
     QString newName = KLineEditDlg::getText( i18n("Rename identity"),
 			     message, oldName, &ok, this ).stripWhiteSpace();
-
+    
     if ( ok && newName != oldName ) {
       if ( newName.isEmpty() ) {
 	KMessageBox::error( this, i18n("You must specify an identity name!") );
@@ -2723,7 +2722,7 @@ void ConfigureDialog::slotRenameIdentity()
       IdentityEntry & entry = mIdentity.identities[ index ];
       assert( entry.identityName() == oldName );
       entry.setIdentityName( newName );
-
+      
       // resort the list:
       mIdentity.identities.sort();
 
@@ -2772,14 +2771,14 @@ void ConfigureDialog::slotIdentitySelectorChanged()
 void ConfigureDialog::slotChangeDefaultPGPKey( void )
 {
   Kpgp::Module *pgp;
-
+  
   if ( !(pgp = Kpgp::Module::getKpgp()) )
     return;
 
   QCString keyID = pgp->selectDefaultKey();
 
   if ( !keyID.isEmpty() )
-    mIdentity.pgpIdentityLabel->setText( keyID );
+    mIdentity.pgpIdentityLabel->setText( keyID ); 
 }
 
 
@@ -3435,7 +3434,7 @@ void ConfigureDialog::slotAddCharset( void )
   if ( linedlg->exec() == QDialog::Accepted )
   {
       QString charsetText=linedlg->text();
-      if (!charsetText.isEmpty() &&
+      if (!charsetText.isEmpty() && 
           ((charsetText.lower() == "us-ascii") ||
            (charsetText.lower() == "locale") ||
            KMMsgBase::codecForName( charsetText.latin1() )))
@@ -3538,7 +3537,6 @@ void ConfigureDialog::slotNewMimeHeader( void )
     mComposer.tagNameLabel->setEnabled(true);
     mComposer.tagValueLabel->setEnabled(true);
     mComposer.tagNameEdit->setFocus();
-    buttonRemoveHeader->setEnabled(true);
   }
 }
 
@@ -3566,10 +3564,7 @@ void ConfigureDialog::slotDeleteMimeHeader( void )
     if( next != 0 )
     {
       mComposer.tagList->setSelected( next, true );
-      buttonRemoveHeader->setEnabled(true);
     }
-    else
-        buttonRemoveHeader->setEnabled(false);
   }
 }
 
