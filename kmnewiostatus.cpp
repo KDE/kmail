@@ -63,7 +63,7 @@ void KMIOStatus::updateProgressBar(int,int) {
 
 bool KMIOStatus::abortRequested() {
 
-  return abortPressed;
+  return abortPressedBool;
 
 }
 

@@ -18,7 +18,8 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
 		kfileio.cpp kmaddrbook.cpp \
-		kmaddrbookdlg.cpp kmiostatusdlg.cpp 
+		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
+		kmnewiostatus.cpp kmnewiostatuswdg.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -28,7 +29,8 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
-		kmaddrbookdlg.moc kmiostatusdlg.moc
+		kmaddrbookdlg.moc kmiostatusdlg.moc \
+		kmnewiostatus.cpp kmnewiostatuswdg.cpp
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -157,3 +159,11 @@ kmsender.moc: kmsender.h
 kmiostatusdlg.cpp: kmiostatusdlg.moc
 kmiostatusdlg.moc: kmiostatusdlg.h
 	$(MOC) kmiostatusdlg.h -o kmiostatusdlg.moc
+
+kmnewiostatuswdg.cpp: kmnewiostatuswdg.moc
+kmnewiostatuswdg.cpp: kmnewiostatuswdg.h
+	$(MOC) kmnewiostatuswdg.h -o kmnewiostatuswdg.moc
+
+kmnewiostatus.cpp: kmnewiostatus.moc
+kmnewiostatus.cpp: kmnewiostatus.h
+	$(MOC) kmnewiostatus.h -o kmnewiostatus.moc

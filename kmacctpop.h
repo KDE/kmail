@@ -57,7 +57,7 @@ public:
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
-  virtual bool processNewMail(void);
+  virtual bool processNewMail(KMIOStatus *);
 
   
 protected:
@@ -71,7 +71,7 @@ protected:
   const QString decryptStr(const QString inStr);
 
   /** Mail processing main worker method. */
-  virtual bool doProcessNewMail(void);
+  virtual bool doProcessNewMail(KMIOStatus *);
 
   /** Display POP error message. Always returns FALSE to simplify the
     code in doProcessNewMail(). */
@@ -84,6 +84,7 @@ protected:
   bool    mStorePasswd;
   bool    mLeaveOnServer;
   bool    mRetrieveAll;
+  bool    gotMsgs;
 };
 
 

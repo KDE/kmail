@@ -25,7 +25,7 @@ public:
   virtual void setLocation(const QString&);
 
   virtual const char* type(void) const;
-  virtual bool processNewMail(void);
+  virtual bool processNewMail(KMIOStatus *);
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 

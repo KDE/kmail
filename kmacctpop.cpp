@@ -66,7 +66,7 @@ void KMAcctPop::init(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctPop::processNewMail(void)
+bool KMAcctPop::processNewMail(KMIOStatus *wid)
 {
   void (*oldHandler)(int);
   void (*pipeHandler)(int);
@@ -82,7 +82,7 @@ bool KMAcctPop::processNewMail(void)
   // abort the app when received. SIGPIPE is send when e.g the client attempts
   // to write to a TCP socket when the connection was shutdown by the server.
   pipeHandler = signal(SIGPIPE, SIG_IGN);
-  result = doProcessNewMail();
+  result = doProcessNewMail(wid);
   signal(SIGALRM, oldHandler);
   signal(SIGPIPE, pipeHandler);
   return result;
@@ -90,7 +90,7 @@ bool KMAcctPop::processNewMail(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctPop::doProcessNewMail(void)
+bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 {
   DwPopClient client;
   QString passwd;
@@ -101,8 +101,9 @@ bool KMAcctPop::doProcessNewMail(void)
   char dummyStr[32];
   int replyCode; // ReplyCode need from User & Passwd call.
   KMMessage* msg;
-  bool gotMsgs = FALSE;
+  gotMsgs = FALSE;
 
+  wid->setHost(host());
 
   // is everything specified ?
   if (mHost.isEmpty() || mPort<=0)
@@ -168,17 +169,16 @@ bool KMAcctPop::doProcessNewMail(void)
 					     mLogin, decryptStr(passwd));
       if(!d->exec())
 	return FALSE;
-      else
-      {
+      else {
 	mPasswd = encryptStr(mPasswd);
 	passwd = decryptStr(mPasswd);
 	passwd = decryptStr(passwd);
       }
-      }
+    }
     else
       return popError("PASS", client);
   }
-
+  
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
@@ -194,6 +194,11 @@ bool KMAcctPop::doProcessNewMail(void)
 
   while (id <= num)
   {
+    if(wid->abortRequested()) {
+      client.Quit();
+      return gotMsgs;
+    }
+    wid->updateProgressBar(id,num);
     debug("processing message %d", id);
     app->processEvents(1000);
     if (client.List(id) != '+')
@@ -264,9 +269,9 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   QString tmp;
   tmp.sprintf(i18n("Account: %s\nIn %s:\n%s"), name().data(), aStage.data(),msg.data());
   KMsgBox::message(0, caption, tmp);
-  kbp->busy();
+  //kbp->busy();
   aClient.Quit();
-  return FALSE;
+  return gotMsgs;
 }
 
 
@@ -442,7 +447,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
 //-----------------------------------------------------------------------------
 void KMPasswdDialog::slotOkPressed()
 {
-  kbp->busy();
+  //kbp->busy();
   act->setLogin(usernameLEdit->text());
   act->setPasswd(passwdLEdit->text());
   done(1);
@@ -451,6 +456,19 @@ void KMPasswdDialog::slotOkPressed()
 //-----------------------------------------------------------------------------
 void KMPasswdDialog::slotCancelPressed()
 {
-  kbp->busy();
+  //kbp->busy();
   done(0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

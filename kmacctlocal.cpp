@@ -46,7 +46,7 @@ void KMAcctLocal::init(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctLocal::processNewMail(void)
+bool KMAcctLocal::processNewMail(KMIOStatus *)
 {
   KMFolder mailFolder(NULL, location());
   long num = 0;

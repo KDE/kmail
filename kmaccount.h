@@ -10,6 +10,7 @@
 #include <qtimer.h>
 #include <qsignal.h>
 #include <kmsgbox.h>
+#include "kmnewiostatuswdg.h"
 
 class KMAcctMgr;
 class KMFolder;
@@ -43,7 +44,7 @@ public:
   /** Process new mail for this account if one arrived. Returns TRUE if new
     mail has been found. Whether the mail is automatically loaded to
     an associated folder or not depends on the type of the account. */
-  virtual bool processNewMail(void) = 0;
+  virtual bool processNewMail(KMIOStatus *) = 0;
 
   /** Read config file entries. This method is called by the account
     manager when a new account is created. */

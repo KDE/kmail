@@ -104,12 +104,16 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
 {
   bool hasNewMail = FALSE;
   debug("singleCheckMail called!");
-  kbp->busy();
-  if (account->processNewMail())
+  //kbp->busy();
+  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+  wid->show();
+
+  if (account->processNewMail(wid))
   {
     hasNewMail = TRUE;
     emit newMail(account);
   }
+  delete wid;
   kbp->idle();
   return hasNewMail;
 }
@@ -189,14 +193,19 @@ bool KMAcctMgr::checkMail(void)
     return FALSE;
   }
 
+
+  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+  wid->show();
+  
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
-    if (cur->processNewMail())
+    if (cur->processNewMail(wid))
     {
       hasNewMail = TRUE;
       emit newMail(cur);
     }
   }
+  delete wid;
   return hasNewMail;
 }
 
