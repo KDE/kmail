@@ -915,6 +915,12 @@ void KMKernel::init()
 
   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ), 
            this, SLOT( slotFolderRemoved(KMFolder*) ) );
+  connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ), 
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+  connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ), 
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
+  connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ), 
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 }
 
 void KMKernel::cleanupImapFolders()
