@@ -100,7 +100,7 @@ KMFolder :: ~KMFolder()
   /* Well, this is a problem. If I add the above line then kmfolder depends
    * on kmaccount and is then not that portable. Hmm.
    */
-  undoStack->folderDestroyed(this);
+  if (undoStack) undoStack->folderDestroyed(this);
 }
 
 

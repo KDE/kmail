@@ -44,7 +44,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  undoStack->clear(); // Speed things up a bit.
+  if (undoStack) undoStack->clear(); // Speed things up a bit.
   mBasePath = QString::null;;
 }
 
