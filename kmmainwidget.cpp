@@ -1907,7 +1907,7 @@ KRadioAction * KMMainWidget::actionForAttachmentStrategy( const AttachmentStrate
 void KMMainWidget::setupActions()
 {
   //----- File Menu
-  (void) new KAction( i18n("New &Window..."), "window_new", 0,
+  (void) new KAction( i18n("New &Window"), "window_new", 0,
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
