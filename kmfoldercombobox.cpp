@@ -97,7 +97,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
   mFolder = aFolder;
 }
 
-void KMFolderComboBox::setFolder( QString &idString )
+void KMFolderComboBox::setFolder( const QString &idString )
 {
   KMFolder *folder = kernel->folderMgr()->findIdString( idString );
   if (!folder) folder = kernel->imapFolderMgr()->findIdString( idString );

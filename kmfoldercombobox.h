@@ -24,7 +24,7 @@ public:
   void showImapFolders(bool shown);
   
   void setFolder( KMFolder *aFolder );
-  void setFolder( QString &idString );
+  void setFolder( const QString &idString );
   KMFolder *getFolder();
   
 public slots:
