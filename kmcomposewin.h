@@ -339,6 +339,13 @@ public:
    */
    void setReplyFocus( bool hasMessage = true );
 
+  /**
+   * Sets the focus to the subject line edit. For use when creating a
+   * message to a known recipient.
+   */
+   void setFocusToSubject();
+
+
    /**
     * Tries to find the given mimetype @p type in the KDE Mimetype registry.
     * If found, returns its localized description, otherwise the @p type

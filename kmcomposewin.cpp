@@ -5251,6 +5251,11 @@ void KMComposeWin::setReplyFocus( bool hasMessage )
     mEditor->setCursorPosition( 1, 0 );
 }
 
+void KMComposeWin::setFocusToSubject()
+{
+  mEdtSubject->setFocus();
+}
+
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
     KConfig *config = KMKernel::config();

@@ -332,6 +332,7 @@ void KMMailtoComposeCommand::execute()
 
   win = new KMComposeWin(msg, id);
   win->setCharset("", TRUE);
+  win->setFocusToSubject();
   win->show();
 }
 

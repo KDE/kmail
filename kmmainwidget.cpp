@@ -792,6 +792,7 @@ void KMMainWidget::slotPostToML()
           msg->setTo(mFolder->mailingListPostAddress());
       }
       win = new KMComposeWin(msg, mFolder->identity());
+      win->setFocusToSubject();
   } else {
       msg->initHeader();
       win = new KMComposeWin(msg);
