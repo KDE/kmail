@@ -884,7 +884,8 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
   if ( parent() && parent()->isMailingList() ) {
     mailingListPostAddress = parent()->mailingListPostAddress();
   }
-  else if ( headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
+  if ( mailingListPostAddress.isEmpty() &&
+       headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
     QString listPost = headerField("List-Post");
     QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
     if ( rx.search( listPost, 0 ) != -1 ) // matched
@@ -4040,14 +4041,14 @@ DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpe
 
   if ( part->partId() == partSpecifier )
     return part;
- 
+
   // multipart
   if ( part->hasHeaders() &&
        part->Headers().HasContentType() &&
        part->Body().FirstBodyPart() &&
        (DwMime::kTypeMultipart == part->Headers().ContentType().Type() ) &&
        (current = findDwBodyPart( part->Body().FirstBodyPart(), partSpecifier )) )
-  { 
+  {
     return current;
   }
 
