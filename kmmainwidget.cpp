@@ -2367,8 +2367,9 @@ void KMMainWidget::setupActions()
 			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
   //----- Create filter actions
-  mFilterMenu = new KActionMenu( i18n("&Create Filter"), actionCollection(), "create_filter" );
-
+  mFilterMenu = new KActionMenu( i18n("&Create Filter"), "filter", actionCollection(), "create_filter" );
+  connect( mFilterMenu, SIGNAL(activated()), this,
+	   SLOT(slotFilter()) );
   mSubjectFilterAction = new KAction( i18n("Filter on &Subject..."), 0, this,
 				      SLOT(slotSubjectFilter()),
 				      actionCollection(), "subject_filter");
