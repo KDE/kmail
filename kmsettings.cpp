@@ -42,6 +42,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
