@@ -43,6 +43,7 @@ private:
   QGuardedPtr<KMFolder> mFolder;
   bool mOutboxShown;
   bool mImapShown;
+  int mSpecialIdx;
 };
 
 #endif /* __KMFOLDERCOMBOBOX */

@@ -27,6 +27,7 @@ KMFolderComboBox::KMFolderComboBox( bool rw, QWidget *parent, char *name )
 
 void KMFolderComboBox::init()
 {
+  mSpecialIdx = -1;
   mOutboxShown = true;
   mImapShown = true;
   refreshFolders();
@@ -50,10 +51,10 @@ void KMFolderComboBox::showImapFolders(bool shown)
 {
   mImapShown = shown;
   refreshFolders();
-	if (shown)
-  	connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
-	else
-  	disconnect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  if (shown)
+    connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  else
+    disconnect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -120,6 +121,17 @@ void KMFolderComboBox::setFolder( const QString &idString )
 {
   KMFolder *folder = kernel->folderMgr()->findIdString( idString );
   if (!folder) folder = kernel->imapFolderMgr()->findIdString( idString );
+  if (!folder && !idString.isEmpty())
+  {
+     if (mSpecialIdx >= 0)
+        removeItem(mSpecialIdx);
+     mSpecialIdx = count();
+     insertItem(idString, -1);
+     setCurrentItem(mSpecialIdx);
+     
+     mFolder = 0;
+     return;
+  }
   setFolder( folder );
 }
 
@@ -134,10 +146,14 @@ KMFolder *KMFolderComboBox::getFolder()
   QValueList<QGuardedPtr<KMFolder> > folders;
   createFolderList( &names, &folders );
 
+  if (currentItem() == mSpecialIdx)
+     return 0;
+
+  QString text = currentText();
   int idx = 0;
   QStringList::Iterator it;
   for ( it = names.begin(); it != names.end(); ++it ) {
-    if ( ! (*it).compare( currentText() ) )
+    if ( ! (*it).compare( text ) )
       return *folders.at( idx );
     idx++;
   }
@@ -152,10 +168,15 @@ void KMFolderComboBox::slotActivated(int index)
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
   createFolderList( &names, &folders );
-  
-  mFolder = *folders.at( index );
-  KMFolder *folder = mFolder;
-  QString name = folder->name();
+
+  if (index == mSpecialIdx)
+  {
+     mFolder = 0;
+  }
+  else
+  {
+     mFolder = *folders.at( index );
+  }
 }
 
 //-----------------------------------------------------------------------------

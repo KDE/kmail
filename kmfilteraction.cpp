@@ -210,6 +210,14 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
   mFolder = ((KMFolderComboBox *)paramWidget)->getFolder();
+  if (mFolder)
+  {
+     mFolderName = QString::null;
+  }
+  else
+  {
+     mFolderName = ((KMFolderComboBox *)paramWidget)->currentText();
+  }
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
@@ -217,7 +225,7 @@ void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
   if ( mFolder )
     ((KMFolderComboBox *)paramWidget)->setFolder( mFolder );
   else
-    clearParamWidget( paramWidget );
+    ((KMFolderComboBox *)paramWidget)->setFolder( mFolderName );
 }
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
@@ -228,6 +236,10 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 void KMFilterActionWithFolder::argsFromString( const QString argsStr )
 {
   mFolder = kernel->folderMgr()->findIdString( argsStr );
+  if (mFolder)
+     mFolderName = QString::null;
+  else
+     mFolderName = argsStr;
 }
 
 const QString KMFilterActionWithFolder::argsAsString() const
@@ -236,7 +248,7 @@ const QString KMFilterActionWithFolder::argsAsString() const
   if ( mFolder )
     result = mFolder->idString();
   else
-    result = "";
+    result = mFolderName;
   return result;
 }
 
@@ -244,6 +256,7 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
 {
   if ( aFolder == mFolder ) {
     mFolder = aNewFolder;
+    mFolderName = QString::null;
     return TRUE;
   } else
     return FALSE;
