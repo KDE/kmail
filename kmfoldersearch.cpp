@@ -381,6 +381,8 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
 
 KMFolderSearch::~KMFolderSearch()
 {
+    delete mSearch;
+    mSearch = 0;
     if (mOpenCount > 0)
 	close(TRUE);
 }
@@ -507,7 +509,7 @@ int KMFolderSearch::addMsg(KMMessage*, int* index_return)
 
 bool KMFolderSearch::readSearch()
 {
-    mSearch = new KMSearch();
+    mSearch = new KMSearch;
     QObject::connect(mSearch, SIGNAL(found(Q_UINT32)), SLOT(addSerNum(Q_UINT32)));
     QObject::connect(mSearch, SIGNAL(finished(bool)), SLOT(searchFinished(bool)));
     return mSearch->read(location());
