@@ -33,6 +33,8 @@
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
   QObject(), mDir(this, QString::null, dirType)
 {
+  if ( dirType == KMStandardDir )
+    mDir.setBaseURL( I18N_NOOP("Local") );
   mQuiet = 0;
   mChanged = FALSE;
   setBasePath(aBasePath);
@@ -315,13 +317,13 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   if (aFolder->child())
   {
     // call remove for every child
-    KMFolderNode* node; 
-    QPtrListIterator<KMFolderNode> it(*aFolder->child()); 
-    for ( ; (node = it.current()); ) 
-    { 
-      ++it; 
-      if (node->isDir()) continue; 
-      KMFolder *folder = static_cast<KMFolder*>(node); 
+    KMFolderNode* node;
+    QPtrListIterator<KMFolderNode> it(*aFolder->child());
+    for ( ; (node = it.current()); )
+    {
+      ++it;
+      if (node->isDir()) continue;
+      KMFolder *folder = static_cast<KMFolder*>(node);
       remove(folder);
     }
   }

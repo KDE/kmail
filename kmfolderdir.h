@@ -73,14 +73,16 @@ public:
   /** set the absolute path */
   virtual void setPath(const QString&);
 
-  /** returns an empty string */
   virtual QString prettyURL() const;
+
+  void setBaseURL( const QCString& baseURL );
 
   virtual KMFolderMgr* manager() const;
 
 protected:
   QString mPath;
   KMFolderMgr *mManager;
+  QCString mBaseURL;
 };
 
 #endif /*kmfolderdir_h*/

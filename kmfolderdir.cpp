@@ -19,11 +19,11 @@
 //=============================================================================
 //=============================================================================
 KMFolderRootDir::KMFolderRootDir(KMFolderMgr* manager, const QString& path,
-                                 KMFolderDirType dirType):
-  KMFolderDir( 0, 0, path, dirType )
+                                 KMFolderDirType dirType)
+  : KMFolderDir( 0, 0, path, dirType ),
+    mPath( path ),
+    mManager( manager )
 {
-  setPath(path);
-  mManager = manager;
 }
 
 //-----------------------------------------------------------------------------
@@ -52,7 +52,17 @@ QString KMFolderRootDir::path() const
 //-----------------------------------------------------------------------------
 QString KMFolderRootDir::prettyURL() const
 {
-  return QString::null;
+  if ( !mBaseURL.isEmpty() )
+    return '/' + i18n( mBaseURL.data() );
+  else
+    return QString::null;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderRootDir::setBaseURL( const QCString &baseURL )
+{
+  mBaseURL = baseURL;
 }
 
 
