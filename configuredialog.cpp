@@ -813,7 +813,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
 			       i18n("Message &property:"), group ), 3, 0 );
   QLabel *l = new QLabel( mDefaultDomainEdit, /*buddy*/
-                          i18n("Default domain:"), group );
+                          i18n("Defaul&t domain:"), group );
   glay->addWidget( l, 4, 0 );
 
   // and now: add QWhatsThis:
@@ -1211,7 +1211,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mBeepNewMailCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                  QSizePolicy::Fixed ) );
   // "Systray" notification check box
-  mSystrayCheck = new QCheckBox( i18n("S&ystem tray notification"), group );
+  mSystrayCheck = new QCheckBox( i18n("System &tray notification"), group );
 
   // System tray modes
   QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray Modes"), group);
@@ -1223,17 +1223,17 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   bgroupLayout->setSpacing( 6 );
   bgroupLayout->setMargin( 11 );
 
-  mBlinkingSystray = new QRadioButton( i18n("Always show system tray"), bgroup);
+  mBlinkingSystray = new QRadioButton( i18n("Alwa&ys show system tray"), bgroup);
   bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
 
-  mSystrayOnNew = new QRadioButton( i18n("Show system tray on new mail"), bgroup);
+  mSystrayOnNew = new QRadioButton( i18n("Sho&w system tray on new mail"), bgroup);
   bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
 
   bgroup->setEnabled( false ); // since !mSystrayCheck->isChecked()
   connect( mSystrayCheck, SIGNAL(toggled(bool)),
            bgroup, SLOT(setEnabled(bool)) );
 
-  mCheckmailStartupCheck = new QCheckBox( i18n("Check mail on startup"), group );
+  mCheckmailStartupCheck = new QCheckBox( i18n("Chec&k mail on startup"), group );
 
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
@@ -2317,7 +2317,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
 
-  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request message disposition notifications"), this );
+  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request &message disposition notifications"), this );
   vlay->addWidget( mAutoRequestMDNCheck );
 
   // a checkbutton for "word wrap" and a spinbox for the column in
@@ -3072,7 +3072,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
 
   // "Enable detection of missing attachments" check box
   mMissingAttachmentDetectionCheck =
-    new QCheckBox( i18n("Enable detection of missing attachments"), this );
+    new QCheckBox( i18n("E&nable detection of missing attachments"), this );
   mMissingAttachmentDetectionCheck->setChecked( true );
   vlay->addWidget( mMissingAttachmentDetectionCheck );
 
