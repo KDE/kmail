@@ -192,16 +192,26 @@ public:
       :QWidget( parent, name )
       {}
   ~ConfigModuleTab() {}
-  virtual void load() = 0;
+  void load();
   virtual void save() = 0;
+  void defaults();
   // the below are optional
-  virtual void defaults() {}
   virtual void installProfile(){}
 signals:
    // forwarded to the ConfigModule
   void changed(bool);
 public slots:
   void slotEmitChanged();
+private:
+  // reimplement this for loading values of settings which are available
+  // via GlobalSettings
+  virtual void doLoadFromGlobalSettings() {}
+  // reimplement this for loading values of settings which are not available
+  // via GlobalSettings
+  virtual void doLoadOther() {}
+  // reimplement this for loading default values of settings which are
+  // not available via GlobalSettings (KConfigXT).
+  virtual void doResetToDefaultsOther() {}
 };
 
 
@@ -215,6 +225,7 @@ public:
   ConfigModuleWithTabs( QWidget * parent=0, const char * name=0 );
    ~ConfigModuleWithTabs() {}
 
+  // don't reimplement any of those methods
   virtual void load();
   virtual void save();
   virtual void defaults();
@@ -249,7 +260,7 @@ public:
 public slots:
   void slotUpdateTransportCombo( const QStringList & );
 
-protected slots:
+private slots:
   void slotNewIdentity();
   void slotModifyIdentity();
   void slotRemoveIdentity();
@@ -263,10 +274,10 @@ protected slots:
   void slotSetAsDefault();
   void slotIdentitySelectionChanged();
 
-protected: // methods
+private: // methods
   void refreshList();
 
-protected: // data members
+private: // data members
   KMail::IdentityDialog   * mIdentityDialog;
   int            mOldNumberOfIdentities;
 
@@ -290,14 +301,12 @@ class AccountsPageSendingTab : public ConfigModuleTab {
 public:
   AccountsPageSendingTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
-  void load();
   void save();
-  void defaults() {}
 
 signals:
   void transportListChanged( const QStringList & );
 
-protected slots:
+private slots:
   void slotTransportSelected();
   void slotAddTransport();
   void slotModifySelectedTransport();
@@ -305,7 +314,12 @@ protected slots:
   void slotTransportUp();
   void slotTransportDown();
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   ListView    *mTransportList;
   QPushButton *mModifyTransportButton;
   QPushButton *mRemoveTransportButton;
@@ -326,14 +340,12 @@ class AccountsPageReceivingTab : public ConfigModuleTab {
 public:
   AccountsPageReceivingTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
-  void load();
   void save();
-  void defaults() {}
 
 signals:
   void accountListChanged( const QStringList & );
 
-protected slots:
+private slots:
   void slotAccountSelected();
   void slotAddAccount();
   void slotModifySelectedAccount();
@@ -341,10 +353,13 @@ protected slots:
   void slotEditNotifications();
   void slotTweakAccountList();
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
   QStringList occupiedNames();
 
-protected:
+private:
   ListView      *mAccountList;
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
@@ -378,7 +393,7 @@ signals:
   void transportListChanged( const QStringList & );
   void accountListChanged( const QStringList & );
 
-protected:
+private:
   SendingTab   *mSendingTab;
   ReceivingTab *mReceivingTab;
 };
@@ -395,19 +410,20 @@ class AppearancePageFontsTab : public ConfigModuleTab {
 public:
   AppearancePageFontsTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
-  void load();
   void save();
-  void defaults() {}
 
   void installProfile( KConfig * profile );
 
-protected slots:
+private slots:
   void slotFontSelectorChanged( int );
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
   void updateFontSelector();
 
-protected:
+private:
   QCheckBox    *mCustomFontCheck;
   QComboBox    *mFontLocationCombo;
   KFontChooser *mFontChooser;
@@ -421,13 +437,16 @@ class AppearancePageColorsTab : public ConfigModuleTab {
 public:
   AppearancePageColorsTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
-  void load();
   void save();
-  void defaults() {}
 
   void installProfile( KConfig * profile );
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   QCheckBox    *mCustomColorCheck;
   ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
@@ -439,12 +458,15 @@ public:
   AppearancePageLayoutTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
 
-protected: // data
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private: // data
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
@@ -458,15 +480,16 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
 
-protected: // methods
+private: // methods
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
   void setDateDisplay( int id, const QString & format );
 
-protected: // data
+private: // data
   QCheckBox    *mMessageSizeCheck;
   QCheckBox    *mAttachmentCheck;
   QCheckBox    *mNestedMessagesCheck;
@@ -483,12 +506,13 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
   void readCurrentOverrideCodec();
 
 private: // data
@@ -507,10 +531,11 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
+
+private:
+  virtual void doLoadFromGlobalSettings();
 
 private: // data
   QCheckBox    *mSystemTrayCheck;
@@ -532,7 +557,7 @@ public:
   typedef AppearancePageReaderTab ReaderTab;
   typedef AppearancePageSystemTrayTab SystemTrayTab;
 
-protected:
+private:
   FontsTab      *mFontsTab;
   ColorsTab     *mColorsTab;
   LayoutTab     *mLayoutTab;
@@ -553,12 +578,13 @@ public:
   ComposerPageGeneralTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults();
   void installProfile( KConfig * profile );
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
+
+private:
   QCheckBox     *mAutoAppSignFileCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
@@ -575,21 +601,20 @@ public:
   ComposerPagePhrasesTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
 
-protected slots:
+private slots:
   void slotNewLanguage();
   void slotRemoveLanguage();
   void slotLanguageChanged( const QString& );
   void slotAddNewLanguage( const QString& );
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
   void setLanguageItemInformation( int index );
   void saveActiveLanguageItem();
 
-protected:
+private:
   LanguageComboBox *mPhraseLanguageCombo;
   QPushButton      *mRemoveButton;
   QLineEdit        *mPhraseReplyEdit;
@@ -607,12 +632,12 @@ public:
   ComposerPageSubjectTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
 
+private:
+  virtual void doLoadFromGlobalSettings();
 
-protected:
+private:
   SimpleStringListEditor *mReplyListEditor;
   QCheckBox              *mReplaceReplyPrefixCheck;
   SimpleStringListEditor *mForwardListEditor;
@@ -625,14 +650,17 @@ public:
   ComposerPageCharsetTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
 
-protected slots:
+private slots:
   void slotVerifyCharset(QString&);
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   SimpleStringListEditor *mCharsetListEditor;
   QCheckBox              *mKeepReplyCharsetCheck;
 };
@@ -643,18 +671,21 @@ public:
   ComposerPageHeadersTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
 
-protected slots:
+private slots:
   void slotMimeHeaderSelectionChanged();
   void slotMimeHeaderNameChanged( const QString & );
   void slotMimeHeaderValueChanged( const QString & );
   void slotNewMimeHeader();
   void slotRemoveMimeHeader();
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   QCheckBox   *mCreateOwnMessageIdCheck;
   QLineEdit   *mMessageIdSuffixEdit;
   QRegExpValidator *mMessageIdSuffixValidator;
@@ -672,14 +703,17 @@ public:
   ComposerPageAttachmentsTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
 
-protected slots:
+private slots:
   void slotOutlookCompatibleClicked();
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   QCheckBox   *mOutlookCompatibleCheck;
   QCheckBox   *mMissingAttachmentDetectionCheck;
   SimpleStringListEditor *mAttachWordsListEditor;
@@ -700,7 +734,7 @@ public:
   typedef ComposerPageHeadersTab HeadersTab;
   typedef ComposerPageAttachmentsTab AttachmentsTab;
 
-protected:
+private:
   GeneralTab  *mGeneralTab;
   PhrasesTab  *mPhrasesTab;
   SubjectTab  *mSubjectTab;
@@ -721,13 +755,15 @@ public:
   SecurityPageGeneralTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
-
   void installProfile( KConfig * profile );
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   QCheckBox    *mExternalReferences;
   QCheckBox    *mHtmlMailCheck;
   QCheckBox    *mNoMDNsWhenEncryptedCheck;
@@ -744,12 +780,15 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   ComposerCryptoConfiguration* mWidget;
 };
 
@@ -760,15 +799,18 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
 
 private slots:
   void slotReenableAllWarningsClicked();
 
-protected:
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   WarningConfiguration* mWidget;
 };
 
@@ -782,11 +824,13 @@ public:
   QString helpAnchor() const;
 
   // Can't use k_dcop here. dcopidl can't parse this file, dcopidlng has a namespace bug.
-  void load();
-
   void save();
-  void defaults() {}
   void installProfile( KConfig * profile );
+
+private:
+  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
 
 private:
   SMimeConfiguration* mWidget;
@@ -802,9 +846,11 @@ public:
 
   QString helpAnchor() const;
 
-  void load();
   void save();
-  void defaults() {}
+
+private:
+  virtual void doLoadOther();
+  //virtual void doResetToDefaultsOther();
 
 private:
   Kleo::BackendConfigWidget * mBackendConfig;
@@ -826,7 +872,7 @@ public:
   typedef SecurityPageSMimeTab SMimeTab;
   typedef SecurityPageCryptPlugTab CryptPlugTab;
 
-protected:
+private:
   GeneralTab    *mGeneralTab;
   ComposerCryptoTab *mComposerCryptoTab;
   WarningTab    *mWarningTab;
@@ -846,12 +892,15 @@ class MiscPageFolderTab : public ConfigModuleTab {
 public:
   MiscPageFolderTab( QWidget * parent=0, const char * name=0 );
 
-  void load();
   void save();
-  void defaults() {}
  QString helpAnchor() const;
 
-protected:
+private:
+  virtual void doLoadFromGlobalSettings();
+  virtual void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
   QCheckBox    *mEmptyFolderConfirmCheck;
   QCheckBox    *mExcludeImportantFromExpiry;
   QComboBox    *mLoopOnGotoUnread;
@@ -868,13 +917,16 @@ class MiscPageGroupwareTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
   MiscPageGroupwareTab( QWidget * parent=0, const char * name=0 );
-  void load();
   void save();
-  void defaults() {}
   QString helpAnchor() const;
+
 private slots:
   void slotStorageFormatChanged( int );
   void slotLegacyBodyInvitesToggled( bool on );
+
+private:
+  virtual void doLoadFromGlobalSettings();
+
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;

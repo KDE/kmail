@@ -14,6 +14,7 @@
 
 // other KMail headers:
 #include "kmtransport.h"
+#include "globalsettings.h"
 
 // other kdenetwork headers: (none)
 
@@ -396,11 +397,9 @@ void ConfigModuleWithTabs::save() {
 }
 
 void ConfigModuleWithTabs::defaults() {
-  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
-    if ( tab )
-      tab->defaults();
-  }
+  ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->currentPage() );
+  if ( tab )
+    tab->defaults();
   KCModule::defaults();
 }
 
@@ -410,6 +409,23 @@ void ConfigModuleWithTabs::installProfile(KConfig * /* profile */ ) {
     if ( tab )
       tab->installProfile();
   }
+}
+
+void ConfigModuleTab::load()
+{
+  doLoadFromGlobalSettings();
+  doLoadOther();
+}
+
+void ConfigModuleTab::defaults()
+{
+  // reset settings which are available via GlobalSettings to their defaults
+  // (stolen from KConfigDialogManager::updateWidgetsDefault())
+  const bool bUseDefaults = GlobalSettings::self()->useDefaults( true );
+  doLoadFromGlobalSettings();
+  GlobalSettings::self()->useDefaults( bUseDefaults );
+  // reset other settings to default values
+  doResetToDefaultsOther();
 }
 
 void ConfigModuleTab::slotEmitChanged( void ) {

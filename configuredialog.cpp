@@ -958,7 +958,11 @@ void AccountsPage::SendingTab::slotTransportDown()
   emit changed( true );
 }
 
-void AccountsPage::SendingTab::load() {
+void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
+  mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
+}
+
+void AccountsPage::SendingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
@@ -995,7 +999,6 @@ void AccountsPage::SendingTab::load() {
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
                                                          false ) );
-  mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
   {
@@ -1341,7 +1344,11 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
     KNotifyDialog::configure(this);
 }
 
-void AccountsPage::ReceivingTab::load() {
+void AccountsPage::ReceivingTab::doLoadFromGlobalSettings() {
+  mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
+}
+
+void AccountsPage::ReceivingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
@@ -1362,7 +1369,6 @@ void AccountsPage::ReceivingTab::load() {
   }
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
-  mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
   QTimer::singleShot( 0, this, SLOT( slotTweakAccountList() ) );
 }
@@ -1598,7 +1604,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
                               fontNames[ index ].enableFamilyAndSize );
 }
 
-void AppearancePage::FontsTab::load() {
+void AppearancePage::FontsTab::doLoadOther() {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
@@ -1720,7 +1726,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
            this, SLOT( slotEmitChanged( void ) ) );
 }
 
-void AppearancePage::ColorsTab::load() {
+void AppearancePage::ColorsTab::doLoadOther() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors", true ) );
@@ -1865,7 +1871,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePage::LayoutTab::load() {
+void AppearancePage::LayoutTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
@@ -2035,7 +2041,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePage::HeadersTab::load() {
+void AppearancePage::HeadersTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
@@ -2255,13 +2261,17 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   }
 }
 
-void AppearancePage::ReaderTab::load()
+void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
+{
+  mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
+  readCurrentOverrideCodec();
+}
+
+void AppearancePage::ReaderTab::doLoadOther()
 {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   loadWidget( mShowColorbarCheck, reader, showColorbarMode );
   loadWidget( mShowSpamStatusCheck, reader, showSpamStatusMode );
-  mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
-  readCurrentOverrideCodec();
 }
 
 
@@ -2320,7 +2330,7 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePage::SystemTrayTab::load() {
+void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings() {
   mSystemTrayCheck->setChecked( GlobalSettings::systemTrayEnabled() );
   mSystemTrayGroup->setButton( GlobalSettings::systemTrayPolicy() );
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
@@ -2512,7 +2522,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   vlay->addStretch( 100 );
 }
 
-void ComposerPage::GeneralTab::load() {
+void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   // various check boxes:
 
   mAutoAppSignFileCheck->setChecked(
@@ -2527,30 +2537,6 @@ void ComposerPage::GeneralTab::load() {
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::useExternalEditor() );
   mEditorRequester->setURL( GlobalSettings::externalEditor() );
-}
-
-void ComposerPageGeneralTab::defaults()
-{
-  // first swap default value and current value of all settings
-  GlobalSettings::self()->autoTextSignatureItem()->swapDefault();
-  GlobalSettings::self()->smartQuoteItem()->swapDefault();
-  GlobalSettings::self()->requestMDNItem()->swapDefault();
-  GlobalSettings::self()->wordWrapItem()->swapDefault();
-  GlobalSettings::self()->lineWrapWidthItem()->swapDefault();
-  GlobalSettings::self()->autosaveIntervalItem()->swapDefault();
-  GlobalSettings::self()->useExternalEditorItem()->swapDefault();
-  GlobalSettings::self()->externalEditorItem()->swapDefault();
-  // then load the default values
-  load();
-  // and finally restore the current values by swapping again
-  GlobalSettings::self()->autoTextSignatureItem()->swapDefault();
-  GlobalSettings::self()->smartQuoteItem()->swapDefault();
-  GlobalSettings::self()->requestMDNItem()->swapDefault();
-  GlobalSettings::self()->wordWrapItem()->swapDefault();
-  GlobalSettings::self()->lineWrapWidthItem()->swapDefault();
-  GlobalSettings::self()->autosaveIntervalItem()->swapDefault();
-  GlobalSettings::self()->useExternalEditorItem()->swapDefault();
-  GlobalSettings::self()->externalEditorItem()->swapDefault();
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2754,7 +2740,7 @@ void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
 }
 
 
-void ComposerPage::PhrasesTab::load() {
+void ComposerPage::PhrasesTab::doLoadFromGlobalSettings() {
   mLanguageList.clear();
   mPhraseLanguageCombo->clear();
   mActiveLanguageItem = -1;
@@ -2878,7 +2864,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 }
 
-void ComposerPage::SubjectTab::load() {
+void ComposerPage::SubjectTab::doLoadFromGlobalSettings() {
   mReplyListEditor->setStringList( GlobalSettings::replyPrefixes() );
   mReplaceReplyPrefixCheck->setChecked( GlobalSettings::replaceReplyPrefix() );
   mForwardListEditor->setStringList( GlobalSettings::forwardPrefixes() );
@@ -2956,7 +2942,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
   charset = QString::null;
 }
 
-void ComposerPage::CharsetTab::load() {
+void ComposerPage::CharsetTab::doLoadOther() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList charsets = composer.readListEntry( "pref-charsets" );
@@ -3143,7 +3129,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
   emit changed( true );
 }
 
-void ComposerPage::HeadersTab::load() {
+void ComposerPage::HeadersTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   QString suffix = general.readEntry( "myMessageIdSuffix" );
@@ -3256,7 +3242,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
            mAttachWordsListEditor, SLOT(setEnabled(bool)) );
 }
 
-void ComposerPage::AttachmentsTab::load() {
+void ComposerPage::AttachmentsTab::doLoadOther() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mOutlookCompatibleCheck->setChecked(
@@ -3541,7 +3527,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addStretch( 10 ); // spacer
 }
 
-void SecurityPage::GeneralTab::load() {
+void SecurityPage::GeneralTab::doLoadOther() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
@@ -3642,7 +3628,7 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent, 
   vlay->addWidget( mWidget );
 }
 
-void SecurityPage::ComposerCryptoTab::load() {
+void SecurityPage::ComposerCryptoTab::doLoadOther() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
 
   // If you change default values, sync messagecomposer.cpp too
@@ -3725,7 +3711,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * n
            SLOT(slotReenableAllWarningsClicked()) );
 }
 
-void SecurityPage::WarningTab::load() {
+void SecurityPage::WarningTab::doLoadOther() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mWidget->warnUnencryptedCB->setChecked( composer.readBoolEntry( "crypto-warning-unencrypted", false ) );
@@ -3932,7 +3918,7 @@ struct SMIMECryptoConfigEntries {
   Kleo::CryptoConfig* mConfig;
 };
 
-void SecurityPage::SMimeTab::load() {
+void SecurityPage::SMimeTab::doLoadOther() {
   if ( !mConfig ) {
     setEnabled( false );
     return;
@@ -4123,7 +4109,7 @@ SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
 
 }
 
-void SecurityPage::CryptPlugTab::load() {
+void SecurityPage::CryptPlugTab::doLoadOther() {
   mBackendConfig->load();
 }
 
@@ -4313,21 +4299,23 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
-void MiscPage::FolderTab::load() {
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
+void MiscPage::FolderTab::doLoadFromGlobalSettings() {
   mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
-  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-                                                  kmkernel->inboxFolder()->idString() ) );
-  mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
-
   mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
   mActionEnterFolder->setCurrentItem( GlobalSettings::actionEnterFolder() );
   mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
   mDelayedMarkTime->setValue( GlobalSettings::delayedMarkTime() );
   mShowPopupAfterDnD->setChecked( GlobalSettings::showPopupAfterDnD() );
+}
+
+void MiscPage::FolderTab::doLoadOther() {
+  KConfigGroup general( KMKernel::config(), "General" );
+
+  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
+  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
+                                                  kmkernel->inboxFolder()->idString() ) );
+  mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -4523,7 +4511,7 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 }
 
-void MiscPage::GroupwareTab::load() {
+void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   // Read the groupware config
   if ( mEnableGwCB ) {
     mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
