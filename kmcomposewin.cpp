@@ -3154,10 +3154,10 @@ void KMEdit::spellcheck()
 		       SLOT(slotSpellcheck2(KSpell*)));
   connect (mKSpell, SIGNAL( death()),
           this, SLOT (slotSpellDone()));
-  connect (mKSpell, SIGNAL (misspelling (QString, QStringList *, unsigned)),
-          this, SLOT (misspelling (QString, QStringList *, unsigned)));
-  connect (mKSpell, SIGNAL (corrected (QString, QString, unsigned)),
-          this, SLOT (corrected (QString, QString, unsigned)));
+  connect (mKSpell, SIGNAL (misspelling (const QString &, const QStringList &, unsigned int)),
+          this, SLOT (misspelling (const QString &, const QStringList &, unsigned int)));
+  connect (mKSpell, SIGNAL (corrected (const QString &, const QString &, unsigned int)),
+          this, SLOT (corrected (const QString &, const QString &, unsigned int)));
   connect (mKSpell, SIGNAL (done(const QString &)),
           this, SLOT (slotSpellResult (const QString&)));
 }
