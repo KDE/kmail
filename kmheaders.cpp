@@ -71,6 +71,8 @@ QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
 QPixmap* KMHeaders::pixWatched = 0;
 QPixmap* KMHeaders::pixIgnored = 0;
+QPixmap* KMHeaders::pixSpam = 0;
+QPixmap* KMHeaders::pixHam = 0;
 QPixmap* KMHeaders::pixFullySigned = 0;
 QPixmap* KMHeaders::pixPartiallySigned = 0;
 QPixmap* KMHeaders::pixUndefinedSigned = 0;
@@ -354,7 +356,9 @@ public:
 
       PixmapList pixmaps;
 
-      // Have the watched/ignored icons first, I guess.
+      // Have the spam/ham and watched/ignored icons first, I guess.
+      if(mMsgBase->isSpam()) pixmaps << *KMHeaders::pixSpam;
+      if(mMsgBase->isHam()) pixmaps << *KMHeaders::pixHam;
       if(mMsgBase->isIgnored()) pixmaps << *KMHeaders::pixIgnored;
       if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
 
@@ -615,6 +619,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixFlag  = new QPixmap( UserIcon("kmmsgflag") );
     pixWatched  = new QPixmap( UserIcon("kmmsgwatched") );
     pixIgnored  = new QPixmap( UserIcon("kmmsgignored") );
+    pixSpam  = new QPixmap( UserIcon("kmmsgspam") );
+    pixHam  = new QPixmap( UserIcon("kmmsgham") );
     pixFullySigned = new QPixmap( UserIcon( "kmmsgfullysigned" ) );
     pixPartiallySigned = new QPixmap( UserIcon( "kmmsgpartiallysigned" ) );
     pixUndefinedSigned = new QPixmap( UserIcon( "kmmsgundefinedsigned" ) );

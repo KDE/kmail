@@ -151,5 +151,8 @@
   <Action name="go_next_unread_message"/>
   <Separator/>
   <Action name="kmail_configure_kmail"/>
+  <Separator/>
+  <Action name="status_spam"/>
+  <Action name="status_ham"/>
  </ToolBar>
 </kpartgui>

@@ -219,7 +219,7 @@ public slots:
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixRead, *pixRep, *pixSent,
-    *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored,
+    *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored, *pixSpam, *pixHam,
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
       *pixFiller, *pixEncryptionProblematic,
