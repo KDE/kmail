@@ -587,10 +587,8 @@ void KMReaderWin::parseMsg(void)
   if (!parent())
     setCaption(mMsg->subject());
 
-  kernel->kbp()->busy();
   parseMsg(mMsg);
-  kernel->kbp()->idle();
-   
+
   mViewer->write("</body></html>");
   mViewer->end();
 }
