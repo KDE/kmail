@@ -73,8 +73,10 @@ public:
   virtual void finalizeMove( KMHeaderItem *item, int contentX, int contentY );
 
   /** If destination is 0 then the messages are deleted, otherwise
-    they are moved to this folder. */
-  virtual void moveMsgToFolder(KMFolder* destination);
+    they are moved to this folder. The second parameter is usefull when the
+    user has already confirmed the move/deletion. */
+  virtual void moveMsgToFolder( KMFolder* destination,
+                                bool askForConfirmation=true );
 
   /** Messages are duplicated and added to given folder.
       If aMsg is set this one will be written to the destination folder. */

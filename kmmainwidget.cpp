@@ -1180,7 +1180,9 @@ void KMMainWidget::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotDeleteMsg()
 {
-  mHeaders->moveMsgToFolder(0);
+  /* Don't ask for confirmation again when deleting, the user has already
+     confirmed. */
+  mHeaders->moveMsgToFolder( 0, false );
   updateMessageActions();
 }
 

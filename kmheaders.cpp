@@ -1702,10 +1702,10 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
+void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation )
 {
   KMMessageList msgList = *selectedMsgs();
-  if ( !destFolder &&     // messages shall be deleted
+  if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          ( msgList.count() == 1 )
          ? i18n("<qt>Do you really want to delete the selected message?<br>"
