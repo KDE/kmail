@@ -49,7 +49,7 @@ const int KMFldSearch::MSGID_COLUMN = 4;
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
                          KMFolder *curFolder, bool modal):
-  KDialogBase(0, name, modal, i18n("Search in Folders"),
+  KDialogBase(0, name, modal, i18n("Find Messages"),
               User1 | User2 | Close, User1, false,
               KGuiItem( i18n("&Search"), "find" ),
               KGuiItem( i18n("S&top"), "cancel" )),
@@ -142,7 +142,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
 	   mChkSubFolders, SLOT(setEnabled(bool)) );
 
-  mLbxMatches = new KListView(searchWidget, "Search in Folders");
+  mLbxMatches = new KListView(searchWidget, "Find Messages");
 
   /*
      Default is to sort by date. TODO: Unfortunately this sorts *while*
