@@ -333,11 +333,13 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
   KMMsgBase* msg = 0;
 
   open();
-  for( int i = 0; i < count() && !msg; ++i ) {
-    KMMsgBase *m = getMsgBase( i );
-    if( !m ) continue;
-    if( m->UID() == uid )
+  int cnt = count();
+  for( int i = 0; i < cnt; ++i ) {
+    KMMsgBase *m = mMsgList[i];
+    if ( m && m->UID() == uid ) {
       msg = m;
+      break;
+    }
   }
   close();
 
