@@ -539,7 +539,8 @@ void KMSender::cleanup(void)
   mSentMessages = 0;
   mFailedMessages = 0;
   mSentBytes = 0;
-  mProgressItem->setComplete();
+  if ( mProgressItem )
+    mProgressItem->setComplete();
   mProgressItem = 0;
   kmkernel->filterMgr()->deref();
 }
