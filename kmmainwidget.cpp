@@ -1996,15 +1996,15 @@ void KMMainWidget::setupActions()
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardAttachedMsg()) );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				mActionCollection, "message_forward_inline" );
-  mForwardActionMenu->insert( forwardAction() );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
 					SLOT(slotForwardAttachedMsg()), mActionCollection,
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( forwardAttachedAction() );
+  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+				mActionCollection, "message_forward_inline" );
+  mForwardActionMenu->insert( forwardAction() );
   mForwardActionMenu->insert( redirectAction() );
 
 
