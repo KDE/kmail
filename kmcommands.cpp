@@ -52,6 +52,7 @@ using KMail::ActionScheduler;
 #include "kmaddrbook.h"
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
+#include "kmfoldermbox.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
