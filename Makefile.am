@@ -1,7 +1,7 @@
 
-SUBDIRS = pics 
+SUBDIRS = pics
 INCLUDES = $(all_includes)
-LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
+LDADD	= $(LIB_KHTML) -lkjava -lkspell -lmimelib $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
@@ -21,7 +21,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
-		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp 
+		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -33,15 +33,15 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
-		charsetsDlg.moc kmtopwidget.moc 
+		charsetsDlg.moc kmtopwidget.moc
 
 appsdir = $(kde_appsdir)/Internet/
 apps_DATA = KMail.desktop
 
-EXTRA_DIST = KMail.desktop 
+EXTRA_DIST = KMail.desktop
 
 KDE_ICON = kmail
 
 messages:
-	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot 
+	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot
 

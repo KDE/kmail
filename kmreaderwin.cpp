@@ -97,12 +97,12 @@ void KMReaderWin::makeAttachDir(void)
   QString directory;
   directory.sprintf("kmail/tmp/kmail%d/", getpid());
   KGlobal::dirs()->
-    addResourceType("kmail_tmp", 
+    addResourceType("kmail_tmp",
 		    KStandardDirs::kde_default("data") + directory);
   mAttachDir = locateLocal( "kmail_tmp", "/" );
 
   if (mAttachDir.isNull()) warning(i18n("Failed to create temporary "
-					"attachment directory '%s': %s"), 
+					"attachment directory '%s': %s"),
 				   directory.ascii(), strerror(errno));
 }
 
@@ -143,7 +143,7 @@ void KMReaderWin::readConfig(void)
 
   int fontsizes[7];
   mViewer->resetFontSizes();
-  mViewer->getFontSizes(fontsizes);
+  mViewer->fontSizes(fontsizes);
   diff= fntSize - fontsizes[3];
   if (fontsizes[0]+diff > 0)
   {
@@ -187,7 +187,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  mViewer = new KHTMLWidget(this, "htmlw");
+  mViewer = new KHTMLWidget(this, "khtml");
   mViewer->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
   mViewer->setDefaultBGColor(QColor("#ffffff"));
@@ -195,25 +195,19 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setDefaultBGColor(pal->normal().background());
   mViewer->setDefaultTextColor(app->textColor, app->);
   */
-  connect(mViewer,SIGNAL(URLSelected(QString ,int)),this,
-	  SLOT(slotUrlOpen(QString ,int)));
-  connect(mViewer,SIGNAL(onURL(QString)),this,
-	  SLOT(slotUrlOn(QString)));
-  connect(mViewer,SIGNAL(popupMenu(QString , const QPoint &)),  
-	  SLOT(slotUrlPopup(QString, const QPoint &)));
-  connect(mViewer,SIGNAL(textSelected(bool)), 
+  // ### FIXME
+  //connect(mViewer,SIGNAL(URLSelected(QString ,int)),this,
+  //	  SLOT(slotUrlOpen(QString ,int)));
+  connect(mViewer,SIGNAL(onURL(const QString &)),this,
+	  SLOT(slotUrlOn(const QString &)));
+  connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
+	  SLOT(slotUrlPopup(const QString &, const QPoint &)));
+  connect(mViewer,SIGNAL(textSelected(bool)),
           SLOT(slotTextSelected(bool)));
 
-  mSbVert = new QScrollBar(0, 110, 12, height()-110, 0, 
-                           QScrollBar::Vertical, this);
-  mSbHorz = new QScrollBar(0, 0, 24, width()-32, 0,
-                           QScrollBar::Horizontal, this);       
-  connect(mViewer, SIGNAL(scrollVert(int)), SLOT(slotScrollVert(int)));
-  connect(mViewer, SIGNAL(scrollHorz(int)), SLOT(slotScrollHorz(int)));
-  connect(mSbVert, SIGNAL(valueChanged(int)), mViewer, SLOT(slotScrollVert(int)));
-  connect(mSbHorz, SIGNAL(valueChanged(int)), mViewer, SLOT(slotScrollHorz(int)));
-  connect(mViewer, SIGNAL(documentChanged()), SLOT(slotDocumentChanged()));
-  connect(mViewer, SIGNAL(documentDone()), SLOT(slotDocumentDone()));
+  // ### FIXME
+  //connect(mViewer, SIGNAL(documentChanged()), SLOT(slotDocumentChanged()));
+  //connect(mViewer, SIGNAL(documentDone()), SLOT(slotDocumentDone()));
 }
 
 
@@ -235,7 +229,7 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
-{  
+{
   mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
   update(true);
 }
@@ -257,15 +251,12 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   mMsg = aMsg;
 
-  mViewer->stopParser();
-
   if (mMsg) parseMsg();
   else
   {
     mViewer->begin();
     mViewer->write("<HTML><BODY></BODY></HTML>");
     mViewer->end();
-    mViewer->parse();
   }
 }
 
@@ -279,16 +270,15 @@ void KMReaderWin::parseMsg(void)
 
   mViewer->begin();
   mViewer->write("<HTML><BODY>");
-#if defined CHARSETS  
+#if defined CHARSETS
   printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
   mViewer->setCharset(mMsg->charset());
-#endif  
+#endif
 
   parseMsg(mMsg);
 
   mViewer->write("</BODY></HTML>");
   mViewer->end();
-  mViewer->parse();
 }
 
 
@@ -301,7 +291,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   bool asIcon = false;
 
   inlineImage=false;
-  
+
   assert(aMsg!=NULL);
   writeMsgHeader();
 
@@ -336,7 +326,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     // follows this will not be shown correctly. You'll still be able to read the
     // main message and deal with attachments. Nothing I can do now :-(
     // ---sven: handle multipart/alternative end ---
-    
+
     for (i=0; i<numParts; i++)
     {
       aMsg->bodyPart(i, &msgPart);
@@ -346,11 +336,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       debug("type: %s",type.data());
       debug("subtye: %s",subtype.data());
       debug("contDisp %s",contDisp.data());
-      
+
       if (i <= 0) asIcon = FALSE;
       else switch (mAttachmentStyle)
       {
-      case IconicAttmnt: 
+      case IconicAttmnt:
         asIcon=TRUE; break;
       case InlineAttmnt:
         asIcon=FALSE; break;
@@ -365,7 +355,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
-	  if (stricmp(subtype, "html")==0) 
+	  if (stricmp(subtype, "html")==0)
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
@@ -415,7 +405,7 @@ void KMReaderWin::writeMsgHeader(void)
   switch (mHeaderStyle)
   {
   case HdrBrief:
-    mViewer->write("<FONT SIZE=+1><B>" + strToHtml(mMsg->subject()) + 
+    mViewer->write("<FONT SIZE=+1><B>" + strToHtml(mMsg->subject()) +
                    "</B></FONT>&nbsp; (" +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
     if (!mMsg->cc().isEmpty())
@@ -443,7 +433,7 @@ void KMReaderWin::writeMsgHeader(void)
     break;
 
   case HdrFancy:
-    mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + 
+    mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") +
 		   locate("data", "kmail/pics/kdelogo.xpm") +
                    "></TD><TD HSPACE=50><B><FONT SIZE=+2>");
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT></B><BR>");
@@ -519,7 +509,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if(!str.isEmpty()) htmlStr += quotedHTML(str);
     htmlStr += "<BR>";
     if (pgp->isEncrypted())
-    {      
+    {
       pgpMessage = true;
       if(pgp->decrypt())
       {
@@ -536,11 +526,11 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (pgp->isSigned())
     {
       pgpMessage = true;
-      if (pgp->goodSignature()) 
+      if (pgp->goodSignature())
          sig = i18n("Message was signed by");
-      else 
+      else
          sig = i18n("Warning: Bad signature from");
-      
+
       /* HTMLize signedBy data */
       QString sdata=pgp->signedBy();
       sdata.replace(QRegExp("\""), "&quot;");
@@ -551,7 +541,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       {
          sdata.replace(QRegExp("unknown key ID"), i18n("unknown key ID"));
          htmlStr += QString("<B>%1 %2</B><BR>").arg(sig).arg(sdata);
-      } 
+      }
       else {
          htmlStr += QString("<B>%1 <A HREF=\"mailto:%2\">%3</A></B><BR>")
                       .arg(sig).arg(sdata).arg(sdata);
@@ -685,8 +675,8 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
     aMsgPart->magicSetType();
     iconName = aMsgPart->iconName();
   }
-  mViewer->write("<TABLE><TR><TD><A HREF=\"" + href + "\"><IMG SRC=\"" + 
-		 iconName + "\" BORDER=0>" + label + 
+  mViewer->write("<TABLE><TR><TD><A HREF=\"" + href + "\"><IMG SRC=\"" +
+		 iconName + "\" BORDER=0>" + label +
 		 "</A></TD></TR></TABLE>" + comment + "<BR>");
 }
 
@@ -770,17 +760,17 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     {
       const char *startofstring = qpstr.data();
       const char *startpos = pos;
-      for (i=0; pos >= startofstring && *pos 
-	     && (isalnum(*pos) 
-		 || *pos=='@' || *pos=='.' || *pos=='_'||*pos=='-' 
-		 || *pos=='*' || *pos=='[' || *pos==']') 
+      for (i=0; pos >= startofstring && *pos
+	     && (isalnum(*pos)
+		 || *pos=='@' || *pos=='.' || *pos=='_'||*pos=='-'
+		 || *pos=='*' || *pos=='[' || *pos==']')
 	     && i<255; i++, pos--)
 	{
 	}
       i1 = i;
-      pos++; 
+      pos++;
       for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
-			 *pos=='_'||*pos=='-' || *pos=='*'  || *pos=='[' || *pos==']') 
+			 *pos=='_'||*pos=='-' || *pos=='*'  || *pos=='[' || *pos==']')
 	     && i<255; i++, pos++)
       {
 	iStr += *pos;
@@ -814,7 +804,8 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 void KMReaderWin::printMsg(void)
 {
   if (!mMsg) return;
-  mViewer->print();
+  // FIXME
+  //mViewer->print();
 }
 
 
@@ -822,7 +813,7 @@ void KMReaderWin::printMsg(void)
 int KMReaderWin::msgPartFromUrl(const char* aUrl)
 {
   if (!aUrl || !mMsg) return -1;
-  
+
   QString url = QString("file:%1/part").arg(mAttachDir);
   int s = url.length();
   if (strncmp(aUrl, url, s) == 0)
@@ -840,12 +831,7 @@ int KMReaderWin::msgPartFromUrl(const char* aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent(QResizeEvent *)
 {
-  mViewer->setGeometry(0, 0, width()-16, height()-16);
-  mSbHorz->setGeometry(0, height()-16, width()-16, 16);
-  mSbVert->setGeometry(width()-16, 0, 16, height()-16);
-
-  mSbHorz->setSteps( 12, mViewer->width() - 12 );
-  mSbVert->setSteps( 12, mViewer->height() - 12 );
+  mViewer->setGeometry(0, 0, width(), height());
 }
 
 
@@ -858,7 +844,7 @@ void KMReaderWin::closeEvent(QCloseEvent *e)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOn(QString aUrl)
+void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   int id;
   KMMessagePart msgPart;
@@ -896,7 +882,7 @@ void KMReaderWin::slotUrlOpen(QString aUrl, int aButton)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlPopup(QString aUrl, const QPoint& aPos)
+void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
   KMMessagePart msgPart;
   int id;
@@ -943,7 +929,7 @@ void KMReaderWin::slotAtmView()
   // Sven commented out
   //QMultiLineEdit* edt = new QMultiLineEdit;
   // ---Sven's view text, html and image attachments in html widget end ---
-  
+
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   pname = msgPart.fileName();
   if (pname.isEmpty()) pname=msgPart.name();
@@ -969,7 +955,7 @@ void KMReaderWin::slotAtmView()
   {
 
     KMReaderWin* win = new KMReaderWin; //new reader
-    
+
     if (stricmp(msgPart.typeStr(), "text")==0)
     {
       win->mViewer->begin();
@@ -981,7 +967,6 @@ void KMReaderWin::slotAtmView()
         win->writeBodyStr(str);
       win->mViewer->write("</BODY></HTML>");
       win->mViewer->end();
-      win->mViewer->parse();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
@@ -996,7 +981,6 @@ void KMReaderWin::slotAtmView()
       win->mViewer->write(linkName.data());
       win->mViewer->write("</BODY></HTML>");
       win->mViewer->end();
-      win->mViewer->parse();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
@@ -1050,7 +1034,7 @@ void KMReaderWin::slotAtmOpen()
   c = 0;
   while ((c = fileName.find('\'', c)) >= 0)
     fileName.remove(c, 1);
-  
+
   // Sven commented out:
   //kbp->busy();
   // NOTE: this next line will not work with Qt 2.0 - use a QByteArray str.
@@ -1076,10 +1060,10 @@ void KMReaderWin::slotAtmSave()
   fileName = QDir::currentDirPath();
   fileName.append("/");
 
-  
+
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   fileName.append(msgPart.name());
-  
+
   fileName = KFileDialog::getSaveFileName(fileName.data(), "*", this);
   if(fileName.isEmpty()) return;
 
@@ -1114,72 +1098,45 @@ void KMReaderWin::slotAtmProperties()
   dlg.exec();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollVert(int _y)
-{
-  mSbVert->setValue(_y);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotScrollHorz(int _x)
-{
-  mSbHorz->setValue(_x);
-}
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
-  mSbVert->setValue(mSbVert->value() - 10);	
+  mViewer->scrollBy(0, -10);	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollDown()
 {
-  mSbVert->setValue(mSbVert->value() + 10);	
+  mViewer->scrollBy(0, 10);	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  mSbVert->setValue(mSbVert->value() - (int)(height()*0.8));	
+  mViewer->scrollBy(0, -(int)(height()*0.8));	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  mSbVert->setValue(mSbVert->value() + (int)(height()*0.8));	
+  mViewer->scrollBy(0, (int)(height()*0.8));	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentChanged()
 {
-  if (mViewer->docHeight() > mViewer->height())
-    mSbVert->setRange(0, mViewer->docHeight() - 
-		    mViewer->height());
-  else
-    mSbVert->setRange(0, 0);
-  
-  if (mViewer->docWidth() > mViewer->width())
-    mSbHorz->setRange(0, mViewer->docWidth() - 
-		    mViewer->width());
-  else
-    mSbHorz->setRange(0, 0);
+
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
 {
-  QString temp;
-
-  mViewer->getSelectedText(temp);
+  QString temp = mViewer->selectedText();
   kapp->clipboard()->setText(temp);
 }
 
@@ -1187,8 +1144,7 @@ void KMReaderWin::slotTextSelected(bool)
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
 {
-  QString temp;
-  mViewer->getSelectedText(temp);
+  QString temp = mViewer->selectedText();
   return temp;
 }
 
