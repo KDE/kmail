@@ -724,11 +724,11 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 static bool folderHasCreateRights( const KMFolder *folder )
 {
   bool createRights = true; // we don't have acls for local folders yet
-  if ( folder->folderType() == KMFolderTypeImap ) {
+  if ( folder && folder->folderType() == KMFolderTypeImap ) {
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
     createRights =
       imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
-  } else if ( folder->folderType() == KMFolderTypeCachedImap ) {
+  } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     createRights =
       dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
