@@ -74,7 +74,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   config->setGroup("SearchDialog");
 
   QWidget* searchWidget = new QWidget(this);
-  mGrid = new QGridLayout(searchWidget, mNumRules+5, 5, spacingHint());
+  mGrid = new QGridLayout(searchWidget, mNumRules+5, 5, 0, spacingHint());
 
   mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget);
   mGrid->addMultiCellWidget(mChkbxAllFolders, 0, 0, 0, 3);
@@ -737,7 +737,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
   } else {
     int start, stop;
     char ch = '\0';
-    start = aMsgStr.find(mHeaderField);
+    start = aMsgStr.find(mHeaderField, 0, false /*cis*/ );
     if (start == -1) return false;
     int endOfHeader = aMsgStr.find("\n\n");
     if (endOfHeader == -1) endOfHeader = aMsgStr.find("\n\r\n");
