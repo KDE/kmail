@@ -123,7 +123,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = true;
   KMMsgStatus oldStatus = status();
-    if ( status() & aStatus ) {
+  if ( status() & aStatus ) {
     mStatus &= ~aStatus;
   } else {
     mStatus |= aStatus;
