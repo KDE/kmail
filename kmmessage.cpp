@@ -4020,8 +4020,10 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   }
 
   if ( part->hasHeaders() &&
-       part->Headers().HasContentDisposition() &&
-       !part->Headers().ContentDisposition().Filename().empty() &&
+       ( ( part->Headers().HasContentDisposition() &&
+           !part->Headers().ContentDisposition().Filename().empty() ) ||
+         ( part->Headers().HasContentType() && 
+           !part->Headers().ContentType().Name().empty() ) ) &&
        0 != kasciistricmp(part->Headers().ContentDisposition().Filename().c_str(), cSMIMEData ))
   {
     setStatus( KMMsgStatusHasAttach );
