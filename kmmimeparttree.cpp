@@ -94,6 +94,7 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
 void KMMimePartTree::itemRightClicked( QListViewItem* item,
                                        const QPoint& point )
 {
+    // TODO: remove this member var?
     mCurrentContextMenuItem = dynamic_cast<KMMimePartTreeItem*>( item );
     if ( 0 == mCurrentContextMenuItem ) {
         kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
@@ -252,7 +253,7 @@ void KMMimePartTree::saveItem( KMMimePartTreeItem* item, const QString& filename
                 // reason: SaveAsEncoded does not decode the Message Content-Transfer-Encoding
                 //         but saves the _original_ content of the message (or the message part, resp.)
                 QDataStream ds( &file );
-                QCString cstr( mCurrentContextMenuItem->node()->msgPart().body() );
+                QCString cstr( item->node()->msgPart().body() );
                 ds.writeRawBytes( cstr, cstr.length() );
             }
             else
