@@ -695,7 +695,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
     {
       // warn the user that there are conflicting encryption preferences
       const KCursorSaver idle( KBusyPtr::idle() );
-      const QString msg = i18n("There are conflicting encryption references "
+      const QString msg = i18n("There are conflicting encryption preferences "
 			       "for these recipients.\n"
 			       "Encrypt this message?");
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
