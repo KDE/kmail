@@ -1550,8 +1550,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 
       if ( !encryptThisNow && !signThisNow ) {
         msg->addBodyPart( it->part );
-        // I DON'T KNOW WHY, BUT THIS FIXES THE VANISHING BOUNDARY PARAMTER
-        msg->getTopLevelPart()->Assemble();
+        // Assemble the message if needed. Not sure why, but this fixes the vanishing boundary parameter
+        (void)msg->asDwMessage();
         continue;
       }
 
@@ -1625,7 +1625,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
           mRc = false;
       }
       msg->addBodyPart( &newAttachPart );
-      msg->getTopLevelPart()->Assemble(); // see above comment about vanishing boundary parameter...
+      (void)msg->asDwMessage(); // Assemble the message if needed. One gets a completely empty message otherwise :/
     }
   } else { // no attachments in the final message
     if( ourFineBodyPart.originalContentTypeStr() ) {
