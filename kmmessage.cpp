@@ -4191,7 +4191,9 @@ void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
 //-----------------------------------------------------------------------------
 void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
 {
-  Q_ASSERT( aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded );
+  Q_ASSERT( aStatus == KMMsgStatusReplied
+      || aStatus == KMMsgStatusForwarded
+      || aStatus == KMMsgStatusDeleted );
 
   QString message = headerField( "X-KMail-Link-Message" );
   if ( !message.isEmpty() )
