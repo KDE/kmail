@@ -72,7 +72,7 @@
                             <property name="whatsThis" stdset="0">
                                 <string>&lt;qt&gt;
 &lt;h1&gt;Sign All Message Parts By Default&lt;/h1&gt;
-If this option is selected, all parts of a message (i.e., the main message body and all attachments) are signed by default.
+If this option is selected, all parts of a message (i.e. the main message body and all attachments) are signed by default.
 &lt;p&gt;
 This is a default setting, you can still override it for each individual message.
 &lt;/qt&gt;</string>
@@ -91,7 +91,7 @@ This is a default setting, you can still override it for each individual message
                             <property name="whatsThis" stdset="0">
                                 <string>&lt;qt&gt;
 &lt;h1&gt;Ask Before Signing Each Part&lt;/h1&gt;
-When this option is selected, you will be asked for each part of the message (i.e., the main message body as well as all attachments) individually whether you want the part to be signed.
+When this option is selected, you will be asked for each part of the message (i.e. the main message body as well as all attachments) individually whether you want the part to be signed.
 &lt;/qt&gt;</string>
                             </property>
                         </widget>
@@ -132,7 +132,7 @@ This is a default setting, you can still override it for each individual setting
 &lt;h1&gt;Warn When Trying To Send Unsigned Messages&lt;/h1&gt;
 If this box is checked, you will be warned when you try to send parts of or the whole message unsigned.
 &lt;p&gt;
-It is recommended to leave this option turned out for maximum integrity.
+It is recommended to leave this option turned on for maximum integrity.
 &lt;/qt&gt;</string>
                             </property>
                         </widget>

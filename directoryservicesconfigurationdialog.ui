@@ -80,7 +80,7 @@
                 <cstring>x500LV</cstring>
             </property>
             <property name="toolTip" stdset="0">
-                <string>Select Directory Services To Use Here</string>
+                <string>Select Directory Services to Use Here</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
@@ -134,7 +134,7 @@ If you do not use a directory service, you can still use local certificates.
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
-&lt;h1&gt;Add A Directory Service&lt;/h1&gt;
+&lt;h1&gt;Add a Directory Service&lt;/h1&gt;
 By clicking this button, you can select a new directory service to be used for retrieving certificates and CRLs. You will be asked for the server name and an optional description.
 &lt;/qt&gt;</string>
                     </property>
@@ -279,7 +279,7 @@ When this option is selected, the email client will only try to find the necessa
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
 &lt;h1&gt;Directory Services Only&lt;/h1&gt;
-When this option is selected, the email client will first not use the certificates on your local computer. Instead, it will query the directory services specified in the list above in the order given there. If none of the services has the certificate in question, it cannot be used for the operation.
+When this option is selected, the email client will not use the certificates on your local computer. Instead, it will query the directory services specified in the list above in the order given there. If none of the services has the certificate in question, it cannot be used for the operation.
 &lt;/qt&gt;</string>
                     </property>
                 </widget>
@@ -352,7 +352,7 @@ When this option is selected, the email client will only try to find the necessa
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
 &lt;h1&gt;Directory Services Only&lt;/h1&gt;
-When this option is selected, the email client will first not use the certificate revocation lists (CRLs) on your local computer. Instead, it will query the directory services specified in the list above in the order given there. If none of the services has the certificate in question, it cannot be used for the operation.
+When this option is selected, the email client will not use the certificate revocation lists (CRLs) on your local computer. Instead, it will query the directory services specified in the list above in the order given there. If none of the services has the certificate in question, it cannot be used for the operation.
 &lt;/qt&gt;</string>
                     </property>
                 </widget>
