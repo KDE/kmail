@@ -646,7 +646,7 @@ main(int argc, char *argv[])
   KAboutData about("kmail", I18N_NOOP("KMail"), 
                    KMAIL_VERSION, 
                    description,
-		   KAboutData::GPL,
+		   KAboutData::License_GPL,
                    "(c) 1997-2000, The KMail developers" );
 
   KCmdLineArgs::init(argc, argv, &about);
