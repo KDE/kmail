@@ -40,6 +40,7 @@
 #include "kmservertest.h"
 #include "kmtransport.h"
 #include "kmaccount.h"
+#include "kmkernel.h"
 
 
 KMTransportInfo::KMTransportInfo()
@@ -522,7 +523,7 @@ void KMTransportDialog::slotSmtpEncryptionChanged(int id)
 
 void KMTransportDialog::slotCheckSmtpCapabilities()
 {
-  if (mServerTest) delete mServerTest;
+  delete mServerTest;
   mServerTest = new KMServerTest("smtp", mSmtp.hostEdit->text(),
     mSmtp.portEdit->text());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),

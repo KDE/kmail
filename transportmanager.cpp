@@ -15,6 +15,7 @@
 #include "transportmanager.h"
 
 #include "kmtransport.h"
+#include "kmkernel.h"
 
 #include <kapplication.h>
 #include <kconfig.h>

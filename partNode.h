@@ -140,9 +140,9 @@ public:
         // 0. delete the DwBodyPart if flag is set
         if( mDeleteDwBodyPart && mDwPart ) delete( mDwPart );
         // 1. delete our children
-        if( mChild ) delete( mChild );
+        delete( mChild );
         // 2. delete our siblings
-        if( mNext )  delete( mNext );
+        delete( mNext );
     }
 
     void buildObjectTree( bool processSiblings=true );
