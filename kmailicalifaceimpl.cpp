@@ -1833,12 +1833,12 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
   bool relevantForOwner = true;
   bool relevantForEveryone = false;
   if ( folder->folderType() == KMFolderTypeImap ) {
-    KMFolderImap *imapFolder = static_cast<KMFolderImap*>( folder->storage() );
+    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
     administerRights = 
       imapFolder->userRights() <= 0 || imapFolder->userRights() & KMail::ACLJobs::Administer;
   }
   if ( folder->folderType() == KMFolderTypeCachedImap ) {
-    KMFolderCachedImap *dimapFolder = static_cast<KMFolderCachedImap*>( folder->storage() );
+    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     administerRights = 
       dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
     relevantForOwner = dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins;
