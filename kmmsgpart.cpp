@@ -42,10 +42,11 @@ void KMMessagePart::setBody(const QCString &aStr)
 {
   mBody.duplicate( aStr.data(), aStr.length() );
 
-  if (cte() == DwMime::kCteQuotedPrintable || cte() == DwMime::kCteBase64)
-    mBodyDecodedSize = -1; // Can't know the decoded size
-  else
+  int enc = cte();
+  if (enc == DwMime::kCte7bit || enc == DwMime::kCte8bit || enc == DwMime::kCteBinary)
     mBodyDecodedSize = mBody.size();
+  else
+    mBodyDecodedSize = -1; // Can't know the decoded size
 }
 
 //-----------------------------------------------------------------------------
@@ -159,6 +160,11 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
     break;
   }
 
+  assert( mBodyDecodedSize < 0
+	  || (unsigned int)mBodyDecodedSize == result.size() );
+  if ( mBodyDecodedSize < 0 )
+    mBodyDecodedSize = result.size(); // cache the decoded size.
+
   return result;
 }
 
@@ -197,6 +203,13 @@ QCString KMMessagePart::bodyDecoded(void) const
     }
   }
   result[len] = 0;
+
+  kdWarning( result.length() != (unsigned int)len, 5006 )
+    << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
+
+  assert( mBodyDecodedSize < 0 || mBodyDecodedSize == len );
+  if ( mBodyDecodedSize < 0 )
+    mBodyDecodedSize = len; // cache decoded size
 
   return result;
 }
