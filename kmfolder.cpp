@@ -682,6 +682,16 @@ void KMFolder::removeMsg(KMMsgBasePtr aMsg)
   removeMsg(idx);
 }
 
+void KMFolder::removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet)
+{
+  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  {
+    int idx = find(msg);
+    assert( idx != -1);
+    removeMsg(idx, imapQuiet);
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMFolder::removeMsg(int idx, bool)
@@ -742,6 +752,19 @@ KMMessage* KMFolder::take(int idx)
     mChanged = TRUE;
 
   return msg;
+}
+
+void KMFolder::take(QPtrList<KMMessage> msgList)
+{
+  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  {
+    if (msg->parent())
+    {
+      int idx = msg->parent()->find(msg);
+      assert( idx != -1);
+      KMFolder::take(idx);
+    }
+  }
 }
 
 
@@ -834,6 +857,29 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 
   open();
   rc = addMsg(aMsg, aIndex_ret);
+  close();
+
+  if (msgParent)
+    msgParent->close();
+
+  return rc;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
+{
+  KMFolder* msgParent;
+  int rc;
+
+  KMMessage* aMsg = msglist.first();
+  assert(aMsg != NULL);
+  msgParent = aMsg->parent();
+
+  if (msgParent)
+    msgParent->open();
+
+  open();
+  rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret);
   close();
 
   if (msgParent)

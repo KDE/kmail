@@ -117,6 +117,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
+  virtual void take(QPtrList<KMMessage> msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -133,6 +134,7 @@ public:
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
   virtual void removeMsg(KMMsgBasePtr msg);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -147,6 +149,7 @@ public:
     code on failure. The index of the new message is stored in index_return
     if given. */
   virtual int moveMsg(KMMessage* msg, int* index_return = NULL);
+  virtual int moveMsg(QPtrList<KMMessage>, int* index_return = NULL);
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBasePtr msg) const { return mMsgList.find(msg); }

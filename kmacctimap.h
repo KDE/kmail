@@ -140,8 +140,9 @@ public:
     QCString cdata;
     QStringList items;
     KMFolderImap *parent;
-    int total, done;
+    int total, done, offset;
     bool inboxOnly, quiet;
+    QPtrList<KMMessage> msgList;
   };
   QMap<KIO::Job *, jobData> mapJobData;
  

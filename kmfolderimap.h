@@ -42,19 +42,23 @@ public:
   enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
     tGetMessage, tPutMessage, tCopyMessage };
   KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = NULL);
+  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = NULL );
   ~KMImapJob();
   static void ignoreJobsForMessage(KMMessage *msg);
 signals:
   void messageRetrieved(KMMessage *);
   void messageStored(KMMessage *);
   void messageCopied(KMMessage *);
+  void messageCopied(QPtrList<KMMessage>);
 private slots:
   void slotGetMessageResult(KIO::Job * job);
   void slotGetNextMessage();
+  /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq(KIO::Job *job, QByteArray &data);
   void slotPutMessageResult(KIO::Job *job);
   void slotCopyMessageResult(KIO::Job *job);
 private:
+  void init(JobType jt, QString sets, KMFolderImap *folder, QPtrList<KMMessage>& msgList);
   JobType mType;
   KMMessage *mMsg;
   KMFolderImap *mDestFolder;
@@ -102,6 +106,7 @@ public:
   
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool quiet = FALSE);
 
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void removeOnServer();
@@ -139,6 +144,7 @@ public:
    * Delete a message
    */
   void deleteMessage(KMMessage * msg);
+  void deleteMessage(QPtrList<KMMessage> msgList);
 
   /**
    * Change the status of the message indicated by @p index
@@ -155,12 +161,16 @@ public:
   void setImapStatus(QString path, QCString flags);
 
   /** generates sets of uids */
-  QStringList makeSets(QValueList<int>&);
-  QStringList makeSets(QStringList&);
+  QStringList makeSets(QValueList<int>&, bool sort = true);
+  QStringList makeSets(QStringList&, bool sort = true);
 
   /** gets the uids of the given ids */ 
-  void getUids(QValueList<int>& in, QValueList<int>& out);
-  
+  void getUids(QValueList<int>& ids, QValueList<int>& uids, bool unget = false);
+ 
+  /** same as above but accepts a Message-List
+   * if unget is true the messages are unget'ted */ 
+  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, bool unget = false, KMFolder* msgParent = NULL);
+
   /**
    * Expunge deleted messages from the folder
    */
@@ -206,6 +216,7 @@ signals:
 public slots:
   /** Add a message to a folder after is has been added on an IMAP server */
   virtual void addMsgQuiet(KMMessage *);
+  virtual void addMsgQuiet(QPtrList<KMMessage>);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -214,10 +225,17 @@ public slots:
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+  int addMsg(QPtrList<KMMessage>&, int* index_return = NULL);
+
+  /** Copy the messages to this folder */
+  void copyMsg(QPtrList<KMMessage>& msgList/*, KMFolder* parent*/);
+
+  QPtrList<KMMessage> splitMessageList(QString set, QPtrList<KMMessage>& msgList);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
+  virtual void take(QPtrList<KMMessage>);
 
   /**
    * Add the data a KIO::Job retrieves to the buffer

@@ -1576,6 +1576,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   blockSignals( true ); // don't emit signals when the current message is
 
   int index;
+  QPtrList<KMMessage> list;
   for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
     int idx = mFolder->find(msgBase);
@@ -1584,18 +1585,35 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     if (msg->transferInProgress()) continue;
 
     if (destFolder) {
-      rc = destFolder->moveMsg(msg, &index);
-      if (rc == 0 && index != -1) {
-	KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
-	kernel->undoStack()->pushAction( mb->getMsgSerNum(), mFolder, destFolder );
+      if (destFolder->protocol() == "imap")
+        list.append(msg);
+      else
+      {
+        rc = destFolder->moveMsg(msg, &index);
+        if (rc == 0 && index != -1) {
+          KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
+          kernel->undoStack()->pushAction( mb->getMsgSerNum(), mFolder, destFolder );
+        }
       }
     }
     else
     {
       // really delete messages that are already in the trash folder
-      mFolder->removeMsg(msg);
-      delete msg;
+      if (mFolder->protocol() == "imap")
+        list.append(msg);
+      else
+      {
+        mFolder->removeMsg(msg);
+        delete msg;
+      }
     }
+  }
+  if (!list.isEmpty())
+  {
+    if (destFolder)
+      destFolder->moveMsg(list, &index);
+    else
+      mFolder->removeMsg(list);
   }
 
   blockSignals( false );
@@ -1669,6 +1687,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessage *msg, *newMsg;
   int top, rc, index, idx = -1;
   bool isMessage;
+  QPtrList<KMMessage> list;
 
   if (!destFolder) return;
 
@@ -1692,9 +1711,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 	(static_cast<KMFolderImap*>(mFolder)->account() ==
 	 static_cast<KMFolderImap*>(destFolder)->account()))
     {
-      KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(destFolder);
-      new KMImapJob(msg, KMImapJob::tCopyMessage, imapDestFolder);
-      if (imapDestFolder->isSelected()) imapDestFolder->getFolder();
+      list.append(msg);
     } else {
       newMsg = new KMMessage;
       newMsg->fromString(msg->asString());
@@ -1713,12 +1730,21 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       }	
     }
     
-    if (!isMessage)
+    if (!isMessage && list.isEmpty())
     {
       assert(idx != -1);
       mFolder->unGetMsg( idx );
     }
+  } // end for
+
+  if (!list.isEmpty())
+  {
+    // copy the message(s); note: the list is empty afterwards!
+    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(destFolder);
+    imapDestFolder->copyMsg(list);
+    if (imapDestFolder->isSelected()) imapDestFolder->getFolder();
   }
+
   destFolder->close();
   kernel->kbp()->idle();
 }
