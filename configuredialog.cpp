@@ -3051,7 +3051,7 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     listItem->setText( 0, account->name() );
     listItem->setText( 1, account->type() );
     if( account->folder() )
-      listItem->setText( 2, account->folder()->name() );
+      listItem->setText( 2, account->folder()->label() );
   }
   delete dialog;
 }
