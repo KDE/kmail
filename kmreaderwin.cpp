@@ -703,7 +703,9 @@ while( ( current = it.current() ) ) {
                     else
                       kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
                     QCString decryptedData;
-                    if( okDecryptMIME( *curNode, decryptedData, false ) ) {
+                    if( okDecryptMIME( *curNode,
+                                       decryptedData,
+                                       false ) ) {
                       kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
                       isEncrypted = true;
                       curNode->setEncrypted( true );
