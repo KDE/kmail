@@ -180,7 +180,6 @@ bool KMSender::sendQueued(void)
 
   if (mSendInProgress)
   {
-    KMessageBox::information(0,i18n("Sending still in progress"));
     return FALSE;
   }
 
