@@ -298,8 +298,9 @@ void KMMainWin::hide()
 void KMMainWin::show()
 {
   //KMMainWinInherited::show();
-  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  //mVertPanner->setAbsSeparatorPos(mVertPannerSep);
   mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
+  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
   KMMainWinInherited::show();
 }
 
