@@ -35,7 +35,9 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-
+  virtual void take(QPtrList<KMMessage> msgList);
+  { return KMFolderIndex::take(msgList); }
+  
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
     an errno error code on failure. The index of the new message
@@ -46,6 +48,8 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE); 
+  { return KMFolderIndex::removeMsg(msgList, imapQuiet); }
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
