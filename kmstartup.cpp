@@ -46,7 +46,7 @@ void kmcrashHandler(int sigId)
   kmsetSignalHandler(SIG_DFL);
   fprintf(stderr, "*** KMail got signal %d (Crashing)\n", sigId);
   // try to cleanup all windows
-  kmkernel->dumpDeadLetters();
+  if (kmkernel) kmkernel->dumpDeadLetters();
   // Return to DrKonqi.
 }
 //-----------------------------------------------------------------------------
