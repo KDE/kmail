@@ -12,6 +12,7 @@
 #include <kconfig.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
+#include <qguardedptr.h>
 #include <ktempfile.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -81,8 +82,8 @@ public:
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
   static KMFilterAction* newAction(void);
 protected:
-  KMFolder* mDest;
-  QList<KMFolder> folders;
+  QGuardedPtr<KMFolder> mDest;
+  QValueList<QGuardedPtr<KMFolder> > gfolders;
 };
 
 bool KMFilterActionMove::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
@@ -130,18 +131,27 @@ QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
   QString name;
   QComboBox* cbx;
   QStringList str;
+  QList<KMFolder> folders;
 
   folders.clear();
+  gfolders.clear();
+
   kernel->folderMgr()->createFolderList( &str, &folders );
   cbx = aParent->createFolderCombo( &str, &folders, mDest );
+  QListIterator<KMFolder> it(folders);
+  while (it.current()) {
+    gfolders.append( *it );
+    ++it;
+  }
+
   return cbx;
 }
 
 void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
 {
   QComboBox* cbx = (QComboBox*)aParamWidget;
-  if ((cbx->currentItem() >= 0) && (cbx->currentItem() < (int)folders.count()))
-    mDest = folders.at(cbx->currentItem());
+  if ((cbx->currentItem() >= 0) && (cbx->currentItem() < (int)gfolders.count()))
+    mDest = (*gfolders.at(cbx->currentItem()));
   else
     mDest = 0;
 }
