@@ -900,12 +900,12 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
       toStr = headerField( "Mail-Followup-To" );
     }
-    else if ( !mailingListAddresses.isEmpty() ) {
-      toStr = mailingListAddresses[0];
-    }
     else if ( !replyToStr.isEmpty() ) {
       // assume a Reply-To header mangling mailing list
       toStr = replyToStr;
+    }
+    else if ( !mailingListAddresses.isEmpty() ) {
+      toStr = mailingListAddresses[0];
     }
     else {
       // doesn't seem to be a mailing list, reply to From: address
