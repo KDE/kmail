@@ -475,11 +475,11 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   passwdLEdit->setGeometry(100,76,150,25);
   connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
 
-  ok = new QPushButton("OK" ,this,"NULL");
+  ok = new QPushButton(i18n("OK") ,this,"NULL");
   ok->setGeometry(55,130,70,25);
   connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
 
-  cancel = new QPushButton("Cancel", this);
+  cancel = new QPushButton(i18n("Cancel"), this);
   cancel->setGeometry(180,130,70,25);
   connect(cancel,SIGNAL(pressed()),this,SLOT(slotCancelPressed()));
 

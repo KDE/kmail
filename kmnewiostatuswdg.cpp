@@ -21,7 +21,7 @@ KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name,
   progressBar = new KProgress(this);
   progressBar->setGeometry(35,45,200,30);
 
-  abortBt = new QPushButton("Abort",this);
+  abortBt = new QPushButton(i18n("Abort"),this);
   abortBt->resize(abortBt->sizeHint());
   abortBt->move(110,90);
   connect(abortBt,SIGNAL(clicked()),this,SLOT(abortPressed()));
