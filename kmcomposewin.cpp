@@ -1430,8 +1430,6 @@ bool KMComposeWin::applyChanges(void)
       innerBodyPart.setBodyEncoded( body );
       DwBodyPart* innerDwPart = mMsg->createDWBodyPart( &innerBodyPart );
       innerDwPart->Assemble();
-//    if( '\n' != body[body.length()-1] )
-//      body += '\n';
       body  = "--";
       body +=     boundaryCStr;
       body +=                 "\n";
@@ -1531,7 +1529,7 @@ bool KMComposeWin::applyChanges(void)
       else {
         // we try calling the *old* build-in code for OpenPGP clearsigning
         Kpgp::Block block;
-        block.setText( encodedBody );
+        block.setText( body );
 
         // get PGP user id for the chosen identity
         const KMIdentity & ident =
