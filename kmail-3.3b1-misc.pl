@@ -31,6 +31,7 @@ while ( <> ) {
   } elsif ( /^MailingListPostingAddress/ ) {
     my ($key,$value) = split /=/;
     if ( not $value eq "" and not $value =~ /^mailto:/ ) {
+      print "# DELETE $currentGroup$key\n";
       print "$currentGroup\n$key=mailto:$value\n";
     }
   }
