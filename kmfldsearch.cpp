@@ -87,7 +87,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
   mLbxMatches->addColumn(i18n("Subject"), 150);
-  mLbxMatches->addColumn(i18n("Sender"), 120);
+  mLbxMatches->addColumn(i18n("Sender/Receiver"), 120);
   mLbxMatches->addColumn(i18n("Date"), 120);
 #define LOCATION_COLUMN 3
   mLbxMatches->addColumn(i18n("Folder"), 100);
@@ -277,9 +277,15 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
     }
     if (found)
     {
+      QString from;
+      if( mSearchFolder == i18n("sent-mail") ) {
+        from = msg->to();
+      } else {
+        from = msg->from();
+      }
       (void)new QListViewItem(mLbxMatches,
 			      msg->subject(),
-			      msg->from(),
+			      from,
 			      msg->dateIsoStr(),
 			      mSearchFolder,
 			      QString("%1").arg(i),
