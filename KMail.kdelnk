@@ -19,6 +19,7 @@ Name[pt_BR]=Cliente de Mail
 Name[ro]=Program de Poºtã
 Name[ru]=ğÏŞÔÏ×ÙÊ ËÌÉÅÎÔ
 Name[sk]=Po¹tovı klient
+Name[sl]=E-Po¹ta
 Name[sv]=E-post-program
 Type=Application
 Exec=kmail -caption "%c" %i %m
@@ -43,6 +44,7 @@ Comment[pt_BR]=Envio e recepção de mensagens eletrônicas
 Comment[ro]=Program de Poºtã Electronicã
 Comment[ru]=ğÏŞÔÏ×ÙÊ ËÌÉÅÎÔ
 Comment[sk]=Klient na èítanie a posielanie elektronickej po¹ty
+Comment[sl]=Program za e-po¹to
 Comment[sv]=Program för att läsa elektronisk post
 Terminal=0
 
