@@ -12,6 +12,7 @@
 #include "kmmsgpartdlg.h"
 #include "kpgp.h"
 #include "kmaddrbookdlg.h"
+#include "kmaddrbook.h"
 
 #include <assert.h>
 #include <drag.h>
@@ -26,7 +27,7 @@
 #include <kstdaccel.h>
 #include <mimelib/mimepp.h>
 #include <html.h>
-#include <qfiledlg.h>
+#include <kfiledialog.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
@@ -1135,7 +1136,7 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in 
   // this function.
   QString fileName;
-  QFileDialog fdlg(".","*",this,NULL,TRUE);
+  KFileDialog fdlg(".","*",this,NULL,TRUE);
 
   fdlg.setCaption(i18n("Attach File"));
   if (!fdlg.exec()) return;
@@ -1153,7 +1154,7 @@ void KMComposeWin::slotInsertFile()
   QString fileName, str;
   int col, line;
 
-  QFileDialog fdlg(".", "*", this, NULL, TRUE);
+  KFileDialog fdlg(".", "*", this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
@@ -1245,7 +1246,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  fileName = QFileDialog::getSaveFileName(".", "*", NULL, pname);
+  fileName = KFileDialog::getSaveFileName(".", "*", NULL, pname);
   if (fileName.isEmpty()) return;
   kStringToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
@@ -1492,7 +1493,7 @@ void KMComposeWin::slotAppendSignature()
   if (sigFileName.isEmpty())
   {
     // open a file dialog and let the user choose manually
-    QFileDialog dlg;
+    KFileDialog dlg(getenv("HOME"));
     dlg.setCaption(i18n("Choose Signature File"));
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();
@@ -1798,6 +1799,7 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent,
 		       const char *name): KMLineEditInherited(parent,name)
 {
   mComposer = composer;
+  connect (this, SIGNAL(completion()), this, SLOT(complete()));
 }
 
 //-----------------------------------------------------------------------------
@@ -1828,7 +1830,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent* e)
 {
   if (e->key()==Key_Backtab && mComposer)
     mComposer->focusNextPrevEdit(this,FALSE);
-  else if ((e->key()==Key_Tab || e->key()==Key_Return) && mComposer)
+  else if ((/* e->key()==Key_Tab ||*/ e->key()==Key_Return) && mComposer)
     mComposer->focusNextPrevEdit(this,TRUE);
   else KMLineEditInherited::keyPressEvent(e);
 }
@@ -1863,6 +1865,62 @@ void KMLineEdit::paste()
 void KMLineEdit::markAll()
 {
   selectAll();
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::complete()
+{
+  QString t;
+  
+  QPopupMenu *pop = new QPopupMenu;
+  int n;
+  
+  KMAddrBook *adb = new KMAddrBook();
+  adb->readConfig();
+  adb->load();
+
+  QString s(text());
+  s.append("*");
+  QRegExp regexp(s.data(), true, true);
+  
+  n=0;
+  
+  for (const char *a=adb->first(); a; a=adb->next())
+  {
+    t.setStr(a);
+    if (t.contains(regexp))
+    {
+      pop->insertItem(a);
+      n++;
+    }
+  }
+  
+  if (n>1)
+  {
+    int id;
+    pop->popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
+    pop->setActiveItem(pop->idAt(0));
+    id=pop->exec();
+    
+    if (id!=-1)
+    {
+      setText(pop->text(id));
+      delete pop;
+      mComposer->focusNextPrevEdit(this,TRUE);
+    }
+  }
+  else if (n==1)
+  {
+    setText(pop->text(pop->idAt(0)));
+    delete pop;
+    mComposer->focusNextPrevEdit(this,TRUE);
+  }
+  else
+  {
+    delete pop;
+    cursorAtEnd();
+    setFocus();
+  }
 }
 
 
