@@ -1,19 +1,18 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
-Comment[af]=kpos
-Comment[sv]=Kmail
+Comment[af/messages/kdenetwork/desktop_kdenetwork.po]=kpos
+Comment[sv/messages/kdenetwork/desktop_kdenetwork.po]=Kmail
 
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
-Comment[af]=nuwe pos gearriveer
-Comment[bs]=Stigla vam je nova pošta.
-Comment[da]=Ny post ankommet
-Comment[es]=Tiene correo nuevo
-Comment[ja]=新規メールが到着しました
-Comment[pt_BR]=Chegou novo E-mail
-Comment[sv]=Ny post har anlänt
-Comment[tr]=Yeni İleti Geldi
+Comment[af/messages/kdenetwork/desktop_kdenetwork.po]=nuwe pos gearriveer
+Comment[bs/messages/kdenetwork/desktop_kdenetwork.po]=Stigla vam je nova pošta.
+Comment[da/messages/kdenetwork/desktop_kdenetwork.po]=Ny post ankommet
+Comment[es/messages/kdenetwork/desktop_kdenetwork.po]=Tiene correo nuevo
+Comment[ja/messages/kdenetwork/desktop_kdenetwork.po]=新規メールが到着しました
+Comment[sv/messages/kdenetwork/desktop_kdenetwork.po]=Ny post har anlänt
+Comment[tr/messages/kdenetwork/desktop_kdenetwork.po]=Yeni İleti Geldi
 default_sound=
 default_presentation=0
