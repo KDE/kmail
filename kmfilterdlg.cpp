@@ -330,9 +330,11 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   QHBox *hb = new QHBox(this);
   hb->setSpacing(4);
   mBtnUp = new QPushButton( QString::null, hb );
+  mBtnUp->setAutoRepeat( true );
   mBtnUp->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
   mBtnDown = new QPushButton( QString::null, hb );
+  mBtnDown->setAutoRepeat( true );
   mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
   QToolTip::add( mBtnUp, i18n("Up") );
