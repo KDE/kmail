@@ -1276,7 +1276,8 @@ KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder
 {
   QPtrList<KMMessage> msgList;
   msgList.append( msg );
-  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder->storage() ) );
+  CachedImapJob *job = new CachedImapJob( msgList, jt, folder? static_cast<KMFolderCachedImap*>( folder->storage() ):0 );
+  job->setParentFolder( this );
   return job;
 }
 
@@ -1286,7 +1287,8 @@ KMFolderCachedImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& se
 {
   //FIXME: how to handle sets here?
   Q_UNUSED( sets );
-  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder->storage() ) );
+  CachedImapJob *job = new CachedImapJob( msgList, jt, folder? static_cast<KMFolderCachedImap*>( folder->storage() ):0 );
+  job->setParentFolder( this );
   return job;
 }
 

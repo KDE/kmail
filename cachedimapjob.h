@@ -96,6 +96,7 @@ public:
 
   void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
   bool passiveDestructor() { return mPassiveDestructor; }
+  void setParentFolder( const KMFolderCachedImap* parent );
 
 protected:
   virtual void execute();
@@ -131,6 +132,7 @@ private:
   QStringList mFolderPathList; // Used only for folder deletion
   KMMessage* mMsg;
   QString mString; // Used as uids and as rename target
+  KMFolderCachedImap *mParentFolder;
 };
 
 }

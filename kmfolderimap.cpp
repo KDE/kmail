@@ -1063,6 +1063,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
     job->start();
     ImapJob *job2 = new ImapJob( msg, jt, kmfi, "STRUCTURE", as );
     job2->start();
+    job->setParentFolder( this );
     return job;
   } else {
     // download complete message or part (attachment)
@@ -1072,6 +1073,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
     connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
         mAccount, SLOT( displayProgress() ) );
+    job->setParentFolder( this );
     return job;
   }
 }
@@ -1083,6 +1085,7 @@ KMFolderImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
 {
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder->storage());
   ImapJob *job = new ImapJob( msgList, sets, jt, kmfi );
+  job->setParentFolder( this );
   return job;
 }
 

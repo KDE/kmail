@@ -41,6 +41,7 @@
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
+#include "maildirjob.h"
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
@@ -56,7 +57,7 @@ namespace KMail {
 CachedImapJob::CachedImapJob( const QValueList<MsgForDownload>& msgs,
                               JobType type, KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mMsgsForDownload( msgs ),
-    mTotalBytes(0), mMsg(0)
+    mTotalBytes(0), mMsg(0), mParentFolder( 0 )
 {
   QValueList<MsgForDownload>::ConstIterator it = msgs.begin();
   for ( ; it != msgs.end() ; ++it )
@@ -66,27 +67,30 @@ CachedImapJob::CachedImapJob( const QValueList<MsgForDownload>& msgs,
 // Put messages
 CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( msgs, QString::null, type, folder->folder() ), mFolder( folder ),
-    mTotalBytes( 0 ), mMsg( 0 )
+  : FolderJob( msgs, QString::null, type, folder?folder->folder():0 ), mFolder( folder ),
+    mTotalBytes( 0 ), mMsg( 0 ), mParentFolder( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QValueList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
-  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder->folder() ),
-    mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( 0 ), mMsg( 0 )
+  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder?folder->folder():0 ),
+    mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( 0 ), mMsg( 0 ),
+    mParentFolder ( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QValueList<KMFolderCachedImap*>& fList,
                               JobType type, KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg( 0 )
+  : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg( 0 ),
+    mParentFolder ( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QString& uids, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder(folder), mMsg( 0 ), mString( uids )
+  : FolderJob( type ), mFolder(folder), mMsg( 0 ), mString( uids ),
+    mParentFolder ( 0 )
 {
   assert( folder );
 }
@@ -94,13 +98,13 @@ CachedImapJob::CachedImapJob( const QString& uids, JobType type,
 CachedImapJob::CachedImapJob( const QStringList& folderpaths, JobType type,
                               KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mFolderPathList( folderpaths ),
-    mMsg( 0 )
+    mMsg( 0 ), mParentFolder ( 0 )
 {
   assert( folder );
 }
 
 CachedImapJob::CachedImapJob( JobType type, KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder( folder ), mMsg( 0 )
+  : FolderJob( type ), mFolder( folder ), mMsg( 0 ), mParentFolder ( 0 )
 {
   assert( folder );
 }
@@ -114,6 +118,11 @@ CachedImapJob::~CachedImapJob()
 void CachedImapJob::init()
 {
   mSentBytes = 0;
+
+  if ( mType == tExpireMessages ) {
+     expireMessages();
+     return;
+  }
 
   if( !mFolder ) {
     if( !mMsgList.isEmpty() ) {
@@ -629,6 +638,13 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
   delete this;
 }
 
+//-----------------------------------------------------------------------------
+void CachedImapJob::setParentFolder( const KMFolderCachedImap* parent )
+{
+  mParentFolder = const_cast<KMFolderCachedImap*>( parent );
+}
+
+
 void CachedImapJob::execute()
 {
   init();
@@ -636,7 +652,9 @@ void CachedImapJob::execute()
 
 void CachedImapJob::expireMessages()
 {
-  //FIXME: not implemented yet
+   MaildirJob *m = new MaildirJob(0, tExpireMessages, 0 );
+   m->setParentFolder( mParentFolder );
+   m->start();
 }
 
 }

@@ -418,7 +418,6 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   if ( mFolder ) {
     if ( mFolder->folderType() == KMFolderTypeImap
          || mFolder->folderType() == KMFolderTypeCachedImap ) {
-      mExpireGroupBox->hide();
       mMailboxTypeGroupBox->hide();
     }
     else if ( mFolder->isSystemFolder() ) {
@@ -515,11 +514,9 @@ void KMFolderDialog::slotUpdateItems ( int current )
   {
     // deactivate stuff that is not available for imap
     mMailboxTypeGroupBox->setEnabled( false );
-    mExpireGroupBox->setEnabled( false );
   } else {
     // activate it
     mMailboxTypeGroupBox->setEnabled( true );
-    mExpireGroupBox->setEnabled( true );
   }
 }
 

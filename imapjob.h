@@ -60,6 +60,7 @@ public:
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
 
+  void setParentFolder( const KMFolderImap* parent );
 private slots:
   void slotGetMessageResult( KIO::Job * job );
   void slotGetBodyStructureResult( KIO::Job * job );
@@ -81,6 +82,7 @@ private:
   KIO::Job *mJob;
   QByteArray mData;
   const AttachmentStrategy *mAttachmentStrategy;
+  KMFolderImap *mParentFolder;
 };
 
 }
