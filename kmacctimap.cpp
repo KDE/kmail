@@ -182,6 +182,9 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
     KMessageBox::error(0,
     i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
   }
+  else KMessageBox::error(0, i18n("Error connecting to %1:\n%2")
+    .arg(mHost).arg(errorMsg));
+  killAllJobs();
 }
 
 
