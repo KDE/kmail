@@ -1608,6 +1608,7 @@ namespace KMail {
   bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode * curNode,
                                                           ProcessResult & )
   {
+#if 0
     // For special treatment of invitations etc. we need a reader window
     if ( !mReader )
       return false;
@@ -1620,6 +1621,9 @@ namespace KMail {
       return false;
 
     return true;
+#else
+    return false;
+#endif
   }
 
 
