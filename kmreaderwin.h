@@ -129,7 +129,7 @@ public:
       normally no need to call this function directly,
       since correct value is set automatically in
       parseMsg(KMMessage* aMsg, bool onlyProcessHeaders). */
-  void setIdOfLastViewedMessage( QString msgId )
+  void setIdOfLastViewedMessage( const QString & msgId )
     { mIdOfLastViewedMessage = msgId; }
 
   /** Specify whether message is to be shown completely or not.
@@ -427,7 +427,6 @@ protected:
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
   bool mInlineImage;
-  static QString mAttachDir;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
@@ -461,7 +460,6 @@ protected:
   QColor cCBnoHtmlB, cCBnoHtmlF,
          cCBisHtmlB, cCBisHtmlF;
   QString mQuoteFontTag[3];
-  bool    mLoadExternal;
   bool mShowColorbar;
   bool mShowCompleteMessage;
   uint mDelayedMarkTimeout;

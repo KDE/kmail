@@ -455,7 +455,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mRootNode( 0 ),
-    mIdOfLastViewedMessage(),
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection ),
     mHtmlWriter( 0 )
@@ -786,8 +785,8 @@ void KMReaderWin::readConfig(void)
 
   mAttachmentStrategy =
     AttachmentStrategy::create( config->readEntry( "attachment-strategy" ) );
-  mLoadExternal = config->readBoolEntry( "htmlLoadExternal" );
-  mViewer->setOnlyLocalReferences( !mLoadExternal );
+
+  mViewer->setOnlyLocalReferences( !config->readBoolEntry( "htmlLoadExternal", false ) );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
