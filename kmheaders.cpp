@@ -858,7 +858,7 @@ void KMHeaders::deleteMsg (int msgId)
     // We are in the trash folder -> really delete messages
     moveMsgToFolder(NULL, msgId);
   }
-  triggerUpdate();
+  //  triggerUpdate();
 }
 
 
