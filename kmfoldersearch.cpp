@@ -746,7 +746,7 @@ int KMFolderSearch::updateIndex()
   return 0;
 }
 
-int KMFolderSearch::writeIndex()
+int KMFolderSearch::writeIndex( bool )
 {
     // TODO:If we fail to write the index we should panic the kernel
     // TODO:and the same for other folder types too, and the msgDict.
