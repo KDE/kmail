@@ -334,8 +334,10 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
   int newInFolder = folder->countUnread();
   if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
     newInFolder -= mUnreadBeforeCheck[folderId];
-  addToNewInFolder( folderId, newInFolder );
-  mCountUnread += newInFolder;
+  if ( newInFolder > 0 ) {
+    addToNewInFolder( folderId, newInFolder );
+    mCountUnread += newInFolder;
+  }
   if (mCountRemainChecks == 0)
   {
     // all checks are done

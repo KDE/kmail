@@ -286,7 +286,8 @@ void KMAcctCachedImap::addUnreadMsgCount( const KMFolderCachedImap *folder,
     int newInFolder = countUnread;
     if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
       newInFolder -= mUnreadBeforeCheck[folderId];
-    addToNewInFolder( folderId, newInFolder );
+    if ( newInFolder > 0 )
+      addToNewInFolder( folderId, newInFolder );
   }
   mCountUnread += countUnread;
 }
