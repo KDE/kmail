@@ -531,7 +531,7 @@ It is recommended to leave this option turned on for maximum integrity.
                             <property name="title">
                                 <string>Signature Compound Mode</string>
                             </property>
-                            <hbox>
+                            <vbox>
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
@@ -541,6 +541,23 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <property name="spacing">
                                     <number>6</number>
                                 </property>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>sendSigMultiPartRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Standard MIME</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>A Multipart/Signed holding Signature and signed data.</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Multipart detached signature&lt;/h1&gt;
+When this option is selected, the signature and the signed data will be separate parts of a Multipart/Signed message part. Signed message data will be readable even by Mail User Agents not supporting the signaturing algorithm and not supporting ASN.1 decoding.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
                                 <widget class="QRadioButton">
                                     <property name="name">
                                         <cstring>sendSigOpaqueRB</cstring>
@@ -558,24 +575,21 @@ When this option is selected, both the signature and the signed data will be enc
 &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
-                                <widget class="QRadioButton">
+                                <widget class="QLabel">
                                     <property name="name">
-                                        <cstring>sendSigMultiPartRB</cstring>
+                                        <cstring>TextLabel111</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Detached</string>
-                                    </property>
-                                    <property name="toolTip" stdset="0">
-                                        <string>A Multipart/Signed holding Signature and signed data.</string>
+                                        <string>(Opaque not recommended except for SPHINX)</string>
                                     </property>
                                     <property name="whatsThis" stdset="0">
                                         <string>&lt;qt&gt;
-&lt;h1&gt;Multipart detached signature&lt;/h1&gt;
-When this option is selected, the signature and the signed data will be separate parts of a Multipart/Signed message part. Signed message data will be readable even by Mail User Agents not supporting the signaturing algorithm and not supporting ASN.1 decoding.
+&lt;h1&gt;Opaque signed messages&lt;/h1&gt;
+When this option is selected, both the signature and the signed data will be encoded into one ASN.1 block. Messages will be readable only by Mail User Agents supporting ASN.1 decoding.
 &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
-                            </hbox>
+                            </vbox>
                         </widget>
                         <widget class="QButtonGroup">
                             <property name="name">
