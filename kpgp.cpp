@@ -63,8 +63,11 @@ Kpgp::init()
   {
     if(havePGP5)
       pgp = new KpgpBase5();
-    else
+    else if (haveGpg)
+      pgp = new KpgpBaseG();
+    else 
       pgp = new KpgpBase2();
+
   }
   else
   {
@@ -630,7 +633,25 @@ Kpgp::checkForPGP(void)
     {
       havePgp=TRUE;
       havePGP5=TRUE;
+      haveGpg=FALSE;
       debug("Kpgp: found pgp5.0");
+      return TRUE;
+    }
+    ++it;
+  }
+
+  // lets try gpg
+  it.toFirst();
+  while ( it.current() )
+  {
+    path = it.current();
+    path += "/gpg";
+    if ( !access( path, X_OK ) )
+    {
+      havePgp=TRUE;
+      havePGP5=FALSE;
+      haveGpg=TRUE;
+      //debug("Kpgp: found gpg");
       return TRUE;
     }
     ++it;
@@ -646,6 +667,7 @@ Kpgp::checkForPGP(void)
        {
 	    havePgp=TRUE;
 	    havePGP5=FALSE;
+	    haveGpg=FALSE;
 	    debug("Kpgp: found pgp2.6.x");
 	    return TRUE;
        }
@@ -711,7 +733,7 @@ KpgpPass::KpgpPass(QWidget *parent, const char *name)
   if(cursor != 0)
     kapp->setOverrideCursor(QCursor(ibeamCursor));
   this->setCursor(QCursor(ibeamCursor));
-  QLabel *text = new QLabel(i18n("Please enter your\nPGP passphrase"),this);
+  QLabel *text = new QLabel(i18n("Please enter your\nOpenPGP passphrase"),this);
   text->move(56,4);
   text->setAutoResize(TRUE);
   QLabel *icon = new QLabel(this);
@@ -738,7 +760,7 @@ KpgpPass::~KpgpPass()
 QString
 KpgpPass::getPassphrase(QWidget *parent)
 {
-  KpgpPass kpgppass(parent, i18n("PGP Security Check"));
+  KpgpPass kpgppass(parent, i18n("OpenPGP Security Check"));
   kpgppass.exec();
   return kpgppass.getPhrase().copy();
 }

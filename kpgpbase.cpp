@@ -92,6 +92,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     QString tmp;
     tmp.sprintf("%d",ppass[0]);
     setenv("PGPPASSFD",tmp,1);
+
     //printf("PGPPASSFD = %s\n",tmp.data());
     //printf("pass = %s\n",passphrase);
   }
@@ -123,7 +124,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     dup2(perr[1], 2);
     close(perr[1]);
 	
-    execl("/bin/sh", "sh", "-c", cmd, NULL);
+    execl("/bin/sh", "sh", "-c", cmd,  NULL);
     _exit(127);
   }                
      
@@ -157,6 +158,123 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   }
  
   unsetenv("PGPPASSFD");
+  if(passphrase)
+    close(ppass[0]);
+     
+  //printf("output = %s\n",output.data());
+  //printf("info = %s\n",info.data());
+
+  // we don't want a zombie, do we?  ;-)
+  rc = waitpid(0/*child_pid*/, &status, 0);
+  if (rc==-1) printf("waitpid: %s\n", strerror(errno));
+  
+  return OK;
+}
+
+int
+KpgpBase::runGpg(const char *cmd, const char *passphrase)
+{
+  /* the pipe ppass is used for to pass the password to
+   * pgp. passing the password together with the normal input through
+   * stdin doesn't seem to work as expected (at least for pgp5.0)
+   */
+  char str[1024] = "\0";
+  int pin[2], pout[2], perr[2], ppass[2];
+  int len, status;
+  FILE *pass;
+  pid_t child_pid, rc;
+  char gpgcmd[1024] = "\0";
+
+  if(passphrase)
+  {
+    pipe(ppass);
+
+    pass = fdopen(ppass[1], "w");
+    fwrite(passphrase, sizeof(char), strlen(passphrase), pass);
+    fwrite("\n", sizeof(char), 1, pass);
+    fclose(pass);
+    close(ppass[1]);
+
+    //printf("pass = %s\n",passphrase);
+  }
+
+  //printf("cmd = %s\n",cmd);
+  //printf("input = %s\nlength = %d\n",input.data(), input.length());
+
+  info = "";
+  output = "";
+
+  pipe(pin);
+  pipe(pout);
+  pipe(perr);
+
+
+    if(passphrase) {
+      snprintf(gpgcmd, 1023, "gpg --passphrase-fd %d %s",ppass[0],cmd);
+    } else {
+      snprintf(gpgcmd, 1023, "gpg %s",cmd);
+    }
+
+
+  if(!(child_pid = fork()))
+  {
+    /*We're the child.*/
+    close(pin[1]);
+    dup2(pin[0], 0);
+    close(pin[0]);
+	  
+    close(pout[0]);
+    dup2(pout[1], 1);
+    close(pout[1]);
+
+    close(perr[0]);
+    dup2(perr[1], 2);
+    close(perr[1]);
+	
+
+#warning FIXME: there has to be a better way to do this
+     /* this is nasty nasty nasty (but it works) */
+    if(passphrase) {
+      snprintf(gpgcmd, 1023, "gpg --passphrase-fd %d %s",ppass[0],cmd);
+    } else {
+      snprintf(gpgcmd, 1023, "gpg %s",cmd);
+    }
+
+    execl("/bin/sh", "sh", "-c", gpgcmd,  NULL);
+    _exit(127);
+  }                
+     
+  /*Only get here if we're the parent.*/
+  close(pin[0]);
+  close(pout[1]);
+  close(perr[1]);
+
+  if (!input.isEmpty()) 
+    write(pin[1], input.data(), input.length());
+  else
+    write(pin[1], "\n", 1);
+  close(pin[1]);
+ 
+  if (pout[0] >= 0)
+  {
+    while ((len=read(pout[0],str,1023))>0)
+    {
+      str[len] ='\0';
+      output += str;
+    }
+   close(pout[0]);
+  }
+ 
+  if (perr[0] >= 0)
+  {
+    while ((len=read(perr[0],str,1023))>0)
+    {
+      str[len] ='\0';
+      info += str;
+    }
+    close(perr[0]);
+  }
+ 
   if(passphrase)
     close(ppass[0]);
      
@@ -209,6 +327,321 @@ KpgpBase::lastErrorMessage() const
 {
   return errMsg;
 }
+
+// -------------------------------------------------------------------------
+
+KpgpBaseG::KpgpBaseG()
+  : KpgpBase()
+{
+}
+
+KpgpBaseG::~KpgpBaseG()
+{
+}
+
+int 
+KpgpBaseG::encrypt(const QStrList *_recipients, bool /*ignoreUntrusted*/)
+{
+  return encsign(_recipients, 0);
+}
+
+int 
+KpgpBaseG::sign(const char *passphrase)
+{
+  return encsign(0, passphrase);
+}
+
+int 
+KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
+		   bool /*ignoreUntrusted*/)
+{
+  QString cmd, pers;
+  output = "";
+
+  if(_recipients != 0)
+    if(_recipients->count() <= 0)
+      _recipients = 0;
+
+  if(_recipients != 0 && passphrase != 0)
+    cmd = "--batch --escape-from --armor --always-trust --sign --encrypt ";
+  else if( _recipients != 0 )
+    cmd = "--batch --escape-from --armor --always-trust --encrypt ";
+  else if(passphrase != 0 )
+    cmd = "--batch --escape-from --armor --always-trust --clearsign ";
+  else 
+  {
+    debug("kpgpbase: Neither recipients nor passphrase specified.");
+    return OK;
+  }
+
+  if(passphrase != 0)
+    cmd += addUserId();
+
+  if(_recipients != 0)
+  {
+    QStrListIterator it(*_recipients);
+    while( (pers=it.current()) )
+    {
+      cmd += " --recipient \"";
+      cmd += pers;
+      cmd += "\" ";
+      ++it;
+    }
+    if(flagEncryptToSelf)
+      cmd += " --default-recipient-self";
+  }
+  cmd += " --set-filename stdin ";
+
+  status = runGpg(cmd, passphrase);
+  if(status == RUN_ERR) return status;
+
+  if(_recipients != 0)
+  {
+    int index = 0;
+    bool bad = FALSE;
+    unsigned int num = 0;
+    QString badkeys = "";
+    while((index = info.find("Cannot find the public key",index)) 
+	  != -1)
+    {
+      bad = TRUE;
+      index = info.find("'",index);
+      int index2 = info.find("'",index+1);
+      badkeys += info.mid(index, index2-index+1) + ", ";
+      num++;
+    }
+    if(bad)
+    {
+      badkeys.stripWhiteSpace();
+      if(num == _recipients->count())
+	errMsg.sprintf("Could not find public keys matching the\n" 
+		       "userid(s) %s.\n" 
+		       "Message is not encrypted.\n",
+		       (const char *)badkeys);
+      else
+	errMsg.sprintf("Could not find public keys matching the\n" 
+		       "userid(s) %s. These persons won't be able\n"
+		       "to read the message.",
+		       (const char *)badkeys);
+      status |= MISSINGKEY;
+      status |= ERROR;
+    }
+  }
+  if(passphrase != 0)
+  {
+    if(info.find("Pass phrase is good") != -1)
+    {
+      //debug("KpgpBase: Good Passphrase!");
+      status |= SIGNED;
+    }
+    if( info.find("Bad pass phrase") != -1)
+    {
+      errMsg = i18n("Bad pass Phrase; couldn't sign");
+      status |= ERR_SIGNING;
+      status |= ERROR;
+    }
+  }
+  //debug("status = %d",status);
+  return status;
+}
+
+int 
+KpgpBaseG::decrypt(const char *passphrase)
+{
+  QString cmd;
+  int index, index2;
+  output = "";
+
+  cmd = "--batch --set-filename stdin --decrypt ";
+
+  status = runGpg(cmd, passphrase);
+
+  // pgp2.6 has sometimes problems with the ascii armor pgp5.0 produces
+  // this hack can solve parts of the problem
+  if(info.find("ASCII armor corrupted.") != -1)
+  {
+    debug("removing ASCII armor header");
+    int index1 = input.find("-----BEGIN PGP SIGNED MESSAGE-----");
+    if(index1 != -1)
+      index1 = input.find("-----BEGIN PGP SIGNATURE-----", index1);
+    else
+      index1 = input.find("-----BEGIN PGP MESSAGE-----");
+    index1 = input.find("\n", index1);
+    index2 = input.find("\n\n", index1);
+    input.remove(index1, index2 - index1);
+    status = runGpg(cmd, passphrase);
+  }
+ 
+  if(status == RUN_ERR)
+  {
+    errMsg = i18n("error running gpg");
+    return status;
+  }
+
+  if( info.find("File contains key") != -1)
+  {
+    // FIXME: should do something with it...
+  }
+
+  if(info.find("secret key not available") != -1)
+  {
+    //debug("kpgpbase: message is encrypted");
+    status |= ENCRYPTED;
+    if( info.find("bad passphrase") != -1)
+    {
+      if(passphrase != 0) 
+      {
+	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
+	debug("KpgpBase: passphrase is bad");
+	status |= BADPHRASE;
+	status |= ERROR;
+      }
+    } 
+    else
+    {
+      // no secret key fitting this message
+      status |= NO_SEC_KEY;
+      status |= ERROR;
+      errMsg = i18n("Do not have the secret key for this message");
+      debug("KpgpBase: no secret key for this message");
+    }
+    // check for persons
+    index = info.find("can only be read by:");
+    if(index != -1) 
+    {
+      index = info.find("\n",index);
+      int end = info.find("\n\n",index);
+      
+      recipients.clear();
+      while( (index2 = info.find("\n",index+1)) <= end )
+      {
+	QString item = info.mid(index+1,index2-index-1);
+	item.stripWhiteSpace();
+	recipients.append(item);
+	index = index2;
+      }
+    }
+  }
+  if((index = info.find("Signature made")) != -1)
+  {
+    //debug("KpgpBase: message is signed");
+    status |= SIGNED;
+    if( info.find("Key matching expected") != -1)
+    {
+      index = info.find("Key ID ",index);
+      signatureID = info.mid(index+7,8);
+      signature = i18n("unknown key ID ") + signatureID + " ";
+      status |= UNKNOWN_SIG;
+      status |= GOODSIG;
+    }
+    else if( info.find("Good signature") != -1 )
+    {
+      status |= GOODSIG;
+      // get signer
+      index = info.find("\"",index);
+      index2 = info.find("\"", index+1);
+      signature = info.mid(index+1, index2-index-1);
+      
+      // get key ID of signer
+      index = info.find("key ID ",index2);
+      signatureID = info.mid(index+7,8);
+    }
+    else if( info.find("CRC error") != -1 )
+    {
+      //debug("BAD signature");
+      status |= SIGNED;
+      status |= ERROR;
+
+      // get signer
+      index = info.find("\"",index);
+      index2 = info.find("\"", index+1);
+      signature = info.mid(index+1, index2-index-1);
+      
+      // get key ID of signer
+      index = info.find("key ID ",index2);
+      signatureID = info.mid(index+7,8);
+    }
+    else if( info.find("Can't find the right public key") != -1 )
+    {
+      status |= UNKNOWN_SIG;
+      status |= GOODSIG; // this is a hack...
+      signature = i18n("??? (file ~/.gnupg/pubring.gpg not found)");
+      signatureID = "???";
+    }
+    else
+    {
+      status |= ERROR;
+      signature = "";
+      signatureID = "";
+    }
+  }
+  //debug("status = %d",status);
+  return status;
+}
+
+QStrList
+KpgpBaseG::pubKeys()
+{
+  QString cmd;
+  int index, index2;
+
+  cmd = "--batch --list-keys";
+  status = runGpg(cmd);
+  if(status == RUN_ERR) return 0;
+
+  // now we need to parse the output
+  QStrList publicKeys;
+  index = output.find("\n",1)+1; // skip first to "\n"
+  while( (index = output.find("\n",index)) != -1)
+  {
+    //parse line
+    QString line;
+    if( (index2 = output.find("\n",index+1)) != -1)
+    {
+      int index3 = output.find("pub ",index);
+		    
+      if( (index3 <index2) && (index3 != -1) )
+      {
+	line = output.mid(index3+31,index2-index3-31);
+	line = line.lower();
+      }
+      if(!line.isEmpty())
+      {
+	//debug("KpgpBase: found key for %s.",(const char *)line);
+	publicKeys.append(line);
+      }
+    }
+    index = index2;
+  }
+  //debug("finished reading keys");
+  return publicKeys;
+}
+
+int
+KpgpBaseG::signKey(const char *key, const char *passphrase)
+{
+  QString cmd;
+
+  cmd = "--set-filename stdin ";
+  cmd += addUserId();
+  cmd += "--sign-key ";
+  cmd += key;
+
+  return runGpg(cmd,passphrase);
+}
+
+
+QString KpgpBaseG::getAsciiPublicKey(QString _person) {
+
+  QString toexec;
+  toexec.sprintf("--batch --armor --export \"%s\"", _person.data());
+
+  status = runGpg(toexec.data());
+  if(status == RUN_ERR) return 0;
+
+  return output;
+}
+
 
 // -------------------------------------------------------------------------
 
@@ -509,6 +942,19 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
   return run(cmd);
 }
 
+
+QString KpgpBase2::getAsciiPublicKey(QString _person) {
+
+  QString toexec;
+  toexec.sprintf("pgp -kxaf \"%s\"", _person.data());
+
+  status = run(toexec.data());
+  if(status == RUN_ERR) return QString::null;
+
+  return output;
+}
+
+
 // -------------------------------------------------------------------------
 
 KpgpBase5::KpgpBase5()
@@ -751,7 +1197,7 @@ QStrList
 KpgpBase5::pubKeys()
 {
   int index,index2;
-
+	
   status = run("pgpk -l");
   if(status == RUN_ERR) return 0;
 
@@ -786,17 +1232,6 @@ KpgpBase5::pubKeys()
 QString KpgpBase5::getAsciiPublicKey(QString _person) {
   QString toexec;
   toexec.sprintf("pgpk -xa \"%s\"", _person.data());
-
-  status = run(toexec.data());
-  if(status == RUN_ERR) return QString::null;
-
-  return output;
-}
-
-QString KpgpBase2::getAsciiPublicKey(QString _person) {
-
-  QString toexec;
-  toexec.sprintf("pgp -kxaf \"%s\"", _person.data());
 
   status = run(toexec.data());
   if(status == RUN_ERR) return QString::null;

@@ -168,6 +168,7 @@ private:
 
   bool havePgp;
   bool havePGP5;
+  bool haveGpg;
   bool havePassPhrase;
 };
 

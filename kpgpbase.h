@@ -72,6 +72,7 @@ public:
 
 protected:
   virtual int run(const char *cmd, const char *passphrase = 0);
+  virtual int runGpg(const char *cmd, const char *passphrase = 0);
   virtual void clear();
 
   QString addUserId();
@@ -98,6 +99,24 @@ class KpgpBase2 : public KpgpBase
 public:
   KpgpBase2();
   virtual ~KpgpBase2();
+
+  virtual int encrypt(const QStrList *recipients,
+		      bool ignoreUntrusted = false);
+  virtual int sign(const char *passphrase);
+  virtual int encsign(const QStrList *recipients, const char *passphrase = 0,
+		      bool ingoreUntrusted = false);
+  virtual int decrypt(const char *passphrase = 0);
+  virtual QStrList pubKeys();
+  virtual QString getAsciiPublicKey(QString _person);
+  virtual int signKey(const char *key, const char *passphrase);
+};
+
+class KpgpBaseG : public KpgpBase
+{
+
+public:
+  KpgpBaseG();
+  virtual ~KpgpBaseG();
 
   virtual int encrypt(const QStrList *recipients,
 		      bool ignoreUntrusted = false);
