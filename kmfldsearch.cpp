@@ -100,7 +100,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mPatternEdit->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
   mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();
-  KMFolderSearch *searchFolder = dynamic_cast<KMFolderSearch*>(curFolder);
+  KMFolderSearch *searchFolder = dynamic_cast<KMFolderSearch*>(curFolder->storage());
   if (searchFolder) {
       KConfig config(curFolder->location());
       KMFolder *root = searchFolder->search()->root();
