@@ -589,21 +589,14 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
     return -1;
 
   int retval;
-  QCString messageText;
-  static QStringList *msgIds = 0;
-  static QString      lastFolder = "";
   bool readFolderMsgIds = false;
 
   //kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
-  if ( foldername != lastFolder ) {
-    if ( msgIds != 0 ) {
-      delete msgIds;
-      msgIds = 0;
-    }
-    msgIds = new QStringList;
+  if ( foldername != mAddMessageLastFolder ) {
+    mAddMessageMsgIds.clear();
     readFolderMsgIds = true;
-    lastFolder = foldername;
+    mAddMessageLastFolder = foldername;
   }
 
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
@@ -615,8 +608,9 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
     // because of the implicit sharing this poses
     // no memory or performance penalty.
 
-    messageText = KPIM::kFileToString( msgUrl.path(), true, false);
-    if ( messageText.isNull() )
+    const QCString messageText =
+      KPIM::kFileToString( msgUrl.path(), true, false );
+    if ( messageText.isEmpty() )
       return -2;
 
     KMMessage *msg = new KMMessage();
@@ -627,55 +621,68 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
     if ( folder ) {
       if (readFolderMsgIds) {
 
+      	// OLD COMMENT:
         // Try to determine if a message already exists in
         // the folder. The message id that is searched for, is
         // the subject line + the date. This should be quite
         // unique. The change that a given date with a given
         // subject is in the folder twice is very small.
-
         // If the subject is empty, the fromStrip string
         // is taken.
+
+	// NEW COMMENT from Danny Kukawka (danny.kukawka@web.de):
+	// subject line + the date is only unique if the following
+	// return a correct unique value:
+	// 	time_t  DT = mb->date();
+        // 	QString dt = ctime(&DT);
+	// But if the datestring in the Header isn't RFC conform
+	// subject line + the date isn't unique.
+	//
+	// The only uique headerfield is the Message-ID. In some
+	// cases this could be empty. I then I use the
+	// subject line + dateStr .
+
         int i;
 
         folder->open();
         for( i=0; i<folder->count(); i++) {
           KMMsgBase *mb = folder->getMsgBase(i);
-          time_t  DT = mb->date();
-          QString dt = ctime(&DT);
-          QString id = mb->subject();
+	  QString id = mb->msgIdMD5();
+	  if ( id.isEmpty() ) {
+            id = mb->subject();
+            if ( id.isEmpty() )
+              id = mb->fromStrip();
+            if ( id.isEmpty() )
+              id = mb->toStrip();
 
-          if (id.isEmpty())
-            id = mb->fromStrip();
-          if (id.isEmpty())
-            id = mb->toStrip();
-
-          id+=dt;
+            id += mb->dateStr();
+	  }
 
           //fprintf(stderr,"%s\n",(const char *) id);
-          if (!id.isEmpty()) {
-            msgIds->append(id);
+          if ( !id.isEmpty() ) {
+            mAddMessageMsgIds.append(id);
           }
         }
         folder->close();
       }
 
-      time_t DT = msg->date();
-      QString dt = ctime( &DT );
-      QString msgId = msg->subject();
+      QString msgId = msg->msgIdMD5();
+      if ( msgId.isEmpty()) {
+	msgId = msg->subject();
+	if ( msgId.isEmpty() )
+          msgId = msg->fromStrip();
+        if ( msgId.isEmpty() )
+          msgId = msg->toStrip();
 
-      if ( msgId.isEmpty() )
-        msgId = msg->fromStrip();
-      if ( msgId.isEmpty() )
-        msgId = msg->toStrip();
+	msgId += msg->dateStr();
+      }
 
-      msgId += dt;
-
-      int k = msgIds->findIndex( msgId );
+      int k = mAddMessageMsgIds.findIndex( msgId );
       //fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
 
       if ( k == -1 ) {
         if ( !msgId.isEmpty() ) {
-          msgIds->append( msgId );
+          mAddMessageMsgIds.append( msgId );
         }
         if ( folder->addMsg( msg ) == 0 ) {
           retval = 1;
@@ -685,7 +692,8 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
           msg = 0;
         }
       } else {
-        retval = -4;
+        //qDebug( "duplicate: " + msgId + "; subj: " + msg->subject() + ", from: " + msgId = msg->fromStrip());
+	retval = -4;
       }
     } else {
       retval = -1;
@@ -693,6 +701,56 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
   } else {
     retval = -2;
   }
+  return retval;
+}
+
+void KMKernel::dcopResetAddMessage()
+{
+  mAddMessageMsgIds.clear();
+  mAddMessageLastFolder = QString();
+}
+
+int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const QString & msgUrlString)
+{
+  return dcopAddMessage_fastImport(foldername, KURL(msgUrlString));
+}
+
+int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & msgUrl)
+{
+  // Use this function to import messages without
+  // search for already existing emails.
+
+  if ( foldername.isEmpty() )
+    return -1;
+
+  int retval;
+
+  if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
+    const QCString messageText =
+      KPIM::kFileToString( msgUrl.path(), true, false );
+    if ( messageText.isEmpty() )
+      return -2;
+
+    KMMessage *msg = new KMMessage();
+    msg->fromString( messageText );
+
+    KMFolder *folder = the_folderMgr->findOrCreate( foldername, false );
+
+    if ( folder ) {
+      if ( folder->addMsg( msg ) == 0 ) {
+        retval = 1;
+      } else {
+        retval =- 2;
+        delete msg;
+        msg = 0;
+      }
+    } else {
+      retval = -1;
+    }
+  } else {
+    retval = -2;
+  }
+
   return retval;
 }
 

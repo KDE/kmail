@@ -85,7 +85,7 @@ k_dcop:
                      zero level in the foldertree.
       @param messagefile: the name of the filename (local) with the
                      message to be added.
-  @return =1,  message added to folder, if folder doesn't exist, folder
+      @return =1,  message added to folder, if folder doesn't exist, folder
              has been created.
         =0,  an error occurred.
         =-1, couldn't create folder and it didn't exist
@@ -97,7 +97,7 @@ k_dcop:
                              const QString & messagefile) = 0;
   virtual int dcopAddMessage(const QString & foldername,
                              const KURL & messagefile) = 0;
-
+			     
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
   virtual void selectFolder( QString folder ) =0;
@@ -130,6 +130,30 @@ k_dcop_hidden:
    * DCOP-enabled for use in kaddressbook drop
    */
   virtual QString getFrom( Q_UINT32 serialNumber ) = 0;
+
+  /** Does essentially the same as dcopAddMessage except that it doesn't reject
+      duplicate messages.
+
+      @param foldername the requested foldername in kmail (at the
+                     zero level in the foldertree.
+      @param messagefile: the name of the filename (local) with the
+                     message to be added.
+      @return =1,  message added to folder, if folder doesn't exist, folder
+             has been created.
+        =0,  an error occurred.
+        =-1, couldn't create folder and it didn't exist
+        =-2, couldn't read messageFile.
+        =-3, Can't allocate memory.
+        =-4, Message already exists in folder.
+  */
+  virtual int dcopAddMessage_fastImport(const QString & foldername,
+                             		const QString & messagefile) = 0;
+  virtual int dcopAddMessage_fastImport(const QString & foldername,
+                             		const KURL & messagefile) = 0;
+
+  /** Clears the list of added message ids which is used to filter out
+      duplicates. */
+  virtual void dcopResetAddMessage() = 0;
 };
 
 #endif

@@ -134,6 +134,10 @@ public:
   void openReader() { openReader( false ); }
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
+  void dcopResetAddMessage();
+  /** add messages without rejecting duplicates */
+  int dcopAddMessage_fastImport(const QString & foldername, const QString & messageFile);
+  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messageFile);
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
@@ -394,6 +398,10 @@ private:
   KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
 
   KWallet::Wallet *mWallet;
+
+  // variables used by dcopAddMessage()
+  QStringList mAddMessageMsgIds;
+  QString     mAddMessageLastFolder;
 };
 
 #endif
