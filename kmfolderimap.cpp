@@ -428,8 +428,7 @@ kdDebug(5006) << "uidnext = " << uidNext() << endl;
 void KMFolderImap::getFolder()
 {
   mImapState = imapInProgress;
-  if (!uidValidity().isEmpty()) checkValidity();
-  else reallyGetFolder();
+  checkValidity();
 }
 
 
