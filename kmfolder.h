@@ -552,7 +552,7 @@ protected:
   /** Convert "\r\n" line endings in "\n" line endings. The conversion
       happens in place. Returns the length of the resulting string.
   */
-  size_t crlf2lf( char* str, const size_t strLen );
+  static size_t crlf2lf( char* str, const size_t strLen );
 
   int mOpenCount, mQuiet;
   bool mChanged;
