@@ -674,6 +674,8 @@ void KMKernel::initFolders(KConfig* cfg)
   }
 
   the_inboxFolder->setSystemFolder(TRUE);
+  if ( the_inboxFolder->userWhoField().isEmpty() )
+    the_inboxFolder->setUserWhoField( QString::null );
   // inboxFolder->open();
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
@@ -683,6 +685,8 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_outboxFolder->setType("Out");
   the_outboxFolder->setSystemFolder(TRUE);
+  if ( the_outboxFolder->userWhoField().isEmpty() )
+    the_outboxFolder->setUserWhoField( QString::null );
   the_outboxFolder->open();
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
@@ -691,6 +695,8 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
+  if ( the_sentFolder->userWhoField().isEmpty() )
+    the_sentFolder->setUserWhoField( QString::null );
   // the_sentFolder->open();
 
   the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
@@ -699,6 +705,8 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
+  if ( the_trashFolder->userWhoField().isEmpty() )
+    the_trashFolder->setUserWhoField( QString::null );
   // the_trashFolder->open();
 
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
@@ -707,6 +715,8 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
+  if ( the_draftsFolder->userWhoField().isEmpty() )
+    the_draftsFolder->setUserWhoField( QString::null );
   the_draftsFolder->open();
 }
 
