@@ -319,14 +319,14 @@ public:
   QString mailingListAdminAddress() const { return mMailingListAdminAddress; }
 
   void setIdentity(uint identity);
-  uint identity() const;
+  uint identity() const { return mIdentity; }
 
   /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
-  QString whoField() const;
+  QString whoField() const { return mWhoField; }
   void setWhoField(const QString& aWhoField);
 
   /** Get / set the user-settings for the WhoField (From/To/Empty) */
-  QString userWhoField(void);
+  QString userWhoField(void) { return mUserWhoField; }
   void setUserWhoField(const QString &whoField,bool writeConfig=true);
 
   /** A cludge to help make sure the count of unread messges is kept in sync */
@@ -527,6 +527,11 @@ private:
   bool mMailingListEnabled;
   QString mMailingListPostingAddress;
   QString mMailingListAdminAddress;
+
+  uint mIdentity;
+
+  /** name of the field that is used for "From" in listbox */
+  QString mWhoField, mUserWhoField;
 };
 
 #endif /*kmfolder_h*/

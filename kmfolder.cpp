@@ -12,9 +12,12 @@
 #include "kmfoldersearch.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
+#include "identitymanager.h"
+#include "kmidentity.h"
 
 #include <errno.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <qfile.h>
@@ -98,6 +101,10 @@ void KMFolder::readConfig( KConfig* config )
   mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
   mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
 
+  mIdentity = config->readUnsignedNumEntry("Identity",0);
+
+  setUserWhoField( config->readEntry("WhoField"), false );
+
   if ( mUseCustomIcons )
     emit iconsChanged();
 }
@@ -117,6 +124,10 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
+
+  config->writeEntry("Identity", mIdentity);
+
+  config->writeEntry("WhoField", mUserWhoField);
 }
 
 KMFolderType KMFolder::folderType() const
@@ -489,32 +500,53 @@ void KMFolder::setMailingListAdminAddress( const QString& address )
 
 void KMFolder::setIdentity( uint identity )
 {
-  mStorage->setIdentity( identity );
-}
-
-uint KMFolder::identity() const
-{
-  return mStorage->identity();
-}
-
-QString KMFolder::whoField() const
-{
-  return mStorage->whoField();
+  mIdentity = identity;
+  kmkernel->slotRequestConfigSync();
 }
 
 void KMFolder::setWhoField(const QString& aWhoField )
 {
-  mStorage->setWhoField( aWhoField );
-}
-
-QString KMFolder::userWhoField()
-{
-  return mStorage->userWhoField();
+  mWhoField = aWhoField;
+#if 0
+  // This isn't saved in the config anyway
+  mStorage->writeConfig();
+#endif
 }
 
 void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
 {
-  mStorage->setUserWhoField( whoField, writeConfig );
+  mUserWhoField = whoField;
+  if ( whoField.isEmpty() )
+  {
+    // default setting
+    const KMIdentity & identity =
+      kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
+
+    if ( isSystemFolder() && folderType() != KMFolderTypeImap ) {
+      // local system folders
+      if ( this == kmkernel->inboxFolder() ||
+           this == kmkernel->trashFolder() )
+        mWhoField = "From";
+      if ( this == kmkernel->outboxFolder() ||
+           this == kmkernel->sentFolder() ||
+           this == kmkernel->draftsFolder() )
+        mWhoField = "To";
+    } else if ( identity.drafts() == idString()
+                || identity.fcc() == idString() )
+      // drafts or sent of the identity
+      mWhoField = "To";
+    else
+      mWhoField = "From";
+  } else if ( whoField == "From" || whoField == "To" )
+    // set the whoField according to the user-setting
+    mWhoField = whoField;
+  else
+    // this should not happen...
+    kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!"
+                  << endl;
+
+  if (writeConfig)
+    mStorage->writeConfig();
 }
 
 void KMFolder::correctUnreadMsgsCount()

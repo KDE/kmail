@@ -40,8 +40,6 @@
 #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "undostack.h"
 #include "kmmsgdict.h"
-#include "identitymanager.h"
-#include "kmidentity.h"
 #include "kmfoldermgr.h"
 #include "kmkernel.h"
 #include "kmcommands.h"
@@ -148,12 +146,6 @@ void FolderStorage::setDirty(bool f)
     mDirtyTimer->changeInterval( mDirtyTimerInterval );
   else
     mDirtyTimer->stop();
-}
-
-//-----------------------------------------------------------------------------
-void FolderStorage::setIdentity( uint identity ) {
-  mIdentity = identity;
-  kmkernel->slotRequestConfigSync();
 }
 
 //-----------------------------------------------------------------------------
@@ -818,9 +810,7 @@ void FolderStorage::readConfig()
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
-  mIdentity = config->readUnsignedNumEntry("Identity",0);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
-  setUserWhoField( config->readEntry("WhoField"), false );
 
   if( folder() ) folder()->readConfig( config );
 }
@@ -832,9 +822,7 @@ void FolderStorage::writeConfig()
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", countUnread());
   config->writeEntry("TotalMsgs", mTotalMsgs);
-  config->writeEntry("Identity", mIdentity);
   config->writeEntry("Compactable", mCompactable);
-  config->writeEntry("WhoField", mUserWhoField);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
@@ -916,47 +904,6 @@ void FolderStorage::setStatus(QValueList<int>& ids, KMMsgStatus status, bool tog
   {
     FolderStorage::setStatus(*it, status, toggle);
   }
-}
-
-//-----------------------------------------------------------------------------
-void FolderStorage::setUserWhoField(const QString &whoField, bool aWriteConfig)
-{
-  mUserWhoField = whoField;
-  if ( whoField.isEmpty() )
-  {
-    // default setting
-    const KMIdentity & identity =
-      kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
-
-    if ( folder() && folder()->isSystemFolder() 
-          && folderType() != KMFolderTypeImap )
-    {
-      // local system folders
-      if ( folder() == kmkernel->inboxFolder() ||
-           folder() == kmkernel->trashFolder() ) mWhoField = "From";
-      if ( folder() == kmkernel->outboxFolder() ||
-           folder() == kmkernel->sentFolder() ||
-           folder() == kmkernel->draftsFolder() ) mWhoField = "To";
-
-    } else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
-      // drafts or sent of the identity
-      mWhoField = "To";
-    } else {
-      mWhoField = "From";
-    }
-
-  } else if ( whoField == "From" || whoField == "To" ) {
-
-    // set the whoField according to the user-setting
-    mWhoField = whoField;
-
-  } else {
-    // this should not happen...
-    kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!" << endl;
-  }
-
-  if (aWriteConfig)
-    writeConfig();
 }
 
 void FolderStorage::ignoreJobsForMessage( KMMessage *msg )

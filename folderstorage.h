@@ -308,17 +308,6 @@ public:
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != 0); }
 
-  void setIdentity(uint identity);
-  uint identity() const { return mIdentity; }
-
-  /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
-  QString whoField() const { return mWhoField; }
-  void setWhoField(const QString& aWhoField) { mWhoField = aWhoField; /*writeConfig();*/ }
-
-  /** Get / set the user-settings for the WhoField (From/To/Empty) */
-  QString userWhoField(void) { return mUserWhoField; }
-  void setUserWhoField(const QString &whoField,bool writeConfig=true);
-
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
 
@@ -484,11 +473,7 @@ protected:
   bool mFilesLocked;
   /** nationalized label or QString::null (then name() should be used) */
   QString mLabel;
-  /** name of the field that is used for "From" in listbox */
-  QString mWhoField, mUserWhoField;
   KMAcctList* mAcctList;
-
-  uint    mIdentity;
 
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
