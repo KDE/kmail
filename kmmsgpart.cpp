@@ -17,6 +17,10 @@
 
 #include <kiconloader.h>
 
+#if QT_VERSION <= 0x030100
+#include <qregexp.h>
+#endif
+
 #include <assert.h>
 
 using namespace KMime;
@@ -315,7 +319,11 @@ QCString KMMessagePart::bodyDecoded(void) const
 			<< mBody.size() << " ). Result truncated!" << endl;
       len = oit - result.begin();
       result.truncate( len ); // adds trailing NUL
+#if QT_VERSION >= 0x030100
       result = result.replace( "\r\n", "\n" );
+#else
+      result = result.replace( QRegExp("\r\n"), "\n" );
+#endif
       break;
     }
   default:
