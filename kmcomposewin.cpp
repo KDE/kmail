@@ -1389,35 +1389,82 @@ bool KMComposeWin::applyChanges(void)
 
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
 
-  if( !doEncrypt ) {
+  // check settings of composer buttons *and* attachment check boxes
+  bool doSignCompletely    = doSign;
+  bool doEncryptCompletely = doEncrypt;
+  if( cryptPlug && (0 < mAtmList.count() ) ) {
+    int idx=0;
+    KMMessagePart *attachPart;
+    for( attachPart = mAtmList.first();
+         attachPart;
+         attachPart=mAtmList.next(), ++idx ) {
+      if( !encryptFlagOfAttachment( idx ) )
+        doEncryptCompletely = false;
+      if( !signFlagOfAttachment(    idx ) )
+        doSignCompletely = false;
+    }
+  }
+  
+  if( bOk && !doSignCompletely ) {
     if( cryptPlug ) {
-      // check if the message should be encrypted via Crypto Plugin
-      EncryptEmail encMode = cryptPlug->encryptEmail();
-      switch ( encMode ) {
-      case EncryptEmail_undef:
-        break;
-      case EncryptEmail_EncryptAll: {
-          int ret =
-            KMessageBox::warningYesNoCancel( this,
-              "There are conflicting encryption preferences!\n\n"
-              "Should this message be encrypted?" );
-          if( ret == KMessageBox::Cancel )
-            bOk = false;
-          doEncrypt = ( ret == KMessageBox::Yes );
-        }
-        break;
-      case EncryptEmail_Ask: {
-          kernel->kbp()->idle();
-          int ret =
-            KMessageBox::questionYesNo( this,
-              "Should this message be encrypted?" );
-          kernel->kbp()->busy();
-          doEncrypt = ( KMessageBox::Yes == ret );
-        }
-        break;
-      case EncryptEmail_DontEncrypt:
-        break;
+      // note: only ask for signing if "Warn me" flag is set! (khz)
+      if( cryptPlug->warnSendUnsigned() ) {
+        int ret =
+        KMessageBox::warningYesNoCancel( this,
+          QString( "<qt><b>"
+            + i18n("Warning:")
+            + "</b><br>"
+            + QString(
+                (doSign && !doSignCompletely)
+              ? i18n("You specified not to sign some parts of this message, but"
+                     " you wanted to be warned not to send unsigned messages!")
+              : i18n("You specified not to sign this message, but"
+                     " you wanted to be warned not to send unsigned messages!") )
+            + "<br>&nbsp;<br><b>"
+            + i18n("Sign all parts of this message?")
+            + i18n("</b></qt>") ) );
+        if( ret == KMessageBox::Cancel )
+          bOk = false;
+        doSign = ( ret == KMessageBox::Yes );
       }
+    } else {
+      // ask if the message should be encrypted via old build-in pgp code
+      // pending (who ever wants to implement it)
+    }
+  }
+  
+  if( bOk && !doEncryptCompletely ) {
+    if( cryptPlug ) {
+      // note: only ask for encrypting if "Warn me" flag is set! (khz)
+      if( cryptPlug->warnSendUnencrypted() ) {
+        int ret =
+        KMessageBox::warningYesNoCancel( this,
+          QString( "<qt><b>"
+            + i18n("Warning:")
+            + "</b><br>"
+            + QString(
+                (doEncrypt && !doEncryptCompletely)
+              ? i18n("You specified not to encrypt some parts of this message, but"
+                     " you wanted to be warned not to send unencrypted messages!")
+              : i18n("You specified not to encrypt this message, but"
+                     " you wanted to be warned not to send unencrypted messages!") )
+            + "<br>&nbsp;<br><b>"
+            + i18n("Encrypt all parts of this message?")
+            + i18n("</b></qt>") ) );
+        if( ret == KMessageBox::Cancel )
+        bOk = false;
+        doEncrypt = ( ret == KMessageBox::Yes );
+      }
+      
+      /*
+      note: Processing the cryptPlug->encryptEmail() flag here would
+            be absolutely wrong: this is used for specifying 
+                if messages should be encrypted 'in general'.
+            --> This sets the initial state of a freshly started Composer.
+            --> This does *not* mean overriding user setting made while
+                editing in that composer window!         (khz, 2002/06/26)
+      */
+               
     } else if( mAutoPgpEncrypt && !pgpUserId.isEmpty() ) {
       // determine the complete list of recipients
       QString _to = to().simplifyWhiteSpace();
