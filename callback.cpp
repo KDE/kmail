@@ -90,12 +90,6 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
 
-  // TODO: These are no longer available. It was an internal
-  // implementation detail of kmcomposewin, anyway. Please find
-  // another way...
-  //cWin->mNeverSign = true;
-  //cWin->mNeverEncrypt = true;
-
   if ( options.readBoolEntry( "AutomaticSending", true ) ) {
     cWin->setAutoDeleteWindow(  true );
     cWin->slotSendNow();
