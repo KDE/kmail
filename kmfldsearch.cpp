@@ -283,6 +283,7 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
   bool fetchHeaders)
 {
+  //kdDebug(5006) << "Searching folder '" << aFld->name() << "'" << endl;
   if (fetchHeaders && aFld->protocol() == "imap")
   {
     KMFolder *fld = aFld;
@@ -407,12 +408,12 @@ void KMFldSearch::searchInAllFolders(void)
   QValueList<QGuardedPtr<KMFolder> > folders;
   QGuardedPtr<KMFolder> folder;
   QStringList str;
-  int i = 0;
 
   mMainWin->folderTree()->createFolderList( &str, &folders );
-  for (; folders.at(i) != folders.end(); ++i)
+  QValueListConstIterator<QGuardedPtr<KMFolder> > it;
+  for (it = folders.begin(); it != folders.end(); ++it)
   {
-    folder = *folders.at(i);
+    folder = *it;
     // Stop pressed?
     if(!mSearching)
     {
@@ -421,7 +422,7 @@ void KMFldSearch::searchInAllFolders(void)
 
     if (folder && (folder->protocol() != "imap"))
     {
-      searchInFolder(folder);
+      searchInFolder(folder, false);
     }
   }
 }

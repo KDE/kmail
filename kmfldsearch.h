@@ -60,7 +60,7 @@ protected:
   virtual bool searchInMessage(KMMessage*, const QCString&);
 
   /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
-  virtual void searchInFolder(QGuardedPtr<KMFolder>, bool recursive = true,
+  virtual void searchInFolder(QGuardedPtr<KMFolder>, bool recursive,
     bool fetchHeaders = true);
 
   /** Search for matches in all folders. Calls searchInFolder() for every
