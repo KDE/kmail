@@ -208,7 +208,7 @@ void KMComposeWin::rethinkFields(void)
     mMnuView->setItemChecked(0, FALSE);
   }
 
-  for (mask=1,mNumHeaders=0; mask<showHeaders; mask<<=1)
+  for (mask=1,mNumHeaders=0; mask<=showHeaders; mask<<=1)
     if ((showHeaders&mask) != 0) mNumHeaders++;
 
   numRows = mNumHeaders + 2;
