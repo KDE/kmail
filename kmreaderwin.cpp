@@ -32,6 +32,7 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qmlined.h>
+#include <qregexp.h>
 
 #define hand_width 16
 #define hand_height 16
@@ -266,7 +267,8 @@ void KMReaderWin::parseMsg(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeMsgHeader(void)
 {
-  QString t;
+  QString t, str;
+
   switch (mHeaderStyle)
   {
   case HdrBrief:
@@ -296,12 +298,12 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT><BR>");
     mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
-    mViewer->write(i18n("To: ") +
+    mViewer->write(i18n("To: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
-    mViewer->write(i18n("Date: ") +
+    mViewer->write(i18n("Date: ")+
 		   strToHtml(mMsg->dateStr()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
@@ -315,9 +317,9 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write("<FONT SIZE=+1><B>" +
 		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
-    mViewer->write(i18n("From: ") +
+    mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
-    mViewer->write(i18n("To: ") +
+    mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
@@ -330,21 +332,21 @@ void KMReaderWin::writeMsgHeader(void)
 		     KMMessage::emailAddrAsAnchor(mMsg->replyTo()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
-        mViewer->write(i18n("References: ") +
+        mViewer->write(i18n("References: ")+
                        KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
     if (!mMsg->groups().isEmpty())
-        mViewer->write(i18n("Groups: ")+mMsg->groups()+"<BR>");
+        mViewer->write(i18n("Groups: ") + mMsg->groups()+"<BR>");
 #endif
     mViewer->write("<BR>");
     break;
 
-  case HdrAll:
-    mViewer->write(strToHtml(mMsg->headerAsString()));
-    mViewer->write("<br><br>");
-    break;
-
   default:
     warning("Unsupported header style %d", mHeaderStyle);
+  case HdrAll:
+    str = strToHtml(mMsg->headerAsString());
+    mViewer->write(str);
+    mViewer->write("<br><br>");
+    break;
   }
 }
 

@@ -894,8 +894,8 @@ const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const
 
   assert(msgPart != NULL);
 
-  len = msgPart->body().size()-1;
-  if (len > 9999) lenStr.sprintf("%uK", len>>10);
+  len = msgPart->size();
+  if (len > 9999) lenStr.sprintf("%uK", (len>>10));
   else lenStr.sprintf("%u", len);
 
   return (" \n" + msgPart->name() + "\n" + lenStr + "\n" +

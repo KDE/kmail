@@ -37,6 +37,8 @@ class KSpellConfig;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
+
+//-----------------------------------------------------------------------------
 class KMLineEdit : public QLineEdit
 {
   Q_OBJECT
@@ -55,6 +57,7 @@ private:
 protected:
   virtual void mousePressEvent(QMouseEvent *);
 };
+
 
 //-----------------------------------------------------------------------------
 #define KMComposeWinInherited KTopLevelWidget

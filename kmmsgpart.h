@@ -25,6 +25,9 @@ public:
   /** Sets body, encoded according to the content-transfer-encoding. */
   virtual void setBodyEncoded(const QString aStr);
 
+  /** Returns decoded length of body. */
+  virtual int size(void) const;
+
   /** Get or set name parameter */
   const QString name(void) const;
   void setName(const QString aStr);
@@ -84,6 +87,7 @@ protected:
   QString mContentDisposition;
   QString mBody;
   QString mName;
+  int mBodySize;
 };
 
 

@@ -32,7 +32,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   QGridLayout* grid = new QGridLayout(this, 6, 4, 8, 8);
   QPushButton *btnOk, *btnCancel;
   QLabel *label;
-  int h;
+  int h, w1, w2;
 
   mMsgPart = NULL;
 
@@ -91,7 +91,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   mCbxEncoding->insertItem(i18n("quoted printable"));
   mCbxEncoding->setMinimumSize(100, h);
   mCbxEncoding->setMaximumSize(1024, h);
-  grid->addMultiCellWidget(mCbxEncoding, 4, 4, 1, 2);
+  grid->addMultiCellWidget(mCbxEncoding, 4, 4, 1, 3);
 
   if(readOnly)
     {mEdtMimetype->setEnabled(FALSE);
@@ -113,6 +113,14 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   btnCancel->setMinimumSize(btnCancel->sizeHint());
   connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
   grid->addMultiCellWidget(btnCancel, 5, 5, 2, 3);
+
+  h  = btnOk->sizeHint().height();
+  w1 = btnOk->sizeHint().width();
+  w2 = btnCancel->sizeHint().width();
+  if (w1 < w2) w1 = w2;
+  if (w1 < 120) w1 = 120;
+  btnOk->setMaximumSize(w1, h);
+  btnCancel->setMaximumSize(w1, h);
 
   //-----
   grid->setColStretch(0, 0);
@@ -143,8 +151,8 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   mEdtName->setText(mMsgPart->name());
   mEdtMimetype->setText(mMsgPart->typeStr()+"/"+mMsgPart->subtypeStr());
 
-  len = mMsgPart->body().size()-1;
-  if (len > 9999) lenStr.sprintf("%u KB", len>>10);
+  len = mMsgPart->size();
+  if (len > 9999) lenStr.sprintf("%u KB", (len>>10));
   else lenStr.sprintf("%u bytes", len);
   mLblSize->setText(lenStr);
 

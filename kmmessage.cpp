@@ -480,6 +480,8 @@ const QString KMMessage::dateShortStr(void) const
   result.detach();
   result = ctime(&unixTime);
   result.detach();
+  if (result[result.length()-1]=='\n')
+    result.truncate(result.length()-1);
 
   return result;
 }

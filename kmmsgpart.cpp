@@ -22,6 +22,7 @@ KMMessagePart::KMMessagePart() :
   mType("text"), mSubtype("plain"), mCte("7bit"), mContentDescription(),
   mContentDisposition(), mBody(), mName()
 {
+  mBodySize = 0;
 }
 
 
@@ -32,14 +33,41 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
+int KMMessagePart::size(void) const
+{
+  if (mBodySize < 0)
+  {
+    ((KMMessagePart*)this)->mBodySize = 
+      bodyDecoded().size() - 1;
+  }
+  return mBodySize;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::setBody(const QString aStr)
+{
+  int encoding = contentTransferEncoding();
+
+  mBody = aStr.copy();
+
+  if (encoding!=DwMime::kCteQuotedPrintable &&
+      encoding!=DwMime::kCteBase64)
+  {
+    mBodySize = mBody.size() - 1;
+  }
+  else mBodySize = -1;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QString aStr)
 {
   DwString dwResult, dwSrc;
   int encoding = contentTransferEncoding();
   int len;
 
-  debug("setBodyEncoded (%s): len=%d, size=%d", cteStr().data(), 
-	aStr.length(), aStr.size());
+  mBodySize = aStr.size() - 1;
 
   switch (encoding)
   {
@@ -297,13 +325,6 @@ void KMMessagePart::setContentDisposition(const QString aStr)
 const QString KMMessagePart::body(void) const
 {
   return mBody;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setBody(const QString aStr)
-{
-  mBody = aStr.copy();
 }
 
 
