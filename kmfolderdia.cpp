@@ -122,6 +122,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   }
 
   connect( mIconsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotEnableIcons(bool)) );
+  connect( mNormalIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotChangeIcon(QString)) );
 
   //end icons group
   
@@ -591,4 +592,11 @@ KMFolderDialog::slotEnableIcons( bool yes)
   mUnreadIconButton->setEnabled( yes );
   if ( folder ) 
     folder->setUseCustomIcons( yes );
+}
+
+void 
+KMFolderDialog::slotChangeIcon( QString icon )
+{
+  if ( mFolder && !mFolder->unreadIcon() ) 
+    mUnreadIconButton->setIcon( icon );
 }

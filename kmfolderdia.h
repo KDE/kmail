@@ -33,6 +33,7 @@ protected slots:
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
   virtual void slotEnableIcons( bool );
+  virtual void slotChangeIcon( QString icon );
   /* 
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
