@@ -26,7 +26,7 @@ class KMFldSearch: public QDialog
   Q_OBJECT
 public:
   KMFldSearch(KMMainWin* parent, const char* name=NULL,
-	       bool modal=FALSE, WFlags f=0);
+	       QString currentfolder = "", bool modal=FALSE, WFlags f=0);
   virtual ~KMFldSearch();
 
 protected slots:

@@ -24,7 +24,8 @@
 #include <qlistview.h>
 
 //-----------------------------------------------------------------------------
-KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f): 
+KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, 
+  QString curFolder, bool modal, WFlags f): 
   KMFldSearchInherited(NULL, name, modal, f)
 {
   KButtonBox* bbox;
@@ -40,7 +41,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
   setCaption(i18n("Search in Folders"));
   mGrid = new QGridLayout(this, mNumRules+4, 5, 4, 4);
 
-  mCbxFolders = createFolderCombo("");
+  mCbxFolders = createFolderCombo(curFolder);
   mCbxFolders->setMinimumSize(mCbxFolders->sizeHint());
   mCbxFolders->setMaximumSize(1024, mCbxFolders->sizeHint().height());
   mGrid->addMultiCellWidget(mCbxFolders, 0, 0, 1, 2);
@@ -139,10 +140,14 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
  
  cbx->insertItem("Search all folders");
  QStringList::Iterator st;
- for( st = str.begin(); st != str.end(); ++st)
+ int i = 1;
+ for( st = str.begin(); st != str.end(); ++st, ++i) {
    cbx->insertItem(*st);
- 
-#warning TODO: preselect current folder
+   if( *st == curFolder ) {		// preselect current folder
+     cbx->setCurrentItem(i);
+   }
+ }
+
  return cbx; 
 }
 
@@ -208,7 +213,16 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
     msg = aFld->getMsg(i);
     if (msg && searchInMessage(msg))
     {
+      /* Insert item at the end. Not very elgant, but this way the user
+         can look at the first results while new results are added at the
+         bottom. Doesn't make search noticeably slower --dnaber
+      */
+      QListViewItem *lastchild=mLbxMatches->firstChild();
+      if (lastchild)
+        for (;lastchild->nextSibling()!=0; lastchild=lastchild->nextSibling())
+	  ;
       (void)new QListViewItem(mLbxMatches,
+      			      lastchild,
 			      msg->subject(), 
 			      msg->from(),
 			      msg->dateStr(),
@@ -304,6 +318,7 @@ void KMFldSearch::slotSearch()
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotClose()
 {
+#warning Also connect the escape key to this
   accept();
   fprintf(stderr, "here\n");
   delete this;
