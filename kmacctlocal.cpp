@@ -25,7 +25,7 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctLocal::~KMAcctLocal()
 {
-  mLocation = NULL;
+  mLocation = "";
 }
 
 

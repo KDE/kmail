@@ -270,7 +270,7 @@ const QString KMFilter::asString(void) const
 
 KMFilterRule::KMFilterRule()
 {
-  mField    = NULL;
+  mField    = "";
   mFunction = FuncContains;
   mContents = "";
 }

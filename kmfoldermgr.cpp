@@ -42,7 +42,7 @@ KMFolderMgr::KMFolderMgr(const char* aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  mBasePath = NULL;
+  mBasePath = "";
 }
 
 

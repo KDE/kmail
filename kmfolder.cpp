@@ -124,7 +124,7 @@ int KMFolder::open(void)
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  assert(name() != NULL);
+  assert(name() != "");
 
   mFilesLocked = FALSE;
   mStream = fopen(location(), "r+"); // messages file
@@ -170,7 +170,7 @@ int KMFolder::create(void)
   int rc;
   int old_umask;
 
-  assert(name() != NULL);
+  assert(name() != "");
   assert(mOpenCount == 0);
 
   old_umask = umask(077);
@@ -779,7 +779,7 @@ int KMFolder::remove(void)
 {
   int rc;
 
-  assert(name() != NULL);
+  assert(name() != "");
 
   close(TRUE);
   unlink(indexLocation());
@@ -796,7 +796,7 @@ int KMFolder::expunge(void)
 {
   int openCount = mOpenCount;
 
-  assert(name() != NULL);
+  assert(name() != "");
 
   close(TRUE);
 
@@ -832,7 +832,7 @@ int KMFolder::compact(void)
   tempName += ".compacted";
   unlink(tempName);
   tempFolder = parent()->createFolder(tempName);
-  assert(tempFolder != NULL);
+  assert(tempFolder != "");
 
   quiet(TRUE);
   tempFolder->open();
