@@ -410,8 +410,8 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mCbxFunc->insertItem(i18n("doesn't contain"));
   mCbxFunc->insertItem(i18n("equals"));
   mCbxFunc->insertItem(i18n("not equal"));
-  mCbxFunc->insertItem(i18n("less or equal"));
-  mCbxFunc->insertItem(i18n("greater or equal"));
+  mCbxFunc->insertItem(i18n("matches RegExp"));
+  mCbxFunc->insertItem(i18n("doesn't match RegExp"));
   mCbxFunc->setMinimumSize(mCbxFunc->sizeHint());
   mCbxFunc->setMaximumSize(1024, mCbxFunc->sizeHint().height());
 
@@ -466,10 +466,10 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
     return value.contains(mValue, FALSE);
   case NotContains:
     return ( ! value.contains(mValue, FALSE) );
-  case GreaterEqual: 
-    return (stricmp(value, mValue) >= 0);
-  case LessEqual: 
-    return (stricmp(value, mValue) <= 0);
+  case MatchesRegExp:
+    return (value.find(QRegExp(mValue, FALSE)) >= 0);
+  case NotMatchesRegExp:
+    return (value.find(QRegExp(mValue, FALSE)) < 0);
   default:
     debug("KMFldSearchRule::matches: wrong rule func #%d", mFunc);
     return false;

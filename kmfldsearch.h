@@ -89,8 +89,8 @@ public:
   /** Enable or disable all the push buttons */
   virtual void setEnabled(bool);
 
-  enum Func { Contains=0, NotContains, Equal, NotEqual, LessEqual, 
-	      GreaterEqual };
+  enum Func { Contains=0, NotContains, Equal, NotEqual, 
+              MatchesRegExp, NotMatchesRegExp };
 
 protected:
   QComboBox *mCbxField, *mCbxFunc;
