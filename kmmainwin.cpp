@@ -1826,8 +1826,22 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       {
         QString msgId( oldMsg->msgId() );
         int leftAngle = msgId.findRev( '<' );
-        newMsg->setMsgId( msgId.insert( (-1 == leftAngle) ? 0 : ++leftAngle,
-                                        "local." ) );
+        int idx = (-1 == leftAngle) ? 0 : ++leftAngle;
+        QString prefix("DecryptedMsg.");
+        int oldIdx = msgId.find(prefix, 0, false);
+        if( -1 == oldIdx )
+          msgId = msgId.insert( idx, prefix );
+        else {
+          // toggle between "DecryptedMsg." and "DeCryptedMsg."
+          // to avoid same message id
+          QCharRef c = msgId[ oldIdx+2 ];
+          if( 'C' == c )
+            c = 'c';
+          else
+            c = 'C';
+        }
+        newMsg->setMsgId( msgId );
+        mMsgView->setIdOfLastViewedMessage( msgId );
       }
       const QString newMsgIdMD5( newMsg->msgIdMD5() );
       // insert the unencrypted message
@@ -1843,8 +1857,7 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       int idx = mFolder->find( newMsgIdMD5 );
       if( -1 != idx ) {
         mHeaders->setCurrentMsg( idx );
-        mHeaders->highlightMessage(mHeaders->currentItem(), true);
-        mMsgView->setMsg( newMsg );
+        mMsgView->setMsg( mHeaders->currentMsg() );
       } else {
         kdDebug(5006) << "KMMainWin  -  SORRY, could not store unencrypted message!" << endl;
       }
@@ -3517,7 +3530,7 @@ void KMMainWin::slotJobFinished()
   mCountJobs--;
   if (mProgressDialog->wasCancelled()) return; 
   
-  if ( (mCountMsgs - mSelectedMsgs.count()) > mCountJobs )
+  if ( (mCountMsgs - static_cast<int>(mSelectedMsgs.count())) > mCountJobs )
   {
     // the message wasn't retrieved before => error
     mProgressDialog->hide();

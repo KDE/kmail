@@ -102,6 +102,13 @@ public:
   /** Set the message that shall be shown. If NULL, an empty page is
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
+  
+  /** Store message id of last viewed message,
+      normally no need to call this function directly,
+      since correct value is set automatically in
+      parseMsg(KMMessage* aMsg, bool onlyProcessHeaders). */
+  void setIdOfLastViewedMessage( QString msgId )
+    { mIdOfLastViewedMessage = msgId; }
 
   /** Specify whether message is to be shown completely or not.
       This is used to make sure message contains it's headers
@@ -442,6 +449,7 @@ protected:
   int* mShowMIMETreeMode;
   CryptPlugWrapperList * mCryptPlugList;
   partNode* mRootNode;
+  QString mIdOfLastViewedMessage;
   static QPtrList<KMReaderWin> mStandaloneWindows;
 };
 

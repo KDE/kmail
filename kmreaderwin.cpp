@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
 #include <config.h>
 #include <stdlib.h>
@@ -1400,7 +1400,8 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mCryptPlugList( cryptPlugList ),
-    mRootNode( 0 )
+    mRootNode( 0 ),
+    mIdOfLastViewedMessage()
 {
   mAutoDelete = false;
   mLastSerNum = 0;
@@ -2803,7 +2804,9 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   if(    !onlyProcessHeaders
       && (aMsg == mMsg)
       && (    (KMMsgFullyEncrypted == encryptionState)
-           || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
+           || (KMMsgPartiallyEncrypted == encryptionState) )
+         // avoid endless recursions
+      && ( mIdOfLastViewedMessage != mMsg->msgId() ) ) {
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
     NewByteArray decryptedData;
@@ -2843,6 +2846,9 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to mMsg" << endl;
       delete mRootNode;
     mRootNode = savedRootNode;
   }
+
+  // store message id to avoid endless recursions
+  setIdOfLastViewedMessage( aMsg->msgId() );
   
   if( emitReplaceMsgByUnencryptedVersion ) {
 kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
