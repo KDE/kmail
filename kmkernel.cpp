@@ -1284,7 +1284,7 @@ void KMKernel::emergencyExit( const QString& reason )
                       "terminate now.\nThe error was:\n%1").arg( reason );
 
   kdWarning() << mesg << endl;
-  KNotifyClient::userEvent( mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
+  KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
 
   ::exit(1);
 }
