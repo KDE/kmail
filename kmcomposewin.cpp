@@ -214,9 +214,17 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
 
   mEdtTo->setFocus();
   mErrorProcessingStructuringInfo =
-    i18n("Structuring information returned by the Crypto Plug-In\n"
-         "could not be processed correctly, the Plug-In might be damaged.\n\n"
+    i18n("Structuring information returned by the Crypto Plug-In "
+         "could not be processed correctly, the Plug-In might be damaged.\n"
          "PLEASE CONTACT YOUR SYSTEM ADMINISTRATOR");
+  mErrorNoCryptPlugAndNoBuildIn =
+    i18n("No active Crypto Plug-In was found and the built-in OpenPGP code "
+         "did not run successfully.\n"
+         "You could do two things to change this:\n"
+         "* EITHER activate a Plug-In using the "
+         "'Settings/Configure KMail / Plug-In' dialog.\n"
+         "* OR specify traditional OpenPGP settings on the same dialog's "
+         "'Identity / Advanced' tabpage.");
   mDone = true;
 }
 
@@ -1618,10 +1626,7 @@ bool KMComposeWin::applyChanges(void)
         }
         else
           KMessageBox::sorry(this,
-            i18n("Signing not done: No active Crypto Plug-In was found\n"
-                "and the built-in OpenPGP code did not run successfully.\n\n"
-                "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog\n."
-                "(or specify the traditional OpenPGP settings, resp.)."));
+            i18n("Signing not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
       }
     }
 
@@ -1633,7 +1638,7 @@ bool KMComposeWin::applyChanges(void)
             ++it ) {
           QStringList tmpRecips( recipients );
           tmpRecips << *it;
-          //            kdDebug() << "###BEFORE \"" << mMsg->asString() << "\""<< endl;
+          //kdDebug() << "###BEFORE \"" << mMsg->asString() << "\""<< endl;
           KMMessage* yetAnotherMessageForBCC = new KMMessage( *mMsg );
           KMMessagePart tmpNewBodyPart = newBodyPart;
           bOk = encryptMessage( yetAnotherMessageForBCC,
@@ -1645,7 +1650,7 @@ bool KMComposeWin::applyChanges(void)
                                 tmpNewBodyPart );
           yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
           bccMsgList.append( yetAnotherMessageForBCC );
-          //            kdDebug() << "###BCC AFTER \"" << mMsg->asString() << "\""<<endl;
+          //kdDebug() << "###BCC AFTER \"" << mMsg->asString() << "\""<<endl;
 
         }
         mMsg->setHeaderField( "X-KMail-Recipients", recipients.join(",") );
@@ -1759,10 +1764,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
       }
       else
         KMessageBox::sorry(this,
-          i18n("Encrypting not done: No active Crypto Plug-In was found\n"
-               "and the built-in OpenPGP code did not run successfully.\n\n"
-               "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog\n."
-               "(or specify the traditional OpenPGP settings, resp.)."));
+          i18n("Encrypting not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
     }
   }
 
@@ -1784,8 +1786,10 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type to
       // add Attachments
       // create additional bodyparts for the attachments (if any)
       KMMessagePart *msgPart;
-      for( msgPart = mAtmList.first(); msgPart; msgPart=mAtmList.next() )
+      for( msgPart = mAtmList.first(); msgPart; msgPart=mAtmList.next() ) {
         msg->addBodyPart( msgPart );
+kdDebug(5006) << "                                 add a KMMessagePart to this Multipart/Mixed" << endl;
+      }
     } else {
       if( ourFineBodyPart.originalContentTypeStr() ) {
         msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
@@ -3560,7 +3564,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       msg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
       QString recips = msg->headerField( "X-KMail-Recipients" );
       if( !recips.isEmpty() ) {
-	msg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
+        msg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
       }
       msg->cleanupHeader();
       sentOk &= kernel->msgSender()->send(msg, aSendNow);
