@@ -366,7 +366,9 @@ void KMFilterDlg::updateCurFilterName(const QString &/*text*/)
     return;
   mFilter->setName(QString("<") + mRuleFieldA->currentText() + ">:" 
 		   + mRuleValueA->text());
+  QObject::disconnect(mFilterList,SIGNAL(highlighted(int)),this,SLOT(slotFilterSelected(int)));
   mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
+  connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
 }
 
 //-----------------------------------------------------------------------------
@@ -470,6 +472,7 @@ void KMFilterDlg::slotFilterSelected(int idx)
 {
   KMFilter* filter;
 
+  debug( QString( "mCurFilterIdx %1 idx %2" ).arg( mCurFilterIdx ).arg( idx ) );
   if (mCurFilterIdx == idx)
     return;
 
