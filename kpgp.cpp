@@ -25,10 +25,8 @@
 
 #include <config.h>
 
-/* TODO :
-  --  When there is no output from PGP, a warning dialog should
-      appear (when there's a problem now, the MESSAGE IS SENT
-      UNENCRYPTED AND/OR UNSIGNED !)
+/* 
+   TODO :
   --  Use sending of passphrase via pipe, rather than via -z,
       because it can be listed with 'ps' then. -- not very safe
 */ 
@@ -821,23 +819,35 @@ bool Kpgp::parseInfo(int action)
     index = 0;
     bool bad = FALSE;
     QString badkeys = "";
-    while((index = info.find("Cannot find the public key",index)) 
-	  != -1)
+    if (!flagPgp50)
     {
-      bad = TRUE;
-      index = info.find("'",index);
-      index2 = info.find("'",index+1);
-      badkeys += info.mid(index, index2-index+1) + ' ';
+      while((index = info.find("Cannot find the public key",index)) 
+  	  != -1)
+      {
+        bad = TRUE;
+        index = info.find("'",index);
+        index2 = info.find("'",index+1);
+        badkeys += info.mid(index, index2-index+1) + ' ';
+      }
+      if(bad)
+      {
+        badkeys.stripWhiteSpace();
+        badkeys.replace(QRegExp(" "),", ");
+        errMsg.sprintf(i18n("Could not find public keys matching the\n" 
+      		     "userid(s) %s. These persons won't be able\n"
+  		     "to read the message."),
+  		     (const char *)badkeys);
+        returnFlag = FALSE;
+      }
     }
-    if(bad)
+    else
     {
-      badkeys.stripWhiteSpace();
-      badkeys.replace(QRegExp(" "),", ");
-      errMsg.sprintf("Could not find public keys matching the\n" 
-		     "userid(s) %s. These persons won't be able\n"
-		     "to read the message.",
-		     (const char *)badkeys);
-      returnFlag = FALSE;
+      if((info.find("No encryption keys") != -1))
+        {
+          errMsg.sprintf(
+            i18n("Could not find public keys for some persons.\n"));
+          returnFlag = FALSE;
+        }
     }
     break;
   }
