@@ -68,10 +68,9 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix,
+static bool sSmartQuote,
   sWordWrap;
 static int sWrapCol;
-static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
 
 QString KMMessage::sForwardStr;
@@ -783,64 +782,6 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
 }
 
 //-----------------------------------------------------------------------------
-// static
-QString KMMessage::stripOffPrefixes( const QString& str )
-{
-  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
-                          true, QString::null ).stripWhiteSpace();
-}
-
-//-----------------------------------------------------------------------------
-// static
-QString KMMessage::replacePrefixes( const QString& str,
-                                    const QStringList& prefixRegExps,
-                                    bool replace,
-                                    const QString& newPrefix )
-{
-  bool recognized = false;
-  // construct a big regexp that
-  // 1. is anchored to the beginning of str (sans whitespace)
-  // 2. matches at least one of the part regexps in prefixRegExps
-  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
-                      .arg( prefixRegExps.join(")|(?:") );
-  QRegExp rx( bigRegExp, false /*case insens.*/ );
-  if ( !rx.isValid() ) {
-    kdWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
-                    << bigRegExp << "\"\n"
-                    << "prefix regexp is invalid!" << endl;
-    // try good ole Re/Fwd:
-    recognized = str.startsWith( newPrefix );
-  } else { // valid rx
-    QString tmp = str;
-    if ( rx.search( tmp ) == 0 ) {
-      recognized = true;
-      if ( replace )
-	return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
-    }
-  }
-  if ( !recognized )
-    return newPrefix + ' ' + str;
-  else
-    return str;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::cleanSubject() const
-{
-  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
-		       true, QString::null ).stripWhiteSpace();
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::cleanSubject( const QStringList & prefixRegExps,
-                                 bool replace,
-                                 const QString & newPrefix ) const
-{
-  return KMMessage::replacePrefixes( subject(), prefixRegExps, replace,
-                                     newPrefix );
-}
-
-//-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /* = QString::null */,
                                    bool noQuote /* = false */,
@@ -1044,7 +985,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
   }
 
-  msg->setSubject(cleanSubject(sReplySubjPrefixes, sReplaceSubjPrefix, "Re:"));
+  msg->setSubject( replySubject() );
 
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
@@ -1297,7 +1238,7 @@ KMMessage* KMMessage::createForward()
     }
   }
 
-  msg->setSubject(cleanSubject(sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:"));
+  msg->setSubject( forwardSubject() );
 
   msg->cleanupHeader();
 
@@ -1594,14 +1535,6 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
     idx += replacement.length();
   }
   return result;
-}
-
-QString KMMessage::forwardSubject() const {
-  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
-}
-
-QString KMMessage::replySubject() const {
-  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
 }
 
 KMMessage* KMMessage::createDeliveryReceipt() const
@@ -4091,6 +4024,8 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig()
 {
+  KMMsgBase::readConfig();
+
   KConfig *config=KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
@@ -4112,15 +4047,6 @@ void KMMessage::readConfig()
 
   { // area for config group "Composer"
     KConfigGroupSaver saver(config, "Composer");
-    sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
-    if (sReplySubjPrefixes.count() == 0)
-      sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
-    sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
-    sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
-    if (sForwardSubjPrefixes.count() == 0)
-      sForwardSubjPrefixes << "Fwd:" << "FW:";
-    sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
-
     sSmartQuote = config->readBoolEntry("smart-quote", true);
     sWordWrap = config->readBoolEntry( "word-wrap", true );
     sWrapCol = config->readNumEntry("break-at", 78);

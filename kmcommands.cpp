@@ -682,10 +682,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     ++it;
   }
   mMsgListIndex = 0;
-  KMMessage* msg = msgBase->isMessage()
-                   ? static_cast<KMMessage*>(msgBase)
-                   : msgBase->parent()->getMsg( msgBase->parent()->find(msgBase) );
-  mUrl = subjectToUrl( msg->cleanSubject() );
+  mUrl = subjectToUrl( msgBase->cleanSubject() );
 }
 
 KURL KMSaveMsgCommand::url()

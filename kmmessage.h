@@ -357,40 +357,6 @@ public:
   /** Calculate strippedSubject */
   void initStrippedSubjectMD5() {};
 
-  /** Check for prefixes @p prefixRegExps in @p str. If none
-      is found, @p newPrefix + ' ' is prepended to @p str and the
-      resulting string is returned. If @p replace is true, any
-      sequence of whitespace-delimited prefixes at the beginning of
-      @p str is replaced by @p newPrefix.
-  **/
-  static QString replacePrefixes( const QString& str,
-                                  const QStringList& prefixRegExps,
-                                  bool replace,
-                                  const QString& newPrefix );
-
-  /** Returns @p str with all "forward" and "reply" prefixes stripped off.
-   **/
-  static QString stripOffPrefixes( const QString& str );
-
-  /** Check for prefixes @p prefixRegExps in @ref #subject(). If none
-      is found, @p newPrefix + ' ' is prepended to the subject and the
-      resulting string is returned. If @p replace is true, any
-      sequence of whitespace-delimited prefixes at the beginning of
-      @ref #subject() is replaced by @p newPrefix
-  **/
-  QString cleanSubject(const QStringList& prefixRegExps, bool replace,
-		       const QString& newPrefix) const;
-
-  /** Return this mails subject, with all "forward" and "reply"
-      prefixes removed */
-  QString cleanSubject() const;
-
-  /** Return this mails subject, formatted for "forward" mails */
-  QString forwardSubject() const;
-
-  /** Return this mails subject, formatted for "reply" mails */
-  QString replySubject() const;
-
   /** Get or set the 'X-Mark' header field */
   QString xmark() const;
   void setXMark(const QString& aStr);
