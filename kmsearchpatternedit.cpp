@@ -62,6 +62,7 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
 {
   assert ( aRule );
 
+  blockSignals(TRUE);
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
   
@@ -76,6 +77,8 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   //--------------set function and contents
   mRuleFunc->setCurrentItem( (int)aRule->function() );
   mRuleValue->setText( aRule->contents() );
+
+  blockSignals(FALSE);
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const
@@ -91,12 +94,16 @@ KMSearchRule* KMSearchRuleWidget::rule() const
 
 void KMSearchRuleWidget::reset()
 {
+  blockSignals(TRUE);
+
   mRuleField->changeItem( " ", 0 );
   mRuleField->setCurrentItem( 0 );
 
   mRuleFunc->setCurrentItem( 0 );
 
   mRuleValue->clear();
+
+  blockSignals(FALSE);
 }
 
 QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
@@ -314,26 +321,28 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
 {
   assert( aPattern );
 
-  blockSignals(TRUE);
-
   mRuleLister->setRuleList( aPattern );
   
   mPattern = aPattern;
 
+  blockSignals(TRUE);
   if ( mPattern->op() == KMSearchPattern::OpOr )
     mAnyRBtn->setChecked(TRUE);
   else
     mAllRBtn->setChecked(TRUE);
+  blockSignals(FALSE);
 
   setEnabled( TRUE );
-
-  blockSignals(FALSE);
 }
 
 void KMSearchPatternEdit::reset()
 {
   mRuleLister->reset();
+
+  blockSignals(TRUE);
   mAllRBtn->setChecked( TRUE );
+  blockSignals(FALSE);
+
   setEnabled( FALSE );
 }
 

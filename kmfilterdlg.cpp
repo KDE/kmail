@@ -170,7 +170,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 void KMFilterListBox::createFilter( const QString field, const QString value )
 {
   KMSearchRule *newRule = new KMSearchRule();
-  newRule->init( field, KMSearchRule::FuncEquals, value );
+  newRule->init( field, KMSearchRule::FuncContains, value );
   
   KMFilter *newFilter = new KMFilter();
   newFilter->pattern()->append( newRule );

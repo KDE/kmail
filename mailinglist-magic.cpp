@@ -104,7 +104,7 @@ static QString check_list_id(const KMMessage  *message,
         return QString::null;
 
     header_name = "List-Id";
-    header_value = header;
+    header_value = header.mid( lAnglePos );
     header = header.mid( lAnglePos + 1, firstDotPos - lAnglePos - 1 );
     return header;
 }
