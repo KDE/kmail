@@ -20,6 +20,7 @@
 #include <klineedit.h>
 #include <kio/job.h>
 #include <kglobalsettings.h>
+#include <kdeversion.h>
 
 #include <kpgp.h>
 
