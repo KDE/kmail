@@ -246,8 +246,8 @@ KMLittleProgressDlg::KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* par
   connect ( ProgressManager::instance(), SIGNAL( progressItemCompleted( ProgressItem * ) ),
             this, SLOT( slotProgressItemCompleted( ProgressItem * ) ) );
 
-  connect ( mainWidget, SIGNAL( progressDialogToggled()),
-            this, SLOT( slotProgressDialogToggled() ) );
+  connect ( mainWidget, SIGNAL( progressDialogVisible( bool )),
+            this, SLOT( slotProgressDialogVisible( bool ) ) );
 }
 
 void KMLittleProgressDlg::slotProgressItemAdded( ProgressItem *item )
@@ -331,14 +331,12 @@ void KMLittleProgressDlg::setMode() {
     break;
 
   case Progress:
-    if (stack->isVisible()) {
-      stack->show();
-      stack->raiseWidget( m_pProgressBar );
-      if ( m_bShowButton ) {
-        m_pButton->show();
-      }
-      m_sslLabel->setState( m_sslLabel->lastState() );
+    stack->show();
+    stack->raiseWidget( m_pProgressBar );
+    if ( m_bShowButton ) {
+      m_pButton->show();
     }
+    m_sslLabel->setState( m_sslLabel->lastState() );
     break;
   }
 }
@@ -372,13 +370,15 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
   return false;
 }
 
-void KMLittleProgressDlg::slotProgressDialogToggled()
+void KMLittleProgressDlg::slotProgressDialogVisible( bool b )
 {
-      // Hide the progress bar when the detailed one is showing
-      if ( mode == Label ) {
-        mode = Progress;
-      } else if ( mode == Progress ) {
-        mode = Label;
-      }
-      setMode();
+  // Hide the progress bar when the detailed one is showing
+  if ( b ) {
+    mode = Label;
+    m_pButton->setPixmap( SmallIcon( "down" ) );
+  } else {
+    mode = Progress;
+    m_pButton->setPixmap( SmallIcon( "up" ) );
+  }
+  setMode();
 }

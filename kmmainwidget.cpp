@@ -3373,6 +3373,7 @@ void KMMainWidget::slotShowProgressDialog()
 {
   if( mProgressDialog ) {
     mProgressDialog->show();
+    emit progressDialogVisible( true );
   }
 }
 
@@ -3384,6 +3385,6 @@ void KMMainWidget::slotToggleProgressDialog()
       mProgressDialog->hide();
     else if ( mProgressDialog->isHidden() )
       mProgressDialog->show();
+    emit progressDialogVisible( mProgressDialog->isShown() );
   }
-  emit progressDialogToggled();
 }

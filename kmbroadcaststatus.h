@@ -126,7 +126,7 @@ public slots:
   virtual void slotProgressItemProgress( ProgressItem *i, unsigned int value );
 
 protected slots:
-  void slotProgressDialogToggled();
+  void slotProgressDialogVisible( bool );
 
 protected:
   KMMainWidget* m_mainWidget;
