@@ -50,7 +50,7 @@ static KCmdLineOptions kmoptions[] =
                                           "attach the file the 'URL' points "
                                           "to."), 0 },
 //  { "+[file]",                  I18N_NOOP("Show message from file 'file'."), 0 },
-  { 0, 0, 0}
+  KCmdLineLastOption
 };
 
 //-----------------------------------------------------------------------------
