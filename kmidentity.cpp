@@ -277,7 +277,11 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mReplyToAddr = config->readEntry("Reply-To Address");
   mBcc = config->readEntry("Bcc");
   mFcc = config->readEntry("Fcc", "sent-mail");
+  if( mFcc.isEmpty() )
+    mFcc = "sent-mail";
   mDrafts = config->readEntry("Drafts", "drafts");
+  if( mDrafts.isEmpty() )
+    mDrafts = "drafts";
   mTransport = config->readEntry("Transport");
 
   mSignature.readConfig( config );
