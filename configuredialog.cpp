@@ -1201,6 +1201,9 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   btn_vlay->addWidget( mRemoveAccountButton );
   btn_vlay->addStretch( 1 ); // spacer
 
+  mCheckmailStartupCheck = new QCheckBox( i18n("Chec&k mail on startup"), this );
+  vlay->addWidget( mCheckmailStartupCheck );
+
   // "New Mail Notification" group box: stretch 0
   group = new QVGroupBox( i18n("New Mail Notification"), this );
   vlay->addWidget( group );
@@ -1232,8 +1235,6 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   bgroup->setEnabled( false ); // since !mSystrayCheck->isChecked()
   connect( mSystrayCheck, SIGNAL(toggled(bool)),
            bgroup, SLOT(setEnabled(bool)) );
-
-  mCheckmailStartupCheck = new QCheckBox( i18n("Chec&k mail on startup"), group );
 
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
