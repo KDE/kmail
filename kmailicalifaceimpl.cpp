@@ -1583,7 +1583,7 @@ static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
     folder->setType( "plain" );
     folder->setSystemFolder( false );
     folder->disconnect( _this );
-    folder->close( true );
+    folder->close();
   }
 }
 
