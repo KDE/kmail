@@ -362,7 +362,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QHBoxLayout *sl = new QHBoxLayout( senderGroup->layout() );
   sl->setSpacing( 6 );
 
-  QLabel *sender_label = new QLabel( i18n("Sho&w Column:" ), senderGroup );
+  QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), senderGroup );
   sl->addWidget( sender_label );
   mShowSenderReceiverComboBox = new QComboBox(senderGroup);
   sender_label->setBuddy(mShowSenderReceiverComboBox);
