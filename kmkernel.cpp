@@ -24,7 +24,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
-#include "startupwizard.h"
+// #### disabled for now #include "startupwizard.h"
 #include <kwin.h>
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
@@ -401,8 +401,8 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
           id+=dt;
 
           //fprintf(stderr,"%s\n",(const char *) id);
-          if (!id.isEmpty()) { 
-            msgIds->append(id); 
+          if (!id.isEmpty()) {
+            msgIds->append(id);
           }
         }
         folder->close();
@@ -426,15 +426,15 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
         if ( !msgId.isEmpty() ) {
           msgIds->append( msgId );
         }
-        if ( folder->addMsg( msg ) == 0 ) { 
+        if ( folder->addMsg( msg ) == 0 ) {
           retval = 1;
         } else {
           retval =- 2;
           delete msg;
           msg = 0;
         }
-      } else { 
-        retval = -4; 
+      } else {
+        retval = -4;
       }
     } else {
       retval = -1;
@@ -512,7 +512,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
     folder->close();
     return true;
   }
-  
+
   return false;
 }
 
@@ -1226,7 +1226,8 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
 {
   // Run the groupware setup wizard. It doesn't do anything if this isn't
   // the first run. Replace this with a general wizard later
-  StartupWizard::run();
+  // #### Disabled until we have a general startup wizard.
+  // StartupWizard::run();
 
   if (mailto)
     openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);

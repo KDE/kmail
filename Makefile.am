@@ -34,7 +34,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
-		kmgroupware.cpp kmgroupwarefuncs.cpp startupwizard.cpp \
+		kmgroupware.cpp kmgroupwarefuncs.cpp \
 		csshelper.cpp klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
