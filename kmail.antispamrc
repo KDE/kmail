@@ -13,9 +13,11 @@ ExecCmdSpam=sa-learn -L --spam --no-rebuild --single
 ExecCmdHam=sa-learn -L --ham --no-rebuild --single
 DetectionHeader=X-Spam-Flag
 DetectionPattern=yes
+DetectionPattern2=
 DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
+SupportsUnsure=0
 
 [Spamtool #2]
 Ident=bogofilter
@@ -28,10 +30,12 @@ PipeCmdDetect=bogofilter -p -e -u
 ExecCmdSpam=bogofilter -N -s
 ExecCmdHam=bogofilter -S -n
 DetectionHeader=X-Bogosity
-DetectionPattern=(yes)|(\bspam\b)
+DetectionPattern=(yes)|(spam\b)
+DetectionPattern2=
 DetectionOnly=0
 UseRegExp=1
 SupportsBayes=1
+SupportsUnsure=0
 
 [Spamtool #3]
 Ident=annoyance-filter
@@ -45,9 +49,11 @@ ExecCmdSpam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-fil
 ExecCmdHam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --mail - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
 DetectionHeader=X-Annoyance-Filter-Classification
 DetectionPattern=Junk
+DetectionPattern2=
 DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
+SupportsUnsure=0
 
 [Spamtool #4]
 Ident=gmx-antispam
@@ -61,9 +67,11 @@ ExecCmdSpam=
 ExecCmdHam=
 DetectionHeader=X-GMX-Antispam
 DetectionPattern=^[2345]
+DetectionPattern2=
 DetectionOnly=1
 UseRegExp=1
 SupportsBayes=0
+SupportsUnsure=0
 
 [Spamtool #5]
 Ident=spambayes
@@ -77,6 +85,8 @@ ExecCmdSpam=sb_filter.py -s
 ExecCmdHam=sb_filter.py -g
 DetectionHeader=X-Spambayes-Classification
 DetectionPattern=spam
+DetectionPattern2=unsure
 DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
+SupportsUnsure=1

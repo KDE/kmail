@@ -83,9 +83,11 @@ namespace KMail {
     ExecCmdHam=sa-learn --ham --no-rebuild --single
     DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
+    DetectionPattern2=
     DetectionOnly=0
     UseRegExp=0
     SupportsBayes=1
+    SupportsUnsure=0
     type=spam
     </pre>
     The name of the config file is kmail.antispamrc
@@ -130,8 +132,9 @@ namespace KMail {
           SpamToolConfig( QString toolId, int configVersion,
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
-                        QString header, QString pattern, bool detectionOnly, 
-                        bool regExp, bool bayesFilter, WizardMode type );
+                        QString header, QString pattern, QString pattern2,
+                        bool detectionOnly, bool regExp, bool bayesFilter, 
+                        bool tristateDetection, WizardMode type );
 
           int getVersion() const { return mVersion; }
           QString getId()  const { return mId; }
@@ -144,9 +147,11 @@ namespace KMail {
           QString getHamCmd() const { return mHamCmd; }
           QString getDetectionHeader() const { return mDetectionHeader; }
           QString getDetectionPattern() const { return mDetectionPattern; }
+          QString getDetectionPattern2() const { return mDetectionPattern2; }
           bool isDetectionOnly() const { return mDetectionOnly; }
           bool isUseRegExp() const { return mUseRegExp; }
           bool useBayesFilter() const { return mSupportsBayesFilter; }
+          bool hasTristateDetection() const { return mSupportsUnsure; }
           WizardMode getType() const { return mType; }
           // convinience methods for types
           bool isSpamTool() const { return ( mType == AntiSpam ); }
@@ -176,12 +181,16 @@ namespace KMail {
           QString mDetectionHeader;
           // what header pattern is used to mark spam messages
           QString mDetectionPattern;
+          // what header pattern is used to mark unsure messages
+          QString mDetectionPattern2;
           // filter cannot search actively but relies on pattern by regExp or contain rule
           bool mDetectionOnly;
           // filter searches for the pattern by regExp or contain rule
           bool mUseRegExp;
           // can the tool learn spam and ham, has it a bayesian algorithm
           bool mSupportsBayesFilter;
+          // differentiate between ham, spam and a third "unsure" state
+          bool mSupportsUnsure;
           // Is the tool AntiSpam or AntiVirus
           WizardMode mType;
       };
@@ -303,8 +312,11 @@ namespace KMail {
       bool moveRulesSelected() const;
       bool markReadRulesSelected() const;
 
-      QString selectedFolderName() const;
+      QString selectedSpamFolderName() const;
+      QString selectedUnsureFolderName() const;
+      
       void allowClassification( bool enabled );
+      void allowUnsureFolderSelection( bool enabled );
 
     private slots:
       void processSelectionChange();
@@ -316,8 +328,9 @@ namespace KMail {
       QCheckBox * mPipeRules;
       QCheckBox * mClassifyRules;
       QCheckBox * mMoveRules;
-      SimpleFolderTree *mFolderTree;
       QCheckBox * mMarkRules;
+      SimpleFolderTree *mFolderTreeForSpamFolder;
+      SimpleFolderTree *mFolderTreeForUnsureFolder;
   };
 
   //-------------------------------------------------------------------------
