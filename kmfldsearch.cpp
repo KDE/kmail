@@ -115,9 +115,23 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mPatternEdit->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
   mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();
+  KMFolderSearch *searchFolder = dynamic_cast<KMFolderSearch*>(curFolder);
+  if (searchFolder) {
+      KConfig config(curFolder->location());
+      KMFolder *root = searchFolder->search()->root();
+      config.setGroup("Search Folder");
+      mSearchPattern->readConfig(&config);
+      if (root) {
+	  mChkbxSpecificFolders->setChecked(true);
+	  mCbxFolders->setFolder(root);
+	  mChkSubFolders->setChecked(searchFolder->search()->recursive());
+      } else {
+	  mChkbxAllFolders->setChecked(true);
+      }
+  }
   mPatternEdit->setSearchPattern( mSearchPattern );
   QObject *object = mPatternEdit->queryList( 0, "mRuleField" )->first();
-  if (object && object->inherits( "QComboBox" )) {
+  if (!searchFolder && object && object->inherits( "QComboBox" )) {
       QComboBox *combo = (QComboBox*)object;
       combo->setCurrentText("Subject");
   }
@@ -126,6 +140,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
       QWidget *widget = (QComboBox*)object;
       widget->setFocus();
   }
+  
   vbl->addWidget( mPatternEdit );
 
   // enable/disable widgets depending on radio buttons:
@@ -353,7 +368,7 @@ void KMFldSearch::slotSearch()
 
     if (!folder)
 	folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
-				   &mgr->dir());    
+				   &mgr->dir());
 
     mFolder = (KMFolderSearch*)folder;
     mFolder->stopSearch();
