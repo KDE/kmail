@@ -1403,9 +1403,7 @@ bool KMComposeWin::applyChanges(void)
       _to += ",";
     _to += cc().simplifyWhiteSpace();
   }
-  // *no* bcc handling here, this is done separately later...
-
-  QStringList recipients = KMMessage::splitEmailAddrList(_to);
+  QStringList recipientsWithoutBcc = KMMessage::splitEmailAddrList(_to);
 
   if( !doEncrypt ) {
     if( cryptPlug ) {
@@ -1438,7 +1436,13 @@ bool KMComposeWin::applyChanges(void)
       }
     } else if( mAutoPgpEncrypt && !pgpUserId.isEmpty() ) {
       // check if the message should be encrypted via old build-in pgp code
-      int status = pgp->encryptionPossible( recipients );
+      if( !mMsg->bcc().isEmpty() ) {
+        if( !_to.endsWith(",") )
+          _to += ",";
+        _to += mMsg->bcc().simplifyWhiteSpace();
+      }
+      QStringList recipientsIncludingBcc = KMMessage::splitEmailAddrList(_to);
+      int status = pgp->encryptionPossible( recipientsIncludingBcc );
       if( status == 1 )
         doEncrypt = true;
       else if( status == 2 )
@@ -1683,7 +1687,7 @@ bool KMComposeWin::applyChanges(void)
         for( QStringList::ConstIterator it = bccRecips.begin();
             it != bccRecips.end();
             ++it ) {
-          QStringList tmpRecips( recipients );
+          QStringList tmpRecips( recipientsWithoutBcc );
           tmpRecips << *it;
           //kdDebug() << "###BEFORE \"" << mMsg->asString() << "\""<< endl;
           KMMessage* yetAnotherMessageForBCC = new KMMessage( *mMsg );
@@ -1700,11 +1704,11 @@ bool KMComposeWin::applyChanges(void)
           //kdDebug() << "###BCC AFTER \"" << mMsg->asString() << "\""<<endl;
 
         }
-        mMsg->setHeaderField( "X-KMail-Recipients", recipients.join(",") );
+        mMsg->setHeaderField( "X-KMail-Recipients", recipientsWithoutBcc.join(",") );
       }
 
       bOk = encryptMessage( mMsg,
-                            recipients,
+                            recipientsWithoutBcc,
                             doSign, doEncrypt, cryptPlug, encodedBody,
                             previousBoundaryLevel,
                             oldBodyPart,
