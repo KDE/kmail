@@ -269,7 +269,16 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   setCheckingMail( false );
   emit finishedCheck(false);
-   //postProcessNewMail(static_cast<KMFolder*>(folder));
+
+  // We remove everything from the deleted folders list after a sync, unconditionally.
+  // Even if it fails (no permission), because on the next sync we want the folder to reappear,
+  //  instead of the user being stuck with "can't delete" every time.
+  // And we do it for _all_ deleted folders, even those that were deleted on the server in the first place (slotListResult).
+  //  Otherwise this might have side effects much later (e.g. when regaining permissions to a folder we could see before)
+  mDeletedFolders.clear();
+  mPreviouslyDeletedFolders.clear();
+
+  //postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
 //

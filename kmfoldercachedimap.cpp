@@ -1372,10 +1372,6 @@ void KMFolderCachedImap::listDirectory2() {
       if ( locallyDeleted ) {
         kdDebug(5006) << subfolderPath << " was deleted locally => delete on server." << endl;
         foldersForDeletionOnServer << subfolderPath;
-        // We immediately remove it from the deleted folders list.
-        // If removing the folder from the server fails (no permission), then on the next sync
-        // the server will reappear, instead of the user being stuck with "can't delete" every time.
-        mAccount->removeDeletedFolder( subfolderPath );
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
         f = static_cast<KMFolderCachedImap*>
@@ -1403,7 +1399,6 @@ void KMFolderCachedImap::listDirectory2() {
       f->setImapPath(mSubfolderPaths[i]);
     }
   }
-
   kmkernel->dimapFolderMgr()->quiet(false);
   emit listComplete(this);
   serverSyncInternal();
