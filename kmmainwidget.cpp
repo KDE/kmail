@@ -157,6 +157,7 @@ void KMMainWidget::destruct()
   delete mHeaders;
   delete mFolderTree;
   delete mSystemTray;
+  delete mMsgView;
   mDestructed = true;
 }
 
