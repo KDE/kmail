@@ -79,6 +79,8 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mAutoDetectCodec(true),
     mUnencryptedMsg(0)
 {
+  mEncryptionState = KMMsgEncryptionStateUnknown;
+  mSignatureState = KMMsgSignatureStateUnknown;
 }
 
 //-----------------------------------------------------------------------------

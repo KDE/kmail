@@ -74,6 +74,7 @@ KMMsgBase::KMMsgBase(KMFolderIndex* aParent)
   mDirty   = FALSE;
   mIndexOffset = 0;
   mIndexLength = 0;
+  mEnableUndo = false;
 }
 
 

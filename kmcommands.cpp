@@ -1319,7 +1319,7 @@ void KMMoveCommand::execute()
     return;
   KCursorSaver busy(KBusyPtr::busy());
   // used for remembering the message to select afterwards
-  int nextId;
+  int nextId = -1;
   int contentX, contentY;
   if (mHeaders)
     mHeaders->prepareMove( &nextId, &contentX, &contentY );
