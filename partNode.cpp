@@ -532,12 +532,20 @@ bool partNode::isAttachment() const
 {
   if( !dwPart() )
     return false;
-  DwHeaders& headers = dwPart()->Headers();
-  if( headers.HasContentDisposition() )
-    return ( headers.ContentDisposition().DispositionType()
-             == DwMime::kDispTypeAttachment );
-  else
+  if ( !dwPart()->hasHeaders() )
     return false;
+  DwHeaders& headers = dwPart()->Headers();
+  if( !headers.HasContentDisposition() )
+    return false;
+  return ( headers.ContentDisposition().DispositionType()
+	   == DwMime::kDispTypeAttachment );
+}
+
+bool partNode::isHeuristicalAttachment() const {
+  if ( isAttachment() )
+    return true;
+  const KMMessagePart & p = msgPart();
+  return !p.fileName().isEmpty() || !p.name().isEmpty() ;
 }
 
 bool partNode::hasContentDispositionInline() const

@@ -209,6 +209,7 @@ public:
     }
 
     bool isAttachment() const;
+    bool isHeuristicalAttachment() const;
 
     bool hasContentDispositionInline() const;
 
