@@ -218,7 +218,7 @@ main(int argc, char *argv[])
   mainWin = new KMMainWin;
   mainWin->show();
 
-  if (argc > 1)
+  if (argc > 1 && argv[1][0]!='-')
   {
     KMComposeWin *win;
     KMMessage* msg = new KMMessage;

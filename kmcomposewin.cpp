@@ -161,8 +161,8 @@ void KMComposeWin::readConfig(void)
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 80);
-  mBackColor = config->readEntry( "Back-Color");
-  mForeColor = config->readEntry( "Fore-Color");
+  mBackColor = config->readEntry( "Back-Color","#ffffff");
+  mForeColor = config->readEntry( "Fore-Color","#000000");
 
 
   config->setGroup("Geometry");
@@ -187,8 +187,8 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
 
-  config->writeEntry("Fore-Color",foreColor);
-  config->writeEntry("Back-Color",backColor);
+  config->writeEntry("Fore-Color",mForeColor);
+  config->writeEntry("Back-Color",mBackColor);
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
