@@ -155,7 +155,7 @@ public:
   /** pops up a modal window which asks for the passphrase 
    puts the window on top of the parent, or in the middle of the screen,
    if parent = 0 */
-  static const QString askForPass(QString &keyID=QString::null, QWidget *parent = 0);
+  static const QString askForPass(const QString &keyID=QString::null, QWidget *parent = 0);
 
 private:
   // test if the PGP executable is found and if there is a passphrase
@@ -201,10 +201,10 @@ class KpgpPass : public KDialogBase
 
   public:
     KpgpPass( QWidget *parent=0, const QString &name=QString::null, bool modal=true,
-              QString &keyID=QString::null);
+              const QString &keyID=QString::null);
     virtual ~KpgpPass();
 
-    static QString getPassphrase(QWidget *parent = 0, QString &keyID=QString::null);
+    static QString getPassphrase(QWidget *parent = 0, const QString &keyID=QString::null);
 
   private:
     QString getPhrase();

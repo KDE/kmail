@@ -631,7 +631,7 @@ Kpgp::getConfig()
 
 
 const QString
-Kpgp::askForPass(QString &keyID, QWidget *parent)
+Kpgp::askForPass(const QString &keyID, QWidget *parent)
 {
   int n = 0;
   while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
@@ -854,7 +854,7 @@ Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
 //  widgets needed by kpgp
 //----------------------------------------------------------------------
 
-KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal, QString &keyID )
+KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal, const QString &keyID )
   :KDialogBase( parent, name, modal, i18n("OpenPGP Security Check"),
                 Ok|Cancel )
 {
@@ -891,7 +891,7 @@ KpgpPass::~KpgpPass()
 }
 
 QString
-KpgpPass::getPassphrase(QWidget *parent, QString &keyID)
+KpgpPass::getPassphrase(QWidget *parent, const QString &keyID)
 {
   KpgpPass kpgppass(parent, i18n("OpenPGP Security Check"), true, keyID);
   if (kpgppass.exec())
