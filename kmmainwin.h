@@ -56,7 +56,6 @@ public:
 
   /** Easy access to main components of the window. */
   KMReaderWin* messageView(void) const { return mMsgView; }
-  KToolBar* toolBar(void) const     { return mToolBar; }
   KStatusBar* statusBar(void) const   { return mStatusBar; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
