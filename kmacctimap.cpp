@@ -262,7 +262,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 void KMAcctImap::processNewMail(bool interactive)
 {
   if (!mFolder || !mFolder->child() ||
-      !makeConnection())
+      makeConnection() != ImapAccountBase::Connected)
   {
     mCountRemainChecks = 0;
     checkDone(false, 0);
@@ -336,7 +336,8 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotUpdateFolderList()
 {
-  if (!mFolder || !mFolder->child() || !makeConnection())
+  if (!mFolder || !mFolder->child() || 
+      makeConnection() != ImapAccountBase::Connected)
     return;
   QStringList strList;
   mMailCheckFolders.clear();

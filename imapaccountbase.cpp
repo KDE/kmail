@@ -305,7 +305,8 @@ namespace KMail {
   void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
       bool secondStep, KMFolder* parent)
   {
-    if (!makeConnection()) return;
+    if (makeConnection() != Connected) 
+      return;
     // create jobData
     jobData jd;
     jd.total = 1; jd.done = 0;
@@ -419,7 +420,8 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if (!makeConnection()) return;
+    if (makeConnection() != Connected) 
+      return;
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd;

@@ -110,7 +110,7 @@ void CachedImapJob::init()
   assert( mFolder );
   mAccount = mFolder->account();
   assert( mAccount != 0 );
-  if( !mAccount->makeConnection() ) {
+  if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     // No connection to the IMAP server
     kdDebug(5006) << "mAccount->makeConnection() failed" << endl;
     mPassiveDestructor = true;

@@ -121,7 +121,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       i++;
     }
     jd.data = mData;
-    if ( !account->makeConnection() )
+    if ( account->makeConnection() != ImapAccountBase::Connected )
     {
       account->mJobList.remove( this );
       deleteLater();
@@ -155,7 +155,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 
     stream << (int) 'C' << url << destUrl;
 
-    if ( !account->makeConnection() )
+    if ( account->makeConnection() != ImapAccountBase::Connected )
     {
       account->mJobList.remove( this );
       deleteLater();
@@ -251,7 +251,7 @@ void ImapJob::slotGetNextMessage()
   ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
-  if ( !account->makeConnection() )
+  if ( account->makeConnection() != ImapAccountBase::Connected )
   {
     account->mJobList.remove( this );
     deleteLater();
@@ -318,6 +318,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         msg->setComplete( TRUE );
       }
     } else {
+      kdWarning(5006) << "got no data from server!" << endl;
       gotData = false;
     }
   }

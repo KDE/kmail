@@ -918,7 +918,7 @@ void KMFolderCachedImap::listMessages() {
     return;
   }
 
-  if( !mAccount->makeConnection() ) {
+  if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     emit listMessagesComplete();
     emit folderComplete( this, false );
     return;
@@ -1101,7 +1101,7 @@ bool KMFolderCachedImap::listDirectory()
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
 
-  if( !mAccount->makeConnection() ) {
+  if( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     emit folderComplete( this, false );
     return false;
   }
