@@ -780,7 +780,8 @@ KMFolderDialog::slotChangeIcon( QString icon ) // can't use a const-ref here, du
 void KMFolderDialog::slotHoldsML( bool holdsML )
 {
   mMLHandlerCombo->setEnabled( holdsML );
-  mDetectButton->setEnabled( holdsML );
+  if ( mFolder && mFolder->count() )
+    mDetectButton->setEnabled( holdsML );
   mAddressCombo->setEnabled( holdsML );
   mEditList->setEnabled( holdsML );
   mMLId->setEnabled( holdsML );
