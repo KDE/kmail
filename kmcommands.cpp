@@ -1495,10 +1495,14 @@ void KMMoveCommand::execute()
       mLostBoys.append(msg->getMsgSerNum());
       if (mDestFolder->folderType() == KMFolderTypeImap) {
         /* If we are moving to an imap folder, connect to it's completed
-         * siganl so we notice when all the mails should have showed up in it
+         * signal so we notice when all the mails should have showed up in it
          * but haven't for some reason. */
-        connect (mDestFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
-            this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
+        KMFolderImap *imapFolder = static_cast<KMFolderImap*> ( mDestFolder->storage() );
+        disconnect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
+                 this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
+
+        connect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
+                 this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
         list.append(msg);
       } else {
         // We are moving to a local folder.
