@@ -40,7 +40,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 {
   folder = static_cast<KMAcctFolder*>( aFolder );
   mFolder = aFolder;
-  kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()\n";
+  kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QFrame *page = plainPage();
 
@@ -549,6 +549,8 @@ void KMFolderDialog::slotOk()
          */
         folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
+      } else if (selectedFolder && selectedFolder->protocol() == "cachedimap"){
+        folder = (KMAcctFolder*)kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mailboxType->currentItem() == 2) {
         folder = (KMAcctFolder*)kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
       } else if (mailboxType->currentItem() == 1) {
