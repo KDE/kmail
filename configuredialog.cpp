@@ -72,6 +72,7 @@ using KMime::DateFormatter;
 #include <kwin.h>
 #include <knotifydialog.h>
 #include <kconfig.h>
+#include <kactivelabel.h>
 
 // Qt headers:
 #include <qvalidator.h>
@@ -2057,7 +2058,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain new, unread "
-			   "or important &messages and open watched threads."), 
+			   "or important &messages and open watched threads."),
                       mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
@@ -3208,26 +3209,103 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   QHBox        *hbox;
   QGroupBox    *group;
   QRadioButton *radio;
-  QLabel       *label;
+  KActiveLabel *label;
   QWidget      *w;
   QString       msg;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // QWhat'sThis texts
+  QString htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
+              "This option controls whether you want the HTML part or the plain "
+	      "text part to be displayed.</p>"
+	      "<p>Displaying the HTML part makes the message look better, "
+	      "but at the same time increases the risk of security holes "
+	      "being exploited.</p>"
+	      "<p>Displaying the plain text part loses much of the message's "
+	      "formatting, but makes it almost <em>impossible</em> "
+	      "to exploit security holes in the HTML renderer (Konqueror).</p>"
+	      "<p>The option below guards against one common misuse of HTML "
+	      "messages, but it cannot guard against security issues that were "
+	      "not known at the time this version of KMail was written.</p>"
+	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
+	      "plain text.</p>"
+	      "<p><b>Note:</b> You can set this option on a per-folder basis "
+	      "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
+
+  QString externalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
+              "and contain references to, for example, images that the advertisers"
+	      " employ to find out that you have read their message "
+	      "(&quot;web bugs&quot;).</p>"
+	      "<p>There is no valid reason to load images off the Internet like "
+	      "this, since the sender can always attach the required images "
+	      "directly to the message.</p>"
+	      "<p>To guard from such a misuse of the HTML displaying feature "
+	      "of KMail, this option is <em>disabled</em> by default.</p>"
+	      "<p>However, if you wish to, for example, view images in HTML "
+	      "messages that were not attached to it, you can enable this "
+	      "option, but you should be aware of the possible problem.</p></qt>" );
+
+  QString confirmationWhatsThis = i18n( "<qt><p>This option enables the "
+              "<em>unconditional</em> sending of delivery- and read confirmations "
+	      "(&quot;receipts&quot;).</p>"
+	      "<p>Returning these confirmations (so-called <em>receipts</em>) "
+	      "makes it easy for the sender to track whether and - more "
+	      "importantly - <em>when</em> you read his/her message.</p>"
+	      "<p>You can return <em>delivery</em> confirmations in a "
+	      "fine-grained manner using the &quot;confirm delivery&quot; filter "
+	      "action. We advise against issuing <em>read</em> confirmations "
+	      "at all.</p></qt>");
+
+  QString receiptWhatsThis = i18n( "<qt><h3>Message Disposition "
+              "Notification Policy</h3>"
+	      "<p>MDNs are a generalization of what is commonly called <b>read "
+ 	      "receipt</b>. The message author requests a disposition "
+ 	      "notification to be sent and the receiver's mail program "
+ 	      "generates a reply from which the author can learn what "
+ 	      "happened to his message. Common disposition types include "
+ 	      "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
+ 	      "(e.g. forwarded).</p>"
+ 	      "<p>The following options are available to control KMail's "
+ 	      "sending of MDNs:</p>"
+ 	      "<ul>"
+ 	      "<li><em>Ignore</em>: Ignores any request for disposition "
+ 	      "notifications. No MDN will ever be sent automatically "
+ 	      "(recommended).</li>"
+ 	      "<li><em>Ask</em>: Answers requests only after asking the user "
+ 	      "for permission. This way, you can send MDNs for selected "
+ 	      "messages while denying or ignoring them for others.</li>"
+ 	      "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
+ 	      "is only <em>slightly</em> better than always sending MDNs. "
+ 	      "The author will still know that the messages has been acted "
+ 	      "upon, he just cannot tell whether it was deleted or read etc.</li>"
+ 	      "<li><em>Always send</em>: Always sends the requested "
+ 	      "disposition notification. That means that the author of the "
+ 	      "message gets to know when the message was acted upon and, "
+ 	      "in addition, what happened to it (displayed, deleted, "
+ 	      "etc.). This option is strongly discouraged, but since it "
+ 	      "makes much sense e.g. for customer relationship management, "
+ 	      "it has been made available.</li>"
+ 	      "</ul></qt>" );
+
 
   // "HTML Messages" group box:
   group = new QVGroupBox( i18n( "HTML Messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
+  QWhatsThis::add( mHtmlMailCheck, htmlWhatsThis );
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
 					    "references from the Internet" ), group );
-  label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in email may "
+  QWhatsThis::add( mExternalReferences, externalWhatsThis );
+  label = new KActiveLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
 			   "compromised by present and anticipated security "
-			   "exploits. Use \"What's this\" help (Shift+F1) for "
-			   "detailed information on each option.</qt>"),
-		      group );
-  label->setAlignment( WordBreak);
+			   "exploits. <a href=\"whatsthis:%1\">More about "
+			   "HTML mails...</a> <a href=\"whatsthis:%2\">More "
+			   "about external references...</a>")
+			   .arg(htmlWhatsThis).arg(externalWhatsThis),
+			   group );
 
   vlay->addWidget( group );
 
@@ -3236,11 +3314,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mSendReceivedReceiptCheck = new QCheckBox( i18n("Automatically &send delivery confirmations"), group );
-  label = new QLabel( i18n( "<qt><b>WARNING:</b> Unconditionally returning "
-			    "confirmations undermines your privacy. See "
-			    "\"What's this\" help (Shift+F1) for more.</qt>" ),
-		      group );
-  label->setAlignment( WordBreak);
+  QWhatsThis::add( mSendReceivedReceiptCheck, confirmationWhatsThis );
+
+  label = new KActiveLabel( i18n( "<b>WARNING:</b> Unconditionally returning "
+			    "confirmations undermines your privacy. "
+			    "<a href=\"whatsthis:%1\">More...</a>")
+			      .arg(confirmationWhatsThis),
+			    group );
 
   vlay->addWidget( group );
 
@@ -3270,6 +3350,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   radio = new QRadioButton( i18n("Al&ways send"), hbox );
   mMDNGroup->insert( radio );
 
+  for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
+      QWhatsThis::add( mMDNGroup->find( i ), receiptWhatsThis );
+
   w = new QWidget( hbox ); // spacer
   hbox->setStretchFactor( w, 1 );
 
@@ -3295,89 +3378,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   hbox->setStretchFactor( w, 1 );
 
   // Warning label:
-  label = new QLabel( i18n("<qt><b>WARNING:</b> Unconditionally returning "
-			   "confirmations undermines your privacy. See "
-			   "\"What's this\" help (Shift+F1) for more.</qt>"),
-		      group );
-  label->setAlignment( WordBreak );
+  label = new KActiveLabel( i18n("<b>WARNING:</b> Unconditionally returning "
+			   "confirmations undermines your privacy. "
+			   "<a href=\"whatsthis:%1\">More...</a>")
+			     .arg(receiptWhatsThis),
+			   group );
 
   vlay->addWidget( group );
   vlay->addStretch( 10 ); // spacer
-
-  // and now: adding QWhat'sThis all over the place:
-  msg = i18n( "<qt><p>Messages sometimes come in both formats. This option "
-	      "controls whether you want the HTML part or the plain text "
-	      "part to be displayed.</p>"
-	      "<p>Displaying the HTML part makes the message look better, "
-	      "but at the same time increases the risk of security holes "
-	      "being exploited.</p>"
-	      "<p>Displaying the plain text part loses much of the message's "
-	      "formatting, but makes it almost <em>impossible</em> "
-	      "to exploit security holes in the HTML renderer (Konqueror).</p>"
-	      "<p>The option below guards against one common misuse of HTML "
-	      "messages, but it cannot guard against security issues that were "
-	      "not known at the time this version of KMail was written.</p>"
-	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
-	      "plain text.</p>"
-	      "<p><b>Note:</b> You can set this option on a per-folder basis "
-	      "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
-  QWhatsThis::add( mHtmlMailCheck, msg );
-
-  msg = i18n( "<qt><p>Some mail advertisements are in HTML and contain "
-	      "references to, for example, images that the advertisers employ to "
-	      "find out that you have read their message (\"web bugs\").</p>"
-	      "<p>There is no valid reason to load images off the Internet like "
-	      "this, since the sender can always attach the required images "
-	      "directly to the message.</p>"
-	      "<p>To guard from such a misuse of the HTML displaying feature "
-	      "of KMail, this option is <em>disabled</em> by default.</p>"
-	      "<p>However, if you wish to, for example, view images in HTML "
-	      "messages that were not attached to it, you can enable this "
-	      "option, but you should be aware of the possible problem.</p></qt>" );
-  QWhatsThis::add( mExternalReferences, msg );
-
-  msg = i18n( "<qt><p>This option enables the <em>unconditional</em> sending "
-	      "of delivery- and read confirmations (\"receipts\").</p>"
-	      "<p>Returning these confirmations (so-called <em>receipts</em>) "
-	      "makes it easy for the sender to track whether and - more "
-	      "importantly - <em>when</em> you read his/her message.</p>"
-	      "<p>You can return <em>delivery</em> confirmations in a "
-	      "fine-grained manner using the \"confirm delivery\" filter "
-	      "action. We advise against issuing <em>read</em> confirmations "
-	      "at all.</p></qt>");
-  QWhatsThis::add( mSendReceivedReceiptCheck, msg );
-
-  msg = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
-	      "<p>MDNs are a generalization of what is commonly called <b>read "
- 	      "receipt</b>. The message author requests a disposition "
- 	      "notification to be sent and the receiver's mail program "
- 	      "generates a reply from which the author can learn what "
- 	      "happened to his message. Common disposition types include "
- 	      "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
- 	      "(e.g. forwarded).</p>"
- 	      "<p>The following options are available to control KMail's "
- 	      "sending of MDNs:</p>"
- 	      "<ul>"
- 	      "<li><em>Ignore</em>: Ignores any request for disposition "
- 	      "notifications. No MDN will ever be sent automatically "
- 	      "(recommended).</li>"
- 	      "<li><em>Ask</em>: Answers requests only after asking the user "
- 	      "for permission. This way, you can send MDNs for selected "
- 	      "messages while denying or ignoring them for others.</li>"
- 	      "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
- 	      "is only <em>slightly</em> better than always sending MDNs. "
- 	      "The author will still know that the messages has been acted "
- 	      "upon, he just cannot tell whether it was deleted or read etc.</li>"
- 	      "<li><em>Always send</em>: Always sends the requested "
- 	      "disposition notification. That means that the author of the "
- 	      "message gets to know when the message was acted upon and, "
- 	      "in addition, what happened to it (displayed, deleted, "
- 	      "etc.). This option is strongly discouraged, but since it "
- 	      "makes much sense e.g. for customer relationship management, "
- 	      "it has been made available.</li>"
- 	      "</ul></qt>" );
-  for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
-      QWhatsThis::add( mMDNGroup->find( i ), msg );
 }
 
 void SecurityPage::GeneralTab::setup() {
