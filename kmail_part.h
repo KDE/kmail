@@ -26,7 +26,9 @@
 #define KMail_PART_H
 
 #include <kparts/browserextension.h>
+#if KDE_IS_VERSION( 3, 1, 90 )
 #include <kparts/statusbarextension.h>
+#endif
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <qwidget.h>
@@ -36,6 +38,7 @@
 class KInstance;
 class KAboutData;
 class KMailBrowserExtension;
+class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;
 class KMLittleProgressDlg;
@@ -46,10 +49,11 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
 {
     Q_OBJECT
   public:
-    friend class KMailStatusBarExtension;
     KMailPart(QWidget *parentWidget, const char *widgetName,
               QObject *parent, const char *name, const QStringList &);
     virtual ~KMailPart();
+
+    QWidget* parentWidget() const;
 
     static KAboutData *createAboutData();
 
@@ -68,7 +72,9 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     QWidget *widget;
     ActionManager *mActionManager;
     KMailBrowserExtension *m_extension;
+#if KDE_IS_VERSION( 3, 1, 90 )
     KMailStatusBarExtension *mStatusBar;
+#endif
     QWidget *mParentWidget;
 };
 
@@ -81,6 +87,7 @@ class KMailBrowserExtension : public KParts::BrowserExtension
     virtual ~KMailBrowserExtension();
 };
 
+#if KDE_IS_VERSION( 3, 1, 90 )
 class KMailStatusBarExtension : public KParts::StatusBarExtension
 {
 public:
@@ -92,5 +99,6 @@ private:
   KMailPart *mParent;
   KMLittleProgressDlg *mLittleProgress;
 };
+#endif
 
 #endif
