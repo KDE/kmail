@@ -643,7 +643,7 @@ void ImapJob::slotProcessedSize(KIO::Job * job, KIO::filesize_t processed)
     return;
   }
   KMFolderImap* parent = 0;
-  if (msg->parent())
+  if ( msg->parent() && msg->parent()->folderType() == KMFolderTypeImap )
     parent = static_cast<KMFolderImap*>(msg->parent()->storage());
   else if (mDestFolder) // put
     parent = static_cast<KMFolderImap*>(mDestFolder->storage());
