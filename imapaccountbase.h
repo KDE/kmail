@@ -158,16 +158,24 @@ class AttachmentStrategy;
     void listDirectory(QString path, bool onlySubscribed,
         bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);
 
-    /** 
+    /**
      * Starts the folderlisting for the root folder
-     */ 
+     */
     virtual void listDirectory() = 0;
 
     /**
      * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
-     * identified by @p imapPath
+     * identified by @p imapPath.
+     * Emits subscriptionChanged signal on success.
      */
     void changeSubscription(bool subscribe, QString imapPath);
+
+    /**
+     * Retrieve the users' right on the folder
+     * identified by @p imapPath.
+     * (async, will emit some signal)
+     */
+    void getUserRights( const QString& imapPath );
 
     /**
      * The KIO-Slave died
@@ -179,15 +187,15 @@ class AttachmentStrategy;
      */
     void killAllJobs( bool disconnectSlave=false ) = 0;
 
-	/**
-	 * Init a new-mail-check for a single folder
-	 */
-	void processNewMailSingleFolder(KMFolder* folder);
+    /**
+     * Init a new-mail-check for a single folder
+     */
+    void processNewMailSingleFolder(KMFolder* folder);
 
     /**
      * Check whether we're checking for new mail
      * and the folder is included
-     */ 
+     */
     bool checkingMail( KMFolder *folder );
 
     bool checkingMail() { return NetworkAccount::checkingMail(); }
@@ -200,13 +208,13 @@ class AttachmentStrategy;
 
     /**
      * Handles the result from a BODYSTRUCTURE fetch
-     */ 
+     */
     void handleBodyStructure( QDataStream & stream, KMMessage * msg,
                               const AttachmentStrategy *as );
 
     /**
      * Reimplemented. Additionally set the folder label
-     */  
+     */
     virtual void setFolder(KMFolder*, bool addAccount = false);
 
   public slots:
@@ -256,6 +264,9 @@ class AttachmentStrategy;
      */
     void slotSetStatusResult(KIO::Job * job);
 
+    /// Result of getUserRights() job
+    void slotGetUserRightsResult( KIO::Job* _job );
+
   protected:
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
@@ -264,7 +275,7 @@ class AttachmentStrategy;
 
     /**
      * Build KMMessageParts and DwBodyParts from the bodystructure-stream
-     */ 
+     */
     void constructParts( QDataStream & stream, int count, KMMessagePart* parentKMPart,
        DwBodyPart * parent, const DwMessage * dwmsg );
 

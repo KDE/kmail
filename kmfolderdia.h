@@ -59,10 +59,43 @@ template <typename T> class QGuardedPtr;
 namespace KMail {
 
 /**
+ * This is the base class for tabs in the folder dialog.
+ * It uses the API from ConfigModuleTab (basically: it's a widget that can load and save)
+ * but it also adds support for delayed-saving:
+ * when save() needs to use async jobs (e.g. KIO) for saving,
+ * we need to delay the closing until after the jobs are finished,
+ * and to cancel the saving on error.
+ *
+ * Feel free to rename and move this base class somewhere else if it
+ * can be useful for other dialogs.
+ */
+class FolderDiaTab : public ConfigModuleTab
+{
+  Q_OBJECT
+public:
+   FolderDiaTab( QWidget *parent=0, const char* name=0 )
+     : ConfigModuleTab( parent, name ) {}
+
+  /// Called when clicking OK.
+  /// If a module returns false, the closing is cancelled for now,
+  /// and the module can close the dialog later on (i.e. after an async
+  /// operation like a KIO job).
+  virtual bool accept() { save(); return true; }
+
+signals:
+  /// Emit this to tell the dialog that you're done with the async jobs,
+  /// and that the dialog can be closed.
+  void readyForAccept();
+  /// Emit this, i.e. after a job had an error, to tell the dialog to cancel
+  /// the closing.
+  void cancelAccept();
+};
+
+/**
  * "General" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDiaGeneralTab : public ConfigModuleTab
+class FolderDiaGeneralTab : public FolderDiaTab
 {
   Q_OBJECT
 
@@ -116,7 +149,7 @@ private:
  * "Mailing List" tab in the folder dialog
  * Internal class, only used by KMFolderDialog
  */
-class FolderDiaMailingListTab : public ConfigModuleTab
+class FolderDiaMailingListTab : public FolderDiaTab
 {
   Q_OBJECT
 
@@ -177,14 +210,22 @@ public:
 
 protected slots:
   void slotChanged( bool );
-  virtual void slotOk( void );
+  virtual void slotOk();
+  virtual void slotApply();
 
-protected:
+  void slotReadyForAccept();
+  void slotCancelAccept();
+
+private:
+  void addTab( KMail::FolderDiaTab* tab );
+
+private:
   QGuardedPtr<KMFolder> mFolder;
   QGuardedPtr<KMFolderDir> mFolderDir;
   FolderList mFolders;
 
-  QValueVector<ConfigModuleTab*> mTabs;
+  QValueVector<KMail::FolderDiaTab*> mTabs;
+  int mDelayedSavingTabs; // this should go into a base class one day
 };
 
 #endif /*__KMFOLDERDIA*/

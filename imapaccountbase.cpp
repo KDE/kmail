@@ -56,6 +56,7 @@ using KIO::PasswordDialog;
 //using KIO::Scheduler; // use FQN below
 
 #include <qregexp.h>
+#include "acljobs.h"
 
 namespace KMail {
 
@@ -454,6 +455,38 @@ namespace KMail {
     } else {
       emit subscriptionChanged(
           static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
+    }
+    if (mSlave) removeJob(job);
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::getUserRights( const QString& imapPath )
+  {
+    KURL url = getUrl();
+    url.setPath(imapPath);
+
+    ACLJobs::GetUserRightsJob* job = ACLJobs::getUserRights( mSlave, url );
+
+    jobData jd;
+    jd.total = 1; jd.done = 0; jd.parent = NULL;
+    insertJob(job, jd);
+
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotGetUserRightsResult(KIO::Job *)));
+  }
+
+  void ImapAccountBase::slotGetUserRightsResult( KIO::Job* _job )
+  {
+    ACLJobs::GetUserRightsJob* job = static_cast<ACLJobs::GetUserRightsJob *>( _job );
+    // result of a get-users-right-job
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
+
+    if ( job->error() )
+      kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
+    else {
+      kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
+      // TODO store the permissions somewhere (in the folder? storage?)
     }
     if (mSlave) removeJob(job);
   }

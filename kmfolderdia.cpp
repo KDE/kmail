@@ -32,6 +32,7 @@
 
 #include <config.h>
 
+#include "kmfolderdia.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "identitycombo.h"
@@ -41,6 +42,7 @@
 #include "kmcommands.h"
 #include "mailinglist-magic.h"
 #include "kmfoldertree.h"
+#include "folderdiaacltab.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -50,6 +52,7 @@
 #include <kicondialog.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <klistview.h>
 
 #include <qcheckbox.h>
 #include <qlayout.h>
@@ -60,7 +63,6 @@
 
 #include <assert.h>
 
-#include "kmfolderdia.h" //has to be later because of KMFolder* fdcls
 #include "kmfolderdia.moc"
 
 using namespace KMail;
@@ -77,44 +79,101 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
-  ConfigModuleTab* tab;
+  FolderDiaTab* tab;
   QVBox* box;
 
   box = addVBoxPage( i18n("General") );
   tab = new FolderDiaGeneralTab( this, aParent, aName, box );
-  //connect( tab, SIGNAL(changed( bool )),
-  //         this, SIGNAL(changed( bool )) );
-  mTabs.append( tab );
+  addTab( tab );
 
   box = addVBoxPage( i18n("Mailing List") );
   tab = new FolderDiaMailingListTab( this, box );
-  //connect( tab, SIGNAL(changed( bool )),
-  //         this, SIGNAL(changed( bool )) );
-  mTabs.append( tab );
+  addTab( tab );
+
+  if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap )
+  {
+    //KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
+    // TODO check if the capabilities of the IMAP server include "acl"
+
+    box = addVBoxPage( i18n("Access Control") );
+    tab = new FolderDiaACLTab( this, box );
+    addTab( tab );
+  }
 
   for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
 }
 
-void KMFolderDialog::slotOk()
+void KMFolderDialog::addTab( FolderDiaTab* tab )
+{
+  connect( tab, SIGNAL( readyForAccept() ),
+           this, SLOT( slotReadyForAccept() ) );
+  connect( tab, SIGNAL( cancelAccept() ),
+           this, SLOT( slotCancelAccept() ) );
+  //connect( tab, SIGNAL(changed( bool )),
+  //         this, SLOT(slotChanged( bool )) );
+  mTabs.append( tab );
+}
+
+// Not used yet (no button), but ready to be used :)
+void KMFolderDialog::slotApply()
 {
   for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
-  KDialogBase::slotOk();
+  KDialogBase::slotApply();
+}
+
+// Called when pressing Ok
+// We want to apply the changes first (which is async), before closing the dialog,
+// in case of errors during the upload.
+void KMFolderDialog::slotOk()
+{
+  mDelayedSavingTabs = 0; // number of tabs which need delayed saving
+  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
+    if ( !mTabs[i]->accept() )
+      ++mDelayedSavingTabs;
+
+  if ( mDelayedSavingTabs )
+    enableButtonOK( false );
+  else
+    KDialogBase::slotOk();
+}
+
+void KMFolderDialog::slotReadyForAccept()
+{
+  --mDelayedSavingTabs;
+  if ( mDelayedSavingTabs == 0 )
+    KDialogBase::slotOk();
+}
+
+void KMFolderDialog::slotCancelAccept()
+{
+  mDelayedSavingTabs = -1;
+  enableButtonOK( true );
+  // Other tabs might call slotReadyForAccept. -1 ensures that it won't close the dialog,
+  // but the OK button being enabled means that people might succeed in running
+  // the same job from save more than once.
+  // Solution: mAcceptCanceled = true instead of -1.
+  // Bah for now we only have one tab which can delay saving -> later.
 }
 
 void KMFolderDialog::slotChanged( bool )
 {
   // TODO, support for 'changed', and Apply button.
-  //if ( b )
-  //  m_changed = true;
+  // sample code for here: KCMultiDialog calls bool changed() on every KCModuleProxy...
+}
+
+void KMFolderDialog::setFolder( KMFolder* folder )
+{
+  Q_ASSERT( mFolder.isNull() );
+  mFolder = folder;
 }
 
 //----------------------------------------------------------------------------
 KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTree* aParent,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
-  : ConfigModuleTab( parent, name ), mDlg( dlg )
+  : FolderDiaTab( parent, name ), mDlg( dlg )
 {
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
@@ -753,7 +812,7 @@ void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-re
 //----------------------------------------------------------------------------
 FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
                                                   QWidget* parent, const char* name )
-  : ConfigModuleTab( parent, name ), mDlg( dlg )
+  : FolderDiaTab( parent, name ), mDlg( dlg )
 {
   if ( mDlg->folder() && mDlg->folder()->noContent() ) {
     return;
@@ -1006,10 +1065,4 @@ void FolderDiaMailingListTab::slotInvokeHandler()
     kdWarning( 5006 )<<"Wrong entry in the mailing list entry combo!"<<endl;
   }
   if ( command ) command->start();
-}
-
-void KMFolderDialog::setFolder( KMFolder* folder )
-{
-  Q_ASSERT( mFolder.isNull() );
-  mFolder = folder;
 }
