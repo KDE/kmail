@@ -472,7 +472,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   :KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
 		Ok, parent, name, modal, true )
 {
-  setHelp( "kmail/kmail.html", QString::null );
+  setHelp( "configure" );	// The documentation anchor of the configure dialog's help
   setIconListAllVisible( true );
 
   /* Button not used
