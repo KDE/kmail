@@ -613,7 +613,7 @@ int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
+int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
 {
   QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
@@ -621,7 +621,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   int rc=0, openCount=mOpenCount;
   KMFolderDir *oldParent;
 
-  assert(!aName.isEmpty());
+  assert(!newName.isEmpty());
 
   oldLoc = location();
   oldIndexLoc = indexLocation();
@@ -633,10 +633,10 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 
   oldName = fileName();
   oldParent = parent();
-  if (aParent)
-    setParent( aParent );
+  if (newParent)
+    setParent( newParent );
 
-  setName(aName);
+  setName(newName);
   newLoc = location();
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
@@ -648,32 +648,40 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
     setParent(oldParent);
     rc = errno;
   }
-  else if (!oldIndexLoc.isEmpty()) {
-    ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
-    ::rename(oldIndexLoc.local8Bit() + ".sorted",
-             newIndexLoc.local8Bit() + ".sorted");
+  else {
+    // rename/move index file and index.sorted file
+    if (!oldIndexLoc.isEmpty()) {
+      ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+      ::rename(oldIndexLoc.local8Bit() + ".sorted",
+               newIndexLoc.local8Bit() + ".sorted");
+    }
+
+    // rename/move serial number file
     if (!oldIdsLoc.isEmpty())
       ::rename(oldIdsLoc.local8Bit(), newIdsLoc.local8Bit());
+
+    // rename/move the subfolder directory
     if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
-      KMFolderDir* fdir = parent();
-      KMFolderNode* fN;
-
-      for (fN = fdir->first(); fN != 0; fN = fdir->next())
-	if (fN->name() == "." + oldName + ".directory" ) {
-	  fN->setName( "." + fileName().local8Bit() + ".directory" );
-	  break;
-	}
+      // now that the subfolder directory has been renamed and/or moved also
+      // change the name that is stored in the corresponding KMFolderNode
+      // (provide that the name actually changed)
+      if( mChild && ( oldName != newName ) ) {
+        mChild->setName( "." + newName.local8Bit() + ".directory" );
+      }
     }
-  }
 
-  if (aParent) {
-    if (oldParent->findRef( this ) != -1)
-      oldParent->take();
-    aParent->inSort( this );
-    if (mChild) {
-      if (mChild->parent()->findRef( mChild ) != -1)
-	mChild->parent()->take();
-      aParent->inSort( mChild );
+    // if the folder is being moved then move its node and, if necessary, also
+    // the associated subfolder directory node to the new parent 
+    if (newParent) {
+      if (oldParent->findRef( this ) != -1)
+        oldParent->take();
+      newParent->inSort( this );
+      if (mChild) {
+        if (mChild->parent()->findRef( mChild ) != -1)
+          mChild->parent()->take();
+        newParent->inSort( mChild );
+        mChild->setParent( newParent );
+      }
     }
   }
 
