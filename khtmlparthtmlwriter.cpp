@@ -58,11 +58,9 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::queue( const QString & str ) {
-    uint pos = 0;
-    while ( str.length() > pos ) {
-      mHtmlQueue += str.mid( pos, 16384 );
-      pos += 16384;
-    }
+    static const uint chunksize = 16384;
+    for ( uint pos = 0 ; pos < str.length() ; pos += chunksize )
+      mHtmlQueue.push_back( str.mid( pos, chunksize ) );
   }
 
   void KHtmlPartHtmlWriter::flush() {
@@ -70,17 +68,16 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::slotWriteNextHtmlChunk() {
-    QStringList::Iterator it = mHtmlQueue.begin();
-    if ( it == mHtmlQueue.end() ) {
+    if ( mHtmlQueue.empty() ) {
       end();
       mHtmlPart->view()->viewport()->setUpdatesEnabled( true );
       mHtmlPart->view()->setUpdatesEnabled( true );
       mHtmlPart->view()->viewport()->repaint( false );
-      return;
+    } else {
+      write( mHtmlQueue.front() );
+      mHtmlQueue.pop_front();
+      mHtmlTimer.start( 0, true );
     }
-    write( *it );
-    mHtmlQueue.remove( it );
-    mHtmlTimer.start( 0, true );
   }
 
   
