@@ -3588,6 +3588,20 @@ void KMComposeWin::slotContinuePrint( bool rc )
   }
 }
 
+//----------------------------------------------------------------------------
+bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresses )
+{
+  QString brokenAddress;
+  KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
+  if ( !( errorCode == KPIM::AddressOk || errorCode == KPIM::AddressEmpty ) ) {
+    QString errorMsg( "<qt><p><b>" + brokenAddress +
+                      "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
+                      "</p></qt>" );
+    KMessageBox::sorry( parent, errorMsg, i18n("Invalid Email Address") );
+    return false;
+  }
+  return true;
+}
 
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
@@ -3620,40 +3634,16 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     }
 
     // Validate the To:, CC: and BCC fields
-    if ( !to().isEmpty() ) {
-      QString brokenAddress;
-      KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( to()), brokenAddress );
-      if ( errorCode != KPIM::AddressOk ) {
-        QString errorMsg( "<qt><p><b>" + brokenAddress +
-                          "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
-                          "</p></qt>" );
-        KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
-        return;
-      }
+    if ( !validateAddresses( this, to().stripWhiteSpace() ) ) {
+      return;
     }
 
-    if ( !cc().isEmpty() ) {
-      QString brokenAddress;
-      KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( cc()), brokenAddress);
-      if ( errorCode != KPIM::AddressOk ) {
-        QString errorMsg( "<qt><p><b>" + brokenAddress +
-                          "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
-                          "</p></qt>" );
-        KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
-        return;
-      }
+    if ( !validateAddresses( this, cc().stripWhiteSpace() ) ) {
+      return;
     }
 
-    if ( !bcc().isEmpty() ) {
-      QString brokenAddress;
-      KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( bcc()), brokenAddress);
-        if ( errorCode != KPIM::AddressOk ) {
-          QString errorMsg( "<qt><p><b>" + brokenAddress +
-                          "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
-                          "</p></qt>" );
-        KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
-        return;
-      }
+    if ( !validateAddresses( this, bcc().stripWhiteSpace() ) ) {
+      return;
     }
 
     if (subject().isEmpty())

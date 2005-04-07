@@ -801,6 +801,11 @@ private:
    */
   void cleanupAutoSave();
 
+  /**
+   * Validate email addresses
+   */
+  static bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresses );
+
 protected slots:
    /**
     * Compress an attachemnt with the given index
