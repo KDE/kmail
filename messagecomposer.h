@@ -93,6 +93,10 @@ private:
 
   void adjustCryptFlags();
 
+#ifdef KLEO_CHIASMUS
+  void chiasmusEncryptEverything();
+#endif
+
   // This is the composeMessage method
   void composeMessage();
   // And these two are the parts that should be run after job completions
@@ -248,6 +252,10 @@ private:
   DwString  mSaveBoundary;
 
   QValueList<MessageComposerJob*> mJobs;
+#ifdef KLEO_CHIASMUS
+  bool mEncryptWithChiasmus;
+  QString mChiasmusKey;
+#endif
 };
 
 #endif /* MESSAGECOMPOSER_H */

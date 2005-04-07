@@ -3818,12 +3818,12 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
     return;
   }
 
-  QVariant result;
-  if ( job->exec( &result ) ) {
+  if ( job->exec() ) {
     job->showErrorDialog( this, i18n( "Chiasmus Backend Error" ) );
     return;
   }
 
+  const QVariant result = job->property( "result" );
   if ( result.type() != QVariant::StringList ) {
     const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
                               "The \"x-obtain-keys\" function did not return a "
