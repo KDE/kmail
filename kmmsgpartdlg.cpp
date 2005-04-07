@@ -399,7 +399,7 @@ void KMMsgPartDialogCompat::applyChanges()
     if ( name != QString( encName ) )
       cDisp += "*=" + encName;
     else
-      cDisp += "=\"" + encName + '"';
+      cDisp += "=\"" + encName.replace( '\\', "\\\\" ).replace( '"', "\\\"" ) + '"';
     mMsgPart->setContentDisposition( cDisp );
   }
 
