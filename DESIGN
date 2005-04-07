@@ -114,7 +114,7 @@ A search rule consists of a field-QString, a "function"-enum and a
 pseudoheader) to match against, the second says how to match (equals,
 consists, is less than,...) and the third holds the pattern to match
 against.
-  Currently, there are two types of search rules, whcih are mixed
+  Currently, there are two types of search rules, which are mixed
 together into a single class: String-valued and int-valued. The latter
 is a hack to enable <size> and <age in days> pseudo-header matching.
   KMSearchRules should better be organized like KMFilterActions are.
@@ -268,7 +268,10 @@ accessed via KMKernel ( the "kmkernel" construct ). Those methods are :
    for all imap folders. They're handled a little differently because
    for all imap messages only headers are cached locally while the
    main contents of all messages is kept on the server.
-3) KMFolderMgr *searchFolderMgr() - which returns the folder manager
+3) KMFolderMgr *dimapFolderMgr() - which returns disconnected IMAP (dimap) 
+   folder manager. In dimap, both the headers and a copy of the full message
+   is cached locally.
+4) KMFolderMgr *searchFolderMgr() - which returns the folder manager
    for the search folders (the folders created by using the "find
    messages" tool. Other email clients call that type of folders
    "virtual folders".
