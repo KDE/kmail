@@ -584,37 +584,39 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
   KMMsgStatus status = 0;
-  if ( ! aStatusString.compare("Important") )
+  QString statusString = aStatusString.upper();
+
+  if ( ! statusString.compare( QString("Important").upper() ) )
     status = KMMsgStatusFlag;
-  if ( ! aStatusString.compare("New") )
+  if ( ! statusString.compare( QString("New").upper() ) )
     status = KMMsgStatusNew;
-  if ( ! aStatusString.compare("Unread") )
+  if ( ! statusString.compare( QString("Unread").upper() ) )
     status = KMMsgStatusUnread | KMMsgStatusNew;
-  if ( ! aStatusString.compare("Read") )
+  if ( ! statusString.compare( QString("Read").upper() ) )
     status = KMMsgStatusRead;
-  if ( ! aStatusString.compare("Old") )
+  if ( ! statusString.compare( QString("Old").upper() ) )
     status = KMMsgStatusOld;
-  if ( ! aStatusString.compare("Deleted") )
+  if ( ! statusString.compare( QString("Deleted").upper() ) )
     status = KMMsgStatusDeleted;
-  if ( ! aStatusString.compare("Replied") )
+  if ( ! statusString.compare( QString("Replied").upper() ) )
     status = KMMsgStatusReplied;
-  if ( ! aStatusString.compare("Forwarded") )
+  if ( ! statusString.compare( QString("Forwarded").upper() ) )
     status = KMMsgStatusForwarded;
-  if ( ! aStatusString.compare("Queued") )
+  if ( ! statusString.compare( QString("Queued").upper() ) )
     status = KMMsgStatusQueued;
-  if ( ! aStatusString.compare("Sent") )
+  if ( ! statusString.compare( QString("Sent").upper() ) )
     status = KMMsgStatusSent;
-  if ( ! aStatusString.compare("Watched") )
+  if ( ! statusString.compare( QString("Watched").upper() ) )
     status = KMMsgStatusWatched;
-  if ( ! aStatusString.compare("Ignored") )
+  if ( ! statusString.compare( QString("Ignored").upper() ) )
     status = KMMsgStatusIgnored;
-  if ( ! aStatusString.compare("To Do") )
+  if ( ! statusString.compare( QString("To Do").upper() ) )
     status = KMMsgStatusTodo;
-  if ( ! aStatusString.compare("Spam") )
+  if ( ! statusString.compare( QString("Spam").upper() ) )
     status = KMMsgStatusSpam;
-  if ( ! aStatusString.compare("Ham") )
+  if ( ! statusString.compare( QString("Ham").upper() ) )
      status = KMMsgStatusHam;
-  if ( ! aStatusString.compare("Has Attachment") )
+  if ( ! statusString.compare( QString("Has Attachment").upper() ) )
      status = KMMsgStatusHasAttach;
 
   return status;
