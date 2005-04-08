@@ -202,7 +202,7 @@ void KMFilter::readConfig(KConfig* config)
     bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
-    bAutoNaming = config->readBoolEntry("AutomaticName", true);
+    bAutoNaming = config->readBoolEntry("AutomaticName", false);
 
     int i, numActions;
     QString actName, argsName;
