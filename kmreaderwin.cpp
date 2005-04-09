@@ -70,6 +70,12 @@ using KMail::TeeHtmlWriter;
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
 
+#ifdef KLEO_CHIASMUS
+#include <kleo/specialjob.h>
+#include <kleo/cryptobackend.h>
+#include <kleo/cryptobackendfactory.h>
+#endif
+
 // KABC includes
 #include <kabc/addressee.h>
 #include <kabc/vcardconverter.h>
@@ -81,6 +87,13 @@ using KMail::TeeHtmlWriter;
 #include <dom/html_block.h>
 #include <dom/html_document.h>
 #include <dom/dom_string.h>
+
+#ifdef KLEO_CHIASMUS
+// KIO headers
+#include <kio/job.h>
+#include <kio/netaccess.h>
+#include <storedtransferjob.h>
+#endif
 
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
@@ -101,6 +114,7 @@ using KMail::TeeHtmlWriter;
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kmdcodec.h>
+#include <kinputdialog.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -110,10 +124,15 @@ using KMail::TeeHtmlWriter;
 #include <qlabel.h>
 #include <qsplitter.h>
 #include <qstyle.h>
+#include <qvariant.h>
+#include <qstringlist.h>
+#include <qfile.h>
 
 // X headers...
 #undef Never
 #undef Always
+
+#include <memory>
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -1591,15 +1610,19 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p ) {
   mAtmCurrent = id;
   mAtmCurrentName = name;
-  KPopupMenu *menu = new KPopupMenu();
-  menu->insertItem(SmallIcon("fileopen"),i18n("Open"), 1);
-  menu->insertItem(i18n("Open With..."), 2);
-  menu->insertItem(i18n("to view something", "View"), 3);
-  menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
-  menu->insertItem(i18n("Properties"), 5);
-  connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
-  menu->exec( p ,0 );
-  delete menu;
+  KPopupMenu menu;
+  menu.insertItem(SmallIcon("fileopen"),i18n("Open"), 1);
+  menu.insertItem(i18n("Open With..."), 2);
+  menu.insertItem(i18n("to view something", "View"), 3);
+  menu.insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+#ifdef KLEO_CHIASMUS
+  if ( name.endsWith( ".xia", false ) &&
+       Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
+    menu.insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
+#endif
+  menu.insertItem(i18n("Properties"), 5);
+  connect(&menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
+  menu.exec( p ,0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1664,6 +1687,11 @@ void KMReaderWin::slotAtmDistributeClick()
     case 5:
       slotAtmProperties();
       break;
+#ifdef KLEO_CHIASMUS
+    case 6:
+      slotAtmDecryptWithChiasmus();
+      break;
+#endif
     default: kdWarning(5006) << "unknown menu item " << mChoice << endl;
   }
 }
@@ -2258,6 +2286,160 @@ void KMReaderWin::slotIMChat()
 {
   KMCommand *command = new KMIMChatCommand( mUrlClicked, message() );
   command->start();
+}
+
+void KMReaderWin::slotAtmDecryptWithChiasmus() {
+#ifdef KLEO_CHIASMUS
+  const partNode * node = partNodeForId( mAtmCurrent );
+  Q_ASSERT( node );
+  if ( !node )
+    return;
+
+  // FIXME: better detection of mimetype??
+  if ( !mAtmCurrentName.endsWith( ".xia", false ) )
+    return;
+
+  const Kleo::CryptoBackend::Protocol * chiasmus =
+    Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
+  Q_ASSERT( chiasmus );
+  if ( !chiasmus )
+    return;
+
+  const std::auto_ptr<Kleo::SpecialJob> listjob( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  if ( !listjob.get() ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-obtain-keys\" function. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  if ( listjob->exec() ) {
+    listjob->showErrorDialog( this, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QVariant result = listjob->property( "result" );
+  if ( result.type() != QVariant::StringList ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-obtain-keys\" function did not return a "
+                              "string list. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QStringList keys = result.toStringList();
+  if ( keys.empty() ) {
+    const QString msg = i18n( "No keys have been found. Please check that a "
+                              "valid key path has been set in the Chiasmus "
+                              "configuration." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  bool ok = false;
+  const QString key = KInputDialog::getItem( i18n( "Chiasmus Decryption Key Selection" ),
+                                             i18n( "Please select the Chiasmus key file to use:" ),
+                                             keys, 0, false, &ok, this );
+  if ( !ok )
+    return;
+
+  assert( !key.isEmpty() );
+
+  Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
+  if ( !job ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-decrypt\" function. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QByteArray input = node->msgPart().bodyDecodedBinary();
+
+  if ( !job->setProperty( "key", key ) ||
+       !job->setProperty( "input", input ) ) {
+    const QString msg = i18n( "The \"x-decrypt\" function does no accept "
+                              "\"key\" or \"input\" parameters. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  if ( job->start() ) {
+    job->showErrorDialog( this, i18n( "Chiasmus Decryption Error" ) );
+    return;
+  }
+
+  mJob = job;
+  connect( job, SIGNAL(result(const GpgME::Error&,const QVariant&)),
+           this, SLOT(slotAtmDecryptWithChiasmusResult(const GpgME::Error&,const QVariant&)) );
+#endif
+}
+
+#ifdef KLEO_CHIASMUS
+// return true if we should proceed, false if we should abort
+static bool checkOverwrite( const KURL& url, bool& overwrite, QWidget* w )
+{
+  if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
+    if ( KMessageBox::Cancel ==
+         KMessageBox::warningContinueCancel(
+                                            w,
+                                            i18n( "A file named \"%1\" already exists. "
+                                                  "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
+                                            i18n( "Overwrite File?" ),
+                                            i18n( "&Overwrite" ) ) )
+      return false;
+    overwrite = true;
+  }
+  return true;
+}
+
+static const QString chomp( const QString & base, const QString & suffix, bool cs ) {
+  return base.endsWith( suffix, cs ) ? base.left( base.length() - suffix.length() ) : base ;
+}
+#endif
+
+void KMReaderWin::slotAtmDecryptWithChiasmusResult( const GpgME::Error & err, const QVariant & result ) {
+#ifdef KLEO_CHIASMUS
+  if ( !mJob )
+    return;
+  Q_ASSERT( mJob == sender() );
+  if ( mJob != sender() )
+    return;
+  Kleo::Job * job = mJob;
+  mJob = 0;
+  if ( err ) {
+    job->showErrorDialog( this, i18n( "Chiasmus Decryption Error" ) );
+    return;
+  }
+
+  if ( result.type() != QVariant::ByteArray ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-decrypt\" function did not return a "
+                              "byte array. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const KURL url = KFileDialog::getSaveURL( chomp( mUrlClicked.fileName(), ".xia", false ), QString::null, this );
+  if ( url.isEmpty() )
+    return;
+
+  bool overwrite = false;
+  if ( !checkOverwrite( url, overwrite, this ) )
+    return;
+
+  KIO::Job * uploadJob = KIOext::put( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
+  uploadJob->setWindow( this );
+  connect( uploadJob, SIGNAL(result(KIO::Job*)),
+           this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KIO::Job*)) );
+#else
+  Q_UNUSED( err );
+  Q_UNUSED( result );
+#endif
+}
+
+void KMReaderWin::slotAtmDecryptWithChiasmusUploadResult( KIO::Job * job ) {
+  if ( job->error() )
+    job->showErrorDialog();
 }
 
 #if 1

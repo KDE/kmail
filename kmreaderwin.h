@@ -50,6 +50,15 @@ namespace KMail {
   class FolderJob;
   class CSSHelper;
 }
+namespace KIO {
+  class Job;
+}
+namespace Kleo {
+  class Job;
+}
+namespace GpgME {
+  class Error;
+}
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
@@ -338,6 +347,9 @@ protected slots:
   void slotTouchMessage();
   void slotAtmLoadPart( int );
   void slotAtmDistributeClick();
+  void slotAtmDecryptWithChiasmus();
+  void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
+  void slotAtmDecryptWithChiasmusUploadResult( KIO::Job * );
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed
@@ -434,6 +446,9 @@ private:
   KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
+#ifdef KLEO_CHIASMUS
+  Kleo::Job * mJob;
+#endif
 
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;
