@@ -33,7 +33,7 @@
 #include <kwin.h>
 #include <kaction.h>
 #include <kiconloader.h>
-
+#include <kdebug.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kpopupmenu.h"
@@ -311,11 +311,10 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   KPopupMenu * menu = new KPopupMenu;
   mUrl = aUrl;
   mMsg = &aMsg;
-
-  if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
-    mReaderWin->copyAction()->plug( menu );
-    mReaderWin->selectAllAction()->plug( menu );
-  } else if (!aUrl.isEmpty()) {
+  bool urlMenuAdded=false;
+  
+  if (!aUrl.isEmpty()) 
+  {
     if (aUrl.protocol() == "mailto") {
       // popup on a mailto URL
       mReaderWin->mailToComposeAction()->plug( menu );
@@ -334,7 +333,15 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       mReaderWin->copyURLAction()->plug( menu );
       mReaderWin->addBookmarksAction()->plug( menu );
     }
-  } else {
+    urlMenuAdded=true;
+  } 
+  if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
+    if ( urlMenuAdded )
+      menu->insertSeparator();
+    mReaderWin->copyAction()->plug( menu );
+    mReaderWin->selectAllAction()->plug( menu );
+  } else if ( !urlMenuAdded )
+  {
     // popup somewhere else (i.e., not a URL) on the message
 
     if (!mMsg) // no message

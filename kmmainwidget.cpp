@@ -2077,10 +2077,10 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
   KPopupMenu * menu = new KPopupMenu;
   updateMessageMenu();
   mUrlCurrent = aUrl;
-  if(mMsgView && !mMsgView->copyText().isEmpty()) {
-    mMsgView->copyAction()->plug( menu );
-    mMsgView->selectAllAction()->plug( menu );
-  } else if (!aUrl.isEmpty())
+
+  bool urlMenuAdded = false;
+
+  if (!aUrl.isEmpty())
   {
     if (aUrl.protocol() == "mailto")
     {
@@ -2110,9 +2110,18 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       // only be present if it is.
       mMsgView->startImChatAction()->plug( menu );
     }
+
+    urlMenuAdded=true;
     kdDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
   }
-  else
+
+
+  if(mMsgView && !mMsgView->copyText().isEmpty()) {
+    if ( urlMenuAdded )
+      menu->insertSeparator();
+    mMsgView->copyAction()->plug( menu );
+    mMsgView->selectAllAction()->plug( menu );
+  } else  if ( !urlMenuAdded ) 
   {
     // popup somewhere else (i.e., not a URL) on the message
 
