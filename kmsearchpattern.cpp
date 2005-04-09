@@ -36,6 +36,32 @@ static const char* funcConfigNames[] =
     "has-attachment", "has-no-attachment"};
 static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
+struct _statusNames {
+  const char* name;
+  KMMsgStatus status;
+};
+
+static struct _statusNames statusNames[] = {
+  { "Important", KMMsgStatusFlag },
+  { "New", KMMsgStatusNew },
+  { "Unread", KMMsgStatusUnread | KMMsgStatusNew },
+  { "Read", KMMsgStatusRead },
+  { "Old", KMMsgStatusOld },
+  { "Deleted", KMMsgStatusDeleted },
+  { "Replied", KMMsgStatusReplied },
+  { "Forwarded", KMMsgStatusForwarded },
+  { "Queued", KMMsgStatusQueued },
+  { "Sent", KMMsgStatusSent },
+  { "Watched", KMMsgStatusWatched },
+  { "Ignored", KMMsgStatusIgnored },
+  { "To Do", KMMsgStatusTodo },
+  { "Spam", KMMsgStatusSpam },
+  { "Ham", KMMsgStatusHam },
+  { "Has Attachment", KMMsgStatusHasAttach }
+};
+
+static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );
+
 
 //==================================================
 //
@@ -583,41 +609,12 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
 KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
-  KMMsgStatus status = 0;
-  if ( ! aStatusString.compare( "Important" ) )
-    status = KMMsgStatusFlag;
-  if ( ! aStatusString.compare( "New" ) )
-    status = KMMsgStatusNew;
-  if ( ! aStatusString.compare( "Unread" ) )
-    status = KMMsgStatusUnread | KMMsgStatusNew;
-  if ( ! aStatusString.compare( "Read" ) )
-    status = KMMsgStatusRead;
-  if ( ! aStatusString.compare( "Old" ) )
-    status = KMMsgStatusOld;
-  if ( ! aStatusString.compare( "Deleted" ) )
-    status = KMMsgStatusDeleted;
-  if ( ! aStatusString.compare( "Replied" ) )
-    status = KMMsgStatusReplied;
-  if ( ! aStatusString.compare( "Forwarded" ) )
-    status = KMMsgStatusForwarded;
-  if ( ! aStatusString.compare( "Queued" ) )
-    status = KMMsgStatusQueued;
-  if ( ! aStatusString.compare( "Sent" ) )
-    status = KMMsgStatusSent;
-  if ( ! aStatusString.compare( "Watched" ) )
-    status = KMMsgStatusWatched;
-  if ( ! aStatusString.compare( "Ignored" ) )
-    status = KMMsgStatusIgnored;
-  if ( ! aStatusString.compare( "To Do" ) )
-    status = KMMsgStatusTodo;
-  if ( ! aStatusString.compare( "Spam" ) )
-    status = KMMsgStatusSpam;
-  if ( ! aStatusString.compare( "Ham" ) )
-     status = KMMsgStatusHam;
-  if ( ! aStatusString.compare( "Has Attachment" ) )
-     status = KMMsgStatusHasAttach;
-
-  return status;
+  for ( int i=0; i< numStatusNames; i++ ) {
+    if ( !aStatusString.compare( statusNames[i].name ) ) {
+      return statusNames[i].status;
+    }
+  }
+  return KMMsgStatusUnknown;
 }
 
 bool KMSearchRuleStatus::isEmpty() const
