@@ -597,7 +597,7 @@ namespace KMail {
   }
 
   bool Vacation::defaultSendForSpam() {
-    return true;
+    return false;
   }
 
   QString Vacation::defaultDomainName() {

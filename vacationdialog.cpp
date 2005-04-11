@@ -102,8 +102,8 @@ namespace KMail {
 
     // "Send responses also to SPAM mail" checkbox:
     ++row;
-    mSpamCheck = new QCheckBox( i18n("React to spam"), plainPage(), "mSpamCheck" );
-    mSpamCheck->setChecked( false );
+    mSpamCheck = new QCheckBox( i18n("Do not send vacation replies to spam messages"), plainPage(), "mSpamCheck" );
+    mSpamCheck->setChecked( true );
     glay->addMultiCellWidget( mSpamCheck, row, row, 0, 1 );
 
     //  domain checkbox and linedit:
@@ -186,11 +186,11 @@ namespace KMail {
   }
 
   bool VacationDialog::sendForSpam() const {
-    return mSpamCheck->isChecked();
+    return !mSpamCheck->isChecked();
   }
 
   void VacationDialog::setSendForSpam( bool enable ) {
-    mSpamCheck->setChecked( enable );
+    mSpamCheck->setChecked( !enable );
   }
 
 } // namespace KMail
