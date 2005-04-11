@@ -30,6 +30,11 @@
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "folderstorage.h"
+#include "renamejob.h"
+#include "copyfolderjob.h"
+
+using KMail::RenameJob;
+using KMail::CopyFolderJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
@@ -575,6 +580,36 @@ uint KMFolderMgr::createId()
   } while ( findById( newId ) != 0 );
 
   return newId;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::moveFolder( KMFolder* folder, KMFolderDir *newParent )
+{
+  renameFolder( folder, folder->name(), newParent );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
+                                KMFolderDir *newParent )
+{
+  RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
+  connect( job, SIGNAL( renameDone( QString, bool ) ),
+      this, SLOT( slotRenameDone( QString, bool ) ) );
+  job->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::copyFolder( KMFolder* folder, KMFolderDir *newParent )
+{
+  kdDebug(5006) << "Copy folder: " << folder->prettyURL() << endl;
+  CopyFolderJob* job = new CopyFolderJob( folder->storage(), newParent );
+  job->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::slotRenameDone( QString, bool success )
+{
+  kdDebug(5006) << k_funcinfo << success << endl;
 }
 
 #include "kmfoldermgr.moc"

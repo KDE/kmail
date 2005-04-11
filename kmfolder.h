@@ -497,6 +497,9 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
+  /** Returns true if this folder can be moved */
+  bool isMoveable() const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

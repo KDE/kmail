@@ -117,6 +117,12 @@ public:
   void addDeletedFolder( KMFolder* folder );
 
   /**
+   * Remember that a folder got explicitely deleted - NOT including all child folders
+   * This is used when renaming a folder.
+   */
+  void addDeletedFolder( const QString& imapPath );
+
+  /**
    * Ask if a folder was explicitely deleted in this session
    */
   bool isDeletedFolder( const QString& subFolderPath ) const;

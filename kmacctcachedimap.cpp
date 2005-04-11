@@ -387,7 +387,7 @@ void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
   if ( folder->folderType() != KMFolderTypeCachedImap )
     return;
   KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(folder->storage());
-  mDeletedFolders << storage->imapPath();
+  addDeletedFolder( storage->imapPath() );
   kdDebug(5006) << k_funcinfo << storage->imapPath() << endl;
 
   // Add all child folders too
@@ -400,6 +400,11 @@ void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
       node = folder->child()->next();
     }
   }
+}
+
+void KMAcctCachedImap::addDeletedFolder( const QString& imapPath )
+{
+  mDeletedFolders << imapPath;
 }
 
 QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath ) const

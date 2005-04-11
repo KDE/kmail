@@ -805,4 +805,9 @@ void KMFolder::reallyAddCopyOfMsg( KMMessage* aMsg )
   mStorage->reallyAddCopyOfMsg( aMsg );
 }
 
+bool KMFolder::isMoveable() const
+{
+  return !isSystemFolder();
+}
+
 #include "kmfolder.moc"

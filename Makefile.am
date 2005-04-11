@@ -96,7 +96,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
 		partnodebodypart.cpp \
 		expirejob.cpp compactionjob.cpp jobscheduler.cpp callback.cpp \
-		listjob.cpp \
+		listjob.cpp renamejob.cpp copyfolderjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
                 accountcombobox.cpp
