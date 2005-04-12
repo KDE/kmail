@@ -177,6 +177,7 @@ void MboxCompactionJob::done( int rc )
     str = i18n( "Error occurred while compacting \"%1\". Compaction aborted." ).arg( mSrcFolder->label() );
     kdDebug(5006) << "Error occurred while compacting " << mbox->location() << endl;
     kdDebug(5006) << "Compaction aborted." << endl;
+    QFile::remove( mTempName );
   }
   mErrorCode = rc;
 
