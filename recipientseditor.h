@@ -143,6 +143,7 @@ class RecipientLine : public QWidget
     void rightPressed();
     void deleteLine(  RecipientLine * );
     void countChanged();
+    void typeModified( RecipientLine * );
 
   protected:
     void keyPressEvent( QKeyEvent * );
@@ -221,6 +222,7 @@ class RecipientsView : public QScrollView
     void slotDecideLineDeletion(  RecipientLine * );
     void slotDeleteLine();
     void calculateTotal();
+    void slotTypeModified( RecipientLine * );
 
   private:
     QPtrList<RecipientLine> mLines;
