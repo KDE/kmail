@@ -361,6 +361,8 @@ void RecipientsPicker::initCollections()
     collection->setTitle( res->resourceName() );
   }
 
+  QMap<QString,RecipientsCollection *> categoryMap;
+
   mAllRecipients = new RecipientsCollection;
   mAllRecipients->setTitle( i18n("All") );
 
@@ -378,6 +380,22 @@ void RecipientsPicker::initCollections()
       if ( collIt != collectionMap.end() ) {
         (*collIt)->addItem( item );
       }
+      
+      QStringList categories = (*it).categories();
+      QStringList::ConstIterator catIt;
+      for( catIt = categories.begin(); catIt != categories.end(); ++catIt ) {
+        QMap<QString, RecipientsCollection *>::ConstIterator catMapIt;
+        catMapIt = categoryMap.find( *catIt );
+        RecipientsCollection *collection;
+        if ( catMapIt == categoryMap.end() ) {
+          collection = new RecipientsCollection;
+          collection->setTitle( *catIt );
+          categoryMap.insert( *catIt, collection );
+        } else {
+          collection = *catMapIt;
+        }
+        collection->addItem( item );
+      }
     }
   }
 
@@ -386,6 +404,11 @@ void RecipientsPicker::initCollections()
   QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator it2;
   for( it2 = collectionMap.begin(); it2 != collectionMap.end(); ++it2 ) {
     insertCollection( *it2 );
+  }
+
+  QMap<QString, RecipientsCollection *>::ConstIterator it3;
+  for( it3 = categoryMap.begin(); it3 != categoryMap.end(); ++it3 ) {
+    insertCollection( *it3 );
   }
 
   insertDistributionLists();

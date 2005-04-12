@@ -327,6 +327,13 @@
         </choices>
         <default>MultiLine</default>
       </entry>
+      <entry name="SecondRecipientTypeDefault" type="Enum">
+        <choices>
+          <choice name="To"/>
+          <choice name="Cc"/>
+        </choices>
+        <default>To</default>
+      </entry>
       <entry name="MaximumRecipients" type="Int">
         <label>Maximum number of recipient editor lines.</label>
         <default>200</default>

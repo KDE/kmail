@@ -192,6 +192,8 @@ void RecipientLine::slotFocusDown()
 void RecipientLine::slotTypeModified()
 {
   mModified = true;
+
+  emit typeModified( this );
 }
 
 void RecipientLine::analyzeLine( const QString &text )
@@ -343,9 +345,20 @@ RecipientLine *RecipientsView::addLine()
   connect( line, SIGNAL( deleteLine( RecipientLine * ) ),
     SLOT( slotDecideLineDeletion( RecipientLine * ) ) );
   connect( line, SIGNAL( countChanged() ), SLOT( calculateTotal() ) );
+  connect( line, SIGNAL( typeModified( RecipientLine * ) ),
+    SLOT( slotTypeModified( RecipientLine * ) ) );
 
   if ( mLines.last() ) {
-    line->setRecipientType( mLines.last()->recipientType() );
+    if ( mLines.count() == 1 ) {
+      if ( GlobalSettings::secondRecipientTypeDefault() ==
+           GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
+        line->setRecipientType( Recipient::To );
+      } else {
+        line->setRecipientType( Recipient::Cc );
+      }
+    } else {
+      line->setRecipientType( mLines.last()->recipientType() );
+    }
     line->fixTabOrder( mLines.last()->tabOut() );
   }
 
@@ -372,6 +385,21 @@ RecipientLine *RecipientsView::addLine()
   return line;
 }
 
+void RecipientsView::slotTypeModified( RecipientLine *line )
+{
+  if ( mLines.count() == 2 ||
+       ( mLines.count() == 3 && mLines.at( 2 )->isEmpty() ) ) {
+    if ( mLines.at( 1 ) == line ) {
+      if ( line->recipientType() == Recipient::To ) {
+        GlobalSettings::setSecondRecipientTypeDefault(
+          GlobalSettings::EnumSecondRecipientTypeDefault::To );
+      } else if ( line->recipientType() == Recipient::Cc ) {
+        GlobalSettings::setSecondRecipientTypeDefault(
+          GlobalSettings::EnumSecondRecipientTypeDefault::Cc );
+      }
+    }
+  }
+}
 
 void RecipientLine::setRemoveLineButtonEnabled( bool b )
 {
