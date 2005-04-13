@@ -804,7 +804,7 @@ private:
   /**
    * Validate email addresses
    */
-  static bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresses );
+  static bool validateAddresses( QWidget * parent, const QString & addresses );
 
 protected slots:
    /**
