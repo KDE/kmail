@@ -1996,6 +1996,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
       mCustomDateFormatEdit->setEnabled( false );
       connect( radio, SIGNAL(toggled(bool)),
                mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
+      connect( mCustomDateFormatEdit, SIGNAL(textChanged(const QString&)),
+               this, SLOT(slotEmitChanged(void)) );
       QString customDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
              "</strong></p>"
