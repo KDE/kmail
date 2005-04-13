@@ -589,8 +589,10 @@ namespace KMail {
     }
 
     // check if we still display an error
-    if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED )
-    {
+    if ( !mErrorDialogIsActive 
+        && errorCode != KIO::ERR_USER_CANCELED
+        && errorCode != KIO::ERR_SERVER_TIMEOUT
+        && errorCode != KIO::ERR_CONNECTION_BROKEN ) {
       mErrorDialogIsActive = true;
       QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
       QString caption = i18n("Error");
@@ -614,8 +616,17 @@ namespace KMail {
         }
       }
       mErrorDialogIsActive = false;
-    } else if ( errorCode != KIO::ERR_USER_CANCELED )
-      kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+    } else {
+      if ( mErrorDialogIsActive )
+        kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+      else if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
+        KPIM::BroadcastStatus::instance()->setStatusMsg(  
+            i18n(  "The connection to account %1 was broken." ).arg( name() ) );
+      else if ( errorCode == KIO::ERR_SERVER_TIMEOUT )
+        KPIM::BroadcastStatus::instance()->setStatusMsg(  
+            i18n(  "The connection to account %1 timed out." ).arg( name() ) );
+
+    }
 
     if ( job && !jobsKilled )
       removeJob( job );
