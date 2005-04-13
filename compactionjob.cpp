@@ -109,7 +109,10 @@ int MboxCompactionJob::executeNow( bool silent )
       //      exit(1); backed out due to broken nfs
   }
 
-  mTempName = realLocation() + ".compacted";
+  const QFileInfo pathInfo( realLocation() );
+  // Use /dir/.mailboxname.compacted so that it's hidden, and doesn't show up after restarting kmail
+  // (e.g. due to an unfortunate crash while compaction is happening)
+  mTempName = pathInfo.dirPath() + "/." + pathInfo.fileName() + ".compacted";
 
   mode_t old_umask = umask(077);
   mTmpFile = fopen(QFile::encodeName(mTempName), "w");
@@ -127,7 +130,7 @@ int MboxCompactionJob::executeNow( bool silent )
   mOffset = 0;
   mCurrentIndex = 0;
 
-  kdDebug(5006) << "MboxCompactionJob: starting to compact in folder " << mSrcFolder->location() << endl;
+  kdDebug(5006) << "MboxCompactionJob: starting to compact folder " << mSrcFolder->location() << " into " << mTempName << endl;
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   if ( !mImmediate )
     mTimer.start( COMPACTIONJOB_TIMERINTERVAL );
