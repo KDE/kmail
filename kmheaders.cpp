@@ -2192,6 +2192,8 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
         if( it.current()->isSelected() ) {
           HeaderItem *item = static_cast<HeaderItem*>(it.current());
           KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
+          // FIXME: msg can be null here which crashes.  I think it's a race
+          //        because it's very hard to reproduce. (GS)
           MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
                                    msg->subject(), msg->fromStrip(),
                                    msg->toStrip(), msg->date() );
