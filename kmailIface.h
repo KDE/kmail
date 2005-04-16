@@ -111,7 +111,11 @@ k_dcop_signals:
   void unreadCountChanged( const QString& folderURL, int numUnread );
 
 k_dcop_hidden:
-  /** DCOP call which is used by the Kontact plugin to create a new message. */
+  /** DCOP call which is used by the Kontact plugin to create a new message. 
+   *
+   *  @TODO Rename to newMessageInternal()
+   *  @TODO Merge this and the various openComposer methods for better code reuse 
+  */
   virtual DCOPRef newMessage(const QString &to, 
                              const QString &cc, 
                              const QString& bcc, 
