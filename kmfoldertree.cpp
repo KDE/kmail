@@ -291,6 +291,8 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   mMainWidget = mainWidget;
   mReloading = false;
 
+  mUpdateCountTimer= new QTimer( this );
+
   addAcceptableDropMimetype(MailListDrag::format(), false);
 
   int namecol = addColumn( i18n("Folder"), 250 );
@@ -313,6 +315,9 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
 // connects all needed signals to their slots
 void KMFolderTree::connectSignals()
 {
+  connect( mUpdateCountTimer, SIGNAL(timeout()),
+          this, SLOT(slotUpdateCountTimeout()) );
+
   connect(&mUpdateTimer, SIGNAL(timeout()),
           this, SLOT(delayedUpdate()));
 
@@ -535,6 +540,9 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(),SIGNAL(nameChanged()),
             fti,SLOT(slotNameChanged()));
 
+    // With the use of slotUpdateCountsDelayed is not necesary
+    // a specific processing for Imap
+#if 0    
     if (fti->folder()->folderType() == KMFolderTypeImap) {
       // imap-only
       KMFolderImap *imapFolder =
@@ -543,23 +551,24 @@ void KMFolderTree::reload(bool openFolders)
           this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
       connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
           this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-    } else {
-      // others-only, imap doesn't need this because of the folderComplete-signal
-      // we want to be noticed of changes to update the unread/total columns
-      disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-          this,SLOT(slotUpdateCounts(KMFolder*)));
-      connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-          this,SLOT(slotUpdateCounts(KMFolder*)));
-    }
+    } else {*/ 
+#endif
+
+    // we want to be noticed of changes to update the unread/total columns
+    disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+        this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
+    connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+        this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
+    //}
 
     disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-               this,SLOT(slotUpdateCounts(KMFolder*)));
+               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
     connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-            this,SLOT(slotUpdateCounts(KMFolder*)));
+            this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
     disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-               this,SLOT(slotUpdateCounts(KMFolder*)));
+               this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
     connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-            this,SLOT(slotUpdateCounts(KMFolder*)));
+            this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
 
     disconnect(fti->folder(), SIGNAL(shortcutChanged(KMFolder*)),
                mMainWidget, SLOT( slotShortcutChanged(KMFolder*)));
@@ -1455,8 +1464,38 @@ void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderTree::slotUpdateCountsDelayed(KMFolder * folder)
+{
+//  kdDebug(5006) << "KMFolderTree::slotUpdateCountsDelayed()" << endl;
+  if ( !mFolderToUpdateCount.contains( folder->idString() ) )
+  {
+//    kdDebug( 5006 )<< "adding " << folder->idString() << " to updateCountList " << endl;
+    mFolderToUpdateCount.insert( folder->idString(),folder );
+  }
+  if ( !mUpdateCountTimer->isActive() )
+    mUpdateCountTimer->start( 500 );
+}
+
+
+void KMFolderTree::slotUpdateCountTimeout()
+{
+//  kdDebug(5006) << "KMFolderTree::slotUpdateCountTimeout()" << endl;
+
+  QMap<QString,KMFolder*>::iterator it;
+  for ( it= mFolderToUpdateCount.begin();
+      it!=mFolderToUpdateCount.end();
+      ++it )
+  {
+    slotUpdateCounts( it.data() );
+  }
+  mFolderToUpdateCount.clear();
+  mUpdateCountTimer->stop();
+
+}
+
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
+ // kdDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
   QListViewItem * current;
   if (folder)
     current = indexOfFolder(folder);

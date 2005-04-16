@@ -290,9 +290,11 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
     mSentBytes += size;
     emit progress( mSentBytes, mTotalBytes );
     mAccount->removeJob(it);
-  }
+  } else
+    mFolder->quiet( true );
 
   if( mMsgsForDownload.isEmpty() ) {
+    mFolder->quiet( false );
     delete this;
     return;
   }

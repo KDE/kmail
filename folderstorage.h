@@ -507,6 +507,8 @@ public slots:
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
+  /** Emit changed signal if mQuite <=0 */
+  void slotEmitChangedTimer();
 
 protected slots:
   virtual void removeJob( QObject* );
@@ -591,6 +593,8 @@ protected:
   KMail::FolderContentsType mContentsType;
 
   KMFolder* mFolder;
+
+  QTimer * mEmitChangedTimer;
 
   int mCurrentSearchedMsg;
   KMSearchPattern* mSearchPattern;

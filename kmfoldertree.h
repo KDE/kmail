@@ -268,6 +268,9 @@ protected slots:
   /** Update the total and unread columns (if available) */
   void slotUpdateCounts(KMFolder * folder);
   void slotUpdateCounts(KMFolderImap * folder, bool success = true);
+  /** Update the total and unread columns but delayed */
+  void slotUpdateCountsDelayed(KMFolder * folder);
+  void slotUpdateCountTimeout();
   void slotUpdateOneCount();
 
   /** slots for the unread/total-popup */
@@ -339,6 +342,9 @@ private:
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
+
+  QTimer *mUpdateCountTimer;
+  QMap<QString,KMFolder*> mFolderToUpdateCount;
 
   /** Map menu id into a folder */
   KMMenuToFolder mMenuToFolder;

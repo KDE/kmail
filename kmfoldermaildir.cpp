@@ -465,7 +465,16 @@ if( fileD0.open( IO_WriteOnly ) ) {
       mUnreadMsgs = 1;
     else
       ++mUnreadMsgs;
-    emit numUnreadMsgsChanged( folder() );
+    if ( !mQuiet ) {
+      kdDebug( 5006 ) << "FolderStorage::msgStatusChanged" << endl;
+      emit numUnreadMsgsChanged( folder() );
+    }else{
+      if ( !mEmitChangedTimer->isActive() ) {
+//        kdDebug( 5006 )<< "QuietTimer started" << endl;
+        mEmitChangedTimer->start( 3000 );
+      }
+      mChanged = true;
+    }
   }
   ++mTotalMsgs;
 

@@ -61,7 +61,7 @@ using KMail::ListJob;
 //-----------------------------------------------------------------------------
 
 FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
-  : QObject( folder, aName ), mFolder( folder )
+  : QObject( folder, aName ), mFolder( folder ), mEmitChangedTimer( 0L )
 {
   mOpenCount      = 0;
   mQuiet	  = 0;
@@ -82,6 +82,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
+  
   mHasChildren = HasNoChildren;
   mContentsType = KMail::ContentsTypeMail;
 }
@@ -192,15 +193,32 @@ void FolderStorage::markUnreadAsRead()
 //-----------------------------------------------------------------------------
 void FolderStorage::quiet(bool beQuiet)
 {
+
   if (beQuiet)
+  {
+    /* Allocate the timer here to don't have one timer for each folder. BTW,
+     * a timer is created when a folder is checked
+     */
+    if ( !mEmitChangedTimer) { 
+      mEmitChangedTimer= new QTimer( this );
+      connect( mEmitChangedTimer, SIGNAL( timeout() ),
+      this, SLOT( slotEmitChangedTimer() ) );
+    }
     mQuiet++;
-  else {
+  } else {
     mQuiet--;
     if (mQuiet <= 0)
     {
+      delete mEmitChangedTimer;
+      mEmitChangedTimer=0L;
+
       mQuiet = 0;
-      if (mChanged)
+      if (mChanged) {
        emit changed();
+       // Don't hurt emit this if the mUnreadMsg really don't change
+       // We emit it here, because this signal is delayed if mQuiet >0
+       emit numUnreadMsgsChanged( folder() );
+      }
       mChanged = FALSE;
     }
   }
@@ -245,6 +263,12 @@ int FolderStorage::expungeOldMsg(int days)
   return msgnb;
 }
 
+//------------------------------------------
+void FolderStorage::slotEmitChangedTimer()
+{
+  emit changed();
+  mChanged=false;
+}
 //-----------------------------------------------------------------------------
 void FolderStorage::emitMsgAddedSignals(int idx)
 {
@@ -252,6 +276,11 @@ void FolderStorage::emitMsgAddedSignals(int idx)
   if (!mQuiet) {
     emit msgAdded(idx);
   } else {
+    /** Restart always the timer or not. BTW we get a kmheaders refresh
+     * each 3 seg.?*/
+    if ( !mEmitChangedTimer->isActive() ) {
+      mEmitChangedTimer->start( 3000 );
+    }
     mChanged=true;
   }
   emit msgAdded( folder(), serNum );
@@ -359,7 +388,16 @@ void FolderStorage::removeMsg(int idx, bool)
   if (mb->isUnread() || mb->isNew() ||
       (folder() == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
-    emit numUnreadMsgsChanged( folder() );
+    if ( !mQuiet ) {
+//      kdDebug( 5006 ) << "FolderStorage::msgStatusChanged" << endl;
+      emit numUnreadMsgsChanged( folder() );
+    }else{
+      if ( !mEmitChangedTimer->isActive() ) {
+//        kdDebug( 5006 )<< "EmitChangedTimer started" << endl;
+        mEmitChangedTimer->start( 3000 );
+      }
+      mChanged = true;
+    }
   }
   --mTotalMsgs;
 
@@ -388,7 +426,14 @@ KMMessage* FolderStorage::take(int idx)
   if (msg->isUnread() || msg->isNew() ||
       ( folder() == kmkernel->outboxFolder() )) {
     --mUnreadMsgs;
-    emit numUnreadMsgsChanged( folder() );
+    if ( !mQuiet ) {
+      emit numUnreadMsgsChanged( folder() );
+    }else{
+      if ( !mEmitChangedTimer->isActive() ) {
+        mEmitChangedTimer->start( 3000 );
+      }
+      mChanged = true;
+    }
   }
   --mTotalMsgs;
   msg->setParent(0);
@@ -800,10 +845,14 @@ void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
   if (deltaUnread != 0) {
     if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;
-    if ( !mQuiet )
+    if ( !mQuiet ) {
       emit numUnreadMsgsChanged( folder() );
-    else
+    }else{
+      if ( !mEmitChangedTimer->isActive() ) {
+        mEmitChangedTimer->start( 3000 );
+      }
       mChanged = true;
+    }
     Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(folder(), idx);
     emit msgChanged( folder(), serNum, deltaUnread );
   }
@@ -814,9 +863,18 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 {
   if (idx < 0)
     idx = aMsg->parent()->find( aMsg );
-  if (idx >= 0 && !mQuiet)
-    emit msgHeaderChanged(folder(), idx);
-  else
+
+  if (idx >= 0 )
+  {
+    if ( !mQuiet )
+      emit msgHeaderChanged(folder(), idx);
+    else{
+      if ( !mEmitChangedTimer->isActive() ) {
+        mEmitChangedTimer->start( 3000 );
+      }
+      mChanged = true;
+    }
+  } else
     mChanged = true;
 }
 

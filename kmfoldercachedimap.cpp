@@ -313,7 +313,7 @@ void KMFolderCachedImap::reloadUidMap()
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue;
     ulong uid = msg->UID();
-    kdDebug(5006) << "Inserting: " << i << " with uid: " << uid << endl;
+    //kdDebug(5006) << "Inserting: " << i << " with uid: " << uid << endl;
     uidMap.insert( uid, i );
   }
   close();
