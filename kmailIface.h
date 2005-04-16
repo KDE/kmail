@@ -112,7 +112,13 @@ k_dcop_signals:
 
 k_dcop_hidden:
   /** DCOP call which is used by the Kontact plugin to create a new message. */
-  virtual DCOPRef newMessage() = 0;
+  virtual DCOPRef newMessage(const QString &to, 
+                             const QString &cc, 
+                             const QString& bcc, 
+                             bool hidden, 
+                             bool useFolderId, 
+                             const KURL &messageFile,
+                             const KURL &attachURL) = 0;
 
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
   /**

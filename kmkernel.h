@@ -127,7 +127,13 @@ public:
                        const QString &body,bool hidden);
 
   /** DCOP call used by the Kontact plugin to create a new message. */
-  DCOPRef newMessage();
+  DCOPRef newMessage(const QString &to,
+                     const QString &cc,
+                     const QString &bcc,
+                     bool hidden,
+                     bool useFolderId,
+                     const KURL &messageFile,
+                     const KURL &attachURL);
 
   int sendCertificate( const QString& to, const QByteArray& certData );
 
@@ -332,6 +338,7 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
+  KMFolder *currentFolder();
 
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;

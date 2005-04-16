@@ -537,25 +537,41 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   return DCOPRef(cWin);
 }
 
-DCOPRef KMKernel::newMessage()
+DCOPRef KMKernel::newMessage(const QString &to,
+                             const QString &cc,
+                             const QString &bcc,
+                             bool hidden,
+                             bool useFolderId,
+                             const KURL &messageFile,
+                             const KURL &attachURL)
 {
-  KMFolder *folder = 0;
-  KMMainWidget *widget = getKMMainWidget();
-  if ( widget && widget->folderTree() )
-    folder = widget->folderTree()->currentFolder();
-
-  // the following code is basically the same as in KMMainWidget::slotCompose()
   KMComposeWin *win;
   KMMessage *msg = new KMMessage;
-  if ( folder ) {
-    msg->initHeader( folder->identity() );
-    win = new KMComposeWin( msg, folder->identity() );
+
+  if ( useFolderId ) {
+    //create message with required folder identity
+    KMFolder *folder = currentFolder();
+    uint id = folder ? folder->identity() : 0;
+    msg->initHeader( id );
+    win = new KMComposeWin( msg, id );
   } else {
     msg->initHeader();
     win = new KMComposeWin( msg );
   }
-  win->show();
+  msg->setCharset("utf-8");
+  //set basic headers
+  if (!to.isEmpty()) msg->setTo(to);
+  if (!cc.isEmpty()) msg->setCc(cc);
+  if (!bcc.isEmpty()) msg->setBcc(bcc);
 
+  //Add the attachment if we have one
+  if(!attachURL.isEmpty() && attachURL.isValid()) {
+    win->addAttach(attachURL); 
+  }
+  //only show window when required
+  if(!hidden) {
+    win->show();
+  }
   return DCOPRef( win );
 }
 
@@ -2052,6 +2068,15 @@ QValueList< QGuardedPtr<KMFolder> > KMKernel::allFolders()
   searchFolderMgr()->createFolderList(&names, &folders);
 
   return folders;
+}
+
+KMFolder *KMKernel::currentFolder() {
+  KMMainWidget *widget = getKMMainWidget();
+  KMFolder *folder = 0;
+  if ( widget && widget->folderTree() ) {
+    folder = widget->folderTree()->currentFolder();
+  }
+  return folder;	
 }
 
 #include "kmkernel.moc"
