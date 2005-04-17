@@ -167,7 +167,8 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		kmail-3.3-split-sign-encr-keys.sh \
 		kmail-3.3-misc.pl \
 		kmail-3.3b1-misc.pl \
-		kmail-3.4-misc.pl 
+		kmail-3.4-misc.pl \
+		kmail-3.4.1-update-status-filters.pl
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc kmail.antivirusrc
