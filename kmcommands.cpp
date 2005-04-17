@@ -2111,11 +2111,8 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrL
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments,
                                                     KMMessage *msg, bool encoded )
-  : KMCommand( parent, msg ), mImplicitAttachments( false ),
-    mEncoded( encoded )
+  : KMCommand( parent ), mImplicitAttachments( false ), mEncoded( encoded )
 {
-  // do not load the complete message but only parts
-  msg->setComplete( true );
   for ( QPtrListIterator<partNode> it( attachments ); it.current(); ++it ) {
     mAttachmentMap.insert( it.current(), msg );
   }
