@@ -154,6 +154,10 @@ Options=copy
 Key=list-font,list-new-font
 Options=copy
 Key=list-font,list-unread-font
+# Convert status filter rules to upper case (cf. bug #101001)
+Id=3.4.1
+File=kmailrc
+Script=kmail-3.4.1-update-status-filters.pl,perl
 #
 # Important notice:
 # If you add updates here, keep this text below them.
