@@ -85,6 +85,9 @@ k_dcop:
                      zero level in the foldertree.
       @param messagefile: the name of the filename (local) with the
                      message to be added.
+      @param MsgStatusFlags a string coding the status of the message
+             with a char for each status e.g. a 'N' for new
+             this param is optional
       @return =1,  message added to folder, if folder doesn't exist, folder
              has been created.
         =0,  an error occurred.
@@ -94,10 +97,12 @@ k_dcop:
         =-4, Message already exists in folder.
   */
   virtual int dcopAddMessage(const QString & foldername,
-                             const QString & messagefile) = 0;
+                             const QString & messagefile, 
+                             const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage(const QString & foldername,
-                             const KURL & messagefile) = 0;
-			     
+                             const KURL & messagefile, 
+                             const QString & MsgStatusFlags = QString()) = 0;
+
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
   virtual void selectFolder( QString folder ) =0;
@@ -148,6 +153,9 @@ k_dcop_hidden:
                      zero level in the foldertree.
       @param messagefile: the name of the filename (local) with the
                      message to be added.
+      @param MsgStatusFlags a string coding the status of the message
+                     with a char for each status e.g. a 'N' for new
+                     this param is optional
       @return =1,  message added to folder, if folder doesn't exist, folder
              has been created.
         =0,  an error occurred.
@@ -157,9 +165,11 @@ k_dcop_hidden:
         =-4, Message already exists in folder.
   */
   virtual int dcopAddMessage_fastImport(const QString & foldername,
-                             		const QString & messagefile) = 0;
+                                        const QString & messagefile, 
+                                        const QString & MsgStatusFlags = QString()) = 0;
   virtual int dcopAddMessage_fastImport(const QString & foldername,
-                             		const KURL & messagefile) = 0;
+                                        const KURL & messagefile, 
+                                        const QString & MsgStatusFlags = QString()) = 0;
 
   /** Clears the list of added message ids which is used to filter out
       duplicates. */

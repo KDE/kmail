@@ -612,13 +612,79 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   return 1;
 }
 
-
-int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlString)
+static KMMsgStatus strToStatus(const QString &flags)
 {
-  return dcopAddMessage(foldername, KURL(msgUrlString));
+    KMMsgStatus status = 0;
+    if (!flags.isEmpty()) {  
+        for (uint n = 0; n < flags.length() ; n++) {
+            switch (flags[n]) {
+                case 'N':
+                    status |= KMMsgStatusNew;
+                    break;
+                case 'U':
+                    status |= KMMsgStatusUnread;
+                    break;
+                case 'O':
+                    status |= KMMsgStatusOld;
+                    break;
+                case 'R':
+                    status |= KMMsgStatusRead;
+                    break;
+                case 'D':
+                    status |= KMMsgStatusDeleted;
+                    break;
+                case 'A':
+                    status |= KMMsgStatusReplied;
+                    break;
+                case 'F':
+                    status |= KMMsgStatusForwarded;
+                    break;
+                case 'Q':
+                    status |= KMMsgStatusQueued;
+                    break;
+                case 'K':
+                    status |= KMMsgStatusTodo;
+                    break;
+                case 'S':
+                    status |= KMMsgStatusSent;
+                    break;
+                case 'G':
+                    status |= KMMsgStatusFlag;
+                    break;
+                case 'W':
+                    status |= KMMsgStatusWatched;
+                    break;
+                case 'I':
+                    status |= KMMsgStatusIgnored;
+                    break;
+                case 'P':
+                    status |= KMMsgStatusSpam;
+                    break;
+                case 'H':
+                    status |= KMMsgStatusHam;
+                    break;
+                case 'T':
+                    status |= KMMsgStatusHasAttach;
+                    break;
+                case 'C':
+                    status |= KMMsgStatusHasNoAttach;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return status;
 }
 
-int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
+int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrlString, 
+                              const QString & MsgStatusFlags) 
+{
+  return dcopAddMessage(foldername, KURL(msgUrlString), MsgStatusFlags);
+}
+
+int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl, 
+                              const QString & MsgStatusFlags)
 {
   kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
@@ -760,6 +826,12 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
         if ( !msgId.isEmpty() ) {
           mAddMessageMsgIds.append( msgId );
         }
+        
+        if ( !MsgStatusFlags.isEmpty() ) {
+          KMMsgStatus status = strToStatus(MsgStatusFlags);
+          if (status) msg->setStatus(status);
+        }
+        
         int index;
         if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
           mAddMsgCurrentFolder->unGetMsg( index );
@@ -788,12 +860,16 @@ void KMKernel::dcopResetAddMessage()
   mAddMessageLastFolder = QString();
 }
 
-int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const QString & msgUrlString)
+int KMKernel::dcopAddMessage_fastImport( const QString & foldername, 
+                                         const QString & msgUrlString, 
+                                         const QString & MsgStatusFlags)
 {
-  return dcopAddMessage_fastImport(foldername, KURL(msgUrlString));
+  return dcopAddMessage_fastImport(foldername, KURL(msgUrlString), MsgStatusFlags);
 }
 
-int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & msgUrl)
+int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
+                                         const KURL & msgUrl, 
+                                         const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
   // search for already existing emails.
@@ -865,6 +941,12 @@ int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & 
 
     if ( mAddMsgCurrentFolder ) {
       int index;
+      
+      if( !MsgStatusFlags.isEmpty() ) {
+        KMMsgStatus status = strToStatus(MsgStatusFlags);
+        if (status) msg->setStatus(status);
+      }
+      
       if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
         mAddMsgCurrentFolder->unGetMsg( index );
         retval = 1;

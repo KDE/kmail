@@ -138,12 +138,18 @@ public:
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }
-  int dcopAddMessage(const QString & foldername, const QString & messageFile);
-  int dcopAddMessage(const QString & foldername, const KURL & messageFile);
+  
+  int dcopAddMessage(const QString & foldername, const QString & messageFile, 
+                     const QString & MsgStatusFlags = QString());
+  int dcopAddMessage(const QString & foldername, const KURL & messageFile, 
+                     const QString & MsgStatusFlags = QString());
   void dcopResetAddMessage();
   /** add messages without rejecting duplicates */
-  int dcopAddMessage_fastImport(const QString & foldername, const QString & messageFile);
-  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messageFile);
+  int dcopAddMessage_fastImport(const QString & foldername, const QString & messageFile,
+                                const QString & MsgStatusFlags = QString());
+  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messageFile, 
+                                const QString & MsgStatusFlags = QString());
+  
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
