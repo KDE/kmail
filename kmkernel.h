@@ -15,6 +15,7 @@
 #include <kdepimmacros.h>
 
 #include "kmailIface.h"
+#include "kmmsgbase.h"
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -344,6 +345,7 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
+  KMMsgStatus strToStatus(const QString &flags);
   KMFolder *currentFolder();
 
   KMFolder *the_inboxFolder;

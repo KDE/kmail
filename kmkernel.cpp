@@ -612,7 +612,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   return 1;
 }
 
-static KMMsgStatus strToStatus(const QString &flags)
+KMMsgStatus KMKernel::strToStatus(const QString &flags)
 {
     KMMsgStatus status = 0;
     if (!flags.isEmpty()) {  
