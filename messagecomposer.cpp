@@ -543,8 +543,10 @@ void MessageComposer::chiasmusEncryptEverything() {
       mRc = false;
       return;
     }
-    if ( job->exec() ) {
-      job->showErrorDialog( mComposeWin, i18n( "Chiasmus Encryption Error" ) );
+    const GpgME::Error err = job->exec();
+    if ( err.isCanceled() || err ) {
+      if ( err )
+        job->showErrorDialog( mComposeWin, i18n( "Chiasmus Encryption Error" ) );
       mRc = false;
       return;
     }
