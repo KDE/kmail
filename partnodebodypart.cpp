@@ -60,8 +60,6 @@ QString KMail::PartNodeBodyPart::asText() const {
 }
 
 QByteArray KMail::PartNodeBodyPart::asBinary() const {
-  if ( mPartNode.type() == DwMime::kTypeText )
-    return QByteArray();
   return mPartNode.msgPart().bodyDecodedBinary();
 }
 
