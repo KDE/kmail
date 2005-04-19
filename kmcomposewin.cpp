@@ -87,6 +87,9 @@ using KRecentAddress::RecentAddresses;
 #include <kstdguiitem.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
+#include <kmenubar.h>
+#include <ktoolbarbutton.h>
+
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -926,6 +929,77 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
   }
 }
 
+namespace {
+
+#if KDE_IS_VERSION( 3, 3, 0 )
+  // KDELIBS 3.2 misses setCheckedState(), so we provide our own
+  typedef KToggleAction K33ToggleAction;
+#else
+  class K33ToggleAction : public KToggleAction {
+    KGuiItem * m_checkedGuiItem;
+  public:
+    K33ToggleAction( const QString & text, const QString & pix, const KShortcut & cut,
+                     QObject * parent, const char * name=0 )
+      : KToggleAction( text, pix, cut, parent, name ),
+        m_checkedGuiItem( 0 )
+    {
+
+    }
+    ~K33ToggleAction() {
+      delete m_checkedGuiItem; m_checkedGuiItem = 0;
+    }
+
+    // This is just copied from some kdelibs version beyond 3.3..
+    void updateChecked( int id ) {
+      if ( !m_checkedGuiItem || !isChecked() ) {
+        KToggleAction::updateChecked( id );
+        return;
+      }
+
+      QWidget *w = container( id );
+
+      if ( ::qt_cast<QPopupMenu *>( w ) ) {
+        QPopupMenu* pm = static_cast<QPopupMenu*>(w);
+        int itemId_ = itemId( id );
+        if ( m_checkedGuiItem->hasIcon() )
+          pm->changeItem( itemId_, m_checkedGuiItem->iconSet( KIcon::Small ),
+                          m_checkedGuiItem->text() );
+        else
+          pm->changeItem( itemId_, m_checkedGuiItem->text() );
+        if ( !m_checkedGuiItem->whatsThis().isEmpty() ) // if empty, we keep the initial one
+          pm->setWhatsThis( itemId_, m_checkedGuiItem->whatsThis() );
+        updateShortcut( pm, itemId_ );
+      }
+      else if ( ::qt_cast<QMenuBar *>( w ) ) // not handled in plug...
+        static_cast<QMenuBar*>(w)->setItemChecked( itemId( id ), isChecked() );
+      else if ( ::qt_cast<KToolBar *>( w ) ) {
+        QWidget* r = static_cast<KToolBar*>( w )->getButton( itemId( id ) );
+        if ( r && ::qt_cast<KToolBarButton *>( r ) ) {
+          static_cast<KToolBar*>( w )->setButton( itemId( id ), isChecked() );
+          if ( m_checkedGuiItem->hasIcon() ) {
+            static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), m_checkedGuiItem->iconSet( KIcon::Toolbar ) );
+          }
+        }
+      }
+    }
+
+    void setCheckedState( const KGuiItem & item ) {
+      delete m_checkedGuiItem;
+      m_checkedGuiItem = new KGuiItem( item );
+    }
+
+    QString toolTip() const {
+      if ( m_checkedGuiItem && isChecked() )
+        return m_checkedGuiItem->toolTip();
+      else
+        return KToggleAction::toolTip();
+    }
+  };
+
+#endif
+
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupActions(int aCryptoMessageFormat)
 {
@@ -1110,11 +1184,13 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                       actionCollection(), "setup_spellchecker");
 
 #ifdef KLEO_CHIASMUS
-  if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
-    mEncryptChiasmusAction = new KToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
-                                                "decrypted", 0, actionCollection(),
-                                                "encrypt_message_chiasmus" );
-  else
+  if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
+    K33ToggleAction * a = new K33ToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
+                                               "chidecrypted", 0, actionCollection(),
+                                               "encrypt_message_chiasmus" );
+    a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
+    mEncryptChiasmusAction = a;
+  } else
     mEncryptChiasmusAction = 0;
   connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
            this, SLOT(slotEncryptChiasmusToggled(bool)) );
