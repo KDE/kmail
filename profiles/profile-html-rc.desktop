@@ -1,7 +1,6 @@
 [KMail Profile]
 Name=HTML
 Name[bg]=Поддръжка на HTML
-Name[xx]=xxHTMLxx
 Comment=Standard profile with HTML preview enabled - less secure!
 Comment[ar]=تشكيل قياسي مع تمكين استعراض HTML - أقل أمانا!
 Comment[az]=HTML nümayişli standard - ən az etibarlı!
@@ -16,6 +15,7 @@ Comment[el]=Τυπικό προφίλ με την προεπισκόπηση HTM
 Comment[eo]=Apriora agordo, kun ŝaltita HTML-antaŭrigardo - malpli sekura!
 Comment[es]=Perfil estándar con las vista HTML activada - menos seguro
 Comment[et]=Standardprofiil HTML-i eelvaatlusega - pole nii turvaline!
+Comment[eu]=HTML aurrebista gaituta duen profil estandarra - sekuritate gutxiago du
 Comment[fi]=Normaali profiili HTML esikatselua käyttäville - vähemmän turvallinen!
 Comment[fr]=Profil standard avec l'aperçu HTML activé - Moins sécurisé !
 Comment[gl]=Perfil estándar con previsualización HTML activada - menos seguro!
@@ -48,7 +48,6 @@ Comment[uk]=Окремий профіль з ввімкненим перегля
 Comment[ven]=Profile yo doweleaho irena HTML ya mbonelaphanda yo itwaho - a i ngo tsireledzea!
 Comment[vi]=Hồ sơ chuẩn cho phép xem trước HTML - I't bảo mật hơn !
 Comment[xh]=Imboniselo yabucala esezantsi nge HTML imboniso yenziwe - ukhuseleko oluncinane!
-Comment[xx]=xxStandard profile with HTML preview enabled - less secure!xx
 Comment[zh_CN]=启用 HTML 预览的标准配置文件 - 更不安全！
 Comment[zu]=Yenza ngokulingeneyo iprofayela nge HTML okokukhombisa ngaphambili kwenzeliwe - okuncane ukuvikeleka!
 
