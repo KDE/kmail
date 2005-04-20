@@ -481,7 +481,7 @@ void KMFldSearch::slotAddMsg(int idx)
         fName = pFolder->name();
 
     (void)new KListViewItem(mLbxMatches, mLbxMatches->lastItem(),
-			    msg->subject(), from, msg->dateStr(),
+			    msg->subject(), from, msg->dateIsoStr(),
 			    fName,
 			    QString::number(mFolder->serNum(idx)));
     if (unget)
