@@ -589,22 +589,30 @@ namespace KMail {
     }
 
     // check if we still display an error
-    if ( !mErrorDialogIsActive 
-        && errorCode != KIO::ERR_USER_CANCELED
-        && errorCode != KIO::ERR_SERVER_TIMEOUT
-        && errorCode != KIO::ERR_CONNECTION_BROKEN ) {
+    if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED ) {
       mErrorDialogIsActive = true;
       QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
       QString caption = i18n("Error");
-
+      
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
-        if ( !errors.isEmpty() )
-            KMessageBox::detailedError( kapp->activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
-        else
-            KMessageBox::error( kapp->activeWindow(), msg, caption );
+        if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
+          msg = "<qt>The connection to the server was unexpectedly closed or timed out. It will be re-established automatically if possible.";
+          KMessageBox::information( kapp->activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
+          // Show it in the status bar, in case the user has ticked "don't show again"
+          if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
+            KPIM::BroadcastStatus::instance()->setStatusMsg(
+                i18n(  "The connection to account %1 was broken." ).arg( name() ) );
+          else if ( errorCode == KIO::ERR_SERVER_TIMEOUT )
+            KPIM::BroadcastStatus::instance()->setStatusMsg(
+                i18n(  "The connection to account %1 timed out." ).arg( name() ) );
+        } else {
+          if ( !errors.isEmpty() )
+              KMessageBox::detailedError( kapp->activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
+          else
+              KMessageBox::error( kapp->activeWindow(), msg, caption );
+          }
       }
-      else // i.e. we have a chance to continue, ask the user about it
-      {
+      else { // i.e. we have a chance to continue, ask the user about it
         if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
           msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
           caption = errors[0];
@@ -619,19 +627,11 @@ namespace KMail {
     } else {
       if ( mErrorDialogIsActive )
         kdDebug(5006) << "suppressing error:" << errorMsg << endl;
-      else if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
-        KPIM::BroadcastStatus::instance()->setStatusMsg(  
-            i18n(  "The connection to account %1 was broken." ).arg( name() ) );
-      else if ( errorCode == KIO::ERR_SERVER_TIMEOUT )
-        KPIM::BroadcastStatus::instance()->setStatusMsg(  
-            i18n(  "The connection to account %1 timed out." ).arg( name() ) );
-
     }
-
     if ( job && !jobsKilled )
       removeJob( job );
     return !jobsKilled; // jobsKilled==false -> continue==true
-  }
+    }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::cancelMailCheck()
