@@ -192,13 +192,17 @@ void NewFolderDialog::slotOk()
   bool success = false;
   KMFolder *newFolder = 0;
 
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap) {
-    newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
-    if ( newFolder ) {
-      KMFolderImap* selectedStorage = static_cast<KMFolderImap*>( mFolder->storage() );
-      selectedStorage->createFolder(fldName); // create it on the server
-      static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
-      success = true;
+   if ( mFolder && mFolder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap* selectedStorage = static_cast<KMFolderImap*>( mFolder->storage() );
+    KMAcctImap *anAccount = selectedStorage->account();
+    // check if a connection is available BEFORE creating the folder
+    if (anAccount->makeConnection() == ImapAccountBase::Connected) {
+      newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
+      if ( newFolder ) {
+        selectedStorage->createFolder(fldName); // create it on the server
+        static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
+        success = true;
+      }
     }
   } else if ( mFolder && mFolder->folderType() == KMFolderTypeCachedImap ) {
     newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
