@@ -1748,7 +1748,6 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
       }
     }
   }
-  emit numUnreadMsgsChanged( folder() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1852,6 +1851,7 @@ void KMFolderImap::slotCompleteMailCheckProgress()
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->setComplete();
     mMailCheckProgressItem = 0;
+    emit numUnreadMsgsChanged( folder() );
   }
 }
 
