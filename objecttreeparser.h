@@ -278,6 +278,9 @@ namespace KMail {
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     KMail::CSSHelper * mCSSHelper;
+    // DataUrl Icons cache
+    QString mCollapseIcon;
+    QString mExpandIcon;
   };
 
 } // namespace KMail

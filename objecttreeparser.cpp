@@ -76,11 +76,17 @@
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
+#include <kiconloader.h>
+#include <kmdcodec.h>
 
 // other Qt headers
 #include <qtextcodec.h>
 #include <qfile.h>
 #include <qapplication.h>
+#include <kstyle.h>
+#include <qbuffer.h>
+#include <qpixmap.h>
+#include <qpainter.h>
 
 // other headers
 #include <sys/stat.h>
@@ -2402,6 +2408,21 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
   else
     htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ), decorate ) );
 }
+static QString pngToDataUrl( const QString & iconPath )
+{
+  if ( iconPath.isEmpty() )
+    return QString::null;
+
+  QFile pngFile( iconPath );
+  if ( !pngFile.open( IO_ReadOnly | IO_Raw ) )
+    return QString::null;
+
+  QByteArray ba = pngFile.readAll();
+  pngFile.close();
+  return QString::fromLatin1("data:image/png;base64,%1")
+         .arg( KCodecs::base64Encode( ba ) );
+}
+
 
 QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 {
@@ -2429,6 +2450,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   beg = pos;
 
   int currQuoteLevel = -2; // -2 == no previous lines
+  bool curHidden = false; // no hide any block
 
   while (beg<length)
   {
@@ -2460,34 +2482,80 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       }
     } /* for() */
 
+    bool actHidden = false;
+    QString textExpand;
+    // LevelQuote:
+    // 0  don't hide anything
+    // >0 hide the level 1, 2,3,... and so on
+    if ( mReader->mLevelQuote >= 0 && mReader->mLevelQuote <= ( actQuoteLevel ) )
+      actHidden = true;
+
     if ( actQuoteLevel != currQuoteLevel ) {
       /* finish last quotelevel */
       if (currQuoteLevel == -1)
         htmlStr.append( normalEndTag );
-      else if (currQuoteLevel >= 0)
+      else if ( currQuoteLevel >= 0 && !curHidden )
         htmlStr.append( quoteEnd );
 
       /* start new quotelevel */
-      currQuoteLevel = actQuoteLevel;
       if (actQuoteLevel == -1)
         htmlStr += normalStartTag;
       else
-        htmlStr += quoteFontTag[currQuoteLevel%3];
-    }
+      {
+        if ( GlobalSettings::showExpandQuotesMark() ) 
+        {
+          // Cache Icons
+          if ( mCollapseIcon.isEmpty() )
+            mCollapseIcon= pngToDataUrl( 
+                KGlobal::instance()->iconLoader()->iconPath( "quotecollapse",0 ));
+          if ( mExpandIcon.isEmpty() )
+            mExpandIcon= pngToDataUrl( 
+                KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
 
-    // don't write empty <div ...></div> blocks (they have zero height)
-    // ignore ^M DOS linebreaks
-    if( !line.replace('\015', "").isEmpty() )
-    {
-      if( line.isRightToLeft() )
-        htmlStr += QString( "<div dir=\"rtl\">" );
-      else
-        htmlStr += QString( "<div dir=\"ltr\">" );
-      htmlStr += LinkLocator::convertToHtml( line, convertFlags );
-      htmlStr += QString( "</div>" );
+          if ( !actHidden ) 
+          {
+            htmlStr += "<div class=\"quotelevelmark\" >" ;
+            htmlStr += QString( "<a href=\"kmail:levelquote?%1 \">"
+                "<img src=\"%2\" alt=\"\" title=\"\"/></a>" )
+              .arg(actQuoteLevel)
+              .arg( mCollapseIcon);
+            htmlStr += "</div>";
+            htmlStr += quoteFontTag[actQuoteLevel%3];
+          }
+          else
+            //only show the QuoteMark when is the first level hidden
+            if ( mReader->mLevelQuote == actQuoteLevel && currQuoteLevel < actQuoteLevel ) 
+            {
+              //Expand all quotes
+              htmlStr += "<div class=\"quotelevelmark\" >" ;
+              htmlStr += QString( "<a href=\"kmail:levelquote?%1 \">"
+                  "<img src=\"%2\" alt=\"\" title=\"\"/></a>" )
+                .arg(-1)
+                .arg( mExpandIcon );
+              htmlStr += "</div><br/>";
+              htmlStr += quoteEnd;
+            }
+        } else 
+          htmlStr += quoteFontTag[actQuoteLevel%3];
+      }
+      currQuoteLevel = actQuoteLevel;
     }
-    else
-      htmlStr += "<br>";
+    curHidden = actHidden;
+
+
+    if ( !actHidden )
+    {
+      // don't write empty <div ...></div> blocks (they have zero height)
+      // ignore ^M DOS linebreaks
+      if( !line.replace('\015', "").isEmpty() )
+      {
+         htmlStr +=QString( "<div dir=\"%1\">" ).arg( line.isRightToLeft() ? "rtl":"ltr" );
+         htmlStr += LinkLocator::convertToHtml( line, convertFlags );
+         htmlStr += QString( "</div>" );
+      }
+      else
+        htmlStr += "<br>";
+    }
   } /* while() */
 
   /* really finish the last quotelevel */

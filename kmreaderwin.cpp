@@ -529,12 +529,15 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mHtmlOverride = false;
   mHtmlLoadExtOverride = false;
 
+	mLevelQuote=GlobalSettings::self()->collapseQuoteLevelSpin()-1;
+
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
+
 }
 
 void KMReaderWin::createActions( KActionCollection * ac ) {
@@ -723,6 +726,13 @@ void KMReaderWin::slotLongHeaders() {
 void KMReaderWin::slotAllHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
                              HeaderStrategy::all() );
+}
+
+void KMReaderWin::slotLevelQuote( int l )
+{
+  kdDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
+	mLevelQuote = l;
+  update(true);
 }
 
 void KMReaderWin::slotCycleHeaderStyles() {
@@ -1060,6 +1070,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
         << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
+
+	//Reset the level quote if the msg has changed.
+  if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
+    mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
+  }
+  if ( mPrinting )
+    mLevelQuote = -1;
 
   bool complete = true;
   if ( aMsg &&

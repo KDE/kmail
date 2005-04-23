@@ -519,6 +519,8 @@ private: // data
   QCheckBox *mShowColorbarCheck;
   QCheckBox *mShowSpamStatusCheck;
   QCheckBox *mShowEmoticonsCheck;
+  QCheckBox *mShowExpandQuotesMark;
+  KIntSpinBox  *mCollapseQuoteLevelSpin;
   QComboBox *mCharsetCombo;
   QComboBox *mOverrideCharsetCombo;
 };

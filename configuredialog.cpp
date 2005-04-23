@@ -2175,6 +2175,10 @@ static const BoolConfigEntry showSpamStatusMode = {
 static const BoolConfigEntry showEmoticons = {
   "Reader", "ShowEmoticons", I18N_NOOP("Replace smileys by emoticons"), true
 };
+static const BoolConfigEntry showExpandQuotesMark= {
+  "Reader", "ShowExpandQuotesMark", I18N_NOOP("Show expand/collapse quote marks"), false
+};
+
 
 QString AppearancePage::ReaderTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-reader");
@@ -2204,8 +2208,32 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
+  // "Show expand/collaps quote marks" check box;
+  QHBoxLayout *hlay= new QHBoxLayout( vlay ); // inherits spacing
+  populateCheckBox( mShowExpandQuotesMark= new QCheckBox( this ), showExpandQuotesMark);
+  hlay->addWidget( mShowExpandQuotesMark);
+  connect( mShowExpandQuotesMark, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  hlay->addStretch( 1 );
+  mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
+      3/*init*/,10/*base*/,this );
+
+  QLabel *label = new QLabel( mCollapseQuoteLevelSpin,
+           GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
+
+  hlay->addWidget( label );
+
+  mCollapseQuoteLevelSpin->setEnabled( false ); //since !mShowExpandQuotesMark->isCheckec()
+  connect(  mCollapseQuoteLevelSpin, SIGNAL( valueChanged( int ) ),
+      this, SLOT( slotEmitChanged( void ) ) );
+  hlay->addWidget( mCollapseQuoteLevelSpin);
+
+  connect( mShowExpandQuotesMark, SIGNAL( toggled( bool ) ),
+      mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
+
   // Fallback Character Encoding
-  QHBoxLayout *hlay = new QHBoxLayout( vlay ); // inherits spacing
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
   mCharsetCombo = new QComboBox( this );
   const QStringList &encodings = KMMsgBase::supportedEncodings( false );
   mCharsetCombo->insertStringList( encodings );
@@ -2230,7 +2258,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
     i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
   QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
 
-  QLabel *label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
+  label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
   label->setBuddy( mCharsetCombo );
 
   hlay->addWidget( label );
@@ -2283,6 +2311,8 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 {
   mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
+  mShowExpandQuotesMark->setChecked( GlobalSettings::showExpandQuotesMark() );
+  mCollapseQuoteLevelSpin->setValue( GlobalSettings::collapseQuoteLevelSpin() );
   readCurrentOverrideCodec();
 }
 
@@ -2299,6 +2329,9 @@ void AppearancePage::ReaderTab::save() {
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
   GlobalSettings::setShowEmoticons( mShowEmoticonsCheck->isChecked() );
+  GlobalSettings::setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
+  
+  GlobalSettings::setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
   GlobalSettings::setFallbackCharacterEncoding(
       KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::setOverrideCharacterEncoding(
@@ -2311,6 +2344,7 @@ void AppearancePage::ReaderTab::installProfile( KConfig * /* profile */ ) {
   loadProfile( mShowColorbarCheck, reader, showColorbarMode );
   loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
   loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
+  loadProfile( mShowExpandQuotesMark, reader, showExpandQuotesMark);
 }
 
 

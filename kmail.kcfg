@@ -388,6 +388,19 @@
        <label>Replace smileys by emoticons</label>
        <whatsthis>Enable this if you want smileys like :-) appearing in the message text to be replaced by emoticons (small pictures).</whatsthis> 
      </entry>
+     <entry name="ShowExpandQuotesMark" type="Bool">
+       <default>false</default>
+       <label>Show expand/collapse quote marks</label>
+       <whatsthis>Enable this option to show different levels of quoted text. Disable to hide the levels of quoted text.</whatsthis> 
+     </entry>
+      <entry name="CollapseQuoteLevelSpin" type="Int" >
+        <label>Automatic collapse level:</label>
+        <default>3</default>
+        <min>0</min>
+        <max>10</max>
+      </entry>
+
+
     </group>
 
 </kcfg>

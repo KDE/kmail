@@ -336,6 +336,8 @@ public slots:
   void slotIMChat();
   void contactStatusChanged( const QString &uid);
 
+	void slotLevelQuote( int l );
+
 protected slots:
   void slotCycleHeaderStyles();
   void slotBriefHeaders();
@@ -466,6 +468,7 @@ private:
   int mChoice;
   unsigned long mWaitingForSerNum;
   float mSavedRelativePosition;
+	int mLevelQuote;
 };
 
 

@@ -340,6 +340,18 @@ namespace {
         w->update( true );
         return true;
       }
+      //Format url: 
+      //  kmail:levelquote/?inc      -> inc the level quote shown.
+      //  kmail:levelquote/?dec      -> dec the level quote shown.
+      if (  url.path() == "levelquote" ){
+
+        QString levelStr= url.query().mid( 1,url.query().length() );
+        bool isNumber;
+        int levelQuote= levelStr.toInt(&isNumber);
+        if ( isNumber )
+          w->slotLevelQuote( levelQuote );
+        return true;
+      }
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
@@ -351,10 +363,22 @@ namespace {
   }
 
   QString ShowHtmlSwitchURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
-    if ( url.url() == "kmail:showHTML" )
-      return i18n("Turn on HTML rendering for this message.");
-    if ( url.url() == "kmail:loadExternal" )
-      return i18n("Load external references from the Internet for this message.");
+    if ( url.protocol() == "kmail" )
+    {
+      if ( url.path() == "showHTML" )
+        return i18n("Turn on HTML rendering for this message.");
+      if ( url.path() == "loadExternal" )
+        return i18n("Load external references from the Internet for this message.");
+      if ( url.path() == "levelquote" )
+      {
+        QString query= url.query();
+        if ( query.length()>=2 )
+          if ( query[ 1 ] =='-'  )
+            return i18n("Expand all quoted text.");
+          else
+            return i18n("Collapse quoted text.");
+      }
+    }
     return QString::null ;
   }
 }

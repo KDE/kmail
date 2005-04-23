@@ -718,6 +718,11 @@ namespace KMail {
 
       "img.pimsmileyimg {\n"
       "}\n\n"
+
+      "div.quotelevelmark {\n"
+      "  position: absolute;\n"
+      "  margin-left:-10px;\n"
+      "}\n\n"
       ;
   }
 
