@@ -2466,6 +2466,19 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
     /* calculate line's current quoting depth */
     int actQuoteLevel = -1;
+
+    if ( GlobalSettings::showExpandQuotesMark() ) 
+    {
+      // Cache Icons
+      if ( mCollapseIcon.isEmpty() ) {
+        mCollapseIcon= pngToDataUrl( 
+            KGlobal::instance()->iconLoader()->iconPath( "quotecollapse",0 ));
+      }
+      if ( mExpandIcon.isEmpty() )
+        mExpandIcon= pngToDataUrl( 
+            KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
+    }
+
     for (unsigned int p=0; p<line.length(); p++) {
       switch (line[p].latin1()) {
         case '>':
@@ -2504,14 +2517,6 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       {
         if ( GlobalSettings::showExpandQuotesMark() ) 
         {
-          // Cache Icons
-          if ( mCollapseIcon.isEmpty() )
-            mCollapseIcon= pngToDataUrl( 
-                KGlobal::instance()->iconLoader()->iconPath( "quotecollapse",0 ));
-          if ( mExpandIcon.isEmpty() )
-            mExpandIcon= pngToDataUrl( 
-                KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
-
           if ( !actHidden ) 
           {
             htmlStr += "<div class=\"quotelevelmark\" >" ;
