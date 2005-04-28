@@ -732,6 +732,9 @@ void KMReaderWin::slotLevelQuote( int l )
 {
   kdDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
 	mLevelQuote = l;
+  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
+
   update(true);
 }
 

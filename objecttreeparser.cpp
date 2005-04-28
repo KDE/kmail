@@ -2528,8 +2528,8 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
             htmlStr += quoteFontTag[actQuoteLevel%3];
           }
           else
-            //only show the QuoteMark when is the first level hidden
-            if ( mReader->mLevelQuote == actQuoteLevel && currQuoteLevel < actQuoteLevel ) 
+            //only show the QuoteMark when is the first line of the level hidden
+            if ( !curHidden ) 
             {
               //Expand all quotes
               htmlStr += "<div class=\"quotelevelmark\" >" ;
