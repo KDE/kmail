@@ -931,7 +931,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 
 namespace {
 
-#if 0// KDE_IS_VERSION( 3, 3, 0 )
+#if KDE_IS_VERSION( 3, 3, 0 )
   // KDELIBS 3.2 misses setCheckedState(), so we provide our own
   typedef KToggleAction K33ToggleAction;
 #else
