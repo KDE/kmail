@@ -931,7 +931,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 
 namespace {
 
-#if KDE_IS_VERSION( 3, 3, 0 )
+#if 0// KDE_IS_VERSION( 3, 3, 0 )
   // KDELIBS 3.2 misses setCheckedState(), so we provide our own
   typedef KToggleAction K33ToggleAction;
 #else
@@ -949,7 +949,7 @@ namespace {
       delete m_checkedGuiItem; m_checkedGuiItem = 0;
     }
 
-    // This is just copied from some kdelibs version beyond 3.3..
+    // This is inspired from some kdelibs version beyond 3.3..
     void updateChecked( int id ) {
       if ( !m_checkedGuiItem ) {
         KToggleAction::updateChecked( id );
@@ -961,13 +961,20 @@ namespace {
       if ( ::qt_cast<QPopupMenu *>( w ) ) {
         QPopupMenu* pm = static_cast<QPopupMenu*>(w);
         int itemId_ = itemId( id );
-        const KGuiItem* gui = isChecked() ? m_checkedGuiItem : &guiItem();
-        if ( m_checkedGuiItem->hasIcon() )
-          pm->changeItem( itemId_, gui->iconSet( KIcon::Small ), gui->text() );
-        else
-          pm->changeItem( itemId_, gui->text() );
-        if ( !m_checkedGuiItem->whatsThis().isEmpty() ) // if empty, we keep the initial one
-          pm->setWhatsThis( itemId_, gui->whatsThis() );
+        if ( isChecked() ) {
+          if ( m_checkedGuiItem->hasIcon() )
+            pm->changeItem( itemId_, m_checkedGuiItem->iconSet( KIcon::Small ), m_checkedGuiItem->text() );
+          else
+            pm->changeItem( itemId_, m_checkedGuiItem->text() );
+          if ( !m_checkedGuiItem->whatsThis().isEmpty() ) // if empty, we keep the initial one
+            pm->setWhatsThis( itemId_, m_checkedGuiItem->whatsThis() );
+        } else {
+          if ( hasIcon() )
+            pm->changeItem( itemId_, iconSet( KIcon::Small ), text() );
+          else
+            pm->changeItem( itemId_, text() );
+          pm->setWhatsThis( itemId_, whatsThis() );
+        }
         updateShortcut( pm, itemId_ );
       }
       else if ( ::qt_cast<QMenuBar *>( w ) ) // not handled in plug...
@@ -977,8 +984,10 @@ namespace {
         if ( r && ::qt_cast<KToolBarButton *>( r ) ) {
           static_cast<KToolBar*>( w )->setButton( itemId( id ), isChecked() );
           if ( m_checkedGuiItem->hasIcon() ) {
-            const KGuiItem* gui = isChecked() ? m_checkedGuiItem : &guiItem();
-            static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( KIcon::Toolbar ) );
+            const QIconSet iconSet = isChecked()
+              ? m_checkedGuiItem->iconSet( KIcon::Toolbar )
+              : this->iconSet( KIcon::Toolbar );
+            static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), iconSet );
           }
         }
       }
