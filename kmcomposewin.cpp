@@ -951,7 +951,7 @@ namespace {
 
     // This is just copied from some kdelibs version beyond 3.3..
     void updateChecked( int id ) {
-      if ( !m_checkedGuiItem || !isChecked() ) {
+      if ( !m_checkedGuiItem ) {
         KToggleAction::updateChecked( id );
         return;
       }
@@ -961,13 +961,13 @@ namespace {
       if ( ::qt_cast<QPopupMenu *>( w ) ) {
         QPopupMenu* pm = static_cast<QPopupMenu*>(w);
         int itemId_ = itemId( id );
+        const KGuiItem* gui = isChecked() ? m_checkedGuiItem : &guiItem();
         if ( m_checkedGuiItem->hasIcon() )
-          pm->changeItem( itemId_, m_checkedGuiItem->iconSet( KIcon::Small ),
-                          m_checkedGuiItem->text() );
+          pm->changeItem( itemId_, gui->iconSet( KIcon::Small ), gui->text() );
         else
-          pm->changeItem( itemId_, m_checkedGuiItem->text() );
+          pm->changeItem( itemId_, gui->text() );
         if ( !m_checkedGuiItem->whatsThis().isEmpty() ) // if empty, we keep the initial one
-          pm->setWhatsThis( itemId_, m_checkedGuiItem->whatsThis() );
+          pm->setWhatsThis( itemId_, gui->whatsThis() );
         updateShortcut( pm, itemId_ );
       }
       else if ( ::qt_cast<QMenuBar *>( w ) ) // not handled in plug...
@@ -977,7 +977,8 @@ namespace {
         if ( r && ::qt_cast<KToolBarButton *>( r ) ) {
           static_cast<KToolBar*>( w )->setButton( itemId( id ), isChecked() );
           if ( m_checkedGuiItem->hasIcon() ) {
-            static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), m_checkedGuiItem->iconSet( KIcon::Toolbar ) );
+            const KGuiItem* gui = isChecked() ? m_checkedGuiItem : &guiItem();
+            static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( KIcon::Toolbar ) );
           }
         }
       }
@@ -1190,10 +1191,11 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                                                "encrypt_message_chiasmus" );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
     mEncryptChiasmusAction = a;
-  } else
+    connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
+             this, SLOT(slotEncryptChiasmusToggled(bool)) );
+  } else {
     mEncryptChiasmusAction = 0;
-  connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
-           this, SLOT(slotEncryptChiasmusToggled(bool)) );
+  }
 #endif // KLEO_CHIASMUS
 
   mEncryptAction = new KToggleAction (i18n("&Encrypt Message"),
