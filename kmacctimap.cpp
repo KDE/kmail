@@ -403,15 +403,32 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   // Filter messages
   QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
   QValueList<Q_UINT32> inTransit;
+
   while (filterIt != mFilterSerNums.end()) {
     int idx = -1;
     KMFolder *folder = 0;
     KMMessage *msg = 0;
     kmkernel->msgDict()->getLocation( *filterIt, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
-    // different folder
+    // different folder, or that the serNum is stale
+    
+    KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
+    if (!imapFolder->folder()->isSystemFolder() ||
+	!(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
+	mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+	++filterIt;
+	continue;
+    }
+
     if (folder && (idx != -1)) {
+
       msg = folder->getMsg( idx );
+      if (!msg) { // sanity checking
+	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+	  ++filterIt;
+	  continue;
+      }
+	    
       if (msg->transferInProgress()) {
 	  inTransit.append( *filterIt );
 	  ++filterIt;
