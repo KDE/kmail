@@ -77,6 +77,12 @@ public:
    of messages left to process is empty */
   void setFilterList( QPtrList<KMFilter> filters );
 
+  /* Set the id of the account associated with this scheduler */
+  void setAccountId( uint id  ) { mAccountId = id; mAccount = true; }
+
+  /* Clear the id of the account associated with this scheduler */
+  void clearAccountId() { mAccountId = 0; mAccount = false; }
+
   /** Queue a message for filtering */
   void execFilters(const QValueList<Q_UINT32> serNums);
   void execFilters(const QPtrList<KMMsgBase> msgList);
@@ -111,6 +117,7 @@ private slots:
   void filterMessage();
   void moveMessage();
   void moveMessageFinished( KMCommand *command );
+  void timeOut();
 
 private:
   static KMFolderMgr *tempFolderMgr;
@@ -130,11 +137,16 @@ private:
   bool mFiltersAreQueued;
   bool mAutoDestruct;
   bool mAlwaysMatch;
+  bool mAccount;
+  uint mAccountId;
   Q_UINT32 mOriginalSerNum;
   bool mDeleteSrcFolder;
   ReturnCode mResult;
   QTimer *finishTimer, *fetchMessageTimer, *tempCloseFoldersTimer;
   QTimer *processMessageTimer, *filterMessageTimer;
+  QTimer *timeOutTimer;
+  QTime timeOutTime;
+  KMCommand *lastCommand;
 };
 
 }
