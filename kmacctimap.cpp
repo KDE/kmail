@@ -46,7 +46,7 @@ using KPIM::ProgressManager;
 #include <kio/slave.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-
+#include <errno.h>
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
