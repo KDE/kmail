@@ -23,6 +23,7 @@
 #define KMAcctImap_h
 
 #include "imapaccountbase.h"
+#include <qdict.h>
 
 class KMFolderImap;
 class KMFolderTreeItem;
@@ -90,6 +91,11 @@ public:
    */
   virtual FolderStorage* const rootFolder() const;
 
+  /**
+   * Queues a message for automatic filtering
+   */
+  void execFilters(Q_UINT32 serNum);
+    
 public slots:
   /**
    * updates the new-mail-check folderlist
@@ -129,11 +135,19 @@ protected slots:
    * called to reset the connection error status
    */
   void slotResetConnectionError();
+    
+  /**
+   * Slots for automatic filtering
+   */
+  void slotFolderSelected( KMFolderImap*, bool );
+  int slotFilterMsg( KMMessage* );
 
 private:
   /** used to reset connection errors */
   QTimer mErrorTimer;
   int mCountRemainChecks;
+  QValueList<Q_UINT32> mFilterSerNums;
+  QDict<int> mFilterSerNumsToSave;
 };
 
 #endif /*KMAcctImap_h*/

@@ -225,7 +225,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
   // 0==message moved; 1==processing ok, no move; 2==critical error, abort!
 
-  processResult = kmkernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
+  processResult = kmkernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound,true,id());
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
     KMessageBox::information(0,(i18n("Critical error: "

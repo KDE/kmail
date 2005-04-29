@@ -32,6 +32,9 @@ using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwin.h"
+#include "kmmsgdict.h"
+#include "kmfilter.h"
+#include "kmfiltermgr.h"
 #include "folderstorage.h"
 #include "imapjob.h"
 using KMail::ImapJob;
@@ -56,6 +59,18 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
   connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
+  
+  QString serNumUri = locateLocal( "data", "kmail/unfiltered." + 
+				   QString("%1").arg(KAccount::id()) );
+  KConfig config( serNumUri );
+  QStringList serNums = config.readListEntry( "unfiltered" );
+  mFilterSerNumsToSave.setAutoDelete( false );
+  
+  for ( QStringList::ConstIterator it = serNums.begin();
+	it != serNums.end(); ++it ) {
+      mFilterSerNums.append( (*it).toUInt() );
+      mFilterSerNumsToSave.insert( *it, (const int *)1 );
+    }
 }
 
 
@@ -63,6 +78,15 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
 KMAcctImap::~KMAcctImap()
 {
   killAllJobs( true );
+  
+  QString serNumUri = locateLocal( "data", "kmail/unfiltered." + 
+				   QString("%1").arg(KAccount::id()) );
+  KConfig config( serNumUri );
+  QStringList serNums;
+  QDictIterator<int> it( mFilterSerNumsToSave );
+  for( ; it.current(); ++it )
+      serNums.append( it.currentKey() );
+  config.writeEntry( "unfiltered", serNums );
 }
 
 
@@ -291,11 +315,31 @@ void KMAcctImap::processNewMail(bool interactive)
       {
         // connect the result-signals for new-mail-notification
         mCountRemainChecks++;
+
+	QPtrListIterator<KMFilter> it( *kmkernel->filterMgr() );
+	bool someFilterApplies = false;
+	for ( it.toFirst() ; it.current() ; ++it ) {
+	  KMFilter *filter = *it;
+	  if ( filter->applyOnAccount( id() ) ) {
+	      someFilterApplies = true;
+	      break;
+	  }
+	}
+
         if (imapFolder->isSelected()) {
           connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
               this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
           imapFolder->getFolder();
-        }
+        } else if ( someFilterApplies &&
+		    imapFolder->folder()->isSystemFolder() && 
+		    imapFolder->imapPath() == "/INBOX/" ) {
+	  imapFolder->open(); // will be closed in the folderSelected slot
+	  // first get new headers before we select the folder
+	  imapFolder->setSelected( true );
+	  connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+		   this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
+	  imapFolder->getFolder();
+	}
         else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
@@ -355,6 +399,39 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     addToNewInFolder( folderId, newInFolder );
     mCountUnread += newInFolder;
   }
+
+  // Filter messages
+  QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
+  QValueList<Q_UINT32> inTransit;
+  while (filterIt != mFilterSerNums.end()) {
+    int idx = -1;
+    KMFolder *folder = 0;
+    KMMessage *msg = 0;
+    kmkernel->msgDict()->getLocation( *filterIt, &folder, &idx );
+    // It's possible that the message has been deleted or moved into a
+    // different folder
+    if (folder && (idx != -1)) {
+      msg = folder->getMsg( idx );
+      if (msg->transferInProgress()) {
+	  inTransit.append( *filterIt );
+	  ++filterIt;
+	  continue;
+      }
+      msg->setTransferInProgress(true);
+      if ( !msg->isComplete() ) {
+	FolderJob *job = folder->createJob(msg);
+	connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+		SLOT(slotFilterMsg(KMMessage*)));
+	job->start();
+      } else {
+	mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+	if (slotFilterMsg(msg) == 2) break;
+      }
+    }
+    ++filterIt;
+  }
+  mFilterSerNums = inTransit;
+  
   if (mCountRemainChecks == 0)
   {
     // all checks are done
@@ -438,6 +515,51 @@ void KMAcctImap::slotResetConnectionError()
 {
   mSlaveConnectionError = false;
   kdDebug(5006) << k_funcinfo << endl;
+}
+    
+void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
+{
+  folder->setSelected( false );
+  disconnect( folder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+	      this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
+  postProcessNewMail( static_cast<KMFolder*>(folder->folder()) );
+  folder->close();
+}
+
+void KMAcctImap::execFilters(Q_UINT32 serNum)
+{
+  QValueListIterator<Q_UINT32> findIt = mFilterSerNums.find( serNum );
+  if ( findIt != mFilterSerNums.end() )
+      return;
+  mFilterSerNums.append( serNum );
+  mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), (const int *)1 );
+}
+
+int KMAcctImap::slotFilterMsg( KMMessage *msg )
+{
+  msg->setTransferInProgress(false);
+  Q_UINT32 serNum = msg->getMsgSerNum();
+  if ( serNum )
+    mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
+
+  int filterResult = kmkernel->filterMgr()->process(msg, 
+						    KMFilterMgr::Inbound,
+						    true,
+						    id() );
+  if (filterResult == 2) {
+    // something went horribly wrong (out of space?)
+    kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
+    return 2;
+  }
+  if (msg->parent()) { // unGet this msg
+    int idx = -1;
+    KMFolder * p = 0;
+    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    assert( p == msg->parent() ); assert( idx >= 0 );
+    p->unGetMsg( idx );
+  }
+
+  return filterResult;
 }
 
 #include "kmacctimap.moc"

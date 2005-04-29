@@ -11,6 +11,7 @@
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
+#include "kmacctmgr.h"
 
 // other KDE headers:
 #include <kmessagebox.h>
@@ -23,6 +24,7 @@
 #include <kconfig.h>
 #include <kicondialog.h>
 #include <kkeybutton.h>
+#include <klistview.h>
 #include <kpushbutton.h>
 
 // other Qt headers:
@@ -35,6 +37,7 @@
 #include <qcheckbox.h>
 #include <qhbox.h>
 #include <qvalidator.h>
+#include <qtabwidget.h>
 
 // other headers:
 #include <assert.h>
@@ -116,17 +119,35 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
-  QWidget *w = new QWidget(this);
-  setMainWidget(w);
-  QHBoxLayout *hbl = new QHBoxLayout( w, 0, spacingHint(), "kmfd_hbl" );
+  QWidget *w = new QWidget( this );
+  setMainWidget( w );
+  QHBoxLayout *topLayout = new QHBoxLayout( w, 0, spacingHint(), "topLayout" );
+  QHBoxLayout *hbl = topLayout;
+  QVBoxLayout *vbl2 = 0;
+  QWidget *page1 = 0;
+  QWidget *page2 = 0;
 
   mFilterList = new KMFilterListBox( i18n("Available Filters"), w, 0, bPopFilter);
-  hbl->addWidget( mFilterList, 1 /*stretch*/ );
+  topLayout->addWidget( mFilterList, 1 /*stretch*/ );
+
+  if(!bPopFilter) {
+    QTabWidget *tabWidget = new QTabWidget( w, "kmfd_tab" );
+    tabWidget->setMargin( KDialog::marginHint() );
+    topLayout->addWidget( tabWidget );
+
+    page1 = new QWidget( tabWidget );
+    tabWidget->addTab( page1, i18n("&General") );
+    hbl = new QHBoxLayout( page1, 0, spacingHint(), "kmfd_hbl" );
+
+    page2 = new QWidget( tabWidget );
+    tabWidget->addTab( page2, i18n("A&dvanced") );
+    vbl2 = new QVBoxLayout( page2, 0, spacingHint(), "kmfd_vbl2" );
+  }
 
   QVBoxLayout *vbl = new QVBoxLayout( hbl, spacingHint(), "kmfd_vbl" );
   hbl->setStretchFactor( vbl, 2 );
 
-  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w , "spe", bPopFilter);
+  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), bPopFilter ? w : page1 , "spe", bPopFilter);
   vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
 
   if(bPopFilter){
@@ -139,38 +160,61 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
   }
   else {
-    QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), w );
+    QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), page1 );
     mActionLister = new KMFilterActionWidgetLister( agb );
     vbl->addWidget( agb, 0, Qt::AlignTop );
 
     mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical,
-				    i18n("Advanced Options"), w);
+				    i18n("Advanced Options"), page2);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
-      QGridLayout *gl = new QGridLayout( adv_w, 4 /*rows*/, 4 /*cols*/,
-				         0 /*border*/, spacingHint() );
-      gl->setColStretch( 0, 1 );
-      QLabel *l = new QLabel( i18n("Apply this filter"), adv_w );
-      gl->addWidget( l, 0, 0, AlignLeft );
-      mApplyOnIn = new QCheckBox( i18n("to &incoming messages"), adv_w );
-      gl->addWidget( mApplyOnIn, 0, 1 );
-      mApplyOnOut = new QCheckBox( i18n("to &sent messages"), adv_w );
-      gl->addWidget( mApplyOnOut, 0, 2 );
-      mApplyOnCtrlJ = new QCheckBox( i18n("on manual &filtering"), adv_w );
-      gl->addWidget( mApplyOnCtrlJ, 0, 3 );
+      QGridLayout *gl = new QGridLayout( adv_w, 8 /*rows*/, 3 /*cols*/,
+      				         0 /*border*/, spacingHint() );
+
+      QVBoxLayout *vbl3 = new QVBoxLayout( gl, spacingHint(), "vbl3" );
+      vbl3->addStretch( 1 );
+      mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), adv_w );
+      vbl3->addWidget( mApplyOnIn );
+      QButtonGroup *bg = new QButtonGroup( 0, "bg" );
+      bg->setExclusive( true );
+      mApplyOnForAll = new QRadioButton( i18n("from all accounts"), adv_w );
+      bg->insert( mApplyOnForAll );
+      vbl3->addWidget( mApplyOnForAll );
+      mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), adv_w );
+      bg->insert( mApplyOnForTraditional );
+      vbl3->addWidget( mApplyOnForTraditional );
+      mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), adv_w );
+      bg->insert( mApplyOnForChecked );
+      vbl3->addWidget( mApplyOnForChecked );
+      vbl3->addStretch( 2 );
+
+      mAccountList = new KListView( adv_w, "accountList" );
+      mAccountList->addColumn( i18n("Account Name") );
+      mAccountList->addColumn( i18n("Type") );
+      mAccountList->setAllColumnsShowFocus( true );
+      mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+      mAccountList->setSorting( -1 );
+      gl->addMultiCellWidget( mAccountList, 0, 3, 1, 3 );
+
+      mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), adv_w );
+      gl->addMultiCellWidget( mApplyOnOut, 4, 4, 0, 3 );
+
+      mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), adv_w );
+      gl->addMultiCellWidget( mApplyOnCtrlJ, 5, 5, 0, 3 );
+
       mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), adv_w );
-      gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
-			      1, 1, /*from to row*/
+      gl->addMultiCellWidget( mStopProcessingHere,
+			      6, 6, /*from to row*/
   			      0, 3 /*from to col*/ );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
-      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 1 );
+      gl->addMultiCellWidget( mConfigureShortcut, 7, 7, 0, 1 );
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), adv_w );
       keyButtonLabel->setAlignment( AlignVCenter | AlignRight );
-      gl->addMultiCellWidget( keyButtonLabel, 2, 2, 2, 2 );
+      gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
-      gl->addMultiCellWidget( mKeyButton, 2, 2, 3, 3 );
+      gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
-      gl->addMultiCellWidget( mConfigureToolbar, 3, 3, 1, 3 );
+      gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
       mConfigureToolbar->setEnabled( false );
 
       QHBox *hbox = new QHBox( adv_w );
@@ -185,9 +229,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mFilterActionIconButton->setIcon( "gear" );
       mFilterActionIconButton->setEnabled( false );
 
-      gl->addMultiCellWidget( hbox, 4, 4, 1, 3 );
+      gl->addMultiCellWidget( hbox, 9, 9, 0, 3 );
     }
-    vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
+    vbl2->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
   // spacer:
   vbl->addStretch( 1 );
@@ -209,11 +253,21 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     // combo box to the filter
     connect( mApplyOnIn, SIGNAL(clicked()),
   	     this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyOnForAll, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyOnForTraditional, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyOnForChecked, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnOut, SIGNAL(clicked()),
   	     this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnCtrlJ, SIGNAL(clicked()),
   	     this, SLOT(slotApplicabilityChanged()) );
-
+    connect( mAccountList, SIGNAL(clicked(QListViewItem*)),
+  	     this, SLOT(slotApplicableAccountsChanged()) );
+    connect( mAccountList, SIGNAL(spacePressed(QListViewItem*)),
+  	     this, SLOT(slotApplicableAccountsChanged()) );
+    
     // transfer changes from the 'stop processing here'
     // check box to the filter
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
@@ -315,6 +369,8 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     // the filter! So make sure we have the correct values _before_ we
     // set the first one:
     const bool applyOnIn = aFilter->applyOnInbound();
+    const bool applyOnForAll = aFilter->applicability() == KMFilter::All;
+    const bool applyOnTraditional = aFilter->applicability() == KMFilter::ButImap;
     const bool applyOnOut = aFilter->applyOnOutbound();
     const bool applyOnExplicit = aFilter->applyOnExplicit();
     const bool stopHere = aFilter->stopProcessingHere();
@@ -324,6 +380,14 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     const KShortcut shortcut( aFilter->shortcut() );
 
     mApplyOnIn->setChecked( applyOnIn );
+    mApplyOnForAll->setEnabled( applyOnIn );
+    mApplyOnForTraditional->setEnabled( applyOnIn );
+    mApplyOnForChecked->setEnabled( applyOnIn );
+    mApplyOnForAll->setChecked( applyOnForAll );
+    mApplyOnForTraditional->setChecked( applyOnTraditional );
+    mApplyOnForChecked->setChecked( !applyOnForAll && !applyOnTraditional );
+    mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
+    slotUpdateAccountList();
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
@@ -345,6 +409,7 @@ void KMFilterDlg::slotReset()
   } else {
     mActionLister->reset();
     mAdvOptsGroup->setEnabled( false );
+    slotUpdateAccountList();
   }
 }
 
@@ -362,11 +427,50 @@ void KMFilterDlg::slotApplicabilityChanged()
     mFilter->setApplyOnInbound( mApplyOnIn->isChecked() );
     mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
     mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
+    if ( mApplyOnForAll->isChecked() )
+      mFilter->setApplicability( KMFilter::All );
+    else if ( mApplyOnForTraditional->isChecked() )
+      mFilter->setApplicability( KMFilter::ButImap );
+    else if ( mApplyOnForChecked->isChecked() )
+      mFilter->setApplicability( KMFilter::Checked );
+      
+    mApplyOnForAll->setEnabled( mApplyOnIn->isChecked() );
+    mApplyOnForTraditional->setEnabled(  mApplyOnIn->isChecked() );
+    mApplyOnForChecked->setEnabled( mApplyOnIn->isChecked() );
+    mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
+
+    // Advanced tab functionality - Update list of accounts this filter applies to
+    QListViewItemIterator it( mAccountList );
+    while ( it.current() ) {
+      QCheckListItem *item = dynamic_cast<QCheckListItem*>( it.current() );
+      if (item) {
+	int id = item->text( 2 ).toInt();
+	  item->setOn( mFilter->applyOnAccount( id ) );
+      }
+      ++it;
+    }
+
     kdDebug(5006) << "KMFilterDlg: setting filter to be applied at "
                   << ( mFilter->applyOnInbound() ? "incoming " : "" )
                   << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
                   << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
                   << endl;
+  }
+}
+
+void KMFilterDlg::slotApplicableAccountsChanged()
+{
+  if ( mFilter && mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() ) {
+    // Advanced tab functionality - Update list of accounts this filter applies to
+    QListViewItemIterator it( mAccountList );
+    while ( it.current() ) {
+      QCheckListItem *item = dynamic_cast<QCheckListItem*>( it.current() );
+      if (item) {
+	int id = item->text( 2 ).toInt();
+	mFilter->setApplyOnAccount( id, item->isOn() );
+      }
+      ++it;
+    }
   }
 }
 
@@ -410,6 +514,28 @@ void KMFilterDlg::slotFilterActionIconChanged( QString icon )
 {
   if ( mFilter )
     mFilter->setIcon( icon );
+}
+
+void KMFilterDlg::slotUpdateAccountList()
+{
+  mAccountList->clear();
+  QListViewItem *top = 0;
+  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+       a = kmkernel->acctMgr()->next() ) {
+    QCheckListItem *listItem =
+      new QCheckListItem( mAccountList, top, a->name(), QCheckListItem::CheckBox );
+    listItem->setText( 1, a->type() );
+    listItem->setText( 2, QString( "%1" ).arg( a->id() ) );
+    if ( mFilter )
+      listItem->setOn( mFilter->applyOnAccount( a->id() ) );
+    top = listItem;
+  }
+
+  QListViewItem *listItem = mAccountList->firstChild();
+  if ( listItem ) {
+    mAccountList->setCurrentItem( listItem );
+    mAccountList->setSelected( listItem, true );
+  }
 }
 
 //=============================================================================
@@ -525,7 +651,7 @@ void KMFilterListBox::slotUpdateFilterName()
   if ( shouldBeName.stripWhiteSpace().isEmpty() ) {
     mFilterList.at(mIdxSelItem)->setAutoNaming( true );
   }
-  
+
   if ( mFilterList.at(mIdxSelItem)->isAutoNaming() ) {
     // auto-naming of patterns
     if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )

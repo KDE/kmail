@@ -30,6 +30,7 @@ class QWidgetStack;
 class QCheckBox;
 class KIconButton;
 class KKeyButton;
+class KListView;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -320,7 +321,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is @see KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg( QWidget* parent=0, const char* name=0, bool popFilter=false, 
+  KMFilterDlg( QWidget* parent=0, const char* name=0, bool popFilter=false,
                bool createDummyFilter=true );
 
   /** Called from @see KMFilterMgr. Creates a new filter and presets
@@ -341,6 +342,7 @@ public slots:
 
 protected slots:
   void slotApplicabilityChanged();
+  void slotApplicableAccountsChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotConfigureShortcutButtonToggled( bool aChecked );
   void slotCapturedShortcutChanged( const KShortcut& );
@@ -349,8 +351,10 @@ protected slots:
   void slotReset();
   void slotUpdateFilter();
   void slotSaveSize();
-  /// called when the dialog is closed (finished)
+  // called when the dialog is closed (finished)
   void slotFinished();
+  // update the list of accounts shown in the advanced tab
+  void slotUpdateAccountList();
 
 protected:
   /** The widget that contains the ListBox showing the filters, and
@@ -366,6 +370,12 @@ protected:
   /** Lets the user select whether to apply this filter on
       inbound/outbound messages, both, or only on explicit CTRL-J. */
   QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
+  /** For a filter applied to inbound messages selects whether to apply
+      this filter to all accounts or to selected accounts only. */
+  QRadioButton *mApplyOnForAll, *mApplyOnForTraditional, *mApplyOnForChecked;
+  /** ListView that shows the accounts in the advanced tab */
+  KListView *mAccountList;
+
   QCheckBox *mStopProcessingHere;
   QCheckBox *mConfigureShortcut;
   QCheckBox *mConfigureToolbar;

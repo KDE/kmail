@@ -206,7 +206,8 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
   return result;
 }
 
-int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
+int KMFilterMgr::process( KMMessage * msg, FilterSet set,
+			  bool account, uint accountId ) {
   if ( bPopFilter )
     return processPop( msg );
 
@@ -223,8 +224,10 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
     return 1;
   for ( QPtrListIterator<KMFilter> it(*this) ; !stopIt && it.current() ; ++it ) {
 
-    if ( ( (set&Outbound) && (*it)->applyOnOutbound() ) ||
-         ( (set&Inbound)  && (*it)->applyOnInbound() ) ||
+    if ( ( ( (set&Inbound) && (*it)->applyOnInbound() ) &&
+	   ( !account || 
+	     ( account && (*it)->applyOnAccount( accountId ) ) ) ) ||
+         ( (set&Outbound)  && (*it)->applyOnOutbound() ) ||
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
 

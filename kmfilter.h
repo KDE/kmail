@@ -53,6 +53,17 @@ public:
   */
   enum ReturnCode { NoResult, GoOn, CriticalError };
 
+  /** Account type codes used by @see setApplicability. They mean:
+
+      @param All Apply to all accounts
+      
+      @param ButImap Apply to all but online-IMAP accounts
+      
+      @param Checked apply to all accounts specified by @see setApplyOnAccount
+
+  */
+  enum AccountType { All, ButImap, Checked };
+
   /** Constructor that initializes from given config file, if given.
     * Filters are stored one by one in config groups, i.e. one filter, one group.
     * The config group has to be preset if config is not 0. */
@@ -164,6 +175,37 @@ public:
   */
   bool applyOnExplicit() const { return bApplyOnExplicit; }
 
+  /** Set whether this filter should be applied on
+      inbound messages for all accounts (@p aApply == All) or
+      inbound messages for all but nline IMAP accounts (@p aApply == ButImap) or
+      for a specified set of accounts only.
+      Only applicable to filters that are applied on inbound messages.
+      @see setApplyOnInbound setApplyOnAccount
+  */
+  void setApplicability( AccountType aApply=All ) { mApplicability = aApply; }
+
+  /** @return TRUE if this filter should be applied on
+      inbound messages for all accounts, or FALSE if this filter
+      is to be applied on a specified set of accounts only.
+      Only applicable to filters that are applied on inbound messages.
+      @see setApplicability
+  */
+  AccountType applicability() const { return mApplicability; }
+
+  /** Set whether this filter should be applied on
+      inbound messages for the account with id (@p id).
+      Only applicable to filters that are only applied to a specified
+      set of accounts.
+      @see setApplicability applyOnAccount
+  */
+  void setApplyOnAccount( uint id, bool aApply=TRUE );
+
+  /** @return TRUE if this filter should be applied on
+      inbound messages from the account with id (@p id), FALSE otherwise.
+      @see setApplicability
+  */
+  bool applyOnAccount( uint id ) const;
+
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
 
@@ -252,6 +294,7 @@ public:
 private:
   KMSearchPattern mPattern;
   QPtrList<KMFilterAction> mActions;
+  QValueList<int> mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
   KShortcut mShortcut;
@@ -263,6 +306,7 @@ private:
   bool bConfigureShortcut : 1;
   bool bConfigureToolbar : 1;
   bool bAutoNaming : 1;
+  AccountType mApplicability;
 };
 
 #endif /*kmfilter_h*/

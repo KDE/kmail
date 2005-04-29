@@ -22,6 +22,8 @@
 #endif
 
 #include "kmfilter.h"
+#include "kmacctmgr.h"
+#include "kmacctimap.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
 #include "filterlog.h"
@@ -53,6 +55,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bConfigureShortcut = false;
     bConfigureToolbar = false;
     bAutoNaming = true;
+    mApplicability = All;
   }
 }
 
@@ -75,6 +78,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bStopProcessingHere = aFilter.stopProcessingHere();
     bConfigureShortcut = aFilter.configureShortcut();
     bConfigureToolbar = aFilter.configureToolbar();
+    mApplicability = aFilter.applicability();
     mIcon = aFilter.icon();
     mShortcut = aFilter.shortcut();
 
@@ -89,6 +93,11 @@ KMFilter::KMFilter( const KMFilter & aFilter )
 	}
       }
     }
+
+    mAccounts.clear();
+    QValueListConstIterator<int> it2;
+    for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
+      mAccounts.append( *it2 );
   }
 }
 
@@ -176,6 +185,31 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
   return rem;
 }
 
+void KMFilter::setApplyOnAccount( uint id, bool aApply )
+{
+  if (aApply && !mAccounts.contains( id )) {
+    mAccounts.append( id );
+  } else if (!aApply && mAccounts.contains( id )) {
+    mAccounts.remove( id );
+  }
+}
+
+bool KMFilter::applyOnAccount( uint id ) const
+{
+  if ( applicability() == All )
+    return true;
+  if ( applicability() == ButImap ) {
+    KMAccount *account = kmkernel->acctMgr()->find( id );
+    bool result =  account && !dynamic_cast<KMAcctImap*>(account);
+    return result;
+  }
+  if ( applicability() == Checked )
+    return mAccounts.contains( id );
+
+  return false;
+}
+
+
 //-----------------------------------------------------------------------------
 void KMFilter::readConfig(KConfig* config)
 {
@@ -201,10 +235,12 @@ void KMFilter::readConfig(KConfig* config)
       bApplyOnOutbound = false;
       bApplyOnInbound = true;
       bApplyOnExplicit = true;
+      mApplicability = ButImap;
     } else {
       bApplyOnInbound = bool(sets.contains("check-mail"));
       bApplyOnOutbound = bool(sets.contains("send-mail"));
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
+      mApplicability = (AccountType)config->readNumEntry( "Applicability", ButImap );
     }
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
@@ -254,6 +290,8 @@ void KMFilter::readConfig(KConfig* config)
 				  i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
 				       .arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
     }
+
+    mAccounts = config->readIntListEntry( "accounts-set" );
   }
 }
 
@@ -293,6 +331,7 @@ void KMFilter::writeConfig(KConfig* config) const
     config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config->writeEntry( "Icon", mIcon );
     config->writeEntry( "AutomaticName", bAutoNaming );
+    config->writeEntry( "Applicability", mApplicability );
 
     QString key;
     int i;
@@ -304,7 +343,8 @@ void KMFilter::writeConfig(KConfig* config) const
       config->writeEntry( key.sprintf("action-args-%d", i),
 			  (*it)->argsAsString() );
     }
-    config->writeEntry("actions", i );
+    config->writeEntry( "actions", i );
+    config->writeEntry( "accounts-set", mAccounts );
   }
 }
 
@@ -320,6 +360,15 @@ void KMFilter::purify()
         mActions.remove ( (*it) );
       else
         --it;
+
+    // Remove invalid accounts from mAccounts - just to be tidy
+    QValueListConstIterator<int> it2 = mAccounts.begin();
+    while ( it2 != mAccounts.end() ) {
+      if ( !kmkernel->acctMgr()->find( *it2 ) )
+	 mAccounts.remove( *it2 );
+      else
+	 ++it2;
+    }
   }
 }
 
@@ -328,7 +377,7 @@ bool KMFilter::isEmpty() const
   if (bPopFilter)
     return mPattern.isEmpty();
   else
-    return mPattern.isEmpty() && mActions.isEmpty();
+    return mPattern.isEmpty() && mActions.isEmpty() && mAccounts.isEmpty();
 }
 
 #ifndef NDEBUG
@@ -360,6 +409,20 @@ const QString KMFilter::asString() const
     if ( bApplyOnExplicit )
       result += " Explicit";
     result += "\n";
+    if ( bApplyOnInbound && mApplicability == All ) {
+      result += "This filter applies to all accounts.\n";
+    } else if ( bApplyOnInbound && mApplicability == ButImap ) {
+      result += "This filter applies to all but online IMAP accounts.\n";
+    } else if ( bApplyOnInbound ) {
+      QValueListConstIterator<int> it2;
+      result += "This filter applies to the following accounts:";
+      if ( mAccounts.isEmpty() )
+	result += " None";
+      else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
+	if ( kmkernel->acctMgr()->find( *it2 ) )
+	  result += " " + kmkernel->acctMgr()->find( *it2 )->name();
+      result += "\n";
+    }
     if ( bStopProcessingHere )
       result += "If it matches, processing stops at this filter.\n";
   }
