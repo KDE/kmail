@@ -500,6 +500,9 @@ void KMComposeWin::readConfig(void)
   mNeverEncryptWhenSavingInDrafts = config->readBoolEntry("never-encrypt-drafts", true);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
   mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
+#ifdef KLEO_CHIASMUS
+  mChiasmusKey = config->readEntry( "chiasmus-key" );
+#endif
 
   int mode = config->readNumEntry("Completion Mode",
                                   KGlobalSettings::completionMode() );
@@ -621,6 +624,9 @@ void KMComposeWin::writeConfig(void)
         mTransportHistory.prepend(mTransport->currentText());
     config->writeEntry("transport-history", mTransportHistory );
     config->writeEntry("use-fixed-font", mUseFixedFont );
+#ifdef KLEO_CHIASMUS
+    config->writeEntry( "chiasmus-key", mChiasmusKey );
+#endif
   }
 
   {
