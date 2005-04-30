@@ -868,6 +868,12 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
     }
   }
 
+  // if the deleted transport is the currently used transport reset it to default
+  const QString& currentTransport = GlobalSettings::currentTransport();
+  if ( item->text( 0 ) == currentTransport ) {
+    GlobalSettings::setCurrentTransport( QString::null );
+  }
+
   if ( !changedIdents.isEmpty() ) {
     QString information = i18n( "This identity has been changed to use the default transport:",
                           "These %n identities have been changed to use the default transport:",
