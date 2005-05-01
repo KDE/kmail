@@ -1107,11 +1107,9 @@ void FolderStorage::slotProcessNextSearchBatch()
 //-----------------------------------------------------------------------------
 void FolderStorage::search( KMSearchPattern* pattern, Q_UINT32 serNum )
 {
-  Q_UINT32 mySerNum = 0;
-  if ( pattern->matches( serNum ) )
-    mySerNum = serNum;
+  bool matches = pattern->matches( serNum );
 
-  emit searchDone( folder(), mySerNum, pattern );
+  emit searchDone( folder(), serNum, pattern, matches );
 }
 
 //-----------------------------------------------------------------------------

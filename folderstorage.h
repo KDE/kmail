@@ -491,9 +491,9 @@ signals:
 
   /**
    * Emitted when a search for a single message is completed
-   * The matching serial number is included
+   * The serial number and a bool matching yes/no is included
    */
-  void searchDone( KMFolder*, Q_UINT32, KMSearchPattern* );
+  void searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool );
 
 
 public slots:
@@ -507,6 +507,7 @@ public slots:
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
+  
   /** Emit changed signal if mQuite <=0 */
   void slotEmitChangedTimer();
 

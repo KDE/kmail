@@ -241,6 +241,11 @@ public:
     uidmap.insert(uid, sernum); }
 
   /**
+   * Get the serial number for the given UID (if available)
+   */
+   const ulong serNumForUID( ulong uid );
+
+  /**
    * Splits a uid-set into single uids
    */
   static QValueList<ulong> splitSets(const QString);
@@ -354,12 +359,13 @@ public slots:
   /**
    * Called from the SearchJob when the folder search is done
    */
-  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern ); 
+  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern,
+     bool complete ); 
 
   /**
    * Called from the SearchJob when the message was searched
    */
-  void slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern ); 
+  void slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern, bool matches ); 
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,

@@ -1007,6 +1007,9 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
           flagsToStatus( msgBase, serverFlags, false );
         idx++;
         uid = (*it).items.remove(uid);
+        if ( msgBase->getMsgSerNum() > 0 ) {
+          uidmap.insert( mailUid, (ulong *)msgBase->getMsgSerNum() );
+        }        
       }
       else break;  // happens only, if deleted mails reappear on the server
     }
@@ -1230,8 +1233,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
           // assign the sernum from the cache
           const ulong sernum = (ulong) uidmap[uid];
           msg->setMsgSerNum(sernum);
-          // delete the entry
-          uidmap.remove(uid);
         }
         KMFolderMbox::addMsg(msg, 0);
         // Transfer the status, if it is cached.
@@ -1249,6 +1250,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         // set the correct size
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
+        if ( msg->getMsgSerNum() > 0 ) {
+          uidmap.insert( uid, (ulong *)msg->getMsgSerNum() );
+        }        
 
         // Just in case we have changed (reverted) the serial number of this 
         // message update the message dict.
@@ -1457,6 +1461,7 @@ void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMFolderImap::deleteMessage(KMMessage * msg)
 {
+  uidmap.remove( msg->UID() );
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
   ulong uid = msg->UID();
@@ -1481,6 +1486,13 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 
 void KMFolderImap::deleteMessage(const QPtrList<KMMessage>& msgList)
 {
+  QPtrListIterator<KMMessage> it( msgList );
+  KMMessage *msg;
+  while ( (msg = it.current()) != 0 ) {
+    ++it;
+    uidmap.remove( msg->UID() );
+  }
+
   QValueList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);
@@ -1932,16 +1944,17 @@ void KMFolderImap::search( KMSearchPattern* pattern )
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern );
-  connect( job, SIGNAL( searchDone( QValueList<Q_UINT32>, KMSearchPattern* ) ),
-      this, SLOT( slotSearchDone( QValueList<Q_UINT32>, KMSearchPattern* ) ) );
+  connect( job, SIGNAL( searchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool ) ),
+      this, SLOT( slotSearchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums,
-                                   KMSearchPattern* pattern )
+                                   KMSearchPattern* pattern,
+                                   bool complete )
 {
-  emit searchResult( folder(), serNums, pattern, true );
+  emit searchResult( folder(), serNums, pattern, complete );
 }
 
 //-----------------------------------------------------------------------------
@@ -1950,19 +1963,20 @@ void KMFolderImap::search( KMSearchPattern* pattern, Q_UINT32 serNum )
   if ( !pattern )
   {
     // not much to do here
-    emit searchDone( folder(), 0, pattern );
+    emit searchDone( folder(), serNum, pattern, false );
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern, serNum );
-  connect( job, SIGNAL( searchDone( Q_UINT32, KMSearchPattern* ) ),
-      this, SLOT( slotSearchDone( Q_UINT32, KMSearchPattern* ) ) );
+  connect( job, SIGNAL( searchDone( Q_UINT32, KMSearchPattern*, bool ) ),
+      this, SLOT( slotSearchDone( Q_UINT32, KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern )
+void KMFolderImap::slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern,
+                                   bool matches )
 {
-  emit searchDone( folder(), serNum, pattern );
+  emit searchDone( folder(), serNum, pattern, matches );
 }
 
 //-----------------------------------------------------------------------------
@@ -1970,6 +1984,16 @@ bool KMFolderImap::isMoveable() const
 {
   return ( hasChildren() == HasNoChildren && 
       !folder()->isSystemFolder() ) ? true : false;
+}
+ 
+//-----------------------------------------------------------------------------
+const ulong KMFolderImap::serNumForUID( ulong uid )
+{
+  if ( uidmap.find( uid ) ) {
+    return (ulong) uidmap[uid];
+  } else {
+    return 0;
+  }
 }
 
 #include "kmfolderimap.moc"

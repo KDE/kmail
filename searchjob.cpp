@@ -34,6 +34,10 @@
 #include "imapjob.h"
 #include "kmmsgdict.h"
 
+#include <progressmanager.h>
+using KPIM::ProgressItem;
+using KPIM::ProgressManager;
+
 #include <kdebug.h>
 #include <kurl.h>
 #include <kio/scheduler.h>
@@ -159,41 +163,57 @@ void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
   {
     // no local search and the server found nothing
     QValueList<Q_UINT32> serNums;
-    emit searchDone( serNums, mSearchPattern );
+    emit searchDone( serNums, mSearchPattern, true );
   } else
   {
     // remember the uids the server found
     mImapSearchHits = QStringList::split( " ", data );
 
-    // get the folder to make sure we have all messages
-    connect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-        this, SLOT( slotSearchFolderComplete()) );
-    mFolder->getFolder();
+    if ( canMapAllUIDs() ) 
+    {
+      slotSearchFolder();
+    } else
+    {
+      // get the folder to make sure we have all messages
+      connect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+          this, SLOT( slotSearchFolder()) );
+      mFolder->getFolder();
+    }
   }
 }
 
 //-----------------------------------------------------------------------------
-void SearchJob::slotSearchFolderComplete()
+bool SearchJob::canMapAllUIDs()
+{
+  for ( QStringList::Iterator it = mImapSearchHits.begin(); 
+        it != mImapSearchHits.end(); ++it ) 
+  {
+    if ( mFolder->serNumForUID( (*it).toULong() ) == 0 )
+      return false;
+  }
+  return true;
+}
+
+//-----------------------------------------------------------------------------
+void SearchJob::slotSearchFolder()
 {  
   disconnect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-            this, SLOT( slotSearchFolderComplete()) );
+            this, SLOT( slotSearchFolder()) );
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // search for the serial number of the UIDs
     QValueList<Q_UINT32> serNums;
-    for ( int i = 0; i < mFolder->count(); ++i ) {
-      KMMsgBase * base = mFolder->getMsgBase( i );
-      if ( mImapSearchHits.find( QString::number( base->UID() ) ) != mImapSearchHits.end() ) {
-        Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( mFolder->folder(), i );
-        serNums.append( serNum );
-      }
+    for ( QStringList::Iterator it = mImapSearchHits.begin(); 
+        it != mImapSearchHits.end(); ++it ) 
+    {
+      serNums.append( mFolder->serNumForUID( (*it).toULong() ) );
     }
-    emit searchDone( serNums, mSearchPattern );
+    emit searchDone( serNums, mSearchPattern, true );
   } else {
     // we have search patterns that can not be handled by the server
     mRemainingMsgs = mFolder->count();
     if ( mRemainingMsgs == 0 ) {
-      emit searchDone( mSearchSerNums, mSearchPattern );
+      emit searchDone( mSearchSerNums, mSearchPattern, true );
       return;
     }
 
@@ -216,16 +236,28 @@ void SearchJob::slotSearchFolderComplete()
             "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
       {
         QValueList<Q_UINT32> serNums;
-        emit searchDone( serNums, mSearchPattern );
+        emit searchDone( serNums, mSearchPattern, true );
         return;
       }
     }
     unsigned int numMsgs = mRemainingMsgs;
+    // progress
+    mProgress = ProgressManager::createProgressItem(
+        "ImapSearchDownload" + ProgressManager::getUniqueID(),
+        i18n("Downloading emails from IMAP server"),
+        "URL: " + mFolder->folder()->prettyURL(),
+        true,
+        mAccount->useSSL() || mAccount->useTLS() );
+    mProgress->setTotalItems( numMsgs );
+    connect ( mProgress, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
+        this, SLOT( slotAbortSearch( KPIM::ProgressItem* ) ) );
+
     for ( unsigned int i = 0; i < numMsgs ; ++i ) {
       KMMessage * msg = mFolder->getMsg( i );
       if ( needToDownload ) {
         ImapJob *job = new ImapJob( msg );
         job->setParentFolder( mFolder );
+        job->setParentProgressItem( mProgress );
         connect( job, SIGNAL(messageRetrieved(KMMessage*)),
             this, SLOT(slotSearchMessageArrived(KMMessage*)) );
         job->start();
@@ -239,7 +271,13 @@ void SearchJob::slotSearchFolderComplete()
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchMessageArrived( KMMessage* msg )
 {
+  if ( mProgress )
+  {
+    mProgress->incCompletedItems();
+    mProgress->updateProgress();
+  }
   --mRemainingMsgs;
+  bool matches = false;
   if ( msg ) { // messageRetrieved(0) is always possible
     if ( mLocalSearchPattern->op() == KMSearchPattern::OpAnd ) {
       // imap and local search have to match
@@ -248,6 +286,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
            mImapSearchHits.find( QString::number(msg->UID() ) ) != mImapSearchHits.end() ) ) {
         Q_UINT32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
+        matches = true;
       }
     } else if ( mLocalSearchPattern->op() == KMSearchPattern::OpOr ) {
       // imap or local search have to match
@@ -255,6 +294,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
           mImapSearchHits.find( QString::number(msg->UID()) ) != mImapSearchHits.end() ) {
         Q_UINT32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
+        matches = true;
       }
     }
     int idx = -1;
@@ -263,8 +303,16 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     if ( idx != -1 )
       mFolder->unGetMsg( idx );
   }
-  if ( mRemainingMsgs == 0 ) {
-    emit searchDone( mSearchSerNums, mSearchPattern );
+  bool complete = ( mRemainingMsgs == 0 );
+  if ( complete && mProgress )
+  {
+    mProgress->setComplete();
+    mProgress = 0;
+  }
+  if ( matches || complete )
+  {
+    emit searchDone( mSearchSerNums, mSearchPattern, complete );
+    mSearchSerNums.clear();
   }
 }
 
@@ -274,12 +322,15 @@ void SearchJob::slotSearchResult( KIO::Job *job )
   if ( job->error() )
   {
     mAccount->handleJobError( job, i18n("Error while searching.") );
-    if ( mSearchSerNums.empty() )
+    if ( mSerNum == 0 )
     {
+      // folder
       QValueList<Q_UINT32> serNums;
-      emit searchDone( serNums, mSearchPattern );
-    } else
-      emit searchDone( 0, mSearchPattern );
+      emit searchDone( serNums, mSearchPattern, true );
+    } else {
+      // message
+      emit searchDone( mSerNum, mSearchPattern, false );
+    }
   }
 }
 
@@ -331,19 +382,24 @@ void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data 
   if ( job && job->error() )
    return;
 
-  if ( !data.isEmpty() )
-    emit searchDone( mSerNum, mSearchPattern );
-  else
-    emit searchDone( 0, mSearchPattern );
+  emit searchDone( mSerNum, mSearchPattern, !data.isEmpty() );
 }
  
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchSingleMessage( KMMessage* msg )
 {
-  if ( msg && mLocalSearchPattern->matches( msg ) )
-    emit searchDone( mSerNum, mSearchPattern );
-  else
-    emit searchDone( 0, mSearchPattern );
+  bool matches = ( msg && mLocalSearchPattern->matches( msg ) );
+  emit searchDone( mSerNum, mSearchPattern, matches );
+}
+
+//-----------------------------------------------------------------------------
+void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
+{
+  if ( item )
+    item->setComplete();
+  mAccount->killAllJobs();
+  QValueList<Q_UINT32> serNums;
+  emit searchDone( serNums, mSearchPattern, true );
 }
 
 #include "searchjob.moc"

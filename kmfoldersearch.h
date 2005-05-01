@@ -158,8 +158,8 @@ public slots:
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex();
 
-  // Examine the added message
-  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, KMSearchPattern* );
+  // Examine the message
+  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, KMSearchPattern*, bool );
 
 public:
   //See base class for documentation

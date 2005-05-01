@@ -945,18 +945,20 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
-      connect( folder->storage(),
-              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
+      connect( folder->storage(), 
+              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+                      KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
-                                               Q_UINT32 serNum,
-                                               KMSearchPattern* pattern )
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
+                                               Q_UINT32 serNum, 
+                                               KMSearchPattern* pattern,
+                                               bool matches )
 {
     if ( search()->searchPattern() != pattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNum << endl;
@@ -964,10 +966,11 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       if ( count == 1 ) {
-        disconnect( folder->storage(),
-                SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
+        disconnect( folder->storage(), 
+                SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
+                SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+                        KMSearchPattern*, bool ) ) );
         mFoldersCurrentlyBeingSearched.remove( folder );
       } else {
         mFoldersCurrentlyBeingSearched.replace( folder, count-1 );
@@ -977,15 +980,25 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     }
     folder->close();
 
-    if ( serNum == 0 )
+    if ( !matches ) {
+        QValueVector<Q_UINT32>::const_iterator it;
+        it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
+        if (it != mSerNums.end()) {
+            removeSerNum( serNum );
+        }
         return;
-
-    if (mSearch->running()) {
-        mSearch->stop();
-        mExecuteSearchTimer->start( 0, true );
-    } else {
-      addSerNum( serNum );
     }
+
+//    if (mSearch->running()) {
+//        mSearch->stop();
+//        mExecuteSearchTimer->start( 0, true );
+//    } else {
+        QValueVector<Q_UINT32>::const_iterator it;
+        it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
+        if (it == mSerNums.end()) {
+            addSerNum( serNum );
+        }
+//    }
 }
 
 void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
@@ -1000,7 +1013,6 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
     }
 
     if (mSearch->running()) {
-//        mSearch->stop();
         mExecuteSearchTimer->start(0, true);
     } else {
         removeSerNum(serNum);
@@ -1082,10 +1094,26 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum) {
             emit msgHeaderChanged(folder(), pos);
-            return;
+            break;
         }
         ++pos;
     }
+    // let's try if the message matches our search
+    aFolder->open();
+
+    // if we are already checking this folder, refcount
+    if ( mFoldersCurrentlyBeingSearched.contains( aFolder ) ) {
+      unsigned int count = mFoldersCurrentlyBeingSearched[aFolder];
+      mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
+    } else {
+      connect( aFolder->storage(), 
+              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
+              this,
+              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+                      KMSearchPattern*, bool ) ) );
+      mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
+    }
+    aFolder->storage()->search( search()->searchPattern(), serNum );
 }
 
 void KMFolderSearch::tryReleasingFolder(KMFolder* folder)

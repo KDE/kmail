@@ -39,6 +39,10 @@ namespace KIO {
   class Job;
 }
 
+namespace KPIM {
+  class ProgressItem;
+}
+
 namespace KMail {
 
 class ImapAccountBase;
@@ -75,9 +79,13 @@ protected:
   // creates an imap search command
   QString searchStringFromPattern( KMSearchPattern* );
 
+  // returns true if all uids can be mapped to sernums
+  bool canMapAllUIDs();
+
 protected slots:
-  // called when the folder is complete and ready to be searched
-  void slotSearchFolderComplete();
+  // search the folder
+  // is called when all uids can be mapped to sernums
+  void slotSearchFolder();
 
   void slotSearchData( KIO::Job* job, const QString& data );
 
@@ -93,10 +101,15 @@ protected slots:
   // single message was downloaded and is checked
   void slotSearchSingleMessage( KMMessage* msg );
 
-signals:
-  void searchDone( QValueList<Q_UINT32>, KMSearchPattern* );
+  // the user cancelled the search progress
+  void slotAbortSearch( KPIM::ProgressItem* item );
 
-  void searchDone( Q_UINT32, KMSearchPattern* );
+signals:
+  // emitted when a list of matching serial numbers was found
+  void searchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool complete );
+
+  // emitted when a single message (identified by the serial number) was checked
+  void searchDone( Q_UINT32, KMSearchPattern*, bool matches );
 
 protected:
   KMFolderImap* mFolder;
@@ -110,6 +123,8 @@ protected:
   QValueList<Q_UINT32> mSearchSerNums;
   // the remaining messages that have to be downloaded for local search
   uint mRemainingMsgs;
+  // progress item for local searches
+  KPIM::ProgressItem *mProgress;
 
 };
 
