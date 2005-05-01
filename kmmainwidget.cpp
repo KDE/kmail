@@ -965,7 +965,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroupSaver saver(config, "General");
 
   if (config->readBoolEntry("warn-before-expire", true)) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(mFolder->label());
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(QStyleSheet::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
@@ -988,7 +988,7 @@ void KMMainWidget::slotEmptyFolder()
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
-           "folder <b>%1</b> to the trash?</qt>").arg(mFolder->label());
+           "folder <b>%1</b> to the trash?</qt>").arg( QStyleSheet::escape( mFolder->label() ) );
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edittrash"))
       != KMessageBox::Continue) return;
@@ -1026,32 +1026,32 @@ void KMMainWidget::slotRemoveFolder()
                 "<b>%1</b>? The messages displayed in it will not be deleted "
                 "if you do so, as they are stored in a different folder.</qt>")
 
-           .arg(mFolder->label());
+           .arg( QStyleSheet::escape( mFolder->label() ) );
   } else {
     if ( mFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>")
-              .arg(mFolder->label());
+              .arg( QStyleSheet::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b> and all its subfolders? Those subfolders "
                    "might not be empty and their  contents will be "
                    "discarded as well.</qt>")
-              .arg(mFolder->label());
+              .arg( QStyleSheet::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b>, discarding its contents?</qt>")
-              .arg(mFolder->label());
+              .arg( QStyleSheet::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b> and all its subfolders, discarding their "
                  "contents?</qt>")
-            .arg(mFolder->label());
+            .arg( QStyleSheet::escape( mFolder->label() ) );
       }
     }
   }
