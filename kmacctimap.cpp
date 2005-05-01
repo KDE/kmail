@@ -411,38 +411,43 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     kmkernel->msgDict()->getLocation( *filterIt, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
     // different folder, or that the serNum is stale
+    if ( !folder ) {
+      mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+      ++filterIt;      
+      continue;
+    }    
     
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
     if (!imapFolder->folder()->isSystemFolder() ||
-	!(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
-	mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-	++filterIt;
-	continue;
+        !(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
+      mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+      ++filterIt;
+      continue;
     }
 
-    if (folder && (idx != -1)) {
+    if (idx != -1) {
 
       msg = folder->getMsg( idx );
       if (!msg) { // sanity checking
-	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-	  ++filterIt;
-	  continue;
+        mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+        ++filterIt;
+        continue;
       }
 	    
       if (msg->transferInProgress()) {
-	  inTransit.append( *filterIt );
-	  ++filterIt;
-	  continue;
+        inTransit.append( *filterIt );
+        ++filterIt;
+        continue;
       }
       msg->setTransferInProgress(true);
       if ( !msg->isComplete() ) {
-	FolderJob *job = folder->createJob(msg);
-	connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-		SLOT(slotFilterMsg(KMMessage*)));
-	job->start();
+        FolderJob *job = folder->createJob(msg);
+        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotFilterMsg(KMMessage*)));
+        job->start();
       } else {
-	mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-	if (slotFilterMsg(msg) == 2) break;
+        mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+        if (slotFilterMsg(msg) == 2) break;
       }
     }
     ++filterIt;
