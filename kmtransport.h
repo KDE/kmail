@@ -139,6 +139,7 @@ private:
   void saveSettings();
   void checkHighest( QButtonGroup * );
   void enableAuthMethods( unsigned int which );
+  bool sanityCheckSmtpInput();
   static unsigned int authMethodsFromString( const QString & s );
   static unsigned int authMethodsFromStringList( const QStringList & sl );
 
