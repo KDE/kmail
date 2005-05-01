@@ -784,8 +784,9 @@ bool KMTransportDialog::sanityCheckSmtpInput()
   // FIXME: add additional checks for all fields that needs it
   // this is only the beginning
   if ( mSmtp.hostEdit->text().isEmpty() ) {
-    QString errorMsg = i18n(" The hostname field cannot be emtpy, please enter a valid hostname or IP address");
-    KMessageBox::sorry( this, errorMsg, i18n("Invalid Smtp hostname or address") );
+    QString errorMsg = i18n("The Host field cannot be empty. Please  "
+                            "enter the name or the IP address of the SMTP server.");
+    KMessageBox::sorry( this, errorMsg, i18n("Invalid Hostname or Address") );
     return false;
   }
   return true;
