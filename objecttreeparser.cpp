@@ -2497,10 +2497,10 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 
     bool actHidden = false;
     QString textExpand;
-    // LevelQuote:
-    // 0  don't hide anything
-    // >0 hide the level 1, 2,3,... and so on
-    if ( mReader->mLevelQuote >= 0 && mReader->mLevelQuote <= ( actQuoteLevel ) )
+
+    // This quoted line needs be hiden
+    if (GlobalSettings::showExpandQuotesMark() && mReader->mLevelQuote >= 0 
+        && mReader->mLevelQuote <= ( actQuoteLevel ) )
       actHidden = true;
 
     if ( actQuoteLevel != currQuoteLevel ) {
@@ -2517,17 +2517,8 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
       {
         if ( GlobalSettings::showExpandQuotesMark() ) 
         {
-          if ( !actHidden ) 
+          if (  actHidden )
           {
-            htmlStr += "<div class=\"quotelevelmark\" >" ;
-            htmlStr += QString( "<a href=\"kmail:levelquote?%1 \">"
-                "<img src=\"%2\" alt=\"\" title=\"\"/></a>" )
-              .arg(actQuoteLevel)
-              .arg( mCollapseIcon);
-            htmlStr += "</div>";
-            htmlStr += quoteFontTag[actQuoteLevel%3];
-          }
-          else
             //only show the QuoteMark when is the first line of the level hidden
             if ( !curHidden ) 
             {
@@ -2540,6 +2531,15 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
               htmlStr += "</div><br/>";
               htmlStr += quoteEnd;
             }
+          }else {
+            htmlStr += "<div class=\"quotelevelmark\" >" ;
+            htmlStr += QString( "<a href=\"kmail:levelquote?%1 \">"
+                "<img src=\"%2\" alt=\"\" title=\"\"/></a>" )
+              .arg(actQuoteLevel)
+              .arg( mCollapseIcon);
+            htmlStr += "</div>";
+            htmlStr += quoteFontTag[actQuoteLevel%3];
+          }
         } else 
           htmlStr += quoteFontTag[actQuoteLevel%3];
       }
