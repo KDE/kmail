@@ -427,7 +427,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   tmp_file += filename;
 
   if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, false))
-    kmkernel->emergencyExit( "" ); // KPIM::kCStringToFile already showed an errormessage
+    kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") ); 
 
   QFile file(tmp_file);
   size = msgText.length();
