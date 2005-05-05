@@ -67,6 +67,19 @@ namespace {
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   };
 
+  class ExpandCollapseQuoteURLManager : public KMail::URLHandler {
+  public:
+    ExpandCollapseQuoteURLManager() : KMail::URLHandler() {}
+    ~ExpandCollapseQuoteURLManager() {}
+
+    bool handleClick( const KURL &, KMReaderWin * ) const;
+    bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
+      return false;
+    }
+    QString statusBarMessage( const KURL &, KMReaderWin * ) const;
+
+  };
+
   class SMimeURLHandler : public KMail::URLHandler {
   public:
     SMimeURLHandler() : KMail::URLHandler() {}
@@ -243,6 +256,7 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 
 KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ShowHtmlSwitchURLHandler() );
+  registerHandler( new ExpandCollapseQuoteURLManager() );
   registerHandler( new SMimeURLHandler() );
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
@@ -340,18 +354,7 @@ namespace {
         w->update( true );
         return true;
       }
-      //Format url: 
-      //  kmail:levelquote/?inc      -> inc the level quote shown.
-      //  kmail:levelquote/?dec      -> dec the level quote shown.
-      if (  url.path() == "levelquote" ){
-
-        QString levelStr= url.query().mid( 1,url.query().length() );
-        bool isNumber;
-        int levelQuote= levelStr.toInt(&isNumber);
-        if ( isNumber )
-          w->slotLevelQuote( levelQuote );
-        return true;
-      }
+    
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
@@ -369,7 +372,33 @@ namespace {
         return i18n("Turn on HTML rendering for this message.");
       if ( url.path() == "loadExternal" )
         return i18n("Load external references from the Internet for this message.");
-      if ( url.path() == "levelquote" )
+    }
+    return QString::null ;
+  }
+}
+
+namespace {
+
+  bool ExpandCollapseQuoteURLManager::handleClick( 
+      const KURL & url, KMReaderWin * w ) const 
+  {
+    //  kmail:levelquote/?num      -> the level quote to collapse.
+    //  kmail:levelquote/?-num      -> expand all levels quote.
+    if ( url.protocol() == "kmail" && url.path()=="levelquote" ) 
+    {
+      QString levelStr= url.query().mid( 1,url.query().length() );
+      bool isNumber;
+      int levelQuote= levelStr.toInt(&isNumber);
+      if ( isNumber )
+        w->slotLevelQuote( levelQuote );
+      return true;
+    }
+    return false;
+  }
+  QString ExpandCollapseQuoteURLManager::statusBarMessage( 
+      const KURL & url, KMReaderWin * ) const 
+  {
+      if ( url.protocol() == "kmail" && url.path() == "levelquote" )
       {
         QString query= url.query();
         if ( query.length()>=2 )
@@ -378,9 +407,9 @@ namespace {
           else
             return i18n("Collapse quoted text.");
       }
-    }
-    return QString::null ;
+      return QString::null ;
   }
+
 }
 
 // defined in kmreaderwin.cpp...
