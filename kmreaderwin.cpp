@@ -1167,6 +1167,7 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
+  ""
 };
 static const int numKMailChanges =
   sizeof kmailChanges / sizeof *kmailChanges;
