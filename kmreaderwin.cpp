@@ -1272,7 +1272,7 @@ void KMReaderWin::displayAboutPage()
     info = info.arg( QString::null );
   }
 
-  if ( numKMailChanges > 0 ) {
+  if ( ( numKMailChanges > 1 ) || ( numKMailChanges == 1 && strlen(kmailChanges[0]) > 0 ) ) {
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
            "Important changes</span> (compared to KMail %1):</p>\n")
