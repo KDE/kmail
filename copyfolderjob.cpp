@@ -185,7 +185,7 @@ void CopyFolderJob::createTargetDir()
     }
     // inherit the folder type
     // FIXME we should probably copy over most if not all settings
-    mNewFolder->storage()->setContentsType( mStorage->contentsType() );
+    mNewFolder->storage()->setContentsType( mStorage->contentsType(), true /*quiet*/ );
     mNewFolder->storage()->writeConfig();
     kdDebug(5006)<< "CopyJob::createTargetDir - " << mStorage->folder()->idString()
       << " |=> " << mNewFolder->idString() << endl;

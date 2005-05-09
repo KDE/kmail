@@ -1015,11 +1015,12 @@ void FolderStorage::setNoChildren( bool aNoChildren )
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setContentsType( KMail::FolderContentsType type )
+void FolderStorage::setContentsType( KMail::FolderContentsType type, bool quiet )
 {
   if ( type != mContentsType ) {
     mContentsType = type;
-    kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
+    if ( !quiet )
+      kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
   }
 }
 
