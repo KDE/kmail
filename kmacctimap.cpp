@@ -111,7 +111,7 @@ void KMAcctImap::pseudoAssign( const KMAccount * a ) {
 void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 {
   mFolder = aFolder;
-  mFolder->setImapPath(mPrefix);
+  mFolder->setImapPath( "/" );
 }
 
 
@@ -413,9 +413,9 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     // different folder, or that the serNum is stale
     if ( !folder ) {
       mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-      ++filterIt;      
+      ++filterIt;
       continue;
-    }    
+    }
     
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
     if (!imapFolder->folder()->isSystemFolder() ||
@@ -496,11 +496,6 @@ void KMAcctImap::slotUpdateFolderList()
 void KMAcctImap::listDirectory()
 {
   mFolder->listDirectory();
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setPrefixHook() {
-  if ( mFolder ) mFolder->setImapPath( prefix() );
 }
 
 //-----------------------------------------------------------------------------

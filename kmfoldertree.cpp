@@ -116,12 +116,15 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
-      case Drafts: icon = "edit";break;
+      case Drafts: icon = "edit"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
     // non-root search folders
-    if ( protocol() == KMFolderTreeItem::Search) {
+    if ( protocol() == KMFolderTreeItem::Search ) {
       icon = "mail_find";
+    }
+    if ( mFolder && mFolder->noContent() ) {
+      icon = "folder_grey";
     }
   }
 
@@ -159,9 +162,15 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
       pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
                          KIcon::DefaultState, 0, true );
   }
-  if ( pm.isNull() )
-    pm = il->loadIcon( "folder_open", KIcon::Small, size,
-                       KIcon::DefaultState, 0, true );
+  if ( pm.isNull() ) {
+    if ( mFolder && mFolder->noContent() ) {
+      pm = il->loadIcon( "folder_grey_open", KIcon::Small, size,
+                         KIcon::DefaultState, 0, true );
+    } else {
+      pm = il->loadIcon( "folder_open", KIcon::Small, size,
+                         KIcon::DefaultState, 0, true );
+    }
+  }
 
   return pm;
 }
@@ -649,12 +658,14 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
-      // set folders explicitely to exandable even with unknown child state
-      // this way we can do a listing for IMAP folders when they're expanded
-      if ( folder->storage()->hasChildren() != FolderStorage::HasNoChildren )
+      // set folders explicitely to exandable when they have children
+      // this way we can do a listing for IMAP folders when the user expands them
+      // even when the child folders are not created yet
+      if ( folder->storage()->hasChildren() == FolderStorage::HasChildren ) {
         fti->setExpandable( true );
-      else
+      } else {
         fti->setExpandable( false );
+      }
 
       connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),
           this, SIGNAL(iconChanged(KMFolderTreeItem*)));

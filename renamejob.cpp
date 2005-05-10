@@ -240,8 +240,11 @@ void RenameJob::slotMoveMessages()
 void RenameJob::slotMoveCompleted( KMCommand* command )
 {
   kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
-  disconnect( command, SIGNAL( completed( KMCommand * ) ),
-      this, SLOT( slotMoveCompleted( KMCommand * ) ) );
+  if ( command ) {
+    // just make sure nothing bounces
+    disconnect( command, SIGNAL( completed( KMCommand * ) ),
+        this, SLOT( slotMoveCompleted( KMCommand * ) ) );
+  }
   if ( !command || command->result() == KMCommand::OK )
   {
     kdDebug(5006) << "deleting old folder" << endl;
@@ -309,7 +312,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
 
     emit renameDone( mNewName, false );
   }
-  deleteLater();
+  delete this;
 }
 
 #include "renamejob.moc"

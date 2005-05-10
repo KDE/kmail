@@ -60,22 +60,30 @@ public:
    * @param storage the parent folder, either provide this or a path
    * @param account the ImapAccountBase
    * @param type Type of subscription
-   * @param secondStep if this is the second listing (when a prefix is set)
    * @param complete list all folders or only next level
-   * @param hasInbox if you already have an inbox
    * @param path the listing path;
    *             if empty the path of the folder will be taken
    * @param item a parent ProgressItem
    */
-  ListJob( FolderStorage* storage, ImapAccountBase* account,
-           ImapAccountBase::ListType type,
-           bool secondStep = false, bool complete = false,
-           bool hasInbox = false, const QString& path = QString::null,
-           KPIM::ProgressItem* item = 0 );
+  ListJob( ImapAccountBase* account, ImapAccountBase::ListType type,
+           FolderStorage* storage = 0, const QString& path = QString::null,
+           bool complete = false, KPIM::ProgressItem* item = 0 );
 
   virtual ~ListJob();
 
   virtual void execute();
+
+  /** Path */
+  void setPath( const QString& path ) { mPath = path; }
+
+  /** Storage */
+  void setStorage( FolderStorage* st ) { mStorage = st; }
+
+  void setComplete( bool complete ) { mComplete = complete; }
+
+  /** Set parent progress item */
+  void setParentProgressItem( KPIM::ProgressItem* it ) { 
+    mParentProgressItem = it; }
 
 protected:
   /**
@@ -111,8 +119,6 @@ protected:
   FolderStorage* mStorage;
   ImapAccountBase* mAccount;
   ImapAccountBase::ListType mType;
-  bool mHasInbox;
-  bool mSecondStep;
   bool mComplete;
   QString mPath;
   QStringList mSubfolderNames, mSubfolderPaths,

@@ -94,15 +94,11 @@ void KMAcctCachedImap::pseudoAssign( const KMAccount * a ) {
   ImapAccountBase::pseudoAssign( a );
 }
 
-void KMAcctCachedImap::setPrefixHook() {
-  if ( mFolder ) mFolder->setImapPath( prefix() );
-}
-
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::setImapFolder(KMFolderCachedImap *aFolder)
 {
   mFolder = aFolder;
-  mFolder->setImapPath(mPrefix);
+  mFolder->setImapPath( "/" );
   mFolder->setAccount( this );
 }
 
@@ -236,6 +232,22 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mUnreadBeforeCheck.clear();
   // stop sending noops during sync, that will keep the connection open
   mNoopTimer.stop();
+
+  // reset namespace todo
+  if ( folder == mFolder ) {
+    QStringList nsToList = namespaces()[PersonalNS];
+    QStringList otherNSToCheck = namespaces()[OtherUsersNS];
+    otherNSToCheck += namespaces()[SharedNS];
+    for ( QStringList::Iterator it = otherNSToCheck.begin(); 
+          it != otherNSToCheck.end(); ++it ) {
+      if ( (*it).isEmpty() ) {
+        // empty namespaces are included in the "normal" listing
+        // as the folders are created under the root folder
+        nsToList += *it;
+      }
+    }
+    folder->setNamespacesToList( nsToList );
+  }
 
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(

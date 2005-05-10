@@ -523,7 +523,12 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  url.setPath(mFolder->imapPath() + folder->folder()->name());
+  QString path = mFolder->imapPath() + folder->folder()->name();
+  if ( !folder->imapPathForCreation().isEmpty() ) {
+    // the folder knows it's namespace
+    path = folder->imapPathForCreation();
+  }
+  url.setPath( path );
 
   // Associate the jobData with the parent folder, not with the child
   // This is necessary in case of an error while creating the subfolder,
@@ -563,7 +568,8 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
     return;
   }
 
-  QString folderPath = mFoldersOrMessages.front(); mFoldersOrMessages.pop_front();
+  QString folderPath = mFoldersOrMessages.front();
+  mFoldersOrMessages.pop_front();
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );

@@ -195,7 +195,9 @@ public:
    * It uses a ListJob to get the folders
    * returns false if the connection failed
    */
-  virtual bool listDirectory(bool secondStep = false);
+  virtual bool listDirectory();
+
+  virtual void listNamespaces();
 
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
@@ -241,14 +243,21 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
-protected slots:
-  /**
-   * Connected to ListJob::receivedFolders
-   * creates/removes folders
+  /** 
+   * List of namespaces that need to be queried
+   * Is set by the account for the root folder when the listing starts
    */
-  void slotListResult(const QStringList&, const QStringList&,
-      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
+  QStringList namespacesToList() { return mNamespacesToList; }
+  void setNamespacesToList( QStringList list ) { mNamespacesToList = list; }
 
+  /**
+   * Specify an imap path that is used to create the folder on the server
+   * Otherwise the parent folder is used to construct the path
+   */
+  const QString& imapPathForCreation() { return mImapPathCreation; }
+  void setImapPathForCreation( const QString& path ) { mImapPathCreation = path; }
+
+protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
   void slotGetLastMessagesResult(KMail::FolderJob *);
@@ -308,6 +317,9 @@ protected:
   /* update progress status */
   void newState( int progress, const QString& syncStatus );
 
+  /** See if there is a better parent then this folder */
+  KMFolderCachedImap* findParent( const QString& path, const QString& name );  
+
 public slots:
   /**
    * Add the data a KIO::Job retrieves to the buffer
@@ -318,6 +330,20 @@ public slots:
    * Troubleshoot the IMAP cache
    */
   void slotTroubleshoot();
+
+  /**
+   * Connected to ListJob::receivedFolders
+   * creates/removes folders
+   */
+  void slotListResult( const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
+
+  /**
+   * Connected to ListJob::receivedFolders
+   * creates namespace folders
+   */
+  void slotCheckNamespace( const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
 private slots:
   void serverSyncInternal();
@@ -344,6 +370,7 @@ private:
     SYNC_STATE_PUT_MESSAGES,
     SYNC_STATE_UPLOAD_FLAGS,
     SYNC_STATE_CREATE_SUBFOLDERS,
+    SYNC_STATE_LIST_NAMESPACES,
     SYNC_STATE_LIST_SUBFOLDERS,
     SYNC_STATE_LIST_SUBFOLDERS2,
     SYNC_STATE_DELETE_SUBFOLDERS,
@@ -420,7 +447,6 @@ private:
   bool mFolderRemoved;
   //bool mHoldSyncs;
   bool mRecurse;
-  bool mCreateInbox;
   /** Set to true by setStatus. Indicates that the client has changed
       the status of at least one mail. The mail flags will therefore be
       uploaded to the server, overwriting the server's notion of the status
@@ -430,6 +456,11 @@ private:
   bool mAnnotationFolderTypeChanged;
   /// Set to true when the "incidences-for" annotation needs to be set on the next sync
   bool mIncidencesForChanged;
+
+  QStringList mNamespacesToList;
+  int mNamespacesToCheck;
+  bool mPersonalNamespacesCheckDone;
+  QString mImapPathCreation;
 };
 
 #endif /*kmfoldercachedimap_h*/

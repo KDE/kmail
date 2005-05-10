@@ -137,7 +137,7 @@ public:
    * It uses a ListJob to get the folders
    * returns false if the connection failed
    */
-  virtual bool listDirectory(bool secondStep = false);
+  virtual bool listDirectory();
 
   /**
    * Retrieve all mails in a folder
@@ -156,8 +156,10 @@ public:
 
   /**
    * Create a new subfolder
+   * You may specify the root imap path or this folder will be used
    */
-  void createFolder(const QString &name);
+  void createFolder(const QString &name, 
+      const QString& imapPath = QString::null);
 
   /**
    * Delete a message
@@ -304,6 +306,9 @@ public:
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
 
+  /** Initialize this storage from another one. Used when creating a child folder */
+  void initializeFrom( KMFolderImap* parent, QString path, QString mimeType );
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -357,15 +362,29 @@ public slots:
   void slotCopyMsgResult( KMail::FolderJob* job );
 
   /**
-   * Called from the SearchJob when the folder search is done
+   * Called from the SearchJob when the folder is done or messages where found
    */
-  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern,
+  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern, 
      bool complete ); 
 
   /**
    * Called from the SearchJob when the message was searched
    */
   void slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern, bool matches ); 
+
+  /**
+   * Connected to ListJob::receivedFolders
+   * creates/removes folders
+   */
+  void slotListResult( const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
+
+  /**
+   * Connected to slotListNamespaces
+   * creates/removes namespace folders
+   */
+  void slotCheckNamespace( const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
@@ -381,14 +400,18 @@ protected:
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
 
-protected slots:
+  void setChildrenState( QString attributes );
 
-  /**
-   * Connected to ListJob::receivedFolders
-   * creates/removes folders
-   */
-  void slotListResult(const QStringList&, const QStringList&,
-      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
+  /** Create or find the INBOX and initialize it */
+  void initInbox();
+
+  /** See if there is a better parent then this folder */
+  KMFolderImap* findParent( const QString& path, const QString& name );
+
+  /** See if all folders are still present on server, otherwise delete them */
+  void checkFolders( const QStringList& folderNames );
+
+protected slots:
 
   /**
    * Retrieve the whole folder or only the changes
@@ -446,6 +469,11 @@ protected slots:
    * signal this slot is called and the folders created.
    */
   void slotCreatePendingFolders( int errorCode, const QString& errorMsg );
+
+  /**
+   * Starts a namespace listing
+   */ 
+  void slotListNamespaces();
 
 protected:
   QString     mImapPath;

@@ -37,7 +37,6 @@
 #include "kmmessage.h"
 #include "folderstorage.h"
 #include "listjob.h"
-using KMail::ListJob;
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -48,7 +47,7 @@ namespace KMail {
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
     KAccount *acct, QString startPath )
   : KSubscription( parent, caption, acct, User1, QString::null, false ),
-    mStartPath( startPath )
+    mStartPath( startPath ), mSubscribed( false )
 {
   // hide unneeded checkboxes
   hideTreeCheckbox();
@@ -78,7 +77,6 @@ void SubscriptionDialog::slotListDirectory( const QStringList& subfolderNames,
   mJobData = jobData;
 
   mCount = 0;
-  mCheckForExisting = false;
 
   createItems();
 }
@@ -87,9 +85,12 @@ void SubscriptionDialog::slotListDirectory( const QStringList& subfolderNames,
 void SubscriptionDialog::createItems()
 {
   bool onlySubscribed = mJobData.onlySubscribed;
-  ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
+
   GroupItem *parent = 0;
   uint done = 0;
+//  kdDebug(5006) << "createItems subscribed=" << onlySubscribed <<",folders="
+//    << mFolderNames.join(",") << endl;
+
   for (uint i = mCount; i < mFolderNames.count(); ++i)
   {
     // give the dialog a chance to repaint
@@ -104,14 +105,6 @@ void SubscriptionDialog::createItems()
     GroupItem *item = 0;
     if (!onlySubscribed && mFolderPaths.size() > 0)
     {
-      // the account does not know the delimiter
-      if (mDelimiter.isEmpty())
-      {
-        int start = mFolderPaths[i].findRev(mFolderNames[i]);
-        if (start > 1)
-          mDelimiter = mFolderPaths[i].mid(start-1, 1);
-      }
-
       // get the parent
       GroupItem *oldItem = 0;
       QString parentPath;
@@ -122,8 +115,6 @@ void SubscriptionDialog::createItems()
         // the parent is not available and it's no root-item
         // this happens when the folders do not arrive in hierarchical order
         // so we create each parent in advance
-        // as a result we have to check from now on if the folder already exists
-        mCheckForExisting = true;
         QStringList folders = QStringList::split(mDelimiter, parentPath);
         uint i = 0;
         for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it ) 
@@ -134,11 +125,6 @@ void SubscriptionDialog::createItems()
           if (name.endsWith("/"))
             name.truncate(name.length()-1);
           KGroupInfo info(name);
-          if (("/"+name+"/") == ai->prefix()) 
-          {
-            ++i;
-            continue;
-          }
           info.subscribed = false;
 
           QStringList tmpPath;
@@ -173,11 +159,11 @@ void SubscriptionDialog::createItems()
       } // parent
     
       KGroupInfo info(mFolderNames[i]);
-      if (mFolderNames[i].upper() == "INBOX" &&
-          mFolderPaths[i] == "/INBOX/")
-        info.name = i18n("inbox");
-      info.subscribed = false;
       info.path = mFolderPaths[i];
+
+      if ( info.path == "/INBOX/" )
+        info.name = i18n("inbox");
+
       // only checkable when the folder is selectable
       bool checkable = ( mFolderMimeTypes[i] == "inode/directory" ) ? false : true;
       // create a new item
@@ -230,39 +216,7 @@ void SubscriptionDialog::createItems()
       }
     }
   }
-  if ( mJobData.inboxOnly ) 
-  {
-    // list again (secondStep=true) with prefix
-    ImapAccountBase::ListType type = ImapAccountBase::List;
-    if ( onlySubscribed )
-      type = ImapAccountBase::ListSubscribedNoCheck;
-    ListJob* job = new ListJob( 0, ai, type, true, true,
-        false, ai->prefix() );
-    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
-            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
-        this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
-            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
-    job->start();
-  } else if (!onlySubscribed) 
-  {
-    // get subscribed folders
-    // only do a complete listing (*) when the user did not enter a prefix
-    // otherwise the complete listing will be done in second step
-    // we use the 'SubscribedNoCheck' feature so that the kioslave doesn't check
-    // for every folder if it actually exists
-    bool complete = (ai->prefix() == "/") ? true : false;
-    ListJob* job = new ListJob( 0, ai, ImapAccountBase::ListSubscribedNoCheck,
-        false, complete, false, ai->prefix() );
-    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
-            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
-        this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
-            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
-    job->start();
-  } else if (onlySubscribed)
-  {
-    // activate buttons and stuff
-    slotLoadingComplete();
-  }
+  processNext();
 }
 
 //------------------------------------------------------------------------------
@@ -276,22 +230,16 @@ void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &
   parentPath = path;
   parentPath.remove(start, length);
 
-  if (mDelimiter.isEmpty())
-    return;
-
   // find the parent by it's path
   *parent = mItemDict[parentPath];
   
   // check if the item already exists
-  if (mCheckForExisting) 
-    *oldItem = mItemDict[path];
+  *oldItem = mItemDict[path];
 }
 
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotSave()
 {
-  if (!account())
-    return;
   // subscribe
   QListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
@@ -314,23 +262,97 @@ void SubscriptionDialog::slotLoadFolders()
 {
   // clear the views
   KSubscription::slotLoadFolders();
-  if ( !account() )
-    return;
-  ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
-  if ( ai->prefix().isEmpty() )
-    return;
   mItemDict.clear();
-  // only do a complete listing (*) when the user did not enter a prefix
-  // otherwise the complete listing will be done in second step
-  bool complete = (ai->prefix() == "/") ? true : false;
-  // get all folders
-  ListJob* job = new ListJob( 0, ai, ImapAccountBase::List, false,
-      complete, false, ai->prefix() );
+
+  ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
+  // we need a connection
+  if ( ai->makeConnection() == ImapAccountBase::Error )
+  {
+    kdWarning(5006) << "SubscriptionDialog - got no connection" << endl;
+    return;
+  } else if ( ai->makeConnection() == ImapAccountBase::Connecting )
+  {
+    // We'll wait for the connectionResult signal from the account.
+    kdDebug(5006) << "SubscriptionDialog - waiting for connection" << endl;
+    connect( ai, SIGNAL( connectionResult(int, const QString&) ),
+        this, SLOT( slotConnectionResult(int, const QString&) ) );
+    return;
+  }
+
+  initPrefixList();
+
+  processNext();
+}
+
+//------------------------------------------------------------------------------
+void SubscriptionDialog::processNext()
+{
+  if ( mPrefixList.empty() ) 
+  {
+    if ( !mSubscribed )
+    {
+      mSubscribed = true;
+      initPrefixList();
+    } else {
+      slotLoadingComplete();
+      return;
+    }
+  }
+  ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
+  ImapAccountBase::ListType type = ( mSubscribed ? 
+      ImapAccountBase::ListSubscribedNoCheck : ImapAccountBase::List );
+
+  bool completeListing = true;
+  mCurrentNamespace = mPrefixList.first();
+  mDelimiter = ai->delimiterForNamespace( mCurrentNamespace );
+  mPrefixList.pop_front();
+  if ( mCurrentNamespace == "/INBOX/" )
+  {
+    type = mSubscribed ? 
+      ImapAccountBase::ListFolderOnlySubscribed : ImapAccountBase::ListFolderOnly;
+    completeListing = false;
+  }
+
+//  kdDebug(5006) << "process " << mCurrentNamespace << ",subscribed=" << mSubscribed << endl;
+  ListJob* job = new ListJob( ai, type, 0, ai->addPathToNamespace( mCurrentNamespace ), completeListing );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
   job->start();
+}
+
+//------------------------------------------------------------------------------
+void SubscriptionDialog::initPrefixList()
+{
+  ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
+  ImapAccountBase::nsMap map = ai->namespaces();
+  mPrefixList.clear();
+
+  bool hasInbox = false;
+  const QStringList ns = map[ImapAccountBase::PersonalNS];
+  for ( QStringList::ConstIterator it = ns.begin(); it != ns.end(); ++it )
+  {
+    if ( (*it).isEmpty() )
+      hasInbox = true;
+  }
+  if ( !hasInbox && !ns.isEmpty() ) 
+  {
+    // the namespaces includes no listing for the root so start a special
+    // listing for the INBOX to make sure we get it
+    mPrefixList += "/INBOX/";
+  }
+  
+  mPrefixList += map[ImapAccountBase::PersonalNS];
+  mPrefixList += map[ImapAccountBase::OtherUsersNS];
+  mPrefixList += map[ImapAccountBase::SharedNS];
+}
+
+void SubscriptionDialog::slotConnectionResult( int errorCode, const QString& errorMsg )
+{
+  Q_UNUSED( errorMsg );
+  if ( !errorCode )
+    slotLoadFolders();
 }
 
 } // namespace

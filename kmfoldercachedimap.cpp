@@ -54,6 +54,7 @@ using KMail::CachedImapJob;
 #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "listjob.h"
+using KMail::ListJob;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -147,7 +148,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mFolderRemoved( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
-    mIncidencesForChanged( false )
+    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true )
 {
   setUidValidity("");
   readUidCache();
@@ -207,6 +208,9 @@ void KMFolderCachedImap::readConfig()
 
   mAnnotationFolderTypeChanged = config->readBoolEntry( "AnnotationFolderTypeChanged", false );
   mIncidencesForChanged = config->readBoolEntry( "IncidencesForChanged", false );
+  if ( mImapPath.isEmpty() ) {
+    mImapPathCreation = config->readEntry("ImapPathCreation");
+  }
 }
 
 void KMFolderCachedImap::writeConfig()
@@ -216,6 +220,13 @@ void KMFolderCachedImap::writeConfig()
   configGroup.writeEntry( "NoContent", mNoContent );
   configGroup.writeEntry( "ReadOnly", mReadOnly );
   configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
+  if ( !mImapPathCreation.isEmpty() ) {
+    if ( mImapPath.isEmpty() ) {
+      configGroup.writeEntry( "ImapPathCreation", mImapPathCreation );
+    } else {
+      configGroup.deleteEntry( "ImapPathCreation" );
+    }
+  }
   writeAnnotationConfig();
   KMFolderMaildir::writeConfig();
 }
@@ -547,6 +558,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
   case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
   case SYNC_STATE_LIST_SUBFOLDERS:   return "SYNC_STATE_LIST_SUBFOLDERS";
+  case SYNC_STATE_LIST_NAMESPACES:   return "SYNC_STATE_LIST_NAMESPACES";
   case SYNC_STATE_LIST_SUBFOLDERS2:  return "SYNC_STATE_LIST_SUBFOLDERS2";
   case SYNC_STATE_DELETE_SUBFOLDERS: return "SYNC_STATE_DELETE_SUBFOLDERS";
   case SYNC_STATE_LIST_MESSAGES:     return "SYNC_STATE_LIST_MESSAGES";
@@ -614,6 +626,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_INITIAL:
   {
     mProgress = 0;
+    foldersForDeletionOnServer.clear();
     newState( mProgress, i18n("Synchronizing"));
 
     open();
@@ -628,7 +641,7 @@ void KMFolderCachedImap::serverSyncInternal()
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
       newState( mProgress, i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
       close();
-      emit folderComplete(this, FALSE);
+      emit folderComplete(this, false);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
       mAccount->setAnnotationCheckPassed( false );
@@ -698,7 +711,7 @@ void KMFolderCachedImap::serverSyncInternal()
     }
     // Else carry on
   case SYNC_STATE_UPLOAD_FLAGS:
-    mSyncState = SYNC_STATE_LIST_SUBFOLDERS;
+    mSyncState = SYNC_STATE_LIST_NAMESPACES;
     if( !noContent() ) {
        // We haven't downloaded messages yet, so we need to build the map.
        if( uidMapDirty )
@@ -715,9 +728,18 @@ void KMFolderCachedImap::serverSyncInternal()
        }
     }
     // Else carry on
+
+  case SYNC_STATE_LIST_NAMESPACES:
+    if ( this == mAccount->rootFolder() ) {
+      listNamespaces();
+      break;
+    }
+    mSyncState = SYNC_STATE_LIST_SUBFOLDERS;
+    // Else carry on
+
   case SYNC_STATE_LIST_SUBFOLDERS:
-    mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
     newState( mProgress, i18n("Retrieving folderlist"));
+    mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
     if( !listDirectory() ) {
       mSyncState = SYNC_STATE_INITIAL;
       KMessageBox::error(0, i18n("Error while retrieving the folderlist"));
@@ -980,8 +1002,12 @@ void KMFolderCachedImap::serverSyncInternal()
             // Only sync folders that have been accepted by the server
             if ( !storage->imapPath().isEmpty()
                  // and that were not just deleted from it
-                 && !foldersForDeletionOnServer.contains( storage->imapPath() ) )
+                 && !foldersForDeletionOnServer.contains( storage->imapPath() ) ) {
               mSubfoldersForSync << storage;
+            } else {
+              kdDebug(5006) << "Do not add " << storage->label() 
+                << " to synclist" << endl;
+            }
           }
           node = folder()->child()->next();
         }
@@ -1011,7 +1037,7 @@ void KMFolderCachedImap::serverSyncInternal()
         mSyncState = SYNC_STATE_INITIAL;
         mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
         close();
-        emit folderComplete( this, TRUE );
+        emit folderComplete( this, true );
       } else {
         mCurrentSubfolder = mSubfoldersForSync.front();
         mSubfoldersForSync.pop_front();
@@ -1191,7 +1217,9 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
           assert(0);
         }
         KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-        if( folder->imapPath().isEmpty() ) newFolders << folder;
+        if( folder->imapPath().isEmpty() ) {
+          newFolders << folder;
+        }
       }
       node = folder()->child()->next();
     }
@@ -1437,27 +1465,134 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
       static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->setAccount(aAccount);
 }
 
+void KMFolderCachedImap::listNamespaces()
+{
+  ImapAccountBase::ListType type = ImapAccountBase::List;
+  if ( mAccount->onlySubscribedFolders() )
+    type = ImapAccountBase::ListSubscribed;
+
+  kdDebug(5006) << "listNamespaces " << mNamespacesToList << endl;
+  if ( mNamespacesToList.isEmpty() ) {
+    mSyncState = SYNC_STATE_DELETE_SUBFOLDERS;
+    mPersonalNamespacesCheckDone = true;
+
+    QStringList ns = mAccount->namespaces()[ImapAccountBase::OtherUsersNS];
+    ns += mAccount->namespaces()[ImapAccountBase::SharedNS];
+    mNamespacesToCheck = ns.count();
+    for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
+    {
+      if ( (*it).isEmpty() ) {
+        // ignore empty listings as they have been listed before
+        --mNamespacesToCheck;
+        continue;
+      }
+      ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+      connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+              const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+          this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
+              const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
+      job->start();
+    }      
+    if ( mNamespacesToCheck == 0 ) {
+      serverSyncInternal();
+    }
+    return;
+  }
+  mPersonalNamespacesCheckDone = false;
+
+  QString ns = mNamespacesToList.front();
+  mNamespacesToList.pop_front();
+
+  mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
+  newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
+  ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
+  connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListResult(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
+  job->start();
+}
+
+void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
+                                             const QStringList& subfolderPaths,
+                                             const QStringList& subfolderMimeTypes,
+                                             const QStringList& subfolderAttributes,
+                                             const ImapAccountBase::jobData& jobData )
+{
+  Q_UNUSED( subfolderPaths );
+  Q_UNUSED( subfolderMimeTypes );
+  Q_UNUSED( subfolderAttributes );
+  --mNamespacesToCheck;
+  kdDebug(5006) << "slotCheckNamespace " << subfolderNames << ",remain=" << 
+   mNamespacesToCheck << endl;
+
+  // get a correct foldername: 
+  // strip / and make sure it does not contain the delimiter
+  QString name = jobData.path.mid( 1, jobData.path.length()-2 );
+  name.remove( mAccount->delimiterForNamespace( name ) );
+  if ( name.isEmpty() ) {
+    // should not happen
+    kdWarning(5006) << "slotCheckNamespace: ignoring empty folder!" << endl;
+    return;
+  }  
+
+  folder()->createChildFolder();
+  KMFolderNode *node = 0;
+  for ( node = folder()->child()->first(); node;
+        node = folder()->child()->next()) 
+  {
+    if ( !node->isDir() && node->name() == name ) 
+      break;
+  }
+  if ( !subfolderNames.isEmpty() ) {
+    if ( node ) {
+      // folder exists so we have nothing to do - it will be listed later
+      kdDebug(5006) << "found namespace folder " << name << endl;
+    } else
+    {
+      // create folder
+      kdDebug(5006) << "create namespace folder " << name << endl;
+      KMFolder* newFolder = folder()->child()->createFolder( name, false, 
+          KMFolderTypeCachedImap );
+      if ( newFolder ) {
+        KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>( newFolder->storage() );
+        f->setImapPath( mAccount->addPathToNamespace( name ) );
+        f->setNoContent( true );
+        f->setAccount( mAccount );
+        f->close();
+        kmkernel->dimapFolderMgr()->contentsChanged();
+      }
+    }     
+  } else {
+    if ( node ) {
+      kdDebug(5006) << "delete namespace folder " << name << endl;
+      KMFolder* fld = static_cast<KMFolder*>(node);
+      kmkernel->dimapFolderMgr()->remove( fld );
+    }
+  }
+  
+  if ( mNamespacesToCheck == 0 ) {
+    // all namespaces are done so continue with the next step
+    serverSyncInternal();
+  }
+}
 
 // This lists the subfolders on the server
 // and (in slotListResult) takes care of folders that have been removed on the server
-bool KMFolderCachedImap::listDirectory(bool secondStep)
+bool KMFolderCachedImap::listDirectory()
 {
-  mSubfolderState = imapInProgress;
   if( !mAccount->slave() ) { // sync aborted
     resetSyncState();
     emit folderComplete( this, false );
     return false;
   }
-  // reset
-  if ( this == mAccount->rootFolder() )
-    mAccount->setHasInbox( false );
+  mSubfolderState = imapInProgress;
 
   // get the folders
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  KMail::ListJob* job = new KMail::ListJob( this, mAccount, type, secondStep,
-      false, mAccount->hasInbox() );
+  ListJob* job = new ListJob( mAccount, type, this );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1473,88 +1608,82 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
                                          const QStringList& folderAttributes,
                                          const ImapAccountBase::jobData& jobData )
 {
-  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" << folderPaths << " mimeTypes=" << folderMimeTypes << endl;
+  Q_UNUSED( jobData );
+  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" 
+  //<< folderPaths << " mimeTypes=" << folderMimeTypes << endl;
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
   mSubfolderAttributes = folderAttributes;
 
   mSubfolderState = imapFinished;
-  bool it_inboxOnly = jobData.inboxOnly;
-  // pass it to listDirectory2
-  mCreateInbox = jobData.createInbox;
 
-  if (it_inboxOnly) {
-    // list again only for the INBOX
-    listDirectory(TRUE);
-    return;
-  }
-
-  if ( folder()->isSystemFolder() && mImapPath == "/INBOX/"
-       && mAccount->prefix() == "/INBOX/" )
-  {
-    // do not create folders under INBOX
-    mCreateInbox = false;
-    mSubfolderNames.clear();
-  }
   folder()->createChildFolder();
-  // Find all subfolders present on disk but not on the server
   KMFolderNode *node = folder()->child()->first();
+  bool root = ( this == mAccount->rootFolder() );
+
   QPtrList<KMFolder> toRemove;
-  while (node) {
-    if (!node->isDir() ) {
-      KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-      if ( mSubfolderNames.findIndex(node->name()) == -1 &&
-          (node->name().upper() != "INBOX" || !mCreateInbox) )
-      {
-        // This subfolder isn't present on the server
-        if( !f->imapPath().isEmpty()  ) {
-          // The folder has an imap path set, so it has been
-          // on the server before. Delete it locally.
-          toRemove.append( f->folder() );
-          kdDebug(5006) << node->name() << " isn't on the server. It has an imapPath -> delete it locally" << endl;
-        } else { // shouldn't happen
-          kdDebug(5006) << node->name() << " isn't on the server, but has no imapPath. ERROR - why didn't createNewFolders create it?" << endl;
+  bool emptyList = ( root && mSubfolderNames.empty() );
+  if ( !emptyList ) {
+    while (node) {
+      if (!node->isDir() ) {
+        KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+        if ( mSubfolderNames.findIndex(node->name()) == -1 ) {
+          QString name = node->name();
+          // ignore some cases
+          bool ignore = root && ( f->imapPath() == "/INBOX/" || 
+              mAccount->isNamespaceFolder( name ) );
+
+          // This subfolder isn't present on the server
+          if( !f->imapPath().isEmpty() && !ignore  ) {
+            // The folder has an imap path set, so it has been
+            // on the server before. Delete it locally.
+            toRemove.append( f->folder() );
+            kdDebug(5006) << node->name() << " isn't on the server. It has an imapPath -> delete it locally" << endl;
+          }
+        } else { // folder both local and on server
+          //kdDebug(5006) << node->name() << " is on the server." << endl;
         }
-      } else { // folder both local and on server
-        //kdDebug(5006) << node->name() << " is on the server." << endl;
+      } else {
+        //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
       }
-    } else {
-      //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
+      node = folder()->child()->next();
     }
-    node = folder()->child()->next();
   }
 
-  for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
+  for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() ) {
     kmkernel->dimapFolderMgr()->remove( doomed );
+  }
 
   mProgress += 5;
   serverSyncInternal();
 }
 
 // This synchronizes the local folders as needed (creation/deletion). No network communication here.
-void KMFolderCachedImap::listDirectory2() {
-  foldersForDeletionOnServer.clear();
+void KMFolderCachedImap::listDirectory2() 
+{
   QString path = folder()->path();
   KMFolderCachedImap *f = 0;
   kmkernel->dimapFolderMgr()->quiet(true);
 
-  if (mCreateInbox)
-  {
-    KMFolderNode *node;
+  KMFolderNode *node;
+  bool root = ( this == mAccount->rootFolder() );
+  if ( root && !mAccount->hasInbox() ) {
+    kdDebug(5006) << "check INBOX" << endl;
     // create the INBOX
     for (node = folder()->child()->first(); node; node = folder()->child()->next())
       if (!node->isDir() && node->name() == "INBOX") break;
-    if (node)
+    if (node) {
       f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-    else {
+    } else {
       KMFolder* newFolder = folder()->child()->createFolder("INBOX", true, KMFolderTypeCachedImap);
-      if (newFolder)
+      if ( newFolder ) {
         f = static_cast<KMFolderCachedImap*>(newFolder->storage());
+      }
     }
-    f->setAccount(mAccount);
-    f->setImapPath("/INBOX/");
-    f->folder()->setLabel(i18n("inbox"));
+    f->setAccount( mAccount );
+    f->setImapPath( "/INBOX/" );
+    f->folder()->setLabel( i18n("inbox") );
     if (!node) {
       f->close();
       kmkernel->dimapFolderMgr()->contentsChanged();
@@ -1563,16 +1692,20 @@ void KMFolderCachedImap::listDirectory2() {
     mAccount->setHasInbox( true );
   }
 
+  if ( root && !mSubfolderNames.isEmpty() ) {
+    KMFolderCachedImap* parent = 
+      findParent( mSubfolderPaths.first(), mSubfolderNames.first() );
+    if ( parent ) {
+      kdDebug(5006) << "KMFolderCachedImap::listDirectory2 - pass listing to " 
+        << parent->label() << endl;
+      mSubfolderNames.clear();
+    }
+  }
+
   // Find all subfolders present on server but not on disk
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
 
-    if (mSubfolderNames[i].upper() == "INBOX" &&
-        mSubfolderPaths[i] == "/INBOX/" &&
-        mAccount->hasInbox()) // do not create an additional inbox
-      continue;
-
     // Find the subdir, if already present
-    KMFolderNode *node;
     for (node = folder()->child()->first(); node;
          node = folder()->child()->next())
       if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
@@ -1599,8 +1732,9 @@ void KMFolderCachedImap::listDirectory2() {
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
         KMFolder* newFolder = folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap);
-        if (newFolder)
+        if ( newFolder ) {
           f = static_cast<KMFolderCachedImap*>(newFolder->storage());
+        }
         if (f) {
           f->close();
           f->setAccount(mAccount);
@@ -1628,7 +1762,40 @@ void KMFolderCachedImap::listDirectory2() {
   }
   kmkernel->dimapFolderMgr()->quiet(false);
   emit listComplete(this);
+  if ( !mPersonalNamespacesCheckDone ) {
+    // we're not done with the namespaces
+    mSyncState = SYNC_STATE_LIST_NAMESPACES;
+  }
   serverSyncInternal();
+}
+
+//-----------------------------------------------------------------------------
+KMFolderCachedImap* KMFolderCachedImap::findParent( const QString& path, 
+                                                    const QString& name )
+{
+  QString parent = path.left( path.length() - name.length() - 2 );
+  if ( parent.length() > 1 )
+  {
+    // extract name of the parent
+    parent = parent.right( parent.length() - 1 );
+    if ( parent != label() )
+    {
+      KMFolderNode *node = folder()->child()->first();
+      // look for a better parent
+      while ( node )
+      {
+        if ( node->name() == parent )
+        {
+          KMFolder* fld = static_cast<KMFolder*>(node);
+          KMFolderCachedImap* imapFld = 
+            static_cast<KMFolderCachedImap*>( fld->storage() );
+          return imapFld;
+        }
+        node = folder()->child()->next();
+      }
+    }
+  }
+  return 0;
 }
 
 void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool success)

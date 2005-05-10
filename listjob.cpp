@@ -48,14 +48,13 @@ using KPIM::ProgressManager;
 
 using namespace KMail;
 
-ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
-    ImapAccountBase::ListType type,
-    bool secondStep, bool complete, bool hasInbox, const QString& path,
+ListJob::ListJob( ImapAccountBase* account, ImapAccountBase::ListType type,
+    FolderStorage* storage, const QString& path, bool complete,
     KPIM::ProgressItem* item )
  : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
    mStorage( storage ), mAccount( account ), mType( type ),
-   mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete ),
-   mPath( path ), mParentProgressItem( item )
+   mComplete( complete ), mPath( path ),
+   mParentProgressItem( item )
 {
 }
 
@@ -95,9 +94,10 @@ void ListJob::execute()
   ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0;
   jd.cancellable = true;
-  jd.createInbox = ( mSecondStep && !mHasInbox ) ? true : false;
   jd.parent = mDestFolder;
-  jd.onlySubscribed = ( mType != ImapAccountBase::List );
+  jd.onlySubscribed = ( mType == ImapAccountBase::ListSubscribed || 
+                        mType == ImapAccountBase::ListSubscribedNoCheck ||
+                        mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
   QString status = mDestFolder ? mDestFolder->prettyURL() : QString::null;
   if ( mParentProgressItem )
@@ -112,21 +112,27 @@ void ListJob::execute()
     mParentProgressItem->setStatus( status );
   }
 
-  // this is needed if you have a prefix
-  // as the INBOX is located in your root ("/") and needs a special listing
-  jd.inboxOnly = !mSecondStep && mAccount->prefix() != "/"
-    && mPath == mAccount->prefix() && !mHasInbox;
   // make the URL
   QString ltype = "LIST";
-  if ( mType == ImapAccountBase::ListSubscribed )
+  if ( mType == ImapAccountBase::ListSubscribed ||
+       mType == ImapAccountBase::ListFolderOnlySubscribed )
     ltype = "LSUB";
   else if ( mType == ImapAccountBase::ListSubscribedNoCheck )
     ltype = "LSUBNOCHECK";
+
+  QString section;
+  if ( mComplete )
+    section = ";SECTION=COMPLETE";
+  else if ( mType == ImapAccountBase::ListFolderOnly || 
+            mType == ImapAccountBase::ListFolderOnlySubscribed )
+    section = ";SECTION=FOLDERONLY";
+  
   KURL url = mAccount->getUrl();
-  url.setPath( ( jd.inboxOnly ? QString("/") : mPath )
+  url.setPath( mPath 
       + ";TYPE=" + ltype
-      + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
+      + section );
   // go
+  //kdDebug(5006) << "start listjob for " << url.path() << endl;
   KIO::SimpleJob *job = KIO::listDir( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
@@ -163,12 +169,6 @@ void ListJob::slotListResult( KIO::Job* job )
         true );
   } else
   {
-    // temporary debug output to trace the dimap cache eater, remove when fixed!
-    kdDebug() << "Listing folder: " << ( *it ).path << endl;
-    kdDebug() << "\tSubfolderNames: " << mSubfolderNames << endl;
-    kdDebug() << "\tSubfolderPaths: " << mSubfolderPaths << endl;
-    kdDebug() << "\tSubfolderMimeTypes: " << mSubfolderMimeTypes << endl;
-    kdDebug() << "\tSubfolderAttributes: " << mSubfolderAttributes << endl;
     // transport the information, include the jobData
     emit receivedFolders( mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
@@ -191,7 +191,6 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   KURL url;
   QString mimeType;
   QString attributes;
-  kdDebug() << "slotListEntries called.  uds is empty? " << (uds.isEmpty() ? "YES" : "NO") << endl;
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
         udsIt != uds.end(); udsIt++ )
   {
@@ -212,29 +211,17 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
     }
     if ( (mimeType == "inode/directory" || mimeType == "message/digest"
           || mimeType == "message/directory")
-         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
-         && (!(*it).inboxOnly || name.upper() == "INBOX") )
+         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.') )
     {
-      if ( ((*it).inboxOnly ||
-            url.path() == "/INBOX/") && name.upper() == "INBOX" &&
-           !mHasInbox )
-      {
-        // our INBOX
-        (*it).createInbox = true;
-      }
-
       // Some servers send _lots_ of duplicates
       // This check is too slow for huge lists
       if ( mSubfolderPaths.count() > 100 ||
            mSubfolderPaths.findIndex(url.path()) == -1 )
       {
-        kdDebug() << "APPENDING in slotListEntries: " << name << " " << url.path() << " " << mimeType << " " << attributes << endl;
         mSubfolderNames.append( name );
         mSubfolderPaths.append( url.path() );
         mSubfolderMimeTypes.append( mimeType );
         mSubfolderAttributes.append( attributes );
-      } else {
-        kdDebug() << "NOT APPENDING in slotListEntries.  count = " << mSubfolderPaths.count() << " url.path() = " << url.path() << endl;
       }
     }
   }

@@ -189,8 +189,6 @@ QByteArray& NewByteArray::qByteArray()
     return *((QByteArray*)this);
 }
 
-
-
 // This function returns the complete data that were in this
 // message parts - *after* all encryption has been removed that
 // could be removed.
@@ -1193,7 +1191,8 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("New recipient editor and picker in the composer"),
   I18N_NOOP("Quick folder switching via configurable shortcuts"),
   I18N_NOOP("Anti-Spam Wizard supports additional tools"),
-  I18N_NOOP("Import mail from Evolution 2.x, Opera and Thunderbird")
+  I18N_NOOP("Import mail from Evolution 2.x, Opera and Thunderbird"),
+  I18N_NOOP("Full Namespace support for IMAP")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;

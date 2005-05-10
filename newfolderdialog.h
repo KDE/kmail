@@ -58,12 +58,15 @@ class NewFolderDialog : public KDialogBase
     QComboBox* mFormatComboBox;
     QLabel* mContentsLabel;
     QComboBox* mContentsComboBox;
+    QLabel* mNamespacesLabel;
+    QComboBox* mNamespacesComboBox;
 
   protected:
     QVBoxLayout* mTopLevelLayout;
     QHBoxLayout* mNameHBox;
     QHBoxLayout* mFormatHBox;
     QHBoxLayout* mContentsHBox;
+    QHBoxLayout* mNamespacesHBox;
   protected slots:
     void slotOk();
   void slotFolderNameChanged( const QString & _text);

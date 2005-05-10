@@ -50,8 +50,21 @@ namespace KMail {
          QString startPath = QString::null );
 
     protected:
+      /**
+       * Find the parent item 
+       */ 
       void findParentItem ( QString &name, QString &path, QString &compare,
                        GroupItem **parent, GroupItem **oldItem );
+
+      /**
+       * Process the next prefix in mPrefixList
+       */ 
+      void processNext();
+
+      /**
+       * Fill mPrefixList
+       */ 
+      void initPrefixList();
 
     public slots:
       /**
@@ -64,6 +77,11 @@ namespace KMail {
        * called by Ok-button, saves the changes
        */ 
       void slotSave();
+
+      /**
+       * Called from the account when a connection was established
+       */
+      void slotConnectionResult( int errorCode, const QString& errorMsg );      
 
     protected slots:
       /**
@@ -82,9 +100,11 @@ namespace KMail {
                   mFolderMimeTypes, mFolderAttributes;
       ImapAccountBase::jobData mJobData;
       uint mCount;
-      bool mCheckForExisting;
       QDict<GroupItem> mItemDict;
       QString mStartPath;
+      bool mSubscribed;
+      QStringList mPrefixList;
+      QString mCurrentNamespace;
   };
 
 } // namespace KMail

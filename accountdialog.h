@@ -24,7 +24,9 @@
 #define _ACCOUNT_DIALOG_H_
 
 #include <kdialogbase.h>
+#include <klistview.h>
 #include <qguardedptr.h>
+#include "imapaccountbase.h"
 
 class QRegExpValidator;
 class QCheckBox;
@@ -38,10 +40,11 @@ class KMAccount;
 class KMFolder;
 class KMServerTest;
 class QButtonGroup;
+
 namespace KMail {
-  class SieveConfigEditor;
-  class FolderRequester;
-}
+
+class SieveConfigEditor;
+class FolderRequester;
 
 class AccountDialog : public KDialogBase
 {
@@ -149,7 +152,6 @@ class AccountDialog : public KDialogBase
       QLineEdit    *passwordEdit;
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
-      QLineEdit    *prefixEdit;
 #if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
@@ -180,7 +182,9 @@ class AccountDialog : public KDialogBase
       QRadioButton *authNTLM;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
-      KMail::FolderRequester *trashCombo;
+      FolderRequester *trashCombo;
+      KListView    *namespaceView;
+      int           namespaceViewColumn;
     };
 
   private slots:
@@ -202,6 +206,10 @@ class AccountDialog : public KDialogBase
     void slotCheckImapCapabilities();
     void slotPopCapabilities( const QStringList &, const QStringList & );
     void slotImapCapabilities( const QStringList &, const QStringList & );
+    void slotReloadNamespaces();
+    void slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map );
+    void slotRemoveNamespace();
+    void slotContextMenuNamespaceView( QListViewItem *lvi, const QPoint &p );
 #if 0
     // Moc doesn't understand #if 0, so they are also commented out
     // void slotClearResourceAllocations();
@@ -220,6 +228,7 @@ class AccountDialog : public KDialogBase
     static unsigned int imapCapabilitiesFromStringList( const QStringList & );
     void enablePopFeatures( unsigned int );
     void enableImapAuthMethods( unsigned int );
+    void initAccountForConnect();
 
   private:
     LocalWidgets mLocal;
@@ -259,5 +268,32 @@ class AccountDialog : public KDialogBase
     QRegExpValidator *mValidator;
 };
 
+class NamespaceViewElement : public KListViewItem
+{
+  public:
+    NamespaceViewElement( QListView * parent, QListViewItem * after );
+    NamespaceViewElement( QListView * parent, QString text );
+    NamespaceViewElement( QListViewItem * parent, QString text );
+
+    QString& delimiter() { return mDelimiter; }
+    void setDelimiter( const QString& delim ) { mDelimiter = delim; }
+
+    QString& oldText() { return mOldText; }
+    void setOldText( QString& old ) { mOldText = old; }
+
+    // return if our text has changed
+    bool changed() { return mChanged; }
+
+  protected:
+    // reimplemented to set mChanged to true
+    void okRename ( int col );
+
+  private:
+    QString mDelimiter;
+    QString mOldText;
+    bool mChanged;
+};
+
+} // namespace KMail
 
 #endif

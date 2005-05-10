@@ -66,10 +66,6 @@ namespace KMail {
     /** A weak assignment operator */
     virtual void pseudoAssign( const KMAccount * a );
 
-    /** IMAP folder prefix */
-    QString prefix() const { return mPrefix; }
-    virtual void setPrefix( const QString & prefix );
-
     /** @return whether to automatically expunge deleted messages when
         leaving the folder */
     bool autoExpunge() const { return mAutoExpunge; }
@@ -97,8 +93,20 @@ namespace KMail {
     virtual void readConfig( KConfig& config );
     virtual void writeConfig( KConfig& config );
 
+    /** 
+     * The state of the kioslave connection
+     */
     enum ConnectionState { Error = 0, Connected, Connecting };
-    enum ListType { List, ListSubscribed, ListSubscribedNoCheck };
+
+    // possible list types
+    enum ListType { 
+      List, 
+      ListSubscribed, 
+      ListSubscribedNoCheck, 
+      ListFolderOnly,
+      ListFolderOnlySubscribed
+    };
+
     /**
      * Connect to the server, if no connection is active
      * Returns Connected (ok), Error (ko) or Connecting - which means
@@ -107,6 +115,18 @@ namespace KMail {
      */
     ConnectionState makeConnection();
 
+    // namespace defines
+    enum imapNamespace { PersonalNS=0, OtherUsersNS=1, SharedNS=2 };
+
+    // map a namespace type to a list of namespaces
+    typedef QMap<imapNamespace, QStringList> nsMap;
+
+    // map a namespace to a delimiter
+    typedef QMap<QString, QString> namespaceDelim;
+
+    // map a namespace type to a map with the namespace and the delimiter
+    typedef QMap<imapNamespace, namespaceDelim> nsDelimMap;
+
     /**
      * Info Data for the Job
      */
@@ -114,14 +134,13 @@ namespace KMail {
     {
       // Needed by QMap, don't use
       jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), progressItem(0),
-                  inboxOnly(false), quiet(false), cancellable(false), createInbox(false) {}
+                  onlySubscribed(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false,
-          bool _inboxOnly = false, bool _cancelable = false, bool _createInbox = false )
+          bool _cancelable = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(_cancelable),
-          createInbox(_createInbox) {}
+          progressItem(0), quiet(_quiet), cancellable(_cancelable) {}
 
       // Return "url" in a form that can be displayed in HTML (w/o password)
       QString htmlURL() const;
@@ -135,8 +154,7 @@ namespace KMail {
       QPtrList<KMMessage> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
-      bool inboxOnly, onlySubscribed, quiet,
-           cancellable, createInbox;
+      bool onlySubscribed, quiet, cancellable;
     };
 
     typedef QMap<KIO::Job *, jobData>::Iterator JobIterator;
@@ -275,6 +293,67 @@ namespace KMail {
      */
     virtual unsigned int folderCount() const;
 
+    /** 
+     * @return defined namespaces 
+     */
+    nsMap namespaces() const { return mNamespaces; }
+
+    /**
+     * Set defined namespaces
+     */ 
+    virtual void setNamespaces( nsMap map ) 
+    { mNamespaces = map; }
+
+    /**
+     * Full blown section - namespace - delimiter map
+     * Do not call this very often as the map is constructed on the fly
+     */ 
+    nsDelimMap namespacesWithDelimiter();
+
+    /**
+     * @return the prefix (namespace) for the @p folder
+     */
+     QString prefixForFolder( FolderStorage* );
+
+     /**
+      * Adds "/" as needed to the given namespace
+      */
+     QString addPathToNamespace( const QString& ns );
+
+     /**
+      * @return the delimiter for the @p namespace
+      */
+     QString delimiterForNamespace( const QString& prefix );
+
+     /**
+      * @return the delimiter for the @p folderstorage
+      */
+     QString delimiterForFolder( FolderStorage* );
+
+     /**
+      * @return the namespace - delimiter map
+      */
+     namespaceDelim namespaceToDelimiter() const
+     { return mNamespaceToDelimiter; }
+
+     /**
+      * Set the namespace - delimiter map
+      */
+     void setNamespaceToDelimiter( namespaceDelim map )
+     { mNamespaceToDelimiter = map; } 
+
+     /**
+      * Returns true if the given string is a namespace
+      */ 
+     bool isNamespaceFolder( QString& name );
+
+  public slots:
+    /**
+     * Call this to get the namespaces
+     * You are notified by the signal namespacesFetched
+     */ 
+    void getNamespaces();
+
   private slots:
     /**
      * is called when the changeSubscription has finished
@@ -320,6 +399,14 @@ namespace KMail {
      */
     void slotSimpleResult(KIO::Job * job);
 
+    /** Gets and parses the namespaces */
+    void slotNamespaceResult( KIO::Job*, const QString& str );
+
+    /**
+     * Saves the fetched namespaces
+     */ 
+    void slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map );
+
   protected:
 
   /**
@@ -345,14 +432,13 @@ namespace KMail {
 
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
-    // ### Hacks
-    virtual void setPrefixHook() = 0;
 
     /**
      * Build KMMessageParts and DwBodyParts from the bodystructure-stream
      */
     void constructParts( QDataStream & stream, int count, KMMessagePart* parentKMPart,
        DwBodyPart * parent, const DwMessage * dwmsg );
+
 
   protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
@@ -363,7 +449,6 @@ namespace KMail {
     QTimer mIdleTimer;
     /** used to send a noop to the slave in regular intervals to keep it from disonnecting */
     QTimer mNoopTimer;
-    QString mPrefix;
     int mTotal, mCountUnread, mCountLastUnread;
     QMap<QString, int> mUnreadBeforeCheck;
     bool mAutoExpunge : 1;
@@ -383,7 +468,7 @@ namespace KMail {
 
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
-        // folders that should be checked after the current check is done
+    // folders that should be checked after the current check is done
 	QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
     // holds messageparts from the bodystructure
     QPtrList<KMMessagePart> mBodyPartList;
@@ -391,6 +476,12 @@ namespace KMail {
     KMMessage* mCurrentMsg;
 
     QGuardedPtr<KPIM::ProgressItem> mListDirProgressItem;
+
+    // our namespaces in the form section=namespaceList
+    nsMap mNamespaces;
+
+    // namespace - delimiter map
+    namespaceDelim mNamespaceToDelimiter;
 
   signals:
     /**
@@ -429,6 +520,11 @@ namespace KMail {
      * @param entries the ACL list. Make your copy of it, it comes from the job.
      */
     void receivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& entries );
+
+    /**
+     * Emitted when we got the namespaces
+     */
+    void namespacesFetched( const ImapAccountBase::nsDelimMap& );
   };
 
 

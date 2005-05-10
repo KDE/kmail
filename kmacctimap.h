@@ -41,9 +41,6 @@ class KMAcctImap: public KMail::ImapAccountBase
   Q_OBJECT
   friend class KMail::ImapJob;
 
-protected: // ### Hacks
-  void setPrefixHook();
-
 public:
   virtual ~KMAcctImap();
 

@@ -33,6 +33,7 @@
 // other KMail headers:
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
+using KMail::AccountDialog;
 #include "colorlistbox.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
@@ -41,6 +42,8 @@
 #include "kmfoldermgr.h"
 #include <libkpimidentities/identitymanager.h>
 #include "identitylistview.h"
+using KMail::IdentityListView;
+using KMail::IdentityListViewItem;
 #include "kcursorsaver.h"
 #include "kmkernel.h"
 #include <composercryptoconfiguration.h>
@@ -50,15 +53,12 @@
 using KMail::FolderRequester;
 #include "accountcombobox.h"
 #include "imapaccountbase.h"
+using KMail::ImapAccountBase;
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
-
-using KMail::IdentityListView;
-using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
-using KMail::ImapAccountBase;
 
 // other kdenetwork headers:
 #include <libkpimidentities/identity.h>
@@ -1277,6 +1277,16 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         KMessageBox::sorry( this, i18n("Unable to locate account") );
         return;
       }
+      if ( account->type() == "imap" || account->type() == "cachedimap" )
+      {
+        ImapAccountBase* ai = static_cast<ImapAccountBase*>( account );
+        if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
+        {
+          // connect to server - the namespaces are fetched automatically
+          kdDebug(5006) << "slotModifySelectedAccount - connect" << endl;
+          ai->makeConnection();
+        }
+      }      
 
       ModifiedAccountsType *mod = new ModifiedAccountsType;
       mod->oldAccount = account;
@@ -1285,12 +1295,6 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
       mod->newAccount->pseudoAssign( account );
       mModifiedAccounts.append( mod );
       account = mod->newAccount;
-    }
-
-    if( !account ) {
-      // ### FIXME: See above.
-      KMessageBox::sorry( this, i18n("Unable to locate account") );
-      return;
     }
   }
 
@@ -4699,7 +4703,6 @@ void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
 }
 
 #undef DIM
-
 
 //----------------------------
 #include "configuredialog.moc"

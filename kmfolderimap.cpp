@@ -41,6 +41,7 @@ using KMail::AttachmentStrategy;
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 #include "listjob.h"
+using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "searchjob.h"
 using KMail::SearchJob;
@@ -203,7 +204,8 @@ void KMFolderImap::remove()
   }
   KURL url = mAccount->getUrl();
   url.setPath(imapPath());
-  if ( mAccount->makeConnection() == ImapAccountBase::Error )
+  if ( mAccount->makeConnection() == ImapAccountBase::Error ||
+       imapPath().isEmpty() )
   {
     emit removed(folder(), false);
     return;
@@ -548,7 +550,130 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 }
 
 //-----------------------------------------------------------------------------
-bool KMFolderImap::listDirectory(bool secondStep)
+void KMFolderImap::slotListNamespaces()
+{
+  if ( mAccount->makeConnection() == ImapAccountBase::Error )
+  {
+    kdWarning(5006) << "slotListNamespaces - got no connection" << endl;
+    return;
+  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
+  {
+    // wait for the connectionResult
+    kdDebug(5006) << "slotListNamespaces - waiting for connection" << endl;
+    connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+        this, SLOT( slotListNamespaces() ) );
+    return;
+  }
+  kdDebug(5006) << "slotListNamespaces" << endl;
+  // reset subfolder states
+  setSubfolderState( imapNoInformation );
+  mSubfolderState = imapInProgress;
+  mAccount->setHasInbox( false );
+
+  ImapAccountBase::ListType type = ImapAccountBase::List;
+  if ( mAccount->onlySubscribedFolders() )
+    type = ImapAccountBase::ListSubscribed;
+
+  ImapAccountBase::nsMap map = mAccount->namespaces();
+  QStringList personal = map[ImapAccountBase::PersonalNS];
+  // start personal namespace listing and send it directly to slotListResult
+  for ( QStringList::Iterator it = personal.begin(); it != personal.end(); ++it )
+  {
+    ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotListResult(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
+    job->start();
+  }
+
+  // and now we list all other namespaces and check them ourself
+  QStringList ns = map[ImapAccountBase::OtherUsersNS];
+  ns += map[ImapAccountBase::SharedNS];
+  for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
+  {
+    ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
+    job->start();
+  }  
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotCheckNamespace( const QStringList& subfolderNames,
+                                       const QStringList& subfolderPaths,
+                                       const QStringList& subfolderMimeTypes,
+                                       const QStringList& subfolderAttributes,
+                                       const ImapAccountBase::jobData& jobData )
+{
+  kdDebug(5006) << "slotCheckNamespace - " << subfolderNames.join(",") << endl;
+
+  // get a correct foldername: 
+  // strip / and make sure it does not contain the delimiter
+  QString name = jobData.path.mid( 1, jobData.path.length()-2 );
+  name.remove( mAccount->delimiterForNamespace( name ) );
+  if ( name.isEmpty() ) {
+    // happens when an empty namespace is defined
+    slotListResult( subfolderNames, subfolderPaths, 
+        subfolderMimeTypes, subfolderAttributes, jobData );
+    return;
+  }
+
+  folder()->createChildFolder();
+  KMFolderNode *node = 0;
+  for ( node = folder()->child()->first(); node;
+        node = folder()->child()->next()) 
+  {
+    if ( !node->isDir() && node->name() == name ) 
+      break;
+  }
+  if ( subfolderNames.isEmpty() )
+  {
+    if ( node )
+    {
+      kdDebug(5006) << "delete namespace folder " << name << endl;
+      KMFolder *fld = static_cast<KMFolder*>(node);
+      KMFolderImap* nsFolder = static_cast<KMFolderImap*>(fld->storage());
+      nsFolder->setAlreadyRemoved( true );
+      kmkernel->imapFolderMgr()->remove( fld );
+    }
+  } else {
+    if ( node )
+    {
+      // folder exists so pass on the attributes
+      kdDebug(5006) << "found namespace folder " << name << endl;
+      if ( !mAccount->listOnlyOpenFolders() )
+      {
+        KMFolderImap* nsFolder = 
+          static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+        nsFolder->slotListResult( subfolderNames, subfolderPaths, 
+            subfolderMimeTypes, subfolderAttributes, jobData );
+      }
+    } else
+    {
+      // create folder
+      kdDebug(5006) << "create namespace folder " << name << endl;
+      KMFolder *fld = folder()->child()->createFolder( name );
+      if ( fld ) {
+        KMFolderImap* f = static_cast<KMFolderImap*> ( fld->storage() );
+        f->initializeFrom( this, mAccount->addPathToNamespace( name ), 
+            "inode/directory" );
+        f->close();
+        if ( !mAccount->listOnlyOpenFolders() )
+        {
+          f->slotListResult( subfolderNames, subfolderPaths, 
+              subfolderMimeTypes, subfolderAttributes, jobData );
+        }
+      }
+      kmkernel->imapFolderMgr()->contentsChanged();
+    }  
+  }
+}
+
+//-----------------------------------------------------------------------------
+bool KMFolderImap::listDirectory()
 {
   if ( !mAccount ||
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
@@ -557,12 +682,11 @@ bool KMFolderImap::listDirectory(bool secondStep)
     return false;
   }
 
-  // reset
   if ( this == mAccount->rootFolder() )
   {
-    mAccount->setHasInbox( false );
-    // recursive
-    setSubfolderState( imapNoInformation );
+    // a new listing started
+    slotListNamespaces();
+    return true;
   }
   mSubfolderState = imapInProgress;
 
@@ -570,8 +694,8 @@ bool KMFolderImap::listDirectory(bool secondStep)
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  KMail::ListJob* job = new KMail::ListJob( this, mAccount, type, secondStep,
-      false, mAccount->hasInbox(), QString::null, account()->listDirProgressItem() );
+  ListJob* job = new ListJob( mAccount, type, this );
+  job->setParentProgressItem( account()->listDirProgressItem() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -583,154 +707,234 @@ bool KMFolderImap::listDirectory(bool secondStep)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
+void KMFolderImap::slotListResult( const QStringList& subfolderNames,
                                    const QStringList& subfolderPaths,
                                    const QStringList& subfolderMimeTypes,
                                    const QStringList& subfolderAttributes,
                                    const ImapAccountBase::jobData& jobData )
 {
-  QStringList subfolderNames( subfolderNames_ ); // for the clear() below.
   mSubfolderState = imapFinished;
-  bool it_inboxOnly = jobData.inboxOnly;
-  bool createInbox = jobData.createInbox;
-//  kdDebug(5006) << name() << ": " << subfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
-//    << ", createinbox:" << createInbox << ", hasinbox:" << mAccount->hasInbox() << endl;
+  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" 
+  //<< folderPaths << " mimeTypes=" << folderMimeTypes << endl;  
 
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
-  if (it_inboxOnly) {
-    // list again only for the INBOX
-    listDirectory(true);
-  } else {
-    if ( folder()->isSystemFolder() && mImapPath == "/INBOX/"
-        && mAccount->prefix() == "/INBOX/" )
+
+  bool root = ( this == mAccount->rootFolder() );
+  folder()->createChildFolder();
+  if ( root && !mAccount->hasInbox() )
+  {
+    // create the INBOX
+    initInbox();
+  }
+
+  // see if we have a better parent
+  // if you have a prefix that contains a folder (e.g "INBOX.") the folders
+  // need to be created underneath it
+  if ( root && !subfolderNames.empty() )
+  {
+    KMFolderImap* parent = findParent( subfolderPaths.first(), subfolderNames.first() );
+    if ( parent )
     {
-      // do not create folders under INBOX when we have an INBOX prefix
-      createInbox = false;
-      subfolderNames.clear();
+      kdDebug(5006) << "KMFolderImap::slotListResult - pass listing to " 
+        << parent->label() << endl;
+      parent->slotListResult( subfolderNames, subfolderPaths, 
+          subfolderMimeTypes, subfolderAttributes, jobData );
+      emit directoryListingFinished( this );
+      kmkernel->imapFolderMgr()->quiet( false );
+      return;
     }
-    folder()->createChildFolder();
-    KMFolderImap *f = 0;
-    KMFolderNode *node = folder()->child()->first();
-    while (node)
-    {
-      // check if the folders still exist on the server
-      if (!node->isDir() && (node->name().upper() != "INBOX" || !createInbox)
-          && subfolderNames.findIndex(node->name()) == -1)
-      {
-        kdDebug(5006) << node->name() << " disappeared" << endl;
-        // remove the folder without server round trip
-        KMFolder* fld = static_cast<KMFolder*>(node);
-        static_cast<KMFolderImap*>(fld->storage())->setAlreadyRemoved(true);
-        kmkernel->imapFolderMgr()->remove(fld);
-        node = folder()->child()->first();
-      }
-      else node = folder()->child()->next();
+  }
+
+  bool emptyList = ( root && subfolderNames.empty() );
+  if ( !emptyList )
+  {
+    checkFolders( subfolderNames );
+  }
+
+  KMFolderImap *f = 0;
+  KMFolderNode *node = 0;
+  for ( uint i = 0; i < subfolderNames.count(); i++ )
+  {
+    bool settingsChanged = false;
+    // create folders if necessary
+    for ( node = folder()->child()->first(); node;
+          node = folder()->child()->next() ) {
+      if ( !node->isDir() && node->name() == subfolderNames[i] ) 
+        break;
     }
-    if ( createInbox )
+    if ( node ) {
+      f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+    } 
+    else if ( subfolderPaths[i] != "/INBOX/" ) 
     {
-      // create the INBOX
-      for (node = folder()->child()->first(); node;
-           node = folder()->child()->next())
-        if (!node->isDir() && node->name() == "INBOX") break;
-      if (node) {
-        f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+      kdDebug(5006) << "create folder " << subfolderNames[i] << endl;
+      KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
+      if ( fld ) {
+        f = static_cast<KMFolderImap*> ( fld->storage() );
+        f->close();
+        settingsChanged = true;
       } else {
-        f = static_cast<KMFolderImap*>
-          (folder()->child()->createFolder("INBOX", true)->storage());
-        if ( !mAccount->listOnlyOpenFolders() ) // should be ok as a default
-          f->setHasChildren( FolderStorage::HasNoChildren );
+        kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
       }
-      f->setAccount(mAccount);
-      f->setImapPath("/INBOX/");
-      f->folder()->setLabel(i18n("inbox"));
-      for (uint i = 0; i < subfolderNames.count(); i++)
+    }
+    if ( f )
+    {
+      // sanity check
+      if ( f->imapPath().isEmpty() ) {
+        f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
+        settingsChanged = true;
+      }
+      // update progress
+      account()->listDirProgressItem()->incCompletedItems();
+      account()->listDirProgressItem()->updateProgress();
+      account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
+
+      f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
+      f->setChildrenState( subfolderAttributes[i] );
+      if ( mAccount->listOnlyOpenFolders() && 
+           f->hasChildren() != FolderStorage::ChildrenUnknown ) 
       {
-        if ( subfolderNames[i] == "INBOX" &&
-             subfolderPaths[i] == "/INBOX/" )
-          f->setNoChildren( subfolderMimeTypes[i] == "message/digest" );
+        settingsChanged = true;
       }
-      if (!node) f->close();
-      // so we have an INBOX
-      mAccount->setHasInbox( true );
-      kmkernel->imapFolderMgr()->contentsChanged();
-      if ( !mAccount->listOnlyOpenFolders() ) {
+      
+      if ( settingsChanged )
+      {
+        // tell the tree our information changed
+        kmkernel->imapFolderMgr()->contentsChanged();
+      }
+      if ( ( subfolderMimeTypes[i] == "message/directory" ||
+             subfolderMimeTypes[i] == "inode/directory" ) &&
+           !mAccount->listOnlyOpenFolders() )
+      {
         f->listDirectory();
       }
+    } else {
+      kdWarning(5006) << "can't find folder " << subfolderNames[i] << endl;
     }
-    for (uint i = 0; i < subfolderNames.count(); i++)
-    {
-      // create folders if necessary
-      if (subfolderNames[i].upper() == "INBOX" &&
-          subfolderPaths[i] == "/INBOX/" &&
-          mAccount->hasInbox()) // do not create an additional inbox
-        continue;
-      for (node = folder()->child()->first(); node;
-           node = folder()->child()->next())
-        if (!node->isDir() && node->name() == subfolderNames[i]) break;
-      if (node)
-        f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
-      else {
-        KMFolder *newFolder = folder()->child()->createFolder(subfolderNames[i]);
-        if ( newFolder ) {
-          f = static_cast<KMFolderImap*> ( newFolder->storage() );
-          if ( f ) {
-            f->close();
-          }
-        }
-        if ( !f ) {
-          kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
-        }
-      }
-      if (f)
-      {
-        // update progress
-        account()->listDirProgressItem()->incCompletedItems();
-        account()->listDirProgressItem()->updateProgress();
-        account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
-        f->setAccount(mAccount);
-        if ( f->hasChildren() == FolderStorage::ChildrenUnknown )
-        {
-          // this is for new folders
-          kmkernel->imapFolderMgr()->contentsChanged();
-        }
+  } // for subfolders
 
-        // update children state
-        if ( subfolderAttributes[i].find( "haschildren", 0, false ) != -1 )
-        {
-          f->setHasChildren( FolderStorage::HasChildren );
-        } else if ( subfolderAttributes[i].find( "hasnochildren", 0, false ) != -1 )
-        {
-          f->setHasChildren( FolderStorage::HasNoChildren );
-        } else
-        {
-          if ( mAccount->listOnlyOpenFolders() )
-            f->setHasChildren( FolderStorage::ChildrenUnknown );
-          else // we don't need to be expandable
-            f->setHasChildren( FolderStorage::HasNoChildren );
-        }
-        f->setImapPath(subfolderPaths[i]);
-        f->setNoContent(subfolderMimeTypes[i] == "inode/directory");
-        f->setNoChildren(subfolderMimeTypes[i] == "message/digest");
-        if ( mAccount->listOnlyOpenFolders() &&
-             f->hasChildren() != FolderStorage::ChildrenUnknown )
-        {
-          // tell the tree our information changed
-          kmkernel->imapFolderMgr()->contentsChanged();
-        }
-        if ( ( subfolderMimeTypes[i] == "message/directory" ||
-               subfolderMimeTypes[i] == "inode/directory" ) &&
-             !mAccount->listOnlyOpenFolders() )
-        {
-          f->listDirectory();
-        }
-      }
-    } // for subfolders
-  } // inbox_only
   // now others should react on the changes
-  kmkernel->imapFolderMgr()->quiet(false);
+  kmkernel->imapFolderMgr()->quiet( false );
   emit directoryListingFinished( this );
   account()->listDirProgressItem()->setComplete();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::initInbox()
+{
+  KMFolderImap *f = 0;
+  KMFolderNode *node = 0;
+
+  for (node = folder()->child()->first(); node;
+      node = folder()->child()->next()) {
+    if (!node->isDir() && node->name() == "INBOX") break;
+  }
+  if (node) {
+    f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+  } else {
+    f = static_cast<KMFolderImap*>
+      (folder()->child()->createFolder("INBOX", true)->storage());
+    if ( f )
+    {
+      f->folder()->setLabel( i18n("inbox") );
+      f->close();
+    }
+    kmkernel->imapFolderMgr()->contentsChanged();
+  }
+  f->initializeFrom( this, "/INBOX/", "message/directory" );
+  f->setChildrenState( QString::null );
+  // so we have an INBOX
+  mAccount->setHasInbox( true );
+}
+
+//-----------------------------------------------------------------------------
+KMFolderImap* KMFolderImap::findParent( const QString& path, const QString& name )
+{
+  QString parent = path.left( path.length() - name.length() - 2 );
+  if ( parent.length() > 1 )
+  {
+    // extract name of the parent
+    parent = parent.right( parent.length() - 1 );
+    if ( parent != label() )
+    {
+      KMFolderNode *node = folder()->child()->first();
+      // look for a better parent
+      while ( node )
+      {
+        if ( node->name() == parent )
+        {
+          KMFolder* fld = static_cast<KMFolder*>(node);
+          KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
+          return imapFld;
+        }
+        node = folder()->child()->next();
+      }
+    }
+  }
+  return 0;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::checkFolders( const QStringList& subfolderNames )
+{
+  QPtrList<KMFolder> toRemove;
+  KMFolderNode *node = folder()->child()->first();
+  while ( node )
+  {
+    if ( !node->isDir() && subfolderNames.findIndex(node->name()) == -1 )
+    {
+      KMFolder* fld = static_cast<KMFolder*>(node);
+      KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
+      // ignore some cases
+      QString name = node->name();
+      bool ignore = ( ( this == mAccount->rootFolder() ) && 
+          ( imapFld->imapPath() == "/INBOX/" || 
+            mAccount->isNamespaceFolder( name ) ) );
+      if ( !ignore )
+      {
+        // remove the folder without server round trip
+        kdDebug(5006) << "checkFolders - " << node->name() << " disappeared" << endl;
+        imapFld->setAlreadyRemoved( true );
+        toRemove.append( fld );
+      } 
+    }
+    node = folder()->child()->next();
+  }
+  // remove folders
+  for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
+    kmkernel->imapFolderMgr()->remove( doomed );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath, 
+                                   QString mimeType )
+{
+  setAccount( parent->account() );
+  setImapPath( folderPath );
+  setNoContent( mimeType == "inode/directory" );
+  setNoChildren( mimeType == "message/digest" );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::setChildrenState( QString attributes )
+{
+  // update children state
+  if ( attributes.find( "haschildren", 0, false ) != -1 )
+  {
+    setHasChildren( FolderStorage::HasChildren );
+  } else if ( attributes.find( "hasnochildren", 0, false ) != -1 ||
+              attributes.find( "noinferiors", 0, false ) != -1 )
+  {
+    setHasChildren( FolderStorage::HasNoChildren );
+  } else
+  {
+    if ( mAccount->listOnlyOpenFolders() ) {
+      setHasChildren( FolderStorage::HasChildren );
+    } else {
+      setHasChildren( FolderStorage::ChildrenUnknown );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1362,25 +1566,18 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::createFolder(const QString &name)
+void KMFolderImap::createFolder(const QString &name, const QString& parentPath)
 {
-  if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
-    return;
-  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting ) {
-    // We'll wait for the connectionResult signal from the account.
-    kdDebug(5006) << "KMFolderImap::createFolder - waiting for connection" << endl;
-
-    if ( mFoldersPendingCreation.isEmpty() ) {
-      // first folder, connect
-      connect( mAccount, SIGNAL( connectionResult( int, const QString& ) ),
-               this, SLOT( slotCreatePendingFolders( int, const QString& ) ) );
-    }
-    mFoldersPendingCreation << name;
     return;
   }
   KURL url = mAccount->getUrl();
-  url.setPath(imapPath() + name);
+  QString parent = ( parentPath.isEmpty() ? imapPath() : parentPath );
+  if ( !parent.endsWith("/") ) {
+    parent += "/";
+  }
+  url.setPath( parent + name );
 
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -1835,7 +2032,8 @@ int KMFolderImap::expungeContents()
   // set the deleted flag for all messages in the folder
   KURL url = mAccount->getUrl();
   url.setPath( imapPath() + ";UID=1:*");
-  if ( mAccount->makeConnection() == ImapAccountBase::Connected ) {
+  if ( mAccount->makeConnection() == ImapAccountBase::Connected ) 
+  {
     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     ImapAccountBase::jobData jd( url.url(), 0 );
@@ -1919,7 +2117,7 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
   }
 }
 
-void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString &errorMsg )
+void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString& errorMsg )
 {
   Q_UNUSED( errorMsg );
   disconnect( mAccount, SIGNAL( connectionResult( int, const QString& ) ),
@@ -1930,7 +2128,7 @@ void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString &error
       createFolder( *it );
     }
   }
-  mFoldersPendingCreation.clear();
+  mFoldersPendingCreation.clear();  
 }
 
 //-----------------------------------------------------------------------------

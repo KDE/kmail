@@ -47,6 +47,7 @@ using KMail::ImapJob;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 #include "kmfoldermgr.h"
+#include "listjob.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -79,7 +80,6 @@ namespace KMail {
 
   ImapAccountBase::ImapAccountBase( KMAcctMgr * parent, const QString & name, uint id )
     : NetworkAccount( parent, name, id ),
-      mPrefix( "/" ),
       mTotal( 0 ),
       mCountUnread( 0 ),
       mCountLastUnread( 0 ),
@@ -114,7 +114,6 @@ namespace KMail {
   }
 
   void ImapAccountBase::init() {
-    mPrefix = '/';
     mAutoExpunge = true;
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
@@ -129,12 +128,13 @@ namespace KMail {
     const ImapAccountBase * i = dynamic_cast<const ImapAccountBase*>( a );
     if ( !i ) return;
 
-    setPrefix( i->prefix() );
     setAutoExpunge( i->autoExpunge() );
     setHiddenFolders( i->hiddenFolders() );
     setOnlySubscribedFolders( i->onlySubscribedFolders() );
     setLoadOnDemand( i->loadOnDemand() );
     setListOnlyOpenFolders( i->listOnlyOpenFolders() );
+    setNamespaces( i->namespaces() );
+    setNamespaceToDelimiter( i->namespaceToDelimiter() );
   }
 
   unsigned short int ImapAccountBase::defaultPort() const {
@@ -150,20 +150,6 @@ namespace KMail {
   // Getters and Setters
   //
   //
-
-  void ImapAccountBase::setPrefix( const QString & prefix ) {
-    mPrefix = prefix;
-    mPrefix.remove( QRegExp( "[%*\"]" ) );
-    if ( mPrefix.isEmpty() || mPrefix[0] != '/' )
-      mPrefix.prepend( '/' );
-    if ( mPrefix[ mPrefix.length() - 1 ] != '/' )
-      mPrefix += '/';
-#if 1
-    setPrefixHook(); // ### needed while KMFolderCachedImap exists
-#else
-    if ( mFolder ) mFolder->setImapPath( mPrefix );
-#endif
-  }
 
   void ImapAccountBase::setAutoExpunge( bool expunge ) {
     mAutoExpunge = expunge;
@@ -194,23 +180,62 @@ namespace KMail {
   void ImapAccountBase::readConfig( /*const*/ KConfig/*Base*/ & config ) {
     NetworkAccount::readConfig( config );
 
-    setPrefix( config.readEntry( "prefix", "/" ) );
     setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
     setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
     setListOnlyOpenFolders( config.readBoolEntry( "listOnlyOpenFolders", false ) );
+    // read namespaces
+    nsMap map;
+    QStringList list = config.readListEntry( QString::number( PersonalNS ) );
+    if ( !list.isEmpty() )
+      map[PersonalNS] = list.gres( "\"", "" );
+    list = config.readListEntry( QString::number( OtherUsersNS ) );
+    if ( !list.isEmpty() )
+      map[OtherUsersNS] = list.gres( "\"", "" );
+    list = config.readListEntry( QString::number( SharedNS ) );
+    if ( !list.isEmpty() )
+      map[SharedNS] = list.gres( "\"", "" );
+    setNamespaces( map );
+    // read namespace - delimiter
+    namespaceDelim entries = config.entryMap( config.group() );
+    namespaceDelim namespaceToDelimiter;
+    for ( namespaceDelim::ConstIterator it = entries.begin(); 
+          it != entries.end(); ++it )
+    {
+      if ( it.key().startsWith( "Namespace:" ) )
+      {
+        QString key = it.key().right( it.key().length() - 10 );
+        namespaceToDelimiter[key] = it.data();
+      }
+    }
+    setNamespaceToDelimiter( namespaceToDelimiter );
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
     NetworkAccount::writeConfig( config );
 
-    config.writeEntry( "prefix", prefix() );
     config.writeEntry( "auto-expunge", autoExpunge() );
     config.writeEntry( "hidden-folders", hiddenFolders() );
     config.writeEntry( "subscribed-folders", onlySubscribedFolders() );
     config.writeEntry( "loadondemand", loadOnDemand() );
     config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
+    QString data;
+    for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it )
+    {
+      if ( !it.data().isEmpty() )
+      {
+        data = "\"" + it.data().join("\",\"") + "\"";
+        config.writeEntry( QString::number( it.key() ), data );
+      }
+    }
+    QString key;
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+          it != mNamespaceToDelimiter.end(); ++it )
+    {
+      key = "Namespace:" + it.key();
+      config.writeEntry( key, it.data() );
+    }
   }
 
   //
@@ -229,9 +254,11 @@ namespace KMail {
     return m;
   }
 
-  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() {
-
-    if ( mSlave && mSlaveConnected ) return Connected;
+  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() 
+  {
+    if ( mSlave && mSlaveConnected ) {
+      return Connected;
+    }
     if ( mPasswordDialogIsActive ) return Connecting;
 
     if( mAskAgain || ( ( passwd().isEmpty() || login().isEmpty() ) &&
@@ -329,8 +356,8 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if (makeConnection() != Connected) // ## doesn't handle Connecting
-      return;
+    if ( makeConnection() != Connected ) 
+      return;// ## doesn't handle Connecting
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd( url.url(), NULL );
@@ -448,33 +475,33 @@ namespace KMail {
 
   void ImapAccountBase::slotNoopTimeout()
   {
-      if ( mSlave ) {
-        QByteArray packedArgs;
-        QDataStream stream( packedArgs, IO_WriteOnly );
+    if ( mSlave ) {
+      QByteArray packedArgs;
+      QDataStream stream( packedArgs, IO_WriteOnly );
 
-        stream << ( int ) 'N';
+      stream << ( int ) 'N';
 
-        KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
-        KIO::Scheduler::assignJobToSlave(mSlave, job);
-        connect( job, SIGNAL(result( KIO::Job * ) ),
+      KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+      KIO::Scheduler::assignJobToSlave(mSlave, job);
+      connect( job, SIGNAL(result( KIO::Job * ) ),
           this, SLOT( slotSimpleResult( KIO::Job * ) ) );
-      } else {
-        /* Stop the timer, we have disconnected. We have to make sure it is
-           started again when a new slave appears. */
-        mNoopTimer.stop();
-      }
+    } else {
+      /* Stop the timer, we have disconnected. We have to make sure it is
+         started again when a new slave appears. */
+      mNoopTimer.stop();
+    }
   }
 
   void ImapAccountBase::slotIdleTimeout()
   {
-      if ( mSlave ) {
-        KIO::Scheduler::disconnectSlave(mSlave);
-        mSlave = 0;
-        mSlaveConnected = false;
-        /* As for the noop timer, we need to make sure this one is started
-           again when a new slave goes up. */
-        mIdleTimer.stop();
-      }
+    if ( mSlave ) {
+      KIO::Scheduler::disconnectSlave(mSlave);
+      mSlave = 0;
+      mSlaveConnected = false;
+      /* As for the noop timer, we need to make sure this one is started
+         again when a new slave goes up. */
+      mIdleTimer.stop();
+    }
   }
 
   void ImapAccountBase::slotAbortRequested( KPIM::ProgressItem* item )
@@ -489,31 +516,184 @@ namespace KMail {
   void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,
       const QString &errorMsg)
   {
-      if (aSlave != mSlave) return;
-      handleError( errorCode, errorMsg, 0, QString::null, true );
-      if ( mAskAgain )
-        makeConnection();
-      else {
-        if ( !mSlaveConnected ) {
-          mSlaveConnectionError = true;
-          mOwner->resetConnectionList( this );
-          if ( mSlave )
-          {
-            KIO::Scheduler::disconnectSlave( slave() );
-            mSlave = 0;
-          }
+    if (aSlave != mSlave) return;
+    handleError( errorCode, errorMsg, 0, QString::null, true );
+    if ( mAskAgain )
+      makeConnection();
+    else {
+      if ( !mSlaveConnected ) {
+        mSlaveConnectionError = true;
+        mOwner->resetConnectionList( this );
+        if ( mSlave )
+        {
+          KIO::Scheduler::disconnectSlave( slave() );
+          mSlave = 0;
         }
-        emit connectionResult( errorCode, errorMsg );
       }
+      emit connectionResult( errorCode, errorMsg );
+    }
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
   {
-      if (aSlave != mSlave) return;
-      mSlaveConnected = true;
-      mNoopTimer.start( 60000 ); // make sure we start sending noops
-      emit connectionResult( 0, QString::null ); // success
+    if (aSlave != mSlave) return;
+    mSlaveConnected = true;
+    mNoopTimer.start( 60000 ); // make sure we start sending noops
+    emit connectionResult( 0, QString::null ); // success
+
+    if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() )
+    {
+      connect( this, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
+          this, SLOT( slotSaveNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
+      getNamespaces();
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::getNamespaces()
+  {
+    disconnect( this, SIGNAL( connectionResult(int, const QString&) ),
+          this, SLOT( getNamespaces() ) );
+    if ( makeConnection() != Connected || !mSlave )
+    {
+      // when the connection is established we're called automatically
+      kdDebug(5006) << "getNamespaces - wait for connection" << endl;
+      connect( this, SIGNAL( connectionResult(int, const QString&) ),
+          this, SLOT( getNamespaces() ) );
+      return;
+    }
+    
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly);
+    stream << (int) 'n';
+    jobData jd;
+    jd.total = 1; jd.done = 0; jd.cancellable = true;
+    jd.progressItem = ProgressManager::createProgressItem( 
+        ProgressManager::getUniqueID(),
+        i18n("Retrieving Namespaces"),
+        QString::null, true, useSSL() || useTLS() );
+    jd.progressItem->setTotalItems( 1 );
+    connect ( jd.progressItem,
+        SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
+        this,
+        SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
+    KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+    KIO::Scheduler::assignJobToSlave( mSlave, job );
+    insertJob( job, jd );
+    connect( job, SIGNAL( infoMessage(KIO::Job*, const QString&) ),
+        SLOT( slotNamespaceResult(KIO::Job*, const QString&) ) );
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotNamespaceResult( KIO::Job* job, const QString& str )
+  {
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
+    nsDelimMap map;
+    namespaceDelim nsDelim;
+    QStringList ns = QStringList::split( ",", str );
+    for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
+    {
+      // split, allow empty parts as we can get empty namespaces
+      QStringList parts = QStringList::split( "=", *it, true );
+      imapNamespace section = imapNamespace( parts[0].toInt() );
+      if ( map.contains( section ) ) {
+        nsDelim = map[section];
+      } else {
+        nsDelim.clear();
+      }
+      // map namespace to delimiter
+      nsDelim[parts[1]] = parts[2];
+      map[section] = nsDelim;
+    }
+    removeJob(it);
+
+    kdDebug(5006) << map.count() << " namespaces fetched" << endl;
+    emit namespacesFetched( map );
+  }
+    
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map )
+  {
+    kdDebug(5006) << "slotSaveNamespaces " << name() << endl;
+    // extract the needed information
+    mNamespaces.clear();
+    mNamespaceToDelimiter.clear();
+    for ( uint i = 0; i < 3; ++i )
+    {
+      imapNamespace section = imapNamespace( i );
+      namespaceDelim ns = map[ section ];
+      namespaceDelim::ConstIterator it;
+      QStringList list;
+      for ( it = ns.begin(); it != ns.end(); ++it )
+      {
+        list += it.key();
+        mNamespaceToDelimiter[ it.key() ] = it.data();
+      }
+      if ( !list.isEmpty() )
+        mNamespaces[section] = list;
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  QString ImapAccountBase::prefixForFolder( FolderStorage* storage )
+  {
+    QString path;
+    if ( storage->folderType() == KMFolderTypeImap ) {
+      path = static_cast<KMFolderImap*>( storage )->imapPath();
+    } else if ( storage->folderType() == KMFolderTypeCachedImap ) {
+      path = static_cast<KMFolderCachedImap*>( storage )->imapPath();
+    }
+
+    nsMap::Iterator it;
+    for ( it = mNamespaces.begin(); it != mNamespaces.end(); ++it )
+    {
+      QStringList::Iterator strit;
+      for ( strit = it.data().begin(); strit != it.data().end(); ++strit )
+      {
+        // first ignore an empty prefix
+        if ( !(*strit).isEmpty() && path.find( *strit ) != -1 ) {
+          return (*strit);
+        }
+      }
+    }
+    return QString::null;
+  }  
+
+  //-----------------------------------------------------------------------------
+  QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
+  {
+    // try to match exactly
+    if ( mNamespaceToDelimiter.contains(prefix) ) {
+      return mNamespaceToDelimiter[prefix];
+    }
+
+    // then try if the prefix is part of a namespace
+    // exclude empty namespace
+    for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
+          it != mNamespaceToDelimiter.end(); ++it )
+    {
+      if ( !it.key().isEmpty() && prefix.contains( it.key() ) ) {
+        return it.data();
+      }
+    }
+    // see if we have an empty namespace
+    if ( mNamespaceToDelimiter.contains( QString::null ) ) {
+      return mNamespaceToDelimiter[QString::null];
+    }
+    // well, we tried
+    return QString::null;
+  }
+
+  //-----------------------------------------------------------------------------
+  QString ImapAccountBase::delimiterForFolder( FolderStorage* storage )
+  {
+    QString prefix = prefixForFolder( storage );
+    QString delim;
+    if ( mNamespaceToDelimiter.contains(prefix) )
+      delim = mNamespaceToDelimiter[prefix];
+    return delim;
   }
 
   //-----------------------------------------------------------------------------
@@ -577,6 +757,7 @@ namespace KMail {
       // fallthrough intended
     case KIO::ERR_CONNECTION_BROKEN:
     case KIO::ERR_COULD_NOT_CONNECT:
+    case KIO::ERR_SERVER_TIMEOUT:
       // These mean that we'll have to reconnect on the next attempt, so disconnect and set mSlave to 0.
       killAllJobs( true );
       break;
@@ -599,7 +780,8 @@ namespace KMail {
       
       if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
         if ( errorCode == KIO::ERR_SERVER_TIMEOUT || errorCode == KIO::ERR_CONNECTION_BROKEN ) {
-          msg = "<qt>The connection to the server was unexpectedly closed or timed out. It will be re-established automatically if possible.";
+          msg = i18n("The connection to the server %1 was unexpectedly closed or timed out. It will be re-established automatically if possible.").
+            arg( name() );
           KMessageBox::information( kapp->activeWindow(), msg, caption, "kmailConnectionBrokenErrorDialog" );
           // Show it in the status bar, in case the user has ticked "don't show again"
           if ( errorCode == KIO::ERR_CONNECTION_BROKEN )
@@ -847,7 +1029,7 @@ namespace KMail {
 
      stream << (int) 'S' << url << flags;
 
-     if ( makeConnection() != ImapAccountBase::Connected )
+     if ( makeConnection() != Connected ) 
        return; // can't happen with dimap
 
      KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
@@ -927,11 +1109,62 @@ namespace KMail {
     return mListDirProgressItem;
   }
 
+  //-----------------------------------------------------------------------------
   unsigned int ImapAccountBase::folderCount() const
   {
     if ( !rootFolder() || !rootFolder()->folder() || !rootFolder()->folder()->child() )
       return 0;
     return kmkernel->imapFolderMgr()->folderCount( rootFolder()->folder()->child() );
+  }
+
+  //------------------------------------------------------------------------------
+  QString ImapAccountBase::addPathToNamespace( const QString& prefix )
+  {
+    QString myPrefix = prefix;
+    if ( !myPrefix.startsWith( "/" ) ) {
+      myPrefix = "/" + myPrefix;
+    }
+    if ( !myPrefix.endsWith( "/" ) ) {
+      myPrefix += "/";
+    }
+
+    return myPrefix;
+  }
+
+  //------------------------------------------------------------------------------
+  bool ImapAccountBase::isNamespaceFolder( QString& name )
+  {
+    QStringList ns = mNamespaces[OtherUsersNS];
+    ns += mNamespaces[SharedNS];
+    ns += mNamespaces[PersonalNS];
+    QString nameWithDelimiter;
+    for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
+    {
+      nameWithDelimiter = name + delimiterForNamespace( *it );
+      if ( *it == name || *it == nameWithDelimiter )
+        return true;
+    }
+    return false;
+  }
+
+  //------------------------------------------------------------------------------
+  ImapAccountBase::nsDelimMap ImapAccountBase::namespacesWithDelimiter()
+  {
+    nsDelimMap map;
+    nsMap::ConstIterator it;
+    for ( uint i = 0; i < 3; ++i )
+    {
+      imapNamespace section = imapNamespace( i );
+      QStringList namespaces = mNamespaces[section];
+      namespaceDelim nsDelim;
+      QStringList::Iterator lit;
+      for ( lit = namespaces.begin(); lit != namespaces.end(); ++lit )
+      {
+        nsDelim[*lit] = delimiterForNamespace( *lit );
+      }
+      map[section] = nsDelim;
+    }
+    return map;
   }
 
 } // namespace KMail

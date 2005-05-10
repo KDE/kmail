@@ -52,7 +52,6 @@ class KMKernel;
 class KMMsgDict;
 class KProcess;
 class KProgressDialog;
-class ConfigureDialog;
 class KInstance;
 class QTimer;
 class KProgress;
@@ -63,6 +62,7 @@ class KMailICalIfaceImpl;
 class KMReaderWin;
 class KSystemTray;
 class KMMainWidget;
+class ConfigureDialog;
 
 class KDE_EXPORT KMKernel : public QObject, virtual public KMailIface
 {

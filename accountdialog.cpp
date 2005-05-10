@@ -33,6 +33,8 @@
 #include <qwhatsthis.h>
 #include <qhbox.h>
 #include <qcombobox.h>
+#include <qheader.h>
+#include <qtoolbutton.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -43,13 +45,13 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kprotocolinfo.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
 
 #include "sieveconfig.h"
-using KMail::SieveConfig;
-using KMail::SieveConfigEditor;
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
@@ -60,7 +62,6 @@ using KMail::SieveConfigEditor;
 #include "kmservertest.h"
 #include "protocols.h"
 #include "folderrequester.h"
-using KMail::FolderRequester;
 #include "kmmainwidget.h"
 #include "kmfolder.h"
 
@@ -74,6 +75,8 @@ using KMail::FolderRequester;
 #ifndef _PATH_MAILDIR
 #define _PATH_MAILDIR "/var/spool/mail"
 #endif
+
+namespace KMail {
 
 class ProcmailRCParser
 {
@@ -804,8 +807,6 @@ void AccountDialog::makeImapAccountPage( bool connected )
   int row = -1;
   QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*16 );
-//  grid->setRowStretch( 15, 10 );
-//  grid->setColStretch( 1, 10 );
 
   ++row;
   QLabel *label = new QLabel( i18n("Account &name:"), page1 );
@@ -849,11 +850,34 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.portEdit, row, 1 );
 
   ++row;
-  label = new QLabel( i18n("Prefix to fol&ders:"), page1 );
-  grid->addWidget( label, row, 0 );
-  mImap.prefixEdit = new KLineEdit( page1 );
-  label->setBuddy( mImap.prefixEdit );
-  grid->addWidget( mImap.prefixEdit, row, 1 );
+  QHBox* box = new QHBox( page1 );
+  label = new QLabel( i18n("Namespaces:"), box );
+  QWhatsThis::add( label, 
+      i18n("Shows the namespaces that are available. You can edit each namespace by double clicking.") );
+  // button to reload
+  QToolButton* button = new QToolButton( box );
+  button->setAutoRaise(true);
+  button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  button->setFixedSize( 22, 22 );
+  button->setIconSet( 
+      KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
+  connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
+  QWhatsThis::add( button, 
+      i18n("Reload the namespaces from the server. This overwrites any changes.") );
+  grid->addWidget( box, row, 0 );
+  // listview
+  mImap.namespaceView = new KListView( page1 );
+  mImap.namespaceViewColumn = mImap.namespaceView->addColumn( i18n("Namespace") );
+  mImap.namespaceView->header()->hide();
+  mImap.namespaceView->setRootIsDecorated( true );
+  mImap.namespaceView->setFullWidth( true );
+  mImap.namespaceView->setMaximumHeight( 50 );
+  mImap.namespaceView->setSorting( -1 );
+  connect( mImap.namespaceView, 
+      SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
+      this, SLOT( slotContextMenuNamespaceView( QListViewItem*, const QPoint & ) ) );
+  label->setBuddy( mImap.namespaceView );
+  grid->addWidget( mImap.namespaceView, row, 1 );
 
   ++row;
   mImap.storePasswordCheck =
@@ -1128,11 +1152,6 @@ void AccountDialog::setupSettings()
     mImap.passwordEdit->setText( ai.passwd());
     mImap.hostEdit->setText( ai.host() );
     mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    QString prefix = ai.prefix();
-    if (!prefix.isEmpty() && prefix[0] == '/') prefix = prefix.mid(1);
-    if (!prefix.isEmpty() && prefix[prefix.length() - 1] == '/')
-      prefix = prefix.left(prefix.length() - 1);
-    mImap.prefixEdit->setText( prefix );
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
@@ -1184,11 +1203,6 @@ void AccountDialog::setupSettings()
     mImap.passwordEdit->setText( ai.passwd());
     mImap.hostEdit->setText( ai.host() );
     mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    QString prefix = ai.prefix();
-    if (!prefix.isEmpty() && prefix[0] == '/') prefix = prefix.mid(1);
-    if (!prefix.isEmpty() && prefix[prefix.length() - 1] == '/')
-      prefix = prefix.left(prefix.length() - 1);
-    mImap.prefixEdit->setText( prefix );
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
@@ -1249,6 +1263,20 @@ void AccountDialog::setupSettings()
   }
   else // Unknown account type
     return;
+
+  if ( accountType == "imap" || accountType == "cachedimap" )
+  {
+    // settings for imap in general
+    ImapAccountBase &ai = *(ImapAccountBase*)mAccount;
+    // namespaces
+    if ( ( ai.namespaces().isEmpty() || ai.namespaceToDelimiter().isEmpty() ) &&
+         !ai.login().isEmpty() && !ai.passwd().isEmpty() && !ai.host().isEmpty() )
+    {
+      slotReloadNamespaces();
+    } else {
+      slotSetupNamespaces( ai.namespacesWithDelimiter() );
+    }
+  }
 
   if (!folderCombo) return;
 
@@ -1662,39 +1690,15 @@ void AccountDialog::saveSettings()
 
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
 
+    initAccountForConnect();
     KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
-    epa.setHost( mPop.hostEdit->text().stripWhiteSpace() );
-    epa.setPort( mPop.portEdit->text().toInt() );
-    epa.setLogin( mPop.loginEdit->text().stripWhiteSpace() );
-    epa.setPasswd( mPop.passwordEdit->text(), true );
     epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
-    epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
-    epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( mPop.leaveOnServerCheck->isChecked() );
     epa.setDeleteAfterDays( mPop.deleteAfterDaysCheck->isChecked() ?
                              mPop.deleteAfterDaysSpin->value() : 0 );
     epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
     epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );
-    epa.setUseSSL( mPop.encryptionSSL->isChecked() );
-    epa.setUseTLS( mPop.encryptionTLS->isChecked() );
-    if (mPop.authUser->isChecked())
-      epa.setAuth("USER");
-    else if (mPop.authLogin->isChecked())
-      epa.setAuth("LOGIN");
-    else if (mPop.authPlain->isChecked())
-      epa.setAuth("PLAIN");
-    else if (mPop.authCRAM_MD5->isChecked())
-      epa.setAuth("CRAM-MD5");
-    else if (mPop.authDigestMd5->isChecked())
-      epa.setAuth("DIGEST-MD5");
-    else if (mPop.authNTLM->isChecked())
-      epa.setAuth("NTLM");
-    else if (mPop.authGSSAPI->isChecked())
-      epa.setAuth("GSSAPI");
-    else if (mPop.authAPOP->isChecked())
-      epa.setAuth("APOP");
-    else epa.setAuth("AUTO");
   }
   else if( accountType == "imap" )
   {
@@ -1707,20 +1711,13 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
     mAccount->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()) );
 
+    initAccountForConnect();
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
-    epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
-    epa.setPort( mImap.portEdit->text().toInt() );
-    QString prefix = "/" + mImap.prefixEdit->text();
-    if (prefix[prefix.length() - 1] != '/') prefix += "/";
-    epa.setPrefix( prefix );
-    epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
     epa.setListOnlyOpenFolders( mImap.listOnlyOpenCheck->isChecked() );
-    epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
-    epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     KMFolder *t = mImap.trashCombo->folder();
     if ( t )
       epa.setTrash( mImap.trashCombo->folder()->idString() );
@@ -1730,23 +1727,6 @@ void AccountDialog::saveSettings()
     epa.setResource( mImap.resourceCheck->isChecked() );
 #endif
     epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
-    epa.setUseSSL( mImap.encryptionSSL->isChecked() );
-    epa.setUseTLS( mImap.encryptionTLS->isChecked() );
-    if (mImap.authCramMd5->isChecked())
-      epa.setAuth("CRAM-MD5");
-    else if (mImap.authDigestMd5->isChecked())
-      epa.setAuth("DIGEST-MD5");
-    else if (mImap.authNTLM->isChecked())
-      epa.setAuth("NTLM");
-    else if (mImap.authGSSAPI->isChecked())
-      epa.setAuth("GSSAPI");
-    else if (mImap.authAnonymous->isChecked())
-      epa.setAuth("ANONYMOUS");
-    else if (mImap.authLogin->isChecked())
-      epa.setAuth("LOGIN");
-    else if (mImap.authPlain->isChecked())
-      epa.setAuth("PLAIN");
-    else epa.setAuth("*");
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
@@ -1761,20 +1741,12 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
-    kdDebug(5006) << mAccount->name() << endl;
     //kdDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
 
+    initAccountForConnect();
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;
-    epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
-    epa.setPort( mImap.portEdit->text().toInt() );
-    QString prefix = "/" + mImap.prefixEdit->text();
-    if (prefix[prefix.length() - 1] != '/') prefix += "/";
-    epa.setPrefix( prefix );
-    epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
-    epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
-    epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     KMFolder *t = mImap.trashCombo->folder();
     if ( t )
       epa.setTrash( mImap.trashCombo->folder()->idString() );
@@ -1784,23 +1756,6 @@ void AccountDialog::saveSettings()
     epa.setResource( mImap.resourceCheck->isChecked() );
 #endif
     epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
-    epa.setUseSSL( mImap.encryptionSSL->isChecked() );
-    epa.setUseTLS( mImap.encryptionTLS->isChecked() );
-    if (mImap.authCramMd5->isChecked())
-      epa.setAuth("CRAM-MD5");
-    else if (mImap.authDigestMd5->isChecked())
-      epa.setAuth("DIGEST-MD5");
-    else if (mImap.authNTLM->isChecked())
-      epa.setAuth("NTLM");
-    else if (mImap.authGSSAPI->isChecked())
-      epa.setAuth("GSSAPI");
-    else if (mImap.authAnonymous->isChecked())
-      epa.setAuth("ANONYMOUS");
-    else if (mImap.authLogin->isChecked())
-      epa.setAuth("LOGIN");
-    else if (mImap.authPlain->isChecked())
-      epa.setAuth("PLAIN");
-    else epa.setAuth("*");
     if ( mSieveConfigEditor )
       epa.setSieveConfig( mSieveConfigEditor->config() );
   }
@@ -1832,6 +1787,39 @@ void AccountDialog::saveSettings()
 
     mAccount->setPrecommand( mMaildir.precommand->text() );
   }
+
+  if ( accountType == "imap" || accountType == "cachedimap" )
+  {
+    // settings for imap in general
+    ImapAccountBase &ai = *(ImapAccountBase*)mAccount;
+    // namespace
+    ImapAccountBase::imapNamespace curNS;
+    ImapAccountBase::nsMap map;
+    QMap<QString, QString> namespaceDelim = ai.namespaceToDelimiter();
+    for ( QListViewItemIterator it( mImap.namespaceView ) ; it.current() ; ++it ) 
+    {
+      NamespaceViewElement* item = static_cast<NamespaceViewElement*>( *it );
+      if ( !item->parent() )
+      {
+        if ( item->text( mImap.namespaceViewColumn ) == i18n("Personal") )
+          curNS = ImapAccountBase::PersonalNS;
+        else if ( item->text( mImap.namespaceViewColumn ) == i18n("Other Users") ) 
+          curNS = ImapAccountBase::OtherUsersNS;
+        else if ( item->text( mImap.namespaceViewColumn ) == i18n("Shared") )
+          curNS = ImapAccountBase::SharedNS;
+      } else {
+        map[curNS].append( item->text( mImap.namespaceViewColumn ) );
+        if ( item->changed() )
+        {
+          // the prefix changed so update the namespace - delimiter map
+          namespaceDelim.remove( item->oldText() );
+          namespaceDelim[item->text( mImap.namespaceViewColumn )] = item->delimiter();
+        }
+      }
+    }
+    ai.setNamespaces( map );
+    ai.setNamespaceToDelimiter( namespaceDelim );
+  }  
 
   kmkernel->acctMgr()->writeConfig(TRUE);
 
@@ -1965,5 +1953,173 @@ void AccountDialog::slotClearPastResourceAllocations()
     mAccount->clearOldIntervals();
 }
 #endif
+
+void AccountDialog::slotReloadNamespaces()
+{
+  if ( mAccount->type() == "imap" || mAccount->type() == "cachedimap" )
+  {
+    initAccountForConnect();
+    mImap.namespaceView->clear();
+    new NamespaceViewElement( mImap.namespaceView, 
+       i18n( "Loading Namespaces from server %1").arg( mAccount->name() ) );
+    ImapAccountBase* ai = static_cast<ImapAccountBase*>( mAccount );
+    connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
+        this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
+    ai->getNamespaces();
+  }
+}
+
+void AccountDialog::slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map )
+{
+  disconnect( this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
+  mImap.namespaceView->clear();
+  int totalHeight = 0;
+  KListViewItem* last = 0;
+  ImapAccountBase::nsDelimMap::ConstIterator it;
+  int col = mImap.namespaceViewColumn;
+  for ( it = map.begin(); it != map.end(); ++it ) {
+    if ( it.data().isEmpty() )
+      continue;
+    NamespaceViewElement* parent = new NamespaceViewElement( mImap.namespaceView, last );
+    QString text;
+    if ( it.key() == ImapAccountBase::PersonalNS ) {
+      text = i18n("Personal");
+    } else if ( it.key() == ImapAccountBase::OtherUsersNS ) {
+      text = i18n("Other Users");
+    } else if ( it.key() == ImapAccountBase::SharedNS ) {
+      text = i18n("Shared");
+    } else {
+      text = i18n("Unknown");
+    }
+    parent->setText( col, text );
+    parent->setOldText( text );
+    parent->setSelectable( false );
+    parent->setOpen( true );
+    ImapAccountBase::namespaceDelim::ConstIterator pit;
+    for ( pit = it.data().begin(); pit != it.data().end(); ++pit ) {
+      NamespaceViewElement* item = new NamespaceViewElement( parent, pit.key() );
+      item->setRenameEnabled ( col, true );
+      item->setDelimiter( pit.data() );
+    }
+    totalHeight += parent->totalHeight();
+    last = parent;
+  }
+  // add some pix to get no scrollbar
+  if ( mImap.namespaceView->childCount() == 0 ) {
+    totalHeight += 20;
+  } else {
+    totalHeight += 5;
+  }
+  mImap.namespaceView->setMaximumHeight( (totalHeight > 100)?100:totalHeight );
+}
+
+void AccountDialog::slotContextMenuNamespaceView( QListViewItem *lvi, const QPoint &p )
+{
+  if ( !lvi || !lvi->parent() )
+    return;
+  KPopupMenu *menu = new KPopupMenu;
+  menu->insertItem( SmallIconSet("editdelete"),
+      i18n("&Delete"), this, SLOT(slotRemoveNamespace()) );
+  menu->exec( p, 0 );
+  delete menu;
+  menu = 0;
+}
+
+void AccountDialog::slotRemoveNamespace()
+{
+  if ( !mImap.namespaceView->selectedItem() || 
+       !mImap.namespaceView->selectedItem()->parent() )
+    return;
+  QListViewItem* curItem = mImap.namespaceView->selectedItem();
+  QListViewItem* parent = curItem->parent();
+  delete curItem;
+  if ( parent->childCount() == 0 ) {
+    delete parent;
+  }
+  mImap.namespaceView->triggerUpdate();
+}
+
+void AccountDialog::initAccountForConnect()
+{
+  QString type = mAccount->type();
+  if ( type == "local" )
+    return;
+
+  NetworkAccount &na = *(NetworkAccount*)mAccount;
+
+  if ( type == "pop" ) {
+    na.setHost( mPop.hostEdit->text().stripWhiteSpace() );
+    na.setPort( mPop.portEdit->text().toInt() );
+    na.setLogin( mPop.loginEdit->text().stripWhiteSpace() );
+    na.setStorePasswd( mPop.storePasswordCheck->isChecked() );
+    na.setPasswd( mPop.passwordEdit->text(), na.storePasswd() );
+    na.setUseSSL( mPop.encryptionSSL->isChecked() );
+    na.setUseTLS( mPop.encryptionTLS->isChecked() );
+    if (mPop.authUser->isChecked())
+      na.setAuth("USER");
+    else if (mPop.authLogin->isChecked())
+      na.setAuth("LOGIN");
+    else if (mPop.authPlain->isChecked())
+      na.setAuth("PLAIN");
+    else if (mPop.authCRAM_MD5->isChecked())
+      na.setAuth("CRAM-MD5");
+    else if (mPop.authDigestMd5->isChecked())
+      na.setAuth("DIGEST-MD5");
+    else if (mPop.authNTLM->isChecked())
+      na.setAuth("NTLM");
+    else if (mPop.authGSSAPI->isChecked())
+      na.setAuth("GSSAPI");
+    else if (mPop.authAPOP->isChecked())
+      na.setAuth("APOP");
+    else na.setAuth("AUTO");    
+  } 
+  else if ( type == "imap" || type == "cachedimap" ) {
+    na.setHost( mImap.hostEdit->text().stripWhiteSpace() );
+    na.setPort( mImap.portEdit->text().toInt() );
+    na.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
+    na.setStorePasswd( mImap.storePasswordCheck->isChecked() );
+    na.setPasswd( mImap.passwordEdit->text(), na.storePasswd() );
+    na.setUseSSL( mImap.encryptionSSL->isChecked() );
+    na.setUseTLS( mImap.encryptionTLS->isChecked() );
+    if (mImap.authCramMd5->isChecked())
+      na.setAuth("CRAM-MD5");
+    else if (mImap.authDigestMd5->isChecked())
+      na.setAuth("DIGEST-MD5");
+    else if (mImap.authNTLM->isChecked())
+      na.setAuth("NTLM");
+    else if (mImap.authGSSAPI->isChecked())
+      na.setAuth("GSSAPI");
+    else if (mImap.authAnonymous->isChecked())
+      na.setAuth("ANONYMOUS");
+    else if (mImap.authLogin->isChecked())
+      na.setAuth("LOGIN");
+    else if (mImap.authPlain->isChecked())
+      na.setAuth("PLAIN");
+    else na.setAuth("*");    
+  }
+}
+
+NamespaceViewElement::NamespaceViewElement( QListView * parent, QListViewItem * after )
+  : KListViewItem( parent, after ), mChanged( false )
+{
+}
+
+NamespaceViewElement::NamespaceViewElement( QListView * parent, QString text )
+  : KListViewItem( parent, text ), mChanged( false )
+{
+}
+
+NamespaceViewElement::NamespaceViewElement( QListViewItem * parent, QString text )
+  : KListViewItem( parent, text ), mOldText( text ), mChanged( false )
+{
+}
+
+void NamespaceViewElement::okRename( int col )
+{
+  mChanged = true;
+  KListViewItem::okRename( col );
+}
+
+} // namespace KMail
 
 #include "accountdialog.moc"

@@ -57,9 +57,6 @@ class KMAcctCachedImap: public KMail::ImapAccountBase
   friend class ImapJob;
   friend class CachedImapJob;
 
-protected: // ### Hacks
-  void setPrefixHook();
-
 public:
   virtual ~KMAcctCachedImap();
   virtual void init();

@@ -49,6 +49,8 @@
 #include "kmfolderdir.h"
 #include "folderstorage.h"
 #include "kmailicalifaceimpl.h"
+#include "kmacctimap.h"
+#include "kmacctcachedimap.h"
 
 using namespace KMail;
 
@@ -130,6 +132,43 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsHBox->addWidget( mContentsComboBox );
     mTopLevelLayout->addLayout( mContentsHBox );
   }
+  
+  if ( mFolder &&
+      ( mFolder->folderType() == KMFolderTypeImap ||
+        mFolder->folderType() == KMFolderTypeCachedImap ) ) {
+    bool rootFolder = false;
+    QStringList namespaces;
+    if ( mFolder->folderType() == KMFolderTypeImap ) {
+      ImapAccountBase* ai = static_cast<KMFolderImap*>(mFolder->storage())->account();
+      if ( mFolder->storage() == ai->rootFolder() ) {
+        rootFolder = true;
+        namespaces = ai->namespaces()[ImapAccountBase::PersonalNS];
+      }
+    }
+    if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
+      ImapAccountBase* ai = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
+      if ( mFolder->storage() == ai->rootFolder() ) {
+        rootFolder = true;
+        namespaces = ai->namespaces()[ImapAccountBase::PersonalNS];
+      }
+    }
+    if ( rootFolder && namespaces.count() > 1 ) {
+      mNamespacesHBox = new QHBoxLayout( 0, 0, 6, "mNamespaceHBox");
+
+      mNamespacesLabel = new QLabel( privateLayoutWidget, "mNamespacesLabel" );
+      mNamespacesLabel->setText( i18n( "Namespace for &folder:" ) );
+      mNamespacesHBox->addWidget( mNamespacesLabel );
+
+      mNamespacesComboBox = new QComboBox( FALSE, privateLayoutWidget, "mNamespacesComboBox" );
+      mNamespacesLabel->setBuddy( mNamespacesComboBox );
+      QWhatsThis::add( mNamespacesComboBox, i18n( "Select the personal namespace the folder should be created in." ) );
+      mNamespacesComboBox->insertStringList( namespaces );
+      mNamespacesHBox->addWidget( mNamespacesComboBox );
+      mTopLevelLayout->addLayout( mNamespacesHBox );
+    } else {
+      mNamespacesComboBox = 0;
+    }
+  }
 
   resize( QSize(282, 108).expandedTo(minimumSizeHint()) );
   clearWState( WState_Polished );
@@ -160,11 +199,19 @@ void NewFolderDialog::slotOk()
   if ( fldName.startsWith( "." ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
-  } else if ( fldName.find( '.' ) != -1 &&
-    ( !mFolder
-      || mFolder->folderType() == KMFolderTypeImap
-      || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
-    if ( KMessageBox::warningContinueCancel( this, i18n( "Some mailservers do not support folder names which contain a . (dot) character; do you want to continue?" ), QString::null, KStdGuiItem::cont(), "warn_create_folders_with_dot_in_middle" ) == KMessageBox::Cancel ) {
+  } else if ( mFolder && 
+      ( mFolder->folderType() == KMFolderTypeImap ||
+        mFolder->folderType() == KMFolderTypeCachedImap ) ) {
+    QString delimiter;
+    if ( mFolder->folderType() == KMFolderTypeImap ) {
+      KMAcctImap* ai = static_cast<KMFolderImap*>( mFolder->storage() )->account();
+      delimiter = ai->delimiterForFolder( mFolder->storage() );
+    } else {
+      KMAcctCachedImap* ai = static_cast<KMFolderCachedImap*>( mFolder->storage() )->account();
+      delimiter = ai->delimiterForFolder( mFolder->storage() );
+    }
+    if ( !delimiter.isEmpty() && fldName.find( delimiter ) != -1 ) {
+      KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name." ).arg( delimiter ) );
       return;
     }
   }
@@ -199,7 +246,15 @@ void NewFolderDialog::slotOk()
     if (anAccount->makeConnection() == ImapAccountBase::Connected) {
       newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
       if ( newFolder ) {
-        selectedStorage->createFolder(fldName); // create it on the server
+        QString imapPath, parent;
+        if ( mNamespacesComboBox ) {
+          // create folder with namespace
+          parent = mNamespacesComboBox->currentText();
+          imapPath = anAccount->addPathToNamespace( parent ) + fldName;
+        }
+        KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
+        selectedStorage->createFolder(fldName, parent); // create it on the server
+        newStorage->initializeFrom( selectedStorage, imapPath, QString::null );
         static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
         success = true;
       }
@@ -210,6 +265,12 @@ void NewFolderDialog::slotOk()
       KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>( newFolder->storage() );
       newStorage->initializeFrom( selectedStorage );
+      if ( mNamespacesComboBox ) {
+        // create folder with namespace
+        QString path = selectedStorage->account()->addPathToNamespace( 
+            mNamespacesComboBox->currentText() ) + fldName;
+        newStorage->setImapPathForCreation( path );
+      }
       success = true;
     }
   } else {
