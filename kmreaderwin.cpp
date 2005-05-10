@@ -2406,6 +2406,8 @@ void KMReaderWin::slotAtmDecryptWithChiasmusResult( const GpgME::Error & err, co
     return;
   Kleo::Job * job = mJob;
   mJob = 0;
+  if ( err.isCanceled() )
+    return;
   if ( err ) {
     job->showErrorDialog( this, i18n( "Chiasmus Decryption Error" ) );
     return;
