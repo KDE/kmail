@@ -402,6 +402,9 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
+  /** Event filter */
+  bool eventFilter( QObject *obj, QEvent *ev );
+
 private:
   void adjustLayout();
   void createWidgets();

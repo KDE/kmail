@@ -1002,6 +1002,8 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setURLCursor(KCursor::handCursor());
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
+  // register our own event filter for shift-click
+  mViewer->view()->viewport()->installEventFilter( this );
 
   if ( !htmlWriter() )
 #ifdef KMAIL_READER_HTML_DEBUG
@@ -2396,6 +2398,23 @@ QString KMReaderWin::createAtmFileLink() const
   }
   kdWarning(5006) << "Couldn't link to " << mAtmCurrentName << endl;
   return QString::null;
+}
+
+//-----------------------------------------------------------------------------
+bool KMReaderWin::eventFilter( QObject *, QEvent *e )
+{
+  if ( e->type() == QEvent::MouseButtonPress ) {
+    QMouseEvent* me = static_cast<QMouseEvent*>(e);
+    if ( me->button() == LeftButton && ( me->state() & ShiftButton ) ) {
+      // special processing for shift+click
+      mAtmCurrent = msgPartFromUrl( mUrlClicked );
+      mAtmCurrentName = mUrlClicked.path();
+      slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
+      return true; // eat event
+    }
+  }
+  // standard event processing
+  return false;
 }
 
 #include "kmreaderwin.moc"
