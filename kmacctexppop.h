@@ -131,9 +131,9 @@ protected:
   QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
-  QMap<QString, int> mUidsOfSeenMsgsMap; // set of UIDs of previously seen messages (for fast lookup)
+  QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
   QValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
-  QMap<QString, int> mUidsOfNextSeenMsgsMap; // set of UIDs of seen messages (for the next check)
+  QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
   QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
