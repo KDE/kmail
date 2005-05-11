@@ -63,8 +63,6 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint 
   processingDelay = 2*100;
   mProcessing = false;
   dataCounter = 0;
-  mUidsOfSeenMsgsDict.setAutoDelete( false );
-  mUidsOfNextSeenMsgsDict.setAutoDelete( false );
 
   headersOnServer.setAutoDelete(true);
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
@@ -159,15 +157,14 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
     QValueList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
-    mUidsOfSeenMsgsDict.clear();
-    mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
+    mUidsOfSeenMsgsMap.clear();
     int idx = 1;
     for ( QStringList::ConstIterator it = uidsOfSeenMsgs.begin();
           it != uidsOfSeenMsgs.end(); ++it, idx++ ) {
-      // we use mUidsOfSeenMsgsDict to just provide fast random access to the
+      // we use mUidsOfSeenMsgsMap to just provide fast random access to the
       // keys, so we can store the index(+1) that corresponds to the index of
       // mTimeOfSeenMsgsVector for use in KMAcctExpPop::slotData()
-      mUidsOfSeenMsgsDict.insert( *it, (const int *)idx );
+      mUidsOfSeenMsgsMap.insert( *it, idx );
     }
     mTimeOfSeenMsgsVector.clear();
     mTimeOfSeenMsgsVector.reserve( timeOfSeenMsgs.size() );
@@ -178,13 +175,13 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     // If the counts differ then the config file has presumably been tampered
     // with and so to avoid possible unwanted message deletion we'll treat
     // them all as newly seen by clearing the seen times vector
-    if ( mTimeOfSeenMsgsVector.count() != mUidsOfSeenMsgsDict.count() )
+    if ( mTimeOfSeenMsgsVector.count() != mUidsOfSeenMsgsMap.count() )
       mTimeOfSeenMsgsVector.clear();
     QStringList downloadLater = config.readListEntry( "downloadLater" );
     for ( QStringList::Iterator it = downloadLater.begin(); it != downloadLater.end(); ++it ) {
         mHeaderLaterUids.insert( *it, true );
     }
-    mUidsOfNextSeenMsgsDict.clear();
+    mUidsOfNextSeenMsgsMap.clear();
     mTimeOfNextSeenMsgsMap.clear();
 
     interactive = _interactive;
@@ -308,7 +305,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     }
     else {
       idsOfMsgsToDelete.append( *curId );
-      mUidsOfNextSeenMsgsDict.insert( *curUid, (const int *)1 );
+      mUidsOfNextSeenMsgsMap.insert( *curUid, 1 );
       mTimeOfNextSeenMsgsMap.insert( *curUid,
         QDateTime::currentDateTime().toTime_t() );
     }
@@ -449,9 +446,6 @@ void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
     kdDebug(5006) << k_funcinfo << "stage == List" << endl;
-    // set the initial size of mUidsOfNextSeenMsgsDict to the number of
-    // messages on the server + 10%
-    mUidsOfNextSeenMsgsDict.resize( KMail::nextPrime( ( idsOfMsgs.count() * 11 ) / 10 ) );
     KURL url = getUrl();
     url.setPath(QString("/uidl"));
     job = KIO::get( url, false, false );
@@ -463,14 +457,14 @@ void KMAcctExpPop::slotJobFinished() {
     mUidlFinished = TRUE;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
-         mUidsOfNextSeenMsgsDict.isEmpty() && !idsOfMsgs.isEmpty() ) {
+         mUidsOfNextSeenMsgsMap.empty() && !idsOfMsgs.isEmpty() ) {
       KMessageBox::sorry(0, i18n("Your POP3 server does not support the UIDL "
       "command: this command is required to determine, in a reliable way, "
       "which of the mails on the server KMail has already seen before;\n"
       "the feature to leave the mails on the server will therefore not "
       "work properly."));
       // An attempt to work around buggy pop servers, these seem to be popular.
-      mUidsOfNextSeenMsgsDict = mUidsOfSeenMsgsDict;
+      mUidsOfNextSeenMsgsMap= mUidsOfSeenMsgsMap;
     }
 
     //check if filter on server
@@ -601,8 +595,7 @@ void KMAcctExpPop::slotJobFinished() {
         }
         if (headersOnServer.current()->action() == Delete) {
           mHeaderDeleteUids.insert(headersOnServer.current()->uid(), true);
-          mUidsOfNextSeenMsgsDict.insert( headersOnServer.current()->uid(),
-                                          (const int *)1 );
+          mUidsOfNextSeenMsgsMap.insert( headersOnServer.current()->uid(), 1 );
           idsOfMsgsToDelete.append(headersOnServer.current()->id());
           mTimeOfNextSeenMsgsMap.insert( headersOnServer.current()->uid(),
                                      QDateTime::currentDateTime().toTime_t() );
@@ -697,7 +690,7 @@ void KMAcctExpPop::slotJobFinished() {
     // remove the uids of all messages which have been deleted
     for ( QStringList::ConstIterator it = idsOfMsgsToDelete.begin();
           it != idsOfMsgsToDelete.end(); ++it ) {
-      mUidsOfNextSeenMsgsDict.remove( mUidForIdMap[*it] );
+      mUidsOfNextSeenMsgsMap.remove( mUidForIdMap[*it] );
     }
     idsOfMsgsToDelete.clear();
     mMailCheckProgressItem->setStatus(
@@ -753,10 +746,10 @@ void KMAcctExpPop::saveUidList()
 
   QStringList uidsOfNextSeenMsgs;
   QValueList<int> seenUidTimeList;
-  QDictIterator<int> it( mUidsOfNextSeenMsgsDict );
-  for( ; it.current(); ++it ) {
-    uidsOfNextSeenMsgs.append( it.currentKey() );
-    seenUidTimeList.append( mTimeOfNextSeenMsgsMap[it.currentKey()] );
+  QMapIterator<QString,int> it = mUidsOfNextSeenMsgsMap.begin();
+  for( ; it!=mUidsOfNextSeenMsgsMap.end(); ++it ) {
+    uidsOfNextSeenMsgs.append( it.key() );
+    seenUidTimeList.append( mTimeOfNextSeenMsgsMap[it.key()] );
   }
   QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
                                       mHost + ":" + QString("%1").arg(mPort) );
@@ -860,19 +853,19 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     else { // stage == Uidl
       const QString id = qdata.left(spc);
       const QString uid = qdata.mid(spc + 1);
-      if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
+      if ( mUidsOfSeenMsgsMap.contains( uid ) ) {
         if ( mMsgsPendingDownload.contains( id ) ) {
           mMsgsPendingDownload.remove( id );
         }
         else
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.append( id );
-        mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
+        mUidsOfNextSeenMsgsMap.insert( uid, 1 );
         if ( mTimeOfSeenMsgsVector.empty() )
           mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
         else
           mTimeOfNextSeenMsgsMap.insert( uid,
-            mTimeOfSeenMsgsVector[(int)mUidsOfSeenMsgsDict[uid] - 1] );
+            mTimeOfSeenMsgsVector[mUidsOfSeenMsgsMap[uid] - 1] );
       }
       mUidForIdMap.insert( id, uid );
     }

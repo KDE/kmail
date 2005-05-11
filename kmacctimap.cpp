@@ -64,12 +64,11 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums = config.readListEntry( "unfiltered" );
-  mFilterSerNumsToSave.setAutoDelete( false );
   
   for ( QStringList::ConstIterator it = serNums.begin();
 	it != serNums.end(); ++it ) {
       mFilterSerNums.append( (*it).toUInt() );
-      mFilterSerNumsToSave.insert( *it, (const int *)1 );
+      mFilterSerNumsToSave.insert( *it, 1 );
     }
 }
 
@@ -83,9 +82,9 @@ KMAcctImap::~KMAcctImap()
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums;
-  QDictIterator<int> it( mFilterSerNumsToSave );
-  for( ; it.current(); ++it )
-      serNums.append( it.currentKey() );
+  QMapIterator<QString,int> it = mFilterSerNumsToSave.begin();
+  for( ; it!=mFilterSerNumsToSave.end(); ++it )
+      serNums.append( it.key() );
   config.writeEntry( "unfiltered", serNums );
 }
 
@@ -549,7 +548,7 @@ void KMAcctImap::execFilters(Q_UINT32 serNum)
   if ( findIt != mFilterSerNums.end() )
       return;
   mFilterSerNums.append( serNum );
-  mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), (const int *)1 );
+  mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), 1 );
 }
 
 int KMAcctImap::slotFilterMsg( KMMessage *msg )

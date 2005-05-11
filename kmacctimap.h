@@ -23,7 +23,7 @@
 #define KMAcctImap_h
 
 #include "imapaccountbase.h"
-#include <qdict.h>
+#include <qmap.h>
 
 class KMFolderImap;
 class KMFolderTreeItem;
@@ -144,7 +144,7 @@ private:
   QTimer mErrorTimer;
   int mCountRemainChecks;
   QValueList<Q_UINT32> mFilterSerNums;
-  QDict<int> mFilterSerNumsToSave;
+  QMap<QString,int> mFilterSerNumsToSave;
 };
 
 #endif /*KMAcctImap_h*/
