@@ -87,7 +87,7 @@ I18N_NOOP( "<qt><p>Click this button to move the currently-"
 const char * _wt_filterlist_rename =
 I18N_NOOP( "<qt><p>Click this button to rename the currently-selected filter.</p>"
 	   "<p>Filters are named automatically, as long as they start with "
-	   "\"<<\".</p>"
+	   "\"&lt;\".</p>"
 	   "<p>If you have renamed a filter accidentally and want automatic "
 	   "naming back, click this button and select <em>Clear</em> followed "
 	   "by <em>OK</em> in the appearing dialog.</p></qt>" );
