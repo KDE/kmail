@@ -780,7 +780,7 @@ bool Kleo::KeyResolver::encryptionPossible() const {
 		       EmptyKeyList ) == d->mSecondaryEncryptionKeys.end() ;
 }
 
-Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool signingRequested, bool encryptionRequested ) {
+Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool& signingRequested, bool& encryptionRequested ) {
   if ( !encryptionRequested && !signingRequested ) {
     // make a dummy entry with all recipients, but no signing or
     // encryption keys to avoid special-casing on the caller side:
@@ -797,8 +797,13 @@ Kpgp::Result Kleo::KeyResolver::resolveAllKeys( bool signingRequested, bool encr
   if ( signingRequested )
     if ( encryptionRequested )
       result = resolveSigningKeysForEncryption();
-    else
+    else {
       result = resolveSigningKeysForSigningOnly();
+      if ( result == Kpgp::Failure ) {
+        signingRequested = false;
+        return Kpgp::Ok;
+      }
+    }
   return result;
 }
 
@@ -1041,7 +1046,17 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForSigningOnly() {
     return Kpgp::Ok;
   }
 
-  return Kpgp::Failure;
+  const QString msg = i18n("Examination of recipient's signing preferences "
+                           "showed no common type of signature matching your "
+                           "available signing keys.\n"
+                           "Send message without signing?"  );
+  if ( KMessageBox::warningContinueCancel( 0, msg, i18n("No signing possible"),
+                                           KStdGuiItem::cont() )
+       == KMessageBox::Continue ) {
+    d->mFormatInfoMap[OpenPGPMIMEFormat].splitInfos.push_back( SplitInfo( allRecipients() ) );
+    return Kpgp::Failure; // means "Ok, but without signing"
+  }
+  return Kpgp::Canceled;
 }
 
 std::vector<GpgME::Key> Kleo::KeyResolver::signingKeysFor( CryptoMessageFormat f ) const {

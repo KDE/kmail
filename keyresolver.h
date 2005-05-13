@@ -200,7 +200,7 @@ namespace Kleo {
        Queries the user for missing keys and displays a key approval
        dialog if needed.
     */
-    Kpgp::Result resolveAllKeys( bool signingRequested, bool encryptionRequested );
+    Kpgp::Result resolveAllKeys( bool& signingRequested, bool& encryptionRequested );
 
     /**
        @return the signing keys to use (if any) for the given message
