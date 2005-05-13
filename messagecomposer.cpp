@@ -762,7 +762,7 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
 			       "If you choose to continue, "
 			       "no signing will be performed.");
       if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
-					       i18n("Send &Unsigned") )
+					       i18n("Send Unsigned") )
 	   == KMessageBox::Cancel ) {
 	mRc = false;
 	return false;
@@ -883,7 +883,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 			       "but no valid trusted encryption keys have been "
 			       "configured for this identity.");
       if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
-					       i18n("Send &Unencrypted") )
+					       i18n("Send Unencrypted") )
 	   == KMessageBox::Cancel ) {
 	mRc = false;
 	return false;
