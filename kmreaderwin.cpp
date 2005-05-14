@@ -872,7 +872,7 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
     delete mCSSHelper;
-    mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
+    mCSSHelper = new KMail::CSSHelper( 	QPaintDeviceMetrics( mViewer->view() ) );
     if (message())
       message()->readConfig();
     update( true ); // Force update
@@ -889,7 +889,7 @@ void KMReaderWin::readConfig(void)
   /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
-  mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
+  mCSSHelper = new KMail::CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
 
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
 

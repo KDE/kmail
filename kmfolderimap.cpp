@@ -579,7 +579,7 @@ void KMFolderImap::slotListNamespaces()
   // start personal namespace listing and send it directly to slotListResult
   for ( QStringList::Iterator it = personal.begin(); it != personal.end(); ++it )
   {
-    ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+    KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
     connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
         this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -592,7 +592,7 @@ void KMFolderImap::slotListNamespaces()
   ns += map[ImapAccountBase::SharedNS];
   for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
   {
-    ListJob* job = new ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+     KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
     connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
         this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
@@ -694,7 +694,7 @@ bool KMFolderImap::listDirectory()
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  ListJob* job = new ListJob( mAccount, type, this );
+   KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this );
   job->setParentProgressItem( account()->listDirProgressItem() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
