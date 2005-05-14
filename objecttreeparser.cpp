@@ -2408,20 +2408,6 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
   else
     htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ), decorate ) );
 }
-static QString pngToDataUrl( const QString & iconPath )
-{
-  if ( iconPath.isEmpty() )
-    return QString::null;
-
-  QFile pngFile( iconPath );
-  if ( !pngFile.open( IO_ReadOnly | IO_Raw ) )
-    return QString::null;
-
-  QByteArray ba = pngFile.readAll();
-  pngFile.close();
-  return QString::fromLatin1("data:image/png;base64,%1")
-         .arg( KCodecs::base64Encode( ba ) );
-}
 
 
 QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
@@ -2467,15 +2453,15 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     /* calculate line's current quoting depth */
     int actQuoteLevel = -1;
 
-    if ( GlobalSettings::showExpandQuotesMark() ) 
+    if ( GlobalSettings::showExpandQuotesMark() )
     {
       // Cache Icons
       if ( mCollapseIcon.isEmpty() ) {
-        mCollapseIcon= pngToDataUrl( 
+        mCollapseIcon= LinkLocator::pngToDataUrl(
             KGlobal::instance()->iconLoader()->iconPath( "quotecollapse",0 ));
       }
       if ( mExpandIcon.isEmpty() )
-        mExpandIcon= pngToDataUrl( 
+        mExpandIcon= LinkLocator::pngToDataUrl(
             KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
     }
 
@@ -2499,7 +2485,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     QString textExpand;
 
     // This quoted line needs be hiden
-    if (GlobalSettings::showExpandQuotesMark() && mReader->mLevelQuote >= 0 
+    if (GlobalSettings::showExpandQuotesMark() && mReader->mLevelQuote >= 0
         && mReader->mLevelQuote <= ( actQuoteLevel ) )
       actHidden = true;
 
@@ -2515,12 +2501,12 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
         htmlStr += normalStartTag;
       else
       {
-        if ( GlobalSettings::showExpandQuotesMark() ) 
+        if ( GlobalSettings::showExpandQuotesMark() )
         {
           if (  actHidden )
           {
             //only show the QuoteMark when is the first line of the level hidden
-            if ( !curHidden ) 
+            if ( !curHidden )
             {
               //Expand all quotes
               htmlStr += "<div class=\"quotelevelmark\" >" ;
@@ -2540,7 +2526,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
             htmlStr += "</div>";
             htmlStr += quoteFontTag[actQuoteLevel%3];
           }
-        } else 
+        } else
           htmlStr += quoteFontTag[actQuoteLevel%3];
       }
       currQuoteLevel = actQuoteLevel;

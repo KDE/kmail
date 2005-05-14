@@ -793,6 +793,7 @@ void KMReaderWin::slotCycleAttachmentStrategy() {
 KMReaderWin::~KMReaderWin()
 {
   delete mHtmlWriter; mHtmlWriter = 0;
+  delete mCSSHelper;
   if (mAutoDelete) delete message();
   delete mRootNode; mRootNode = 0;
   removeTempFiles();
@@ -871,7 +872,7 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
     delete mCSSHelper;
-    mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
+    mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
     if (message())
       message()->readConfig();
     update( true ); // Force update
@@ -888,7 +889,7 @@ void KMReaderWin::readConfig(void)
   /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
-  mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
+  mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
 
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
 
@@ -1848,10 +1849,7 @@ void KMReaderWin::slotHandleAttachment( int choice )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
 {
-  //dnaber:
-  KAction *act = mViewer->actionCollection()->action("find");
-  if( act )
-    act->activate();
+  mViewer->findText();
 }
 
 //-----------------------------------------------------------------------------
@@ -2106,7 +2104,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     command->start();
   }
   else if( choice == KMessageBox::No ) {	// Open
-    KMHandleAttachmentCommand::AttachmentAction action = ( offer ? 
+    KMHandleAttachmentCommand::AttachmentAction action = ( offer ?
         KMHandleAttachmentCommand::Open : KMHandleAttachmentCommand::OpenWith );
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,

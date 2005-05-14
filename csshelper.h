@@ -32,51 +32,13 @@
 #ifndef __KMAIL_CSSHELPER_H__
 #define __KMAIL_CSSHELPER_H__
 
-#include <libkdepim/configmanager.h>
-using KPIM::ConfigManager;
-
-#include <qpaintdevicemetrics.h>
-
-class QString;
-class QFont;
+#include <libkdepim/csshelper.h>
 
 namespace KMail {
 
-  class CSSHelper : public ConfigManager {
+  class CSSHelper : public KPIM::CSSHelper {
   public:
-    CSSHelper( const QPaintDeviceMetrics & pdm, QObject * parent=0, const char * name=0 );
-    virtual ~CSSHelper();
-
-    /** @reimplemented */
-    void commit();
-    /** @reimplemented */
-    void rollback();
-    /** @reimplemented */
-    bool hasPendingChanges() const;
-
-    /** @return HTML head including style sheet definitions and the
-	&gt;body&lt; tag */
-    QString htmlHead( bool fixedFont=false ) const;
-
-    /** @return The collected CSS definitions as a string */
-    QString cssDefinitions( bool fixedFont=false ) const;
-
-    /** @return a &lt;div&gt; start tag with embedded style
-	information suitable for quoted text with quote level @p level */
-    QString quoteFontTag( int level ) const;
-    /** @return a &lt;div&gt; start tag with embedded style
-	information suitable for non-quoted text */
-    QString nonQuotedFontTag() const;
-
-    QFont bodyFont( bool fixedFont=false, bool printing=false ) const;
-
-  private:
-    class Private;
-    friend class Private; // This should not be necessary, should it?
-    Private * d;
-    Private * s;
-
-    const QPaintDeviceMetrics mMetrics;
+    CSSHelper( const QPaintDeviceMetrics &pdm );
   };
 
 } // namespace KMail
