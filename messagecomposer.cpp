@@ -245,8 +245,8 @@ protected:
     mComposer->continueComposeMessage( msg, doSign, doEncrypt, format );
   }
 #ifdef KLEO_CHIASMUS
-  void chiasmusEncryptEverything() {
-    mComposer->chiasmusEncryptEverything();
+  void chiasmusEncryptAllAttachments() {
+    mComposer->chiasmusEncryptAllAttachments();
   }
 #endif
 
@@ -260,7 +260,7 @@ public:
     : MessageComposerJob( composer ) {}
 
   void execute() {
-    chiasmusEncryptEverything();
+    chiasmusEncryptAllAttachments();
   }
 };
 #endif
@@ -510,7 +510,43 @@ static QCString escape_quoted_string( const QCString & str ) {
   return result;
 }
 
-void MessageComposer::chiasmusEncryptEverything() {
+bool MessageComposer::encryptWithChiasmus( const Kleo::CryptoBackend::Protocol * chiasmus,
+                                           const QByteArray& body,
+                                           QByteArray& resultData )
+{
+  std::auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-encrypt", QMap<QString,QVariant>() ) );
+  if ( !job.get() ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-encrypt\" function. Please report this bug." );
+    KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
+    return false;
+  }
+  if ( !job->setProperty( "key", mChiasmusKey ) ||
+       !job->setProperty( "input", body ) ) {
+    const QString msg = i18n( "The \"x-encrypt\" function does not accept "
+                              "\"key\" or \"input\" parameters. Please report this bug." );
+    KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
+    return false;
+  }
+  const GpgME::Error err = job->exec();
+  if ( err.isCanceled() || err ) {
+    if ( err )
+      job->showErrorDialog( mComposeWin, i18n( "Chiasmus Encryption Error" ) );
+    return false;
+  }
+  const QVariant result = job->property( "result" );
+  if ( result.type() != QVariant::ByteArray ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-encrypt\" function did not return a "
+                              "byte array. Please report this bug." );
+    KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
+    return false;
+  }
+  resultData = result.toByteArray();
+  return true;
+}
+
+void MessageComposer::chiasmusEncryptAllAttachments() {
   if ( !mEncryptWithChiasmus )
     return;
   assert( !mChiasmusKey.isEmpty() ); // kmcomposewin code should have made sure
@@ -527,41 +563,14 @@ void MessageComposer::chiasmusEncryptEverything() {
     if ( filename.endsWith( ".xia", false ) )
       continue; // already encrypted
     const QByteArray body = part->bodyDecodedBinary();
-    std::auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-encrypt", QMap<QString,QVariant>() ) );
-    if ( !job.get() ) {
-      const QString msg = i18n( "Chiasmus backend does not offer the "
-                                "\"x-encrypt\" function. Please report this bug." );
-      KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
-      mRc = false;
-      return;
-    }
-    if ( !job->setProperty( "key", mChiasmusKey ) ||
-         !job->setProperty( "input", body ) ) {
-      const QString msg = i18n( "The \"x-encrypt\" function does not accept "
-                                "\"key\" or \"input\" parameters. Please report this bug." );
-      KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
-      mRc = false;
-      return;
-    }
-    const GpgME::Error err = job->exec();
-    if ( err.isCanceled() || err ) {
-      if ( err )
-        job->showErrorDialog( mComposeWin, i18n( "Chiasmus Encryption Error" ) );
-      mRc = false;
-      return;
-    }
-    const QVariant result = job->property( "result" );
-    if ( result.type() != QVariant::ByteArray ) {
-      const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
-                                "The \"x-encrypt\" function did not return a "
-                                "byte array. Please report this bug." );
-      KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
+    QByteArray resultData;
+    if ( !encryptWithChiasmus( chiasmus, body, resultData ) ) {
       mRc = false;
       return;
     }
     // everything ok, so let's fill in the part again:
     QValueList<int> dummy;
-    part->setBodyAndGuessCte( result.toByteArray(), dummy );
+    part->setBodyAndGuessCte( resultData, dummy );
     part->setTypeStr( "application" );
     part->setSubtypeStr( "vnd.de.bund.bsi.chiasmus" );
     part->setName( filename + ".xia" );
@@ -582,7 +591,7 @@ void MessageComposer::chiasmusEncryptEverything() {
 void MessageComposer::adjustCryptFlags()
 {
   if ( !mDisableCrypto &&
-       mAllowedCryptoMessageFormats & Kleo::InlineOpenPGPFormat &&
+       ( mAllowedCryptoMessageFormats & Kleo::InlineOpenPGPFormat )&&
        !mAttachments.empty() &&
        ( mSigningRequested || mEncryptionRequested ) )
   {
@@ -1248,6 +1257,71 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
   } // end for
 }
 
+#ifdef KLEO_CHIASMUS
+// very much inspired by composeInlineOpenPGPMessage
+void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::CryptoMessageFormat format )
+{
+  assert( !mChiasmusKey.isEmpty() ); // kmcomposewin code should have made sure
+  const Kleo::CryptoBackendFactory * cpf = Kleo::CryptoBackendFactory::instance();
+  assert( cpf );
+  const Kleo::CryptoBackend::Protocol * chiasmus
+    = cpf->protocol( "Chiasmus" );
+  assert( chiasmus ); // kmcomposewin code should have made sure
+
+  // preprocess the body text
+  QCString body = bodyText();
+  if (body.isNull()) {
+    mRc = false;
+    return;
+  }
+
+  mNewBodyPart = 0; // unused
+  mEarlyAddAttachments = false;
+  mAllAttachmentsAreInBody = false;
+
+  // set the main headers
+  theMessage.deleteBodyParts();
+  QString oldContentType = theMessage.headerField( "Content-Type" );
+  theMessage.removeHeaderField("Content-Type");
+  theMessage.removeHeaderField("Content-Transfer-Encoding");
+
+  QByteArray plainText;
+  plainText.duplicate( body.data(), body.length() ); // hrmpf...
+
+  // This reads strange, but we know that AdjustCryptFlagsJob created a single splitinfo,
+  // under the given "format" (usually openpgp/mime; doesn't matter)
+  const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos
+    = mKeyResolver->encryptionItems( format );
+  assert( splitInfos.size() == 1 );
+  for ( std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it = splitInfos.begin() ; it != splitInfos.end() ; ++it )
+  {
+    const Kleo::KeyResolver::SplitInfo& splitInfo = *it;
+    KMMessage* msg = new KMMessage( theMessage );
+    QByteArray encryptedBody;
+
+    if ( !encryptWithChiasmus( chiasmus, plainText, encryptedBody ) ) {
+      mRc = false;
+      return;
+    }
+    assert( !encryptedBody.isNull() );
+    mOldBodyPart.setBodyEncodedBinary( encryptedBody );
+
+    mOldBodyPart.setContentDisposition( "inline" );
+    mOldBodyPart.setTypeStr( "application" );
+    mOldBodyPart.setSubtypeStr( "vnd.de.bund.bsi.chiasmus-text" );
+    addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
+    mMessageList.push_back( msg );
+
+    if ( it == splitInfos.begin() && !saveMessagesEncrypted() ) {
+      mOldBodyPart.setBodyEncoded( body );
+      KMMessage* msgUnenc = new KMMessage( theMessage );
+      addBodyAndAttachments( msgUnenc, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
+      msg->setUnencryptedMsg( msgUnenc );
+    }
+  }
+}
+#endif
+
 void MessageComposer::composeMessage( KMMessage& theMessage,
                                       bool doSign, bool doEncrypt,
                                       Kleo::CryptoMessageFormat format )
@@ -1259,6 +1333,14 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     composeInlineOpenPGPMessage( theMessage, doSign, doEncrypt );
     return;
   }
+
+#ifdef KLEO_CHIASMUS
+  if ( mEncryptWithChiasmus )
+  {
+    composeChiasmusMessage( theMessage, format );
+    return;
+  }
+#endif
 
   // create informative header for those that have no mime-capable
   // email client
@@ -1761,8 +1843,13 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       msg->headers().ContentType().Parse();
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
-      msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
+      QCString contentType = ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr();
+#ifdef KLEO_CHIASMUS
+      if ( mEncryptWithChiasmus )
+        contentType += ";chiasmus-charset=" + mCharset;
+#endif
+      msg->headers().ContentType().FromString( contentType );
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << contentType << endl;
     }
     if ( !ourFineBodyPart.charset().isEmpty() )
       msg->setCharset( ourFineBodyPart.charset() );
