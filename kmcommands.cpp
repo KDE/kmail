@@ -1760,14 +1760,12 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList)
   :mDestFolder( destFolder ), mMsgList( msgList ), mProgressItem( 0 )
 {
-  setDeletesItself( true );
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMessage *msg )
   :mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  setDeletesItself( true );
   mMsgList.append( &msg->toMsgBase() );
 }
 
@@ -1775,18 +1773,17 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               KMMsgBase *msgBase )
   :mDestFolder( destFolder ), mProgressItem( 0 )
 {
-  setDeletesItself( true );
   mMsgList.append( msgBase );
 }
 
 KMMoveCommand::KMMoveCommand( Q_UINT32 )
 :mProgressItem( 0 )
 {
-  setDeletesItself( true );
 }
 
 KMCommand::Result KMMoveCommand::execute()
 {
+  setDeletesItself( true );
   setEmitsCompletedItself( true );
   typedef QMap< KMFolder*, QPtrList<KMMessage>* > FolderToMessageListMap;
   FolderToMessageListMap folderDeleteList;
@@ -1857,7 +1854,6 @@ KMCommand::Result KMMoveCommand::execute()
         list.append(msg);
       } else {
         // We are moving to a local folder.
-        mDestFolder->open();
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
@@ -1867,12 +1863,10 @@ KMCommand::Result KMMoveCommand::execute()
               undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
             kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
-          mDestFolder->close();
         } else if (rc != 0) {
           // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
           completeMove( Failed );
-          mDestFolder->close();
           return Failed;
         }
       }
@@ -1890,6 +1884,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
   }
   if (!list.isEmpty() && mDestFolder) {
+    // will be completed with folderComplete signal
     mDestFolder->moveMsg(list, &index);
   } else {
     FolderToMessageListMap::Iterator it;
@@ -1897,27 +1892,17 @@ KMCommand::Result KMMoveCommand::execute()
       it.key()->removeMsg(*it.data());
       delete it.data();
     }
-    /* The list is empty, which means that either all messages were to be
-     * deleted, which is done above, or all of them were already in this folder.
-     * In both cases make sure a completed() signal is emitted nonetheless. */
-    KMFolder *srcFolder = 0;
-    if ( mMsgList.first() ) {
-      srcFolder = mMsgList.first()->parent();
-      if ( mDestFolder && mDestFolder == srcFolder ) {
-        completeMove( OK );
-      }
-    }
-    if ( !mDestFolder || mLostBoys.isEmpty() ) {
-      // normal local move
-      completeMove( OK );
-    }
+    Result result = ( mLostBoys.isEmpty() ? OK : Failed );
+    completeMove( result );
   }
 
   return OK;
 }
 
-void KMMoveCommand::slotImapFolderCompleted(KMFolderImap*, bool success)
+void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool success)
 {
+  disconnect (imapFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
+      this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
   if ( success ) {
     // the folder was checked successfully but we were still called, so check
     // if we are still waiting for messages to show up. If so, uidValidity
@@ -1946,9 +1931,10 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
   mLostBoys.remove(serNum);
   if ( mLostBoys.isEmpty() ) {
     // we are done. All messages transferred to the host succesfully
+    disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+        this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
-      completeMove( OK ); // imap ones will be completed via folderComplete
     }
   } else {
     mProgressItem->incCompletedItems();
