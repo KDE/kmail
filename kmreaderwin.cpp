@@ -2076,10 +2076,11 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     command->start();
   }
   else if( choice == KMessageBox::No ) {	// Open
+    KMHandleAttachmentCommand::AttachmentAction action = ( offer ? 
+        KMHandleAttachmentCommand::Open : KMHandleAttachmentCommand::OpenWith );    
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Open,
-        offer );
+        message(), mAtmCurrent, mAtmCurrentName, action, offer );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
