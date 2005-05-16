@@ -1307,8 +1307,12 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
     mOldBodyPart.setBodyEncodedBinary( encryptedBody );
 
     mOldBodyPart.setContentDisposition( "inline" );
+    // Used in case of no attachments
+    mOldBodyPart.setOriginalContentTypeStr( "application/vnd.de.bund.bsi.chiasmus-text;chiasmus-charset=" + mCharset );
+    // Used in case of attachments
     mOldBodyPart.setTypeStr( "application" );
     mOldBodyPart.setSubtypeStr( "vnd.de.bund.bsi.chiasmus-text" );
+    mOldBodyPart.setAdditionalCTypeParamStr( QCString( "chiasmus-charset=" + mCharset ) );
     addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
     mMessageList.push_back( msg );
 
@@ -1843,11 +1847,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       msg->headers().ContentType().Parse();
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
-      QCString contentType = ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr();
-#ifdef KLEO_CHIASMUS
-      if ( mEncryptWithChiasmus )
-        contentType += ";chiasmus-charset=" + mCharset;
-#endif
+      const QCString contentType = ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr();
       msg->headers().ContentType().FromString( contentType );
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << contentType << endl;
     }
