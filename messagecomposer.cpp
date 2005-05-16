@@ -1993,13 +1993,10 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 
       //kdDebug(5006) << "processStructuringInfo: mainStr=" << mainStr << endl;
       resultingPart.setBodyEncoded( mainStr );
-    } //  OF  if( !makeMultiMime ) .. else
+    }
 
-  } else { //  not making a mime object
-    // Build a plain message body based on the values returned in structInf.
-    // Note: We do _not_ insert line breaks between the parts since
-    //       it is the plugin job to provide us with ready-to-use
-    //       texts containing all necessary line breaks.
+  } else { //  not making a mime object, build a plain message body.
+
     resultingPart.setContentDescription( contentDescClear );
     resultingPart.setTypeStr( contentTypeClear );
     resultingPart.setSubtypeStr( contentSubtypeClear );
@@ -2007,22 +2004,12 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
     resultingPart.setContentTransferEncodingStr( contentTEncClear );
     QCString resultingBody;
 
-#ifdef NULL_ANYWAY // these are never set currently (although they'll be used for InlineOpenPGP)
-    if( structuring.data.flatTextPrefix
-        && strlen( structuring.data.flatTextPrefix ) )
-      resultingBody += structuring.data.flatTextPrefix;
-#endif
     if ( signing && includeCleartextWhenSigning( format ) ) {
       if( !clearCStr.isEmpty() )
         resultingBody += clearCStr;
-#ifdef NULL_ANYWAY
-      if( structuring.data.flatTextSeparator
-          && strlen( structuring.data.flatTextSeparator ) )
-        resultingBody += structuring.data.flatTextSeparator;
-#endif
     }
     if ( !ciphertext.isEmpty() )
-      resultingBody += QCString( ciphertext.data(), ciphertext.size() + 1 ); // what's that supposed to do ????
+      resultingBody += QCString( ciphertext.data(), ciphertext.size() + 1 ); // null-terminate
     else {
       // Plugin error!
       KMessageBox::sorry( mComposeWin,
@@ -2032,21 +2019,8 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
                           .arg( bugURL ) );
       bOk = false;
     }
-#ifdef NULL_ANYWAY
-    if( structuring.data.flatTextPostfix
-        && strlen( structuring.data.flatTextPostfix ) )
-      resultingBody += structuring.data.flatTextPostfix;
-#endif
     resultingPart.setBodyEncoded( resultingBody );
   }
-
-  // No need to free the memory that was allocated for the ciphertext
-  // since this memory is freed by it's QCString destructor.
-
-  // Neither do we free the memory that was allocated
-  // for our structuring info data's char* members since we are using
-  // not the pure cryptplug's StructuringInfo struct
-  // but the convenient CryptPlugWrapper's StructuringInfoWrapper class.
 
   return bOk;
 }
