@@ -498,6 +498,11 @@ namespace KMail {
         if ( !mSlaveConnected ) {
           mSlaveConnectionError = true;
           mOwner->resetConnectionList( this );
+          if ( mSlave )
+          {
+            KIO::Scheduler::disconnectSlave( slave() );
+            mSlave = 0;
+          }          
         }
         emit connectionResult( errorCode, errorMsg );
       }
@@ -506,7 +511,6 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
   {
-    kdDebug() << k_funcinfo << endl;
       if (aSlave != mSlave) return;
       mSlaveConnected = true;
       mNoopTimer.start( 60000 ); // make sure we start sending noops
