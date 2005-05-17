@@ -565,6 +565,8 @@ void KMFolderImap::slotListNamespaces()
     return;
   }
   kdDebug(5006) << "slotListNamespaces" << endl;
+  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+      this, SLOT( slotListNamespaces() ) );
   // reset subfolder states
   setSubfolderState( imapNoInformation );
   mSubfolderState = imapInProgress;
@@ -1405,7 +1407,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     msg->setReadyToShow(false);
     // nothing between the boundaries, older UWs do that
     if ( pos != 14 ) {
-      msg->fromString((*it).cdata.mid(16, pos - 16));
+      msg->fromString( (*it).cdata.mid(16, pos - 16) );
       flags = msg->headerField("X-Flags").toInt();
       ulong uid = msg->UID();
       bool ok = true;
@@ -1433,10 +1435,10 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         delete msg;
         msg = 0;
       } else {
-        if (uidmap.find(uid)) {
+        if ( uidmap.find(uid) ) {
           // assign the sernum from the cache
           const ulong sernum = (ulong) uidmap[uid];
-          msg->setMsgSerNum(sernum);
+          msg->setMsgSerNum( sernum );
         }
         KMFolderMbox::addMsg(msg, 0);
         // Transfer the status, if it is cached.
