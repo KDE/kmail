@@ -1304,7 +1304,15 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
       return;
     }
     assert( !encryptedBody.isNull() );
-    mOldBodyPart.setBodyEncodedBinary( encryptedBody );
+    // This leaves CTE==7-bit, no good
+    //mOldBodyPart.setBodyEncodedBinary( encryptedBody );
+
+    bool doSign = false;
+    QValueList<int> allowedCTEs;
+    mOldBodyPart.setBodyAndGuessCte( encryptedBody, allowedCTEs,
+                                     !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+				     doSign );
+
 
     mOldBodyPart.setContentDisposition( "inline" );
     // Used in case of no attachments
