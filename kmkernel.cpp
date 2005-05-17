@@ -542,7 +542,7 @@ DCOPRef KMKernel::newMessage(const QString &to,
                              const QString &bcc,
                              bool hidden,
                              bool useFolderId,
-                             const KURL &messageFile,
+                             const KURL & /*messageFile*/,
                              const KURL &attachURL)
 {
   KMComposeWin *win;
