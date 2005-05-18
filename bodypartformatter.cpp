@@ -111,6 +111,9 @@ namespace {
 
   CREATE_BODY_PART_FORMATTER(ApplicationOctetStream)
   CREATE_BODY_PART_FORMATTER(ApplicationPkcs7Mime)
+#ifdef KLEO_CHIASMUS
+  CREATE_BODY_PART_FORMATTER(ApplicationChiasmusText)
+#endif
   //CREATE_BODY_PART_FORMATTER(ApplicationPgp)
 
   CREATE_BODY_PART_FORMATTER(MessageRfc822)
@@ -143,7 +146,10 @@ static const SubtypeBuiltin applicationSubtypeBuiltins[] = {
   { "octet-stream", &ApplicationOctetStreamBodyPartFormatter::create },
   { "pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
   { "x-pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
-  { "pgp", &ApplicationPgpBodyPartFormatter::create },
+#ifdef KLEO_CHIASMUS
+  { "vnd.de.bund.bsi.chiasmus-text", &ApplicationChiasmusTextBodyPartFormatter::create },
+#endif
+  { "pgp", &ApplicationPgpBodyPartFormatter::create }
 };
 
 static const SubtypeBuiltin textSubtypeBuiltins[] = {
@@ -286,6 +292,13 @@ static const KMail::BodyPartFormatter * createForApplication( const char * subty
       //if ( qstricmp( subtype, "ms-tnef" ) == 0 )
       //  return ApplicationMsTnefBodyPartFormatter::create();
       break;
+#ifdef KLEO_CHIASMUS
+    case 'v':
+    case 'V':
+      if ( qstricmp( subtype, "vnd.de.bund.bsi.chiasmus-text") == 0)
+        return ApplicationChiasmusTextBodyPartFormatter::create();
+      break;
+#endif
     }
 
   return AnyTypeBodyPartFormatter::create();

@@ -60,6 +60,12 @@
 #include <mimelib/string.h>
 #include <mimelib/text.h>
 
+#ifdef KLEO_CHIASMUS
+#include <kleo/specialjob.h>
+#include <kleo/cryptobackend.h>
+#include <kleo/cryptobackendfactory.h>
+#endif
+
 #include <gpgmepp/importresult.h>
 
 #include <kpgpblock.h>
@@ -74,6 +80,7 @@
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 
 // other Qt headers
@@ -978,9 +985,10 @@ namespace KMail {
     // process old style not-multipart Mailman messages to
     // enable verification of the embedded messages' signatures
     if ( !isMailmanMessage( curNode ) ||
-         !processMailmanMessage( curNode ) )
-      writeBodyString( cstr, curNode->trueFromAddress(),
-                       codecFor( curNode ), result );
+         !processMailmanMessage( curNode ) ) {
+        writeBodyString( cstr, curNode->trueFromAddress(),
+                         codecFor( curNode ), result );
+    }
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
 
@@ -1273,7 +1281,7 @@ namespace KMail {
   }
 
 
-  bool ObjectTreeParser::processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result ) {
+bool ObjectTreeParser::processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
@@ -1354,9 +1362,9 @@ namespace KMail {
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
     return false;
-  }
+}
 
-  bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result ) {
+bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
@@ -1556,69 +1564,180 @@ namespace KMail {
     }
 
     return isSigned || isEncrypted;
+}
+
+#ifdef KLEO_CHIASMUS
+bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText )
+{
+  const Kleo::CryptoBackend::Protocol * chiasmus =
+    Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
+  Q_ASSERT( chiasmus );
+  if ( !chiasmus )
+    return false;
+
+  const std::auto_ptr<Kleo::SpecialJob> listjob( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  if ( !listjob.get() ) {
+    errorText = i18n( "Chiasmus backend does not offer the "
+                      "\"x-obtain-keys\" function. Please report this bug." );
+    return false;
   }
 
-  void ObjectTreeParser::writeBodyString( const QCString & bodyString,
-                                          const QString & fromAddress,
-                                          const QTextCodec * codec,
-                                          ProcessResult & result ) {
-    assert( mReader ); assert( codec );
-    KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
-    KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
-    writeBodyStr( bodyString, codec, fromAddress,
-                  inlineSignatureState, inlineEncryptionState );
-    result.setInlineSignatureState( inlineSignatureState );
-    result.setInlineEncryptionState( inlineEncryptionState );
+  if ( listjob->exec() ) {
+    errorText = i18n( "Chiasmus Backend Error" );
+    return false;
   }
 
-  void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage ) {
-    if ( !mReader || !msgPart )
-      return;
+  const QVariant result = listjob->property( "result" );
+  if ( result.type() != QVariant::StringList ) {
+    errorText = i18n( "Unexpected return value from Chiasmus backend: "
+                      "The \"x-obtain-keys\" function did not return a "
+                      "string list. Please report this bug." );
+    return false;
+  }
 
-    kdDebug(5006) << "writePartIcon: PartNum: " << partNum << endl;
+  const QStringList keys = result.toStringList();
+  if ( keys.empty() ) {
+    errorText = i18n( "No keys have been found. Please check that a "
+                      "valid key path has been set in the Chiasmus "
+                      "configuration." );
+    return false;
+  }
 
-    QString label = msgPart->fileName();
-    if( label.isEmpty() )
-      label = msgPart->name();
-    if( label.isEmpty() )
-      label = "unnamed";
-    label = KMMessage::quoteHtmlChars( label, true );
+  bool ok = false;
+  const QString key = KInputDialog::getItem( i18n( "Chiasmus Decryption Key Selection" ),
+                                             i18n( "Please select the Chiasmus key file to use:" ),
+                                             keys, 0, false, &ok, mReader );
+  if ( !ok )
+    return false;
 
-    QString comment = msgPart->contentDescription();
-    comment = KMMessage::quoteHtmlChars( comment, true );
+  assert( !key.isEmpty() );
 
-    QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
+  Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
+  if ( !job ) {
+    errorText = i18n( "Chiasmus backend does not offer the "
+                      "\"x-decrypt\" function. Please report this bug." );
+    return false;
+  }
 
-    QString href = fileName.isEmpty() ?
-      "part://" + QString::number( partNum + 1 ) :
-      "file:" + KURL::encode_string( fileName ) ;
+  if ( !job->setProperty( "key", key ) ||
+       !job->setProperty( "input", data ) ) {
+    errorText = i18n( "The \"x-decrypt\" function does no accept "
+                      "\"key\" or \"input\" parameters. Please report this bug." );
+    return false;
+  }
 
-    QString iconName;
-    if( inlineImage )
-      iconName = href;
-    else {
+  if ( job->exec() ) {
+    errorText = i18n( "Chiasmus Decryption Error" );
+    return false;
+  }
+
+  const QVariant resultData = job->property( "result" );
+  if ( resultData.type() != QVariant::ByteArray ) {
+    errorText = i18n( "Unexpected return value from Chiasmus backend: "
+                      "The \"x-decrypt\" function did not return a "
+                      "byte array. Please report this bug." );
+    return false;
+  }
+  bodyDecoded = resultData.toByteArray();
+  return true;
+}
+
+bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode, ProcessResult & result )
+{
+  if ( !mReader ) {
+    mRawReplyString = curNode->msgPart().bodyDecoded();
+    mTextualContent += curNode->msgPart().bodyToUnicode();
+    mTextualContentCharset = curNode->msgPart().charset();
+    return true;
+  }
+
+  QByteArray decryptedBody;
+  QString errorText;
+  const QByteArray data = curNode->msgPart().bodyDecodedBinary();
+  bool bOkDecrypt = decryptChiasmus( data, decryptedBody, errorText );
+  PartMetaData messagePart;
+  messagePart.isDecryptable = bOkDecrypt;
+  messagePart.isEncrypted = true;
+  messagePart.isSigned = false;
+  messagePart.errorText = errorText;
+  if ( mReader )
+    htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                             0, //cryptPlugWrapper(),
+                                             curNode->trueFromAddress() ) );
+  const QByteArray body = bOkDecrypt ? decryptedBody : data;
+  const QString chiasmusCharset = curNode->contentTypeParameter("chiasmus-charset");
+  const QTextCodec* aCodec = chiasmusCharset.isEmpty()
+    ? codecFor( curNode )
+    : KMMsgBase::codecForName( chiasmusCharset.ascii() );
+  htmlWriter()->queue( quotedHTML( aCodec->toUnicode( body ) ) );
+  result.setInlineEncryptionState( KMMsgFullyEncrypted );
+  if ( mReader )
+    htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+  return true;
+}
+#endif
+
+void ObjectTreeParser::writeBodyString( const QCString & bodyString,
+                                        const QString & fromAddress,
+                                        const QTextCodec * codec,
+                                        ProcessResult & result ) {
+  assert( mReader ); assert( codec );
+  KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
+  KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
+  writeBodyStr( bodyString, codec, fromAddress,
+                inlineSignatureState, inlineEncryptionState );
+  result.setInlineSignatureState( inlineSignatureState );
+  result.setInlineEncryptionState( inlineEncryptionState );
+}
+
+void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage ) {
+  if ( !mReader || !msgPart )
+    return;
+
+  kdDebug(5006) << "writePartIcon: PartNum: " << partNum << endl;
+
+  QString label = msgPart->fileName();
+  if( label.isEmpty() )
+    label = msgPart->name();
+  if( label.isEmpty() )
+    label = "unnamed";
+  label = KMMessage::quoteHtmlChars( label, true );
+
+  QString comment = msgPart->contentDescription();
+  comment = KMMessage::quoteHtmlChars( comment, true );
+
+  QString fileName = mReader->writeMessagePartToTempFile( msgPart, partNum );
+
+  QString href = fileName.isEmpty() ?
+    "part://" + QString::number( partNum + 1 ) :
+    "file:" + KURL::encode_string( fileName ) ;
+
+  QString iconName;
+  if( inlineImage )
+    iconName = href;
+  else {
+    iconName = msgPart->iconName();
+    if( iconName.right( 14 ) == "mime_empty.png" ) {
+      msgPart->magicSetType();
       iconName = msgPart->iconName();
-      if( iconName.right( 14 ) == "mime_empty.png" ) {
-        msgPart->magicSetType();
-        iconName = msgPart->iconName();
-      }
     }
-
-    if( inlineImage )
-      // show the filename of the image below the embedded image
-      htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-                           "<img src=\"" + iconName + "\" border=\"0\"></a>"
-                           "</div>"
-                           "<div><a href=\"" + href + "\">" + label + "</a>"
-                           "</div>"
-                           "<div>" + comment + "</div><br>" );
-    else
-      // show the filename next to the image
-      htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
-                           iconName + "\" border=\"0\">" + label +
-                           "</a></div>"
-                           "<div>" + comment + "</div><br>" );
   }
+
+  if( inlineImage )
+    // show the filename of the image below the embedded image
+    htmlWriter()->queue( "<div><a href=\"" + href + "\">"
+                         "<img src=\"" + iconName + "\" border=\"0\"></a>"
+                         "</div>"
+                         "<div><a href=\"" + href + "\">" + label + "</a>"
+                         "</div>"
+                         "<div>" + comment + "</div><br>" );
+  else
+    // show the filename next to the image
+    htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
+                         iconName + "\" border=\"0\">" + label +
+                         "</a></div>"
+                         "<div>" + comment + "</div><br>" );
+}
 
 #define SIG_FRAME_COL_UNDEF  99
 #define SIG_FRAME_COL_RED    -1

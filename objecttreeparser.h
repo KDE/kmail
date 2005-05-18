@@ -201,7 +201,7 @@ namespace KMail {
 
     bool processMailmanMessage( partNode * node );
 
-  public:// (during refactoring)
+  public:// for BodyPartFormatter (during refactoring)
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
     bool processTextPlainSubtype( partNode * node, ProcessResult & result );
@@ -217,8 +217,14 @@ namespace KMail {
 
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
+#ifdef KLEO_CHIASMUS
+    bool processApplicationChiasmusTextSubtype( partNode * node, ProcessResult & result );
+#endif
 
   private:
+#ifdef KLEO_CHIASMUS
+    bool decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText );
+#endif
     void writeBodyString( const QCString & bodyString,
 			  const QString & fromAddress,
 			  const QTextCodec * codec,
