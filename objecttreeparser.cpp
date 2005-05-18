@@ -89,6 +89,7 @@
 #include <qapplication.h>
 
 // other headers
+#include <memory>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
