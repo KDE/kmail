@@ -260,10 +260,6 @@ void SubscriptionDialog::slotSave()
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotLoadFolders()
 {
-  // clear the views
-  KSubscription::slotLoadFolders();
-  mItemDict.clear();
-
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
   // we need a connection
   if ( ai->makeConnection() == ImapAccountBase::Error )
@@ -278,6 +274,11 @@ void SubscriptionDialog::slotLoadFolders()
         this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
   }
+  // clear the views
+  KSubscription::slotLoadFolders();
+  mItemDict.clear();
+  mSubscribed = false;
+  mLoading = true;
 
   initPrefixList();
 
@@ -287,7 +288,7 @@ void SubscriptionDialog::slotLoadFolders()
 //------------------------------------------------------------------------------
 void SubscriptionDialog::processNext()
 {
-  if ( mPrefixList.empty() ) 
+  if ( mPrefixList.isEmpty() ) 
   {
     if ( !mSubscribed )
     {
