@@ -552,6 +552,8 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotListNamespaces()
 {
+  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+      this, SLOT( slotListNamespaces() ) );
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
     kdWarning(5006) << "slotListNamespaces - got no connection" << endl;
@@ -565,8 +567,6 @@ void KMFolderImap::slotListNamespaces()
     return;
   }
   kdDebug(5006) << "slotListNamespaces" << endl;
-  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
-      this, SLOT( slotListNamespaces() ) );
   // reset subfolder states
   setSubfolderState( imapNoInformation );
   mSubfolderState = imapInProgress;
