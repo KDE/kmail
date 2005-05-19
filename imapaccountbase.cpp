@@ -542,8 +542,7 @@ namespace KMail {
     mNoopTimer.start( 60000 ); // make sure we start sending noops
     emit connectionResult( 0, QString::null ); // success
 
-    if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() )
-    {
+    if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
       connect( this, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
           this, SLOT( slotSaveNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
       getNamespaces();
@@ -555,12 +554,15 @@ namespace KMail {
   {
     disconnect( this, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( getNamespaces() ) );
-    if ( makeConnection() != Connected || !mSlave )
-    {
-      // when the connection is established we're called automatically
+    if ( makeConnection() != Connected || !mSlave ) {
       kdDebug(5006) << "getNamespaces - wait for connection" << endl;
-      connect( this, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( getNamespaces() ) );
+      if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
+        // when the connection is established slotSchedulerSlaveConnected notifies us
+      } else {
+        // getNamespaces was called by someone else
+        connect( this, SIGNAL( connectionResult(int, const QString&) ),
+            this, SLOT( getNamespaces() ) );
+      }
       return;
     }
     
@@ -590,11 +592,11 @@ namespace KMail {
   {
     JobIterator it = findJob( job );
     if ( it == jobsEnd() ) return;
+
     nsDelimMap map;
     namespaceDelim nsDelim;
     QStringList ns = QStringList::split( ",", str );
-    for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
-    {
+    for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it ) {
       // split, allow empty parts as we can get empty namespaces
       QStringList parts = QStringList::split( "=", *it, true );
       imapNamespace section = imapNamespace( parts[0].toInt() );
@@ -620,19 +622,18 @@ namespace KMail {
     // extract the needed information
     mNamespaces.clear();
     mNamespaceToDelimiter.clear();
-    for ( uint i = 0; i < 3; ++i )
-    {
+    for ( uint i = 0; i < 3; ++i ) {
       imapNamespace section = imapNamespace( i );
       namespaceDelim ns = map[ section ];
       namespaceDelim::ConstIterator it;
       QStringList list;
-      for ( it = ns.begin(); it != ns.end(); ++it )
-      {
+      for ( it = ns.begin(); it != ns.end(); ++it ) {
         list += it.key();
         mNamespaceToDelimiter[ it.key() ] = it.data();
       }
-      if ( !list.isEmpty() )
+      if ( !list.isEmpty() ) {
         mNamespaces[section] = list;
+      }
     }
   }
 

@@ -25,6 +25,7 @@
 
 #include <kdialogbase.h>
 #include <klistview.h>
+#include <klineedit.h>
 #include <qguardedptr.h>
 #include "imapaccountbase.h"
 
@@ -35,6 +36,7 @@ class QPushButton;
 class QLabel;
 class QLineEdit;
 class QRadioButton;
+class QToolButton;
 class KIntNumInput;
 class KMAccount;
 class KMFolder;
@@ -183,8 +185,13 @@ class AccountDialog : public KDialogBase
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
       FolderRequester *trashCombo;
-      KListView    *namespaceView;
-      int           namespaceViewColumn;
+      KLineEdit    *personalNS;
+      KLineEdit    *otherUsersNS;
+      KLineEdit    *sharedNS;
+      QToolButton  *editPNS;
+      QToolButton  *editONS;
+      QToolButton  *editSNS;
+      ImapAccountBase::nsDelimMap nsMap;
     };
 
   private slots:
@@ -208,8 +215,10 @@ class AccountDialog : public KDialogBase
     void slotImapCapabilities( const QStringList &, const QStringList & );
     void slotReloadNamespaces();
     void slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map );
-    void slotRemoveNamespace();
-    void slotContextMenuNamespaceView( QListViewItem *lvi, const QPoint &p );
+    void slotEditPersonalNamespace();
+    void slotEditOtherUsersNamespace();
+    void slotEditSharedNamespace();
+    void slotConnectionResult( int errorCode, const QString& );
 #if 0
     // Moc doesn't understand #if 0, so they are also commented out
     // void slotClearResourceAllocations();
@@ -229,6 +238,7 @@ class AccountDialog : public KDialogBase
     void enablePopFeatures( unsigned int );
     void enableImapAuthMethods( unsigned int );
     void initAccountForConnect();
+    const QString namespaceListToString( const QStringList& list );
 
   private:
     LocalWidgets mLocal;
@@ -268,30 +278,40 @@ class AccountDialog : public KDialogBase
     QRegExpValidator *mValidator;
 };
 
-class NamespaceViewElement : public KListViewItem
+class NamespaceLineEdit: public KLineEdit
 {
+  Q_OBJECT
+
   public:
-    NamespaceViewElement( QListView * parent, QListViewItem * after );
-    NamespaceViewElement( QListView * parent, QString text );
-    NamespaceViewElement( QListViewItem * parent, QString text );
+    NamespaceLineEdit( QWidget* parent );
 
-    QString& delimiter() { return mDelimiter; }
-    void setDelimiter( const QString& delim ) { mDelimiter = delim; }
+    const QString& lastText() { return mLastText; }
 
-    QString& oldText() { return mOldText; }
-    void setOldText( QString& old ) { mOldText = old; }
-
-    // return if our text has changed
-    bool changed() { return mChanged; }
-
-  protected:
-    // reimplemented to set mChanged to true
-    void okRename ( int col );
+  public slots:
+    virtual void setText ( const QString & );
 
   private:
-    QString mDelimiter;
-    QString mOldText;
-    bool mChanged;
+    QString mLastText;
+};
+
+class NamespaceEditDialog: public KDialogBase
+{
+  Q_OBJECT
+
+  public:
+    NamespaceEditDialog( QWidget* parent, ImapAccountBase::imapNamespace type,
+        ImapAccountBase::nsDelimMap* map );
+
+  protected slots:
+    void slotOk();
+    void slotRemoveEntry( int );
+
+  private:
+    ImapAccountBase::imapNamespace mType;
+    ImapAccountBase::nsDelimMap* mNamespaceMap;
+    ImapAccountBase::namespaceDelim mDelimMap;
+    QMap<int, NamespaceLineEdit*> mLineEditMap;
+    QButtonGroup* mBg;
 };
 
 } // namespace KMail

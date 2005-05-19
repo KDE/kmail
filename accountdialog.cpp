@@ -23,7 +23,6 @@
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
-#include <klineedit.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
@@ -35,6 +34,7 @@
 #include <qcombobox.h>
 #include <qheader.h>
 #include <qtoolbutton.h>
+#include <qgrid.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -849,35 +849,59 @@ void AccountDialog::makeImapAccountPage( bool connected )
   label->setBuddy( mImap.portEdit );
   grid->addWidget( mImap.portEdit, row, 1 );
 
+  // namespace list
   ++row;
   QHBox* box = new QHBox( page1 );
   label = new QLabel( i18n("Namespaces:"), box );
-  QWhatsThis::add( label, 
-      i18n("Shows the namespaces that are available. You can edit each namespace by double clicking.") );
   // button to reload
   QToolButton* button = new QToolButton( box );
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
-  button->setIconSet( 
+ button->setIconSet( 
       KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
   QWhatsThis::add( button, 
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
   grid->addWidget( box, row, 0 );
-  // listview
-  mImap.namespaceView = new KListView( page1 );
-  mImap.namespaceViewColumn = mImap.namespaceView->addColumn( i18n("Namespace") );
-  mImap.namespaceView->header()->hide();
-  mImap.namespaceView->setRootIsDecorated( true );
-  mImap.namespaceView->setFullWidth( true );
-  mImap.namespaceView->setMaximumHeight( 50 );
-  mImap.namespaceView->setSorting( -1 );
-  connect( mImap.namespaceView, 
-      SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
-      this, SLOT( slotContextMenuNamespaceView( QListViewItem*, const QPoint & ) ) );
-  label->setBuddy( mImap.namespaceView );
-  grid->addWidget( mImap.namespaceView, row, 1 );
+
+  // grid with label, namespace list and edit button
+  QGrid* listbox = new QGrid( 3, page1 );
+  new QLabel( i18n("Personal"), listbox );
+  mImap.personalNS = new KLineEdit( listbox );
+  mImap.personalNS->setReadOnly( true );
+  mImap.editPNS = new QToolButton( listbox );
+  mImap.editPNS->setIconSet( 
+      KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
+  mImap.editPNS->setAutoRaise( true );
+  mImap.editPNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  mImap.editPNS->setFixedSize( 22, 22 );
+  connect( mImap.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
+
+  new QLabel( i18n("Other Users"), listbox );
+  mImap.otherUsersNS = new KLineEdit( listbox );
+  mImap.otherUsersNS->setReadOnly( true );
+  mImap.editONS = new QToolButton( listbox );
+  mImap.editONS->setIconSet( 
+      KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
+  mImap.editONS->setAutoRaise( true );
+  mImap.editONS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  mImap.editONS->setFixedSize( 22, 22 );
+  connect( mImap.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
+
+  new QLabel( i18n("Shared"), listbox );
+  mImap.sharedNS = new KLineEdit( listbox );
+  mImap.sharedNS->setReadOnly( true );
+  mImap.editSNS = new QToolButton( listbox );
+  mImap.editSNS->setIconSet( 
+      KGlobal::iconLoader()->loadIconSet( "edit", KIcon::Small, 0 ) );
+  mImap.editSNS->setAutoRaise( true );
+  mImap.editSNS->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  mImap.editSNS->setFixedSize( 22, 22 );
+  connect( mImap.editSNS, SIGNAL(clicked()), this, SLOT(slotEditSharedNamespace()) );
+
+  label->setBuddy( listbox );
+  grid->addWidget( listbox, row, 1 );
 
   ++row;
   mImap.storePasswordCheck =
@@ -1793,32 +1817,20 @@ void AccountDialog::saveSettings()
     // settings for imap in general
     ImapAccountBase &ai = *(ImapAccountBase*)mAccount;
     // namespace
-    ImapAccountBase::imapNamespace curNS;
     ImapAccountBase::nsMap map;
-    QMap<QString, QString> namespaceDelim = ai.namespaceToDelimiter();
-    for ( QListViewItemIterator it( mImap.namespaceView ) ; it.current() ; ++it ) 
-    {
-      NamespaceViewElement* item = static_cast<NamespaceViewElement*>( *it );
-      if ( !item->parent() )
-      {
-        if ( item->text( mImap.namespaceViewColumn ) == i18n("Personal") )
-          curNS = ImapAccountBase::PersonalNS;
-        else if ( item->text( mImap.namespaceViewColumn ) == i18n("Other Users") ) 
-          curNS = ImapAccountBase::OtherUsersNS;
-        else if ( item->text( mImap.namespaceViewColumn ) == i18n("Shared") )
-          curNS = ImapAccountBase::SharedNS;
-      } else {
-        map[curNS].append( item->text( mImap.namespaceViewColumn ) );
-        if ( item->changed() )
-        {
-          // the prefix changed so update the namespace - delimiter map
-          namespaceDelim.remove( item->oldText() );
-          namespaceDelim[item->text( mImap.namespaceViewColumn )] = item->delimiter();
-        }
+    ImapAccountBase::namespaceDelim delimMap;
+    ImapAccountBase::nsDelimMap::Iterator it;
+    ImapAccountBase::namespaceDelim::Iterator it2;
+    for ( it = mImap.nsMap.begin(); it != mImap.nsMap.end(); ++it ) {
+      QStringList list;
+      for ( it2 = it.data().begin(); it2 != it.data().end(); ++it2 ) {
+        list << it2.key();
+        delimMap[it2.key()] = it2.data();
       }
+      map[it.key()] = list;
     }
     ai.setNamespaces( map );
-    ai.setNamespaceToDelimiter( namespaceDelim );
+    ai.setNamespaceToDelimiter( delimMap );
   }  
 
   kmkernel->acctMgr()->writeConfig(TRUE);
@@ -1959,84 +1971,71 @@ void AccountDialog::slotReloadNamespaces()
   if ( mAccount->type() == "imap" || mAccount->type() == "cachedimap" )
   {
     initAccountForConnect();
-    mImap.namespaceView->clear();
-    new NamespaceViewElement( mImap.namespaceView, 
-       i18n( "Loading Namespaces from server %1").arg( mAccount->name() ) );
+    mImap.personalNS->setText( i18n("Fetching Namespaces...") );
+    mImap.otherUsersNS->setText( QString::null );
+    mImap.sharedNS->setText( QString::null );
     ImapAccountBase* ai = static_cast<ImapAccountBase*>( mAccount );
     connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
+    connect( ai, SIGNAL( connectionResult(int, const QString&) ),
+          this, SLOT( slotConnectionResult(int, const QString&) ) );    
     ai->getNamespaces();
+  }
+}
+
+void AccountDialog::slotConnectionResult( int errorCode, const QString& )
+{
+  if ( errorCode > 0 ) {
+    ImapAccountBase* ai = static_cast<ImapAccountBase*>( mAccount );
+    disconnect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
+        this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
+    disconnect( ai, SIGNAL( connectionResult(int, const QString&) ),
+          this, SLOT( slotConnectionResult(int, const QString&) ) );    
+    mImap.personalNS->setText( QString::null );
   }
 }
 
 void AccountDialog::slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map )
 {
   disconnect( this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
-  mImap.namespaceView->clear();
-  int totalHeight = 0;
-  KListViewItem* last = 0;
-  ImapAccountBase::nsDelimMap::ConstIterator it;
-  int col = mImap.namespaceViewColumn;
-  for ( it = map.begin(); it != map.end(); ++it ) {
-    if ( it.data().isEmpty() )
-      continue;
-    NamespaceViewElement* parent = new NamespaceViewElement( mImap.namespaceView, last );
-    QString text;
-    if ( it.key() == ImapAccountBase::PersonalNS ) {
-      text = i18n("Personal");
-    } else if ( it.key() == ImapAccountBase::OtherUsersNS ) {
-      text = i18n("Other Users");
-    } else if ( it.key() == ImapAccountBase::SharedNS ) {
-      text = i18n("Shared");
-    } else {
-      text = i18n("Unknown");
-    }
-    parent->setText( col, text );
-    parent->setOldText( text );
-    parent->setSelectable( false );
-    parent->setOpen( true );
-    ImapAccountBase::namespaceDelim::ConstIterator pit;
-    for ( pit = it.data().begin(); pit != it.data().end(); ++pit ) {
-      NamespaceViewElement* item = new NamespaceViewElement( parent, pit.key() );
-      item->setRenameEnabled ( col, true );
-      item->setDelimiter( pit.data() );
-    }
-    totalHeight += parent->totalHeight();
-    last = parent;
-  }
-  // add some pix to get no scrollbar
-  if ( mImap.namespaceView->childCount() == 0 ) {
-    totalHeight += 20;
+  mImap.personalNS->setText( QString::null );
+  mImap.otherUsersNS->setText( QString::null );
+  mImap.sharedNS->setText( QString::null );
+  mImap.nsMap = map;
+
+  ImapAccountBase::namespaceDelim ns = map[ImapAccountBase::PersonalNS];
+  ImapAccountBase::namespaceDelim::ConstIterator it;
+  if ( !ns.isEmpty() ) {
+    mImap.personalNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.editPNS->setEnabled( true );
   } else {
-    totalHeight += 5;
+    mImap.editPNS->setEnabled( false );
   }
-  mImap.namespaceView->setMaximumHeight( (totalHeight > 100)?100:totalHeight );
+  ns = map[ImapAccountBase::OtherUsersNS];
+  if ( !ns.isEmpty() ) {
+    mImap.otherUsersNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.editONS->setEnabled( true );
+  } else {
+    mImap.editONS->setEnabled( false );
+  }
+  ns = map[ImapAccountBase::SharedNS];
+  if ( !ns.isEmpty() ) {
+    mImap.sharedNS->setText( namespaceListToString( ns.keys() ) );
+    mImap.editSNS->setEnabled( true );
+  } else {
+    mImap.editSNS->setEnabled( false );
+  }
 }
 
-void AccountDialog::slotContextMenuNamespaceView( QListViewItem *lvi, const QPoint &p )
+const QString AccountDialog::namespaceListToString( const QStringList& list )
 {
-  if ( !lvi || !lvi->parent() )
-    return;
-  KPopupMenu *menu = new KPopupMenu;
-  menu->insertItem( SmallIconSet("editdelete"),
-      i18n("&Delete"), this, SLOT(slotRemoveNamespace()) );
-  menu->exec( p, 0 );
-  delete menu;
-  menu = 0;
-}
-
-void AccountDialog::slotRemoveNamespace()
-{
-  if ( !mImap.namespaceView->selectedItem() || 
-       !mImap.namespaceView->selectedItem()->parent() )
-    return;
-  QListViewItem* curItem = mImap.namespaceView->selectedItem();
-  QListViewItem* parent = curItem->parent();
-  delete curItem;
-  if ( parent->childCount() == 0 ) {
-    delete parent;
+  QStringList myList = list;
+  for ( QStringList::Iterator it = myList.begin(); it != myList.end(); ++it ) {
+    if ( (*it).isEmpty() ) {
+      (*it) = "<" + i18n("Empty") + ">";
+    }
   }
-  mImap.namespaceView->triggerUpdate();
+  return myList.join(",");
 }
 
 void AccountDialog::initAccountForConnect()
@@ -2099,25 +2098,108 @@ void AccountDialog::initAccountForConnect()
   }
 }
 
-NamespaceViewElement::NamespaceViewElement( QListView * parent, QListViewItem * after )
-  : KListViewItem( parent, after ), mChanged( false )
+void AccountDialog::slotEditPersonalNamespace()
+{
+  NamespaceEditDialog dialog( this, ImapAccountBase::PersonalNS, &mImap.nsMap );
+  if ( dialog.exec() == QDialog::Accepted ) {
+    slotSetupNamespaces( mImap.nsMap );
+  }
+}
+
+void AccountDialog::slotEditOtherUsersNamespace()
+{
+  NamespaceEditDialog dialog( this, ImapAccountBase::OtherUsersNS, &mImap.nsMap );
+  if ( dialog.exec() == QDialog::Accepted ) {
+    slotSetupNamespaces( mImap.nsMap );
+  }
+}
+
+void AccountDialog::slotEditSharedNamespace()
+{
+  NamespaceEditDialog dialog( this, ImapAccountBase::SharedNS, &mImap.nsMap );
+  if ( dialog.exec() == QDialog::Accepted ) {
+    slotSetupNamespaces( mImap.nsMap );
+  }
+}
+
+NamespaceLineEdit::NamespaceLineEdit( QWidget* parent )
+  : KLineEdit( parent )
 {
 }
 
-NamespaceViewElement::NamespaceViewElement( QListView * parent, QString text )
-  : KListViewItem( parent, text ), mChanged( false )
+void NamespaceLineEdit::setText( const QString& text )
 {
+  mLastText = text;
+  KLineEdit::setText( text );
 }
 
-NamespaceViewElement::NamespaceViewElement( QListViewItem * parent, QString text )
-  : KListViewItem( parent, text ), mOldText( text ), mChanged( false )
+NamespaceEditDialog::NamespaceEditDialog( QWidget *parent, 
+    ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
+  : KDialogBase( parent, "edit_namespace", false, QString::null,
+      Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
 {
+  QVBox *page = makeVBoxMainWidget();
+
+  QString ns;
+  if ( mType == ImapAccountBase::PersonalNS ) {
+    ns = i18n("Personal");
+  } else if ( mType == ImapAccountBase::OtherUsersNS ) {
+    ns = i18n("Other Users");
+  } else {
+    ns = i18n("Shared");
+  }
+  setCaption( i18n("Edit Namespace '%1'").arg(ns) );
+  QGrid* grid = new QGrid( 2, page );
+
+  mBg = new QButtonGroup( 0 );
+  connect( mBg, SIGNAL( clicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
+  mDelimMap = mNamespaceMap->find( mType ).data();
+  ImapAccountBase::namespaceDelim::Iterator it;
+  for ( it = mDelimMap.begin(); it != mDelimMap.end(); ++it ) {
+    NamespaceLineEdit* edit = new NamespaceLineEdit( grid );
+    edit->setText( it.key() );
+    QToolButton* button = new QToolButton( grid );
+    button->setIconSet( 
+      KGlobal::iconLoader()->loadIconSet( "editdelete", KIcon::Small, 0 ) );
+    button->setAutoRaise( true );
+    button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+    button->setFixedSize( 22, 22 );
+    mLineEditMap[ mBg->insert( button ) ] = edit;
+  }
 }
 
-void NamespaceViewElement::okRename( int col )
+void NamespaceEditDialog::slotRemoveEntry( int id )
 {
-  mChanged = true;
-  KListViewItem::okRename( col );
+  if ( mLineEditMap.contains( id ) ) {
+    // delete the lineedit and remove namespace from map
+    NamespaceLineEdit* edit = mLineEditMap[id];
+    mDelimMap.remove( edit->text() );
+    if ( edit->isModified() ) {
+      mDelimMap.remove( edit->lastText() );
+    }
+    mLineEditMap.remove( id );
+    delete edit;
+  }
+  if ( mBg->find( id ) ) {
+    // delete the button
+    delete mBg->find( id );
+  }
+  adjustSize();
+}
+
+void NamespaceEditDialog::slotOk()
+{
+  QMap<int, NamespaceLineEdit*>::Iterator it;
+  for ( it = mLineEditMap.begin(); it != mLineEditMap.end(); ++it ) {
+    NamespaceLineEdit* edit = it.data();
+    if ( edit->isModified() ) {
+      // register delimiter for new namespace
+      mDelimMap[edit->text()] = mDelimMap[edit->lastText()];
+      mDelimMap.remove( edit->lastText() );
+    }
+  }
+  mNamespaceMap->replace( mType, mDelimMap );
+  KDialogBase::slotOk();
 }
 
 } // namespace KMail
