@@ -311,9 +311,9 @@ namespace KMail {
     nsDelimMap namespacesWithDelimiter();
 
     /**
-     * @return the prefix (namespace) for the @p folder
+     * @return the namespace for the @p folder
      */
-     QString prefixForFolder( FolderStorage* );
+     QString namespaceForFolder( FolderStorage* );
 
      /**
       * Adds "/" as needed to the given namespace

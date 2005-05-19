@@ -1486,7 +1486,7 @@ void KMFolderCachedImap::listNamespaces()
         --mNamespacesToCheck;
         continue;
       }
-      KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+      ListJob* job = new  ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
       connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
               const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
           this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
@@ -1505,7 +1505,8 @@ void KMFolderCachedImap::listNamespaces()
 
   mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
   newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
-  KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
+  ListJob* job = new  ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
+  mCurrentNamespace = ns;
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1592,7 +1593,8 @@ bool KMFolderCachedImap::listDirectory()
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this );
+  ListJob* job = new ListJob( mAccount, type, this );
+  mCurrentNamespace = QString::null;
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1628,11 +1630,16 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
     while (node) {
       if (!node->isDir() ) {
         KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+
         if ( mSubfolderNames.findIndex(node->name()) == -1 ) {
           QString name = node->name();
+          // as more than one namespace can be listed in the root folder we need to make sure
+          // that the folder is within the current namespace
+          bool isInNamespace = ( mCurrentNamespace.isEmpty() || 
+              mCurrentNamespace == mAccount->namespaceForFolder( f ) );
           // ignore some cases
           bool ignore = root && ( f->imapPath() == "/INBOX/" || 
-              mAccount->isNamespaceFolder( name ) );
+              mAccount->isNamespaceFolder( name ) || !isInNamespace );
 
           // This subfolder isn't present on the server
           if( !f->imapPath().isEmpty() && !ignore  ) {

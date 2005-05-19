@@ -638,7 +638,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  QString ImapAccountBase::prefixForFolder( FolderStorage* storage )
+  QString ImapAccountBase::namespaceForFolder( FolderStorage* storage )
   {
     QString path;
     if ( storage->folderType() == KMFolderTypeImap ) {
@@ -690,7 +690,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForFolder( FolderStorage* storage )
   {
-    QString prefix = prefixForFolder( storage );
+    QString prefix = namespaceForFolder( storage );
     QString delim;
     if ( mNamespaceToDelimiter.contains(prefix) )
       delim = mNamespaceToDelimiter[prefix];

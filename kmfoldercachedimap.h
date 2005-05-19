@@ -458,6 +458,7 @@ private:
   bool mIncidencesForChanged;
 
   QStringList mNamespacesToList;
+  QString mCurrentNamespace;
   int mNamespacesToCheck;
   bool mPersonalNamespacesCheckDone;
   QString mImapPathCreation;
