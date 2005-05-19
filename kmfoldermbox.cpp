@@ -938,13 +938,6 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   bool editing = false;
   int growth = 0;
 
-/* Then we can also disable it completely, this wastes time, at least for IMAP
-  if (KMFolder::IndexOk != indexStatus()) {
-      kdDebug(5006) << "Critical error: " << location() <<
-          " has been modified by an external application while KMail was running." << endl;
-      //      exit(1); backed out due to broken nfs
-  } */
-
   if (!mStream)
   {
     opened = true;
