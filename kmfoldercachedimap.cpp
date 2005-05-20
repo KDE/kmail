@@ -1486,7 +1486,7 @@ void KMFolderCachedImap::listNamespaces()
         --mNamespacesToCheck;
         continue;
       }
-      ListJob* job = new  ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+      KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
       connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
               const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
           this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
@@ -1505,7 +1505,7 @@ void KMFolderCachedImap::listNamespaces()
 
   mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
   newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
-  ListJob* job = new  ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
+  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
   mCurrentNamespace = ns;
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -1593,7 +1593,7 @@ bool KMFolderCachedImap::listDirectory()
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  ListJob* job = new ListJob( mAccount, type, this );
+  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this );
   mCurrentNamespace = QString::null;
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
