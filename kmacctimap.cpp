@@ -417,8 +417,9 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
       continue;
     }
     
-    KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
-    if (!imapFolder->folder()->isSystemFolder() ||
+    KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder->storage());
+    if (!imapFolder ||
+	!imapFolder->folder()->isSystemFolder() ||
         !(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
       mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
       ++filterIt;
