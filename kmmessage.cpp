@@ -243,7 +243,6 @@ void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
 }
 
 //-----------------------------------------------------------------------------
-//FMD
 //FIXME: move to libemailfunctions
 KPIM::EmailParseResult KMMessage::isValidEmailAddressList( const QString& aStr,
                                                            QString& brokenAddress ) 
