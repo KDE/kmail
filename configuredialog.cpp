@@ -2509,6 +2509,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mShowRecentAddressesInComposer = new QCheckBox(
+           GlobalSettings::self()->showRecentAddressesInComposerItem()->label(),
+           this, "kcfg_ShowRecentAddressesInComposer" );
+  vlay->addWidget( mShowRecentAddressesInComposer );
+  connect( mShowRecentAddressesInComposer, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   // a checkbox for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing

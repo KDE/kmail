@@ -590,6 +590,7 @@ private:
   QCheckBox     *mAutoAppSignFileCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mAutoRequestMDNCheck;
+  QCheckBox	*mShowRecentAddressesInComposer;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   KIntSpinBox   *mAutoSave;
