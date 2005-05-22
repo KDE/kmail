@@ -337,8 +337,6 @@ private:
   int mUnreadPop;
   int mTotalPop;
 
-  /** show popup after D'n'D? */
-  bool mShowPopupAfterDnD;
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
