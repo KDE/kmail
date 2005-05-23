@@ -272,8 +272,8 @@ void ImapJob::slotGetNextMessage()
   KMAcctImap *account = msgParent->account();
   if ( msg->UID() == 0 )
   {
-    emit messageRetrieved( msg );
-    account->mJobList.remove( this );
+    // broken message
+    emit messageRetrieved( 0 );
     deleteLater();
     return;
   }
@@ -343,6 +343,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
 {
   KMMessage *msg = mMsgList.first();
   if (!msg || !msg->parent() || !job) {
+    emit messageRetrieved( 0 );
     deleteLater();
     return;
   }
@@ -351,6 +352,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
+    emit messageRetrieved( 0 );
     deleteLater();
     return;
   }

@@ -555,6 +555,10 @@ void KMAcctImap::execFilters(Q_UINT32 serNum)
 
 int KMAcctImap::slotFilterMsg( KMMessage *msg )
 {
+  if ( !msg ) {
+    // messageRetrieved(0) is always possible
+    return -1;
+  }
   msg->setTransferInProgress(false);
   Q_UINT32 serNum = msg->getMsgSerNum();
   if ( serNum )
