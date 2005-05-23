@@ -205,8 +205,7 @@ void KMCommand::slotStart()
       emit messagesTransfered( Failed );
       return;
     } else {
-      mFolders.append( mb->parent() );
-      mb->parent()->open();
+      keepFolderOpen( mb->parent() );
     }
 
   // transfer the selected messages first
