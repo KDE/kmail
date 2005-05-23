@@ -940,12 +940,15 @@ KMMessage* KMFolderMaildir::take(int idx)
   // first, we do the high-level stuff.. then delete later
   KMMessage *msg = KMFolderIndex::take(idx);
 
-  if (!msg || !msg->fileName()) return 0;
-
-  if (removeFile(msg->fileName()))
-    return msg;
-  else
+  if (!msg || !msg->fileName()) {
     return 0;
+  }
+
+  if ( removeFile(msg->fileName()) ) {
+    return msg;
+  } else {
+    return 0;
+  }
 }
 
 // static
