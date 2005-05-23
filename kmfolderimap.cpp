@@ -301,6 +301,8 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     int idx = aFolder->find( aMsg );
     assert( idx != -1 );
     aFolder->take( idx );
+  } else {
+    kdDebug(5006) << k_funcinfo << "no parent" << endl;
   }
   // Remember the status, so it can be transfered to the new message.
   mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status(), serNum));
@@ -320,7 +322,9 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
   }
   KMFolder *aFolder = msgList.first()->parent();
   Q_UINT32 serNum = 0;
-  if (aFolder) serNum = msgList.first()->getMsgSerNum();
+  if ( aFolder ) { 
+    serNum = msgList.first()->getMsgSerNum();
+  }
   int undoId = -1;
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
@@ -332,7 +336,11 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status(), serNum));
     msg->setTransferInProgress( false );
   }
-  if (aFolder) aFolder->take(msgList);
+  if ( aFolder ) {
+    aFolder->take( msgList );
+  } else {
+    kdDebug(5006) << k_funcinfo << "no parent" << endl;
+  }
   msgList.setAutoDelete(true);
   msgList.clear();
   getFolder();
