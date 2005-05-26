@@ -931,18 +931,21 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   mDelayedMarkTimer.stop();
 
-  mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
-  if ( !aMsg ) mWaitingForSerNum = 0; // otherwise it has been set
-
-  // assume if a serial number exists it can be used to find the assoc KMMessage
-  if (mLastSerNum <= 0)
-    mMessage = aMsg;
-  else
-    mMessage = 0;
-  if (message() != aMsg) {
-    mMessage = aMsg;
-    mLastSerNum = 0; // serial number was invalid
-    Q_ASSERT(0);
+  mMessage = 0;
+  if ( !aMsg ) {
+    mWaitingForSerNum = 0; // otherwise it has been set
+    mLastSerNum = 0;
+  } else {
+    mLastSerNum = aMsg->getMsgSerNum();
+    // Check if the serial number can be used to find the assoc KMMessage
+    // If so, keep only the serial number (and not mMessage), to avoid a dangling mMessage
+    // when going to another message in the mainwindow.
+    // Otherwise, keep only mMessage, this is fine for standalone KMReaderMainWins since
+    // we're working on a copy of the KMMessage, which we own.
+    if (message() != aMsg) {
+      mMessage = aMsg;
+      mLastSerNum = 0;
+    }
   }
 
   if (aMsg) {
