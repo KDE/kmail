@@ -439,6 +439,9 @@ namespace KMail {
     void constructParts( QDataStream & stream, int count, KMMessagePart* parentKMPart,
        DwBodyPart * parent, const DwMessage * dwmsg );
 
+    /** Migrate the prefix */
+    void migratePrefix();
+
 
   protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
@@ -482,6 +485,9 @@ namespace KMail {
 
     // namespace - delimiter map
     namespaceDelim mNamespaceToDelimiter;
+
+    // old prefix for migration
+    QString mOldPrefix;
 
   signals:
     /**

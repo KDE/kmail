@@ -210,6 +210,10 @@ namespace KMail {
       }
     }
     setNamespaceToDelimiter( namespaceToDelimiter );
+    mOldPrefix = config.readEntry( "prefix" );
+    if ( !mOldPrefix.isEmpty() ) {
+      makeConnection();
+    }
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
@@ -611,7 +615,7 @@ namespace KMail {
     }
     removeJob(it);
 
-    kdDebug(5006) << map.count() << " namespaces fetched" << endl;
+    kdDebug(5006) << "namespaces fetched" << endl;
     emit namespacesFetched( map );
   }
     
@@ -635,6 +639,76 @@ namespace KMail {
         mNamespaces[section] = list;
       }
     }
+    // see if we need to migrate an old prefix
+    if ( !mOldPrefix.isEmpty() ) {
+      migratePrefix();
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::migratePrefix()
+  {
+    if ( !mOldPrefix.isEmpty() && mOldPrefix != "/" ) {
+      // strip /
+      if ( mOldPrefix.startsWith("/") ) {
+        mOldPrefix = mOldPrefix.right( mOldPrefix.length()-1 );
+      }
+      if ( mOldPrefix.endsWith("/") ) {
+        mOldPrefix = mOldPrefix.left( mOldPrefix.length()-1 );
+      }
+      QStringList list = mNamespaces[PersonalNS];
+      bool done = false;
+      for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+        if ( (*it).startsWith( mOldPrefix ) ) {
+          // should be ok
+          done = true;
+          kdDebug(5006) << "migratePrefix - no migration needed" << endl;
+          break;
+        }
+      }
+      if ( !done ) {
+        QString msg = i18n("KMail has detected a prefix entry in the "
+            "configuration of the account \"%1\" which is obsolete with the "
+            "support of IMAP namespaces.").arg( name() );
+        if ( list.contains( QString::null ) ) {
+          // replace empty entry with the old prefix
+          list.remove( QString::null );
+          list += mOldPrefix;
+          mNamespaces[PersonalNS] = list;
+          if ( mNamespaceToDelimiter.contains( QString::null ) ) {
+            QString delim = mNamespaceToDelimiter[QString::null];
+            mNamespaceToDelimiter.remove( QString::null );
+            mNamespaceToDelimiter[mOldPrefix] = delim;
+          }
+          kdDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
+          msg += i18n("The configuration was automatically migrated but you should check "
+              "your account configuration.");
+        } else if ( list.count() == 1 ) {
+          // only one entry in the personal namespace so replace it
+          QString old = list.first();
+          list.clear();
+          list += mOldPrefix;
+          mNamespaces[PersonalNS] = list;
+          if ( mNamespaceToDelimiter.contains( old ) ) {
+            QString delim = mNamespaceToDelimiter[old];
+            mNamespaceToDelimiter.remove( old );
+            mNamespaceToDelimiter[mOldPrefix] = delim;
+          }
+          kdDebug(5006) << "migratePrefix - replaced single with " << mOldPrefix << endl;
+          msg += i18n("The configuration was automatically migrated but you should check "
+              "your account configuration.");
+        } else {
+          kdDebug(5006) << "migratePrefix - migration failed" << endl;
+          msg += i18n("It was not possible to migrate your configuration automatically "
+              "so please check your account configuration.");
+        }
+        KMessageBox::information( kmkernel->getKMMainWidget(), msg );
+      }
+    } else 
+    {
+      kdDebug(5006) << "migratePrefix - no migration needed" << endl;
+    }
+    mOldPrefix = QString::null;
   }
 
   //-----------------------------------------------------------------------------
