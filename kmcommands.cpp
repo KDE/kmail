@@ -311,6 +311,7 @@ void KMCommand::transferSelectedMsgs()
   if (complete)
   {
     delete mProgressDialog;
+    mProgressDialog = 0;
     emit messagesTransfered( OK );
   } else {
     // wait for the transfer and tell the progressBar the necessary steps
@@ -362,6 +363,7 @@ void KMCommand::slotJobFinished()
   {
     // all done
     delete mProgressDialog;
+    mProgressDialog = 0;
     emit messagesTransfered( OK );
   }
 }
