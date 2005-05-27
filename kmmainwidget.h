@@ -214,6 +214,9 @@ public slots:
   void clearFilterActions();
   void initializeFilterActions();
 
+  /** Create IMAP-account-related actions if applicable */
+  void initializeIMAPActions();
+
   /** Create actions for the folder shortcuts. */
   void initializeFolderShortcutActions();
 
