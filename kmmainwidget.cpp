@@ -1070,6 +1070,17 @@ void KMMainWidget::slotRefreshFolder()
   }
 }
 
+void KMMainWidget::slotTroubleshootFolder()
+{
+  if (mFolder)
+  {
+    if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( mFolder->storage() );
+      f->slotTroubleshoot();
+    }
+  }
+}
+
 void KMMainWidget::slotInvalidateIMAPFolders() {
   if ( KMessageBox::warningContinueCancel( this,
           i18n("Are you sure you want to refresh the IMAP cache?\n"
@@ -2297,6 +2308,9 @@ void KMMainWidget::setupActions()
   mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload", Key_F5 , this,
                      SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
 
+  mTroubleshootFolderAction = new KAction( i18n("&Troubleshoot IMAP Cache..."), "wizard", 0, this,
+                     SLOT(slotTroubleshootFolder()), actionCollection(), "troubleshoot_folder" );
+
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
@@ -3080,6 +3094,7 @@ void KMMainWidget::updateFolderMenu()
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
                                                            || ( cachedImap && knownImapPath ) ) );
+  mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) );
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
