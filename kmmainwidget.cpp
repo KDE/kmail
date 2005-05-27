@@ -151,6 +151,11 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
+  connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
+           this, SLOT( initializeIMAPActions() ) );
+  connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
+           this, SLOT( initializeIMAPActions() ) );
+
   connect(kmkernel, SIGNAL( configChanged() ),
           this, SLOT( slotConfigChanged() ));
 
@@ -2307,9 +2312,7 @@ void KMMainWidget::setupActions()
 
   mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload", Key_F5 , this,
                      SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
-
-  mTroubleshootFolderAction = new KAction( i18n("&Troubleshoot IMAP Cache..."), "wizard", 0, this,
-                     SLOT(slotTroubleshootFolder()), actionCollection(), "troubleshoot_folder" );
+  mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
@@ -2848,6 +2851,7 @@ void KMMainWidget::setupActions()
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
   initializeFilterActions();
+  initializeIMAPActions();
   updateMessageActions();
 }
 
@@ -3094,7 +3098,8 @@ void KMMainWidget::updateFolderMenu()
   bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
   mRefreshFolderAction->setEnabled( folderWithContent && ( imap
                                                            || ( cachedImap && knownImapPath ) ) );
-  mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) );
+  if ( mTroubleshootFolderAction )
+    mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) );
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
@@ -3343,6 +3348,37 @@ void KMMainWidget::initializeFilterActions()
     mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::initializeIMAPActions()
+{
+  bool hasImapAccount = false;
+  for( KMAccount *a = kmkernel->acctMgr()->first(); a;
+       a = kmkernel->acctMgr()->next() ) {
+    if ( a->type() == "cachedimap" ) {
+      hasImapAccount = true;
+      break;
+    }
+  }
+  if ( hasImapAccount == ( mTroubleshootFolderAction != 0 ) )
+    return; // nothing to do
+
+  KXMLGUIFactory* factory = mGUIClient->factory();
+  kdDebug() << k_funcinfo << endl;
+  if ( factory )
+    factory->removeClient( mGUIClient );
+
+  if ( !mTroubleshootFolderAction ) {
+    mTroubleshootFolderAction = new KAction( i18n("&Troubleshoot IMAP Cache..."), "wizard", 0,
+     this, SLOT(slotTroubleshootFolder()), actionCollection(), "troubleshoot_folder" );
+    updateFolderMenu(); // set initial state of the action
+  } else {
+    delete mTroubleshootFolderAction ;
+    mTroubleshootFolderAction = 0;
+  }
+
+  if ( factory )
+    factory->addClient( mGUIClient );
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubscriptionDialog()

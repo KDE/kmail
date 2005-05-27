@@ -191,6 +191,9 @@ public slots:
   void clearFilterActions();
   void initializeFilterActions();
 
+  /** Create IMAP-account-related actions if applicable */
+  void initializeIMAPActions();
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
