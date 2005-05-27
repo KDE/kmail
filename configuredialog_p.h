@@ -513,6 +513,7 @@ private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
+  void readCurrentFallbackCodec();
   void readCurrentOverrideCodec();
 
 private: // data
