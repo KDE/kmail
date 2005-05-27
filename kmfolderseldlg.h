@@ -17,6 +17,8 @@ namespace KMail {
 
   class SimpleFolderTree : public KListView
   {
+    Q_OBJECT
+
     public:
       SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree,
                         const QString & preSelection, bool mustBeReadWrite );
@@ -32,10 +34,19 @@ namespace KMail {
       void setFolder( KMFolder* );
       void setFolder( const QString& idString );
 
+    public slots:
+      void addChildFolder();
+
+    protected slots:
+      void slotContextMenuRequested( QListViewItem *, const QPoint & );
+
     private:
       KMFolderTree* mFolderTree;
       int mFolderColumn;
-  };
+      bool mLastMustBeReadWrite;
+      bool mLastShowOutbox;
+      bool mLastShowImapFolders;
+};
 
   //-----------------------------------------------------------------------------
   class KMFolderSelDlg: public KDialogBase
@@ -76,6 +87,8 @@ namespace KMail {
 
     protected slots:
       void slotSelect();
+      void slotUser1();
+      void slotUpdateBtnStatus();
 
     protected:
       void readConfig();

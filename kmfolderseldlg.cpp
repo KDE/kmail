@@ -66,11 +66,19 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
   setSorting( -1 );
 
   reload( mustBeReadWrite, true, true, preSelection );
+
+  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
+           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
 }
 
+//-----------------------------------------------------------------------------
 void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
                                bool showImapFolders, const QString& preSelection )
 {
+  mLastMustBeReadWrite = mustBeReadWrite;
+  mLastShowOutbox = showOutbox;
+  mLastShowImapFolders = showImapFolders;
+
   clear();
   FolderItem * lastItem = 0;
   FolderItem * lastTopItem = 0;
@@ -190,12 +198,52 @@ void SimpleFolderTree::setFolder( const QString& idString )
   setFolder( kmkernel->findFolderById( idString ) );
 }
 
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::addChildFolder()
+{
+  const KMFolder *fld = folder();
+  if ( fld ) {
+    mFolderTree->addChildFolder( (KMFolder *) fld, parentWidget() );
+    reload( mLastMustBeReadWrite, mLastShowOutbox, mLastShowImapFolders );
+    setFolder( (KMFolder *) fld );
+  }
+}
+
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::slotContextMenuRequested( QListViewItem *lvi,
+                                                 const QPoint &p )
+{
+  if (!lvi)
+    return;
+  setCurrentItem( lvi );
+  setSelected( lvi, TRUE );
+
+  const KMFolder * folder = static_cast<FolderItem *>( lvi )->folder();
+  if ( !folder || folder->noContent() || folder->noChildren() )
+    return;
+
+  KPopupMenu *folderMenu = new KPopupMenu;
+  folderMenu->insertTitle( folder->label() );
+  folderMenu->insertSeparator();
+  folderMenu->insertItem(SmallIconSet("folder_new"),
+                          i18n("&New Subfolder..."), this,
+                          SLOT(addChildFolder()));
+  kmkernel->setContextMenuShown( true );
+  folderMenu->exec (p, 0);
+  kmkernel->setContextMenuShown( false );
+  delete folderMenu;
+  folderMenu = 0;
+}
+
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, 
     bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
-                 Ok|Cancel, Ok, true ), // mainwin as parent, modal
+                 Ok|Cancel|User1, Ok, true, 
+                 KGuiItem(i18n("&New Subfolder"), "folder_new",
+                   i18n("Create a new subfolder under the currently selected folder"))
+               ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )             
 {
   KMFolderTree * ft = parent->folderTree();
@@ -209,15 +257,20 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
+  connect( mTreeView, SIGNAL( selectionChanged() ),
+           this, SLOT( slotUpdateBtnStatus() ) );
 
   readConfig();
 }
 
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
-                 Ok|Cancel, Ok, true ), // mainwin as parent, modal
+                 Ok|Cancel|User1, Ok, true,
+                 KGuiItem(i18n("&New Subfolder"), "folder_new",
+                   i18n("Create a new subfolder under the currently selected folder"))
+               ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )             
 {
   QString global = mUseGlobalSettings ? 
@@ -228,6 +281,8 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
+  connect( mTreeView, SIGNAL( selectionChanged() ),
+           this, SLOT( slotUpdateBtnStatus() ) );
 
   readConfig();
 }
@@ -260,6 +315,19 @@ void KMFolderSelDlg::setFolder( KMFolder* folder )
 void KMFolderSelDlg::slotSelect()
 {
   accept();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderSelDlg::slotUser1()
+{
+  mTreeView->addChildFolder();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderSelDlg::slotUpdateBtnStatus()
+{
+  enableButton( User1, folder() && 
+                ( !folder()->noContent() && !folder()->noChildren() ) );
 }
 
 //-----------------------------------------------------------------------------

@@ -1112,12 +1112,15 @@ static bool folderHasCreateRights( const KMFolder *folder )
 //-----------------------------------------------------------------------------
 // Create a subfolder.
 // Requires creating the appropriate subdirectory and show a dialog
-void KMFolderTree::addChildFolder()
+void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
 {
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(currentItem());
-  if (!fti)
-    return;
-  KMFolder *aFolder = fti->folder();
+  KMFolder *aFolder = folder;
+  if ( !aFolder ) {
+    KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(currentItem());
+    if (!fti)
+      return;
+    aFolder = fti->folder();
+  }
   if (aFolder) {
     if (!aFolder->createChildFolder())
       return;
@@ -1132,7 +1135,10 @@ void KMFolderTree::addChildFolder()
     }
   }
 
-  ( new KMail::NewFolderDialog( this, aFolder ) )->show();
+  if ( parent )
+    ( new KMail::NewFolderDialog( parent, aFolder ) )->exec();
+  else
+    ( new KMail::NewFolderDialog( this, aFolder ) )->show();
   return;
 /*
   KMFolderDir *dir = &(kmkernel->folderMgr()->dir());

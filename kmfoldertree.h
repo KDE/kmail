@@ -239,6 +239,9 @@ public slots:
    */
   void slotResetFolderList( QListViewItem* item = 0, bool startList = true );
 
+  /** Create a child folder */
+  void addChildFolder( KMFolder *folder = 0, QWidget * parent = 0 );
+
 protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
@@ -249,9 +252,6 @@ protected slots:
 
   /** Updates the folder tree (delayed), causing a "blink" */
   void refresh();
-
-  /** Create a child folder */
-  void addChildFolder();
 
   /** Open a folder */
   void openFolder();
