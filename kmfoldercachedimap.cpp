@@ -105,7 +105,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                       "not cause any problems.</p><p>If that is not enough, "
                       "you can try refreshing the IMAP cache. If you do this, "
                       "you will loose all your local changes for this folder "
-                      "and all it's subfolders.</p>" );
+                      "and all its subfolders.</p>" );
   topLayout->addWidget( new QLabel( txt, page ) );
   enableButtonSeparator( true );
 
