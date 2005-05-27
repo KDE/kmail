@@ -264,6 +264,7 @@ protected slots:
   void slotEmptyFolder();
   void slotCompactFolder();
   void slotRefreshFolder();
+  void slotTroubleshootFolder();
   void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideHtmlLoadExt();
@@ -481,7 +482,7 @@ private:
   KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
       *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction;
+      *mFolderShortCutCommandAction, *mTroubleshootFolderAction;
   KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction, *mThreadMessagesAction;
   KToggleAction *mThreadBySubjectAction;
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
