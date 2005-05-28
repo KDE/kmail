@@ -2750,15 +2750,23 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_prev_important_message" );
   */
 
-  new KAction( KGuiItem( i18n("Next Unread &Folder"), QString::null,
-                         i18n("Go to the next folder with unread messages") ),
-                         CTRL+Key_Plus, this, SLOT(slotNextUnreadFolder()),
-                         actionCollection(), "go_next_unread_folder" );
+  KAction *action =
+    new KAction( KGuiItem( i18n("Next Unread &Folder"), QString::null,
+                           i18n("Go to the next folder with unread messages") ),
+                           ALT+Key_Plus, this, SLOT(slotNextUnreadFolder()),
+                           actionCollection(), "go_next_unread_folder" );
+  KShortcut shortcut = action->shortcut();
+  shortcut.append( KKey( CTRL+Key_Plus ) );
+  action->setShortcut( shortcut );
 
-  new KAction( KGuiItem( i18n("Previous Unread F&older"), QString::null,
-                         i18n("Go to the previous folder with unread messages") ),
-                         CTRL+Key_Minus, this, SLOT(slotPrevUnreadFolder()),
-                         actionCollection(), "go_prev_unread_folder" );
+  action =
+    new KAction( KGuiItem( i18n("Previous Unread F&older"), QString::null,
+                           i18n("Go to the previous folder with unread messages") ),
+                           ALT+Key_Minus, this, SLOT(slotPrevUnreadFolder()),
+                           actionCollection(), "go_prev_unread_folder" );
+  shortcut = action->shortcut();
+  shortcut.append( KKey( CTRL+Key_Minus ) );
+  action->setShortcut( shortcut );
 
   new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString::null,
                          i18n("Go to the next unread text"),
