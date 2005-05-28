@@ -883,10 +883,10 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 
 KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url,
-                                    const QTextCodec *codec )
+                                    const QString & encoding )
   : KMCommand( parent ),
     mUrl( url ),
-    mCodec( codec )
+    mEncoding( encoding )
 {
   setDeletesItself( true );
 }
@@ -975,7 +975,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
     KMMessage *msg = new KMMessage( dwMsg );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
-    win->showMsg( mCodec, msg );
+    win->showMsg( mEncoding, msg );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
@@ -1321,10 +1321,10 @@ KMCommand::Result KMRedirectCommand::execute()
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
   KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride,
-  bool useFixedFont, const QTextCodec *codec )
+  bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ),
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
-    mUseFixedFont( useFixedFont ), mCodec( codec )
+    mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
 }
 
@@ -1336,7 +1336,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setHtmlOverride( mHtmlOverride );
   printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printWin.setUseFixedFont( mUseFixedFont );
-  printWin.setOverrideCodec( mCodec );
+  printWin.setOverrideEncoding( mEncoding );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
 

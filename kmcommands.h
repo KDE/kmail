@@ -14,7 +14,6 @@
 #include <kservice.h>
 
 class QPopupMenu;
-class QTextCodec;
 class KMainWindow;
 class KAction;
 class KProgressDialog;
@@ -331,8 +330,8 @@ class KDE_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL(), 
-                    const QTextCodec *codec = 0 );
+  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL(),
+                    const QString & encoding = QString() );
 
 private:
   virtual Result execute();
@@ -346,7 +345,7 @@ private:
   KURL mUrl;
   DwString mMsgString;
   KIO::TransferJob *mJob;
-  const QTextCodec *mCodec;
+  const QString mEncoding;
 };
 
 class KDE_EXPORT KMSaveAttachmentsCommand : public KMCommand
@@ -512,7 +511,7 @@ public:
                   bool htmlOverride=false,
                   bool htmlLoadExtOverride=false,
                   bool useFixedFont = false,
-                  const QTextCodec *codec = 0 );
+                  const QString & encoding = QString() );
 
 private:
   virtual Result execute();
@@ -520,7 +519,7 @@ private:
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
-  const QTextCodec *mCodec;
+  QString mEncoding;
 };
 
 class KDE_EXPORT KMSetStatusCommand : public KMCommand

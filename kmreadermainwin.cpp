@@ -72,12 +72,12 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *codec, char *name )
+    const QString & encoding, char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
     mMsg( 0 )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
-  mReaderWin->setOverrideCodec( codec );
+  mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   initKMReaderMainWin();
 }
@@ -107,9 +107,9 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
+void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
 {
-  mReaderWin->setOverrideCodec( codec );
+  mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsg( msg, true );
   setCaption( msg->subject() );
   mMsg = msg;
@@ -120,8 +120,8 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride(),  mReaderWin->htmlLoadExtOverride(),
-      mReaderWin->overrideCodec() );
+      mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
+      mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->start();
 }
 
@@ -312,8 +312,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   mUrl = aUrl;
   mMsg = &aMsg;
   bool urlMenuAdded=false;
-  
-  if (!aUrl.isEmpty()) 
+
+  if (!aUrl.isEmpty())
   {
     if (aUrl.protocol() == "mailto") {
       // popup on a mailto URL
@@ -334,7 +334,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       mReaderWin->addBookmarksAction()->plug( menu );
     }
     urlMenuAdded=true;
-  } 
+  }
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();

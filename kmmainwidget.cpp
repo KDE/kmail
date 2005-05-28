@@ -361,8 +361,6 @@ void KMMainWidget::readConfig(void)
   if (mMsgView)
     mMsgView->readConfig();
 
-  readCurrentOverrideCodec();
-
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
 
@@ -528,10 +526,6 @@ void KMMainWidget::createWidgets(void)
   mAccel->connectItem(mAccel->insertItem(SHIFT+Key_Right),
                      mHeaders, SLOT(selectNextMessage()));
 
-  if (!GlobalSettings::overrideCharacterEncoding().isEmpty())
-    mCodec = KMMsgBase::codecForName( GlobalSettings::overrideCharacterEncoding().latin1() );
-  else mCodec = 0;
-
   if (mReaderWindowActive) {
     mMsgView = new KMReaderWin(messageParent, this, actionCollection(), 0 );
 
@@ -679,23 +673,6 @@ void KMMainWidget::activatePanners(void)
   }
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetEncoding()
-{
-  GlobalSettings::setOverrideCharacterEncoding(
-      KGlobal::charsets()->encodingForName( mEncoding->currentText() ) );
-    if (mEncoding->currentItem() == 0) // Auto
-    {
-      mCodec = 0;
-      GlobalSettings::setOverrideCharacterEncoding( "" );
-    }
-    else
-      mCodec = KMMsgBase::codecForName( GlobalSettings::overrideCharacterEncoding().latin1() );
-    if (mMsgView)
-      mMsgView->setOverrideCodec(mCodec);
-    return;
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::hide()
@@ -1575,7 +1552,7 @@ void KMMainWidget::slotPrintMsg()
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, htmlLoadExtOverride,
-                        useFixedFont, mCodec );
+                        useFixedFont, overrideEncoding() );
   command->start();
 }
 
@@ -1603,7 +1580,7 @@ void KMMainWidget::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOpenMsg()
 {
-  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, 0, mCodec );
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, 0, overrideEncoding() );
 
   openCommand->start();
 }
@@ -1625,7 +1602,7 @@ void KMMainWidget::slotSendQueued()
 {
   kmkernel->msgSender()->sendQueued();
 }
- 
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueuedVia( int item )
 {
@@ -2077,7 +2054,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
-  win->showMsg( mCodec, newMessage );
+  win->showMsg( overrideEncoding(), newMessage );
   win->show();
 }
 
@@ -2137,7 +2114,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       menu->insertSeparator();
     mMsgView->copyAction()->plug( menu );
     mMsgView->selectAllAction()->plug( menu );
-  } else  if ( !urlMenuAdded ) 
+  } else  if ( !urlMenuAdded )
   {
     // popup somewhere else (i.e., not a URL) on the message
 
@@ -2469,12 +2446,6 @@ void KMMainWidget::setupActions()
   mFilterMenu->insert( mListFilterAction );
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
-
-  //----- Message-Encoding Submenu
-  mEncoding = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0, this,
-		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
-
-  readCurrentOverrideCodec();
 
   mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
@@ -2808,27 +2779,6 @@ void KMMainWidget::setupActions()
   initializeIMAPActions();
   updateMessageActions();
 }
-
-void KMMainWidget::readCurrentOverrideCodec()
-{
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
-  encodings.prepend( i18n( "Auto" ) );
-  mEncoding->setItems( encodings );
-  mEncoding->setCurrentItem(0);
-  QStringList::ConstIterator it( encodings.begin() );
-  QStringList::ConstIterator end( encodings.end() );
-  int i = 0;
-  for( ; it != end; ++it)
-  {
-    if ( KGlobal::charsets()->encodingForName(*it ) == GlobalSettings::overrideCharacterEncoding() )
-    {
-      mEncoding->setCurrentItem( i );
-      break;
-    }
-    i++;
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
@@ -3538,4 +3488,13 @@ void KMMainWidget::setAccelsEnabled( bool enabled )
 KMSystemTray *KMMainWidget::systray() const
 {
   return mSystemTray;
+}
+
+//-----------------------------------------------------------------------------
+QString KMMainWidget::overrideEncoding() const
+{
+  if ( mMsgView )
+    return mMsgView->overrideEncoding();
+  else
+    return GlobalSettings::overrideCharacterEncoding();
 }

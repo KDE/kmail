@@ -1041,7 +1041,7 @@ void KMComposeWin::getTransportMenu()
   availTransports = KMail::TransportManager::transportNames();
   QStringList::Iterator it;
   int id = 0;
-  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++) 
+  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++)
   {
     mActNowMenu->insertItem((*it).replace("&", "&&"), id);
     mActLaterMenu->insertItem((*it).replace("&", "&&"), id);
@@ -1064,11 +1064,11 @@ void KMComposeWin::setupActions(void)
     actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
 		    actionCollection(), "send_default_via" );
 
-    (void) new KAction (i18n("Send &Later"), "queue", 0, this, 
+    (void) new KAction (i18n("Send &Later"), "queue", 0, this,
 			SLOT(slotSendLater()), actionCollection(),"send_alternative");
-    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue", 
+    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue",
 		    actionCollection(), "send_alternative_via" );
-  
+
   }
   else //no, default = send later
   {
@@ -1076,9 +1076,9 @@ void KMComposeWin::setupActions(void)
     (void) new KAction (i18n("Send &Later"), "queue",
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),"send_default");
-    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue", 
+    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue",
 		    actionCollection(), "send_default_via" );
-    
+
    ( void )  new KAction( i18n("&Send Mail"), "mail_send", 0,
                         this, SLOT(slotSendNow()), actionCollection(),"send_alternative");
 
@@ -1092,23 +1092,23 @@ void KMComposeWin::setupActions(void)
   actActionNowMenu->setDelayed(true);
   actActionLaterMenu->setDelayed(true);
 
-  connect(  actActionNowMenu, SIGNAL(  activated() ), this, 
+  connect(  actActionNowMenu, SIGNAL(  activated() ), this,
 		    SLOT( slotSendNow() ) );
-  connect(  actActionLaterMenu, SIGNAL(  activated() ), this, 
+  connect(  actActionLaterMenu, SIGNAL(  activated() ), this,
 		    SLOT( slotSendLater() ) );
 
 
   mActNowMenu = actActionNowMenu->popupMenu();
   mActLaterMenu = actActionLaterMenu->popupMenu();
 
-  connect(  mActNowMenu, SIGNAL(  activated( int ) ), this, 
+  connect(  mActNowMenu, SIGNAL(  activated( int ) ), this,
 		    SLOT( slotSendNowVia( int ) ) );
-  connect(  mActNowMenu, SIGNAL(  aboutToShow() ), this, 
+  connect(  mActNowMenu, SIGNAL(  aboutToShow() ), this,
 		    SLOT( getTransportMenu() ) );
 
-  connect(  mActLaterMenu, SIGNAL(  activated( int ) ), this, 
+  connect(  mActLaterMenu, SIGNAL(  activated( int ) ), this,
 		  SLOT( slotSendLaterVia( int ) ) );
-  connect(  mActLaterMenu, SIGNAL(  aboutToShow() ), this, 
+  connect(  mActLaterMenu, SIGNAL(  aboutToShow() ), this,
 		  SLOT( getTransportMenu() ) );
 
 
@@ -2031,9 +2031,7 @@ bool KMComposeWin::userForgotAttachment()
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
-#ifdef DEBUG
   kdDebug(5006) << "entering KMComposeWin::applyChanges" << endl;
-#endif
 
   if(!mMsg) {
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
@@ -3108,7 +3106,7 @@ void KMComposeWin::viewAttach( int index )
   KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
-    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
+    atmTempFile->name(), pname, mCharset );
   win->show();
 }
 
@@ -4110,6 +4108,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( !ident.bcc().isEmpty() ) {
     mShowHeaders |= HDR_BCC;
   }
+
   if ( ident.organization().isEmpty() )
     mMsg->removeHeaderField("Organization");
   else

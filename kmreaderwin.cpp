@@ -485,7 +485,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
-    mOverrideCodec( 0 ),
+    mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
@@ -502,6 +502,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAddBookmarksAction( 0 ),
     mStartIMChatAction( 0 ),
     mSelectAllAction( 0 ),
+    mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mHtmlWriter( 0 ),
     mSavedRelativePosition( 0 )
@@ -527,7 +528,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mHtmlOverride = false;
   mHtmlLoadExtOverride = false;
 
-	mLevelQuote=GlobalSettings::self()->collapseQuoteLevelSpin()-1;
+  mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin() - 1;
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
@@ -621,6 +622,15 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   raction->setToolTip( i18n("Do not show attachments in the message viewer") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
+
+  // Set Encoding submenu
+  mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
+                                 this, SLOT( slotSetEncoding() ),
+                                 ac, "encoding" );
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  encodings.prepend( i18n( "Auto" ) );
+  mSelectEncodingAction->setItems( encodings );
+  mSelectEncodingAction->setCurrentItem( 0 );
 
   mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
                                       SLOT(slotMailtoCompose()), ac,
@@ -938,6 +948,8 @@ void KMReaderWin::readConfig(void)
 
   adjustLayout();
 
+  readGlobalOverrideCodec();
+
   if (message())
     update();
   KMMessage::readConfig();
@@ -1061,11 +1073,60 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
   update( true );
 }
 
-void KMReaderWin::setOverrideCodec( const QTextCodec * codec ) {
-  if ( mOverrideCodec == codec )
+//-----------------------------------------------------------------------------
+void KMReaderWin::setOverrideEncoding( const QString & encoding )
+{
+  if ( encoding == mOverrideEncoding )
     return;
-  mOverrideCodec = codec;
+
+  mOverrideEncoding = encoding;
+  if ( mSelectEncodingAction ) {
+    if ( encoding.isEmpty() ) {
+      mSelectEncodingAction->setCurrentItem( 0 );
+    }
+    else {
+      QStringList encodings = mSelectEncodingAction->items();
+      int i = 0;
+      for ( QStringList::const_iterator it = encodings.begin(), end = encodings.end(); it != end; ++it, ++i ) {
+        if ( KGlobal::charsets()->encodingForName( *it ) == encoding ) {
+          mSelectEncodingAction->setCurrentItem( i );
+          break;
+        }
+      }
+    }
+  }
   update( true );
+}
+
+//-----------------------------------------------------------------------------
+const QTextCodec * KMReaderWin::overrideCodec() const
+{
+  kdDebug(5006) << k_funcinfo << " mOverrideEncoding == '" << mOverrideEncoding << "'" << endl;
+  if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
+    return 0;
+  else
+    return KMMsgBase::codecForName( mOverrideEncoding.latin1() );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotSetEncoding()
+{
+  if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
+    mOverrideEncoding = QString();
+  else
+    mOverrideEncoding = KGlobal::charsets()->encodingForName( mSelectEncodingAction->currentText() );
+  update( true );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::readGlobalOverrideCodec()
+{
+  // if the global character encoding wasn't changed then there's nothing to do
+  if ( GlobalSettings::overrideCharacterEncoding() == mOldGlobalOverrideEncoding )
+    return;
+
+  setOverrideEncoding( GlobalSettings::overrideCharacterEncoding() );
+  mOldGlobalOverrideEncoding = GlobalSettings::overrideCharacterEncoding();
 }
 
 //-----------------------------------------------------------------------------
@@ -1893,7 +1954,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( overrideCodec(), msg );
+  win->showMsg( overrideEncoding(), msg );
   win->show();
 }
 
@@ -2027,7 +2088,7 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
       setMsgPart( &msgPart, htmlMail(), name, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-          name, pname, overrideCodec() );
+          name, pname, overrideEncoding() );
       win->show();
     }
   }

@@ -29,6 +29,7 @@ class DwMediaType;
 class KActionCollection;
 class KAction;
 class KActionMenu;
+class KSelectAction;
 class KRadioAction;
 class KToggleAction;
 class KConfigBase;
@@ -113,18 +114,17 @@ public:
   }
   void setAttachmentStrategy( const KMail::AttachmentStrategy * strategy );
 
-  /** Get override-codec for the reader win.
-      @return The codec selected by the user or 0 if charset
-      auto-detection is in force. */
-  const QTextCodec * overrideCodec() const { return mOverrideCodec; }
+  /** Get selected override character encoding.
+      @return The encoding selected by the user or an empty string if auto-detection
+      is selected. */
+  QString overrideEncoding() const { return mOverrideEncoding; }
 
-  /** Set the override-codec for the reader win. If @p codec is 0,
-      switches to charset auto-detection */
-  void setOverrideCodec( const QTextCodec * codec );
+  /** Set the override character encoding. */
+  void setOverrideEncoding( const QString & encoding );
 
-  /** @return true if charset autodetection is in force, false
-      otherwise */
-  bool autoDetectEncoding() const { return !overrideCodec(); }
+  /** Get codec corresponding to the currently selected override character encoding.
+      @return The override codec or 0 if auto-detection is selected. */
+  const QTextCodec * overrideCodec() const;
 
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
@@ -405,6 +405,9 @@ protected:
   /** Event filter */
   bool eventFilter( QObject *obj, QEvent *ev );
 
+private slots:
+  void slotSetEncoding();
+
 private:
   void adjustLayout();
   void createWidgets();
@@ -415,7 +418,8 @@ private:
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
   KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
-
+  /** Read override codec from configuration */
+  void readGlobalOverrideCodec();
 
 private:
   bool mHtmlMail, mHtmlLoadExternal, mHtmlOverride, mHtmlLoadExtOverride;
@@ -439,7 +443,8 @@ private:
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
-  const QTextCodec * mOverrideCodec;
+  QString mOverrideEncoding;
+  QString mOldGlobalOverrideEncoding; // used to detect changes of the global override character encoding
   bool mMsgDisplay;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
@@ -462,7 +467,7 @@ private:
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
-
+  KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;

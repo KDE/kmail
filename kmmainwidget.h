@@ -33,12 +33,10 @@
 class QAccel;
 class QVBoxLayout;
 class QSplitter;
-class QTextCodec;
 
 class KActionMenu;
 class KActionCollection;
 class KConfig;
-class KSelectAction;
 class KRadioAction;
 class KToggleAction;
 class KMenuBar;
@@ -158,8 +156,6 @@ public:
 
 
   void modifyFolder( KMFolderTreeItem* folderItem );
-
-  void readCurrentOverrideCodec();
 
   /**
    * Enable or disable the global accelerators. This is useful for keyboard
@@ -324,7 +320,6 @@ protected slots:
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
-  void slotSetEncoding();
   void slotSendQueued();
   void slotSendQueuedVia( int item );
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
@@ -399,6 +394,10 @@ protected slots:
   void slotFolderRemoved( KMFolder *folder );
 
 private:
+  /** Get override character encoding. */
+  QString overrideEncoding() const;
+
+private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
     *mDeleteThreadAction, *mSaveAsAction, *mEditAction,
@@ -455,9 +454,7 @@ private:
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
-  const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
-  KSelectAction *mEncoding;
   KAction       *mlistFilterAction;
   bool		mIntegrated;
   bool          mBeepOnNew;
