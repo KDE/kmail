@@ -349,12 +349,16 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotTypeModified( RecipientLine * ) ) );
 
   if ( mLines.last() ) {
-    if ( mLines.count() == 1 ) {
+    if ( mLines.count() == 1 ) { 
       if ( GlobalSettings::secondRecipientTypeDefault() ==
-           GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
+         GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
         line->setRecipientType( Recipient::To );
       } else {
-        line->setRecipientType( Recipient::Cc );
+        if ( mLines.last()->recipientType() == Recipient::Bcc ) {
+          line->setRecipientType( Recipient::To );
+        } else {
+          line->setRecipientType( Recipient::Cc );
+        }
       }
     } else {
       line->setRecipientType( mLines.last()->recipientType() );
