@@ -44,12 +44,6 @@ public:
    */
   bool usePipelining(void) const { return mUsePipelining; }
   virtual void setUsePipelining(bool);
-
-  /**
-   * If value is positive, delete mail from server after that many days.
-   */
-  int deleteAfterDays(void) const { return mDeleteAfterDays; }
-  virtual void setDeleteAfterDays(int);
  
   /**
    * Shall messages be left on the server upon retreival (TRUE)
@@ -57,6 +51,24 @@ public:
    */
   bool leaveOnServer(void) const { return mLeaveOnServer; }
   virtual void setLeaveOnServer(bool);
+
+  /**
+   * If value is positive, leave mail on the server for so many days.
+   */
+  int leaveOnServerDays(void) const { return mLeaveOnServerDays; }
+  virtual void setLeaveOnServerDays(int);
+
+  /**
+   * If value is positive, leave so many messages on the server.
+   */
+  int leaveOnServerCount(void) const { return mLeaveOnServerCount; }
+  virtual void setLeaveOnServerCount(int);
+
+  /**
+   * If value is positive, leave so many MBs on the server.
+   */
+  int leaveOnServerSize(void) const { return mLeaveOnServerSize; }
+  virtual void setLeaveOnServerSize(int);
 
   /**
    * Shall messages be filter on the server (TRUE)
@@ -110,7 +122,9 @@ protected:
 
   bool    mUsePipelining;
   bool    mLeaveOnServer;
-  int     mDeleteAfterDays;
+  int     mLeaveOnServerDays;
+  int     mLeaveOnServerCount;
+  int     mLeaveOnServerSize;
   bool    gotMsgs;
   bool    mFilterOnServer;
   unsigned int mFilterOnServerCheckSize;
@@ -127,14 +141,14 @@ protected:
   QMap<QString, bool> mHeaderDownUids;
   QMap<QString, bool> mHeaderLaterUids;
 
-
   QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
   QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
-  QValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
   QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
+  QValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
   QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
+  QDict<int> mSizeOfNextSeenMsgsDict;
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 

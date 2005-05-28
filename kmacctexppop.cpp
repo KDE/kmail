@@ -111,7 +111,9 @@ void KMAcctExpPop::init(void)
 
   mUsePipelining = FALSE;
   mLeaveOnServer = FALSE;
-  mDeleteAfterDays = -1;
+  mLeaveOnServerDays = -1;
+  mLeaveOnServerCount = -1;
+  mLeaveOnServerSize = -1;
   mFilterOnServer = FALSE;
   //tz todo
   mFilterOnServerCheckSize = 50000;
@@ -127,7 +129,9 @@ void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
 
   setUsePipelining( p->usePipelining() );
   setLeaveOnServer( p->leaveOnServer() );
-  setDeleteAfterDays( p->deleteAfterDays() );
+  setLeaveOnServerDays( p->leaveOnServerDays() );
+  setLeaveOnServerCount( p->leaveOnServerCount() );
+  setLeaveOnServerSize( p->leaveOnServerSize() );
   setFilterOnServer( p->filterOnServer() );
   setFilterOnServerCheckSize( p->filterOnServerCheckSize() );
 }
@@ -186,6 +190,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     }
     mUidsOfNextSeenMsgsDict.clear();
     mTimeOfNextSeenMsgsMap.clear();
+    mSizeOfNextSeenMsgsDict.clear();
 
     interactive = _interactive;
     mUidlFinished = FALSE;
@@ -205,7 +210,9 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
   mUsePipelining = config.readNumEntry("pipelining", FALSE);
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
-  mDeleteAfterDays = config.readNumEntry("delete-after-days", -1);
+  mLeaveOnServerDays = config.readNumEntry("leave-on-server-days", -1);
+  mLeaveOnServerCount = config.readNumEntry("leave-on-server-count", -1);
+  mLeaveOnServerSize = config.readNumEntry("leave-on-server-size", -1);
   mFilterOnServer = config.readNumEntry("filter-on-server", FALSE);
   mFilterOnServerCheckSize = config.readUnsignedNumEntry("filter-os-check-size", 50000);
 }
@@ -218,7 +225,9 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
   config.writeEntry("pipelining", mUsePipelining);
   config.writeEntry("leave-on-server", mLeaveOnServer);
-  config.writeEntry("delete-after-days", mDeleteAfterDays);
+  config.writeEntry("leave-on-server-days", mLeaveOnServerDays);
+  config.writeEntry("leave-on-server-count", mLeaveOnServerCount);
+  config.writeEntry("leave-on-server-size", mLeaveOnServerSize);
   config.writeEntry("filter-on-server", mFilterOnServer);
   config.writeEntry("filter-os-check-size", mFilterOnServerCheckSize);
 }
@@ -237,12 +246,21 @@ void KMAcctExpPop::setLeaveOnServer(bool b)
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setDeleteAfterDays(int days)
+void KMAcctExpPop::setLeaveOnServerDays(int days)
 {
-  if ( days <= 0 )
-    mDeleteAfterDays = 0;
-  else
-    mDeleteAfterDays = days;
+  mLeaveOnServerDays = days;
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setLeaveOnServerCount(int count)
+{
+  mLeaveOnServerCount = count;
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setLeaveOnServerSize(int size)
+{
+  mLeaveOnServerSize = size;
 }
 
 //---------------------------------------------------------------------------
@@ -309,8 +327,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     else {
       idsOfMsgsToDelete.append( *curId );
       mUidsOfNextSeenMsgsDict.insert( *curUid, (const int *)1 );
-      mTimeOfNextSeenMsgsMap.insert( *curUid,
-        QDateTime::currentDateTime().toTime_t() );
+      mTimeOfNextSeenMsgsMap.insert( *curUid, time(0) );
     }
     ++cur;
     ++curId;
@@ -482,9 +499,9 @@ void KMAcctExpPop::slotJobFinished() {
           //check for mails bigger mFilterOnServerCheckSize
           if ( (unsigned int)hids.data() >= mFilterOnServerCheckSize ) {
             kdDebug(5006) << "bigger than " << mFilterOnServerCheckSize << endl;
-              headersOnServer.append(new KMPopHeaders( hids.key(),
-                                                       mUidForIdMap[hids.key()],
-                                                       Later));//TODO
+            headersOnServer.append(new KMPopHeaders( hids.key(),
+                                                     mUidForIdMap[hids.key()],
+                                                     Later));//TODO
             //set Action if already known
             if( mHeaderDeleteUids.contains( headersOnServer.current()->uid() ) ) {
               headersOnServer.current()->setAction(Delete);
@@ -605,7 +622,7 @@ void KMAcctExpPop::slotJobFinished() {
                                           (const int *)1 );
           idsOfMsgsToDelete.append(headersOnServer.current()->id());
           mTimeOfNextSeenMsgsMap.insert( headersOnServer.current()->uid(),
-                                     QDateTime::currentDateTime().toTime_t() );
+                                          time(0) );
         }
         else {
           mHeaderLaterUids.insert(headersOnServer.current()->uid(), true);
@@ -643,43 +660,72 @@ void KMAcctExpPop::slotJobFinished() {
     kmkernel->folderMgr()->syncAllFolders();
 
     KURL url = getUrl();
-    if (mLeaveOnServer && mDeleteAfterDays > 0 && !idsOfMsgsToDelete.isEmpty()) {
-      // Remove from idsOfMsgsToDelete entries which are newer than the limit
-      QDateTime timeLimit = QDateTime::currentDateTime();
-      timeLimit = timeLimit.addDays( -mDeleteAfterDays );
-      QStringList::Iterator cur = idsOfMsgsToDelete.begin();
-      while (cur != idsOfMsgsToDelete.end()) {
-        QDateTime msgTime;
-        if ( !mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] ) {
-          cur = idsOfMsgsToDelete.remove( cur );
-        }
-        else {
-          msgTime.setTime_t( mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] );
-          kdDebug() << "uid: "
-                    << mUidForIdMap[*cur]
-                    << " msgTime: " << msgTime
-                    << ", timeLimit: " << timeLimit << endl;
-          if (msgTime >= timeLimit) {
-            cur = idsOfMsgsToDelete.remove( cur );
-          }
-          else {
-            ++cur;
+    QMap< QPair<time_t, QString>, int > idsToSave;
+    idsToSave.clear();
+    // Check if we want to keep any messages
+    if ( !idsOfMsgsToDelete.isEmpty() ) {
+      // Keep all messages on server
+      if ( mLeaveOnServerDays == -1 && mLeaveOnServerCount <= 0 &&
+           mLeaveOnServerSize <= 0)
+        idsOfMsgsToDelete.clear();
+      // Delete old messages
+      else if ( mLeaveOnServerDays > 0 && !mTimeOfNextSeenMsgsMap.isEmpty() ) {
+        time_t timeLimit = time(0) - (86400 * mLeaveOnServerDays);
+        kdDebug() << "timeLimit is " << timeLimit << endl;
+        QStringList::Iterator cur = idsOfMsgsToDelete.begin();
+        for ( ; cur != idsOfMsgsToDelete.end(); ++cur) {
+          time_t msgTime = mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]];
+          kdDebug() << "id: " << *cur << " msgTime: " << msgTime << endl;
+          if (msgTime >= timeLimit ||
+                !mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]]) {
+            kdDebug() << "Saving msg id " << *cur << endl;
+            QPair<time_t, QString> msg(msgTime, *cur);
+            idsToSave.insert( msg, 1 );
           }
         }
       }
+      // Delete more old messages if there are more than mLeaveOnServerCount
+      if ( mLeaveOnServerCount > 0 ) {
+        int numToDelete = idsToSave.count() - mLeaveOnServerCount;
+        kdDebug() << "numToDelete is " << numToDelete << endl;
+        if ( numToDelete > 0 && (unsigned)numToDelete < idsToSave.count() ) {
+          QMap< QPair<time_t, QString>, int >::Iterator cur = idsToSave.begin();
+          for ( int deleted = 0; deleted < numToDelete && cur != idsToSave.end()
+                ; deleted++, cur++ ) {
+            kdDebug() << "deleting msg id " << cur.key().second << endl;
+            idsToSave.remove( cur );
+          }
+        }
+        else if ( numToDelete > 0 && (unsigned)numToDelete >= idsToSave.count() )
+          idsToSave.clear();
+      }
+      // Delete more old messages until we're under mLeaveOnServerSize MBs
+      if ( mLeaveOnServerSize > 0 ) {
+        double sizeOnServer = 0;
+        QMap< QPair<time_t, QString>, int >::Iterator cur = idsToSave.begin();
+        for ( ; cur != idsToSave.end(); cur++ ) {
+          sizeOnServer +=
+            *mSizeOfNextSeenMsgsDict[ mUidForIdMap[ cur.key().second ] ];
+        }
+        kdDebug() << "sizeOnServer is " << sizeOnServer/(1024*1024) << "MB" << endl;
+        long limitInBytes = mLeaveOnServerSize * ( 1024 * 1024 );
+        for ( cur = idsToSave.begin(); cur != idsToSave.end()
+                && sizeOnServer > limitInBytes; cur++ ) {
+          sizeOnServer -=
+            *mSizeOfNextSeenMsgsDict[ mUidForIdMap[ cur.key().second ] ];
+          idsToSave.remove( cur );
+        }
+      }
+      // Save msgs from deletion
+      QMap< QPair<time_t, QString>, int >::Iterator it = idsToSave.begin();
+      kdDebug() << "Going to save " << idsToSave.count() << endl;
+      for ( ; it != idsToSave.end(); ++it ) {
+        kdDebug() << "saving msg id " << it.key().second << endl;
+        idsOfMsgsToDelete.remove( it.key().second );
+      }
     }
- 
-    if ((mLeaveOnServer && mDeleteAfterDays <= 0) || idsOfMsgsToDelete.isEmpty()) {
-      stage = Quit;
-      mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Terminating transmission...",
-              "Fetched %n messages from %1. Terminating transmission...",
-              numMsgs )
-        .arg( mHost ) );
-      url.setPath(QString("/commit"));
-      job = KIO::get(url, false, false );
-    }
-    else {
+    // If there are messages to delete then delete them
+    if ( !idsOfMsgsToDelete.isEmpty() ) {
       stage = Dele;
       mMailCheckProgressItem->setStatus(
         i18n( "Fetched 1 message from %1. Deleting messages from server...",
@@ -688,8 +734,17 @@ void KMAcctExpPop::slotJobFinished() {
         .arg( mHost ) );
       url.setPath("/remove/" + idsOfMsgsToDelete.join(","));
       kdDebug(5006) << "url: " << url.prettyURL() << endl;
-      job = KIO::get( url, false, false );
+    } else {
+      stage = Quit;
+      mMailCheckProgressItem->setStatus(
+        i18n( "Fetched 1 message from %1. Terminating transmission...",
+              "Fetched %n messages from %1. Terminating transmission...",
+              numMsgs )
+        .arg( mHost ) );
+      url.setPath(QString("/commit"));
+      kdDebug(5006) << "url: " << url.prettyURL() << endl;
     }
+    job = KIO::get( url, false, false );
     connectJob();
   }
   else if (stage == Dele) {
@@ -860,7 +915,11 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     else { // stage == Uidl
       const QString id = qdata.left(spc);
       const QString uid = qdata.mid(spc + 1);
+      int *size = new int; //malloc(size_of(int));
+      *size = mMsgsPendingDownload[id];
+      mSizeOfNextSeenMsgsDict.insert( uid, size );
       if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
+
         if ( mMsgsPendingDownload.contains( id ) ) {
           mMsgsPendingDownload.remove( id );
         }
@@ -868,13 +927,15 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.append( id );
         mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
-        if ( mTimeOfSeenMsgsVector.empty() )
+        if ( mTimeOfSeenMsgsVector.empty() ) {
           mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
-        else
+        }
+        else {
           // cast the int* with a long to can convert it to a int, BTW
           // works with g++-4.0 and amd64
           mTimeOfNextSeenMsgsMap.insert( uid,
             mTimeOfSeenMsgsVector[(int)( long )mUidsOfSeenMsgsDict[uid] - 1] );
+        }
       }
       mUidForIdMap.insert( id, uid );
     }
