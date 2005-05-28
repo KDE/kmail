@@ -129,7 +129,14 @@ k_dcop_hidden:
                              const KURL &messageFile,
                              const KURL &attachURL) = 0;
 
+  /** Shows the specified message in a separate message window.
+      @param serialNumber the serial number of the message to be shown.
+      @param messageId this parameter is ignored.
+
+      @TODO Get rid of the messageId parameter.
+   */
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
+
   /**
    * DCOP-enabled for KMailUniqueAppHandler in the kontact plugin
    * @param noArgsOpensReader true in the kmail process, meaning that launching "kmail"
