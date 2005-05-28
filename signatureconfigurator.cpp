@@ -26,13 +26,15 @@
 #include <kshellcompletion.h>
 #include <krun.h>
 
-#include <qlabel.h>
-#include <qlayout.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qwidgetstack.h>
+#include <qdir.h>
+#include <qfileinfo.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qtextedit.h>
 #include <qwhatsthis.h>
+#include <qwidgetstack.h>
 
 #include <assert.h>
 
@@ -202,7 +204,14 @@ namespace KMail {
   }
 
   QString SignatureConfigurator::fileURL() const {
-    return mFileRequester->url();
+    QString file = mFileRequester->url().stripWhiteSpace();
+
+    // Force the filename to be relative to ~ instead of $PWD depending
+    // on the rest of the code (KRun::run in Edit and KFileItem on save)
+    if ( !file.isEmpty() && QFileInfo( file ).isRelative() )
+        file = QDir::home().absPath() + QDir::separator() + file;
+
+    return file;
   }
 
   void SignatureConfigurator::setFileURL( const QString & url ) {
@@ -253,7 +262,7 @@ namespace KMail {
   }
 
   void SignatureConfigurator::slotEdit() {
-    QString url = mFileRequester->url().stripWhiteSpace();
+    QString url = fileURL();
     // slotEnableEditButton should prevent this assert from being hit:
     assert( !url.isEmpty() );
 
