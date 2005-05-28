@@ -1219,7 +1219,10 @@ KMCommand::Result KMForwardCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *fwdMsg = msg->createForward();
 
-  win = new KMComposeWin( fwdMsg );
+  uint id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+  if ( id == 0 )
+    id = mIdentity;
+  win = new KMComposeWin( fwdMsg, id );
   win->setCharset( fwdMsg->codec()->mimeName(), true );
   win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
   win->show();
