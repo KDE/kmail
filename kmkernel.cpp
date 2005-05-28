@@ -14,6 +14,7 @@
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
+#include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
@@ -1029,8 +1030,15 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
       return false;
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg(idx);
-    mainWidget->slotSelectFolder(folder);
-    mainWidget->slotSelectMessage(msg);
+
+    KMReaderMainWin *win = new KMReaderMainWin( false, false );
+    KMMessage *newMessage = new KMMessage( *msg );
+    newMessage->setParent( msg->parent() );
+    newMessage->setMsgSerNum( msg->getMsgSerNum() );
+    newMessage->setReadyToShow( true );
+    win->showMsg( GlobalSettings::overrideCharacterEncoding(), newMessage );
+    win->show();
+
     if (unGet)
       folder->unGetMsg(idx);
     folder->close();
