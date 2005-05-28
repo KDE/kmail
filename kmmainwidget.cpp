@@ -112,6 +112,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
                            KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name),
     mQuickSearchLine( 0 ),
+    mShowBusySplashTimer( 0 ),
     mAccel( 0 )
 {
   // must be the first line of the constructor:
@@ -1650,6 +1651,10 @@ void KMMainWidget::folderSelected()
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
 {
+  // Delete any pending timer, if needed it will be recreated below
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = 0;
+
   KCursorSaver busy(KBusyPtr::busy());
 
   if (mMsgView)
@@ -1700,9 +1705,23 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       mHeaders->setFolder( 0 );
       updateFolderMenu();
       mForceJumpToUnread = forceJumpToUnread;
+
+      // Set a timer to show a splash screen if fetching folder contents
+      // takes more than half a second
+      mShowBusySplashTimer = new QTimer( this );
+      connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
+      mShowBusySplashTimer->start( 500, true );
       return;
     } else {
       // the folder is complete now - so go ahead
+      // If needed, hide the busy splash and re-enable the widgets
+      if (mMsgView) {
+        mMsgView->enableMsgDisplay();
+        mMsgView->clear(true);
+      }
+      if( mSearchAndHeaders && mHeaders )
+        mSearchAndHeaders->show();
+
       disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
           this, SLOT( folderSelected() ) );
       forceJumpToUnread = mForceJumpToUnread;
@@ -1730,6 +1749,18 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   updateFolderMenu();
   if (!aFolder)
     slotIntro();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowBusySplash()
+{
+  if ( mReaderWindowActive )
+  {
+    mMsgView->displayBusyPage();
+    // hide widgets that are in the way:
+    if ( mSearchAndHeaders && mHeaders && mLongFolderList )
+      mSearchAndHeaders->hide();
+  }
 }
 
 //-----------------------------------------------------------------------------

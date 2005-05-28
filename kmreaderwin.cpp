@@ -1279,7 +1279,7 @@ QString KMReaderWin::newFeaturesMD5()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::displayAboutPage()
+void KMReaderWin::displaySplashPage( const QString &info )
 {
   mMsgDisplay = false;
   adjustLayout();
@@ -1293,6 +1293,32 @@ void KMReaderWin::displayAboutPage()
     content = content.arg( "" );
 
   mViewer->begin(KURL( location ));
+
+  QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
+  QString appTitle = i18n("KMail");
+  QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
+  QString quickDescription = i18n("The email client for the K Desktop Environment.");
+  mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
+  mViewer->end();
+}
+
+void KMReaderWin::displayBusyPage()
+{
+  QString info =
+    i18n( "%1: KMail version; %2: help:// URL; %3: homepage URL; "
+	 "%4: prior KMail version; %5: prior KDE version; "
+	 "%6: generated list of new features; "
+	 "%7: First-time user text (only shown on first start); "
+         "%8: generated list of important changes; "
+	 "--- end of comment ---",
+	 "<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;" );
+
+  displaySplashPage( info );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::displayAboutPage()
+{
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
 	 "%4: prior KMail version; %5: prior KDE version; "
@@ -1352,12 +1378,7 @@ void KMReaderWin::displayAboutPage()
   else
     info = info.arg(""); // remove the %8
 
-  QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
-  QString appTitle = i18n("KMail");
-  QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
-  QString quickDescription = i18n("The email client for the K Desktop Environment.");
-  mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
-  mViewer->end();
+  displaySplashPage( info );
 }
 
 void KMReaderWin::enableMsgDisplay() {

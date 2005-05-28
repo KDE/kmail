@@ -184,8 +184,14 @@ public:
   /** Returns the MD5 hash for the list of new features */
   static QString newFeaturesMD5();
 
+  /** Display a generic HTML splash page instead of a message */
+  void displaySplashPage( const QString &info );
+
   /** Display the about page instead of a message */
   void displayAboutPage();
+
+  /** Display the 'please wait' page instead of a message */
+  void displayBusyPage();
 
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay();

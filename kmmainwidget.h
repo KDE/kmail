@@ -393,6 +393,9 @@ protected slots:
   /** Remove the shortcut actions associated with a folder. */
   void slotFolderRemoved( KMFolder *folder );
 
+  /** Show a splash screen for the longer-lasting operation */
+  void slotShowBusySplash();
+
 private:
   /** Get override character encoding. */
   QString overrideEncoding() const;
@@ -488,6 +491,7 @@ private:
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 
   QTimer *menutimer;
+  QTimer *mShowBusySplashTimer;
 
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
