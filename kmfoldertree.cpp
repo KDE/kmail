@@ -953,7 +953,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   if ( (fti->folder() == kmkernel->outboxFolder()) && fti->folder()->count() )
         mMainWidget->action("send_queued")->plug( folderMenu );
   // Mark all as read is supposedly used often, therefor it is first
-  if ( fti->folder() && !fti->folder()->noContent() && fti->folder()->count() )
+  if ( fti->folder() && !fti->folder()->noContent() )
       mMainWidget->action("mark_all_as_read")->plug( folderMenu );
 
   /* Treat the special case of the root and account folders */
