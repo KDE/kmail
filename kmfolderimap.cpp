@@ -724,8 +724,8 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
                                    const ImapAccountBase::jobData& jobData )
 {
   mSubfolderState = imapFinished;
-  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" 
-  //<< folderPaths << " mimeTypes=" << folderMimeTypes << endl;  
+  //kdDebug(5006) << label() << ": folderNames=" << subfolderNames << " folderPaths=" 
+  //<< subfolderPaths << " mimeTypes=" << subfolderMimeTypes << endl;  
 
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
@@ -792,7 +792,6 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
     {
       // sanity check
       if ( f->imapPath().isEmpty() ) {
-        f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
         settingsChanged = true;
       }
       // update progress
