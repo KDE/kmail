@@ -249,7 +249,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if ( !mIsLocalSystemFolder ) {
 
     QHBoxLayout *hl = new QHBoxLayout( topLayout );
-    hl->setSpacing( 6 );
+    hl->setSpacing( KDialog::spacingHint() );
 
     label = new QLabel( i18n("&Name:"), this );
     hl->addWidget( label );
@@ -269,7 +269,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
     //start icons group
     QVBoxLayout *ivl = new QVBoxLayout( topLayout );
-    ivl->setSpacing( 6 );
+    ivl->setSpacing( KDialog::spacingHint() );
 
     QHBoxLayout *ihl = new QHBoxLayout( ivl );
     mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), this );
@@ -340,7 +340,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     // should this folder be included in new-mail-checks?
 
     QHBoxLayout *nml = new QHBoxLayout( topLayout );
-    nml->setSpacing( 6 );
+    nml->setSpacing( KDialog::spacingHint() );
     mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks"), this );
     // default is on
     mNewMailCheckBox->setChecked(true);
