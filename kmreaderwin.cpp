@@ -1242,23 +1242,6 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("Optional columns in the message list: status, attachment, important, etc."),
-  I18N_NOOP("Load external references for certain folders and on request"),
-  I18N_NOOP("Replace smileys by emoticons"),
-  I18N_NOOP("Show the sender's picture if it is in the address book"),
-  I18N_NOOP("Support for X-Face (b/w pictures in messages)"),
-  I18N_NOOP("Optional spam probability meter"),
-  I18N_NOOP("Configurable default character encoding"),
-  I18N_NOOP("Searching in IMAP messages fully supported"),
-  I18N_NOOP("Move IMAP folders"),
-  I18N_NOOP("KWallet support"),
-  I18N_NOOP("New authentication methods for IMAP, POP3, SMTP: NTLM (Microsoft Windows) and GSSAPI (Kerberos)"),
-  I18N_NOOP("Optional compression of attachments"),
-  I18N_NOOP("Attach images from the clipboard"),
-  I18N_NOOP("New recipient editor and picker in the composer"),
-  I18N_NOOP("Quick folder switching via configurable shortcuts"),
-  I18N_NOOP("Anti-Spam Wizard supports additional tools"),
-  I18N_NOOP("Import mail from Evolution 2.x, Opera and Thunderbird"),
   I18N_NOOP("Full Namespace support for IMAP")
 };
 static const int numKMailNewFeatures =
@@ -1305,13 +1288,7 @@ void KMReaderWin::displaySplashPage( const QString &info )
 void KMReaderWin::displayBusyPage()
 {
   QString info =
-    i18n( "%1: KMail version; %2: help:// URL; %3: homepage URL; "
-	 "%4: prior KMail version; %5: prior KDE version; "
-	 "%6: generated list of new features; "
-	 "%7: First-time user text (only shown on first start); "
-         "%8: generated list of important changes; "
-	 "--- end of comment ---",
-	 "<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;" );
+    i18n( "<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;" );
 
   displaySplashPage( info );
 }
@@ -1345,7 +1322,7 @@ void KMReaderWin::displayAboutPage()
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
-    .arg("1.7").arg("3.3"); // prior KMail and KDE version
+    .arg("1.8").arg("3.4"); // prior KMail and KDE version
 
   QString featureItems;
   for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
@@ -1368,7 +1345,7 @@ void KMReaderWin::displayAboutPage()
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
            "Important changes</span> (compared to KMail %1):</p>\n")
-      .arg("1.7");
+      .arg("1.8");
     changesText += "<ul>\n";
     for ( int i = 0 ; i < numKMailChanges ; i++ )
       changesText += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
