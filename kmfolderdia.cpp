@@ -329,11 +329,17 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QHBoxLayout *hbl = new QHBoxLayout( topLayout );
   hbl->setSpacing( KDialog::spacingHint() );
   mNotifyOnNewMailCheckBox =
-    new QCheckBox( i18n("Notify on new mail in this folder" ), this );
+    new QCheckBox( i18n("Act on new/unread mail in this folder" ), this );
   QWhatsThis::add( mNotifyOnNewMailCheckBox,
-      i18n( "Check this option if you want to be notified "
-        "about new mail that is moved to this folder; unchecking this "
-        "is useful, for example, for ignoring spam folders." ) );
+      i18n( "<qt><p>If this option is enabled then you will be notified about "
+            "new/unread mail in this folder. Moreover, going to the "
+            "next/previous folder with unread messages will stop at this "
+            "folder.</p>"
+            "<p>Uncheck this option if you do not want to be notified about "
+            "new/unread mail in this folder and if you want this folder to "
+            "be skipped when going to the next/previous folder with unread "
+            "messages. This is useful for ignoring any new/unread mail in "
+            "your trash and spam folder.</p></qt>" ) );
   hbl->addWidget( mNotifyOnNewMailCheckBox );
 
   if ( mDlg->folder()->folderType() == KMFolderTypeImap ) {

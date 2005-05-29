@@ -551,7 +551,7 @@ void KMFolderTree::reload(bool openFolders)
 
     // With the use of slotUpdateCountsDelayed is not necesary
     // a specific processing for Imap
-#if 0    
+#if 0
     if (fti->folder()->folderType() == KMFolderTypeImap) {
       // imap-only
       KMFolderImap *imapFolder =
@@ -560,7 +560,7 @@ void KMFolderTree::reload(bool openFolders)
           this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
       connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
           this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-    } else {*/ 
+    } else {*/
 #endif
 
     // we want to be noticed of changes to update the unread/total columns
@@ -783,8 +783,8 @@ void KMFolderTree::nextUnreadFolder(bool confirm)
 //-----------------------------------------------------------------------------
 bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
 {
-  if (fti && fti->folder()  &&
-      (fti->folder()->countUnread() > 0)) {
+  if ( fti && fti->folder() && !fti->folder()->ignoreNewMail() &&
+       ( fti->folder()->countUnread() > 0 ) ) {
 
     // Don't change into the trash or outbox folders.
     if (fti->type() == KFolderTreeItem::Trash ||
@@ -1772,10 +1772,10 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
       bool subMenu = false;
-      if ( ( action == MoveMessage || action == CopyMessage ) && 
+      if ( ( action == MoveMessage || action == CopyMessage ) &&
            fti->folder() && !fti->folder()->noContent() )
         subMenu = true;
-      if ( action == MoveFolder && ( !fti->folder() || 
+      if ( action == MoveFolder && ( !fti->folder() ||
             ( fti->folder() && !fti->folder()->noChildren() ) ) )
         subMenu = true;
       if ( subMenu )
@@ -1819,7 +1819,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
   KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
   if ( destination )
     parent = destination->createChildFolder();
-  QString message = 
+  QString message =
     i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).
         arg( folder->label() );
 
@@ -1851,7 +1851,7 @@ void KMFolderTree::moveFolder( KMFolder* destination )
     return;
   }
 
-  kdDebug(5006) << "move folder " << currentFolder()->label() << " to " 
+  kdDebug(5006) << "move folder " << currentFolder()->label() << " to "
     << ( destination ? destination->label() : "Local Folders" ) << endl;
   kmkernel->folderMgr()->moveFolder( folder, parent );
 }
