@@ -1651,23 +1651,10 @@ void KMMainWidget::folderSelected()
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
 {
-  // Delete any pending timer, if needed it will be recreated below
-  delete mShowBusySplashTimer;
-  mShowBusySplashTimer = 0;
-
   KCursorSaver busy(KBusyPtr::busy());
 
   if (mMsgView)
     mMsgView->clear(true);
-
-  if( !mFolder ) {
-    if (mMsgView) {
-      mMsgView->enableMsgDisplay();
-      mMsgView->clear(true);
-    }
-    if( mSearchAndHeaders && mHeaders )
-      mSearchAndHeaders->show();
-  }
 
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
   {
@@ -1676,7 +1663,29 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       imap->expungeFolder(imap, TRUE);
   }
 
-  if ( mFolder != aFolder )
+  // Re-enable the msg list and quicksearch if we're showing a splash
+  // screen. This is true either if there's no active folder, or if we
+  // have a timer that is no longer active (i.e. it has already fired)
+  // To make the if() a bit more complicated, we suppress the hiding
+  // when the new folder is also an IMAP folder, because that's an
+  // async operation and we don't want flicker if it results in just
+  // a new splash.
+  bool newFolder = ( mFolder != aFolder );
+  bool isNewImapFolder = aFolder && aFolder->folderType() == KMFolderTypeImap && newFolder;
+  if( !mFolder || ( !isNewImapFolder && mShowBusySplashTimer && !mShowBusySplashTimer->isActive() ) ) {
+    if (mMsgView) {
+      mMsgView->enableMsgDisplay();
+      mMsgView->clear(true);
+    }
+    if( mSearchAndHeaders && mHeaders )
+      mSearchAndHeaders->show();
+  }
+
+  // Delete any pending timer, if needed it will be recreated below
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = 0;
+
+  if ( newFolder )
     writeFolderConfig();
   if ( mFolder ) {
     disconnect( mFolder, SIGNAL( changed() ),
@@ -1689,7 +1698,6 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
            this, SLOT( updateMarkAsReadAction() ) );
   }
 
-  bool newFolder = ( mFolder != aFolder );
   mFolder = aFolder;
   if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
   {
@@ -1714,14 +1722,6 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       return;
     } else {
       // the folder is complete now - so go ahead
-      // If needed, hide the busy splash and re-enable the widgets
-      if (mMsgView) {
-        mMsgView->enableMsgDisplay();
-        mMsgView->clear(true);
-      }
-      if( mSearchAndHeaders && mHeaders )
-        mSearchAndHeaders->show();
-
       disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
           this, SLOT( folderSelected() ) );
       forceJumpToUnread = mForceJumpToUnread;
