@@ -266,7 +266,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
                     this, SLOT( slotFolderNameChanged( const QString & ) ) );
 
-  
+
     //start icons group
     QVBoxLayout *ivl = new QVBoxLayout( topLayout );
     ivl->setSpacing( 6 );
@@ -323,8 +323,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     //end icons group
     addLine( this, topLayout);
   }
- 
-  
+
+
   // should new mail in this folder be ignored?
   QHBoxLayout *hbl = new QHBoxLayout( topLayout );
   hbl->setSpacing( KDialog::spacingHint() );
@@ -362,18 +362,21 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   addLine( this, topLayout );
 
+  // use grid layout for the following combobox settings
+  QGridLayout *gl = new QGridLayout( topLayout, 3, 2, KDialog::spacingHint() );
+  gl->setColStretch( 1, 100 ); // make the second column use all available space
+  int row = -1;
+
   // sender or receiver column?
+  ++row;
   QString tip = i18n("Show Sender/Receiver Column in List of Messages");
 
-  QHBoxLayout *sl = new QHBoxLayout( topLayout );
-  sl->setSpacing( 17 );
-
   QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), this );
-  sl->addWidget( sender_label );
+  gl->addWidget( sender_label, row, 0 );
   mShowSenderReceiverComboBox = new QComboBox( this );
   QToolTip::add( mShowSenderReceiverComboBox, tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
-  sl->addWidget( mShowSenderReceiverComboBox, 3 );
+  gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
   mShowSenderReceiverComboBox->insertItem(i18n("Default"), 0);
   mShowSenderReceiverComboBox->insertItem(i18n("Sender"), 1);
   mShowSenderReceiverComboBox->insertItem(i18n("Receiver"), 2);
@@ -385,13 +388,13 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
 
 
-  // identity
-  QHBoxLayout *idLayout = new QHBoxLayout( topLayout );
+  // sender identity
+  ++row;
   label = new QLabel( i18n("&Sender identity:"), this );
-  idLayout->addWidget( label );
+  gl->addWidget( label, row, 0 );
   mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
-  idLayout->addWidget( mIdentityComboBox, 3 );
+  gl->addWidget( mIdentityComboBox, row, 1 );
   QWhatsThis::add( mIdentityComboBox,
       i18n( "Select the sender identity to be used when writing new mail "
         "or replying to mail in this folder. This means that if you are in "
@@ -401,17 +404,16 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         "dialog. (Settings -> Configure KMail)") );
 
 
+  // folder contents
   if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
-  
-    QHBoxLayout *typeLayout = new QHBoxLayout( topLayout );
-    typeLayout->setSpacing( 6 );
+    ++row;
     label = new QLabel( i18n("&Folder contents:"), this );
-    typeLayout->addWidget( label );
+    gl->addWidget( label, row, 0 );
     mContentsComboBox = new QComboBox( this );
     label->setBuddy( mContentsComboBox );
-    typeLayout->addWidget( mContentsComboBox, 3 );
+    gl->addWidget( mContentsComboBox, row, 1 );
 
     mContentsComboBox->insertItem( i18n( "Mail" ) );
     mContentsComboBox->insertItem( i18n( "Calendar" ) );
@@ -433,14 +435,12 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if ( ( GlobalSettings::theIMAPResourceStorageFormat() ==
          GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
       mContentsComboBox ) {
-    QHBoxLayout *relevanceLayout = new QHBoxLayout( topLayout );
-    relevanceLayout->setSpacing( 6 );
-
+    ++row;
     QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
-    relevanceLayout->addWidget( label );
+    gl->addWidget( label, row, 0 );
     mIncidencesForComboBox = new QComboBox( this );
     label->setBuddy( mIncidencesForComboBox );
-    relevanceLayout->addWidget( mIncidencesForComboBox, 3 );
+    gl->addWidget( mIncidencesForComboBox, row, 1 );
 
     QWhatsThis::add( mIncidencesForComboBox,
                      i18n( "This setting defines which users sharing "
@@ -594,7 +594,7 @@ bool FolderDiaGeneralTab::save()
          ( !mUnreadIconButton->icon().isEmpty())) ) {
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
     }
-  
+
     // Set type field
     if ( mContentsComboBox ) {
       KMail::FolderContentsType type =
@@ -621,7 +621,7 @@ bool FolderDiaGeneralTab::save()
     // make sure everything is on disk, connected slots will call readConfig()
     // when creating a new folder.
     folder->storage()->writeConfig();
-    // Renamed an existing folder? We don't check for oldName == newName on 
+    // Renamed an existing folder? We don't check for oldName == newName on
     // purpose here. The folder might be pending renaming on the next dimap
     // sync already, in which case the old name would still be around and
     // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would
