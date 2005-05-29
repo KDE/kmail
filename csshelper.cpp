@@ -32,6 +32,7 @@
 #include "csshelper.h"
 
 #include "kmkernel.h"
+#include "globalsettings.h"
 
 #include <kconfig.h>
 
@@ -80,6 +81,8 @@ namespace KMail {
         mQuoteFont[i] = fonts.readFontEntry( key, &defaultFont );
       }
     }
+
+    mShrinkQuotes = GlobalSettings::shrinkQuotes();
 
     mBackingPixmapStr = pixmaps.readPathEntry("Readerwin");
     mBackingPixmapOn = !mBackingPixmapStr.isEmpty();

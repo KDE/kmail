@@ -2185,6 +2185,11 @@ static const BoolConfigEntry showSpamStatusMode = {
 static const BoolConfigEntry showEmoticons = {
   "Reader", "ShowEmoticons", I18N_NOOP("Replace smileys by emoticons"), true
 };
+
+static const BoolConfigEntry shrinkQuotes = {
+  "Reader", "ShrinkQuotes", I18N_NOOP("Use smaller font for quoted text"), false
+};
+
 static const BoolConfigEntry showExpandQuotesMark= {
   "Reader", "ShowExpandQuotesMark", I18N_NOOP("Show expand/collapse quote marks"), false
 };
@@ -2216,6 +2221,13 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ), showEmoticons );
   vlay->addWidget( mShowEmoticonsCheck );
   connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // "Use smaller font for quoted text" check box
+  mShrinkQuotesCheck = new QCheckBox( i18n( shrinkQuotes.desc ), this,
+                                      "kcfg_ShrinkQuotes" );
+  vlay->addWidget( mShrinkQuotesCheck );
+  connect( mShrinkQuotesCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show expand/collaps quote marks" check box;
@@ -2329,6 +2341,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 {
   mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
+  mShrinkQuotesCheck->setChecked( GlobalSettings::shrinkQuotes() );
   mShowExpandQuotesMark->setChecked( GlobalSettings::showExpandQuotesMark() );
   mCollapseQuoteLevelSpin->setValue( GlobalSettings::collapseQuoteLevelSpin() );
   readCurrentFallbackCodec();
@@ -2348,6 +2361,7 @@ void AppearancePage::ReaderTab::save() {
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
   GlobalSettings::setShowEmoticons( mShowEmoticonsCheck->isChecked() );
+  GlobalSettings::setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
   GlobalSettings::setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
 
   GlobalSettings::setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
@@ -2365,6 +2379,7 @@ void AppearancePage::ReaderTab::installProfile( KConfig * /* profile */ ) {
   loadProfile( mShowColorbarCheck, reader, showColorbarMode );
   loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
   loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
+  loadProfile( mShrinkQuotesCheck, reader, shrinkQuotes );
   loadProfile( mShowExpandQuotesMark, reader, showExpandQuotesMark);
 }
 

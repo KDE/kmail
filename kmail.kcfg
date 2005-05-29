@@ -405,6 +405,11 @@
         <max>10</max>
       </entry>
 
+      <entry name="ShrinkQuotes" type="Bool">
+        <default>false</default>
+        <label>Reduce font size for quoted text</label>
+        <whatsthis>Enable this option to show quoted text with a smaller font.</whatsthis>
+     </entry>
 
     </group>
 

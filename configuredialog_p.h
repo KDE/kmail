@@ -522,6 +522,7 @@ private: // data
   QCheckBox *mShowEmoticonsCheck;
   QCheckBox *mShowExpandQuotesMark;
   KIntSpinBox  *mCollapseQuoteLevelSpin;
+  QCheckBox *mShrinkQuotesCheck;
   QComboBox *mCharsetCombo;
   QComboBox *mOverrideCharsetCombo;
 };

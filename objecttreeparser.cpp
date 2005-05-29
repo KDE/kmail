@@ -2422,8 +2422,11 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   QString htmlStr;
   const QString normalStartTag = cssHelper()->nonQuotedFontTag();
   QString quoteFontTag[3];
-  for ( int i = 0 ; i < 3 ; ++i )
+  QString deepQuoteFontTag[3];
+  for ( int i = 0 ; i < 3 ; ++i ) {
     quoteFontTag[i] = cssHelper()->quoteFontTag( i );
+    deepQuoteFontTag[i] = cssHelper()->quoteFontTag( i+3 );
+  }
   const QString normalEndTag = "</div>";
   const QString quoteEnd = "</div>";
 
@@ -2524,10 +2527,16 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
               .arg(actQuoteLevel)
               .arg( mCollapseIcon);
             htmlStr += "</div>";
-            htmlStr += quoteFontTag[actQuoteLevel%3];
+            if ( actQuoteLevel < 3 )
+              htmlStr += quoteFontTag[actQuoteLevel];
+            else
+              htmlStr += deepQuoteFontTag[actQuoteLevel%3];
           }
         } else
-          htmlStr += quoteFontTag[actQuoteLevel%3];
+            if ( actQuoteLevel < 3 )
+              htmlStr += quoteFontTag[actQuoteLevel];
+            else
+              htmlStr += deepQuoteFontTag[actQuoteLevel%3];
       }
       currQuoteLevel = actQuoteLevel;
     }
