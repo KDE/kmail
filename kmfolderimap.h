@@ -409,7 +409,7 @@ protected:
   KMFolderImap* findParent( const QString& path, const QString& name );
 
   /** See if all folders are still present on server, otherwise delete them */
-  void checkFolders( const QStringList& folderNames );
+  void checkFolders( const QStringList& folderNames, const QString& ns );
 
 protected slots:
 

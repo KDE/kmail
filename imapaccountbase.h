@@ -147,6 +147,7 @@ namespace KMail {
 
       QString path;
       QString url;
+      QString curNamespace;
       QByteArray data;
       QCString cdata;
       QStringList items;

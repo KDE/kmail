@@ -90,6 +90,10 @@ void ListJob::execute()
       return;
     }
   }
+  if ( mNamespace.isEmpty() && mStorage )
+  {
+    mNamespace = mAccount->namespaceForFolder( mStorage );
+  }
   // create jobData
   ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0;
@@ -99,6 +103,7 @@ void ListJob::execute()
                         mType == ImapAccountBase::ListSubscribedNoCheck ||
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
+  jd.curNamespace = mNamespace;
   QString status = mDestFolder ? mDestFolder->prettyURL() : QString::null;
   if ( mParentProgressItem )
   {

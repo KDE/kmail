@@ -1505,8 +1505,9 @@ void KMFolderCachedImap::listNamespaces()
 
   mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
   newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
-  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( ns ) );
-  mCurrentNamespace = ns;
+  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, 
+      mAccount->addPathToNamespace( ns ) );
+  job->setNamespace( ns );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1594,7 +1595,6 @@ bool KMFolderCachedImap::listDirectory()
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
   KMail::ListJob* job = new KMail::ListJob( mAccount, type, this );
-  mCurrentNamespace = QString::null;
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
       this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -1635,8 +1635,8 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
           QString name = node->name();
           // as more than one namespace can be listed in the root folder we need to make sure
           // that the folder is within the current namespace
-          bool isInNamespace = ( mCurrentNamespace.isEmpty() || 
-              mCurrentNamespace == mAccount->namespaceForFolder( f ) );
+          bool isInNamespace = ( jobData.curNamespace.isEmpty() || 
+              jobData.curNamespace == mAccount->namespaceForFolder( f ) );
           // ignore some cases
           bool ignore = root && ( f->imapPath() == "/INBOX/" || 
               mAccount->isNamespaceFolder( name ) || !isInNamespace );

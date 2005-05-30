@@ -79,11 +79,15 @@ public:
   /** Storage */
   void setStorage( FolderStorage* st ) { mStorage = st; }
 
+  /** Set this to true for a complete listing */
   void setComplete( bool complete ) { mComplete = complete; }
 
   /** Set parent progress item */
   void setParentProgressItem( KPIM::ProgressItem* it ) { 
     mParentProgressItem = it; }
+
+  /** Set the namespace for this listing */
+  void setNamespace( const QString& ns ) { mNamespace = ns; }
 
 protected:
   /**
@@ -124,6 +128,7 @@ protected:
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
   KPIM::ProgressItem* mParentProgressItem;
+  QString mNamespace;
 };
 
 } // namespace

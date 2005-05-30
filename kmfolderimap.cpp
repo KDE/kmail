@@ -589,7 +589,9 @@ void KMFolderImap::slotListNamespaces()
   // start personal namespace listing and send it directly to slotListResult
   for ( QStringList::Iterator it = personal.begin(); it != personal.end(); ++it )
   {
-    KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+    KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, 
+	mAccount->addPathToNamespace( *it ) );
+    job->setNamespace( *it );
     connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
         this, SLOT(slotListResult(const QStringList&, const QStringList&,
@@ -602,7 +604,7 @@ void KMFolderImap::slotListNamespaces()
   ns += map[ImapAccountBase::SharedNS];
   for ( QStringList::Iterator it = ns.begin(); it != ns.end(); ++it )
   {
-     KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
+    KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this, mAccount->addPathToNamespace( *it ) );
     connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
         this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
@@ -704,7 +706,7 @@ bool KMFolderImap::listDirectory()
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-   KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this );
+  KMail::ListJob* job = new  KMail::ListJob( mAccount, type, this );
   job->setParentProgressItem( account()->listDirProgressItem() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -750,6 +752,10 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
         << parent->label() << endl;
       parent->slotListResult( subfolderNames, subfolderPaths, 
           subfolderMimeTypes, subfolderAttributes, jobData );
+      // cleanup
+      QStringList list;
+      checkFolders( list, jobData.curNamespace );
+      // finish
       emit directoryListingFinished( this );
       kmkernel->imapFolderMgr()->quiet( false );
       return;
@@ -759,7 +765,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames,
   bool emptyList = ( root && subfolderNames.empty() );
   if ( !emptyList )
   {
-    checkFolders( subfolderNames );
+    checkFolders( subfolderNames, jobData.curNamespace );
   }
 
   KMFolderImap *f = 0;
@@ -885,7 +891,8 @@ KMFolderImap* KMFolderImap::findParent( const QString& path, const QString& name
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::checkFolders( const QStringList& subfolderNames )
+void KMFolderImap::checkFolders( const QStringList& subfolderNames, 
+    const QString& myNamespace )
 {
   QPtrList<KMFolder> toRemove;
   KMFolderNode *node = folder()->child()->first();
@@ -895,18 +902,31 @@ void KMFolderImap::checkFolders( const QStringList& subfolderNames )
     {
       KMFolder* fld = static_cast<KMFolder*>(node);
       KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
+      // as more than one namespace can be listed in the root folder we need to make sure
+      // that the folder is within the current namespace
+      bool isInNamespace = ( myNamespace.isEmpty() || 
+          myNamespace == mAccount->namespaceForFolder( imapFld ) );
+      kdDebug(5006) << node->name() << " in namespace " << myNamespace << ":" << 
+        isInNamespace << endl;
       // ignore some cases
       QString name = node->name();
       bool ignore = ( ( this == mAccount->rootFolder() ) && 
           ( imapFld->imapPath() == "/INBOX/" || 
-            mAccount->isNamespaceFolder( name ) ) );
+            mAccount->isNamespaceFolder( name ) ||
+	    !isInNamespace ) );
+      // additional sanity check for broken folders
+      if ( imapFld->imapPath().isEmpty() ) {
+        ignore = false;
+      }
       if ( !ignore )
       {
         // remove the folder without server round trip
         kdDebug(5006) << "checkFolders - " << node->name() << " disappeared" << endl;
         imapFld->setAlreadyRemoved( true );
         toRemove.append( fld );
-      } 
+      } else {
+        kdDebug(5006) << "checkFolders - " << node->name() << " ignored" << endl;
+      }
     }
     node = folder()->child()->next();
   }
@@ -1420,19 +1440,11 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       bool ok = true;
       if ( uid <= lastUid() )
       {
-        // as some servers send the messages out of order
+        // the UID is already known but as some servers send the messages out of order
         // we have to check if the message really already exists
-        int idx = 0;
-        KMMsgBase *msg;
-        while ( idx < count() )
+        if ( serNumForUID( msg->UID() ) > 0 ) 
         {
-          msg = getMsgBase( idx );
-          if ( msg && msg->UID() == uid )
-          {
-            ok = false; // exists, no need to create it
-            break;
-          }
-          ++idx;
+          ok = false; // exists, no need to create it
         }
       }
       // deleted flag
