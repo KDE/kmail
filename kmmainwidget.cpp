@@ -1656,7 +1656,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   if (mMsgView)
     mMsgView->clear(true);
 
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && !mFolder->noContent() )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
     if ( mFolder->needsCompacting() && imap->autoExpunge() )
@@ -1702,7 +1702,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
-    if ( newFolder )
+    if ( newFolder && !mFolder->noContent() )
     {
       imap->open(); // will be closed in the folderSelected slot
       // first get new headers before we select the folder
