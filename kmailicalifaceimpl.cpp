@@ -1714,7 +1714,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
   KMFolder* folder = findStandardResourceFolder( mFolderParentDir, contentsType );
   if( !folder && GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) {
     // Maybe there's a folder with the right name - well, change its type then
-    KMFolderNode* node = mFolderParentDir->hasNamedFolder( folderName( itemType ) );
+    KMFolderNode* node = mFolderParentDir->hasNamedFolder( localizedDefaultFolderName( contentsType ) );
     if ( node && !node->isDir() ) {
       folder = static_cast<KMFolder *>( node );
       folder->storage()->setContentsType( contentsType );
@@ -1727,10 +1727,10 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
   if ( !folder ) {
     // The folder isn't there yet - create it
     folder =
-      mFolderParentDir->createFolder( folderName( itemType ), false, type );
+      mFolderParentDir->createFolder( localizedDefaultFolderName( contentsType ), false, type );
     if( mFolderType == KMFolderTypeImap )
       static_cast<KMFolderImap*>( folder->storage() )->
-        createFolder( folderName( itemType ) );
+        createFolder( localizedDefaultFolderName( contentsType ) );
 
     // Groupware folder created, use the global setting for storage format
     setStorageFormat( folder, GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard );
