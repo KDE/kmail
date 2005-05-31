@@ -433,6 +433,11 @@ public slots:
   void slotSubjectTextSpellChecked();
 
   /**
+   * Configure the order of address completion sources.
+   */
+  void slotConfigureAddressCompletion();
+
+  /**
    * Change crypto plugin to be used for signing/encrypting messages,
    * or switch to built-in OpenPGP code.
    */

@@ -38,6 +38,9 @@ using KPIM::AddressesDialog;
 #include <maillistdrag.h>
 using KPIM::MailListDrag;
 #include "recentaddresses.h"
+#include "completionordereditor.h"
+#include "ldapclient.h"
+
 using KRecentAddress::RecentAddresses;
 #include "kleo_util.h"
 #include "stl_util.h"
@@ -1196,8 +1199,12 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
-  (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
+  (void) new KAction (i18n("Configure &Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
+
+  (void) new KAction (i18n("Configure &Address Completion..."), 0,
+                      this, SLOT(slotConfigureAddressCompletion()),
+                      actionCollection(), "setup_completion_order");
 
 #ifdef KLEO_CHIASMUS
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
@@ -3647,6 +3654,15 @@ void KMComposeWin::slotSpellcheckConfig()
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotConfigureAddressCompletion()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  KPIM::LdapSearch ls;
+  KPIM::CompletionOrderEditor editor( &ls, this );
+  editor.exec();
 }
 
 //-----------------------------------------------------------------------------
