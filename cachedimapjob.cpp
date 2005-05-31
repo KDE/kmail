@@ -48,7 +48,6 @@
 #include <kio/scheduler.h>
 #include <kio/job.h>
 
-#include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
 
