@@ -1715,10 +1715,10 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
       mForceJumpToUnread = forceJumpToUnread;
 
       // Set a timer to show a splash screen if fetching folder contents
-      // takes more than half a second
+      // takes more than a second
       mShowBusySplashTimer = new QTimer( this );
       connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
-      mShowBusySplashTimer->start( 500, true );
+      mShowBusySplashTimer->start( 1000, true );
       return;
     } else {
       // the folder is complete now - so go ahead
