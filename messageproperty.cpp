@@ -1,5 +1,5 @@
 /*  Message Property
-    
+
     This file is part of KMail, the KDE mail client.
     Copyright (c) Don Sanders <sanders@kde.org>
 
@@ -214,14 +214,8 @@ void MessageProperty::setSerialCache( const KMMsgBase *msgBase, Q_UINT32 serNum 
 
 void MessageProperty::forget( const KMMsgBase *msgBase )
 {
-  Q_UINT32 serNum = serialCache( msgBase );
-  if (serNum) {
-    Q_ASSERT( !transferInProgress( serNum ) );
-    sCompletes.remove( serNum );
-    sTransfers.remove( serNum );
-    sReadyToShows.remove( serNum );
-    sSerialCache.remove( msgBase );
-  }
+  // Don't touch sCompletes etc. - see https://intevation.de/roundup/kolab/issue757
+  sSerialCache.remove( msgBase );
 }
 
 #include "messageproperty.moc"
