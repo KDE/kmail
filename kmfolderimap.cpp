@@ -322,9 +322,6 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
   }
   KMFolder *aFolder = msgList.first()->parent();
   Q_UINT32 serNum = 0;
-  if ( aFolder ) { 
-    serNum = msgList.first()->getMsgSerNum();
-  }
   int undoId = -1;
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
@@ -333,6 +330,7 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     if ( msg->getMsgSerNum() > 0 )
       kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     // Remember the status, so it can be transfered to the new message.
+    serNum = msg->getMsgSerNum();
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status(), serNum));
     msg->setTransferInProgress( false );
   }
@@ -1289,6 +1287,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       emit folderComplete(this, FALSE);
       return;
     }
+      
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
@@ -1437,15 +1436,11 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       msg->fromString( (*it).cdata.mid(16, pos - 16) );
       flags = msg->headerField("X-Flags").toInt();
       ulong uid = msg->UID();
+      const ulong serNum = serNumForUID( uid );
       bool ok = true;
-      if ( uid <= lastUid() )
-      {
-        // the UID is already known but as some servers send the messages out of order
-        // we have to check if the message really already exists
-        if ( serNumForUID( msg->UID() ) > 0 ) 
-        {
-          ok = false; // exists, no need to create it
-        }
+      if ( uid <= lastUid() && serNum > 0 ) {
+        // the UID is already known so no need to create it
+        ok = false;
       }
       // deleted flag
       if ( flags & 8 )
@@ -1454,10 +1449,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         delete msg;
         msg = 0;
       } else {
-        if ( uidmap.find(uid) ) {
+        if ( serNum > 0 ) {
           // assign the sernum from the cache
-          const ulong sernum = (ulong) uidmap[uid];
-          msg->setMsgSerNum( sernum );
+          msg->setMsgSerNum( serNum );
         }
         KMFolderMbox::addMsg(msg, 0);
         // Transfer the status, if it is cached.
@@ -1465,7 +1459,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         if ( mMetaDataMap.find( id ) ) {
           KMMsgMetaData *md =  mMetaDataMap[id];
           msg->setStatus( md->status() );
-          if ( md->serNum() != 0 )
+          if ( md->serNum() != 0 && serNum == 0 )
             msg->setMsgSerNum( md->serNum() );
           mMetaDataMap.remove( id );
           delete md;
