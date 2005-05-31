@@ -575,8 +575,10 @@ namespace KMail {
     }
 
     // check if we still display an error
-    if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED )
-    {
+    // the server is free to break the connection at any time
+    if ( !mErrorDialogIsActive
+       && errorCode != KIO::ERR_USER_CANCELED
+       && errorCode != KIO::ERR_CONNECTION_BROKEN ) {
       mErrorDialogIsActive = true;
       QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
       QString caption = i18n("Error");
