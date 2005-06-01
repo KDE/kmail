@@ -9,9 +9,6 @@ pics_DATA = kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgpartiallysigned.png kmmsgfullyencrypted.png \
 	kmmsgfullysigned.png kmmsgundefinedencrypted.png \
 	kmmsgundefinedsigned.png \
-	kmgroupware_folder_contacts.png \
-	kmgroupware_folder_calendar.png kmgroupware_folder_notes.png \
-	kmgroupware_folder_tasks.png kmgroupware_folder_journals.png \
 	quotecollapse.png quoteexpand.png
 
 
