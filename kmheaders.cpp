@@ -153,8 +153,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixFlag                  = new QPixmap( UserIcon( "kmmsgflag"                  ) );
     pixWatched               = new QPixmap( UserIcon( "kmmsgwatched"               ) );
     pixIgnored               = new QPixmap( UserIcon( "kmmsgignored"               ) );
-    pixSpam                  = new QPixmap( UserIcon( "kmmsgspam"                  ) );
-    pixHam                   = new QPixmap( UserIcon( "kmmsgham"                   ) );
+    pixSpam                  = new QPixmap( UserIcon( "mark_as_spam"                  ) );
+    pixHam                   = new QPixmap( UserIcon( "mark_as_ham"                   ) );
     pixFullySigned           = new QPixmap( UserIcon( "kmmsgfullysigned"           ) );
     pixPartiallySigned       = new QPixmap( UserIcon( "kmmsgpartiallysigned"       ) );
     pixUndefinedSigned       = new QPixmap( UserIcon( "kmmsgundefinedsigned"       ) );
