@@ -163,7 +163,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "kmmsgundefinedencrypted"    ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
-    pixAttachment            = new QPixmap( UserIcon( "kmmsgattachment"            ) );
+    pixAttachment            = new QPixmap( UserIcon( "attach"            ) );
     pixReadFwd               = new QPixmap( UserIcon( "kmmsgread_fwd"              ) );
     pixReadReplied           = new QPixmap( UserIcon( "kmmsgread_replied"          ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "kmmsgread_fwd_replied"      ) );
