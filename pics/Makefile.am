@@ -1,6 +1,6 @@
 SUBDIRS = icons
 
-pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
+pics_DATA = kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png \
 	kmmsgsent.png kmmsgwatched.png kmmsgignored.png kmmsgtodo.png \
 	kmmsgread_fwd.png kmmsgread_replied.png kmmsgread_fwd_replied.png \

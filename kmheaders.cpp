@@ -143,7 +143,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixmapsLoaded = true;
     pixNew                   = new QPixmap( UserIcon( "kmmsgnew"                   ) );
     pixUns                   = new QPixmap( UserIcon( "kmmsgunseen"                ) );
-    pixDel                   = new QPixmap( UserIcon( "kmmsgdel"                   ) );
+    pixDel                   = new QPixmap( UserIcon( "editdelete"                   ) );
     pixRead                  = new QPixmap( UserIcon( "kmmsgread"                  ) );
     pixRep                   = new QPixmap( UserIcon( "kmmsgreplied"               ) );
     pixQueued                = new QPixmap( UserIcon( "kmmsgqueued"                ) );
