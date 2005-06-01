@@ -2503,7 +2503,7 @@ void KMMainWidget::setupActions()
   mStatusMenu->insert( new KActionSeparator( this ) );
 
   // -------- Toggle Actions
-  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
+  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "flag",
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
@@ -2577,7 +2577,7 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
+  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "flag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
   mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );

@@ -219,7 +219,7 @@ namespace KMail {
   };
 
   static const MessageStatus StatusValues[] = {
-    { I18N_NOOP( "Important" ),        "kmmsgflag"   },
+    { I18N_NOOP( "Important" ),        "flag"   },
     { I18N_NOOP( "New" ),              "kmmsgnew"   },
     { I18N_NOOP( "Unread" ),           "kmmsgunseen"   },
     { I18N_NOOP( "Read" ),             "kmmsgread"   },
