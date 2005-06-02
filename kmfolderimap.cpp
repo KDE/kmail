@@ -1287,7 +1287,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       emit folderComplete(this, FALSE);
       return;
     }
-      
+
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
@@ -1397,6 +1397,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   if ( it == mAccount->jobsEnd() ) return;
   (*it).cdata += QCString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
+  if ( pos == -1 ) {
+    return; // optimization
+  }
   if (pos > 0)
   {
     int p = (*it).cdata.find("\r\nX-uidValidity:");
