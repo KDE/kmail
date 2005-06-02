@@ -219,7 +219,7 @@ namespace KMail {
   };
 
   static const MessageStatus StatusValues[] = {
-    { I18N_NOOP( "Important" ),        "flag"   },
+    { I18N_NOOP( "Important" ),        "mail_flag"   },
     { I18N_NOOP( "New" ),              "kmmsgnew"   },
     { I18N_NOOP( "Unread" ),           "kmmsgunseen"   },
     { I18N_NOOP( "Read" ),             "kmmsgread"   },
@@ -231,8 +231,8 @@ namespace KMail {
     { I18N_NOOP( "Sent" ),             "kmmsgsent"   },
     { I18N_NOOP( "Watched" ),          "kmmsgwatched"   },
     { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
-    { I18N_NOOP( "Spam" ),             "mark_as_spam"   },
-    { I18N_NOOP( "Ham" ),              "mark_as_ham"   },
+    { I18N_NOOP( "Spam" ),             "mail_spam"   },
+    { I18N_NOOP( "Ham" ),              "mail_ham"   },
     { I18N_NOOP( "To Do" ),            "kontact_todo"   },
     { I18N_NOOP( "Has Attachment"),    "attach"   }
   };

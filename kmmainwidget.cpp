@@ -2503,7 +2503,7 @@ void KMMainWidget::setupActions()
   mStatusMenu->insert( new KActionSeparator( this ) );
 
   // -------- Toggle Actions
-  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "flag",
+  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "mail_flag",
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
@@ -2542,12 +2542,12 @@ void KMMainWidget::setupActions()
 
   mStatusMenu->insert( new KActionSeparator( this ) );
 
-  mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mark_as_spam",
+  mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mail_spam",
                                  0, this, SLOT(slotSetMsgStatusSpam()),
                                  actionCollection(), "status_spam");
   mStatusMenu->insert( mMarkAsSpamAction );
 
-  mMarkAsHamAction = new KAction(i18n("Mark Message as &Ham"), "mark_as_ham",
+  mMarkAsHamAction = new KAction(i18n("Mark Message as &Ham"), "mail_ham",
                                  0, this, SLOT(slotSetMsgStatusHam()),
                                  actionCollection(), "status_ham");
   mStatusMenu->insert( mMarkAsHamAction );
@@ -2577,7 +2577,7 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
   //----- "Mark Thread" toggle actions
-  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "flag",
+  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "mail_flag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
   mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
@@ -2625,12 +2625,12 @@ void KMMainWidget::setupActions()
                                        actionCollection(), "thread_ignored");
 
   //------- "Ham and spam thread" actions
-  mMarkThreadAsSpamAction = new KAction(i18n("Mark Thread as S&pam"), "mark_as_spam",
+  mMarkThreadAsSpamAction = new KAction(i18n("Mark Thread as S&pam"), "mail_spam",
                                        0, this, SLOT(slotSetThreadStatusSpam()),
                                        actionCollection(), "thread_spam");
   mThreadStatusMenu->insert( mMarkThreadAsSpamAction );
 
-  mMarkThreadAsHamAction = new KAction(i18n("Mark Thread as &Ham"), "mark_as_ham",
+  mMarkThreadAsHamAction = new KAction(i18n("Mark Thread as &Ham"), "mail_ham",
                                        0, this, SLOT(slotSetThreadStatusHam()),
                                        actionCollection(), "thread_ham");
   mThreadStatusMenu->insert( mMarkThreadAsHamAction );

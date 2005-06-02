@@ -340,7 +340,7 @@ void AntiSpamWizard::accept()
     {
       // Classify messages manually as Spam
       KMFilter* classSpamFilter = new KMFilter();
-      classSpamFilter->setIcon( "mark_as_spam" );
+      classSpamFilter->setIcon( "mail_spam" );
       QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
       KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
       classSpamFilterActionFirst->argsFromString( "P" );
@@ -373,7 +373,7 @@ void AntiSpamWizard::accept()
 
       // Classify messages manually as not Spam / as Ham
       KMFilter* classHamFilter = new KMFilter();
-      classHamFilter->setIcon( "mark_as_ham" );
+      classHamFilter->setIcon( "mail_ham" );
       QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
       KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
       classHamFilterActionFirst->argsFromString( "H" );
