@@ -291,6 +291,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       const QCString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
+      msgPart.setParameter( "charset", "utf8" ); // as per spec
       QCString ctd("attachment;\n  filename=\"");
       ctd.append( attachmentName.latin1() );
       ctd.append("\"");
