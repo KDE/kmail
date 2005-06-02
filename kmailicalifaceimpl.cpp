@@ -209,7 +209,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
 // Helper function to find an attachment of a given mimetype
 // Can't use KMMessage::findDwBodyPart since it only works with known mimetypes.
-static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sType, const char* sSubtype )
+static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sType, const char* sSubtype, bool startsWith = false )
 {
   // quickly searching for our message part: since Kolab parts are
   // top-level parts we do *not* have to travel into embedded multiparts
@@ -219,9 +219,15 @@ static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sTy
     //          << part->Headers().ContentType().SubtypeStr().c_str() << endl;
     if ( part->hasHeaders() ) {
       DwMediaType& contentType = part->Headers().ContentType();
-      if ( contentType.TypeStr() == sType
-           && contentType.SubtypeStr() == sSubtype )
-        return part;
+      if ( startsWith ) {
+        if ( contentType.TypeStr() == sType
+             && QString( contentType.SubtypeStr().c_str() ).startsWith( sSubtype ) )
+          return part;
+      }
+      else
+        if ( contentType.TypeStr() == sType
+             && contentType.SubtypeStr() == sSubtype )
+          return part;
     }
     part = part->Next();
   }
@@ -339,7 +345,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
   const int iSlash = mimetype.find('/');
   const QCString sType    = mimetype.left( iSlash   ).latin1();
   const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
-  DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype );
+  DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype, true /* starts with sSubtype, to accept application/x-vnd.kolab.contact.distlist */ );
   if ( part ) {
     KMMessagePart msgPart;
     KMMessage::bodyPart(part, &msgPart);
