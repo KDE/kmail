@@ -2620,7 +2620,7 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusWatched()),
                                        actionCollection(), "thread_watched");
 
-  mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
+  mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "mail_ignore",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
 

@@ -152,7 +152,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixFwd                   = new QPixmap( UserIcon( "kmmsgforwarded"             ) );
     pixFlag                  = new QPixmap( UserIcon( "mail_flag"                  ) );
     pixWatched               = new QPixmap( UserIcon( "kmmsgwatched"               ) );
-    pixIgnored               = new QPixmap( UserIcon( "kmmsgignored"               ) );
+    pixIgnored               = new QPixmap( UserIcon( "mail_ignore"               ) );
     pixSpam                  = new QPixmap( UserIcon( "mail_spam"                  ) );
     pixHam                   = new QPixmap( UserIcon( "mail_ham"                   ) );
     pixFullySigned           = new QPixmap( UserIcon( "kmmsgfullysigned"           ) );

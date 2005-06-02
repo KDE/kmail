@@ -230,7 +230,7 @@ namespace KMail {
     { I18N_NOOP( "Queued" ),           "kmmsgqueued"   },
     { I18N_NOOP( "Sent" ),             "kmmsgsent"   },
     { I18N_NOOP( "Watched" ),          "kmmsgwatched"   },
-    { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
+    { I18N_NOOP( "Ignored" ),          "mail_ignore"   },
     { I18N_NOOP( "Spam" ),             "mail_spam"   },
     { I18N_NOOP( "Ham" ),              "mail_ham"   },
     { I18N_NOOP( "To Do" ),            "kontact_todo"   },
