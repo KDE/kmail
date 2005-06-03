@@ -3322,7 +3322,7 @@ QString KMMessage::decodeIDN( const QString & addrSpec )
 {
   const int atPos = addrSpec.findRev( '@' );
   if ( atPos == -1 )
-    return QString::null;
+    return addrSpec;
 
   QString idn = KIDNA::toUnicode( addrSpec.mid( atPos + 1 ) );
   if ( idn.isEmpty() )
