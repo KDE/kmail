@@ -65,6 +65,7 @@
 #include <ktempfile.h>
 #include <qfile.h>
 #include <qdom.h>
+#include <qtextcodec.h>
 #include "kmfoldercachedimap.h"
 
 // Local helper methods
@@ -297,7 +298,6 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       const QCString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
-      msgPart.setParameter( "charset", "utf8" ); // as per spec
       QCString ctd("attachment;\n  filename=\"");
       ctd.append( attachmentName.latin1() );
       ctd.append("\"");
@@ -349,7 +349,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
   if ( part ) {
     KMMessagePart msgPart;
     KMMessage::bodyPart(part, &msgPart);
-    s = msgPart.bodyToUnicode();
+    s = msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) );
     return true;
   }
   return false;
@@ -637,7 +637,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
-          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode());
+          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) ));
         } else {
           // This is *not* an error: it may be that not all of the messages
           // have a message part that is matching the wanted MIME type
