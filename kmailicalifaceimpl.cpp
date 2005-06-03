@@ -48,11 +48,16 @@
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"
+#include "kmfoldercachedimap.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/body.h>
 #include <mimelib/mimepp.h>
+
+#include <qfile.h>
+#include <qmap.h>
+#include <qtextcodec.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -60,10 +65,7 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kurl.h>
-#include <qmap.h>
 #include <ktempfile.h>
-#include <qfile.h>
-#include "kmfoldercachedimap.h"
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
@@ -231,7 +233,6 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       const QCString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
-      msgPart.setParameter( "charset", "utf8" ); // as per spec
       QCString ctd("attachment;\n  filename=\"");
       ctd.append( attachmentName.latin1() );
       ctd.append("\"");
@@ -283,7 +284,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
   if ( part ) {
     KMMessagePart msgPart;
     KMMessage::bodyPart(part, &msgPart);
-    s = msgPart.bodyToUnicode();
+    s = msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) );
     return true;
   }
   return false;
@@ -512,7 +513,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
-          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode());
+          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode( QTextCodec::codecForName( "utf8" ) ));
         } else {
           // Check if the whole message has the right types. This is what 
           // happens in the case of ical storage, where the whole mail is
