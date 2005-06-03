@@ -234,7 +234,6 @@ protected slots:
   void slotModifyFolder();
   void slotExpireFolder();
   void slotExpireAll();
-  void slotInvalidateIMAPFolders();
   void slotMarkAllAsRead();
   void slotRemoveFolder();
   void slotEmptyFolder();
