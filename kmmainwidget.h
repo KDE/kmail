@@ -65,6 +65,7 @@ namespace KIO {
 
 namespace KMail {
   class Vacation;
+  class SieveDebugDialog;
   class FolderJob;
   class HeaderListQuickSearch;
 }
@@ -286,6 +287,7 @@ protected slots:
   void slotCopyMsg();
   void slotResendMsg();
   void slotEditVacation();
+  void slotDebugSieve();
   void slotStartCertManager();
   void slotStartWatchGnuPG();
   void slotApplyFilters();
@@ -494,6 +496,9 @@ private:
   QTimer *mShowBusySplashTimer;
 
   QGuardedPtr<KMail::Vacation> mVacation;
+#if !defined(NDEBUG)
+  QGuardedPtr<KMail::SieveDebugDialog> mSieveDebugDialog;
+#endif
   KActionCollection *mActionCollection;
   KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;

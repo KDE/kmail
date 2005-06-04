@@ -68,6 +68,7 @@ using KPIM::BroadcastStatus;
 using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
+
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
 #include "attachmentstrategy.h"
@@ -87,6 +88,11 @@ using KMail::FilterLogDialog;
 using KMail::HeaderListQuickSearch;
 #include "kmheaders.h"
 #include "mailinglistpropertiesdialog.h"
+
+#if !defined(NDEBUG)
+    #include "sievedebugdialog.h"
+    using KMail::SieveDebugDialog;
+#endif
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1501,6 +1507,19 @@ void KMMainWidget::slotEditVacation()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotDebugSieve()
+{
+#if !defined(NDEBUG)
+  if ( mSieveDebugDialog )
+    return;
+
+  mSieveDebugDialog = new SieveDebugDialog( this );
+  mSieveDebugDialog->exec();
+  delete mSieveDebugDialog;
+#endif
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotStartCertManager()
 {
   KProcess certManagerProc; // save to create on the heap, since
@@ -2296,6 +2315,12 @@ void KMMainWidget::setupActions()
   act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
 		     SLOT(slotImport()), actionCollection(), "import" );
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
+
+#if !defined(NDEBUG)
+  (void) new KAction( i18n("&Debug Sieve..."),
+		      "idea", 0, this, SLOT(slotDebugSieve()),
+		      actionCollection(), "tools_debug_sieve" );
+#endif
 
   // @TODO (marc/bo): Test
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
