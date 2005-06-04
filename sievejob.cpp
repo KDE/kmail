@@ -135,7 +135,7 @@ namespace KMail {
     // loop over entries:
     for ( UDSEntryList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
       // loop over atoms to find the UDS_ACCESS and UDS_NAME atoms;
-      // note if we find an exec'able file ( == sctive script )
+      // note if we find an exec'able file ( == active script )
       // or the requested filename (mUrl.fileName())
       QString filename;
       bool isActive = false;
@@ -230,3 +230,6 @@ namespace KMail {
 } // namespace KMail
 
 #include "sievejob.moc"
+
+// vim: set et sts=2 ts=8 sw=2:
+
