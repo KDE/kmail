@@ -157,7 +157,6 @@ namespace KMail {
 	  mAvailableScripts.append( filename );
 	} else if ( ( *et ).m_uds == KIO::UDS_ACCESS && ( *et ).m_long == 0700 )
 	  isActive = true;
-	else
       }
 
       if ( isActive )
