@@ -2468,6 +2468,7 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     if ( me->button() == LeftButton && ( me->state() & ShiftButton ) ) {
       // special processing for shift+click
       mAtmCurrent = msgPartFromUrl( mUrlClicked );
+      if ( mAtmCurrent < 0 ) return false; // not an attachment
       mAtmCurrentName = mUrlClicked.path();
       slotHandleAttachment( KMHandleAttachmentCommand::Save ); // save
       return true; // eat event
