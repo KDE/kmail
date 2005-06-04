@@ -34,7 +34,7 @@ namespace KMail {
   class SieveJob : public QObject {
     Q_OBJECT
   protected:
-    enum Command { Get, Put, Activate, Deactivate, SearchActive };
+    enum Command { Get, Put, Activate, Deactivate, SearchActive, List };
     SieveJob( const KURL & url, const QString & script,
 	      const QValueStack<Command> & commands,
 	      QObject * parent=0, const char * name=0 );
@@ -43,9 +43,22 @@ namespace KMail {
   public:
     enum Existence { DontKnow, Yes, No };
 
+    /**
+     * Store a Sieve script. If @param makeActive is set, also mark the
+     * script active
+     */
     static SieveJob * put( const KURL & dest, const QString & script,
 			   bool makeActive, bool wasActive );
+
+    /**
+     * Get a specific Sieve script
+     */
     static SieveJob * get( const KURL & src );
+
+    /**
+     * List all available scripts
+     */
+    static SieveJob * list( const KURL &src );
 
     void kill( bool quiet=true );
 
@@ -59,7 +72,17 @@ namespace KMail {
 
   signals:
     void gotScript( KMail::SieveJob * job, bool success,
-		 const QString & script, bool active );
+		    const QString & script, bool active );
+
+    /**
+     * We got the list of available scripts
+     *
+     * @param scriptList is the list of script filenames
+     * @param activeScript lists the filename of the active script, or an
+     *        empty string if no script is active.
+     */
+    void gotList( KMail::SieveJob *job, bool success,
+		  const QStringList &scriptList, const QString &activeScript );
 
   protected:
     void schedule( Command command );
@@ -79,8 +102,14 @@ namespace KMail {
     Existence mFileExists;
     QStringList mSieveCapabilities;
     QValueStack<Command> mCommands;
+
+    // List of Sieve scripts on the server, used by @ref list()
+    QStringList mAvailableScripts;
   };
 
 } // namespace KMail
 
 #endif // __KMAIL_SIEVE_JOB_H__
+
+// vim: set noet sts=2 ts=8 sw=2:
+

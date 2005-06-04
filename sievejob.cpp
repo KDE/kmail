@@ -91,6 +91,14 @@ namespace KMail {
 		 SLOT(slotEntries(KIO::Job*,const KIO::UDSEntryList&)) );
 	break;
       }
+    case List:
+      kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyURL() << " )" << endl;
+      {
+	mJob = KIO::listDir( mUrl );
+	connect( mJob, SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList & ) ),
+		 SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList & ) ) );
+	break;
+      }
     default:
       assert( 0 );
     }
@@ -130,29 +138,31 @@ namespace KMail {
   }
 
   void SieveJob::slotEntries( Job *, const UDSEntryList & l ) {
+    // Skip all processing if we already have the filename for a
+    // SearchActive job. In case of a List job this condition is never
+    // met (mFileExists will equal DontKnow until the very end).
     if ( !mActiveScriptName.isEmpty() && mFileExists != DontKnow )
       return;
+
     // loop over entries:
     for ( UDSEntryList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-      // loop over atoms to find the UDS_ACCESS and UDS_NAME atoms;
+      // Loop over all UDS atoms to find the UDS_ACCESS and UDS_NAME atoms;
       // note if we find an exec'able file ( == active script )
-      // or the requested filename (mUrl.fileName())
+      // or the requested filename (mUrl.fileName()).
       QString filename;
       bool isActive = false;
-      for ( UDSEntry::const_iterator et = (*it).begin() ; et != (*it).end() ; ++ et )
-	if ( (*et).m_uds == KIO::UDS_NAME ) {
-	  if ( isActive ) { // have all info...
-	    mActiveScriptName = (*et).m_str;
-	    break;
-	  } else // still need access info...
-	    filename = (*et).m_str;
-	} else if ( (*et).m_uds == KIO::UDS_ACCESS && (*et).m_long == 0700 ) {
-	  if ( !filename.isEmpty() ) { // have all info...
-	    mActiveScriptName = filename;
-	    break;
-	  } else // still need filename...
-	    isActive = true;
-	}
+      for ( UDSEntry::const_iterator et = (*it).begin() ; et != (*it).end() ; ++ et ) {
+	if ( ( *et ).m_uds == KIO::UDS_NAME ) {
+	  filename = ( *et ).m_str;
+	  mAvailableScripts.append( filename );
+	} else if ( ( *et ).m_uds == KIO::UDS_ACCESS && ( *et ).m_long == 0700 )
+	  isActive = true;
+	else
+      }
+
+      if ( isActive )
+	mActiveScriptName = filename;
+
       if ( mFileExists == DontKnow && filename == mUrl.fileName() )
 	mFileExists = Yes;
       if ( mFileExists == Yes && !mActiveScriptName.isEmpty() )
@@ -161,11 +171,12 @@ namespace KMail {
   }
 
   void SieveJob::slotResult( Job * job ) {
-    // First, let's see if we come back from a listDir. If so, set
+    Command lastCmd = mCommands.top();
+
+    // First, let's see if we come back from a SearchActive. If so, set
     // mFileExists to No if we didn't see the mUrl.fileName() during
     // listDir...
-    if ( mCommands.top() == SearchActive &&
-	 mFileExists == DontKnow && !job->error() )
+    if ( lastCmd == SearchActive && mFileExists == DontKnow && !job->error() )
       mFileExists = No;
     // prepare for next round:
     mCommands.pop();
@@ -173,15 +184,19 @@ namespace KMail {
 
     if ( mSieveCapabilities.empty() ) {
       mSieveCapabilities = QStringList::split( ' ', job->queryMetaData( "sieveExtensions" ) );
-      kdDebug(5006) << "received sieve extensions supported:" << endl
-		<< mSieveCapabilities.join("\n") << endl;
+      kdDebug(5006) << "Received Sieve extensions supported:" << endl
+		    << mSieveCapabilities.join("\n") << endl;
     }
 
     // check for errors:
     if ( job->error() ) {
       job->showErrorDialog( 0 );
-      emit gotScript( this, false, mScript,
-		   mUrl.fileName() == mActiveScriptName );
+
+      if ( lastCmd == List )
+	emit gotList( this, false, mAvailableScripts, mActiveScriptName );
+      else
+	emit gotScript( this, false, mScript, mUrl.fileName() == mActiveScriptName );
+
       mJob = 0;
       delete this;
       return;
@@ -198,7 +213,11 @@ namespace KMail {
 
     if ( mCommands.empty() ) {
       // was last command; report success and delete this object:
-      emit gotScript( this, true, mScript, mUrl.fileName() == mActiveScriptName );
+      if ( lastCmd == List )
+	emit gotList( this, false, mAvailableScripts, mActiveScriptName );
+      else
+	emit gotScript( this, false, mScript, mUrl.fileName() == mActiveScriptName );
+
       mJob = 0; // deletes itself on returning from this slot
       delete this;
       return;
@@ -226,10 +245,15 @@ namespace KMail {
     return new SieveJob( src, QString::null, commands );
   }
 
+  SieveJob * SieveJob::list( const KURL & src ) {
+    QValueStack<Command> commands;
+    commands.push( List );
+    return new SieveJob( src, QString::null, commands );
+  }
 
 } // namespace KMail
 
 #include "sievejob.moc"
 
-// vim: set et sts=2 ts=8 sw=2:
+// vim: set noet sts=2 ts=8 sw=2:
 
