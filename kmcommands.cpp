@@ -2068,7 +2068,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "ftp") || (mUrl.protocol() == "file") ||
            (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
            (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
-           (mUrl.protocol() == "smb"))
+           (mUrl.protocol() == "smb") || (mUrl.protocol() == "fish"))
   {
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( mUrl );
