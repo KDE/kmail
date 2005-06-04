@@ -58,7 +58,7 @@ namespace KMail {
     }
 
   signals:
-    void result( KMail::SieveJob * job, bool success,
+    void gotScript( KMail::SieveJob * job, bool success,
 		 const QString & script, bool active );
 
   protected:

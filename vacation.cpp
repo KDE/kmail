@@ -170,7 +170,7 @@ namespace KMail {
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mSieveJob = SieveJob::get( mUrl );
-    connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+    connect( mSieveJob, SIGNAL(gotScript(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
   }
 
@@ -371,7 +371,7 @@ namespace KMail {
 
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );
-    connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+    connect( mSieveJob, SIGNAL(gotScript(KMail::SieveJob*,bool,const QString&,bool)),
 	     active
 	     ? SLOT(slotPutActiveResult(KMail::SieveJob*,bool))
 	     : SLOT(slotPutInactiveResult(KMail::SieveJob*,bool)) );

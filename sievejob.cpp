@@ -180,7 +180,7 @@ namespace KMail {
     // check for errors:
     if ( job->error() ) {
       job->showErrorDialog( 0 );
-      emit result( this, false, mScript,
+      emit gotScript( this, false, mScript,
 		   mUrl.fileName() == mActiveScriptName );
       mJob = 0;
       delete this;
@@ -198,7 +198,7 @@ namespace KMail {
 
     if ( mCommands.empty() ) {
       // was last command; report success and delete this object:
-      emit result( this, true, mScript, mUrl.fileName() == mActiveScriptName );
+      emit gotScript( this, true, mScript, mUrl.fileName() == mActiveScriptName );
       mJob = 0; // deletes itself on returning from this slot
       delete this;
       return;
