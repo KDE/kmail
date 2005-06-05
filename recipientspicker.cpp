@@ -83,12 +83,13 @@ QString RecipientItem::name() const
 
 QString RecipientItem::email() const
 {
-  if ( !mAddressee.isEmpty() ) return mEmail;
-  else if ( mDistributionList ) {
+  if ( mAddressee.isEmpty() &&  mDistributionList ) {
     int count = mDistributionList->entries().count();
     return i18n( "1 email address", "%n email addresses", count );
+  } else {
+    return mEmail;
   }
-  else return QString::null;
+  return QString::null;
 }
 
 QString RecipientItem::recipient() const
