@@ -132,9 +132,8 @@ k_dcop_hidden:
   /** Shows the specified message in a separate message window.
       @param serialNumber the serial number of the message to be shown.
       @param messageId this parameter is ignored.
-
-      @TODO Get rid of the messageId parameter.
-   */
+  */
+  /*  @TODO Get rid of the messageId parameter.  */
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
 
   /**
