@@ -243,7 +243,7 @@ void SieveDebugDialog::slotDiagNextAccount()
         SieveConfig sieve = mAccountBase->sieveConfig();
         if ( !sieve.managesieveSupported() )
         {
-            mEdit->append( i18n( "(Account doesn't support Sieve)\n\n" ) );
+            mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
         } else {
             if ( sieve.reuseConfig() )
             {
