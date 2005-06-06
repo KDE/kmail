@@ -38,6 +38,7 @@
 #include <qlayout.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
+#include <qtoolbutton.h>
 #include <qlabel.h>
 
 RecipientItem::RecipientItem()
@@ -263,6 +264,8 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   mCollectionCombo = new QComboBox( this );
   resLayout->addWidget( mCollectionCombo );
+  resLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
+
   connect( mCollectionCombo, SIGNAL( highlighted( int ) ),
     SLOT( updateList() ) );
   connect( mCollectionCombo, SIGNAL( activated( int ) ),
@@ -270,8 +273,9 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
 
-  QPushButton *button = new QPushButton( this );
-  button->setPixmap( SmallIcon( "locationbar_erase" ) );
+  QToolButton *button = new QToolButton( this );
+  button->setIconSet( KGlobal::iconLoader()->loadIconSet(
+              KApplication::reverseLayout() ? "clear_left":"locationbar_erase", KIcon::Small, 0 ) );
   searchLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );
 
