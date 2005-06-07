@@ -31,6 +31,10 @@
     your version.
 */
 
+/** @file This file contains the class KMailICalIfaceImpl which actually
+* implements the ICal (DCOP) interface for KMail.
+*/
+
 #ifndef KMAILICALIFACEIMPL_H
 #define KMAILICALIFACEIMPL_H
 
@@ -75,6 +79,7 @@ public:
 
 }
 
+/** The implementation of the interface. */
 class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
   Q_OBJECT
 public:
