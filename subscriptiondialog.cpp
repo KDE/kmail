@@ -37,9 +37,11 @@
 #include "kmmessage.h"
 #include "folderstorage.h"
 #include "listjob.h"
+#include "imapaccountbase.h"
 
 #include <klocale.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
 
 
 namespace KMail {
@@ -47,7 +49,7 @@ namespace KMail {
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
     KAccount *acct, QString startPath )
   : KSubscription( parent, caption, acct, User1, QString::null, false ),
-    mStartPath( startPath ), mSubscribed( false )
+    mStartPath( startPath ), mSubscribed( false ), mForceSubscriptionEnable( false)
 {
   // hide unneeded checkboxes
   hideTreeCheckbox();
@@ -255,6 +257,14 @@ void SubscriptionDialog::slotSave()
     static_cast<ImapAccountBase*>(account())->changeSubscription(false,
         static_cast<GroupItem*>(it2.current())->info().path);
   }
+
+  if( mForceSubscriptionEnable ) {
+    KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
+    if( account )
+    {
+      account->setOnlySubscribedFolders(true);
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -354,6 +364,32 @@ void SubscriptionDialog::slotConnectionResult( int errorCode, const QString& err
   Q_UNUSED( errorMsg );
   if ( !errorCode )
     slotLoadFolders();
+}
+
+void SubscriptionDialog::show()
+{
+  KDialogBase::show();
+  KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
+  if( account )
+  {
+    if( !account->onlySubscribedFolders() )
+    {
+      kdDebug() << "Not subscribed!!!" << endl;
+      int result = KMessageBox::questionYesNoCancel( this,
+              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?")
+              .arg( account->name() ),
+            i18n("Enable subscriptions?"));
+        switch(result) {
+            case KMessageBox::Yes:
+                mForceSubscriptionEnable = true;
+                break;
+            case KMessageBox::No:
+                break;
+            case KMessageBox::Cancel:
+                cancel();
+        }
+    }
+  }
 }
 
 } // namespace

@@ -49,6 +49,8 @@ namespace KMail {
       SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct,
          QString startPath = QString::null );
 
+      void show();
+
     protected:
       /**
        * Find the parent item 
@@ -102,7 +104,7 @@ namespace KMail {
       uint mCount;
       QDict<GroupItem> mItemDict;
       QString mStartPath;
-      bool mSubscribed;
+      bool mSubscribed, mForceSubscriptionEnable;
       QStringList mPrefixList;
       QString mCurrentNamespace;
   };
