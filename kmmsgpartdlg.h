@@ -132,7 +132,6 @@ protected:
   QCheckBox  *mEncrypted;
   QCheckBox  *mSigned;
   QStringList mI18nizedEncodings;
-  bool mReadOnly;
 };
 
 /** @short The attachment dialog with convenience backward compatible methods

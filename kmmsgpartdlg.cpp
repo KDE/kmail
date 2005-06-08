@@ -47,7 +47,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 				  QWidget * parent, const char * name )
   : KDialogBase( Plain,
 		 caption.isEmpty() ? i18n("Message Part Properties") : caption,
-		 Ok|Cancel|Help, Ok, parent, name )
+		 Ok|Cancel|Help, Ok, parent, name, true, true)
 {
   // tmp vars:
   QGridLayout * glay;
@@ -197,7 +197,7 @@ QString KMMsgPartDialog::mimeType() const {
 void KMMsgPartDialog::setMimeType( const QString & mimeType ) {
   int dummy = 0;
   QString tmp = mimeType; // get rid of const'ness
-  if ( mMimeType->validator()->validate( tmp, dummy ) )
+  if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy ) )
     for ( int i = 0 ; i < mMimeType->count() ; ++i )
       if ( mMimeType->text( i ) == mimeType ) {
 	mMimeType->setCurrentItem( i );
@@ -321,7 +321,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
   // find a mimetype icon:
   int dummy = 0;
   QString tmp = mimeType; // get rid of const'ness
-  if ( mMimeType->validator()->validate( tmp, dummy )
+  if ( mMimeType->validator() && mMimeType->validator()->validate( tmp, dummy )
        == QValidator::Acceptable )
     mIcon->setPixmap( KMimeType::mimeType( mimeType )->pixmap( KIcon::Desktop ) );
   else
@@ -335,12 +335,12 @@ KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool readOnly)
   : KMMsgPartDialog(), mMsgPart( 0 )
 {
   setShownEncodings( SevenBit|EightBit|QuotedPrintable|Base64 );
-  mReadOnly = readOnly;
   if (readOnly)
   {
+    mMimeType->setEditable(false);
     mMimeType->setEnabled(false);
-    mFileName->setEnabled(false);
-    mDescription->setEnabled(false);
+    mFileName->setReadOnly(true);
+    mDescription->setReadOnly(true);
     mEncoding->setEnabled(false);
     mInline->setEnabled(false);
     mEncrypted->setEnabled(false);
