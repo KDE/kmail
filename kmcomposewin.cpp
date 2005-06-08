@@ -3240,17 +3240,9 @@ void KMComposeWin::slotPasteAsQuotation()
 {
     if( mEditor->hasFocus() && msg() )
     {
-        QString quotePrefix = quotePrefixName();
         QString s = QApplication::clipboard()->text();
-        if (!s.isEmpty()) {
-            for (int i=0; (uint)i<s.length(); i++) {
-                if ( s[i] < ' ' && s[i] != '\n' && s[i] != '\t' )
-                    s[i] = ' ';
-            }
-            s.prepend(quotePrefix);
-            s.replace("\n","\n"+quotePrefix);
-            mEditor->insert(s);
-        }
+        if (!s.isEmpty())
+            mEditor->insert(addQuotesToText(s));
     }
 }
 
@@ -3284,11 +3276,9 @@ void KMComposeWin::slotAddQuotes()
     if( mEditor->hasFocus() && msg() )
     {
         if ( mEditor->hasMarkedText()) {
-            QString s =  mEditor->markedText();
-            QString quotePrefix = quotePrefixName();
-            s.prepend(quotePrefix);
-            s.replace("\n", "\n"+quotePrefix);
-            mEditor->insert(s);
+            QString s = mEditor->markedText();
+            if(!s.isEmpty())
+                mEditor->insert(addQuotesToText(s));
         } else {
             int l =  mEditor->currentLine();
             int c =  mEditor->currentColumn();
@@ -3301,6 +3291,39 @@ void KMComposeWin::slotAddQuotes()
     }
 }
 
+QString KMComposeWin::addQuotesToText(const QString &inputText)
+{
+    QString answer = QString(quotePrefixName());
+    int sentenceLength = 0;
+    for (unsigned int i=0; (uint)i<inputText.length(); i++) {
+        if(inputText[i] == '\n') {
+            if(i > 0 && inputText[i-1] == ' ')
+                continue;
+            sentenceLength = 1;
+            answer.append('\n');
+            if(i < inputText.length())
+                answer.append(quotePrefixName());
+            continue;
+        }
+        else if(sentenceLength > GlobalSettings::lineWrapWidth()) {
+            unsigned int back = answer.length();
+            while(answer[back] != ' ' && back > 0)
+                back--;
+            if(back != 0) {
+                answer.insert(back+1, quotePrefixName());
+                answer.insert(back+1, "\n");
+            }
+            sentenceLength = 0;
+        }
+
+        if ( inputText[i] < ' ' && inputText[i] != '\t' )
+            answer.append(' ');
+        else
+            answer.append(inputText[i]);
+        sentenceLength++;
+    }
+    return answer;
+}
 
 void KMComposeWin::slotRemoveQuotes()
 {

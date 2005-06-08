@@ -905,6 +905,8 @@ private:
 
   bool mSubjectTextWasSpellChecked;
 
+  QString addQuotesToText(const QString &inputText);
+
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );
   void slotConfigChanged();
