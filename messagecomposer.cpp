@@ -407,7 +407,8 @@ void MessageComposer::readFromComposeWin()
   // of the message is no longer reliable (e. g. if he editted a draft/resent a
   // message and then removed all attachments or changed from PGP/MIME signed
   // to clearsigned); therefore we reset the Content-Type to text/plain.
-  mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
+  if ( mReferenceMessage->type() == DwMime::kTypeMultipart )
+    mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
   mUseOpportunisticEncryption = mComposeWin->mAutoPgpEncrypt;
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
