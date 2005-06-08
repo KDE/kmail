@@ -96,6 +96,8 @@ KMFolderImap::~KMFolderImap()
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
   mMetaDataMap.setAutoDelete( true );
   mMetaDataMap.clear();
+  mUidMetaDataMap.setAutoDelete( true );
+  mUidMetaDataMap.clear();
 }
 
 
@@ -304,8 +306,12 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
   } else {
     kdDebug(5006) << k_funcinfo << "no parent" << endl;
   }
-  // Remember the status, so it can be transfered to the new message.
-  mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status(), serNum));
+  if ( !mAccount->hasCapability("uidplus") ) {
+    // Remember the status with the MD5 as key
+    // so it can be transfered to the new message
+    mMetaDataMap.insert( aMsg->msgIdMD5(), 
+        new KMMsgMetaData(aMsg->status(), serNum) );
+  }
 
   delete aMsg;
   aMsg = 0;
@@ -321,17 +327,20 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     mAddMessageProgressItem = 0;
   }
   KMFolder *aFolder = msgList.first()->parent();
-  Q_UINT32 serNum = 0;
   int undoId = -1;
+  bool uidplus = mAccount->hasCapability("uidplus");
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
     if ( undoId == -1 )
       undoId = kmkernel->undoStack()->newUndoAction( aFolder, folder() );
     if ( msg->getMsgSerNum() > 0 )
       kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
-    // Remember the status, so it can be transfered to the new message.
-    serNum = msg->getMsgSerNum();
-    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status(), serNum));
+    if ( !uidplus ) {
+      // Remember the status with the MD5 as key
+      // so it can be transfered to the new message
+      mMetaDataMap.insert( msg->msgIdMD5(), 
+          new KMMsgMetaData(msg->status(), msg->getMsgSerNum()) );
+    }
     msg->setTransferInProgress( false );
   }
   if ( aFolder ) {
@@ -478,10 +487,14 @@ void KMFolderImap::slotCopyMsgResult( KMail::FolderJob* job )
 //-----------------------------------------------------------------------------
 void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 {
-  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
-    // Remember the status, so it can be transfered to the new message.
-    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
+  if ( !mAccount->hasCapability("uidplus") ) {
+    for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
+      // Remember the status with the MD5 as key
+      // so it can be transfered to the new message
+      mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData(msg->status()) );
+    }
   }
+  
   QValueList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids, false);
@@ -1085,7 +1098,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
       if ( !uidValidity().isEmpty() )
       {
         mAccount->ignoreJobsForFolder( folder() );
-        uidmap.clear();
+        mUidMetaDataMap.clear();
       }
       mLastUid = 0;
       setUidValidity(uidv);
@@ -1239,7 +1252,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
         idx++;
         uid = (*it).items.remove(uid);
         if ( msgBase->getMsgSerNum() > 0 ) {
-          uidmap.insert( mailUid, (ulong *)msgBase->getMsgSerNum() );
+          saveMsgMetaData( static_cast<KMMessage*>(msgBase) );
         }        
       }
       else break;  // happens only, if deleted mails reappear on the server
@@ -1276,18 +1289,19 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   else sets = makeSets( (*it).items );
   mAccount->removeJob(it); // don't use *it below
 
+  // make sure we have a connection
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+  {
+    quiet(false);
+    emit folderComplete(this, FALSE);
+    return;
+  }
+
   // Now kick off the getting of envelopes for the new mails in the folder
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
   {
     KURL url = mAccount->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
-    if ( mAccount->makeConnection() != ImapAccountBase::Connected )
-    {
-      quiet(false);
-      emit folderComplete(this, FALSE);
-      return;
-    }
-
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     jd.url = url.url();
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
@@ -1398,7 +1412,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   (*it).cdata += QCString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
   if ( pos == -1 ) {
-    return; // optimization
+    // if we do not find the pattern in the complete string we will not find 
+    // it in a substring.
+    return;
   }
   if (pos > 0)
   {
@@ -1428,7 +1444,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   int flags;
-  open();
   while (pos >= 0)
   {
     KMMessage *msg = new KMMessage;
@@ -1439,7 +1454,11 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       msg->fromString( (*it).cdata.mid(16, pos - 16) );
       flags = msg->headerField("X-Flags").toInt();
       ulong uid = msg->UID();
-      const ulong serNum = serNumForUID( uid );
+      KMMsgMetaData *md =  mUidMetaDataMap[uid];
+      ulong serNum = 0;
+      if ( md ) {
+        serNum = md->serNum();
+      }
       bool ok = true;
       if ( uid <= lastUid() && serNum > 0 ) {
         // the UID is already known so no need to create it
@@ -1458,14 +1477,21 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         }
         KMFolderMbox::addMsg(msg, 0);
         // Transfer the status, if it is cached.
-        QString id = msg->msgIdMD5();
-        if ( mMetaDataMap.find( id ) ) {
-          KMMsgMetaData *md =  mMetaDataMap[id];
+        if ( md ) {
           msg->setStatus( md->status() );
-          if ( md->serNum() != 0 && serNum == 0 )
-            msg->setMsgSerNum( md->serNum() );
-          mMetaDataMap.remove( id );
-          delete md;
+        } else if ( !mAccount->hasCapability("uidplus") ) {
+          // see if we have cached the msgIdMD5 and get the status +
+          // serial number from there
+          QString id = msg->msgIdMD5();
+          if ( mMetaDataMap.find( id ) ) {
+            md =  mMetaDataMap[id];
+            msg->setStatus( md->status() );
+            if ( md->serNum() != 0 && serNum == 0 ) {
+              msg->setMsgSerNum( md->serNum() );
+            }
+            mMetaDataMap.remove( id );
+            delete md;
+          }
         }
         // Merge with the flags from the server.
         flagsToStatus((KMMsgBase*)msg, flags);
@@ -1473,18 +1499,21 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
         if ( msg->getMsgSerNum() > 0 ) {
-          uidmap.insert( uid, (ulong *)msg->getMsgSerNum() );
+          saveMsgMetaData( msg );
         }        
 
         // Just in case we have changed (reverted) the serial number of this 
         // message update the message dict.
-        kmkernel->msgDict()->replace( msg->getMsgSerNum(), msg, msg->storage()->find( msg ) );
+        kmkernel->msgDict()->replace( msg->getMsgSerNum(), msg, 
+            msg->storage()->find( msg ) );
 
 	// Filter messages that have arrived in the inbox folder
 	if ( folder()->isSystemFolder() && imapPath() == "/INBOX/" )
 	    mAccount->execFilters( msg->getMsgSerNum() );
 	
-        if (count() > 1) unGetMsg(count() - 1);
+        if ( count() > 1 ) {
+          unGetMsg(count() - 1);
+        }
         mLastUid = uid;
         if ( mMailCheckProgressItem ) {
           mMailCheckProgressItem->incCompletedItems();
@@ -1496,7 +1525,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   } // while
-  close();
 }
 
 //-------------------------------------------------------------
@@ -1676,7 +1704,8 @@ void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMFolderImap::deleteMessage(KMMessage * msg)
 {
-  uidmap.remove( msg->UID() );
+  mUidMetaDataMap.remove( msg->UID() );
+  mMetaDataMap.remove( msg->msgIdMD5() );
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
   ulong uid = msg->UID();
@@ -1705,7 +1734,8 @@ void KMFolderImap::deleteMessage(const QPtrList<KMMessage>& msgList)
   KMMessage *msg;
   while ( (msg = it.current()) != 0 ) {
     ++it;
-    uidmap.remove( msg->UID() );
+    mUidMetaDataMap.remove( msg->UID() );
+    mMetaDataMap.remove( msg->msgIdMD5() );
   }
 
   QValueList<ulong> uids;
@@ -2205,11 +2235,23 @@ bool KMFolderImap::isMoveable() const
 //-----------------------------------------------------------------------------
 const ulong KMFolderImap::serNumForUID( ulong uid )
 {
-  if ( uidmap.find( uid ) ) {
-    return (ulong) uidmap[uid];
+  if ( mUidMetaDataMap.find( uid ) ) {
+    KMMsgMetaData *md = mUidMetaDataMap[uid];
+    return md->serNum();
   } else {
+    kdDebug(5006) << "serNumForUID: unknown uid " << uid << endl;
     return 0;
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
+{
+  if ( uid == 0 ) {
+    uid = msg->UID();
+  }
+  ulong serNum = msg->getMsgSerNum();
+  mUidMetaDataMap.replace( uid, new KMMsgMetaData(msg->status(), serNum) );
 }
 
 #include "kmfolderimap.moc"

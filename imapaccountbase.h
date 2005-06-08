@@ -348,6 +348,12 @@ namespace KMail {
       */ 
      bool isNamespaceFolder( QString& name );
 
+     /**
+      * Returns true if the account has the given capability
+      */
+     bool hasCapability( const QString& capa ) {
+      return mCapabilities.contains( capa ); } 
+
   public slots:
     /**
      * Call this to get the namespaces
@@ -407,6 +413,11 @@ namespace KMail {
      * Saves the fetched namespaces
      */ 
     void slotSaveNamespaces( const ImapAccountBase::nsDelimMap& map );
+
+    /** 
+     * Saves the capabilities list 
+     */
+    void slotCapabilitiesResult( KIO::Job*, const QString& result );
 
   protected:
 
@@ -470,10 +481,10 @@ namespace KMail {
     bool mSlaveConnectionError : 1;
     bool mCheckingSingleFolder : 1;
 
-	// folders that should be checked for new mails
-	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
+    // folders that should be checked for new mails
+    QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
     // folders that should be checked after the current check is done
-	QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
+    QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
     // holds messageparts from the bodystructure
     QPtrList<KMMessagePart> mBodyPartList;
     // the current message for the bodystructure
@@ -489,6 +500,9 @@ namespace KMail {
 
     // old prefix for migration
     QString mOldPrefix;
+
+    // capabilities
+    QStringList mCapabilities;
 
   signals:
     /**

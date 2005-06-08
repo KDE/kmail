@@ -1728,6 +1728,7 @@ KMCommand::Result KMCopyCommand::execute()
 
   } // end for
 
+  bool deleteNow = false;
   if (!localList.isEmpty())
   {
     QValueList<int> index;
@@ -1735,25 +1736,38 @@ KMCommand::Result KMCopyCommand::execute()
     for ( QValueListIterator<int> it = index.begin(); it != index.end(); ++it ) {
       mDestFolder->unGetMsg( *it );
     }
+    if ( mDestFolder->folderType() == KMFolderTypeImap ) {
+      if ( mWaitingForMsgs.isEmpty() ) {
+        // wait for the end of the copy before closing the folder
+        KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
+        connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+            this, SLOT( slotFolderComplete() ) );
+      }
+    } else {
+      deleteNow = true; // we're done
+    }
   }
-
-  // only close the folder if we're done
-  if ( mWaitingForMsgs.isEmpty() )
-    mDestFolder->close();
 
 //TODO: Get rid of the other cases just use this one for all types of folder
 //TODO: requires adding copyMsg and getFolder methods to KMFolder.h
-
   if (!list.isEmpty())
   {
     // copy the message(s); note: the list is empty afterwards!
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
+    connect( imapDestFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+        this, SLOT( slotFolderComplete() ) );
     imapDestFolder->copyMsg(list);
     imapDestFolder->getFolder();
   }
 
-  if ( mWaitingForMsgs.isEmpty() )
+  // only close the folder and delete the job if we're done
+  // otherwise this is done in slotMsgAdded or slotFolderComplete
+  if ( deleteNow ) 
+  {
+    mDestFolder->close();
     deleteLater();
+  }
+
   return OK;
 }
 
@@ -1765,6 +1779,12 @@ void KMCopyCommand::slotMsgAdded( KMFolder*, Q_UINT32 serNum )
     mDestFolder->close();
     deleteLater();
   }
+}
+
+void KMCopyCommand::slotFolderComplete()
+{
+  mDestFolder->close();
+  deleteLater();
 }
 
 

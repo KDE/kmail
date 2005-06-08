@@ -237,15 +237,15 @@ public:
     return encodeFileName( KMFolderMbox::fileName() ); }
 
   /**
-   * Insert a new entry into the uid <=> sernum cache
-   */
-  void insertUidSerNumEntry(ulong uid, const ulong * sernum) {
-    uidmap.insert(uid, sernum); }
-
-  /**
    * Get the serial number for the given UID (if available)
    */
    const ulong serNumForUID( ulong uid );
+
+  /**
+   * Save the metadata for the UID
+   * If the UID is not supplied the one from the message is taken
+   */
+  void saveMsgMetaData( KMMessage* msg, ulong uid = 0 ); 
 
   /**
    * Splits a uid-set into single uids
@@ -484,17 +484,26 @@ protected:
   bool        mReadOnly;
   bool        mCheckMail;
   QGuardedPtr<KMAcctImap> mAccount;
-  QIntDict<ulong> uidmap;
+  // the current uidvalidity
   QString mUidValidity;
   unsigned int mUserRights;
 
 private:
+  // if we're checking validity currently
   bool        mCheckingValidity;
+  // uid - metadata cache
+  QIntDict<KMMsgMetaData> mUidMetaDataMap;
+  // msgidMD5 - status map
   QDict<KMMsgMetaData> mMetaDataMap;
+  // if the folder should be deleted without server roundtrip
   bool        mAlreadyRemoved;
+  // the progress for mailchecks
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
+  // the progress for listings
   ProgressItem *mListDirProgressItem;
+  // the progress for addMsg
   ProgressItem *mAddMessageProgressItem;
+  // to-be-added folders
   QStringList mFoldersPendingCreation;
 };
 

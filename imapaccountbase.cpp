@@ -551,6 +551,22 @@ namespace KMail {
           this, SLOT( slotSaveNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
       getNamespaces();
     }
+
+    // get capabilities
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly);
+    stream << (int) 'c';
+    KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+    KIO::Scheduler::assignJobToSlave( mSlave, job );
+    connect( job, SIGNAL(infoMessage(KIO::Job*, const QString&)),
+	   SLOT(slotCapabilitiesResult(KIO::Job*, const QString&)) );
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotCapabilitiesResult( KIO::Job*, const QString& result )
+  {
+    mCapabilities = QStringList::split(' ', result.lower() );
+    kdDebug(5006) << "capabilities:" << mCapabilities << endl;
   }
 
   //-----------------------------------------------------------------------------
@@ -727,7 +743,7 @@ namespace KMail {
       QStringList::Iterator strit;
       for ( strit = it.data().begin(); strit != it.data().end(); ++strit )
       {
-        // first ignore an empty prefix
+        // first ignore an empty prefix as it would match always
         if ( !(*strit).isEmpty() && path.find( *strit ) != -1 ) {
           return (*strit);
         }

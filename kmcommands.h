@@ -653,6 +653,8 @@ public:
 protected slots:
   void slotMsgAdded( KMFolder*, Q_UINT32 );
 
+  void slotFolderComplete();
+
 private:
   virtual Result execute();
 

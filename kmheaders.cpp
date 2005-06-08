@@ -143,7 +143,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixmapsLoaded = true;
     pixNew                   = new QPixmap( UserIcon( "kmmsgnew"                   ) );
     pixUns                   = new QPixmap( UserIcon( "kmmsgunseen"                ) );
-    pixDel                   = new QPixmap( UserIcon( "editdelete"                   ) );
+    pixDel                   = new QPixmap( UserIcon( "editdelete"                 ) );
     pixRead                  = new QPixmap( UserIcon( "kmmsgread"                  ) );
     pixRep                   = new QPixmap( UserIcon( "kmmsgreplied"               ) );
     pixQueued                = new QPixmap( UserIcon( "kmmsgqueued"                ) );
@@ -152,7 +152,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixFwd                   = new QPixmap( UserIcon( "kmmsgforwarded"             ) );
     pixFlag                  = new QPixmap( UserIcon( "mail_flag"                  ) );
     pixWatched               = new QPixmap( UserIcon( "kmmsgwatched"               ) );
-    pixIgnored               = new QPixmap( UserIcon( "mail_ignore"               ) );
+    pixIgnored               = new QPixmap( UserIcon( "mail_ignore"                ) );
     pixSpam                  = new QPixmap( UserIcon( "mail_spam"                  ) );
     pixHam                   = new QPixmap( UserIcon( "mail_ham"                   ) );
     pixFullySigned           = new QPixmap( UserIcon( "kmmsgfullysigned"           ) );
@@ -163,7 +163,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "kmmsgundefinedencrypted"    ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
-    pixAttachment            = new QPixmap( UserIcon( "attach"            ) );
+    pixAttachment            = new QPixmap( UserIcon( "attach"                     ) );
     pixReadFwd               = new QPixmap( UserIcon( "kmmsgread_fwd"              ) );
     pixReadReplied           = new QPixmap( UserIcon( "kmmsgread_replied"          ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "kmmsgread_fwd_replied"      ) );
