@@ -2534,7 +2534,7 @@ void KMMainWidget::setupActions()
   mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
   mStatusMenu->insert( mToggleFlagAction );
 
-  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "kontact_todo",
+  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "mail_todo",
                                  0, this, SLOT(slotSetMsgStatusTodo()),
                                  actionCollection(), "status_todo");
   mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
@@ -2608,7 +2608,7 @@ void KMMainWidget::setupActions()
   mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
 
-  mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &To-do"), "kontact_todo",
+  mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &To-do"), "mail_todo",
                                        0, this, SLOT(slotSetThreadStatusTodo()),
                                        actionCollection(), "thread_todo");
   mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
