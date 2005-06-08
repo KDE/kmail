@@ -519,6 +519,10 @@ void KMHeaders::reset(void)
   int id = currentItemIndex();
   noRepaint = true;
   clear();
+  QString colText = i18n( "Sender" );
+  if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+    colText = i18n("Receiver");
+  setColumnText(mPaintInfo.senderCol, colText);
   noRepaint = false;
   mItems.resize(0);
   updateMessageList();

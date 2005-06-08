@@ -390,8 +390,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QString whoField;
   if (mDlg->folder()) whoField = mDlg->folder()->userWhoField();
   if (whoField.isEmpty()) mShowSenderReceiverComboBox->setCurrentItem(0);
-  if (whoField == "From") mShowSenderReceiverComboBox->setCurrentItem(1);
-  if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
+  else if (whoField == "From") mShowSenderReceiverComboBox->setCurrentItem(1);
+  else if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
 
 
   // sender identity
@@ -554,13 +554,19 @@ bool FolderDiaGeneralTab::save()
 {
   KMFolder* folder = mDlg->folder();
   folder->setIdentity( mIdentityComboBox->currentIdentity() );
+  QString oldWhoField = folder->userWhoField();
   // set whoField
   if (mShowSenderReceiverComboBox->currentItem() == 1)
     folder->setUserWhoField("From");
   else if (mShowSenderReceiverComboBox->currentItem() == 2)
     folder->setUserWhoField("To");
   else
-    folder->setUserWhoField(QString::null);
+    folder->setUserWhoField("");
+  if( oldWhoField.compare(folder->userWhoField()) != 0 )
+  {
+    if(mDlg->folderTree()->mainWidget() && mDlg->folderTree()->mainWidget()->headers())
+      mDlg->folderTree()->mainWidget()->headers()->reset();
+  }
 
   folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
   folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
