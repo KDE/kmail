@@ -681,9 +681,9 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   f->open();
 
   KMMessage* msg = 0;
-  if ( sernum != 0 )
+  if ( sernum != 0 ) {
     msg = findMessageBySerNum( sernum, f );
-  if ( msg ) {
+    if ( !msg ) return 0;
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
