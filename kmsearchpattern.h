@@ -219,22 +219,22 @@ namespace KMail {
   };
 
   static const MessageStatus StatusValues[] = {
-    { I18N_NOOP( "Important" ),        "mail_flag"   },
+    { I18N_NOOP( "Important" ),        "kmmsgflag"   },
     { I18N_NOOP( "New" ),              "kmmsgnew"   },
     { I18N_NOOP( "Unread" ),           "kmmsgunseen"   },
     { I18N_NOOP( "Read" ),             "kmmsgread"   },
     { I18N_NOOP( "Old" ),              0   },
-    { I18N_NOOP( "Deleted" ),          "edittrash"   },
+    { I18N_NOOP( "Deleted" ),          "kmmsgdel"   },
     { I18N_NOOP( "Replied" ),          "kmmsgreplied"   },
     { I18N_NOOP( "Forwarded" ),        "kmmsgforwarded"   },
     { I18N_NOOP( "Queued" ),           "kmmsgqueued"   },
     { I18N_NOOP( "Sent" ),             "kmmsgsent"   },
     { I18N_NOOP( "Watched" ),          "kmmsgwatched"   },
-    { I18N_NOOP( "Ignored" ),          "mail_ignore"   },
-    { I18N_NOOP( "Spam" ),             "mail_spam"   },
-    { I18N_NOOP( "Ham" ),              "mail_ham"   },
-    { I18N_NOOP( "To Do" ),            "mail_todo"   },
-    { I18N_NOOP( "Has Attachment"),    "attach"   }
+    { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
+    { I18N_NOOP( "Spam" ),             "kmmsgspam"   },
+    { I18N_NOOP( "Ham" ),              "kmmsgham"   },
+    { I18N_NOOP( "To Do" ),            "kmmsgtodo"   },
+    { I18N_NOOP( "Has Attachment"),    "kmmsgattachment"   }
   };
 
   static const int StatusValueCount =

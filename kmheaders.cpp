@@ -143,18 +143,18 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixmapsLoaded = true;
     pixNew                   = new QPixmap( UserIcon( "kmmsgnew"                   ) );
     pixUns                   = new QPixmap( UserIcon( "kmmsgunseen"                ) );
-    pixDel                   = new QPixmap( UserIcon( "editdelete"                 ) );
+    pixDel                   = new QPixmap( UserIcon( "kmmsgdel"                   ) );
     pixRead                  = new QPixmap( UserIcon( "kmmsgread"                  ) );
     pixRep                   = new QPixmap( UserIcon( "kmmsgreplied"               ) );
     pixQueued                = new QPixmap( UserIcon( "kmmsgqueued"                ) );
-    pixTodo                  = new QPixmap( UserIcon( "mail_todo"                  ) );
+    pixTodo                  = new QPixmap( UserIcon( "kmmsgtodo"                  ) );
     pixSent                  = new QPixmap( UserIcon( "kmmsgsent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "kmmsgforwarded"             ) );
-    pixFlag                  = new QPixmap( UserIcon( "mail_flag"                  ) );
+    pixFlag                  = new QPixmap( UserIcon( "kmmsgflag"                  ) );
     pixWatched               = new QPixmap( UserIcon( "kmmsgwatched"               ) );
-    pixIgnored               = new QPixmap( UserIcon( "mail_ignore"                ) );
-    pixSpam                  = new QPixmap( UserIcon( "mail_spam"                  ) );
-    pixHam                   = new QPixmap( UserIcon( "mail_ham"                   ) );
+    pixIgnored               = new QPixmap( UserIcon( "kmmsgignored"               ) );
+    pixSpam                  = new QPixmap( UserIcon( "kmmsgspam"                  ) );
+    pixHam                   = new QPixmap( UserIcon( "kmmsgham"                   ) );
     pixFullySigned           = new QPixmap( UserIcon( "kmmsgfullysigned"           ) );
     pixPartiallySigned       = new QPixmap( UserIcon( "kmmsgpartiallysigned"       ) );
     pixUndefinedSigned       = new QPixmap( UserIcon( "kmmsgundefinedsigned"       ) );
@@ -163,7 +163,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixUndefinedEncrypted    = new QPixmap( UserIcon( "kmmsgundefinedencrypted"    ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
-    pixAttachment            = new QPixmap( UserIcon( "attach"                     ) );
+    pixAttachment            = new QPixmap( UserIcon( "kmmsgattachment"            ) );
     pixReadFwd               = new QPixmap( UserIcon( "kmmsgread_fwd"              ) );
     pixReadReplied           = new QPixmap( UserIcon( "kmmsgread_replied"          ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "kmmsgread_fwd_replied"      ) );
@@ -395,7 +395,7 @@ void KMHeaders::readColorConfig (void)
   QColor c5=QColor(0,0x7F,0);
   QColor c6=QColor(0,0x98,0);
   QColor c7=KGlobalSettings::alternateBackgroundColor();
-  
+
   if (!config->readBoolEntry("defaultColors",true)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
     mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
@@ -1063,7 +1063,7 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       HeaderItem *item = static_cast<HeaderItem*>(lvi);
       SortCacheItem *sci = item->sortCacheItem();
       SortCacheItem *parent = findParent( sci );
-      if ( !parent && mSubjThreading ) 
+      if ( !parent && mSubjThreading )
         parent = findParentBySubject( sci );
 
       Q_ASSERT( !parent || parent->item() != removedItem );
@@ -2253,7 +2253,7 @@ void KMHeaders::slotRMB()
   menu->insertSeparator();
 
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, 
+  mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
       &mMenuToFolder, msgCopyMenu );
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
 
@@ -2262,7 +2262,7 @@ void KMHeaders::slotRMB()
     menu->setItemEnabled( id, false );
   } else {
     QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-    mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this, 
+    mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
         &mMenuToFolder, msgMoveMenu );
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
   }
