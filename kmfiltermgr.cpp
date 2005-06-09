@@ -267,6 +267,19 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 }
 
 
+bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
+{
+  // three cheers for QPtrList...
+  QPtrListIterator<KMFilter> it( const_cast<KMFilterMgr&>( *this ) );
+  for ( it.toFirst() ; it.current() ; ++it ) {
+    if ( (*it)->applyOnAccount( accountID ) ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
 //-----------------------------------------------------------------------------
 void KMFilterMgr::ref(void)
 {

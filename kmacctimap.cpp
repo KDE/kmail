@@ -316,15 +316,15 @@ void KMAcctImap::processNewMail(bool interactive)
         // connect the result-signals for new-mail-notification
         mCountRemainChecks++;
 
-	QPtrListIterator<KMFilter> it( *kmkernel->filterMgr() );
-	bool someFilterApplies = false;
-	for ( it.toFirst() ; it.current() ; ++it ) {
-	  KMFilter *filter = *it;
-	  if ( filter->applyOnAccount( id() ) ) {
-	      someFilterApplies = true;
-	      break;
-	  }
-	}
+        QPtrListIterator<KMFilter> it( *kmkernel->filterMgr() );
+        bool someFilterApplies = false;
+        for ( it.toFirst() ; it.current() ; ++it ) {
+          KMFilter *filter = *it;
+          if ( filter->applyOnInbound() && filter->applyOnAccount( id() ) ) {
+            someFilterApplies = true;
+            break;
+          }
+        }
 
         if (imapFolder->isSelected()) {
           connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
@@ -546,6 +546,7 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
 
 void KMAcctImap::execFilters(Q_UINT32 serNum)
 {
+  if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
   QValueListIterator<Q_UINT32> findIt = mFilterSerNums.find( serNum );
   if ( findIt != mFilterSerNums.end() )
       return;

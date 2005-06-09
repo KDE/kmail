@@ -60,6 +60,13 @@ public:
   int moveMessage(KMMessage *msg) const;
   void endFiltering(KMMsgBase *msgBase) const;
 
+  /**
+   * Returns whether at least one filter applies to this account,
+   * which means that mail must be downloaded in order to be filtered, 
+   * for example;
+   * */
+  bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
+
   /** Check for existing filters with the &p name and extend the
       "name" to "name (i)" until no match is found for i=1..n */
   const QString createUniqueName( const QString & name );
