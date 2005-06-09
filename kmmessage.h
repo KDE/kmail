@@ -5,6 +5,8 @@
 #ifndef kmmessage_h
 #define kmmessage_h
 
+/** @file This file defines Mime Message classes. */
+
 // for large file support
 #include <config.h>
 #include <sys/types.h>
@@ -60,6 +62,7 @@ namespace KMail {
                        ReplyNone };
 }
 
+/** This is a Mime Message. */
 class KMMessage: public KMMsgBase, public KMail::ISubject
 {
   friend class KMForwardCommand;    // needed for MIME Digest forward
