@@ -323,7 +323,7 @@ public:
   bool isReadOnly() const;
 
   /** Returns TRUE if the folder is a kmail system folder. These are
-    the folders 'outbox', 'sent', 'trash'. The name of these
+    the folders 'inbox', 'outbox', 'sent', 'trash'. The name of these
     folders is nationalized in the folder display and they cannot have
     accounts associated. Deletion is also forbidden. Etc. */
   bool isSystemFolder() const { return mIsSystemFolder; }
