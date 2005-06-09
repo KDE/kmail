@@ -1608,7 +1608,7 @@ uint KMMessage::identityUoid() const {
   int id = idString.toUInt( &ok );
 
   if ( !ok || id == 0 )
-    id = kmkernel->identityManager()->identityForAddress( to() + cc() ).uoid();
+    id = kmkernel->identityManager()->identityForAddress( to() + ", " + cc() ).uoid();
   if ( id == 0 && parent() )
     id = parent()->identity();
 
