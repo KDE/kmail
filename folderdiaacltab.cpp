@@ -30,6 +30,8 @@
  *  your version.
  */
 
+#include <config.h>
+
 #include "folderdiaacltab.h"
 #include "acljobs.h"
 #include "kmfolderimap.h"
@@ -39,7 +41,11 @@
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
+#ifdef KDEPIM_NEW_DISTRLISTS
+#include <libkdepim/distributionlist.h> // libkdepim
+#else
 #include <kabc/distributionlist.h>
+#endif
 #include <kabc/stdaddressbook.h>
 #include <kaddrbook.h>
 #include <kpushbutton.h>
@@ -146,14 +152,7 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
     return;
 
   const QStringList distrLists = dlg.toDistributionLists();
-  QString txt;
-  if ( !distrLists.isEmpty() ) {
-    for( QStringList::ConstIterator it = distrLists.begin(); it != distrLists.end(); ++it ) {
-      if ( !txt.isEmpty() )
-        txt += ", ";
-      txt += *it; // put the distr list name here, don't expand until saving
-    }
-  }
+  QString txt = distrLists.join( ", " );
   const KABC::Addressee::List lst = dlg.toAddresses();
   if ( !lst.isEmpty() ) {
     for( QValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
@@ -206,7 +205,13 @@ public:
       mModified( false ), mNew( false ) {}
 
   void load( const ACLListEntry& entry );
-  void save( ACLList& list, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat );
+  void save( ACLList& list,
+#ifdef KDEPIM_NEW_DISTRLISTS
+             KABC::AddressBook* abook,
+#else
+             KABC::DistributionListManager& manager,
+#endif
+             IMAPUserIdFormat userIdFormat );
 
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
@@ -266,15 +271,30 @@ void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
   mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat )
+void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList,
+#ifdef KDEPIM_NEW_DISTRLISTS
+                                                 KABC::AddressBook* addressBook,
+#else
+                                                 KABC::DistributionListManager& manager,
+#endif
+                                                 IMAPUserIdFormat userIdFormat )
 {
   // expand distribution lists
+#ifdef KDEPIM_NEW_DISTRLISTS
+  KPIM::DistributionList list = KPIM::DistributionList::findByName( addressBook, userId(), false );
+  if ( !list.isEmpty() ) {
+    Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
+    KPIM::DistributionList::Entry::List entryList = list.entries(addressBook);
+    KPIM::DistributionList::Entry::List::ConstIterator it;
+    // (we share for loop with the old-distrlist-code)
+#else
   // kaddrbook.cpp has a strange two-pass case-insensitive lookup; is it ok to be case sensitive?
   KABC::DistributionList* list = manager.list( userId() );
   if ( list ) {
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
     KABC::DistributionList::Entry::List entryList = list->entries();
     KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
+#endif
     for( it = entryList.begin(); it != entryList.end(); ++it ) {
       QString email = (*it).email;
       if ( email.isEmpty() )
@@ -650,12 +670,20 @@ bool KMail::FolderDiaACLTab::save()
   // listviewitems at the same time sounds dangerous, so let's just save into
   // ACLList and reload that.
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
+#ifndef KDEPIM_NEW_DISTRLISTS
   KABC::DistributionListManager manager( addressBook );
   manager.load();
+#endif
   ACLList aclList;
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    ACLitem->save( aclList, manager, mUserIdFormat );
+    ACLitem->save( aclList,
+#ifdef KDEPIM_NEW_DISTRLISTS
+                   addressBook,
+#else
+                   manager,
+#endif
+                   mUserIdFormat );
   }
   loadListView( aclList );
 
