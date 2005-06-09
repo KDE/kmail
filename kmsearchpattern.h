@@ -223,7 +223,7 @@ namespace KMail {
     { I18N_NOOP( "New" ),              "kmmsgnew"   },
     { I18N_NOOP( "Unread" ),           "kmmsgunseen"   },
     { I18N_NOOP( "Read" ),             "kmmsgread"   },
-    { I18N_NOOP( "Old" ),              "history"   },
+    { I18N_NOOP( "Old" ),              0   },
     { I18N_NOOP( "Deleted" ),          "edittrash"   },
     { I18N_NOOP( "Replied" ),          "kmmsgreplied"   },
     { I18N_NOOP( "Forwarded" ),        "kmmsgforwarded"   },
