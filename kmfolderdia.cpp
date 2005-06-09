@@ -562,10 +562,9 @@ bool FolderDiaGeneralTab::save()
     folder->setUserWhoField("To");
   else
     folder->setUserWhoField("");
-  if( oldWhoField.compare(folder->userWhoField()) != 0 )
-  {
-    if(mDlg->folderTree()->mainWidget() && mDlg->folderTree()->mainWidget()->headers())
-      mDlg->folderTree()->mainWidget()->headers()->reset();
+  if( oldWhoField != folder->userWhoField() ) { // we changed the 'from' column
+    if( mDlg->folderTree()->mainWidget() && mDlg->folderTree()->mainWidget()->headers() )
+      mDlg->folderTree()->mainWidget()->headers()->reset(); // so we update the UI
   }
 
   folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );

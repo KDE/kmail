@@ -350,8 +350,8 @@ void KMHeaders::slotToggleColumn(int id, int mode)
   if ( static_cast<KPaintInfo::ColumnIds>(id) ==  KPaintInfo::COL_RECEIVER ) {
     QString colText = i18n( "Sender" );
     if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
-      colText = i18n("Receiver");
-    setColumnText(mPaintInfo.senderCol, colText);
+      colText = i18n( "Receiver" );
+    setColumnText( mPaintInfo.senderCol, colText );
   }
 
   if (mode == -1)
@@ -521,8 +521,8 @@ void KMHeaders::reset(void)
   clear();
   QString colText = i18n( "Sender" );
   if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
-    colText = i18n("Receiver");
-  setColumnText(mPaintInfo.senderCol, colText);
+    colText = i18n( "Receiver" );
+  setColumnText( mPaintInfo.senderCol, colText );
   noRepaint = false;
   mItems.resize(0);
   updateMessageList();
