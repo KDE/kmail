@@ -219,9 +219,7 @@ public:
       slow for large message since it involves a string copy. If you
       need the string representation only for a short time
       (i.e. without the chance of calling any function in the
-      underlying mimelib, then you should use the @see asByteArray,
-      which is more efficient or use the @see asDwString function.
-      @see asByteArray
+      underlying mimelib, then you should use the asDwString function.
       @see asDwString
   */
   QCString asString() const;
