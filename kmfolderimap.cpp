@@ -1507,10 +1507,10 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         kmkernel->msgDict()->replace( msg->getMsgSerNum(), msg, 
             msg->storage()->find( msg ) );
 
-	// Filter messages that have arrived in the inbox folder
-	if ( folder()->isSystemFolder() && imapPath() == "/INBOX/" )
-	    mAccount->execFilters( msg->getMsgSerNum() );
-	
+        // Filter messages that have arrived in the inbox folder
+        if ( folder()->isSystemFolder() && imapPath() == "/INBOX/" )
+            mAccount->execFilters( msg->getMsgSerNum() );
+        
         if ( count() > 1 ) {
           unGetMsg(count() - 1);
         }
