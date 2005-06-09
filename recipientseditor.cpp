@@ -484,13 +484,22 @@ void RecipientsView::slotDeleteLine()
   removeChild( line );
   delete line;
 
+  bool atLeastOneToLine = false;
+  unsigned int firstCC = 0;
   for( uint i = pos; i < mLines.count(); ++i ) {
     RecipientLine *line = mLines.at( i );
     moveChild( line, childX( line ), childY( line ) - mLineHeight );
+    if ( line->recipientType() == Recipient::To )
+      atLeastOneToLine = true;
+    else if ( ( line->recipientType() == Recipient::Cc ) && ( i == 0 ) )
+      firstCC = i;
   }
   // only one left, can't remove that one
   if ( mLines.count() == 1 )
     mLines.first()->setRemoveLineButtonEnabled( false );
+
+  if ( !atLeastOneToLine )
+    mLines.at( firstCC )->setRecipientType( Recipient::To );
 
   calculateTotal();
 
