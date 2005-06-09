@@ -752,7 +752,6 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
-  //emit maybeDeleting();
   if (mFolder->count() == 0) { // Folder cleared
     clear();
     return;
@@ -764,11 +763,12 @@ void KMHeaders::msgChanged()
   QListViewItem *item = currentItem();
   HeaderItem *hi = dynamic_cast<HeaderItem*>(item);
   if (item && hi) {
+    // get the msgIdMD5 to compare it later
     KMMsgBase *mb = mFolder->getMsgBase(hi->msgId());
     if (mb)
       msgIdMD5 = mb->msgIdMD5();
   }
-  if (!isUpdatesEnabled()) return;
+//  if (!isUpdatesEnabled()) return;
   // prevent IMAP messages from scrolling to top
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
              this,SLOT(highlightMessage(QListViewItem*)));
@@ -3190,8 +3190,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     }
 
     if (getNestingPolicy()<2)
-    for (HeaderItem *khi=static_cast<HeaderItem*>(firstChild()); khi!=0;khi=static_cast<HeaderItem*>(khi->nextSibling()))
-       khi->setOpen(true);
+      for (HeaderItem *khi=static_cast<HeaderItem*>(firstChild()); khi!=0;khi=static_cast<HeaderItem*>(khi->nextSibling()))
+        khi->setOpen(true);
 
     END_TIMER(header_creation);
     SHOW_TIMER(header_creation);
