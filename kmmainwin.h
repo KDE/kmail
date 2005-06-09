@@ -66,6 +66,9 @@ protected slots:
   void slotConfigChanged();
   void slotShowTipOnStart();
 
+private slots:
+  void slotNewMailReader();
+
 private:
   KMMainWidget *mKMMainWidget;
   StatusbarProgressWidget *mLittleProgress;

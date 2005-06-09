@@ -151,7 +151,7 @@ EXTRA_DIST = KMail.desktop $(link_DATA)
 KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
-rc_DATA = kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc
+rc_DATA = kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc kmail_part.rc
 
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd

@@ -245,7 +245,6 @@ protected slots:
   void getAccountMenu();
   void getTransportMenu();
   void slotHelp();
-  void slotNewMailReader();
   void slotFilter();
   void slotPopFilter();
   void slotAddrBook();

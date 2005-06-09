@@ -115,7 +115,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mStatusBar  = new KMailStatusBarExtension(this);
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   KGlobal::iconLoader()->addAppDir("kmail");
-  setXMLFile( "kmmainwin.rc" );
+  setXMLFile( "kmail_part.rc" );
   kmkernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
@@ -139,7 +139,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
   KGlobal::iconLoader()->addAppDir( "kmail" );
-  setXMLFile( "kmmainwin.rc" );
+  setXMLFile( "kmail_part.rc" );
 #endif
 }
 

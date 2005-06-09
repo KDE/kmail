@@ -36,6 +36,11 @@ KMMainWin::KMMainWin(QWidget *)
   setWFlags( getWFlags() | WGroupLeader );
 
   kapp->ref();
+
+  (void) new KAction( i18n("New &Window"), "window_new", 0,
+		      this, SLOT(slotNewMailReader()),
+		      actionCollection(), "new_mail_client" );
+
   mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
@@ -123,6 +128,17 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 
   statusBar()->changeItem(text, mMessageStatusId);
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotNewMailReader()
+{
+  KMMainWin *d;
+
+  d = new KMMainWin();
+  d->show();
+  d->resize(d->size());
+}
+
 
 void KMMainWin::slotEditToolbars()
 {

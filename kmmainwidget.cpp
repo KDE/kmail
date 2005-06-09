@@ -736,17 +736,6 @@ void KMMainWidget::slotHelp()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotNewMailReader()
-{
-  KMMainWin *d;
-
-  d = new KMMainWin();
-  d->show();
-  d->resize(d->size());
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
   kmkernel->filterMgr()->openDialog( this );
@@ -2240,10 +2229,6 @@ void KMMainWidget::getTransportMenu()
 void KMMainWidget::setupActions()
 {
   //----- File Menu
-  (void) new KAction( i18n("New &Window"), "window_new", 0,
-		      this, SLOT(slotNewMailReader()),
-		      actionCollection(), "new_mail_client" );
-
   mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
