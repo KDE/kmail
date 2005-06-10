@@ -89,8 +89,8 @@ namespace KMail {
    *
    * You may combine the two modes in the following way only. Any
    * number of @see #write() calls can precede @see #queue() calls,
-   * but once a chunk has been queued, you @em must @em not @see
-   * #write() more data, only @see #queue() it.
+   * but once a chunk has been queued, you @em must @em not
+   * @see #write() more data, only @see #queue() it.
    *
    * Naturally, whenever you queued data in a given session, that
    * session must be ended by calling @see #flush(), not @see #end().
