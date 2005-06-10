@@ -247,6 +247,7 @@ protected slots:
   void slotHelp();
   void slotFilter();
   void slotPopFilter();
+  void slotManageSieveScripts();
   void slotAddrBook();
   void slotImport();
   void slotViewChange();

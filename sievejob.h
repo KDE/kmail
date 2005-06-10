@@ -34,7 +34,7 @@ namespace KMail {
   class SieveJob : public QObject {
     Q_OBJECT
   protected:
-    enum Command { Get, Put, Activate, Deactivate, SearchActive, List };
+    enum Command { Get, Put, Activate, Deactivate, SearchActive, List, Delete };
     SieveJob( const KURL & url, const QString & script,
 	      const QValueStack<Command> & commands,
 	      QObject * parent=0, const char * name=0 );
@@ -58,7 +58,11 @@ namespace KMail {
     /**
      * List all available scripts
      */
-    static SieveJob * list( const KURL &src );
+    static SieveJob * list( const KURL & url );
+
+    static SieveJob * del( const KURL & url );
+
+    static SieveJob * activate( const KURL & url );
 
     void kill( bool quiet=true );
 
@@ -82,7 +86,12 @@ namespace KMail {
      *        empty string if no script is active.
      */
     void gotList( KMail::SieveJob *job, bool success,
-		  const QStringList &scriptList, const QString &activeScript );
+                  const QStringList &scriptList, const QString &activeScript );
+    
+    void result(  KMail::SieveJob * job, bool success,
+                  const QString & script, bool active );
+
+    void item( KMail::SieveJob * job, const QString & filename, bool active );
 
   protected:
     void schedule( Command command );

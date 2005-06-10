@@ -82,7 +82,8 @@ namespace KMail {
       {
 	KURL url = mUrl;
 	QString query = url.query(); //save query part, because KURL::cd() erases it
-	url.cd("..");
+	if ( !url.fileName().isEmpty() )
+		url.cd("..");
 	url.setQuery( query );
 	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.prettyURL()
 		  << endl;
@@ -99,6 +100,10 @@ namespace KMail {
 		 SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList & ) ) );
 	break;
       }
+    case Delete:
+      kdDebug(5006) << "SieveJob::schedule: delete( " << mUrl.prettyURL() << " )" << endl;
+      mJob = KIO::del( mUrl );
+      break;
     default:
       assert( 0 );
     }
@@ -138,12 +143,6 @@ namespace KMail {
   }
 
   void SieveJob::slotEntries( Job *, const UDSEntryList & l ) {
-    // Skip all processing if we already have the filename for a
-    // SearchActive job. In case of a List job this condition is never
-    // met (mFileExists will equal DontKnow until the very end).
-    if ( !mActiveScriptName.isEmpty() && mFileExists != DontKnow )
-      return;
-
     // loop over entries:
     for ( UDSEntryList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
       // Loop over all UDS atoms to find the UDS_ACCESS and UDS_NAME atoms;
@@ -164,6 +163,7 @@ namespace KMail {
 
       if ( mFileExists == DontKnow && filename == mUrl.fileName() )
 	mFileExists = Yes;
+      emit item( this, filename, isActive );
       if ( mFileExists == Yes && !mActiveScriptName.isEmpty() )
 	return; // early return if we have all information
     }
@@ -212,6 +212,7 @@ namespace KMail {
 
     if ( mCommands.empty() ) {
       // was last command; report success and delete this object:
+      emit result( this, true, mScript, mUrl.fileName() == mActiveScriptName );
       if ( lastCmd == List )
 	emit gotList( this, false, mAvailableScripts, mActiveScriptName );
       else
@@ -248,6 +249,18 @@ namespace KMail {
     QValueStack<Command> commands;
     commands.push( List );
     return new SieveJob( src, QString::null, commands );
+  }
+  SieveJob * SieveJob::del( const KURL & url ) {
+    QValueStack<Command> commands;
+    commands.push( Delete );
+    return new SieveJob( url, QString::null, commands );
+  }
+
+  SieveJob * SieveJob::activate( const KURL & url ) {
+    QValueStack<Command> commands;
+    commands.push( Activate );
+    commands.push( Deactivate );
+    return new SieveJob( url, QString::null, commands );
   }
 
 } // namespace KMail

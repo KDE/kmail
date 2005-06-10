@@ -107,6 +107,8 @@ using KMime::Types::AddrSpecList;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 
+#include "managesievescriptsdialog.h"
+
 #include "kmmainwidget.moc"
 
 QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
@@ -746,6 +748,11 @@ void KMMainWidget::slotFilter()
 void KMMainWidget::slotPopFilter()
 {
   kmkernel->popFilterMgr()->openDialog( this );
+}
+
+void KMMainWidget::slotManageSieveScripts() {
+  KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
+  dlg->show();
 }
 
 
@@ -2798,6 +2805,8 @@ void KMMainWidget::setupActions()
  		      SLOT(slotFilter()), actionCollection(), "filter" );
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
  		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
+  (void) new KAction( i18n("Manage &Sieve Scripts..."), 0, this,
+                      SLOT(slotManageSieveScripts()), actionCollection(), "sieveFilters" );
 
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
 				i18n("Display KMail's Welcome Page") ),

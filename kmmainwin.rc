@@ -147,6 +147,7 @@
    <Action name="show_quick_search"/>
    <Action name="filter" append="save_merge"/>
    <Action name="popFilter" append="save_merge"/>
+   <Action name="sieveFilters" append="save_merge"/>
    <Separator/>
    <Action name="options_configure_keybinding" group="settings_configure"/>
    <Action name="kmail_configure_notifications" group="settings_configure"/>
