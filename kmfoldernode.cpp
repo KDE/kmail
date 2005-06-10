@@ -9,7 +9,6 @@
 //-----------------------------------------------------------------------------
 KMFolderNode::KMFolderNode( KMFolderDir * parent, const QString & name )
   : mName( name ),
-    mType( "node" ),
     mParent( parent ),
     mDir( false ),
     mId( 0 )
@@ -21,21 +20,6 @@ KMFolderNode::KMFolderNode( KMFolderDir * parent, const QString & name )
 KMFolderNode::~KMFolderNode()
 {
 }
-
-
-//-----------------------------------------------------------------------------
-const char* KMFolderNode::type(void) const
-{
-  return mType;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderNode::setType(const char* aType)
-{
-  mType = aType;
-}
-
 
 //-----------------------------------------------------------------------------
 bool KMFolderNode::isDir(void) const

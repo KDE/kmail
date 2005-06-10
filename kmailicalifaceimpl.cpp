@@ -1498,11 +1498,11 @@ void KMailICalIfaceImpl::readConfig()
   cleanup();
 
   // Set the new folders
-  mCalendar = initFolder( "GCa", KMail::ContentsTypeCalendar );
-  mTasks    = initFolder( "GTa", KMail::ContentsTypeTask );
-  mJournals = initFolder( "GTa", KMail::ContentsTypeJournal );
-  mContacts = initFolder( "GCo", KMail::ContentsTypeContact );
-  mNotes    = initFolder( "GNo", KMail::ContentsTypeNote );
+  mCalendar = initFolder( KMail::ContentsTypeCalendar );
+  mTasks    = initFolder( KMail::ContentsTypeTask );
+  mJournals = initFolder( KMail::ContentsTypeJournal );
+  mContacts = initFolder( KMail::ContentsTypeContact );
+  mNotes    = initFolder( KMail::ContentsTypeNote );
 
   mCalendar->setLabel( i18n( "Calendar" ) );
   mTasks->setLabel( i18n( "Tasks" ) );
@@ -1576,8 +1576,7 @@ void KMailICalIfaceImpl::slotCheckDone()
   }
 }
 
-KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
-                                          KMail::FolderContentsType contentsType )
+KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType )
 {
   // Figure out what type of folder this is supposed to be
   KMFolderType type = mFolderType;
@@ -1621,7 +1620,6 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
                        .arg( folderName( itemType ) ) );
     return 0;
   }
-  folder->setType( typeString );
   folder->storage()->setContentsType( contentsType );
   folder->setSystemFolder( true );
   folder->storage()->writeConfig();
@@ -1665,7 +1663,6 @@ void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
 static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
 {
   if( folder ) {
-    folder->setType( "plain" );
     folder->setSystemFolder( false );
     folder->disconnect( _this );
     folder->close();

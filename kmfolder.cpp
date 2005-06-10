@@ -562,11 +562,6 @@ QString KMFolder::mailingListPostAddress() const
   return QString::null;
 }
 
-const char* KMFolder::type() const
-{
-  return mStorage->type();
-}
-
 bool KMFolder::hasAccounts() const
 {
   return mStorage->hasAccounts();

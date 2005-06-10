@@ -220,7 +220,7 @@ private slots:
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
-  KMFolder* initFolder( const char* typeString, KMail::FolderContentsType contentsType );
+  KMFolder* initFolder( KMail::FolderContentsType contentsType );
 
   void connectFolder( KMFolder* folder );
 

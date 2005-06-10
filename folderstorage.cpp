@@ -67,7 +67,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mQuiet	  = 0;
   mChanged        = FALSE;
   mAutoCreateIndex= TRUE;
-  folder->setType( "plain" );
   mAcctList       = 0;
   mDirty          = FALSE;
   mUnreadMsgs      = -1;
@@ -782,15 +781,6 @@ int FolderStorage::expunge()
 
   return 0;
 }
-
-
-//-----------------------------------------------------------------------------
-const char* FolderStorage::type() const
-{
-  if (mAcctList) return "In";
-  return folder()->KMFolderNode::type();
-}
-
 
 //-----------------------------------------------------------------------------
 QString FolderStorage::label() const

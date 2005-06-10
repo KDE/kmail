@@ -340,9 +340,6 @@ public:
   /** URL of the node for visualization purposes. */
   virtual QString prettyURL() const;
 
-  /** Type of the folder. Inherited. */
-  const char* type() const;
-
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const;
 

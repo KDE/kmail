@@ -1207,7 +1207,6 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_outboxFolder->setNoChildren(true);
 
-  the_outboxFolder->setType("Out");
   the_outboxFolder->setSystemFolder(TRUE);
   if ( the_outboxFolder->userWhoField().isEmpty() )
     the_outboxFolder->setUserWhoField( QString::null );
@@ -1225,7 +1224,6 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_sentFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
   }
-  the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
   if ( the_sentFolder->userWhoField().isEmpty() )
     the_sentFolder->setUserWhoField( QString::null );
@@ -1235,7 +1233,6 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_trashFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
   }
-  the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
   if ( the_trashFolder->userWhoField().isEmpty() )
     the_trashFolder->setUserWhoField( QString::null );
@@ -1245,7 +1242,6 @@ void KMKernel::initFolders(KConfig* cfg)
   if (the_draftsFolder->canAccess() != 0) {
     emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
   }
-  the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
   if ( the_draftsFolder->userWhoField().isEmpty() )
     the_draftsFolder->setUserWhoField( QString::null );

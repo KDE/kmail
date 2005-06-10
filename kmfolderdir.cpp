@@ -81,7 +81,6 @@ KMFolderDir::KMFolderDir( KMFolder * owner, KMFolderDir* parent,
     mOwner( owner ), mDirType( dirType )
 {
   setAutoDelete( true );
-  setType( "dir" );
 }
 
 

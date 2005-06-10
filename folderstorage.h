@@ -342,9 +342,6 @@ public:
   /** Returns the label of the folder for visualization. */
   QString label() const;
 
-  /** Type of the folder. Inherited. */
-  virtual const char* type() const;
-
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != 0); }
 
