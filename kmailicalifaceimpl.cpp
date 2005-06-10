@@ -1111,9 +1111,9 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
   KMFolder* aFolder = 0;
   int index;
   kmkernel->msgDict()->getLocation( serNum, &aFolder, &index );
-  if( aFolder && aFolder != folder ){
+  if( aFolder && aFolder != folder ) {
     kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) found it in folder " << aFolder->location() << ", expected " << folder->location() << endl;
-  }else{
+  } else {
     if( aFolder )
       message = aFolder->getMsg( index );
     if (!message)
