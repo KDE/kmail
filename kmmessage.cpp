@@ -1861,7 +1861,6 @@ void KMMessage::setFcc(const QString& aStr)
 void KMMessage::setDrafts(const QString& aStr)
 {
   mDrafts = aStr;
-  kdDebug(5006) << "KMMessage::setDrafts " << aStr << endl;
 }
 
 //-----------------------------------------------------------------------------
