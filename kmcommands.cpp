@@ -2085,10 +2085,11 @@ KMCommand::Result KMUrlClickedCommand::execute()
     kmkernel->imProxy()->chatWithContact( mUrl.path() );
   }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
-           (mUrl.protocol() == "ftp") || (mUrl.protocol() == "file") ||
+           (mUrl.protocol() == "ftp")  || (mUrl.protocol() == "file")  ||
            (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
-           (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
-           (mUrl.protocol() == "smb") || (mUrl.protocol() == "fish"))
+           (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc")   ||
+           (mUrl.protocol() == "smb")  || (mUrl.protocol() == "fish")  ||
+           (mUrl.protocol() == "news"))
   {
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( mUrl );
