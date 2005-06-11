@@ -253,7 +253,6 @@ void KMFolderCachedImap::remove()
   // When this happens, be sure to delete all traces of the cache
   if( QFile::exists(uidCacheFile) )
     unlink( QFile::encodeName( uidCacheFile ) );
-  KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
 
   FolderStorage::remove();
 }
