@@ -3305,15 +3305,15 @@ QString KMComposeWin::addQuotesToText(const QString &inputText)
                 answer.append(quotePrefixName());
             continue;
         }
-        else if(sentenceLength > GlobalSettings::lineWrapWidth()) {
+        else if(sentenceLength >= GlobalSettings::lineWrapWidth()) {
             unsigned int back = answer.length();
             while(answer[back] != ' ' && back > 0)
                 back--;
             if(back != 0) {
+                sentenceLength = answer.length() - back;
                 answer.insert(back+1, quotePrefixName());
                 answer.insert(back+1, "\n");
             }
-            sentenceLength = 0;
         }
 
         if ( inputText[i] < ' ' && inputText[i] != '\t' )
