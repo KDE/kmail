@@ -32,6 +32,8 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 
+#include <kio/netaccess.h>
+
 #include "headeritem.h"
 #include "kmheaders.h"
 

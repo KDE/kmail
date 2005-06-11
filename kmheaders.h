@@ -3,16 +3,14 @@
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
-#include "kmmessage.h"
 #include "kmime_util.h"
-#include "kmcommands.h"
 #include "headeritem.h"
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
 
 #include <klistview.h>
-#include <kfoldertree.h>
-#include <kpopupmenu.h>
+#include <kfoldertree.h> // for KPaintInfo
+#include <kmmsgbase.h>   // for KMMsgStatus
 
 #include <qwidget.h>
 #include <qstrlist.h>
@@ -20,11 +18,14 @@ using KMail::HeaderItem;
 #include <qmap.h>
 #include <qdragobject.h>
 #include <qdict.h>
+#include <qguardedptr.h>
 
 class KMFolder;
 class KMMessage;
 class KMMsgBase;
+class KMCommand;
 class KMMainWidget;
+class KPopupMenu;
 class QPalette;
 class QPixmap;
 class QIconSet;

@@ -55,6 +55,7 @@
 #include <dcopclient.h>
 
 #include <qtextcodec.h>
+#include <qpopupmenu.h>
 
 #include <libemailfunctions/email.h>
 #include <kdebug.h>
