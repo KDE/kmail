@@ -513,7 +513,7 @@ void KMHeaders::readConfig (void)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::reset(void)
+void KMHeaders::reset()
 {
   int top = topItemIndex();
   int id = currentItemIndex();
@@ -662,6 +662,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(folderCleared()));
       disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
                   BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
+      disconnect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
       writeSortOrder();
       mFolder->close();
       // System folders remain open but we also should write the index from
@@ -694,6 +695,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           this, SLOT(setFolderInfoStatus()));
+      connect(mFolder, SIGNAL(viewConfigChanged()), this, SLOT(reset()));
 
       // Not very nice, but if we go from nested to non-nested
       // in the folderConfig below then we need to do this otherwise

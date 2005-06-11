@@ -567,6 +567,9 @@ signals:
   /** Emitted when a folder was removed */
   void removed(KMFolder*, bool);
 
+  /** Emitted when the variables for the config of the view have changed */
+  void viewConfigChanged();
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   int updateIndex();

@@ -596,7 +596,8 @@ void KMFolder::setWhoField(const QString& aWhoField )
 
 void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
 {
-  mUserWhoField = whoField;
+  if ( mUserWhoField == whoField )
+    return;
   if ( whoField.isEmpty() )
   {
     // default setting
@@ -621,13 +622,17 @@ void KMFolder::setUserWhoField( const QString& whoField, bool writeConfig )
   } else if ( whoField == "From" || whoField == "To" )
     // set the whoField according to the user-setting
     mWhoField = whoField;
-  else
+  else {
     // this should not happen...
     kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!"
                   << endl;
+    return; // don't use the value
+  }
+  mUserWhoField = whoField;
 
   if (writeConfig)
     mStorage->writeConfig();
+  emit viewConfigChanged();
 }
 
 void KMFolder::correctUnreadMsgsCount()

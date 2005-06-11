@@ -124,9 +124,6 @@ public:
   /** Read color options and set palette. */
   virtual void readColorConfig(void);
 
-  /** Refresh the list of message headers shown */
-  virtual void reset(void);
-
   /** Scroll to show new mail */
   void showNewMail();
 
@@ -241,6 +238,9 @@ public slots:
   void slotNoDrag();
   /** timer function to set the current time regularly */
   void resetCurrentTime();
+
+  /** Refresh the list of message headers shown */
+  void reset();
 
   /** Expands (@p expand == true) or collapses (@p expand == false)
       the current thread. */

@@ -554,7 +554,6 @@ bool FolderDiaGeneralTab::save()
 {
   KMFolder* folder = mDlg->folder();
   folder->setIdentity( mIdentityComboBox->currentIdentity() );
-  QString oldWhoField = folder->userWhoField();
   // set whoField
   if (mShowSenderReceiverComboBox->currentItem() == 1)
     folder->setUserWhoField("From");
@@ -562,10 +561,6 @@ bool FolderDiaGeneralTab::save()
     folder->setUserWhoField("To");
   else
     folder->setUserWhoField("");
-  if( oldWhoField != folder->userWhoField() ) { // we changed the 'from' column
-    if( mDlg->folderTree()->mainWidget() && mDlg->folderTree()->mainWidget()->headers() )
-      mDlg->folderTree()->mainWidget()->headers()->reset(); // so we update the UI
-  }
 
   folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
   folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
