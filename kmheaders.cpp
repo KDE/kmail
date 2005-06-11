@@ -1618,13 +1618,15 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
   for (QListViewItemIterator it(this); it.current(); it++) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
-      if (toBeDeleted) {
-        // make sure the item is not uselessly rethreaded and not selectable
-        item->setAboutToBeDeleted ( true );
-        item->setSelectable ( false );
+      if ( !item->aboutToBeDeleted() ) { // we are already working on this one
+        if (toBeDeleted) {
+          // make sure the item is not uselessly rethreaded and not selectable
+          item->setAboutToBeDeleted ( true );
+          item->setSelectable ( false );
+        }
+        KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
+        mSelMsgBaseList.append(msgBase);
       }
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      mSelMsgBaseList.append(msgBase);
     }
   }
   return &mSelMsgBaseList;
