@@ -14,7 +14,6 @@
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "kmailicalifaceimpl.h"
 #include <libkdepim/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
@@ -1377,13 +1376,11 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder;
   if (message(&folder))
   {
-    if( !kmkernel->iCalIface().isResourceFolder( folder ) ){
-      if ( mShowColorbar )
-        mColorBar->show();
-      else
-        mColorBar->hide();
-      displayMessage();
-    }
+    if ( mShowColorbar )
+      mColorBar->show();
+    else
+      mColorBar->hide();
+    displayMessage();
   }
   else
   {
