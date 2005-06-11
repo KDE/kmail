@@ -1003,8 +1003,9 @@ void KMMainWidget::slotRemoveFolder()
   QString str;
   QDir dir;
 
-  if (!mFolder) return;
-  if (mFolder->isSystemFolder()) return;
+  if ( !mFolder ) return;
+  if ( mFolder->isSystemFolder() ) return;
+  if ( mFolder->isReadOnly() ) return;
 
   QString title;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
@@ -3108,7 +3109,7 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() );
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && !mFolder->isReadOnly() );
   if(mFolder) {
     mRemoveFolderAction->setText( mFolder->folderType() == KMFolderTypeSearch
         ? i18n("&Delete Search") : i18n("&Delete Folder") );
