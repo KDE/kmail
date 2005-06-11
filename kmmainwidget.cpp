@@ -1006,13 +1006,14 @@ void KMMainWidget::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder()) return;
 
+  QString title;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
-     str = i18n("<qt>Are you sure you want to delete the search folder "
-                "<b>%1</b>? The messages displayed in it will not be deleted "
-                "if you do so, as they are stored in a different folder.</qt>")
-
+    title = i18n("Delete Search");
+    str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br>"
+                "Any messages it shows will still be available in their original folder.</qt>")
            .arg( QStyleSheet::escape( mFolder->label() ) );
   } else {
+    title = i18n("Delete Folder");
     if ( mFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
@@ -1041,7 +1042,7 @@ void KMMainWidget::slotRemoveFolder()
     }
   }
 
-  if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
+  if (KMessageBox::warningContinueCancel(this, str, title,
                                          KGuiItem( i18n("&Delete"), "editdelete"))
       == KMessageBox::Continue)
   {
@@ -2385,11 +2386,10 @@ void KMMainWidget::setupActions()
                                       actionCollection(), "refresh_folder" );
   mTroubleshootFolderAction = 0; // set in initializeIMAPActions
 
-  mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
-                                   "edittrash", 0, this,
+  mEmptyFolderAction = new KAction( "foo", "edittrash", 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  mRemoveFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
+  mRemoveFolderAction = new KAction( "foo", "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
   mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
@@ -3108,7 +3108,11 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && !mFolder->isReadOnly() );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() );
+  if(mFolder) {
+    mRemoveFolderAction->setText( mFolder->folderType() == KMFolderTypeSearch
+        ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  }
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
