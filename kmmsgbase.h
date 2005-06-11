@@ -374,17 +374,17 @@ public:
 
   /** Return if the message is complete and not only the header of a message
    * in an IMAP folder */
-  bool isComplete();
+  bool isComplete() const;
   /** Set if the message is a complete message */
   void setComplete(bool value);
 
   /** Return if the message is ready to be shown */
-  bool readyToShow();
+  bool readyToShow() const;
   /** Set if the message is ready to be shown */
   void setReadyToShow(bool);
 
   /** Return, if the message should not be deleted */
-  bool transferInProgress();
+  bool transferInProgress() const;
   /** Set that the message shall not be deleted because it is still required */
   void setTransferInProgress(bool value, bool force = false);
 

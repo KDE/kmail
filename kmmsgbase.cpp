@@ -1009,7 +1009,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgBase::isComplete()
+bool KMMsgBase::isComplete() const
 {
   return MessageProperty::complete( getMsgSerNum() );
 }
@@ -1024,7 +1024,7 @@ void KMMsgBase::setComplete(bool value)
 }
 
 //-----------------------------------------------------------------------------
-bool KMMsgBase::readyToShow()
+bool KMMsgBase::readyToShow() const
 {
   return MessageProperty::readyToShow( getMsgSerNum() );
 }
@@ -1038,7 +1038,7 @@ void KMMsgBase::setReadyToShow(bool value)
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgBase::transferInProgress()
+bool KMMsgBase::transferInProgress() const
 {
   return MessageProperty::transferInProgress( getMsgSerNum() );
 }
