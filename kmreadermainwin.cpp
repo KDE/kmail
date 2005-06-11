@@ -350,10 +350,11 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       return;
     }
 
-    mReplyActionMenu->plug( menu );
-    mForwardActionMenu->plug( menu );
-
-    menu->insertSeparator();
+    if( !aMsg.parent()->isSent() && !aMsg.parent()->isDrafts() ) {
+      mReplyActionMenu->plug( menu );
+      mForwardActionMenu->plug( menu );
+      menu->insertSeparator();
+    }
 
     QPopupMenu* copyMenu = new QPopupMenu(menu);
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();

@@ -2248,7 +2248,8 @@ void KMHeaders::slotRMB()
      mOwner->editAction()->plug(menu);
   else {
      // show most used actions
-     mOwner->replyMenu()->plug(menu);
+     if( !mFolder->isSent() )
+       mOwner->replyMenu()->plug(menu);
      mOwner->forwardMenu()->plug(menu);
      if(mOwner->sendAgainAction()->isEnabled()) {
        mOwner->sendAgainAction()->plug(menu);
@@ -2292,11 +2293,14 @@ void KMHeaders::slotRMB()
   mOwner->saveAttachmentsAction()->plug(menu);
   mOwner->printAction()->plug(menu);
   menu->insertSeparator();
-  mOwner->trashAction()->plug(menu);
-  mOwner->deleteAction()->plug(menu);
-  if ( mOwner->trashThreadAction()->isEnabled() ) {
-    mOwner->trashThreadAction()->plug(menu);
-    mOwner->deleteThreadAction()->plug(menu);
+  if ( mFolder->isTrash() ) {
+    mOwner->deleteAction()->plug(menu);
+    if ( mOwner->trashThreadAction()->isEnabled() )
+      mOwner->deleteThreadAction()->plug(menu);
+  } else {
+    mOwner->trashAction()->plug(menu);
+    if ( mOwner->trashThreadAction()->isEnabled() )
+      mOwner->trashThreadAction()->plug(menu);
   }
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );

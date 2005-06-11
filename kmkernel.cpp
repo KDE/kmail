@@ -1834,7 +1834,15 @@ void KMKernel::emergencyExit( const QString& reason )
 bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
 {
   assert( folder );
-  if ( folder == the_outboxFolder || folder == the_draftsFolder )
+  if ( folder == the_outboxFolder )
+    return true;
+  return folderIsDrafts( folder );
+}
+
+bool KMKernel::folderIsDrafts(const KMFolder * folder)
+{
+  assert( folder );
+  if ( folder == the_draftsFolder )
     return true;
 
   QString idString = folder->idString();

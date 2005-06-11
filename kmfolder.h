@@ -79,6 +79,30 @@ public:
             KMFolderType aFolderType );
   ~KMFolder();
 
+  /** Returns true if this folder is the inbox on the local disk */
+  bool isMainInbox() {
+    return this == KMKernel::self()->inboxFolder();
+  }
+  /** Returns true only if this is the outbox for outgoing mail */
+  bool isOutbox() {
+    return this == KMKernel::self()->outboxFolder();
+  }
+  /** Retuns true if this folder is the sent-mail box of the local account,
+    or is configured to be the sent mail box of any of the users identities */
+  bool isSent() {
+    return KMKernel::self()->folderIsSentMailFolder( this );
+  }
+  /** Retuns true if this folder is configured as a trash folder, localy or
+    for one of the accounts. */
+  bool isTrash() {
+    return KMKernel::self()->folderIsTrash( this );
+  }
+  /** Retuns true if this folder is the drafts box of the local account,
+    or is configured to be the drafts box of any of the users identities */
+  bool isDrafts() {
+    return KMKernel::self()->folderIsDrafts( this );
+  }
+
   /** This is used by the storage to read the folder specific configuration */
   void readConfig( KConfig* config );
 

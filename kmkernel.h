@@ -190,6 +190,7 @@ public:
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
+  bool folderIsDrafts(const KMFolder *);
   bool folderIsTrash(KMFolder *);
   /**
    * Returns true if the folder is one of the sent-mail folders.

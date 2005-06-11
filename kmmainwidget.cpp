@@ -2129,6 +2129,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mMsgView->mailToComposeAction()->plug( menu );
       mMsgView->mailToReplyAction()->plug( menu );
       mMsgView->mailToForwardAction()->plug( menu );
+
       menu->insertSeparator();
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
@@ -2160,6 +2161,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
   if(mMsgView && !mMsgView->copyText().isEmpty()) {
     if ( urlMenuAdded )
       menu->insertSeparator();
+    mReplyActionMenu->plug(menu);
+    menu->insertSeparator();
+
     mMsgView->copyAction()->plug( menu );
     mMsgView->selectAllAction()->plug( menu );
   } else  if ( !urlMenuAdded )
@@ -2172,12 +2176,12 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       return;
     }
 
-    bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
-    if ( out_folder ) {
+    if ( mFolder->isDrafts() || mFolder->isOutbox() ) {
       mEditAction->plug(menu);
     }
     else {
-      mReplyActionMenu->plug(menu);
+      if( !mFolder->isSent() )
+        mReplyActionMenu->plug(menu);
       mForwardActionMenu->plug(menu);
     }
     menu->insertSeparator();
@@ -2200,8 +2204,10 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     mSaveAttachmentsAction->plug( menu );
 
     menu->insertSeparator();
-    mTrashAction->plug( menu );
-    mDeleteAction->plug( menu );
+    if( mFolder->isTrash() )
+      mDeleteAction->plug( menu );
+    else
+      mTrashAction->plug( menu );
   }
   KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
