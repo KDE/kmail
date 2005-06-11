@@ -20,7 +20,6 @@
 using KMail::MaildirJob;
 #include "compactionjob.h"
 
-#include <kio/netaccess.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
