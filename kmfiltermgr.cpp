@@ -23,6 +23,7 @@ using KMail::MessageProperty;
 
 // other Qt headers
 #include <qregexp.h>
+#include <qvaluevector.h>
 
 // other headers
 #include <assert.h>
@@ -295,8 +296,8 @@ void KMFilterMgr::deref(bool force)
     mRefCount = 0;
   if (mRefCount && !force)
     return;
-  QPtrListIterator<KMFolder> it(mOpenFolders);
-  for ( it.toFirst() ; it.current() ; ++it )
+  QValueVector< KMFolder *>::const_iterator it;
+  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it )
     (*it)->close();
   mOpenFolders.clear();
 }

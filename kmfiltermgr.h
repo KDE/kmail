@@ -29,6 +29,7 @@
 
 class KMFilter;
 class KMFilterDlg;
+template <typename T> class QValueVector;
 
 class KMFilterMgr: public QObject, public QPtrList<KMFilter>
 {
@@ -154,7 +155,7 @@ private:
   int processPop( KMMessage * msg ) const;
 
   QGuardedPtr<KMFilterDlg> mEditDialog;
-  QPtrList<KMFolder> mOpenFolders;
+  QValueVector<KMFolder *> mOpenFolders;
   bool bPopFilter;
   bool mShowLater;
   int mRefCount;
