@@ -523,8 +523,6 @@ void RecipientsView::activateLine( RecipientLine *line )
 
 void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )
 {
-  kdDebug() << "RESIZE " << ev->size() << endl;
-
   for( uint i = 0; i < mLines.count(); ++i ) {
     mLines.at( i )->resize( ev->size().width(), mLineHeight );
   }
