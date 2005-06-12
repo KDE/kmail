@@ -49,6 +49,7 @@ using KMail::FolderRequester;
 #include <qbuttongroup.h>
 #include <qobjectlist.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <qcursor.h>
+#include <qpopupmenu.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/boyermor.h>

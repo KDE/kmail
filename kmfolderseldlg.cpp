@@ -8,6 +8,8 @@
 
 #include <kdebug.h>
 #include <klineedit.h>
+#include <kpopupmenu.h>
+#include <kiconloader.h>
 
 #include <qlayout.h>
 #include <qtoolbutton.h>

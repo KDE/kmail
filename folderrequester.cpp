@@ -32,6 +32,7 @@
 
 #include <kdebug.h>
 #include <klineedit.h>
+#include <kiconloader.h>
 #include <kdialog.h>
 
 #include <qlayout.h>

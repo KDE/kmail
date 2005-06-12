@@ -22,9 +22,7 @@
 #include "kmfolder.h"
 
 #include <klocale.h>
-#include <kpopupmenu.h>
 #include <kfoldertree.h>
-#include <kiconloader.h>
 #include <kdepimmacros.h>
 
 #include <qwidget.h>
@@ -34,6 +32,8 @@
 class QDropEvent;
 class QPixmap;
 class QPainter;
+class QPopupMenu;
+class KPopupMenu;
 class KMFolderImap;
 class KMFolderTree;
 class KMMainWidget;

@@ -32,6 +32,7 @@ using namespace KPIM;
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kpopupmenu.h>
 #include <kimageio.h>
 #include <kconfig.h>
 #include <klocale.h>

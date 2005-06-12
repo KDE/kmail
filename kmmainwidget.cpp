@@ -17,11 +17,13 @@
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qvbox.h>
+#include <qpopupmenu.h>
 
 #include <kopenwith.h>
 
 #include <kmessagebox.h>
 
+#include <kpopupmenu.h>
 #include <kaccelmanager.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>

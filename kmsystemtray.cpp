@@ -33,6 +33,7 @@
 #include <kiconeffect.h>
 #include <kwin.h>
 #include <kdebug.h>
+#include <kpopupmenu.h>
 
 #include <qpainter.h>
 #include <qbitmap.h>

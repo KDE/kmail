@@ -28,11 +28,13 @@ using namespace KPIM;
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
+#include <kpopupmenu.h>
 #include <kdebug.h>
 
 #include <qpainter.h>
 #include <qcursor.h>
 #include <qregexp.h>
+#include <qpopupmenu.h>
 
 #include <unistd.h>
 #include <assert.h>
