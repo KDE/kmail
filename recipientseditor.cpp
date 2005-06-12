@@ -721,8 +721,6 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
   QToolTip::add( mSelectButton, i18n("Select recipients from address book") );
-
-  initRecipientPicker();
 }
 
 SideWidget::~SideWidget()
@@ -731,23 +729,20 @@ SideWidget::~SideWidget()
 
 RecipientsPicker* SideWidget::picker() const
 {
+  if ( !mRecipientPicker ) {
+    // hacks to allow picker() to be const in the presence of lazy loading
+    SideWidget *non_const_this = const_cast<SideWidget*>( this );
+    mRecipientPicker = new RecipientsPicker( non_const_this );
+    connect( mRecipientPicker, SIGNAL( pickedRecipient( const Recipient & ) ),
+             non_const_this, SIGNAL( pickedRecipient( const Recipient & ) ) );
+    mPickerPositioner = new KWindowPositioner( non_const_this, mRecipientPicker );
+  }
   return mRecipientPicker;
 }
 
 void SideWidget::setFocus()
 {
   mSelectButton->setFocus();
-}
-
-void SideWidget::initRecipientPicker()
-{
-  if ( mRecipientPicker ) return;
-
-  mRecipientPicker = new RecipientsPicker( this );
-  connect( mRecipientPicker, SIGNAL( pickedRecipient( const Recipient & ) ),
-    SIGNAL( pickedRecipient( const Recipient & ) ) );
-
-  mPickerPositioner = new KWindowPositioner( this, mRecipientPicker );
 }
 
 void SideWidget::setTotal( int recipients, int lines )
@@ -776,11 +771,12 @@ void SideWidget::pickRecipient()
     "Email address of recipient" );
   if ( !rec.isEmpty() ) emit pickedRecipient( rec );
 #else
-  mRecipientPicker->setDefaultType( mView->activeLine()->recipientType() );
-  mRecipientPicker->setRecipients( mView->recipients() );
-  mRecipientPicker->show();
+  RecipientsPicker *p = picker();
+  p->setDefaultType( mView->activeLine()->recipientType() );
+  p->setRecipients( mView->recipients() );
+  p->show();
   mPickerPositioner->reposition();
-  mRecipientPicker->raise();
+  p->raise();
 #endif
 }
 

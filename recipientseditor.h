@@ -265,16 +265,16 @@ class SideWidget : public QWidget
     void pickedRecipient( const Recipient & );
     void saveDistributionList();
 
-  protected:
-    void initRecipientPicker();
-
   private:
     RecipientsView *mView;
     QLabel *mTotalLabel;
     QPushButton *mDistributionListButton;
     QPushButton *mSelectButton;
-    RecipientsPicker *mRecipientPicker;
-    KWindowPositioner *mPickerPositioner;
+    /** The RecipientsPicker is lazy loaded, never access it directly, 
+      only through picker() */
+    mutable RecipientsPicker *mRecipientPicker;
+    /** lazy loaded, don't access directly, unless you've called picker() */
+    mutable KWindowPositioner *mPickerPositioner;
 };
 
 class RecipientsEditor : public QWidget
