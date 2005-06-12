@@ -158,7 +158,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( -1 )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   mClassicalRecipients = GlobalSettings::recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -4316,7 +4316,7 @@ void KMComposeWin::setAutoSaveFilename( const QString & filename )
 void KMComposeWin::cleanupAutoSave()
 {
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  if ( !mAutoSaveFilename.isEmpty() && mLastAutoSaveErrno != -1 ) {
+  if ( !mAutoSaveFilename.isEmpty() ) {
     kdDebug(5006) << k_funcinfo << "deleting autosave file "
                   << mAutoSaveFilename << endl;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
