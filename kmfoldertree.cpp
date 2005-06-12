@@ -9,7 +9,6 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolderdia.h"
-#include "kmcomposewin.h"
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "kmacctmgr.h"
