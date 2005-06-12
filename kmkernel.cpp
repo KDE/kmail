@@ -14,6 +14,8 @@
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
+#include "kmmessage.h"
+#include "kmmsgpart.h"
 #include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercachedimap.h"
