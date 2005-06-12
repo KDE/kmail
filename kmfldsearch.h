@@ -103,6 +103,8 @@ protected slots:
   virtual void slotRemoveMsg(KMFolder *, Q_UINT32 serNum);
   void enableGUI();
 
+  void setEnabledSearchButton(bool);
+
 protected:
 
   /** Reimplemented to react to Escape. */

@@ -155,6 +155,8 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
 	   mCbxFolders, SLOT(setEnabled(bool)) );
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
 	   mChkSubFolders, SLOT(setEnabled(bool)) );
+  connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
+	   this, SLOT(setEnabledSearchButton(bool)) );
 
   mLbxMatches = new KListView(searchWidget, "Find Messages");
 
@@ -313,6 +315,15 @@ KMFldSearch::~KMFldSearch()
   config->writeEntry("SearchWidgetWidth", width());
   config->writeEntry("SearchWidgetHeight", height());
   config->sync();
+}
+
+void KMFldSearch::setEnabledSearchButton(bool)
+{
+  //Make sure that button is enable
+  //Before when we selected a folder == "Local Folder" as that it was not a folder
+  //search button was disable, and when we select "Search in all local folder"
+  //Search button was never enabled :(
+  mBtnSearch->setEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
