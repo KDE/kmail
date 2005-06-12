@@ -23,21 +23,24 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
-#include <qptrlist.h>
 #include <qguardedptr.h>
 #include <qobject.h>
 
 class KMFilter;
 class KMFilterDlg;
 template <typename T> class QValueVector;
+template <typename T> class QValueList;
 
-class KMFilterMgr: public QObject, public QPtrList<KMFilter>
+class KMFilterMgr: public QObject
 {
   Q_OBJECT
 
 public:
   KMFilterMgr(bool popFilter = false);
   virtual ~KMFilterMgr();
+
+  /** Clears the list of filters and deletes them. */
+  void clear();
 
   enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, Explicit = 0x4,
 		   All = Inbound|Outbound|Explicit };
@@ -67,14 +70,28 @@ public:
    * for example;
    * */
   bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
+  /**
+   * Returns whether at least one incoming filter applies to this account,
+   * which means that mail must be downloaded in order to be filtered, 
+   * for example;
+   * */
+  bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
 
   /** Check for existing filters with the &p name and extend the
       "name" to "name (i)" until no match is found for i=1..n */
   const QString createUniqueName( const QString & name );
 
   /** Append the list of filters to the current list of filters and
-      write everything back into the configuration.*/
-  void appendFilters( const QPtrList<KMFilter> filters );
+      write everything back into the configuration. The filter manager
+      takes ownership of the filters in the list. */
+  void appendFilters( const QValueList<KMFilter*> &filters );
+
+  /** Replace the list of filters under control of the filter manager.
+   * The manager takes ownershipt of the filters. */
+  void setFilters( const QValueList<KMFilter*> &filters );
+
+  /** @return the list of filters managed by this object */
+  const QValueList<KMFilter*> & filters() const { return mFilters; }
 
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
@@ -123,7 +140,7 @@ public:
 
   /** Output all rules to stdout */
 #ifndef NDEBUG
-  void dump();
+  void dump() const;
 #endif
 
   /** Called from the folder manager when a folder is removed.
@@ -156,6 +173,7 @@ private:
 
   QGuardedPtr<KMFilterDlg> mEditDialog;
   QValueVector<KMFolder *> mOpenFolders;
+  QValueList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
   int mRefCount;

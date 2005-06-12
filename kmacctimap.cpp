@@ -316,21 +316,11 @@ void KMAcctImap::processNewMail(bool interactive)
         // connect the result-signals for new-mail-notification
         mCountRemainChecks++;
 
-        QPtrListIterator<KMFilter> it( *kmkernel->filterMgr() );
-        bool someFilterApplies = false;
-        for ( it.toFirst() ; it.current() ; ++it ) {
-          KMFilter *filter = *it;
-          if ( filter->applyOnInbound() && filter->applyOnAccount( id() ) ) {
-            someFilterApplies = true;
-            break;
-          }
-        }
-
         if (imapFolder->isSelected()) {
           connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
               this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
           imapFolder->getFolder();
-        } else if ( someFilterApplies &&
+        } else if ( kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( id() ) &&
 		    imapFolder->folder()->isSystemFolder() && 
 		    imapFolder->imapPath() == "/INBOX/" ) {
 	  imapFolder->open(); // will be closed in the folderSelected slot

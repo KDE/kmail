@@ -693,10 +693,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  // block attemts to use filters (currently a no-op)
-  fm->beginUpdate();
-  fm->clear();
-
+  QValueList<KMFilter*> newFilters;
   QStringList emptyFilters;
   QPtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {
@@ -704,7 +701,7 @@ void KMFilterListBox::slotApplyFilterChanges()
     f->purify();
     if ( !f->isEmpty() )
       // the filter is valid:
-      fm->append( f );
+      newFilters.append( f );
     else {
       // the filter is invalid:
       emptyFilters << f->name();
@@ -714,6 +711,9 @@ void KMFilterListBox::slotApplyFilterChanges()
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
 
+  // block attemts to use filters (currently a no-op)
+  fm->beginUpdate();
+  fm->setFilters( newFilters );
   // allow usage of the filters again.
   fm->endUpdate();
   fm->writeConfig();
@@ -907,19 +907,20 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   mFilterList.clear();
   mListBox->clear();
 
-	QPtrList<KMFilter> *manager;
+  const KMFilterMgr *manager = 0;
   if(bPopFilter)
-	{
+  {
     mShowLater = kmkernel->popFilterMgr()->showLaterMsgs();
-		manager = kmkernel->popFilterMgr();
-	}
-	else
-	{
-		manager = kmkernel->filterMgr();
-	}
+    manager = kmkernel->popFilterMgr();
+  }
+  else
+  {
+    manager = kmkernel->filterMgr();
+  }
+  Q_ASSERT( manager );
 
-  QPtrListIterator<KMFilter> it( *manager );
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  QValueListConstIterator<KMFilter*> it;
+  for ( it = manager->filters().constBegin() ; it != manager->filters().constEnd() ; ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
   }

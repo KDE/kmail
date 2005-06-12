@@ -143,7 +143,7 @@ void AntiSpamWizard::accept()
                     << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
-  QPtrList<KMFilter> filterList;
+  QValueList<KMFilter*> filterList;
 
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages

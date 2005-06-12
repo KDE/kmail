@@ -31,15 +31,13 @@ using KMail::MessageProperty;
 
 //-----------------------------------------------------------------------------
 KMFilterMgr::KMFilterMgr( bool popFilter )
-  : QPtrList<KMFilter>(),
-    mEditDialog( 0 ),
+  : mEditDialog( 0 ),
     bPopFilter( popFilter ),
     mShowLater( false ),
     mRefCount( 0 )
 {
   if (bPopFilter)
     kdDebug(5006) << "pPopFilter set" << endl;
-  setAutoDelete(TRUE);
   connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
            this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 }
@@ -48,10 +46,18 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
 //-----------------------------------------------------------------------------
 KMFilterMgr::~KMFilterMgr()
 {
-  deref(true);
-  writeConfig(FALSE);
+  deref( true );
+  clear();
+  writeConfig( false );
 }
 
+void KMFilterMgr::clear()
+{
+  for ( QValueListIterator<KMFilter*> it = mFilters.begin() ; 
+        it != mFilters.end() ; ++it ) {
+    delete *it;
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::readConfig(void)
@@ -83,7 +89,7 @@ void KMFilterMgr::readConfig(void)
 #endif
       delete filter;
     } else
-      append(filter);
+      mFilters.append(filter);
   }
 }
 
@@ -97,22 +103,24 @@ void KMFilterMgr::writeConfig(bool withSync)
   QStringList filterGroups =
     config->groupList().grep( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
   for ( QStringList::Iterator it = filterGroups.begin() ;
-	it != filterGroups.end() ; ++it )
+        it != filterGroups.end() ; ++it )
     config->deleteGroup( *it );
 
   // Now, write out the new stuff:
   int i = 0;
   QString grpName;
-  for ( QPtrListIterator<KMFilter> it(*this) ; it.current() ; ++it )
+  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin() ; 
+        it != mFilters.constEnd() ; ++it ) {
     if ( !(*it)->isEmpty() ) {
       if ( bPopFilter )
-	grpName.sprintf("PopFilter #%d", i);
+        grpName.sprintf("PopFilter #%d", i);
       else
-	grpName.sprintf("Filter #%d", i);
+        grpName.sprintf("Filter #%d", i);
       KConfigGroupSaver saver(config, grpName);
       (*it)->writeConfig(config);
       ++i;
     }
+  }
 
   KConfigGroupSaver saver(config, "General");
   if (bPopFilter) {
@@ -126,7 +134,8 @@ void KMFilterMgr::writeConfig(bool withSync)
 
 
 int KMFilterMgr::processPop( KMMessage * msg ) const {
-  for ( QPtrListIterator<KMFilter> it( *this ) ; it.current() ; ++it )
+  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+        it != mFilters.constEnd() ; ++it )
     if ( (*it)->pattern()->matches( msg ) )
       return (*it)->action();
   return NoAction;
@@ -223,7 +232,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
   if (!beginFiltering( msg ))
     return 1;
-  for ( QPtrListIterator<KMFilter> it(*this) ; !stopIt && it.current() ; ++it ) {
+  for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+        !stopIt && it != mFilters.constEnd() ; ++it ) {
 
     if ( ( ( (set&Inbound) && (*it)->applyOnInbound() ) &&
 	   ( !account || 
@@ -270,9 +280,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
-  // three cheers for QPtrList...
-  QPtrListIterator<KMFilter> it( const_cast<KMFilterMgr&>( *this ) );
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     if ( (*it)->applyOnAccount( accountID ) ) {
       return true;
     }
@@ -280,6 +289,16 @@ bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
   return false;
 }
 
+bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const
+{
+  QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
+    if ( (*it)->applyOnInbound() && (*it)->applyOnAccount( accountID ) ) {
+      return true;
+    }
+  }
+  return false;
+}
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::ref(void)
@@ -349,8 +368,8 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
   
   while ( found ) {
     found = false;
-    for ( QPtrListIterator<KMFilter> it(*this) ;
-          it.current() ; ++it ) {
+    for ( QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+          it != mFilters.constEnd(); ++it ) {
       if ( !( (*it)->name().compare( uniqueName ) ) ) {
         found = true;
         ++counter;
@@ -366,16 +385,19 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::appendFilters( const QPtrList<KMFilter> filters )
+void KMFilterMgr::appendFilters( const QValueList<KMFilter*> &filters )
 {
   beginUpdate();
-  QPtrListIterator<KMFilter> it(filters);
-  for ( it.toFirst(); it.current() ; ++it )
-    append( *it );
-  writeConfig( TRUE );
+  mFilters += filters;
+  writeConfig( true );
   endUpdate();
 }
 
+void KMFilterMgr::setFilters( const QValueList<KMFilter*> &filters )
+{
+  clear();
+  mFilters = filters;
+}
 
 void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
 {
@@ -385,11 +407,11 @@ void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
 //-----------------------------------------------------------------------------
 bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
-  bool rem = FALSE;
-
-  QPtrListIterator<KMFilter> it(*this);
-  for ( it.toFirst() ; it.current() ; ++it )
-    if ( (*it)->folderRemoved(aFolder, aNewFolder) ) rem=TRUE;
+  bool rem = false;
+  QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it )
+    if ( (*it)->folderRemoved(aFolder, aNewFolder) ) 
+      rem = true;
 
   return rem;
 }
@@ -397,11 +419,11 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 
 //-----------------------------------------------------------------------------
 #ifndef NDEBUG
-void KMFilterMgr::dump(void)
+void KMFilterMgr::dump(void) const
 {
-  QPtrListIterator<KMFilter> it(*this);
-  for ( it.toFirst() ; it.current() ; ++it )
-  {
+  
+  QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
     kdDebug(5006) << (*it)->asString() << endl;
   }
 }

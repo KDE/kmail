@@ -3361,8 +3361,8 @@ void KMMainWidget::initializeFilterActions()
   clearFilterActions();
   mApplyAllFiltersAction->plug(mApplyFilterActionsMenu->popupMenu());
   bool addedSeparator = false;
-  for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
-        it.current() ; ++it ) {
+  QValueListConstIterator<KMFilter*> it = kmkernel->filterMgr()->filters().constBegin();
+  for ( ;it != kmkernel->filterMgr()->filters().constEnd(); ++it ) {
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
       filterName = QString("Filter %1").arg((*it)->name());
       normalizedName = filterName.replace(" ", "_");
