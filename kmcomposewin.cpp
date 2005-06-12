@@ -5051,7 +5051,7 @@ void KMEdit::initializeAutoSpellChecking()
   QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
   QColor misspelled = readerConfig.readColorEntry( "MisspelledColor", &c );
-  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ false,
+  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ true,
                                                 /*autoEnabled*/ false,
                                                 /*spellColor*/ misspelled,
                                                 /*colorQuoting*/ true,
