@@ -2143,9 +2143,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     } else {
       // popup on a not-mailto URL
       mMsgView->urlOpenAction()->plug( menu );
+      mMsgView->addBookmarksAction()->plug( menu );
       mMsgView->urlSaveAsAction()->plug( menu );
       mMsgView->copyURLAction()->plug( menu );
-      mMsgView->addBookmarksAction()->plug( menu );
     }
     if ( aUrl.protocol() == "im" )
     {
