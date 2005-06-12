@@ -639,8 +639,10 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::setUseFixedFont( mFixedFontAction->isChecked() );
   GlobalSettings::setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::setComposerSize( size() );
-}
 
+  KConfigGroupSaver saver( KMKernel::config(), "Geometry" );
+  saveMainWindowSettings( KMKernel::config(), "Composer" );
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
