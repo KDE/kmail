@@ -162,7 +162,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( -1 )
 {
   mClassicalRecipients = GlobalSettings::recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -546,9 +546,6 @@ void KMComposeWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  QCString str;
-
-  GlobalSettings::self()->readConfig(); //TODO until configure* used kconfigXT
   mDefCharset = KMMessage::defaultCharset();
   mBtnIdentity->setChecked( GlobalSettings::stickyIdentity() );
   if (mBtnIdentity->isChecked()) {
@@ -627,10 +624,6 @@ void KMComposeWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
 {
-  KConfig *config = KMKernel::config();
-  QString str;
-
-    KConfigGroupSaver saver(config, "Composer");
   GlobalSettings::setHeaders( mShowHeaders );
   GlobalSettings::setStickyTransport( mBtnTransport->isChecked() );
   GlobalSettings::setStickyIdentity( mBtnIdentity->isChecked() );
@@ -649,14 +642,7 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::setTransportHistory( transportHistory );
   GlobalSettings::setUseFixedFont( mFixedFontAction->isChecked() );
   GlobalSettings::setUseHtmlMarkup( mHtmlMarkup );
-  GlobalSettings::writeConfig();
-
   GlobalSettings::setComposerSize( size() );
-  {
-    KConfigGroupSaver saver(config, "Geometry");
-    saveMainWindowSettings(config, "Composer");
-    config->sync();
-  }
 }
 
 
@@ -1963,7 +1949,6 @@ bool KMComposeWin::queryClose ()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::userForgotAttachment()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
   bool checkForForgottenAttachments = GlobalSettings::showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) )
@@ -3093,7 +3078,7 @@ bool KMComposeWin::inlineSigningEncryptionSelected() {
 //-----------------------------------------------------------------------------
 void KMComposeWin::viewAttach( int index )
 {
-  QString str, pname;
+  QString pname;
   KMMessagePart* msgPart;
   msgPart = mAtmList.at(index);
   pname = msgPart->name().stripWhiteSpace();
@@ -4338,9 +4323,8 @@ void KMComposeWin::setAutoSaveFilename( const QString & filename )
 
 void KMComposeWin::cleanupAutoSave()
 {
-  kdDebug(5006) << k_funcinfo << endl;
   delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  if ( !mAutoSaveFilename.isEmpty() ) {
+  if ( !mAutoSaveFilename.isEmpty() && mLastAutoSaveErrno != -1 ) {
     kdDebug(5006) << k_funcinfo << "deleting autosave file "
                   << mAutoSaveFilename << endl;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
