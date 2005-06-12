@@ -3,9 +3,6 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
-// keep this in sync with the define in configuredialog.h
-#define DEFAULT_EDITOR_STR "kate %f"
-
 #undef GrayScale
 #undef Color
 #include <config.h>
@@ -13,7 +10,6 @@
 #include "kmcomposewin.h"
 
 #include "kmmainwin.h"
-#include "kmreaderwin.h"
 #include "kmreadermainwin.h"
 #include "kmsender.h"
 #include "kmmsgpartdlg.h"
@@ -1865,7 +1861,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
+    QTimer::singleShot( 200, this, SLOT(slotAppendSignature()) );
   }
   setModified( isModified );
 }
@@ -3943,48 +3939,44 @@ void KMComposeWin::toggleMarkup(bool markup)
 {
   if ( markup ) {
     if ( !mUseHTMLEditor ) {
-    kdDebug(5006) << "setting RichText editor" << endl;
-    mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
-    mHtmlMarkup = true;
+      kdDebug(5006) << "setting RichText editor" << endl;
+      mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+      mHtmlMarkup = true;
 
-    // set all highlighted text caused by spelling back to black
-    int paraFrom, indexFrom, paraTo, indexTo;
-    mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
-    mEditor->selectAll();
-    // save the buttonstates because setColor calls fontChanged
-    bool _bold = textBoldAction->isChecked();
-    bool _italic = textItalicAction->isChecked();
-    mEditor->setColor(QColor(0,0,0));
-    textBoldAction->setChecked(_bold);
-    textItalicAction->setChecked(_italic);
-    mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
+      // set all highlighted text caused by spelling back to black
+      int paraFrom, indexFrom, paraTo, indexTo;
+      mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
+      mEditor->selectAll();
+      // save the buttonstates because setColor calls fontChanged
+      bool _bold = textBoldAction->isChecked();
+      bool _italic = textItalicAction->isChecked();
+      mEditor->setColor(QColor(0,0,0));
+      textBoldAction->setChecked(_bold);
+      textItalicAction->setChecked(_italic);
+      mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
 
-    mEditor->setTextFormat(Qt::RichText);
-    mEditor->setModified(true);
-    markupAction->setChecked(true);
-    toolBar( "htmlToolBar" )->show();
-    mEditor->deleteAutoSpellChecking();
-    mAutoSpellCheckingAction->setChecked(false);
-    slotAutoSpellCheckingToggled(false);
-   }
-  }
-  else if ( mUseHTMLEditor ) {
+      mEditor->setTextFormat(Qt::RichText);
+      mEditor->setModified(true);
+      markupAction->setChecked(true);
+      toolBar( "htmlToolBar" )->show();
+      mEditor->deleteAutoSpellChecking();
+      mAutoSpellCheckingAction->setChecked(false);
+      slotAutoSpellCheckingToggled(false);
+    }
+  } else { // markup is to be turned off
     kdDebug(5006) << "setting PlainText editor" << endl;
     mHtmlMarkup = false;
-    mUseHTMLEditor = false;
-    mEditor->setTextFormat(Qt::PlainText);
-    QString text = mEditor->text();
-    mEditor->setText(text); // otherwise the text still looks formatted
-    mEditor->setModified(true);
     toolBar("htmlToolBar")->hide();
-    mEditor->initializeAutoSpellChecking( mDictionaryCombo->spellConfig());
-    slotAutoSpellCheckingToggled(true);
-  }
-  else if ( !markup && !mUseHTMLEditor )
-    {
-      mHtmlMarkup = false;
-      toolBar("htmlToolBar")->hide();
+    if ( mUseHTMLEditor ) { // it was turned on
+      mUseHTMLEditor = false;
+      mEditor->setTextFormat(Qt::PlainText);
+      QString text = mEditor->text();
+      mEditor->setText(text); // otherwise the text still looks formatted
+      mEditor->setModified(true);
+      mEditor->initializeAutoSpellChecking();
+      slotAutoSpellCheckingToggled(true);
     }
+  }
 }
 
 void KMComposeWin::slotSubjectTextSpellChecked()
@@ -5025,6 +5017,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   : KEdit( parent, name ),
     mComposer( composer ),
     mKSpell( 0 ),
+    mSpellConfig( autoSpellConfig ),
     mSpellingFilter( 0 ),
     mExtEditorTempFile( 0 ),
     mExtEditorTempFileWatcher( 0 ),
@@ -5038,32 +5031,33 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   KCursor::setAutoHideCursor( this, true, true );
   setOverwriteEnabled( true );
 
-  initializeAutoSpellChecking( autoSpellConfig );
+  QTimer::singleShot( 0, this, SLOT( initializeAutoSpellChecking() ) );
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
+void KMEdit::initializeAutoSpellChecking()
 {
   if ( mSpellChecker )
     return; // already initialized
-  KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
   QColor defaultForeground( kapp->palette().active().text() );
+ 
+  QColor c = Qt::red;
+  KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );
   QColor col2 = readerConfig.readColorEntry( "QuotedText3", &defaultColor3 );
   QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
-  QColor c = Qt::red;
   QColor misspelled = readerConfig.readColorEntry( "MisspelledColor", &c );
-
-  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ true,
+  mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ false,
                                                 /*autoEnabled*/ false,
                                                 /*spellColor*/ misspelled,
                                                 /*colorQuoting*/ true,
                                                 col1, col2, col3, col4,
-                                                autoSpellConfig );
+                                                mSpellConfig );
+
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
            mComposer, SLOT(slotStatusMessage(const QString &)));
   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
@@ -5299,10 +5293,11 @@ int KMEdit::autoSpellChecking( bool on )
        KMessageBox::sorry(this, i18n("Automatic spellchecking is not possible on text with markup."));
      return -1;
   }
-
-  // don't autoEnable spell checking if the user turned spell checking off
-  mSpellChecker->setAutomatic( on );
-  mSpellChecker->setActive( on );
+  if ( mSpellChecker ) {
+    // don't autoEnable spell checking if the user turned spell checking off
+    mSpellChecker->setAutomatic( on );
+    mSpellChecker->setActive( on );
+  }
   return 1;
 }
 
@@ -5389,21 +5384,21 @@ void KMEdit::spellcheck()
 void KMEdit::cut()
 {
   KEdit::cut();
-  if ( textFormat() != Qt::RichText )
+  if ( textFormat() != Qt::RichText && mSpellChecker )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 
 void KMEdit::clear()
 {
   KEdit::clear();
-  if ( textFormat() != Qt::RichText )
+  if ( textFormat() != Qt::RichText && mSpellChecker )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 
 void KMEdit::del()
 {
   KEdit::del();
-  if ( textFormat() != Qt::RichText )
+  if ( textFormat() != Qt::RichText && mSpellChecker )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 

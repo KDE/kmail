@@ -131,7 +131,6 @@ public:
   void contentsDragMoveEvent(QDragMoveEvent *e);
   void contentsDropEvent(QDropEvent *e);
 
-  void initializeAutoSpellChecking( KSpellConfig* autoSpellConfig );
   void deleteAutoSpellChecking();
 
   unsigned int lineBreakColumn() const;
@@ -141,6 +140,7 @@ signals:
   void pasteImage();
   void focusUp();
 public slots:
+  void initializeAutoSpellChecking();
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString&);
   void slotSpellDone();
@@ -169,6 +169,7 @@ private:
 
 private:
   KSpell *mKSpell;
+  KSpellConfig *mSpellConfig;
   QMap<QString,QStringList> mReplacements;
   SpellingFilter* mSpellingFilter;
   KTempFile *mExtEditorTempFile;
