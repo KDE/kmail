@@ -24,6 +24,7 @@
 #include <config.h>
 #endif
 
+#include "kmfolder.h"
 #include "kmfolderimap.h"
 #include "kmfoldermbox.h"
 #include "kmfoldertree.h"

@@ -37,6 +37,7 @@
 #endif
 
 #include "kmailicalifaceimpl.h"
+#include "kmfolder.h"
 #include "kmfoldertree.h"
 #include "kmfolderdir.h"
 #include "kmgroupware.h"

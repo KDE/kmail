@@ -19,6 +19,7 @@
 #include <config.h>
 
 #include "kmsystemtray.h"
+#include "kmfolder.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"

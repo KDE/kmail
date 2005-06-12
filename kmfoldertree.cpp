@@ -6,6 +6,7 @@
 #include "kmfoldertree.h"
 
 #include "kmfoldermgr.h"
+#include "kmfolder.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolderdia.h"

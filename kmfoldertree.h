@@ -18,9 +18,6 @@
 #ifndef __KMFOLDERTREE
 #define __KMFOLDERTREE
 
-#include "kmheaders.h"
-#include "kmfolder.h"
-
 #include <klocale.h>
 #include <kfoldertree.h>
 #include <kdepimmacros.h>
@@ -34,10 +31,14 @@ class QPixmap;
 class QPainter;
 class QPopupMenu;
 class KPopupMenu;
+class KMFolder;
+class KMFolderDir;
 class KMFolderImap;
 class KMFolderTree;
 class KMMainWidget;
 class KMAccount;
+// duplication from kmcommands.h, to avoid the include
+typedef QMap<int,KMFolder*> KMMenuToFolder; 
 template <typename T> class QGuardedPtr;
 
 class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem

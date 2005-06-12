@@ -27,6 +27,7 @@
  */
 
 #include "folderrequester.h"
+#include "kmfolder.h"
 #include "kmfoldertree.h"
 #include "kmfolderseldlg.h"
 

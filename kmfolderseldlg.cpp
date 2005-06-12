@@ -3,6 +3,7 @@
 #include <config.h>
 #include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
+#include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
 
