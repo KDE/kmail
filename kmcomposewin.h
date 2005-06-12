@@ -25,8 +25,6 @@
 #include <keditcl.h>
 #include <ktempdir.h>
 
-#include "kmmsgpart.h"
-#include "kmmsgbase.h"
 #include "mailcomposerIface.h"
 
 #include <libkdepim/addresseelineedit.h>
@@ -46,7 +44,9 @@ class KCompletion;
 class KEdit;
 class KMComposeWin;
 class KMFolderComboBox;
+class KMFolder;
 class KMMessage;
+class KMMessagePart;
 class KProcess;
 class KDirWatch;
 class KSelectAction;
