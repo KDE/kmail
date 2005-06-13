@@ -690,6 +690,13 @@ public:
   */
   static QString guessEmailAddressFromLoginName( const QString& userName );
 
+  /**
+   *  Given argument msg add quoting characters and relayout for max width maxLength
+   *  @param msg the string which it to be quoted
+   *  @param maxLineLength reformat text to be this amount of columns at maximum, adding
+   *    linefeeds at word boundaries to make it fit.
+   */
+  static QString smartQuote( const QString &msg, int maxLineLength );
 
   /** Get the default message charset.*/
   static QCString defaultCharset();

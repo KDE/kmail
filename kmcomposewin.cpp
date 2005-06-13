@@ -3276,36 +3276,12 @@ void KMComposeWin::slotAddQuotes()
 
 QString KMComposeWin::addQuotesToText(const QString &inputText)
 {
-    QString answer = QString(quotePrefixName());
-    int sentenceLength = 0;
-    for (unsigned int i=0; (uint)i<inputText.length(); i++) {
-        if(inputText[i] == '\n') {
-            if(i > 0 && inputText[i-1] == ' ')
-                continue;
-            sentenceLength = 1;
-            answer.append('\n');
-            if(i < inputText.length())
-                answer.append(quotePrefixName());
-            continue;
-        }
-        else if(sentenceLength >= GlobalSettings::lineWrapWidth()) {
-            unsigned int back = answer.length();
-            while(answer[back] != ' ' && back > 0)
-                back--;
-            if(back != 0) {
-                sentenceLength = answer.length() - back;
-                answer.insert(back+1, quotePrefixName());
-                answer.insert(back+1, "\n");
-            }
-        }
-
-        if ( inputText[i] < ' ' && inputText[i] != '\t' )
-            answer.append(' ');
-        else
-            answer.append(inputText[i]);
-        sentenceLength++;
-    }
-    return answer;
+    QString answer = QString( inputText );
+    QString indentStr = quotePrefixName();
+    answer.replace( '\n', '\n' + indentStr);
+    answer.prepend( indentStr );
+    answer += '\n';
+    return KMMessage::smartQuote( answer, GlobalSettings::lineWrapWidth() );
 }
 
 void KMComposeWin::slotRemoveQuotes()

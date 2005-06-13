@@ -617,7 +617,7 @@ static QString stripSignature( const QString & msg, bool clearSigned ) {
     return msg.left( msg.findRev( "\n-- \n" ) );
 }
 
-static QString smartQuote( const QString & msg, int maxLength )
+QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
 {
   QStringList part;
   QString oldIndent;
@@ -664,7 +664,7 @@ static QString smartQuote( const QString & msg, int maxLength )
               part.remove(it2);
            }
         }
-        if (flushPart( result, part, oldIndent, maxLength))
+        if (flushPart( result, part, oldIndent, maxLineLength))
         {
            if (oldIndent.length() > indent.length())
               result += indent + '\n';
@@ -679,7 +679,7 @@ static QString smartQuote( const QString & msg, int maxLength )
      }
      part.append(line);
   }
-  flushPart( result, part, oldIndent, maxLength);
+  flushPart( result, part, oldIndent, maxLineLength);
   return result;
 }
 
