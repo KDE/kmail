@@ -37,7 +37,6 @@
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmkernel.h"
 
 #include <dcopobject.h>
 #include <kurl.h>

@@ -26,7 +26,6 @@
 #include "undostack.h"
 
 #include "kmmainwin.h"
-#include "kmkernel.h"
 #include "kmfolder.h"
 #include "kmmsgdict.h"
 

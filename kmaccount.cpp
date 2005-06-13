@@ -8,7 +8,6 @@
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmsender.h"
-#include "kmkernel.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"

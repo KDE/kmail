@@ -35,7 +35,6 @@
 #include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "aboutdata.h"
-#include "kmkernel.h"
 #include "kmfolder.h"
 #include "kmacctmgr.h"
 #include "sidebarextension.h"

@@ -35,7 +35,6 @@
 
 #include <errno.h>
 
-#include "kmkernel.h"
 #include "kmfoldercachedimap.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"

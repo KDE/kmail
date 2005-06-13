@@ -14,7 +14,6 @@ using KMail::HeaderItem;
 #include "kmfiltermgr.h"
 #include "undostack.h"
 #include "kmmsgdict.h"
-#include "kmkernel.h"
 #include "kmdebug.h"
 #include "kmfoldertree.h"
 #include "folderjob.h"

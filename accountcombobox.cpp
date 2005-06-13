@@ -27,7 +27,6 @@
  */
 
 #include "accountcombobox.h"
-#include "kmkernel.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
 #include "kmacctmgr.h"

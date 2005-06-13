@@ -41,7 +41,6 @@
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "kmfoldermgr.h"
-#include "kmkernel.h"
 #include "kmcommands.h"
 #include "listjob.h"
 using KMail::ListJob;

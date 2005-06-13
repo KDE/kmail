@@ -33,7 +33,6 @@
 
 #include "folderIface.h"
 
-#include "kmkernel.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"

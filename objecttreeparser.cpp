@@ -38,7 +38,6 @@
 // other KMail headers
 #include "kmreaderwin.h"
 #include "partNode.h"
-#include "kmkernel.h"
 #include <libkdepim/kfileio.h>
 #include <libemailfunctions/email.h>
 #include "partmetadata.h"

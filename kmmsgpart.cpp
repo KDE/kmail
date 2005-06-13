@@ -8,7 +8,6 @@
 
 #include "kmmsgpart.h"
 #include "kmmessage.h"
-#include "kmkernel.h"
 #include "globalsettings.h"
 
 #include <kasciistringtools.h>

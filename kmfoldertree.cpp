@@ -13,7 +13,6 @@
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "kmacctmgr.h"
-#include "kmkernel.h"
 #include "globalsettings.h"
 #include "kmcommands.h"
 #include "foldershortcutdialog.h"

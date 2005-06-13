@@ -11,7 +11,6 @@
 #include "kmfoldersearch.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
-#include "kmkernel.h"
 
 #include "mimelib/message.h"
 #include "mimelib/headers.h"

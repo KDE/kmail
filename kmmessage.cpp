@@ -17,7 +17,6 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
-#include "kmkernel.h"
 #include "headerstrategy.h"
 #include "globalsettings.h"
 using KMail::HeaderStrategy;

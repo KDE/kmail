@@ -23,7 +23,6 @@
 #include "kmtransport.h"
 #include "kmcommands.h"
 #include "kcursorsaver.h"
-#include "kmkernel.h"
 #include "partNode.h"
 #include "attachmentlistview.h"
 #include "transportmanager.h"

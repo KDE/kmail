@@ -32,7 +32,6 @@
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
-#include "kmkernel.h"
 #include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
 #include "kmmainwin.h"

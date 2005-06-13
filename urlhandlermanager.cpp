@@ -325,7 +325,6 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
 #include "kmmessage.h"
-#include "kmkernel.h"
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "kmmsgpart.h"

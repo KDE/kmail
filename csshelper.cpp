@@ -31,7 +31,6 @@
 
 #include "csshelper.h"
 
-#include "kmkernel.h"
 #include "globalsettings.h"
 
 #include <kconfig.h>

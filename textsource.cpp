@@ -31,7 +31,6 @@
 */
 
 #include "textsource.h"
-#include "kmkernel.h"
 #include "kmmsgbase.h"
 #include "kmmsgdict.h"
 #include "kmfolder.h"

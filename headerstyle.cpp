@@ -38,7 +38,6 @@
 #include "headerstrategy.h"
 #include "linklocator.h"
 #include "kmmessage.h"
-#include "kmkernel.h"
 #include "spamheaderanalyzer.h"
 #include "globalsettings.h"
 

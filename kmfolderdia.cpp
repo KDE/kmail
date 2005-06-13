@@ -40,7 +40,6 @@
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
 #include "kmheaders.h"
-#include "kmkernel.h"
 #include "kmcommands.h"
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"

@@ -42,7 +42,6 @@ using KMail::SieveConfig;
 #include "kmfoldercachedimap.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "progressmanager.h"
 

@@ -5,7 +5,6 @@
 
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"
-#include "kmkernel.h"
 
 //-----------------------------------------------------------------------------
 

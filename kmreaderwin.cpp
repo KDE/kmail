@@ -24,7 +24,6 @@ using KMail::MailSourceViewer;
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "kcursorsaver.h"
-#include "kmkernel.h"
 #include "kmfolder.h"
 #include "vcardviewer.h"
 using KMail::VCardViewer;

@@ -22,7 +22,6 @@
 
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
-#include "kmkernel.h" // for KabcBridge
 
 #include <kapplication.h>
 #include <kdebug.h>

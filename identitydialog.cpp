@@ -42,7 +42,6 @@
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
-#include "kmkernel.h"
 #include "dictionarycombobox.h"
 #include "kleo_util.h"
 #include "kmmainwidget.h"
