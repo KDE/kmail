@@ -47,8 +47,8 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
 KMFilterMgr::~KMFilterMgr()
 {
   deref( true );
-  clear();
   writeConfig( false );
+  clear();
 }
 
 void KMFilterMgr::clear()
