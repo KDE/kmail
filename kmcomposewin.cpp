@@ -357,6 +357,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     this, SLOT (slotSpellcheckDone (int)));
   connect (mEditor, SIGNAL( pasteImage() ),
     this, SLOT (slotPaste() ) );
+  connect (mEditor, SIGNAL( focusChanged(bool) ),
+    this, SLOT (editorFocusChanged(bool)) );
 
   mMainWidget->resize(480,510);
   setCentralWidget(mMainWidget);
@@ -1147,16 +1149,16 @@ void KMComposeWin::setupActions(void)
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
-  (void) new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
+  mPasteQuotation = new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
                       actionCollection(), "paste_quoted");
 
   (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteAsAttachment()),
                       actionCollection(), "paste_att");
 
-  (void) new KAction(i18n("Add &Quote Characters"), 0, this,
+  mAddQuoteChars = new KAction(i18n("Add &Quote Characters"), 0, this,
               SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
 
-  (void) new KAction(i18n("Re&move Quote Characters"), 0, this,
+  mRemQuoteChars = new KAction(i18n("Re&move Quote Characters"), 0, this,
               SLOT(slotRemoveQuotes()), actionCollection(), "tools_unquote");
 
 
@@ -1378,6 +1380,7 @@ void KMComposeWin::setupActions(void)
                                      this, SLOT( slotTextColor() ),
                                      actionCollection(), "format_color");
 
+  editorFocusChanged(false);
   createGUI("kmcomposerui.rc");
 }
 
@@ -4339,6 +4342,12 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 }
 
 
+void KMComposeWin::editorFocusChanged(bool gained)
+{
+  mPasteQuotation->setEnabled(gained);
+  mAddQuoteChars->setEnabled(gained);
+  mRemQuoteChars->setEnabled(gained);
+}
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 {
@@ -5256,11 +5265,14 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         return true;
       }
     }
+  } else if ( e->type() == QEvent::FocusIn || e->type() == QEvent::FocusOut ) {
+    QFocusEvent *fe = static_cast<QFocusEvent*>(e);
+    if(! (fe->reason() == QFocusEvent::ActiveWindow || fe->reason() == QFocusEvent::Popup) )
+      emit focusChanged( fe->gotFocus() );
   }
 
   return KEdit::eventFilter(o, e);
 }
-
 
 //-----------------------------------------------------------------------------
 int KMEdit::autoSpellChecking( bool on )

@@ -139,6 +139,7 @@ signals:
   void spellcheck_done(int result);
   void pasteImage();
   void focusUp();
+  void focusChanged( bool );
 public slots:
   void initializeAutoSpellChecking();
   void slotSpellcheck2(KSpell*);
@@ -813,6 +814,7 @@ protected slots:
     */
     void compressAttach(int idx);
     void uncompressAttach(int idx);
+    void editorFocusChanged(bool gained);
 
 protected:
   QWidget   *mMainWidget;
@@ -864,7 +866,8 @@ protected:
   QString mOldSigText;
 
   KAction *mAttachPK, *mAttachMPK,
-          *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
+          *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction,
+          *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
   KRecentFilesAction *mRecentAction;
 
   KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;

@@ -2278,7 +2278,7 @@ void KMHeaders::slotRMB()
     mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
   }
 
-  if (!out_folder && mOwner->watchThreadAction()->isEnabled() ) {
+  if (!out_folder && !mFolder->isSent() && mOwner->watchThreadAction()->isEnabled() ) {
     mOwner->watchThreadAction()->plug(menu);
     mOwner->ignoreThreadAction()->plug(menu);
   }
