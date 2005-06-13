@@ -34,7 +34,6 @@
 #endif
 
 #include "subscriptiondialog.h"
-#include "kmmessage.h"
 #include "folderstorage.h"
 #include "listjob.h"
 #include "imapaccountbase.h"

@@ -35,7 +35,6 @@
 #include "messagecomposer.h"
 #include "kmmsgpart.h"
 #include "kmcomposewin.h"
-#include "kmmessage.h"
 #include "klistboxdialog.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"

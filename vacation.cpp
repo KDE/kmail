@@ -25,7 +25,6 @@ using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
-#include "kmmessage.h"
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identity.h>
 

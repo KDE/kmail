@@ -41,7 +41,6 @@
 #include "kmacctimap.h"
 #include "kmacctmgr.h"
 #include "kmkernel.h"
-#include "kmmessage.h"
 #include "sievejob.h"
 #include <qtextedit.h>
 

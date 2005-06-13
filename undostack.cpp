@@ -28,7 +28,6 @@
 #include "kmmainwin.h"
 #include "kmkernel.h"
 #include "kmfolder.h"
-#include "kmmessage.h"
 #include "kmmsgdict.h"
 
 #include <kmessagebox.h>

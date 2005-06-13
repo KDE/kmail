@@ -7,7 +7,6 @@
 
 #include "kmaddrbook.h"
 #include "kmsearchpattern.h"
-#include "kmmessage.h"
 #include "kmmsgindex.h"
 #include "kmmsgdict.h"
 #include "filterlog.h"

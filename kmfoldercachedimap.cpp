@@ -39,7 +39,6 @@
 #include "kmfoldercachedimap.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"
 #include "kmailicalifaceimpl.h"
