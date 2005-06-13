@@ -22,6 +22,7 @@
 #endif
 
 #include "kmfilter.h"
+#include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
 #include "kmfilteraction.h"

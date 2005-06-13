@@ -44,7 +44,6 @@
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
 #include "kmailicalifaceimpl.h"
-#include "kmmainwidget.h"
 #include "globalsettings.h"
 #include "folderrequester.h"
 

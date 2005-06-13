@@ -34,7 +34,6 @@
 #include "folderIface.h"
 
 #include "kmmainwin.h"
-#include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"

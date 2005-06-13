@@ -41,6 +41,7 @@
 #include <qvbox.h>
 
 #include "kmacctlocal.h"
+#include "kmkernel.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"

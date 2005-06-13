@@ -8,6 +8,7 @@
 
 
 #define ALLOW_GUI 1
+#include "kmkernel.h"
 #include "kmmessage.h"
 #include "mailinglist-magic.h"
 #include "messageproperty.h"

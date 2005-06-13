@@ -27,6 +27,7 @@
 #include "kmfoldertype.h"
 #include "kmmsginfo.h"
 #include "kmglobal.h"
+#include "kmkernel.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "mailinglist-magic.h"

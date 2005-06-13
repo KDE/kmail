@@ -36,6 +36,7 @@
 
 #include "folderstorage.h"
 #include "kmfolder.h"
+#include "kmkernel.h"
 
 #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "undostack.h"

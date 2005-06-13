@@ -26,7 +26,6 @@
 
 #include "recipientseditor.h"
 
-#include <kaboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -47,7 +47,6 @@ using KMail::FolderIface;
 #include "jobscheduler.h"
 
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
 #include <kstaticdeleter.h>

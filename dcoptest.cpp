@@ -5,7 +5,6 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <kaboutdata.h>
 #include <kcmdlineargs.h>
 
 #include <kmailIface_stub.h>

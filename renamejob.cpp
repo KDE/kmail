@@ -32,7 +32,6 @@
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
-#include "kmfoldertype.h"
 #include "kmfoldermgr.h"
 #include "imapaccountbase.h"
 #include "kmacctimap.h"

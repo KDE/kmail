@@ -23,8 +23,6 @@
 #ifndef kmglobal_h
 #define kmglobal_h
 
-#include "kmkernel.h"
-
 typedef enum
 {
     FCNTL,

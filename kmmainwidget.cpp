@@ -62,7 +62,6 @@ using KPIM::BroadcastStatus;
 #include "kmacctfolder.h"
 #include "undostack.h"
 #include "kmcommands.h"
-#include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "imapaccountbase.h"

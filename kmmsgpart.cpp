@@ -7,6 +7,7 @@
 #include <kmdcodec.h>
 
 #include "kmmsgpart.h"
+#include "kmkernel.h"
 #include "kmmessage.h"
 #include "globalsettings.h"
 
