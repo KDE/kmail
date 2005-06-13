@@ -86,11 +86,11 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ (*it)->name() ];
       if ( desc ) {
-	KMFilterAction *f = desc->create();
-	if ( f ) {
-	  f->argsFromString( (*it)->argsAsString() );
-	  mActions.append( f );
-	}
+        KMFilterAction *f = desc->create();
+        if ( f ) {
+          f->argsFromString( (*it)->argsAsString() );
+          mActions.append( f );
+        }
       }
     }
 
@@ -275,20 +275,20 @@ void KMFilter::readConfig(KConfig* config)
         //...create an instance...
         KMFilterAction *fa = desc->create();
         if ( fa ) {
-  	  //...load it with it's parameter...
+          //...load it with it's parameter...
           fa->argsFromString( config->readEntry( argsName ) );
-	  //...check if it's emoty and...
-	  if ( !fa->isEmpty() )
-	    //...append it if it's not and...
-	    mActions.append( fa );
-	  else
-	    //...delete is else.
-	    delete fa;
+          //...check if it's emoty and...
+          if ( !fa->isEmpty() )
+            //...append it if it's not and...
+            mActions.append( fa );
+          else
+            //...delete is else.
+            delete fa;
         }
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
-				  i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
-				       .arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
+                                  i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
+                                       .arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
     }
 
     mAccounts = config->readIntListEntry( "accounts-set" );
@@ -339,9 +339,9 @@ void KMFilter::writeConfig(KConfig* config) const
     QPtrListIterator<KMFilterAction> it( mActions );
     for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
       config->writeEntry( key.sprintf("action-name-%d", i),
-    			  (*it)->name() );
+                          (*it)->name() );
       config->writeEntry( key.sprintf("action-args-%d", i),
-			  (*it)->argsAsString() );
+                          (*it)->argsAsString() );
     }
     config->writeEntry( "actions", i );
     config->writeEntry( "accounts-set", mAccounts );
@@ -365,9 +365,9 @@ void KMFilter::purify()
     QValueListConstIterator<int> it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
       if ( !kmkernel->acctMgr()->find( *it2 ) )
-	 mAccounts.remove( *it2 );
+         mAccounts.remove( *it2 );
       else
-	 ++it2;
+         ++it2;
     }
   }
 }
@@ -417,10 +417,10 @@ const QString KMFilter::asString() const
       QValueListConstIterator<int> it2;
       result += "This filter applies to the following accounts:";
       if ( mAccounts.isEmpty() )
-	result += " None";
+        result += " None";
       else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 )
-	if ( kmkernel->acctMgr()->find( *it2 ) )
-	  result += " " + kmkernel->acctMgr()->find( *it2 )->name();
+        if ( kmkernel->acctMgr()->find( *it2 ) )
+          result += " " + kmkernel->acctMgr()->find( *it2 )->name();
       result += "\n";
     }
     if ( bStopProcessingHere )
