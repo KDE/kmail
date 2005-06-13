@@ -961,7 +961,8 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
                                                bool matches )
 {
     if ( search()->searchPattern() != pattern ) return;
-    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNum << endl;
+    kdDebug(5006) << folder->label() << ": serNum " << serNum
+     << " matches?" << matches << endl;
 
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];

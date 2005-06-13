@@ -389,17 +389,18 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
         (*it).data.resize( dataSize );
 
-        // I will probably burn in hell for the below, but here's why:
-        // during the construction of the message from the byteArray it does 
+        // During the construction of the message from the byteArray it does 
         // not have a uid. Therefore we have to make sure that no connected
         // slots are called, since they would operate on uid == 0.
-        msg->parent()->storage()->quiet( true );
+        msg->parent()->storage()->blockSignals( true );
         msg->fromByteArray( (*it).data );
-        // reconstruct as it may be overwritten above
-        msg->setUID(uid);
-        msg->parent()->storage()->quiet( false );
-        if ( size > 0 && msg->msgSizeServer() == 0 )
+        // now let others react
+        msg->parent()->storage()->blockSignals( false );
+        if ( size > 0 && msg->msgSizeServer() == 0 ) {
           msg->setMsgSizeServer(size);
+        }
+        // reconstruct the UID as it gets overwritten above
+        msg->setUID(uid);
 
       } else {
         // Convert CR/LF to LF.

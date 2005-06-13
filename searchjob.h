@@ -82,24 +82,25 @@ protected:
   // returns true if all uids can be mapped to sernums
   bool canMapAllUIDs();
 
+  // if we need to download messages
+  bool needsDownload();
+
 protected slots:
   // search the folder
   // is called when all uids can be mapped to sernums
   void slotSearchFolder();
 
+  // processes the server answer
   void slotSearchData( KIO::Job* job, const QString& data );
 
   // message is downloaded and searched
   void slotSearchMessageArrived( KMMessage* msg );
 
-  // error handling
+  // error handling for all cases
   void slotSearchResult( KIO::Job *job );
 
   // imap search result from a single message
   void slotSearchDataSingleMessage( KIO::Job* job, const QString& data );
-
-  // single message was downloaded and is checked
-  void slotSearchSingleMessage( KMMessage* msg );
 
   // the user cancelled the search progress
   void slotAbortSearch( KPIM::ProgressItem* item );

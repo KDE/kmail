@@ -46,13 +46,13 @@ using KPIM::ProgressManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 
-using namespace KMail;
+namespace KMail {
 
 SearchJob::SearchJob( KMFolderImap* folder, ImapAccountBase* account,
     KMSearchPattern* pattern, Q_UINT32 serNum )
  : FolderJob( 0, tOther, (folder ? folder->folder() : 0) ),
    mFolder( folder ), mAccount( account ), mSearchPattern( pattern ),
-   mSerNum( serNum ), mRemainingMsgs( 0 )
+   mSerNum( serNum ), mRemainingMsgs( 0 ), mProgress( 0 )
 {
 }
 
@@ -107,47 +107,56 @@ QString SearchJob::searchStringFromPattern( KMSearchPattern* pattern )
     bool accept = true;
     QString result;
     QString field = (*it)->field();
-    if ( (*it)->function() == KMSearchRule::FuncContainsNot )
+    // check if the operation is supported
+    if ( (*it)->function() == KMSearchRule::FuncContainsNot ) {
       result = "NOT ";
-    else if ( (*it)->function() == KMSearchRule::FuncIsGreater &&
-              (*it)->field() == "<size>" )
+    } else if ( (*it)->function() == KMSearchRule::FuncIsGreater &&
+              (*it)->field() == "<size>" ) {
       result = "LARGER ";
-    else if ( (*it)->function() == KMSearchRule::FuncIsLess &&
-              (*it)->field() == "<size>" )
+    } else if ( (*it)->function() == KMSearchRule::FuncIsLess &&
+              (*it)->field() == "<size>" ) {
       result = "SMALLER ";
-    else if ( (*it)->function() != KMSearchRule::FuncContains )
+    } else if ( (*it)->function() != KMSearchRule::FuncContains ) {
+      // can't be handled by imap
       accept = false;
+    }
 
-    if ( (*it)->field() == "<message>" )
+    // now see what should be searched
+    if ( (*it)->field() == "<message>" ) {
       result += "TEXT \"" + (*it)->contents() + "\"";
-    else if ( (*it)->field() == "<body>" )
+    } else if ( (*it)->field() == "<body>" ) {
       result += "BODY \"" + (*it)->contents() + "\"";
-    else if ( (*it)->field() == "<recipients>" ) 
+    } else if ( (*it)->field() == "<recipients>" ) {
       result += " (OR HEADER To \"" + (*it)->contents() + "\" HEADER Cc \"" +
         (*it)->contents() + "\" HEADER Bcc \"" + (*it)->contents() + "\")";
-    else if ( (*it)->field() == "<size>" )
+    } else if ( (*it)->field() == "<size>" ) {
       result += (*it)->contents();
-    else if ( (*it)->field() == "<age in days>" ||
+    } else if ( (*it)->field() == "<age in days>" ||
               (*it)->field() == "<status>" ||
-              (*it)->field() == "<any header>" )
+              (*it)->field() == "<any header>" ) {
       accept = false;
-    else
+    } else {
       result += "HEADER "+ field + " \"" + (*it)->contents() + "\"";
+    }
 
-    if ( result.isEmpty() )
+    if ( result.isEmpty() ) {
       accept = false;
+    }
 
-    if ( accept )
+    if ( accept ) {
       parts += result;
-    else
+    } else {
       mLocalSearchPattern->append( *it );
+    }
   }
   
   QString search;
-  if ( pattern->op() == KMSearchPattern::OpOr )
+  if ( pattern->op() == KMSearchPattern::OpOr ) {
     search = "(OR " + parts.join(" ") + ")";
-  else
+  } else {
+    // and's are simply joined
     search = parts.join(" ");
+  }
 
   kdDebug(5006) << k_funcinfo << search << ";localSearch=" << mLocalSearchPattern->asString() << endl;
   return search;
@@ -156,8 +165,10 @@ QString SearchJob::searchStringFromPattern( KMSearchPattern* pattern )
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
 {
-  if ( job && job->error() )
-   return; 
+  if ( job && job->error() ) {
+    // error is handled in slotSearchResult
+    return; 
+  }
 
   if ( mLocalSearchPattern->isEmpty() && data.isEmpty() )
   {
@@ -201,7 +212,7 @@ void SearchJob::slotSearchFolder()
             this, SLOT( slotSearchFolder()) );
 
   if ( mLocalSearchPattern->isEmpty() ) {
-    // search for the serial number of the UIDs
+    // pure imap search - now get the serial number for the UIDs
     QValueList<Q_UINT32> serNums;
     for ( QStringList::Iterator it = mImapSearchHits.begin(); 
         it != mImapSearchHits.end(); ++it ) 
@@ -218,14 +229,7 @@ void SearchJob::slotSearchFolder()
     }
 
     // Let's see if all we need is status, that we can do locally. Optimization.
-    bool needToDownload = false;
-    for ( QPtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
-      if ( (*it)->field() != "<status>" ) {
-        needToDownload = true;
-        break;
-      }
-    }
-
+    bool needToDownload = needsDownload();
     if ( needToDownload ) {
       // so we need to download all messages and check
       QString question = i18n("To execute your search all messages of the folder %1 "
@@ -303,16 +307,21 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     if ( idx != -1 )
       mFolder->unGetMsg( idx );
   }
-  bool complete = ( mRemainingMsgs == 0 );
-  if ( complete && mProgress )
+  if ( mSerNum > 0 )
   {
-    mProgress->setComplete();
-    mProgress = 0;
-  }
-  if ( matches || complete )
-  {
-    emit searchDone( mSearchSerNums, mSearchPattern, complete );
-    mSearchSerNums.clear();
+    emit searchDone( mSerNum, mSearchPattern, matches );
+  } else {
+    bool complete = ( mRemainingMsgs == 0 );
+    if ( complete && mProgress )
+    {
+      mProgress->setComplete();
+      mProgress = 0;
+    }
+    if ( matches || complete )
+    {
+      emit searchDone( mSearchSerNums, mSearchPattern, complete );
+      mSearchSerNums.clear();
+    }
   }
 }
 
@@ -339,18 +348,9 @@ void SearchJob::searchSingleMessage()
 {
   QString searchString = searchStringFromPattern( mSearchPattern );
   if ( searchString.isEmpty() )
-  { 
-    // download the message and search local
-    int idx = -1;
-    KMFolder *aFolder = 0;
-    kmkernel->msgDict()->getLocation( mSerNum, &aFolder, &idx );
-
-    KMMessage * msg = mFolder->getMsg( idx );
-    ImapJob *job = new ImapJob( msg );
-    job->setParentFolder( mFolder );
-    connect( job, SIGNAL(messageRetrieved(KMMessage*)),
-        this, SLOT(slotSearchSingleMessage(KMMessage*)) );
-    job->start();
+  {
+    // no imap search
+    slotSearchDataSingleMessage( 0, QString::null );
   } else
   {
     // imap search
@@ -379,19 +379,36 @@ void SearchJob::searchSingleMessage()
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data )
 {
-  if ( job && job->error() )
-   return;
+  if ( job && job->error() ) {
+    // error is handled in slotSearchResult
+    return;
+  }
 
-  emit searchDone( mSerNum, mSearchPattern, !data.isEmpty() );
+  if ( mLocalSearchPattern->isEmpty() ) {
+    // we are done
+    emit searchDone( mSerNum, mSearchPattern, !data.isEmpty() );
+    return;
+  }
+  // remember what the server found
+  mImapSearchHits = QStringList::split( " ", data );
+
+  // add the local search
+  int idx = -1;
+  KMFolder *aFolder = 0;
+  kmkernel->msgDict()->getLocation( mSerNum, &aFolder, &idx );
+  assert(aFolder && (idx != -1));
+  KMMessage * msg = mFolder->getMsg( idx );
+  if ( needsDownload() ) {
+    ImapJob *job = new ImapJob( msg );
+    job->setParentFolder( mFolder );
+    connect( job, SIGNAL(messageRetrieved(KMMessage*)),
+        this, SLOT(slotSearchMessageArrived(KMMessage*)) );
+    job->start();
+  } else {
+    slotSearchMessageArrived( msg );
+  }
 }
  
-//-----------------------------------------------------------------------------
-void SearchJob::slotSearchSingleMessage( KMMessage* msg )
-{
-  bool matches = ( msg && mLocalSearchPattern->matches( msg ) );
-  emit searchDone( mSerNum, mSearchPattern, matches );
-}
-
 //-----------------------------------------------------------------------------
 void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
 {
@@ -401,5 +418,18 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
   QValueList<Q_UINT32> serNums;
   emit searchDone( serNums, mSearchPattern, true );
 }
+
+//-----------------------------------------------------------------------------
+bool SearchJob::needsDownload()
+{
+  for ( QPtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
+    if ( (*it)->field() != "<status>" ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+} // namespace KMail
 
 #include "searchjob.moc"
