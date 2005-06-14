@@ -31,14 +31,17 @@
 #include "kio/job.h"
 #include "kio/global.h"
 
+#include <kstandarddirs.h>
+
 #include <qintdict.h>
 #include <qdict.h>
-#include <qvaluelist.h>
-#include <kstandarddirs.h>
+template< typename T> class QPtrList;
+template< typename T> class QValueList;
 
 class KMFolderTreeItem;
 class KMFolderImap;
 class KMSearchPattern;
+class KMMessage;
 namespace KMail {
   class FolderJob;
   class ImapJob;

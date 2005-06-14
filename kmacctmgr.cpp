@@ -6,6 +6,7 @@
 
 #include "kmacctmgr.h"
 
+#include "kmaccount.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"

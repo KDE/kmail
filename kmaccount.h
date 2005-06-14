@@ -27,15 +27,15 @@
 #include <qsignal.h>
 #include <qstring.h>
 #include <qptrlist.h>
-#include <qvaluelist.h>
 #include <qguardedptr.h>
 #include <qmap.h>
+
+#include "kmmessage.h"
 
 class KMAcctMgr;
 class KMFolder;
 class KMAcctFolder;
 class KConfig;
-class KMMessage;
 class KMFolderJob;
 namespace  KMail {
   class FolderJob;
@@ -43,6 +43,7 @@ namespace  KMail {
 namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
 using KPIM::ProgressItem;
+template <typename T> class QValueList;
 
 class KMPrecommand : public QObject
 {
