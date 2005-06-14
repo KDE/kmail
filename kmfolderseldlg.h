@@ -7,7 +7,7 @@
 #define kmfolderseldlg_h
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <kfoldertree.h>
 
 class KMFolder;
 class KMFolderTree;
@@ -15,7 +15,7 @@ class KMMainWidget;
 
 namespace KMail {
 
-  class SimpleFolderTree : public KListView
+  class SimpleFolderTree : public KFolderTree
   {
     Q_OBJECT
 

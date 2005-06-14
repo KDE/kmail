@@ -17,13 +17,11 @@
 
 namespace KMail {
 
-class FolderItem : public KListViewItem
+class FolderItem : public KFolderTreeItem
 {
   public:
-    FolderItem( QListView * listView );
-    FolderItem( QListView * listView, QListViewItem * afterListViewItem );
-    FolderItem( QListViewItem * listViewItem );
-    FolderItem( QListViewItem * listViewItem, QListViewItem * afterListViewItem );
+    FolderItem( KFolderTree * listView );
+    FolderItem( KFolderTreeItem * listViewItem );
 
     void setFolder( KMFolder * folder ) { mFolder = folder; };
     const KMFolder * folder() { return mFolder; };
@@ -33,40 +31,25 @@ class FolderItem : public KListViewItem
 };
 
 //-----------------------------------------------------------------------------
-FolderItem::FolderItem( QListView * listView )
-  : KListViewItem( listView ),
+FolderItem::FolderItem( KFolderTree * listView )
+  : KFolderTreeItem( listView ),
     mFolder( 0 )
 {}
 
 //-----------------------------------------------------------------------------
-FolderItem::FolderItem( QListView * listView, QListViewItem * afterListViewItem )
-  : KListViewItem( listView, afterListViewItem ),
+FolderItem::FolderItem( KFolderTreeItem * listViewItem )
+  : KFolderTreeItem( listViewItem ),
     mFolder( 0 )
 {}
-
-//-----------------------------------------------------------------------------
-FolderItem::FolderItem( QListViewItem * listViewItem )
-  : KListViewItem( listViewItem ),
-    mFolder( 0 )
-{}
-
-//-----------------------------------------------------------------------------
-FolderItem::FolderItem( QListViewItem * listViewItem, QListViewItem * afterListViewItem )
-  : KListViewItem( listViewItem, afterListViewItem ),
-    mFolder( 0 )
-{}
-
 
 //-----------------------------------------------------------------------------
 SimpleFolderTree::SimpleFolderTree( QWidget * parent,
                                     KMFolderTree * folderTree,
                                     const QString & preSelection,
                                     bool mustBeReadWrite )
-  : KListView( parent ), mFolderTree( folderTree )
+  : KFolderTree( parent ), mFolderTree( folderTree )
 {
   mFolderColumn = addColumn( i18n( "Folder" ) );
-  setRootIsDecorated( true );
-  setSorting( -1 );
 
   reload( mustBeReadWrite, true, true, preSelection );
 
@@ -112,10 +95,9 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     FolderItem * item = 0;
     if ( depth <= 0 ) {
       // top level - first top level item or after last existing top level item
+      item = new FolderItem( this );
       if ( lastTopItem )
-        item = new FolderItem( this, lastTopItem );
-      else
-        item = new FolderItem( this );
+        item->moveItem( lastTopItem );
       lastTopItem = item;
       depth = 0;
     }
@@ -123,21 +105,22 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
       if ( depth > lastDepth ) {
         // next lower level - parent node will get opened
         item = new FolderItem( lastItem );
-        lastItem->setOpen( true );
       }
       else {
-        if ( depth == lastDepth )
+        if ( depth == lastDepth ) {
           // same level - behind previous item
-          item = new FolderItem( lastItem->parent(), lastItem );
-        else if ( depth < lastDepth ) {
+          item = new FolderItem( static_cast<FolderItem*>(lastItem->parent()) );
+          item->moveItem( lastItem );
+        } else if ( depth < lastDepth ) {
           // above previous level - might be more than one level difference
           // but highest possibility is top level
           while ( ( depth <= --lastDepth ) && lastItem->parent() ) {
             lastItem = static_cast<FolderItem *>( lastItem->parent() );
           }
-          if ( lastItem->parent() )
-            item = new FolderItem( lastItem->parent(), lastItem );
-          else {
+          if ( lastItem->parent() ) {
+            item = new FolderItem( static_cast<FolderItem*>(lastItem->parent()) );
+            item->moveItem( lastItem );
+          } else {
             // chain somehow broken - what does cause this ???
             kdDebug( 5006 ) << "You shouldn't get here: depth=" << depth
                             << "folder name=" << fti->text( 0 ) << endl;
@@ -149,6 +132,9 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     }
 
     item->setText( mFolderColumn, fti->text( 0 ) );
+    item->setProtocol( fti->protocol() );
+    item->setType( fti->type() );
+    item->setOpen( fti->isOpen() );
     // Make items without folders and readonly items unselectable
     // if we're told so
     if ( mustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
