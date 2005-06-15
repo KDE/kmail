@@ -650,9 +650,9 @@ public:
   static QString stripEmailAddr(const QString& emailAddr);
 
   /** Quotes the following characters which have a special meaning in HTML:
-   * '<'  '>'  '&'  '"'. Additionally '\n' is converted to "<br />" if
+   * '<'  '>'  '&'  '"'. Additionally '\\n' is converted to "<br />" if
    * @p removeLineBreaks is false. If @p removeLineBreaks is true, then
-   * '\n' is removed. Last but not least '\r' is removed.
+   * '\\n' is removed. Last but not least '\\r' is removed.
    */
   static QString quoteHtmlChars( const QString& str,
                                  bool removeLineBreaks = false );
