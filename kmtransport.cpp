@@ -778,7 +778,6 @@ void KMTransportDialog::slotSmtpCapabilities( const QStringList & capaNormal,
   delete mServerTest;
   mServerTest = 0;
 }
-
 bool KMTransportDialog::sanityCheckSmtpInput()
 {
   // FIXME: add additional checks for all fields that needs it
@@ -794,9 +793,12 @@ bool KMTransportDialog::sanityCheckSmtpInput()
 
 void KMTransportDialog::slotOk()
 {
-  if( !sanityCheckSmtpInput() ) {
-    return;
+  if (mTransportInfo->type != "sendmail") {
+    if( !sanityCheckSmtpInput() ) {
+      return;
+    }
   }
+
   saveSettings();
   accept();
 }
