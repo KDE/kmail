@@ -847,11 +847,6 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
-
-  // Todo:
-  // scroll mHeaders to show new items if current item would
-  // still be visible
-  //  mHeaders->showNewMail();
 }
 
 

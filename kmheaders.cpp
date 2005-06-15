@@ -778,7 +778,7 @@ void KMHeaders::msgChanged()
   QValueList<int> curItems = selectedItems();
   updateMessageList(); // do not change the selection
   // restore the old state
-  setTopItemByIndex( i );
+  setTopItemByIndex( i, true);
   setCurrentMsg( cur );
   setSelectedByIndex( curItems, true );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -2352,37 +2352,40 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
 //-----------------------------------------------------------------------------
 int KMHeaders::topItemIndex()
 {
-  HeaderItem *item = static_cast<HeaderItem*>(itemAt(QPoint(1,1)));
-  if (item)
-    return item->msgId();
-  else
-    return -1;
-}
-
-// If sorting ascending by date/ooa then try to scroll list when new mail
-// arrives to show it, but don't scroll current item out of view.
-void KMHeaders::showNewMail()
-{
-  if (mSortCol != mPaintInfo.dateCol)
-    return;
- for( int i = 0; i < (int)mItems.size(); ++i)
-   if (mFolder->getMsgBase(i)->isNew()) {
-     if (!mSortDescending)
-       setTopItemByIndex( currentItemIndex() );
-     break;
-   }
+  int i=0;
+  HeaderItem *topItem = static_cast<HeaderItem*>(itemAt(QPoint(1,1)));
+  QListViewItem *item =  firstChild();
+  while(item && item != topItem) {
+    item = item->itemBelow();
+    i++;
+  }
+  if(item)
+    return i;
+  return -1;
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setTopItemByIndex( int aMsgIdx)
+void KMHeaders::setTopItemByIndex( int aMsgIdx, bool fuzzy)
 {
-  int msgIdx = aMsgIdx;
-  if (msgIdx < 0)
-    msgIdx = 0;
-  else if (msgIdx >= (int)mItems.size())
-    msgIdx = mItems.size() - 1;
-  if ((msgIdx >= 0) && (msgIdx < (int)mItems.size()))
-    setContentsPos( 0, itemPos( mItems[msgIdx] ));
+  int y = 0;
+  QListViewItem *item =  firstChild();
+  while(item) {
+    if(aMsgIdx-- <= 0)
+        break;
+    y += item->totalHeight();
+    item = item->itemBelow();
+  }
+  if(fuzzy) {
+    item = item->itemAbove();
+    while(item) {
+        int mesgId = static_cast<HeaderItem*>(item)->msgId();
+        if( !mFolder->getMsgBase(mesgId)->isUnread() )
+          break;
+        y -= item->totalHeight();
+        item = item->itemAbove();
+    }
+  }
+  setContentsPos( 0, y );
 }
 
 //-----------------------------------------------------------------------------

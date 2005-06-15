@@ -125,9 +125,6 @@ public:
   /** Read color options and set palette. */
   virtual void readColorConfig(void);
 
-  /** Scroll to show new mail */
-  void showNewMail();
-
   /** Return the current message */
   virtual KMMessage* currentMsg();
   /** Return the current list view item */
@@ -142,7 +139,7 @@ public:
   virtual int topItemIndex();
   /** Make the item corresponding to the message with the given id the
       top most visible item. */
-  virtual void setTopItemByIndex( int aMsgIdx );
+  virtual void setTopItemByIndex( int aMsgIdx, bool fuzzy=false);
   virtual void setNestedOverride( bool override );
   virtual void setSubjectThreading( bool subjThreading );
   /** Double force items to always be open */
