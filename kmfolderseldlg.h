@@ -93,6 +93,8 @@ namespace KMail {
     protected:
       void readConfig();
       void writeConfig();
+      /** Init the dialog */
+      void init();
 
       SimpleFolderTree * mTreeView;
       bool mUseGlobalSettings;

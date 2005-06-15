@@ -49,6 +49,7 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
                                     bool mustBeReadWrite )
   : KFolderTree( parent ), mFolderTree( folderTree )
 {
+  setSelectionModeExt( Single );
   mFolderColumn = addColumn( i18n( "Folder" ) );
 
   reload( mustBeReadWrite, true, true, preSelection );
@@ -238,18 +239,11 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
   KMFolderTree * ft = parent->folderTree();
   assert( ft );
 
-  QString global = mUseGlobalSettings ? 
+  QString preSelection = mUseGlobalSettings ? 
     GlobalSettings::lastSelectedFolder() : QString::null;
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
-                                           global, mustBeReadWrite );
-                                           
-  mTreeView->setFocus();
-  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
-           this, SLOT( slotSelect() ) );
-  connect( mTreeView, SIGNAL( selectionChanged() ),
-           this, SLOT( slotUpdateBtnStatus() ) );
-
-  readConfig();
+                                           preSelection, mustBeReadWrite );
+  init();
 }
 
 //----------------------------------------------------------------------------
@@ -262,11 +256,16 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
                ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )             
 {
-  QString global = mUseGlobalSettings ? 
+  QString preSelection = mUseGlobalSettings ? 
     GlobalSettings::lastSelectedFolder() : QString::null;
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), tree,
-                                           global, mustBeReadWrite );
-                                          
+                                           preSelection, mustBeReadWrite );
+  init();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderSelDlg::init()
+{
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
