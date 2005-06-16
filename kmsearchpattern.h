@@ -218,6 +218,7 @@ namespace KMail {
     const char * const icon;
   };
 
+  // If you change the ordering here; also do it in the enum below
   static const MessageStatus StatusValues[] = {
     { I18N_NOOP( "Important" ),        "kmmsgflag"   },
     { I18N_NOOP( "New" ),              "kmmsgnew"   },
@@ -235,6 +236,25 @@ namespace KMail {
     { I18N_NOOP( "Ham" ),              "kmmsgham"   },
     { I18N_NOOP( "To Do" ),            "kmmsgtodo"   },
     { I18N_NOOP( "Has Attachment"),    "kmmsgattachment"   }
+  };
+  // If you change the ordering here; also do it in the array above
+  enum StatusValueTypes {
+    StatusImportant = 0,
+    StatusNew = 1,
+    StatusUnread = 2,
+    StatusRead = 3,
+    StatusOld = 4,
+    StatusDeleted = 5,
+    StatusReplied = 6,
+    StatusForwarded = 7,
+    StatusQueued = 8,
+    StatusSent = 9,
+    StatusWatched = 10,
+    StatusIgnored = 11,
+    StatusSpam = 12,
+    StatusHam = 13,
+    StatusToDo = 14,
+    StatusHasAttachment = 15
   };
 
   static const int StatusValueCount =

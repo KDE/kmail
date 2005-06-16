@@ -32,6 +32,7 @@
 #include <qapplication.h>
 #include <qlabel.h>
 #include <qcombobox.h>
+#include <qvaluevector.h>
 #include <qtimer.h>
 
 #include <kaction.h>
@@ -49,7 +50,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KListView *listView,
                                               KActionCollection *actionCollection,
                                               const char *name )
-  : KListViewSearchLine(parent, listView, name), mStatusCombo(0), mStatus(0)
+  : KListViewSearchLine(parent, listView, name), mStatusCombo(0), mStatus(0),  statusList()
 {
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
                                            QApplication::reverseLayout()
@@ -68,8 +69,16 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   mStatusCombo = new QComboBox( parent, "quick search status combo box" );
   mStatusCombo->insertItem( SmallIcon( "run" ), i18n("Any Status") );
-  for ( int i = 0; i < KMail::StatusValueCount; i++ )
-    mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
+
+  insertStatus( StatusUnread );
+  insertStatus( StatusNew );
+  insertStatus( StatusImportant );
+  insertStatus( StatusReplied );
+  insertStatus( StatusForwarded );
+  insertStatus( StatusToDo );
+  insertStatus( StatusHasAttachment );
+  insertStatus( StatusWatched );
+  insertStatus( StatusIgnored );
   mStatusCombo->setCurrentItem( 0 );
   mStatusCombo->installEventFilter( this );
   connect( mStatusCombo, SIGNAL ( activated( int ) ),
@@ -150,9 +159,15 @@ void HeaderListQuickSearch::slotStatusChanged( int index )
   if ( index == 0 )
     mStatus = 0;
   else
-    mStatus =
-      KMSearchRuleStatus::statusFromEnglishName( KMail::StatusValues[ index - 1 ].text );
+    mStatus = KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] );
   updateSearch();
+}
+
+void HeaderListQuickSearch::insertStatus(KMail::StatusValueTypes which)
+{
+  mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[which].icon ),
+    i18n( KMail::StatusValues[ which ].text ) );
+  statusList.append( KMail::StatusValues[ which ].text );
 }
 
 } // namespace KMail

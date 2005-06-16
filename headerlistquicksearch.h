@@ -32,7 +32,9 @@
 #define KMAILHEADERLISTQUICKSEARCH_H
 
 #include "kmmsgbase.h" // for KMMsgStatus
+#include "kmsearchpattern.h"
 #include <klistviewsearchline.h>
+#include <qvaluevector.h>
 class QComboBox;
 class QLabel;
 class KListView;
@@ -74,8 +76,11 @@ private slots:
   void slotStatusChanged( int index );
 
 private:
+    /** Helper method for the filling of the status combo. */
+    void insertStatus(KMail::StatusValueTypes which);
     QComboBox *mStatusCombo;
     KMMsgStatus mStatus;
+    QValueVector<QString> statusList;
 };
 
 }
