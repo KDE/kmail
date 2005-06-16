@@ -152,7 +152,7 @@ public:
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
 
-  /** Returns TRUE if status is new or unread. */
+  /** Returns TRUE if status unread.  Note that new messages are not unread.*/
   virtual bool isUnread(void) const;
 
   /** Returns TRUE if status is new. */
