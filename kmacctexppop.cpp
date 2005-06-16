@@ -662,7 +662,7 @@ void KMAcctExpPop::slotJobFinished() {
     QMap< QPair<time_t, QString>, int > idsToSave;
     idsToSave.clear();
     // Check if we want to keep any messages
-    if ( !idsOfMsgsToDelete.isEmpty() ) {
+    if ( mLeaveOnServer && !idsOfMsgsToDelete.isEmpty() ) {
       // Keep all messages on server
       if ( mLeaveOnServerDays == -1 && mLeaveOnServerCount <= 0 &&
            mLeaveOnServerSize <= 0)
