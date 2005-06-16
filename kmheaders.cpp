@@ -781,7 +781,7 @@ void KMHeaders::msgChanged()
   HeaderItem *topOfList = mItems[i];
   item = firstChild();
   QListViewItem *unreadItem = 0;
-  while(item != topOfList) {
+  while(item && item != topOfList) {
     KMMsgBase *msg = mFolder->getMsgBase( static_cast<HeaderItem*>(item)->msgId() );
     if ( msg->isUnread() || msg->isNew() ) {
       if ( !unreadItem )
