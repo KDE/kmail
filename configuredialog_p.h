@@ -311,8 +311,7 @@ private slots:
   void slotAddTransport();
   void slotModifySelectedTransport();
   void slotRemoveSelectedTransport();
-  void slotTransportUp();
-  void slotTransportDown();
+  void slotSetDefaultTransport();
 
 private:
   virtual void doLoadFromGlobalSettings();
@@ -323,8 +322,7 @@ private:
   ListView    *mTransportList;
   QPushButton *mModifyTransportButton;
   QPushButton *mRemoveTransportButton;
-  QPushButton *mTransportUpButton;
-  QPushButton *mTransportDownButton;
+  QPushButton *mSetDefaultTransportButton;
   QCheckBox   *mConfirmSendCheck;
   QComboBox   *mSendOnCheckCombo;
   QComboBox   *mSendMethodCombo;

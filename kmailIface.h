@@ -108,6 +108,8 @@ k_dcop:
   virtual void selectFolder( QString folder ) =0;
   virtual bool canQueryClose() =0;
 
+  virtual void setDefaultTransport( const QString & transport ) =0;
+
   virtual int timeOfLastMessageCountChange() const =0;
 
 k_dcop_signals:

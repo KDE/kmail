@@ -625,27 +625,12 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
            this, SLOT(slotRemoveSelectedTransport()) );
   btn_vlay->addWidget( mRemoveTransportButton );
 
-  // "up" button: stretch 0
-  // ### FIXME: shouldn't this be a QToolButton?
-  mTransportUpButton = new KPushButton( QString::null, this );
-  mTransportUpButton->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
-  //  mTransportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
-  mTransportUpButton->setAutoDefault( false );
-  mTransportUpButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mTransportUpButton, SIGNAL(clicked()),
-           this, SLOT(slotTransportUp()) );
-  btn_vlay->addWidget( mTransportUpButton );
-
-  // "down" button: stretch 0
-  // ### FIXME: shouldn't this be a QToolButton?
-  mTransportDownButton = new KPushButton( QString::null, this );
-  mTransportDownButton->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
-  //  mTransportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
-  mTransportDownButton->setAutoDefault( false );
-  mTransportDownButton->setEnabled( false ); // b/c no item is selected yet
-  connect( mTransportDownButton, SIGNAL(clicked()),
-           this, SLOT(slotTransportDown()) );
-  btn_vlay->addWidget( mTransportDownButton );
+  mSetDefaultTransportButton = new QPushButton( i18n("Set Default"), this );
+  mSetDefaultTransportButton->setAutoDefault( false );
+  mSetDefaultTransportButton->setEnabled( true );
+  connect ( mSetDefaultTransportButton, SIGNAL(clicked()),
+            this, SLOT(slotSetDefaultTransport()) );
+  btn_vlay->addWidget( mSetDefaultTransportButton );
   btn_vlay->addStretch( 1 ); // spacer
 
   // "Common options" groupbox:
@@ -730,8 +715,6 @@ void AccountsPage::SendingTab::slotTransportSelected()
   QListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
-  mTransportDownButton->setEnabled( cur && cur->itemBelow() );
-  mTransportUpButton->setEnabled( cur && cur->itemAbove() );
 }
 
 // adds a number to @p name to make the name unique
@@ -747,6 +730,26 @@ static inline QString uniqueName( const QStringList & list,
     suffix++;
   }
   return result;
+}
+
+void AccountsPage::SendingTab::slotSetDefaultTransport()
+{
+  QListViewItem *item = mTransportList->selectedItem();
+  if ( !item ) return;
+
+  QListViewItemIterator it( mTransportList );
+    for ( ; it.current(); ++it ) {
+      if ( it.current()->text(1) != "sendmail" ) {
+        it.current()->setText( 1, "smtp" );
+      }
+    }
+
+  if ( item->text(1) != "sendmail" ) {
+    item->setText( 1, i18n( "smtp (Default)" ));
+  }
+
+  GlobalSettings::setDefaultTransport( item->text(0) );
+
 }
 
 void AccountsPage::SendingTab::slotAddTransport()
@@ -798,9 +801,6 @@ void AccountsPage::SendingTab::slotAddTransport()
   // ### FIXME: insert before the selected item, append on empty selection
   QListViewItem *lastItem = mTransportList->firstChild();
   QString typeDisplayName;
-  if ( lastItem )
-    while ( lastItem->nextSibling() )
-      lastItem = lastItem->nextSibling();
   if ( lastItem )
     typeDisplayName = transportInfo->type;
   else
@@ -904,81 +904,6 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   emit changed( true );
 }
 
-
-void AccountsPage::SendingTab::slotTransportUp()
-{
-  QListViewItem *item = mTransportList->selectedItem();
-  if ( !item ) return;
-  QListViewItem *above = item->itemAbove();
-  if ( !above ) return;
-
-  // swap in the transportInfo list:
-  // ### FIXME: use value-based list. This is ugly.
-  KMTransportInfo *ti, *ti2 = 0;
-  int i = 0;
-  for (ti = mTransportInfoList.first(); ti;
-    ti2 = ti, ti = mTransportInfoList.next(), i++)
-      if (ti->name == item->text(0)) break;
-  if (!ti || !ti2) return;
-  ti = mTransportInfoList.take(i);
-  mTransportInfoList.insert(i-1, ti);
-
-  // swap in the display
-  item->setText(0, ti2->name);
-  item->setText(1, ti2->type);
-  above->setText(0, ti->name);
-  if ( above->itemAbove() )
-    // not first:
-    above->setText( 1, ti->type );
-  else
-    // first:
-    above->setText( 1, i18n("%1: type of transport. Result used in "
-                            "Configure->Accounts->Sending listview, \"type\" "
-                            "column, first row, to indicate that this is the "
-                            "default transport", "%1 (Default)")
-                    .arg( ti->type ) );
-
-  mTransportList->setCurrentItem( above );
-  mTransportList->setSelected( above, true );
-  emit changed( true );
-}
-
-
-void AccountsPage::SendingTab::slotTransportDown()
-{
-  QListViewItem * item = mTransportList->selectedItem();
-  if ( !item ) return;
-  QListViewItem * below = item->itemBelow();
-  if ( !below ) return;
-
-  KMTransportInfo *ti, *ti2 = 0;
-  int i = 0;
-  for (ti = mTransportInfoList.first(); ti;
-       ti = mTransportInfoList.next(), i++)
-    if (ti->name == item->text(0)) break;
-  ti2 = mTransportInfoList.next();
-  if (!ti || !ti2) return;
-  ti = mTransportInfoList.take(i);
-  mTransportInfoList.insert(i+1, ti);
-
-  item->setText(0, ti2->name);
-  below->setText(0, ti->name);
-  below->setText(1, ti->type);
-  if ( item->itemAbove() )
-    item->setText( 1, ti2->type );
-  else
-    item->setText( 1, i18n("%1: type of transport. Result used in "
-                           "Configure->Accounts->Sending listview, \"type\" "
-                           "column, first row, to indicate that this is the "
-                           "default transport", "%1 (Default)")
-                   .arg( ti2->type ) );
-
-
-  mTransportList->setCurrentItem(below);
-  mTransportList->setSelected(below, TRUE);
-  emit changed( true );
-}
-
 void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
   mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
 }
@@ -1002,16 +927,20 @@ void AccountsPage::SendingTab::doLoadOther() {
   }
   emit transportListChanged( transportNames );
 
-  QListViewItem *listItem = mTransportList->firstChild();
-  if ( listItem ) {
-    listItem->setText( 1, i18n("%1: type of transport. Result used in "
-                               "Configure->Accounts->Sending listview, "
-                               "\"type\" column, first row, to indicate "
-                               "that this is the default transport",
-                               "%1 (Default)").arg( listItem->text(1) ) );
-    mTransportList->setCurrentItem( listItem );
-    mTransportList->setSelected( listItem, true );
-  }
+  QString defaultTransport = GlobalSettings::defaultTransport();
+
+  QListViewItemIterator it( mTransportList );
+    for ( ; it.current(); ++it ) {
+      if ( it.current()->text(0) == defaultTransport ) {
+        if ( it.current()->text(1) != "sendmail" ) {
+          it.current()->setText( 1, "smtp (Default)" );
+        }
+      } else {
+        if ( it.current()->text(1) != "sendmail" ) {
+          it.current()->setText( 1, "smtp" );
+        }
+      }
+    }
 
   mSendMethodCombo->setCurrentItem(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );

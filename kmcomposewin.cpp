@@ -553,6 +553,7 @@ void KMComposeWin::readConfig(void)
   mBtnTransport->setChecked( GlobalSettings::stickyTransport() );
   QStringList transportHistory = GlobalSettings::transportHistory();
   QString currentTransport = GlobalSettings::currentTransport();
+  QString defaultTransport = GlobalSettings::defaultTransport();
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
@@ -602,10 +603,14 @@ void KMComposeWin::readConfig(void)
   mTransport->insertStringList( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
   {
-    for (int i = 0; i < mTransport->count(); i++)
+    for (int i = 0; i < mTransport->count(); i++) 
       if (mTransport->text(i) == currentTransport)
         mTransport->setCurrentItem(i);
     mTransport->setEditText( currentTransport );
+  }
+
+  if ( !mBtnTransport->isChecked() ) {
+    mTransport->setCurrentText( defaultTransport );
   }
 
   QString fccName = "";

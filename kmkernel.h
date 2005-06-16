@@ -127,6 +127,10 @@ public:
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
+  /** DCOP call used to set the default transport. */
+
+  void setDefaultTransport( const QString & transport );
+
   /** DCOP call used by the Kontact plugin to create a new message. */
   DCOPRef newMessage(const QString &to,
                      const QString &cc,

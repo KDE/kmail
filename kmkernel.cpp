@@ -37,6 +37,7 @@ using KRecentAddress::RecentAddresses;
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
+#include "transportmanager.h"
 
 #include <kwin.h>
 #include "kmailicalifaceimpl.h"
@@ -509,6 +510,17 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
 
   return 1;
+}
+
+void KMKernel::setDefaultTransport( const QString & transport )
+{
+  QStringList availTransports = KMail::TransportManager::transportNames();
+  QStringList::const_iterator it = availTransports.find( transport ); 
+  if ( it == availTransports.end() ) {
+    kdWarning() << "The transport you entered is not available" << endl;
+    return;
+  }
+  GlobalSettings::setDefaultTransport( transport );
 }
 
 DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
