@@ -468,7 +468,7 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
   it = uidMap.find( uid );
   if( it != uidMap.end() )
     // Since the uid map is just rebuilt, no need for the sanity check
-    return getMsg( *it );
+    return getMsgBase( *it );
   else
     kdDebug(5006) << "Reloaded, but stil didn't find uid: " << uid << endl;
   // Then it's not here
