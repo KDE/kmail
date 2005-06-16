@@ -984,6 +984,7 @@ namespace {
             pm->changeItem( itemId_, text() );
           pm->setWhatsThis( itemId_, whatsThis() );
         }
+        pm->setItemChecked( itemId_, isChecked() );
         updateShortcut( pm, itemId_ );
       }
       else if ( ::qt_cast<QMenuBar *>( w ) ) // not handled in plug...
