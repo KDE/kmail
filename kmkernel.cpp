@@ -1533,8 +1533,9 @@ void KMKernel::cleanup(void)
   delete mWin;
   mWin = 0;
 
-  RecentAddresses::self( KMKernel::config() )->save( KMKernel::config() );
-  KMKernel::config()->sync();
+  if ( RecentAddresses::exists() )
+    RecentAddresses::self( config )->save( config );
+  config->sync();
 }
 
 bool KMKernel::transferMail( QString & destinationDir )
