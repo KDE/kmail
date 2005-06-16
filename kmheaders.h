@@ -139,7 +139,7 @@ public:
   virtual int topItemIndex();
   /** Make the item corresponding to the message with the given id the
       top most visible item. */
-  virtual void setTopItemByIndex( int aMsgIdx, bool fuzzy=false);
+  virtual void setTopItemByIndex( int aMsgIdx );
   virtual void setNestedOverride( bool override );
   virtual void setSubjectThreading( bool subjThreading );
   /** Double force items to always be open */

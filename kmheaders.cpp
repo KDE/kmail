@@ -777,8 +777,22 @@ void KMHeaders::msgChanged()
   // remember all selected messages
   QValueList<int> curItems = selectedItems();
   updateMessageList(); // do not change the selection
-  // restore the old state
-  setTopItemByIndex( i, true);
+  // restore the old state, but move up when there are unread message just out of view
+  HeaderItem *topOfList = mItems[i];
+  item = firstChild();
+  QListViewItem *unreadItem = 0;
+  while(item != topOfList) {
+    KMMsgBase *msg = mFolder->getMsgBase( static_cast<HeaderItem*>(item)->msgId() );
+    if ( msg->isUnread() || msg->isNew() ) {
+      if ( !unreadItem )
+        unreadItem = item;
+    } else
+      unreadItem = 0;
+    item = item->itemBelow();
+  }
+  if(unreadItem == 0)
+      unreadItem = topOfList;
+  setContentsPos( 0, itemPos( unreadItem ));
   setCurrentMsg( cur );
   setSelectedByIndex( curItems, true );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -2352,40 +2366,19 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
 //-----------------------------------------------------------------------------
 int KMHeaders::topItemIndex()
 {
-  int i=0;
-  HeaderItem *topItem = static_cast<HeaderItem*>(itemAt(QPoint(1,1)));
-  QListViewItem *item =  firstChild();
-  while(item && item != topItem) {
-    item = item->itemBelow();
-    i++;
-  }
-  if(item)
-    return i;
-  return -1;
+  HeaderItem *item = static_cast<HeaderItem*>(itemAt(QPoint(1,1)));
+  if (item)
+    return item->msgId();
+  else
+    return -1;
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setTopItemByIndex( int aMsgIdx, bool fuzzy)
+void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
-  int y = 0;
-  QListViewItem *item =  firstChild();
-  while(item) {
-    if(aMsgIdx-- <= 0)
-        break;
-    y += item->totalHeight();
-    item = item->itemBelow();
-  }
-  if(fuzzy) {
-    item = item->itemAbove();
-    while(item) {
-        int mesgId = static_cast<HeaderItem*>(item)->msgId();
-        if( !mFolder->getMsgBase(mesgId)->isUnread() )
-          break;
-        y -= item->totalHeight();
-        item = item->itemAbove();
-    }
-  }
-  setContentsPos( 0, y );
+  QListViewItem *item = mItems[aMsgIdx];
+  if(item)
+    setContentsPos( 0, itemPos( item ) );
 }
 
 //-----------------------------------------------------------------------------
