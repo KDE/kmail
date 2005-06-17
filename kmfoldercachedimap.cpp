@@ -1121,11 +1121,16 @@ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&,
   }
 }
 
+  // This is not perfect, what if the status didn't really change? Oh well ...
+void KMFolderCachedImap::setStatus( int id, KMMsgStatus status, bool toggle )
+{
+  KMFolderMaildir::setStatus(id, status, toggle);
+  mStatusChangedLocally = true;
+}
 
 void KMFolderCachedImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
   KMFolderMaildir::setStatus(ids, status, toggle);
-  // This is not perfect, what if the status didn't really change? Oh well ...
   mStatusChangedLocally = true;
 }
 
