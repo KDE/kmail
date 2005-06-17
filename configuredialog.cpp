@@ -737,12 +737,15 @@ void AccountsPage::SendingTab::slotSetDefaultTransport()
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
+  KMTransportInfo ti;
+
   QListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
-    if ( it.current()->text(1) != "sendmail" && it.current()->text(1) != "sendmail (Default)" ) {
-      it.current()->setText( 1, "smtp" );
-    } else {
-      it.current()->setText( 1, "sendmail" );
+  ti.readConfig( KMTransportInfo::findTransport( it.current()->text(0) ));
+  if ( ti.type != "sendmail" ) {
+    it.current()->setText( 1, "smtp" );
+  } else {
+    it.current()->setText( 1, "sendmail" );
     }
   }
 
@@ -931,17 +934,21 @@ void AccountsPage::SendingTab::doLoadOther() {
   }
   emit transportListChanged( transportNames );
 
-  QString defaultTransport = GlobalSettings::defaultTransport();
+  const QString &defaultTransport = GlobalSettings::defaultTransport();
 
   QListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
     if ( it.current()->text(0) == defaultTransport ) {
       if ( it.current()->text(1) != "sendmail" ) {
-        it.current()->setText( 1, "smtp (Default)" );
+        it.current()->setText( 1, i18n( "smtp (Default)" ));
+      } else {
+        it.current()->setText( 1, i18n( "sendmail (Default)" ));
       }
     } else {
       if ( it.current()->text(1) != "sendmail" ) {
         it.current()->setText( 1, "smtp" );
+      } else {
+        it.current()->setText( 1, "sendmail" );
       }
     }
   }
