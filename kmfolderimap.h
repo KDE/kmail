@@ -193,7 +193,7 @@ public:
   void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
+  void getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids);
 
   /**
    * Expunge deleted messages from the folder

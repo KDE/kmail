@@ -1890,18 +1890,16 @@ void KMFolderImap::getUids(QValueList<int>& ids, QValueList<ulong>& uids)
   }
 }
 
-void KMFolderImap::getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent)
+void KMFolderImap::getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids)
 {
   KMMessage *msg = 0;
-
-  if (!msgParent)
-    msgParent = msgList.getFirst()->parent();
-  if (!msgParent) return;
 
   QPtrListIterator<KMMessage> it( msgList );
   while ( (msg = it.current()) != 0 ) {
     ++it;
-    uids.append(msg->UID());
+    if ( msg->UID() > 0 ) {
+      uids.append( msg->UID() );
+    }
   }
 }
 
