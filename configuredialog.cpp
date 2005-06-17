@@ -627,7 +627,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
 
   mSetDefaultTransportButton = new QPushButton( i18n("Set Default"), this );
   mSetDefaultTransportButton->setAutoDefault( false );
-  mSetDefaultTransportButton->setEnabled( true );
+  mSetDefaultTransportButton->setEnabled( false );
   connect ( mSetDefaultTransportButton, SIGNAL(clicked()),
             this, SLOT(slotSetDefaultTransport()) );
   btn_vlay->addWidget( mSetDefaultTransportButton );
@@ -715,6 +715,7 @@ void AccountsPage::SendingTab::slotTransportSelected()
   QListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
+  mSetDefaultTransportButton->setEnabled( cur ); 
 }
 
 // adds a number to @p name to make the name unique
