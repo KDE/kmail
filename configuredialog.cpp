@@ -739,13 +739,17 @@ void AccountsPage::SendingTab::slotSetDefaultTransport()
 
   QListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
-    if ( it.current()->text(1) != "sendmail" ) {
+    if ( it.current()->text(1) != "sendmail" && it.current()->text(1) != "sendmail (Default)" ) {
       it.current()->setText( 1, "smtp" );
+    } else {
+      it.current()->setText( 1, "sendmail" );
     }
   }
 
   if ( item->text(1) != "sendmail" ) {
     item->setText( 1, i18n( "smtp (Default)" ));
+  } else {
+    item->setText( 1, i18n( "sendmail (Default)" ));
   }
 
   GlobalSettings::setDefaultTransport( item->text(0) );
