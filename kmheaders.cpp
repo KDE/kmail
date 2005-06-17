@@ -2376,7 +2376,7 @@ int KMHeaders::topItemIndex()
 //-----------------------------------------------------------------------------
 void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
-  if( aMsgIdx < 0 || aMsgIdx > mItems.size() )
+  if( aMsgIdx < 0 || aMsgIdx >= mItems.size() )
     return;
   QListViewItem *item = mItems[aMsgIdx];
   if(item)
