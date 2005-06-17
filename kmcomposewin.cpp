@@ -602,7 +602,7 @@ void KMComposeWin::readConfig(void)
   mTransport->insertStringList( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
   {
-    for (int i = 0; i < mTransport->count(); i++) 
+    for (int i = 0; i < mTransport->count(); i++)
       if (mTransport->text(i) == currentTransport)
         mTransport->setCurrentItem(i);
     mTransport->setEditText( currentTransport );

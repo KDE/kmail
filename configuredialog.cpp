@@ -738,11 +738,11 @@ void AccountsPage::SendingTab::slotSetDefaultTransport()
   if ( !item ) return;
 
   QListViewItemIterator it( mTransportList );
-    for ( ; it.current(); ++it ) {
-      if ( it.current()->text(1) != "sendmail" ) {
-        it.current()->setText( 1, "smtp" );
-      }
+  for ( ; it.current(); ++it ) {
+    if ( it.current()->text(1) != "sendmail" ) {
+      it.current()->setText( 1, "smtp" );
     }
+  }
 
   if ( item->text(1) != "sendmail" ) {
     item->setText( 1, i18n( "smtp (Default)" ));
@@ -930,17 +930,17 @@ void AccountsPage::SendingTab::doLoadOther() {
   QString defaultTransport = GlobalSettings::defaultTransport();
 
   QListViewItemIterator it( mTransportList );
-    for ( ; it.current(); ++it ) {
-      if ( it.current()->text(0) == defaultTransport ) {
-        if ( it.current()->text(1) != "sendmail" ) {
-          it.current()->setText( 1, "smtp (Default)" );
-        }
-      } else {
-        if ( it.current()->text(1) != "sendmail" ) {
-          it.current()->setText( 1, "smtp" );
-        }
+  for ( ; it.current(); ++it ) {
+    if ( it.current()->text(0) == defaultTransport ) {
+      if ( it.current()->text(1) != "sendmail" ) {
+        it.current()->setText( 1, "smtp (Default)" );
+      }
+    } else {
+      if ( it.current()->text(1) != "sendmail" ) {
+        it.current()->setText( 1, "smtp" );
       }
     }
+  }
 
   mSendMethodCombo->setCurrentItem(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
