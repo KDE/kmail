@@ -9,7 +9,7 @@
 #include "kmaccount.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
-#include "kmacctpop.h"
+#include "popaccount.h"
 #include "kmacctimap.h"
 #include "networkaccount.h"
 using KMail::NetworkAccount;

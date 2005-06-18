@@ -55,7 +55,7 @@
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
-#include "kmacctpop.h"
+#include "popaccount.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"

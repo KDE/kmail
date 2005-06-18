@@ -42,7 +42,7 @@
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"
-#include "kmacctpop.h"
+#include "popaccount.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmaildir.h"

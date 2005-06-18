@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include "kmacctpop.h"
+#include "popaccount.h"
 
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
