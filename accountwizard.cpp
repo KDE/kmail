@@ -42,7 +42,7 @@
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"
-#include "kmacctexppop.h"
+#include "kmacctpop.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmaildir.h"
@@ -431,7 +431,7 @@ void AccountWizard::createAccount()
     case AccountTypeBox::POP3:
     {
       mAccount = acctManager->create( "pop", accountName() );
-      KMAcctExpPop *acct = static_cast<KMAcctExpPop*>( mAccount );
+      KMail::PopAccount *acct = static_cast<KMail::PopAccount*>( mAccount );
       acct->setLogin( mLoginName->text() );
       acct->setPasswd( mPassword->text() );
       acct->setHost( mIncomingServer->text() );

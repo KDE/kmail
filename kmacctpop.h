@@ -20,15 +20,16 @@ namespace KIO {
   class Job;
 }
 
+/** The namespace where all classes of KMail can be found in. */
+namespace KMail {
 /**
  * KMail account for pop mail account
- * The Exp in the name used to mean Experimental, but it's the stable one now :)
  */
-class KMAcctExpPop: public KMail::NetworkAccount {
+class PopAccount: public NetworkAccount {
   Q_OBJECT
 
 public:
-  virtual ~KMAcctExpPop();
+  virtual ~PopAccount();
   virtual void init(void);
 
   virtual KIO::MetaData slaveConfig() const;
@@ -98,7 +99,7 @@ protected:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
-  KMAcctExpPop(KMAcctMgr* owner, const QString& accountName, uint id);
+  PopAccount(KMAcctMgr* owner, const QString& accountName, uint id);
 
   /**
    * Start a KIO Job to get a list of messages on the pop server
@@ -233,6 +234,8 @@ protected slots:
    */
   void slotGetNextHdr();
 };
+
+} // namespace KMail
 
 
 

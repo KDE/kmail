@@ -9,7 +9,7 @@
 #include "kmaccount.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
-#include "kmacctexppop.h"
+#include "kmacctpop.h"
 #include "kmacctimap.h"
 #include "networkaccount.h"
 using KMail::NetworkAccount;
@@ -249,7 +249,7 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
     act = new KMAcctMaildir(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
 
   else if (aType == "pop")
-    act = new KMAcctExpPop(this, aName.isEmpty() ? i18n("POP Account") : aName, id);
+    act = new KMail::PopAccount(this, aName.isEmpty() ? i18n("POP Account") : aName, id);
 
   else if (aType == "imap")
     act = new KMAcctImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);

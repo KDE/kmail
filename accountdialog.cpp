@@ -55,7 +55,7 @@
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
-#include "kmacctexppop.h"
+#include "kmacctpop.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
@@ -1139,7 +1139,7 @@ void AccountDialog::setupSettings()
   }
   else if( accountType == "pop" )
   {
-    KMAcctExpPop &ap = *(KMAcctExpPop*)mAccount;
+    PopAccount &ap = *(PopAccount*)mAccount;
     mPop.nameEdit->setText( mAccount->name() );
     mPop.nameEdit->setFocus();
     mPop.loginEdit->setText( ap.login() );
@@ -1758,7 +1758,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
 
     initAccountForConnect();
-    KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
+    PopAccount &epa = *(PopAccount*)mAccount;
     epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
     epa.setLeaveOnServer( mPop.leaveOnServerCheck->isChecked() );
     epa.setLeaveOnServerDays( mPop.leaveOnServerCheck->isChecked() ?

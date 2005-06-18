@@ -5,7 +5,7 @@
  * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
  *
  * This file is based on kmacctimap.h by Michael Haeckel which is
- * based on kmacctexppop.h by Don Sanders
+ * based on kmacctpop.h by Don Sanders
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

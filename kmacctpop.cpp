@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include "kmacctexppop.h"
+#include "kmacctpop.h"
 
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
@@ -47,8 +47,9 @@ using KIO::MetaData;
 
 static const unsigned short int pop3DefaultPort = 110;
 
+namespace KMail {
 //-----------------------------------------------------------------------------
-KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint id)
+PopAccount::PopAccount(KMAcctMgr* aOwner, const QString& aAccountName, uint id)
   : NetworkAccount(aOwner, aAccountName, id),
     headerIt(headersOnServer)
 {
@@ -78,7 +79,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint 
 
 
 //-----------------------------------------------------------------------------
-KMAcctExpPop::~KMAcctExpPop()
+PopAccount::~PopAccount()
 {
   if (job) {
     job->kill();
@@ -90,21 +91,21 @@ KMAcctExpPop::~KMAcctExpPop()
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctExpPop::type(void) const
+QString PopAccount::type(void) const
 {
   return "pop";
 }
 
-QString KMAcctExpPop::protocol() const {
+QString PopAccount::protocol() const {
   return useSSL() ? POP_SSL_PROTOCOL : POP_PROTOCOL;
 }
 
-unsigned short int KMAcctExpPop::defaultPort() const {
+unsigned short int PopAccount::defaultPort() const {
   return pop3DefaultPort;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::init(void)
+void PopAccount::init(void)
 {
   NetworkAccount::init();
 
@@ -119,11 +120,11 @@ void KMAcctExpPop::init(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
+void PopAccount::pseudoAssign( const KMAccount * a ) {
   slotAbortRequested();
   NetworkAccount::pseudoAssign( a );
 
-  const KMAcctExpPop * p = dynamic_cast<const KMAcctExpPop*>( a );
+  const PopAccount * p = dynamic_cast<const PopAccount*>( a );
   if ( !p ) return;
 
   setUsePipelining( p->usePipelining() );
@@ -136,7 +137,7 @@ void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::processNewMail(bool _interactive)
+void PopAccount::processNewMail(bool _interactive)
 {
   if (stage == Idle) {
 
@@ -169,7 +170,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
           it != uidsOfSeenMsgs.end(); ++it, idx++ ) {
       // we use mUidsOfSeenMsgsDict to just provide fast random access to the
       // keys, so we can store the index(+1) that corresponds to the index of
-      // mTimeOfSeenMsgsVector for use in KMAcctExpPop::slotData()
+      // mTimeOfSeenMsgsVector for use in PopAccount::slotData()
       mUidsOfSeenMsgsDict.insert( *it, (const int *)idx );
     }
     mTimeOfSeenMsgsVector.clear();
@@ -203,7 +204,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::readConfig(KConfig& config)
+void PopAccount::readConfig(KConfig& config)
 {
   NetworkAccount::readConfig(config);
 
@@ -218,7 +219,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::writeConfig(KConfig& config)
+void PopAccount::writeConfig(KConfig& config)
 {
   NetworkAccount::writeConfig(config);
 
@@ -233,49 +234,49 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setUsePipelining(bool b)
+void PopAccount::setUsePipelining(bool b)
 {
   mUsePipelining = b;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setLeaveOnServer(bool b)
+void PopAccount::setLeaveOnServer(bool b)
 {
   mLeaveOnServer = b;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setLeaveOnServerDays(int days)
+void PopAccount::setLeaveOnServerDays(int days)
 {
   mLeaveOnServerDays = days;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setLeaveOnServerCount(int count)
+void PopAccount::setLeaveOnServerCount(int count)
 {
   mLeaveOnServerCount = count;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setLeaveOnServerSize(int size)
+void PopAccount::setLeaveOnServerSize(int size)
 {
   mLeaveOnServerSize = size;
 }
 
 //---------------------------------------------------------------------------
-void KMAcctExpPop::setFilterOnServer(bool b)
+void PopAccount::setFilterOnServer(bool b)
 {
   mFilterOnServer = b;
 }
 
 //---------------------------------------------------------------------------
-void KMAcctExpPop::setFilterOnServerCheckSize(unsigned int aSize)
+void PopAccount::setFilterOnServerCheckSize(unsigned int aSize)
 {
   mFilterOnServerCheckSize = aSize;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::connectJob() {
+void PopAccount::connectJob() {
   KIO::Scheduler::assignJobToSlave(mSlave, job);
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
@@ -288,7 +289,7 @@ void KMAcctExpPop::connectJob() {
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotCancel()
+void PopAccount::slotCancel()
 {
   mMsgsPendingDownload.clear();
   processRemainingQueuedMessages();
@@ -298,7 +299,7 @@ void KMAcctExpPop::slotCancel()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotProcessPendingMsgs()
+void PopAccount::slotProcessPendingMsgs()
 {
   if (mProcessing) // not reentrant
     return;
@@ -341,7 +342,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotAbortRequested()
+void PopAccount::slotAbortRequested()
 {
   if (stage == Idle) return;
   disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
@@ -355,7 +356,7 @@ void KMAcctExpPop::slotAbortRequested()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::startJob()
+void PopAccount::startJob()
 {
   // Run the precommand
   if (!runPrecommand(precommand()))
@@ -409,7 +410,7 @@ void KMAcctExpPop::startJob()
   connectJob();
 }
 
-MetaData KMAcctExpPop::slaveConfig() const {
+MetaData PopAccount::slaveConfig() const {
   MetaData m = NetworkAccount::slaveConfig();
 
   m.insert("progress", "off");
@@ -429,7 +430,7 @@ MetaData KMAcctExpPop::slaveConfig() const {
 //-----------------------------------------------------------------------------
 // one message is finished
 // add data to a KMMessage
-void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
+void PopAccount::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 {
   if (infoMsg != "message complete") return;
   KMMessage *msg = new KMMessage;
@@ -461,7 +462,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 
 //-----------------------------------------------------------------------------
 // finit state machine to cycle trow the stages
-void KMAcctExpPop::slotJobFinished() {
+void PopAccount::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
     kdDebug(5006) << k_funcinfo << "stage == List" << endl;
@@ -786,7 +787,7 @@ void KMAcctExpPop::slotJobFinished() {
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::processRemainingQueuedMessages()
+void PopAccount::processRemainingQueuedMessages()
 {
   kdDebug(5006) << k_funcinfo << endl;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
@@ -798,7 +799,7 @@ void KMAcctExpPop::processRemainingQueuedMessages()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::saveUidList()
+void PopAccount::saveUidList()
 {
   kdDebug(5006) << k_funcinfo << endl;
   // Don't update the seen uid list unless we successfully got
@@ -823,7 +824,7 @@ void KMAcctExpPop::saveUidList()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotGetNextMsg()
+void PopAccount::slotGetNextMsg()
 {
   QMap<QString, int>::Iterator next = mMsgsPendingDownload.begin();
 
@@ -846,7 +847,7 @@ void KMAcctExpPop::slotGetNextMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
+void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
     kdDebug(5006) << "Data: <End>" << endl;
@@ -923,7 +924,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
           mMsgsPendingDownload.remove( id );
         }
         else
-          kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
+          kdDebug(5006) << "PopAccount::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.append( id );
         mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
         if ( mTimeOfSeenMsgsVector.empty() ) {
@@ -952,7 +953,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotResult( KIO::Job* )
+void PopAccount::slotResult( KIO::Job* )
 {
   if (!job) return;
   if ( job->error() )
@@ -981,7 +982,7 @@ void KMAcctExpPop::slotResult( KIO::Job* )
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
+void PopAccount::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
   if (aSlave != mSlave) return;
@@ -1008,7 +1009,7 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::slotGetNextHdr(){
+void PopAccount::slotGetNextHdr(){
   kdDebug(5006) << "slotGetNextHeader" << endl;
 
   curMsgData.resize(0);
@@ -1018,8 +1019,9 @@ void KMAcctExpPop::slotGetNextHdr(){
   curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
 }
 
-void KMAcctExpPop::killAllJobs( bool ) {
+void PopAccount::killAllJobs( bool ) {
   // must reimpl., but we don't use it yet
 }
 
-#include "kmacctexppop.moc"
+} // namespace KMail
+#include "kmacctpop.moc"
