@@ -217,14 +217,6 @@ SieveDebugDialog::~SieveDebugDialog()
     kdDebug( 5006 ) << k_funcinfo << endl;
 }
 
-static inline QString dotstuff( QString s )
-{
-    if ( s.startsWith( "." ) )
-      return '.' + s.replace( "\n.", "\n.." );
-    else
-      return s.replace( "\n.", "\n.." );
-}
-
 void SieveDebugDialog::slotDiagNextAccount()
 {
     if ( mAccountList.isEmpty() )
