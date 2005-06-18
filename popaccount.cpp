@@ -2,7 +2,7 @@
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2000 Don Sanders <sanders@kde.org>
 
-    Based on kmacctpop by:
+    Based on popaccount by:
       Stefan Taferner <taferner@kde.org>
       Markus Wuebben <markus.wuebben@kde.org>
 
