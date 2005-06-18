@@ -26,6 +26,11 @@ namespace KIO {
 namespace KWallet {
   class Wallet;
 }
+
+/** The KMail namespace contains classes used for KMail.
+* This is to keep them out of the way from all the other
+* un-namespaced classes in libs and the rest of PIM.
+*/
 namespace KMail {
   class MailServiceImpl;
   class UndoStack;

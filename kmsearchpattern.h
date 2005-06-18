@@ -206,11 +206,6 @@ public:
 };
 
 
-/** This class represents a search to be performed against the status of a
- *  messsage. The status is represented by a bitfield.
-    @short This class represents a search pattern rule operating on message
-    status.
-*/
 namespace KMail {
 // The below are used in several places and here so they are accessible.
   struct MessageStatus {
@@ -265,6 +260,11 @@ namespace KMail {
   static const int StatusValueCountWithoutHidden = StatusValueCount - 1;
 }
 
+/** This class represents a search to be performed against the status of a
+ *  messsage. The status is represented by a bitfield.
+    @short This class represents a search pattern rule operating on message
+    status.
+*/
 class KMSearchRuleStatus : public KMSearchRule
 {
 public:
