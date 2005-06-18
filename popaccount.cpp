@@ -1024,4 +1024,4 @@ void PopAccount::killAllJobs( bool ) {
 }
 
 } // namespace KMail
-#include "kmacctpop.moc"
+#include "popaccount.moc"
