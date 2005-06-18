@@ -322,15 +322,15 @@ void KMAcctImap::processNewMail(bool interactive)
               this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
           imapFolder->getFolder();
         } else if ( kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( id() ) &&
-		    imapFolder->folder()->isSystemFolder() && 
-		    imapFolder->imapPath() == "/INBOX/" ) {
-	  imapFolder->open(); // will be closed in the folderSelected slot
-	  // first get new headers before we select the folder
-	  imapFolder->setSelected( true );
-	  connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-		   this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
-	  imapFolder->getFolder();
-	}
+                    imapFolder->folder()->isSystemFolder() && 
+                    imapFolder->imapPath() == "/INBOX/" ) {
+          imapFolder->open(); // will be closed in the folderSelected slot
+          // first get new headers before we select the folder
+          imapFolder->setSelected( true );
+          connect( imapFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+                   this, SLOT( slotFolderSelected( KMFolderImap*, bool) ) );
+          imapFolder->getFolder();
+        }
         else {
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
