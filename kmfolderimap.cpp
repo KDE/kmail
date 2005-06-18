@@ -31,6 +31,7 @@
 #include "kmmsgdict.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
 #include "kmmsgdict.h"
 #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
@@ -1509,7 +1510,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
             msg->storage()->find( msg ) );
 
         // Filter messages that have arrived in the inbox folder
-        if ( folder()->isSystemFolder() && imapPath() == "/INBOX/" )
+        if ( folder()->isSystemFolder() && imapPath() == "/INBOX/"
+            && kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( mAccount->id() ) )
             mAccount->execFilters( msg->getMsgSerNum() );
         
         if ( count() > 1 ) {
