@@ -894,12 +894,25 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
     if ( (*it)->name == item->text(0) ) break;
   if ( !it.current() ) return;
 
+  KMTransportInfo ti;
+
   QListViewItem *newCurrent = item->itemBelow();
   if ( !newCurrent ) newCurrent = item->itemAbove();
   //mTransportList->removeItem( item );
   if ( newCurrent ) {
     mTransportList->setCurrentItem( newCurrent );
     mTransportList->setSelected( newCurrent, true );
+    GlobalSettings::setDefaultTransport( newCurrent->text(0) );
+    ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
+    if ( item->text( 0 ) == GlobalSettings::defaultTransport() ) {
+      if ( ti.type != "sendmail" ) {
+        newCurrent->setText( 1, i18n("smtp (Default)") );
+      } else {
+        newCurrent->setText( 1, i18n("sendmail (Default)" ));
+      }
+    }
+  } else {
+    GlobalSettings::setDefaultTransport( QString::null ); 
   }
 
   delete item;
