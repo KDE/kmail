@@ -483,12 +483,6 @@ public:
   /** Writes the message serial number file. */
   int writeMsgDict(KMMsgDict *dict = 0);
 
-  /** Touches the message serial number file. */
-  int touchMsgDict();
-
-  /** Append message to end of message serial number file. */
-  int appendtoMsgDict(int idx = -1);
-
   /** Set the status of the message at index @p idx to @p status. */
   void setStatus(int idx, KMMsgStatus status, bool toggle=false);
 

@@ -774,16 +774,6 @@ int KMFolder::writeMsgDict( KMMsgDict* dict)
   return mStorage->writeMsgDict( dict );
 }
 
-int KMFolder::touchMsgDict()
-{
-  return mStorage->touchMsgDict();
-}
-
-int KMFolder::appendtoMsgDict( int idx )
-{
-  return mStorage->appendtoMsgDict( idx );
-}
-
 void KMFolder::setStatus( int idx, KMMsgStatus status, bool toggle )
 {
   mStorage->setStatus( idx, status, toggle );
