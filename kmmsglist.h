@@ -26,11 +26,17 @@
 
 class KMMsgDict;
 
+/**
+ * @short An abstraction of an array of pointers to messages.
+ *
+ * This class represents an array of pointers to message objects. It
+ * autoresizes and can load a KMMsgDict object from its contents.
+ *
+ * @author Stefan Taferner <taferner@kde.org>
+ */
 class KMMsgList: public QMemArray<KMMsgBase*>
 {
 public:
-  /** Valid parameters for sort() */
-  typedef enum { sfNone=99, sfStatus=0, sfFrom=1, sfSubject=2, sfDate=3 } SortField;
 
   /** Constructor with optional initial size. */
   KMMsgList(int initialSize=32);
