@@ -55,7 +55,7 @@ using KPIM::BroadcastStatus;
 #include "kmcomposewin.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmaddrbook.h"
 #include "kmversion.h"
 #include "kmfldsearch.h"

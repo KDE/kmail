@@ -2,7 +2,10 @@
 
 #include <config.h>
 
+#define REALLY_WANT_KMSENDER
 #include "kmsender.h"
+#include "kmsender_p.h"
+#undef REALLY_WANT_KMSENDER
 
 #include <kmime_header_parsing.h>
 using namespace KMime::Types;
@@ -113,7 +116,7 @@ bool KMSender::settingsOk() const
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::send(KMMessage* aMsg, short sendNow)
+bool KMSender::doSend(KMMessage* aMsg, short sendNow)
 {
   int rc;
 
@@ -194,7 +197,7 @@ void KMSender::outboxMsgAdded(int idx)
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::sendQueued( const QString &customTransport )
+bool KMSender::doSendQueued( const QString &customTransport )
 {
   if (!settingsOk()) return FALSE;
 
@@ -777,8 +780,8 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
       folder->open();
       if ( status == KMMsgStatusDeleted ) {
         // Move the message to the trash folder
-        KMDeleteMsgCommand *cmd = 
-          new KMDeleteMsgCommand( folder, folder->getMsg( index ) ); 
+        KMDeleteMsgCommand *cmd =
+          new KMDeleteMsgCommand( folder, folder->getMsg( index ) );
         cmd->start();
       } else {
         folder->setStatus(index, status);
@@ -1231,3 +1234,4 @@ void KMSendSMTP::slaveError(KIO::Slave *aSlave, int error, const QString &errorM
 }
 
 #include "kmsender.moc"
+#include "kmsender_p.moc"

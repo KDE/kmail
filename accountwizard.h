@@ -40,6 +40,7 @@ class KMAccount;
 class KMKernel;
 class KMServerTest;
 class AccountTypeBox;
+class KMTransportInfo;
 
 class AccountWizard : public KWizard
 {

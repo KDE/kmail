@@ -11,7 +11,7 @@
 
 #include "kmmainwin.h"
 #include "kmreadermainwin.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmmsgpartdlg.h"
 #include <kpgpblock.h>
 #include <kaddrbook.h>

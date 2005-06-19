@@ -22,7 +22,7 @@
 using KMail::MailSourceViewer;
 #include "partNode.h"
 #include "kmmsgdict.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kcursorsaver.h"
 #include "kmfolder.h"
 #include "vcardviewer.h"

@@ -14,7 +14,7 @@
 #include "kmfiltermgr.h"
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmmainwidget.h"
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>

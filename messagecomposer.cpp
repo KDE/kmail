@@ -37,7 +37,7 @@
 #include "kmcomposewin.h"
 #include "klistboxdialog.h"
 #include "kcursorsaver.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmfolder.h"
 #include "kmfoldercombobox.h"
 #include "keyresolver.h"

@@ -35,6 +35,7 @@ namespace KMail {
   class MailServiceImpl;
   class UndoStack;
   class JobScheduler;
+  class MessageSender;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
@@ -231,7 +232,7 @@ public:
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
-  KMSender *msgSender() { return the_msgSender; }
+  KMail::MessageSender *msgSender();
   KMMsgDict *msgDict();
   KMMsgIndex *msgIndex();
 
