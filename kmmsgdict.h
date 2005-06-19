@@ -1,8 +1,22 @@
-/* kmail message dictionary
- * keeps location information for every message
- * the message serial number is the key for the dictionary
+/*
+ * This file is part of KMail, the KDE mail client
+ * Copyright (c)  Ronen Tzur <rtzur@shani.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
  */
-
 #ifndef __KMMSGDICT
 #define __KMMSGDICT
 
@@ -14,6 +28,19 @@ class KMMsgDictREntry;
 class KMDict;
 class QString;
 
+/**
+ * @short KMail message dictionary. Keeps location information for every
+ * message. The message serial number is the key for the dictionary.
+ *
+ * The KMMsgDict singleton is managed by the KMail kernel and is used to look
+ * up at which index in which folder a certain serial number can be found. Each
+ * folder holds a "reverse entry", which is an array of message dict entries for
+ * that folder and persists that to disk. In effect the whole message dict is therefor
+ * persisted per folder and restored on startup when all folder dict entries
+ * are read and re-enter their respective entries into the global dict.
+ *
+ * @author Ronen Tzur <rtzur@shani.net>
+ */
 class KMMsgDict
 {
 public:

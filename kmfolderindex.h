@@ -23,6 +23,17 @@
 #include "folderstorage.h"
 #include "kmmsglist.h"
 
+/**
+ * @short A FolderStorage with an index for faster access to often used
+ * message properties..
+ *
+ * This class represents a message store which has an index for providing fast
+ * access to often used message properties, namely those displayed in the list
+ * of messages (KMHeaders).
+ * 
+ * @author Don Sanders <sanders@kde.org>
+ */
+
 class KMFolderIndex: public FolderStorage
 {
   Q_OBJECT
