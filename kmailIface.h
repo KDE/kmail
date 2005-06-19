@@ -112,6 +112,13 @@ k_dcop:
 
   virtual int timeOfLastMessageCountChange() const =0;
 
+  /**
+   * Abort any running compaction/expiry, and don't launch any new ones
+   * until resumeBackgroundJobs() is called
+   */
+  virtual void pauseBackgroundJobs() = 0;
+  virtual void resumeBackgroundJobs() = 0;
+
 k_dcop_signals:
   void unreadCountChanged();
 

@@ -229,6 +229,20 @@ void JobScheduler::slotJobFinished()
     restartTimer();
 }
 
+// DCOP call to pause any background jobs
+void JobScheduler::pause()
+{
+  mPendingImmediateTasks = 0;
+  if ( mCurrentJob && mCurrentJob->isCancellable() )
+    interruptCurrentTask();
+  mTimer.stop();
+}
+
+void JobScheduler::resume()
+{
+  restartTimer();
+}
+
 ////
 
 KMail::ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )

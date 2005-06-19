@@ -1080,6 +1080,18 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   return result;
 }
 
+void KMKernel::pauseBackgroundJobs()
+{
+  mBackgroundTasksTimer->stop();
+  mJobScheduler->pause();
+}
+
+void KMKernel::resumeBackgroundJobs()
+{
+  mJobScheduler->resume();
+  mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true );
+}
+ 
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/

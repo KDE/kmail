@@ -168,6 +168,9 @@ public:
   virtual QString getFrom( Q_UINT32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
+  virtual void pauseBackgroundJobs();
+  virtual void resumeBackgroundJobs();
+
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }

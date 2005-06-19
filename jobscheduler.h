@@ -108,6 +108,10 @@ public:
   /// Interrupt any running job for this folder and re-schedule it for later
   void notifyOpeningFolder( KMFolder* folder );
 
+  // DCOP calls
+  void pause();
+  void resume();
+
 private slots:
   /// Called by a timer to run the next job
   void slotRunNextJob();
