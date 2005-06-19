@@ -30,7 +30,9 @@ class KMMsgDict;
  * @short An abstraction of an array of pointers to messages.
  *
  * This class represents an array of pointers to message objects. It
- * autoresizes and can load a KMMsgDict object from its contents.
+ * autoresizes and can load a KMMsgDict object from its contents. It's
+ * a pure implementation detail of KMFolderIndex and should not be used by
+ * the layers above that.
  *
  * @author Stefan Taferner <taferner@kde.org>
  */
