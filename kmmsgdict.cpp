@@ -49,7 +49,8 @@ class KMMsgDictEntry : public KMDictItem
 {
 public:
   KMMsgDictEntry(const KMFolder *aFolder, int aIndex)
-    { folder = aFolder; index = aIndex; }
+  : folder( aFolder ), index( aIndex )
+    {}
 
   const KMFolder *folder;
   int index;
