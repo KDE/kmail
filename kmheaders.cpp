@@ -2375,10 +2375,10 @@ int KMHeaders::topItemIndex()
 //-----------------------------------------------------------------------------
 void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
-  if( aMsgIdx < 0 || aMsgIdx >= (int) mItems.size() )
+  if( aMsgIdx < 0 || static_cast<unsigned int>( aMsgIdx ) >= mItems.size() )
     return;
-  QListViewItem *item = mItems[aMsgIdx];
-  if(item)
+  const QListViewItem * const item = mItems[aMsgIdx];
+  if( item )
     setContentsPos( 0, itemPos( item ) );
 }
 
