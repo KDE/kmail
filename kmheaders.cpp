@@ -10,7 +10,6 @@ using KMail::HeaderItem;
 #include "kcursorsaver.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "kmmsglist.h"
 #include "kmfiltermgr.h"
 #include "undostack.h"
 #include "kmmsgdict.h"
@@ -132,7 +131,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
 
   connect(mPopup, SIGNAL(activated(int)), this, SLOT(slotToggleColumn(int)));
 
-  mSortCol = KMMsgList::sfDate;
+  mSortCol = 3;
   mSortDescending = false;
 
   setShowSortIndicator(true);
@@ -558,7 +557,7 @@ void KMHeaders::readFolderConfig (void)
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
-  mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
+  mSortCol = config->readNumEntry("SortColumn", mSortCol /* inited to  date column */);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
 
