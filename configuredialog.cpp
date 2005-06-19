@@ -809,14 +809,16 @@ void AccountsPage::SendingTab::slotAddTransport()
   // ### FIXME: insert before the selected item, append on empty selection
   QListViewItem *lastItem = mTransportList->firstChild();
   QString typeDisplayName;
-  if ( lastItem )
+  if ( lastItem ) {
     typeDisplayName = transportInfo->type;
-  else
+  } else {
     typeDisplayName = i18n("%1: type of transport. Result used in "
                            "Configure->Accounts->Sending listview, \"type\" "
                            "column, first row, to indicate that this is the "
                            "default transport", "%1 (Default)")
       .arg( transportInfo->type );
+    GlobalSettings::setDefaultTransport( transportInfo->name );
+  }
   (void) new QListViewItem( mTransportList, lastItem, transportInfo->name,
                             typeDisplayName );
 
