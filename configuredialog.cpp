@@ -35,7 +35,7 @@
 #include "colorlistbox.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include <libkpimidentities/identitymanager.h>

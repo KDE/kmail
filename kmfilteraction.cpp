@@ -14,7 +14,7 @@
 #include "kmfiltermgr.h"
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
@@ -1447,7 +1447,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
     return ErrorButGoOn;
 
   msg = aMsg->createRedirect2( mParameter );
-  
+
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( msg, FALSE ) ) {

@@ -19,7 +19,9 @@
 #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
+#define REALLY_WANT_KMSENDER
 #include "kmsender.h"
+#undef REALLY_WANT_KMSENDER
 #include "undostack.h"
 #include "kmacctmgr.h"
 #include <libkdepim/kfileio.h>
@@ -464,7 +466,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
-  cWin->setSigningAndEncryptionDisabled( isICalInvitation 
+  cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
@@ -1804,5 +1806,9 @@ int KMKernel::timeOfLastMessageCountChange() const
 {
   return mTimeOfLastMessageCountChange;
 }
+
+// can't be inline, since KMSender isn't known to implement
+// KMail::MessageSender outside this .cpp file
+KMail::MessageSender * KMKernel::msgSender() { return the_msgSender; }
 
 #include "kmkernel.moc"

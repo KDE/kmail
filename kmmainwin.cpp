@@ -6,7 +6,7 @@
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
 #include "kmkernel.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
 #include "broadcaststatus.h"

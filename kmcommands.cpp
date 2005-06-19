@@ -72,7 +72,7 @@ using KMail::ActionScheduler;
 #include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
 #include "partNode.h"

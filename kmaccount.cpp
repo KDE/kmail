@@ -7,7 +7,7 @@
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
-#include "kmsender.h"
+#include "messagesender.h"
 #include "kmkernel.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
