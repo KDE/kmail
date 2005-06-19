@@ -53,7 +53,7 @@ protected:
     The sender takes ownership of the given message on success,
     so DO NOT DELETE OR MODIFY the message further.
     Returns TRUE on success. */
-  bool doSend(KMMessage* msg, short sendNow=-1);
+  bool doSend(KMMessage* msg, short sendNow);
 
 public:
   /** Start sending all queued messages. Returns TRUE on success. */
