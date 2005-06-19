@@ -44,7 +44,6 @@ class KMMessage;
 class KMFolderDir;
 class KMAcctList;
 class KMMsgDict;
-class KMMsgDictREntry;
 class QTimer;
 class FolderStorage;
 class KMFolderTreeItem;
@@ -489,12 +488,6 @@ public:
 
   /** Append message to end of message serial number file. */
   int appendtoMsgDict(int idx = -1);
-
-  /** Sets the reverse-dictionary for this folder. */
-  void setRDict(KMMsgDictREntry *rentry);
-
-  /** Returns the reverse-dictionary for this folder. */
-  KMMsgDictREntry *rDict() const;
 
   /** Set the status of the message at index @p idx to @p status. */
   void setStatus(int idx, KMMsgStatus status, bool toggle=false);

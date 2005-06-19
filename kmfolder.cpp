@@ -784,16 +784,6 @@ int KMFolder::appendtoMsgDict( int idx )
   return mStorage->appendtoMsgDict( idx );
 }
 
-void KMFolder::setRDict( KMMsgDictREntry* rentry )
-{
-  mStorage->setRDict( rentry );
-}
-
-KMMsgDictREntry* KMFolder::rDict() const
-{
-  return mStorage->rDict();
-}
-
 void KMFolder::setStatus( int idx, KMMsgStatus status, bool toggle )
 {
   mStorage->setStatus( idx, status, toggle );

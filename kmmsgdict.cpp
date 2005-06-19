@@ -43,8 +43,10 @@
 // The asterisk at the end is important
 #define IDS_HEADER "# KMail-Index-IDs V%d\n*"
 
-//-----------------------------------------------------------------------------
-
+/**
+ * @short an entry in the global message dictionary consisting of a pointer 
+ * to a folder and the index of a message in the folder.
+ */
 class KMMsgDictEntry : public KMDictItem
 {
 public:
@@ -56,8 +58,13 @@ public:
   int index;
 };
 
-//-----------------------------------------------------------------------------
-
+/**
+ * @short A "reverse entry", consisting of an array of DictEntry pointers.
+ * 
+ * Each folder (storage) holds such an entry. That's useful for looking up the
+ * serial number of a message at a certain index in the folder, since that is the
+ * key of these entries.
+ */
 class KMMsgDictREntry
 {
 public:
@@ -242,7 +249,7 @@ void KMMsgDict::remove(unsigned long msgSerNum)
     return;
 
   if (entry->folder) {
-    KMMsgDictREntry *rentry = entry->folder->rDict();
+    KMMsgDictREntry *rentry = entry->folder->storage()->rDict();
     if (rentry)
       rentry->set(entry->index, 0);
   }
@@ -261,7 +268,7 @@ unsigned long KMMsgDict::remove(const KMMsgBase *msg)
 
 void KMMsgDict::update(const KMMsgBase *msg, int index, int newIndex)
 {
-  KMMsgDictREntry *rentry = msg->parent()->rDict();
+  KMMsgDictREntry *rentry = msg->parent()->storage()->rDict();
   if (rentry) {
     KMMsgDictEntry *entry = rentry->get(index);
     if (entry) {
@@ -302,7 +309,7 @@ void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int *
 unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index)
 {
   unsigned long msn = 0;
-  KMMsgDictREntry *rentry = folder->rDict();
+  KMMsgDictREntry *rentry = folder->storage()->rDict();
   if (rentry)
     msn = rentry->getMsn(index);
   return msn;
@@ -403,7 +410,7 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
   GlobalSettings::setMsgDictSizeHint( GlobalSettings::msgDictSizeHint() + count );
 
   fclose(fp);
-  folder->setRDict(rentry);
+  folder->storage()->setRDict(rentry);
 
   return 0;
 }
@@ -412,10 +419,10 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
 
 KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
 {
-  KMMsgDictREntry *rentry = folder->rDict();
+  KMMsgDictREntry *rentry = folder->storage()->rDict();
   if (!rentry) {
     rentry = new KMMsgDictREntry();
-    folder->setRDict(rentry);
+    folder->storage()->setRDict(rentry);
   }
 
   if (!rentry->fp) {
@@ -566,14 +573,14 @@ int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
 
 bool KMMsgDict::hasFolderIds(const KMFolder *folder)
 {
-  return folder->rDict() != 0;
+  return folder->storage()->rDict() != 0;
 }
 
 //-----------------------------------------------------------------------------
 
 bool KMMsgDict::removeFolderIds(KMFolder *folder)
 {
-  folder->setRDict(0);
+  folder->storage()->setRDict(0);
   QString filename = getFolderIdsLocation(folder);
   return unlink(QFile::encodeName(filename));
 }
