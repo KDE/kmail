@@ -910,6 +910,8 @@ private:
   bool mSubjectTextWasSpellChecked;
 
   QString addQuotesToText(const QString &inputText);
+  // helper method for rethinkFields
+  int calcColumnWidth(int which, long allShowing, int width);
 
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );

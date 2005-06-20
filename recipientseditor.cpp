@@ -282,9 +282,13 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
   }
 }
 
-void RecipientLine::setComboWidth( int w )
+int RecipientLine::setComboWidth( int w )
 {
+  w = QMAX( w, mCombo->sizeHint().width() );
   mCombo->setFixedWidth( w );
+  mCombo->updateGeometry();
+  parentWidget()->updateGeometry();
+  return w;
 }
 
 void RecipientLine::fixTabOrder( QWidget *previous )
@@ -304,6 +308,14 @@ void RecipientLine::clear()
   mEdit->clear();
 }
 
+void RecipientLine::setRemoveLineButtonEnabled( bool b )
+{
+  mRemoveButton->setEnabled( b );
+}
+
+
+// ------------ RecipientsView ---------------------
+
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent ), mCurDelLine( 0 ), mModified( false )
 {
@@ -311,6 +323,8 @@ RecipientsView::RecipientsView( QWidget *parent )
   setLineWidth( 0 );
 
   addLine();
+  setResizePolicy( QScrollView::Manual );
+  setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 }
 
 RecipientLine *RecipientsView::activeLine()
@@ -330,8 +344,6 @@ RecipientLine *RecipientsView::emptyLine()
 
 RecipientLine *RecipientsView::addLine()
 {
-  kdDebug() << "RecipientsView::addLine()" << endl;
-
   RecipientLine *line = new RecipientLine( viewport() );
   addChild( line, 0, mLines.count() * mLineHeight );
   line->show();
@@ -374,7 +386,7 @@ RecipientLine *RecipientsView::addLine()
     mLines.first()->setRemoveLineButtonEnabled( true );
   }
 
-  line->setComboWidth( mFirstColumnWidth );
+  mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
 
   mLineHeight = line->minimumSizeHint().height();
 
@@ -404,14 +416,6 @@ void RecipientsView::slotTypeModified( RecipientLine *line )
     }
   }
 }
-
-void RecipientLine::setRemoveLineButtonEnabled( bool b )
-{
-  mRemoveButton->setEnabled( b );
-}
-
-
-// ------------ RecipientsView ---------------------
 
 void RecipientsView::calculateTotal()
 {
@@ -508,7 +512,7 @@ void RecipientsView::slotDeleteLine()
 
 void RecipientsView::resizeView()
 {
-  resizeContents( viewport()->width(), mLines.count() * mLineHeight );
+  resizeContents( width(), mLines.count() * mLineHeight );
 
   if ( mLines.count() < 6 ) {
     setFixedHeight( mLineHeight * mLines.count() );
@@ -628,20 +632,20 @@ void RecipientsView::setFocusBottom()
   else  kdWarning() << "No last" << endl;
 }
 
-void RecipientsView::setFirstColumnWidth( int w )
+int RecipientsView::setFirstColumnWidth( int w )
 {
   mFirstColumnWidth = w;
 
   QPtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
-    line->setComboWidth( mFirstColumnWidth );
+    mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
     ++it;
   }
 
   resizeView();
+  return mFirstColumnWidth;
 }
-
 
 RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
   : QToolTip( parent ), mView( view )
@@ -698,6 +702,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
+  topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->addStretch( 1 );
 
   mTotalLabel = new QLabel( this );
@@ -863,8 +868,6 @@ void RecipientsEditor::setRecipientString( const QString &str,
 
 QString RecipientsEditor::recipientString( Recipient::Type type )
 {
-  kdDebug() << "recipientString() " << Recipient::typeLabel( type ) << endl;
-
   QString str;
 
   Recipient::List recipients = mRecipientsView->recipients();
@@ -923,9 +926,9 @@ void RecipientsEditor::setFocusBottom()
   mRecipientsView->setFocusBottom();
 }
 
-void RecipientsEditor::setFirstColumnWidth( int w )
+int RecipientsEditor::setFirstColumnWidth( int w )
 {
-  mRecipientsView->setFirstColumnWidth( w );
+  return mRecipientsView->setFirstColumnWidth( w );
 }
 
 void RecipientsEditor::selectRecipients()

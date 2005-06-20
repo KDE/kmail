@@ -364,7 +364,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   rethinkFields();
 
   if ( !mClassicalRecipients ) {
-    mRecipientsEditor->setFirstColumnWidth( mLabelWidth );
     // This is ugly, but if it isn't called the line edits in the recipients
     // editor aren't wide enough until the first resize event comes.
     rethinkFields();
@@ -780,7 +779,35 @@ void KMComposeWin::slotView(void)
     else mShowHeaders = -abs(mShowHeaders);
   }
   rethinkFields(true);
+}
 
+int KMComposeWin::calcColumnWidth(int which, long allShowing, int width)
+{
+  if ( (allShowing & which) == 0 )
+    return width;
+
+  QLabel *w;
+  if ( which == HDR_IDENTITY )
+    w = mLblIdentity;
+  else if ( which == HDR_DICTIONARY )
+    w = mDictionaryLabel;
+  else if ( which == HDR_FCC )
+    w = mLblFcc;
+  else if ( which == HDR_TRANSPORT )
+    w = mLblTransport;
+  else if ( which == HDR_FROM )
+    w = mLblFrom;
+  else if ( which == HDR_REPLY_TO )
+    w = mLblReplyTo;
+  else if ( which == HDR_SUBJECT )
+    w = mLblSubject;
+  else
+    return width;
+
+  w->setBuddy( mEditor ); // set dummy so we don't calculate width of '&' for this label.
+  w->adjustSize();
+  w->show();
+  return QMAX( width, w->sizeHint().width() );
 }
 
 void KMComposeWin::rethinkFields(bool fromSlot)
@@ -800,7 +827,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   numRows = mNumHeaders + 1;
 
   delete mGrid;
-  mGrid = new QGridLayout(mMainWidget, numRows, 3, 4, 4);
+  mGrid = new QGridLayout(mMainWidget, numRows, 3, KDialogBase::marginHint()/2, KDialogBase::spacingHint());
   mGrid->setColStretch(0, 1);
   mGrid->setColStretch(1, 100);
   mGrid->setColStretch(2, 1);
@@ -808,6 +835,15 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   row = 0;
   kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
+  mLabelWidth = mRecipientsEditor->setFirstColumnWidth( 0 );
+  mLabelWidth = calcColumnWidth( HDR_IDENTITY, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_DICTIONARY, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_FCC, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_TRANSPORT, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_FROM, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_REPLY_TO, showHeaders, mLabelWidth );
+  mLabelWidth = calcColumnWidth( HDR_SUBJECT, showHeaders, mLabelWidth );
+
   if (!fromSlot) mAllFieldsAction->setChecked(showHeaders==HDR_ALL);
 
   if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
@@ -929,6 +965,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if ( mBccAction ) mBccAction->setEnabled(!mAllFieldsAction->isChecked());
   mFccAction->setEnabled(!mAllFieldsAction->isChecked());
   mSubjectAction->setEnabled(!mAllFieldsAction->isChecked());
+  mRecipientsEditor->setFirstColumnWidth( mLabelWidth );
 }
 
 QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
@@ -952,23 +989,16 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
       QToolTip::add( aLbl, toolTip );
     if ( !whatsThis.isEmpty() )
       QWhatsThis::add( aLbl, whatsThis );
-    aLbl->adjustSize();
-    aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
-    aLbl->setMinimumSize(aLbl->size());
-    aLbl->show();
+    aLbl->setFixedWidth( mLabelWidth );
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
-    if ( aLbl->width() > mLabelWidth ) mLabelWidth = aLbl->width();
-
     aEdt->setBackgroundColor( mBackColor );
     aEdt->show();
-    aEdt->setMinimumSize(100, aLbl->height()+2);
 
     if (aBtn) {
       mGrid->addWidget(aEdt, aRow, 1);
 
       mGrid->addWidget(aBtn, aRow, 2);
-      aBtn->setFixedSize(aBtn->sizeHint().width(), aLbl->height());
       aBtn->show();
     } else {
       mGrid->addMultiCellWidget(aEdt, aRow, aRow, 1, 2 );
@@ -997,9 +1027,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->show();
     aLbl->setBuddy(aCbx);
     mGrid->addWidget(aLbl, aRow, 0);
-    if ( aLbl->width() > mLabelWidth ) mLabelWidth = aLbl->width();
-
-    //    aCbx->setBackgroundColor( mBackColor );
     aCbx->show();
     aCbx->setMinimumSize(100, aLbl->height()+2);
 
