@@ -94,8 +94,10 @@ QString KMFolderIndex::indexLocation() const
 {
   QString sLocation(folder()->path());
 
-  if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += '.';
+  if ( !sLocation.isEmpty() ) {
+    sLocation += '/';
+    sLocation += '.';
+  }
   sLocation += dotEscape(fileName());
   sLocation += ".index";
 
