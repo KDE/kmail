@@ -873,12 +873,15 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   QHBox* box = new QHBox( page1 );
   label = new QLabel( i18n("Namespaces:"), box );
+  QWhatsThis::add( label, i18n( "Here you see the different namespaces that your IMAP server supports."
+        "Each namespace represents a prefix that separates groups of folders."
+        "Namespaces allow KMail for example to display your personal folders and shared folders in one account." ) );
   // button to reload
   QToolButton* button = new QToolButton( box );
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 22, 22 );
- button->setIconSet( 
+  button->setIconSet( 
       KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
   QWhatsThis::add( button, 
@@ -887,7 +890,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   // grid with label, namespace list and edit button
   QGrid* listbox = new QGrid( 3, page1 );
-  new QLabel( i18n("Personal"), listbox );
+  label = new QLabel( i18n("Personal"), listbox );
+  QWhatsThis::add( label, i18n( "Personal namespaces include your personal folders." ) );
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
@@ -898,7 +902,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.editPNS->setFixedSize( 22, 22 );
   connect( mImap.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
 
-  new QLabel( i18n("Other Users"), listbox );
+  label = new QLabel( i18n("Other Users"), listbox );
+  QWhatsThis::add( label, i18n( "These namespaces include the folders of other users." ) );
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
@@ -909,7 +914,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.editONS->setFixedSize( 22, 22 );
   connect( mImap.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
 
-  new QLabel( i18n("Shared"), listbox );
+  label = new QLabel( i18n("Shared"), listbox );
+  QWhatsThis::add( label, i18n( "These namespaces include the shared folders." ) );
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
