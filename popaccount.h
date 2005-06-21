@@ -98,7 +98,6 @@ public:
 protected:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
   friend class ::KMAcctMgr;
-  friend class KMPasswdDialog;
   PopAccount(KMAcctMgr* owner, const QString& accountName, uint id);
 
   /**

@@ -101,7 +101,6 @@ public slots:
 
 protected:
   friend class KMAcctMgr;
-  friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const QString& accountName, uint id);
   /**
    * Handle an error coming from a KIO job
