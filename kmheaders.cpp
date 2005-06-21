@@ -131,7 +131,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
 
   connect(mPopup, SIGNAL(activated(int)), this, SLOT(slotToggleColumn(int)));
 
-  mSortCol = 3;
+  mSortCol = 3; // 3 == date
   mSortDescending = false;
 
   setShowSortIndicator(true);
@@ -2365,8 +2365,8 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
 //-----------------------------------------------------------------------------
 int KMHeaders::topItemIndex()
 {
-  HeaderItem *item = static_cast<HeaderItem*>(itemAt(QPoint(1,1)));
-  if (item)
+  HeaderItem *item = static_cast<HeaderItem*>( itemAt( QPoint( 1, 1 ) ) );
+  if ( item )
     return item->msgId();
   else
     return -1;
@@ -2375,10 +2375,10 @@ int KMHeaders::topItemIndex()
 //-----------------------------------------------------------------------------
 void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
-  if( aMsgIdx < 0 || static_cast<unsigned int>( aMsgIdx ) >= mItems.size() )
+  if ( aMsgIdx < 0 || static_cast<unsigned int>( aMsgIdx ) >= mItems.size() )
     return;
   const QListViewItem * const item = mItems[aMsgIdx];
-  if( item )
+  if ( item )
     setContentsPos( 0, itemPos( item ) );
 }
 
