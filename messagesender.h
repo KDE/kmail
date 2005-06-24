@@ -43,21 +43,38 @@ protected:
   virtual ~MessageSender() = 0;
 
 public:
-  /** Send given message. The message is either queued or sent
-    immediately. The default behaviour, as selected with
-    setSendImmediate(), can be overwritten with the parameter
-    sendNow (by specifying TRUE or FALSE).
-    The sender takes ownership of the given message on success,
-    so DO NOT DELETE OR MODIFY the message further.
-    Returns TRUE on success. */
-  bool send( KMMessage * msg ) { return doSend( msg, -1 ); }
-  bool send( KMMessage* msg, bool sendNow ) { return doSend( msg, sendNow ); }
+  enum SendMethod {
+    SendDefault = -1,
+    SendImmediate = true,
+    SendLater = false
+  };
+  /**
+     Send given message.
 
-  /** Start sending all queued messages. Optionally a transport can be 
-   * specified that will be used as the default transport.
-   * Returns true on success. */
-  bool sendQueued() { return doSendQueued( QString::null ); }
-  bool sendQueued( const QString& transport) { return doSendQueued( transport ); }
+     The message is either queued (@p method == SendLater) or sent
+     immediately (@p method = SendImmediate). The default behaviour,
+     as selected with setSendImmediate(), can be overwritten with the
+     parameter @p method.  The sender takes ownership of the given
+     message on success, so DO NOT DELETE OR MODIFY the message
+     further.
+
+     FIXME: what about send() == false?
+
+     @return true on success.
+  */
+  bool send( KMMessage * msg, SendMethod method=SendDefault ) { return doSend( msg, method ); }
+
+  /**
+     Start sending all queued messages.
+
+     FIXME: what does success mean here, if it's only _start_ sending?
+
+     Optionally a transport can be specified that will be used as the
+     default transport.
+
+     @return true on success.
+  */
+  bool sendQueued( const QString & transport=QString::null ) { return doSendQueued( transport ); }
 
   virtual void readConfig() = 0;
   virtual void writeConfig( bool withSync = true ) = 0;

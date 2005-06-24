@@ -112,7 +112,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
                               const QValueList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
-  if ( mdn && !kmkernel->msgSender()->send( mdn, FALSE ) ) {
+  if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
     kdDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
     //delete mdn;
   }
@@ -592,7 +592,7 @@ KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMMessage* msg) co
 
   // Queue message. This is a) so that the user can check
   // the receipt before sending and b) for speed reasons.
-  kmkernel->msgSender()->send( receipt, FALSE );
+  kmkernel->msgSender()->send( receipt, KMail::MessageSender::SendLater );
 
   return GoOn;
 }
@@ -1493,7 +1493,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( msg, FALSE ) ) {
+  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
     kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
@@ -1533,7 +1533,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( msg, FALSE ) ) {
+  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
     kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }

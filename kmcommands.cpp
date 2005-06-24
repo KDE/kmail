@@ -1315,7 +1315,10 @@ KMCommand::Result KMRedirectCommand::execute()
   KMMessage *newMsg = msg->createRedirect( dlg.to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( newMsg, dlg.sendImmediate() ) ) {
+  const KMail::MessageSender::SendMethod method = dlg.sendImmediate()
+    ? KMail::MessageSender::SendImmediate
+    : KMail::MessageSender::SendLater;
+  if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
     kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
     return Failed; // error: couldn't send
   }
@@ -1763,7 +1766,7 @@ KMCommand::Result KMCopyCommand::execute()
 
   // only close the folder and delete the job if we're done
   // otherwise this is done in slotMsgAdded or slotFolderComplete
-  if ( deleteNow ) 
+  if ( deleteNow )
   {
     mDestFolder->close();
     deleteLater();

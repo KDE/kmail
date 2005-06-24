@@ -3617,9 +3617,9 @@ bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresse
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
+void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInDrafts)
 {
-  mSendNow = aSendNow;
+  mSendMethod = method;
   mSaveInDrafts = saveInDrafts;
 
   if (!saveInDrafts)
@@ -3811,7 +3811,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 	(*it)->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ), KMMessage::Address );
       }
       (*it)->cleanupHeader();
-      sentOk = kmkernel->msgSender()->send((*it), mSendNow);
+      sentOk = kmkernel->msgSender()->send((*it), mSendMethod);
     }
 
     if (!sentOk)
@@ -3838,14 +3838,14 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 void KMComposeWin::slotSendLater()
 {
   if ( mEditor->checkExternalEditorFinished() )
-    doSend( false );
+    doSend( KMail::MessageSender::SendLater );
 }
 
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSaveDraft() {
   if ( mEditor->checkExternalEditorFinished() )
-    doSend( false, true );
+    doSend( KMail::MessageSender::SendLater, true );
 }
 
 
@@ -3874,27 +3874,16 @@ void KMComposeWin::slotSendLaterVia( int item )
 void KMComposeWin::slotSendNow() {
   if ( !mEditor->checkExternalEditorFinished() )
     return;
-  if ( GlobalSettings::confirmBeforeSend() ) {
-    switch(KMessageBox::warningYesNoCancel(mMainWidget,
-                                    i18n("About to send email..."),
-                                    i18n("Send Confirmation"),
-                                    i18n("&Send Now"),
-                                    i18n("Send &Later"))) {
-    case KMessageBox::Yes:        // send now
-        doSend(TRUE);
-      break;
-    case KMessageBox::No:        // send later
-        doSend(FALSE);
-      break;
-    case KMessageBox::Cancel:        // cancel
-      break;
-    default:
-      ;    // whoa something weird happened here!
-    }
-    return;
-  }
-
-  doSend(TRUE);
+  if ( GlobalSettings::confirmBeforeSend() &&
+       KMessageBox::warningYesNoCancel( mMainWidget,
+                                        i18n("About to send email..."),
+                                        i18n("Send Confirmation"),
+                                        i18n("&Send Now"),
+                                        i18n("Send &Later") )
+       == KMessageBox::No )
+    doSend( KMail::MessageSender::SendLater );
+  else
+    doSend( KMail::MessageSender::SendImmediate );
 }
 
 
@@ -5060,7 +5049,7 @@ void KMEdit::initializeAutoSpellChecking()
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
   QColor defaultForeground( kapp->palette().active().text() );
- 
+
   QColor c = Qt::red;
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );

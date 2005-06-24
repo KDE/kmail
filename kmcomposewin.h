@@ -780,7 +780,7 @@ private:
   /**
    * Send the message. Returns true if the message was sent successfully.
    */
-  void doSend(int sendNow=-1, bool saveInDrafts = false);
+  void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault, bool saveInDrafts = false);
 
   /**
    * Returns the autosave interval in milliseconds (as needed for QTimer).
@@ -948,7 +948,7 @@ private:
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
 
   // These are for passing on methods over the applyChanges calls
-  int mSendNow;
+  KMail::MessageSender::SendMethod mSendMethod;
   bool mSaveInDrafts;
 
   // This is the temporary object that constructs the message out of the
