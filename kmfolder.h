@@ -47,6 +47,7 @@ class KMMsgDict;
 class QTimer;
 class FolderStorage;
 class KMFolderTreeItem;
+class KMFolderJob;
 
 namespace KMail {
    class AttachmentStrategy;
@@ -68,7 +69,7 @@ typedef QValueList<Q_UINT32> SerNumList;
 class KMFolder: public KMFolderNode
 {
   Q_OBJECT
-  friend class KMFolderJob;
+  friend class ::KMFolderJob;
 public:
 
 

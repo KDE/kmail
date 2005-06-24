@@ -81,7 +81,7 @@ namespace KMail {
   //
 
   class AllHeaderStrategy : public HeaderStrategy {
-    friend class HeaderStrategy;
+    friend class ::KMail::HeaderStrategy;
   protected:
     AllHeaderStrategy() : HeaderStrategy() {}
     virtual ~AllHeaderStrategy() {}
@@ -104,7 +104,7 @@ namespace KMail {
   //
 
   class RichHeaderStrategy : public HeaderStrategy {
-    friend class HeaderStrategy;
+    friend class ::KMail::HeaderStrategy;
   protected:
     RichHeaderStrategy()
       : HeaderStrategy(),
@@ -129,7 +129,7 @@ namespace KMail {
   //
 
   class StandardHeaderStrategy : public HeaderStrategy {
-    friend class HeaderStrategy;
+    friend class ::KMail::HeaderStrategy;
   protected:
     StandardHeaderStrategy()
       : HeaderStrategy(),
@@ -154,7 +154,7 @@ namespace KMail {
   //
 
   class BriefHeaderStrategy : public HeaderStrategy {
-    friend class HeaderStrategy;
+    friend class ::KMail::HeaderStrategy;
   protected:
     BriefHeaderStrategy()
       : HeaderStrategy(),
@@ -180,7 +180,7 @@ namespace KMail {
   //
 
   class CustomHeaderStrategy : public HeaderStrategy {
-    friend class HeaderStrategy;
+    friend class ::KMail::HeaderStrategy;
   protected:
     CustomHeaderStrategy();
     virtual ~CustomHeaderStrategy() {}

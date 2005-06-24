@@ -10,7 +10,7 @@
 class KMAcctMaildir: public KMAccount
 {
 protected:
-  friend class KMAcctMgr;
+  friend class ::KMAcctMgr;
 
   KMAcctMaildir(KMAcctMgr* owner, const QString& accountName, uint id);
 

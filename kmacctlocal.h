@@ -10,7 +10,7 @@
 class KMAcctLocal: public KMAccount
 {
 protected:
-  friend class KMAcctMgr;
+  friend class ::KMAcctMgr;
 
   KMAcctLocal(KMAcctMgr* owner, const QString& accountName, uint id);
 

@@ -33,6 +33,7 @@ class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
 class KMHeaders;
+class KMForwardCommand;
 
 namespace KMime {
   class CharFreq;
@@ -65,7 +66,7 @@ namespace KMail {
 /** This is a Mime Message. */
 class KMMessage: public KMMsgBase, public KMail::ISubject
 {
-  friend class KMForwardCommand;    // needed for MIME Digest forward
+  friend class ::KMForwardCommand;    // needed for MIME Digest forward
 
 public:
   // promote some of KMMsgBase's methods to public:

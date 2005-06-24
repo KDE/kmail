@@ -54,8 +54,8 @@ namespace KIO {
 class KMAcctCachedImap: public KMail::ImapAccountBase
 {
   Q_OBJECT
-  friend class ImapJob;
-  friend class CachedImapJob;
+  friend class ::KMail::ImapJob;
+  friend class ::KMail::CachedImapJob;
 
 public:
   virtual ~KMAcctCachedImap();
@@ -186,7 +186,7 @@ public:
   void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; };
 
 protected:
-  friend class KMAcctMgr;
+  friend class ::KMAcctMgr;
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
 
 protected slots:

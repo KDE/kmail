@@ -17,7 +17,7 @@ using KMail::AttachmentStrategy;
 class KMFolderMaildir : public KMFolderIndex
 {
   Q_OBJECT
-  friend class MaildirJob;
+  friend class ::KMail::MaildirJob;
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder

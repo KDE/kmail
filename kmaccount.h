@@ -37,6 +37,7 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMFolderJob;
+class KMFolderCachedImap;
 namespace  KMail {
   class FolderJob;
 }
@@ -69,9 +70,9 @@ protected:
 class KMAccount: public QObject, public KAccount
 {
   Q_OBJECT
-  friend class KMAcctMgr;
-  friend class FolderJob;
-  friend class KMFolderCachedImap; /* HACK for processNewMSg() */
+  friend class ::KMAcctMgr;
+  friend class ::KMail::FolderJob;
+  friend class ::KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
   virtual ~KMAccount();

@@ -233,8 +233,8 @@ public:
 class KMAtmListViewItem : public QObject, public QListViewItem
 {
   Q_OBJECT
-  friend class KMComposeWin;
-  friend class MessageComposer;
+  friend class ::KMComposeWin;
+  friend class ::MessageComposer;
 
 public:
   KMAtmListViewItem(QListView * parent);
@@ -279,8 +279,8 @@ class KMHeaders;
 class KMComposeWin : public KMail::SecondaryWindow, virtual public MailComposerIface
 {
   Q_OBJECT
-  friend class KMHeaders;         // needed for the digest forward
-  friend class MessageComposer;
+  friend class ::KMHeaders;         // needed for the digest forward
+  friend class ::MessageComposer;
 
 public:
   KMComposeWin( KMMessage* msg=0, uint identity=0 );

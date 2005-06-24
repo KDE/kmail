@@ -52,9 +52,9 @@ namespace KPIM {
 class KMSender: public QObject, public KMail::MessageSender
 {
   Q_OBJECT
-  friend class KMSendProc;
-  friend class KMSendSendmail;
-  friend class KMSendSMTP;
+  friend class ::KMSendProc;
+  friend class ::KMSendSendmail;
+  friend class ::KMSendSMTP;
 
 public:
   KMSender();
@@ -69,7 +69,7 @@ protected:
     so DO NOT DELETE OR MODIFY the message further.
     Returns TRUE on success. */
   bool doSend(KMMessage* msg, short sendNow);
-  
+
   /** Send queued messages, using the specified transport or the
    * default, if none is given.
    */

@@ -99,7 +99,7 @@ namespace KMail {
   //
 
   class BriefHeaderStyle : public HeaderStyle {
-    friend class HeaderStyle;
+    friend class ::KMail::HeaderStyle;
   protected:
     BriefHeaderStyle() : HeaderStyle() {}
     virtual ~BriefHeaderStyle() {}
@@ -194,7 +194,7 @@ namespace KMail {
   //
 
   class PlainHeaderStyle : public HeaderStyle {
-    friend class HeaderStyle;
+    friend class ::KMail::HeaderStyle;
   protected:
     PlainHeaderStyle() : HeaderStyle() {}
     virtual ~PlainHeaderStyle() {}
@@ -340,7 +340,7 @@ namespace KMail {
   //
 
   class FancyHeaderStyle : public HeaderStyle {
-    friend class HeaderStyle;
+    friend class ::KMail::HeaderStyle;
   protected:
     FancyHeaderStyle() : HeaderStyle() {}
     virtual ~FancyHeaderStyle() {}

@@ -77,7 +77,7 @@ private:
 class KMFolderImap : public KMFolderMbox
 {
   Q_OBJECT
-  friend class ImapJob;
+  friend class ::KMail::ImapJob;
 public:
 
   static QString cacheLocation() {

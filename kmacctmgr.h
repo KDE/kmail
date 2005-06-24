@@ -31,7 +31,7 @@ class QStringList;
 class KDE_EXPORT KMAcctMgr: public QObject
 {
   Q_OBJECT
-  friend class KMAccount;
+  friend class ::KMAccount;
 
 public:
   /** Initialize Account Manager and load accounts with reload() if the

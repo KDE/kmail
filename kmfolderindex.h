@@ -40,7 +40,7 @@ class KMFolderIndex: public FolderStorage
   //TODO:Have to get rid of this friend declaration and add necessary pure
   //virtuals to kmfolder.h so that KMMsgBase::parent() can be a plain KMFolder
   //rather than a KMFolderIndex. Need this for database indices.
-  friend class KMMsgBase;
+  friend class ::KMMsgBase;
 public:
 
   /** This enum indicates the status of the index file. It's returned by

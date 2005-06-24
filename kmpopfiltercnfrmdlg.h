@@ -76,7 +76,7 @@ protected:
 
 class KMPopFilterCnfrmDlg : public KDialogBase
 {
-	friend class KMPopHeadersView;
+	friend class ::KMPopHeadersView;
   Q_OBJECT
 protected:
   KMPopFilterCnfrmDlg() { };

@@ -294,9 +294,9 @@ namespace Kleo {
 
   private:
     class EncryptionPreferenceCounter;
-    friend class EncryptionPreferenceCounter;
+    friend class ::Kleo::KeyResolver::EncryptionPreferenceCounter;
     class SigningPreferenceCounter;
-    friend class SigningPreferenceCounter;
+    friend class ::Kleo::KeyResolver::SigningPreferenceCounter;
 
     class Private;
     Private * d;

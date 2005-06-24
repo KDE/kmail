@@ -47,7 +47,7 @@ using KMail::AttachmentStrategy;
 class KMFolderMbox : public KMFolderIndex
 {
   Q_OBJECT
-  friend class MboxJob;
+  friend class ::KMail::MboxJob;
 public:
 
 

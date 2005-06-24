@@ -47,6 +47,8 @@ class KMComposeWin;
 class CryptPlugWrapper;
 
 class MessageComposerJob;
+class EncryptMessageJob;
+class SetLastMessageAsUnencryptedVersionOfLastButOne;
 
 namespace Kleo {
   class KeyResolver;
@@ -62,9 +64,9 @@ namespace KPIM {
 
 class MessageComposer : public QObject {
   Q_OBJECT
-  friend class MessageComposerJob;
-  friend class EncryptMessageJob;
-  friend class SetLastMessageAsUnencryptedVersionOfLastButOne;
+  friend class ::MessageComposerJob;
+  friend class ::EncryptMessageJob;
+  friend class ::SetLastMessageAsUnencryptedVersionOfLastButOne;
 
 public:
   class KeyResolver;
@@ -135,7 +137,7 @@ private:
    * part in a multipart/alternative mail.
    */
   QCString plainTextFromMarkup( const QString& markupText );
-  
+
   /**
    * Get signature for a message (into mMessage).
    * To build nice S/MIME objects signing and encoding must be separated.

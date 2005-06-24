@@ -49,7 +49,7 @@ class KMHeaders : public KListView
 {
   Q_OBJECT
 
-  friend class HeaderItem; // For easy access to the pixmaps
+  friend class ::KMail::HeaderItem; // For easy access to the pixmaps
 
 public:
   KMHeaders(KMMainWidget *owner, QWidget *parent=0, const char *name=0);

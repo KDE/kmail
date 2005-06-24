@@ -104,7 +104,7 @@ class KMSearchRuleWidgetLister : public KWidgetLister
 {
   Q_OBJECT
 
-  friend class KMSearchPatternEdit;
+  friend class ::KMSearchPatternEdit;
 
 public:
   KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );

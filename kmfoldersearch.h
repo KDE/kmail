@@ -40,6 +40,7 @@
 typedef QValueList<Q_UINT32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
+class KMFolderSearchJob;
 class QTimer;
 
 namespace KMail {
@@ -82,7 +83,7 @@ protected slots:
       KMSearchPattern*, bool );
 
 protected:
-  friend class KMIndexSearchTarget;
+  friend class ::KMIndexSearchTarget;
   void setRunning(bool b) { mRunning = b; }
   void setFoundCount(int f) { mFoundCount = f; }
   void setSearchedCount(int f) { mSearchedCount = f; }
@@ -104,7 +105,7 @@ private:
 class KMFolderSearch: public FolderStorage
 {
   Q_OBJECT
-  friend class KMFolderSearchJob;
+  friend class ::KMFolderSearchJob;
 public:
   KMFolderSearch(KMFolder* folder, const char* name=0);
   virtual ~KMFolderSearch();

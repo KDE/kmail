@@ -45,7 +45,7 @@ namespace KMail {
 
   class BodyPartFormatterFactory {
     class gcc_shut_up;
-    friend class gcc_shut_up;
+    friend class ::KMail::BodyPartFormatterFactory::gcc_shut_up;
   public:
     ~BodyPartFormatterFactory();
 
