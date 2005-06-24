@@ -191,6 +191,8 @@ namespace KMail {
     if ( job->error() ) {
       job->showErrorDialog( 0 );
 
+      emit result( this, false, mScript, mUrl.fileName() == mActiveScriptName );
+
       if ( lastCmd == List )
 	emit gotList( this, false, mAvailableScripts, mActiveScriptName );
       else
