@@ -110,7 +110,6 @@ protected:
      * used on newly appeared folders, where there is no .ids file yet, or
      * when that has been invalidated. */
   virtual void fillMessageDict();
-  virtual void readMessageDictCache();
 
   /** table of contents file */
   FILE* mIndexStream;

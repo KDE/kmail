@@ -180,8 +180,6 @@ KMMsgDict* KMMsgDict::mutableInstance()
   return m_self;
 }
 
-
-
 //-----------------------------------------------------------------------------
 
 unsigned long KMMsgDict::getNextMsgSerNum() {

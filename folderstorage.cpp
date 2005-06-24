@@ -905,12 +905,22 @@ void FolderStorage::correctUnreadMsgsCount()
 
 void FolderStorage::registerWithMessageDict()
 {
-  readMessageDictCache();
+  readFolderIdsFile();
 }
 
 void FolderStorage::deregisterFromMessageDict()
 {
-  writeMsgDict();
+  writeFolderIdsFile();
+}
+
+void FolderStorage::readFolderIdsFile()
+{
+  if ( KMMsgDict::mutableInstance()->readFolderIds( *this ) == -1 ) {
+    invalidateFolder();
+  }
+  if ( !KMMsgDict::mutableInstance()->hasFolderIds( *this ) ) {
+    invalidateFolder();
+  }
 }
 
 void FolderStorage::invalidateFolder()
@@ -924,19 +934,19 @@ void FolderStorage::invalidateFolder()
 
 
 //-----------------------------------------------------------------------------
-int FolderStorage::writeMsgDict() const
+int FolderStorage::writeFolderIdsFile() const
 {
   return KMMsgDict::mutableInstance()->writeFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::touchMsgDict()
+int FolderStorage::touchFolderIdsFile()
 {
   return KMMsgDict::mutableInstance()->touchFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::appendToMsgDict( int idx )
+int FolderStorage::appendToFolderIdsFile( int idx )
 {
   int ret = 0;
   if ( count() == 1 ) {

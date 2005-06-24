@@ -114,7 +114,7 @@ int KMFolderIndex::updateIndex()
     if (mMsgList.at(i))
       dirty = !mMsgList.at(i)->syncIndexString();
   if (!dirty) { // Update successful
-      touchMsgDict();
+      touchFolderIdsFile();
       return 0;
   }
   return writeIndex();
@@ -203,7 +203,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
   updateIndexStreamPtr();
 
-  writeMsgDict();
+  writeFolderIdsFile();
 
   setDirty( false );
   return 0;
@@ -459,16 +459,6 @@ void KMFolderIndex::truncateIndex()
     // The index file wasn't opened, so we don't know the header offset.
     // So let's just create a new empty index.
     writeIndex( true );
-}
-
-void KMFolderIndex::readMessageDictCache()
-{
-  if ( KMMsgDict::mutableInstance()->readFolderIds( *this ) == -1 ) {
-    invalidateFolder();
-  }
-  if ( !KMMsgDict::mutableInstance()->hasFolderIds( *this ) ) {
-    invalidateFolder();
-  }
 }
 
 void KMFolderIndex::fillMessageDict()

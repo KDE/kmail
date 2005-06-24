@@ -66,8 +66,9 @@ using KMail::AttachmentStrategy;
 
 typedef QValueList<Q_UINT32> SerNumList;
 
-/** Mail folder.
- * (description will be here).
+/**
+ * @short The FolderStorage class is the bass class for the storage related
+ * aspects of a collection of mail (a folder).
  *
  * @section Accounts
  *   The accounts (of KMail) that are fed into the folder are
@@ -529,24 +530,24 @@ protected:
 
   //--------- Message Dict manipulation
 friend class KMMsgDict;
-  /** Read the on-disk cache of serial number and location of messages in
- * this store and fill those into the global message dict, such that the messages
-   * we hold can be looked up.there. */
-  virtual void readMessageDictCache() {}
-
   /** Inserts messages into the message dictionary. The messages will get
    * new serial numbers. This is only used on newly appeared folders, where
    * there is no .ids file yet, or when that has been invalidated. */
   virtual void fillMessageDict() {}
- 
+
+  /** Read the on-disk cache of serial numbers  of messages in this store
+   * and fill those into the global message dict, such that the messages
+   * we hold can be looked up there. */
+  void readFolderIdsFile();
+
   /** Writes the message serial number file. */
-  int writeMsgDict() const;
+  int writeFolderIdsFile() const;
 
   /** Touches the message serial number file. */
-  int touchMsgDict();
+  int touchFolderIdsFile();
 
   /** Append message to end of message serial number file. */
-  int appendToMsgDict( int idx = -1 );
+  int appendToFolderIdsFile( int idx = -1 );
 
   /** Sets the reverse-dictionary for this folder. const, because the mRDict
    * is mutable, since it is not part of the (conceptually) const-relevant state

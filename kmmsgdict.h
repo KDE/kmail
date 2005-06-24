@@ -36,9 +36,13 @@ class FolderStorage;
  * The KMMsgDict singleton is used to look up at which index in which folder a
  * certain serial number can be found. Each folder holds a "reverse entry",
  * which is an array of message dict entries for that folder and persists that
- * to disk. In effect the whole message dict is therefor persisted per folder
- * and restored on startup when all folder dict entries
- * are read and re-enter their respective entries into the global dict.
+ * to disk as an array of serial numbers, the "$folder.index.ids" file.
+ * In effect the whole message dict is therefor persisted per folder
+ * and restored on startup when all folder dict entries are read and re-enter
+ * their respective entries (serial numbers) into the global dict. The code for
+ * creating, deleting and manipulating these files is in this class, rather than
+ * the FolderStorage class, which only holds the pointer to the reverse entry
+ * and otherwise knows nothing of the message dict.
  *
  * @author Ronen Tzur <rtzur@shani.net>
  */

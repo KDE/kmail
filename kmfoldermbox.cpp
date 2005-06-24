@@ -1113,7 +1113,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     fflush(mIndexStream);
     error = ferror(mIndexStream);
 
-    error |= appendToMsgDict(idx);
+    error |= appendToFolderIdsFile( idx );
 
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
