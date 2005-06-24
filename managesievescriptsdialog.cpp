@@ -99,7 +99,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
     last = new QCheckListItem( mListView, last, a->name(), QCheckListItem::Controller );
     last->setPixmap( 0, SmallIcon( "server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
-      const KURL u = findUrlForAccount( iab );
+      const KURL u = ::findUrlForAccount( iab );
       if ( u.isEmpty() )
         continue;
       SieveJob * job = SieveJob::list( u );
