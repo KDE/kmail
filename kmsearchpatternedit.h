@@ -21,6 +21,7 @@ class QLineEdit;
 class QRadioButton;
 class QWidgetStack;
 class QLabel;
+class KMSearchPatternEdit;
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable @see QComboBox for the field,

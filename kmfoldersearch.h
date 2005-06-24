@@ -41,6 +41,7 @@ typedef QValueList<Q_UINT32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
 class KMFolderSearchJob;
+class KMIndexSearchTarget;
 class QTimer;
 
 namespace KMail {
