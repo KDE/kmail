@@ -44,6 +44,7 @@
 #include "kleo_util.h"
 #include "globalsettings.h"
 #include "custommimeheader.h"
+#include "kmedit.h"
 
 
 #include <libkpimidentities/identity.h>

@@ -66,6 +66,9 @@ class KRecentFilesAction;
 class SpellingFilter;
 class MessageComposer;
 class RecipientsEditor;
+class KMLineEdit;
+class KMLineEditSpell;
+class KMAtmListViewItem;
 
 namespace KPIM {
   class IdentityCombo;
@@ -80,95 +83,6 @@ namespace KMail {
 namespace GpgME {
   class Error;
 }
-
-
-//-----------------------------------------------------------------------------
-class KMLineEdit : public KPIM::AddresseeLineEdit
-{
-    Q_OBJECT
-public:
-    KMLineEdit(bool useCompletion, QWidget *parent = 0,
-               const char *name = 0);
-
-signals:
-    void focusUp();
-    void focusDown();
-
-protected:
-    // Inherited. Always called by the parent when this widget is created.
-    virtual void loadContacts();
-
-    virtual void keyPressEvent(QKeyEvent*);
-
-    virtual QPopupMenu *createPopupMenu();
-
-private slots:
-    void editRecentAddresses();
-
-private:
-    void dropEvent( QDropEvent *event );
-    void insertEmails( QStringList emails );
-};
-
-
-class KMLineEditSpell : public KMLineEdit
-{
-    Q_OBJECT
-public:
-    KMLineEditSpell(bool useCompletion, QWidget *parent = 0,
-               const char *name = 0);
-    void highLightWord( unsigned int length, unsigned int pos );
-    void spellCheckDone( const QString &s );
-    void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
-    void spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos);
-
- signals:
-  void subjectTextSpellChecked();
-};
-
-
-//-----------------------------------------------------------------------------
-class KMAtmListViewItem : public QObject, public QListViewItem
-{
-  Q_OBJECT
-  friend class ::KMComposeWin;
-  friend class ::MessageComposer;
-
-public:
-  KMAtmListViewItem(QListView * parent);
-  virtual ~KMAtmListViewItem();
-  virtual void paintCell( QPainter * p, const QColorGroup & cg,
-                          int column, int width, int align );
-
-  void setUncompressedMimeType( QCString type, QCString subtype );
-  void uncompressedMimeType( QCString &type, QCString &subtype );
-  void setUncompressedCodec( QCString codec );
-  QCString uncompressedCodec();
-
-signals:
-  void compress( int );
-  void uncompress( int );
-
-protected:
-  void enableCryptoCBs(bool on);
-  void setEncrypt(bool on);
-  bool isEncrypt();
-  void setSign(bool on);
-  bool isSign();
-  void setCompress(bool on);
-  bool isCompress();
-
-private slots:
-  void slotCompress();
-
-private:
-  QListView* mListview;
-  QCheckBox* mCBEncrypt;
-  QCheckBox* mCBSign;
-  QCheckBox* mCBCompress;
-  bool mCBSignEnabled, mCBEncryptEnabled;
-  QCString mType, mSubtype, mCodec;
-};
 
 
 class KMHeaders;

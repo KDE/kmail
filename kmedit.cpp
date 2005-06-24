@@ -6,6 +6,7 @@
 #include <config.h>
 
 #include "kmedit.h"
+#include "kmlineeditspell.h"
 
 #include "kmcomposewin.h"
 #include "kmmsgdict.h"

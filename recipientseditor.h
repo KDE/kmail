@@ -7,16 +7,16 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-    
+
     As a special exception, permission is given to link this program
     with any edition of Qt, and distribute the resulting executable,
     without including the source code for Qt in the source distribution.
@@ -29,13 +29,13 @@
 #include <qlineedit.h>
 #include <qtooltip.h>
 
-#include "kmcomposewin.h"
+#include "kmlineeditspell.h"
+#include <qcombobox.h>
 
 class RecipientsPicker;
 
 class KWindowPositioner;
 
-class QComboBox;
 class QLabel;
 class QPushButton;
 class SideWidget;
@@ -59,10 +59,10 @@ class Recipient
 
     static int typeToId( Type );
     static Type idToType( int );
-    
+
     QString typeLabel() const;    static QString typeLabel( Type );
     static QStringList allTypeLabels();
-    
+
   private:
     QString mEmail;
     Type mType;
@@ -73,7 +73,7 @@ class RecipientComboBox : public QComboBox
     Q_OBJECT
   public:
     RecipientComboBox( QWidget *parent );
-    
+
   signals:
     void rightPressed();
 
@@ -121,7 +121,7 @@ class RecipientLine : public QWidget
     */
     bool isModified();
 
-    /** Resets the modified flag to false. 
+    /** Resets the modified flag to false.
     */
     void clearModified();
 
@@ -176,7 +176,7 @@ class RecipientsView : public QScrollView
     RecipientLine *activeLine();
 
     RecipientLine *emptyLine();
-    
+
     Recipient::List recipients() const;
 
     /** Removes the recipient provided it can be found and has the given type.
@@ -190,7 +190,7 @@ class RecipientsView : public QScrollView
     */
     bool isModified();
 
-    /** Resets the modified flag to false. 
+    /** Resets the modified flag to false.
     */
     void clearModified();
 
@@ -247,9 +247,9 @@ class RecipientsToolTip : public QToolTip
     void maybeTip( const QPoint & p );
 
     QString line( const Recipient & );
-    
+
   private:
-    RecipientsView *mView; 
+    RecipientsView *mView;
 };
 
 class SideWidget : public QWidget
@@ -276,7 +276,7 @@ class SideWidget : public QWidget
     QLabel *mTotalLabel;
     QPushButton *mDistributionListButton;
     QPushButton *mSelectButton;
-    /** The RecipientsPicker is lazy loaded, never access it directly, 
+    /** The RecipientsPicker is lazy loaded, never access it directly,
       only through picker() */
     mutable RecipientsPicker *mRecipientPicker;
     /** lazy loaded, don't access directly, unless you've called picker() */
@@ -315,7 +315,7 @@ class RecipientsEditor : public QWidget
     */
     bool isModified();
 
-    /** Resets the modified flag to false. 
+    /** Resets the modified flag to false.
     */
     void clearModified();
 

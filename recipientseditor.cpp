@@ -45,6 +45,7 @@
 #include <qhbox.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
+#include <qstylesheet.h>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )
   : mEmail( email ), mType( type )
@@ -361,7 +362,7 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotTypeModified( RecipientLine * ) ) );
 
   if ( mLines.last() ) {
-    if ( mLines.count() == 1 ) { 
+    if ( mLines.count() == 1 ) {
       if ( GlobalSettings::secondRecipientTypeDefault() ==
          GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
         line->setRecipientType( Recipient::To );

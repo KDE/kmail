@@ -30,6 +30,7 @@
 #include "redirectdialog.h"
 
 #include "kmkernel.h"
+#include "kmlineeditspell.h"
 
 #include <libemailfunctions/email.h>
 #include <addressesdialog.h>
@@ -48,7 +49,7 @@ using KRecentAddress::RecentAddresses;
 
 using namespace KMail;
 
-RedirectDialog::RedirectDialog( QWidget *parent, const char *name, 
+RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
                                 bool modal, bool immediate )
   : KDialogBase( parent, name, modal, i18n( "Redirect Message" ),
                  User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
@@ -56,7 +57,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   QVBox *vbox = makeVBoxMainWidget();
   mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
-  
+
   QHBox *hbox = new QHBox( vbox );
   hbox->setSpacing(4);
   mEditTo = new KMLineEdit( true, hbox, "toLine" );
@@ -69,9 +70,9 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   QWhatsThis::add( mBtnTo, i18n("This button opens a separate dialog "
                                  "where you can select recipients out "
                                  "of all available addresses." ) );
-  
+
   connect( mBtnTo, SIGNAL(clicked()), SLOT(slotAddrBook()) );
-  
+
   mLabelTo->setBuddy( mBtnTo );
   mEditTo->setFocus();
 
@@ -99,8 +100,8 @@ void RedirectDialog::accept()
 {
   mResentTo = mEditTo->text();
   if ( mResentTo.isEmpty() ) {
-    KMessageBox::sorry( this, 
-        i18n("You cannot redirect the message without an address."), 
+    KMessageBox::sorry( this,
+        i18n("You cannot redirect the message without an address."),
         i18n("Empty Redirection Address") );
   }
   else done( Ok );
@@ -118,7 +119,7 @@ void RedirectDialog::slotAddrBook()
       dlg.setSelectedTo( lst );
   }
 
-  dlg.setRecentAddresses( 
+  dlg.setRecentAddresses(
       RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
 
   // Make it impossible to specify Cc or Bcc addresses as we support

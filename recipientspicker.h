@@ -7,12 +7,12 @@
     modify it under the terms of the GNU Library General Public
     License as published by the Free Software Foundation; either
     version 2 of the License, or (at your option) any later version.
-    
+
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     Library General Public License for more details.
-    
+
     You should have received a copy of the GNU Library General Public License
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -28,6 +28,8 @@
 #include <kabc/addressee.h>
 
 #include <qwidget.h>
+#include <qdialog.h>
+#include <qtooltip.h>
 
 class QComboBox;
 
@@ -40,7 +42,7 @@ class RecipientItem
 {
   public:
     typedef QValueList<RecipientItem *> List;
-  
+
     RecipientItem();
 
     void setDistributionList( KABC::DistributionList * );
@@ -50,23 +52,23 @@ class RecipientItem
     QString recipientType() const;
 
     QString recipient() const;
-    
+
     QPixmap icon() const;
     QString name() const;
     QString email() const;
-    
+
     QString key() const { return mKey; }
 
     QString toolTip() const;
-    
+
   private:
     KABC::Addressee mAddressee;
     QString mEmail;
     KABC::DistributionList *mDistributionList;
     QString mType;
-    
+
     QPixmap mIcon;
-    
+
     QString mKey;
 };
 
@@ -74,9 +76,9 @@ class RecipientViewItem : public KListViewItem
 {
   public:
     RecipientViewItem( RecipientItem *, KListView * );
-    
+
     RecipientItem *recipientItem() const;
-    
+
   private:
     RecipientItem *mRecipientItem;
 };
@@ -98,12 +100,12 @@ class RecipientsCollection
   public:
     RecipientsCollection();
     ~RecipientsCollection();
-    
+
     void setTitle( const QString & );
     QString title() const;
-    
+
     void addItem( RecipientItem * );
-    
+
     RecipientItem::List items() const;
 
     bool hasEquivalentItem( RecipientItem * ) const;
@@ -123,10 +125,10 @@ class SearchLine : public KListViewSearchLine
     Q_OBJECT
   public:
     SearchLine( QWidget *parent, KListView *listView );
-    
+
   signals:
     void downPressed();
-    
+
   protected:
     void keyPressEvent( QKeyEvent * );
 };
@@ -170,7 +172,7 @@ class RecipientsPicker : public QDialog
     void slotPicked();
     void setFocusList();
     void resetSearch();
-  
+
   private:
     QComboBox *mCollectionCombo;
     KListView *mRecipientList;
@@ -179,13 +181,13 @@ class RecipientsPicker : public QDialog
     QPushButton *mToButton;
     QPushButton *mCcButton;
     QPushButton *mBccButton;
-  
+
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
     RecipientsCollection *mSelectedRecipients;
 
     KABC::DistributionListManager *mDistributionListManager;
-    
+
     Recipient::Type mDefaultType;
 };
 
