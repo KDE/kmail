@@ -6,6 +6,7 @@
 #define __KMComposeWin
 
 #include "secondarywindow.h"
+#include "messagesender.h"
 
 #include <qlabel.h>
 #include <qlistview.h>
