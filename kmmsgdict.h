@@ -33,11 +33,11 @@ class FolderStorage;
  * @short KMail message dictionary. Keeps location information for every
  * message. The message serial number is the key for the dictionary.
  *
- * The KMMsgDict singleton is managed by the KMail kernel and is used to look
- * up at which index in which folder a certain serial number can be found. Each
- * folder holds a "reverse entry", which is an array of message dict entries for
- * that folder and persists that to disk. In effect the whole message dict is therefor
- * persisted per folder and restored on startup when all folder dict entries
+ * The KMMsgDict singleton is used to look up at which index in which folder a
+ * certain serial number can be found. Each folder holds a "reverse entry",
+ * which is an array of message dict entries for that folder and persists that
+ * to disk. In effect the whole message dict is therefor persisted per folder
+ * and restored on startup when all folder dict entries
  * are read and re-enter their respective entries into the global dict.
  *
  * @author Ronen Tzur <rtzur@shani.net>
@@ -75,7 +75,7 @@ class KMMsgDict
    * @p folder. Zero if no such message can be found. */
     unsigned long getMsgSerNum(KMFolder *folder, int index) const;
 
-  protected:
+  private:
     // Access for those altering the dict, our friend classes
     static KMMsgDict* mutableInstance();
     
@@ -83,7 +83,6 @@ class KMMsgDict
    * @p msgSerNum and may be zero, in which case a new serial number is
    * generated.  Returns the message serial number. */
   unsigned long insert(unsigned long msgSerNum, const KMMsgBase *msg, int index = -1);
-  unsigned long insert(unsigned long msgSerNum, const KMMessage *msg, int index = -1);
 
   /** Insert a new message.  The message serial number is taken from
    * the message, and passed to the other insert().  Returns the message
@@ -103,6 +102,9 @@ class KMMsgDict
   /** Updates index for a message. */
   void update(const KMMsgBase *msg, int index, int newIndex);
 
+
+  // ----- per folder serial number on-disk structure handling ("ids files")
+  
   /** Returns the name of the .folder.index.ids file. */
   static QString getFolderIdsLocation( const FolderStorage &folder );
 
@@ -128,22 +130,22 @@ class KMMsgDict
   /** Removes the .folder.index.ids file. */
   bool removeFolderIds( FolderStorage & );
 
-  // delete an entry that has been assigned to a folder
-  static void deleteRentry(KMMsgDictREntry *entry);
-  
-  /** Returns the next message serial number for use. */
-  unsigned long getNextMsgSerNum();
-
   /** Opens the .folder.index.ids file, and writes the header
    * information at the beginning of the file. */
   KMMsgDictREntry *openFolderIds( const FolderStorage &, bool truncate);
 
-  /** The dictionary. */
-  KMDict *dict;
+  // delete an entry that has been assigned to a folder
+  static void deleteRentry(KMMsgDictREntry *entry);
+
+  /** Returns the next message serial number for use. */
+  unsigned long getNextMsgSerNum();
 
   /** Highest message serial number we know of. */
   unsigned long nextMsgSerNum;
-private:
+
+  /** The dictionary. */
+  KMDict *dict;
+
   static KMMsgDict *m_self;
 };
 

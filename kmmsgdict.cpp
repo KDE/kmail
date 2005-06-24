@@ -195,12 +195,6 @@ void KMMsgDict::deleteRentry(KMMsgDictREntry *entry)
   delete entry;
 }
 
-//-----------------------------------------------------------------------------
-unsigned long KMMsgDict::insert(unsigned long msn, const KMMessage * msg, int idx ) {
-  return insert( msn, &msg->toMsgBase(), idx );
-}
-
-
 unsigned long KMMsgDict::insert(unsigned long msgSerNum,
                                 const KMMsgBase *msg, int index)
 {
