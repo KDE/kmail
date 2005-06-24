@@ -98,7 +98,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
 		attachmentlistview.cpp kmedit.cpp kmlineeditspell.cpp \
-                kmatmlistview.cpp \
+                kmatmlistview.cpp composer.cpp \
 		isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
