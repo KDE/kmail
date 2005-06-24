@@ -42,7 +42,7 @@ class QPopupMenu;
 class QPushButton;
 class QCString;
 class KCompletion;
-class KEdit;
+class KMEdit;
 class KMComposeWin;
 class KMFolderComboBox;
 class KMFolder;
@@ -54,9 +54,6 @@ class KSelectAction;
 class KFontAction;
 class KFontSizeAction;
 class KSelectAction;
-class KSpell;
-class KSpellConfig;
-class KDictSpellingHighlighter;
 class KStatusBar;
 class KAction;
 class KToggleAction;
@@ -83,106 +80,6 @@ namespace KMail {
 namespace GpgME {
   class Error;
 }
-
-
-//-----------------------------------------------------------------------------
-class KMEdit: public KEdit
-{
-  Q_OBJECT
-public:
-  KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
-         KSpellConfig* spellConfig = 0,
-	 const char *name=0);
-  virtual ~KMEdit();
-
-  /**
-   * Start the spell checker.
-   */
-  void spellcheck();
-
-  /**
-   * Text with lines breaks inserted after every row
-   */
-  QString brokenText();
-
-   /**
-   * Toggle automatic spellchecking
-   */
-  int autoSpellChecking( bool );
-
-  /**
-   * For the external editor
-   */
-  void setUseExternalEditor( bool use ) { mUseExtEditor = use; }
-  void setExternalEditorPath( const QString & path ) { mExtEditor = path; }
-
-  /**
-   * Check that the external editor has finished and output a warning
-   * if it hasn't.
-   * @return false if the user chose to cancel whatever operation
-   * called this method.
-   */
-  bool checkExternalEditorFinished();
-
-  QPopupMenu* createPopupMenu(const QPoint&);
-  void setSpellCheckingActive(bool spellCheckingActive);
-
-  /** Drag and drop methods */
-  void contentsDragEnterEvent(QDragEnterEvent *e);
-  void contentsDragMoveEvent(QDragMoveEvent *e);
-  void contentsDropEvent(QDropEvent *e);
-
-  void deleteAutoSpellChecking();
-
-  unsigned int lineBreakColumn() const;
-
-signals:
-  void spellcheck_done(int result);
-  void pasteImage();
-  void focusUp();
-  void focusChanged( bool );
-public slots:
-  void initializeAutoSpellChecking();
-  void slotSpellcheck2(KSpell*);
-  void slotSpellResult(const QString&);
-  void slotSpellDone();
-  void slotExternalEditorDone(KProcess*);
-  void slotMisspelling(const QString &, const QStringList &, unsigned int);
-  void slotCorrected (const QString &, const QString &, unsigned int);
-  void addSuggestion(const QString& text, const QStringList& lst, unsigned int );
-  virtual void cut();
-  virtual void clear();
-  virtual void del();
-  virtual void paste();
-protected:
-  /**
-   * Event filter that does Tab-key handling.
-   */
-  virtual bool eventFilter(QObject*, QEvent*);
-  virtual void keyPressEvent( QKeyEvent* );
-
-  KMComposeWin* mComposer;
-
-private slots:
-  void slotExternalEditorTempFileChanged( const QString & fileName );
-
-private:
-  void killExternalEditor();
-
-private:
-  KSpell *mKSpell;
-  KSpellConfig *mSpellConfig;
-  QMap<QString,QStringList> mReplacements;
-  SpellingFilter* mSpellingFilter;
-  KTempFile *mExtEditorTempFile;
-  KDirWatch *mExtEditorTempFileWatcher;
-  KProcess  *mExtEditorProcess;
-  bool      mUseExtEditor;
-  QString   mExtEditor;
-  bool      mWasModifiedBeforeSpellCheck;
-  KDictSpellingHighlighter *mSpellChecker;
-  bool mSpellLineEdit;
-};
 
 
 //-----------------------------------------------------------------------------
