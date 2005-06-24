@@ -403,12 +403,11 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
            && (    (subType == DwMime::kSubtypeUnknown)
                    || (subType == mSubType) ) )
         return this;
-    else if( mChild && deep )
+    if ( mChild && deep )
         return mChild->findType( type, subType, deep, wide );
-    else if( mNext && wide )
+    if ( mNext && wide )
         return mNext->findType(  type, subType, deep, wide );
-    else
-        return 0;
+    return 0;
 }
 
 partNode* partNode::findNodeForDwPart( DwBodyPart* part )
@@ -431,12 +430,11 @@ partNode* partNode::findTypeNot( int type, int subType, bool deep, bool wide )
            && (    (subType == DwMime::kSubtypeUnknown)
                    || (subType != mSubType) ) )
         return this;
-    else if( mChild && deep )
+    if ( mChild && deep )
         return mChild->findTypeNot( type, subType, deep, wide );
-    else if( mNext && wide )
+    if ( mNext && wide )
         return mNext->findTypeNot(  type, subType, deep, wide );
-    else
-        return 0;
+    return 0;
 }
 
 void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,

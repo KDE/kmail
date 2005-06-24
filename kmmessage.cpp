@@ -245,7 +245,7 @@ void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
 //-----------------------------------------------------------------------------
 //FIXME: move to libemailfunctions
 KPIM::EmailParseResult KMMessage::isValidEmailAddressList( const QString& aStr,
-                                                           QString& brokenAddress ) 
+                                                           QString& brokenAddress )
 {
   if ( aStr.isEmpty() ) {
      return KPIM::AddressEmpty;
@@ -814,8 +814,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
   const QString headerStr = formatString( aHeaderStr );
   if ( sSmartQuote && sWordWrap )
     return headerStr + smartQuote( content, sWrapCol );
-  else
-    return headerStr + content;
+  return headerStr + content;
 }
 
 //-----------------------------------------------------------------------------
@@ -1157,12 +1156,12 @@ KMMessage* KMMessage::createForward()
   QString id;
 
   // If this is a multipart mail or if the main part is only the text part,
-  // Make an identical copy of the mail, minus headers, so attachments are 
+  // Make an identical copy of the mail, minus headers, so attachments are
   // preserved
   if ( type() == DwMime::kTypeMultipart ||
      ( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypePlain ) ) {
     msg->fromDwString( this->asDwString() );
-    // remember the type and subtype, initFromMessage sets the contents type to 
+    // remember the type and subtype, initFromMessage sets the contents type to
     // text/plain, via initHeader, for unclear reasons
     const int type = msg->type();
     const int subtype = msg->subtype();
@@ -1175,7 +1174,7 @@ KMMessage* KMMessage::createForward()
     while (field)
     {
       nextField = field->Next();
-      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos ) 
+      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos )
         header.RemoveField(field);
       field = nextField;
     }
