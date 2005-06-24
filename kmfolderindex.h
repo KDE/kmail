@@ -61,7 +61,6 @@ public:
   virtual KMMsgBase* takeIndexEntry( int idx ) { return mMsgList.take( idx ); }
   virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg );
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
-  virtual void fillDictFromIndex(KMMsgDict *dict);
   virtual void truncateIndex();
 
   virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
@@ -105,6 +104,13 @@ protected:
       or if the index is not older than the contents.
   */
   virtual IndexStatus indexStatus() = 0;
+
+    /** Inserts messages into the message dictionary by iterating over the
+     * message list. The messages will get new serial numbers. This is only
+     * used on newly appeared folders, where there is no .ids file yet, or
+     * when that has been invalidated. */
+  virtual void fillMessageDict();
+  virtual void readMessageDictCache();
 
   /** table of contents file */
   FILE* mIndexStream;

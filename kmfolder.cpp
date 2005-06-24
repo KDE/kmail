@@ -64,6 +64,10 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   else
     mStorage = new KMFolderMbox( this, aFolderName.latin1() );
 
+   // trigger from here, since it needs a fully constructed FolderStorage
+  assert( mStorage );
+  mStorage->registerWithMessageDict();
+
   if ( aParent ) {
     connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
              aParent->manager(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ) );
@@ -73,6 +77,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
              parent()->manager(), SIGNAL( msgChanged( KMFolder*, Q_UINT32, int ) ) );
     connect( this, SIGNAL( msgHeaderChanged( KMFolder*,  int ) ),
              parent()->manager(), SIGNAL( msgHeaderChanged( KMFolder*, int ) ) );
+    connect( mStorage, SIGNAL( invalidated( KMFolder* ) ),
+             parent()->manager(), SIGNAL( folderInvalidated( KMFolder* ) ) );
   }
 
   // Resend all mStorage signals
@@ -110,6 +116,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
 KMFolder::~KMFolder()
 {
+  if ( mStorage ) mStorage->deregisterFromMessageDict();
   delete mStorage;
 }
 
@@ -762,16 +769,6 @@ KMFolder* KMFolder::trashFolder() const
 int KMFolder::writeIndex( bool createEmptyIndex )
 {
   return mStorage->writeIndex( createEmptyIndex );
-}
-
-void KMFolder::fillMsgDict( KMMsgDict* dict )
-{
-  mStorage->fillMsgDict( dict );
-}
-
-int KMFolder::writeMsgDict( KMMsgDict* dict)
-{
-  return mStorage->writeMsgDict( dict );
 }
 
 void KMFolder::setStatus( int idx, KMMsgStatus status, bool toggle )

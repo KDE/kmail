@@ -6,10 +6,12 @@
 #include "kmmsgdict.h"
 #include "kmdict.h"
 #include "globalsettings.h"
+#include "folderstorage.h"
 
 #include <qfileinfo.h>
 
 #include <kdebug.h>
+#include <kstaticdeleter.h>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -138,6 +140,9 @@ public:
 };
 
 
+static KStaticDeleter<KMMsgDict> msgDict_sd;
+KMMsgDict * KMMsgDict::m_self = 0;
+
 //-----------------------------------------------------------------------------
 
 KMMsgDict::KMMsgDict()
@@ -147,6 +152,7 @@ KMMsgDict::KMMsgDict()
   GlobalSettings::setMsgDictSizeHint( 0 );
   dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
+  m_self = this;
 }
 
 //-----------------------------------------------------------------------------
@@ -155,6 +161,26 @@ KMMsgDict::~KMMsgDict()
 {
   delete dict;
 }
+
+//-----------------------------------------------------------------------------
+
+const KMMsgDict* KMMsgDict::instance()
+{
+  if ( !m_self ) {
+    msgDict_sd.setObject( m_self, new KMMsgDict() );
+  }
+  return m_self;
+}
+
+KMMsgDict* KMMsgDict::mutableInstance()
+{
+  if ( !m_self ) {
+    msgDict_sd.setObject( m_self, new KMMsgDict() );
+  }
+  return m_self;
+}
+
+
 
 //-----------------------------------------------------------------------------
 
@@ -236,7 +262,6 @@ void KMMsgDict::replace(unsigned long msgSerNum,
     folder->setRDict(rentry);
   }
   rentry->set(index, entry);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -282,7 +307,7 @@ void KMMsgDict::update(const KMMsgBase *msg, int index, int newIndex)
 //-----------------------------------------------------------------------------
 
 void KMMsgDict::getLocation(unsigned long key,
-                            KMFolder **retFolder, int *retIndex)
+                            KMFolder **retFolder, int *retIndex) const
 {
   KMMsgDictEntry *entry = (KMMsgDictEntry *)dict->find((long)key);
   if (entry) {
@@ -295,18 +320,19 @@ void KMMsgDict::getLocation(unsigned long key,
 }
 
 void KMMsgDict::getLocation(const KMMsgBase *msg,
-                            KMFolder **retFolder, int *retIndex)
+                            KMFolder **retFolder, int *retIndex) const
 {
   getLocation(msg->getMsgSerNum(), retFolder, retIndex);
 }
 
-void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int * retIndex ) {
+void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int * retIndex ) const
+{
   getLocation( msg->toMsgBase().getMsgSerNum(), retFolder, retIndex );
 }
 
 //-----------------------------------------------------------------------------
 
-unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index)
+unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
 {
   unsigned long msn = 0;
   KMMsgDictREntry *rentry = folder->storage()->rDict();
@@ -317,19 +343,19 @@ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index)
 
 //-----------------------------------------------------------------------------
 
-QString KMMsgDict::getFolderIdsLocation(const KMFolder *folder)
+QString KMMsgDict::getFolderIdsLocation( const FolderStorage &storage )
 {
-  return folder->indexLocation() + ".ids";
+  return storage.indexLocation() + ".ids";
 }
 
 //-----------------------------------------------------------------------------
 
-bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
+bool KMMsgDict::isFolderIdsOutdated( const FolderStorage &storage )
 {
   bool outdated = false;
 
-  QFileInfo indexInfo(folder->indexLocation());
-  QFileInfo idsInfo(getFolderIdsLocation(folder));
+  QFileInfo indexInfo( storage.indexLocation() );
+  QFileInfo idsInfo( getFolderIdsLocation( storage ) );
 
   if (!indexInfo.exists() || !idsInfo.exists())
     outdated = true;
@@ -341,12 +367,12 @@ bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::readFolderIds(KMFolder *folder)
+int KMMsgDict::readFolderIds( FolderStorage& storage )
 {
-  if (isFolderIdsOutdated(folder))
+  if ( isFolderIdsOutdated( storage ) )
     return -1;
 
-  QString filename = getFolderIdsLocation(folder);
+  QString filename = getFolderIdsLocation( storage );
   FILE *fp = fopen(QFile::encodeName(filename), "r+");
   if (!fp)
     return -1;
@@ -398,7 +424,7 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
 
     // Insert into the dict. Don't use dict->replace() as we _know_
     // there is no entry with the same msn, we just made sure.
-    KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
+    KMMsgDictEntry *entry = new KMMsgDictEntry( storage.folder(), index);
     dict->insert((long)msn, entry);
     if (msn >= nextMsgSerNum)
       nextMsgSerNum = msn + 1;
@@ -410,23 +436,23 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
   GlobalSettings::setMsgDictSizeHint( GlobalSettings::msgDictSizeHint() + count );
 
   fclose(fp);
-  folder->storage()->setRDict(rentry);
+  storage.setRDict(rentry);
 
   return 0;
 }
 
 //-----------------------------------------------------------------------------
 
-KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
+KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool truncate)
 {
-  KMMsgDictREntry *rentry = folder->storage()->rDict();
+  KMMsgDictREntry *rentry = storage.rDict();
   if (!rentry) {
     rentry = new KMMsgDictREntry();
-    folder->storage()->setRDict(rentry);
+    storage.setRDict(rentry);
   }
 
   if (!rentry->fp) {
-    QString filename = getFolderIdsLocation(folder);
+    QString filename = getFolderIdsLocation( storage );
     FILE *fp = truncate ? 0 : fopen(QFile::encodeName(filename), "r+");
     if (fp)
     {
@@ -451,7 +477,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
       if (!fp)
       {
         kdDebug(5006) << "Dict '" << filename
-                      << "' cannot open with folder " << folder->label() << ": "
+                      << "' cannot open with folder " << storage.label() << ": "
                       << strerror(errno) << " (" << errno << ")" << endl;
          delete rentry;
          rentry = 0;
@@ -471,18 +497,18 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::writeFolderIds(KMFolder *folder)
+int KMMsgDict::writeFolderIds( const FolderStorage &storage )
 {
-  KMMsgDictREntry *rentry = openFolderIds(folder, true);
+  KMMsgDictREntry *rentry = openFolderIds( storage, true );
   if (!rentry)
     return 0;
   FILE *fp = rentry->fp;
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
-  // kdDebug(5006) << "Dict writing for folder " << folder->label() << endl;
+  // kdDebug(5006) << "Dict writing for folder " << storage.label() << endl;
   Q_UINT32 count = rentry->getRealSize();
   if (!fwrite(&count, sizeof(count), 1, fp)) {
-    kdDebug(5006) << "Dict cannot write count with folder " << folder->label() << ": "
+    kdDebug(5006) << "Dict cannot write count with folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
     return -1;
   }
@@ -496,7 +522,7 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
   rentry->sync();
 
   off_t eof = ftell(fp);
-  QString filename = getFolderIdsLocation(folder);
+  QString filename = getFolderIdsLocation( storage );
   truncate(QFile::encodeName(filename), eof);
   fclose(rentry->fp);
   rentry->fp = 0;
@@ -506,9 +532,9 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::touchFolderIds(KMFolder *folder)
+int KMMsgDict::touchFolderIds( const FolderStorage &storage )
 {
-  KMMsgDictREntry *rentry = openFolderIds(folder, false);
+  KMMsgDictREntry *rentry = openFolderIds( storage, false);
   if (rentry) {
     rentry->sync();
     fclose(rentry->fp);
@@ -519,19 +545,19 @@ int KMMsgDict::touchFolderIds(KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
+int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
 {
-  KMMsgDictREntry *rentry = openFolderIds(folder, false);
+  KMMsgDictREntry *rentry = openFolderIds( storage, false);
   if (!rentry)
     return 0;
   FILE *fp = rentry->fp;
 
-//  kdDebug(5006) << "Dict appending for folder " << folder->label() << endl;
+//  kdDebug(5006) << "Dict appending for folder " << storage.label() << endl;
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
   Q_UINT32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
-    kdDebug(5006) << "Dict cannot read count for folder " << folder->label() << ": "
+    kdDebug(5006) << "Dict cannot read count for folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }
@@ -544,7 +570,7 @@ int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
      count = kmail_swap_32(count);
   fseek(fp, rentry->baseOffset, SEEK_SET);
   if (!fwrite(&count, sizeof(count), 1, fp)) {
-    kdDebug(5006) << "Dict cannot write count for folder " << folder->label() << ": "
+    kdDebug(5006) << "Dict cannot write count for folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }
@@ -557,7 +583,7 @@ int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
   if (rentry->swapByteOrder)
      msn = kmail_swap_32(msn);
   if (!fwrite(&msn, sizeof(msn), 1, fp)) {
-    kdDebug(5006) << "Dict cannot write count for folder " << folder->label() << ": "
+    kdDebug(5006) << "Dict cannot write count for folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
     return 0;
   }
@@ -571,16 +597,16 @@ int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
 
 //-----------------------------------------------------------------------------
 
-bool KMMsgDict::hasFolderIds(const KMFolder *folder)
+bool KMMsgDict::hasFolderIds( const FolderStorage& storage )
 {
-  return folder->storage()->rDict() != 0;
+  return storage.rDict() != 0;
 }
 
 //-----------------------------------------------------------------------------
 
-bool KMMsgDict::removeFolderIds(KMFolder *folder)
+bool KMMsgDict::removeFolderIds( FolderStorage& storage )
 {
-  folder->storage()->setRDict(0);
-  QString filename = getFolderIdsLocation(folder);
-  return unlink(QFile::encodeName(filename));
+  storage.setRDict( 0 );
+  QString filename = getFolderIdsLocation( storage );
+  return unlink( QFile::encodeName( filename) );
 }

@@ -99,7 +99,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_startingUp = true;
   closed_by_user = true;
   the_firstInstance = true;
-  the_msgDict = 0;
   the_msgIndex = 0;
 
   the_inboxFolder = 0;
@@ -1035,7 +1034,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
   if (mainWidget) {
     int idx = -1;
     KMFolder *folder = 0;
-    msgDict()->getLocation(serialNumber, &folder, &idx);
+    KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (!folder || (idx == -1))
       return false;
     folder->open();
@@ -1066,7 +1065,7 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
 {
   int idx = -1;
   KMFolder *folder = 0;
-  msgDict()->getLocation(serialNumber, &folder, &idx);
+  KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
     return QString::null;
   folder->open();
@@ -1109,7 +1108,7 @@ void KMKernel::quit()
        (our own, QSocketNotifier based. Pops up errors and sends signal
         senderFinished when done)
 
-   o If we are getting mail, stop it (but don´t lose something!)
+   o If we are getting mail, stop it (but dont lose something!)
          [Done already, see mailCheckAborted]
    o If we are sending mail, go on UNLESS this was called by SM,
        in which case stop ASAP that too (can we warn? should we continue
@@ -1125,7 +1124,7 @@ void KMKernel::quit()
        if sending, stop;
        if receiving, stop;
        Windows will take care of themselves (composer should dump
-        it´s messages, if any but not in deadMail)
+        its messages, if any but not in deadMail)
        declare us ready for the End of the Session
 
      No, normal quit call
@@ -1304,7 +1303,7 @@ void KMKernel::init()
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
   the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
-
+  
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
@@ -1539,9 +1538,7 @@ void KMKernel::cleanup(void)
     if (!folder || folder->isDir()) continue;
     folder->close(TRUE);
   }
-  folderMgr()->writeMsgDict(msgDict());
-  imapFolderMgr()->writeMsgDict(msgDict());
-  dimapFolderMgr()->writeMsgDict(msgDict());
+
   delete the_msgIndex;
   the_msgIndex = 0;
   delete the_folderMgr;
@@ -1552,8 +1549,6 @@ void KMKernel::cleanup(void)
   the_dimapFolderMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
-  delete the_msgDict;
-  the_msgDict = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
   delete mWin;
@@ -1918,17 +1913,6 @@ KPIM::IdentityManager * KMKernel::identityManager() {
     mIdentityManager = new KPIM::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
-}
-
-KMMsgDict *KMKernel::msgDict()
-{
-    if (the_msgDict)
-	return the_msgDict;
-    the_msgDict = new KMMsgDict;
-    folderMgr()->readMsgDict(msgDict());
-    imapFolderMgr()->readMsgDict(msgDict());
-    dimapFolderMgr()->readMsgDict(msgDict());
-    return the_msgDict;
 }
 
 KMMsgIndex *KMKernel::msgIndex()

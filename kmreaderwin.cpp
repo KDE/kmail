@@ -2303,7 +2303,7 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
   if (mLastSerNum) {
     KMMessage *message = 0;
     int index;
-    kmkernel->msgDict()->getLocation( mLastSerNum, &folder, &index );
+    KMMsgDict::instance()->getLocation( mLastSerNum, &folder, &index );
     if (folder )
       message = folder->getMsg( index );
     if (!message)

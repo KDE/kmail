@@ -5,7 +5,7 @@
 #endif
 
 #include "kmmsglist.h"
-#include "kmmsgdict.h"
+#include "kmmsgdict.h" // FIXME Till - move those into kmfolderindex
 #include "kmkernel.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -31,19 +31,15 @@ KMMsgList::~KMMsgList()
 //-----------------------------------------------------------------------------
 void KMMsgList::clear(bool doDelete, bool syncDict)
 {
-  KMMsgDict *dict = 0;
-  if (syncDict)
-    dict = kmkernel->msgDict();
-
   if ( mHigh > 0 )
     for (unsigned int i=mHigh; i>0; i--)
     {
       KMMsgBase * msg = at(i-1);
       if (msg) {
-	if (dict)
-	  dict->remove(msg);
-	at(i-1) = 0;
-	if (doDelete) delete msg;
+        if ( syncDict )
+          KMMsgDict::mutableInstance()->remove(msg);
+        at(i-1) = 0;
+        if (doDelete) delete msg;
       }
     }
   mHigh  = 0;
@@ -102,7 +98,7 @@ void KMMsgList::set(unsigned int idx, KMMsgBase* aMsg)
   else if (at(idx) && !aMsg) mCount--;
 
   delete at(idx);
-  
+
   at(idx) = aMsg;
 
   if (!aMsg || idx >= mHigh) rethinkHigh();
@@ -112,26 +108,22 @@ void KMMsgList::set(unsigned int idx, KMMsgBase* aMsg)
 //-----------------------------------------------------------------------------
 void KMMsgList::insert(unsigned int idx, KMMsgBase* aMsg, bool syncDict)
 {
-  KMMsgDict *dict = 0;
-  if (syncDict)
-    dict = kmkernel->msgDict();
-
   if (idx >= size())
     resize( idx > 2 * size() ? idx + 16 : 2 * size() );
 
   if (aMsg) mCount++;
 
   for (unsigned int i=mHigh; i>idx; i--) {
-    if (dict)
-      dict->remove(at(i - 1));
+    if ( syncDict )
+      KMMsgDict::mutableInstance()->remove(at(i - 1));
     at(i) = at(i-1);
-    if (dict)
-      dict->insert(at(i), i);
+    if ( syncDict )
+      KMMsgDict::mutableInstance()->insert(at(i), i);
   }
 
   at(idx) = aMsg;
-  if (dict)
-    dict->insert(at(idx), idx);
+  if ( syncDict )
+    KMMsgDict::mutableInstance()->insert(at(idx), idx);
 
   mHigh++;
 }
@@ -150,21 +142,17 @@ unsigned int KMMsgList::append(KMMsgBase* aMsg, bool syncDict)
 void KMMsgList::remove(unsigned int idx)
 {
   assert(idx<size());
-  KMMsgDict *dict = kmkernel->msgDict();
-  
   if (at(idx)) {
     mCount--;
-    if (dict)
-      dict->remove(at(idx));
+    KMMsgDict::mutableInstance()->remove(at(idx));
   }
-  
+
   mHigh--;
   for (unsigned int i=idx; i<mHigh; i++) {
-    if (dict)
-      dict->update(at(i + 1), i + 1, i);
+    KMMsgDict::mutableInstance()->update(at(i + 1), i + 1, i);
     at(i) = at(i+1);
   }
-  
+
   at(mHigh) = 0;
 
   rethinkHigh();
@@ -197,12 +185,4 @@ void KMMsgList::rethinkHigh()
     while (mHigh>0 && !at(mHigh-1))
       mHigh--;
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMMsgList::fillMsgDict(KMMsgDict *dict)
-{
-  for (unsigned int idx = 0; idx < mHigh; idx++)
-    if (at(idx))
-      dict->insert(0, at(idx), idx);
 }

@@ -739,7 +739,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
   bool res;
   int idx = -1;
   KMFolder *folder = 0;
-  kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
+  KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
   if (!folder || (idx == -1) || (idx >= folder->count())) {
     return false;
   }

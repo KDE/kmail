@@ -345,7 +345,7 @@ void CachedImapJob::slotPutNextMessage()
     // Find the message with this serial number
     int i = 0;
     KMFolder* aFolder = 0;
-    kmkernel->msgDict()->getLocation( serNum, &aFolder, &i );
+    KMMsgDict::instance()->getLocation( serNum, &aFolder, &i );
     if( mFolder->folder() != aFolder )
       // This message was moved or something
       continue;

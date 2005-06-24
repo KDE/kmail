@@ -27,7 +27,6 @@
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
-#include "kmmsgdict.h"
 #include "folderstorage.h"
 #include "renamejob.h"
 using KMail::RenameJob;
@@ -475,63 +474,6 @@ void KMFolderMgr::expireAllFolders(bool immediate, KMFolderDir *adir) {
                if (folder->isAutoExpire()) {
                  folder->expireOldMessages( immediate );
                }
-             }
-  )
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderMgr::invalidateFolder(KMMsgDict *dict, KMFolder *folder)
-{
-    unlink(QFile::encodeName(folder->indexLocation()) + ".sorted");
-    unlink(QFile::encodeName(folder->indexLocation()) + ".ids");
-    if (dict) {
-	folder->fillMsgDict(dict);
-	dict->writeFolderIds(folder);
-    }
-    emit folderInvalidated(folder);
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
-{
-  bool atTop = false;
-  if (!dir) {
-    dir = &mDir;
-    atTop = true;
-  }
-
-  DO_FOR_ALL(
-             {
-               readMsgDict(dict, child, pass);
-             },
-             {
-               if (pass == 1) {
-                 if ( dict->readFolderIds(folder) == -1 )
-                   invalidateFolder(dict, folder);
-               } else if (pass == 2) {
-                 if (!dict->hasFolderIds(folder)) {
-                   invalidateFolder(dict, folder);
-                 }
-               }
-             }
-  )
-
-  if (pass == 1 && atTop)
-    readMsgDict(dict, dir, pass + 1);
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
-{
-  if (!dir)
-    dir = &mDir;
-
-  DO_FOR_ALL(
-             {
-               writeMsgDict(dict, child);
-             },
-             {
-               folder->writeMsgDict(dict);
              }
   )
 }

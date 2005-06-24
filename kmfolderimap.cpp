@@ -1477,7 +1477,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
           // assign the sernum from the cache
           msg->setMsgSerNum( serNum );
         }
-        KMFolderMbox::addMsg(msg, 0);
         // Transfer the status, if it is cached.
         if ( md ) {
           msg->setStatus( md->status() );
@@ -1495,6 +1494,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
             delete md;
           }
         }
+        KMFolderMbox::addMsg(msg, 0);
         // Merge with the flags from the server.
         flagsToStatus((KMMsgBase*)msg, flags);
         // set the correct size
@@ -1502,13 +1502,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         msg->setUID(uid);
         if ( msg->getMsgSerNum() > 0 ) {
           saveMsgMetaData( msg );
-        }        
-
-        // Just in case we have changed (reverted) the serial number of this 
-        // message update the message dict.
-        kmkernel->msgDict()->replace( msg->getMsgSerNum(), msg, 
-            msg->storage()->find( msg ) );
-
+        }
         // Filter messages that have arrived in the inbox folder
         if ( folder()->isSystemFolder() && imapPath() == "/INBOX/"
             && kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( mAccount->id() ) )

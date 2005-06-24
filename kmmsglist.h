@@ -24,8 +24,6 @@
 
 #include <qmemarray.h>
 
-class KMMsgDict;
-
 /**
  * @short An abstraction of an array of pointers to messages.
  *
@@ -86,10 +84,6 @@ public:
 
   /** Number of messages in the array. */
   unsigned int count() const { return mCount; }
-
-  /** Inserts messages into the message dictionary.  Might be called
-    during kernel initialization. */
-  void fillMsgDict(KMMsgDict *dict);
 
 protected:
   /** Set mHigh to proper value */

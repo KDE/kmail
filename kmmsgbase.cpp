@@ -1000,7 +1000,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
     return msn;
   if (mParent) {
     int index = mParent->find((KMMsgBase*)this);
-    msn = kmkernel->msgDict()->getMsgSerNum(mParent, index);
+    msn = KMMsgDict::instance()->getMsgSerNum(mParent, index);
     if (msn)
       MessageProperty::setSerialCache( this, msn );
   }

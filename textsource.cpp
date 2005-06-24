@@ -48,7 +48,7 @@ QCString KMTextSource::text(Q_UINT32 serialNumber) const {
     QCString rc;
     KMFolder *folder = 0;
     int idx;
-    kmkernel->msgDict()->getLocation(serialNumber, &folder, &idx);
+    KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
     if (folder) {
         KMMsgBase *msgBase = folder->getMsgBase(idx);
         if (msgBase) {

@@ -91,7 +91,7 @@ void UndoStack::undo()
     info->destFolder->open();
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;
-      kmkernel->msgDict()->getLocation(serNum, &curFolder, &idx);
+      KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);
       if ( idx == -1 || curFolder != info->destFolder ) {
         kdDebug(5006)<<"Serious undo error!"<<endl;
         delete info;

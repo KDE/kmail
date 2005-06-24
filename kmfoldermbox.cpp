@@ -22,8 +22,10 @@
 #include <qregexp.h>
 
 #include "kmfoldermbox.h"
-#include "kmfoldermgr.h"
+#include "folderstorage.h"
 #include "kmfolder.h"
+#include "kmkernel.h"
+#include "kmmsgdict.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
 #include "jobscheduler.h"
@@ -782,8 +784,7 @@ int KMFolderMbox::createIndexFromContents()
     "most-likely not created by KMail;\nplease remove them from there if you "
     "do not want KMail to send them."));
 
-  if ( folder()->parent() )
-      folder()->parent()->manager()->invalidateFolder( kmkernel->msgDict(), folder() );
+  invalidateFolder();
   return 0;
 }
 
@@ -1080,8 +1081,10 @@ if( fileD1.open( IO_WriteOnly ) ) {
   aMsg->setFolderOffset(offs);
   aMsg->setMsgSize(size);
   idx = mMsgList.append(&aMsg->toMsgBase());
-  if (aMsg->getMsgSerNum() <= 0)
+  if ( aMsg->getMsgSerNum() <= 0 )
     aMsg->setMsgSerNum();
+  else
+    replaceMsgSerNum( aMsg->getMsgSerNum(), &aMsg->toMsgBase(), idx );
 
   // change the length of the previous message to encompass white space added
   if ((idx > 0) && (growth > 0)) {
@@ -1110,7 +1113,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     fflush(mIndexStream);
     error = ferror(mIndexStream);
 
-    error |= appendtoMsgDict(idx);
+    error |= appendToMsgDict(idx);
 
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;

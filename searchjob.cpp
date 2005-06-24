@@ -303,7 +303,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     }
     int idx = -1;
     KMFolder * p = 0;
-    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    KMMsgDict::instance()->getLocation( msg, &p, &idx );
     if ( idx != -1 )
       mFolder->unGetMsg( idx );
   }
@@ -356,7 +356,7 @@ void SearchJob::searchSingleMessage()
     // imap search
     int idx = -1;
     KMFolder *aFolder = 0;
-    kmkernel->msgDict()->getLocation( mSerNum, &aFolder, &idx );
+    KMMsgDict::instance()->getLocation( mSerNum, &aFolder, &idx );
     assert(aFolder && (idx != -1));
     KMMsgBase *mb = mFolder->getMsgBase( idx );
 
@@ -395,7 +395,7 @@ void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data 
   // add the local search
   int idx = -1;
   KMFolder *aFolder = 0;
-  kmkernel->msgDict()->getLocation( mSerNum, &aFolder, &idx );
+  KMMsgDict::instance()->getLocation( mSerNum, &aFolder, &idx );
   assert(aFolder && (idx != -1));
   KMMessage * msg = mFolder->getMsg( idx );
   if ( needsDownload() ) {

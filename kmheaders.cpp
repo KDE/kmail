@@ -1221,7 +1221,7 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
   if (msg->parent()) { // unGet this msg
     int idx = -1;
     KMFolder * p = 0;
-    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    KMMsgDict::instance()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }
@@ -2466,9 +2466,9 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
 {
   unsigned long msgSerNum;
   unsigned long parentSerNum;
-  msgSerNum = kmkernel->msgDict()->getMsgSerNum( folder, msgid );
+  msgSerNum = KMMsgDict::instance()->getMsgSerNum( folder, msgid );
   if (parent_id >= 0)
-    parentSerNum = kmkernel->msgDict()->getMsgSerNum( folder, parent_id ) + KMAIL_RESERVED;
+    parentSerNum = KMMsgDict::instance()->getMsgSerNum( folder, parent_id ) + KMAIL_RESERVED;
   else
     parentSerNum = (unsigned long)(parent_id + KMAIL_RESERVED);
 
@@ -2938,7 +2938,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                     key = QString(""); //yuck
                 }
 
-                kmkernel->msgDict()->getLocation(serNum, &folder, &id);
+                KMMsgDict::instance()->getLocation(serNum, &folder, &id);
                 if (folder != mFolder) {
                     ++deleted_count;
                     continue;
@@ -2946,7 +2946,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if (parentSerNum < KMAIL_RESERVED) {
                     parent = (int)parentSerNum - KMAIL_RESERVED;
                 } else {
-                    kmkernel->msgDict()->getLocation(parentSerNum - KMAIL_RESERVED, &folder, &parent);
+                    KMMsgDict::instance()->getLocation(parentSerNum - KMAIL_RESERVED, &folder, &parent);
                     if (folder != mFolder)
                         parent = -1;
                 }

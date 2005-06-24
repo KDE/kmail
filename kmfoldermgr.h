@@ -12,7 +12,6 @@
 #include "kmfolderdir.h"
 
 class KMFolder;
-class KMMsgDict;
 
 class KMFolderMgr: public QObject
 {
@@ -99,23 +98,11 @@ public:
   /** Expire old messages in all folders, either immediately or scheduled as a background task */
   void expireAllFolders( bool immediate, KMFolderDir *adir = 0 );
 
-  /** Inserts messages into the message dictionary.  Called during
-    kernel initialization. */
-  void readMsgDict(KMMsgDict *dict, KMFolderDir *dir=0, int pass = 1);
-
-  /** Writes message serial on disk.  Called during kernel shutdown. */
-  void writeMsgDict(KMMsgDict *dict, KMFolderDir *dir=0);
-
   /** Enable, disable changed() signals */
   void quiet(bool);
 
   /** Number of folders for purpose of progres report */
   int folderCount(KMFolderDir *dir=0);
-
-  /** Called when serial numbers for a folder are invalidated,
-      invalidates/recreates data structures dependent on the
-      serial numbers for this folder */
-  void invalidateFolder(KMMsgDict *dict, KMFolder *folder);
 
   /** Try closing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry */

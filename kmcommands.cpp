@@ -775,7 +775,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     KMMessage *msg = 0;
     int idx = -1;
     KMFolder * p = 0;
-    kmkernel->msgDict()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
+    KMMsgDict::instance()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
     assert( p );
     assert( idx >= 0 );
     msg = p->getMsg(idx);
@@ -838,7 +838,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   if ( msg && msg->parent() && msg->getMsgSerNum() ) {
     int idx = -1;
     KMFolder * p = 0;
-    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    KMMsgDict::instance()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
     p->close();
@@ -1365,7 +1365,7 @@ KMCommand::Result KMSetStatusCommand::execute()
   // depending on the state of the parent.
   if (mToggle) {
     KMMsgBase *msg;
-    kmkernel->msgDict()->getLocation( *mSerNums.begin(), &folder, &idx );
+    KMMsgDict::instance()->getLocation( *mSerNums.begin(), &folder, &idx );
     if (folder) {
       msg = folder->getMsgBase(idx);
       if (msg && (msg->status()&mStatus))
@@ -1376,7 +1376,7 @@ KMCommand::Result KMSetStatusCommand::execute()
   }
   QMap< KMFolder*, QValueList<int> > folderMap;
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
-    kmkernel->msgDict()->getLocation( *it, &folder, &idx );
+    KMMsgDict::instance()->getLocation( *it, &folder, &idx );
     if (folder) {
       if (mToggle) {
         KMMsgBase *msg = folder->getMsgBase(idx);
@@ -2020,7 +2020,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
 {
   KMFolder *srcFolder;
   int idx;
-  kmkernel->msgDict()->getLocation( sernum, &srcFolder, &idx );
+  KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
   KMMsgBase *msg = srcFolder->getMsgBase( idx );
   srcFolder->open();
   mOpenedFolders.push_back( srcFolder );

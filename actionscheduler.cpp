@@ -238,7 +238,7 @@ KMMsgBase *ActionScheduler::messageBase(Q_UINT32 serNum)
   int idx = -1;
   KMFolder *folder = 0;
   KMMsgBase *msg = 0;
-  kmkernel->msgDict()->getLocation( serNum, &folder, &idx );
+  KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder
   if (folder && (idx != -1)) {
@@ -258,7 +258,7 @@ KMMessage *ActionScheduler::message(Q_UINT32 serNum)
   int idx = -1;
   KMFolder *folder = 0;
   KMMessage *msg = 0;
-  kmkernel->msgDict()->getLocation( serNum, &folder, &idx );
+  KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
   // It's possible that the message has been deleted or moved into a
   // different folder
   if (folder && (idx != -1)) {

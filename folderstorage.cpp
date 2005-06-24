@@ -81,7 +81,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
-  
+
   mHasChildren = HasNoChildren;
   mContentsType = KMail::ContentsTypeMail;
 }
@@ -198,7 +198,7 @@ void FolderStorage::quiet(bool beQuiet)
     /* Allocate the timer here to don't have one timer for each folder. BTW,
      * a timer is created when a folder is checked
      */
-    if ( !mEmitChangedTimer) { 
+    if ( !mEmitChangedTimer) {
       mEmitChangedTimer= new QTimer( this );
       connect( mEmitChangedTimer, SIGNAL( timeout() ),
       this, SLOT( slotEmitChangedTimer() ) );
@@ -271,7 +271,7 @@ void FolderStorage::slotEmitChangedTimer()
 //-----------------------------------------------------------------------------
 void FolderStorage::emitMsgAddedSignals(int idx)
 {
-  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder() , idx );
+  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder() , idx );
   if (!mQuiet) {
     emit msgAdded(idx);
   } else {
@@ -376,7 +376,7 @@ void FolderStorage::removeMsg(int idx, bool)
 
   KMMsgBase* mb = getMsgBase(idx);
 
-  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), idx );
+  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   if (serNum != 0)
     emit msgRemoved( folder(), serNum );
   mb = takeIndexEntry( idx );
@@ -417,7 +417,7 @@ KMMessage* FolderStorage::take(int idx)
   mb = getMsgBase(idx);
   if (!mb) return 0;
   if (!mb->isMessage()) readMsg(idx);
-  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), idx );
+  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   emit msgRemoved( folder(), serNum );
 
   msg = (KMMessage*)takeIndexEntry(idx);
@@ -483,15 +483,10 @@ KMMessage* FolderStorage::getMsg(int idx)
       }
 
   }
-  msg->setEnableUndo(undo);
-
-  // Can't happen. Either isMessage and we had a sernum, or readMsg gives us one
+  // Either isMessage and we had a sernum, or readMsg gives us one
   // (via insertion into mMsgList).
-  if (msg->getMsgSerNum() == 0) {
-    msg->setMsgSerNum(kmkernel->msgDict()->insert(0, msg, idx));
-    kdDebug(5006) << "Serial number generated for message in folder "
-                  << label() << endl;
-  }
+  assert( msg->getMsgSerNum() != 0);
+  msg->setEnableUndo(undo); 
   msg->setComplete( true );
   return msg;
 }
@@ -639,8 +634,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   oldLoc = location();
   oldIndexLoc = indexLocation();
   oldSubDirLoc = folder()->subdirLocation();
-  if (kmkernel->msgDict())
-    oldIdsLoc = kmkernel->msgDict()->getFolderIdsLocation( folder() );
+  oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
   QString oldConfigString = "Folder-" + folder()->idString();
 
   close(TRUE);
@@ -654,8 +648,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   newLoc = location();
   newIndexLoc = indexLocation();
   newSubDirLoc = folder()->subdirLocation();
-  if (kmkernel->msgDict())
-    newIdsLoc = kmkernel->msgDict()->getFolderIdsLocation( folder() );
+  newIdsLoc = KMMsgDict::instance()->getFolderIdsLocation( *this );
 
   if (::rename(QFile::encodeName(oldLoc), QFile::encodeName(newLoc))) {
     folder()->setName(oldName);
@@ -728,7 +721,7 @@ void FolderStorage::remove()
   clearIndex(true, true); // delete and remove from dict
   close(TRUE);
 
-  if (kmkernel->msgDict()) kmkernel->msgDict()->removeFolderIds( folder() );
+  KMMsgDict::mutableInstance()->removeFolderIds( *this );
   unlink(QFile::encodeName(indexLocation()) + ".sorted");
   unlink(QFile::encodeName(indexLocation()));
 
@@ -754,7 +747,7 @@ int FolderStorage::expunge()
   clearIndex(true, true);   // delete and remove from dict
   close(TRUE);
 
-  kmkernel->msgDict()->removeFolderIds( folder() );
+  KMMsgDict::mutableInstance()->removeFolderIds( *this );
   if (mAutoCreateIndex)
     truncateIndex();
   else unlink(QFile::encodeName(indexLocation()));
@@ -842,7 +835,7 @@ void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
       }
       mChanged = true;
     }
-    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(folder(), idx);
+    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum(folder(), idx);
     emit msgChanged( folder(), serNum, deltaUnread );
   }
 }
@@ -892,7 +885,7 @@ void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  config->writeEntry("UnreadMsgs", 
+  config->writeEntry("UnreadMsgs",
       mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
@@ -910,46 +903,53 @@ void FolderStorage::correctUnreadMsgsCount()
   emit numUnreadMsgsChanged( folder() );
 }
 
-//-----------------------------------------------------------------------------
-void FolderStorage::fillMsgDict(KMMsgDict *dict)
+void FolderStorage::registerWithMessageDict()
 {
-  fillDictFromIndex(dict);
+  readMessageDictCache();
 }
 
-//-----------------------------------------------------------------------------
-int FolderStorage::writeMsgDict(KMMsgDict *dict)
+void FolderStorage::deregisterFromMessageDict()
 {
-  int ret = 0;
-  if (!dict)
-    dict = kmkernel->msgDict();
-  if (dict)
-    ret = dict->writeFolderIds(folder());
-  return ret;
+  writeMsgDict();
+}
+
+void FolderStorage::invalidateFolder()
+{
+  unlink(QFile::encodeName( indexLocation()) + ".sorted");
+  unlink(QFile::encodeName( indexLocation()) + ".ids");
+  fillMessageDict();
+  KMMsgDict::mutableInstance()->writeFolderIds( *this );
+  emit invalidated( folder() );
+}
+
+
+//-----------------------------------------------------------------------------
+int FolderStorage::writeMsgDict() const
+{
+  return KMMsgDict::mutableInstance()->writeFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::touchMsgDict()
 {
-  int ret = 0;
-  KMMsgDict *dict = kmkernel->msgDict();
-  if (dict)
-    ret = dict->touchFolderIds(folder());
-  return ret;
+  return KMMsgDict::mutableInstance()->touchFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::appendtoMsgDict(int idx)
+int FolderStorage::appendToMsgDict( int idx )
 {
   int ret = 0;
-  KMMsgDict *dict = kmkernel->msgDict();
-  if (dict) {
-    if (count() == 1) {
-      ret = dict->writeFolderIds(folder());
-    } else {
-      ret = dict->appendtoFolderIds(folder(), idx);
-    }
+  if ( count() == 1 ) {
+    ret = KMMsgDict::mutableInstance()->writeFolderIds( *this );
+  } else {
+    ret = KMMsgDict::mutableInstance()->appendToFolderIds( *this, idx );
   }
   return ret;
+}
+
+void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx )
+{
+  KMMsgDict::mutableInstance()->replace( sernum, msg, idx );
 }
 
 //-----------------------------------------------------------------------------
@@ -964,7 +964,8 @@ void FolderStorage::setStatus(int idx, KMMsgStatus status, bool toggle)
   }
 }
 
-void FolderStorage::setRDict(KMMsgDictREntry *rentry) {
+void FolderStorage::setRDict(KMMsgDictREntry *rentry) const
+{
   if (rentry == mRDict)
 	return;
   KMMsgDict::deleteRentry(mRDict);
@@ -1082,7 +1083,7 @@ void FolderStorage::slotProcessNextSearchBatch()
   int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
-    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
+    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
     if ( mSearchPattern->matches( serNum ) )
       matchingSerNums.append( serNum );
   }

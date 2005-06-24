@@ -196,7 +196,6 @@ protected:
   virtual KMMsgBase* takeIndexEntry(int idx);
   virtual KMMsgInfo* setIndexEntry(int idx, KMMessage *msg);
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false);
-  virtual void fillDictFromIndex(KMMsgDict*);
   virtual void truncateIndex();
 
 private:

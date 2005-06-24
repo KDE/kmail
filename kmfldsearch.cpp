@@ -617,7 +617,7 @@ bool KMFldSearch::slotShowMsg(QListViewItem *item)
 
     KMFolder* folder;
     int msgIndex;
-    kmkernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+    KMMsgDict::instance()->getLocation(item->text(MSGID_COLUMN).toUInt(),
 				   &folder, &msgIndex);
 
     if (!folder || msgIndex < 0)
@@ -656,7 +656,7 @@ KMMessageList KMFldSearch::selectedMessages()
     int msgIndex = -1;
     for (QListViewItemIterator it(mLbxMatches); it.current(); it++)
 	if (it.current()->isSelected()) {
-	    kmkernel->msgDict()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
+	    KMMsgDict::instance()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
 					   &folder, &msgIndex);
 	    if (folder && msgIndex >= 0)
 		msgList.append(folder->getMsgBase(msgIndex));
@@ -672,7 +672,7 @@ KMMessage* KMFldSearch::message()
     int msgIndex = -1;
     if (!item)
 	return 0;
-    kmkernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+    KMMsgDict::instance()->getLocation(item->text(MSGID_COLUMN).toUInt(),
 				   &folder, &msgIndex);
     if (!folder || msgIndex < 0)
 	return 0;

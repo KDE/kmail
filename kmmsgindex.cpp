@@ -474,7 +474,7 @@ KMMsgIndex::processMsg(Q_UINT32 serNum)
 
     int idx = -1;
     KMFolder *folder = 0;
-    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
+    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
     if(!folder || (idx == -1) || (idx >= folder->count()))
 	return -1;
     if(mOpenedFolders.findIndex(folder) == -1) {
@@ -685,7 +685,7 @@ KMMsgIndex::createState(bool finish)
 	    mOpenedFolders.append(f);
 	}
 	for(int i = 0, s; i < f->count(); ++i) {
-	    s = kmkernel->msgDict()->getMsgSerNum(f, i);
+	    s = KMMsgDict::instance()->getMsgSerNum(f, i);
 	    if(finish ||
 	       (terms < max_terms && processed < max_process &&
 		skipped < (max_process*4))) {
@@ -1074,7 +1074,7 @@ KMMsgIndex::find(QString data, bool contains, KMSearchRule *rule,
 	    it != ret.end(); ++it) {
 	    int idx = -1, ser = (*it);
 	    KMFolder *folder = 0;
-	    kmkernel->msgDict()->getLocation(ser, &folder, &idx);
+	    KMMsgDict::instance()->getLocation(ser, &folder, &idx);
 	    if(!folder || (idx == -1))
               continue;
 	    KMMessage *msg = folder->getMsg(idx);
@@ -1238,7 +1238,7 @@ KMIndexSearchTarget::timerEvent(QTimerEvent *)
 	int stop_at = QMIN(mSearchResult.count(), max_src);
 	for(int i = 0, idx; i < stop_at; i++) {
 	    Q_UINT32 serNum = mSearchResult.pop();
-	    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
+	    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
 	    if (!folder || (idx == -1))
 		continue;
 	    if(mSearch->inScope(folder)) {

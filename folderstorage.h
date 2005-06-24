@@ -54,7 +54,7 @@ using KMail::FolderJob;
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
-class KMMsgDict;
+class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
 class QTimer;
 class KMSearchPattern;
@@ -352,24 +352,13 @@ public:
     failure. */
   virtual int writeIndex( bool createEmptyIndex = false ) = 0;
 
-  /** Inserts messages into the message dictionary.  Might be called
-    during kernel initialization. */
-  void fillMsgDict(KMMsgDict *dict);
+  /** Triggers registration with the message dict, which will cause the dict
+   * to ask the FolderStorage to fill itself into it. */
+  void registerWithMessageDict();
 
-  /** Writes the message serial number file. */
-  int writeMsgDict(KMMsgDict *dict = 0);
-
-  /** Touches the message serial number file. */
-  int touchMsgDict();
-
-  /** Append message to end of message serial number file. */
-  int appendtoMsgDict(int idx = -1);
-
-  /** Sets the reverse-dictionary for this folder. */
-  void setRDict(KMMsgDictREntry *rentry);
-
-  /** Returns the reverse-dictionary for this folder. */
-  KMMsgDictREntry *rDict() const { return mRDict; }
+    /** Triggers deregistration from the message dict, which will cause the dict
+     * to ask the FolderStorage to write the relevant data structures to disk.. */
+  void deregisterFromMessageDict();
 
   /** Set the status of the message at index @p idx to @p status. */
   virtual void setStatus(int idx, KMMsgStatus status, bool toggle=false);
@@ -441,6 +430,9 @@ signals:
       emmitted first. */
   void expunged( KMFolder* );
 
+  /** Emitted when the serial numbers of this folder were invalidated. */
+  void invalidated( KMFolder * );
+  
   /** Emitted when the name of the folder changes. */
   void nameChanged();
 
@@ -515,6 +507,7 @@ protected slots:
   void slotProcessNextSearchBatch();
 
 protected:
+
   /**
    * These two methods actually create the jobs. They have to be implemented
    * in all folders.
@@ -534,8 +527,44 @@ protected:
     on failure. */
   virtual KMMessage* readMsg(int idx) = 0;
 
-  /** Read index file and fill the message-info list mMsgList. */
-  virtual bool readIndex() = 0;
+  //--------- Message Dict manipulation
+friend class KMMsgDict;
+  /** Read the on-disk cache of serial number and location of messages in
+ * this store and fill those into the global message dict, such that the messages
+   * we hold can be looked up.there. */
+  virtual void readMessageDictCache() {}
+
+  /** Inserts messages into the message dictionary. The messages will get
+   * new serial numbers. This is only used on newly appeared folders, where
+   * there is no .ids file yet, or when that has been invalidated. */
+  virtual void fillMessageDict() {}
+ 
+  /** Writes the message serial number file. */
+  int writeMsgDict() const;
+
+  /** Touches the message serial number file. */
+  int touchMsgDict();
+
+  /** Append message to end of message serial number file. */
+  int appendToMsgDict( int idx = -1 );
+
+  /** Sets the reverse-dictionary for this folder. const, because the mRDict
+   * is mutable, since it is not part of the (conceptually) const-relevant state
+   * of the object. */
+  void setRDict(KMMsgDictREntry *rentry) const;
+
+  /** Returns the reverse-dictionary for this folder. */
+  KMMsgDictREntry *rDict() const { return mRDict; }
+
+
+  /** Replaces the serial number for the message @p msg at index @p idx with
+   * @p sernum */
+  void replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx );
+  
+   /** Called when serial numbers for a folder are invalidated,
+  invalidates/recreates data structures dependent on the
+  serial numbers for this folder */
+  void invalidateFolder();
 
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
@@ -546,11 +575,12 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-
+  
+  /** Read index file and fill the message-info list mMsgList. */
+  virtual bool readIndex() = 0;
   virtual KMMsgBase* takeIndexEntry( int idx ) = 0;
   virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg ) = 0;
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
-  virtual void fillDictFromIndex(KMMsgDict *dict) = 0;
   virtual void truncateIndex() = 0;
 
   int mOpenCount;
@@ -578,7 +608,7 @@ protected:
   bool mContentsTypeChanged;
 
   /** Points at the reverse dictionary for this folder. */
-  KMMsgDictREntry *mRDict;
+  mutable KMMsgDictREntry *mRDict;
   /** List of jobs created by this folder. */
   mutable QPtrList<FolderJob> mJobList;
 

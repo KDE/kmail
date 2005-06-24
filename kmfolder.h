@@ -43,7 +43,6 @@ using KMail::MailingList;
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
-class KMMsgDict;
 class QTimer;
 class FolderStorage;
 class KMFolderTreeItem;
@@ -476,13 +475,6 @@ public:
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
   int writeIndex( bool createEmptyIndex = false );
-
-  /** Inserts messages into the message dictionary.  Might be called
-    during kernel initialization. */
-  void fillMsgDict(KMMsgDict *dict);
-
-  /** Writes the message serial number file. */
-  int writeMsgDict(KMMsgDict *dict = 0);
 
   /** Set the status of the message at index @p idx to @p status. */
   void setStatus(int idx, KMMsgStatus status, bool toggle=false);

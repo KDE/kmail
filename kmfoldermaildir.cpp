@@ -19,6 +19,7 @@
 #include "jobscheduler.h"
 using KMail::MaildirJob;
 #include "compactionjob.h"
+#include "kmmsgdict.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -487,6 +488,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
   idx = mMsgList.append(&aMsg->toMsgBase());
   if (aMsg->getMsgSerNum() <= 0)
     aMsg->setMsgSerNum();
+  else
+    replaceMsgSerNum( aMsg->getMsgSerNum(), &aMsg->toMsgBase(), idx );
 
   // write index entry if desired
   if (mAutoCreateIndex)
@@ -508,7 +511,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
 
-    error |= appendtoMsgDict(idx);
+    error |= appendToMsgDict(idx);
 
     if (error) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
@@ -899,8 +902,7 @@ int KMFolderMaildir::createIndexFromContents()
 
   needsCompact = true;
 
-  if (folder()->parent())
-    folder()->parent()->manager()->invalidateFolder(kmkernel->msgDict(), folder());
+  invalidateFolder();
   return 0;
 }
 

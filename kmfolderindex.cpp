@@ -396,7 +396,7 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
     // running, while the clock switches from daylight savings time to normal time
     utime(QFile::encodeName(location()), 0);
     utime(QFile::encodeName(indexLocation()), 0);
-    utime(QFile::encodeName(KMMsgDict::getFolderIdsLocation( folder() )), 0);
+    utime(QFile::encodeName( KMMsgDict::getFolderIdsLocation( *this ) ), 0);
 
   mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
@@ -461,11 +461,22 @@ void KMFolderIndex::truncateIndex()
     writeIndex( true );
 }
 
+void KMFolderIndex::readMessageDictCache()
+{
+  if ( KMMsgDict::mutableInstance()->readFolderIds( *this ) == -1 ) {
+    invalidateFolder();
+  }
+  if ( !KMMsgDict::mutableInstance()->hasFolderIds( *this ) ) {
+    invalidateFolder();
+  }
+}
 
-void KMFolderIndex::fillDictFromIndex(KMMsgDict *dict)
+void KMFolderIndex::fillMessageDict()
 {
   open();
-  mMsgList.fillMsgDict(dict);
+  for (unsigned int idx = 0; idx < mMsgList.high(); idx++)
+    if ( mMsgList.at( idx ) )
+      KMMsgDict::mutableInstance()->insert(0, mMsgList.at( idx ), idx);
   close();
 }
 
@@ -477,4 +488,5 @@ KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
   mMsgList.set( idx, msgInfo );
   return msgInfo;
 }
+
 #include "kmfolderindex.moc"

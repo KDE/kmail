@@ -775,7 +775,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
 
     KMFolder *folder = 0;
     int index = -1;
-    kmkernel->msgDict()->getLocation(msn, &folder, &index);
+    KMMsgDict::instance()->getLocation(msn, &folder, &index);
     if (folder && index != -1) {
       folder->open();
       if ( status == KMMsgStatusDeleted ) {

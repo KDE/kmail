@@ -576,7 +576,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
     mTheUnGetMes.remove( sernum );
     int i = 0;
     KMFolder* folder = 0;
-    kmkernel->msgDict()->getLocation( sernum, &folder, &i );
+    KMMsgDict::instance()->getLocation( sernum, &folder, &i );
     folder->unGetMsg( i );
   }
 }
@@ -848,7 +848,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
   // Get the index of the mail
   int i = 0;
   KMFolder* aFolder = 0;
-  kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
+  KMMsgDict::instance()->getLocation( sernum, &aFolder, &i );
   assert( folder == aFolder );
 
   bool unget = !folder->isMessage( i );
@@ -915,7 +915,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     // Get the index of the mail
     int i = 0;
     KMFolder* aFolder = 0;
-    kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
+    KMMsgDict::instance()->getLocation( sernum, &aFolder, &i );
     assert( folder == aFolder );
 
     // Read the iCal or vCard
@@ -1070,7 +1070,7 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
 
     // French
     folderNames[2][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendrier");
-    folderNames[2][KFolderTreeItem::Tasks] = QString::fromLatin1("Tâches");
+    folderNames[2][KFolderTreeItem::Tasks] = QString::fromLatin1("TÃ¢ches");
     folderNames[2][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
     folderNames[2][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
     folderNames[2][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
@@ -1098,7 +1098,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
   if( !folder || !mUIDToSerNum.contains( uid ) ) return 0;
   int i;
   KMFolder *aFolder;
-  kmkernel->msgDict()->getLocation( mUIDToSerNum[uid], &aFolder, &i );
+  KMMsgDict::instance()->getLocation( mUIDToSerNum[uid], &aFolder, &i );
   Q_ASSERT( aFolder == folder );
   return folder->getMsg( i );
 }
@@ -1111,7 +1111,7 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
   KMMessage *message = 0;
   KMFolder* aFolder = 0;
   int index;
-  kmkernel->msgDict()->getLocation( serNum, &aFolder, &index );
+  KMMsgDict::instance()->getLocation( serNum, &aFolder, &index );
   if( aFolder && aFolder != folder ) {
     kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) found it in folder " << aFolder->location() << ", expected " << folder->location() << endl;
   } else {

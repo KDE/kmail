@@ -55,7 +55,6 @@ namespace KPIM {
   class IdentityManager;
 }
 class KMKernel;
-class KMMsgDict;
 class KProcess;
 class KProgressDialog;
 class KInstance;
@@ -233,7 +232,6 @@ public:
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMail::MessageSender *msgSender();
-  KMMsgDict *msgDict();
   KMMsgIndex *msgIndex();
 
   KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
@@ -379,7 +377,6 @@ private:
   KMFilterActionDict *the_filterActionDict;
   mutable KPIM::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
-  KMMsgDict *the_msgDict;
   KMMsgIndex *the_msgIndex;
   struct putData
   {

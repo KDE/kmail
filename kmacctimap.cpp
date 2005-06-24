@@ -399,7 +399,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     int idx = -1;
     KMFolder *folder = 0;
     KMMessage *msg = 0;
-    kmkernel->msgDict()->getLocation( *filterIt, &folder, &idx );
+    KMMsgDict::instance()->getLocation( *filterIt, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
     // different folder, or that the serNum is stale
     if ( !folder ) {
@@ -568,7 +568,7 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
   if (msg->parent()) { // unGet this msg
     int idx = -1;
     KMFolder * p = 0;
-    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    KMMsgDict::instance()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }

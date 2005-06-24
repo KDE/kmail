@@ -405,8 +405,7 @@ void KMFolderSearch::executeSearch()
     if (mSearch)
         mSearch->stop();
     setSearch(mSearch);
-    if ( folder()->parent() )
-        folder()->parent()->manager()->invalidateFolder(kmkernel->msgDict(), folder() );
+    invalidateFolder();
 }
 
 const KMSearch* KMFolderSearch::search() const
@@ -427,7 +426,7 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
         return;
     int idx = -1;
     KMFolder *aFolder = 0;
-    kmkernel->msgDict()->getLocation(serNum, &aFolder, &idx);
+    KMMsgDict::instance()->getLocation(serNum, &aFolder, &idx);
     assert(aFolder && (idx != -1));
     if(mFolders.findIndex(aFolder) == -1) {
         aFolder->open();
@@ -460,7 +459,7 @@ void KMFolderSearch::removeSerNum(Q_UINT32 serNum)
         if ((*it) == serNum) {
             int idx = -1;
             KMFolder *aFolder = 0;
-            kmkernel->msgDict()->getLocation(serNum, &aFolder, &idx);
+            KMMsgDict::instance()->getLocation(serNum, &aFolder, &idx);
             assert(aFolder && (idx != -1));
             emit msgRemoved(folder(), serNum);
             removeMsg(i);
@@ -637,7 +636,7 @@ const KMMsgBase* KMFolderSearch::getMsgBase(int idx) const
     KMFolder *folder = 0;
     if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
         return 0;
-    kmkernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
+    KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
     return folder->getMsgBase(folderIdx);
 }
@@ -648,7 +647,7 @@ KMMsgBase* KMFolderSearch::getMsgBase(int idx)
     KMFolder *folder = 0;
     if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
         return 0;
-    kmkernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
+    KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     if (!folder || folderIdx == -1)
         return 0; //exceptional case
     return folder->getMsgBase(folderIdx);
@@ -661,7 +660,7 @@ KMMessage* KMFolderSearch::getMsg(int idx)
     KMFolder *folder = 0;
     if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
         return 0;
-    kmkernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
+    KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
     KMMessage* msg = folder->getMsg( folderIdx );
     return msg;
@@ -784,7 +783,7 @@ KMMessage* KMFolderSearch::readMsg(int idx)
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    kmkernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
+    KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
     return folder->getMsg( folderIdx );
 }
@@ -838,7 +837,7 @@ bool KMFolderSearch::readIndex()
         if (swapByteOrder)
             serNum = kmail_swap_32(serNum);
 
-        kmkernel->msgDict()->getLocation( serNum, &folder, &folderIdx );
+        KMMsgDict::instance()->getLocation( serNum, &folder, &folderIdx );
         if (!folder || (folderIdx == -1)) {
             clearIndex();
             fclose(mIdsStream);
@@ -908,12 +907,6 @@ void KMFolderSearch::clearIndex(bool, bool)
     mSerNums.clear();
 }
 
-void KMFolderSearch::fillDictFromIndex(KMMsgDict *)
-{
-    // No dict for search folders, as search folders don't own any messages
-    return;
-}
-
 void KMFolderSearch::truncateIndex()
 {
     truncate(QFile::encodeName(indexLocation()), IDS_SEARCH_HEADER_LEN);
@@ -935,7 +928,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 
     int idx = -1;
     KMFolder *folder = 0;
-    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
+    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
     assert(folder && (idx != -1));
     assert(folder == aFolder);
     folder->open();
@@ -1090,7 +1083,7 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
         mTempOpened = true;
     }
 
-    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(aFolder, idx);
+    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum(aFolder, idx);
     QValueVector<Q_UINT32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum) {
