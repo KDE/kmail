@@ -75,7 +75,7 @@ class KMMsgDict
      * and the index in that folder at which it is stored. */
     void getLocation(const KMMessage *msg, KMFolder **retFolder, int *retIndex) const;
 
-  /** @Returns a message serial number for the message located at index @p index in folder
+  /** Returns a message serial number for the message located at index @p index in folder
    * @p folder. Zero if no such message can be found. */
     unsigned long getMsgSerNum(KMFolder *folder, int index) const;
 
