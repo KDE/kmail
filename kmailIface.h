@@ -7,10 +7,10 @@
 #include <kurl.h>
 #include <qstringlist.h>
 
-/** checkMail won´t show reader but will check mail. use openReader to
+/** checkMail wont show reader but will check mail. use openReader to
     show if you give a filename to openReader it will show mbox or
     message if it is valid rfc-822 message or mbox file.  You can pass
-    hidden=1 to openComposer and it won´t be visible that way you can
+    hidden=1 to openComposer and it wont be visible that way you can
     write messages and add attachments from other apps and send it via
     kmail. Should I add showAddressBook? hmm...  The openComposer
     functions always return 1.  sven <radej@kde.org> */
@@ -83,7 +83,7 @@ k_dcop:
 
   /** @param foldername the requested foldername in kmail (at the
                      zero level in the foldertree.
-      @param messagefile: the name of the filename (local) with the
+      @param messagefile the name of the filename (local) with the
                      message to be added.
       @param MsgStatusFlags a string coding the status of the message
              with a char for each status e.g. a 'N' for new

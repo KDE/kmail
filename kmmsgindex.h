@@ -24,6 +24,12 @@ class KMSearchPattern;
 class KMSearchRule;
 class KMSearch;
 
+/**
+ * @short UNUSED full text index for messages
+ *
+ * KMMsgIndex provides a full test message indexer. It is currently unused.
+ * @author Sam Magnuson <zachsman@wiw.org>
+ */
 class KMMsgIndex : public QObject
 {
     Q_OBJECT
