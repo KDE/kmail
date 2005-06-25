@@ -319,11 +319,7 @@ void KMail::ManageSieveScriptsDialog::slotGetResult( KMail::SieveJob *, bool suc
 void KMail::ManageSieveScriptsDialog::slotSieveEditorOkClicked() {
   if ( !mSieveEditor )
     return;
-  QString script = mSieveEditor->script();
-  //assert the scripts ends with new line
-  if ( !script.endsWith( "\n" ) )
-    script.append( "\n" );
-  SieveJob * job = SieveJob::put( mCurrentURL, script, mWasActive, mWasActive );
+  SieveJob * job = SieveJob::put( mCurrentURL,mSieveEditor->script(), mWasActive, mWasActive );
   connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotPutResult(KMail::SieveJob*,bool)) );
 }
