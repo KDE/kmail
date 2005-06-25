@@ -49,37 +49,34 @@ class FolderStorage;
 class KMMsgDict
 {
   template<class> friend class KStaticDeleter;
-   /* FIXME It would be better to do without these, they are the classes
-    * involved in filling and maintaining the dict. The MsgList needs access
-    * because of things it does that should be in FolderIndex, probably, which
-    * the message list is an implementation detail of. */
-  friend class FolderStorage; 
-  friend class KMMsgList;
-  friend class KMFolderIndex;
-
-  protected: // prevent creation and deletion, we are a singleton
-    KMMsgDict();
-    ~KMMsgDict();
-
   public:
     /** Access the globally unique MessageDict */
     static const KMMsgDict* instance();
 
     /** Returns the folder the message represented by the serial number @p key is in
      * and the index in that folder at which it is stored. */
-    void getLocation(unsigned long key, KMFolder **retFolder, int *retIndex) const;
+    void getLocation( unsigned long key, KMFolder **retFolder, int *retIndex ) const;
     /** Returns the folder the message represented by @p msg is in
       * and the index in that folder at which it is stored. */
-    void getLocation(const KMMsgBase *msg, KMFolder **retFolder, int *retIndex) const;
+    void getLocation( const KMMsgBase *msg, KMFolder **retFolder, int *retIndex ) const;
     /** Returns the folder the message represented by @p msg is in
      * and the index in that folder at which it is stored. */
-    void getLocation(const KMMessage *msg, KMFolder **retFolder, int *retIndex) const;
+    void getLocation( const KMMessage *msg, KMFolder **retFolder, int *retIndex ) const;
 
-  /** Returns a message serial number for the message located at index @p index in folder
-   * @p folder. Zero if no such message can be found. */
-    unsigned long getMsgSerNum(KMFolder *folder, int index) const;
+  /** Find the message serial number for the message located at index @p index in folder
+   * @p folder.
+   * @return the message serial number or zero is no such message can be found */
+    unsigned long getMsgSerNum( KMFolder *folder, int index ) const;
 
   private:
+       /* FIXME It would be better to do without these, they are the classes
+    * involved in filling and maintaining the dict. The MsgList needs access
+    * because of things it does that should be in FolderIndex, probably, which
+       * the message list is an implementation detail of. */
+    friend class FolderStorage;
+    friend class KMMsgList;
+    friend class KMFolderIndex;
+
     // Access for those altering the dict, our friend classes
     static KMMsgDict* mutableInstance();
     
@@ -138,11 +135,19 @@ class KMMsgDict
    * information at the beginning of the file. */
   KMMsgDictREntry *openFolderIds( const FolderStorage &, bool truncate);
 
-  // delete an entry that has been assigned to a folder
+
+  // --------- helpers ------------
+
+  /** delete an entry that has been assigned to a folder. Needs to be done from
+   * inside this file, since operator delete is not available outside. */
   static void deleteRentry(KMMsgDictREntry *entry);
 
   /** Returns the next message serial number for use. */
   unsigned long getNextMsgSerNum();
+
+  // prevent creation and deletion, we are a singleton
+  KMMsgDict();
+  ~KMMsgDict();
 
   /** Highest message serial number we know of. */
   unsigned long nextMsgSerNum;
@@ -150,6 +155,7 @@ class KMMsgDict
   /** The dictionary. */
   KMDict *dict;
 
+  /** The singleton instance */
   static KMMsgDict *m_self;
 };
 
