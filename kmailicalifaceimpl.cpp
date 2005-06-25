@@ -1731,6 +1731,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
     }
   }
 
+  StorageFormat defaultFormat = GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
   if ( !folder ) {
     // The folder isn't there yet - create it
     folder =
@@ -1740,13 +1741,19 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
         createFolder( localizedDefaultFolderName( contentsType ) );
 
     // Groupware folder created, use the global setting for storage format
-    setStorageFormat( folder, GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard );
+    setStorageFormat( folder, defaultFormat );
   } else {
     KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
-    QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
+    QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "unset" );
     FolderInfo info;
-    info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
-    info.mChanges = (FolderChanges) configGroup.readNumEntry(  folder->idString() + "-changes" );
+    if ( str == "unset" ) {
+      info.mStorageFormat = defaultFormat;
+      configGroup.writeEntry( folder->idString() + "-storageFormat",
+                              info.mStorageFormat == StorageXML ? "xml" : "icalvcard" );
+    } else {
+      info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
+    }
+    info.mChanges = (FolderChanges) configGroup.readNumEntry( folder->idString() + "-changes" );
     mFolderInfoMap.insert( folder, info );
 
     //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
@@ -1907,7 +1914,7 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
         KMFolder* folder = static_cast<KMFolder *>( it.current() );
         if ( folder->folderType() == KMFolderTypeCachedImap ) {
           QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
-          //kdDebug(5006) << "findStandardResourceFolder: " << folder->name() << " has annotation " << annotation << endl;
+          //kdDebug(5006) << "findStandardResourceFolder: " << folder->idString() << " " << folder->name() << " has annotation " << annotation << endl;
           // this is a default folder and it is below our default resources parent folder => Bingo
           if ( ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
               && folder->parent()->owner()->idString() == GlobalSettings::theIMAPResourceFolderParent() ) {
