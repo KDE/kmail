@@ -146,8 +146,9 @@ public:
 
   void updateListFilterAction();
 
-  /// @return a list of all KMMainWidgets. Warning, the list itself can be 0.
-  static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
+  /** Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
+   * @return the list of all main widgets, or 0 if it is not yet initialized */
+  static const QValueList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
 
@@ -513,7 +514,7 @@ private:
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
 
-  static QPtrList<KMMainWidget>* s_mainWidgetList;
+  static QValueList<KMMainWidget*>* s_mainWidgetList;
 
   QAccel *mAccel;
 };

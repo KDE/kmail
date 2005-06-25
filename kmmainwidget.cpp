@@ -112,8 +112,8 @@ using KPIM::ProgressManager;
 
 #include "kmmainwidget.moc"
 
-QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
-static KStaticDeleter<QPtrList<KMMainWidget> > mwlsd;
+QValueList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
+static KStaticDeleter<QValueList<KMMainWidget*> > mwlsd;
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
@@ -151,7 +151,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mToolbarActionSeparator = new KActionSeparator( actionCollection );
 
   if( !s_mainWidgetList )
-    mwlsd.setObject( s_mainWidgetList, new QPtrList<KMMainWidget>() );
+    mwlsd.setObject( s_mainWidgetList, new QValueList<KMMainWidget*>() );
   s_mainWidgetList->append( this );
 
   mPanner1Sep << 1 << 1;
