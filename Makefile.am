@@ -194,4 +194,5 @@ messages: rc.cpp
 
 kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg
 
+DOXYGEN_REFERENCES = kdeui
 include $(top_srcdir)/admin/Doxyfile.am
