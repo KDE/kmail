@@ -6,6 +6,7 @@
 #endif
 
 #include "kmdict.h"
+#include "kmglobal.h"
 #include <kdebug.h>
 
 #include <string.h>

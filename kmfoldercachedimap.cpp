@@ -42,7 +42,7 @@
 #include "kmacctmgr.h"
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
-#include "kmdict.h"
+#include "kmglobal.h"
 #include "acljobs.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;

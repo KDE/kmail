@@ -33,7 +33,7 @@ using KPIM::BroadcastStatus;
 #include "kmfiltermgr.h"
 #include "kmpopfiltercnfrmdlg.h"
 #include "protocols.h"
-#include "kmdict.h"
+#include "kmglobal.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
