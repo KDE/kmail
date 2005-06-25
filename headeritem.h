@@ -63,31 +63,37 @@ public:
           mImperfectlyThreaded (true), mSubjThreadingList(0) { }
     ~SortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
-    SortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
+    /** The parent node of the item in the threading hierarchy. 0 if the item
+     * is at top level, which is the default. Can only be set by parents. */
+    SortCacheItem *parent() const { return mParent; }
     /**
-     * if an item is imperfectly threaded (by References or subject, not by 
+     * Returs whether the item is so far imperfectly threaded.
+     * If an item is imperfectly threaded (by References or subject, not by
      * In-Reply-To) it will be reevalutated when a new mail comes in. It could be
      * the perfect parent. */
     bool isImperfectlyThreaded() const
         { return mImperfectlyThreaded; }
+    /** Set whether the item is currently imperfectly threaded (by References
+     * or Subject, not by In-Reply-To). */
     void setImperfectlyThreaded (bool val)
         { mImperfectlyThreaded = val; }
+    /** Returns whether the item has other items below it. */
     bool hasChildren() const
         { return mSortedChildren.count() || mUnsortedCount; }
-    
     /** The sorted children are an array of sortcache items we know are below the
      * current one and are already properly sorted (as read from the cache ) */
     const QPtrList<SortCacheItem> *sortedChildren() const
         { return &mSortedChildren; }
- 
     /** The unsorted children are an array of sortcache items we know are below the
      * current one, but are yet to be threaded and sorted properly. */
     SortCacheItem **unsortedChildren(int &count) const
         { count = mUnsortedCount; return mUnsortedChildren; }
+    /** Add an item to this itme's list of already sorted children. */
     void addSortedChild(SortCacheItem *i) {
         i->mParent = this;
         mSortedChildren.append(i);
     }
+    /** Add an item to this itme's list of unsorted children. */
     void addUnsortedChild(SortCacheItem *i) {
         i->mParent = this;
         if(!mUnsortedChildren)
@@ -106,12 +112,14 @@ public:
       mUnsortedCount = mUnsortedSize = 0;
     }
 
-    /** the corresponding HeaderItem */
+    /** The corresponding KMail::HeaderItem */
     HeaderItem *item() const { return mItem; }
+    /** Set the corresponding KMail::HeaderItem */
     void setItem(HeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
 
     /** sort key as used by the listview */
     const QString &key() const { return mKey; }
+    /** Set the sort key used by the list view. */
     void setKey(const QString &key) { mKey = key; }
 
     int id() const { return mId; }
@@ -125,7 +133,10 @@ public:
                          bool waiting_for_parent = false,
                          bool update_discovered_count = false);
 
+    /** Set the list of mails with a certain subject that this item is on.
+     * Used to remove the item from that list on deletion. */
     void setSubjectThreadingList( QPtrList<SortCacheItem> *list ) { mSubjThreadingList = list; }
+    /** The list of mails with a certain subject that this item is on. */
     QPtrList<SortCacheItem>* subjectThreadingList() const { return mSubjThreadingList; }
 
 private:
@@ -156,7 +167,8 @@ public:
   HeaderItem( QListViewItem* parent, int msgId, const QString& key = QString::null );
   ~HeaderItem ();
 
-  // Update the msgId this item corresponds to.
+  /** Set the message id of this item, which is the offset/index in the folder
+   * currently displayed by the KMHeaders list view. */
   void setMsgId( int aMsgId );
 
   // Profiling note: About 30% of the time taken to initialize the
@@ -164,12 +176,13 @@ public:
   // new and QListViewItem::QListViewItem.
   void irefresh();
 
-  // Return the msgId of the message associated with this item
+  /** Return the msgId of the message associated with this item. */
   int msgId() const;
 
-  //Opens all children in the thread
+  /** Expands all children of the list view item. */
   void setOpenRecursive( bool open );
 
+  /** Returns the text of the list view item. */
   QString text( int col) const;
 
   void setup();
@@ -197,10 +210,18 @@ public:
   
   QListViewItem* firstChildNonConst(); /* Non const! */ 
 
+  /** Returns whether the item is about to be removed from the list view as a
+   * result of some user action. Such items are not selectable and painted with
+   * a strike-through decoration. */
   bool aboutToBeDeleted() const { return mAboutToBeDeleted; }
+  /** Set the item to be in about-to-be-deleted state, which means it
+   * cannot be selected and will be painted with a strike-through decoration. */
   void setAboutToBeDeleted( bool val ) { mAboutToBeDeleted = val; }
 
+  /** Associate a KMail::SortCacheItem with this item. This is the structure used to
+   * represent the mail during sorting and threading calculation. */
   void setSortCacheItem( SortCacheItem *item ) { mSortCacheItem = item; }
+  /** Returns the KMail::SortCacheItem associated with this display item. */
   SortCacheItem* sortCacheItem() const { return mSortCacheItem; }
 
 private:
