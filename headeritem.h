@@ -42,13 +42,14 @@ namespace KMail
 {
 class HeaderItem; // forward declaration
 
-
-/** 
- * Represents an item in the set of mails to be displayed but only as far
+/**
+ * @short Represents an item in the set of mails to be displayed but only as far
  * as sorting, threading and reading/writing of the current sort order to
- * a disk cache is concerned. Each such item is paired with a HeaderItem, 
- * which holds the graphical representation of each item (mail).
- * This is what the threading trees are built of.
+ * a disk cache is concerned.
+ *
+ * Each such item is paired with a KMail::HeaderItem, which holds the graphical
+ * representation of each item (mail). This is what the threading trees are
+ * built of.
  */
 class SortCacheItem {
 
@@ -145,7 +146,7 @@ private:
 
 /**
  * Visual representation of a member of the set of displayables (mails in 
- * the current folder). Each item is paired with a sort cache item. See above
+ * the current folder). Each item is paired with a KMail::SortCacheItem. See there as to
  * how they are meant to cooperate. This should be about the visual aspects of
  * displaying an entry only. */
 class HeaderItem : public KListViewItem
