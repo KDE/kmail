@@ -307,7 +307,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   if( e->button() == RightButton )
   {
     mPopupFolders.clear();
-    mPopupFolders.resize(mFoldersWithUnread.count());
+    mPopupFolders.reserve( mFoldersWithUnread.count() );
 
     // Rebuild popup menu at click time to minimize race condition if
     // the base KMainWidget is closed.
@@ -326,8 +326,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
       for(uint i=0; it != mFoldersWithUnread.end(); ++i)
       {
         kdDebug(5006) << "Adding folder" << endl;
-        if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
-        mPopupFolders.insert(i, it.key());
+        mPopupFolders.append( it.key() );
         QString item = prettyName(it.key()) + " (" + QString::number(it.data()) + ")";
         newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
         ++it;

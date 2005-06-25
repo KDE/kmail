@@ -22,7 +22,7 @@
 
 #include <qmap.h>
 #include <qguardedptr.h>
-#include <qptrvector.h>
+#include <qvaluevector.h>
 #include <qpixmap.h>
 #include <qimage.h>
 
@@ -81,7 +81,7 @@ private:
   QPixmap mDefaultIcon;
   QImage mLightIconImage;
 
-  QPtrVector<KMFolder> mPopupFolders;
+  QValueVector<KMFolder*> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
   QMap<QGuardedPtr<KMFolder>, bool> mPendingUpdates;
   QTimer *mUpdateTimer;
