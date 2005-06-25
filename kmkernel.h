@@ -69,6 +69,15 @@ class KSystemTray;
 class KMMainWidget;
 class ConfigureDialog;
 
+/**
+ * @short Central point of coordination in KMail
+ *
+ * The KMKernel class represents the core of KMail, where the different parts
+ * come together and are coordinated. It is currently also the class which exports
+ * KMail's main DCOP interfaces. The kernel is responsible for creating various
+ * (singleton) objects such as the UndoStack, the folder managers and filter
+ * manager, etc.
+ */
 class KDE_EXPORT KMKernel : public QObject, virtual public KMailIface
 {
   Q_OBJECT
@@ -149,15 +158,15 @@ public:
 
   void openReader() { openReader( false ); }
   
-  int dcopAddMessage(const QString & foldername, const QString & messageFile, 
+  int dcopAddMessage(const QString & foldername, const QString & messagefile,
                      const QString & MsgStatusFlags = QString());
-  int dcopAddMessage(const QString & foldername, const KURL & messageFile, 
+  int dcopAddMessage(const QString & foldername, const KURL & messagefile,
                      const QString & MsgStatusFlags = QString());
   void dcopResetAddMessage();
   /** add messages without rejecting duplicates */
-  int dcopAddMessage_fastImport(const QString & foldername, const QString & messageFile,
+  int dcopAddMessage_fastImport(const QString & foldername, const QString & messagefile,
                                 const QString & MsgStatusFlags = QString());
-  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messageFile, 
+  int dcopAddMessage_fastImport(const QString & foldername, const KURL & messagefile,
                                 const QString & MsgStatusFlags = QString());
   
   QStringList folderList() const;
