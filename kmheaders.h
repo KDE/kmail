@@ -406,7 +406,6 @@ private:
   HeaderItem* getMsgItem;
   /** @see KMHeaders::selectedMsgs isn't reentrant */
   KMMessageList mSelMsgBaseList;
-  QPtrList<KMMessage> mSelMsgList;
   HeaderItem* mPrevCurrent;
 
   /** Current colours and backing pixmap */
