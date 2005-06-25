@@ -34,12 +34,11 @@
 
 #include "interfaces/htmlwriter.h"
 
-#include <qptrlist.h>
+#include <qvaluelist.h>
 
 class QString;
 
 namespace KMail {
-
 
   /** @short A @see HtmlWriter that dispatches all calls to a list of other @see HtmlWriters
       @author Marc Mutz <mutz@kde.org>
@@ -63,7 +62,7 @@ namespace KMail {
 
   private:
     /** We own the HtmlWriters added to us! */
-    QPtrList<KMail::HtmlWriter> mWriters;
+    QValueList<KMail::HtmlWriter*> mWriters;
   };
 
 } // namespace KMail

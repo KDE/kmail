@@ -37,13 +37,13 @@
 
 #include <kdebug.h>
 
+#include <qvaluelist.h>
 
 namespace KMail {
 
   TeeHtmlWriter::TeeHtmlWriter( HtmlWriter * writer1, HtmlWriter * writer2 )
     : HtmlWriter()
   {
-    mWriters.setAutoDelete( true );
     if ( writer1 )
       mWriters.append( writer1 );
     if ( writer2 )
@@ -51,6 +51,8 @@ namespace KMail {
   }
 
   TeeHtmlWriter::~TeeHtmlWriter() {
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      delete (*it);
   }
 
   void TeeHtmlWriter::addHtmlWriter( HtmlWriter * writer ) {
@@ -59,33 +61,33 @@ namespace KMail {
   }
 
   void TeeHtmlWriter::begin( const QString & css ) {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->begin( css );
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->begin( css );
   }
 
   void TeeHtmlWriter::end() {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->end();
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->end();
   }
 
   void TeeHtmlWriter::reset() {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->reset();
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->reset();
   }
 
   void TeeHtmlWriter::write( const QString & str ) {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->write( str );
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->write( str );
   }
 
   void TeeHtmlWriter::queue( const QString & str ) {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->queue( str );
+   for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->queue( str );
   }
 
   void TeeHtmlWriter::flush() {
-    for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->flush();
+    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+      (*it)->flush();
   }
 
 } // namespace KMail
