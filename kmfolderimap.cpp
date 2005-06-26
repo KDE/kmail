@@ -984,6 +984,7 @@ void KMFolderImap::checkValidity()
 {
   if (!mAccount) {
     emit folderComplete(this, false);
+    close();
     return;
   }
   KURL url = mAccount->getUrl();
@@ -999,6 +1000,7 @@ void KMFolderImap::checkValidity()
     kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     mContentState = imapNoInformation;
+    close();
     return;
   } else if ( connectionState == ImapAccountBase::Connecting ) {
     // We'll wait for the connectionResult signal from the account. If it
@@ -1011,6 +1013,7 @@ void KMFolderImap::checkValidity()
   // Only check once at a time.
   if (mCheckingValidity) {
     kdDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
+    close();
     return;
   }
   // otherwise we already are inside a mailcheck
@@ -1074,6 +1077,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     }
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
+    close();
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
@@ -1151,6 +1155,7 @@ void KMFolderImap::getFolder(bool force)
     emit folderComplete(this, true);
     return;
   }
+  open();
   mContentState = imapInProgress;
   if (force) {
     // force an update
@@ -1168,6 +1173,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   {
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
+    close();
     return;
   }
   quiet(true);
@@ -1218,6 +1224,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
+    close();
     return;
   }
   mCheckFlags = FALSE;
@@ -1274,6 +1281,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
+    close();
     return;
   }
   if ( mMailCheckProgressItem )
@@ -1290,14 +1298,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   if (jd.total == 1) sets.append(*uid + ":" + *uid);
   else sets = makeSets( (*it).items );
   mAccount->removeJob(it); // don't use *it below
-
-  // make sure we have a connection
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
-  {
-    quiet(false);
-    emit folderComplete(this, FALSE);
-    return;
-  }
 
   // Now kick off the getting of envelopes for the new mails in the folder
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
@@ -1580,6 +1580,7 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
     mContentState = imapNoInformation;
     quiet( false );
     emit folderComplete(this, false);
+    close();
   }
   else
   {
@@ -1588,6 +1589,7 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
       mContentState = imapFinished;
       quiet(false);
       emit folderComplete(this, true);
+      close();
     }
     mAccount->removeJob(it);
   }
