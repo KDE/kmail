@@ -13,7 +13,7 @@
 #include "kmstartup.h"
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
-#include "kmcomposewin.h"
+#include "composer.h"
 #include "kmmsgpart.h"
 #include "kmreadermainwin.h"
 #include "kmfoldermgr.h"
@@ -45,6 +45,7 @@ using KRecentAddress::RecentAddresses;
 #include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
+#include "mailcomposerIface.h"
 #include "folderIface.h"
 using KMail::FolderIface;
 #include "jobscheduler.h"
@@ -381,7 +382,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   else if (!body.isEmpty())
     msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
@@ -486,7 +487,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
-  KMComposeWin *cWin = new KMComposeWin();
+  KMail::Composer * cWin = KMail::makeComposer();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::legacyBodyInvites() );
@@ -516,7 +517,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 void KMKernel::setDefaultTransport( const QString & transport )
 {
   QStringList availTransports = KMail::TransportManager::transportNames();
-  QStringList::const_iterator it = availTransports.find( transport ); 
+  QStringList::const_iterator it = availTransports.find( transport );
   if ( it == availTransports.end() ) {
     kdWarning() << "The transport you entered is not available" << endl;
     return;
@@ -537,7 +538,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
   if (!hidden) {
     cWin->show();
@@ -548,7 +549,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 #endif
   }
 
-  return DCOPRef(cWin);
+  return DCOPRef( cWin->asMailComposerIFace() );
 }
 
 DCOPRef KMKernel::newMessage(const QString &to,
@@ -559,7 +560,7 @@ DCOPRef KMKernel::newMessage(const QString &to,
                              const KURL & /*messageFile*/,
                              const KURL &attachURL)
 {
-  KMComposeWin *win;
+  KMail::Composer * win = 0;
   KMMessage *msg = new KMMessage;
 
   if ( useFolderId ) {
@@ -567,10 +568,10 @@ DCOPRef KMKernel::newMessage(const QString &to,
     KMFolder *folder = currentFolder();
     uint id = folder ? folder->identity() : 0;
     msg->initHeader( id );
-    win = new KMComposeWin( msg, id );
+    win = makeComposer( msg, id );
   } else {
     msg->initHeader();
-    win = new KMComposeWin( msg );
+    win = makeComposer( msg );
   }
   msg->setCharset("utf-8");
   //set basic headers
@@ -580,13 +581,13 @@ DCOPRef KMKernel::newMessage(const QString &to,
 
   //Add the attachment if we have one
   if(!attachURL.isEmpty() && attachURL.isValid()) {
-    win->addAttach(attachURL); 
+    win->addAttach(attachURL);
   }
   //only show window when required
   if(!hidden) {
     win->show();
   }
-  return DCOPRef( win );
+  return DCOPRef( win->asMailComposerIFace() );
 }
 
 int KMKernel::viewMessage( const KURL & messageFile )
@@ -608,7 +609,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   // ### Make this message customizable via KIOSK
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).utf8() );
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
@@ -629,7 +630,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 KMMsgStatus KMKernel::strToStatus(const QString &flags)
 {
     KMMsgStatus status = 0;
-    if (!flags.isEmpty()) {  
+    if (!flags.isEmpty()) {
         for (uint n = 0; n < flags.length() ; n++) {
             switch (flags[n]) {
                 case 'N':
@@ -691,13 +692,13 @@ KMMsgStatus KMKernel::strToStatus(const QString &flags)
     return status;
 }
 
-int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrlString, 
-                              const QString & MsgStatusFlags) 
+int KMKernel::dcopAddMessage( const QString & foldername, const QString & msgUrlString,
+                              const QString & MsgStatusFlags)
 {
   return dcopAddMessage(foldername, KURL(msgUrlString), MsgStatusFlags);
 }
 
-int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl, 
+int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
                               const QString & MsgStatusFlags)
 {
   kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
@@ -840,12 +841,12 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
         if ( !msgId.isEmpty() ) {
           mAddMessageMsgIds.append( msgId );
         }
-        
+
         if ( !MsgStatusFlags.isEmpty() ) {
           KMMsgStatus status = strToStatus(MsgStatusFlags);
           if (status) msg->setStatus(status);
         }
-        
+
         int index;
         if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
           mAddMsgCurrentFolder->unGetMsg( index );
@@ -874,15 +875,15 @@ void KMKernel::dcopResetAddMessage()
   mAddMessageLastFolder = QString();
 }
 
-int KMKernel::dcopAddMessage_fastImport( const QString & foldername, 
-                                         const QString & msgUrlString, 
+int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
+                                         const QString & msgUrlString,
                                          const QString & MsgStatusFlags)
 {
   return dcopAddMessage_fastImport(foldername, KURL(msgUrlString), MsgStatusFlags);
 }
 
 int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
-                                         const KURL & msgUrl, 
+                                         const KURL & msgUrl,
                                          const QString & MsgStatusFlags)
 {
   // Use this function to import messages without
@@ -955,12 +956,12 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
 
     if ( mAddMsgCurrentFolder ) {
       int index;
-      
+
       if( !MsgStatusFlags.isEmpty() ) {
         KMMsgStatus status = strToStatus(MsgStatusFlags);
         if (status) msg->setStatus(status);
       }
-      
+
       if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
         mAddMsgCurrentFolder->unGetMsg( index );
         retval = 1;
@@ -1092,7 +1093,7 @@ void KMKernel::resumeBackgroundJobs()
   mJobScheduler->resume();
   mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true );
 }
- 
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/
@@ -1193,7 +1194,7 @@ void KMKernel::recoverDeadLetters()
   for ( int i = 0; i < num; i++ ) {
     KMMessage *msg = folder.take( 0 );
     if ( msg ) {
-      KMComposeWin *win = new KMComposeWin();
+      KMail::Composer * win = KMail::makeComposer();
       win->setMsg( msg, false, false, true );
       win->setAutoSaveFilename( msg->fileName() );
       win->show();
@@ -1303,7 +1304,7 @@ void KMKernel::init()
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
   the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
-  
+
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
   if (lsf)
@@ -1687,14 +1688,12 @@ void KMKernel::dumpDeadLetters()
     return; //All documents should be saved before shutting down is set!
 
   // make all composer windows autosave their contents
-  if ( KMainWindow::memberList ) {
-    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
-    for ( ; it.current() != 0; ++it ) {
-      KMComposeWin *win = ::qt_cast<KMComposeWin*>( it.current() );
-      if ( win )
-        win->autoSaveMessage();
-    }
-  }
+  if ( !KMainWindow::memberList )
+    return;
+
+  for ( QPtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it )
+    if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) )
+      win->autoSaveMessage();
 }
 
 
@@ -2181,7 +2180,7 @@ KMFolder *KMKernel::currentFolder() {
   if ( widget && widget->folderTree() ) {
     folder = widget->folderTree()->currentFolder();
   }
-  return folder;	
+  return folder;
 }
 
 // can't be inline, since KMSender isn't known to implement

@@ -37,7 +37,7 @@
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include "kmmainwin.h"
-#include "kmcomposewin.h"
+#include "composer.h"
 
 #include <mimelib/enum.h>
 
@@ -84,7 +84,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
       msg->setBcc( "" );
   }
 
-  KMComposeWin *cWin = new KMComposeWin();
+  KMail::Composer * cWin = KMail::makeComposer();
   cWin->setMsg( msg, false /* mayAutoSign */ );
   // cWin->setCharset( "", true );
   cWin->slotWordWrapToggled( false );

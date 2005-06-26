@@ -46,6 +46,9 @@ using KRecentAddress::RecentAddresses;
 #include <qhbox.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
+#include <qlabel.h>
+#include <qpushbutton.h>
+#include <qstringlist.h>
 
 using namespace KMail;
 

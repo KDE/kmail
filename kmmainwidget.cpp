@@ -52,7 +52,7 @@ using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"
 #include "kmfolderimap.h"
 #include "kmacctcachedimap.h"
-#include "kmcomposewin.h"
+#include "composer.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
@@ -109,6 +109,7 @@ using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
 
 #include "managesievescriptsdialog.h"
+#include <qstylesheet.h>
 
 #include "kmmainwidget.moc"
 
@@ -853,15 +854,15 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompose()
 {
-  KMComposeWin *win;
+  KMail::Composer * win;
   KMMessage* msg = new KMMessage;
 
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
-      win = new KMComposeWin(msg, mFolder->identity());
+      win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
-      win = new KMComposeWin(msg);
+      win = KMail::makeComposer( msg );
   }
 
   win->show();

@@ -19,12 +19,12 @@
 // my header file
 #include "attachmentlistview.h"
 
-// other KMail headers 
+// other KMail headers
 #include "kmmsgbase.h"
 #include "kmfolder.h"
 #include "kmcommands.h"
 #include "kmmsgdict.h"
-#include "kmcomposewin.h"
+#include "composer.h"
 
 // other module headers
 #include <maillistdrag.h>
@@ -46,7 +46,7 @@ using KPIM::MailListDrag;
 
 namespace KMail {
 
-AttachmentListView::AttachmentListView( KMComposeWin* composer,
+AttachmentListView::AttachmentListView( KMail::Composer * composer,
                                         QWidget* parent,
                                         const char* name )
   : KListView( parent, name ),

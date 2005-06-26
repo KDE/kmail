@@ -17,7 +17,6 @@ class QPopupMenu;
 class KMainWindow;
 class KAction;
 class KProgressDialog;
-class KMComposeWin;
 class KMFilter;
 class KMFolder;
 class KMFolderImap;
@@ -29,6 +28,7 @@ class KMMsgBase;
 class KMReaderWin;
 class partNode;
 namespace KIO { class Job; }
+namespace KMail { class Composer; }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
@@ -480,15 +480,15 @@ class KDE_EXPORT KMForwardAttachedCommand : public KMCommand
 
 public:
   KMForwardAttachedCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
-			    uint identity = 0, KMComposeWin *win = 0 );
+			    uint identity = 0, KMail::Composer *win = 0 );
   KMForwardAttachedCommand( QWidget *parent, KMMessage * msg,
-			    uint identity = 0, KMComposeWin *win = 0 );
+			    uint identity = 0, KMail::Composer *win = 0 );
 
 private:
   virtual Result execute();
 
   uint mIdentity;
-  QGuardedPtr<KMComposeWin> mWin;
+  QGuardedPtr<KMail::Composer> mWin;
 };
 
 class KDE_EXPORT KMRedirectCommand : public KMCommand

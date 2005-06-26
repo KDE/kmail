@@ -7,7 +7,9 @@
 #undef Color
 #include <config.h>
 
+#define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
+#undef REALLY_WANT_KMCOMPOSEWIN_H
 
 #include "kmedit.h"
 #include "kmlineeditspell.h"
@@ -136,9 +138,17 @@ using KRecentAddress::RecentAddresses;
 
 #include "kmcomposewin.moc"
 
+KMail::Composer * KMail::makeComposer( KMMessage * msg, uint identitiy ) {
+  return KMComposeWin::create( msg, identitiy );
+}
+
+KMail::Composer * KMComposeWin::create( KMMessage * msg, uint identitiy ) {
+  return new KMComposeWin( msg, identitiy );
+}
+
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
-  : MailComposerIface(), KMail::SecondaryWindow( "kmail-composer#" ),
+  : MailComposerIface(), KMail::Composer( "kmail-composer#" ),
     mSpellCheckInProgress( false ),
     mDone( false ),
     mAtmModified( false ),
@@ -506,7 +516,7 @@ bool KMComposeWin::event(QEvent *e)
   {
      readColorConfig();
   }
-  return KMail::SecondaryWindow::event(e);
+  return KMail::Composer::event(e);
 }
 
 
@@ -4016,7 +4026,7 @@ void KMComposeWin::polish()
     toolBar("htmlToolBar")->show();
   else
     toolBar("htmlToolBar")->hide();
-  KMail::SecondaryWindow::polish();
+  KMail::Composer::polish();
 }
 
 //-----------------------------------------------------------------------------

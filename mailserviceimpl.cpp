@@ -34,7 +34,8 @@
 
 #include "mailserviceimpl.h"
 
-#include "kmcomposewin.h"
+#include "composer.h"
+
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 
@@ -71,7 +72,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   if ( !subject.isEmpty() ) msg->setSubject( subject );
   if ( !body.isEmpty() )    msg->setBody( body.utf8() );
 
-  KMComposeWin *cWin = new KMComposeWin( msg );
+  KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
 
   for( KURL::List::ConstIterator itr = attachments.begin();
@@ -119,7 +120,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   part->setBodyEncodedBinary( attachment );
   msg->addBodyPart( part );
 
-  KMComposeWin *cWin = new KMComposeWin( msg );
+  KMail::Composer * cWin = KMail::makeComposer( msg );
   cWin->setCharset("", TRUE);
   return true;
 }

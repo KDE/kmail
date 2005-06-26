@@ -25,11 +25,13 @@ class KMComposeWin;
 
 namespace KMail {
 
+class Composer;
+
 class AttachmentListView : public KListView
 {
   Q_OBJECT
 public:
-  AttachmentListView( KMComposeWin* composer = 0, QWidget* parent = 0,
+  AttachmentListView( KMail::Composer * composer = 0, QWidget* parent = 0,
                       const char* name = 0 );
   virtual ~AttachmentListView();
 
@@ -42,7 +44,7 @@ protected:
   virtual void keyPressEvent( QKeyEvent * e );
 
 private:
-  KMComposeWin* mComposer;
+  KMail::Composer * mComposer;
 
 signals:
   void attachmentDeleted();

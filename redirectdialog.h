@@ -29,12 +29,11 @@
 #ifndef KMAIL_REDIRECTDIALOG_H
 #define KMAIL_REDIRECTDIALOG_H
 
-#include "kmcomposewin.h"
+#include <kdialogbase.h>
 
-#include <kicondialog.h>
-
-#include <qlabel.h>
-#include <qpushbutton.h>
+class KMLineEdit;
+class QPushButton;
+class QLabel;
 
 namespace KMail {
 

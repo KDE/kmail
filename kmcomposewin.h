@@ -5,7 +5,13 @@
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
-#include "secondarywindow.h"
+#ifndef KDE_USE_FINAL
+# ifndef REALLY_WANT_KMCOMPOSEWIN_H
+#  error Do not include kmcomposewin.h anymore. Include composer.h instead.
+# endif
+#endif
+
+#include "composer.h"
 #include "messagesender.h"
 
 #include <qlabel.h>
@@ -84,20 +90,23 @@ namespace GpgME {
   class Error;
 }
 
-
-class KMHeaders;
-
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMail::SecondaryWindow, virtual public MailComposerIface
+class KMComposeWin : public KMail::Composer, virtual public MailComposerIface
 {
   Q_OBJECT
-  friend class ::KMHeaders;         // needed for the digest forward
+  friend class ::KMEdit;
   friend class ::MessageComposer;
 
-public:
+private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
   KMComposeWin( KMMessage* msg=0, uint identity=0 );
   ~KMComposeWin();
+public:
+  static Composer * create( KMMessage * msg = 0, uint identity = 0 );
 
+  MailComposerIface * asMailComposerIFace() { return this; }
+  const MailComposerIface * asMailComposerIFace() const { return this; }
+
+public: // mailserviceimpl
   /**
    * From MailComposerIface
    */
@@ -111,8 +120,10 @@ public:
                     const QCString &paramAttr,
                     const QString &paramValue,
                     const QCString &contDisp);
+public: // kmcommand
   void setBody (QString body);
 
+private:
   /**
    * To catch palette changes
    */
@@ -134,6 +145,7 @@ public:
    */
    void verifyWordWrapLengthIsAdequate(const QString&);
 
+public: // kmkernel, kmcommands, callback
   /**
    * Set the message the composer shall work with. This discards
    * previous messages without calling applyChanges() on them before.
@@ -141,17 +153,20 @@ public:
    void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE,
 	       bool allowDecryption=FALSE, bool isModified=FALSE);
 
+private: // kmedit
   /**
    * Returns message of the composer. To apply the user changes to the
    * message, call applyChanges() first.
    */
-   KMMessage* msg(void) const { return mMsg; }
+   KMMessage* msg() const { return mMsg; }
 
+public: // kmkernel
   /**
    * Set the filename which is used for autosaving.
    */
   void setAutoSaveFilename( const QString & filename );
 
+private:
   /**
    * Returns true if the message was modified by the user.
    */
@@ -162,6 +177,7 @@ public:
    */
   void setModified( bool modified );
 
+public: // kmkernel, callback
   /**
    * If this flag is set the message of the composer is deleted when
    * the composer is closed and the message was not sent. Default: FALSE
@@ -174,17 +190,19 @@ public:
    */
   void setAutoDeleteWindow( bool f );
 
+public: // kmcommand
   /**
    * If this folder is set, the original message is inserted back after
    * cancelling
    */
    void setFolder(KMFolder* aFolder) { mFolder = aFolder; }
-
+public: // kmkernel, kmcommand, mailserviceimpl
   /**
    * Recode to the specified charset
    */
    void setCharset(const QCString& aCharset, bool forceDefault = FALSE);
 
+public: // kmcommand
   /**
    * Sets the focus to the edit-widget and the cursor below the
    * "On ... you wrote" line when hasMessage is true.
@@ -198,6 +216,7 @@ public:
    */
    void setFocusToSubject();
 
+private:
   /**
    * determines whether inline signing/encryption is selected
    */
@@ -211,20 +230,22 @@ public:
    static QString prettyMimeType( const QString& type );
     QString quotePrefixName() const;
 
-    KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
+private: // kmedit:
+  KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
   void setSubjectTextWasSpellChecked( bool _spell ) {
     mSubjectTextWasSpellChecked = _spell;
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
 
 
+public: // callback
   /** Disabled signing and encryption completely for this composer window. */
   void setSigningAndEncryptionDisabled( bool v )
   {
     mSigningAndEncryptionExplicitlyDisabled = v;
   }
 
-public slots:
+private slots:
   void polish();
   /**
    * Actions:
@@ -232,7 +253,9 @@ public slots:
   void slotPrint();
   void slotAttachFile();
   void slotInsertRecentFile(const KURL&);
+public slots: // kmkernel, callback
   void slotSendNow();
+private slots:
   void slotSendNowVia( int item );
   void slotSendLater();
   void slotSendLaterVia( int item );
@@ -265,6 +288,7 @@ public slots:
 
   void slotFolderRemoved(KMFolder*);
 
+public slots: // kmkernel
   /**
      Tell the composer to always send the message, even if the user
      hasn't changed the next. This is useful if a message is
@@ -272,7 +296,7 @@ public slots:
      simply be able to confirm the message and send it.
   */
   void slotSetAlwaysSend( bool bAlwaysSend );
-
+private slots:
   /**
    * toggle fixed width font.
    */
@@ -328,11 +352,13 @@ public slots:
    */
   void slotSignToggled(bool);
 
+public slots: // kmkernel, callback
   /**
    * Switch wordWrap on/off
    */
   void slotWordWrapToggled(bool);
 
+private slots:
   /**
    * Append signature file to the end of the text in the editor.
    */
@@ -391,8 +417,10 @@ public slots:
   void slotSpellcheckDone(int result);
   void slotSpellcheckDoneClearStatus();
 
+public slots: // kmkernel
   void autoSaveMessage();
 
+private slots:
   void updateCursorPosition();
 
   void slotView();
@@ -422,33 +450,31 @@ public slots:
   void fontChanged( const QFont & );
   void alignmentChanged( int );
 
+public: // kmkernel, attachmentlistview
   void addAttach(const KURL url);
 
+public: // kmcommand
   /**
    * Add an attachment to the list.
    */
   void addAttach(const KMMessagePart* msgPart);
 
+private:
   /**
    * Add an image from the clipboard as attachment
    */
   void addImageFromClipboard();
 
-public:
+private:
   const KPIM::Identity & identity() const;
   uint identityUid() const;
   Kleo::CryptoMessageFormat cryptoMessageFormat() const;
   bool encryptToSelf() const;
 
 signals:
-  /**
-   * A message has been queued or saved in the drafts folder
-   */
-  void messageQueuedOrDrafted();
-
   void applyChangesDone( bool );
 
-protected:
+private:
   /**
    * Applies the user changes to the message object of the composer
    * and signs/encrypts the message if activated. Returns FALSE in
@@ -620,7 +646,7 @@ private:
    */
   static bool validateAddresses( QWidget * parent, const QString & addresses );
 
-protected slots:
+private slots:
    /**
     * Compress an attachemnt with the given index
     */
@@ -628,7 +654,7 @@ protected slots:
     void uncompressAttach(int idx);
     void editorFocusChanged(bool gained);
 
-protected:
+private:
   QWidget   *mMainWidget;
   QComboBox *mTransport;
   KMail::DictionaryComboBox *mDictionaryCombo;

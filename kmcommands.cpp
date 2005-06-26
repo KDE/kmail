@@ -78,7 +78,7 @@ using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
 #include <kaddrbook.h>
-#include "kmcomposewin.h"
+#include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermbox.h"
 #include "kmfolderimap.h"
@@ -111,6 +111,7 @@ using KPIM::ProgressItem;
 using namespace KMime;
 
 #include "broadcaststatus.h"
+#include <qclipboard.h>
 
 #include "kmcommands.moc"
 
@@ -416,7 +417,6 @@ KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
-  KMComposeWin *win;
   KMMessage *msg = new KMMessage;
   uint id = 0;
 
@@ -427,7 +427,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->setCharset("utf-8");
   msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
-  win = new KMComposeWin(msg, id);
+  KMail::Composer * win = KMail::makeComposer( msg, id );
   win->setCharset("", TRUE);
   win->setFocusToSubject();
   win->show();
@@ -446,11 +446,10 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 {
   //TODO : consider factoring createReply into this method.
   KMMessage *msg = retrievedMessage();
-  KMComposeWin *win;
   KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
-  win = new KMComposeWin(rmsg, 0);
+  KMail::Composer * win = KMail::makeComposer( rmsg, 0 );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -469,11 +468,10 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
   KMMessage *msg = retrievedMessage();
-  KMComposeWin *win;
   KMMessage *fmsg = msg->createForward();
   fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
-  win = new KMComposeWin(fmsg);
+  KMail::Composer * win = KMail::makeComposer( fmsg );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
 
@@ -635,7 +633,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   if ( parent )
     parent->take( parent->find( msg ) );
 
-  KMComposeWin *win = new KMComposeWin();
+  KMail::Composer * win = KMail::makeComposer();
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.
   win->setMsg(msg, FALSE, TRUE);
   win->setFolder( parent );
@@ -1003,7 +1001,7 @@ KMCommand::Result KMReplyToCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
-  KMComposeWin *win = new KMComposeWin( reply );
+  KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
   win->show();
@@ -1023,7 +1021,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplySmart, "", TRUE);
-  KMComposeWin *win = new KMComposeWin( reply );
+  KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
@@ -1043,7 +1041,7 @@ KMCommand::Result KMReplyListCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
-  KMComposeWin *win = new KMComposeWin( reply );
+  KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
@@ -1063,7 +1061,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
-  KMComposeWin *win = new KMComposeWin( reply );
+  KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
   win->show();
@@ -1083,7 +1081,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
-  KMComposeWin *win = new KMComposeWin( reply );
+  KMail::Composer * win = KMail::makeComposer( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
   win->show();
@@ -1108,7 +1106,6 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
 
 KMCommand::Result KMForwardCommand::execute()
 {
-  KMComposeWin *win;
   QPtrList<KMMessage> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) {
@@ -1177,7 +1174,7 @@ KMCommand::Result KMForwardCommand::execute()
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
       KCursorSaver busy(KBusyPtr::busy());
-      win = new KMComposeWin(fwdMsg, id);
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->addAttach(msgPart);
       win->show();
       return OK;
@@ -1205,7 +1202,7 @@ KMCommand::Result KMForwardCommand::execute()
         fwdMsg->link(msg, KMMsgStatusForwarded);
 
       KCursorSaver busy(KBusyPtr::busy());
-      win = new KMComposeWin(fwdMsg, id);
+      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
       win->setCharset("");
       win->show();
       return OK;
@@ -1223,26 +1220,28 @@ KMCommand::Result KMForwardCommand::execute()
   uint id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
   if ( id == 0 )
     id = mIdentity;
-  win = new KMComposeWin( fwdMsg, id );
-  win->setCharset( fwdMsg->codec()->mimeName(), true );
-  win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
-  win->show();
+  {
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+    win->setCharset( fwdMsg->codec()->mimeName(), true );
+    win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+    win->show();
+  }
 
   return OK;
 }
 
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-  const QPtrList<KMMsgBase> &msgList, uint identity, KMComposeWin *win )
+           const QPtrList<KMMsgBase> &msgList, uint identity, KMail::Composer *win )
   : KMCommand( parent, msgList ), mIdentity( identity ),
-    mWin( QGuardedPtr< KMComposeWin >( win ))
+    mWin( QGuardedPtr<KMail::Composer>( win ))
 {
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
-  KMMessage * msg, uint identity, KMComposeWin *win )
+           KMMessage * msg, uint identity, KMail::Composer *win )
   : KMCommand( parent, msg ), mIdentity( identity ),
-    mWin( QGuardedPtr< KMComposeWin >( win ))
+    mWin( QGuardedPtr< KMail::Composer >( win ))
 {
 }
 
@@ -1266,7 +1265,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
   KCursorSaver busy(KBusyPtr::busy());
   if (!mWin)
-    mWin = new KMComposeWin(fwdMsg, mIdentity);
+    mWin = KMail::makeComposer(fwdMsg, mIdentity);
 
   // iterate through all the messages to be forwarded
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
@@ -2051,7 +2050,6 @@ KMUrlClickedCommand::KMUrlClickedCommand( const KURL &url, uint identity,
 
 KMCommand::Result KMUrlClickedCommand::execute()
 {
-  KMComposeWin *win;
   KMMessage* msg;
 
   if (mUrl.protocol() == "mailto")
@@ -2080,7 +2078,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
-    win = new KMComposeWin(msg, mIdentity);
+    KMail::Composer * win = KMail::makeComposer( msg, mIdentity );
     win->setCharset("", TRUE);
     win->show();
   }
@@ -2507,7 +2505,6 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-  KMComposeWin *win;
   KMMessage *msg = retrievedMessage();
 
   KMMessage *newMsg = new KMMessage(*msg);
@@ -2519,7 +2516,7 @@ KMCommand::Result KMResendMessageCommand::execute()
   // adds the new date to the message
   newMsg->removeHeaderField( "Date" );
 
-  win = new KMComposeWin();
+  KMail::Composer * win = KMail::makeComposer();
   win->setMsg(newMsg, false, true);
   win->show();
 

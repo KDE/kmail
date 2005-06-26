@@ -8,7 +8,9 @@
 #include "kmedit.h"
 #include "kmlineeditspell.h"
 
+#define REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmcomposewin.h"
+#undef REALLY_WANT_KMCOMPOSEWIN_H
 #include "kmmsgdict.h"
 #include "kmfolder.h"
 #include "kmcommands.h"
