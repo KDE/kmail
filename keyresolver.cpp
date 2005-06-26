@@ -2,7 +2,7 @@
     keyresolver.cpp
 
     This file is part of libkleopatra, the KDE keymanagement library
-    Copyright (c) 2004 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2004 Klar√§lvdalens Datakonsult AB
 
     Based on kpgp.cpp
     Copyright (C) 2001,2002 the KPGP authors
@@ -1028,8 +1028,10 @@ Kpgp::Result Kleo::KeyResolver::resolveSigningKeysForSigningOnly() {
   CryptoMessageFormat commonFormat = AutoFormat;
 
   for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
+    if ( !(mCryptoMessageFormats & concreteCryptoMessageFormats[i]) )
+      continue; // skip
     if ( signingKeysFor( concreteCryptoMessageFormats[i] ).empty() )
-      continue; // skip;
+      continue; // skip
     if ( count.numOf( concreteCryptoMessageFormats[i] ) == count.numTotal() ) {
       commonFormat = concreteCryptoMessageFormats[i];
       break;
