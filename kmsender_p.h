@@ -46,10 +46,10 @@ public:
   virtual ~KMSendProc() {}
 
   /** Initialize sending of one or more messages. */
-  virtual void start(void);
+  virtual void start();
 
   /** Initializes variables directly before send() is called. */
-  virtual void preSendInit(void);
+  virtual void preSendInit();
 
   /** Send given message. May return before message is sent. */
   virtual bool send(KMMessage* msg) = 0;
@@ -62,13 +62,13 @@ public:
 
   /** Returns TRUE if send was successful, and FALSE otherwise.
       Returns FALSE if sending is still in progress. */
-  bool sendOk(void) const { return mSendOk; }
+  bool sendOk() const { return mSendOk; }
 
   /** Returns TRUE if sending is still in progress. */
-  bool sending(void) const { return mSending; }
+  bool sending() const { return mSending; }
 
   /** Returns error message of last call of failed(). */
-  QString message(void) const { return mMsg; }
+  QString message() const { return mMsg; }
 
 signals:
   /** Emitted when the current message is sent or an error occurred. */
@@ -114,7 +114,7 @@ class KMSendSendmail: public KMSendProc
 public:
   KMSendSendmail(KMSender*);
   virtual ~KMSendSendmail();
-  virtual void start(void);
+  virtual void start();
   virtual bool send(KMMessage* msg);
   virtual bool finish(bool destructive);
   virtual void abort();
