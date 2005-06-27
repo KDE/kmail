@@ -106,6 +106,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
       if ( depth > lastDepth ) {
         // next lower level - parent node will get opened
         item = new FolderItem( lastItem );
+        lastItem->setOpen(true);
       }
       else {
         if ( depth == lastDepth ) {
@@ -135,7 +136,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     item->setText( mFolderColumn, fti->text( 0 ) );
     item->setProtocol( fti->protocol() );
     item->setType( fti->type() );
-    item->setOpen( fti->isOpen() );
+    item->setOpen( true );
     // Make items without folders and readonly items unselectable
     // if we're told so
     if ( mustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
