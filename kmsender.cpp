@@ -438,9 +438,9 @@ void KMSender::doSendMsg()
   }
 
   QString msgTransport = mCustomTransport;
-  if (msgTransport.isEmpty()) { 
+  if (msgTransport.isEmpty()) {
     msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
-  } 
+  }
   if (msgTransport.isEmpty()) {
     QStringList sl = KMTransportInfo::availableTransports();
     if (!sl.isEmpty()) msgTransport = sl[0];
@@ -917,8 +917,6 @@ void KMSendSendmail::abort()
 //-----------------------------------------------------------------------------
 bool KMSendSendmail::send(KMMessage* aMsg)
 {
-  QString bccStr;
-
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
@@ -1085,7 +1083,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   if (ti->auth)
   {
-    if( (ti->user.isEmpty() || ti->passwd().isEmpty()) && 
+    if( (ti->user.isEmpty() || ti->passwd().isEmpty()) &&
       ti->authType != "GSSAPI" )
     {
       bool b = FALSE;
