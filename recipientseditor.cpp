@@ -483,7 +483,10 @@ void RecipientsView::slotDeleteLine()
   int newPos;
   if ( pos == 0 ) newPos = pos + 1;
   else newPos = pos - 1;
-  mLines.at( newPos )->activate();
+
+  // if there is something left to activate, do so
+  if ( mLines.at( newPos ) )
+    mLines.at( newPos )->activate();
 
   mLines.remove( line );
   removeChild( line );
