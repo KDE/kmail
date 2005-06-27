@@ -66,7 +66,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
    // trigger from here, since it needs a fully constructed FolderStorage
   assert( mStorage );
-  mStorage->registerWithMessageDict();
+  if ( aParent )
+    mStorage->registerWithMessageDict();
 
   if ( aParent ) {
     connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
