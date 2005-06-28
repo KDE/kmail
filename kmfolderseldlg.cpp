@@ -136,7 +136,6 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     item->setText( mFolderColumn, fti->text( 0 ) );
     item->setProtocol( fti->protocol() );
     item->setType( fti->type() );
-    item->setOpen( true );
     // Make items without folders and readonly items unselectable
     // if we're told so
     if ( mustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
