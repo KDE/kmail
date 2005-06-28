@@ -74,6 +74,7 @@ using KMime::DateFormatter;
 #include <klocale.h>
 #include <kapplication.h>
 #include <kcharsets.h>
+#include <kasciistringtools.h>
 #include <kdebug.h>
 #include <knuminput.h>
 #include <kfontdialog.h>
@@ -715,7 +716,7 @@ void AccountsPage::SendingTab::slotTransportSelected()
   QListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
-  mSetDefaultTransportButton->setEnabled( cur ); 
+  mSetDefaultTransportButton->setEnabled( cur );
 }
 
 // adds a number to @p name to make the name unique
@@ -914,7 +915,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
       }
     }
   } else {
-    GlobalSettings::setDefaultTransport( QString::null ); 
+    GlobalSettings::setDefaultTransport( QString::null );
   }
 
   delete item;
@@ -3000,9 +3001,11 @@ void ComposerPage::CharsetTab::doLoadOther() {
   QStringList charsets = composer.readListEntry( "pref-charsets" );
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
-      if ( (*it) == QString::fromLatin1("locale") )
-        (*it) = QString("%1 (locale)")
-          .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
+    if ( (*it) == QString::fromLatin1("locale") ) {
+      QCString cset = kmkernel->networkCodec()->mimeName();
+      KPIM::kAsciiToLower( cset.data() );
+      (*it) = QString("%1 (locale)").arg( cset );
+    }
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked( !composer.readBoolEntry( "force-reply-charset", false ) );
