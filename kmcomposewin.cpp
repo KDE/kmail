@@ -1203,7 +1203,7 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
   (void) new KAction (i18n("Configure &Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
 
-  (void) new KAction (i18n("Configure &Address Completion..."), 0,
+  (void) new KAction (i18n("Configure Completion &Order..."), 0,
                       this, SLOT(slotConfigureAddressCompletion()),
                       actionCollection(), "setup_completion_order");
 
