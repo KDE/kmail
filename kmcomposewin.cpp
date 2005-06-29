@@ -4281,13 +4281,14 @@ void KMLineEdit::loadContacts()
       RecentAddresses::self( KMKernel::config() )->addresses();
     QStringList::Iterator it = recent.begin();
     QString name, email;
+    int idx = addCompletionSource( i18n( "Recent Addresses" ) );
     for ( ; it != recent.end(); ++it ) {
       //kdDebug(5006) << "KMLineEdit::loadContacts() found: \"" << *it << "\"" << endl;
       KABC::Addressee addr;
       KPIM::getNameAndMail(*it, name, email);
       addr.setNameFromString( name );
       addr.insertEmail( email, true );
-      addContact( addr, 120 ); // more weight than kabc entries and more than ldap results
+      addContact( addr, 120, idx ); // more weight than kabc entries and more than ldap results
     }
 }
 
