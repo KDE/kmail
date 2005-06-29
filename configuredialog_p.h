@@ -582,6 +582,9 @@ public:
 
   void save();
   void installProfile( KConfig * profile );
+protected slots:
+  void slotConfigureRecentAddresses();
+  void slotConfigureCompletionOrder();
 
 private:
   virtual void doLoadFromGlobalSettings();

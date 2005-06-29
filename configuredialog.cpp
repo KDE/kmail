@@ -57,6 +57,13 @@ using KMail::ImapAccountBase;
 #include "folderstorage.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
+#include "recentaddresses.h"
+using KRecentAddress::RecentAddresses;
+#include "completionordereditor.h"
+#include "ldapclient.h"
+
+using KMail::IdentityListView;
+using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
 
@@ -2533,6 +2540,21 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoSave, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure completion order" ), this );
+  connect( completionOrderBtn, SIGNAL( clicked() ),
+           this, SLOT( slotConfigureCompletionOrder() ) );
+  hlay->addWidget( completionOrderBtn );
+  hlay->addItem( new QSpacerItem(0, 0) );
+  
+  // recent addresses 
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit recent addresses" ), this );
+  connect( recentAddressesBtn, SIGNAL( clicked() ),
+           this, SLOT( slotConfigureRecentAddresses() ) );
+  hlay->addWidget( recentAddressesBtn );
+  hlay->addItem( new QSpacerItem(0, 0) );
+
   // The "external editor" group:
   group = new QVGroupBox( i18n("External Editor"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
@@ -2631,6 +2653,26 @@ void ComposerPage::GeneralTab::save() {
   // editor group:
   GlobalSettings::setUseExternalEditor( mExternalEditorCheck->isChecked() );
   GlobalSettings::setExternalEditor( mEditorRequester->url() );
+}
+
+void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
+{
+  KRecentAddress::RecentAddressDialog dlg( this );
+  dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
+  if ( dlg.exec() ) {
+    RecentAddresses::self( KMKernel::config() )->clear();
+    const QStringList &addrList = dlg.addresses();
+    QStringList::ConstIterator it;
+    for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
+      RecentAddresses::self( KMKernel::config() )->add( *it );
+  }
+}
+
+void ComposerPage::GeneralTab::slotConfigureCompletionOrder( )
+{
+  KPIM::LdapSearch search;
+  KPIM::CompletionOrderEditor editor( &search, this );
+  editor.exec();
 }
 
 QString ComposerPage::PhrasesTab::helpAnchor() const {
