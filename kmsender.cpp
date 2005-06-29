@@ -158,7 +158,8 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  const KMFolderTemporaryOpen openOutbox( kmkernel->outboxFolder() );
+  kmkernel->outboxFolder()->open();
+  const KMFolderCloser openOutbox( kmkernel->outboxFolder() );
 
   aMsg->setStatus(KMMsgStatusQueued);
 
@@ -169,7 +170,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   }
 
   //Ensure the message is correctly and fully parsed
-  openOutbox.folder()->unGetMsg( kmkernel->outboxFolder()->count() - 1 );
+  openOutbox.folder()->unGetMsg( openOutbox.folder()->count() - 1 );
 
   if ( !sendNow || mSendInProgress )
     return true;
@@ -241,15 +242,14 @@ void KMSender::doSendMsg()
   if (!kmkernel)  //To handle message sending in progress when kaplan is exited
     return;	//TODO: handle this case better
 
-  KMFolder *sentFolder = 0, *imapSentFolder = 0;
-  bool someSent = mCurrentMsg;
-  int rc;
+  const bool someSent = mCurrentMsg;
   if (someSent) {
       mSentMessages++;
       mSentBytes += mCurrentMsg->msgSize();
   }
 
   // Post-process sent message (filtering)
+  KMFolder *sentFolder = 0, *imapSentFolder = 0;
   if (mCurrentMsg  && kmkernel->filterMgr())
   {
     mCurrentMsg->setTransferInProgress( FALSE );
@@ -307,8 +307,8 @@ void KMSender::doSendMsg()
       sentFolder = kmkernel->sentFolder();
 
     if ( sentFolder ) {
-      rc = sentFolder->open();
-      if (rc != 0) {
+      if ( const int err = sentFolder->open() ) {
+        Q_UNUSED( err );
         cleanup();
         return;
       }
@@ -318,7 +318,7 @@ void KMSender::doSendMsg()
     // current folder (outbox) and re-added, to make filter actions changing the message
     // work. We don't want that to screw up message counts.
     if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( true );
-    int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
+    const int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
     if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( false );
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
@@ -404,7 +404,7 @@ void KMSender::doSendMsg()
       if ( mSentMessages == mTotalMessages ) {
         setStatusMsg(i18n("%n queued message successfully sent.",
                           "%n queued messages successfully sent.",
-                     mSentMessages));
+                          mSentMessages));
       } else {
         setStatusMsg(i18n("%1 of %2 queued messages successfully sent.")
             .arg(mSentMessages).arg( mTotalMessages ));
@@ -431,12 +431,12 @@ void KMSender::doSendMsg()
   }
 
   QString msgTransport = mCustomTransport;
-  if (msgTransport.isEmpty()) {
+  if ( msgTransport.isEmpty() ) {
     msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
   }
-  if (msgTransport.isEmpty()) {
-    QStringList sl = KMTransportInfo::availableTransports();
-    if (!sl.isEmpty()) msgTransport = sl[0];
+  if ( msgTransport.isEmpty() ) {
+    const QStringList sl = KMTransportInfo::availableTransports();
+    if (!sl.empty()) msgTransport = sl.front();
   }
 
   if (!mSendProc || msgTransport != mMethodStr) {
@@ -473,18 +473,8 @@ void KMSender::doSendMsg()
       connect(mSendProc, SIGNAL(started(bool)), SLOT(sendProcStarted(bool)));
 
       // Run the precommand if there is one
-      if (!mTransportInfo->precommand.isEmpty())
-      {
-        setStatusMsg(i18n("Executing precommand %1")
-          .arg(mTransportInfo->precommand));
-        mPrecommand = new KMPrecommand(mTransportInfo->precommand);
-        connect(mPrecommand, SIGNAL(finished(bool)),
-          SLOT(slotPrecommandFinished(bool)));
-        if (!mPrecommand->start())
-        {
-          delete mPrecommand;
-          mPrecommand = 0;
-        }
+      if ( !mTransportInfo->precommand.isEmpty() ) {
+        runPrecommand( mTransportInfo->precommand );
         return;
       }
 
@@ -497,6 +487,17 @@ void KMSender::doSendMsg()
     doSendMsgAux();
 }
 
+bool KMSender::runPrecommand( const QString & cmd ) {
+  setStatusMsg( i18n("Executing precommand %1").arg( cmd ) );
+  mPrecommand = new KMPrecommand( cmd );
+  connect( mPrecommand, SIGNAL(finished(bool)),
+           SLOT(slotPrecommandFinished(bool)) );
+  if ( !mPrecommand->start() ) {
+    delete mPrecommand; mPrecommand = 0;
+    return false;
+  }
+  return true;
+}
 
 //-----------------------------------------------------------------------------
 void KMSender::sendProcStarted(bool success)

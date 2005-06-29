@@ -145,6 +145,8 @@ private:
       set transport settings */
   KMSendProc* createSendProcFromString(QString transport);
 
+  bool runPrecommand( const QString & cmd );
+
 private:
   bool mSendImmediate;
   bool mSendQuotedPrintable;

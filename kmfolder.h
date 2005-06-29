@@ -630,15 +630,15 @@ private:
 };
 
 /**
-   RAII for KMFolder::open() / close()
+   RAII for KMFolder::open() / close().
+
+   Usage: const KMFolderCloser closer( folder );
 */
-class KMFolderTemporaryOpen {
+class KMFolderCloser {
   KMFolder * f;
 public:
-  KMFolderTemporaryOpen( KMFolder * folder ) : f( folder ) {
-    if ( f ) f->open();
-  }
-  ~KMFolderTemporaryOpen() {
+  KMFolderCloser( KMFolder * folder ) : f( folder ) {}
+  ~KMFolderCloser() {
     if ( f ) f->close();
   }
   KMFolder * folder() const { return f; }
