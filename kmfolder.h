@@ -629,4 +629,19 @@ private:
   KShortcut mShortcut;
 };
 
+/**
+   RAII for KMFolder::open() / close()
+*/
+class KMFolderTemporaryOpen {
+  KMFolder * f;
+public:
+  KMFolderTemporaryOpen( KMFolder * folder ) : f( folder ) {
+    if ( f ) f->open();
+  }
+  ~KMFolderTemporaryOpen() {
+    if ( f ) f->close();
+  }
+  KMFolder * folder() const { return f; }
+};
+
 #endif /*kmfolder_h*/

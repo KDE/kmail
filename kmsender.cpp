@@ -114,17 +114,19 @@ bool KMSender::settingsOk() const
   return true;
 }
 
+static void handleRedirections( KMMessage * m ) {
+  const QString from  = m->headerField("X-KMail-Redirect-From");
+  const QString msgId = m->msgId();
+  if( from.isEmpty() || msgId.isEmpty() )
+    m->setMsgId( KMMessage::generateMessageId( m->sender() ) );
+}
 
 //-----------------------------------------------------------------------------
 bool KMSender::doSend(KMMessage* aMsg, short sendNow)
 {
-  int rc;
-
-  //assert(aMsg != 0);
   if(!aMsg)
-    {
       return false;
-    }
+
   if (!settingsOk()) return FALSE;
 
   if (aMsg->to().isEmpty())
@@ -152,36 +154,27 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
     aMsg->setTo("Undisclosed.Recipients: ;");
   }
 
-
-  // Handle redirections
-  QString from  = aMsg->headerField("X-KMail-Redirect-From");
-  QString msgId = aMsg->msgId();
-  if( from.isEmpty() || msgId.isEmpty() ) {
-    msgId = KMMessage::generateMessageId( aMsg->sender() );
-    //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
-    aMsg->setMsgId( msgId );
-  }
+  handleRedirections( aMsg );
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  kmkernel->outboxFolder()->open();
+  const KMFolderTemporaryOpen openOutbox( kmkernel->outboxFolder() );
+
   aMsg->setStatus(KMMsgStatusQueued);
 
-  rc = kmkernel->outboxFolder()->addMsg(aMsg);
-  if (rc)
-  {
+  if ( const int err = openOutbox.folder()->addMsg(aMsg) ) {
+    Q_UNUSED( err );
     KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
-    return FALSE;
+    return false;
   }
 
   //Ensure the message is correctly and fully parsed
-  kmkernel->outboxFolder()->unGetMsg( kmkernel->outboxFolder()->count() - 1 );
+  openOutbox.folder()->unGetMsg( kmkernel->outboxFolder()->count() - 1 );
 
-  if (sendNow && !mSendInProgress) rc = sendQueued();
-  else rc = TRUE;
-  kmkernel->outboxFolder()->close();
+  if ( !sendNow || mSendInProgress )
+    return true;
 
-  return rc;
+  return sendQueued();
 }
 
 
