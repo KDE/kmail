@@ -530,6 +530,9 @@ public:
   void save();
   void defaults();
   void installProfile( KConfig * profile );
+protected slots:
+  void slotConfigureRecentAddresses();
+  void slotConfigureCompletionOrder();
 
 protected:
   QCheckBox     *mAutoAppSignFileCheck;
