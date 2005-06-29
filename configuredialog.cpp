@@ -2455,7 +2455,7 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
   dlg.setAddresses( RecentAddresses::self( KMKernel::config() )->addresses() );
   if ( dlg.exec() ) {
     RecentAddresses::self( KMKernel::config() )->clear();
-    const QStringList &addrList = dlg.addresses();
+    const QStringList addrList = dlg.addresses();
     QStringList::ConstIterator it;
     for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
       RecentAddresses::self( KMKernel::config() )->add( *it );
