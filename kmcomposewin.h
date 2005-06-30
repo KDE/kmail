@@ -867,6 +867,7 @@ private:
   KToggleAction *mEncryptChiasmusAction;
   bool mEncryptWithChiasmus;
   QString mChiasmusKey;
+  QString mChiasmusOptions;
 #endif
 
   // This is the temporary object that constructs the message out of the

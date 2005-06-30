@@ -494,6 +494,7 @@ void MessageComposer::readFromComposeWin()
 #ifdef KLEO_CHIASMUS
   mEncryptWithChiasmus = mComposeWin->mEncryptWithChiasmus;
   mChiasmusKey = mComposeWin->mChiasmusKey;
+  mChiasmusOptions = mComposeWin->mChiasmusOptions;
 #endif
 }
 
@@ -528,9 +529,10 @@ bool MessageComposer::encryptWithChiasmus( const Kleo::CryptoBackend::Protocol *
     return false;
   }
   if ( !job->setProperty( "key", mChiasmusKey ) ||
+       !job->setProperty( "options", mChiasmusOptions ) ||
        !job->setProperty( "input", body ) ) {
     const QString msg = i18n( "The \"x-encrypt\" function does not accept "
-                              "\"key\" or \"input\" parameters. Please report this bug." );
+                              "the expected parameters. Please report this bug." );
     KMessageBox::error( mComposeWin, msg, i18n( "Chiasmus Backend Error" ) );
     return false;
   }

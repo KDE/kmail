@@ -206,7 +206,64 @@ QByteArray& NewByteArray::qByteArray()
     return *((QByteArray*)this);
 }
 
+#ifdef KLEO_CHIASMUS
 
+#include <klineedit.h>
+#include <klistbox.h>
+
+ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& caption,
+                                          const QStringList& keys, const QString& currentKey,
+                                          const QString& lastOptions )
+  : KDialogBase( parent, "chiasmusKeySelector", true, caption, Ok|Cancel, Ok, true )
+{
+  QWidget *page = makeMainWidget();
+
+  QVBoxLayout *layout = new QVBoxLayout(page, KDialog::spacingHint());
+
+  mLabel = new QLabel( i18n( "Please select the Chiasmus key file to use:" ), page );
+  layout->addWidget( mLabel );
+
+  mListBox = new KListBox( page );
+  mListBox->insertStringList( keys );
+  const int current = keys.findIndex( currentKey );
+  mListBox->setSelected( QMAX( 0, current ), true );
+  mListBox->ensureCurrentVisible();
+  layout->addWidget( mListBox, 1 );
+
+  QLabel* optionLabel = new QLabel( i18n( "Additional arguments for chiasmus:" ), page );
+  layout->addWidget( optionLabel );
+
+  mOptions = new KLineEdit( lastOptions, page );
+  optionLabel->setBuddy( mOptions );
+  layout->addWidget( mOptions );
+
+  layout->addStretch();
+
+  connect( mListBox, SIGNAL( doubleClicked( QListBoxItem * ) ), this, SLOT( slotOk() ) );
+  connect( mListBox, SIGNAL( returnPressed( QListBoxItem * ) ), this, SLOT( slotOk() ) );
+
+  connect( mOptions, SIGNAL( textChanged( const QString & ) ),
+      SLOT( slotEditTextChanged( const QString & ) ) );
+
+  mListBox->setFocus();
+}
+
+QString ChiasmusKeySelector::key() const
+{
+  return mListBox->currentText();
+}
+
+QString ChiasmusKeySelector::options() const
+{
+  return mOptions->text();
+}
+
+void ChiasmusKeySelector::slotEditTextChanged( const QString &text )
+{
+  enableButton( Ok, !text.stripWhiteSpace().isEmpty() );
+}
+
+#endif // KLEO_CHIASMUS
 
 // This function returns the complete data that were in this
 // message parts - *after* all encryption has been removed that
@@ -771,6 +828,11 @@ void KMReaderWin::readConfig(void)
   else
     mSplitterSizes << mimeH << messageH;
 
+#ifdef KLEO_CHIASMUS
+  mChiasmusKey = reader.readEntry( "chiasmus-key" );
+  mChiasmusOptions = reader.readEntry( "chiasmus-options" );
+#endif
+
   adjustLayout();
 
   if (message())
@@ -819,6 +881,11 @@ void KMReaderWin::writeConfig( bool sync ) const {
     reader.writeEntry( "header-set-displayed", headerStrategy()->name() );
   if ( attachmentStrategy() )
     reader.writeEntry( "attachment-strategy", attachmentStrategy()->name() );
+
+#ifdef KLEO_CHIASMUS
+  reader.writeEntry( "chiasmus-key", mChiasmusKey );
+  reader.writeEntry( "chiasmus-options", mChiasmusOptions );
+#endif
 
   saveSplitterSizes( reader );
 
@@ -2339,14 +2406,14 @@ void KMReaderWin::slotAtmDecryptWithChiasmus() {
     return;
   }
 
-  bool ok = false;
-  const QString key = KInputDialog::getItem( i18n( "Chiasmus Decryption Key Selection" ),
-                                             i18n( "Please select the Chiasmus key file to use:" ),
-                                             keys, 0, false, &ok, this );
-  if ( !ok )
+  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Decryption Key Selection" ),
+                                   keys, mChiasmusKey, mChiasmusOptions );
+  if ( selectorDlg.exec() != QDialog::Accepted )
     return;
 
-  assert( !key.isEmpty() );
+  mChiasmusOptions = selectorDlg.options();
+  mChiasmusKey = selectorDlg.key();
+  assert( !mChiasmusKey.isEmpty() );
 
   Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
   if ( !job ) {
@@ -2358,10 +2425,11 @@ void KMReaderWin::slotAtmDecryptWithChiasmus() {
 
   const QByteArray input = node->msgPart().bodyDecodedBinary();
 
-  if ( !job->setProperty( "key", key ) ||
+  if ( !job->setProperty( "key", mChiasmusKey ) ||
+       !job->setProperty( "options", mChiasmusOptions ) ||
        !job->setProperty( "input", input ) ) {
-    const QString msg = i18n( "The \"x-decrypt\" function does no accept "
-                              "\"key\" or \"input\" parameters. Please report this bug." );
+    const QString msg = i18n( "The \"x-decrypt\" function does not accept "
+                              "the expected parameters. Please report this bug." );
     KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
     return;
   }
@@ -2494,5 +2562,3 @@ void KMReaderWin::slotSaveTextAs() {
 }
 
 #include "kmreaderwin.moc"
-
-

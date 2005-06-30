@@ -505,6 +505,7 @@ void KMComposeWin::readConfig(void)
   mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
 #ifdef KLEO_CHIASMUS
   mChiasmusKey = config->readEntry( "chiasmus-key" );
+  mChiasmusOptions = config->readEntry( "chiasmus-options" );
 #endif
 
   int mode = config->readNumEntry("Completion Mode",
@@ -629,6 +630,7 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("use-fixed-font", mUseFixedFont );
 #ifdef KLEO_CHIASMUS
     config->writeEntry( "chiasmus-key", mChiasmusKey );
+    config->writeEntry( "chiasmus-options", mChiasmusOptions );
 #endif
   }
 
@@ -3951,17 +3953,14 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
     return;
   }
 
-  const int current = keys.findIndex( mChiasmusKey );
-  bool ok = false;
-  const QString key = KInputDialog::getItem( i18n( "Chiasmus Encryption Key Selection" ),
-                                             i18n( "Please select the Chiasmus key file to use:" ),
-                                             keys, QMAX( 0, current ), false, &ok, this );
-  if ( !ok )
+  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
+                                   keys, mChiasmusKey, mChiasmusOptions );
+  if ( selectorDlg.exec() != QDialog::Accepted )
     return;
 
-  assert( !key.isEmpty() );
-
-  mChiasmusKey = key;
+  mChiasmusOptions = selectorDlg.options();
+  mChiasmusKey = selectorDlg.key();
+  assert( !mChiasmusKey.isEmpty() );
   mEncryptWithChiasmus = true;
   resetter.disable();
 #endif // KLEO_CHIASMUS

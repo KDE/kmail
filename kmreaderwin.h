@@ -13,7 +13,6 @@
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
-
 class QFrame;
 class QSplitter;
 class QHBox;
@@ -448,6 +447,9 @@ private:
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
 #ifdef KLEO_CHIASMUS
   Kleo::Job * mJob;
+  // Key and options used for decryption - here and in objecttreeparser (which is a friend)
+  QString mChiasmusKey;
+  QString mChiasmusOptions;
 #endif
 
   KToggleAction *mToggleFixFontAction;
@@ -460,6 +462,34 @@ private:
   unsigned long mWaitingForSerNum;
 };
 
+#ifdef KLEO_CHIASMUS
+
+#include <kdialogbase.h>
+class KListBox;
+class KLineEdit;
+class QLabel;
+
+class ChiasmusKeySelector : public KDialogBase
+{
+  Q_OBJECT
+
+public:
+  ChiasmusKeySelector( QWidget* parent, const QString& caption,
+                       const QStringList& keys, const QString& currentKey,
+                       const QString& lastOptions );
+
+  QString key() const;
+  QString options() const;
+
+public slots:
+  void slotEditTextChanged( const QString & );
+
+ private:
+  QLabel* mLabel;
+  KListBox* mListBox;
+  KLineEdit* mOptions;
+};
+
+#endif // KLEO_CHIASMUS
 
 #endif
-

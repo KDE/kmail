@@ -260,6 +260,7 @@ private:
 #ifdef KLEO_CHIASMUS
   bool mEncryptWithChiasmus;
   QString mChiasmusKey;
+  QString mChiasmusOptions;
 #endif
 };
 

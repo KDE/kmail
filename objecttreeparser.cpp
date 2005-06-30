@@ -1604,14 +1604,14 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
     return false;
   }
 
-  bool ok = false;
-  const QString key = KInputDialog::getItem( i18n( "Chiasmus Decryption Key Selection" ),
-                                             i18n( "Please select the Chiasmus key file to use:" ),
-                                             keys, 0, false, &ok, mReader );
-  if ( !ok )
+  ChiasmusKeySelector selectorDlg( mReader, i18n( "Chiasmus Decryption Key Selection" ),
+                                   keys, mReader->mChiasmusKey, mReader->mChiasmusOptions );
+  if ( selectorDlg.exec() != QDialog::Accepted )
     return false;
 
-  assert( !key.isEmpty() );
+  mReader->mChiasmusOptions = selectorDlg.options();
+  mReader->mChiasmusKey = selectorDlg.key();
+  assert( !mReader->mChiasmusKey.isEmpty() );
 
   Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
   if ( !job ) {
@@ -1620,10 +1620,11 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
     return false;
   }
 
-  if ( !job->setProperty( "key", key ) ||
+  if ( !job->setProperty( "key", mReader->mChiasmusKey ) ||
+       !job->setProperty( "options", mReader->mChiasmusOptions ) ||
        !job->setProperty( "input", data ) ) {
-    errorText = i18n( "The \"x-decrypt\" function does no accept "
-                      "\"key\" or \"input\" parameters. Please report this bug." );
+    errorText = i18n( "The \"x-decrypt\" function does not accept "
+                      "the expected parameters. Please report this bug." );
     return false;
   }
 
