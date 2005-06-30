@@ -108,6 +108,11 @@ k_dcop:
   virtual void selectFolder( QString folder ) =0;
   virtual bool canQueryClose() =0;
 
+  /**
+   * Set the KMail Default transport.
+   * @param the name of the transport as defined in the sending
+            accounts configuration.
+  */
   virtual void setDefaultTransport( const QString & transport ) =0;
 
   virtual int timeOfLastMessageCountChange() const =0;
