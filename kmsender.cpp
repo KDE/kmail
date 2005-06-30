@@ -697,7 +697,7 @@ void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
 
 
 //-----------------------------------------------------------------------------
-KMSendProc* KMSender::createSendProcFromString(QString transport)
+KMSendProc* KMSender::createSendProcFromString( const QString & transport )
 {
   mTransportInfo->type = QString::null;
   int nr = KMTransportInfo::findTransport(transport);

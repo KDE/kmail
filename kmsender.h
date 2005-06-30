@@ -77,17 +77,17 @@ protected:
 
 private:
   /** Returns TRUE if sending is in progress. */
-  bool sending(void) const { return mSendInProgress; }
+  bool sending() const { return mSendInProgress; }
 
 public:
   /** Shall messages be sent immediately (TRUE), or shall they be
     queued and sent later upon call of sendQueued() ? */
-  bool sendImmediate(void) const { return mSendImmediate; }
+  bool sendImmediate() const { return mSendImmediate; }
   void setSendImmediate(bool);
 
   /** Shall messages be sent quoted-printable encoded. No encoding
     happens otherwise. */
-  bool sendQuotedPrintable(void) const { return mSendQuotedPrintable; }
+  bool sendQuotedPrintable() const { return mSendQuotedPrintable; }
   void setSendQuotedPrintable(bool);
 
 private:
@@ -96,7 +96,7 @@ private:
 
 public:
   /** Read configuration from global config. */
-  void readConfig(void);
+  void readConfig();
 
   /** Write configuration to global config with optional sync() */
   void writeConfig(bool withSync=TRUE);
@@ -134,16 +134,16 @@ private:
   void doSendMsgAux();
 
   /** cleanup after sending */
-  void cleanup(void);
+  void cleanup();
 
   /** Test if all required settings are set.
       Reports problems to user via dialogs and returns FALSE.
       Returns TRUE if everything is Ok. */
-  bool settingsOk(void) const;
+  bool settingsOk() const;
 
   /** Parse protocol '://' (host port? | mailer) string and
       set transport settings */
-  KMSendProc* createSendProcFromString(QString transport);
+  KMSendProc* createSendProcFromString( const QString & transport );
 
   bool runPrecommand( const QString & cmd );
 
