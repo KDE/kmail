@@ -1209,7 +1209,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if ( GlobalSettings::delayedMarkAsRead() ) {
+  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::delayedMarkAsRead() ) {
     if ( GlobalSettings::delayedMarkTime() != 0 )
       mDelayedMarkTimer.start( GlobalSettings::delayedMarkTime() * 1000, TRUE );
     else
