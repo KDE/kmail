@@ -30,7 +30,7 @@ public:
   virtual ~KMSendProc() {}
 
   /** Initialize sending of one or more messages. */
-  virtual void start();
+  void start() { emit started( doStart() ); }
 
   /** Send given message. May return before message is sent. */
   bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
@@ -73,6 +73,7 @@ private:
 private:
   virtual void doFinish() = 0;
   virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) = 0;
+  virtual bool doStart() = 0;
 
 protected:
   KMSender* mSender;
@@ -102,6 +103,8 @@ private:
   void doFinish();
   /** implemented from KMSendProc */
   bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
+  /** implemented from KMSendProc */
+  bool doStart();
 
 private:
   QCString mMsgStr;
@@ -130,6 +133,8 @@ private:
   void doFinish();
   /** implemented from KMSendProc */
   bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
+  /** implemented from KMSendProc */
+  bool doStart() { return true; }
 
   void cleanup();
 

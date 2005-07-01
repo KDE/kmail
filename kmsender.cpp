@@ -841,12 +841,6 @@ void KMSendProc::failed(const QString &aMsg)
 }
 
 //-----------------------------------------------------------------------------
-void KMSendProc::start(void)
-{
-  emit started(true);
-}
-
-//-----------------------------------------------------------------------------
 void KMSendProc::statusMsg(const QString& aMsg)
 {
   if (mSender) mSender->setStatusMsg(aMsg);
@@ -854,35 +848,34 @@ void KMSendProc::statusMsg(const QString& aMsg)
 
 //=============================================================================
 //=============================================================================
-KMSendSendmail::KMSendSendmail(KMSender* aSender):
-  KMSendProc(aSender)
+KMSendSendmail::KMSendSendmail( KMSender * sender )
+  : KMSendProc( sender ),
+    mMsgStr(),
+    mMsgPos( 0 ),
+    mMsgRest( 0 ),
+    mMailerProc( 0 )
 {
-  mMailerProc = 0;
+
 }
 
-//-----------------------------------------------------------------------------
-KMSendSendmail::~KMSendSendmail()
-{
-  delete mMailerProc;
+KMSendSendmail::~KMSendSendmail() {
+  delete mMailerProc; mMailerProc = 0;
 }
 
-//-----------------------------------------------------------------------------
-void KMSendSendmail::start(void)
-{
+bool KMSendSendmail::doStart() {
+
   if (mSender->transportInfo()->host.isEmpty())
   {
-    QString str = i18n("Please specify a mailer program in the settings.");
-    QString msg;
-    msg = i18n("Sending failed:\n%1\n"
-	"The message will stay in the 'outbox' folder and will be resent.\n"
-        "Please remove it from there if you do not want the message to "
-		"be resent.\n"
-	"The following transport protocol was used:\n  %2")
-    .arg(str + "\n")
-    .arg("sendmail://");
+    const QString str = i18n("Please specify a mailer program in the settings.");
+    const QString msg = i18n("Sending failed:\n%1\n"
+                             "The message will stay in the 'outbox' folder and will be resent.\n"
+                             "Please remove it from there if you do not want the message to "
+                             "be resent.\n"
+                             "The following transport protocol was used:\n  %2")
+                        .arg(str + "\n")
+                        .arg("sendmail://");
     KMessageBox::information(0,msg);
-    emit started(false);
-    return;
+    return false;
   }
 
   if (!mMailerProc)
@@ -896,16 +889,14 @@ void KMSendSendmail::start(void)
     connect(mMailerProc,SIGNAL(receivedStderr(KProcess*,char*,int)),
 	    this, SLOT(receivedStderr(KProcess*, char*, int)));
   }
-  emit started(true);
+  return true;
 }
 
-//-----------------------------------------------------------------------------
 void KMSendSendmail::doFinish() {
   delete mMailerProc;
   mMailerProc = 0;
 }
 
-//-----------------------------------------------------------------------------
 void KMSendSendmail::abort()
 {
   delete mMailerProc;
@@ -936,7 +927,6 @@ bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, con
 }
 
 
-//-----------------------------------------------------------------------------
 void KMSendSendmail::wroteStdin(KProcess *proc)
 {
   char* str;
@@ -963,7 +953,6 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
 }
 
 
-//-----------------------------------------------------------------------------
 void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 {
   assert(proc!=0);
@@ -972,7 +961,6 @@ void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 }
 
 
-//-----------------------------------------------------------------------------
 void KMSendSendmail::sendmailExited(KProcess *proc)
 {
   assert(proc!=0);
