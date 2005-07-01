@@ -547,7 +547,6 @@ void KMSender::doSendMsgAux()
 
   // start sending the current message
 
-  mSendProc->preSendInit();
   setStatusMsg(i18n("%3: subject of message","Sending message %1 of %2: %3")
 	       .arg(mSentMessages+mFailedMessages+1).arg(mTotalMessages)
 	       .arg(mCurrentMsg->subject()));
@@ -627,7 +626,7 @@ void KMSender::slotIdle()
   QString msg;
   QString errString;
   if (mSendProc)
-      errString = mSendProc->message();
+      errString = mSendProc->lastErrorMessage();
 
   if (mSendAborted) {
     // sending of message aborted
@@ -816,18 +815,21 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
 
 //=============================================================================
 //=============================================================================
-KMSendProc::KMSendProc(KMSender* aSender): QObject()
+KMSendProc::KMSendProc( KMSender * sender )
+  : QObject( 0 ),
+    mSender( sender ),
+    mLastErrorMessage(),
+    mSendOk( false ),
+    mSending( false )
 {
-  mSender = aSender;
-  preSendInit();
 }
 
 //-----------------------------------------------------------------------------
-void KMSendProc::preSendInit(void)
+void KMSendProc::reset()
 {
   mSending = FALSE;
   mSendOk = FALSE;
-  mMsg = QString::null;
+  mLastErrorMessage = QString::null;
 }
 
 //-----------------------------------------------------------------------------
@@ -835,7 +837,7 @@ void KMSendProc::failed(const QString &aMsg)
 {
   mSending = FALSE;
   mSendOk = FALSE;
-  mMsg = aMsg;
+  mLastErrorMessage = aMsg;
 }
 
 //-----------------------------------------------------------------------------
@@ -913,7 +915,7 @@ void KMSendSendmail::abort()
   idle();
 }
 
-bool KMSendSendmail::send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host
                << "-i" << "-f" << sender
@@ -966,7 +968,7 @@ void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 {
   assert(proc!=0);
   Q_UNUSED( proc );
-  mMsg.replace(mMsg.length(), buflen, buffer);
+  mLastErrorMessage.replace(mLastErrorMessage.length(), buflen, buffer);
 }
 
 
@@ -1001,7 +1003,7 @@ KMSendSMTP::~KMSendSMTP()
   if (mJob) mJob->kill();
 }
 
-bool KMSendSMTP::send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
   QString query = "headers=0&from=";
   query += KURL::encode_string( sender );
 

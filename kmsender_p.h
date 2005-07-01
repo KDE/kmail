@@ -32,11 +32,10 @@ public:
   /** Initialize sending of one or more messages. */
   virtual void start();
 
-  /** Initializes variables directly before send() is called. */
-  virtual void preSendInit();
-
   /** Send given message. May return before message is sent. */
-  virtual bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) = 0;
+  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+    reset(); return doSend( sender, to, cc, bcc, message );
+  }
 
   /** Cleanup after sending messages. */
   void finish() { doFinish(); deleteLater(); }
@@ -49,7 +48,7 @@ public:
   bool sendOk() const { return mSendOk; }
 
   /** Returns error message of last call of failed(). */
-  QString message() const { return mMsg; }
+  QString lastErrorMessage() const { return mLastErrorMessage; }
 
 signals:
   /** Emitted when the current message is sent or an error occurred. */
@@ -69,12 +68,17 @@ protected:
   void statusMsg(const QString&);
 
 private:
+  void reset();
+
+private:
   virtual void doFinish() = 0;
+  virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) = 0;
 
 protected:
-  bool mSendOk, mSending;
-  QString mMsg;
   KMSender* mSender;
+  QString mLastErrorMessage;
+  bool mSendOk : 1;
+  bool mSending : 1;
 };
 
 
@@ -86,7 +90,6 @@ public:
   KMSendSendmail(KMSender*);
   ~KMSendSendmail();
   void start();
-  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
   void abort();
 
 protected slots:
@@ -95,7 +98,10 @@ protected slots:
   void sendmailExited(KProcess*);
 
 private:
+  /** implemented from KMSendProc */
   void doFinish();
+  /** implemented from KMSendProc */
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
 
 private:
   QCString mMsgStr;
@@ -112,7 +118,6 @@ public:
   KMSendSMTP(KMSender *sender);
   ~KMSendSMTP();
 
-  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
   void abort();
 
 private slots:
@@ -123,6 +128,9 @@ private slots:
 private:
   /** implemented from KMSendProc */
   void doFinish();
+  /** implemented from KMSendProc */
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
+
   void cleanup();
 
 private:
