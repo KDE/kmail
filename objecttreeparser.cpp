@@ -680,6 +680,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                   << cryptPlugLibName << endl;
     int errId = 0;
     char* errTxt = 0;
+    if ( mReader )
+      emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
     bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext.data(),
                                                        cipherIsBinary,
                                                        cipherLen,
