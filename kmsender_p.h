@@ -13,15 +13,7 @@
 #include <kio/global.h>
 #include <kdeversion.h>
 
-class KMMessage;
-class KMFolder;
-class KMFolderMgr;
-class KConfig;
 class KProcess;
-class KMSendProc;
-class QStrList;
-class KMTransportInfo;
-class KMPrecommand;
 
 namespace KIO {
   class Job;
@@ -44,7 +36,7 @@ public:
   virtual void preSendInit();
 
   /** Send given message. May return before message is sent. */
-  virtual bool send(KMMessage* msg) = 0;
+  virtual bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) = 0;
 
   /** Cleanup after sending messages. */
   void finish() { doFinish(); deleteLater(); }
@@ -94,7 +86,7 @@ public:
   KMSendSendmail(KMSender*);
   ~KMSendSendmail();
   void start();
-  bool send(KMMessage* msg);
+  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
   void abort();
 
 protected slots:
@@ -120,7 +112,7 @@ public:
   KMSendSMTP(KMSender *sender);
   ~KMSendSMTP();
 
-  bool send(KMMessage *);
+  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
   void abort();
 
 private slots:
