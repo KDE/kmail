@@ -441,7 +441,7 @@ void KMSender::doSendMsg()
 
   if (!mSendProc || msgTransport != mMethodStr) {
     if (mSendProcStarted && mSendProc) {
-      mSendProc->finish(true);
+      mSendProc->finish();
       mSendProcStarted = FALSE;
     }
 
@@ -504,7 +504,7 @@ void KMSender::sendProcStarted(bool success)
 {
   if (!success) {
     if (mSendProc)
-       mSendProc->finish(true);
+       mSendProc->finish();
     else
       setStatusMsg(i18n("Unrecognized transport protocol. Unable to send message."));
     mSendProc = 0;
@@ -545,7 +545,7 @@ void KMSender::doSendMsgAux()
 void KMSender::cleanup(void)
 {
   kdDebug(5006) << k_funcinfo << endl;
-  if (mSendProc && mSendProcStarted) mSendProc->finish(true);
+  if (mSendProc && mSendProcStarted) mSendProc->finish();
   mSendProc = 0;
   mSendProcStarted = FALSE;
   if (mSendInProgress) kapp->deref();
@@ -664,7 +664,7 @@ void KMSender::slotIdle()
       return;
     }
   }
-  mSendProc->finish(true);
+  mSendProc->finish();
   mSendProc = 0;
   mSendProcStarted = false;
 
@@ -818,27 +818,10 @@ void KMSendProc::start(void)
 }
 
 //-----------------------------------------------------------------------------
-bool KMSendProc::finish(bool destructive)
-{
-  if (destructive) deleteLater();
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------
 void KMSendProc::statusMsg(const QString& aMsg)
 {
   if (mSender) mSender->setStatusMsg(aMsg);
 }
-
-//-----------------------------------------------------------------------------
-bool KMSendProc::addRecipients( const AddrSpecList & al )
-{
-  for ( AddrSpecList::const_iterator it = al.begin() ; it != al.end() ; ++it )
-    if ( !addOneRecipient( (*it).asString() ) )
-      return false;
-  return true;
-}
-
 
 //=============================================================================
 //=============================================================================
@@ -888,13 +871,9 @@ void KMSendSendmail::start(void)
 }
 
 //-----------------------------------------------------------------------------
-bool KMSendSendmail::finish(bool destructive)
-{
+void KMSendSendmail::doFinish() {
   delete mMailerProc;
   mMailerProc = 0;
-  if (destructive)
-    	deleteLater();
-  return TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -907,25 +886,33 @@ void KMSendSendmail::abort()
   idle();
 }
 
+static QStringList addrSpecListToStringList( const AddrSpecList & l, bool allowEmpty=false ) {
+  QStringList result;
+  for ( AddrSpecList::const_iterator it = l.begin(), end = l.end() ; it != end ; ++it ) {
+    const QString s = (*it).asString();
+    if ( allowEmpty || !s.isEmpty() )
+      result.push_back( s );
+  }
+  return result;
+}
 
 //-----------------------------------------------------------------------------
 bool KMSendSendmail::send(KMMessage* aMsg)
 {
   mMailerProc->clearArguments();
-  *mMailerProc << mSender->transportInfo()->host;
-  *mMailerProc << "-i";
-  *mMailerProc << "-f";
-  *mMailerProc << aMsg->sender().latin1();
+  *mMailerProc << mSender->transportInfo()->host
+               << "-i" << "-f" << aMsg->sender().latin1();
 
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing
     // BBC information by looking at source of an OpenPGP encrypted mail
-    addRecipients(aMsg->extractAddrSpecs("X-KMail-Recipients"));
+    // FIXME: extract into KMSender::doSendMsgAux()
+    *mMailerProc << addrSpecListToStringList( aMsg->extractAddrSpecs( "X-KMail-Recipients" ) );
     aMsg->removeHeaderField( "X-KMail-Recipients" );
   } else {
-    addRecipients(aMsg->extractAddrSpecs("To"));
-    addRecipients(aMsg->extractAddrSpecs("Cc"));
-    addRecipients(aMsg->extractAddrSpecs("Bcc"));
+    *mMailerProc << addrSpecListToStringList( aMsg->extractAddrSpecs( "To" ) )
+                 << addrSpecListToStringList( aMsg->extractAddrSpecs( "Cc" ) )
+                 << addrSpecListToStringList( aMsg->extractAddrSpecs( "Bcc" ) );
   }
 
   mMsgStr = aMsg->asSendableString();
@@ -991,15 +978,6 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 }
 
 
-//-----------------------------------------------------------------------------
-bool KMSendSendmail::addOneRecipient(const QString& aRcpt)
-{
-  assert(mMailerProc!=0);
-  if (!aRcpt.isEmpty()) *mMailerProc << aRcpt;
-  return TRUE;
-}
-
-
 
 //-----------------------------------------------------------------------------
 //=============================================================================
@@ -1030,44 +1008,42 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     return false;
 
   // email this is from
-  mQuery = "headers=0&from=";
-  mQuery += KURL::encode_string( sender );
+  QString query = "headers=0&from=";
+  query += KURL::encode_string( sender );
 
   // recipients
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing
     // BBC information by looking at source of an OpenPGP encrypted mail
-    mQueryField = "&to=";
-    if( !addRecipients( aMsg->extractAddrSpecs("X-KMail-Recipients")) ) {
-      return FALSE;
-    }
+    const QStringList to = addrSpecListToStringList( aMsg->extractAddrSpecs( "X-KMail-Recipients" ) );
+    if ( !to.empty() )
+      query += "&to=" + to.join( "&to=" );
     aMsg->removeHeaderField( "X-KMail-Recipients" );
   } else {
-    mQueryField = "&to=";
-    if(!addRecipients(aMsg->extractAddrSpecs("To")))
-    {
-      return FALSE;
+    if ( !aMsg->to().isEmpty() ) {
+      const QStringList to = addrSpecListToStringList( aMsg->extractAddrSpecs( "To" ) );
+      if ( !to.empty() )
+        query += "&to=" + to.join( "&to=" );
     }
 
-    if(!aMsg->cc().isEmpty())
-    {
-      mQueryField = "&cc=";
-      if(!addRecipients(aMsg->extractAddrSpecs("Cc"))) return FALSE;
+    if( !aMsg->cc().isEmpty() ) {
+      const QStringList cc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Cc" ) );
+      if ( !cc.empty() )
+        query += "&cc=" + cc.join( "&cc=" );
     }
 
-    QString bccStr = aMsg->bcc();
-    if(!bccStr.isEmpty())
-    {
-      mQueryField = "&bcc=";
-      if (!addRecipients(aMsg->extractAddrSpecs("Bcc"))) return FALSE;
+    if( !aMsg->bcc().isEmpty() ) {
+      const QStringList bcc = addrSpecListToStringList( aMsg->extractAddrSpecs( "Bcc" ) );
+      if ( !bcc.empty() )
+        query += "&bcc=" + bcc.join( "&bcc=" );
     }
   }
 
   if (ti->specifyHostname)
-    mQuery += "&hostname=" + KURL::encode_string(ti->localHostname);
+    query += "&hostname=" + KURL::encode_string(ti->localHostname);
 
   if ( !kmkernel->msgSender()->sendQuotedPrintable() )
-    mQuery += "&body=8bit";
+    query += "&body=8bit";
 
   KURL destination;
 
@@ -1118,6 +1094,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   }
 
   // dotstuffing is now done by the slave (see setting of metadata)
+  // FIXME: extract this to KMSender::doSendMsgAux()
   mMessage = aMsg->asSendableString();
   mMessageLength = mMessage.length();
   mMessageOffset = 0;
@@ -1125,38 +1102,27 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   if ( mMessageLength )
     // allow +5% for subsequent LF->CRLF and dotstuffing (an average
     // over 2G-lines gives an average line length of 42-43):
-    mQuery += "&size=" + QString::number( qRound( mMessageLength * 1.05 ) );
+    query += "&size=" + QString::number( qRound( mMessageLength * 1.05 ) );
 
   destination.setPath("/send");
-  destination.setQuery(mQuery);
-  mQuery = QString::null;
+  destination.setQuery( query );
 
-  if ((mJob = KIO::put(destination, -1, false, false, false)))
-  {
-    mJob->addMetaData( "lf2crlf+dotstuff", "slave" );
-    KIO::Scheduler::assignJobToSlave(mSlave, mJob);
-    connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
-    connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
-	    this, SLOT(dataReq(KIO::Job *, QByteArray &)));
-    mSendOk = true;
-    mInProcess = true;
-    return mSendOk;
-  }
-  else
-  {
+  mJob = KIO::put( destination, -1, false, false, false );
+  if ( !mJob ) {
     abort();
     return false;
   }
+  mJob->addMetaData( "lf2crlf+dotstuff", "slave" );
+  KIO::Scheduler::assignJobToSlave(mSlave, mJob);
+  connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
+  connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
+          this, SLOT(dataReq(KIO::Job *, QByteArray &)));
+  mSendOk = true;
+  mInProcess = true;
+  return true;
 }
 
-void KMSendSMTP::abort()
-{
-  finish(false);
-  emit idle();
-}
-
-bool KMSendSMTP::finish(bool b)
-{
+void KMSendSMTP::cleanup() {
   if(mJob)
   {
     mJob->kill(TRUE);
@@ -1171,15 +1137,15 @@ bool KMSendSMTP::finish(bool b)
   }
 
   mInProcess = false;
-  return KMSendProc::finish(b);
 }
 
-bool KMSendSMTP::addOneRecipient(const QString& _addr)
-{
-  if(!_addr.isEmpty())
-    mQuery += mQueryField + KURL::encode_string(_addr);
+void KMSendSMTP::abort() {
+  cleanup();
+  emit idle();
+}
 
-  return true;
+void KMSendSMTP::doFinish() {
+  cleanup();
 }
 
 void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)

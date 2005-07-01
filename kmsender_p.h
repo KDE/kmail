@@ -29,14 +29,6 @@ namespace KIO {
   class Slave;
 }
 
-namespace KMime {
-  namespace Types {
-    class AddrSpec;
-    typedef QValueList<AddrSpec> AddrSpecList;
-  }
-}
-
-
 class KMSendProc: public QObject
 {
   Q_OBJECT
@@ -55,7 +47,7 @@ public:
   virtual bool send(KMMessage* msg) = 0;
 
   /** Cleanup after sending messages. */
-  virtual bool finish(bool destructive);
+  void finish() { doFinish(); deleteLater(); }
 
   /** Abort sending the current message. Sets mSending to false */
   virtual void abort() = 0;
@@ -63,9 +55,6 @@ public:
   /** Returns TRUE if send was successful, and FALSE otherwise.
       Returns FALSE if sending is still in progress. */
   bool sendOk() const { return mSendOk; }
-
-  /** Returns TRUE if sending is still in progress. */
-  bool sending() const { return mSending; }
 
   /** Returns error message of last call of failed(). */
   QString message() const { return mMsg; }
@@ -82,23 +71,13 @@ protected:
   /** Called to signal a transmission error. The sender then
     calls finish() and terminates sending of messages.
     Sets mSending to FALSE. */
-  virtual void failed(const QString &msg);
+  void failed(const QString &msg);
 
   /** Informs the user about what is going on. */
-  virtual void statusMsg(const QString&);
+  void statusMsg(const QString&);
 
-  /** Called once for the contents of the header fields To, Cc, and Bcc.
-    Returns TRUE on success and FALSE on failure.
-    Calls addOneRecipient() for each recipient in the list. Aborts and
-    returns FALSE if addOneRecipient() returns FALSE. */
-  virtual bool addRecipients(const KMime::Types::AddrSpecList & aRecpList);
-
-  /** Called from within addRecipients() once for each recipient in
-    the list after all surplus characters have been stripped. E.g.
-    for: "Stefan Taferner" <taferner@kde.org>
-    addRecpient(taferner@kde.org) is called.
-    Returns TRUE on success and FALSE on failure. */
-  virtual bool addOneRecipient(const QString& aRecipient) = 0;
+private:
+  virtual void doFinish() = 0;
 
 protected:
   bool mSendOk, mSending;
@@ -113,20 +92,20 @@ class KMSendSendmail: public KMSendProc
   Q_OBJECT
 public:
   KMSendSendmail(KMSender*);
-  virtual ~KMSendSendmail();
-  virtual void start();
-  virtual bool send(KMMessage* msg);
-  virtual bool finish(bool destructive);
-  virtual void abort();
+  ~KMSendSendmail();
+  void start();
+  bool send(KMMessage* msg);
+  void abort();
 
 protected slots:
   void receivedStderr(KProcess*,char*,int);
   void wroteStdin(KProcess*);
   void sendmailExited(KProcess*);
 
-protected:
-  virtual bool addOneRecipient(const QString& aRecipient);
+private:
+  void doFinish();
 
+private:
   QCString mMsgStr;
   char* mMsgPos;
   int mMsgRest;
@@ -141,12 +120,8 @@ public:
   KMSendSMTP(KMSender *sender);
   ~KMSendSMTP();
 
-  virtual bool send(KMMessage *);
-  virtual void abort();
-  virtual bool finish(bool);
-
-protected:
-  virtual bool addOneRecipient(const QString& aRecipient);
+  bool send(KMMessage *);
+  void abort();
 
 private slots:
   void dataReq(KIO::Job *, QByteArray &);
@@ -154,8 +129,11 @@ private slots:
   void slaveError(KIO::Slave *, int, const QString &);
 
 private:
-  QString mQuery;
-  QString mQueryField;
+  /** implemented from KMSendProc */
+  void doFinish();
+  void cleanup();
+
+private:
   QCString mMessage;
   uint mMessageLength;
   uint mMessageOffset;
