@@ -148,7 +148,7 @@
           <choice name="IcalVcard"/>
           <choice name="XML"/>
         </choices>
-        <default>IcalVcard</default>
+        <default>XML</default>
         <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. "
                    "&lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and "
                    "vcard (for addressbook folders) standards. "
