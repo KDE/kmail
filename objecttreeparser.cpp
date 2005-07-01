@@ -80,7 +80,6 @@
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
-#include <kinputdialog.h>
 #include <kmessagebox.h>
 
 // other Qt headers
@@ -684,6 +683,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                   << cryptPlugLibName << endl;
     int errId = 0;
     char* errTxt = 0;
+    if ( mReader )
+      emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
     bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext.data(),
                                                        cipherIsBinary,
                                                        cipherLen,
@@ -1604,6 +1605,7 @@ bool ObjectTreeParser::decryptChiasmus( const QByteArray& data, QByteArray& body
     return false;
   }
 
+  emit mReader->noDrag();
   ChiasmusKeySelector selectorDlg( mReader, i18n( "Chiasmus Decryption Key Selection" ),
                                    keys, mReader->mChiasmusKey, mReader->mChiasmusOptions );
   if ( selectorDlg.exec() != QDialog::Accepted )
