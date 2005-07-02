@@ -105,10 +105,45 @@ KMMessage::KMMessage(DwMessage* aMsg)
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(KMFolder* parent): KMMsgBase(parent)
 {
-  mNeedsAssembly = FALSE;
+  init();
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
+{
+  init();
+  // now overwrite a few from the msgInfo
+  mMsgSize = msgInfo.msgSize();
+  mFolderOffset = msgInfo.folderOffset();
+  mStatus = msgInfo.status();
+  mEncryptionState = msgInfo.encryptionState();
+  mSignatureState = msgInfo.signatureState();
+  mMDNSentState = msgInfo.mdnSentState();
+  mDate = msgInfo.date();
+  mFileName = msgInfo.fileName();
+  KMMsgBase::assign(&msgInfo);
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessage::KMMessage(const KMMessage& other) :
+    KMMsgBase( other ),
+    ISubject(),
+    mMsg(0)
+{
+  init(); // to be safe
+  assign( other );
+}
+
+void KMMessage::init()
+{
+  mNeedsAssembly = false;
   mMsg = new DwMessage;
   mOverrideCodec = 0;
-  mDecodeHTML = FALSE;
+  mDecodeHTML = false;
+  mComplete = true;
+  mReadyToShow = true;
   mMsgSize = 0;
   mMsgLength = 0;
   mFolderOffset = 0;
@@ -119,40 +154,6 @@ KMMessage::KMMessage(KMFolder* parent): KMMsgBase(parent)
   mDate    = 0;
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
-{
-  mNeedsAssembly = FALSE;
-  mMsg = new DwMessage;
-  mOverrideCodec = 0;
-  mDecodeHTML = FALSE;
-  mMsgSize = msgInfo.msgSize();
-  mMsgLength = 0;
-  mFolderOffset = msgInfo.folderOffset();
-  mStatus = msgInfo.status();
-  mEncryptionState = msgInfo.encryptionState();
-  mSignatureState = msgInfo.signatureState();
-  mMDNSentState = msgInfo.mdnSentState();
-  mDate = msgInfo.date();
-  mFileName = msgInfo.fileName();
-  KMMsgBase::assign(&msgInfo);
-  mUnencryptedMsg = 0;
-  mLastUpdated = 0;
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage::KMMessage(const KMMessage& other) :
-    KMMsgBase( other ),
-    ISubject(),
-    mMsg(0)
-{
-  mUnencryptedMsg = 0;
-  mLastUpdated = 0;
-  assign( other );
 }
 
 void KMMessage::assign( const KMMessage& other )

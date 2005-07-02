@@ -1021,36 +1021,6 @@ unsigned long KMMsgBase::getMsgSerNum() const
   return msn;
 }
 
-
-//-----------------------------------------------------------------------------
-bool KMMsgBase::isComplete() const
-{
-  return MessageProperty::complete( getMsgSerNum() );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgBase::setComplete(bool value)
-{
-  MessageProperty::setComplete( getMsgSerNum(), value );
-  if ( value )
-    setReadyToShow( true );
-}
-
-//-----------------------------------------------------------------------------
-bool KMMsgBase::readyToShow() const
-{
-  return MessageProperty::readyToShow( getMsgSerNum() );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgBase::setReadyToShow(bool value)
-{
-  MessageProperty::setReadyToShow( getMsgSerNum(), value );
-}
-
-
 //-----------------------------------------------------------------------------
 bool KMMsgBase::transferInProgress() const
 {

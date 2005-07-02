@@ -83,20 +83,7 @@ public:
      assigned a new value */
   static void setSerialCache( const KMMsgBase*, Q_UINT32 );
   static Q_UINT32 serialCache( const KMMsgBase* );
-  /* Set the completeness for a message
-     This property becomes invalid when the message is destructed or
-     assigned a new value */
-  static void setComplete( const KMMsgBase*, bool );
-  static bool complete( const KMMsgBase* );
-  static void setComplete( Q_UINT32, bool );
-  static bool complete( Q_UINT32 );
-  /* Set whether this message is ready to be shown in the readerwin
-     This property becomes invalid when the message is destructed or
-     assigned a new value */
-  static void setReadyToShow( const KMMsgBase*, bool );
-  static bool readyToShow( const KMMsgBase* );
-  static void setReadyToShow( Q_UINT32, bool );
-  static bool readyToShow( Q_UINT32 );
+
   /* Set the transferInProgress for a message
      This property becomes invalid when the message is destructed or
      assigned a new value */
@@ -114,10 +101,6 @@ private:
   static QMap<Q_UINT32, QGuardedPtr<KMFolder> > sFolders;
   // The action scheduler currently processing a message if any
   static QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > sHandlers;
-  // The completeness state of a message if any
-  static QMap<Q_UINT32, bool > sCompletes;
-  // The readytoshow state of a message if any
-  static QMap<Q_UINT32, bool > sReadyToShows;
   // The transferInProgres state of a message if any.
   static QMap<Q_UINT32, int > sTransfers;
   // The cached serial number of a message if any.

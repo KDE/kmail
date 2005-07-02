@@ -1449,8 +1449,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   while (pos >= 0)
   {
     KMMessage *msg = new KMMessage;
-    msg->setComplete(false);
-    msg->setReadyToShow(false);
+    msg->setComplete( false );
+    msg->setReadyToShow( false );
     // nothing between the boundaries, older UWs do that
     if ( pos != 14 ) {
       msg->fromString( (*it).cdata.mid(16, pos - 16) );

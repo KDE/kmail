@@ -96,7 +96,7 @@ public:
 
   /** Copy constructor. */
   KMMessage( const KMMessage& other );
-
+  
 #if 0 // currently unused
   /** Assignment operator. */
   const KMMessage& operator=( const KMMessage& other ) {
@@ -799,6 +799,17 @@ public:
   /** Returns the last DwBodyPart that was updated */
   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
 
+  /** Return if the message is complete and not only the header of a message
+   * in an IMAP folder */
+  bool isComplete() const { return mComplete; }
+  /** Set if the message is a complete message */
+  void setComplete( bool v ) { mComplete = v; }
+  
+  /** Return if the message is ready to be shown */
+  bool readyToShow() const { return mReadyToShow; }
+  /** Set if the message is ready to be shown */
+  void setReadyToShow( bool v ) { mReadyToShow = v; }
+  
   void updateAttachmentState(DwBodyPart * part = 0);
 
   /** Returns an mbox message separator line for this message, i.e. a
@@ -833,12 +844,17 @@ private:
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
 
+  /** Initialization shared by the ctors. */
+  void init();
+  /** Assign the values of @param other to this message. Used in the copy c'tor. */
   void assign( const KMMessage& other );
 
   QString mDrafts;
   mutable DwMessage* mMsg;
-  mutable bool       mNeedsAssembly;
-  bool mDecodeHTML;
+  mutable bool       mNeedsAssembly :1;
+  bool mDecodeHTML :1;
+  bool mReadyToShow :1;
+  bool mComplete :1;
   static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
   const QTextCodec * mOverrideCodec;
