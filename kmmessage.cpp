@@ -231,6 +231,21 @@ bool KMMessage::isMessage() const
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+bool KMMessage::transferInProgress() const
+{
+  return MessageProperty::transferInProgress( getMsgSerNum() );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setTransferInProgress(bool value, bool force)
+{
+  MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
+}
+
+
+
 bool KMMessage::isUrgent() const {
   return headerField( "Priority" ).contains( "urgent", false )
     || headerField( "X-Priority" ).startsWith( "2" );

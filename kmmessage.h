@@ -812,6 +812,11 @@ public:
   
   void updateAttachmentState(DwBodyPart * part = 0);
 
+  /** Return, if the message should not be deleted */
+  bool transferInProgress() const;
+  /** Set that the message shall not be deleted because it is still required */
+  void setTransferInProgress(bool value, bool force = false);
+  
   /** Returns an mbox message separator line for this message, i.e. a
       string of the form
       "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".

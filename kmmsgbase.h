@@ -372,11 +372,6 @@ public:
   virtual bool enableUndo() { return mEnableUndo; }
   virtual void setEnableUndo( bool enable ) { mEnableUndo = enable; }
 
-  /** Return, if the message should not be deleted */
-  bool transferInProgress() const;
-  /** Set that the message shall not be deleted because it is still required */
-  void setTransferInProgress(bool value, bool force = false);
-
   /** Return if the message has at least one attachment */
   virtual KMMsgAttachmentState attachmentState() const;
 

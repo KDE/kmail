@@ -1021,19 +1021,6 @@ unsigned long KMMsgBase::getMsgSerNum() const
   return msn;
 }
 
-//-----------------------------------------------------------------------------
-bool KMMsgBase::transferInProgress() const
-{
-  return MessageProperty::transferInProgress( getMsgSerNum() );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgBase::setTransferInProgress(bool value, bool force)
-{
-  MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
-}
-
 
 //-----------------------------------------------------------------------------
 KMMsgAttachmentState KMMsgBase::attachmentState() const
