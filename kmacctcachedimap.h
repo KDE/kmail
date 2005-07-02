@@ -199,7 +199,7 @@ protected slots:
 
 private:
   QValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
-  void processNewMail( KMFolderCachedImap* folder, bool interactive, bool recurse );
+  void processNewMail( KMFolderCachedImap* folder, bool recurse );
 
 private:
   QPtrList<CachedImapJob> mJobList;

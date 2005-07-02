@@ -205,25 +205,23 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
     mMailCheckFolders.clear();
 }
 
-void KMAcctCachedImap::processNewMail( bool interactive )
+void KMAcctCachedImap::processNewMail( bool /*interactive*/ )
 {
-  if ( !mFolder ) { // happens if this is a pseudo-account (from configuredialog)
-    checkDone( false, CheckIgnored );
-    return;
-  }
+  assert( mFolder );
+
   if ( mMailCheckFolders.isEmpty() )
-   processNewMail( mFolder, interactive, true );
+    processNewMail( mFolder, true );
   else {
     KMFolder* f = mMailCheckFolders.front();
     mMailCheckFolders.pop_front();
-    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), interactive, false );
+    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), false );
   }
 }
 
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
-				       bool /* interactive */,
                                        bool recurse )
 {
+  assert( folder );
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
   mCountLastUnread = 0;
@@ -259,7 +257,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
-	  this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
+          this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   folder->serverSync( recurse );
 }
 
