@@ -96,7 +96,7 @@ public:
 
   /** Copy constructor. */
   KMMessage( const KMMessage& other );
-  
+
 #if 0 // currently unused
   /** Assignment operator. */
   const KMMessage& operator=( const KMMessage& other ) {
@@ -200,9 +200,9 @@ public:
       @return The notification message or 0, if none should be sent.
    **/
   KMMessage* createMDN( KMime::MDN::ActionMode a,
-			KMime::MDN::DispositionType d,
-			bool allowGUI=false,
-			QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
+          KMime::MDN::DispositionType d,
+          bool allowGUI=false,
+          QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
   void fromDwString(const DwString& str, bool setStatus=FALSE);
@@ -590,7 +590,7 @@ public:
       If withBody is false the body of the KMMessagePart will be left
       empty and only the headers of the part will be filled in*/
   static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
-		       bool withBody = true );
+          bool withBody = true );
 
   /** Get the body part at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, aPart will have its
@@ -663,7 +663,7 @@ public:
    * only the name part and not the given emailAddr.
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,
-					 bool stripped=TRUE);
+          bool stripped=TRUE);
 
   /** Strips an address from an address list. This is for example used
       when replying to all.
@@ -799,17 +799,16 @@ public:
   /** Returns the last DwBodyPart that was updated */
   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
 
-  /** Return if the message is complete and not only the header of a message
-   * in an IMAP folder */
+  /** Return true if the complete message is available without referring to the backing store.*/
   bool isComplete() const { return mComplete; }
   /** Set if the message is a complete message */
   void setComplete( bool v ) { mComplete = v; }
-  
+
   /** Return if the message is ready to be shown */
   bool readyToShow() const { return mReadyToShow; }
   /** Set if the message is ready to be shown */
   void setReadyToShow( bool v ) { mReadyToShow = v; }
-  
+
   void updateAttachmentState(DwBodyPart * part = 0);
 
   /** Return, if the message should not be deleted */
@@ -830,20 +829,20 @@ private:
     a template where the following fields are replaced with the
     corresponding values:
     <pre>
-	%D: date of this message
-	%S: subject of this message
-	%F: sender (from) of this message
-	%%: a single percent sign
+        %D: date of this message
+        %S: subject of this message
+        %F: sender (from) of this message
+        %%: a single percent sign
     </pre>
     No attachments are handled if includeAttach is false.
     The signature is stripped if aStripSignature is true and
     smart quoting is turned on. Signed or encrypted texts
     get converted to plain text when allowDecryption is true. */
   QString asQuotedString( const QString & headerStr,
-			  const QString & indentStr,
-			  const QString & selection=QString::null,
-			  bool aStripSignature=true,
-			  bool allowDecryption=true) const;
+          const QString & indentStr,
+          const QString & selection=QString::null,
+          bool aStripSignature=true,
+          bool allowDecryption=true) const;
 
   /** Return the textual content of the message as plain text,
       converting HTML to plain text if necessary. */
