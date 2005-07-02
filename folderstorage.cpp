@@ -976,8 +976,8 @@ void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int 
 void FolderStorage::setRDict(KMMsgDictREntry *rentry) const
 {
   if (! mExportsSernums )
-    kdDebug() << kdBacktrace() << endl;
-  assert( mExportsSernums); // otherwise things are very wrong
+    kdDebug() "WTF, this FolderStorage should be invisible to the msgdict, who is calling us?" << kdBacktrace() << endl;
+  assert( mExportsSernums ); // otherwise things are very wrong
   if (rentry == mRDict)
     return;
   KMMsgDict::deleteRentry(mRDict);
