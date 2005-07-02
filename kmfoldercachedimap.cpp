@@ -243,10 +243,11 @@ void KMFolderCachedImap::writeAnnotationConfig()
 
 int KMFolderCachedImap::create()
 {
-  KMFolderMaildir::create();
+  int rc = KMFolderMaildir::create();
   // FIXME why the below? - till
   readConfig();
   mUnreadMsgs = -1;
+  return rc;
 }
 
 void KMFolderCachedImap::remove()
