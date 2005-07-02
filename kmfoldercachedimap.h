@@ -98,6 +98,9 @@ public:
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
 
+  /** @reimpl */
+  virtual int create();
+  
   /** Remove this folder */
   virtual void remove();
 

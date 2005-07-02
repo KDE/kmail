@@ -202,12 +202,10 @@ int KMFolderMbox::canAccess()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::create(bool imap)
+int KMFolderMbox::create()
 {
   int rc;
   int old_umask;
-
-  Q_UNUSED(imap);
 
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);

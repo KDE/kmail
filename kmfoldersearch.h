@@ -171,7 +171,7 @@ public:
   virtual int canAccess();
   virtual void sync();
   virtual void close(bool force=FALSE);
-  virtual int create(bool imap = FALSE);
+  virtual int create();
   virtual int compact( bool );
   virtual bool isReadOnly() const;
   virtual const KMMsgBase* getMsgBase(int idx) const;

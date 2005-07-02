@@ -85,10 +85,8 @@ public:
   static bool removeFile( const QString & folderPath,
                           const QString & filename );
 
-  /** Create a new folder with the name of this object and open it.
-      Returns zero on success and an error code equal to the
-      c-library fopen call otherwise. */
-  virtual int create(bool imap = FALSE);
+  /** @reimpl  */
+  virtual int create();
 
   /** Remove some deleted messages from the folder. Returns zero on success
     and an errno on failure. This is only for use from MaildirCompactionJob. */

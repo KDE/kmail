@@ -285,7 +285,7 @@ public:
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
-  virtual int create(bool imap = FALSE) = 0;
+  virtual int create() = 0;
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
@@ -441,6 +441,10 @@ signals:
    * is used by all code which uses the locatio on disk of the folder storage
    * ( or the cache storage ) as an identifier for the folder. */
   void locationChanged( const QString &, const QString & );
+
+  /** Emitted when the contents type (calendar, mail, tasks, ..) of the
+   * folderstorage changes. */
+  void contentsTypeChanged( KMail::FolderContentsType type );
 
   /** Emitted when the readonly status of the folder changes. */
   void readOnlyChanged(KMFolder*);

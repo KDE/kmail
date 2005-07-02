@@ -32,6 +32,7 @@
 #include "expirejob.h"
 #include "compactionjob.h"
 #include "kmfoldertree.h"
+#include "kmailicalifaceimpl.h"
 
 #include <errno.h>
 
@@ -40,6 +41,7 @@
 #include <kshortcut.h>
 #include <kmessagebox.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
@@ -66,8 +68,19 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   else
     mStorage = new KMFolderMbox( this, aFolderName.latin1() );
 
-   // trigger from here, since it needs a fully constructed FolderStorage
   assert( mStorage );
+
+  QFileInfo dirinfo;
+  dirinfo.setFile( mStorage->location() );
+  if ( !dirinfo.exists() ) {
+    int rc = mStorage->create();
+    QString msg = i18n("<qt>Error while creating file <b>%1</b>:<br>%2</qt>").arg(aFolderName).arg(strerror(rc));
+    if ( rc ) {
+      KMessageBox::information(0, msg);
+    }
+  }
+
+   // trigger from here, since it needs a fully constructed FolderStorage
   if ( mExportsSernums )
     mStorage->registerWithMessageDict();
   if ( !mHasIndex )
@@ -111,6 +124,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( removed( KMFolder*, bool ) ),
            SIGNAL( removed( KMFolder*, bool ) ) );
+
+  connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
+                this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   mStorage->readConfig();
@@ -475,11 +491,6 @@ void KMFolder::markUnreadAsRead()
   mStorage->markUnreadAsRead();
 }
 
-int KMFolder::create( bool imap )
-{
-  return mStorage->create( imap );
-}
-
 void KMFolder::remove()
 {
   mStorage->remove();
@@ -822,6 +833,12 @@ void KMFolder::setShortcut( const KShortcut &sc )
 bool KMFolder::isMoveable() const
 {
   return mStorage->isMoveable();
+}
+
+void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
+{
+  kmkernel->iCalIface().folderContentsTypeChanged( this, type );
+  emit iconsChanged();
 }
 
 #include "kmfolder.moc"

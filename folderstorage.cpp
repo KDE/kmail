@@ -45,7 +45,6 @@
 #include "kmcommands.h"
 #include "listjob.h"
 using KMail::ListJob;
-#include "kmailicalifaceimpl.h"
 #include "kmsearchpattern.h"
 
 #include <klocale.h>
@@ -1090,7 +1089,7 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
 {
   if ( type != mContentsType ) {
     mContentsType = type;
-    kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
+    emit contentsTypeChanged( type );
   }
 }
 

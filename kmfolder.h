@@ -297,11 +297,6 @@ public:
   /** Mark all new and unread messages as read. */
   void markUnreadAsRead();
 
-  /** Create a new folder with the name of this object and open it.
-      Returns zero on success and an error code equal to the
-      c-library fopen call otherwise. */
-  int create(bool imap = false);
-
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
     process, whether there are others using it or not.
@@ -591,6 +586,10 @@ public slots:
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */
   void reallyAddCopyOfMsg(KMMessage* aMsg);
+
+private slots:
+  /** The type of contents of this folder changed. Do what is needed. */
+  void slotContentsTypeChanged( KMail::FolderContentsType type );
 
 private:
   FolderStorage* mStorage;

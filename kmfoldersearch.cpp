@@ -32,8 +32,6 @@
 #include <klocale.h>
 #include <kconfig.h>
 
-#include <qfileinfo.h>
-
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -43,6 +41,8 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <utime.h>
+
+#include <qfile.h>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
@@ -79,6 +79,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     mSearchPattern = 0;
     mSearchedCount = 0;
     mFoundCount = 0;
+
     mProcessNextBatchTimer = new QTimer();
     connect(mProcessNextBatchTimer, SIGNAL(timeout()),
             this, SLOT(slotProcessNextBatch()));
@@ -565,7 +566,7 @@ void KMFolderSearch::close(bool force)
     mUnreadMsgs  = -1;
 }
 
-int KMFolderSearch::create(bool)
+int KMFolderSearch::create()
 {
     int old_umask;
     int rc = unlink(QFile::encodeName(location()));

@@ -2010,11 +2010,11 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderImap::create(bool imap)
+int KMFolderImap::create()
 {
   readConfig();
   mUnreadMsgs = -1;
-  return KMFolderMbox::create(imap);
+  return KMFolderMbox::create();
 }
 
 QValueList<ulong> KMFolderImap::splitSets(const QString uids)

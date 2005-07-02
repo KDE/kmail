@@ -264,7 +264,7 @@ public:
   void setIncludeInMailCheck( bool check );
 
   /** Inherited */
-  virtual int create(bool imap = FALSE);
+  virtual int create();
 
   /** imap folders cannot expire */
   virtual bool isAutoExpire() const { return false; }

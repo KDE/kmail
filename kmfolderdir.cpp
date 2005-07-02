@@ -95,26 +95,16 @@ KMFolderDir::~KMFolderDir()
 KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, KMFolderType aFolderType)
 {
   KMFolder* fld;
-  int rc;
 
   assert(!aFolderName.isEmpty());
+  // FIXME urgs, is this still needed
   if (mDirType == KMImapDir)
     fld = new KMFolder( this, aFolderName, KMFolderTypeImap );
   else
     fld = new KMFolder( this, aFolderName, aFolderType );
+
   assert(fld != 0);
-
   fld->setSystemFolder(aSysFldr);
-
-  rc = fld->create(mDirType == KMImapDir);
-  if (rc)
-  {
-    QString msg = i18n("<qt>Error while creating file <b>%1</b>:<br>%2</qt>").arg(aFolderName).arg(strerror(rc));
-    KMessageBox::information(0, msg);
-    delete fld;
-    fld = 0;
-    return 0;
-  }
 
   KMFolderNode* fNode;
   int index = 0;

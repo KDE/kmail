@@ -50,6 +50,7 @@ using KMail::MaildirJob;
 KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
   : KMFolderIndex(folder, name)
 {
+
 }
 
 
@@ -180,7 +181,7 @@ int KMFolderMaildir::createMaildirFolders( const QString & folderPath )
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::create(bool imap)
+int KMFolderMaildir::create()
 {
   int rc;
   int old_umask;
@@ -192,6 +193,7 @@ int KMFolderMaildir::create(bool imap)
   if ( rc != 0 )
     return rc;
 
+  // FIXME no path == no index? - till
   if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
@@ -209,10 +211,6 @@ int KMFolderMaildir::create(bool imap)
 
   mOpenCount++;
   mChanged = false;
-  if (imap) {
-    readConfig();
-    mUnreadMsgs = -1;
-  }
 
   rc = writeIndex();
   return rc;
