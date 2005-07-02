@@ -1182,8 +1182,7 @@ void KMKernel::recoverDeadLetters()
   if ( !dir.exists( "autosave" ) )
     return;
 
-  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir );
-  folder.setAutoCreateIndex( false );
+  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
   const int rc = folder.open();
   if ( rc ) {
     perror( "cannot open autosave folder" );

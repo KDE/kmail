@@ -89,7 +89,8 @@ void KMAcctMaildir::processNewMail(bool)
     }
   }
 
-  KMFolder mailFolder(0, location(), KMFolderTypeMaildir);
+  KMFolder mailFolder(0, location(), KMFolderTypeMaildir,
+                              false /* no index */, false /* don't export sernums */);
 
   long num = 0;
   long i;
@@ -120,8 +121,6 @@ void KMAcctMaildir::processNewMail(bool)
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     checkDone( hasNewMail, CheckError );
   }
-
-  mailFolder.setAutoCreateIndex(FALSE);
 
   rc = mailFolder.open();
   if (rc)

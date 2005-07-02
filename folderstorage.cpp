@@ -63,20 +63,21 @@ using KMail::ListJob;
 FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   : QObject( folder, aName ), mFolder( folder ), mEmitChangedTimer( 0L )
 {
-  mOpenCount      = 0;
-  mQuiet	  = 0;
-  mChanged        = FALSE;
-  mAutoCreateIndex= TRUE;
-  mAcctList       = 0;
-  mDirty          = FALSE;
-  mUnreadMsgs      = -1;
+  mOpenCount = 0;
+  mQuiet = 0;
+  mChanged = false;
+  mAutoCreateIndex = true;
+  mExportsSernums = false;
+  mAcctList = 0;
+  mDirty = false;
+  mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
-  mTotalMsgs      = -1;
-  needsCompact    = FALSE;
-  mConvertToUtf8  = FALSE;
-  mCompactable     = TRUE;
-  mNoContent      = FALSE;
-  mNoChildren     = FALSE;
+  mTotalMsgs = -1;
+  needsCompact    = false;
+  mConvertToUtf8  = false;
+  mCompactable     = true;
+  mNoContent      = false;
+  mNoChildren     = false;
   mRDict = 0;
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
@@ -163,7 +164,7 @@ void FolderStorage::markNewAsUnread()
     if (msgBase->isNew())
     {
       msgBase->setStatus(KMMsgStatusUnread);
-      msgBase->setDirty(TRUE);
+      msgBase->setDirty(true);
     }
   }
 }
@@ -218,7 +219,7 @@ void FolderStorage::quiet(bool beQuiet)
        // We emit it here, because this signal is delayed if mQuiet >0
        emit numUnreadMsgsChanged( folder() );
       }
-      mChanged = FALSE;
+      mChanged = false;
     }
   }
 }
@@ -301,9 +302,9 @@ bool FolderStorage::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
             SLOT(reallyAddMsg(KMMessage*)));
     job->start();
     aMsg->setTransferInProgress( true );
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
 
@@ -478,7 +479,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {
         kdDebug(5006) << "Error: " << location() <<
           " Index file is inconsistent with folder file. This should never happen." << endl;
-        mCompactable = FALSE; // Don't compact
+        mCompactable = false; // Don't compact
         writeConfig();
       }
 
@@ -550,7 +551,7 @@ KMMsgInfo* FolderStorage::unGetMsg(int idx)
 bool FolderStorage::isMessage(int idx)
 {
   KMMsgBase* mb;
-  if (!(idx >= 0 && idx <= count())) return FALSE;
+  if (!(idx >= 0 && idx <= count())) return false;
   mb = getMsgBase(idx);
   return (mb && mb->isMessage());
 }
@@ -637,7 +638,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   oldIdsLoc =  KMMsgDict::instance()->getFolderIdsLocation( *this );
   QString oldConfigString = "Folder-" + folder()->idString();
 
-  close(TRUE);
+  close(true);
 
   oldName = folder()->fileName();
   oldParent = folder()->parent();
@@ -718,10 +719,11 @@ void FolderStorage::remove()
 {
   assert(!folder()->name().isEmpty());
 
-  clearIndex(true, true); // delete and remove from dict
-  close(TRUE);
+  clearIndex( true, mExportsSernums ); // delete and remove from dict if necessary
+  close(true);
 
-  KMMsgDict::mutableInstance()->removeFolderIds( *this );
+  if ( mExportsSernums )
+    KMMsgDict::mutableInstance()->removeFolderIds( *this );
   unlink(QFile::encodeName(indexLocation()) + ".sorted");
   unlink(QFile::encodeName(indexLocation()));
 
@@ -744,18 +746,19 @@ int FolderStorage::expunge()
 
   assert(!folder()->name().isEmpty());
 
-  clearIndex(true, true);   // delete and remove from dict
-  close(TRUE);
+  clearIndex( true, mExportsSernums );   // delete and remove from dict, if needed
+  close( true );
 
-  KMMsgDict::mutableInstance()->removeFolderIds( *this );
-  if (mAutoCreateIndex)
+  if ( mExportsSernums )
+    KMMsgDict::mutableInstance()->removeFolderIds( *this );
+  if ( mAutoCreateIndex )
     truncateIndex();
   else unlink(QFile::encodeName(indexLocation()));
 
   int rc = expungeContents();
   if (rc) return rc;
 
-  mDirty = FALSE;
+  mDirty = false;
   needsCompact = false; //we're cleared and truncated no need to compact
 
   if (openCount > 0)
@@ -767,7 +770,7 @@ int FolderStorage::expunge()
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
   emit numUnreadMsgsChanged( folder() );
-  if (mAutoCreateIndex)
+  if ( mAutoCreateIndex ) // FIXME Heh? - Till
     writeConfig();
   emit changed();
   emit expunged( folder() );
@@ -870,7 +873,7 @@ void FolderStorage::readConfig()
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
-  mCompactable = config->readBoolEntry("Compactable", TRUE);
+  mCompactable = config->readBoolEntry("Compactable", true);
 
   int type = config->readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
@@ -905,16 +908,19 @@ void FolderStorage::correctUnreadMsgsCount()
 
 void FolderStorage::registerWithMessageDict()
 {
+  mExportsSernums = true;
   readFolderIdsFile();
 }
 
 void FolderStorage::deregisterFromMessageDict()
 {
   writeFolderIdsFile();
+  mExportsSernums = false;
 }
 
 void FolderStorage::readFolderIdsFile()
 {
+  if ( !mExportsSernums ) return;
   if ( KMMsgDict::mutableInstance()->readFolderIds( *this ) == -1 ) {
     invalidateFolder();
   }
@@ -925,6 +931,7 @@ void FolderStorage::readFolderIdsFile()
 
 void FolderStorage::invalidateFolder()
 {
+  if ( !mExportsSernums ) return;
   unlink(QFile::encodeName( indexLocation()) + ".sorted");
   unlink(QFile::encodeName( indexLocation()) + ".ids");
   fillMessageDict();
@@ -936,18 +943,21 @@ void FolderStorage::invalidateFolder()
 //-----------------------------------------------------------------------------
 int FolderStorage::writeFolderIdsFile() const
 {
+  if ( !mExportsSernums ) return -1;
   return KMMsgDict::mutableInstance()->writeFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::touchFolderIdsFile()
 {
+  if ( !mExportsSernums ) return -1;
   return KMMsgDict::mutableInstance()->touchFolderIds( *this );
 }
 
 //-----------------------------------------------------------------------------
 int FolderStorage::appendToFolderIdsFile( int idx )
 {
+  if ( !mExportsSernums ) return -1;
   int ret = 0;
   if ( count() == 1 ) {
     ret = KMMsgDict::mutableInstance()->writeFolderIds( *this );
@@ -959,7 +969,19 @@ int FolderStorage::appendToFolderIdsFile( int idx )
 
 void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int idx )
 {
+  if ( !mExportsSernums ) return;
   KMMsgDict::mutableInstance()->replace( sernum, msg, idx );
+}
+
+void FolderStorage::setRDict(KMMsgDictREntry *rentry) const
+{
+  if (! mExportsSernums )
+    kdDebug() << kdBacktrace() << endl;
+  assert( mExportsSernums); // otherwise things are very wrong
+  if (rentry == mRDict)
+    return;
+  KMMsgDict::deleteRentry(mRDict);
+  mRDict = rentry;
 }
 
 //-----------------------------------------------------------------------------
@@ -974,13 +996,6 @@ void FolderStorage::setStatus(int idx, KMMsgStatus status, bool toggle)
   }
 }
 
-void FolderStorage::setRDict(KMMsgDictREntry *rentry) const
-{
-  if (rentry == mRDict)
-	return;
-  KMMsgDict::deleteRentry(mRDict);
-  mRDict = rentry;
-}
 
 //-----------------------------------------------------------------------------
 void FolderStorage::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)

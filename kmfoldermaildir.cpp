@@ -485,7 +485,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setMsgSize(size);
-  idx = mMsgList.append(&aMsg->toMsgBase());
+  idx = mMsgList.append( &aMsg->toMsgBase(), mExportsSernums );
   if (aMsg->getMsgSerNum() <= 0)
     aMsg->setMsgSerNum();
   else
@@ -511,7 +511,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
 
-    error |= appendToFolderIdsFile( idx );
+    if ( mExportsSernums )
+      error |= appendToFolderIdsFile( idx );
 
     if (error) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
@@ -740,7 +741,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       if ( !uidStr.isEmpty() )
          mi->setUID( uidStr.toULong() );
       mi->setDirty(false);
-      mMsgList.append(mi);
+      mMsgList.append( mi, mExportsSernums );
 
       // if this is a New file and is in 'new', we move it to 'cur'
       if (status & KMMsgStatusNew)

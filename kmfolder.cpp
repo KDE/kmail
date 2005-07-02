@@ -43,10 +43,12 @@
 
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
-                    KMFolderType aFolderType )
+                             KMFolderType aFolderType, bool withIndex, bool exportedSernums )
   : KMFolderNode( aParent, aFolderName ), mStorage(0),
     mChild( 0 ),
     mIsSystemFolder( false ),
+    mHasIndex( withIndex ),
+    mExportsSernums( exportedSernums ),
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
@@ -66,8 +68,10 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
    // trigger from here, since it needs a fully constructed FolderStorage
   assert( mStorage );
-  if ( aParent )
+  if ( mExportsSernums )
     mStorage->registerWithMessageDict();
+  if ( !mHasIndex )
+    mStorage->setAutoCreateIndex( false );
 
   if ( aParent ) {
     connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
@@ -117,7 +121,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
 KMFolder::~KMFolder()
 {
-  if ( mStorage ) mStorage->deregisterFromMessageDict();
+  if ( mHasIndex ) mStorage->deregisterFromMessageDict();
   delete mStorage;
 }
 
@@ -489,16 +493,6 @@ int KMFolder::expunge()
 int KMFolder::rename( const QString& newName, KMFolderDir *aParent )
 {
   return mStorage->rename( newName, aParent );
-}
-
-bool KMFolder::autoCreateIndex() const
-{
-  return mStorage->autoCreateIndex();
-}
-
-void KMFolder::setAutoCreateIndex( bool b )
-{
-  mStorage->setAutoCreateIndex( b );
 }
 
 bool KMFolder::dirty() const

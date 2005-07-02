@@ -665,7 +665,7 @@ int KMFolderMbox::createIndexFromContents()
           mi->setStatus(status, xstatus);
           mi->setDate( dateStr.stripWhiteSpace() );
           mi->setDirty(false);
-          mMsgList.append(mi);
+          mMsgList.append(mi, mExportsSernums );
 
           *status = '\0';
           *xstatus = '\0';
@@ -1080,7 +1080,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   aMsg->setParent(folder());
   aMsg->setFolderOffset(offs);
   aMsg->setMsgSize(size);
-  idx = mMsgList.append(&aMsg->toMsgBase());
+  idx = mMsgList.append(&aMsg->toMsgBase(), mExportsSernums );
   if ( aMsg->getMsgSerNum() <= 0 )
     aMsg->setMsgSerNum();
   else
@@ -1113,7 +1113,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
     fflush(mIndexStream);
     error = ferror(mIndexStream);
 
-    error |= appendToFolderIdsFile( idx );
+    if ( mExportsSernums )
+      error |= appendToFolderIdsFile( idx );
 
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;

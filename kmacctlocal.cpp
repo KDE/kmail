@@ -114,7 +114,8 @@ bool KMAcctLocal::preProcess()
     }
   }
 
-  mMailFolder = new KMFolder( 0, location(), KMFolderTypeMbox );
+  mMailFolder = new KMFolder( 0, location(), KMFolderTypeMbox,
+                              false /* no index */, false /* don't export sernums */ );
   KMFolderMbox* mboxStorage =
     static_cast<KMFolderMbox*>(mMailFolder->storage());
   mboxStorage->setLockType( mLock );
@@ -148,9 +149,7 @@ bool KMAcctLocal::preProcess()
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     return false;
   }
-
-  mMailFolder->setAutoCreateIndex(FALSE);
-
+  
   const int rc = mMailFolder->open();
   if ( rc != 0 ) {
     QString aStr;

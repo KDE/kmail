@@ -586,27 +586,30 @@ friend class KMMsgDict;
 
   int mOpenCount;
   int mQuiet;
-  bool mChanged;
+  bool mChanged :1;
   /** is the automatic creation of a index file allowed ? */
-  bool mAutoCreateIndex;
+  bool mAutoCreateIndex :1;
+  /** Has this storage exported its serial numbers to the global message
+   * dict for lookup? */
+  bool mExportsSernums :1;
   /** if the index is dirty it will be recreated upon close() */
-  bool mDirty;
+  bool mDirty :1;
   /** TRUE if the files of the folder are locked (writable) */
-  bool mFilesLocked;
+  bool mFilesLocked :1;
   KMAcctList* mAcctList;
 
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
-  bool mWriteConfigEnabled;
+  bool mWriteConfigEnabled :1;
   /** sven: true if on destruct folder needs to be compacted. */
-  bool needsCompact;
+  bool needsCompact :1;
   /** false if index file is out of sync with mbox file */
-  bool mCompactable;
-  bool mNoContent;
-  bool mNoChildren;
-  bool mConvertToUtf8;
-  bool mContentsTypeChanged;
+  bool mCompactable :1;
+  bool mNoContent :1;
+  bool mNoChildren :1;
+  bool mConvertToUtf8 :1;
+  bool mContentsTypeChanged :1;
 
   /** Points at the reverse dictionary for this folder. */
   mutable KMMsgDictREntry *mRDict;

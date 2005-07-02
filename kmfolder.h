@@ -71,12 +71,24 @@ class KMFolder: public KMFolderNode
   friend class ::KMFolderJob;
 public:
 
-
-  /** Usually a parent is given. But in some cases there is no
-    fitting parent object available. Then the name of the folder
-    is used as the absolute path to the folder file. */
+  /**
+   * Constructs a new Folder object. 
+   * @param parent The directory in the folder storage hierarchy under which
+   * the folder's storage will be found or created.
+   * @param name If name of the folder. In case there is no parent directory, because
+   * the folder is free-standing (/var/spool/mail/foo), this is used for the full path to
+   * the folder's storage location.
+   * @param aFolderType The type of folder to create.
+   * @param withIndex Wether this folder has an index. No-index folders are
+   * those used by KMail internally, the Outbox, and those of local spool accounts,
+   * for example.
+   * @param exportedSernums whether this folder exports its serial numbers to
+   * the global MsgDict for lookup.
+   * @return A new folder instance.
+   */
   KMFolder( KMFolderDir* parent, const QString& name,
-            KMFolderType aFolderType );
+                KMFolderType aFolderType, bool withIndex = true,
+                bool exportedSernums = true );
   ~KMFolder();
 
   /** Returns true if this folder is the inbox on the local disk */
@@ -224,8 +236,8 @@ public:
   void emitMsgAddedSignals(int idx);
 
   /** Remove (first occurrence of) given message from the folder. */
-  void removeMsg(int i, bool imapQuiet = FALSE);
-  void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);
+  void removeMsg(int i, bool imapQuiet = false);
+  void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = false);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -269,9 +281,9 @@ public:
     Returns zero if readable and writable. */
   int canAccess();
 
-  /** Close folder. If force is TRUE the files are closed even if
+  /** Close folder. If force is true the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  void close(bool force=FALSE);
+  void close(bool force=false);
 
   /** fsync buffers to disk */
   void sync();
@@ -288,7 +300,7 @@ public:
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
-  int create(bool imap = FALSE);
+  int create(bool imap = false);
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
@@ -314,14 +326,7 @@ public:
     on failure. */
   int rename(const QString& newName, KMFolderDir *aParent = 0);
 
-  /** Returns TRUE if a table of contents file is automatically created. */
-  bool autoCreateIndex() const;
-
-  /** Allow/disallow automatic creation of a table of contents file.
-    Default is TRUE. */
-  void setAutoCreateIndex(bool);
-
-  /** Returns TRUE if the table of contents is dirty. This happens when
+  /** Returns true if the table of contents is dirty. This happens when
     a message is deleted from the folder. The toc will then be re-created
     when the folder is closed. */
   bool dirty() const;
@@ -329,7 +334,7 @@ public:
   /** Change the dirty flag. */
   void setDirty(bool f);
 
-  /** Returns TRUE if the folder contains deleted messages */
+  /** Returns true if the folder contains deleted messages */
   bool needsCompacting() const;
   void setNeedsCompacting(bool f);
 
@@ -346,7 +351,7 @@ public:
   /** Is the folder read-only? */
   bool isReadOnly() const;
 
-  /** Returns TRUE if the folder is a kmail system folder. These are
+  /** Returns true if the folder is a kmail system folder. These are
     the folders 'inbox', 'outbox', 'sent', 'trash'. The name of these
     folders is nationalized in the folder display and they cannot have
     accounts associated. Deletion is also forbidden. Etc. */
@@ -364,10 +369,10 @@ public:
   /** URL of the node for visualization purposes. */
   virtual QString prettyURL() const;
 
-  /** Returns TRUE if accounts are associated with this folder. */
+  /** Returns true if accounts are associated with this folder. */
   bool hasAccounts() const;
 
-  /** Returns TRUE if this folder is associated with a mailing-list. */
+  /** Returns true if this folder is associated with a mailing-list. */
   void setMailingListEnabled( bool enabled );
   bool isMailingListEnabled() const { return mMailingListEnabled; }
 
@@ -591,13 +596,15 @@ private:
   FolderStorage* mStorage;
   KMFolderDir* mChild;
   bool mIsSystemFolder;
+  bool mHasIndex :1;
+  bool mExportsSernums :1;
 
   /** nationalized label or QString::null (then name() should be used) */
   QString mLabel;
   QString mSystemLabel;
 
   /** Support for automatic expiry of old messages */
-  bool         mExpireMessages;          // TRUE if old messages are expired
+  bool         mExpireMessages;          // true if old messages are expired
   int          mUnreadExpireAge;         // Given in unreadExpireUnits
   int          mReadExpireAge;           // Given in readExpireUnits
   ExpireUnits  mUnreadExpireUnits;
