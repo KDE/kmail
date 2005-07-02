@@ -56,7 +56,7 @@ KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
 //-----------------------------------------------------------------------------
 KMFolderMaildir::~KMFolderMaildir()
 {
-  if (mOpenCount>0) close(TRUE);
+  if (mOpenCount>0) close(true);
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
@@ -134,11 +134,11 @@ int KMFolderMaildir::open()
   }
   else
   {
-    mAutoCreateIndex = FALSE;
+    mAutoCreateIndex = false;
     rc = createIndexFromContents();
   }
 
-  mChanged = FALSE;
+  mChanged = false;
 
   //readConfig();
 
@@ -196,7 +196,7 @@ int KMFolderMaildir::create(bool imap)
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-    updateIndexStreamPtr(TRUE);
+    updateIndexStreamPtr(true);
     umask(old_umask);
 
     if (!mIndexStream) return errno;
@@ -204,11 +204,11 @@ int KMFolderMaildir::create(bool imap)
   }
   else
   {
-    mAutoCreateIndex = FALSE;
+    mAutoCreateIndex = false;
   }
 
   mOpenCount++;
-  mChanged = FALSE;
+  mChanged = false;
   if (imap) {
     readConfig();
     mUnreadMsgs = -1;
@@ -242,11 +242,11 @@ void KMFolderMaildir::close(bool aForced)
       writeConfig();
   }
 
-  mMsgList.clear(TRUE);
+  mMsgList.clear(true);
 
     if (mIndexStream) {
 	fclose(mIndexStream);
-	updateIndexStreamPtr(TRUE);
+	updateIndexStreamPtr(true);
     }
 
   mOpenCount   = 0;
@@ -380,7 +380,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
   long len;
   unsigned long size;
-  bool opened = FALSE;
+  bool opened = false;
   KMFolder* msgParent;
   QCString msgText;
   int idx(-1);
@@ -434,7 +434,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 
   if (!isOpened())
   {
-    opened = TRUE;
+    opened = true;
     rc = open();
     kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
@@ -886,8 +886,7 @@ int KMFolderMaildir::createIndexFromContents()
     ++it;
   }
 
-  if (autoCreateIndex())
-  {
+  if ( autoCreateIndex() ) {
     emit statusMsg(i18n("Writing index file"));
     writeIndex();
   }
