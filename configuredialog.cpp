@@ -61,6 +61,7 @@ using KMail::ImapAccountBase;
 using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
+#include "kmacctcachedimap.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -1372,18 +1373,11 @@ void AccountsPage::ReceivingTab::slotTweakAccountList()
 
 void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
-  QValueList< QGuardedPtr<KMAccount> > newCachedImapAccounts;
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     kmkernel->acctMgr()->add( *it );
     (*it)->installTimer();
-    // remember new Disconnected IMAP accounts because they are needed again
-    if( (*it)->isA( "KMAcctCachedImap" ) ) {
-      newCachedImapAccounts.append( *it );
-    }
   }
-
-  mNewAccounts.clear();
 
   // Update accounts that have been modified
   QValueList<ModifiedAccountsType*>::Iterator j;
@@ -1416,13 +1410,16 @@ void AccountsPage::ReceivingTab::save() {
   general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
 
   // Sync new IMAP accounts ASAP:
-  for (it = newCachedImapAccounts.begin(); it != newCachedImapAccounts.end(); ++it ) {
-    KMAccount *acc = (*it);
-    if ( !acc->checkingMail() ) {
-      acc->setCheckingMail( true );
-      acc->processNewMail(false);
+  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
+    KMAccount *macc = (*it);
+    KMAcctCachedImap *acc = dynamic_cast<KMAcctCachedImap*> (macc);
+    if ( acc ) {
+      AccountUpdater *au = new AccountUpdater( acc );
+      au->update();
     }
   }
+  mNewAccounts.clear();
+
 }
 
 // *************************************************************
@@ -4736,6 +4733,32 @@ void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
     mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
     mFolderComboLabel->setBuddy( mAccountCombo );
   }
+}
+
+
+// *************************************************************
+// *                                                           *
+// *                     AccountUpdater                        *
+// *                                                           *
+// *************************************************************
+AccountUpdater::AccountUpdater(KMAcctCachedImap *account)
+    : QObject()
+{
+  mAccount = account;
+}
+
+void AccountUpdater::update()
+{
+  connect( mAccount, SIGNAL( namespacesFetched() ),
+          this, SLOT( namespacesFetched() ) );
+  mAccount->getNamespaces();
+}
+
+void AccountUpdater::namespacesFetched()
+{
+  mAccount->setCheckingMail( true );
+  mAccount->processNewMail( false );
+  deleteLater();
 }
 
 #undef DIM

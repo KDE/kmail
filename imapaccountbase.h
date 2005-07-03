@@ -546,6 +546,11 @@ namespace KMail {
      * Emitted when we got the namespaces
      */
     void namespacesFetched( const ImapAccountBase::nsDelimMap& );
+
+    /**
+     * Emitted when we got the namespaces, and they were set on the object.
+     */
+    void namespacesFetched();
   };
 
 

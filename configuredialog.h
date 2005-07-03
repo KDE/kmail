@@ -27,6 +27,7 @@
 
 class KConfig;
 class ProfileDialog;
+class KMAcctCachedImap;
 
 class ConfigureDialog : public KCMultiDialog
 {
@@ -66,5 +67,22 @@ protected slots:
 private:
   QGuardedPtr<ProfileDialog>  mProfileDialog;
 };
+
+/**
+ * DImap accounts need to be updated after just being created to show the folders it has.
+ * This has to be done a-synchronically due to the nature of the account, so this object
+ * takes care of that.
+ */
+class AccountUpdater : public QObject {
+  Q_OBJECT
+  public:
+    AccountUpdater(KMAcctCachedImap *account);
+    void update();
+  public slots:
+    void namespacesFetched();
+  private:
+    KMAcctCachedImap *mAccount;
+};
+
 
 #endif

@@ -15,6 +15,7 @@
 // other KMail headers:
 #include "kmtransport.h"
 #include "globalsettings.h"
+#include "kmacctcachedimap.h"
 
 // other kdenetwork headers: (none)
 
@@ -431,7 +432,6 @@ void ConfigModuleTab::defaults()
 void ConfigModuleTab::slotEmitChanged( void ) {
    emit changed( true );
 }
-
 
 
 #include "configuredialog_p.moc"

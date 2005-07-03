@@ -659,6 +659,7 @@ namespace KMail {
     if ( !mOldPrefix.isEmpty() ) {
       migratePrefix();
     }
+    emit namespacesFetched();
   }
 
   //-----------------------------------------------------------------------------
