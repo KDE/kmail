@@ -110,7 +110,7 @@ k_dcop:
 
   /**
    * Set the KMail Default transport.
-   * @param the name of the transport as defined in the sending
+   * @param transport the name of the transport as defined in the sending
             accounts configuration.
   */
   virtual void setDefaultTransport( const QString & transport ) =0;
