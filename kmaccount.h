@@ -31,7 +31,6 @@
 #include <qmap.h>
 
 #include "kmmessage.h"
-#include "configuredialog_p.h"
 
 class KMAcctMgr;
 class KMFolder;
@@ -39,6 +38,7 @@ class KMAcctFolder;
 class KConfig;
 class KMFolderJob;
 class KMFolderCachedImap;
+class AccountsPageReceivingTab;
 namespace  KMail {
   class FolderJob;
 }
@@ -73,7 +73,7 @@ class KMAccount: public QObject, public KAccount
   Q_OBJECT
   friend class ::KMAcctMgr;
   friend class ::KMail::FolderJob;
-  friend class ::AccountsPage::ReceivingTab; // part of the config dialog
+  friend class ::AccountsPageReceivingTab; // part of the config dialog
   friend class ::KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
