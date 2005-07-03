@@ -44,7 +44,7 @@ namespace KMail {
   /**
      @short A simple tupel of agent, score and header.
 
-     The score returned is positive if no error has occured.
+     The score returned is positive if no error has occurred.
      Negative values indicate the following errors:
        -1.0     Unintialized struct used
        -2.0     Error extracing agent string
