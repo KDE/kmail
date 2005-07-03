@@ -1196,6 +1196,7 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
     return;
   }
 
+  account->deinstallTimer();
   account->setName( uniqueName( accountNames, account->name() ) );
 
   QListViewItem *after = mAccountList->firstChild();
@@ -1375,6 +1376,7 @@ void AccountsPage::ReceivingTab::save() {
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     kmkernel->acctMgr()->add( *it );
+    (*it)->installTimer();
     // remember new Disconnected IMAP accounts because they are needed again
     if( (*it)->isA( "KMAcctCachedImap" ) ) {
       newCachedImapAccounts.append( *it );
