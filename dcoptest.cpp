@@ -6,6 +6,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kcmdlineargs.h>
+#include "aboutdata.h"
 
 #include <kmailIface_stub.h>
 #include <mailcomposerIface_stub.h>
@@ -14,14 +15,9 @@ int main(int argc,char **argv)
 {
   kdDebug(5006) << "Test KMail DCOP interface." << endl;
 
-  KAboutData about("testKMailDCOP","TestKMailDCOP",
-                   "0.0",
-		   "Test for KMail DCOP interface",
-		   KAboutData::License_GPL,
-                   "(c) 2001, Cornelius Schumacher",
-		   0,
-		   "http://kmail.kde.org");
-  KCmdLineArgs::init(argc, argv, &about);
+  KAboutData aboutData( "testKMailDCOP",
+   "Test for KMail DCOP interface", "0.0" );
+  KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
   app.dcopClient()->attach();
 
