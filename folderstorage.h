@@ -613,7 +613,6 @@ friend class KMMsgDict;
   bool mNoContent :1;
   bool mNoChildren :1;
   bool mConvertToUtf8 :1;
-  bool mContentsTypeChanged :1;
 
   /** Points at the reverse dictionary for this folder. */
   mutable KMMsgDictREntry *mRDict;
