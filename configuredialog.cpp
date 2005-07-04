@@ -61,7 +61,6 @@ using KMail::ImapAccountBase;
 using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
-#include "kmacctcachedimap.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -1412,7 +1411,7 @@ void AccountsPage::ReceivingTab::save() {
   // Sync new IMAP accounts ASAP:
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     KMAccount *macc = (*it);
-    KMAcctCachedImap *acc = dynamic_cast<KMAcctCachedImap*> (macc);
+    ImapAccountBase *acc = dynamic_cast<ImapAccountBase*> (macc);
     if ( acc ) {
       AccountUpdater *au = new AccountUpdater( acc );
       au->update();
@@ -4741,7 +4740,7 @@ void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
 // *                     AccountUpdater                        *
 // *                                                           *
 // *************************************************************
-AccountUpdater::AccountUpdater(KMAcctCachedImap *account)
+AccountUpdater::AccountUpdater(ImapAccountBase *account)
     : QObject()
 {
   mAccount = account;

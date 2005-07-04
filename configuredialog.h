@@ -27,7 +27,9 @@
 
 class KConfig;
 class ProfileDialog;
-class KMAcctCachedImap;
+namespace KMail {
+    class ImapAccountBase;
+}
 
 class ConfigureDialog : public KCMultiDialog
 {
@@ -76,12 +78,12 @@ private:
 class AccountUpdater : public QObject {
   Q_OBJECT
   public:
-    AccountUpdater(KMAcctCachedImap *account);
+    AccountUpdater(KMail::ImapAccountBase *account);
     void update();
   public slots:
     void namespacesFetched();
   private:
-    KMAcctCachedImap *mAccount;
+    KMail::ImapAccountBase *mAccount;
 };
 
 
