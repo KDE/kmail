@@ -68,18 +68,18 @@ class KMMsgDict
    * @return the message serial number or zero is no such message can be found */
     unsigned long getMsgSerNum( KMFolder *folder, int index ) const;
 
-  private:
-       /* FIXME It would be better to do without these, they are the classes
-    * involved in filling and maintaining the dict. The MsgList needs access
-    * because of things it does that should be in FolderIndex, probably, which
-       * the message list is an implementation detail of. */
-    friend class FolderStorage;
-    friend class KMMsgList;
-    friend class KMFolderIndex;
+private:
+ /* FIXME It would be better to do without these, they are the classes
+  * involved in filling and maintaining the dict. The MsgList needs access
+  * because of things it does that should be in FolderIndex, probably, which
+  * the message list is an implementation detail of. */
+  friend class FolderStorage;
+  friend class KMMsgList;
+  friend class KMFolderIndex;
 
-    // Access for those altering the dict, our friend classes
-    static KMMsgDict* mutableInstance();
-    
+  // Access for those altering the dict, our friend classes
+  static KMMsgDict* mutableInstance();
+
   /** Insert a new message.  The message serial number is specified in
    * @p msgSerNum and may be zero, in which case a new serial number is
    * generated.  Returns the message serial number. */
@@ -92,7 +92,7 @@ class KMMsgDict
 
   /** Set the serial number of @p msg to @p msgSerNum */
   void replace(unsigned long msgSerNum,
-	       const KMMsgBase *msg, int index = -1);
+               const KMMsgBase *msg, int index = -1);
 
   /** Removes a message. */
   void remove(unsigned long msgSerNum);
