@@ -1,7 +1,7 @@
 #KDE_OPTIONS = nofinal
 KDE_CXXFLAGS = $(USE_RTTI)
 
-SUBDIRS = interfaces . about pics profiles avscripts
+SUBDIRS = interfaces . about pics profiles avscripts tests
 
 INCLUDES = -I$(top_srcdir)/libkmime \
 	-I$(top_srcdir)/libkpgp \
