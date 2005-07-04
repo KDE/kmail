@@ -234,7 +234,6 @@ private:
                               const QStringList& attachmentNames,
                               const QStringList& attachmentMimetypes );
   static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
-  void loadPixmaps() const;
 
   void handleFolderSynced( KMFolder* folder,
                            const KURL& folderURL,
@@ -272,9 +271,6 @@ private:
 
   KMFolderDir* mFolderParentDir;
   KMFolderType mFolderType;
-
-  // groupware folder icons:
-  static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks, *pixJournals;
 
   bool mUseResourceIMAP;
   bool mResourceQuiet;

@@ -1826,20 +1826,6 @@ void KMailICalIfaceImpl::cleanup()
   mContacts = mCalendar = mNotes = mTasks = mJournals = 0;
 }
 
-void KMailICalIfaceImpl::loadPixmaps() const
-{
-  static bool pixmapsLoaded = false;
-
-  if( mUseResourceIMAP && !pixmapsLoaded ) {
-    pixmapsLoaded = true;
-    pixContacts = new QPixmap( UserIcon("kmgroupware_folder_contacts"));
-    pixCalendar = new QPixmap( UserIcon("kmgroupware_folder_calendar"));
-    pixNotes    = new QPixmap( UserIcon("kmgroupware_folder_notes"));
-    pixTasks    = new QPixmap( UserIcon("kmgroupware_folder_tasks"));
-    pixJournals = new QPixmap( UserIcon("kmgroupware_folder_journals"));
-  }
-}
-
 QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
 {
   if( !mUseResourceIMAP )
@@ -1858,12 +1844,6 @@ QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
 
   return QString::null;
 }
-
-QPixmap* KMailICalIfaceImpl::pixContacts;
-QPixmap* KMailICalIfaceImpl::pixCalendar;
-QPixmap* KMailICalIfaceImpl::pixNotes;
-QPixmap* KMailICalIfaceImpl::pixTasks;
-QPixmap* KMailICalIfaceImpl::pixJournals;
 
 static void reloadFolderTree()
 {
