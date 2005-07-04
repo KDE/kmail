@@ -557,6 +557,10 @@ public slots:
       from an IMAP server */
   void reallyAddCopyOfMsg(KMMessage* aMsg);
 
+private slots:
+  /** The type of contents of this folder changed. Do what is needed. */
+  void slotContentsTypeChanged( KMail::FolderContentsType type );
+
 private:
   FolderStorage* mStorage;
   KMFolderDir* mParent;

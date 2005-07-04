@@ -435,6 +435,10 @@ signals:
    * ( or the cache storage ) as an identifier for the folder. */
   void locationChanged( const QString &, const QString & );
 
+  /** Emitted when the contents type (calendar, mail, tasks, ..) of the
+   * folderstorage changes. */
+  void contentsTypeChanged( KMail::FolderContentsType type );
+
   /** Emitted when the readonly status of the folder changes. */
   void readOnlyChanged(KMFolder*);
 

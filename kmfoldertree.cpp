@@ -216,6 +216,11 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
 }
 
 void KMFolderTreeItem::slotRepaint() {
+  kdDebug(5006) << k_funcinfo << endl;
+  // this is prone to change, so better check
+  if( kmkernel->iCalIface().isResourceImapFolder( mFolder ) )
+      setType( kmkernel->iCalIface().folderType(mFolder) );
+
   if ( unreadCount() > 0 )
     setPixmap( 0, unreadIcon() );
   else

@@ -17,6 +17,7 @@
 #include "expirejob.h"
 #include "compactionjob.h"
 #include "kmfoldertree.h"
+#include "kmailicalifaceimpl.h"
 
 #include <errno.h>
 
@@ -84,6 +85,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( removed( KMFolder*, bool ) ),
            SIGNAL( removed( KMFolder*, bool ) ) );
+
+  connect( mStorage, SIGNAL( contentsTypeChanged( KMail::FolderContentsType ) ),
+                this, SLOT( slotContentsTypeChanged( KMail::FolderContentsType ) ) );
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   mStorage->readConfig();
@@ -810,4 +814,11 @@ bool KMFolder::isMoveable() const
   return !isSystemFolder();
 }
 
+void KMFolder::slotContentsTypeChanged( KMail::FolderContentsType type )
+{
+  kmkernel->iCalIface().folderContentsTypeChanged( this, type );
+  emit iconsChanged();
+}
+
+#
 #include "kmfolder.moc"
