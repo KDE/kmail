@@ -31,6 +31,7 @@
 #include <klocale.h>
 #include <kcmdlineargs.h>
 #include <kmessagebox.h>
+#include "aboutdata.h"
 
 #include <qpushbutton.h>
 #include <qlayout.h>
