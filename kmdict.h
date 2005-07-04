@@ -25,6 +25,7 @@ public:
  */
 class KMDict
 {
+  friend class MessageDictTester;
 public:
   /** Creates a hash table with @p size columns. */
   KMDict(int size = 17);
@@ -32,9 +33,6 @@ public:
   /** Destroys the hash table object. */
   ~KMDict();
 
-  /** Initializes the hash table to @p size colums. */
-  void init(int size);
-  
   /** Clears the hash table, removing all items. */
   void clear();
   
@@ -53,10 +51,13 @@ public:
   /** Find an item by key.  Returns pointer to it, or 0 if not found. */
   KMDictItem *find(long key);
   
-protected:
+private:
   /** Removes all items _following_ @p item with key @p key. */
   void removeFollowing(KMDictItem *item, long key);
-  
+
+  /** Initializes the hash table to @p size colums. */
+  void init(int size);
+
   /** The size of the hash. */
   int mSize;
   
