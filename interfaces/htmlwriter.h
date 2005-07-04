@@ -72,14 +72,14 @@ namespace KMail {
    *
    * @section Sync Mode
    *
-   * In sync mode, use @see #begin() to initiate a session, then @see
-   * #write() some chunks of HTML code and finally @see #end() the session.
+   * In sync mode, use #begin() to initiate a session, then 
+   * #write() some chunks of HTML code and finally #end() the session.
    *
    * @section Async Mode
    *
-   * In async mode, use @see #begin() to initialize a session, then
-   * @see #queue() some chunks of HTML code and finally end the
-   * session by calling @see #flush().
+   * In async mode, use #begin() to initialize a session, then
+   * #queue() some chunks of HTML code and finally end the
+   * session by calling #flush().
    *
    * Queued HTML code is fed to the html sink using a timer. For this
    * to work, control must return to the event loop so timer events
@@ -88,19 +88,19 @@ namespace KMail {
    * @section Combined mode
    *
    * You may combine the two modes in the following way only. Any
-   * number of @see #write() calls can precede @see #queue() calls,
+   * number of #write() calls can precede #queue() calls,
    * but once a chunk has been queued, you @em must @em not
-   * @see #write() more data, only @see #queue() it.
+   * #write() more data, only #queue() it.
    *
    * Naturally, whenever you queued data in a given session, that
-   * session must be ended by calling @see #flush(), not @see #end().
+   * session must be ended by calling #flush(), not #end().
    */
   class HtmlWriter : public Interface::HtmlWriter {
   public:
     virtual ~HtmlWriter() {}
 
     /** Stop all possibly pending processing in order to be able to
-	call @see #begin() again. */
+	call #begin() again. */
     virtual void reset() = 0;
 
     virtual void queue( const QString & str ) = 0;

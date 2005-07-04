@@ -268,7 +268,7 @@ private slots:
       KListView::rename on the selected item */
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
-      new name and sets it in the @see KPIM::IdentityManager */
+      new name and sets it in the KPIM::IdentityManager */
   void slotRenameIdentity( QListViewItem *, const QString &, int );
   void slotContextMenu( KListView*, QListViewItem *, const QPoint & );
   void slotSetAsDefault();

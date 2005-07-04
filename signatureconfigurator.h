@@ -54,7 +54,7 @@ namespace KMail {
 
     /**
        Conveniece method.
-       @return a @see Signature object representing the state of the widgets.
+       @return a Signature object representing the state of the widgets.
      **/
     Signature signature() const;
     /**

@@ -300,12 +300,12 @@ public:
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
     process, whether there are others using it or not.
-    @see KMFolder::removeContents */
+    see KMFolder::removeContents */
   void remove();
 
   /** Delete entire folder. Forces a close *but* opens the
     folder again afterwards. Returns errno(3) error code or zero on
-    success.  @see KMFolder::expungeContents */
+    success.  see KMFolder::expungeContents */
   int expunge();
 
   enum CompactOptions { CompactLater, CompactNow, CompactSilentlyNow };

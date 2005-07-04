@@ -390,11 +390,11 @@ public:
    **/
   static QString stripOffPrefixes( const QString& str );
 
-  /** Check for prefixes @p prefixRegExps in @see #subject(). If none
+  /** Check for prefixes @p prefixRegExps in #subject(). If none
       is found, @p newPrefix + ' ' is prepended to the subject and the
       resulting string is returned. If @p replace is true, any
       sequence of whitespace-delimited prefixes at the beginning of
-      @see #subject() is replaced by @p newPrefix
+      #subject() is replaced by @p newPrefix
   **/
   QString cleanSubject(const QStringList& prefixRegExps, bool replace,
 		       const QString& newPrefix) const;

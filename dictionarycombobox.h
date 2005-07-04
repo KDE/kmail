@@ -60,8 +60,8 @@ namespace KMail {
 
   signals:
     /** @em Emitted whenever the current dictionary changes. Either
-     *  by user intervention or on @see setCurrentByDictionaryName() or on
-     *  @see setCurrentByDictionary().
+     *  by user intervention or on setCurrentByDictionaryName() or on
+     *  setCurrentByDictionary().
      **/
     void dictionaryChanged( const QString & dictionary );
     void dictionaryChanged( int );

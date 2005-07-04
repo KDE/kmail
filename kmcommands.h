@@ -627,7 +627,7 @@ private:
       move is TRUE this slot will cause all selected messages to
       be moved into the given folder, otherwise messages will be
       copied.
-      Am empty @see KMMenuToFolder must be passed in. */
+      Am empty KMMenuToFolder must be passed in. */
 
 class KDE_EXPORT KMMenuCommand : public KMCommand
 {

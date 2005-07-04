@@ -53,7 +53,7 @@ public:
       convenience. It behaves essentially like the above function.
 
       Sets the mime type to be displayed, but only if @p mimeType
-      passes @see KMimeTypeValidator's test.  */
+      passes KMimeTypeValidator's test.  */
   void setMimeType( const QString & mimeType );
   /** Sets the initial list of mime types to be displayed in the
       combobox. The items are @em not validated. */
@@ -94,7 +94,7 @@ public:
   /** Sets the encoding to use */
   void setEncoding( Encoding encoding );
   /** Sets the list of encodings to be shown. @p encodings is the
-      bitwise OR of @see Encoding flags */
+      bitwise OR of Encoding flags */
   void setShownEncodings( int encodings );
 
   /** Returns true if the attchment has a content-disposition of

@@ -40,7 +40,7 @@ const int FILTER_MAX_ACTIONS = 8;
 class KMFilter
 {
 public:
-  /** Result codes returned by @see process. They mean:
+  /** Result codes returned by process. They mean:
 
       @param GoOn Everything OK. You are still the owner of the
       message and you should continue applying filter actions to this
@@ -53,13 +53,13 @@ public:
   */
   enum ReturnCode { NoResult, GoOn, CriticalError };
 
-  /** Account type codes used by @see setApplicability. They mean:
+  /** Account type codes used by setApplicability. They mean:
 
       @param All Apply to all accounts
       
       @param ButImap Apply to all but online-IMAP accounts
       
-      @param Checked apply to all accounts specified by @see setApplyOnAccount
+      @param Checked apply to all accounts specified by setApplyOnAccount
 
   */
   enum AccountType { All, ButImap, Checked };
@@ -141,7 +141,7 @@ public:
 
   /** Set whether this filter should be applied on
       outbound messages (@p aApply == TRUE) or not.
-      @see applyOnOutbound applyOnInbound setApplyOnInbound
+      See applyOnOutbound applyOnInbound setApplyOnInbound
   */
   void setApplyOnOutbound( bool aApply=TRUE ) { bApplyOnOutbound = aApply; }
 

@@ -77,7 +77,7 @@ public:
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
   /** Auxillary function to facilitate creating a list of formatted
-      folder names, suitable for showing in @see QComboBox */
+      folder names, suitable for showing in QComboBox */
   virtual void createFolderList( QStringList *str,
  				 QValueList<QGuardedPtr<KMFolder> > *folders,
   				 KMFolderDir *adir,

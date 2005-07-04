@@ -80,7 +80,7 @@ namespace KMail {
     /**
        @short Extract scores from known anti-spam headers
        @param message A KMMessage to examine
-       @return A list of detected scores. @see SpamScore
+       @return A list of detected scores. See SpamScore
     */
     static SpamScores getSpamScores( const KMMessage *message );
   };

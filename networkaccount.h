@@ -91,7 +91,7 @@ namespace KMail {
     bool useTLS() const { return mUseTLS; }
     virtual void setUseTLS( bool use );
 
-    /** @return the @see SieveConfig for this account */
+    /** @return the SieveConfig for this account */
     KMail::SieveConfig sieveConfig() const { return mSieveConfig; }
     virtual void setSieveConfig( const KMail::SieveConfig & config );
 

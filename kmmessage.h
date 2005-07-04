@@ -192,8 +192,8 @@ public:
 
       @param a Use AutomaticAction for filtering and ManualAction for
                user-induced events.
-      @param d See docs for @see KMime::MDN::DispositionType
-      @param m See docs for @see KMime::MDN::DispositionModifier
+      @param d See docs for KMime::MDN::DispositionType
+      @param m See docs for KMime::MDN::DispositionModifier
       @param allowGUI Set to true if this method is allowed to ask the
                       user questions
 
@@ -268,8 +268,8 @@ public:
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
-      searches with @see KPIM::IdentityManager::identityForAddress()
-      and if that fails queries the @see KMMsgBase::parent() folder for a default.
+      searches with KPIM::IdentityManager::identityForAddress()
+      and if that fails queries the KMMsgBase::parent() folder for a default.
    **/
   uint identityUoid() const;
 
@@ -705,8 +705,7 @@ public:
   /** Get a list of preferred message charsets.*/
   static const QStringList &preferredCharsets();
 
-  /** Replaces every occurrence of "${foo}" in @p s with @see
-      headerField("foo") */
+  /** Replaces every occurrence of "${foo}" in @p s with headerField("foo") */
   QString replaceHeadersInString( const QString & s ) const;
 
   /** Get the message charset.*/
@@ -715,7 +714,7 @@ public:
   /** Set the message charset. */
   void setCharset(const QCString& aStr);
 
-  /** Get a @see QTextCodec suitable for this message part */
+  /** Get a QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
 
   /** Set the charset the user selected for the message to display */

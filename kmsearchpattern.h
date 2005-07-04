@@ -34,7 +34,7 @@ public:
   /** Operators for comparison of field and contents.
       If you change the order or contents of the enum: do not forget
       to change funcConfigNames[], sFilterFuncList and matches()
-      in @see KMSearchRule, too.
+      in KMSearchRule, too.
       Also, it is assumed that these functions come in pairs of logical
       opposites (ie. "=" <-> "!=", ">" <-> "<=", etc.).
   */
@@ -69,12 +69,12 @@ public:
       be preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
       validation of the data obtained from the config file. You should
-      call @see isEmpty yourself if you need valid rules. */
+      call isEmpty yourself if you need valid rules. */
   static KMSearchRule* createInstanceFromConfig( const KConfig * config, int aIdx );
 
   virtual ~KMSearchRule() {};
 
-  /** Tries to match the rule against the given @see KMMessage.
+  /** Tries to match the rule against the given KMMessage.
       @return TRUE if the rule matched, FALSE otherwise. Must be
       implemented by subclasses.
   */
@@ -90,8 +90,8 @@ public:
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
-      @see KFilter should make sure that it's rule list contains
-      only non-empty rules, as @see matches doesn't check this. */
+      KFilter should make sure that it's rule list contains
+      only non-empty rules, as matches doesn't check this. */
   virtual bool isEmpty() const = 0;
 
   /** Returns true if the rule depends on a complete message,
@@ -107,7 +107,7 @@ public:
   void writeConfig( KConfig * config, int aIdx ) const;
 
   /** Return filter function. This can be any of the operators
-      defined in @see Function. */
+      defined in Function. */
   Function function() const { return mFunction; }
 
   /** Set filter function. */
@@ -170,7 +170,7 @@ public:
 
   virtual bool matches( const KMMessage * msg ) const;
 
-  /** Optimized version tries to match the rule against the given @see DwString.
+  /** Optimized version tries to match the rule against the given  DwString.
       @return TRUE if the rule matched, FALSE otherwise.
   */
   virtual bool matches( const DwString & str, KMMessage & msg,
@@ -284,18 +284,17 @@ public:
 // ------------------------------------------------------------------------
 
 /** This class is an abstraction of a search over messages.  It is
-    intended to be used inside a @see KFilter (which adds
-    @see KFilterAction's), as well as in @see KMSearch. It can read
-    and write itself into a @see KConfig group and there is a
-    constructor, mainly used by @see KMFilter to initialize from a
-    preset KConfig-Group.
+    intended to be used inside a KFilter (which adds KFilterAction's),
+    as well as in KMSearch. It can read and write itself into a
+    KConfig group and there is a constructor, mainly used by KMFilter
+    to initialize from a preset KConfig-Group.
 
-    From a class hierarchy point of view, it is a @see QPtrList of @see
-    KMSearchRule's that adds the boolean operators (see @see Operator)
+    From a class hierarchy point of view, it is a QPtrList of 
+    KMSearchRule's that adds the boolean operators (see Operator)
     'and' and 'or' that connect the rules logically, and has a name
     under which it could be stored in the config file.
 
-    As a @see QPtrList with autoDelete enabled, it assumes that it is the
+    As a QPtrList with autoDelete enabled, it assumes that it is the
     central repository for the rules it contains. So if you want to
     reuse a rule in another pattern, make a deep copy of that rule.
 
@@ -309,23 +308,24 @@ public:
   /** Boolean operators that connect the return values of the
       individual rules. A pattern with @p OpAnd will match iff all
       it's rules match, whereas a pattern with @p OpOr will match iff
-      any of it's rules matches. */
+      any of it's rules matches.
+  */
   enum Operator { OpAnd, OpOr };
-  /** Constructor that initializes from a given @see KConfig group, if
-      given. This feature is mainly (solely?) used in @see KMFilter,
+  /** Constructor that initializes from a given KConfig group, if
+      given. This feature is mainly (solely?) used in KMFilter,
       as we don't allow to store search patterns in the config (yet).
       If config is 0, provides a pattern with minimal, but
       sufficient initialization. Unmodified, such a pattern will fail
-      to match any @see KMMessage. You can query for such an empty
-      rule by using @see isEmpty, which is inherited from @see
-      QPtrList. */
+      to match any KMMessage. You can query for such an empty
+      rule by using isEmpty, which is inherited from QPtrList.
+  */
   KMSearchPattern( const KConfig * config=0 );
 
   /** Destructor. Deletes all stored rules! */
   ~KMSearchPattern();
 
   /** The central function of this class. Tries to match the set of
-      rules against a @see KMMessage. It's virtual to allow derived
+      rules against a KMMessage. It's virtual to allow derived
       classes with added rules to reimplement it, yet reimplemented
       methods should and (&&) the result of this function with their
       own result or else most functionality is lacking, or has to be
@@ -343,20 +343,18 @@ public:
 
   /** Removes all empty rules from the list. You should call this
       method whenever the user had had control of the rules outside of
-      this class. (e.g. after editing it with @see
-      KMSearchPatternEdit).
+      this class. (e.g. after editing it with KMSearchPatternEdit).
   */
   void purify();
 
-  /** Reads a search pattern from a @see KConfig.  The group has to be
+  /** Reads a search pattern from a KConfig.  The group has to be
       preset. If it does not find a valid saerch pattern in the preset
       group, initializes the pattern as if it were constructed using
       the default constructor.
 
       For backwards compatibility with previous versions of KMail, it
       checks for old-style filter rules (e.g. using @p OpIgnore)
-      in @p config und converts them to the new format on @see
-      writeConfig.
+      in @p config und converts them to the new format on writeConfig.
 
       Derived classes reimplementing readConfig() should also call this
       method, or else the rules will not be loaded.
@@ -372,7 +370,7 @@ public:
 
   /** Get the name of the search pattern. */
   QString name() const { return mName; }
-  /** Set the name of the search pattern. @see KMFilter uses this to
+  /** Set the name of the search pattern. KMFilter uses this to
       store it's own name, too. */
   void setName( const QString & newName ) { mName = newName ; }
 
@@ -391,9 +389,10 @@ private:
   /** Tries to import a legacy search pattern, ie. one that still has
       e.g. the @p unless or @p ignore operator which were useful as
       long as the number of rules was restricted to two. This method
-      is called from @see readConfig, which detects legacy
-      configurations and also makes sure that this method is called
-      from an @see init'ialized object. */
+      is called from readConfig, which detects legacy configurations
+      and also makes sure that this method is called from an initialized
+      object.
+  */
   void importLegacyConfig( const KConfig * config );
   /** Initializes the object. Clears the list of rules, sets the name
       to "<i18n("unnamed")>", and the boolean operator to @p OpAnd. */

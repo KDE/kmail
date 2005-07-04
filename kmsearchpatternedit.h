@@ -24,14 +24,14 @@ class QLabel;
 class KMSearchPatternEdit;
 
 /** A widget to edit a single KMSearchRule.
-    It consists of an editable @see QComboBox for the field,
-    a read-only @see QComboBox for the function and
-    a @see QLineEdit for the content or the pattern (in case of regexps).
+    It consists of an editable QComboBox for the field,
+    a read-only QComboBox for the function and
+    a QLineEdit for the content or the pattern (in case of regexps).
     It manages the i18n itself, so field name should be in it's english form.
 
-    To use, you essentially give it the reference to a @see
-    KMSearchRule and it does the rest. It will never delete the rule
-    itself, as it assumes that something outside of it manages this.
+    To use, you essentially give it the reference to a KMSearchRule and
+    it does the rest. It will never delete the rule itself, as it assumes
+    that something outside of it manages this.
 
     @short A widget to edit a single KMSearchRule.
     @author Marc Mutz <Marc@Mutz.com>
@@ -41,7 +41,7 @@ class KMSearchRuleWidget : public QWidget
 {
   Q_OBJECT
 public:
-  /** Constructor. You can give a @see KMSearchRule as parameter, which will
+  /** Constructor. You can give a KMSearchRule as parameter, which will
       be used to initialize the widget. */
   KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
@@ -52,12 +52,12 @@ public:
       are available also. */
   void setHeadersOnly( bool headersOnly );
   /** Set the rule. The rule is accepted regardless of the return
-      value of @see KMSearchRule::isEmpty. This widget makes a shallow
+      value of KMSearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
       0, resets itself, taks user input, but does essentially
       nothing. If you pass 0, you should probably disable it. */
   void setRule( KMSearchRule* aRule );
-  /** Return a reference to the currently-worked-on @see KMSearchRule. */
+  /** Return a reference to the currently-worked-on KMSearchRule. */
   KMSearchRule* rule() const;
   /** Resets the rule currently worked on and updates the widget
       accordingly. */
@@ -133,27 +133,27 @@ private:
 /** This widget is intended to be used in the filter configuration as
     well as in the message search dialogs. It consists of a frame,
     inside which there are placed two radio buttons entitled "Match
-    {all,any} of the following", followed by a vertical stack of @see
+    {all,any} of the following", followed by a vertical stack of
     KMSearchRuleWidgets (initially two) and two buttons to add and
-    remove, resp., additional @see KMSearchWidget 's.
+    remove, resp., additional KMSearchWidget 's.
 
-    To set the widget according to a given @see KMSearchPattern, use
-    @see setSearchPattern; to initialize it (e.g. for a new, virgin
-    rule), use @see setSearchPattern with a 0 argument. The widget
+    To set the widget according to a given KMSearchPattern, use
+    setSearchPattern; to initialize it (e.g. for a new, virgin
+    rule), use setSearchPattern with a 0 argument. The widget
     operates directly on a shallow(!) copy of the search rule. So
-    while you actually don't really need @see searchPattern, because
+    while you actually don't really need searchPattern, because
     you can always store a pointer to the current pattern yourself,
     you must not modify the currently-worked-on pattern yourself while
     this widget holds a reference to it. The only exceptions are:
 
     @li If you edit a derived class, you can change aspects of the
-    class that don't interfere with the @see KMSearchPattern part. An
-    example is @see KMFilter, whose actions you can still edit while
-    the @see KMSearchPattern part of it is being acted upon by this
+    class that don't interfere with the KMSearchPattern part. An
+    example is KMFilter, whose actions you can still edit while
+    the KMSearchPattern part of it is being acted upon by this
     widget.
 
     @li You can change the name of the pattern, but only using (this
-    widget's) @see setName. You cannot change the pattern's name
+    widget's) setName. You cannot change the pattern's name
     directly, although this widget in itself doesn't let the user
     change it. This is because it auto-names the pattern to
     "<$field>:$contents" iff the pattern begins with "<".
@@ -166,7 +166,7 @@ class KMSearchPatternEdit : public QGroupBox  {
   Q_OBJECT
 public:
   /** Constructor. The parent and name parameters are passed to the underlying
-      @see QGroupBox, as usual. */
+      QGroupBox, as usual. */
   KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false, bool absoluteDates = false);
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
@@ -174,7 +174,7 @@ public:
   ~KMSearchPatternEdit();
 
   /** Set the search pattern. Rules are inserted regardless of the
-      return value of each rules' @see KMSearchRule::isEmpty. This
+      return value of each rules' KMSearchRule::isEmpty. This
       widget makes a shallow copy of @p aPattern and operates directly
       on it. */
   void setSearchPattern( KMSearchPattern* aPattern );

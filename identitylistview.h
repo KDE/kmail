@@ -42,7 +42,7 @@ namespace KMail {
 
   class IdentityListView;
 
-  /** @short A @see QListViewItem for use in @see IdentityListView
+  /** @short A QListViewItem for use in IdentityListView
       @author Marc Mutz <mutz@kde.org>
   **/
   class IdentityListViewItem : public KListViewItem {
@@ -63,7 +63,7 @@ namespace KMail {
     uint mUOID;
   };
 
-  /** @short A listview for @see KPIM::Identity
+  /** @short A listview for KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
   class IdentityListView : public KListView {

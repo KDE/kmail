@@ -56,7 +56,7 @@ namespace KMail {
     public:
       /** 
        * Constructor with KMMainWidget
-       * @p parent @em must be a @see KMMainWin, because we
+       * @p parent @em must be a KMMainWin, because we
        *    need its foldertree.
        * @param mustBeReadWrite if true, readonly folders are disabled
        * @param useGlobalSettings if true, the current folder is read and 

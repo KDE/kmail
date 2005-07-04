@@ -295,7 +295,7 @@ public:
 
   /** Delete entire folder. Forces a close *but* opens the
     folder again afterwards. Returns errno(3) error code or zero on
-    success.  @see KMFolder::expungeContents */
+    success.  see KMFolder::expungeContents */
   virtual int expunge();
 
   /** Remove deleted messages from the folder. Returns zero on success

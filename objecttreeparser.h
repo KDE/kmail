@@ -97,8 +97,7 @@ namespace KMail {
 
   class ObjectTreeParser {
     class CryptPlugWrapperSaver;
-    /** Internal. Copies the context of @p other, but not it's @see
-        rawReplyString() */
+    /** Internal. Copies the context of @p other, but not it's rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,

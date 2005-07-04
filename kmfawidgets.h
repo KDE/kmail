@@ -8,7 +8,7 @@
 #include <klineedit.h>
 #include <qstring.h>
 
-/** The param widget for @see KMFilterActionWithAddress..
+/** The param widget for KMFilterActionWithAddress..
     @author Marc Mutz <mutz@kde.org>
 */
 

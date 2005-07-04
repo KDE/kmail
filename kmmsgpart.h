@@ -168,7 +168,7 @@ public:
   /** Set the message part charset. */
   void setCharset( const QCString & c );
 
-  /** Get a @see QTextCodec suitable for this message part */
+  /** Get a QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
 
   /** Get or set name parameter */

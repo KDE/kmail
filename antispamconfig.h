@@ -42,7 +42,7 @@ class QCString;
 
 namespace KMail {
 
-  /// Valid types of @see SpamAgent
+  /// Valid types of SpamAgent
   typedef enum {
     SpamAgentNone,          //!< Invalid SpamAgent, skip this agent
     SpamAgentBool,          //!< Simple Yes or No (Razor)
