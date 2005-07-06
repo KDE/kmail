@@ -835,7 +835,7 @@ void KMFolderCachedImap::serverSyncInternal()
     }
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if ( !noContent() && mAccount->hasAnnotationSupport() && 
+    if ( !noContent() && mAccount->hasAnnotationSupport() &&
         ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
       QStringList annotations; // list of annotations to be fetched
       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
@@ -1122,9 +1122,9 @@ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&,
 }
 
   // This is not perfect, what if the status didn't really change? Oh well ...
-void KMFolderCachedImap::setStatus( int id, KMMsgStatus status, bool toggle )
+void KMFolderCachedImap::setStatus( int idx, KMMsgStatus status, bool toggle )
 {
-  KMFolderMaildir::setStatus(id, status, toggle);
+  KMFolderMaildir::setStatus(idx, status, toggle);
   mStatusChangedLocally = true;
 }
 
@@ -1883,6 +1883,14 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
           setContentsType( contentsType );
           mAnnotationFolderTypeChanged = false; // we changed it, not the user
           foundKnownType = true;
+
+          // Users don't read events/contacts/etc. in kmail, so mark them all as read.
+          // This is done in cachedimapjob when getting new messages, but do it here too,
+          // for the initial set of messages when we didn't know this was a resource folder yet,
+          // for old folders, etc.
+          if ( contentsType != ContentsTypeMail )
+            markUnreadAsRead();
+
           // Ensure that further readConfig()s don't lose mAnnotationFolderType
           writeAnnotationConfig();
           break;
