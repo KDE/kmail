@@ -32,7 +32,7 @@ void MessageDictTester::testKMDictCreation()
 {
     p("MessageDictTester::testKMDict()");
     p("Check creation with size of next prime: ");
-    CHECK( m_dict->size(), 30 );
+    CHECK( m_dict->size(), 31 );
     m_dict->init( 13 ); // will be created with a 13, no nextPrime()
     CHECK( m_dict->size(), 13 );
 }
