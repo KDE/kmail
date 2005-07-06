@@ -1122,7 +1122,7 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
 
 // Returns true if folder is a resource folder. If the resource isn't enabled
 // this always returns false
-bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
+bool KMailICalIfaceImpl::isResourceFolder( KMFolder* folder ) const
 {
   return mUseResourceIMAP && folder &&
     ( isStandardResourceFolder( folder ) || mExtraFolders.find( folder->location() )!=0 );
@@ -1136,7 +1136,7 @@ bool KMailICalIfaceImpl::isStandardResourceFolder( KMFolder* folder ) const
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
 {
-  return mHideFolders && isResourceImapFolder( folder );
+  return mHideFolders && isResourceFolder( folder );
 }
 
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
@@ -1440,7 +1440,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
 
 void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
 {
-  if ( isResourceImapFolder( folder ) ) {
+  if ( isResourceFolder( folder ) ) {
     const QString location = folder->location();
     const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
 

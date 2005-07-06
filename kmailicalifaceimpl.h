@@ -127,7 +127,7 @@ public:
    * Returns true if resource mode is enabled and folder is one of the
    * resource folders.
    */
-  bool isResourceImapFolder( KMFolder* folder ) const;
+  bool isResourceFolder( KMFolder* folder ) const;
 
   /**
    * Returns true if resource mode is enabled and folder is one of the
@@ -136,7 +136,7 @@ public:
   bool isStandardResourceFolder( KMFolder* folder ) const;
 
   /**
-   * Returns true if isResourceImapFolder( folder ) returns true, and
+   * Returns true if isResourceFolder( folder ) returns true, and
    * imap folders should be hidden.
    */
   bool hideResourceImapFolder( KMFolder* folder ) const;

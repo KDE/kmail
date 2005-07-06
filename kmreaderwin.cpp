@@ -1192,7 +1192,7 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder;
   if (message(&folder))
   {
-    if( !kmkernel->iCalIface().isResourceImapFolder( folder ) ){
+    if( !kmkernel->iCalIface().isResourceFolder( folder ) ){
       if ( mShowColorbar )
         mColorBar->show();
       else

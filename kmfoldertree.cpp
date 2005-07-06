@@ -187,12 +187,12 @@ void KMFolderTreeItem::init()
       setType( SentMail );
     else if ( kmkernel->folderIsTrash( mFolder ) )
       setType( Trash );
-    else if( kmkernel->iCalIface().isResourceImapFolder(mFolder) )
+    else if( kmkernel->iCalIface().isResourceFolder(mFolder) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
     // System folders on dimap or imap which are not resource folders are
     // inboxes. Urgs.
     if ( mFolder->isSystemFolder() &&
-        !kmkernel->iCalIface().isResourceImapFolder( mFolder) &&
+        !kmkernel->iCalIface().isResourceFolder( mFolder) &&
          ( mFolder->folderType() == KMFolderTypeImap
         || mFolder->folderType() == KMFolderTypeCachedImap ) )
       setType( Inbox );
@@ -218,7 +218,7 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
 void KMFolderTreeItem::slotRepaint() {
   kdDebug(5006) << k_funcinfo << endl;
   // this is prone to change, so better check
-  if( kmkernel->iCalIface().isResourceImapFolder( mFolder ) )
+  if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
 
   if ( unreadCount() > 0 )
