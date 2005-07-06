@@ -368,6 +368,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
     return -1;
 
   QString filename = getFolderIdsLocation( storage );
+  kdDebug(5006) << "READ:  " << filename << endl;
   FILE *fp = fopen(QFile::encodeName(filename), "r+");
   if (!fp)
     return -1;
@@ -405,6 +406,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
        msn = kmail_swap_32(msn);
 
     if (!readOk || dict->find(msn)) {
+      if ( readOk ) kdDebug(5006) << "@@@@@@@@@@@@@@@@@22222 already registered msn: " << msn << endl;
       for (unsigned int i = 0; i < index; i++) {
         msn = rentry->getMsn(i);
         dict->remove((long)msn);

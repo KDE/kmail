@@ -284,26 +284,28 @@ void KMSender::doSendMsg()
     if ( !mCurrentMsg->fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0 || sentFolder->isReadOnly() )
       // This is *NOT* supposed to be imapSentFolder!
         sentFolder =
           kmkernel->dimapFolderMgr()->findIdString( mCurrentMsg->fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0  || sentFolder->isReadOnly() )
         imapSentFolder =
           kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
     }
     else if ( !id.fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0 || sentFolder->isReadOnly() )
         // This is *NOT* supposed to be imapSentFolder!
         sentFolder = kmkernel->dimapFolderMgr()->findIdString( id.fcc() );
-      if ( sentFolder == 0 )
+      if ( sentFolder == 0 || sentFolder->isReadOnly() )
         imapSentFolder = kmkernel->imapFolderMgr()->findIdString( id.fcc() );
     }
-    if (imapSentFolder && imapSentFolder->noContent()) imapSentFolder = 0;
+    if (imapSentFolder 
+        && ( imapSentFolder->noContent() || imapSentFolder->isReadOnly() ) )
+        imapSentFolder = 0;
 
-    if ( sentFolder == 0 )
+    if ( sentFolder == 0 || sentFolder->isReadOnly() )
       sentFolder = kmkernel->sentFolder();
 
     if ( sentFolder ) {
