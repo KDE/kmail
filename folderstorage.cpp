@@ -46,6 +46,7 @@
 #include "listjob.h"
 using KMail::ListJob;
 #include "kmsearchpattern.h"
+#include "globalsettings.h"
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -894,6 +895,8 @@ void FolderStorage::writeConfig()
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
+
+  GlobalSettings::self()->requestSync();
 }
 
 //-----------------------------------------------------------------------------
