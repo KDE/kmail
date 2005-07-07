@@ -103,7 +103,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
 		korganizeriface.stub messagecomposer.cpp \
-		keyresolver.cpp globalsettings.kcfgc \
+		keyresolver.cpp globalsettings.cpp globalsettings_base.kcfgc \
 		regexplineedit.cpp rulewidgethandlermanager.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
 		partnodebodypart.cpp \

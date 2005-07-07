@@ -46,7 +46,7 @@
 #define IDS_HEADER "# KMail-Index-IDs V%d\n*"
 
 /**
- * @short an entry in the global message dictionary consisting of a pointer 
+ * @short an entry in the global message dictionary consisting of a pointer
  * to a folder and the index of a message in the folder.
  */
 class KMMsgDictEntry : public KMDictItem
@@ -62,7 +62,7 @@ public:
 
 /**
  * @short A "reverse entry", consisting of an array of DictEntry pointers.
- * 
+ *
  * Each folder (storage) holds such an entry. That's useful for looking up the
  * serial number of a message at a certain index in the folder, since that is the
  * key of these entries.
@@ -147,9 +147,9 @@ KMMsgDict * KMMsgDict::m_self = 0;
 
 KMMsgDict::KMMsgDict()
 {
-  int lastSizeOfDict = GlobalSettings::msgDictSizeHint();
+  int lastSizeOfDict = GlobalSettings::self()->msgDictSizeHint();
   lastSizeOfDict = ( lastSizeOfDict * 11 ) / 10;
-  GlobalSettings::setMsgDictSizeHint( 0 );
+  GlobalSettings::self()->setMsgDictSizeHint( 0 );
   dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
   m_self = this;
@@ -159,9 +159,9 @@ KMMsgDict::KMMsgDict()
 
 KMMsgDict::~KMMsgDict()
 {
-    // Remember how many items we put into the dict this time so we can create 
+    // Remember how many items we put into the dict this time so we can create
   // it with an appropriate size next time.
-  GlobalSettings::setMsgDictSizeHint( dict->size() );
+  GlobalSettings::self()->setMsgDictSizeHint( dict->size() );
   delete dict;
 }
 
@@ -356,7 +356,7 @@ bool KMMsgDict::isFolderIdsOutdated( const FolderStorage &storage )
     outdated = true;
   if (indexInfo.lastModified() > idsInfo.lastModified())
     outdated = true;
-  
+
   return outdated;
 }
 

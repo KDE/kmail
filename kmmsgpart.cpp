@@ -128,7 +128,7 @@ const QTextCodec * KMMessagePart::codec() const {
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
-    c = KMMsgBase::codecForName( GlobalSettings::fallbackCharacterEncoding().latin1() );
+    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().latin1() );
   }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should

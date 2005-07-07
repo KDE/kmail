@@ -664,7 +664,7 @@ void KMFolderCachedImap::serverSyncInternal()
       // Fall through to next state
     }
   }
-  
+
 
   case SYNC_STATE_GET_USERRIGHTS:
     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
@@ -679,7 +679,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mAccount->getUserRights( folder(), imapPath() ); // after connecting, due to the INBOX case
       break;
     }
-   
+
   case SYNC_STATE_RENAME_FOLDER:
   {
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
@@ -856,16 +856,16 @@ void KMFolderCachedImap::serverSyncInternal()
          && !imapPath().isEmpty() && imapPath() != "/" ) {
       kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
       newState( mProgress, i18n("Checking annotation support"));
-    
+
       KURL url = mAccount->getUrl();
       url.setPath( imapPath() );
       KMail::AnnotationList annotations; // to be set
-      
+
       KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
       annotations.append( attr );
-      
+
       kdDebug(5006) << "Setting test attribute to "<< url << endl;
-      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
+      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(),
           url, annotations );
       ImapAccountBase::jobData jd( url.url(), folder() );
       jd.cancellable = true; // we can always do so later
@@ -874,7 +874,7 @@ void KMFolderCachedImap::serverSyncInternal()
               SLOT(slotTestAnnotationResult(KIO::Job *)));
       break;
     }
- 
+
   case SYNC_STATE_GET_ANNOTATIONS: {
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
@@ -894,7 +894,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if ( !noContent() && mAccount->hasAnnotationSupport() && 
+    if ( !noContent() && mAccount->hasAnnotationSupport() &&
         ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
       QStringList annotations; // list of annotations to be fetched
       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
@@ -1011,7 +1011,7 @@ void KMFolderCachedImap::serverSyncInternal()
                  && !foldersForDeletionOnServer.contains( storage->imapPath() ) ) {
               mSubfoldersForSync << storage;
             } else {
-              kdDebug(5006) << "Do not add " << storage->label() 
+              kdDebug(5006) << "Do not add " << storage->label()
                 << " to synclist" << endl;
             }
           }
@@ -1508,7 +1508,7 @@ void KMFolderCachedImap::listNamespaces()
           this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
               const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
       job->start();
-    }      
+    }
     if ( mNamespacesToCheck == 0 ) {
       serverSyncInternal();
     }
@@ -1521,7 +1521,7 @@ void KMFolderCachedImap::listNamespaces()
 
   mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
   newState( mProgress, i18n("Retrieving folders for namespace %1").arg(ns));
-  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, 
+  KMail::ListJob* job = new KMail::ListJob( mAccount, type, this,
       mAccount->addPathToNamespace( ns ) );
   job->setNamespace( ns );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
@@ -1541,10 +1541,10 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
   Q_UNUSED( subfolderMimeTypes );
   Q_UNUSED( subfolderAttributes );
   --mNamespacesToCheck;
-  kdDebug(5006) << "slotCheckNamespace " << subfolderNames << ",remain=" << 
+  kdDebug(5006) << "slotCheckNamespace " << subfolderNames << ",remain=" <<
    mNamespacesToCheck << endl;
 
-  // get a correct foldername: 
+  // get a correct foldername:
   // strip / and make sure it does not contain the delimiter
   QString name = jobData.path.mid( 1, jobData.path.length()-2 );
   name.remove( mAccount->delimiterForNamespace( name ) );
@@ -1552,14 +1552,14 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
     // should not happen
     kdWarning(5006) << "slotCheckNamespace: ignoring empty folder!" << endl;
     return;
-  }  
+  }
 
   folder()->createChildFolder();
   KMFolderNode *node = 0;
   for ( node = folder()->child()->first(); node;
-        node = folder()->child()->next()) 
+        node = folder()->child()->next())
   {
-    if ( !node->isDir() && node->name() == name ) 
+    if ( !node->isDir() && node->name() == name )
       break;
   }
   if ( !subfolderNames.isEmpty() ) {
@@ -1570,7 +1570,7 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
     {
       // create folder
       kdDebug(5006) << "create namespace folder " << name << endl;
-      KMFolder* newFolder = folder()->child()->createFolder( name, false, 
+      KMFolder* newFolder = folder()->child()->createFolder( name, false,
           KMFolderTypeCachedImap );
       if ( newFolder ) {
         KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>( newFolder->storage() );
@@ -1580,7 +1580,7 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
         f->close();
         kmkernel->dimapFolderMgr()->contentsChanged();
       }
-    }     
+    }
   } else {
     if ( node ) {
       kdDebug(5006) << "delete namespace folder " << name << endl;
@@ -1588,7 +1588,7 @@ void KMFolderCachedImap::slotCheckNamespace( const QStringList& subfolderNames,
       kmkernel->dimapFolderMgr()->remove( fld );
     }
   }
-  
+
   if ( mNamespacesToCheck == 0 ) {
     // all namespaces are done so continue with the next step
     serverSyncInternal();
@@ -1627,7 +1627,7 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
                                          const ImapAccountBase::jobData& jobData )
 {
   Q_UNUSED( jobData );
-  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" 
+  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths="
   //<< folderPaths << " mimeTypes=" << folderMimeTypes << endl;
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
@@ -1651,10 +1651,10 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
           QString name = node->name();
           // as more than one namespace can be listed in the root folder we need to make sure
           // that the folder is within the current namespace
-          bool isInNamespace = ( jobData.curNamespace.isEmpty() || 
+          bool isInNamespace = ( jobData.curNamespace.isEmpty() ||
               jobData.curNamespace == mAccount->namespaceForFolder( f ) );
           // ignore some cases
-          bool ignore = root && ( f->imapPath() == "/INBOX/" || 
+          bool ignore = root && ( f->imapPath() == "/INBOX/" ||
               mAccount->isNamespaceFolder( name ) || !isInNamespace );
 
           // This subfolder isn't present on the server
@@ -1683,7 +1683,7 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
 }
 
 // This synchronizes the local folders as needed (creation/deletion). No network communication here.
-void KMFolderCachedImap::listDirectory2() 
+void KMFolderCachedImap::listDirectory2()
 {
   QString path = folder()->path();
   KMFolderCachedImap *f = 0;
@@ -1716,10 +1716,10 @@ void KMFolderCachedImap::listDirectory2()
   }
 
   if ( root && !mSubfolderNames.isEmpty() ) {
-    KMFolderCachedImap* parent = 
+    KMFolderCachedImap* parent =
       findParent( mSubfolderPaths.first(), mSubfolderNames.first() );
     if ( parent ) {
-      kdDebug(5006) << "KMFolderCachedImap::listDirectory2 - pass listing to " 
+      kdDebug(5006) << "KMFolderCachedImap::listDirectory2 - pass listing to "
         << parent->label() << endl;
       mSubfolderNames.clear();
     }
@@ -1793,7 +1793,7 @@ void KMFolderCachedImap::listDirectory2()
 }
 
 //-----------------------------------------------------------------------------
-KMFolderCachedImap* KMFolderCachedImap::findParent( const QString& path, 
+KMFolderCachedImap* KMFolderCachedImap::findParent( const QString& path,
                                                     const QString& name )
 {
   QString parent = path.left( path.length() - name.length() - 2 );
@@ -1810,7 +1810,7 @@ KMFolderCachedImap* KMFolderCachedImap::findParent( const QString& path,
         if ( node->name() == parent )
         {
           KMFolder* fld = static_cast<KMFolder*>(node);
-          KMFolderCachedImap* imapFld = 
+          KMFolderCachedImap* imapFld =
             static_cast<KMFolderCachedImap*>( fld->storage() );
           return imapFld;
         }
@@ -2089,8 +2089,8 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
           //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation" << endl;
           kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
           mAnnotationFolderType = value;
-          if ( folder()->parent()->owner()->idString() != GlobalSettings::theIMAPResourceFolderParent()
-               && GlobalSettings::theIMAPResourceEnabled()
+          if ( folder()->parent()->owner()->idString() != GlobalSettings::self()->theIMAPResourceFolderParent()
+               && GlobalSettings::self()->theIMAPResourceEnabled()
                && subtype == "default" ) {
             // Truncate subtype if this folder can't be a default resource folder for us,
             // although it apparently is for someone else.
@@ -2145,8 +2145,8 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
   if ( annjob->error() ) {
     if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
       // that's when the imap server doesn't support annotations
-      if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
-           && (uint)GlobalSettings::theIMAPResourceAccount() == mAccount->id() )
+      if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
+           && (uint)GlobalSettings::self()->theIMAPResourceAccount() == mAccount->id() )
 	KMessageBox::error( 0, i18n( "The IMAP server %1 does not have support for IMAP annotations. The XML storage cannot be used on this server; please re-configure KMail differently." ).arg( mAccount->host() ) );
       mAccount->setHasNoAnnotationSupport();
     }
@@ -2222,7 +2222,7 @@ void KMFolderCachedImap::slotUpdateLastUid()
 
 bool KMFolderCachedImap::isMoveable() const
 {
-  return ( hasChildren() == HasNoChildren && 
+  return ( hasChildren() == HasNoChildren &&
       !folder()->isSystemFolder() ) ? true : false;
 }
 

@@ -158,7 +158,7 @@ void KMLineEdit::loadContacts()
   // was: KABC::AddressLineEdit::loadAddresses()
   AddresseeLineEdit::loadContacts();
 
-  if ( GlobalSettings::showRecentAddressesInComposer() ){
+  if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
     if ( KMKernel::self() ) {
       QStringList recent =
         KRecentAddress::RecentAddresses::self( KMKernel::config() )->addresses();

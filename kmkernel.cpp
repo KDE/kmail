@@ -178,7 +178,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
   delete mWallet;
   mWallet = 0;
   mySelf = 0;
@@ -456,7 +456,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if ( isICalInvitation && bcc.isEmpty() )
       msg->setBcc( "" );
     if ( isICalInvitation &&
-        GlobalSettings::legacyBodyInvites() ) {
+        GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       msg->setHeaderField( "Content-Type",
@@ -490,7 +490,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   KMail::Composer * cWin = KMail::makeComposer();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
-      && GlobalSettings::legacyBodyInvites() );
+      && GlobalSettings::self()->legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
@@ -522,7 +522,7 @@ void KMKernel::setDefaultTransport( const QString & transport )
     kdWarning() << "The transport you entered is not available" << endl;
     return;
   }
-  GlobalSettings::setDefaultTransport( transport );
+  GlobalSettings::self()->setDefaultTransport( transport );
 }
 
 DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
@@ -1050,7 +1050,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
     newMessage->setParent( msg->parent() );
     newMessage->setMsgSerNum( msg->getMsgSerNum() );
     newMessage->setReadyToShow( true );
-    win->showMsg( GlobalSettings::overrideCharacterEncoding(), newMessage );
+    win->showMsg( GlobalSettings::self()->overrideCharacterEncoding(), newMessage );
     win->show();
 
     if (unGet)

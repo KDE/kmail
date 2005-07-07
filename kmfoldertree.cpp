@@ -1375,7 +1375,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       } else if ( keybstate & KApplication::ShiftModifier ) {
         emit folderDrop(fti->folder());
       } else {
-        if ( GlobalSettings::showPopupAfterDnD() ) {
+        if ( GlobalSettings::self()->showPopupAfterDnD() ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
           menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );

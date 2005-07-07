@@ -380,7 +380,7 @@ void MessageComposer::readFromComposeWin()
   // to clearsigned); therefore we reset the Content-Type to text/plain.
   if ( mComposeWin->isModified() )
     mReferenceMessage->setHeaderField( "Content-Type", "text/plain" );
-  mUseOpportunisticEncryption = GlobalSettings::pgpAutoEncrypt();
+  mUseOpportunisticEncryption = GlobalSettings::self()->pgpAutoEncrypt();
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if( mAutoCharset ) {
@@ -440,7 +440,7 @@ void MessageComposer::readFromComposeWin()
     mReferenceMessage->removeHeaderField("Priority");
   }
 
-  int num = GlobalSettings::custHeaderCount();
+  int num = GlobalSettings::self()->custHeaderCount();
   for(int ix=0; ix<num; ix++) {
     CustomMimeHeader customMimeHeader( QString::number(ix) );
     customMimeHeader.readConfig();

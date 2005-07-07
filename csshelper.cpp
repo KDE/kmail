@@ -82,7 +82,7 @@ namespace KMail {
       }
     }
 
-    mShrinkQuotes = GlobalSettings::shrinkQuotes();
+    mShrinkQuotes = GlobalSettings::self()->shrinkQuotes();
 
     mBackingPixmapStr = pixmaps.readPathEntry("Readerwin");
     mBackingPixmapOn = !mBackingPixmapStr.isEmpty();

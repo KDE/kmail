@@ -126,7 +126,7 @@ void ExpireJob::slotDoWork()
     if (mb == 0)
       continue;
     if ( mb->isImportant()
-      && GlobalSettings::excludeImportantMailFromExpiry() )
+      && GlobalSettings::self()->excludeImportantMailFromExpiry() )
        continue;
 
     time_t maxTime = mb->isUnread() ? mMaxUnreadTime : mMaxReadTime;

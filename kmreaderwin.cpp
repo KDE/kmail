@@ -1120,11 +1120,11 @@ void KMReaderWin::slotSetEncoding()
 void KMReaderWin::readGlobalOverrideCodec()
 {
   // if the global character encoding wasn't changed then there's nothing to do
-  if ( GlobalSettings::overrideCharacterEncoding() == mOldGlobalOverrideEncoding )
+  if ( GlobalSettings::self()->overrideCharacterEncoding() == mOldGlobalOverrideEncoding )
     return;
 
-  setOverrideEncoding( GlobalSettings::overrideCharacterEncoding() );
-  mOldGlobalOverrideEncoding = GlobalSettings::overrideCharacterEncoding();
+  setOverrideEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
+  mOldGlobalOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
 }
 
 //-----------------------------------------------------------------------------
@@ -1209,9 +1209,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::delayedMarkAsRead() ) {
-    if ( GlobalSettings::delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::delayedMarkTime() * 1000, TRUE );
+  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
+    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
     else
       slotTouchMessage();
   }

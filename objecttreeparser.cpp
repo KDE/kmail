@@ -2418,7 +2418,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   assert( cssHelper() );
 
   int convertFlags = LinkLocator::PreserveSpaces;
-  if ( decorate && GlobalSettings::showEmoticons() ) {
+  if ( decorate && GlobalSettings::self()->showEmoticons() ) {
     convertFlags |= LinkLocator::ReplaceSmileys;
   }
   QString htmlStr;
@@ -2458,7 +2458,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     /* calculate line's current quoting depth */
     int actQuoteLevel = -1;
 
-    if ( GlobalSettings::showExpandQuotesMark() )
+    if ( GlobalSettings::self()->showExpandQuotesMark() )
     {
       // Cache Icons
       if ( mCollapseIcon.isEmpty() ) {
@@ -2490,7 +2490,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     QString textExpand;
 
     // This quoted line needs be hiden
-    if (GlobalSettings::showExpandQuotesMark() && mReader->mLevelQuote >= 0
+    if (GlobalSettings::self()->showExpandQuotesMark() && mReader->mLevelQuote >= 0
         && mReader->mLevelQuote <= ( actQuoteLevel ) )
       actHidden = true;
 
@@ -2506,7 +2506,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
         htmlStr += normalStartTag;
       else
       {
-        if ( GlobalSettings::showExpandQuotesMark() )
+        if ( GlobalSettings::self()->showExpandQuotesMark() )
         {
           if (  actHidden )
           {

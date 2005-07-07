@@ -3790,9 +3790,9 @@ void KMMessage::readConfig()
 
   { // area for config group "Composer"
     KConfigGroupSaver saver(config, "Composer");
-    sSmartQuote = GlobalSettings::smartQuote();
-    sWordWrap = GlobalSettings::wordWrap();
-    sWrapCol = GlobalSettings::lineWrapWidth();
+    sSmartQuote = GlobalSettings::self()->smartQuote();
+    sWordWrap = GlobalSettings::self()->wordWrap();
+    sWrapCol = GlobalSettings::self()->lineWrapWidth();
     if ((sWrapCol == 0) || (sWrapCol > 78))
       sWrapCol = 78;
     if (sWrapCol < 30)
@@ -4137,7 +4137,7 @@ const QTextCodec * KMMessage::codec() const {
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
-    c = KMMsgBase::codecForName( GlobalSettings::fallbackCharacterEncoding().latin1() );
+    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().latin1() );
   }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should

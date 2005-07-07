@@ -646,7 +646,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
         QString quotePrefix;
         if(mComposer && mComposer->msg())
         {
-            int languageNr = GlobalSettings::replyCurrentLanguage();
+            int languageNr = GlobalSettings::self()->replyCurrentLanguage();
             ReplyPhrases replyPhrases( QString::number(languageNr) );
             replyPhrases.readConfig();
 

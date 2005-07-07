@@ -1,5 +1,5 @@
 File=kmail.kcfg
-ClassName=GlobalSettings
+ClassName=GlobalSettingsBase
 Mutators=true
 Singleton=true
 ItemAccessors=true

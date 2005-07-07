@@ -363,7 +363,7 @@ RecipientLine *RecipientsView::addLine()
 
   if ( mLines.last() ) {
     if ( mLines.count() == 1 ) {
-      if ( GlobalSettings::secondRecipientTypeDefault() ==
+      if ( GlobalSettings::self()->secondRecipientTypeDefault() ==
          GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
         line->setRecipientType( Recipient::To );
       } else {
@@ -408,10 +408,10 @@ void RecipientsView::slotTypeModified( RecipientLine *line )
        ( mLines.count() == 3 && mLines.at( 2 )->isEmpty() ) ) {
     if ( mLines.at( 1 ) == line ) {
       if ( line->recipientType() == Recipient::To ) {
-        GlobalSettings::setSecondRecipientTypeDefault(
+        GlobalSettings::self()->setSecondRecipientTypeDefault(
           GlobalSettings::EnumSecondRecipientTypeDefault::To );
       } else if ( line->recipientType() == Recipient::Cc ) {
-        GlobalSettings::setSecondRecipientTypeDefault(
+        GlobalSettings::self()->setSecondRecipientTypeDefault(
           GlobalSettings::EnumSecondRecipientTypeDefault::Cc );
       }
     }
@@ -859,10 +859,10 @@ void RecipientsEditor::setRecipientString( const QString &str,
   QStringList r = KPIM::splitEmailAddrList( str );
   QStringList::ConstIterator it;
   for( it = r.begin(); it != r.end(); ++it ) {
-    if ( count++ > GlobalSettings::maximumRecipients() ) {
+    if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18n("Truncating recipients list to %1 of %2 entries.")
-        .arg( GlobalSettings::maximumRecipients() )
+        .arg( GlobalSettings::self()->maximumRecipients() )
         .arg( r.count() ) );
       break;
     }

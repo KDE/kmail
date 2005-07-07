@@ -248,12 +248,12 @@ ConfigureDialog::~ConfigureDialog() {
 }
 
 void ConfigureDialog::slotApply() {
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
   KCMultiDialog::slotApply();
 }
 
 void ConfigureDialog::slotOk() {
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
   KCMultiDialog::slotOk();
 }
 
@@ -764,7 +764,7 @@ void AccountsPage::SendingTab::slotSetDefaultTransport()
     item->setText( 1, i18n( "sendmail (Default)" ));
   }
 
-  GlobalSettings::setDefaultTransport( item->text(0) );
+  GlobalSettings::self()->setDefaultTransport( item->text(0) );
 
 }
 
@@ -825,7 +825,7 @@ void AccountsPage::SendingTab::slotAddTransport()
                            "column, first row, to indicate that this is the "
                            "default transport", "%1 (Default)")
       .arg( transportInfo->type );
-    GlobalSettings::setDefaultTransport( transportInfo->name );
+    GlobalSettings::self()->setDefaultTransport( transportInfo->name );
   }
   (void) new QListViewItem( mTransportList, lastItem, transportInfo->name,
                             typeDisplayName );
@@ -887,9 +887,9 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   }
 
   // if the deleted transport is the currently used transport reset it to default
-  const QString& currentTransport = GlobalSettings::currentTransport();
+  const QString& currentTransport = GlobalSettings::self()->currentTransport();
   if ( item->text( 0 ) == currentTransport ) {
-    GlobalSettings::setCurrentTransport( QString::null );
+    GlobalSettings::self()->setCurrentTransport( QString::null );
   }
 
   if ( !changedIdents.isEmpty() ) {
@@ -912,9 +912,9 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   if ( newCurrent ) {
     mTransportList->setCurrentItem( newCurrent );
     mTransportList->setSelected( newCurrent, true );
-    GlobalSettings::setDefaultTransport( newCurrent->text(0) );
+    GlobalSettings::self()->setDefaultTransport( newCurrent->text(0) );
     ti.readConfig( KMTransportInfo::findTransport( newCurrent->text(0) ));
-    if ( item->text( 0 ) == GlobalSettings::defaultTransport() ) {
+    if ( item->text( 0 ) == GlobalSettings::self()->defaultTransport() ) {
       if ( ti.type != "sendmail" ) {
         newCurrent->setText( 1, i18n("smtp (Default)") );
       } else {
@@ -922,7 +922,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
       }
     }
   } else {
-    GlobalSettings::setDefaultTransport( QString::null );
+    GlobalSettings::self()->setDefaultTransport( QString::null );
   }
 
   delete item;
@@ -936,7 +936,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 }
 
 void AccountsPage::SendingTab::doLoadFromGlobalSettings() {
-  mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
+  mSendOnCheckCombo->setCurrentItem( GlobalSettings::self()->sendOnCheck() );
 }
 
 void AccountsPage::SendingTab::doLoadOther() {
@@ -958,7 +958,7 @@ void AccountsPage::SendingTab::doLoadOther() {
   }
   emit transportListChanged( transportNames );
 
-  const QString &defaultTransport = GlobalSettings::defaultTransport();
+  const QString &defaultTransport = GlobalSettings::self()->defaultTransport();
 
   QListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
@@ -1012,7 +1012,7 @@ void AccountsPage::SendingTab::save() {
     (*it)->writeConfig(i);
 
   // Save common options:
-  GlobalSettings::setSendOnCheck( mSendOnCheckCombo->currentItem() );
+  GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentItem() );
   kmkernel->msgSender()->setSendImmediate(
                              mSendMethodCombo->currentItem() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
@@ -1335,7 +1335,7 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 }
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings() {
-  mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
+  mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
 }
 
 void AccountsPage::ReceivingTab::doLoadOther() {
@@ -1404,7 +1404,7 @@ void AccountsPage::ReceivingTab::save() {
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
-  GlobalSettings::setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
+  GlobalSettings::self()->setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
 
   general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
 
@@ -2264,7 +2264,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList encodings = KMMsgBase::supportedEncodings( false );
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
-  const QString &currentEncoding = GlobalSettings::fallbackCharacterEncoding();
+  const QString &currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
   int i = 0;
   for( ; it != end; ++it)
   {
@@ -2279,7 +2279,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
 
 void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 {
-  const QString &currentOverrideEncoding = GlobalSettings::overrideCharacterEncoding();
+  const QString &currentOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
   if ( currentOverrideEncoding.isEmpty() ) {
     mOverrideCharsetCombo->setCurrentItem( 0 );
     return;
@@ -2302,10 +2302,10 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 {
-  mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
-  mShrinkQuotesCheck->setChecked( GlobalSettings::shrinkQuotes() );
-  mShowExpandQuotesMark->setChecked( GlobalSettings::showExpandQuotesMark() );
-  mCollapseQuoteLevelSpin->setValue( GlobalSettings::collapseQuoteLevelSpin() );
+  mShowEmoticonsCheck->setChecked( GlobalSettings::self()->showEmoticons() );
+  mShrinkQuotesCheck->setChecked( GlobalSettings::self()->shrinkQuotes() );
+  mShowExpandQuotesMark->setChecked( GlobalSettings::self()->showExpandQuotesMark() );
+  mCollapseQuoteLevelSpin->setValue( GlobalSettings::self()->collapseQuoteLevelSpin() );
   readCurrentFallbackCodec();
   readCurrentOverrideCodec();
 }
@@ -2322,14 +2322,14 @@ void AppearancePage::ReaderTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
-  GlobalSettings::setShowEmoticons( mShowEmoticonsCheck->isChecked() );
-  GlobalSettings::setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
-  GlobalSettings::setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
+  GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
+  GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
+  GlobalSettings::self()->setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
 
-  GlobalSettings::setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
-  GlobalSettings::setFallbackCharacterEncoding(
+  GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
+  GlobalSettings::self()->setFallbackCharacterEncoding(
       KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
-  GlobalSettings::setOverrideCharacterEncoding(
+  GlobalSettings::self()->setOverrideCharacterEncoding(
       mOverrideCharsetCombo->currentItem() == 0 ?
         QString() :
         KGlobal::charsets()->encodingForName( mOverrideCharsetCombo->currentText() ) );
@@ -2382,8 +2382,8 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
 }
 
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings() {
-  mSystemTrayCheck->setChecked( GlobalSettings::systemTrayEnabled() );
-  mSystemTrayGroup->setButton( GlobalSettings::systemTrayPolicy() );
+  mSystemTrayCheck->setChecked( GlobalSettings::self()->systemTrayEnabled() );
+  mSystemTrayGroup->setButton( GlobalSettings::self()->systemTrayPolicy() );
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
 
@@ -2400,8 +2400,8 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::SystemTrayTab::save() {
-  GlobalSettings::setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
-  GlobalSettings::setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
+  GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
+  GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
 }
 
 
@@ -2544,8 +2544,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            this, SLOT( slotConfigureCompletionOrder() ) );
   hlay->addWidget( completionOrderBtn );
   hlay->addItem( new QSpacerItem(0, 0) );
-  
-  // recent addresses 
+
+  // recent addresses
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit recent addresses" ), this );
   connect( recentAddressesBtn, SIGNAL( clicked() ),
@@ -2599,17 +2599,17 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
   // various check boxes:
 
   mAutoAppSignFileCheck->setChecked(
-           GlobalSettings::autoTextSignature()=="auto" );
-  mSmartQuoteCheck->setChecked( GlobalSettings::smartQuote() );
-  mAutoRequestMDNCheck->setChecked( GlobalSettings::requestMDN() );
-  mWordWrapCheck->setChecked( GlobalSettings::wordWrap() );
+           GlobalSettings::self()->autoTextSignature()=="auto" );
+  mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
+  mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
+  mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
 
-  mWrapColumnSpin->setValue( GlobalSettings::lineWrapWidth() );
-  mAutoSave->setValue( GlobalSettings::autosaveInterval() );
+  mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
+  mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
 
   // editor group:
-  mExternalEditorCheck->setChecked( GlobalSettings::useExternalEditor() );
-  mEditorRequester->setURL( GlobalSettings::externalEditor() );
+  mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
+  mEditorRequester->setURL( GlobalSettings::self()->externalEditor() );
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2639,18 +2639,18 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 }
 
 void ComposerPage::GeneralTab::save() {
-  GlobalSettings::setAutoTextSignature(
+  GlobalSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
-  GlobalSettings::setSmartQuote( mSmartQuoteCheck->isChecked() );
-  GlobalSettings::setRequestMDN( mAutoRequestMDNCheck->isChecked() );
-  GlobalSettings::setWordWrap( mWordWrapCheck->isChecked() );
+  GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
+  GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
+  GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
 
-  GlobalSettings::setLineWrapWidth( mWrapColumnSpin->value() );
-  GlobalSettings::setAutosaveInterval( mAutoSave->value() );
+  GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
+  GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
 
   // editor group:
-  GlobalSettings::setUseExternalEditor( mExternalEditorCheck->isChecked() );
-  GlobalSettings::setExternalEditor( mEditorRequester->url() );
+  GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
+  GlobalSettings::self()->setExternalEditor( mEditorRequester->url() );
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses( )
@@ -2838,8 +2838,8 @@ void ComposerPage::PhrasesTab::doLoadFromGlobalSettings() {
   mPhraseLanguageCombo->clear();
   mActiveLanguageItem = -1;
 
-  int numLang = GlobalSettings::replyLanguagesCount();
-  int currentNr = GlobalSettings::replyCurrentLanguage();
+  int numLang = GlobalSettings::self()->replyLanguagesCount();
+  int currentNr = GlobalSettings::self()->replyCurrentLanguage();
 
   // build mLanguageList and mPhraseLanguageCombo:
   for ( int i = 0 ; i < numLang ; i++ ) {
@@ -2869,8 +2869,8 @@ void ComposerPage::PhrasesTab::doLoadFromGlobalSettings() {
 }
 
 void ComposerPage::PhrasesTab::save() {
-  GlobalSettings::setReplyLanguagesCount( mLanguageList.count() );
-  GlobalSettings::setReplyCurrentLanguage( mPhraseLanguageCombo->currentItem() );
+  GlobalSettings::self()->setReplyLanguagesCount( mLanguageList.count() );
+  GlobalSettings::self()->setReplyCurrentLanguage( mPhraseLanguageCombo->currentItem() );
 
   saveActiveLanguageItem();
   LanguageItemList::Iterator it = mLanguageList.begin();
@@ -2958,15 +2958,15 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 }
 
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings() {
-  mReplyListEditor->setStringList( GlobalSettings::replyPrefixes() );
-  mReplaceReplyPrefixCheck->setChecked( GlobalSettings::replaceReplyPrefix() );
-  mForwardListEditor->setStringList( GlobalSettings::forwardPrefixes() );
-  mReplaceForwardPrefixCheck->setChecked( GlobalSettings::replaceForwardPrefix() );
+  mReplyListEditor->setStringList( GlobalSettings::self()->replyPrefixes() );
+  mReplaceReplyPrefixCheck->setChecked( GlobalSettings::self()->replaceReplyPrefix() );
+  mForwardListEditor->setStringList( GlobalSettings::self()->forwardPrefixes() );
+  mReplaceForwardPrefixCheck->setChecked( GlobalSettings::self()->replaceForwardPrefix() );
 }
 
 void ComposerPage::SubjectTab::save() {
-  GlobalSettings::setReplyPrefixes( mReplyListEditor->stringList() );
-  GlobalSettings::setForwardPrefixes( mForwardListEditor->stringList() );
+  GlobalSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
+  GlobalSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
 }
 
 QString ComposerPage::CharsetTab::helpAnchor() const {
@@ -4415,13 +4415,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings() {
-  mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
+  mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
   // default = "Loop in current folder"
-  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
-  mActionEnterFolder->setCurrentItem( GlobalSettings::actionEnterFolder() );
-  mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
-  mDelayedMarkTime->setValue( GlobalSettings::delayedMarkTime() );
-  mShowPopupAfterDnD->setChecked( GlobalSettings::showPopupAfterDnD() );
+  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::self()->loopOnGotoUnread() );
+  mActionEnterFolder->setCurrentItem( GlobalSettings::self()->actionEnterFolder() );
+  mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
+  mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
+  mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
 }
 
 void MiscPage::FolderTab::doLoadOther() {
@@ -4446,12 +4446,12 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
                                   mOnStartupOpenFolder->folder()->idString() : QString::null );
 
-  GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
-  GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
-  GlobalSettings::setActionEnterFolder( mActionEnterFolder->currentItem() );
-  GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
-  GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
-  GlobalSettings::setExcludeImportantMailFromExpiry(
+  GlobalSettings::self()->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
+  GlobalSettings::self()->setDelayedMarkTime( mDelayedMarkTime->value() );
+  GlobalSettings::self()->setActionEnterFolder( mActionEnterFolder->currentItem() );
+  GlobalSettings::self()->setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
+  GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
 }
 
@@ -4629,28 +4629,28 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
 void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   // Read the groupware config
   if ( mEnableGwCB ) {
-    mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
+    mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
-  mLegacyMangleFromTo->setChecked( GlobalSettings::legacyMangleFromToHeaders() );
+  mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
   mLegacyBodyInvites->blockSignals( true );
-  mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
+  mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
-  mAutomaticSending->setChecked( GlobalSettings::automaticSending() );
+  mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 
   // Read the IMAP resource config
-  mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
+  mEnableImapResCB->setChecked( GlobalSettings::self()->theIMAPResourceEnabled() );
   mBox->setEnabled( mEnableImapResCB->isChecked() );
 
-  mHideGroupwareFolders->setChecked( GlobalSettings::hideGroupwareFolders() );
-  int i = GlobalSettings::theIMAPResourceFolderLanguage();
+  mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
+  int i = GlobalSettings::self()->theIMAPResourceFolderLanguage();
   mLanguageCombo->setCurrentItem(i);
-  i = GlobalSettings::theIMAPResourceStorageFormat();
+  i = GlobalSettings::self()->theIMAPResourceStorageFormat();
   mStorageFormatCombo->setCurrentItem(i);
   slotStorageFormatChanged( i );
 
-  QString folderId( GlobalSettings::theIMAPResourceFolderParent() );
+  QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
     mFolderCombo->setFolder( folderId );
   } else {
@@ -4659,7 +4659,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   }
 
   KMAccount* selectedAccount = 0;
-  int accountId = GlobalSettings::theIMAPResourceAccount();
+  int accountId = GlobalSettings::self()->theIMAPResourceAccount();
   if ( accountId )
     selectedAccount = kmkernel->acctMgr()->find( accountId );
   else {
@@ -4681,23 +4681,23 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
   }
   if ( selectedAccount )
     mAccountCombo->setCurrentAccount( selectedAccount );
-  else if ( GlobalSettings::theIMAPResourceStorageFormat() == 1 )
+  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 )
     kdDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
 }
 
 void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   if ( mEnableGwCB )
-    GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
-  GlobalSettings::setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
-  GlobalSettings::setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
-  GlobalSettings::setAutomaticSending( mAutomaticSending->isChecked() );
+    GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
+  GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
+  GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
+  GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
   int format = mStorageFormatCombo->currentItem();
-  GlobalSettings::setTheIMAPResourceStorageFormat( format );
+  GlobalSettings::self()->setTheIMAPResourceStorageFormat( format );
 
   // Write the IMAP resource config
-  GlobalSettings::setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
@@ -4711,14 +4711,14 @@ void MiscPage::GroupwareTab::save() {
     KMAccount* acct = mAccountCombo->currentAccount();
     if (  acct ) {
       folderId = QString( ".%1.directory/INBOX" ).arg( acct->id() );
-      GlobalSettings::setTheIMAPResourceAccount( acct->id() );
+      GlobalSettings::self()->setTheIMAPResourceAccount( acct->id() );
     }
   }
 
   bool enabled = mEnableImapResCB->isChecked() && !folderId.isEmpty();
-  GlobalSettings::setTheIMAPResourceEnabled( enabled );
-  GlobalSettings::setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
-  GlobalSettings::setTheIMAPResourceFolderParent( folderId );
+  GlobalSettings::self()->setTheIMAPResourceEnabled( enabled );
+  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
+  GlobalSettings::self()->setTheIMAPResourceFolderParent( folderId );
 }
 
 void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )

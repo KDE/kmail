@@ -127,7 +127,7 @@ QString RecipientItem::toolTip() const
     }
     txt += "</ul>";
   }
-  
+
   return txt;
 }
 
@@ -385,7 +385,7 @@ void RecipientsPicker::initCollections()
       if ( collIt != collectionMap.end() ) {
         (*collIt)->addItem( item );
       }
-      
+
       QStringList categories = (*it).categories();
       QStringList::ConstIterator catIt;
       for( catIt = categories.begin(); catIt != categories.end(); ++catIt ) {
@@ -609,13 +609,13 @@ void RecipientsPicker::pick( Recipient::Type type )
       ++count;
     }
   }
-  if ( count > GlobalSettings::maximumRecipients() ) {
+  if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
         i18n("You selected 1 recipient. The maximum supported number of "
              "recipients is %1. Please adapt the selection.",
              "You selected %n recipients. The maximum supported number of "
              "recipients is %1. Please adapt the selection.", count)
-      .arg( GlobalSettings::maximumRecipients() ) );
+      .arg( GlobalSettings::self()->maximumRecipients() ) );
     return;
   }
 

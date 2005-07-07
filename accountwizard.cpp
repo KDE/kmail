@@ -207,7 +207,7 @@ void AccountWizard::setupAccountTypePage()
   new QLabel( i18n( "Select what kind of account you would like to create" ), mAccountTypePage );
 
   mTypeBox = new AccountTypeBox( mAccountTypePage );
-  
+
   addPage( mAccountTypePage, i18n( "Account Type" ) );
 }
 
@@ -261,7 +261,7 @@ void AccountWizard::setupLoginInformationPage()
 
   layout->addWidget( label, 1, 0 );
   layout->addWidget( mPassword, 1, 1 );
-  
+
   addPage( mLoginInformationPage, i18n( "Login Information" ) );
 }
 
@@ -304,7 +304,7 @@ void AccountWizard::setupServerInformationPage()
 
   connect( mLocalDelivery, SIGNAL( toggled( bool ) ),
            mOutgoingServer, SLOT( setDisabled( bool ) ) );
-  
+
   addPage( mServerInformationPage, i18n( "Server Information" ) );
 }
 
@@ -484,7 +484,7 @@ void AccountWizard::accountCreated()
 
 void AccountWizard::finished()
 {
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
 
   QWizard::accept();
 }

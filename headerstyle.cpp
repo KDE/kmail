@@ -283,7 +283,7 @@ namespace KMail {
       QString fromStr = message->from();
       if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
         fromStr = message->fromStrip(); // let's use that
-      headerStr.append(i18n("From: ") + 
+      headerStr.append(i18n("From: ") +
           KMMessage::emailAddrAsAnchor( fromStr, false) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
@@ -577,7 +577,7 @@ namespace KMail {
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) ) {
       const int flags = LinkLocator::PreserveSpaces |
-                        ( GlobalSettings::showEmoticons() ?
+                        ( GlobalSettings::self()->showEmoticons() ?
                           LinkLocator::ReplaceSmileys : 0 );
       headerStr += QString("<div dir=\"%1\">%2</div>\n")
                         .arg(subjectDir)

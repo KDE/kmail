@@ -76,7 +76,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
   if ( selected.isEmpty() && folder() )
     selected = folder()->idString();
 
-  for ( QListViewItemIterator it( mFolderTree ) ; it.current() ; ++it ) 
+  for ( QListViewItemIterator it( mFolderTree ) ; it.current() ; ++it )
   {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( it.current() );
 
@@ -171,7 +171,7 @@ const KMFolder * SimpleFolderTree::folder() const
 //-----------------------------------------------------------------------------
 void SimpleFolderTree::setFolder( KMFolder *folder )
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) 
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
   {
     const KMFolder *fld = static_cast<FolderItem *>( it.current() )->folder();
     if ( fld == folder )
@@ -227,20 +227,20 @@ void SimpleFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, 
+KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
     bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
-                 Ok|Cancel|User1, Ok, true, 
+                 Ok|Cancel|User1, Ok, true,
                  KGuiItem(i18n("&New Subfolder"), "folder_new",
                    i18n("Create a new subfolder under the currently selected folder"))
                ), // mainwin as parent, modal
-    mUseGlobalSettings( useGlobalSettings )             
+    mUseGlobalSettings( useGlobalSettings )
 {
   KMFolderTree * ft = parent->folderTree();
   assert( ft );
 
-  QString preSelection = mUseGlobalSettings ? 
-    GlobalSettings::lastSelectedFolder() : QString::null;
+  QString preSelection = mUseGlobalSettings ?
+    GlobalSettings::self()->lastSelectedFolder() : QString::null;
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
                                            preSelection, mustBeReadWrite );
   init();
@@ -254,10 +254,10 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
                  KGuiItem(i18n("&New Subfolder"), "folder_new",
                    i18n("Create a new subfolder under the currently selected folder"))
                ), // mainwin as parent, modal
-    mUseGlobalSettings( useGlobalSettings )             
+    mUseGlobalSettings( useGlobalSettings )
 {
-  QString preSelection = mUseGlobalSettings ? 
-    GlobalSettings::lastSelectedFolder() : QString::null;
+  QString preSelection = mUseGlobalSettings ?
+    GlobalSettings::self()->lastSelectedFolder() : QString::null;
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), tree,
                                            preSelection, mustBeReadWrite );
   init();
@@ -280,7 +280,7 @@ KMFolderSelDlg::~KMFolderSelDlg()
 {
   const KMFolder * cur = folder();
   if ( cur && mUseGlobalSettings ) {
-    GlobalSettings::setLastSelectedFolder( cur->idString() );
+    GlobalSettings::self()->setLastSelectedFolder( cur->idString() );
   }
 
   writeConfig();
@@ -314,12 +314,12 @@ void KMFolderSelDlg::slotUser1()
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotUpdateBtnStatus()
 {
-  enableButton( User1, folder() && 
+  enableButton( User1, folder() &&
                 ( !folder()->noContent() && !folder()->noChildren() ) );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox, 
+void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox,
                                bool showImapFolders )
 {
   mTreeView->reload( mustBeReadWrite, showOutbox, showImapFolders );

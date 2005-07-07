@@ -180,13 +180,13 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     kdDebug(5006) << "for host " << accountHostName
                   << " current connections="
                   << (mServerConnections.find(accountHostName)==mServerConnections.end() ? 0 : mServerConnections[accountHostName])
-                  << " and limit is " << GlobalSettings::maxConnectionsPerHost()
+                  << " and limit is " << GlobalSettings::self()->maxConnectionsPerHost()
                   << endl;
     bool connectionLimitForHostReached =
       !accountHostName.isNull() &&
-      GlobalSettings::maxConnectionsPerHost() > 0 &&
+      GlobalSettings::self()->maxConnectionsPerHost() > 0 &&
       mServerConnections.find( accountHostName ) != mServerConnections.end() &&
-      mServerConnections[accountHostName] >= GlobalSettings::maxConnectionsPerHost();
+      mServerConnections[accountHostName] >= GlobalSettings::self()->maxConnectionsPerHost();
     kdDebug(5006) << "connection limit reached: "
                   << connectionLimitForHostReached << endl;
     if ( !(*it)->checkingMail() && !connectionLimitForHostReached ) {
