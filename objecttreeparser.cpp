@@ -588,8 +588,9 @@ namespace KMail {
                                   .arg( errorMsg );
         }
 
-        htmlWriter()->queue( writeSigstatHeader( messagePart,
-                                                 cryptPlug,
+        if ( mReader )
+          htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                   cryptPlug,
                                                  fromAddress ) );
       }
 
@@ -1423,7 +1424,7 @@ namespace KMail {
 
     if ( smimeType == "certs-only" ) {
       result.setNeverDisplayInline( true );
-      if ( !smimeCrypto )
+      if ( !smimeCrypto || !mReader )
         return false;
 
       const KConfigGroup reader( KMKernel::config(), "Reader" );
