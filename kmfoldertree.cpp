@@ -938,7 +938,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
       folderMenu->insertItem( i18n("&Move Folder To"), moveMenu );
     }
 #endif
-    if ( fti->folder() 
+    if ( fti->folder()
        && fti->folder()->folderType() != KMFolderTypeImap  ) {
 //       && fti->folder()->folderType() != KMFolderTypeSearch ) {
       // copy folder
@@ -1327,7 +1327,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       } else if ( keybstate & KApplication::ShiftModifier ) {
         emit folderDrop(fti->folder());
       } else {
-        if ( GlobalSettings::showPopupAfterDnD() ) {
+        if ( GlobalSettings::self()->showPopupAfterDnD() ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
           menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
@@ -1705,10 +1705,10 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
       bool subMenu = false;
-      if ( ( action == MoveMessage || action == CopyMessage ) && 
+      if ( ( action == MoveMessage || action == CopyMessage ) &&
            fti->folder() && !fti->folder()->noContent() )
         subMenu = true;
-      if ( ( action == MoveFolder || action == CopyFolder ) 
+      if ( ( action == MoveFolder || action == CopyFolder )
           && ( !fti->folder() || ( fti->folder() && !fti->folder()->noChildren() ) ) )
         subMenu = true;
       if ( subMenu )
@@ -1758,7 +1758,7 @@ void KMFolderTree::moveOrCopyCurrentFolder( KMFolder* destination, bool move )
   KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
   if ( destination )
     parent = destination->createChildFolder();
-  QString message = 
+  QString message =
     i18n( "<qt>Cannot move or copy folder <b>%1</b> into a subfolder below itself.</qt>" ).
         arg( folder->label() );
 
@@ -1791,7 +1791,7 @@ void KMFolderTree::moveOrCopyCurrentFolder( KMFolder* destination, bool move )
   }
 
   if ( move ) {
-    kdDebug(5006) << "move folder " << currentFolder()->label() << " to " 
+    kdDebug(5006) << "move folder " << currentFolder()->label() << " to "
       << ( destination ? destination->label() : "Local Folders" ) << endl;
     kmkernel->folderMgr()->moveFolder( folder, parent );
   } else {

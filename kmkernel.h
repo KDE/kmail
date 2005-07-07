@@ -275,15 +275,8 @@ public:
 
 public slots:
 
-  /// Save contents of all open composer widnows to ~/dead.letter
+  /// Save contents of all open composer windows to ~/dead.letter
   void dumpDeadLetters();
-
-  /** Call this slot instead of directly @ref KConfig::sync() to
-      minimize the overall config writes. Calling this slot will
-      schedule a sync of the application config file using a timer, so
-      that many consecutive calls can be condensed into a single
-      sync, which is more efficient. */
-  void slotRequestConfigSync();
 
   /** empty all the trash bins */
   void slotEmptyTrash();

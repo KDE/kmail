@@ -2105,7 +2105,7 @@ bool KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(true, -1, false, acceptCurrent);
-  if ( i < 0 && GlobalSettings::loopOnGotoUnread() !=
+  if ( i < 0 && GlobalSettings::self()->loopOnGotoUnread() !=
         GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
   {
     KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
@@ -2131,7 +2131,7 @@ bool KMHeaders::prevUnreadMessage()
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(false);
-  if ( i < 0 && GlobalSettings::loopOnGotoUnread() !=
+  if ( i < 0 && GlobalSettings::self()->loopOnGotoUnread() !=
         GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
   {
     KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
@@ -3026,7 +3026,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     Q_INT32 deleted_count = 0;
     bool unread_exists = false;
-    bool jumpToUnread = GlobalSettings::jumpToUnread() ||
+    bool jumpToUnread = GlobalSettings::self()->jumpToUnread() ||
                         forceJumpToUnread;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;

@@ -162,7 +162,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, b
   assert( ft );
 
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
-                                           GlobalSettings::lastSelectedFolder(),
+                                           GlobalSettings::self()->lastSelectedFolder(),
                                            mustBeReadWrite );
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
@@ -177,7 +177,7 @@ KMFolderSelDlg::~KMFolderSelDlg()
 {
   const KMFolder * cur = folder();
   if ( cur ) {
-    GlobalSettings::setLastSelectedFolder( cur->idString() );
+    GlobalSettings::self()->setLastSelectedFolder( cur->idString() );
   }
 }
 

@@ -890,7 +890,7 @@ void KMReaderWin::writeConfig( bool sync ) const {
   saveSplitterSizes( reader );
 
   if ( sync )
-    kmkernel->slotRequestConfigSync();
+    GlobalSettings::self()->requestSync();
 }
 
 //-----------------------------------------------------------------------------
@@ -1044,9 +1044,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::delayedMarkAsRead() ) {
-    if ( GlobalSettings::delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::delayedMarkTime() * 1000, TRUE );
+  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
+    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
     else
       slotTouchMessage();
   }

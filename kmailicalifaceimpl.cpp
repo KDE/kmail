@@ -1159,7 +1159,7 @@ static QMap<KFolderTreeItem::Type,QString> folderNames[4];
 QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language ) const
 {
   // With the XML storage, folders are always (internally) named in English
-  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
+  if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
     language = 0;
 
   static bool folderNamesSet = false;
@@ -1299,7 +1299,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
 
-    StorageFormat format= GlobalSettings::theIMAPResourceStorageFormat()
+    StorageFormat format= GlobalSettings::self()->theIMAPResourceStorageFormat()
       == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
     FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
@@ -1347,7 +1347,7 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
   FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() )
     return (*it).mStorageFormat;
-  return GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+  return GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
 }
 
 void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
@@ -1510,7 +1510,7 @@ KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 
 void KMailICalIfaceImpl::readConfig()
 {
-  bool enabled = GlobalSettings::theIMAPResourceEnabled();
+  bool enabled = GlobalSettings::self()->theIMAPResourceEnabled();
 
   if( !enabled ) {
     if( mUseResourceIMAP == true ) {
@@ -1524,8 +1524,8 @@ void KMailICalIfaceImpl::readConfig()
   mUseResourceIMAP = enabled;
 
   // Read remaining options
-  const bool hideFolders = GlobalSettings::hideGroupwareFolders();
-  QString parentName = GlobalSettings::theIMAPResourceFolderParent();
+  const bool hideFolders = GlobalSettings::self()->hideGroupwareFolders();
+  QString parentName = GlobalSettings::self()->theIMAPResourceFolderParent();
 
   // Find the folder parent
   KMFolderDir* folderParentDir;
@@ -1536,7 +1536,7 @@ void KMailICalIfaceImpl::readConfig()
     // configure things again.
     kdDebug(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
     // Or maybe the inbox simply wasn't created on the first startup
-    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
+    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
     Q_ASSERT( account );
     if ( account ) {
       // just in case we were connected already
@@ -1598,7 +1598,7 @@ void KMailICalIfaceImpl::readConfig()
                                             " and the IMAP resource will be disabled").arg(folderParent!=0?folderParent->name():folderParentDir->name()),
                                     i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
 
-      GlobalSettings::setTheIMAPResourceEnabled( false );
+      GlobalSettings::self()->setTheIMAPResourceEnabled( false );
       mUseResourceIMAP = false;
       mFolderParentDir = 0;
       reloadFolderTree();
@@ -1620,7 +1620,7 @@ void KMailICalIfaceImpl::readConfig()
 
   // Make the new settings work
   mUseResourceIMAP = true;
-  mFolderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
+  mFolderLanguage = GlobalSettings::self()->theIMAPResourceFolderLanguage();
   if( mFolderLanguage > 3 ) mFolderLanguage = 0;
   mFolderParentDir = folderParentDir;
   mFolderType = folderType;
@@ -1694,12 +1694,12 @@ void KMailICalIfaceImpl::readConfig()
 
 void KMailICalIfaceImpl::slotCheckDone()
 {
-  QString parentName = GlobalSettings::theIMAPResourceFolderParent();
+  QString parentName = GlobalSettings::self()->theIMAPResourceFolderParent();
   KMFolder* folderParent = kmkernel->findFolderById( parentName );
   kdDebug(5006) << k_funcinfo << " folderParent=" << folderParent << endl;
   if ( folderParent )  // cool it exists now
   {
-    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
+    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::self()->theIMAPResourceAccount() );
     if ( account )
       disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                   this, SLOT( slotCheckDone() ) );
@@ -1719,7 +1719,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
 
   // Find the folder
   KMFolder* folder = findStandardResourceFolder( mFolderParentDir, contentsType );
-  if( !folder && GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) {
+  if( !folder && GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) {
     // Maybe there's a folder with the right name - well, change its type then
     KMFolderNode* node = mFolderParentDir->hasNamedFolder( localizedDefaultFolderName( contentsType ) );
     if ( node && !node->isDir() ) {
@@ -1731,7 +1731,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
     }
   }
 
-  StorageFormat defaultFormat = GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+  StorageFormat defaultFormat = GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
   if ( !folder ) {
     // The folder isn't there yet - create it
     folder =
@@ -1885,7 +1885,7 @@ static void vPartMicroParser( const QString& str, QString& s )
 
 KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType )
 {
-  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
+  if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
   {
     // Look for a folder with an annotation like "event.default"
     QPtrListIterator<KMFolderNode> it( *folderParentDir );
@@ -1897,7 +1897,7 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
           //kdDebug(5006) << "findStandardResourceFolder: " << folder->idString() << " " << folder->name() << " has annotation " << annotation << endl;
           // this is a default folder and it is below our default resources parent folder => Bingo
           if ( ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
-              && folder->parent()->owner()->idString() == GlobalSettings::theIMAPResourceFolderParent() ) {
+              && folder->parent()->owner()->idString() == GlobalSettings::self()->theIMAPResourceFolderParent() ) {
             return folder;
           }
 
@@ -1910,7 +1910,7 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
   else // icalvcard: look up standard resource folders by name
   {
     KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
-    unsigned int folderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
+    unsigned int folderLanguage = GlobalSettings::self()->theIMAPResourceFolderLanguage();
     if( folderLanguage > 3 ) folderLanguage = 0;
     KMFolderNode* node = folderParentDir->hasNamedFolder( folderName( itemType, folderLanguage ) );
     if ( !node || node->isDir() )

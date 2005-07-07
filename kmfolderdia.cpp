@@ -445,7 +445,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
   // or if it's set to calendar or task (existing folder)
-  if ( ( GlobalSettings::theIMAPResourceStorageFormat() ==
+  if ( ( GlobalSettings::self()->theIMAPResourceStorageFormat() ==
          GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
        ( mContentsComboBox ||
          ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
@@ -704,7 +704,7 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 {
   KMail::FolderContentsType type =
     static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
-  if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
+  if( type != KMail::ContentsTypeMail && GlobalSettings::self()->hideGroupwareFolders() ) {
     QString message = i18n("You have configured this folder to contain groupware information "
         "and the general configuration option to hide groupware folders is "
         "set. That means that this folder will disappear once the configuration "
@@ -859,7 +859,7 @@ bool FolderDiaGeneralTab::save()
       }
     }
   }
-  // Renamed an existing folder? We don't check for oldName == newName on 
+  // Renamed an existing folder? We don't check for oldName == newName on
   // purpose here. The folder might be pending renaming on the next dimap
   // sync already, in which case the old name would still be around and
   // something like Calendar -> CalendarFoo -> Calendar inbetween syncs would

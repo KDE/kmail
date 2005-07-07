@@ -134,9 +134,9 @@ public:
 
 KMMsgDict::KMMsgDict()
 {
-  int lastSizeOfDict = GlobalSettings::msgDictSizeHint();
+  int lastSizeOfDict = GlobalSettings::self()->msgDictSizeHint();
   lastSizeOfDict = ( lastSizeOfDict * 11 ) / 10;
-  GlobalSettings::setMsgDictSizeHint( 0 );
+  GlobalSettings::self()->setMsgDictSizeHint( 0 );
   dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
 }
@@ -305,7 +305,7 @@ bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
     outdated = true;
   if (indexInfo.lastModified() > idsInfo.lastModified())
     outdated = true;
-  
+
   return outdated;
 }
 
@@ -375,9 +375,9 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
 
     rentry->set(index, entry);
   }
-  // Remember how many items we put into the dict this time so we can create 
+  // Remember how many items we put into the dict this time so we can create
   // it with an appropriate size next time.
-  GlobalSettings::setMsgDictSizeHint( GlobalSettings::msgDictSizeHint() + count );
+  GlobalSettings::self()->setMsgDictSizeHint( GlobalSettings::self()->msgDictSizeHint() + count );
 
   fclose(fp);
   folder->setRDict(rentry);

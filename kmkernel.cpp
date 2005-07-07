@@ -176,7 +176,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
@@ -433,7 +433,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if ( isICalInvitation && bcc.isEmpty() )
       msg->setBcc( "" );
     if ( isICalInvitation &&
-       GlobalSettings::legacyBodyInvites() ) {
+       GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       msg->setHeaderField( "Content-Type",
@@ -467,7 +467,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   KMComposeWin *cWin = new KMComposeWin();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
-      && GlobalSettings::legacyBodyInvites() );
+      && GlobalSettings::self()->legacyBodyInvites() );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
@@ -1443,11 +1443,6 @@ void KMKernel::slotResult(KIO::Job *job)
     else job->showErrorDialog();
   }
   mPutJobs.remove(it);
-}
-
-void KMKernel::slotRequestConfigSync() {
-  // ### FIXME: delay as promised in the kdoc of this function ;-)
-  KMKernel::config()->sync();
 }
 
 void KMKernel::slotShowConfigurationDialog()

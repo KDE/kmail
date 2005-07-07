@@ -239,12 +239,12 @@ ConfigureDialog::~ConfigureDialog() {
 
 void ConfigureDialog::slotApply() {
   KCMultiDialog::slotApply();
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
 }
 
 void ConfigureDialog::slotOk() {
   KCMultiDialog::slotOk();
-  GlobalSettings::writeConfig();
+  GlobalSettings::self()->writeConfig();
 }
 
 void ConfigureDialog::slotUser2() {
@@ -995,7 +995,7 @@ void NetworkPage::SendingTab::load() {
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
 							 false ) );
-  mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
+  mSendOnCheckCombo->setCurrentItem( GlobalSettings::self()->sendOnCheck() );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
   {
@@ -1025,7 +1025,7 @@ void NetworkPage::SendingTab::save() {
     (*it)->writeConfig(i);
 
   // Save common options:
-  GlobalSettings::setSendOnCheck( mSendOnCheckCombo->currentItem() );
+  GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentItem() );
   kmkernel->msgSender()->setSendImmediate(
 			     mSendMethodCombo->currentItem() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
@@ -1365,7 +1365,7 @@ void NetworkPage::ReceivingTab::load() {
   }
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
-  mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
+  mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
 }
 
@@ -1409,7 +1409,7 @@ void NetworkPage::ReceivingTab::save() {
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
-  GlobalSettings::setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
+  GlobalSettings::self()->setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
 
   general.writeEntry( "checkmail-startup", mCheckmailStartupCheck->isChecked() );
 
@@ -2165,8 +2165,8 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
 }
 
 void AppearancePage::SystemTrayTab::load() {
-  mSystemTrayCheck->setChecked( GlobalSettings::systemTrayEnabled() );
-  mSystemTrayGroup->setButton( GlobalSettings::systemTrayPolicy() );
+  mSystemTrayCheck->setChecked( GlobalSettings::self()->systemTrayEnabled() );
+  mSystemTrayGroup->setButton( GlobalSettings::self()->systemTrayPolicy() );
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
 
@@ -2183,8 +2183,8 @@ void AppearancePage::SystemTrayTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::SystemTrayTab::save() {
-  GlobalSettings::setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
-  GlobalSettings::setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
+  GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
+  GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->id( mSystemTrayGroup->selected() ) );
 }
 
 
@@ -2316,8 +2316,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            this, SLOT( slotConfigureCompletionOrder() ) );
   hlay->addWidget( completionOrderBtn );
   hlay->addItem( new QSpacerItem(0, 0) );
-  
-  // recent addresses 
+
+  // recent addresses
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit recent addresses" ), this );
   connect( recentAddressesBtn, SIGNAL( clicked() ),
@@ -4221,17 +4221,17 @@ void MiscPage::FolderTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
-  mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
+  mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
 						  kmkernel->inboxFolder()->idString() ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
 
-  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
-  mJumpToUnread->setChecked( GlobalSettings::jumpToUnread() );
-  mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
-  mDelayedMarkTime->setValue( GlobalSettings::delayedMarkTime() );
-  mShowPopupAfterDnD->setChecked( GlobalSettings::showPopupAfterDnD() );
+  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::self()->loopOnGotoUnread() );
+  mJumpToUnread->setChecked( GlobalSettings::self()->jumpToUnread() );
+  mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
+  mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
+  mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -4247,12 +4247,12 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
 
-  GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
-  GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
-  GlobalSettings::setJumpToUnread( mJumpToUnread->isChecked() );
-  GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
-  GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
-  GlobalSettings::setExcludeImportantMailFromExpiry(
+  GlobalSettings::self()->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
+  GlobalSettings::self()->setDelayedMarkTime( mDelayedMarkTime->value() );
+  GlobalSettings::self()->setJumpToUnread( mJumpToUnread->isChecked() );
+  GlobalSettings::self()->setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
+  GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
 }
 
@@ -4423,24 +4423,24 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
 void MiscPage::GroupwareTab::load() {
   // Read the groupware config
   if ( mEnableGwCB ) {
-    mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
+    mEnableGwCB->setChecked( GlobalSettings::self()->groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
-  mLegacyMangleFromTo->setChecked( GlobalSettings::legacyMangleFromToHeaders() );
+  mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
   mLegacyBodyInvites->blockSignals( true );
-  mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
+  mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
-  mAutomaticSending->setChecked( GlobalSettings::automaticSending() );
+  mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
   mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 
   // Read the IMAP resource config
-  mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
+  mEnableImapResCB->setChecked( GlobalSettings::self()->theIMAPResourceEnabled() );
   mBox->setEnabled( mEnableImapResCB->isChecked() );
 
-  mHideGroupwareFolders->setChecked( GlobalSettings::hideGroupwareFolders() );
+  mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
 
   KMAccount* selectedAccount = 0;
-  int accountId = GlobalSettings::theIMAPResourceAccount();
+  int accountId = GlobalSettings::self()->theIMAPResourceAccount();
   if ( accountId )
     selectedAccount = kmkernel->acctMgr()->find( accountId );
   if ( selectedAccount )
@@ -4450,25 +4450,25 @@ void MiscPage::GroupwareTab::load() {
 void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   if ( mEnableGwCB )
-    GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
-  GlobalSettings::setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
-  GlobalSettings::setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
-  GlobalSettings::setAutomaticSending( mAutomaticSending->isChecked() );
+    GlobalSettings::self()->setGroupwareEnabled( mEnableGwCB->isChecked() );
+  GlobalSettings::self()->setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
+  GlobalSettings::self()->setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
+  GlobalSettings::self()->setAutomaticSending( mAutomaticSending->isChecked() );
 
   // Write the IMAP resource config
-  GlobalSettings::setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
+  GlobalSettings::self()->setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
 
   // Inbox folder of the selected account
   KMAccount* acct = mAccountCombo->currentAccount();
   QString folderId;
   if (  acct ) {
     folderId = QString( ".%1.directory/INBOX" ).arg( acct->id() );
-    GlobalSettings::setTheIMAPResourceAccount( acct->id() );
+    GlobalSettings::self()->setTheIMAPResourceAccount( acct->id() );
   }
 
   bool enabled = mEnableImapResCB->isChecked() && !folderId.isEmpty();
-  GlobalSettings::setTheIMAPResourceEnabled( enabled );
-  GlobalSettings::setTheIMAPResourceFolderParent( folderId );
+  GlobalSettings::self()->setTheIMAPResourceEnabled( enabled );
+  GlobalSettings::self()->setTheIMAPResourceFolderParent( folderId );
 }
 
 #undef DIM

@@ -1,6 +1,6 @@
 File=kmail.kcfg
-ClassName=GlobalSettings
+ClassName=GlobalSettingsBase
 Mutators=true
-Singleton=true
+Singleton=false
 ItemAccessors=true
 SetUserTexts=true

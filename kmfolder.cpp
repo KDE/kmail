@@ -18,6 +18,7 @@
 #include "compactionjob.h"
 #include "kmfoldertree.h"
 #include "kmailicalifaceimpl.h"
+#include "globalsettings.h"
 
 #include <errno.h>
 
@@ -557,7 +558,7 @@ void KMFolder::setMailingList( const MailingList& mlist )
 void KMFolder::setIdentity( uint identity )
 {
   mIdentity = identity;
-  kmkernel->slotRequestConfigSync();
+  GlobalSettings::self()->requestSync();
 }
 
 void KMFolder::setWhoField(const QString& aWhoField )

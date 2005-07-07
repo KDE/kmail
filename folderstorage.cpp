@@ -56,6 +56,7 @@ using KMail::ListJob;
 
 #include <mimelib/mimepp.h>
 #include <errno.h>
+#include "globalsettings.h"
 
 //-----------------------------------------------------------------------------
 
@@ -855,6 +856,8 @@ void FolderStorage::writeConfig()
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
+
+  GlobalSettings::self()->requestSync();
 }
 
 //-----------------------------------------------------------------------------

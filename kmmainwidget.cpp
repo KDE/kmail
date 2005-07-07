@@ -491,7 +491,7 @@ void KMMainWidget::createWidgets(void)
   mSearchToolBar->setStretchableWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
-  if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
+  if ( !GlobalSettings::self()->quickSearchActive() ) mSearchToolBar->hide();
 
   mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
@@ -769,9 +769,9 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                                     const QMap<QString, int> & newInFolder )
 {
   const bool sendOnAll =
-    GlobalSettings::sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
+    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
-    GlobalSettings::sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
+    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
   if( sendOnAll || (sendOnManual && sendOnCheck ) )
     slotSendQueued();
 
@@ -795,7 +795,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
     if ( !folder->ignoreNewMail() ) {
       showNotification = true;
-      if ( GlobalSettings::verboseNewMailNotification() ) {
+      if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18n( "1 new message in %1",
                                   "%n new messages in %1",
                                   newInFolder.find( *it ).data() )
@@ -807,7 +807,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !showNotification )
     return;
 
-  if ( GlobalSettings::verboseNewMailNotification() ) {
+  if ( GlobalSettings::self()->verboseNewMailNotification() ) {
     summary = i18n( "%1 is a list of the number of new messages per folder",
                     "<b>New mail arrived</b><br>%1" )
               .arg( summary );
@@ -1155,8 +1155,8 @@ void KMMainWidget::slotToggleSubjectThreading()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotToggleShowQuickSearch()
 {
-  GlobalSettings::setQuickSearchActive( !GlobalSettings::quickSearchActive() );
-  if ( GlobalSettings::quickSearchActive() )
+  GlobalSettings::self()->setQuickSearchActive( !GlobalSettings::self()->quickSearchActive() );
+  if ( GlobalSettings::self()->quickSearchActive() )
     mSearchToolBar->show();
   else {
     mQuickSearchLine->reset();
@@ -1974,7 +1974,7 @@ void KMMainWidget::slotNextMessage()       { mHeaders->nextMessage(); }
 void KMMainWidget::slotNextUnreadMessage()
 {
   if ( !mHeaders->nextUnreadMessage() )
-    if ( GlobalSettings::loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
+    if ( GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
       mFolderTree->nextUnreadFolder(true);
 }
 void KMMainWidget::slotNextImportantMessage() {
@@ -1984,7 +1984,7 @@ void KMMainWidget::slotPrevMessage()       { mHeaders->prevMessage(); }
 void KMMainWidget::slotPrevUnreadMessage()
 {
   if ( !mHeaders->prevUnreadMessage() )
-    if ( GlobalSettings::loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
+    if ( GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
       mFolderTree->prevUnreadFolder();
 }
 void KMMainWidget::slotPrevImportantMessage() {
@@ -2794,7 +2794,7 @@ void KMMainWidget::setupActions()
   mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString::null,
                                        0, this, SLOT(slotToggleShowQuickSearch()),
                                        actionCollection(), "show_quick_search");
-  mToggleShowQuickSearchAction->setChecked( GlobalSettings::quickSearchActive() );
+  mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
   mToggleShowQuickSearchAction->setWhatsThis(
         i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().utf8() ) );
 
@@ -3040,7 +3040,7 @@ void KMMainWidget::updateMessageActions()
     mSaveTextAsAction->setEnabled( single_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails
-       || (GlobalSettings::loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
+       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
     actionCollection()->action( "go_next_message" )->setEnabled( mails );
     actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );
@@ -3172,8 +3172,8 @@ void KMMainWidget::slotShowStartupFolder()
 
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
-       GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
-    GlobalSettings::setPreviousNewFeaturesMD5( newFeaturesMD5 );
+       GlobalSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5 ) {
+    GlobalSettings::self()->setPreviousNewFeaturesMD5( newFeaturesMD5 );
     slotIntro();
   }
 
@@ -3406,10 +3406,10 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
 
 void KMMainWidget::toggleSystemTray()
 {
-  if ( !mSystemTray && GlobalSettings::systemTrayEnabled() ) {
+  if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {
     mSystemTray = new KMSystemTray();
   }
-  else if ( mSystemTray && !GlobalSettings::systemTrayEnabled() ) {
+  else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
     kdDebug(5006) << "deleting systray" << endl;
     delete mSystemTray;
@@ -3418,7 +3418,7 @@ void KMMainWidget::toggleSystemTray()
 
   // Set mode of systemtray. If mode has changed, tray will handle this.
   if ( mSystemTray )
-    mSystemTray->setMode( GlobalSettings::systemTrayPolicy() );
+    mSystemTray->setMode( GlobalSettings::self()->systemTrayPolicy() );
 }
 
 //-----------------------------------------------------------------------------
