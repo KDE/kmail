@@ -1123,9 +1123,9 @@ void KMFolderCachedImap::uploadNewMessages()
       if ( KMessageBox::warningYesNo( 0, msg ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Message to Folder", "Move Messages to Folder"), true );
-        KMFolder* dest = 0;
         if ( dlg.exec() ) {
-          if ( (dest = dlg.folder()) ) {
+          KMFolder* dest = dlg.folder();
+          if ( dest ) {
             QPtrList<KMMsgBase> msgs;
             for( int i = 0; i < count(); ++i ) {
               KMMsgBase *msg = getMsgBase( i );
