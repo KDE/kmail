@@ -229,7 +229,8 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
   setUnreadCount( newUnreadCount );
 }
 
-void KMFolderTreeItem::slotRepaint() {
+void KMFolderTreeItem::slotIconsChanged()
+{
   kdDebug(5006) << k_funcinfo << endl;
   // this is prone to change, so better check
   if( kmkernel->iCalIface().isResourceFolder( mFolder ) )
@@ -240,6 +241,13 @@ void KMFolderTreeItem::slotRepaint() {
   else
     setPixmap( 0, normalIcon() );
   emit iconChanged( this );
+  repaint();
+}
+
+void KMFolderTreeItem::slotNameChanged()
+{
+  setText( 0, mFolder->label() );
+  emit nameChanged( this );
   repaint();
 }
 
@@ -549,9 +557,9 @@ void KMFolderTree::reload(bool openFolders)
       continue;
 
     disconnect(fti->folder(),SIGNAL(iconsChanged()),
-               fti,SLOT(slotRepaint()));
+               fti,SLOT(slotIconsChanged()));
     connect(fti->folder(),SIGNAL(iconsChanged()),
-            fti,SLOT(slotRepaint()));
+            fti,SLOT(slotIconsChanged()));
 
     disconnect(fti->folder(),SIGNAL(nameChanged()),
                fti,SLOT(slotNameChanged()));
@@ -1256,6 +1264,7 @@ void KMFolderTree::cleanupConfigFile()
       if ( folder && kmkernel->iCalIface().hideResourceFolder( folder ) )
         continue; // hidden IMAP resource folder, don't delete info
 
+      //KMessageBox::error( 0, "cleanupConfigFile: Deleting group " + *grpIt );
       config->deleteGroup(*grpIt, TRUE);
       kdDebug(5006) << "Deleting information about folder " << name << endl;
     }
