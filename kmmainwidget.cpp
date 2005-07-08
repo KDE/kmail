@@ -2838,7 +2838,7 @@ void KMMainWidget::setupActions()
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
   initializeFilterActions();
-  initializeIMAPActions();
+  initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
 }
 
@@ -3336,7 +3336,7 @@ void KMMainWidget::initializeFilterActions()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::initializeIMAPActions()
+void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
 {
   bool hasImapAccount = false;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
@@ -3350,14 +3350,14 @@ void KMMainWidget::initializeIMAPActions()
     return; // nothing to do
 
   KXMLGUIFactory* factory = mGUIClient->factory();
-  kdDebug() << k_funcinfo << endl;
   if ( factory )
     factory->removeClient( mGUIClient );
 
   if ( !mTroubleshootFolderAction ) {
     mTroubleshootFolderAction = new KAction( i18n("&Troubleshoot IMAP Cache..."), "wizard", 0,
      this, SLOT(slotTroubleshootFolder()), actionCollection(), "troubleshoot_folder" );
-    updateFolderMenu(); // set initial state of the action
+    if ( setState )
+      updateFolderMenu(); // set initial state of the action
   } else {
     delete mTroubleshootFolderAction ;
     mTroubleshootFolderAction = 0;
