@@ -183,6 +183,9 @@ public:
 
   // Called after a folder was synced with the server
   void folderSynced( KMFolder* folder, const KURL& folderURL );
+  // Called when deletion of a folder from the server suceeded, 
+  // triggers fb re-generation
+  void folderDeletedOnServer( const KURL& folderURL );
   void addFolderChange( KMFolder* folder, FolderChanges changes );
 
   // See CachedImapJob::slotPutMessageResult

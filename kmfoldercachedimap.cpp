@@ -735,7 +735,7 @@ void KMFolderCachedImap::serverSyncInternal()
       CachedImapJob* job = new CachedImapJob( foldersForDeletionOnServer,
                                                   CachedImapJob::tDeleteFolders, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
-      connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+      connect( job, SIGNAL( finished() ), this, SLOT( slotFolderDeletionOnServerFinished() ) );
       job->start();
       break;
     }
@@ -1982,6 +1982,17 @@ void KMFolderCachedImap::slotUpdateLastUid()
   if( mTentativeHighestUid != 0 )
     setLastUid( mTentativeHighestUid );
   mTentativeHighestUid = 0;
+}
+
+void KMFolderCachedImap::slotFolderDeletionOnServerFinished()
+{
+  for ( QStringList::const_iterator it = foldersForDeletionOnServer.constBegin();
+      it != foldersForDeletionOnServer.constEnd(); ++it ) {
+    KURL url( mAccount->getUrl() );
+    url.setPath( *it );
+    kmkernel->iCalIface().folderDeletedOnServer( url );
+  }
+  serverSyncInternal();
 }
 
 #include "kmfoldercachedimap.moc"
