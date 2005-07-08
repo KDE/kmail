@@ -229,7 +229,15 @@ private:
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
-  KMFolder* findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
+  struct StandardFolderSearchResult
+  {
+    enum FoundEnum { FoundAndStandard, NotFound, FoundByType, FoundByName };
+    StandardFolderSearchResult( KMFolder* f = 0, FoundEnum e = NotFound ) : folder( f ), found( e ) {}
+    KMFolder* folder; // NotFound implies folder==0 of course.
+    FoundEnum found;
+  };
+
+  StandardFolderSearchResult findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
   KMFolder* findResourceFolder( const QString& resource );
 
 
@@ -282,7 +290,7 @@ private:
   typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
   // helper for reading the FolderInfo from the config file
   FolderInfo readFolderInfo( const KMFolder * const folder ) const;
-  
+
   FolderInfoMap mFolderInfoMap;
 
   unsigned int mFolderLanguage;
