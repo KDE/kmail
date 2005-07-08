@@ -213,7 +213,7 @@ public slots:
   void initializeFilterActions();
 
   /** Create IMAP-account-related actions if applicable */
-  void initializeIMAPActions();
+  void initializeIMAPActions() { initializeIMAPActions( true ); }
 
   /** Create actions for the folder shortcuts. */
   void initializeFolderShortcutActions();
@@ -361,7 +361,7 @@ protected slots:
   /** Copy selected messages to folder with corresponding to given menuid */
   virtual void copySelectedToFolder( int menuId );
   /** Update html and threaded messages preferences in Folder menu. */
-  virtual void updateFolderMenu();
+  void updateFolderMenu();
   /** Enable or disable the "mark all as read" action. Needs to happen more
    * often the the other updates and is therefor in its own method. */
   void updateMarkAsReadAction();
@@ -402,6 +402,8 @@ protected slots:
 private:
   /** Get override character encoding. */
   QString overrideEncoding() const;
+
+  void initializeIMAPActions( bool setState );
 
 private:
   // Message actions
