@@ -219,7 +219,16 @@ private:
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
-  KMFolder* findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
+  struct StandardFolderSearchResult
+  {
+    enum FoundEnum { FoundAndStandard, NotFound, FoundByType, FoundByName };
+    StandardFolderSearchResult() : folder( 0 ) {}
+    StandardFolderSearchResult( KMFolder* f, FoundEnum e ) : folder( f ), found( e ) {}
+    KMFolder* folder; // NotFound implies folder==0 of course.
+    FoundEnum found;
+  };
+
+  StandardFolderSearchResult findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
   KMFolder* findResourceFolder( const QString& resource );
 
   bool updateAttachment( KMMessage& msg,
