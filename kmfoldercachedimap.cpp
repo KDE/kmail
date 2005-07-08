@@ -1174,6 +1174,8 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 
 bool KMFolderCachedImap::deleteMessages()
 {
+  if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
+    return false;
   /* Delete messages from cache that are gone from the server */
   QPtrList<KMMessage> msgsForDeletion;
 
@@ -1329,11 +1331,14 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         }
         uidsOnServer.insert( uid, &v );
       }
+      bool redownload = false;
       if (  uid <= lastUid() ) {
        /*
         * If this message UID is not present locally, then it must
         * have been deleted by the user, so we delete it on the
-        * server also.
+        * server also. If we don't have delete permissions on the server, 
+        * re-download the message, it must have vanished by some error, or
+        * while we still thought we were allowed to delete (ACL change).
         *
         * This relies heavily on lastUid() being correct at all times.
         */
@@ -1343,8 +1348,12 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           // since we can't write our status back our local version is what has to
           // be considered correct.
         if( !existingMessage ) {
-          // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
-          uidsForDeletionOnServer << uid;
+          if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
+            // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
+            uidsForDeletionOnServer << uid;
+          } else {
+            redownload = true;
+          }
         } else {
           if (!mReadOnly) {
             /* The message is OK, update flags */
@@ -1352,7 +1361,8 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
           }
         }
         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
-      } else {
+      }
+      if ( uid > lastUid() || redownload ) {
         // The message is new since the last sync, but we might have just uploaded it, in which case
         // the uid map already contains it.
         if ( !uidMap.contains( uid ) ) {
