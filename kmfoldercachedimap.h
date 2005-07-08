@@ -353,6 +353,7 @@ private slots:
   void serverSyncInternal();
   void slotIncreaseProgress();
   void slotUpdateLastUid();
+  void slotFolderDeletionOnServerFinished();
 
 signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);

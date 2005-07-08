@@ -769,7 +769,7 @@ void KMFolderCachedImap::serverSyncInternal()
       CachedImapJob* job = new CachedImapJob( foldersForDeletionOnServer,
                                                   CachedImapJob::tDeleteFolders, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
-      connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+      connect( job, SIGNAL( finished() ), this, SLOT( slotFolderDeletionOnServerFinished() ) );
       job->start();
       break;
     }
@@ -2265,6 +2265,17 @@ bool KMFolderCachedImap::isMoveable() const
 {
   return ( hasChildren() == HasNoChildren &&
       !folder()->isSystemFolder() ) ? true : false;
+}
+
+void KMFolderCachedImap::slotFolderDeletionOnServerFinished()
+{
+  for ( QStringList::const_iterator it = foldersForDeletionOnServer.constBegin();
+      it != foldersForDeletionOnServer.constEnd(); ++it ) {
+    KURL url( mAccount->getUrl() );
+    url.setPath( *it );
+    kmkernel->iCalIface().folderDeletedOnServer( url );
+  }
+  serverSyncInternal();
 }
 
 #include "kmfoldercachedimap.moc"

@@ -1273,6 +1273,11 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   }
 }
 
+void KMailICalIfaceImpl::folderDeletedOnServer( const KURL& folderURL )
+{
+  triggerKolabFreeBusy( folderURL );
+}
+
 void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
 {
   /* Steffen said: you must issue an authenticated HTTP GET request to
