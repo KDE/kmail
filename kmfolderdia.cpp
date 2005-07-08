@@ -656,7 +656,9 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   // ignore new mail
   mIgnoreNewMailCheckBox->setChecked( folder->ignoreNewMail() );
 
-  mKeepRepliesInSameFolderCheckBox->setChecked( folder->putRepliesInSameFolder() );
+  const bool keepInFolder = !folder->isReadOnly() && folder->putRepliesInSameFolder();
+  mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
+  mKeepRepliesInSameFolderCheckBox->setDisabled( folder->isReadOnly() );
 
   if (folder->folderType() == KMFolderTypeImap)
   {
