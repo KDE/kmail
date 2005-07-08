@@ -54,6 +54,9 @@ using KMail::ImapAccountBase;
 #include "listjob.h"
 using KMail::ListJob;
 
+#include "kmfolderseldlg.h"
+#include "kmcommands.h"
+
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -1102,18 +1105,46 @@ void KMFolderCachedImap::uploadNewMessages()
 {
   QValueList<unsigned long> newMsgs = findNewMessages();
   if( !newMsgs.isEmpty() ) {
-
-    newState( mProgress, i18n("Uploading messages to server"));
-    CachedImapJob *job = new CachedImapJob( newMsgs, CachedImapJob::tPutMessage, this );
-    connect( job, SIGNAL( progress( unsigned long, unsigned long) ),
-             this, SLOT( slotPutProgress(unsigned long, unsigned long) ) );
-    connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
-    job->start();
-  } else {
-    newState( mProgress, i18n("No messages to upload to server"));
-
-    serverSyncInternal();
+    if ( mUserRights <= 0 || ( mUserRights & ( KMail::ACLJobs::Insert ) ) ) {
+      newState( mProgress, i18n("Uploading messages to server"));
+      CachedImapJob *job = new CachedImapJob( newMsgs, CachedImapJob::tPutMessage, this );
+      connect( job, SIGNAL( progress( unsigned long, unsigned long) ),
+               this, SLOT( slotPutProgress(unsigned long, unsigned long) ) );
+      connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+      job->start();
+      return;
+    } else {
+      const QString msg ( i18n( "<p>There are new messages in this folder, which "
+            "have not been uploaded to the server yet, but you do not seem to "
+            "have sufficient access rights on the folder now to upload them. "
+            "Please contact your administrator to allow upload of new messages "
+            "to you, or move them out of this folder.</p> "
+            "<p>Do you want to move those messages to another folder now?</p>") );
+      if ( KMessageBox::warningYesNo( 0, msg ) == KMessageBox::Yes ) {
+        KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
+            i18n("Move Message to Folder", "Move Messages to Folder"), true );
+        KMFolder* dest = 0;
+        if ( dlg.exec() ) {
+          if ( (dest = dlg.folder()) ) {
+            QPtrList<KMMsgBase> msgs;
+            for( int i = 0; i < count(); ++i ) {
+              KMMsgBase *msg = getMsgBase( i );
+              if( !msg ) continue; /* what goes on if getMsg() returns 0? */
+              if ( msg->UID() == 0 )
+                msgs.append( msg );
+            }
+            KMCommand *command = new KMMoveCommand( dest, msgs );
+            connect( command, SIGNAL( completed( KMCommand * ) ),
+                     this, SLOT( serverSyncInternal() ) );
+            command->start();
+            return;
+          }
+        }
+      }
+    }
   }
+  newState( mProgress, i18n("No messages to upload to server"));
+  serverSyncInternal();
 }
 
 /* Progress info during uploadNewMessages */
