@@ -273,6 +273,8 @@ public:
    */
   void messageCountChanged();
 
+  KMMainWidget *getKMMainWidget();
+
 public slots:
 
   /// Save contents of all open composer windows to ~/dead.letter
@@ -295,7 +297,6 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
-  KMMainWidget *getKMMainWidget();
 
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
