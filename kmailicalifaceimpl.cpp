@@ -111,6 +111,11 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
   return KMail::ContentsTypeMail;
 }
 
+static QString localizedDefaultFolderName( KMail::FolderContentsType type )
+{
+  return i18n( s_folderContentsType[type].translatedName );
+}
+
 const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContentsType type )
 {
   return s_folderContentsType[type].annotation;
@@ -1177,6 +1182,18 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     FolderInfo info = readFolderInfo( folder );
     mFolderInfoMap.insert( folder, info );
 
+    // Adjust the folder names of all foo.default folders.
+    // German users will get Kalender as the name of all default Calendar folders,
+    // including their own, so that the default calendar folder of their Japanese
+    // coworker appears as /user/hirohito/Kalender, although Hirohito sees his folder
+    // in Japanese. On the server the folders are always in English.
+    if ( folder->folderType() == KMFolderTypeCachedImap ) {
+      QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
+      kdDebug(5006) << "folderContentsTypeChanged: " << folder->name() << " has annotation " << annotation << endl;
+      if ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
+        folder->setLabel( localizedDefaultFolderName( contentsType ) );
+    }
+
     connectFolder( folder );
   }
   // Tell about the new resource
@@ -1434,7 +1451,7 @@ void KMailICalIfaceImpl::readConfig()
   // Make sure the folder parent has the subdirs
   // Globally there are 3 cases: nothing found, some stuff found by type/name heuristics, or everything found OK
   bool noneFound = true;
-  bool mustWarn = false; // true when at least one was found by heuristics
+  bool mustFix = false; // true when at least one was found by heuristics
   QValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
   for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
     if ( i != KMail::ContentsTypeMail ) {
@@ -1443,14 +1460,15 @@ void KMailICalIfaceImpl::readConfig()
         noneFound = false;
       else if ( results[i].found == StandardFolderSearchResult::FoundByType ||
                 results[i].found == StandardFolderSearchResult::FoundByName ) {
-        mustWarn = true;
+        mustFix = true;
         noneFound = false;
-      }
+      } else // NotFound
+        mustFix = true;
     }
   }
 
   // Check if something changed
-  if( mUseResourceIMAP && !noneFound && !mustWarn && mFolderParentDir == folderParentDir
+  if( mUseResourceIMAP && !noneFound && !mustFix && mFolderParentDir == folderParentDir
       && mFolderType == folderType ) {
     // Nothing changed
     if ( hideFolders != mHideFolders ) {
@@ -1461,7 +1479,7 @@ void KMailICalIfaceImpl::readConfig()
     return;
   }
 
-  if( noneFound || mustWarn ) {
+  if( noneFound || mustFix ) {
     QString msg;
     QString parentFolderName = folderParent != 0 ? folderParent->name() : folderParentDir->name();
     if ( noneFound ) {
@@ -1474,7 +1492,7 @@ void KMailICalIfaceImpl::readConfig()
       QString operations = "<ul>";
       for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
         if ( i != KMail::ContentsTypeMail ) {
-          QString typeName = i18n( s_folderContentsType[i].translatedName );
+          QString typeName = localizedDefaultFolderName( static_cast<KMail::FolderContentsType>( i ) );
           if ( results[i].found == StandardFolderSearchResult::NotFound )
             operations += "<li>" + i18n( "%1: no folder found, will create it" ).arg( typeName ) + "</li>";
           else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
@@ -1520,12 +1538,6 @@ void KMailICalIfaceImpl::readConfig()
   mJournals = initFolder( KMail::ContentsTypeJournal );
   mContacts = initFolder( KMail::ContentsTypeContact );
   mNotes    = initFolder( KMail::ContentsTypeNote );
-
-  mCalendar->setLabel( i18n( "Calendar" ) );
-  mTasks->setLabel( i18n( "Tasks" ) );
-  mJournals->setLabel( i18n( "Journal" ) );
-  mContacts->setLabel( i18n( "Contacts" ) );
-  mNotes->setLabel( i18n( "Notes" ) );
 
   // Store final annotation (with .default) so that we won't ask again on next startup
   if ( mCalendar->folderType() == KMFolderTypeCachedImap )
@@ -1609,10 +1621,10 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
   if ( !folder ) {
     // The folder isn't there yet - create it
     folder =
-      mFolderParentDir->createFolder( folderName( itemType ), false, type );
+      mFolderParentDir->createFolder( localizedDefaultFolderName( contentsType ), false, type );
     if( mFolderType == KMFolderTypeImap ) {
       KMFolderImap* parentFolder = static_cast<KMFolderImap*>( mFolderParent->storage() );
-      parentFolder->createFolder( folderName( itemType ) );
+      parentFolder->createFolder( localizedDefaultFolderName( contentsType ) );
       static_cast<KMFolderImap*>( folder->storage() )->setAccount( parentFolder->account() );
     }
     // Groupware folder created, use the global setting for storage format
@@ -1778,12 +1790,12 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
       return StandardFolderSearchResult( folder, StandardFolderSearchResult::FoundByType );
 
     // Fallback: look for the folder by name (we'll need to change its type)
-    KMFolderNode* node = folderParentDir->hasNamedFolder( s_folderContentsType[contentsType].contentsTypeStr );
+    KMFolderNode* node = folderParentDir->hasNamedFolder( localizedDefaultFolderName( contentsType ) );
     if ( node && !node->isDir() )
       return StandardFolderSearchResult( static_cast<KMFolder *>( node ), StandardFolderSearchResult::FoundByName );
 
     kdDebug(5006) << "findStandardResourceFolder: found no resource folder for " << s_folderContentsType[contentsType].annotation << endl;
-    return 0;
+    return StandardFolderSearchResult( 0, StandardFolderSearchResult::NotFound );
   }
   else // icalvcard: look up standard resource folders by name
   {
@@ -1792,8 +1804,8 @@ KMailICalIfaceImpl::StandardFolderSearchResult KMailICalIfaceImpl::findStandardR
     if( folderLanguage > 3 ) folderLanguage = 0;
     KMFolderNode* node = folderParentDir->hasNamedFolder( folderName( itemType, folderLanguage ) );
     if ( !node || node->isDir() )
-      return 0;
-    return static_cast<KMFolder*>( node );
+      return StandardFolderSearchResult( 0, StandardFolderSearchResult::NotFound );
+    return StandardFolderSearchResult( static_cast<KMFolder*>( node ), StandardFolderSearchResult::FoundAndStandard );
   }
 }
 
