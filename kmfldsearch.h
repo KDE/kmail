@@ -57,14 +57,14 @@ namespace KMail {
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 
-class KMFldSearch: public KDialogBase, virtual public KXMLGUIClient
+class SearchWindow: public KDialogBase, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
 public:
-  KMFldSearch(KMMainWidget* parent, const char* name=0,
+  SearchWindow(KMMainWidget* parent, const char* name=0,
               KMFolder *curFolder=0, bool modal=FALSE);
-  virtual ~KMFldSearch();
+  virtual ~SearchWindow();
 
   void activateFolder(KMFolder* curFolder);
   KMMessageList selectedMessages();

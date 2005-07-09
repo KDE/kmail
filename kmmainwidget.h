@@ -51,7 +51,7 @@ class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
-class KMFldSearch;
+class SearchWindow;
 class KMSystemTray;
 class KMHeaders;
 
@@ -485,7 +485,7 @@ private:
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
 
 //  QPopupMenu *mMessageMenu;
-  KMFldSearch *mSearchWin;
+  SearchWindow *mSearchWin;
 
   KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,

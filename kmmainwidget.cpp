@@ -703,7 +703,7 @@ void KMMainWidget::slotSearch()
 {
   if(!mSearchWin)
   {
-    mSearchWin = new KMFldSearch(this, "Search", mFolder, false);
+    mSearchWin = new SearchWindow(this, "Search", mFolder, false);
     connect(mSearchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
   }

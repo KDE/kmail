@@ -22,7 +22,7 @@
 //
 // Historically various operations were implemented as slots of KMMainWin.
 // This proved inadequate as KMail has multiple top level windows
-// (KMMainWin, KMReaderMainWin, KMFldSearch, KMComposeWin) that may
+// (KMMainWin, KMReaderMainWin, SearchWindow, KMComposeWin) that may
 // benefit from using these operations. It is desirable that these
 // classes can operate without depending on or altering the state of
 // a KMMainWin, in fact it is possible no KMMainWin object even exists.
