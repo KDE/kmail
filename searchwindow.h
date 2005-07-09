@@ -28,7 +28,6 @@
 
 #include <kdialogbase.h>
 #include <kxmlguiclient.h>
-#include <mimelib/string.h>
 
 class QCheckBox;
 class QComboBox;
@@ -57,17 +56,47 @@ namespace KMail {
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 
+namespace KMail {
+
+  /**
+   * The SearchWindow class provides a dialog for triggering a search on
+   * folders and storing that search as a search folder. It shows the search
+   * results in a listview and allows triggering of operations such as printing
+   * or moving on them.
+   */
 class SearchWindow: public KDialogBase, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
 public:
-  SearchWindow(KMMainWidget* parent, const char* name=0,
-              KMFolder *curFolder=0, bool modal=FALSE);
+  /**
+   * Creates a new search window.
+   * @param parent The parent widget.
+   * @param name The (widget) name of the dialog.
+   * @param curFolder The folder which will be pre-selected as the base folder
+   * of search operations.
+   * @param modal Whether the dialog is to be shown modal.
+   */
+  SearchWindow( KMMainWidget* parent, const char* name=0,
+                       KMFolder *curFolder=0, bool modal=false );
   virtual ~SearchWindow();
 
-  void activateFolder(KMFolder* curFolder);
+  /**
+   * Changes the base folder for search operations to a different folder.
+   * @param curFolder The folder to use as the new base for searches.
+   */
+  void activateFolder( KMFolder* curFolder );
+  
+  /**
+   * Provides access to the list of currently selected message in the listview.
+   * @return The list of currenty selected search result messages.
+   */
   KMMessageList selectedMessages();
+  
+  /**
+   * Provides access to the currently selected message.
+   * @return the currently selected message.
+   */
   KMMessage* message();
 
 protected slots:
@@ -150,4 +179,6 @@ protected:
 
   static const int MSGID_COLUMN;
 };
+
+} // namespace KMail
 #endif /*searchwindow_h*/

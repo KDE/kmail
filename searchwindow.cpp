@@ -24,7 +24,6 @@
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
-#include "kmfolderdia.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldersearch.h"
@@ -32,7 +31,6 @@
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "folderrequester.h"
-using KMail::FolderRequester;
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -47,6 +45,7 @@ using KMail::FolderRequester;
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qbuttongroup.h>
+#include <qcombobox.h>
 #include <qobjectlist.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <qcursor.h>
 #include <qpopupmenu.h>
@@ -57,8 +56,7 @@ using KMail::FolderRequester;
 #include <assert.h>
 #include <stdlib.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
+namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
 
@@ -587,13 +585,8 @@ void SearchWindow::renameSearchFolder()
 void SearchWindow::openSearchFolder()
 {
     renameSearchFolder();
-    KMFolderTree *folderTree = mKMMainWidget->folderTree();
-    QListViewItem *index = folderTree->indexOfFolder(mFolder->folder());
-    if (index) {
-	folderTree->ensureItemVisible(index);
-	folderTree->doFolderSelected(index);
-	slotClose();
-    }
+    mKMMainWidget->slotSelectFolder( mFolder->folder() );
+    slotClose();
 }
 
 //-----------------------------------------------------------------------------
@@ -722,6 +715,7 @@ void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &,
 	return;
     mLbxMatches->setSelected( lvi, TRUE );
     mLbxMatches->setCurrentItem( lvi );
+    // FIXME is this ever unGetMsg()'d?
     if (!message())
 	return;
     QPopupMenu *menu = new QPopupMenu(this);
@@ -819,4 +813,5 @@ void SearchWindow::slotPrintMsg()
     command->start();
 }
 
+} // namespace KMail
 #include "searchwindow.moc"

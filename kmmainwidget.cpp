@@ -59,6 +59,7 @@ using KPIM::BroadcastStatus;
 #include "kmaddrbook.h"
 #include "kmversion.h"
 #include "searchwindow.h"
+using KMail::SearchWindow;
 #include "kmacctfolder.h"
 #include "undostack.h"
 #include "kmcommands.h"
@@ -1814,8 +1815,10 @@ void KMMainWidget::slotMsgChanged()
 void KMMainWidget::slotSelectFolder(KMFolder* folder)
 {
   QListViewItem* item = mFolderTree->indexOfFolder(folder);
-  if (item)
+  if ( item ) {
+    mFolderTree->ensureItemVisible( item );
     mFolderTree->doFolderSelected( item );
+  }
 }
 
 //-----------------------------------------------------------------------------
