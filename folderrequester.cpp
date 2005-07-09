@@ -55,7 +55,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   button->setAutoRaise(true);
   button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   button->setFixedSize( 16, 16 );
-  button->setIconSet( KGlobal::iconLoader()->loadIconSet( "up", KIcon::Small, 0 ) );
+  button->setIconSet( KGlobal::iconLoader()->loadIconSet( "folder", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotOpenDialog()) );
 
   setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
