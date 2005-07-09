@@ -211,16 +211,16 @@ void KMSearch::stop()
         QValueListConstIterator<QGuardedPtr<KMFolder> > jt;
         for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
+            if ( !folder ) continue;
             // explicitely stop jobs for this folder as it will not be closed below
             // when the folder is currently selected
-            if ( folder && folder->folderType() == KMFolderTypeImap ) {
+            if ( folder->folderType() == KMFolderTypeImap ) {
                 KMAcctImap *account =
                     static_cast<KMFolderImap*>( folder->storage() )->account();
-                if( account )
-                    account->ignoreJobsForFolder( folder );
+                account->ignoreJobsForFolder( folder );
             }
-            if (folder)
-                folder->close();
+            folder->storage()->search( 0 );
+            folder->close();
         }
     }
     mRemainingFolders = -1;
@@ -247,10 +247,10 @@ void KMSearch::slotProcessNextBatch()
             mOpenedFolders.append( folder );
             connect( folder->storage(),
                 SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>,
-                    KMSearchPattern*, bool ) ),
+                                      const KMSearchPattern*, bool ) ),
                 this,
                 SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
-                    KMSearchPattern*, bool ) ) );
+                                              const KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -260,8 +260,9 @@ void KMSearch::slotProcessNextBatch()
 }
 
 void KMSearch::slotSearchFolderResult( KMFolder* folder,
-                                     QValueList<Q_UINT32> serNums,
-                                     KMSearchPattern* pattern, bool complete )
+                                       QValueList<Q_UINT32> serNums,
+                                       const KMSearchPattern* pattern,
+                                       bool complete )
 {
     if ( pattern != mSearchPattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
@@ -276,10 +277,10 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
     {
       disconnect( folder->storage(),
           SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>,
-              KMSearchPattern*, bool ) ),
+                                const KMSearchPattern*, bool ) ),
           this,
           SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
-              KMSearchPattern*, bool ) ) );
+                                        const KMSearchPattern*, bool ) ) );
       mSearchedCount += folder->count();
       --mRemainingFolders;
       folder->close();
@@ -379,6 +380,7 @@ void KMFolderSearch::setSearch(KMSearch *search)
         mUnlinked = true;
     }
     if (mSearch != search) {
+        mSearch->stop();
         delete mSearch;
         mSearch = search; // take ownership
         if (mSearch) {
@@ -940,10 +942,10 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
       connect( folder->storage(), 
-              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
+              SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
               this,
               SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
-                      KMSearchPattern*, bool ) ) );
+                      const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
     folder->storage()->search( search()->searchPattern(), serNum );
@@ -951,7 +953,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 
 void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
                                                Q_UINT32 serNum, 
-                                               KMSearchPattern* pattern,
+                                               const KMSearchPattern* pattern,
                                                bool matches )
 {
     if ( search()->searchPattern() != pattern ) return;
@@ -961,11 +963,12 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     if ( mFoldersCurrentlyBeingSearched.contains( folder ) ) {
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       if ( count == 1 ) {
-        disconnect( folder->storage(), 
-                SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
-                this,
-                SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
-                        KMSearchPattern*, bool ) ) );
+        disconnect( folder->storage(),
+                    SIGNAL( searchDone( KMFolder*, Q_UINT32,
+                                        const KMSearchPattern*, bool ) ),
+                    this,
+                    SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
+                                                    const KMSearchPattern*, bool ) ) );
         mFoldersCurrentlyBeingSearched.remove( folder );
       } else {
         mFoldersCurrentlyBeingSearched.replace( folder, count-1 );
@@ -1102,10 +1105,10 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
       mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
     } else {
       connect( aFolder->storage(), 
-              SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool ) ),
+              SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
               this,
               SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
-                      KMSearchPattern*, bool ) ) );
+                      const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
     }
     aFolder->storage()->search( search()->searchPattern(), serNum );

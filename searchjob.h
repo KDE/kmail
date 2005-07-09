@@ -62,7 +62,7 @@ public:
    * @param serNum if you specify the serNum only this is checked
    */
   SearchJob( KMFolderImap* folder, ImapAccountBase* account,
-             KMSearchPattern* pattern, Q_UINT32 serNum = 0 );
+             const KMSearchPattern* pattern, Q_UINT32 serNum = 0 );
 
   virtual ~SearchJob();
 
@@ -77,7 +77,7 @@ protected:
   void searchSingleMessage();
 
   // creates an imap search command
-  QString searchStringFromPattern( KMSearchPattern* );
+  QString searchStringFromPattern( const KMSearchPattern* );
 
   // returns true if all uids can be mapped to sernums
   bool canMapAllUIDs();
@@ -107,15 +107,15 @@ protected slots:
 
 signals:
   // emitted when a list of matching serial numbers was found
-  void searchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool complete );
+  void searchDone( QValueList<Q_UINT32>, const KMSearchPattern*, bool complete );
 
   // emitted when a single message (identified by the serial number) was checked
-  void searchDone( Q_UINT32, KMSearchPattern*, bool matches );
+  void searchDone( Q_UINT32, const KMSearchPattern*, bool matches );
 
 protected:
   KMFolderImap* mFolder;
   ImapAccountBase* mAccount;
-  KMSearchPattern* mSearchPattern;
+  const KMSearchPattern* mSearchPattern;
   KMSearchPattern* mLocalSearchPattern;
   Q_UINT32 mSerNum;
     // saves the results of the imap search

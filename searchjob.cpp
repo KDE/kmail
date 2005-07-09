@@ -49,7 +49,7 @@ using KPIM::ProgressManager;
 namespace KMail {
 
 SearchJob::SearchJob( KMFolderImap* folder, ImapAccountBase* account,
-    KMSearchPattern* pattern, Q_UINT32 serNum )
+                      const KMSearchPattern* pattern, Q_UINT32 serNum )
  : FolderJob( 0, tOther, (folder ? folder->folder() : 0) ),
    mFolder( folder ), mAccount( account ), mSearchPattern( pattern ),
    mSerNum( serNum ), mRemainingMsgs( 0 ), mProgress( 0 )
@@ -94,7 +94,7 @@ void SearchJob::searchCompleteFolder()
 }
 
 //-----------------------------------------------------------------------------
-QString SearchJob::searchStringFromPattern( KMSearchPattern* pattern )
+QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
 {
   QStringList parts;
   // this is for the search pattern that can only be done local

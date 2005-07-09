@@ -406,13 +406,13 @@ public:
    * Search for messages
    * The end is signaled with searchDone()
    */
-  virtual void search( KMSearchPattern* );
+  virtual void search( const KMSearchPattern* );
 
   /**
    * Check if the message matches the search criteria
    * The end is signaled with searchDone()
    */
-  virtual void search( KMSearchPattern*, Q_UINT32 serNum );
+  virtual void search( const KMSearchPattern*, Q_UINT32 serNum );
 
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;  
@@ -480,13 +480,13 @@ signals:
    * If @p complete is true the search is done
    */
   void searchResult( KMFolder*, QValueList<Q_UINT32>, 
-      KMSearchPattern*, bool complete );
+                     const KMSearchPattern*, bool complete );
 
   /**
    * Emitted when a search for a single message is completed
    * The serial number and a bool matching yes/no is included
    */
-  void searchDone( KMFolder*, Q_UINT32, KMSearchPattern*, bool );
+  void searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool );
 
 
 public slots:
@@ -631,7 +631,7 @@ friend class KMMsgDict;
   QTimer * mEmitChangedTimer;
 
   int mCurrentSearchedMsg;
-  KMSearchPattern* mSearchPattern;
+  const KMSearchPattern* mSearchPattern;
 };
 
 #endif // FOLDERSTORAGE_H

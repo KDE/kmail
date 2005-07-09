@@ -533,7 +533,7 @@ void KMFldSearch::slotRemoveMsg(KMFolder *, Q_UINT32 serNum)
 void KMFldSearch::slotStop()
 {
     if (mFolder)
-	mFolder->stopSearch();
+      mFolder->stopSearch();
     mStopped = true;
     mBtnStop->setEnabled(false);
 }
@@ -549,13 +549,13 @@ void KMFldSearch::slotClose()
 void KMFldSearch::closeEvent(QCloseEvent *e)
 {
     if (mFolder && mFolder->search() && mFolder->search()->running()) {
-	mCloseRequested = true;
-	//Cancel search in progress by setting the search folder search to
-	//the null search
-	mFolder->setSearch(new KMSearch());
-	QTimer::singleShot(0, this, SLOT(slotClose()));
+      mCloseRequested = true;
+      //Cancel search in progress by setting the search folder search to
+      //the null search
+      mFolder->setSearch(new KMSearch());
+      QTimer::singleShot(0, this, SLOT(slotClose()));
     } else {
-	KDialogBase::closeEvent(e);
+      KDialogBase::closeEvent(e);
     }
 }
 

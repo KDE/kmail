@@ -303,8 +303,8 @@ public:
     * The actual search is done in slotSearch and the end
     * is signaled with searchDone()
     */
-  virtual void search( KMSearchPattern* );
-  virtual void search( KMSearchPattern*, Q_UINT32 serNum );
+  virtual void search( const KMSearchPattern* );
+  virtual void search( const KMSearchPattern*, Q_UINT32 serNum );
 
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;
@@ -367,13 +367,14 @@ public slots:
   /**
    * Called from the SearchJob when the folder is done or messages where found
    */
-  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern, 
-     bool complete ); 
+  void slotSearchDone( QValueList<Q_UINT32> serNums,
+                       const KMSearchPattern* pattern,
+                       bool complete );
 
   /**
    * Called from the SearchJob when the message was searched
    */
-  void slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern, bool matches ); 
+  void slotSearchDone( Q_UINT32 serNum, const KMSearchPattern* pattern, bool matches ); 
 
   /**
    * Connected to ListJob::receivedFolders

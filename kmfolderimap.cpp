@@ -2177,7 +2177,7 @@ void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString& error
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::search( KMSearchPattern* pattern )
+void KMFolderImap::search( const KMSearchPattern* pattern )
 {
   if ( !pattern )
   {
@@ -2187,21 +2187,21 @@ void KMFolderImap::search( KMSearchPattern* pattern )
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern );
-  connect( job, SIGNAL( searchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool ) ),
-      this, SLOT( slotSearchDone( QValueList<Q_UINT32>, KMSearchPattern*, bool ) ) );
+  connect( job, SIGNAL( searchDone( QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ),
+           this, SLOT( slotSearchDone( QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums,
-                                   KMSearchPattern* pattern,
+                                   const KMSearchPattern* pattern,
                                    bool complete )
 {
   emit searchResult( folder(), serNums, pattern, complete );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::search( KMSearchPattern* pattern, Q_UINT32 serNum )
+void KMFolderImap::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
 {
   if ( !pattern )
   {
@@ -2210,13 +2210,13 @@ void KMFolderImap::search( KMSearchPattern* pattern, Q_UINT32 serNum )
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern, serNum );
-  connect( job, SIGNAL( searchDone( Q_UINT32, KMSearchPattern*, bool ) ),
-      this, SLOT( slotSearchDone( Q_UINT32, KMSearchPattern*, bool ) ) );
+  connect( job, SIGNAL( searchDone( Q_UINT32, const KMSearchPattern*, bool ) ),
+           this, SLOT( slotSearchDone( Q_UINT32, const KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern,
+void KMFolderImap::slotSearchDone( Q_UINT32 serNum, const KMSearchPattern* pattern,
                                    bool matches )
 {
   emit searchDone( folder(), serNum, pattern, matches );

@@ -1096,15 +1096,17 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::search( KMSearchPattern* pattern )
+void FolderStorage::search( const KMSearchPattern* pattern )
 {
   mSearchPattern = pattern;
   mCurrentSearchedMsg = 0;
-  slotProcessNextSearchBatch();
+  if ( pattern )
+    slotProcessNextSearchBatch();
 }
 
 void FolderStorage::slotProcessNextSearchBatch()
 {
+  if ( !mSearchPattern ) return;
   QValueList<Q_UINT32> matchingSerNums;
   int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
@@ -1121,9 +1123,9 @@ void FolderStorage::slotProcessNextSearchBatch()
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::search( KMSearchPattern* pattern, Q_UINT32 serNum )
+void FolderStorage::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
 {
-  bool matches = pattern->matches( serNum );
+  bool matches = pattern && pattern->matches( serNum );
 
   emit searchDone( folder(), serNum, pattern, matches );
 }
