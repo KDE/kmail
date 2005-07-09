@@ -58,7 +58,7 @@ using KPIM::BroadcastStatus;
 #include "messagesender.h"
 #include "kmaddrbook.h"
 #include "kmversion.h"
-#include "kmfldsearch.h"
+#include "searchwindow.h"
 #include "kmacctfolder.h"
 #include "undostack.h"
 #include "kmcommands.h"

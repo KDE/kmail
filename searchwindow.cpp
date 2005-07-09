@@ -20,7 +20,7 @@
  */
 #include <config.h>
 #include "kmcommands.h"
-#include "kmfldsearch.h"
+#include "searchwindow.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
@@ -819,4 +819,4 @@ void SearchWindow::slotPrintMsg()
     command->start();
 }
 
-#include "kmfldsearch.moc"
+#include "searchwindow.moc"

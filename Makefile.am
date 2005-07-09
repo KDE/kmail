@@ -72,7 +72,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		undostack.cpp kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp popaccount.cpp colorlistbox.cpp \
 		kmkernel.cpp kmailIface.skel kmailicalIface.skel \
-		accountdialog.cpp kmfldsearch.cpp vcardviewer.cpp \
+		accountdialog.cpp searchwindow.cpp vcardviewer.cpp \
 		vacationdialog.cpp vacation.cpp sievedebugdialog.cpp \
 		sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \

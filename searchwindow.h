@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-#ifndef kmfldsearch_h
-#define kmfldsearch_h
+#ifndef searchwindow_h
+#define searchwindow_h
 
 #include <qvaluelist.h>
 #include <qptrlist.h>
@@ -150,4 +150,4 @@ protected:
 
   static const int MSGID_COLUMN;
 };
-#endif /*kmfldsearch_h*/
+#endif /*searchwindow_h*/

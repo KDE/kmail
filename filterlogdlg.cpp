@@ -158,7 +158,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 #if !KDE_IS_VERSION( 3, 2, 91 )
   // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
   // wrong (#76026), and should be done only for modals. CVS HEAD should get
-  // proper fix in KWin (see also kmfldsearch.cpp)
+  // proper fix in KWin (see also searchwindow.cpp)
   XDeleteProperty( qt_xdisplay(), winId(), XA_WM_TRANSIENT_FOR );
 #endif
 }
