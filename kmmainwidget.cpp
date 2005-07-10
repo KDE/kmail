@@ -1398,9 +1398,11 @@ void KMMainWidget::slotFromFilter()
     return;
 
   AddrSpecList al = msg->extractAddrSpecs( "From" );
+  KMCommand *command;
   if ( al.empty() )
-    return;
-  KMCommand *command = new KMFilterCommand( "From",  al.front().asString() );
+    command = new KMFilterCommand( "From",  msg->from() );
+  else
+    command = new KMFilterCommand( "From",  al.front().asString() );
   command->start();
 }
 
