@@ -78,14 +78,7 @@ htmlMail=true
 htmlLoadExternal=false
 
 [Fonts]
-body-font=Helvetica,10,-1,5,50,0,0,0,0,0
-defaultFonts=false
-folder-font=Helvetica,10,-1,5,50,0,0,0,0,0
-list-date-font=Helvetica,10,-1,5,50,0,0,0,0,0
-list-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote1-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote2-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote3-font=Helvetica,10,-1,5,50,0,0,0,0,0
+defaultFonts=true
 
 [Geometry]
 nestedMessages=true
