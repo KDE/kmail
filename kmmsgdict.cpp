@@ -159,9 +159,6 @@ KMMsgDict::KMMsgDict()
 
 KMMsgDict::~KMMsgDict()
 {
-    // Remember how many items we put into the dict this time so we can create
-  // it with an appropriate size next time.
-  GlobalSettings::self()->setMsgDictSizeHint( dict->size() );
   delete dict;
 }
 
@@ -426,6 +423,9 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
 
     rentry->set(index, entry);
   }
+  // Remember how many items we put into the dict this time so we can create
+  // it with an appropriate size next time.
+  GlobalSettings::setMsgDictSizeHint( GlobalSettings::msgDictSizeHint() + count );
 
   fclose(fp);
   storage.setRDict(rentry);
