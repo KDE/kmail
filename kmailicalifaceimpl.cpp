@@ -328,6 +328,38 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   return bOK;
 }
 
+static void setIcalVcardContentTypeHeader( KMMessage *msg, KMail::FolderContentsType t )
+{
+  msg->setType( DwMime::kTypeText );
+  if ( t == KMail::ContentsTypeCalendar || t == KMail::ContentsTypeTask
+      || t == KMail::ContentsTypeJournal ) {
+    msg->setSubtype( DwMime::kSubtypeVCal );
+    msg->setHeaderField("Content-Type",
+        "text/calendar; method=REQUEST; charset=\"utf-8\"");
+  } else if ( t == KMail::ContentsTypeContact ) {
+    msg->setSubtype( DwMime::kSubtypeXVCard );
+    msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+  } else {
+    kdWarning(5006) << k_funcinfo << "Attempt to write non-groupware contents to folder" << endl;
+  }
+}
+
+static void setXMLContentTypeHeader( KMMessage *msg, const QString plainTextBody )
+{
+   // add a first body part to be displayed by all mailer
+    // than can NOT display Kolab data: no matter if these
+    // mailers are MIME compliant or not
+    KMMessagePart firstPart;
+    firstPart.setType( DwMime::kTypeText );
+    firstPart.setSubtype( DwMime::kSubtypePlain );
+    msg->removeHeaderField( "Content-Type" );
+    msg->setType( DwMime::kTypeMultipart );
+    msg->setSubtype( DwMime::kSubtypeMixed );
+    msg->headers().ContentType().CreateBoundary( 0 );
+    msg->headers().ContentType().Assemble();
+    firstPart.setBodyFromUnicode( plainTextBody );
+    msg->addBodyPart( &firstPart );
+}
 
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
@@ -357,32 +389,10 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   // In case of the ical format, simply add the plain text content with the
   // right content type
   if ( storageFormat( &folder ) == StorageXML ) {
-    // add a first body part to be displayed by all mailer
-    // than can NOT display Kolab data: no matter if these
-    // mailers are MIME compliant or not
-    KMMessagePart firstPart;
-    firstPart.setType( DwMime::kTypeText );
-    firstPart.setSubtype( DwMime::kSubtypePlain );
-    msg->setType( DwMime::kTypeMultipart );
-    msg->setSubtype( DwMime::kSubtypeMixed );
-    msg->headers().ContentType().CreateBoundary( 0 );
-    msg->headers().ContentType().Assemble();
-    firstPart.setBodyFromUnicode( plainTextBody );
-    msg->addBodyPart( &firstPart );
+    setXMLContentTypeHeader( msg, plainTextBody );
   } else if ( storageFormat( &folder ) == StorageIcalVcard ) {
     const KMail::FolderContentsType t = folder.storage()->contentsType();
-    msg->setType( DwMime::kTypeText );
-    if ( t == KMail::ContentsTypeCalendar || t == KMail::ContentsTypeTask
-        || t == KMail::ContentsTypeJournal ) {
-      msg->setSubtype( DwMime::kSubtypeVCal );
-      msg->setHeaderField("Content-Type",
-                        "text/calendar; method=REQUEST; charset=\"utf-8\"");
-    } else if ( t == KMail::ContentsTypeContact ) {
-      msg->setSubtype( DwMime::kSubtypeXVCard );
-      msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
-    } else {
-      kdWarning(5006) << k_funcinfo << "Attempt to write non-groupware contents to folder" << endl;
-    }
+    setIcalVcardContentTypeHeader( msg, t );
     msg->setBodyEncoded( plainTextBody.utf8() );
   } else {
     kdWarning(5006) << k_funcinfo << "Attempt to write to folder with unknown storage type" << endl;
@@ -709,18 +719,25 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
         // Note: It is _not_ an error if an attachment was already deleted.
       }
     }
-    /*
-     * Use the mime types and not storageFormat( f ) to discern what to do,
-     * since we want to respect the current format for each event in mixed
-     * folders.
-     */
+
+    const KMail::FolderContentsType t = f->storage()->contentsType();
     const QCString type = msg->typeStr();
     const QCString subtype = msg->subtypeStr();
-    if ( type.lower() == "text" &&
-        ( subtype.lower() == "calendar" || subtype.lower() == "x-vcard" ) ) {
+    const bool messageWasIcalVcardFormat = ( type.lower() == "text" && 
+        ( subtype.lower() == "calendar" || subtype.lower() == "x-vcard" ) );
+
+    if ( storageFormat( f ) == StorageIcalVcard ) {
       //kdDebug(5006) << k_funcinfo << " StorageFormatIcalVcard " << endl;
+      if ( !messageWasIcalVcardFormat ) {
+        setIcalVcardContentTypeHeader( newMsg, t );
+      }
       newMsg->setBodyEncoded( plainTextBody.utf8() );
-    } else {
+    } else if ( storageFormat( f ) == StorageXML ) {
+      if ( messageWasIcalVcardFormat ) {
+        // this was originally an ical event, but the folder changed to xml,
+        // convert
+       setXMLContentTypeHeader( newMsg, plainTextBody );
+      }
       //kdDebug(5006) << k_funcinfo << " StorageFormatXML " << endl;
       // Add all attachments by reading them from their temp. files
       QStringList::ConstIterator iturl = attachmentURLs.begin();
