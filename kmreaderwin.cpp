@@ -242,9 +242,6 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
   connect( mListBox, SIGNAL( doubleClicked( QListBoxItem * ) ), this, SLOT( slotOk() ) );
   connect( mListBox, SIGNAL( returnPressed( QListBoxItem * ) ), this, SLOT( slotOk() ) );
 
-  connect( mOptions, SIGNAL( textChanged( const QString & ) ),
-      SLOT( slotEditTextChanged( const QString & ) ) );
-
   mListBox->setFocus();
 }
 
@@ -256,11 +253,6 @@ QString ChiasmusKeySelector::key() const
 QString ChiasmusKeySelector::options() const
 {
   return mOptions->text();
-}
-
-void ChiasmusKeySelector::slotEditTextChanged( const QString &text )
-{
-  enableButton( Ok, !text.stripWhiteSpace().isEmpty() );
 }
 
 #endif // KLEO_CHIASMUS

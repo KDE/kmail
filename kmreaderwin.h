@@ -481,10 +481,7 @@ public:
   QString key() const;
   QString options() const;
 
-public slots:
-  void slotEditTextChanged( const QString & );
-
- private:
+private:
   QLabel* mLabel;
   KListBox* mListBox;
   KLineEdit* mOptions;
