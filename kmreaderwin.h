@@ -462,7 +462,6 @@ private:
   unsigned long mWaitingForSerNum;
 };
 
-#ifdef KLEO_CHIASMUS
 
 #include <kdialogbase.h>
 class KListBox;
@@ -486,7 +485,5 @@ private:
   KListBox* mListBox;
   KLineEdit* mOptions;
 };
-
-#endif // KLEO_CHIASMUS
 
 #endif
