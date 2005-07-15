@@ -195,8 +195,8 @@ void KMFolderCachedImap::readConfig()
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
-    // if there is an annotation, it has to XML
-    if ( !mAnnotationFolderType.isEmpty() )
+    // if there is an annotation, it has to be XML
+    if ( !mAnnotationFolderType.isEmpty() && !mAnnotationFolderType.startsWith( "mail" ) )
       kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
     kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
                   << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
@@ -1919,7 +1919,8 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
         if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) ) {
           // Case 3: known content-type on server, get it
           //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation: " << type << endl;
-          kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
+          if ( contentsType != ContentsTypeMail )
+            kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
           mAnnotationFolderType = value;
           setContentsType( contentsType );
           mAnnotationFolderTypeChanged = false; // we changed it, not the user
