@@ -4732,6 +4732,7 @@ void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
     mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
     mFolderComboLabel->setBuddy( mAccountCombo );
   }
+  slotEmitChanged();
 }
 
 
