@@ -192,8 +192,8 @@ void KMFolderCachedImap::readConfig()
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
     mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
-    // if there is an annotation, it has to XML
-    if ( !mAnnotationFolderType.isEmpty() )
+    // if there is an annotation, it has to be XML
+    if ( !mAnnotationFolderType.isEmpty() && !mAnnotationFolderType.startsWith( "mail" ) )
       kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
 //    kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
@@ -1433,7 +1433,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
        /*
         * If this message UID is not present locally, then it must
         * have been deleted by the user, so we delete it on the
-        * server also. If we don't have delete permissions on the server, 
+        * server also. If we don't have delete permissions on the server,
         * re-download the message, it must have vanished by some error, or
         * while we still thought we were allowed to delete (ACL change).
         *
@@ -2128,7 +2128,8 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
         if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) ) {
           // Case 3: known content-type on server, get it
           //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation" << endl;
-          kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
+          if ( contentsType != ContentsTypeMail )
+            kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
           mAnnotationFolderType = value;
           if ( folder()->parent()->owner()->idString() != GlobalSettings::self()->theIMAPResourceFolderParent()
                && GlobalSettings::self()->theIMAPResourceEnabled()
