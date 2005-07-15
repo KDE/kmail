@@ -760,6 +760,8 @@ private slots:
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
   void slotContinueAutoSave( bool );
+  
+  void slotEncryptChiasmusToggled( bool );
 
   /**
    * Helper method (you could call is a bottom-half :) for
@@ -788,6 +790,9 @@ private:
   // These are for passing on methods over the applyChanges calls
   KMail::MessageSender::SendMethod mSendMethod;
   bool mSaveInDrafts;
+
+  KToggleAction *mEncryptChiasmusAction;
+  bool mEncryptWithChiasmus;
 
   // This is the temporary object that constructs the message out of the
   // window

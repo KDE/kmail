@@ -258,6 +258,12 @@
       <entry name="NeverEncryptDrafts" type="Bool" key="never-encrypt-drafts">
         <default>true</default>
       </entry>
+
+      <entry name="ChiasmusKey" type="String" key="chiasmus-key">
+      </entry>
+      <entry name="ChiasmusOptions" type="String" key="chiasmus-options">
+      </entry>
+
       <entry name="ConfirmBeforeSend" type="Bool" key="confirm-before-send">
         <label>Confirm &amp;before send</label>
         <default>false</default>
@@ -410,6 +416,12 @@
         <default>false</default>
         <label>Reduce font size for quoted text</label>
         <whatsthis>Enable this option to show quoted text with a smaller font.</whatsthis>
+     </entry>
+
+     <entry name="ChiasmusDecryptionKey" type="String">
+     </entry>
+
+     <entry name="ChiasmusDecryptionOptions" type="String">
      </entry>
 
     </group>

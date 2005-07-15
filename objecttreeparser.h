@@ -221,8 +221,10 @@ namespace KMail {
 
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
+    bool processApplicationChiasmusTextSubtype( partNode * node, ProcessResult & result );
 
   private:
+    bool decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText );
     void writeBodyString( const QCString & bodyString,
                           const QString & fromAddress,
                           const QTextCodec * codec,

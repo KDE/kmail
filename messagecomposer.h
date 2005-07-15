@@ -38,6 +38,7 @@
 #include <qvaluevector.h>
 
 #include <mimelib/mediatyp.h>
+#include <kleo/cryptobackend.h>
 #include <kpgp.h>
 
 #include <vector>
@@ -98,6 +99,12 @@ private:
   void readFromComposeWin();
 
   void adjustCryptFlags();
+
+  bool encryptWithChiasmus( const Kleo::CryptoBackend::Protocol * chiasmus,
+                            const QByteArray& body,
+                            QByteArray& resultData );
+  void chiasmusEncryptAllAttachments();
+  void composeChiasmusMessage( KMMessage& theMessage, Kleo::CryptoMessageFormat format );
 
   // This is the composeMessage method
   void composeMessage();
@@ -265,6 +272,7 @@ private:
   DwString  mSaveBoundary;
 
   QValueList<MessageComposerJob*> mJobs;
+  bool mEncryptWithChiasmus;
 };
 
 #endif /* MESSAGECOMPOSER_H */

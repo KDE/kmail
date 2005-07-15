@@ -29,6 +29,8 @@ class KMReaderWin;
 class partNode;
 namespace KIO { class Job; }
 namespace KMail { class Composer; }
+namespace GpgME { class Error; }
+namespace Kleo { class SpecialJob; }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
@@ -862,29 +864,21 @@ public:
     OpenWith = 2,
     View = 3,
     Save = 4,
-    Properties = 5
+    Properties = 5,
+    ChiasmusEncrypt = 6
   };
   /**
    * Construct a new command
-   * @p node the partNode
-   * @p msg the KMMessage
-   * @p atmId the ID of the attachment, the partNode must know this
-   * @p atmName the name of the attachment
-   * @p action what to do with the attachment
-   * @p offer specify a KService that should handle the "open" action
+   * @param node the partNode
+   * @param msg the KMMessage
+   * @param atmId the ID of the attachment, the partNode must know this
+   * @param atmName the name of the attachment
+   * @param action what to do with the attachment
+   * @param offer specify a KService that should handle the "open" action, 0 otherwise
    */
   KMHandleAttachmentCommand( partNode* node, KMMessage* msg, int atmId,
-      const QString& atmName, AttachmentAction action, KService::Ptr offer = 0 );
+      const QString& atmName, AttachmentAction action, KService::Ptr offer, QWidget* parent );
 
-private slots:
-  /** Called from start() via a single shot timer. */
-  virtual void slotStart();
-
-  /**
-   * Called when the part was downloaded
-   * Calls execute
-   */
-  void slotPartComplete();
 
 signals:
   void showAttachment( int id, const QString& name );
@@ -915,6 +909,22 @@ private:
   /** Display the properties */
   void atmProperties();
 
+  /** Encrypt using chiasmus */
+  void atmEncryptWithChiasmus();
+
+private slots:
+  /** Called from start() via a single shot timer. */
+  virtual void slotStart();
+
+  /**
+   * Called when the part was downloaded
+   * Calls execute
+   */
+  void slotPartComplete();
+
+  void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
+  void slotAtmDecryptWithChiasmusUploadResult( KIO::Job * );
+
 private:
   partNode* mNode;
   KMMessage* mMsg;
@@ -922,6 +932,7 @@ private:
   const QString& mAtmName;
   AttachmentAction mAction;
   KService::Ptr mOffer;
+  Kleo::SpecialJob *mJob;
 
 };
 

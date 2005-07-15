@@ -69,6 +69,10 @@ using KMail::TeeHtmlWriter;
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
 
+#include <kleo/specialjob.h>
+#include <kleo/cryptobackend.h>
+#include <kleo/cryptobackendfactory.h>
+
 // KABC includes
 #include <kabc/addressee.h>
 #include <kabc/vcardconverter.h>
@@ -80,6 +84,7 @@ using KMail::TeeHtmlWriter;
 #include <dom/html_block.h>
 #include <dom/html_document.h>
 #include <dom/dom_string.h>
+
 
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
@@ -1861,6 +1866,9 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
+  if ( name.endsWith( ".xia", false ) &&
+       Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) )
+    menu->insertItem( i18n( "Decrypt With Chiasmus..." ), 6 );
   menu->insertItem(i18n("Properties"), 5);
   connect(menu, SIGNAL(activated(int)), this, SLOT(slotHandleAttachment(int)));
   menu->exec( p ,0 );
@@ -1896,9 +1904,9 @@ void KMReaderWin::slotHandleAttachment( int choice )
 {
   mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-      message(), mAtmCurrent, mAtmCurrentName,
-      KMHandleAttachmentCommand::AttachmentAction( choice ), 0 );
+  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand(
+      node, message(), mAtmCurrent, mAtmCurrentName,
+      KMHandleAttachmentCommand::AttachmentAction( choice ), 0, this );
   connect( command, SIGNAL( showAttachment( int, const QString& ) ),
       this, SLOT( slotAtmView( int, const QString& ) ) );
   command->start();
@@ -2156,7 +2164,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
         message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save,
-        offer );
+        offer, this );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();
@@ -2166,7 +2174,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
         KMHandleAttachmentCommand::Open : KMHandleAttachmentCommand::OpenWith );
     mAtmUpdate = true;
     KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
-        message(), mAtmCurrent, mAtmCurrentName, action, offer );
+        message(), mAtmCurrent, mAtmCurrentName, action, offer, this );
     connect( command, SIGNAL( showAttachment( int, const QString& ) ),
         this, SLOT( slotAtmView( int, const QString& ) ) );
     command->start();

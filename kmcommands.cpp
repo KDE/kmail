@@ -60,7 +60,6 @@
 #include <libemailfunctions/email.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
-#include <kio/netaccess.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
 #include <klocale.h>
@@ -73,6 +72,10 @@
 #include <ktempfile.h>
 #include <kimproxy.h>
 #include <kuserprofile.h>
+// KIO headers
+#include <kio/job.h>
+#include <kio/netaccess.h>
+
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -95,13 +98,18 @@ using KMail::ActionScheduler;
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
+#include "chiasmuskeyselector.h"
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
-#include <redirectdialog.h>
+#include "redirectdialog.h"
 using KMail::RedirectDialog;
+
+#include "broadcaststatus.h"
+#include "globalsettings.h"
+
 #include <libkdepim/kfileio.h>
 
 #include "progressmanager.h"
@@ -110,10 +118,12 @@ using KPIM::ProgressItem;
 #include <kmime_mdn.h>
 using namespace KMime;
 
-#include "broadcaststatus.h"
+#include <kleo/specialjob.h>
+#include <kleo/cryptobackend.h>
+#include <kleo/cryptobackendfactory.h>
+
 #include <qclipboard.h>
 
-#include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
@@ -2653,9 +2663,9 @@ KMCommand::Result KMIMChatCommand::execute()
 
 KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
      KMMessage* msg, int atmId, const QString& atmName,
-     AttachmentAction action, KService::Ptr offer )
-: mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ),
-  mAction( action ), mOffer( offer )
+     AttachmentAction action, KService::Ptr offer, QWidget* parent )
+: KMCommand( parent ), mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ),
+  mAction( action ), mOffer( offer ), mJob( 0 )
 {
 }
 
@@ -2698,6 +2708,9 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
       break;
     case Properties:
       atmProperties();
+      break;
+    case ChiasmusEncrypt:
+      atmEncryptWithChiasmus();
       break;
     default:
       kdDebug(5006) << "unknown action " << mAction << endl;
@@ -2835,3 +2848,156 @@ void KMHandleAttachmentCommand::atmProperties()
   dlg.exec();
 }
 
+void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
+{
+  const partNode * node = mNode;
+  Q_ASSERT( node );
+  if ( !node )
+    return;
+
+  // FIXME: better detection of mimetype??
+  if ( !mAtmName.endsWith( ".xia", false ) )
+    return;
+
+  const Kleo::CryptoBackend::Protocol * chiasmus =
+    Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
+  Q_ASSERT( chiasmus );
+  if ( !chiasmus )
+    return;
+
+  const std::auto_ptr<Kleo::SpecialJob> listjob( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  if ( !listjob.get() ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-obtain-keys\" function. Please report this bug." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  if ( listjob->exec() ) {
+    listjob->showErrorDialog( parentWidget(), i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QVariant result = listjob->property( "result" );
+  if ( result.type() != QVariant::StringList ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-obtain-keys\" function did not return a "
+                              "string list. Please report this bug." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QStringList keys = result.toStringList();
+  if ( keys.empty() ) {
+    const QString msg = i18n( "No keys have been found. Please check that a "
+                              "valid key path has been set in the Chiasmus "
+                              "configuration." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  ChiasmusKeySelector selectorDlg( parentWidget(), i18n( "Chiasmus Decryption Key Selection" ),
+                                   keys, GlobalSettings::chiasmusDecryptionKey(),
+                                   GlobalSettings::chiasmusDecryptionOptions() );
+  if ( selectorDlg.exec() != QDialog::Accepted )
+    return;
+
+  GlobalSettings::setChiasmusDecryptionOptions( selectorDlg.options() );
+  GlobalSettings::setChiasmusDecryptionKey( selectorDlg.key() );
+  assert( !GlobalSettings::chiasmusDecryptionKey().isEmpty() );
+
+  Kleo::SpecialJob * job = chiasmus->specialJob( "x-decrypt", QMap<QString,QVariant>() );
+  if ( !job ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-decrypt\" function. Please report this bug." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QByteArray input = node->msgPart().bodyDecodedBinary();
+
+  if ( !job->setProperty( "key", GlobalSettings::chiasmusDecryptionKey() ) ||
+       !job->setProperty( "options", GlobalSettings::chiasmusDecryptionOptions() ) ||
+       !job->setProperty( "input", input ) ) {
+    const QString msg = i18n( "The \"x-decrypt\" function does not accept "
+                              "the expected parameters. Please report this bug." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  if ( job->start() ) {
+    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
+    return;
+  }
+
+  mJob = job;
+  connect( job, SIGNAL(result(const GpgME::Error&,const QVariant&)),
+           this, SLOT(slotAtmDecryptWithChiasmusResult(const GpgME::Error&,const QVariant&)) );
+}
+
+// return true if we should proceed, false if we should abort
+static bool checkOverwrite( const KURL& url, bool& overwrite, QWidget* w )
+{
+  if ( KIO::NetAccess::exists( url, false /*dest*/, w ) ) {
+    if ( KMessageBox::Cancel ==
+         KMessageBox::warningContinueCancel(
+                                            w,
+                                            i18n( "A file named \"%1\" already exists. "
+                                                  "Are you sure you want to overwrite it?" ).arg( url.prettyURL() ),
+                                            i18n( "Overwrite File?" ),
+                                            i18n( "&Overwrite" ) ) )
+      return false;
+    overwrite = true;
+  }
+  return true;
+}
+
+static const QString chomp( const QString & base, const QString & suffix, bool cs ) {
+  return base.endsWith( suffix, cs ) ? base.left( base.length() - suffix.length() ) : base ;
+}
+
+void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::Error & err, const QVariant & result )
+{
+  if ( !mJob )
+    return;
+  Q_ASSERT( mJob == sender() );
+  if ( mJob != sender() )
+    return;
+  Kleo::Job * job = mJob;
+  mJob = 0;
+  if ( err.isCanceled() )
+    return;
+  if ( err ) {
+    job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
+    return;
+  }
+
+  if ( result.type() != QVariant::ByteArray ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-decrypt\" function did not return a "
+                              "byte array. Please report this bug." );
+    KMessageBox::error( parentWidget(), msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const KURL url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString::null, parentWidget() );
+  if ( url.isEmpty() )
+    return;
+
+  bool overwrite = false;
+  if ( !checkOverwrite( url, overwrite, parentWidget() ) )
+    return;
+
+  KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
+  uploadJob->setWindow( parentWidget() );
+  connect( uploadJob, SIGNAL(result(KIO::Job*)),
+           this, SLOT(slotAtmDecryptWithChiasmusUploadResult(KIO::Job*)) );
+}
+
+void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job * job )
+{
+  if ( job->error() )
+    job->showErrorDialog();
+}
+
+#include "kmcommands.moc"

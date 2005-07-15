@@ -60,6 +60,7 @@ using KRecentAddress::RecentAddresses;
 #include <libemailfunctions/email.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
+#include <kleo/specialjob.h>
 #include <ui/progressdialog.h>
 #include <ui/keyselectiondialog.h>
 
@@ -74,6 +75,7 @@ using KRecentAddress::RecentAddresses;
 #include "klistboxdialog.h"
 
 #include "messagecomposer.h"
+#include "chiasmuskeyselector.h"
 
 #include <kcharsets.h>
 #include <kcompletionbox.h>
@@ -169,6 +171,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mDictionaryAction( 0 ),
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
+    mEncryptChiasmusAction( 0 ),
+    mEncryptWithChiasmus( false ),
     mComposer( 0 ),
     mLabelWidth( 0 ),
     mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
@@ -1317,6 +1321,18 @@ void KMComposeWin::setupActions(void)
 
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
+
+  if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
+    KToggleAction * a = new KToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
+                                           "chidecrypted", 0, actionCollection(),
+                                           "encrypt_message_chiasmus" );
+    a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
+    mEncryptChiasmusAction = a;
+    connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
+             this, SLOT(slotEncryptChiasmusToggled(bool)) );
+  } else {
+    mEncryptChiasmusAction = 0;
+  }
 
   mEncryptAction = new KToggleAction (i18n("&Encrypt Message"),
                                      "decrypted", 0,
@@ -4504,3 +4520,89 @@ void KMComposeWin::alignmentChanged( int a )
     alignCenterAction->setChecked( ( a & AlignHCenter ) );
     alignRightAction->setChecked( ( a & AlignRight ) );
 }
+
+namespace {
+  class KToggleActionResetter {
+    KToggleAction * mAction;
+    bool mOn;
+  public:
+    KToggleActionResetter( KToggleAction * action, bool on )
+      : mAction( action ),  mOn( on ) {}
+    ~KToggleActionResetter() {
+      if ( mAction )
+        mAction->setChecked( mOn );
+    }
+    void disable() { mAction = 0; }
+  };
+}
+
+void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
+  mEncryptWithChiasmus = false;
+
+  if ( !on )
+    return;
+
+  KToggleActionResetter resetter( mEncryptChiasmusAction, false );
+
+  const Kleo::CryptoBackend::Protocol * chiasmus =
+    Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
+
+  if ( !chiasmus ) {
+    const QString msg = Kleo::CryptoBackendFactory::instance()->knowsAboutProtocol( "Chiasmus" )
+      ? i18n( "Please configure a Crypto Backend to use for "
+              "Chiasmus encryption first.\n"
+              "You can do this in the Crypto Backends tab of "
+              "the configure dialog's Security page." )
+      : i18n( "It looks as though libkleopatra was compiled without "
+              "Chiasmus support. You might want to recompile "
+              "libkleopatra with --enable-chiasmus.");
+    KMessageBox::information( this, msg, i18n("No Chiasmus Backend Configured" ) );
+    return;
+  }
+
+  std::auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  if ( !job.get() ) {
+    const QString msg = i18n( "Chiasmus backend does not offer the "
+                              "\"x-obtain-keys\" function. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  if ( job->exec() ) {
+    job->showErrorDialog( this, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QVariant result = job->property( "result" );
+  if ( result.type() != QVariant::StringList ) {
+    const QString msg = i18n( "Unexpected return value from Chiasmus backend: "
+                              "The \"x-obtain-keys\" function did not return a "
+                              "string list. Please report this bug." );
+    KMessageBox::error( this, msg, i18n( "Chiasmus Backend Error" ) );
+    return;
+  }
+
+  const QStringList keys = result.toStringList();
+  if ( keys.empty() ) {
+    const QString msg = i18n( "No keys have been found. Please check that a "
+                              "valid key path has been set in the Chiasmus "
+                              "configuration." );
+    KMessageBox::information( this, msg, i18n( "No Chiasmus Keys Found" ) );
+    return;
+  }
+
+  ChiasmusKeySelector selectorDlg( this, i18n( "Chiasmus Encryption Key Selection" ),
+                                   keys, GlobalSettings::chiasmusKey(),
+                                   GlobalSettings::chiasmusOptions() );
+  if ( selectorDlg.exec() != QDialog::Accepted )
+    return;
+
+  GlobalSettings::setChiasmusOptions( selectorDlg.options() );
+  GlobalSettings::setChiasmusKey( selectorDlg.key() );
+  assert( !GlobalSettings::chiasmusKey().isEmpty() );
+  mEncryptWithChiasmus = true;
+  resetter.disable();
+}
+
+
+
