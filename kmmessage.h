@@ -626,10 +626,6 @@ public:
    */
   static QCString html2source( const QCString & src );
 
-  /** Convert LF line-ends to CRLF
-   */
-  static QCString lf2crlf( const QCString & src );
-
   /** Encodes an email address as mailto URL
    */
   static QString encodeMailtoUrl( const QString& str );

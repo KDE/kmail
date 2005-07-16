@@ -51,6 +51,7 @@
 #include "partnodebodypart.h"
 #include "interfaces/bodypartformatter.h"
 #include "globalsettings.h"
+#include "util.h"
 
 #include "cryptplugwrapperlist.h"
 #include "cryptplugfactory.h"
@@ -406,7 +407,7 @@ namespace KMail {
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
         kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-        cleartext = KMMessage::lf2crlf( cleartext );
+        cleartext = Util::lf2crlf( cleartext );
         kdDebug(5006) << "                                                       done." << endl;
       }
 

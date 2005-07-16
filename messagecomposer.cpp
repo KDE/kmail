@@ -47,6 +47,8 @@
 #include "globalsettings.h"
 #include "custommimeheader.h"
 #include "kmedit.h"
+#include "util.h"
+using KMail::Util;
 
 
 #include <libkpimidentities/identity.h>
@@ -1595,7 +1597,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
     //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-    mEncodedBody = KMMessage::lf2crlf( mEncodedBody );
+    mEncodedBody = Util::lf2crlf( mEncodedBody );
   }
 
   if ( doSignBody ) {
@@ -1692,7 +1694,7 @@ void MessageComposer::encryptMessage( KMMessage* msg,
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
     //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-    innerContent = KMMessage::lf2crlf( innerContent );
+    innerContent = Util::lf2crlf( innerContent );
     //kdDebug(5006) << "                                                       done." << endl;
 
     QByteArray encryptedBody;
@@ -1784,7 +1786,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
       // according to RfC 2633, 3.1.1 Canonicalization
       //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-      encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
+      encodedAttachment = Util::lf2crlf( encodedAttachment );
 
       // sign this attachment
       if( signThisNow ) {

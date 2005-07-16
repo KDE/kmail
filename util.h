@@ -39,9 +39,14 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
+#include <qcstring.h>
 
 namespace KMail
 {
+    /**
+     * The Util namespace contains a collection of helper functions use in
+     * various places.
+     */
 namespace Util {
     /**
      * Convert all sequences of "\r\n" (carriage return followed by a line
@@ -52,6 +57,14 @@ namespace Util {
      * @return The new length of the converted string.
      */
     size_t crlf2lf( char* str, const size_t strLen );
+
+    
+    /**
+     * Convert "\n" line endings to "\r\n".
+     * @param src The source string to convert.
+     * @return The result string.
+     */
+    QCString lf2crlf( const QCString & src );
 }
 }
 
