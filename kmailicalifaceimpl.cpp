@@ -949,6 +949,9 @@ void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
   // pretend the folder just changed back to the mail type, which
   // does the right thing, namely remove resource
   folderContentsTypeChanged( folder, KMail::ContentsTypeMail );
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  configGroup.deleteEntry( folder->idString() + "-storageFormat" );
+  configGroup.deleteEntry( folder->idString() + "-changes" );
 }
 
 // KMail added a file to one of the groupware folders
