@@ -185,10 +185,10 @@ kde_services_DATA = kmail_config_misc.desktop kmail_config_appearance.desktop \
    kmail_config_security.desktop
 
 messages: rc.cpp
-        rm -f tips.cpp
-        $(PREPARETIPS) > tips.cpp
-        $(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
-        rm -f tips.cpp
+	rm -f tips.cpp
+	$(PREPARETIPS) > tips.cpp
+	$(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
+	rm -f tips.cpp
 
 kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg
 
