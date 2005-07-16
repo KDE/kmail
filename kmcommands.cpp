@@ -107,7 +107,6 @@ using KMail::SecondaryWindow;
 #include "redirectdialog.h"
 using KMail::RedirectDialog;
 #include "util.h"
-using KMail::Util;
 
 #include "broadcaststatus.h"
 #include "globalsettings.h"
@@ -2387,7 +2386,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
       size_t size = cstr.size();
       if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
         // convert CRLF to LF before writing text attachments to disk
-        size = Util::crlf2lf( cstr.data(), size );
+        size = KMail::Util::crlf2lf( cstr.data(), size );
       }
       data.resize( size );
     }
@@ -2736,7 +2735,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
     size_t size = data.size();
     if ( mNode->msgPart().type() == DwMime::kTypeText && size) {
       // convert CRLF to LF before writing text attachments to disk
-      size = Util::crlf2lf( data.data(), size );
+      size = KMail::Util::crlf2lf( data.data(), size );
     }
     KPIM::kBytesToFile( data.data(), size, mAtmName, false, false, false );
   }
