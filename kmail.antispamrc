@@ -4,6 +4,7 @@ tools=6
 [Spamtool #1]
 Ident=spamassassin
 Version=1
+Priority=40
 VisibleName=&SpamAssassin
 Executable=spamassassin -V
 URL=http://spamassassin.org
@@ -27,6 +28,7 @@ ScoreThresholdRegexp=required=([\d\.-]+)\s
 [Spamtool #2]
 Ident=bogofilter
 Version=2
+Priority=50
 VisibleName=&Bogofilter
 Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
@@ -50,6 +52,7 @@ ScoreThresholdRegexp=
 [Spamtool #3]
 Ident=annoyance-filter
 Version=1
+Priority=30
 VisibleName=&Annoyance-Filter
 Executable=$HOME/.annoyance-filter/annoyance-filter --version
 URL=http://www.fourmilab.ch/annoyance-filter
@@ -68,6 +71,7 @@ SupportsUnsure=0
 [Spamtool #4]
 Ident=gmx-antispam
 Version=1
+Priority=60
 VisibleName=&GMX Spam Filter
 Executable=echo
 URL=http://www.gmx.net/de/produkte/virenschutz/index.html
@@ -82,10 +86,12 @@ DetectionOnly=1
 UseRegExp=1
 SupportsBayes=0
 SupportsUnsure=0
+ServerPattern=gmx
 
 [Spamtool #5]
 Ident=spambayes
 Version=1
+Priority=20
 VisibleName=S&pamBayes
 Executable=sb_filter.py
 URL=http://spambayes.sourceforge.net

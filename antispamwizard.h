@@ -30,10 +30,12 @@
 #define KMAIL_ANTISPAMWIZARD_H
 
 #include <kconfig.h>
+#include <klistbox.h>
 #include <kwizard.h>
 
 #include <qcheckbox.h>
 #include <qdict.h>
+#include <qlayout.h>
 
 class KActionCollection;
 class KMFolderTree;
@@ -44,7 +46,6 @@ namespace KMail {
   class SimpleFolderTree;
 
   class ASWizInfoPage;
-  class ASWizProgramsPage;
   class ASWizSpamRulesPage;
   class ASWizVirusRulesPage;
 
@@ -65,7 +66,7 @@ namespace KMail {
     Anti-virus support was added by Fred Emmott <fred87@users.sf.net>
 
     The configuration for the tools to get checked and set up
-    is read fro a config file. The structure of the file is as
+    is read from a config file. The structure of the file is as
     following:
     <pre>
     [General]
@@ -74,6 +75,7 @@ namespace KMail {
     [Spamtool #1]
     Ident=spamassassin
     Version=0
+    Priority=1
     VisibleName=&Spamassassin
     Executable=spamassassin -V
     URL=http://spamassassin.org
@@ -88,6 +90,7 @@ namespace KMail {
     UseRegExp=0
     SupportsBayes=1
     SupportsUnsure=0
+    ServerSided=0
     type=spam
     </pre>
     The name of the config file is kmail.antispamrc
@@ -129,14 +132,16 @@ namespace KMail {
       {
         public:
           SpamToolConfig() {}
-          SpamToolConfig( QString toolId, int configVersion,
+          SpamToolConfig( QString toolId, int configVersion, int prio,
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
                         QString header, QString pattern, QString pattern2,
+                        QString serverPattern,
                         bool detectionOnly, bool regExp, bool bayesFilter, 
                         bool tristateDetection, WizardMode type );
 
           int getVersion() const { return mVersion; }
+          int getPrio() const { return mPrio; }
           QString getId()  const { return mId; }
           QString getVisibleName()  const { return mVisibleName; }
           QString getExecutable() const { return mExecutable; }
@@ -148,6 +153,8 @@ namespace KMail {
           QString getDetectionHeader() const { return mDetectionHeader; }
           QString getDetectionPattern() const { return mDetectionPattern; }
           QString getDetectionPattern2() const { return mDetectionPattern2; }
+          QString getServerPattern() const { return mServerPattern; }
+          bool isServerBased() const;
           bool isDetectionOnly() const { return mDetectionOnly; }
           bool isUseRegExp() const { return mUseRegExp; }
           bool useBayesFilter() const { return mSupportsBayesFilter; }
@@ -163,6 +170,8 @@ namespace KMail {
           // The version of the config data, used for merging and
           // detecting newer configs
           int mVersion;
+          // the priority of the tool in the list presented to the user
+          int mPrio;
           // the name as shown by the checkbox in the dialog page
           QString mVisibleName;
           // the command to check the existance of the tool
@@ -183,6 +192,8 @@ namespace KMail {
           QString mDetectionPattern;
           // what header pattern is used to mark unsure messages
           QString mDetectionPattern2;
+          // what header pattern is used in the account to check for a certain server
+          QString mServerPattern;
           // filter cannot search actively but relies on pattern by regExp or contain rule
           bool mDetectionOnly;
           // filter searches for the pattern by regExp or contain rule
@@ -219,14 +230,13 @@ namespace KMail {
           SpamToolConfig createDummyConfig();
 
           void mergeToolConfig( SpamToolConfig config );
+          void sortToolList();
       };
 
 
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();
-      /** Modify the status of the wizard to reflect the selected functionality. */
-      void checkSpamRulesSelections();
       /** Modify the status of the wizard to reflect the selected functionality. */
       void checkVirusRulesSelections();
       /** Check if the spam tools are available via the PATH */
@@ -236,7 +246,6 @@ namespace KMail {
 
     private:
       /* generic checks if any option in a page is checked */
-      bool anySpamOptionChecked();
       bool anyVirusOptionChecked();
 
       /* convenience function calling the appropriate filter manager method */
@@ -244,7 +253,6 @@ namespace KMail {
 
       /* The pages in the wizard */
       ASWizInfoPage * mInfoPage;
-      ASWizProgramsPage * mProgramsPage;
       ASWizSpamRulesPage * mSpamRulesPage;
       ASWizVirusRulesPage * mVirusRulesPage;
 
@@ -261,33 +269,33 @@ namespace KMail {
 
 
   //---------------------------------------------------------------------------
+  class ASWizPage : public QWidget
+  {
+    public:
+      ASWizPage( QWidget *parent, const char *name, 
+                 const QString *bannerName = 0);
+
+    protected:
+      QBoxLayout *mLayout;
+
+    private:
+      QPixmap *mPixmap;
+      QLabel *mBannerLabel;
+  };
+
 
   //---------------------------------------------------------------------------
-  class ASWizInfoPage : public QWidget
+  class ASWizInfoPage : public ASWizPage
   {
+    Q_OBJECT
+
     public:
       ASWizInfoPage( AntiSpamWizard::WizardMode mode,
                      QWidget *parent, const char *name );
 
       void setScanProgressText( const QString &toolName );
-
-    private:
-      QLabel *mIntroText;
-      QLabel *mScanProgressText;
-  };
-
-  //---------------------------------------------------------------------------
-  class ASWizProgramsPage : public QWidget
-  {
-    Q_OBJECT
-
-    public:
-      ASWizProgramsPage( QWidget *parent, const char *name,
-                         QStringList &checkBoxTextList,
-                         QStringList &checkBoxWhatsThisList );
-
+      void addAvailableTool( const QString &visibleName );
       bool isProgramSelected( const QString &visibleName );
-      void setProgramAsFound( const QString &visibleName, bool found );
 
     private slots:
       void processSelectionChange();
@@ -296,26 +304,27 @@ namespace KMail {
       void selectionChanged();
 
     private:
-      QDict<QCheckBox> mProgramDict;
+      QLabel *mIntroText;
+      QLabel *mScanProgressText;
+      QLabel *mSelectionHint;
+      KListBox *mToolsList;
   };
 
   //---------------------------------------------------------------------------
-  class ASWizSpamRulesPage : public QWidget
+  class ASWizSpamRulesPage : public ASWizPage
   {
     Q_OBJECT
 
     public:
       ASWizSpamRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
 
-      bool pipeRulesSelected() const;
-      bool classifyRulesSelected() const;
-      bool moveRulesSelected() const;
-      bool markReadRulesSelected() const;
+      bool markAsReadSelected() const;
+      bool moveSpamSelected() const;
+      bool moveUnsureSelected() const;
 
       QString selectedSpamFolderName() const;
       QString selectedUnsureFolderName() const;
-      
-      void allowClassification( bool enabled );
+
       void allowUnsureFolderSelection( bool enabled );
 
     private slots:
@@ -325,16 +334,15 @@ namespace KMail {
       void selectionChanged();
 
     private:
-      QCheckBox * mPipeRules;
-      QCheckBox * mClassifyRules;
-      QCheckBox * mMoveRules;
       QCheckBox * mMarkRules;
+      QCheckBox * mMoveSpamRules;
+      QCheckBox * mMoveUnsureRules;
       SimpleFolderTree *mFolderTreeForSpamFolder;
       SimpleFolderTree *mFolderTreeForUnsureFolder;
   };
 
   //-------------------------------------------------------------------------
-  class ASWizVirusRulesPage : public QWidget
+  class ASWizVirusRulesPage : public ASWizPage
   {
     Q_OBJECT
 
