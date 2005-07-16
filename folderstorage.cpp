@@ -974,14 +974,14 @@ void FolderStorage::replaceMsgSerNum( unsigned long sernum, KMMsgBase* msg, int 
   KMMsgDict::mutableInstance()->replace( sernum, msg, idx );
 }
 
-void FolderStorage::setRDict(KMMsgDictREntry *rentry) const
+void FolderStorage::setRDict( KMMsgDictREntry *rentry ) const
 {
-  if (! mExportsSernums )
+  if ( ! mExportsSernums )
     kdDebug(5006) << "WTF, this FolderStorage should be invisible to the msgdict, who is calling us?" << kdBacktrace() << endl;
   assert( mExportsSernums ); // otherwise things are very wrong
-  if (rentry == mRDict)
+  if ( rentry == mRDict )
     return;
-  KMMsgDict::deleteRentry(mRDict);
+  KMMsgDict::deleteRentry( mRDict );
   mRDict = rentry;
 }
 
