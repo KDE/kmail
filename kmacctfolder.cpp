@@ -12,52 +12,49 @@
 #define MAX_ACCOUNTS 16
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctFolder::account(void)
+KMAccount* KMAcctFolder::account()
 {
-  if (storage()->acctList()) return storage()->acctList()->first();
+  if ( acctList() )
+      return acctList()->first();
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctFolder::nextAccount(void)
+KMAccount* KMAcctFolder::nextAccount()
 {
-  if (storage()->acctList()) return storage()->acctList()->next();
+  if ( acctList() )
+      return acctList()->next();
   return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-void KMAcctFolder::addAccount(KMAccount* aAcct)
+void KMAcctFolder::addAccount( KMAccount* aAcct )
 {
-  if (!aAcct) return;
-  if (!storage()->acctList()) storage()->setAcctList( new KMAcctList );
+  if ( !aAcct ) return;
+  if ( acctList() )
+      setAcctList( new KMAcctList );
 
-  storage()->acctList()->append(aAcct);
-  aAcct->setFolder(this);
+  acctList()->append( aAcct );
+  aAcct->setFolder( this );
 }
 
-
 //-----------------------------------------------------------------------------
-void KMAcctFolder::clearAccountList(void)
+void KMAcctFolder::clearAccountList()
 {
-  if (storage()->acctList()) storage()->acctList()->clear();
+  if ( acctList() )
+      acctList()->clear();
 }
 
-
 //-----------------------------------------------------------------------------
-void KMAcctFolder::removeAccount(KMAccount* aAcct)
+void KMAcctFolder::removeAccount( KMAccount* aAcct )
 {
-  if (!aAcct || !storage()->acctList()) return;
+  if ( !aAcct || !acctList() ) return;
 
-  storage()->acctList()->remove(aAcct);
-  aAcct->setFolder(0);
-  if (storage()->acctList()->count() <= 0)
-  {
-    delete storage()->acctList();
-    storage()->setAcctList( 0 );
+  acctList()->remove( aAcct );
+  aAcct->setFolder( 0 );
+  if ( acctList()->count() <= 0 ) {
+    delete acctList();
+    setAcctList( 0 );
   }
 }
-
-
-

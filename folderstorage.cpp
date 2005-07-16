@@ -68,7 +68,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mChanged = false;
   mAutoCreateIndex = true;
   mExportsSernums = false;
-  mAcctList = 0;
   mDirty = false;
   mUnreadMsgs = -1;
   mGuessedUnreadMsgs = -1;
@@ -90,7 +89,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
 //-----------------------------------------------------------------------------
 FolderStorage::~FolderStorage()
 {
-  delete mAcctList;
   mJobList.setAutoDelete( true );
   QObject::disconnect( SIGNAL(destroyed(QObject*)), this, 0 );
   mJobList.clear();

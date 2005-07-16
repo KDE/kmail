@@ -115,6 +115,12 @@ public:
     return KMKernel::self()->folderIsDrafts( this );
   }
 
+  void setAcctList( KMAcctList* list ) { mAcctList = list; }
+  KMAcctList* acctList() const { return mAcctList; }
+
+  /** Returns TRUE if accounts are associated with this folder. */
+  bool hasAccounts() const { return (mAcctList != 0); }
+
   /** This is used by the storage to read the folder specific configuration */
   void readConfig( KConfig* config );
 
@@ -364,9 +370,6 @@ public:
   /** URL of the node for visualization purposes. */
   virtual QString prettyURL() const;
 
-  /** Returns true if accounts are associated with this folder. */
-  bool hasAccounts() const;
-
   /** Returns true if this folder is associated with a mailing-list. */
   void setMailingListEnabled( bool enabled );
   bool isMailingListEnabled() const { return mMailingListEnabled; }
@@ -614,7 +617,9 @@ private:
   /** Mailing list attributes */
   bool                mMailingListEnabled;
   MailingList         mMailingList;
-
+  
+  KMAcctList* mAcctList;
+  
   uint mIdentity;
 
   /** name of the field that is used for "From" in listbox */

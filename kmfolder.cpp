@@ -55,7 +55,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
-    mUseCustomIcons( false ), mMailingListEnabled( false )
+    mUseCustomIcons( false ), mMailingListEnabled( false ),
+    mAcctList( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -137,6 +138,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
 KMFolder::~KMFolder()
 {
+  delete mAcctList;
   if ( mHasIndex ) mStorage->deregisterFromMessageDict();
   delete mStorage;
 }
@@ -573,11 +575,6 @@ QString KMFolder::mailingListPostAddress() const
     }
   }
   return QString::null;
-}
-
-bool KMFolder::hasAccounts() const
-{
-  return mStorage->hasAccounts();
 }
 
 void KMFolder::setMailingListEnabled( bool enabled )

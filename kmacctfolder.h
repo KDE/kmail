@@ -36,24 +36,23 @@ class KMAcctFolder: public KMFolder
 public:
   /** Returns first account or 0 if no account is associated with this
       folder */
-  KMAccount* account(void);
+  KMAccount* account();
 
   /** Returns next account or 0 if at the end of the list */
-  KMAccount* nextAccount(void);
+  KMAccount* nextAccount();
 
   /** Add given account to the list */
-  void addAccount(KMAccount*);
+  void addAccount( KMAccount* );
 
   /** Remove given account from the list */
-  void removeAccount(KMAccount*);
+  void removeAccount( KMAccount* );
 
   /** Clear list of accounts */
-  void clearAccountList(void);
+  void clearAccountList();
 
 private:
   KMAcctFolder( KMFolderDir* parent, const QString& name,
-                KMFolderType aFolderType );
+                     KMFolderType aFolderType );
 };
-
 
 #endif /*kmacctfolder_h*/

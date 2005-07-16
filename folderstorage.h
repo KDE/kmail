@@ -52,7 +52,6 @@ using KMail::FolderJob;
 
 class KMMessage;
 class KMFolderDir;
-class KMAcctList;
 class KMMsgDict; // for the rDict manipulations
 class KMMsgDictREntry;
 class QTimer;
@@ -90,9 +89,6 @@ public:
   virtual ~FolderStorage();
 
   KMFolder* folder() const { return mFolder; }
-
-  void setAcctList( KMAcctList* list ) { mAcctList = list; }
-  KMAcctList* acctList() const { return mAcctList; }
 
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeUnknown; }
@@ -341,9 +337,6 @@ public:
 
   /** Returns the label of the folder for visualization. */
   QString label() const;
-
-  /** Returns TRUE if accounts are associated with this folder. */
-  bool hasAccounts() const { return (mAcctList != 0); }
 
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
@@ -594,8 +587,7 @@ friend class KMMsgDict;
   bool mDirty :1;
   /** TRUE if the files of the folder are locked (writable) */
   bool mFilesLocked :1;
-  KMAcctList* mAcctList;
-
+  
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
