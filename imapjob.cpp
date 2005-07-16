@@ -39,6 +39,7 @@
 #include "kmmsgpart.h"
 #include "progressmanager.h"
 using KPIM::ProgressManager;
+#include "util.h"
 
 #include <qstylesheet.h>
 #include <kio/scheduler.h>
@@ -386,7 +387,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
 
         // Convert CR/LF to LF.
         size_t dataSize = (*it).data.size();
-        dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+        dataSize = Util::crlf2lf( (*it).data.data(), dataSize ); // always <=
         (*it).data.resize( dataSize );
 
         // During the construction of the message from the byteArray it does 
@@ -405,7 +406,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       } else {
         // Convert CR/LF to LF.
         size_t dataSize = (*it).data.size();
-        dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+        dataSize = Util::crlf2lf( (*it).data.data(), dataSize ); // always <=
         (*it).data.resize( dataSize );
 
         // Update the body of the retrieved part (the message notifies all observers)

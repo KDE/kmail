@@ -802,11 +802,6 @@ void KMFolder::removeJobs()
   mStorage->removeJobs();
 }
 
-size_t KMFolder::crlf2lf( char* str, const size_t strLen )
-{
-  return FolderStorage::crlf2lf( str, strLen );
-}
-
 int KMFolder::updateIndex()
 {
   return mStorage->updateIndex();

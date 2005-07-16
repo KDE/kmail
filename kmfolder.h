@@ -491,11 +491,6 @@ public:
 
   void removeJobs();
 
-  /** Convert "\r\n" line endings in "\n" line endings. The conversion
-      happens in place. Returns the length of the resulting string.
-  */
-  static size_t crlf2lf( char* str, const size_t strLen );
-
   void daysToExpire( int& unreadDays, int& readDays );
 
   /**

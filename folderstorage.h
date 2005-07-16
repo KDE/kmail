@@ -367,12 +367,7 @@ public:
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
   void removeJobs();
-
-  /** Convert "\r\n" line endings in "\n" line endings. The conversion
-      happens in place. Returns the length of the resulting string.
-  */
-  static size_t crlf2lf( char* str, const size_t strLen );
-
+  
   /** Escape a leading dot */
   static QString dotEscape(const QString&);
 

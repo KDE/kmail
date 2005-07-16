@@ -120,7 +120,10 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 distributionlistdialog.cpp expirypropertiesdialog.cpp \
                 mailinglistpropertiesdialog.cpp newfolderdialog.cpp \
                 accountwizard.cpp textsource.cpp \
-                managesievescriptsdialog.cpp chiasmuskeyselector.cpp
+                managesievescriptsdialog.cpp chiasmuskeyselector.cpp \
+                util.cpp
+
+kmail_SOURCES = main.cpp
 
 libkmailpart_la_SOURCES =  kmailpartIface.skel  kmail_part.cpp
 

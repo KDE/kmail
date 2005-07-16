@@ -30,6 +30,8 @@
 #include "kcursorsaver.h"
 #include "jobscheduler.h"
 #include "compactionjob.h"
+#include "util.h"
+using KMail::Util;
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -894,7 +896,7 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
   mDest[msgSize] = '\0';
 
   size_t newMsgSize = unescapeFrom( mDest.data(), msgSize );
-  newMsgSize = crlf2lf( mDest.data(), newMsgSize );
+  newMsgSize = Util::crlf2lf( mDest.data(), newMsgSize );
 
   return mDest;
 }
@@ -916,7 +918,7 @@ DwString KMFolderMbox::getDwString(int idx)
   msgText[msgSize] = '\0';
 
   size_t newMsgSize = unescapeFrom( msgText, msgSize );
-  newMsgSize = crlf2lf( msgText, newMsgSize );
+  newMsgSize = Util::crlf2lf( msgText, newMsgSize );
 
   DwString msgStr;
   // the DwString takes possession of msgText, so we must not delete msgText

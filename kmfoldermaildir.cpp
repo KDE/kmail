@@ -20,6 +20,7 @@
 using KMail::MaildirJob;
 #include "compactionjob.h"
 #include "kmmsgdict.h"
+#include "util.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -580,7 +581,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       fread(msgText, msgSize, 1, stream);
       fclose( stream );
       msgText[msgSize] = '\0';
-      size_t newMsgSize = crlf2lf( msgText, msgSize );
+      size_t newMsgSize = KMail::Util::crlf2lf( msgText, msgSize );
       DwString str;
       // the DwString takes possession of msgText, so we must not delete it
       str.TakeBuffer( msgText, msgSize + 1, 0, newMsgSize );
@@ -610,7 +611,7 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
   QFileInfo fi( abs_file );
   mDest.resize(fi.size()+2);
   mDest = KPIM::kFileToString(abs_file, false, false);
-  size_t newMsgSize = crlf2lf( mDest.data(), fi.size() );
+  size_t newMsgSize = KMail::Util::crlf2lf( mDest.data(), fi.size() );
   mDest[newMsgSize] = '\0';
   return mDest;
 }

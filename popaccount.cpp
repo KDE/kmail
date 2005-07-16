@@ -34,6 +34,7 @@ using KPIM::BroadcastStatus;
 #include "kmpopfiltercnfrmdlg.h"
 #include "protocols.h"
 #include "kmglobal.h"
+#include "util.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -437,7 +438,7 @@ void PopAccount::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
   msg->setComplete(true);
   // Make sure to use LF as line ending to make the processing easier
   // when piping through external programs
-  uint newSize = KMFolder::crlf2lf( curMsgData.data(), curMsgData.size() );
+  uint newSize = Util::crlf2lf( curMsgData.data(), curMsgData.size() );
   curMsgData.resize( newSize );
   msg->fromByteArray( curMsgData , true );
   if (stage == Head)

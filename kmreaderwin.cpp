@@ -51,6 +51,8 @@ using KMail::ISubject;
 #include "urlhandlermanager.h"
 using KMail::URLHandlerManager;
 #include "interfaces/observable.h"
+#include "util.h"
+using KMail::Util;
 
 #include "broadcaststatus.h"
 
@@ -855,7 +857,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
   QByteArray data = node->msgPart().bodyDecodedBinary();
   size_t size = data.size();
   if ( node->msgPart().type() == DwMime::kTypeText && size) {
-    size = KMFolder::crlf2lf( data.data(), size );
+    size = Util::crlf2lf( data.data(), size );
   }
   KPIM::kBytesToFile( data.data(), size, mAtmCurrentName, false, false, false );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
@@ -1667,7 +1669,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
   size_t size = data.size();
   if ( aMsgPart->type() == DwMime::kTypeText && size) {
     // convert CRLF to LF before writing text attachments to disk
-    size = KMFolder::crlf2lf( data.data(), size );
+    size = Util::crlf2lf( data.data(), size );
   }
   if( !KPIM::kBytesToFile( data.data(), size, fname, false, false, false ) )
     return QString::null;

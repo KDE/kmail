@@ -44,6 +44,7 @@
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
 #include "maildirjob.h"
+#include "util.h"
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
@@ -269,7 +270,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
 
       // Convert CR/LF to LF.
       size_t dataSize = (*it).data.size();
-      dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+      dataSize = Util::crlf2lf( (*it).data.data(), dataSize ); // always <=
       (*it).data.resize( dataSize );
 
       mMsg->setComplete( true );
