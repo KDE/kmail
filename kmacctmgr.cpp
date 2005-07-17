@@ -30,7 +30,8 @@ using KPIM::BroadcastStatus;
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr()
-    :QObject(), mTotalNewMailsArrived( 0 ), mDisplaySummary( false )
+    :QObject(), mNewMailArrived( false ), mInteractive( false ),
+     mTotalNewMailsArrived( 0 ), mDisplaySummary( false )
 {
   mAcctChecking.clear();
   mAcctTodo.clear();
@@ -107,10 +108,10 @@ void KMAcctMgr::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
+void KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
 {
-  newMailArrived = false;
-  interactive = _interactive;
+  mNewMailArrived = false;
+  mInteractive = interactive;
 
   // queue the account
   mAcctTodo.append(account);
@@ -128,7 +129,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 void KMAcctMgr::processNextCheck( bool _newMail )
 {
   kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
-  newMailArrived |= _newMail;
+  mNewMailArrived |= _newMail;
 
   for ( AccountList::Iterator it( mAcctChecking.begin() ), end( mAcctChecking.end() ); it != end;  ) {
     KMAccount* acct = *it;
@@ -156,7 +157,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
     if ( mDisplaySummary )
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
           mTotalNewMailsArrived );
-    emit checkedMail( newMailArrived, interactive, mTotalNewInFolder );
+    emit checkedMail( mNewMailArrived, mInteractive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
     mTotalNewInFolder.clear();
     mDisplaySummary = false;
@@ -197,7 +198,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
         "check your account settings.")
       .arg(curAccount->name());
     KMessageBox::information(0,tmp);
-    emit checkedMail( false, interactive, mTotalNewInFolder );
+    emit checkedMail( false, mInteractive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
     mTotalNewInFolder.clear();
     return;
@@ -214,7 +215,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
   curAccount->setCheckingMail( true );
   mAcctChecking.append( curAccount );
   kmkernel->filterMgr()->ref();
-  curAccount->processNewMail( interactive );
+  curAccount->processNewMail( mInteractive );
 
   if ( !accountHostName.isEmpty() ) {
     if ( mServerConnections.find( accountHostName ) != mServerConnections.end() )
@@ -322,7 +323,7 @@ bool KMAcctMgr::remove( KMAccount* acct )
 //-----------------------------------------------------------------------------
 void KMAcctMgr::checkMail( bool _interactive )
 {
-  newMailArrived = false;
+  mNewMailArrived = false;
 
   if ( mAcctList.isEmpty() ) {
     KMessageBox::information( 0,i18n("You need to add an account in the network "
@@ -368,7 +369,7 @@ QStringList  KMAcctMgr::getAccounts( bool noImap )
 //-----------------------------------------------------------------------------
 void KMAcctMgr::intCheckMail(int item, bool _interactive)
 {
-  newMailArrived = false;
+  mNewMailArrived = false;
   mTotalNewMailsArrived = 0;
   mTotalNewInFolder.clear();
   if ( KMAccount *acct = mAcctList[ item ] )

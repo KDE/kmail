@@ -121,8 +121,8 @@ private:
   AccountList::Iterator mPtrListInterfaceProxyIterator;
   AccountList   mAcctChecking;
   AccountList   mAcctTodo;
-  bool newMailArrived;
-  bool interactive;
+  bool mNewMailArrived;
+  bool mInteractive;
   int  mTotalNewMailsArrived;
 
   // for detailed (per folder) new mail notification
