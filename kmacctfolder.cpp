@@ -23,7 +23,7 @@ KMAccount* KMAcctFolder::account()
 void KMAcctFolder::addAccount( KMAccount* aAcct )
 {
   if ( !aAcct ) return;
-  if ( acctList() )
+  if ( !acctList() )
       setAcctList( new AccountList() );
 
   acctList()->append( aAcct );
