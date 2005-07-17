@@ -27,14 +27,18 @@
 class QString;
 class QStringList;
 
+/**
+ * The account manager is responsible for creating accounts of various types
+ * via the factory method create() and for keeping track of them.
+ */
 class KDE_EXPORT KMAcctMgr: public QObject
 {
   Q_OBJECT
   friend class ::KMAccount;
 
 public:
-  /** Initialize Account Manager and load accounts with reload() if the
-    base path is given */
+    /** Initializes the account manager. readConfig() needs to be called in
+     * order to fill it with persisted account information from the config file. */
   KMAcctMgr();
   virtual ~KMAcctMgr();
 
@@ -42,27 +46,28 @@ public:
   virtual void readConfig(void);
 
   /** Write accounts to config. */
-  virtual void writeConfig(bool withSync=TRUE);
+  virtual void writeConfig( bool withSync=true );
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
   virtual KMAccount* create( const QString& type,
-                             const QString& name = QString::null, uint id = 0);
+                                        const QString& name = QString::null,
+                                        uint id = 0);
 
   /** Adds an account to the list of accounts */
-  virtual void add(KMAccount *account);
+  virtual void add( KMAccount *account );
 
   /** Find account by name. Returns 0 if account does not exist.
     Search is done case sensitive. */
-  virtual KMAccount* findByName(const QString& name);
+  virtual KMAccount* findByName( const QString& name );
 
   /** Find account by id. Returns 0 if account does not exist.
    */
-  virtual KMAccount* find(const uint id);
+  virtual KMAccount* find( const uint id );
 
   /** Physically remove account. Also deletes the given account object !
       Returns FALSE and does nothing if the account cannot be removed. */
-  virtual bool remove(KMAccount*);
+  virtual bool remove( KMAccount* );
 
   /** First account of the list */
   KMAccount* first();
@@ -71,15 +76,12 @@ public:
   KMAccount* next();
 
   /** Processes all accounts looking for new mail */
-  virtual void checkMail(bool _interactive = true);
+  virtual void checkMail( bool interactive = true );
 
   /** Delete all IMAP folders and resync them */
   void invalidateIMAPFolders();
 
   QStringList getAccounts();
-
-  /** Create a new unique ID */
-  uint createId();
 
   /// Called on exit (KMMainWin::queryExit)
   void cancelMailCheck();
@@ -89,18 +91,23 @@ public:
 
   /** Reset connection list for the account */
   void resetConnectionList( KMAccount* acct ) {
-    mServerConnections[ hostForAccount( acct ) ] = 0; }
+    mServerConnections[ hostForAccount( acct ) ] = 0;
+  }
 
 public slots:
-  virtual void singleCheckMail(KMAccount *, bool _interactive = true);
-  virtual void singleInvalidateIMAPFolders(KMAccount *);
+  virtual void singleCheckMail( KMAccount *, bool interactive = true );
+  virtual void singleInvalidateIMAPFolders( KMAccount * );
 
-  virtual void intCheckMail(int, bool _interactive = true);
-  virtual void processNextCheck(bool _newMail);
+  virtual void intCheckMail( int, bool interactive = true );
+  virtual void processNextCheck( bool newMail );
 
   /** this slot increases the count of new mails to show a total number
   after checking in multiple accounts. */
   virtual void addToTotalNewMailCount( const QMap<QString, int> & newInFolder );
+
+protected:
+   /** Create a new unique ID */
+   uint createId();
 
 signals:
   /**
@@ -110,7 +117,7 @@ signals:
    * @param newInFolder number of new messages for each folder
    **/
   void checkedMail( bool newMail, bool interactive,
-                    const QMap<QString, int> & newInFolder );
+                          const QMap<QString, int> & newInFolder );
   /** emitted when an account is removed */
   void accountRemoved( KMAccount* account );
   /** emitted when an account is added */
@@ -134,7 +141,6 @@ private:
 
   // if a summary should be displayed
   bool mDisplaySummary;
-
 };
 
 #endif /*kmacctmgr_h*/
