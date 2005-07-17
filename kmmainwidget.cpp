@@ -1045,16 +1045,15 @@ void KMMainWidget::slotRemoveFolder()
                                          KGuiItem( i18n("&Delete"), "editdelete"))
       == KMessageBox::Continue)
   {
-    if (mFolder->hasAccounts())
-    {
+    if ( mFolder->hasAccounts() ) {
       // this folder has an account, so we need to change that to the inbox
-      KMAccount* acct = 0;
-      KMAcctFolder* acctFolder = static_cast<KMAcctFolder*>(mFolder);
-      for ( acct = acctFolder->account(); acct; acct = acctFolder->nextAccount() )
-      {
-        acct->setFolder(kmkernel->inboxFolder());
+      for ( AccountList::Iterator it (mFolder->acctList()->begin() ),
+             end( mFolder->acctList()->end() ); it != end; ++it ) {
+        (*it)->setFolder( kmkernel->inboxFolder() );
         KMessageBox::information(this,
-            i18n("<qt>The destination folder of the account <b>%1</b> was restored to the inbox.</qt>").arg(acct->name()));
+            i18n("<qt>The folder you deleted was assoicated with the account "
+              "<b>%1</b> which delivered mail into it. The folder the account "
+              "delivers new mail into was reset to the main Inbox folder.</qt>").arg( (*it)->name()));
       }
     }
     if (mFolder->folderType() == KMFolderTypeImap)

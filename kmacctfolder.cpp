@@ -19,21 +19,12 @@ KMAccount* KMAcctFolder::account()
   return 0;
 }
 
-
-//-----------------------------------------------------------------------------
-KMAccount* KMAcctFolder::nextAccount()
-{
-  if ( acctList() )
-      return acctList()->next();
-  return 0;
-}
-
 //-----------------------------------------------------------------------------
 void KMAcctFolder::addAccount( KMAccount* aAcct )
 {
   if ( !aAcct ) return;
   if ( acctList() )
-      setAcctList( new KMAcctList );
+      setAcctList( new AccountList() );
 
   acctList()->append( aAcct );
   aAcct->setFolder( this );

@@ -32,7 +32,6 @@ using KPIM::BroadcastStatus;
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): QObject()
 {
-  mAcctList.setAutoDelete(TRUE);
   mAcctChecking.clear();
   mAcctTodo.clear();
   mTotalNewMailsArrived=0;
@@ -65,8 +64,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 
   // now write new account groups:
   int i = 1;
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-	it.current() ; ++it, ++i ) {
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
     groupName.sprintf("Account %d", i);
     KConfigGroupSaver saver(config, groupName);
     (*it)->writeConfig(*config);
@@ -85,6 +83,8 @@ void KMAcctMgr::readConfig(void)
   int i, num;
   uint id;
 
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
+      delete *it;
   mAcctList.clear();
 
   KConfigGroup general(config, "General");
@@ -134,25 +134,25 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   KMAccount *curAccount = 0;
   newMailArrived |= _newMail;
 
-  KMAccount* acct;
-  for ( acct = mAcctChecking.first(); acct; acct = mAcctChecking.next() )
-  {
-    if ( !acct->checkingMail() )
-    {
-      // check done
-      kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
-      mAcctChecking.removeRef( acct );
-      kmkernel->filterMgr()->deref();
-      disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+
+  for ( AccountList::Iterator it( mAcctChecking.begin() ), end( mAcctChecking.end() ); it != end;  ) {
+    KMAccount* acct = *it;
+    ++it;
+    if ( acct->checkingMail() )
+        continue;
+    // check done
+    kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
+    mAcctChecking.remove( acct );
+    kmkernel->filterMgr()->deref();
+    disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                   this, SLOT( processNextCheck( bool ) ) );
-      QString hostname = hostForAccount( acct );
-      if ( !hostname.isEmpty() ) {
-        if ( mServerConnections.find( hostname ) != mServerConnections.end() &&
-             mServerConnections[hostname] > 0 ) {
-          mServerConnections[hostname] -= 1;
-          kdDebug(5006) << "connections to server " << hostname
-                        << " now " << mServerConnections[hostname] << endl;
-        }
+    QString hostname = hostForAccount( acct );
+    if ( !hostname.isEmpty() ) {
+      if ( mServerConnections.find( hostname ) != mServerConnections.end() &&
+           mServerConnections[hostname] > 0 ) {
+        mServerConnections[hostname] -= 1;
+        kdDebug(5006) << "connections to server " << hostname
+                      << " now " << mServerConnections[hostname] << endl;
       }
     }
   }
@@ -172,11 +172,10 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   QString accountHostName;
 
   curAccount = 0;
-  KMAcctList::Iterator it ( mAcctTodo.begin() );
-  KMAcctList::Iterator last ( mAcctTodo.end() );
-  for ( ; it != last; it++ )
-  {
-    accountHostName = hostForAccount(*it);
+  for ( AccountList::Iterator it ( mAcctTodo.begin() ), last ( mAcctTodo.end() ); it != last; ) {
+    KMAccount *acct = *it;
+    ++it;
+    accountHostName = hostForAccount(acct);
     kdDebug(5006) << "for host " << accountHostName
                   << " current connections="
                   << (mServerConnections.find(accountHostName)==mServerConnections.end() ? 0 : mServerConnections[accountHostName])
@@ -189,9 +188,9 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       mServerConnections[accountHostName] >= GlobalSettings::self()->maxConnectionsPerHost();
     kdDebug(5006) << "connection limit reached: "
                   << connectionLimitForHostReached << endl;
-    if ( !(*it)->checkingMail() && !connectionLimitForHostReached ) {
-      curAccount = (*it);
-      mAcctTodo.remove( curAccount );
+    if ( !acct->checkingMail() && !connectionLimitForHostReached ) {
+      curAccount = (acct);
+      mAcctTodo.remove( acct );
       break;
     }
   }
@@ -285,49 +284,47 @@ KMAccount* KMAcctMgr::findByName(const QString &aName)
 {
   if (aName.isEmpty()) return 0;
 
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
-  {
-    if ((*it)->name() == aName) return (*it);
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    if ( (*it)->name() == aName ) return (*it);
   }
-
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find(const uint id)
+KMAccount* KMAcctMgr::find( const uint id )
 {
   if (id == 0) return 0;
-
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
-  {
-    if ((*it)->id() == id) return (*it);
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    if ( (*it)->id() == id ) return (*it);
   }
-
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::first(void)
+KMAccount* KMAcctMgr::first()
 {
-  return mAcctList.first();
+    mPtrListInterfaceProxyIterator = mAcctList.begin();
+    return *mPtrListInterfaceProxyIterator;
 }
-
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::next(void)
+KMAccount* KMAcctMgr::next()
 {
-  return mAcctList.next();
+    ++mPtrListInterfaceProxyIterator;
+    if ( mPtrListInterfaceProxyIterator == mAcctList.end() )
+        return 0;
+    else
+        return *mPtrListInterfaceProxyIterator;
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::remove( KMAccount* acct )
 {
   if( !acct )
     return false;
-  mAcctList.removeRef( acct );
+  mAcctList.remove( acct );
   emit accountRemoved( acct );
   return true;
 }
@@ -349,11 +346,9 @@ void KMAcctMgr::checkMail(bool _interactive)
   mTotalNewMailsArrived=0;
   mTotalNewInFolder.clear();
 
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-        it.current() ; ++it )
-  {
-    if (!it.current()->checkExclude())
-      singleCheckMail(it.current(), _interactive);
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    if ( !(*it)->checkExclude() )
+      singleCheckMail( (*it), _interactive);
   }
 }
 
@@ -373,18 +368,18 @@ void KMAcctMgr::invalidateIMAPFolders()
     return;
   }
 
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
-    singleInvalidateIMAPFolders(it.current());
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
+    singleInvalidateIMAPFolders( *it );
 }
 
 
 //-----------------------------------------------------------------------------
-QStringList  KMAcctMgr::getAccounts(bool noImap) {
+QStringList  KMAcctMgr::getAccounts( bool noImap ) {
 
-  KMAccount *cur;
   QStringList strList;
-  for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
-    if (!noImap || cur->type() != "imap") strList.append(cur->name());
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    if ( !noImap || (*it)->type() != "imap" )
+        strList.append( (*it)->name() );
   }
 
   return strList;
@@ -394,22 +389,12 @@ QStringList  KMAcctMgr::getAccounts(bool noImap) {
 //-----------------------------------------------------------------------------
 void KMAcctMgr::intCheckMail(int item, bool _interactive)
 {
-  KMAccount* cur;
   newMailArrived = false;
-
   mTotalNewMailsArrived = 0;
   mTotalNewInFolder.clear();
-  int x = 0;
-  cur = mAcctList.first();
-  while (cur)
-  {
-    x++;
-    if (x > item) break;
-    cur=mAcctList.next();
-  }
+  if ( KMAccount *acct = mAcctList[ item ] )
+    singleCheckMail( acct, _interactive );
   mDisplaySummary = false;
-
-  singleCheckMail(cur, _interactive);
 }
 
 
@@ -432,8 +417,9 @@ void KMAcctMgr::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
 uint KMAcctMgr::createId()
 {
   QValueList<uint> usedIds;
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
-    usedIds << it.current()->id();
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    usedIds << (*it)->id();
+  }
 
   usedIds << 0; // 0 is default for unknown
   int newId;
@@ -448,9 +434,8 @@ uint KMAcctMgr::createId()
 //-----------------------------------------------------------------------------
 void KMAcctMgr::cancelMailCheck()
 {
-  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-	it.current() ; ++it ) {
-    it.current()->cancelMailCheck();
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    (*it)->cancelMailCheck();
   }
 }
 
@@ -464,8 +449,8 @@ QString KMAcctMgr::hostForAccount( const KMAccount *acct ) const
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readPasswords()
 {
-  for ( QPtrListIterator<KMAccount> it( mAcctList ); it.current(); ++it ) {
-    NetworkAccount *acct = dynamic_cast<NetworkAccount*>( it.current() );
+  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+    NetworkAccount *acct = dynamic_cast<NetworkAccount*>( (*it) );
     if ( acct )
       acct->readPassword();
   }

@@ -26,8 +26,8 @@
 #include <qtimer.h>
 #include <qsignal.h>
 #include <qstring.h>
-#include <qptrlist.h>
 #include <qguardedptr.h>
+#include <qvaluelist.h>
 #include <qmap.h>
 
 #include "kmmessage.h"
@@ -45,7 +45,9 @@ namespace  KMail {
 namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
 using KPIM::ProgressItem;
-template <typename T> class QValueList;
+
+class KMAccount;
+typedef QValueList<KMAccount*> AccountList;
 
 class KMPrecommand : public QObject
 {
@@ -310,14 +312,6 @@ private:
 private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mNewInFolder;
-};
-
-class KMAcctList: public QPtrList<KMAccount>
-{
-public:
-  virtual ~KMAcctList() {}
-  /** some compilers fail otherwise */
-  short _dummy;
 };
 
 #endif /*kmaccount_h*/

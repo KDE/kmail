@@ -27,7 +27,6 @@
 class QString;
 class QStringList;
 
-
 class KDE_EXPORT KMAcctMgr: public QObject
 {
   Q_OBJECT
@@ -66,10 +65,10 @@ public:
   virtual bool remove(KMAccount*);
 
   /** First account of the list */
-  virtual KMAccount* first(void);
+  KMAccount* first();
 
   /** Next account of the list */
-  virtual KMAccount* next(void);
+  KMAccount* next();
 
   /** Processes all accounts looking for new mail */
   virtual void checkMail(bool _interactive = true);
@@ -118,9 +117,10 @@ signals:
   void accountAdded( KMAccount* account );
 
 private:
-  KMAcctList   mAcctList;
-  KMAcctList   mAcctChecking;
-  KMAcctList   mAcctTodo;
+  AccountList   mAcctList;
+  AccountList::Iterator mPtrListInterfaceProxyIterator;
+  AccountList   mAcctChecking;
+  AccountList   mAcctTodo;
   bool newMailArrived;
   bool interactive;
   int  mTotalNewMailsArrived;

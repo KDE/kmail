@@ -32,6 +32,7 @@
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
 using KMail::MailingList;
+#include "kmaccount.h" // for AccountList
 
 #include "mimelib/string.h"
 
@@ -42,7 +43,6 @@ using KMail::MailingList;
 
 class KMMessage;
 class KMFolderDir;
-class KMAcctList;
 class QTimer;
 class FolderStorage;
 class KMFolderTreeItem;
@@ -115,8 +115,8 @@ public:
     return KMKernel::self()->folderIsDrafts( this );
   }
 
-  void setAcctList( KMAcctList* list ) { mAcctList = list; }
-  KMAcctList* acctList() const { return mAcctList; }
+  void setAcctList( AccountList* list ) { mAcctList = list; }
+  AccountList* acctList() { return mAcctList; }
 
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != 0); }
@@ -618,7 +618,7 @@ private:
   bool                mMailingListEnabled;
   MailingList         mMailingList;
   
-  KMAcctList* mAcctList;
+  AccountList* mAcctList;
   
   uint mIdentity;
 

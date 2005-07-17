@@ -1343,6 +1343,7 @@ void AccountsPage::ReceivingTab::doLoadOther() {
 
   mAccountList->clear();
   QListViewItem *top = 0;
+
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next() ) {
     QListViewItem *listItem =
@@ -1351,7 +1352,6 @@ void AccountsPage::ReceivingTab::doLoadOther() {
       listItem->setText( 2, a->folder()->label() );
     top = listItem;
   }
-
   QListViewItem *listItem = mAccountList->firstChild();
   if ( listItem ) {
     mAccountList->setCurrentItem( listItem );
@@ -4664,7 +4664,7 @@ void MiscPage::GroupwareTab::doLoadFromGlobalSettings() {
     selectedAccount = kmkernel->acctMgr()->find( accountId );
   else {
     // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-    for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+      for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
          a = kmkernel->acctMgr()->next() ) {
       if( a->folder() && a->folder()->child() ) {
         // Look inside that folder for an INBOX

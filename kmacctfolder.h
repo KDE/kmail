@@ -38,9 +38,6 @@ public:
       folder */
   KMAccount* account();
 
-  /** Returns next account or 0 if at the end of the list */
-  KMAccount* nextAccount();
-
   /** Add given account to the list */
   void addAccount( KMAccount* );
 
