@@ -5,11 +5,6 @@
 #endif
 
 #include "kmacctfolder.h"
-#include "kmacctmgr.h"
-#include "folderstorage.h"
-#include <stdlib.h>
-
-#define MAX_ACCOUNTS 16
 
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctFolder::account()
