@@ -296,8 +296,12 @@ KMAccount* KMAcctMgr::find( const uint id )
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::first()
 {
+  if ( !mAcctList.empty() ) {
     mPtrListInterfaceProxyIterator = mAcctList.begin();
     return *mPtrListInterfaceProxyIterator;
+  } else {
+    return 0;
+  }
 }
 
 //-----------------------------------------------------------------------------

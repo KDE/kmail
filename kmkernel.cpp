@@ -1373,7 +1373,7 @@ void KMKernel::readConfig()
 
 void KMKernel::cleanupImapFolders()
 {
-  KMAccount *acct;
+  KMAccount *acct = 0;
   KMFolderNode *node = the_imapFolderMgr->dir().first();
   while (node)
   {
