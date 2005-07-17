@@ -15,6 +15,7 @@
 using KMail::NetworkAccount;
 #include "kmacctcachedimap.h"
 #include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfiltermgr.h"
 #include "globalsettings.h"
 
@@ -27,27 +28,23 @@ using KMail::NetworkAccount;
 #include <qregexp.h>
 #include <qvaluelist.h>
 
-using KPIM::BroadcastStatus;
-
 //-----------------------------------------------------------------------------
-KMAcctMgr::KMAcctMgr(): QObject()
+KMAcctMgr::KMAcctMgr()
+    :QObject(), mTotalNewMailsArrived( 0 ), mDisplaySummary( false )
 {
   mAcctChecking.clear();
   mAcctTodo.clear();
-  mTotalNewMailsArrived=0;
-  mDisplaySummary = false;
 }
-
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::~KMAcctMgr()
 {
-  writeConfig(FALSE);
+  writeConfig( false );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::writeConfig(bool withSync)
+void KMAcctMgr::writeConfig( bool withSync )
 {
   KConfig* config = KMKernel::config();
   QString groupName;
@@ -128,24 +125,22 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::processNextCheck(bool _newMail)
+void KMAcctMgr::processNextCheck( bool _newMail )
 {
   kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
-  KMAccount *curAccount = 0;
   newMailArrived |= _newMail;
-
 
   for ( AccountList::Iterator it( mAcctChecking.begin() ), end( mAcctChecking.end() ); it != end;  ) {
     KMAccount* acct = *it;
     ++it;
     if ( acct->checkingMail() )
-        continue;
+      continue;
     // check done
     kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
     mAcctChecking.remove( acct );
     kmkernel->filterMgr()->deref();
     disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
-                  this, SLOT( processNextCheck( bool ) ) );
+                      this, SLOT( processNextCheck( bool ) ) );
     QString hostname = hostForAccount( acct );
     if ( !hostname.isEmpty() ) {
       if ( mServerConnections.find( hostname ) != mServerConnections.end() &&
@@ -156,8 +151,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       }
     }
   }
-  if (mAcctChecking.isEmpty())
-  {
+  if ( mAcctChecking.isEmpty() ) {
     // all checks finished, display summary
     if ( mDisplaySummary )
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
@@ -167,11 +161,11 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     mTotalNewInFolder.clear();
     mDisplaySummary = false;
   }
-  if (mAcctTodo.isEmpty()) return;
+  if ( mAcctTodo.isEmpty() ) return;
 
   QString accountHostName;
 
-  curAccount = 0;
+  KMAccount *curAccount = 0;
   for ( AccountList::Iterator it ( mAcctTodo.begin() ), last ( mAcctTodo.end() ); it != last; ) {
     KMAccount *acct = *it;
     ++it;
@@ -189,16 +183,15 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     kdDebug(5006) << "connection limit reached: "
                   << connectionLimitForHostReached << endl;
     if ( !acct->checkingMail() && !connectionLimitForHostReached ) {
-      curAccount = (acct);
+      curAccount = acct;
       mAcctTodo.remove( acct );
       break;
     }
   }
   if ( !curAccount ) return; // no account or all of them are already checking
 
-  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
-      curAccount->folder() == 0)
-  {
+  if ( curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
+       curAccount->folder() == 0 ) {
     QString tmp = i18n("Account %1 has no mailbox defined:\n"
         "mail checking aborted;\n"
         "check your account settings.")
@@ -211,17 +204,17 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   }
 
   connect( curAccount, SIGNAL( finishedCheck( bool, CheckStatus ) ),
-	   this, SLOT( processNextCheck( bool ) ) );
+                this, SLOT( processNextCheck( bool ) ) );
 
   BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
 
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 
-  curAccount->setCheckingMail(true);
-  mAcctChecking.append(curAccount);
+  curAccount->setCheckingMail( true );
+  mAcctChecking.append( curAccount );
   kmkernel->filterMgr()->ref();
-  curAccount->processNewMail(interactive);
+  curAccount->processNewMail( interactive );
 
   if ( !accountHostName.isEmpty() ) {
     if ( mServerConnections.find( accountHostName ) != mServerConnections.end() )
@@ -235,43 +228,40 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id)
+KMAccount* KMAcctMgr::create( const QString &aType, const QString &aName, uint id )
 {
   KMAccount* act = 0;
-  if (id == 0)
+  if ( id == 0 )
     id = createId();
 
-  if (aType == "local")
+  if ( aType == "local" ) {
     act = new KMAcctLocal(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
-
-  if (aType == "maildir")
+    act->setFolder( kmkernel->inboxFolder() );
+  } else if ( aType == "maildir" ) {
     act = new KMAcctMaildir(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
-
-  else if (aType == "pop")
+    act->setFolder( kmkernel->inboxFolder() );
+  } else if ( aType == "pop" ) {
     act = new KMail::PopAccount(this, aName.isEmpty() ? i18n("POP Account") : aName, id);
-
-  else if (aType == "imap")
+    act->setFolder( kmkernel->inboxFolder() );
+  } else if ( aType == "imap" ) {
     act = new KMAcctImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
-
-  else if (aType == "cachedimap")
+  } else if (aType == "cachedimap") {
     act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
-
-  if (act)
-  {
-    if (aType != "imap" && aType != "cachedimap")
-      act->setFolder(kmkernel->inboxFolder());
-    connect( act, SIGNAL( newMailsProcessed( const QMap<QString, int> & ) ),
-             this, SLOT( addToTotalNewMailCount( const QMap<QString, int> & ) ) );
   }
-
+  if ( !act ) {
+      kdWarning(5006) << "Attempt to instantiate a non-existing account type!" << endl;
+      return 0;
+  }
+  connect( act, SIGNAL( newMailsProcessed( const QMap<QString, int> & ) ),
+                this, SLOT( addToTotalNewMailCount( const QMap<QString, int> & ) ) );
   return act;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::add(KMAccount *account)
+void KMAcctMgr::add( KMAccount *account )
 {
-  if (account) {
+  if ( account ) {
     mAcctList.append( account );
     emit accountAdded( account );
     account->installTimer();
@@ -282,7 +272,7 @@ void KMAcctMgr::add(KMAccount *account)
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::findByName(const QString &aName)
 {
-  if (aName.isEmpty()) return 0;
+  if ( aName.isEmpty() ) return 0;
 
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     if ( (*it)->name() == aName ) return (*it);
@@ -330,15 +320,13 @@ bool KMAcctMgr::remove( KMAccount* acct )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::checkMail(bool _interactive)
+void KMAcctMgr::checkMail( bool _interactive )
 {
   newMailArrived = false;
 
-  if (mAcctList.isEmpty())
-  {
-    KMessageBox::information(0,i18n("You need to add an account in the network "
-				    "section of the settings in order to "
-				    "receive mail."));
+  if ( mAcctList.isEmpty() ) {
+    KMessageBox::information( 0,i18n("You need to add an account in the network "
+                    "section of the settings in order to receive mail.") );
     return;
   }
   mDisplaySummary = true;
@@ -361,29 +349,20 @@ void KMAcctMgr::singleInvalidateIMAPFolders(KMAccount *account) {
 
 void KMAcctMgr::invalidateIMAPFolders()
 {
-  if (mAcctList.isEmpty()) {
-    KMessageBox::information(0,i18n("You need to add an account in the network "
-                                   "section of the settings in order to "
-                                   "receive mail."));
-    return;
-  }
-
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
     singleInvalidateIMAPFolders( *it );
 }
 
 
 //-----------------------------------------------------------------------------
-QStringList  KMAcctMgr::getAccounts( bool noImap ) {
-
+QStringList  KMAcctMgr::getAccounts( bool noImap )
+{
   QStringList strList;
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     if ( !noImap || (*it)->type() != "imap" )
         strList.append( (*it)->name() );
   }
-
   return strList;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -402,9 +381,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
 void KMAcctMgr::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
 {
   for ( QMap<QString, int>::const_iterator it = newInFolder.begin();
-        it != newInFolder.end();
-        ++it )
-  {
+        it != newInFolder.end(); ++it ) {
     mTotalNewMailsArrived += it.data();
     if ( mTotalNewInFolder.find( it.key() ) == mTotalNewInFolder.end() )
       mTotalNewInFolder[it.key()] = it.data();
