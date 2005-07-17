@@ -17,9 +17,9 @@
    <Separator/>
    <Action name="file_open" />
    <Action name="file_save_as" />
+   <Action name="import"/>
    <Action name="file_print" />
    <Separator/>
-   <Action name="compact_all_folders" />
    <Action name="expire_all_folders" />
    <Action name="file_invalidate_imap_cache"/>
    <Action name="empty_trash"/>
@@ -36,9 +36,7 @@
    <Action name="kmail_undo" />
    <Action name="kmail_redo" />
    <Separator/>
-   <Action name="kmail_cut" />
    <Action name="kmail_copy" />
-   <Action name="kmail_paste" />
    <Separator/>
    <Action name="move_to_trash" />
    <Action name="move_thread_to_trash" />
@@ -85,7 +83,6 @@
    <Separator/>
    <Action name="mark_all_as_read" />
    <Separator/>
-   <Action name="compact" />
    <Action name="expire" />
    <Action name="remove_duplicate_messages" />
    <Separator/>
@@ -128,7 +125,7 @@
    <Action name="move_to" />
    <Separator/> 
    <Action name="set_status" />
-   <Menu name="menubar_message_forward">
+   <Menu name="menubar_message_mark_thread_as">
      <text>Mark Thread as</text>
      <Action name="thread_watched" />
      <Action name="thread_ignored" />
