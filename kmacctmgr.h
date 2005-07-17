@@ -76,7 +76,7 @@ public:
   /** Delete all IMAP folders and resync them */
   void invalidateIMAPFolders();
 
-  QStringList getAccounts(bool noImap = false);
+  QStringList getAccounts();
 
   /** Create a new unique ID */
   uint createId();

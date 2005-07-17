@@ -2221,7 +2221,7 @@ void KMMainWidget::getAccountMenu()
   QStringList actList;
 
   mActMenu->clear();
-  actList = kmkernel->acctMgr()->getAccounts(false);
+  actList = kmkernel->acctMgr()->getAccounts();
   QStringList::Iterator it;
   int id = 0;
   for(it = actList.begin(); it != actList.end() ; ++it, id++)
@@ -3539,7 +3539,7 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  QStringList actList = kmkernel->acctMgr()->getAccounts(false);
+  QStringList actList = kmkernel->acctMgr()->getAccounts();
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );

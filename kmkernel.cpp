@@ -1879,7 +1879,7 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
 {
   assert(folder);
   if (folder == the_trashFolder) return true;
-  QStringList actList = acctMgr()->getAccounts(false);
+  QStringList actList = acctMgr()->getAccounts();
   QStringList::Iterator it( actList.begin() );
   for( ; it != actList.end() ; ++it ) {
     KMAccount* act = acctMgr()->findByName( *it );

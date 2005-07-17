@@ -356,12 +356,11 @@ void KMAcctMgr::invalidateIMAPFolders()
 
 
 //-----------------------------------------------------------------------------
-QStringList  KMAcctMgr::getAccounts( bool noImap )
+QStringList  KMAcctMgr::getAccounts()
 {
   QStringList strList;
   for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
-    if ( !noImap || (*it)->type() != "imap" )
-        strList.append( (*it)->name() );
+    strList.append( (*it)->name() );
   }
   return strList;
 }
