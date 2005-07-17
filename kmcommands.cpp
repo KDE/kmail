@@ -1983,8 +1983,10 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
       mDestFolder->sync();
     }
   } else {
-    mProgressItem->incCompletedItems();
-    mProgressItem->updateProgress();
+    if ( mProgressItem ) {
+      mProgressItem->incCompletedItems();
+      mProgressItem->updateProgress();
+    }
   }
 }
 
@@ -1997,8 +1999,7 @@ void KMMoveCommand::completeMove( Result result )
     mOpenedFolders.pop_back();
     folder->close();
   }
-  if ( mProgressItem )
-  {
+  if ( mProgressItem ) {
     mProgressItem->setComplete();
     mProgressItem = 0;
   }
