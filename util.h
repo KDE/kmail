@@ -70,11 +70,9 @@ namespace Util {
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource
      * Acquisiation is Initialization ) paradigm. When an instance of it
-     * goes out of scope it deletes the associated object after calling the 
-     * virtual doReleaseResources() method which subclasses can reimplement 
-     * to custom resource release as needed. It can be disabled, in case the
-     * deletion needs to be avoided for some reason, since going out-of-scope
-     * cannot be avoided.
+     * goes out of scope it deletes the associated object  It can be 
+     * disabled, in case the deletion needs to be avoided for some 
+     * reason, since going out-of-scope cannot be avoided.
      */
     class LaterDeleter
     {
@@ -86,7 +84,6 @@ namespace Util {
       virtual ~LaterDeleter()
       {
         if ( !m_disabled ) {
-          doReleaseResources();
           m_object->deleteLater();
         }
       }
@@ -94,9 +91,6 @@ namespace Util {
       {
         m_disabled = v;
       }
-      protected:
-      virtual void doReleaseResources() {}
-      
       protected:
       QObject *m_object;
       bool m_disabled;
