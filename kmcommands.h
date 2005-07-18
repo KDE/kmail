@@ -38,6 +38,7 @@ typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
 class KDE_EXPORT KMCommand : public QObject
 {
   Q_OBJECT
+    friend class LaterDeleterWithCommandCompletion;
 
 public:
   enum Result { Undefined, OK, Canceled, Failed };

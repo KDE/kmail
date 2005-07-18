@@ -126,6 +126,26 @@ using namespace KMime;
 #include <qclipboard.h>
 
 
+class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
+{
+public:
+  LaterDeleterWithCommandCompletion( KMCommand* command )
+    :LaterDeleter( command ), m_result( KMCommand::Failed )
+    {
+    }
+    void setResult( KMCommand::Result v ) { m_result = v; }
+protected:
+  virtual void doReleaseResources()
+  {
+    setResult( m_result );
+    KMCommand *command = static_cast<KMCommand*>( m_object );
+    emit command->completed( command );
+  }
+private:
+  KMCommand::Result m_result;
+};
+
+
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
@@ -2713,6 +2733,7 @@ KMCommand::Result KMHandleAttachmentCommand::execute()
       break;
     case ChiasmusEncrypt:
       atmEncryptWithChiasmus();
+      return Undefined;
       break;
     default:
       kdDebug(5006) << "unknown action " << mAction << endl;
@@ -2927,6 +2948,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
     return;
   }
 
+  setDeletesItself( true ); // the job below is async, we have to cleanup ourselves
   if ( job->start() ) {
     job->showErrorDialog( parentWidget(), i18n( "Chiasmus Decryption Error" ) );
     return;
@@ -2960,6 +2982,7 @@ static const QString chomp( const QString & base, const QString & suffix, bool c
 
 void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::Error & err, const QVariant & result )
 {
+  LaterDeleterWithCommandCompletion d( this );
   if ( !mJob )
     return;
   Q_ASSERT( mJob == sender() );
@@ -2990,6 +3013,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
   if ( !checkOverwrite( url, overwrite, parentWidget() ) )
     return;
 
+  d.setDisabled( true ); // we got this far, don't delete yet
   KIO::Job * uploadJob = KIO::storedPut( result.toByteArray(), url, -1, overwrite, false /*resume*/ );
   uploadJob->setWindow( parentWidget() );
   connect( uploadJob, SIGNAL(result(KIO::Job*)),
@@ -3000,6 +3024,8 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusUploadResult( KIO::Job
 {
   if ( job->error() )
     job->showErrorDialog();
+  LaterDeleterWithCommandCompletion d( this );
+  d.setResult( OK );
 }
 
 #include "kmcommands.moc"

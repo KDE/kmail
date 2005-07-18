@@ -39,6 +39,7 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
+#include <qobject.h>
 #include <qcstring.h>
 
 namespace KMail
@@ -65,6 +66,41 @@ namespace Util {
      * @return The result string.
      */
     QCString lf2crlf( const QCString & src );
+
+    /**
+     * A LaterDeleter is intended to be used with the RAII ( Resource
+     * Acquisiation is Initialization ) paradigm. When an instance of it
+     * goes out of scope it deletes the associated object after calling the 
+     * virtual doReleaseResources() method which subclasses can reimplement 
+     * to custom resource release as needed. It can be disabled, in case the
+     * deletion needs to be avoided for some reason, since going out-of-scope
+     * cannot be avoided.
+     */
+    class LaterDeleter
+    {
+      public:
+      LaterDeleter( QObject *o)
+        :m_object( o ), m_disabled( false )
+      {
+      }
+      virtual ~LaterDeleter()
+      {
+        if ( !m_disabled ) {
+          doReleaseResources();
+          m_object->deleteLater();
+        }
+      }
+      void setDisabled( bool v )
+      {
+        m_disabled = v;
+      }
+      protected:
+      virtual void doReleaseResources() {}
+      
+      protected:
+      QObject *m_object;
+      bool m_disabled;
+    };
 }
 }
 
