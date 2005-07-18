@@ -805,6 +805,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
   if ( !mToolsList->isVisible() ) 
   {
     mToolsList->show();
+    mToolsList->setSelected( 0, true );
     mSelectionHint->setText( i18n("<p>Please select the tools to be used "
                                   "for the spam detection and go "
                                   "to the next page.</p>") );
@@ -865,6 +866,9 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveUnsureRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
+
+  mMarkRules->setChecked( true );
+  mMoveSpamRules->setChecked( true );
 }
 
 
