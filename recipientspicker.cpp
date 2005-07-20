@@ -285,6 +285,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mRecipientList = new KListView( this );
   mRecipientList->setSelectionMode( QListView::Extended );
   mRecipientList->setAllColumnsShowFocus( true );
+  mRecipientList->setFullWidth( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
   mRecipientList->addColumn( i18n("Name") );
