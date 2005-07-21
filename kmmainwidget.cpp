@@ -2382,7 +2382,7 @@ void KMMainWidget::setupActions()
   mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
-  mExpireFolderAction = new KAction(i18n("&Expire Folder"), 0, this, SLOT(slotExpireFolder()),
+  mExpireFolderAction = new KAction(i18n("&Expiration Settings"), 0, this, SLOT(slotExpireFolder()),
 				   actionCollection(), "expire");
 
   mCompactFolderAction = new KAction( i18n("&Compact Folder"), 0, this,
@@ -2565,17 +2565,6 @@ void KMMainWidget::setupActions()
   mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
   mStatusMenu->insert( mToggleSentAction );
 
-  mStatusMenu->insert( new KActionSeparator( this ) );
-
-  mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mail_spam",
-                                 0, this, SLOT(slotSetMsgStatusSpam()),
-                                 actionCollection(), "status_spam");
-  mStatusMenu->insert( mMarkAsSpamAction );
-
-  mMarkAsHamAction = new KAction(i18n("Mark Message as &Ham"), "mail_ham",
-                                 0, this, SLOT(slotSetMsgStatusHam()),
-                                 actionCollection(), "status_ham");
-  mStatusMenu->insert( mMarkAsHamAction );
 
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
@@ -2648,18 +2637,6 @@ void KMMainWidget::setupActions()
   mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "mail_ignore",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
-
-  //------- "Ham and spam thread" actions
-  mMarkThreadAsSpamAction = new KAction(i18n("Mark Thread as S&pam"), "mail_spam",
-                                       0, this, SLOT(slotSetThreadStatusSpam()),
-                                       actionCollection(), "thread_spam");
-  mThreadStatusMenu->insert( mMarkThreadAsSpamAction );
-
-  mMarkThreadAsHamAction = new KAction(i18n("Mark Thread as &Ham"), "mail_ham",
-                                       0, this, SLOT(slotSetThreadStatusHam()),
-                                       actionCollection(), "thread_ham");
-  mThreadStatusMenu->insert( mMarkThreadAsHamAction );
-
 
   mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
                                 0, this, SLOT(slotSaveAttachments()),
@@ -2999,8 +2976,6 @@ void KMMainWidget::updateMessageActions()
     // in the toolbar
     mWatchThreadAction->setEnabled( thread_actions );
     mIgnoreThreadAction->setEnabled( thread_actions );
-    mMarkThreadAsSpamAction->setEnabled( thread_actions );
-    mMarkThreadAsHamAction->setEnabled( thread_actions );
     mMarkThreadAsNewAction->setEnabled( thread_actions );
     mMarkThreadAsReadAction->setEnabled( thread_actions );
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
