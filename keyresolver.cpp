@@ -1188,6 +1188,17 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
     for ( uint i = 0; i < items.size(); ++i ) {
       ContactPreferences& pref = lookupContactPreferences( items[i].address );
       pref.encryptionPreference = items[i].pref;
+      pref.pgpKeyFingerprints.clear();
+      pref.smimeCertFingerprints.clear();
+      for ( std::vector<GpgME::Key>::const_iterator it = items[i].keys.begin(), end = items[i].keys.end() ; it != end ; ++it ) {
+        if ( it->protocol() == GpgME::Context::OpenPGP ) {
+          if ( const char * fpr = it->primaryFingerprint() )
+            pref.pgpKeyFingerprints.push_back( fpr );
+        } else if ( it->protocol() == GpgME::Context::CMS ) {
+          if ( const char * fpr = it->primaryFingerprint() )
+            pref.smimeCertFingerprints.push_back( fpr );
+        }
+      }
       saveContactPreference( items[i].address, pref );
     }
   }
