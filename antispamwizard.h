@@ -48,6 +48,7 @@ namespace KMail {
   class ASWizInfoPage;
   class ASWizSpamRulesPage;
   class ASWizVirusRulesPage;
+  class ASWizSummaryPage;
 
   //---------------------------------------------------------------------------
   /**
@@ -243,6 +244,8 @@ namespace KMail {
       void checkToolAvailability();
       /** Show a help topic */
       void slotHelpClicked();
+      /** Create the summary text based on the current settings */
+      void slotBuildSummary();
 
     private:
       /* generic checks if any option in a page is checked */
@@ -255,6 +258,7 @@ namespace KMail {
       ASWizInfoPage * mInfoPage;
       ASWizSpamRulesPage * mSpamRulesPage;
       ASWizVirusRulesPage * mVirusRulesPage;
+      ASWizSummaryPage * mSummaryPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
       QValueList<SpamToolConfig> mToolList;
@@ -365,6 +369,20 @@ namespace KMail {
       QCheckBox * mMoveRules;
       SimpleFolderTree *mFolderTree;
       QCheckBox * mMarkRules;
+  };
+
+  //---------------------------------------------------------------------------
+  class ASWizSummaryPage : public ASWizPage
+  {
+    Q_OBJECT
+
+    public:
+      ASWizSummaryPage( QWidget * parent, const char * name );
+
+      void setSummaryText( const QString & text );
+
+    private:
+      QLabel * mSummaryText;
   };
 
 

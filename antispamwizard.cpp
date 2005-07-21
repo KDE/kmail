@@ -59,8 +59,10 @@ using namespace KMail;
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
                                 QWidget* parent, KMFolderTree * mainFolderTree )
   : KWizard( parent ),
+    mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
     mVirusRulesPage( 0 ),
+    mSummaryPage( 0 ),
     mMode( mode )
 {
   // read the configuration for the anti-spam tools
@@ -109,7 +111,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
     mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
     addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
-             this, SLOT( checkSpamRulesSelections( void ) ) );
+             this, SLOT( slotBuildSummary( void ) ) );
   }
   else {
     mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
@@ -122,8 +124,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
             this, SLOT( slotHelpClicked( void ) ) );
 
   setNextEnabled( mInfoPage, false );
-  if ( mMode == AntiSpam )
-    setFinishEnabled( mSpamRulesPage, true );
+
+  if ( mMode == AntiSpam ) {
+    mSummaryPage = new ASWizSummaryPage( 0, "" );
+    addPage( mSummaryPage, i18n( "KMail will adjust it's settings to detect spam messages." ) );
+    setNextEnabled( mSpamRulesPage, true );
+    setFinishEnabled( mSummaryPage, true );
+  }
 
   QTimer::singleShot( 0, this, SLOT( checkToolAvailability( void ) ) );
 }
@@ -439,8 +446,9 @@ void AntiSpamWizard::checkProgramsSelections()
     }
   }
 
-  if ( mSpamRulesPage ) {
+  if ( mMode == AntiSpam ) {
     mSpamRulesPage->allowUnsureFolderSelection( supportUnsure );
+    slotBuildSummary();
   }
 
   if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
@@ -536,6 +544,70 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
   return KMKernel::self()->filterMgr()->createUniqueName( name );
+}
+
+
+void AntiSpamWizard::slotBuildSummary()
+{
+  QString text;
+  QString filters;
+
+  if ( mMode == AntiVirus ) {
+    text = ""; // TODO add summary for the virus part
+  }
+  else { // AntiSpam mode
+    if ( mSpamRulesPage->markAsReadSelected() )
+      text = i18n( "<p>Messages classified as spam are marked as read." );
+    else
+      text = i18n( "<p>Messages classified as spam are not marked as read." );
+
+    if ( mSpamRulesPage->moveSpamSelected() )
+      text += i18n( "<br>Spam messages are moved into the folder named <i>" )
+            + mSpamRulesPage->selectedSpamFolderName() + "</i>.</p>";
+    else
+      text += i18n( "<br>Spam messages are not moved into a certain folder.</p>" );
+
+    bool canClassify = false;
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) &&
+         (*it).isSpamTool() && !(*it).isDetectionOnly() ) {
+        if ( (*it).useBayesFilter() )
+          canClassify = true;
+        filters += "<li>" + uniqueNameFor( (*it).getFilterName() ) + "</li>";
+      }
+    }
+
+    if ( mSpamRulesPage->moveSpamSelected() ) {
+      filters += "<li>" + uniqueNameFor( i18n( "Spam handling" ) ) + "</li>";
+    }
+
+    if ( mSpamRulesPage->moveUnsureSelected() ) {
+      bool atLeastOneUnsurePattern = false;
+      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+            it != mToolList.end(); ++it ) {
+        if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) ) {
+            if ( (*it).isSpamTool() && (*it).hasTristateDetection())
+              atLeastOneUnsurePattern = true;
+        }
+      }
+      if ( atLeastOneUnsurePattern ) {
+        filters += "<li>" + uniqueNameFor( i18n( "Semi spam (unsure) handling" ) ) + "</li>";
+        text += i18n( "<p>The folder for messages classified as unsure (probably spam) is <i>" )
+              + mSpamRulesPage->selectedUnsureFolderName() + "</i>.</p>";
+      }
+    }
+
+    if ( canClassify ) {
+      filters += "<li>" + uniqueNameFor( i18n( "Classify as spam" ) ) + "</li>";
+      filters += "<li>" + uniqueNameFor( i18n( "Classify as NOT spam" ) ) + "</li>";
+    }
+
+    text += i18n( "<p>The wizard will create the following filters:<ul>" )
+          + filters + "</ul></p>";
+  }
+
+  mSummaryPage->setSummaryText( text );
 }
 
 
@@ -656,7 +728,7 @@ AntiSpamWizard::SpamToolConfig
 AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 {
   return SpamToolConfig( "spamassassin", 0, 1,
-                        "&SpamAssassin", "spamassassin -V",
+                        "SpamAssassin", "spamassassin -V",
                         "http://spamassassin.org", "SpamAssassin Check",
                         "spamassassin -L",
                         "sa-learn -L --spam --no-rebuild --single",
@@ -801,7 +873,7 @@ void ASWizInfoPage::setScanProgressText( const QString &toolName )
 void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 {
   QString listName = visibleName;
-  mToolsList->insertItem( listName.remove( '&' ) );
+  mToolsList->insertItem( listName );
   if ( !mToolsList->isVisible() ) 
   {
     mToolsList->show();
@@ -815,7 +887,6 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
 {
   QString listName = visibleName;
-  listName = listName.remove( '&' );
   return mToolsList->isSelected( mToolsList->findItem( listName ) );
 }
 
@@ -995,5 +1066,24 @@ void ASWizVirusRulesPage::processSelectionChange()
 {
   emit selectionChanged();
 }
+
+
+//---------------------------------------------------------------------------
+ASWizSummaryPage::ASWizSummaryPage( QWidget * parent, const char * name )
+  : ASWizPage( parent, name )
+{
+  QBoxLayout * layout = new QVBoxLayout( mLayout );
+
+  mSummaryText = new QLabel( this );
+  layout->addWidget( mSummaryText );
+
+}
+
+
+void ASWizSummaryPage::setSummaryText( const QString & text )
+{
+  mSummaryText->setText( text );
+}
+
 
 #include "antispamwizard.moc"
