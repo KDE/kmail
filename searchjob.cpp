@@ -52,7 +52,8 @@ SearchJob::SearchJob( KMFolderImap* folder, ImapAccountBase* account,
                       const KMSearchPattern* pattern, Q_UINT32 serNum )
  : FolderJob( 0, tOther, (folder ? folder->folder() : 0) ),
    mFolder( folder ), mAccount( account ), mSearchPattern( pattern ),
-   mSerNum( serNum ), mRemainingMsgs( 0 ), mProgress( 0 )
+   mSerNum( serNum ), mRemainingMsgs( 0 ), mProgress( 0 ),
+   mUngetCurrentMsg( false )
 {
 }
 
@@ -304,7 +305,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     int idx = -1;
     KMFolder * p = 0;
     KMMsgDict::instance()->getLocation( msg, &p, &idx );
-    if ( idx != -1 )
+    if ( idx != -1 && mUngetCurrentMsg )
       mFolder->unGetMsg( idx );
   }
   if ( mSerNum > 0 )
@@ -397,6 +398,7 @@ void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data 
   KMFolder *aFolder = 0;
   KMMsgDict::instance()->getLocation( mSerNum, &aFolder, &idx );
   assert(aFolder && (idx != -1));
+  mUngetCurrentMsg = !mFolder->getMsgBase( idx )->isMessage();
   KMMessage * msg = mFolder->getMsg( idx );
   if ( needsDownload() ) {
     ImapJob *job = new ImapJob( msg );

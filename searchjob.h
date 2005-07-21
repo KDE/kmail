@@ -126,6 +126,7 @@ protected:
   uint mRemainingMsgs;
   // progress item for local searches
   KPIM::ProgressItem *mProgress;
+  bool mUngetCurrentMsg;
 
 };
 
