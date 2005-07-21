@@ -1201,6 +1201,17 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
     for ( uint i = 0; i < items.size(); ++i ) {
       ContactPreferences& pref = lookupContactPreferences( items[i].address );
       pref.encryptionPreference = items[i].pref;
+      pref.pgpKeyFingerprints.clear();
+      pref.smimeCertFingerprints.clear();
+      for ( std::vector<GpgME::Key>::const_iterator it = items[i].keys.begin(), end = items[i].keys.end() ; it != end ; ++it ) {
+        if ( it->protocol() == GpgME::Context::OpenPGP ) {
+          if ( const char * fpr = it->primaryFingerprint() )
+            pref.pgpKeyFingerprints.push_back( fpr );
+        } else if ( it->protocol() == GpgME::Context::CMS ) {
+          if ( const char * fpr = it->primaryFingerprint() )
+            pref.smimeCertFingerprints.push_back( fpr );
+        }
+      }
       saveContactPreference( items[i].address, pref );
     }
   }
@@ -1484,6 +1495,16 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
 {
   KABC::AddressBook *ab = KABC::StdAddressBook::self();
   KABC::Addressee::List res = ab->findByEmail( email );
+  if ( res.isEmpty() ) {
+    // Addressee not found, we must create it
+    // ####### KDE4 TODO: this should be done using another addressbook than the std one,
+    // to avoid polluting the user's real addressbook. Or at least another resource, created
+    // on demand here (but loaded in lookupContactPreferences...)
+    KABC::Addressee addr;
+    addr.insertEmail( email, true );
+    addr.insertCustom( "KADDRESSBOOK", "AUTOCREATED", "true" ); // not used at the moment
+    res.append( addr );
+  }
   if ( !res.isEmpty() ) {
     KABC::Addressee addr = res.first();
     addr.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
