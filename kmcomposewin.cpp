@@ -3904,14 +3904,19 @@ void KMComposeWin::slotSendLaterVia( int item )
 void KMComposeWin::slotSendNow() {
   if ( !mEditor->checkExternalEditorFinished() )
     return;
-  if ( GlobalSettings::self()->confirmBeforeSend() &&
-       KMessageBox::warningYesNoCancel( mMainWidget,
+  if ( GlobalSettings::self()->confirmBeforeSend() )
+  {
+    int rc = KMessageBox::warningYesNoCancel( mMainWidget,
                                         i18n("About to send email..."),
                                         i18n("Send Confirmation"),
                                         i18n("&Send Now"),
-                                        i18n("Send &Later") )
-       == KMessageBox::No )
-    doSend( KMail::MessageSender::SendLater );
+                                        i18n("Send &Later") );
+
+    if ( rc == KMessageBox::Yes )
+      doSend( KMail::MessageSender::SendImmediate );
+    else if ( rc == KMessageBox::No )
+      doSend( KMail::MessageSender::SendLater );
+  }
   else
     doSend( KMail::MessageSender::SendImmediate );
 }
