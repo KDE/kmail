@@ -4,7 +4,7 @@ tools=4
 [Virustool #1]
 Ident=ClamAV
 Version=1
-VisibleName=&Clam Anti-Virus
+VisibleName=Clam Anti-Virus
 Executable=clamscan -V
 URL=http://clamav.sf.net
 PipeFilterName=Clam Anti-Virus Check
@@ -16,7 +16,7 @@ UseRegExp=0
 [Virustool #2]
 Ident=SophosAV
 Version=1
-VisibleName=Sophos Anti&Virus
+VisibleName=Sophos AntiVirus
 Executable=sweep -v
 URL=http://www.sophos.com
 PipeFilterName=Sophos Anti-Virus Check
@@ -28,7 +28,7 @@ UseRegExp=0
 [Virustool #3]
 Ident=FProt
 Version=1
-VisibleName=&F-Prot AntiVirus
+VisibleName=F-Prot AntiVirus
 Executable=f-prot -verno
 URL=http://www.f-prot.com
 PipeFilterName=F-Prot Anti-Virus Check

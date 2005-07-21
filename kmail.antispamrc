@@ -1,11 +1,11 @@
 [General]
-tools=6
+tools=7
 
 [Spamtool #1]
 Ident=spamassassin
 Version=1
 Priority=40
-VisibleName=&SpamAssassin
+VisibleName=SpamAssassin (Perl)
 Executable=spamassassin -V
 URL=http://spamassassin.org
 PipeFilterName=SpamAssassin Check
@@ -29,7 +29,7 @@ ScoreThresholdRegexp=required=([\d\.-]+)\s
 Ident=bogofilter
 Version=2
 Priority=50
-VisibleName=&Bogofilter
+VisibleName=Bogofilter
 Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
 PipeFilterName=Bogofilter Check
@@ -53,7 +53,7 @@ ScoreThresholdRegexp=
 Ident=annoyance-filter
 Version=1
 Priority=30
-VisibleName=&Annoyance-Filter
+VisibleName=Annoyance-Filter
 Executable=$HOME/.annoyance-filter/annoyance-filter --version
 URL=http://www.fourmilab.ch/annoyance-filter
 PipeFilterName=Annoyance-Filter Check
@@ -72,7 +72,7 @@ SupportsUnsure=0
 Ident=gmx-antispam
 Version=1
 Priority=60
-VisibleName=&GMX Spam Filter
+VisibleName=GMX Spam Filter
 Executable=echo
 URL=http://www.gmx.net/de/produkte/virenschutz/index.html
 PipeFilterName=
@@ -92,7 +92,7 @@ ServerPattern=gmx
 Ident=spambayes
 Version=1
 Priority=20
-VisibleName=S&pamBayes
+VisibleName=SpamBayes
 Executable=sb_filter.py
 URL=http://spambayes.sourceforge.net
 PipeFilterName=SpamBayes Check
@@ -114,3 +114,28 @@ ScoreHeader=X-Razor-Spam
 ScoreType=Bool
 ScoreValueRegexp=SPAM
 ScoreThresholdRegexp=
+
+[Spamtool #7]
+Ident=spamd
+Version=1
+Priority=45
+VisibleName=SpamAssassin (Daemon)
+Executable=echo "From: test" | spamc -x && spamassassin -V
+URL=http://spamassassin.org
+PipeFilterName=SpamAssassin Service Check
+PipeCmdDetect=spamc
+ExecCmdSpam=sa-learn -L --spam --no-rebuild --single
+ExecCmdHam=sa-learn -L --ham --no-rebuild --single
+DetectionHeader=X-Spam-Flag
+DetectionPattern=yes
+DetectionPattern2=
+DetectionOnly=0
+UseRegExp=0
+SupportsBayes=1
+SupportsUnsure=0
+ScoreName=Spamassassin
+ScoreHeader=X-Spam-Status
+ScoreType=Adjusted
+ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
+ScoreThresholdRegexp=required=([\d\.-]+)\s
+
