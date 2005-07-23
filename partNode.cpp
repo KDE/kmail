@@ -36,6 +36,7 @@
 #include "kmmimeparttree.h"
 #include <mimelib/utility.h>
 #include <qregexp.h>
+#include <kasciistricmp.h>
 
 /*
   ===========================================================================
@@ -413,7 +414,7 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
 partNode* partNode::findNodeForDwPart( DwBodyPart* part )
 {
     partNode* found = 0;
-    if( dwPart()->partId() == part->partId() )
+    if( kasciistricmp( dwPart()->partId(), part->partId() ) == 0 )
         return this;
     if( mChild )
         found = mChild->findNodeForDwPart( part );
