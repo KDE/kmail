@@ -160,9 +160,12 @@ public:
   /**
    * Create a new subfolder
    * You may specify the root imap path or this folder will be used
+   * If you set askUser to false and the server can only handle folders
+   * that contain messages _or_ folders the new folder is set to "contains messages"
+   * by default
    */
   void createFolder(const QString &name, 
-      const QString& imapPath = QString::null);
+      const QString& imapPath = QString::null, bool askUser = true);
 
   /**
    * Delete a message

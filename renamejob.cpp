@@ -120,11 +120,12 @@ void RenameJob::execute()
     {
       // online imap
       // create it on the server and wait for the folderAdded signal
+      // do not ask the user what kind of folder should be created
       connect( kmkernel->imapFolderMgr(), SIGNAL( changed() ),
           this, SLOT( slotMoveMessages() ) );
       KMFolderImap* imapFolder =
         static_cast<KMFolderImap*>(mNewParent->owner()->storage());
-      imapFolder->createFolder( mNewName );
+      imapFolder->createFolder( mNewName, false ); 
     } else if ( mNewParent->type() == KMDImapDir )
     {
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mNewFolder->storage());
