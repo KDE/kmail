@@ -1611,7 +1611,8 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::createFolder(const QString &name, const QString& parentPath)
+void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
+                                bool askUser)
 {
   if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
@@ -1622,7 +1623,11 @@ void KMFolderImap::createFolder(const QString &name, const QString& parentPath)
   if ( !parent.endsWith("/") ) {
     parent += "/";
   }
-  url.setPath( parent + name );
+  QString path = parent + name;
+  if ( askUser ) {
+    path += ";INFO=ASKUSER";
+  }
+  url.setPath( path );
 
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -2179,7 +2184,7 @@ void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString& error
 //-----------------------------------------------------------------------------
 void KMFolderImap::search( const KMSearchPattern* pattern )
 {
-  if ( !pattern )
+  if ( !pattern || pattern->isEmpty() )
   {
     // not much to do here
     QValueList<Q_UINT32> serNums;
@@ -2203,7 +2208,7 @@ void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums,
 //-----------------------------------------------------------------------------
 void KMFolderImap::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
 {
-  if ( !pattern )
+  if ( !pattern || pattern->isEmpty() )
   {
     // not much to do here
     emit searchDone( folder(), serNum, pattern, false );

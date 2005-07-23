@@ -152,11 +152,13 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
   }
   
   QString search;
-  if ( pattern->op() == KMSearchPattern::OpOr ) {
-    search = "(OR " + parts.join(" ") + ")";
-  } else {
-    // and's are simply joined
-    search = parts.join(" ");
+  if ( !parts.isEmpty() ) {
+    if ( pattern->op() == KMSearchPattern::OpOr ) {
+      search = "(OR " + parts.join(" ") + ")";
+    } else {
+      // and's are simply joined
+      search = parts.join(" ");
+    }
   }
 
   kdDebug(5006) << k_funcinfo << search << ";localSearch=" << mLocalSearchPattern->asString() << endl;
