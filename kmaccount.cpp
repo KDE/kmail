@@ -93,8 +93,6 @@ KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
     mMailCheckProgressItem(0)
 {
   assert(aOwner != 0);
-
-  connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
 void KMAccount::init() {
@@ -185,7 +183,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg)
   KMMessage *newMsg = aMsg->createDeliveryReceipt();
   if (newMsg) {
     mReceipts.append(newMsg);
-    mReceiptTimer.start(0,true);
+    QTimer::singleShot( 0, this, SLOT( sendReceipts() ) );
   }
 }
 
@@ -440,7 +438,7 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
 //-----------------------------------------------------------------------------
 void KMAccount::checkDone( bool newmail, CheckStatus status )
 {
-  mCheckingMail = false;
+    setCheckingMail( false );
   // Reset the timeout for automatic mailchecking. The user might have
   // triggered the check manually.
   if (mTimer)

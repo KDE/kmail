@@ -113,6 +113,12 @@ namespace KMail {
     /** Read password from wallet, used for on-demand wallet opening */
     void readPassword();
 
+    virtual bool mailCheckCanProceed() const;
+
+    virtual void setCheckingMail( bool checking );
+
+    /** Reset connection list for the account */
+    static void resetConnectionList( NetworkAccount* acct );
   protected:
     virtual QString protocol() const = 0;
     virtual unsigned short int defaultPort() const = 0;
@@ -127,7 +133,6 @@ namespace KMail {
     bool mUseTLS : 1;
     bool mAskAgain : 1;
     bool mPasswdDirty, mStorePasswdInConfig;
-
   };
 
 } // namespace KMail

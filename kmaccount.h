@@ -23,14 +23,13 @@
 #include <kprocess.h>
 #include <kaccount.h>
 
-#include <qtimer.h>
-#include <qsignal.h>
 #include <qstring.h>
 #include <qguardedptr.h>
 #include <qvaluelist.h>
 #include <qmap.h>
 
 #include "kmmessage.h"
+class QTimer;
 
 class KMFolder;
 class KMAcctFolder;
@@ -211,10 +210,18 @@ public:
   virtual void invalidateIMAPFolders();
 
   /**
+   * Determines whether the account can be checked, currently.
+   * Reimplementations can use this to prevent mailchecks due to
+   * exceeded connection limits, or because a network link iis down.
+   * @return whether mail checks can proceed
+   */
+  virtual bool mailCheckCanProceed() const { return true; }
+  
+  /**
    * Set/Get if this account is currently checking mail
    */
   bool checkingMail() { return mCheckingMail; }
-  void setCheckingMail( bool checking ) { mCheckingMail = checking; }
+  virtual void setCheckingMail( bool checking ) { mCheckingMail = checking; }
 
   /**
    * Call this if the newmail-check ended.
@@ -294,7 +301,7 @@ protected:
   QString       mTrash;
   AccountManager*    mOwner;
   QGuardedPtr<KMAcctFolder> mFolder;
-  QTimer *mTimer, mReceiptTimer;
+  QTimer *mTimer;
   int mInterval;
   bool mExclude;
   bool mCheckingMail : 1;

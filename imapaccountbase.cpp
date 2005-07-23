@@ -528,7 +528,7 @@ namespace KMail {
     else {
       if ( !mSlaveConnected ) {
         mSlaveConnectionError = true;
-        mOwner->resetConnectionList( this );
+        resetConnectionList( this );
         if ( mSlave )
         {
           KIO::Scheduler::disconnectSlave( slave() );

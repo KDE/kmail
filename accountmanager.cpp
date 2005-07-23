@@ -142,15 +142,6 @@ void AccountManager::processNextCheck( bool _newMail )
     kmkernel->filterMgr()->deref();
     disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                       this, SLOT( processNextCheck( bool ) ) );
-    QString hostname = hostForAccount( acct );
-    if ( !hostname.isEmpty() ) {
-      if ( mServerConnections.find( hostname ) != mServerConnections.end() &&
-           mServerConnections[hostname] > 0 ) {
-        mServerConnections[hostname] -= 1;
-        kdDebug(5006) << "connections to server " << hostname
-                      << " now " << mServerConnections[hostname] << endl;
-      }
-    }
   }
   if ( mAcctChecking.isEmpty() ) {
     // all checks finished, display summary
@@ -170,20 +161,7 @@ void AccountManager::processNextCheck( bool _newMail )
   for ( AccountList::Iterator it ( mAcctTodo.begin() ), last ( mAcctTodo.end() ); it != last; ) {
     KMAccount *acct = *it;
     ++it;
-    accountHostName = hostForAccount(acct);
-    kdDebug(5006) << "for host " << accountHostName
-                  << " current connections="
-                  << (mServerConnections.find(accountHostName)==mServerConnections.end() ? 0 : mServerConnections[accountHostName])
-                  << " and limit is " << GlobalSettings::self()->maxConnectionsPerHost()
-                  << endl;
-    bool connectionLimitForHostReached =
-      !accountHostName.isNull() &&
-      GlobalSettings::self()->maxConnectionsPerHost() > 0 &&
-      mServerConnections.find( accountHostName ) != mServerConnections.end() &&
-      mServerConnections[accountHostName] >= GlobalSettings::self()->maxConnectionsPerHost();
-    kdDebug(5006) << "connection limit reached: "
-                  << connectionLimitForHostReached << endl;
-    if ( !acct->checkingMail() && !connectionLimitForHostReached ) {
+    if ( !acct->checkingMail() && acct->mailCheckCanProceed() ) {
       curAccount = acct;
       mAcctTodo.remove( acct );
       break;
@@ -216,16 +194,6 @@ void AccountManager::processNextCheck( bool _newMail )
   mAcctChecking.append( curAccount );
   kmkernel->filterMgr()->ref();
   curAccount->processNewMail( mInteractive );
-
-  if ( !accountHostName.isEmpty() ) {
-    if ( mServerConnections.find( accountHostName ) != mServerConnections.end() )
-      mServerConnections[accountHostName] += 1;
-    else
-      mServerConnections[accountHostName] = 1;
-    kdDebug(5006) << "check mail started - connections for host "
-                  << accountHostName << " now is "
-                  << mServerConnections[accountHostName] << endl;
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -420,12 +388,6 @@ void AccountManager::cancelMailCheck()
   }
 }
 
-//-----------------------------------------------------------------------------
-QString AccountManager::hostForAccount( const KMAccount *acct ) const
-{
-  const NetworkAccount *net_acct = dynamic_cast<const NetworkAccount*>( acct );
-  return net_acct ? net_acct->host() : QString::null;
-}
 
 //-----------------------------------------------------------------------------
 void AccountManager::readPasswords()

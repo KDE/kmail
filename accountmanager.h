@@ -92,11 +92,6 @@ public:
   /** Read passwords of all accounts from the wallet */
   void readPasswords();
 
-  /** Reset connection list for the account */
-  void resetConnectionList( KMAccount* acct ) {
-    mServerConnections[ hostForAccount( acct ) ] = 0;
-  }
-
 public slots:
   void singleCheckMail( KMAccount *, bool interactive = true );
   void singleInvalidateIMAPFolders( KMAccount * );
@@ -137,10 +132,6 @@ private:
 
   // for detailed (per folder) new mail notification
   QMap<QString, int> mTotalNewInFolder;
-
-  // for restricting number of concurrent connections to the same server
-  QMap<QString, int> mServerConnections;
-  QString hostForAccount( const KMAccount *acct ) const;
 
   // if a summary should be displayed
   bool mDisplaySummary;
