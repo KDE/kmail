@@ -4,6 +4,7 @@
 #include "kmaccount.h"
 
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
@@ -78,7 +79,7 @@ void KMPrecommand::precommandExited(KProcess *p)
 
 
 //-----------------------------------------------------------------------------
-KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName, uint id)
+KMAccount::KMAccount(AccountManager* aOwner, const QString& aName, uint id)
   : KAccount( id, aName ),
     mTrash(KMKernel::self()->trashFolder()->idString()),
     mOwner(aOwner),

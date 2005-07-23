@@ -28,7 +28,7 @@ using KPIM::ProgressManager;
 #include <assert.h>
 
 //-----------------------------------------------------------------------------
-KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
+KMAcctLocal::KMAcctLocal(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMAccount(aOwner, aAccountName, id), mHasNewMail( false ),
   mProcessingNewMail( false ), mAddedOk( true ), mNumMsgs( 0 ),
   mMsgsFetched( 0 ), mMailFolder( 0 )

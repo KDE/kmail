@@ -41,7 +41,7 @@ namespace KMail {
     return transportNames;
   }
 
-  // more or less copied from KMAcctMgr
+  // more or less copied from AccountManager
   uint TransportManager::createId()
   {
     QValueList<unsigned int> usedIds;

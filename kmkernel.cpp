@@ -26,6 +26,7 @@
 #undef REALLY_WANT_KMSENDER
 #include "undostack.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
@@ -1309,7 +1310,7 @@ void KMKernel::init()
   if (lsf)
     the_searchFolderMgr->remove( lsf );
 
-  the_acctMgr       = new KMAcctMgr();
+  the_acctMgr       = new AccountManager();
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;

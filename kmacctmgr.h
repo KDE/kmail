@@ -27,11 +27,12 @@
 class QString;
 class QStringList;
 
+namespace KMail {
 /**
  * The account manager is responsible for creating accounts of various types
  * via the factory method create() and for keeping track of them.
  */
-class KDE_EXPORT KMAcctMgr: public QObject
+class KDE_EXPORT AccountManager: public QObject
 {
   Q_OBJECT
   friend class ::KMAccount;
@@ -39,49 +40,51 @@ class KDE_EXPORT KMAcctMgr: public QObject
 public:
     /** Initializes the account manager. readConfig() needs to be called in
      * order to fill it with persisted account information from the config file. */
-  KMAcctMgr();
-  virtual ~KMAcctMgr();
+  AccountManager();
+  ~AccountManager();
 
   /** Completely reload accounts from config. */
-  virtual void readConfig(void);
+  void readConfig(void);
 
   /** Write accounts to config. */
-  virtual void writeConfig( bool withSync=true );
+  void writeConfig( bool withSync=true );
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
-  virtual KMAccount* create( const QString& type,
-                                        const QString& name = QString::null,
-                                        uint id = 0);
+  KMAccount* create( const QString& type,
+                             const QString& name = QString::null,
+                             uint id = 0);
 
   /** Adds an account to the list of accounts */
-  virtual void add( KMAccount *account );
+  void add( KMAccount *account );
 
   /** Find account by name. Returns 0 if account does not exist.
     Search is done case sensitive. */
-  virtual KMAccount* findByName( const QString& name );
+  KMAccount* findByName( const QString& name ) const;
 
   /** Find account by id. Returns 0 if account does not exist.
    */
-  virtual KMAccount* find( const uint id );
+  KMAccount* find( const uint id ) const;
 
   /** Physically remove account. Also deletes the given account object !
       Returns FALSE and does nothing if the account cannot be removed. */
-  virtual bool remove( KMAccount* );
+  bool remove( KMAccount* );
 
   /** First account of the list */
+  const KMAccount* first() const { return first(); }
   KMAccount* first();
 
   /** Next account of the list */
+  const KMAccount* next() const { return next(); }
   KMAccount* next();
 
   /** Processes all accounts looking for new mail */
-  virtual void checkMail( bool interactive = true );
+  void checkMail( bool interactive = true );
 
   /** Delete all IMAP folders and resync them */
   void invalidateIMAPFolders();
 
-  QStringList getAccounts();
+  QStringList getAccounts() const;
 
   /// Called on exit (KMMainWin::queryExit)
   void cancelMailCheck();
@@ -95,19 +98,16 @@ public:
   }
 
 public slots:
-  virtual void singleCheckMail( KMAccount *, bool interactive = true );
-  virtual void singleInvalidateIMAPFolders( KMAccount * );
+  void singleCheckMail( KMAccount *, bool interactive = true );
+  void singleInvalidateIMAPFolders( KMAccount * );
 
-  virtual void intCheckMail( int, bool interactive = true );
-  virtual void processNextCheck( bool newMail );
+  void intCheckMail( int, bool interactive = true );
+  void processNextCheck( bool newMail );
 
   /** this slot increases the count of new mails to show a total number
   after checking in multiple accounts. */
-  virtual void addToTotalNewMailCount( const QMap<QString, int> & newInFolder );
+  void addToTotalNewMailCount( const QMap<QString, int> & newInFolder );
 
-protected:
-   /** Create a new unique ID */
-   uint createId();
 
 signals:
   /**
@@ -124,6 +124,9 @@ signals:
   void accountAdded( KMAccount* account );
 
 private:
+   /** Create a new unique ID */
+  uint createId();
+
   AccountList   mAcctList;
   AccountList::Iterator mPtrListInterfaceProxyIterator;
   AccountList   mAcctChecking;
@@ -137,10 +140,11 @@ private:
 
   // for restricting number of concurrent connections to the same server
   QMap<QString, int> mServerConnections;
-  QString hostForAccount(const KMAccount *acct) const;
+  QString hostForAccount( const KMAccount *acct ) const;
 
   // if a summary should be displayed
   bool mDisplaySummary;
 };
 
+} // namespace KMail
 #endif /*kmacctmgr_h*/

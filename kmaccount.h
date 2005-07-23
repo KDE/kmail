@@ -32,7 +32,6 @@
 
 #include "kmmessage.h"
 
-class KMAcctMgr;
 class KMFolder;
 class KMAcctFolder;
 class KConfig;
@@ -41,13 +40,15 @@ class KMFolderCachedImap;
 class AccountsPageReceivingTab;
 namespace  KMail {
   class FolderJob;
+  class AccountManager;
 }
+using KMail::AccountManager;
 namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
 using KPIM::ProgressItem;
 
 class KMAccount;
-typedef QValueList<KMAccount*> AccountList;
+typedef QValueList< ::KMAccount* > AccountList;
 
 class KMPrecommand : public QObject
 {
@@ -73,7 +74,7 @@ protected:
 class KMAccount: public QObject, public KAccount
 {
   Q_OBJECT
-  friend class ::KMAcctMgr;
+  friend class KMail::AccountManager;
   friend class ::KMail::FolderJob;
   friend class ::AccountsPageReceivingTab; // part of the config dialog
   friend class ::KMFolderCachedImap; /* HACK for processNewMSg() */
@@ -257,7 +258,7 @@ protected slots:
   virtual void precommandExited(bool);
 
 protected:
-  KMAccount(KMAcctMgr* owner, const QString& accountName, uint id);
+  KMAccount( AccountManager* owner, const QString& accountName, uint id);
 
   /**
    * Does filtering and storing in a folder for the given message.
@@ -291,7 +292,7 @@ protected:
 protected:
   QString       mPrecommand;
   QString       mTrash;
-  KMAcctMgr*    mOwner;
+  AccountManager*    mOwner;
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
   int mInterval;

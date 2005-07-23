@@ -13,6 +13,7 @@
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "globalsettings.h"
 #include "kmcommands.h"
 #include "foldershortcutdialog.h"

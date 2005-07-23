@@ -479,7 +479,7 @@ void AntiSpamWizard::checkToolAvailability()
       QString pattern = (*it).getServerPattern();
       kdDebug(5006) << "Testing for server pattern:" << pattern << endl;
 
-      KMAcctMgr* mgr = kmkernel->acctMgr();
+      AccountManager* mgr = kmkernel->acctMgr();
       KMAccount* account = mgr->first();
       while ( account ) {
         if ( account->type() == "pop" || account->type().contains( "imap" ) ) {

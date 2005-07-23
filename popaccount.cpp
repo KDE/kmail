@@ -50,7 +50,7 @@ static const unsigned short int pop3DefaultPort = 110;
 
 namespace KMail {
 //-----------------------------------------------------------------------------
-PopAccount::PopAccount(KMAcctMgr* aOwner, const QString& aAccountName, uint id)
+PopAccount::PopAccount(AccountManager* aOwner, const QString& aAccountName, uint id)
   : NetworkAccount(aOwner, aAccountName, id),
     headerIt(headersOnServer)
 {

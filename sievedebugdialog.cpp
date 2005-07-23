@@ -40,6 +40,7 @@
 
 #include "kmacctimap.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmkernel.h"
 #include "sievejob.h"
 #include <qtextedit.h>
@@ -191,7 +192,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent, const char *name )
     mSieveJob( 0 )
 {
     // Collect all accounts
-    KMAcctMgr *am = kmkernel->acctMgr();
+    AccountManager *am = kmkernel->acctMgr();
     assert( am );
     for ( KMAccount *a = am->first(); a; a = am->next() )
         mAccountList.append( a );

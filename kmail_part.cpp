@@ -37,6 +37,7 @@
 #include "aboutdata.h"
 #include "kmfolder.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "sidebarextension.h"
 #include "infoextension.h"
 #include "recentaddresses.h"

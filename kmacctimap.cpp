@@ -50,7 +50,7 @@ using KPIM::ProgressManager;
 #include <errno.h>
 
 //-----------------------------------------------------------------------------
-KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
+KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMail::ImapAccountBase(aOwner, aAccountName, id),
   mCountRemainChecks( 0 )
 {

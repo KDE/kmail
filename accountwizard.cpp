@@ -47,6 +47,7 @@
 #include "kmacctcachedimap.h"
 #include "kmacctmaildir.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 
 #include "globalsettings.h"
 #include "kmservertest.h"
@@ -417,7 +418,7 @@ void AccountWizard::transportCreated()
 void AccountWizard::createAccount()
 {
   // create incoming account
-  KMAcctMgr *acctManager = mKernel->acctMgr();
+  AccountManager *acctManager = mKernel->acctMgr();
 
   int port = 0;
 

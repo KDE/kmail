@@ -30,7 +30,7 @@
 #include <qguardedptr.h>
 #include <kio/global.h>
 
-class KMAcctMgr;
+class AccountManager;
 class KMFolder;
 class KConfig/*Base*/;
 class KMMessagePart;
@@ -56,7 +56,7 @@ namespace KMail {
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
   protected:
-    ImapAccountBase( KMAcctMgr * parent, const QString & name, uint id );
+    ImapAccountBase( AccountManager * parent, const QString & name, uint id );
   public:
     virtual ~ImapAccountBase();
 

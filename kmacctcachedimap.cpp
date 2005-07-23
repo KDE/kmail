@@ -42,6 +42,7 @@ using KMail::SieveConfig;
 #include "kmfoldercachedimap.h"
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "progressmanager.h"
 
 #include <kio/passdlg.h>
@@ -54,7 +55,7 @@ using KMail::SieveConfig;
 #include <kconfig.h>
 
 
-KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
+KMAcctCachedImap::KMAcctCachedImap( AccountManager* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
     mAnnotationCheckPassed(false)

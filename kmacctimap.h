@@ -100,8 +100,8 @@ public slots:
   void slotUpdateFolderList();
 
 protected:
-  friend class ::KMAcctMgr;
-  KMAcctImap(KMAcctMgr* owner, const QString& accountName, uint id);
+  friend class ::AccountManager;
+  KMAcctImap(AccountManager* owner, const QString& accountName, uint id);
   /**
    * Handle an error coming from a KIO job
    * See ImapAccountBase::handleJobError for details.

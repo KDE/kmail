@@ -92,7 +92,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
   mUrls.clear();
   mListView->clear();
 
-  KMAcctMgr * am = kmkernel->acctMgr();
+  KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
   QCheckListItem * last = 0;
   for ( KMAccount * a = am->first() ; a ; a = am->next() ) {

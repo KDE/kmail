@@ -31,7 +31,7 @@ using KPIM::ProgressManager;
 #undef None
 
 //-----------------------------------------------------------------------------
-KMAcctMaildir::KMAcctMaildir(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
+KMAcctMaildir::KMAcctMaildir(AccountManager* aOwner, const QString& aAccountName, uint id):
   KMAccount(aOwner, aAccountName, id)
 {
 }

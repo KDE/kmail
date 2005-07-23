@@ -46,6 +46,7 @@
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
+using KMail::AccountManager;
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"

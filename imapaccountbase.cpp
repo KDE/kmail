@@ -29,6 +29,7 @@
 using KMail::SieveConfig;
 
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
@@ -78,7 +79,7 @@ namespace KMail {
   //
   //
 
-  ImapAccountBase::ImapAccountBase( KMAcctMgr * parent, const QString & name, uint id )
+  ImapAccountBase::ImapAccountBase( AccountManager * parent, const QString & name, uint id )
     : NetworkAccount( parent, name, id ),
       mTotal( 0 ),
       mCountUnread( 0 ),

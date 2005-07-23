@@ -77,7 +77,7 @@ protected:
 
     QTextEdit *mEdit;
 
-    // Copied from KMAcctMgr, because we have to do an async iteration
+    // Copied from AccountManager, because we have to do an async iteration
     // WARNING: When copy/pasting this code, be aware that accounts may
     //          get removed inbetween! For debugging this is good enough
     //          though. - Martijn

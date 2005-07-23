@@ -25,6 +25,7 @@
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "globalsettings.h"
 
 #include <kapplication.h>

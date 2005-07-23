@@ -42,9 +42,9 @@
 using KWallet::Wallet;
 #include <kprotocolinfo.h>
 
+#include "kmkernel.h"
 #include "kmservertest.h"
 #include "kmaccount.h"
-#include "kmkernel.h"
 #include "protocols.h"
 #include "transportmanager.h"
 using namespace KMail;

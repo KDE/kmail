@@ -12,6 +12,7 @@
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 
 // other KDE headers:
 #include <kmessagebox.h>

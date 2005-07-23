@@ -24,6 +24,7 @@
 #include "kmfilter.h"
 #include "kmkernel.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmacctimap.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"

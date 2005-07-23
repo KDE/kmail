@@ -31,11 +31,11 @@
 #include "replyphrases.h"
 
 // other KMail headers:
+#include "kmkernel.h"
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
 using KMail::AccountDialog;
 #include "colorlistbox.h"
-#include "kmacctmgr.h"
 #include "kmacctseldlg.h"
 #include "messagesender.h"
 #include "kmtransport.h"
@@ -45,7 +45,7 @@ using KMail::AccountDialog;
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "kcursorsaver.h"
-#include "kmkernel.h"
+#include "kmacctmgr.h"
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>

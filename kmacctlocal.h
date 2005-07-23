@@ -10,9 +10,9 @@
 class KMAcctLocal: public KMAccount
 {
 protected:
-  friend class ::KMAcctMgr;
+  friend class ::AccountManager;
 
-  KMAcctLocal(KMAcctMgr* owner, const QString& accountName, uint id);
+  KMAcctLocal(AccountManager* owner, const QString& accountName, uint id);
 
 public:
   virtual ~KMAcctLocal();

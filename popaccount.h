@@ -97,8 +97,8 @@ public:
 
 protected:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
-  friend class ::KMAcctMgr;
-  PopAccount(KMAcctMgr* owner, const QString& accountName, uint id);
+  friend class ::AccountManager;
+  PopAccount(AccountManager* owner, const QString& accountName, uint id);
 
   /**
    * Start a KIO Job to get a list of messages on the pop server

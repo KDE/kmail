@@ -43,7 +43,7 @@ using KWallet::Wallet;
 
 namespace KMail {
 
-  NetworkAccount::NetworkAccount( KMAcctMgr * parent, const QString & name, uint id )
+  NetworkAccount::NetworkAccount( AccountManager * parent, const QString & name, uint id )
     : KMAccount( parent, name, id ),
       mSlave( 0 ),
       mAuth( "*" ),

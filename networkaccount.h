@@ -31,7 +31,7 @@
 
 #include <qstring.h>
 
-class KMAcctMgr;
+class AccountManager;
 class KConfig/*Base*/;
 class KURL;
 namespace KIO {
@@ -44,7 +44,7 @@ namespace KMail {
   class NetworkAccount : public KMAccount {
     Q_OBJECT
   protected:
-    NetworkAccount( KMAcctMgr * parent, const QString & name, uint id );
+    NetworkAccount( AccountManager * parent, const QString & name, uint id );
   public:
     virtual ~NetworkAccount();
 

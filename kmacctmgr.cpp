@@ -12,10 +12,8 @@
 #include "popaccount.h"
 #include "kmacctimap.h"
 #include "networkaccount.h"
-using KMail::NetworkAccount;
 #include "kmacctcachedimap.h"
 #include "broadcaststatus.h"
-using KPIM::BroadcastStatus;
 #include "kmfiltermgr.h"
 #include "globalsettings.h"
 
@@ -28,8 +26,10 @@ using KPIM::BroadcastStatus;
 #include <qregexp.h>
 #include <qvaluelist.h>
 
+using namespace KMail;
+
 //-----------------------------------------------------------------------------
-KMAcctMgr::KMAcctMgr()
+AccountManager::AccountManager()
     :QObject(), mNewMailArrived( false ), mInteractive( false ),
      mTotalNewMailsArrived( 0 ), mDisplaySummary( false )
 {
@@ -38,14 +38,14 @@ KMAcctMgr::KMAcctMgr()
 }
 
 //-----------------------------------------------------------------------------
-KMAcctMgr::~KMAcctMgr()
+AccountManager::~AccountManager()
 {
   writeConfig( false );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::writeConfig( bool withSync )
+void AccountManager::writeConfig( bool withSync )
 {
   KConfig* config = KMKernel::config();
   QString groupName;
@@ -62,7 +62,7 @@ void KMAcctMgr::writeConfig( bool withSync )
 
   // now write new account groups:
   int i = 1;
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
     groupName.sprintf("Account %d", i);
     KConfigGroupSaver saver(config, groupName);
     (*it)->writeConfig(*config);
@@ -72,7 +72,7 @@ void KMAcctMgr::writeConfig( bool withSync )
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::readConfig(void)
+void AccountManager::readConfig(void)
 {
   KConfig* config = KMKernel::config();
   KMAccount* acct;
@@ -108,7 +108,7 @@ void KMAcctMgr::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
+void AccountManager::singleCheckMail(KMAccount *account, bool interactive)
 {
   mNewMailArrived = false;
   mInteractive = interactive;
@@ -126,7 +126,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::processNextCheck( bool _newMail )
+void AccountManager::processNextCheck( bool _newMail )
 {
   kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
   mNewMailArrived |= _newMail;
@@ -155,7 +155,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
   if ( mAcctChecking.isEmpty() ) {
     // all checks finished, display summary
     if ( mDisplaySummary )
-      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+      KPIM::BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
           mTotalNewMailsArrived );
     emit checkedMail( mNewMailArrived, mInteractive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
@@ -207,7 +207,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
   connect( curAccount, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                 this, SLOT( processNextCheck( bool ) ) );
 
-  BroadcastStatus::instance()->setStatusMsg(
+  KPIM::BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
 
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
@@ -229,7 +229,7 @@ void KMAcctMgr::processNextCheck( bool _newMail )
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create( const QString &aType, const QString &aName, uint id )
+KMAccount* AccountManager::create( const QString &aType, const QString &aName, uint id )
 {
   KMAccount* act = 0;
   if ( id == 0 )
@@ -260,7 +260,7 @@ KMAccount* KMAcctMgr::create( const QString &aType, const QString &aName, uint i
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::add( KMAccount *account )
+void AccountManager::add( KMAccount *account )
 {
   if ( account ) {
     mAcctList.append( account );
@@ -271,11 +271,11 @@ void KMAcctMgr::add( KMAccount *account )
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::findByName(const QString &aName)
+KMAccount* AccountManager::findByName(const QString &aName) const
 {
   if ( aName.isEmpty() ) return 0;
 
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     if ( (*it)->name() == aName ) return (*it);
   }
   return 0;
@@ -283,10 +283,10 @@ KMAccount* KMAcctMgr::findByName(const QString &aName)
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find( const uint id )
+KMAccount* AccountManager::find( const uint id ) const
 {
   if (id == 0) return 0;
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     if ( (*it)->id() == id ) return (*it);
   }
   return 0;
@@ -294,7 +294,7 @@ KMAccount* KMAcctMgr::find( const uint id )
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::first()
+KMAccount* AccountManager::first()
 {
   if ( !mAcctList.empty() ) {
     mPtrListInterfaceProxyIterator = mAcctList.begin();
@@ -305,7 +305,7 @@ KMAccount* KMAcctMgr::first()
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::next()
+KMAccount* AccountManager::next()
 {
     ++mPtrListInterfaceProxyIterator;
     if ( mPtrListInterfaceProxyIterator == mAcctList.end() )
@@ -315,7 +315,7 @@ KMAccount* KMAcctMgr::next()
 }
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::remove( KMAccount* acct )
+bool AccountManager::remove( KMAccount* acct )
 {
   if( !acct )
     return false;
@@ -325,7 +325,7 @@ bool KMAcctMgr::remove( KMAccount* acct )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::checkMail( bool _interactive )
+void AccountManager::checkMail( bool _interactive )
 {
   mNewMailArrived = false;
 
@@ -347,30 +347,30 @@ void KMAcctMgr::checkMail( bool _interactive )
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::singleInvalidateIMAPFolders(KMAccount *account) {
+void AccountManager::singleInvalidateIMAPFolders(KMAccount *account) {
   account->invalidateIMAPFolders();
 }
 
 
-void KMAcctMgr::invalidateIMAPFolders()
+void AccountManager::invalidateIMAPFolders()
 {
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it )
     singleInvalidateIMAPFolders( *it );
 }
 
 
 //-----------------------------------------------------------------------------
-QStringList  KMAcctMgr::getAccounts()
+QStringList  AccountManager::getAccounts() const
 {
   QStringList strList;
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     strList.append( (*it)->name() );
   }
   return strList;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::intCheckMail(int item, bool _interactive)
+void AccountManager::intCheckMail(int item, bool _interactive)
 {
   mNewMailArrived = false;
   mTotalNewMailsArrived = 0;
@@ -382,7 +382,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
+void AccountManager::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
 {
   for ( QMap<QString, int>::const_iterator it = newInFolder.begin();
         it != newInFolder.end(); ++it ) {
@@ -395,10 +395,10 @@ void KMAcctMgr::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
 }
 
 //-----------------------------------------------------------------------------
-uint KMAcctMgr::createId()
+uint AccountManager::createId()
 {
   QValueList<uint> usedIds;
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     usedIds << (*it)->id();
   }
 
@@ -413,24 +413,24 @@ uint KMAcctMgr::createId()
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::cancelMailCheck()
+void AccountManager::cancelMailCheck()
 {
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     (*it)->cancelMailCheck();
   }
 }
 
 //-----------------------------------------------------------------------------
-QString KMAcctMgr::hostForAccount( const KMAccount *acct ) const
+QString AccountManager::hostForAccount( const KMAccount *acct ) const
 {
   const NetworkAccount *net_acct = dynamic_cast<const NetworkAccount*>( acct );
   return net_acct ? net_acct->host() : QString::null;
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::readPasswords()
+void AccountManager::readPasswords()
 {
-  for ( AccountList::Iterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
+  for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     NetworkAccount *acct = dynamic_cast<NetworkAccount*>( (*it) );
     if ( acct )
       acct->readPassword();

@@ -40,6 +40,7 @@
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmglobal.h"

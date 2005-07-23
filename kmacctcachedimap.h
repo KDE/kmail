@@ -186,8 +186,8 @@ public:
   void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; };
 
 protected:
-  friend class ::KMAcctMgr;
-  KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
+  friend class ::AccountManager;
+  KMAcctCachedImap(AccountManager* owner, const QString& accountName, uint id);
 
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */

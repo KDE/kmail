@@ -36,9 +36,11 @@ namespace KMail {
   class UndoStack;
   class JobScheduler;
   class MessageSender;
+  class AccountManager;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
+using KMail::AccountManager;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
@@ -46,7 +48,6 @@ class KMMsgIndex;
 class QLabel;
 class KMFolder;
 class KMFolderMgr;
-class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class KMSender;
@@ -236,7 +237,7 @@ public:
   KMFolderMgr *dimapFolderMgr() { return the_dimapFolderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
-  KMAcctMgr *acctMgr() { return the_acctMgr; }
+  AccountManager *acctMgr() { return the_acctMgr; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
@@ -380,7 +381,7 @@ private:
   KMFolderMgr *the_dimapFolderMgr;
   KMFolderMgr *the_searchFolderMgr;
   UndoStack *the_undoStack;
-  KMAcctMgr *the_acctMgr;
+  AccountManager *the_acctMgr;
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;

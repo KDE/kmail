@@ -24,6 +24,7 @@
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
+using KMail::AccountManager;
 #include "kmacctimap.h"
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identity.h>
@@ -237,7 +238,7 @@ namespace KMail {
   }
 
   KURL Vacation::findURL() const {
-    KMAcctMgr * am = kmkernel->acctMgr();
+    AccountManager * am = kmkernel->acctMgr();
     assert( am );
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
