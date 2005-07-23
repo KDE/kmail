@@ -39,7 +39,7 @@
 #include <libkpimidentities/identitymanager.h>
 
 #include "kmacctimap.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmkernel.h"
 #include "sievejob.h"

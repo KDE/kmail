@@ -39,7 +39,7 @@
 #include "undostack.h"
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"

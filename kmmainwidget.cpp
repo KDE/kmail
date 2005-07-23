@@ -45,7 +45,7 @@
 using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmfilter.h"
 #include "kmfoldertree.h"

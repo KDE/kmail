@@ -28,7 +28,7 @@
 #include "imapaccountbase.h"
 using KMail::SieveConfig;
 
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmfolder.h"
 #include "broadcaststatus.h"

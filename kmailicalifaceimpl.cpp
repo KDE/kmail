@@ -49,7 +49,7 @@
 using KMail::AccountManager;
 #include "kmfolderimap.h"
 #include "globalsettings.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include "kmfoldercachedimap.h"
 
 #include <mimelib/enum.h>

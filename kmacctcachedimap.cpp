@@ -41,7 +41,7 @@ using KMail::SieveConfig;
 #include "kmfiltermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmmainwin.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "progressmanager.h"
 

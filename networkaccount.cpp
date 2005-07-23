@@ -28,7 +28,7 @@
 #endif
 
 #include "networkaccount.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include "kmkernel.h"
 
 #include <kconfig.h>

@@ -12,7 +12,7 @@
 #include "kmfolderdia.h"
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "globalsettings.h"
 #include "kmcommands.h"

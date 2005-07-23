@@ -3,7 +3,7 @@
 
 #include "kmaccount.h"
 
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"

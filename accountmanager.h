@@ -17,8 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#ifndef kmacctmgr_h
-#define kmacctmgr_h
+#ifndef accountmanager_h
+#define accountmanager_h
 
 #include <qobject.h>
 #include "kmaccount.h"
@@ -147,4 +147,4 @@ private:
 };
 
 } // namespace KMail
-#endif /*kmacctmgr_h*/
+#endif /*accountmanager_h*/

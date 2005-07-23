@@ -54,7 +54,7 @@
 #include "sieveconfig.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include "popaccount.h"
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"

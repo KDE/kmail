@@ -36,7 +36,7 @@
 #include "kmstartup.h"
 #include "aboutdata.h"
 #include "kmfolder.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "sidebarextension.h"
 #include "infoextension.h"

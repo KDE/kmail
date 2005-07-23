@@ -23,7 +23,7 @@
 
 #include "kmfilter.h"
 #include "kmkernel.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctimap.h"
 #include "kmfilteraction.h"

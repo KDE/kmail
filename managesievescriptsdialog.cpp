@@ -2,7 +2,7 @@
 #include "managesievescriptsdialog_p.h"
 
 #include "sieveconfig.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include "imapaccountbase.h"
 #include "sievejob.h"
 #include "kmkernel.h"

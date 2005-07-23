@@ -46,7 +46,7 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmaildir.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 
 #include "globalsettings.h"

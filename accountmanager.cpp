@@ -4,7 +4,7 @@
 #include <config.h>
 #endif
 
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 
 #include "kmaccount.h"
 #include "kmacctmaildir.h"
@@ -437,4 +437,4 @@ void AccountManager::readPasswords()
   }
 }
 
-#include "kmacctmgr.moc"
+#include "accountmanager.moc"

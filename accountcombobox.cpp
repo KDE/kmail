@@ -29,7 +29,7 @@
 #include "accountcombobox.h"
 #include "kmfolder.h"
 #include "kmfolderdir.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include <kdebug.h>
 
 using namespace KMail;

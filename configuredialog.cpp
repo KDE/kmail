@@ -45,7 +45,7 @@ using KMail::AccountDialog;
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "kcursorsaver.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>

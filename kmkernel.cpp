@@ -25,7 +25,7 @@
 #include "kmsender.h"
 #undef REALLY_WANT_KMSENDER
 #include "undostack.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
 #include "kmversion.h"

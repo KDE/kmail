@@ -58,7 +58,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 encryptionconfigurationdialog.ui \
                 actionscheduler.cpp messageproperty.cpp \
                 kmmsgpart.cpp kmmsginfo.cpp \
-                kmacctmgr.cpp kmacctfolder.cpp kmdict.cpp \
+                accountmanager.cpp kmacctfolder.cpp kmdict.cpp \
                 kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
                 kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
                 kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \

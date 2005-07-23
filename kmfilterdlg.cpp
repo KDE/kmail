@@ -11,7 +11,7 @@
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 
 // other KDE headers:

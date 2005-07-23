@@ -23,7 +23,7 @@
 #include "sievejob.h"
 using KMail::SieveJob;
 #include "kmkernel.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 using KMail::AccountManager;
 #include "kmacctimap.h"
 #include <libkpimidentities/identitymanager.h>

@@ -11,7 +11,7 @@
 #include "statusbarprogresswidget.h"
 #include "accountwizard.h"
 #include "broadcaststatus.h"
-#include "kmacctmgr.h"
+#include "accountmanager.h"
 #include "kmtransport.h"
 
 #include <kapplication.h>
