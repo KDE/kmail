@@ -34,7 +34,6 @@ namespace Kleo { class SpecialJob; }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
-typedef QValueList<QGuardedPtr<KMMessage> > GuardedMessageList;
 
 class KDE_EXPORT KMCommand : public QObject
 {
@@ -142,7 +141,7 @@ private:
   bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
-  QValueList<QGuardedPtr<KMMessage> > mRetrievedMsgs;
+  QPtrList<KMMessage> mRetrievedMsgs;
   QPtrList<KMMsgBase> mMsgList;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 };

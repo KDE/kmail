@@ -196,23 +196,12 @@ void KMCommand::start()
 
 const QPtrList<KMMessage> KMCommand::retrievedMsgs() const
 {
-  // FIXME port the rest of the interface away from QPtrList
-  QPtrList<KMMessage> retList;
-  for ( GuardedMessageList::ConstIterator it( mRetrievedMsgs.begin() ),
-      end( mRetrievedMsgs.end() ); it != end; ++it ) {
-    if ( KMMessage *msg = ( *it ) )
-      retList.append( msg );
-    else
-      kdWarning( 5006 ) << "A message pointer went away under us! " 
-        "This happens mostly when folder->unGetMsg() is called prematurely, "
-        "often when the folder is close()'d " << endl;
-  }
-  return retList;
+  return mRetrievedMsgs;
 }
 
 KMMessage *KMCommand::retrievedMessage() const
 {
-  return mRetrievedMsgs.front();
+  return mRetrievedMsgs.getFirst();
 }
 
 QWidget *KMCommand::parentWidget() const
@@ -238,7 +227,7 @@ void KMCommand::slotStart()
       (mMsgList.getFirst()->parent() == 0))
   {
     // Special case of operating on message that isn't in a folder
-    mRetrievedMsgs.append( static_cast<KMMessage*>( mMsgList.getFirst() ) );
+    mRetrievedMsgs.append((KMMessage*)mMsgList.getFirst());
     emit messagesTransfered( OK );
     return;
   }
@@ -262,17 +251,12 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( result == OK )
     result = execute();
   mResult = result;
-
-  for ( GuardedMessageList::Iterator it( mRetrievedMsgs.begin() ),
-      end( mRetrievedMsgs.end() ); it != end; ++it ) {
-    KMMessage* msg = ( *it );
-    if ( !msg ) {
-      kdWarning( 5006 ) << "A message pointer went away under us! " 
-        "This happens mostly when folder->unGetMsg() is called prematurely, "
-        "often when the folder is close()'d " << endl;
-      continue;
-    }
-    if ( msg->parent() )
+  QPtrListIterator<KMMessage> it( mRetrievedMsgs );
+  KMMessage* msg;
+  while ( (msg = it.current()) != 0 )
+  {
+    ++it;
+    if (msg->parent())
       msg->setTransferInProgress(false);
   }
   kmkernel->filterMgr()->deref();
@@ -433,12 +417,14 @@ void KMCommand::slotTransferCancelled()
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
   // unget the transfered messages
-  for ( GuardedMessageList::Iterator it( mRetrievedMsgs.begin() ),
-      end( mRetrievedMsgs.end() ); it != end; ++it ) {
-    KMMessage* msg = ( *it );
-    if ( !msg ) continue;
+  QPtrListIterator<KMMessage> it( mRetrievedMsgs );
+  KMMessage* msg;
+  while ( (msg = it.current()) != 0 )
+  {
     KMFolder *folder = msg->parent();
-    if (!folder) continue;
+    ++it;
+    if (!folder)
+      continue;
     msg->setTransferInProgress(false);
     int idx = folder->find(msg);
     if (idx > 0) folder->unGetMsg(idx);
