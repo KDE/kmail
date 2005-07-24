@@ -18,13 +18,13 @@ class KMMsgInfo::KMMsgInfoPrivate
 {
 public:
     enum {
-	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
-	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40, SIZESERVER_SET = 0x80,
-	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
-	SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
-	STRIPPEDSUBJECT_SET = 0x8000,  UID_SET = 0x10000,
+        SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
+        DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40, SIZESERVER_SET = 0x80,
+        XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
+        SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
+        STRIPPEDSUBJECT_SET = 0x8000,  UID_SET = 0x10000,
 
-	ALL_SET = 0xFFFFFF, NONE_SET = 0x000000
+        ALL_SET = 0xFFFFFF, NONE_SET = 0x000000
     };
     uint modifiers;
     QString subject, from, to, replyToIdMD5, replyToAuxIdMD5,
@@ -39,77 +39,77 @@ public:
 
     KMMsgInfoPrivate() : modifiers(NONE_SET) { }
     KMMsgInfoPrivate& operator=(const KMMsgInfoPrivate& other) {
-	modifiers = NONE_SET;
-	if (other.modifiers & SUBJECT_SET) {
-	    modifiers |= SUBJECT_SET;
-	    subject = other.subject;
-	}
-	if (other.modifiers & STRIPPEDSUBJECT_SET) {
-	    modifiers |= STRIPPEDSUBJECT_SET;
-	    strippedSubjectMD5 = other.strippedSubjectMD5;
-	}
-	if (other.modifiers & FROM_SET) {
-	    modifiers |= FROM_SET;
-	    from = other.from;
-	}
-	if (other.modifiers & FILE_SET) {
-	    modifiers |= FILE_SET;
-	    file = other.from;
-	}
-	if (other.modifiers & TO_SET) {
-	    modifiers |= TO_SET;
-	    to = other.to;
-	}
-	if (other.modifiers & REPLYTO_SET) {
-	    modifiers |= REPLYTO_SET;
-	    replyToIdMD5 = other.replyToIdMD5;
-	}
-	if (other.modifiers & REPLYTOAUX_SET) {
-	    modifiers |= REPLYTOAUX_SET;
-	    replyToAuxIdMD5 = other.replyToAuxIdMD5;
-	}
+        modifiers = NONE_SET;
+        if (other.modifiers & SUBJECT_SET) {
+            modifiers |= SUBJECT_SET;
+            subject = other.subject;
+        }
+        if (other.modifiers & STRIPPEDSUBJECT_SET) {
+            modifiers |= STRIPPEDSUBJECT_SET;
+            strippedSubjectMD5 = other.strippedSubjectMD5;
+        }
+        if (other.modifiers & FROM_SET) {
+            modifiers |= FROM_SET;
+            from = other.from;
+        }
+        if (other.modifiers & FILE_SET) {
+            modifiers |= FILE_SET;
+            file = other.from;
+        }
+        if (other.modifiers & TO_SET) {
+            modifiers |= TO_SET;
+            to = other.to;
+        }
+        if (other.modifiers & REPLYTO_SET) {
+            modifiers |= REPLYTO_SET;
+            replyToIdMD5 = other.replyToIdMD5;
+        }
+        if (other.modifiers & REPLYTOAUX_SET) {
+            modifiers |= REPLYTOAUX_SET;
+            replyToAuxIdMD5 = other.replyToAuxIdMD5;
+        }
 
-	if(other.modifiers & MSGID_SET) {
-	    modifiers |= MSGID_SET;
-	    msgIdMD5 = other.msgIdMD5;
-	}
-	if(other.modifiers & XMARK_SET) {
-	    modifiers |= XMARK_SET;
-	    xmark = other.xmark;
-	}
-	if(other.modifiers & OFFSET_SET) {
-	    modifiers |= OFFSET_SET;
-	    folderOffset = other.folderOffset;
-	}
-	if(other.modifiers & SIZE_SET) {
-	    modifiers |= SIZE_SET;
-	    msgSize = other.msgSize;
-	}
-	if(other.modifiers & DATE_SET) {
-	    modifiers |= DATE_SET;
-	    date = other.date;
-	}
-	if(other.modifiers & ENCRYPTION_SET) {
-	    modifiers |= ENCRYPTION_SET;
-	    encryptionState = other.encryptionState;
-	}
-	if(other.modifiers & SIGNATURE_SET) {
-	    modifiers |= SIGNATURE_SET;
-	    signatureState = other.signatureState;
-	}
-	if(other.modifiers & MDN_SET) {
-	    modifiers |= MDN_SET;
-	    mdnSentState = other.mdnSentState;
-	}
-	if(other.modifiers & SIZESERVER_SET) {
-	    modifiers |= SIZESERVER_SET;
-	    msgSizeServer = other.msgSizeServer;
-	}
-	if(other.modifiers & UID_SET) {
-	    modifiers |= UID_SET;
-	    UID = other.UID;
-	}
-	return *this;
+        if(other.modifiers & MSGID_SET) {
+            modifiers |= MSGID_SET;
+            msgIdMD5 = other.msgIdMD5;
+        }
+        if(other.modifiers & XMARK_SET) {
+            modifiers |= XMARK_SET;
+            xmark = other.xmark;
+        }
+        if(other.modifiers & OFFSET_SET) {
+            modifiers |= OFFSET_SET;
+            folderOffset = other.folderOffset;
+        }
+        if(other.modifiers & SIZE_SET) {
+            modifiers |= SIZE_SET;
+            msgSize = other.msgSize;
+        }
+        if(other.modifiers & DATE_SET) {
+            modifiers |= DATE_SET;
+            date = other.date;
+        }
+        if(other.modifiers & ENCRYPTION_SET) {
+            modifiers |= ENCRYPTION_SET;
+            encryptionState = other.encryptionState;
+        }
+        if(other.modifiers & SIGNATURE_SET) {
+            modifiers |= SIGNATURE_SET;
+            signatureState = other.signatureState;
+        }
+        if(other.modifiers & MDN_SET) {
+            modifiers |= MDN_SET;
+            mdnSentState = other.mdnSentState;
+        }
+        if(other.modifiers & SIZESERVER_SET) {
+            modifiers |= SIZESERVER_SET;
+            msgSizeServer = other.msgSizeServer;
+        }
+        if(other.modifiers & UID_SET) {
+            modifiers |= UID_SET;
+            UID = other.UID;
+        }
+        return *this;
     }
 };
 
@@ -138,11 +138,11 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
     KMMsgBase::assign(&other);
     if(other.kd) {
         if(!kd)
-	    kd = new KMMsgInfoPrivate;
-	*kd = *other.kd;
+            kd = new KMMsgInfoPrivate;
+        *kd = *other.kd;
     } else {
-	delete kd;
-	kd = 0;
+        delete kd;
+        kd = 0;
     }
     mStatus = other.status();
     return *this;
@@ -154,7 +154,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
     KMMsgBase::assign(&msg.toMsgBase());
     if(!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
     kd->subject = msg.subject();
     kd->from = msg.fromStrip();
@@ -180,19 +180,19 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
-		     KMMsgStatus aStatus, const QCString& aXMark,
-		     const QCString& replyToId, const QCString& replyToAuxId,
-		     const QCString& msgId,
-		     KMMsgEncryptionState encryptionState,
-		     KMMsgSignatureState signatureState,
-		     KMMsgMDNSentState mdnSentState,
+                     KMMsgStatus aStatus, const QCString& aXMark,
+                     const QCString& replyToId, const QCString& replyToAuxId,
+                     const QCString& msgId,
+                     KMMsgEncryptionState encryptionState,
+                     KMMsgSignatureState signatureState,
+                     KMMsgMDNSentState mdnSentState,
              off_t aFolderOffset, size_t aMsgSize,
              size_t aMsgSizeServer, ulong aUID)
 {
     mIndexOffset = 0;
     mIndexLength = 0;
     if(!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
     kd->subject = decodeRFC2047String(aSubject);
     kd->from = decodeRFC2047String( KMMessage::stripEmailAddr( aFrom ) );
@@ -212,19 +212,19 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->mdnSentState = mdnSentState;
     kd->msgSizeServer = aMsgSizeServer;
     kd->UID = aUID;
-    mDirty     = FALSE;
+    mDirty     = false;
 }
 
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
-		     KMMsgStatus aStatus, const QCString& aXMark,
-		     const QCString& replyToId, const QCString& replyToAuxId,
-		     const QCString& msgId,
-		     const QCString& aFileName,
-		     KMMsgEncryptionState encryptionState,
-		     KMMsgSignatureState signatureState,
-		     KMMsgMDNSentState mdnSentState,
-		     size_t aMsgSize,
+                     KMMsgStatus aStatus, const QCString& aXMark,
+                     const QCString& replyToId, const QCString& replyToAuxId,
+                     const QCString& msgId,
+                     const QCString& aFileName,
+                     KMMsgEncryptionState encryptionState,
+                     KMMsgSignatureState signatureState,
+                     KMMsgMDNSentState mdnSentState,
+                     size_t aMsgSize,
              size_t aMsgSizeServer, ulong aUID)
 {
   // use the "normal" init for most stuff
@@ -239,7 +239,7 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 QString KMMsgInfo::subject(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::SUBJECT_SET)
-	return kd->subject;
+        return kd->subject;
     return getStringPart(MsgSubjectPart);
 }
 
@@ -248,7 +248,7 @@ QString KMMsgInfo::subject(void) const
 QString KMMsgInfo::fromStrip(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::FROM_SET)
-	return kd->from;
+        return kd->from;
     return getStringPart(MsgFromPart);
 }
 
@@ -265,7 +265,7 @@ QString KMMsgInfo::fileName(void) const
 QString KMMsgInfo::toStrip(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::TO_SET)
-	return kd->to;
+        return kd->to;
     return getStringPart(MsgToPart);
 }
 
@@ -273,7 +273,7 @@ QString KMMsgInfo::toStrip(void) const
 QString KMMsgInfo::xmark(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::XMARK_SET)
-	return kd->xmark;
+        return kd->xmark;
     return getStringPart(MsgXMarkPart);
 }
 
@@ -282,7 +282,7 @@ QString KMMsgInfo::xmark(void) const
 QString KMMsgInfo::replyToIdMD5(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::REPLYTO_SET)
-	return kd->replyToIdMD5;
+        return kd->replyToIdMD5;
     return getStringPart(MsgReplyToIdMD5Part);
 }
 
@@ -290,7 +290,7 @@ QString KMMsgInfo::replyToIdMD5(void) const
 QString KMMsgInfo::replyToAuxIdMD5() const
 {
     if( kd && kd->modifiers & KMMsgInfoPrivate::REPLYTOAUX_SET )
-	return kd->replyToAuxIdMD5;
+        return kd->replyToAuxIdMD5;
     return getStringPart( MsgReplyToAuxIdMD5Part );
 }
 
@@ -298,7 +298,7 @@ QString KMMsgInfo::replyToAuxIdMD5() const
 QString KMMsgInfo::strippedSubjectMD5() const
 {
     if( kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET )
-	return kd->strippedSubjectMD5;
+        return kd->strippedSubjectMD5;
     return getStringPart( MsgStrippedSubjectMD5Part );
 }
 
@@ -313,7 +313,7 @@ bool KMMsgInfo::subjectIsPrefixed() const
 QString KMMsgInfo::msgIdMD5(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::MSGID_SET)
-	return kd->msgIdMD5;
+        return kd->msgIdMD5;
     return getStringPart(MsgIdMD5Part);
 }
 
@@ -322,13 +322,13 @@ QString KMMsgInfo::msgIdMD5(void) const
 void KMMsgInfo::setSubject(const QString& aSubject)
 {
     if(aSubject == subject())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::SUBJECT_SET;
     kd->subject = aSubject;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 
@@ -336,13 +336,13 @@ void KMMsgInfo::setSubject(const QString& aSubject)
 void KMMsgInfo::setXMark(const QString& aXMark)
 {
     if (aXMark == xmark())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::XMARK_SET;
     kd->xmark = aXMark;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 
@@ -350,13 +350,13 @@ void KMMsgInfo::setXMark(const QString& aXMark)
 void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
 {
     if (aReplyToIdMD5 == replyToIdMD5())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::REPLYTO_SET;
     kd->replyToIdMD5 = aReplyToIdMD5;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 
@@ -364,13 +364,13 @@ void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
 void KMMsgInfo::setReplyToAuxIdMD5( const QString& aReplyToAuxIdMD5 )
 {
     if( aReplyToAuxIdMD5 == replyToAuxIdMD5() )
-	return;
+        return;
 
     if( !kd )
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::REPLYTOAUX_SET;
     kd->replyToAuxIdMD5 = aReplyToAuxIdMD5;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 
@@ -378,14 +378,14 @@ void KMMsgInfo::setReplyToAuxIdMD5( const QString& aReplyToAuxIdMD5 )
 void KMMsgInfo::initStrippedSubjectMD5()
 {
     if( kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET )
-	return;
+        return;
     QString rawSubject = KMMessage::stripOffPrefixes( subject() );
     QString subjectMD5 = base64EncodedMD5( rawSubject, true /*utf8*/ );
     if( !kd )
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::STRIPPEDSUBJECT_SET;
     kd->strippedSubjectMD5 = subjectMD5;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 
@@ -393,55 +393,55 @@ void KMMsgInfo::initStrippedSubjectMD5()
 void KMMsgInfo::setMsgIdMD5(const QString& aMsgIdMD5)
 {
     if (aMsgIdMD5 == msgIdMD5())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::MSGID_SET;
     kd->msgIdMD5 = aMsgIdMD5;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setEncryptionState( const KMMsgEncryptionState s, int idx )
 {
     if (s == encryptionState())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::ENCRYPTION_SET;
     kd->encryptionState = s;
     KMMsgBase::setEncryptionState(s, idx); //base does more "stuff"
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setSignatureState( const KMMsgSignatureState s, int idx )
 {
     if (s == signatureState())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::SIGNATURE_SET;
     kd->signatureState = s;
     KMMsgBase::setSignatureState(s, idx); //base does more "stuff"
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 {
     if (s == mdnSentState())
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::MDN_SET;
     kd->mdnSentState = s;
     KMMsgBase::setMDNSentState(s, idx); //base does more "stuff"
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -529,7 +529,7 @@ KMMsgMDNSentState KMMsgInfo::mdnSentState() const {
 off_t KMMsgInfo::folderOffset(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::OFFSET_SET)
-	return kd->folderOffset;
+        return kd->folderOffset;
     return getLongPart(MsgOffsetPart);
 }
 
@@ -537,7 +537,7 @@ off_t KMMsgInfo::folderOffset(void) const
 size_t KMMsgInfo::msgSize(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::SIZE_SET)
-	return kd->msgSize;
+        return kd->msgSize;
     return getLongPart(MsgSizePart);
 }
 
@@ -572,13 +572,13 @@ ulong KMMsgInfo::UID(void) const
 void KMMsgInfo::setMsgSize(size_t sz)
 {
     if (sz == msgSize())
-	return;
+        return;
 
     if(!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::SIZE_SET;
     kd->msgSize = sz;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ void KMMsgInfo::setMsgSizeServer(size_t sz)
       kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::SIZESERVER_SET;
     kd->msgSizeServer = sz;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -604,40 +604,40 @@ void KMMsgInfo::setUID(ulong uid)
       kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::UID_SET;
     kd->UID = uid;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setFolderOffset(off_t offs)
 {
     if (folderOffset() == offs)
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::OFFSET_SET;
     kd->folderOffset = offs;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setFileName(const QString& file)
 {
     if (fileName() == file)
-	return;
+        return;
 
     if (!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::FILE_SET;
     kd->file = file;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
 {
     if(aStatus == status())
-	return;
+        return;
     KMMsgBase::setStatus(aStatus, idx); //base does more "stuff"
 }
 
@@ -645,13 +645,13 @@ void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
 void KMMsgInfo::setDate(time_t aUnixTime)
 {
     if(aUnixTime == date())
-	return;
+        return;
 
     if(!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::DATE_SET;
     kd->date = aUnixTime;
-    mDirty = TRUE;
+    mDirty = true;
 }
 
 //--- For compatability with old index files
@@ -660,7 +660,7 @@ void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
     char *start, *offset;
 
     if(!kd)
-	kd = new KMMsgInfoPrivate;
+        kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
     kd->xmark   = str.mid(33, 3).stripWhiteSpace();
     kd->folderOffset = str.mid(2,9).toULong();
@@ -668,31 +668,31 @@ void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
     kd->date = (time_t)str.mid(22,10).toULong();
     mStatus = (KMMsgStatus)str.at(0);
     if (toUtf8) {
-	kd->subject = str.mid(37, 100).stripWhiteSpace();
-	kd->from = str.mid(138, 50).stripWhiteSpace();
-	kd->to = str.mid(189, 50).stripWhiteSpace();
+        kd->subject = str.mid(37, 100).stripWhiteSpace();
+        kd->from = str.mid(138, 50).stripWhiteSpace();
+        kd->to = str.mid(189, 50).stripWhiteSpace();
     } else {
-	start = offset = str.data() + 37;
-	while (*start == ' ' && start - offset < 100) start++;
-	kd->subject = QString::fromUtf8(str.mid(start - str.data(),
+        start = offset = str.data() + 37;
+        while (*start == ' ' && start - offset < 100) start++;
+        kd->subject = QString::fromUtf8(str.mid(start - str.data(),
             100 - (start - offset)), 100 - (start - offset));
-	start = offset = str.data() + 138;
-	while (*start == ' ' && start - offset < 50) start++;
-	kd->from = QString::fromUtf8(str.mid(start - str.data(),
+        start = offset = str.data() + 138;
+        while (*start == ' ' && start - offset < 50) start++;
+        kd->from = QString::fromUtf8(str.mid(start - str.data(),
             50 - (start - offset)), 50 - (start - offset));
-	start = offset = str.data() + 189;
-	while (*start == ' ' && start - offset < 50) start++;
-	kd->to = QString::fromUtf8(str.mid(start - str.data(),
+        start = offset = str.data() + 189;
+        while (*start == ' ' && start - offset < 50) start++;
+        kd->to = QString::fromUtf8(str.mid(start - str.data(),
             50 - (start - offset)), 50 - (start - offset));
     }
     kd->replyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
     kd->msgIdMD5 = str.mid(263, 22).stripWhiteSpace();
-    mDirty = FALSE;
+    mDirty = false;
 }
 
 bool KMMsgInfo::dirty(void) const
 {
-    if(KMMsgBase::dirty())
-	return TRUE;
+    if( KMMsgBase::dirty() )
+      return true;
     return kd && kd->modifiers != KMMsgInfoPrivate::NONE_SET;
 }
