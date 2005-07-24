@@ -776,14 +776,44 @@ void KMMainWidget::slotImport()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
- kmkernel->acctMgr()->checkMail(true);
+  if ( kmkernel->isOffline() ) {
+    int rc =
+    KMessageBox::questionYesNo( this,
+                                i18n("KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work online"),
+                                i18n("Work offline"));
+
+    if( rc == KMessageBox::No ) {
+      return;
+    } else {
+      kmkernel->resumeNetworkJobs();
+      kmkernel->acctMgr()->checkMail(true);
+    }
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount(int item)
 {
-  kmkernel->acctMgr()->intCheckMail(item);
+  if ( kmkernel->isOffline() ) {
+    int rc =
+    KMessageBox::questionYesNo( this,
+                                i18n("KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work online"),
+                                i18n("Work offline"));
+
+    if( rc == KMessageBox::No ) {
+      return;
+    } else {
+      kmkernel->resumeNetworkJobs();
+      kmkernel->acctMgr()->intCheckMail(item);
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
