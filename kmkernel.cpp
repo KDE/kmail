@@ -1110,6 +1110,10 @@ void KMKernel::resumeNetworkJobs()
     return;
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+
+  if ( kmkernel->msgSender()->sendImmediate() ) {
+    kmkernel->msgSender()->sendQueued();
+  }
 }
 
 bool KMKernel::isOffline()
