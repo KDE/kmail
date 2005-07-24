@@ -21,6 +21,7 @@
    <Action name="file_invalidate_imap_cache"/>
    <Action name="empty_trash"/>
    <Separator/>
+   <Action name="online_status" />
    <Action name="check_mail" />
    <Action name="check_mail_in" />
    <Action name="send_queued" />

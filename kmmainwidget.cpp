@@ -1614,6 +1614,16 @@ void KMMainWidget::slotSaveAttachments()
   saveCommand->start();
 }
 
+void KMMainWidget::slotOnlineStatus()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
+    actionCollection()->action( "online_status" )->setText( "Networkstate (offline)" );
+    kmkernel->stopNetworkJobs();
+  } else {
+    actionCollection()->action( "online_status" )->setText( "Networkstate (online)" );
+    kmkernel->resumeNetworkJobs();
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
@@ -2286,6 +2296,9 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
+
+  (void) new KAction( i18n("Onlinestatus (unknown)"), "online_status", 0, this,
+                     SLOT(slotOnlineStatus()), actionCollection(), "online_status");
 
   KActionMenu *sendActionMenu = new
     KActionMenu( i18n("Send Queued Messages via"), "mail_send_via", actionCollection(),
@@ -3047,6 +3060,10 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
+    if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
+      actionCollection()->action( "online_status" )->setText( "Networkstate (online)" );
+    else
+      actionCollection()->action( "online_status" )->setText( "Networkstate (offline)" );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 

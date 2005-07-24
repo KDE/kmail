@@ -181,6 +181,18 @@ public:
   virtual void pauseBackgroundJobs();
   virtual void resumeBackgroundJobs();
 
+  /** Stop all network related jobs and enter offline mode */
+  void stopNetworkJobs();
+
+  /** Resume all network related jobs and enter online mode */
+  void resumeNetworkJobs();
+
+  /** Checks if the current network state is online or offline
+   * returns true if the network state if offline and false if
+   * if the network state is online
+  */
+  static bool isOffline();
+
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }

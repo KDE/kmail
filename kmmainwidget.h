@@ -325,6 +325,7 @@ protected slots:
   void slotToggleTotalColumn();
   void slotSendQueued();
   void slotSendQueuedVia( int item );
+  void slotOnlineStatus();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
   void slotMarkAll();
   void slotMemInfo();

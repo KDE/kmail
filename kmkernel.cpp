@@ -1095,6 +1095,31 @@ void KMKernel::resumeBackgroundJobs()
   mBackgroundTasksTimer->start( 4 * 60 * 60 * 1000, true );
 }
 
+void KMKernel::stopNetworkJobs()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return;
+
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
+
+}
+
+void KMKernel::resumeNetworkJobs()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
+    return;
+
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+}
+
+bool KMKernel::isOffline()
+{
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return true;
+  else
+    return false;
+}
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/

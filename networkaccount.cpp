@@ -340,7 +340,7 @@ namespace KMail {
   
   bool NetworkAccount::mailCheckCanProceed() const
   {
-      bool offlineMode = false;
+      bool offlineMode = KMKernel::isOffline();
 
       kdDebug(5006) << "for host " << host()
               << " current connections="
