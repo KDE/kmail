@@ -1624,7 +1624,7 @@ bool KMKernel::transferMail( QString & destinationDir )
   QString title = i18n( "Migrate Mail Files?" );
   QString buttonText = i18n( "Move" );
 
-  if ( KMessageBox::questionYesNo( 0, msg, title, buttonText ) ==
+  if ( KMessageBox::questionYesNo( 0, msg, title, buttonText, i18n("Do Not Move") ) ==
        KMessageBox::No ) {
     destinationDir = dir;
     return true;

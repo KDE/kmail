@@ -603,8 +603,8 @@ void MessageComposer::adjustCryptFlags()
                                                   "of attachments.\n"
                                                   "Really use deprecated inline OpenPGP?"),
                                              i18n("Insecure Message Format"),
-                                             KStdGuiItem::yes(),
-                                             i18n("&No, Use OpenPGP/MIME") );
+                                             i18n("Use Inline OpenPGP"),
+                                             i18n("Use OpenPGP/MIME") );
     }
     else {
       // if other crypto message formats are allowed then simply don't use
@@ -2090,7 +2090,7 @@ QCString MessageComposer::breakLinesAndApplyCodec()
     bool anyway = ( KMessageBox::warningYesNo( mComposeWin,
                                                i18n("<qt>Not all characters fit into the chosen"
                                                     " encoding.<br><br>Send the message anyway?</qt>"),
-                                               i18n("Some characters will be lost"),
+                                               i18n("Some Characters Will Be Lost"),
                                                i18n("Lose Characters"), i18n("Change Encoding") ) == KMessageBox::Yes );
     if( !anyway ) {
       mComposeWin->mEditor->setText(oldText);

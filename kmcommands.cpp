@@ -1157,7 +1157,7 @@ KMCommand::Result KMForwardCommand::execute()
 
     if (KMessageBox::questionYesNo( parentWidget(),
                                     i18n("Forward selected messages as "
-                                         "a MIME digest?") )
+                                         "a MIME digest?"), QString::null, i18n("Send Digest"), i18n("Send") )
         == KMessageBox::Yes) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
@@ -2146,7 +2146,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" )
-        .arg( mUrl.prettyURL() ) ) != KMessageBox::Yes)
+        .arg( mUrl.prettyURL() ), QString::null, i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl );
@@ -2353,7 +2353,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if( KMessageBox::questionYesNo( parentWidget(),
           i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?" ).
           arg( url.fileName() ),
-          i18n( "KMail Question" ) ) ==
+          i18n( "KMail Question" ), i18n("Keep Encryption"), i18n("Do Not Keep") ) ==
         KMessageBox::Yes )
       bSaveEncrypted = true;
 
@@ -2362,7 +2362,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
     if( KMessageBox::questionYesNo( parentWidget(),
           i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?" ).
           arg( url.fileName() ),
-          i18n( "KMail Question" ) ) !=
+          i18n( "KMail Question" ), i18n("Keep Signature"), i18n("Do Not Keep") ) !=
         KMessageBox::Yes )
       bSaveWithSig = false;
 

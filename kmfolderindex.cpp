@@ -334,7 +334,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
 					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
 					    "This index can be regenerated from your mail folder, but some "
 					    "information, including status flags, may be lost. Do you wish "
-					    "to downgrade your index file?") .arg(name()) .arg(indexVersion) );
+					    "to downgrade your index file?") .arg(name()) .arg(indexVersion), QString::null, i18n("Downgrade"), i18n("Do Not Downgrade") );
       kapp->restoreOverrideCursor();
       if (r == KMessageBox::Yes)
 	  createIndexFromContents();

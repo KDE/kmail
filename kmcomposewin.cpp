@@ -2989,7 +2989,7 @@ void KMComposeWin::compressAttach( int idx )
   zip.close();
   if ( array.size() >= decoded.size() ) {
     if ( KMessageBox::questionYesNo( this, i18n("The compressed file is larger "
-        "than the original. Do you want to keep the original one?" ) )
+        "than the original. Do you want to keep the original one?" ), QString::null, i18n("Keep"), i18n("Compress") )
          == KMessageBox::Yes ) {
       static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
       return;

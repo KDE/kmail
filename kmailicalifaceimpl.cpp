@@ -1506,7 +1506,7 @@ void KMailICalIfaceImpl::readConfig()
     if ( noneFound ) {
       // No subfolder was found, so ask if we can make them
       msg = i18n("KMail will now create the required groupware folders"
-                 " as subfolders of %1; if you do not want this, press \"No\","
+                 " as subfolders of %1; if you do not want this, cancel"
                  " and the IMAP resource will be disabled").arg(parentFolderName);
     } else {
       // Some subfolders were found, be more precise
@@ -1524,13 +1524,13 @@ void KMailICalIfaceImpl::readConfig()
       operations += "</ul>";
 
       msg = i18n("<qt>KMail found the following groupware folders in %1 and needs to perform the following operations: %2"
-                 "<br>If you do not want this, press \"No\","
+                 "<br>If you do not want this, cancel"
                  " and the IMAP resource will be disabled").arg(parentFolderName, operations);
 
     }
 
     if( KMessageBox::questionYesNo( 0, msg,
-                                    i18n("Standard Groupware Folders") ) == KMessageBox::No ) {
+                                    i18n("Standard Groupware Folders"), KStdGuiItem::cont(), KStdGuiItem::cancel() ) == KMessageBox::No ) {
 
       GlobalSettings::self()->setTheIMAPResourceEnabled( false );
       mUseResourceIMAP = false;

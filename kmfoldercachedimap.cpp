@@ -531,7 +531,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ) ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ), QString::null, i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
@@ -1121,7 +1121,7 @@ void KMFolderCachedImap::uploadNewMessages()
             "Please contact your administrator to allow upload of new messages "
             "to you, or move them out of this folder.</p> "
             "<p>Do you want to move those messages to another folder now?</p>") );
-      if ( KMessageBox::warningYesNo( 0, msg ) == KMessageBox::Yes ) {
+      if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Message to Folder", "Move Messages to Folder"), true );
         if ( dlg.exec() ) {
@@ -1788,7 +1788,7 @@ void KMFolderCachedImap::listDirectory2()
       // (could be that the folder was deleted & recreated meanwhile from another client...)
       if ( !locallyDeleted && mAccount->isPreviouslyDeletedFolder( subfolderPath ) ) {
            locallyDeleted = KMessageBox::warningYesNo(
-             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ) ) == KMessageBox::Yes;
+             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ), QString::null, KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
       }
 
       if ( locallyDeleted ) {

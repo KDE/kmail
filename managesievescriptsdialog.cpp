@@ -229,7 +229,7 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
 
   if ( KMessageBox::questionYesNo( this, i18n( "Really delete script \"%1\" from the server?" ).arg( u.fileName() ),
                                    i18n( "Delete Sieve Script Confirmation" ),
-                                   i18n( "Delete" ) )
+                                   KStdGuiItem::del(), KStdGuiItem::cancel() )
        != KMessageBox::Yes )
     return;
 
