@@ -1957,8 +1957,8 @@ KMCommand::Result KMMoveCommand::execute()
       it.key()->removeMsg(*it.data());
       delete it.data();
     }
-    Result result = ( mLostBoys.isEmpty() ? OK : Failed );
-    completeMove( result );
+//    Result result = ( mLostBoys.isEmpty() ? OK : Failed );
+    completeMove( OK );
   }
 
   return OK;
