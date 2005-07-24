@@ -1246,7 +1246,8 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("Full Namespace support for IMAP")
+  I18N_NOOP("Full namespace support for IMAP"),
+  I18N_NOOP("Offline mode")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
