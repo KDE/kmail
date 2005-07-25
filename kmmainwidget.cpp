@@ -782,8 +782,8 @@ void KMMainWidget::slotCheckMail()
                                 i18n("KMail is currently in offline mode. "
                                      "How do you want to proceed?"),
                                 i18n("Online/Offline"),
-                                i18n("Work online"),
-                                i18n("Work offline"));
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
 
     if( rc == KMessageBox::No ) {
       return;
@@ -804,8 +804,8 @@ void KMMainWidget::slotCheckOneAccount(int item)
                                 i18n("KMail is currently in offline mode. "
                                      "How do you want to proceed?"),
                                 i18n("Online/Offline"),
-                                i18n("Work online"),
-                                i18n("Work offline"));
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
 
     if( rc == KMessageBox::No ) {
       return;
@@ -3495,8 +3495,8 @@ void KMMainWidget::slotSubscriptionDialog()
                                 i18n("KMail is currently in offline mode. "
                                      "How do you want to proceed?"),
                                 i18n("Online/Offline"),
-                                i18n("Work online"),
-                                i18n("Work offline"));
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
 
     if( rc == KMessageBox::No ) {
       return;
