@@ -3489,6 +3489,22 @@ void KMMainWidget::slotSubscriptionDialog()
 {
   if (!mFolder) return;
 
+  if ( kmkernel->isOffline() ) {
+    int rc =
+    KMessageBox::questionYesNo( this,
+                                i18n("KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work online"),
+                                i18n("Work offline"));
+
+    if( rc == KMessageBox::No ) {
+      return;
+    } else {
+      kmkernel->resumeNetworkJobs();
+    }
+  }
+
   ImapAccountBase* account;
   QString startPath;
   if (mFolder->folderType() == KMFolderTypeImap)
