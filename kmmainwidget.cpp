@@ -1756,6 +1756,25 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   }
 
   mFolder = aFolder;
+
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && kmkernel->isOffline() ) {
+    const KCursorSaver idle( KBusyPtr::idle() );
+    int rc =
+    KMessageBox::questionYesNo( this,
+                                i18n("The selected folder is an online IMAP folder, "
+                                     "KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
+
+    if( rc == KMessageBox::No ) {
+      return;
+    } else {
+      kmkernel->resumeNetworkJobs();
+    }
+  }
+
   if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
