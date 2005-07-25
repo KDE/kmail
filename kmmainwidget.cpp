@@ -792,6 +792,7 @@ void KMMainWidget::slotCheckMail()
       kmkernel->acctMgr()->checkMail(true);
     }
   }
+  kmkernel->acctMgr()->checkMail(true);
 }
 
 
@@ -814,6 +815,7 @@ void KMMainWidget::slotCheckOneAccount(int item)
       kmkernel->acctMgr()->intCheckMail(item);
     }
   }
+  kmkernel->acctMgr()->intCheckMail(item);
 }
 
 //-----------------------------------------------------------------------------
