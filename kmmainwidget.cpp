@@ -789,7 +789,6 @@ void KMMainWidget::slotCheckMail()
       return;
     } else {
       kmkernel->resumeNetworkJobs();
-      kmkernel->acctMgr()->checkMail(true);
     }
   }
   kmkernel->acctMgr()->checkMail(true);
@@ -812,7 +811,6 @@ void KMMainWidget::slotCheckOneAccount(int item)
       return;
     } else {
       kmkernel->resumeNetworkJobs();
-      kmkernel->acctMgr()->intCheckMail(item);
     }
   }
   kmkernel->acctMgr()->intCheckMail(item);
