@@ -754,7 +754,11 @@ void KMMainWidget::slotPopFilter()
   kmkernel->popFilterMgr()->openDialog( this );
 }
 
-void KMMainWidget::slotManageSieveScripts() {
+void KMMainWidget::slotManageSieveScripts() 
+{
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
+  }
   KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
   dlg->show();
 }
@@ -1491,6 +1495,10 @@ void KMMainWidget::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditVacation()
 {
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
+  }
+
   if ( mVacation )
     return;
 
