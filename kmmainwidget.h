@@ -399,6 +399,9 @@ protected slots:
 
   /** Show a splash screen for the longer-lasting operation */
   void slotShowBusySplash();
+  /** Show a message screen explaining that we are currently offline, when
+   * an online folder is selected. */
+  void showOfflinePage();
 
 private:
   /** Get override character encoding. */
@@ -502,7 +505,7 @@ private:
   KActionCollection *mActionCollection;
   KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
-  bool mDestructed, mForceJumpToUnread;
+  bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
   QPtrList<KAction> mFilterMenuActions;
   QPtrList<KAction> mFilterTBarActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;

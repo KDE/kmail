@@ -125,7 +125,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     QWidget(parent, name),
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
-    mAccel( 0 )
+    mAccel( 0 ),
+    mShowingOfflineScreen( false )
 {
   // must be the first line of the constructor:
   mStartupDone = FALSE;
@@ -1712,13 +1713,16 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
   // a new splash.
   bool newFolder = ( mFolder != aFolder );
   bool isNewImapFolder = aFolder && aFolder->folderType() == KMFolderTypeImap && newFolder;
-  if( !mFolder || ( !isNewImapFolder && mShowBusySplashTimer && !mShowBusySplashTimer->isActive() ) ) {
-    if (mMsgView) {
+  if( !mFolder
+      || ( !isNewImapFolder && mShowBusySplashTimer && !mShowBusySplashTimer->isActive() )
+      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
+    if ( mMsgView ) {
       mMsgView->enableMsgDisplay();
-      mMsgView->clear(true);
+      mMsgView->clear( true );
     }
     if( mSearchAndHeaders && mHeaders )
       mSearchAndHeaders->show();
+    mShowingOfflineScreen = false;
   }
 
   // Delete any pending timer, if needed it will be recreated below
@@ -1740,26 +1744,12 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
 
   mFolder = aFolder;
 
-  if ( mFolder && mFolder->folderType() == KMFolderTypeImap && kmkernel->isOffline() ) {
-    const KCursorSaver idle( KBusyPtr::idle() );
-    int rc =
-    KMessageBox::questionYesNo( this,
-                                i18n("The selected folder is an online IMAP folder, "
-                                     "KMail is currently in offline mode. "
-                                     "How do you want to proceed?"),
-                                i18n("Online/Offline"),
-                                i18n("Work Online"),
-                                i18n("Work Offline"));
-
-    if( rc == KMessageBox::No ) {
-      return;
-    } else {
-      kmkernel->resumeNetworkJobs();
-    }
-  }
-
   if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
   {
+    if ( kmkernel->isOffline() ) {
+      showOfflinePage();
+      return;
+    }
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
     if ( newFolder && !mFolder->noContent() )
     {
@@ -1820,6 +1810,17 @@ void KMMainWidget::slotShowBusySplash()
     if ( mSearchAndHeaders && mHeaders && mLongFolderList )
       mSearchAndHeaders->hide();
   }
+}
+
+void KMMainWidget::showOfflinePage()
+{
+  if ( !mReaderWindowActive ) return;
+  mShowingOfflineScreen = true;
+
+  mMsgView->displayOfflinePage();
+  // hide widgets that are in the way:
+  if ( mSearchAndHeaders && mHeaders && mLongFolderList )
+    mSearchAndHeaders->hide();
 }
 
 //-----------------------------------------------------------------------------

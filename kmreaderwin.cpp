@@ -1299,6 +1299,16 @@ void KMReaderWin::displayBusyPage()
   displaySplashPage( info );
 }
 
+void KMReaderWin::displayOfflinePage()
+{
+  QString info =
+    i18n( "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline mode. "
+        "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>&nbsp;" );
+
+  displaySplashPage( info );
+}
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
 {

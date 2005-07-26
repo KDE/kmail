@@ -192,6 +192,8 @@ public:
 
   /** Display the 'please wait' page instead of a message */
   void displayBusyPage();
+  /** Display the 'we are currently in offline mode' page instead of a message */
+  void displayOfflinePage();
 
   /** Enable the displaying of messages again after an URL was displayed */
   void enableMsgDisplay();

@@ -41,6 +41,7 @@
 #include "partNode.h"
 #include "partnodebodypart.h"
 #include "kmreaderwin.h"
+#include "kmkernel.h"
 #include "callback.h"
 
 #include <kimproxy.h>
@@ -353,7 +354,12 @@ namespace {
         w->update( true );
         return true;
       }
-    
+
+      if ( url.path() == "goOnline" ) {
+        kmkernel->resumeNetworkJobs();
+        return true;
+      }
+
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
@@ -371,6 +377,8 @@ namespace {
         return i18n("Turn on HTML rendering for this message.");
       if ( url.path() == "loadExternal" )
         return i18n("Load external references from the Internet for this message.");
+      if ( url.path() == "goOnline" )
+        return i18n("Work online");
     }
     return QString::null ;
   }
