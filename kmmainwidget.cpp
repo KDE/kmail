@@ -1631,13 +1631,14 @@ void KMMainWidget::slotSaveAttachments()
 void KMMainWidget::slotOnlineStatus()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
+    // if online; then toggle and set it offline.
     actionCollection()->action( "online_status" )->setText( i18n("Networkstate (offline)") );
     kmkernel->stopNetworkJobs();
-    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network resumed"));
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   } else {
     actionCollection()->action( "online_status" )->setText( i18n("Networkstate (online)") );
     kmkernel->resumeNetworkJobs();
-    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
 }
 
