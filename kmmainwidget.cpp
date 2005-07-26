@@ -2380,8 +2380,13 @@ void KMMainWidget::setupActions()
                              Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
+  /* The delete action is nowhere in the gui, by default, so we need to make 
+   * sure it is plugged into the KAccel now, since that won't happen on 
+   * XMLGui construction or manual ->plug(). This is only a problem when run
+   * as a part, though. */
   mDeleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+  mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
   mTrashThreadAction = new KAction( KGuiItem( i18n("M&ove Thread to Trash"), "edittrash",
                                        i18n("Move thread to trashcan") ),
