@@ -1128,7 +1128,7 @@ bool KMKernel::askToGoOnline()
 {
   if ( kmkernel->isOffline() ) {
     int rc =
-    KMessageBox::questionYesNo( 0,
+    KMessageBox::questionYesNo( KMKernel::self()->mainWin(),
                                 i18n("KMail is currently in offline mode. "
                                      "How do you want to proceed?"),
                                 i18n("Online/Offline"),
@@ -1139,7 +1139,7 @@ bool KMKernel::askToGoOnline()
       return false;
     } else {
       kmkernel->resumeNetworkJobs();
-    } 
+    }
   }
   return true;
 }
