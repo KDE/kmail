@@ -1631,11 +1631,13 @@ void KMMainWidget::slotSaveAttachments()
 void KMMainWidget::slotOnlineStatus()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
-    actionCollection()->action( "online_status" )->setText( "Networkstate (offline)" );
+    actionCollection()->action( "online_status" )->setText( i18n("Networkstate (offline)") );
     kmkernel->stopNetworkJobs();
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network resumed"));
   } else {
-    actionCollection()->action( "online_status" )->setText( "Networkstate (online)" );
+    actionCollection()->action( "online_status" )->setText( i18n("Networkstate (online)") );
     kmkernel->resumeNetworkJobs();
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   }
 }
 
@@ -3099,9 +3101,9 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
-      actionCollection()->action( "online_status" )->setText( "Networkstate (online)" );
+      actionCollection()->action( "online_status" )->setText( i18n("Networkstate (online)") );
     else
-      actionCollection()->action( "online_status" )->setText( "Networkstate (offline)" );
+      actionCollection()->action( "online_status" )->setText( i18n("Networkstate (offline)") );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
