@@ -776,42 +776,17 @@ void KMMainWidget::slotImport()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
-  if ( kmkernel->isOffline() ) {
-    int rc =
-    KMessageBox::questionYesNo( this,
-                                i18n("KMail is currently in offline mode. "
-                                     "How do you want to proceed?"),
-                                i18n("Online/Offline"),
-                                i18n("Work Online"),
-                                i18n("Work Offline"));
-
-    if( rc == KMessageBox::No ) {
-      return;
-    } else {
-      kmkernel->resumeNetworkJobs();
-    }
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
   }
   kmkernel->acctMgr()->checkMail(true);
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount(int item)
 {
-  if ( kmkernel->isOffline() ) {
-    int rc =
-    KMessageBox::questionYesNo( this,
-                                i18n("KMail is currently in offline mode. "
-                                     "How do you want to proceed?"),
-                                i18n("Online/Offline"),
-                                i18n("Work Online"),
-                                i18n("Work Offline"));
-
-    if( rc == KMessageBox::No ) {
-      return;
-    } else {
-      kmkernel->resumeNetworkJobs();
-    }
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
   }
   kmkernel->acctMgr()->intCheckMail(item);
 }
@@ -3508,20 +3483,8 @@ void KMMainWidget::slotSubscriptionDialog()
 {
   if (!mFolder) return;
 
-  if ( kmkernel->isOffline() ) {
-    int rc =
-    KMessageBox::questionYesNo( this,
-                                i18n("KMail is currently in offline mode. "
-                                     "How do you want to proceed?"),
-                                i18n("Online/Offline"),
-                                i18n("Work Online"),
-                                i18n("Work Offline"));
-
-    if( rc == KMessageBox::No ) {
-      return;
-    } else {
-      kmkernel->resumeNetworkJobs();
-    }
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
   }
 
   ImapAccountBase* account;

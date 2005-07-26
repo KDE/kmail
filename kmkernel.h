@@ -187,6 +187,9 @@ public:
   /** Resume all network related jobs and enter online mode */
   void resumeNetworkJobs();
 
+  /** A static helper function that allows going online */
+  static bool askToGoOnline();
+
   /** Checks if the current network state is online or offline
    * returns true if the network state if offline and false if
    * if the network state is online

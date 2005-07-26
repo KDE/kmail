@@ -1124,6 +1124,26 @@ bool KMKernel::isOffline()
     return false;
 }
 
+bool KMKernel::askToGoOnline()
+{
+  if ( kmkernel->isOffline() ) {
+    int rc =
+    KMessageBox::questionYesNo( 0,
+                                i18n("KMail is currently in offline mode. "
+                                     "How do you want to proceed?"),
+                                i18n("Online/Offline"),
+                                i18n("Work Online"),
+                                i18n("Work Offline"));
+
+    if( rc == KMessageBox::No ) {
+      return false;
+    } else {
+      kmkernel->resumeNetworkJobs();
+    } 
+  }
+  return true;
+}
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/
