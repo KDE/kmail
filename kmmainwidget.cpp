@@ -2766,9 +2766,10 @@ void KMMainWidget::setupActions()
                                    SLOT(slotShowMsgSrc()), actionCollection(),
                                    "view_source" );
 
-  ( void ) new KAction( i18n("&Display Message"), Key_Return, this,
+  KAction* dukeOfMonmoth = new KAction( i18n("&Display Message"), Key_Return, this,
                         SLOT( slotDisplayCurrentMessage() ), actionCollection(),
                         "display_message" );
+  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
