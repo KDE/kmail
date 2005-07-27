@@ -1651,12 +1651,20 @@ void KMMainWidget::slotOnlineStatus()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
 {
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
+  }
+
   kmkernel->msgSender()->sendQueued();
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueuedVia( int item )
 {
+  if ( !kmkernel->askToGoOnline() ) {
+    return;
+  }
+
   QStringList availTransports= KMail::TransportManager::transportNames();
   QString customTransport = availTransports[ item ];
 
