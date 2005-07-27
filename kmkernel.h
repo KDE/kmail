@@ -178,13 +178,28 @@ public:
   virtual QString getFrom( Q_UINT32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
+  /**
+   * Pauses all background jobs and does not
+   * allow new background jobs to be started.
+  */
   virtual void pauseBackgroundJobs();
+
+  /**
+   * Resumes all background jobs and allows
+   * new jobs to be started.
+  */
   virtual void resumeBackgroundJobs();
 
-  /** Stop all network related jobs and enter offline mode */
+  /** 
+   * Stops all network related jobs and enter offline mode 
+   * New network jobs cannot be started. 
+  */
   void stopNetworkJobs();
 
-  /** Resume all network related jobs and enter online mode */
+  /**
+   * Resumes all network related jobs and enter online mode
+   * New network jobs can be started.
+  */
   void resumeNetworkJobs();
 
   /** A static helper function that asks the user
