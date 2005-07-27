@@ -1113,6 +1113,12 @@ void KMMainWidget::slotRefreshFolder()
 {
   if (mFolder)
   {
+    if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) {
+      if ( !kmkernel->askToGoOnline() ) {
+        return;
+      }
+    }
+
     if (mFolder->folderType() == KMFolderTypeImap)
     {
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
