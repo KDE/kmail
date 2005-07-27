@@ -189,15 +189,15 @@ public:
 
   /** A static helper function that asks the user
    * if they want to go online.
-   * it returns true if the user wants to go online
-   * it returns false if the user wants to stay offline
+   * @return true if the user wants to go online
+   * @return false if the user wants to stay offline
    */
   static bool askToGoOnline();
 
   /** Checks if the current network state is online or offline
-   * returns true if the network state if offline and false if
-   * if the network state is online
-  */
+   * @return true if the network state is offline 
+   * @return false if the network state is online
+   */
   static bool isOffline();
 
   /** normal control stuff */
