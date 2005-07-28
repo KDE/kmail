@@ -384,7 +384,8 @@ public:
     Validate a list of email addresses, and also allow
     aliases and distribution lists to be expanded
     before validation.
-    Returns the broken address in question.
+    @return Enum to describe the error.
+    @return brokenAddress the address that was faulty.
     FIXME: this should be in libemailfucntions but that
            requires moving expandAliases and all that
            it brings
