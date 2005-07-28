@@ -36,6 +36,7 @@
 #include <qstring.h>
 
 class KMMessage;
+class KMReaderWin;
 
 #include <kdepimmacros.h>
 
@@ -49,7 +50,7 @@ namespace KMail {
     for the plugins. */
 class KDE_EXPORT Callback {
 public:
-  Callback( KMMessage* msg );
+  Callback( KMMessage* msg, KMReaderWin* readerWin );
 
   /** Get the full message */
   KMMessage* getMsg() const { return mMsg; }
@@ -61,8 +62,12 @@ public:
   /** Get the receiver of the mail */
   QString receiver() const;
 
+  /** Close the main window showing this message, if it's a secondary window. */
+  void closeIfSecondaryWindow() const;
+
 private:
   KMMessage* mMsg;
+  KMReaderWin* mReaderWin;
   mutable QString mReceiver;
   mutable bool mReceiverSet;
 };
