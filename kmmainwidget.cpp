@@ -1638,11 +1638,11 @@ void KMMainWidget::slotOnlineStatus()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     // if online; then toggle and set it offline.
-    actionCollection()->action( "online_status" )->setText( i18n("Networkstate (offline)") );
+    actionCollection()->action( "online_status" )->setText( i18n("Network State (offline)") );
     kmkernel->stopNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   } else {
-    actionCollection()->action( "online_status" )->setText( i18n("Networkstate (online)") );
+    actionCollection()->action( "online_status" )->setText( i18n("Network State (online)") );
     kmkernel->resumeNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
@@ -2351,7 +2351,7 @@ void KMMainWidget::setupActions()
                      SLOT(slotOnlineStatus()), actionCollection(), "online_status");
 
   KActionMenu *sendActionMenu = new
-    KActionMenu( i18n("Send Queued Messages via"), "mail_send_via", actionCollection(),
+    KActionMenu( i18n("Send Queued Messages Via"), "mail_send_via", actionCollection(),
                                        "send_queued_via" );
   sendActionMenu->setDelayed(true);
 
@@ -3117,9 +3117,9 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
-      actionCollection()->action( "online_status" )->setText( i18n("Networkstate (online)") );
+      actionCollection()->action( "online_status" )->setText( i18n("Network State (online)") );
     else
-      actionCollection()->action( "online_status" )->setText( i18n("Networkstate (offline)") );
+      actionCollection()->action( "online_status" )->setText( i18n("Network State (offline)") );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 

@@ -123,7 +123,7 @@
                         <cstring>ignoreServiceURLCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Ignore Service URL of certificates</string>
+                        <string>Ignore service URL of certificates</string>
                     </property>
                 </widget>
             </vbox>
@@ -250,7 +250,7 @@
                                 <cstring>ignoreHTTPDPCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Ignore HTTP CRL Distribution Point of certificates</string>
+                                <string>Ignore HTTP CRL distribution point of certificates</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
@@ -304,7 +304,7 @@
                                 <cstring>ignoreLDAPDPCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Ignore LDAP CRL Distribution Point of certificates</string>
+                                <string>Ignore LDAP CRL distribution point of certificates</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>

@@ -2539,7 +2539,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            this, SLOT( slotEmitChanged( void ) ) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure completion order" ), this );
+  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order" ), this );
   connect( completionOrderBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureCompletionOrder() ) );
   hlay->addWidget( completionOrderBtn );
@@ -2547,7 +2547,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   // recent addresses
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit recent addresses" ), this );
+  QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses" ), this );
   connect( recentAddressesBtn, SIGNAL( clicked() ),
            this, SLOT( slotConfigureRecentAddresses() ) );
   hlay->addWidget( recentAddressesBtn );

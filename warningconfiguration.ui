@@ -65,7 +65,7 @@ It is recommended to leave this option turned on for maximum integrity.
                 <cstring>warnReceiverNotInCertificateCB</cstring>
             </property>
             <property name="text">
-                <string>Warn if &amp;receiver's email address is not in certificate</string>
+                <string>Warn if &amp;Receiver's Email Address is Not in Certificate</string>
             </property>
             <property name="checked">
                 <bool>true</bool>
