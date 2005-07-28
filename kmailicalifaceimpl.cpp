@@ -51,6 +51,7 @@ using KMail::AccountManager;
 #include "globalsettings.h"
 #include "accountmanager.h"
 #include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -626,6 +627,32 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   if ( subResources.isEmpty() )
     kdDebug(5006) << "subresourcesKolab: No folder found for " << contentsType << endl;
   return subResources;
+}
+
+bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  QValueList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
+  for ( QValueList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
+                                                                    end( folderList.end() ); 
+        it != end ; ++it ) {
+    KMFolder * const f = findResourceFolder( (*it).location );
+    if ( !f ) continue;
+    if ( f->folderType() == KMFolderTypeImap || f->folderType() == KMFolderTypeCachedImap ) {
+      if ( !kmkernel->askToGoOnline() ) {
+        return false;
+      }
+    }
+
+    if ( f->folderType() == KMFolderTypeImap ) {
+      KMFolderImap *imap = static_cast<KMFolderImap*>( f->storage() );
+      imap->getAndCheckFolder();
+    } else if ( f->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap* cached = static_cast<KMFolderCachedImap*>( f->storage() );
+      cached->account()->processNewMailSingleFolder( f );
+    }
+  }
+  return true;
 }
 
 /* Used by the resource to query whether folders are writable. */

@@ -107,6 +107,11 @@ k_dcop:
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
+  /**
+   * Causes all resource folders of the given type to be synced with the server.
+   */
+  virtual bool triggerSync( const QString & ) = 0;
+
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
                        Q_UINT32 sernum, int format, const QString& entry );
