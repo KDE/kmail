@@ -125,8 +125,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     QWidget(parent, name),
     mQuickSearchLine( 0 ),
     mShowBusySplashTimer( 0 ),
-    mAccel( 0 ),
-    mShowingOfflineScreen( false )
+    mShowingOfflineScreen( false ),
+    mAccel( 0 )
 {
   // must be the first line of the constructor:
   mStartupDone = FALSE;
