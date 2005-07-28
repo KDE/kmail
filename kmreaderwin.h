@@ -256,6 +256,8 @@ public:
    *  waiting for. Used to discard updates for already deselected messages. */
   void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
 
+  QWidget* mainWindow() { return mMainWindow; }
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

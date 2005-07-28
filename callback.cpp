@@ -38,6 +38,8 @@
 #include <libkpimidentities/identitymanager.h>
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
+#include "kmreaderwin.h"
+#include "secondarywindow.h"
 
 #include <mimelib/enum.h>
 
@@ -48,7 +50,8 @@
 using namespace KMail;
 
 
-Callback::Callback( KMMessage* msg ) : mMsg( msg ),  mReceiverSet( false )
+Callback::Callback( KMMessage* msg, KMReaderWin* readerWin ) 
+  : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
 }
 
@@ -172,3 +175,9 @@ QString Callback::receiver() const
   return mReceiver;
 }
 
+void Callback::closeIfSecondaryWindow() const
+{
+  KMail::SecondaryWindow *window = dynamic_cast<KMail::SecondaryWindow*>( mReaderWin->mainWindow() );
+  if ( window )
+    window->close();
+}

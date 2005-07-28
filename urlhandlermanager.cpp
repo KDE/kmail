@@ -199,7 +199,7 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUR
     return false;
   KMMessage *msg = w->message();
   if ( !msg ) return false;
-  Callback callback( msg );
+  Callback callback( msg, w );
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( &part, path, callback ) )
