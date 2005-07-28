@@ -122,6 +122,10 @@ k_dcop:
    * until resumeBackgroundJobs() is called
    */
   virtual void pauseBackgroundJobs() = 0;
+
+  /**
+   * Resume compaction/expiry, and allow launching new ones
+   */
   virtual void resumeBackgroundJobs() = 0;
 
   /**
