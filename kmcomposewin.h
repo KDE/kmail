@@ -642,7 +642,9 @@ private:
   void cleanupAutoSave();
 
   /**
-   * Validate email addresses
+   * Validates a list of email addresses.
+   * @return true if all addresses are valid.
+   * @return false if one or several addresses are invalid.
    */
   static bool validateAddresses( QWidget * parent, const QString & addresses );
 
