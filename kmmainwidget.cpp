@@ -2574,6 +2574,7 @@ void KMMainWidget::setupActions()
 
   mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
+  mEditAction->plugAccel( actionCollection()->kaccel() );
 
   //----- "Mark Message" submenu
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
