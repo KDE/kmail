@@ -561,8 +561,10 @@ void KMSender::doSendMsgAux()
   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
   const QCString message = mCurrentMsg->asSendableString();
   if ( sender.isEmpty() || !mSendProc->send( sender, to, cc, bcc, message ) ) {
-    mCurrentMsg->setTransferInProgress( false );
-    mOutboxFolder->unGetMsg( mFailedMessages );
+    if ( mCurrentMsg )
+      mCurrentMsg->setTransferInProgress( false );
+    if ( mOutboxFolder )
+      mOutboxFolder->unGetMsg( mFailedMessages );
     mCurrentMsg = 0;
     cleanup();
     setStatusMsg(i18n("Failed to send (some) queued messages."));
@@ -638,7 +640,8 @@ void KMSender::slotIdle()
     // sending of message aborted
     if ( mCurrentMsg ) {
       mCurrentMsg->setTransferInProgress( false );
-      mOutboxFolder->unGetMsg( mFailedMessages );
+      if ( mOutboxFolder )
+        mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
     }
     msg = i18n("Sending aborted:\n%1\n"
@@ -652,8 +655,10 @@ void KMSender::slotIdle()
     setStatusMsg( i18n( "Sending aborted." ) );
   } else {
     if (!mSendProc->sendOk()) {
-      mCurrentMsg->setTransferInProgress( false );
-      mOutboxFolder->unGetMsg( mFailedMessages );
+      if ( mCurrentMsg )
+        mCurrentMsg->setTransferInProgress( false );
+      if ( mOutboxFolder )
+        mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
       mFailedMessages++;
       // Sending of message failed.
