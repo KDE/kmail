@@ -38,6 +38,7 @@
 #include "kmfoldertree.h"
 #include "kmmainwin.h"
 #include "networkaccount.h"
+#include "folderrequester.h"
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -150,6 +151,7 @@ void AntiSpamWizard::accept()
 
   KMFilterActionDict dict;
   QValueList<KMFilter*> filterList;
+  bool replaceExistingFilters = false;
 
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
@@ -226,6 +228,10 @@ void AntiSpamWizard::accept()
     }
   }
   else { // AntiSpam mode
+    // TODO Existing filters with same name are replaced. This is hardcoded
+    // ATM and needs to be replaced with a value from a (still missing)
+    // checkbox in the GUI. At least, the replacement is announced in the GUI.
+    replaceExistingFilters = true;
     bool canClassify = false;
     for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
           it != mToolList.end(); ++it ) {
@@ -243,7 +249,10 @@ void AntiSpamWizard::accept()
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
-        pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
+        if ( replaceExistingFilters )
+          pipeFilterPattern->setName( (*it).getFilterName() );
+        else
+          pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsLessOrEqual, "256000" ) );
         pipeFilter->setApplyOnOutbound( FALSE);
@@ -273,7 +282,10 @@ void AntiSpamWizard::accept()
         spamFilterActions->append( spamFilterAction3 );
       }
       KMSearchPattern* spamFilterPattern = spamFilter->pattern();
-      spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
+      if ( replaceExistingFilters )
+        spamFilterPattern->setName( i18n( "Spam handling" ) );
+      else
+        spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
       spamFilterPattern->setOp( KMSearchPattern::OpOr );
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
@@ -313,7 +325,10 @@ void AntiSpamWizard::accept()
       unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureFolderName() );
       unsureFilterActions->append( unsureFilterAction1 );
       KMSearchPattern* unsureFilterPattern = unsureFilter->pattern();
-      unsureFilterPattern->setName( uniqueNameFor( i18n( "Semi spam (unsure) handling" ) ) );
+      if ( replaceExistingFilters )
+        unsureFilterPattern->setName( i18n( "Semi spam (unsure) handling" ) );
+      else
+        unsureFilterPattern->setName( uniqueNameFor( i18n( "Semi spam (unsure) handling" ) ) );
       unsureFilterPattern->setOp( KMSearchPattern::OpOr );
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
@@ -371,7 +386,10 @@ void AntiSpamWizard::accept()
       classSpamFilterActions->append( classSpamFilterActionLast );
 
       KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
-      classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
+      if ( replaceExistingFilters )
+        classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
+      else
+        classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
       classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                       KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
       classSpamFilter->setApplyOnOutbound( FALSE);
@@ -400,7 +418,10 @@ void AntiSpamWizard::accept()
         }
       }
       KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
-      classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
+      if ( replaceExistingFilters )
+        classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
+      else
+        classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
       classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                      KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
       classHamFilter->setApplyOnOutbound( FALSE);
@@ -418,7 +439,8 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-    KMKernel::self()->filterMgr()->appendFilters( filterList );
+    KMKernel::self()->filterMgr()->appendFilters( 
+          filterList, replaceExistingFilters );
 
   QDialog::accept();
 }
@@ -514,17 +536,6 @@ void AntiSpamWizard::checkToolAvailability()
 }
 
 
-int AntiSpamWizard::checkForProgram( const QString &executable )
-{
-  kdDebug(5006) << "Testing for executable:" << executable << endl;
-  KProcess process;
-  process << executable;
-  process.setUseShell( true );
-  process.start( KProcess::Block );
-  return process.exitStatus();
-}
-
-
 void AntiSpamWizard::slotHelpClicked()
 {
   if ( mMode == AntiSpam )
@@ -534,23 +545,11 @@ void AntiSpamWizard::slotHelpClicked()
 }
 
 
-bool AntiSpamWizard::anyVirusOptionChecked()
-{
-  return ( mVirusRulesPage->moveRulesSelected()
-           || mVirusRulesPage->pipeRulesSelected() );
-}
-
-
-const QString AntiSpamWizard::uniqueNameFor( const QString & name )
-{
-  return KMKernel::self()->filterMgr()->createUniqueName( name );
-}
-
-
 void AntiSpamWizard::slotBuildSummary()
 {
   QString text;
-  QString filters;
+  QString newFilters;
+  QString replaceFilters;
 
   if ( mMode == AntiVirus ) {
     text = ""; // TODO add summary for the virus part
@@ -574,12 +573,13 @@ void AntiSpamWizard::slotBuildSummary()
          (*it).isSpamTool() && !(*it).isDetectionOnly() ) {
         if ( (*it).useBayesFilter() )
           canClassify = true;
-        filters += "<li>" + uniqueNameFor( (*it).getFilterName() ) + "</li>";
+        sortFilterOnExistance( (*it).getFilterName(), newFilters, replaceFilters );
       }
     }
 
     if ( mSpamRulesPage->moveSpamSelected() ) {
-      filters += "<li>" + uniqueNameFor( i18n( "Spam handling" ) ) + "</li>";
+      sortFilterOnExistance( i18n( "Spam handling" ),
+                             newFilters, replaceFilters );
     }
 
     if ( mSpamRulesPage->moveUnsureSelected() ) {
@@ -592,22 +592,64 @@ void AntiSpamWizard::slotBuildSummary()
         }
       }
       if ( atLeastOneUnsurePattern ) {
-        filters += "<li>" + uniqueNameFor( i18n( "Semi spam (unsure) handling" ) ) + "</li>";
+        sortFilterOnExistance( i18n( "Semi spam (unsure) handling" ),
+                               newFilters, replaceFilters );
         text += i18n( "<p>The folder for messages classified as unsure (probably spam) is <i>" )
               + mSpamRulesPage->selectedUnsureFolderName() + "</i>.</p>";
       }
     }
 
     if ( canClassify ) {
-      filters += "<li>" + uniqueNameFor( i18n( "Classify as spam" ) ) + "</li>";
-      filters += "<li>" + uniqueNameFor( i18n( "Classify as NOT spam" ) ) + "</li>";
+      sortFilterOnExistance( i18n( "Classify as spam" ),
+                             newFilters, replaceFilters );
+      sortFilterOnExistance( i18n( "Classify as NOT spam" ),
+                             newFilters, replaceFilters );
     }
 
-    text += i18n( "<p>The wizard will create the following filters:<ul>" )
-          + filters + "</ul></p>";
+    if ( !newFilters.isEmpty() )
+      text += i18n( "<p>The wizard will create the following filters:<ul>" )
+            + newFilters + "</ul></p>";
+    if ( !replaceFilters.isEmpty() )
+      text += i18n( "<p>The wizard will replace the following filters:<ul>" )
+            + replaceFilters + "</ul></p>";
   }
 
   mSummaryPage->setSummaryText( text );
+}
+
+
+int AntiSpamWizard::checkForProgram( const QString &executable )
+{
+  kdDebug(5006) << "Testing for executable:" << executable << endl;
+  KProcess process;
+  process << executable;
+  process.setUseShell( true );
+  process.start( KProcess::Block );
+  return process.exitStatus();
+}
+
+
+bool AntiSpamWizard::anyVirusOptionChecked()
+{
+  return ( mVirusRulesPage->moveRulesSelected()
+           || mVirusRulesPage->pipeRulesSelected() );
+}
+
+
+const QString AntiSpamWizard::uniqueNameFor( const QString & name )
+{
+  return KMKernel::self()->filterMgr()->createUniqueName( name );
+}
+
+
+void AntiSpamWizard::sortFilterOnExistance( 
+        const QString & intendedFilterName, 
+        QString & newFilters, QString & replaceFilters )
+{
+  if ( uniqueNameFor( intendedFilterName ) == intendedFilterName )
+    newFilters += "<li>" + intendedFilterName + "</li>";
+  else
+    replaceFilters += "<li>" + intendedFilterName + "</li>";
 }
 
 
@@ -861,6 +903,8 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   mSelectionHint = new QLabel( this );
   mSelectionHint->setText( "" );
   layout->addWidget( mSelectionHint );
+
+  layout->addStretch();
 }
 
 
@@ -902,22 +946,25 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
                                         KMFolderTree * mainFolderTree )
   : ASWizPage( parent, name )
 {
-  QGridLayout *grid = new QGridLayout( mLayout, 5, 1, KDialog::spacingHint() );
+  QVBoxLayout *layout = new QVBoxLayout( mLayout );
 
   mMarkRules = new QCheckBox( i18n("&Mark detected spam messages as read"), this );
   QWhatsThis::add( mMarkRules,
       i18n( "Mark messages which have been classified as spam as read.") );
-  grid->addMultiCellWidget( mMarkRules, 0, 0, 0, 2 );
+  layout->addWidget( mMarkRules);
 
   mMoveSpamRules = new QCheckBox( i18n("Move &known spam to:"), this );
   QWhatsThis::add( mMoveSpamRules,
       i18n( "The default folder for spam messages is the trash folder, "
             "but you may change that in the folder view below.") );
-  grid->addMultiCellWidget( mMoveSpamRules, 1, 1, 0, 0 );
+  layout->addWidget( mMoveSpamRules );
 
-  QString s = "trash";
-  mFolderTreeForSpamFolder = new SimpleFolderTree( this, mainFolderTree, s, true );
-  grid->addWidget( mFolderTreeForSpamFolder, 2, 0 );
+  mFolderReqForSpamFolder = new FolderRequester( this, mainFolderTree );
+  mFolderReqForSpamFolder->setFolder( "trash" );
+  mFolderReqForSpamFolder->setMustBeReadWrite( true );
+  mFolderReqForSpamFolder->setShowOutbox( false );
+  mFolderReqForSpamFolder->setShowImapFolders( false );
+  layout->addWidget( mFolderReqForSpamFolder );
 
   mMoveUnsureRules = new QCheckBox( i18n("Move &probable spam to:"), this );
   QWhatsThis::add( mMoveUnsureRules,
@@ -925,11 +972,16 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             "in the folder view below.<p>"
             "Not all tools support a classification as unsure. If you haven't "
             "selected a capable tool, you can't select a folder as well.") );
-  grid->addMultiCellWidget( mMoveUnsureRules, 1, 1, 2, 2 );
+  layout->addWidget( mMoveUnsureRules );
 
-  s = "inbox";
-  mFolderTreeForUnsureFolder = new SimpleFolderTree( this, mainFolderTree, s, true );
-  grid->addWidget( mFolderTreeForUnsureFolder, 2, 2 );
+  mFolderReqForUnsureFolder = new FolderRequester( this, mainFolderTree );
+  mFolderReqForUnsureFolder->setFolder( "inbox" );
+  mFolderReqForUnsureFolder->setMustBeReadWrite( true );
+  mFolderReqForUnsureFolder->setShowOutbox( false );
+  mFolderReqForUnsureFolder->setShowImapFolders( false );
+  layout->addWidget( mFolderReqForUnsureFolder );
+
+  layout->addStretch();
 
   connect( mMarkRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
@@ -937,6 +989,10 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveUnsureRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
+  connect( mFolderReqForSpamFolder, SIGNAL(folderChanged(KMFolder*)),
+            this, SLOT(processSelectionChange(KMFolder*)) );
+  connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(KMFolder*)),
+            this, SLOT(processSelectionChange(KMFolder*)) );
 
   mMarkRules->setChecked( true );
   mMoveSpamRules->setChecked( true );
@@ -964,8 +1020,8 @@ bool ASWizSpamRulesPage::moveUnsureSelected() const
 QString ASWizSpamRulesPage::selectedSpamFolderName() const
 {
   QString name = "trash";
-  if ( mFolderTreeForSpamFolder->folder() )
-    name = mFolderTreeForSpamFolder->folder()->idString();
+  if ( mFolderReqForSpamFolder->folder() )
+    name = mFolderReqForSpamFolder->folder()->idString();
   return name;
 }
 
@@ -973,8 +1029,8 @@ QString ASWizSpamRulesPage::selectedSpamFolderName() const
 QString ASWizSpamRulesPage::selectedUnsureFolderName() const
 {
   QString name = "inbox";
-  if ( mFolderTreeForUnsureFolder->folder() )
-    name = mFolderTreeForUnsureFolder->folder()->idString();
+  if ( mFolderReqForUnsureFolder->folder() )
+    name = mFolderReqForUnsureFolder->folder()->idString();
   return name;
 }
 
@@ -985,10 +1041,18 @@ void ASWizSpamRulesPage::processSelectionChange()
 }
 
 
+void ASWizSpamRulesPage::processSelectionChange( KMFolder* )
+{
+  processSelectionChange();
+}
+
+
 void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
 {
   mMoveUnsureRules->setEnabled( enabled );
-  mFolderTreeForUnsureFolder->setEnabled( enabled );
+  mMoveUnsureRules->setShown( enabled );
+  mFolderReqForUnsureFolder->setEnabled( enabled );
+  mFolderReqForUnsureFolder->setShown( enabled );
 }
 
 
@@ -1076,7 +1140,7 @@ ASWizSummaryPage::ASWizSummaryPage( QWidget * parent, const char * name )
 
   mSummaryText = new QLabel( this );
   layout->addWidget( mSummaryText );
-
+  layout->addStretch();
 }
 
 

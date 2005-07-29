@@ -84,7 +84,8 @@ public:
   /** Append the list of filters to the current list of filters and
       write everything back into the configuration. The filter manager
       takes ownership of the filters in the list. */
-  void appendFilters( const QValueList<KMFilter*> &filters );
+  void appendFilters( const QValueList<KMFilter*> &filters,
+                      bool replaceIfNameExists = false );
 
   /** Replace the list of filters under control of the filter manager.
    * The manager takes ownershipt of the filters. */

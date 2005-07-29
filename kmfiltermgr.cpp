@@ -385,9 +385,22 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::appendFilters( const QValueList<KMFilter*> &filters )
+void KMFilterMgr::appendFilters( const QValueList<KMFilter*> &filters,
+                                 bool replaceIfNameExists )
 {
   beginUpdate();
+  if ( replaceIfNameExists ) {
+    QValueListConstIterator<KMFilter*> it1 = filters.constBegin();
+    for ( ; it1 != filters.constEnd() ; ++it1 ) {
+      QValueListConstIterator<KMFilter*> it2 = mFilters.constBegin();
+      for ( ; it2 != mFilters.constEnd() ; ++it2 ) {
+        if ( (*it1)->name() == (*it2)->name() ) {
+          mFilters.remove( (*it2) );
+          it2 = mFilters.constBegin();
+        }
+      }
+    }
+  }
   mFilters += filters;
   writeConfig( true );
   endUpdate();

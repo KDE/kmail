@@ -38,12 +38,14 @@
 #include <qlayout.h>
 
 class KActionCollection;
+class KMFolder;
 class KMFolderTree;
 class QLabel;
 
 namespace KMail {
 
   class SimpleFolderTree;
+  class FolderRequester;
 
   class ASWizInfoPage;
   class ASWizSpamRulesPage;
@@ -120,10 +122,6 @@ namespace KMail {
                       QWidget * parent, KMFolderTree * mainFolderTree );
 
     protected:
-      /** Evaluate the settings made and create the appropriate filter rules. */
-      void accept();
-      /** Check for the availability of an executible along the PATH */
-      int checkForProgram( const QString &executable );
       /**
         Instances of this class store the settings for one tool as read from
         the config file. Visible name and What's this text can not get
@@ -206,6 +204,7 @@ namespace KMail {
           // Is the tool AntiSpam or AntiVirus
           WizardMode mType;
       };
+
       /**
         Instances of this class control reading the configuration of the
         anti-spam tools from global and user config files as well as the
@@ -234,6 +233,8 @@ namespace KMail {
           void sortToolList();
       };
 
+      /** Evaluate the settings made and create the appropriate filter rules. */
+      void accept();
 
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
@@ -248,11 +249,16 @@ namespace KMail {
       void slotBuildSummary();
 
     private:
+      /* Check for the availability of an executible along the PATH */
+      int checkForProgram( const QString &executable );
       /* generic checks if any option in a page is checked */
       bool anyVirusOptionChecked();
-
-      /* convenience function calling the appropriate filter manager method */
+      /* convenience method calling the appropriate filter manager method */
       const QString uniqueNameFor( const QString & name );
+      /* convenience method to sort out new and existing filters */
+      void sortFilterOnExistance( const QString & intendedFilterName,
+                                  QString & newFilters, 
+                                  QString & replaceFilters );
 
       /* The pages in the wizard */
       ASWizInfoPage * mInfoPage;
@@ -333,6 +339,7 @@ namespace KMail {
 
     private slots:
       void processSelectionChange();
+      void processSelectionChange( KMFolder* );
 
     signals:
       void selectionChanged();
@@ -341,8 +348,8 @@ namespace KMail {
       QCheckBox * mMarkRules;
       QCheckBox * mMoveSpamRules;
       QCheckBox * mMoveUnsureRules;
-      SimpleFolderTree *mFolderTreeForSpamFolder;
-      SimpleFolderTree *mFolderTreeForUnsureFolder;
+      FolderRequester *mFolderReqForSpamFolder;
+      FolderRequester *mFolderReqForUnsureFolder;
   };
 
   //-------------------------------------------------------------------------
