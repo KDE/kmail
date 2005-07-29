@@ -115,6 +115,8 @@ public:
 
   QValueList<SubResource> subresourcesKolab( const QString& contentsType );
 
+  bool triggerSync( const QString& contentsType );
+
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
   KURL getAttachment( const QString& resource,
