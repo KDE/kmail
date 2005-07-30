@@ -62,6 +62,7 @@
 #include <kfiledialog.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
+#include <kdirselectdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kparts/browserextension.h>
@@ -2224,18 +2225,18 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   KURL url, dirUrl;
   if ( mAttachmentMap.count() > 1 ) {
     // get the dir
-    KFileDialog fdlg( ":saveAttachments", QString::null, parentWidget(),
-                      "save attachments dialog", true );
-    fdlg.setCaption( i18n("Save Attachments To") );
-    fdlg.setOperationMode( KFileDialog::Saving );
-    fdlg.setMode( (unsigned int) KFile::Directory );
-    if ( fdlg.exec() == QDialog::Rejected || !fdlg.selectedURL().isValid() ) {
+    dirUrl = KDirSelectDialog::selectDirectory( QString::null, false,
+                                                parentWidget(),
+                                                i18n("Save Attachments To") );
+    if ( !dirUrl.isValid() ) {
       setResult( Canceled );
       emit completed( this );
       delete this;
       return;
     }
-    dirUrl = fdlg.selectedURL();
+
+    // we may not get a slash-terminated url out of KDirSelectDialog
+    dirUrl.adjustPath( 1 );
   }
   else {
     // only one item, get the desired filename
