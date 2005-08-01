@@ -4749,9 +4749,9 @@ AccountUpdater::AccountUpdater(ImapAccountBase *account)
 
 void AccountUpdater::update()
 {
-  connect( mAccount, SIGNAL( namespacesFetched() ),
+  connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( namespacesFetched() ) );
-  mAccount->getNamespaces();
+  mAccount->makeConnection();
 }
 
 void AccountUpdater::namespacesFetched()
