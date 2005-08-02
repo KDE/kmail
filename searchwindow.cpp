@@ -334,7 +334,6 @@ void SearchWindow::updStatus(void)
     QString folderName;
     if (search) {
         numMatches = search->foundCount();
-        count = search->searchedCount();
         folderName = search->currentFolder();
     }
 

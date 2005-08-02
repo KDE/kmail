@@ -25,7 +25,7 @@
 #include "kmfoldermgr.h"
 #include "kmsearchpattern.h"
 #include "kmmsgdict.h"
-#include "kmmsgindex.h"
+#include "index.h"
 #include "jobscheduler.h"
 
 #include <kdebug.h>
@@ -77,12 +77,10 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     mRunByIndex = mRunning = false;
     mRoot = 0;
     mSearchPattern = 0;
-    mSearchedCount = 0;
     mFoundCount = 0;
 
     mProcessNextBatchTimer = new QTimer();
-    connect(mProcessNextBatchTimer, SIGNAL(timeout()),
-            this, SLOT(slotProcessNextBatch()));
+    connect(mProcessNextBatchTimer, SIGNAL(timeout()), this, SLOT(slotProcessNextBatch()));
 }
 
 KMSearch::~KMSearch()
@@ -155,7 +153,6 @@ void KMSearch::start()
         return;
     }
 
-    mSearchedCount = 0;
     mFoundCount = 0;
     mRunning = true;
     mRunByIndex = false;
@@ -231,6 +228,11 @@ void KMSearch::stop()
     emit finished(false);
 }
 
+void KMSearch::indexFinished() {
+	mRunning = false;
+	mRunByIndex = false;
+}
+
 void KMSearch::slotProcessNextBatch()
 {
     if ( !running() )
@@ -246,11 +248,9 @@ void KMSearch::slotProcessNextBatch()
             folder->open();
             mOpenedFolders.append( folder );
             connect( folder->storage(),
-                SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>,
-                                      const KMSearchPattern*, bool ) ),
+                SIGNAL( searchResult( KMFolder*, QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
-                                              const KMSearchPattern*, bool ) ) );
+                SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>, const KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -281,7 +281,6 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
           this,
           SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
                                         const KMSearchPattern*, bool ) ) );
-      mSearchedCount += folder->count();
       --mRemainingFolders;
       folder->close();
       mOpenedFolders.remove( folder );

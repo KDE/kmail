@@ -11,7 +11,7 @@
 
 #include "globalsettings.h"
 #include "kmstartup.h"
-#include "kmmsgindex.h"
+#include "index.h"
 #include "kmmainwin.h"
 #include "composer.h"
 #include "kmmsgpart.h"
@@ -1385,13 +1385,7 @@ void KMKernel::init()
   readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
-#if 0 //disabled for now..
-  the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
-  the_msgIndex->init();
-  the_msgIndex->remove();
-  delete the_msgIndex;
-  the_msgIndex = 0;
-#endif
+  the_msgIndex = new KMMsgIndex(this); //create the indexer
 
 #if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );

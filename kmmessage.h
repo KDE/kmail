@@ -818,7 +818,6 @@ public:
   */
   QCString mboxMessageSeparator();
 
-private:
   /** Returns message body with quoting header and indented by the
     given indentation string. This is suitable for including the message
     in another message of for replies, forwards. The header string is
@@ -843,6 +842,7 @@ private:
   /** Return the textual content of the message as plain text,
       converting HTML to plain text if necessary. */
   QString asPlainText( bool stripSignature, bool allowDecryption ) const;
+private:
 
   /** Initialization shared by the ctors. */
   void init();

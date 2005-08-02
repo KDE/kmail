@@ -1,0 +1,75 @@
+
+/* This file is part of KMail
+ * Copyright (C) 2005 Luís Pedro Coelho <luis@luispedro.org>
+ *
+ * KMail is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License, version 2, as
+ * published by the Free Software Foundation.
+ * 
+ * KMail is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * In addition, as a special exception, the copyright holders give
+ * permission to link the code of this program with any edition of
+ * the Qt library by Trolltech AS, Norway (or with modified versions
+ * of Qt that use the same license as Qt), and distribute linked
+ * combinations including the two.  You must obey the GNU General
+ * Public License in all respects for all of the code used other than
+ * Qt.  If you modify this file, you may extend this exception to
+ * your version of the file, but you are not obligated to do so.  If
+ * you do not wish to do so, delete this exception statement from
+ * your version.
+ */
+
+#include "klistviewindexedsearchline.h"
+#include <kdebug.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "headeritem.h"
+#include "kmheaders.h"
+#include "kmfolder.h"
+#include "index.h"
+
+using KMail::HeaderListQuickSearch;
+
+KListViewIndexedSearchLine::KListViewIndexedSearchLine( QWidget* parent, KListView* listView, KActionCollection* actionCollection, const char* name ):
+	HeaderListQuickSearch( parent, listView, actionCollection, name ),
+	mFiltering( false )
+{
+}
+
+KListViewIndexedSearchLine::~KListViewIndexedSearchLine() {
+}
+
+
+//std::string dirbase = std::string( getenv( "HOME" ) ) + "/.indexes/" + folder->location().latin1();
+
+void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
+	kdDebug( 5006 ) << "updateSearch( -" << s << "- )" << endl;
+	mFiltering = false;
+	if ( !s.isNull() && !s.isEmpty() ) {
+		KMMsgIndex* index = kmkernel->msgIndex();
+		mResults = index->simpleSearch( s );
+		std::sort( mResults.begin(), mResults.end() );
+		mFiltering = true;
+	}
+	KListViewSearchLine::updateSearch( s );
+}
+#include <iostream>
+#define kdDebug( x ) std::cerr
+#define endl std::endl
+
+bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const QString& s ) const {
+	return !mFiltering ||
+		std::binary_search( mResults.begin(), mResults.end(), static_cast<const KMail::HeaderItem*>( item )->msgSerNum() )
+		|| KListViewSearchLine::itemMatches( item, s );
+}
+
+#include "klistviewindexedsearchline.moc"
+

@@ -71,8 +71,10 @@ public:
   bool running() const { return mRunning; }
   void stop();
   int foundCount() const { return mFoundCount; }
-  int searchedCount() const { return mSearchedCount; }
   QString currentFolder() const { return mLastFolder; }
+
+public slots:
+  void indexFinished();
 
 signals:
   void found(Q_UINT32 serNum);
@@ -87,7 +89,6 @@ protected:
   friend class ::KMIndexSearchTarget;
   void setRunning(bool b) { mRunning = b; }
   void setFoundCount(int f) { mFoundCount = f; }
-  void setSearchedCount(int f) { mSearchedCount = f; }
   void setCurrentFolder(const QString &f) { mLastFolder = f; }
 
 private:
@@ -99,7 +100,7 @@ private:
   QValueList<QGuardedPtr<KMFolderImap> > mIncompleteFolders;
   SerNumList mSerNums;
   QString mLastFolder;
-  int mSearchedCount, mFoundCount;
+  int mFoundCount;
   QTimer *mProcessNextBatchTimer;
 };
 

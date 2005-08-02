@@ -3,6 +3,8 @@ KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = interfaces . about pics profiles avscripts tests
 
+LIB_INDEX = -lindex
+
 INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/libkpgp \
         -I$(top_srcdir)/libkdenetwork \
@@ -18,7 +20,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
 
 lib_LTLIBRARIES = libkmailprivate.la
 libkmailprivate_la_LDFLAGS = $(all_libraries) -avoid-version -no-undefined
-libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
+libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) $(LIB_INDEX) \
         ../libkmime/libkmime.la ../libkpgp/libkpgp.la ../libkdepim/libkdepim.la \
         ../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
         ../libksieve/libksieve.la ../libemailfunctions/libemailfunctions.la \
@@ -45,6 +47,7 @@ kmail_LDADD   = libkmailprivate.la
 
 libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 configuredialog_p.cpp \
+		index.cpp klistviewindexedsearchline.cpp \
                 simplestringlisteditor.cpp kmmsgindex.cpp \
                 identitydrag.cpp identitylistview.cpp identitydialog.cpp \
                 kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \

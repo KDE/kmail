@@ -433,4 +433,11 @@
 
     </group>
 
+    <group name="TextIndex">
+      <entry name="automaticDecrypt" type="Bool" key="automaticDecrypt">
+        <default>true</default>
+	<label></label>
+      </entry>
+    </group>
+
 </kcfg>

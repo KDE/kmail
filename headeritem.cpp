@@ -98,6 +98,7 @@ void HeaderItem::irefresh()
   }
 
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+  mSerNum = mMsgBase->getMsgSerNum();
   if (mMsgBase->isNew() || mMsgBase->isUnread()
       || mMsgBase->isImportant() || mMsgBase->isTodo() || mMsgBase->isWatched() ) {
     setOpen(true);
@@ -112,6 +113,12 @@ void HeaderItem::irefresh()
 int HeaderItem::msgId() const
 {
   return mMsgId;
+}
+
+// Return the serial number
+Q_UINT32 HeaderItem::msgSerNum() const
+{
+  return mSerNum;
 }
 
 // Update this item to summarise a new folder and message

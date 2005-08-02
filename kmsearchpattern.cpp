@@ -7,9 +7,11 @@
 
 #include "kmaddrbook.h"
 #include "kmsearchpattern.h"
-#include "kmmsgindex.h"
 #include "kmmsgdict.h"
 #include "filterlog.h"
+#include "kmkernel.h"
+#include "kmmsgdict.h"
+#include "kmfolder.h"
 using KMail::FilterLog;
 
 #include <libemailfunctions/email.h>
