@@ -72,11 +72,11 @@ std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
 
 KMMsgIndex::KMMsgIndex( QObject* parent ):
 	QObject( parent, "index" ),
-	mIndex( 0 ),
 	mState( s_idle ),
+	mLockFile( std::string( static_cast<const char*>( QFile::encodeName( defaultPath() ) + "/lock" ) ) ),
+	mIndex( 0 ),
 	mIndexPath( QFile::encodeName( defaultPath() ) ),
 	mTimer( new QTimer( this ) ),
-	mLockFile( std::string( static_cast<const char*>( QFile::encodeName( defaultPath() ) + "/lock" ) ) ),
 	//mSyncState( ss_none ),
 	//mSyncTimer( new QTimer( this ) ),
 	mSlowDown( false ) {
@@ -199,7 +199,7 @@ void KMMsgIndex::act() {
 			mOpenedFolders.insert( f );
 			f->open();
 		}
-		KMMsgDict* dict = KMMsgDict::instance();
+		const KMMsgDict* dict = KMMsgDict::instance();
 		for ( int i = 0; i < f->count(); ++i) {
 			mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
 		}
@@ -324,7 +324,8 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s ) const {
 
 bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
-	for ( KMSearchRule* rule = pat->first(); rule; rule = pat->next() ) {
+	KMSearchPattern* patnonconst = const_cast<KMSearchPattern*>(pat);
+	for ( KMSearchRule* rule = patnonconst->first(); rule; rule = patnonconst->next() ) {
 		if ( !rule->field().isEmpty() && !rule->contents().isEmpty() &&
 				rule->function() == KMSearchRule::FuncContains &&
 				rule->field() == "<body>" )  return true;
@@ -373,8 +374,8 @@ bool KMMsgIndex::creating() const {
 KMMsgIndex::Search::Search( KMSearch* s ):
 	mSearch( s ),
 	mTimer( new QTimer( this ) ),
-	mState( s_starting ),
-	mResidual( new KMSearchPattern ) {
+	mResidual( new KMSearchPattern ),
+	mState( s_starting ) {
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 	mTimer->start( 0 );
 }
