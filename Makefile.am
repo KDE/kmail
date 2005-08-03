@@ -3,8 +3,6 @@ KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = interfaces . about pics profiles avscripts tests
 
-LIB_INDEX = -lindex
-
 INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/libkpgp \
         -I$(top_srcdir)/libkdenetwork \
@@ -14,17 +12,18 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/libksieve \
         -I$(top_srcdir)/mimelib \
         -I$(top_srcdir)/certmanager/lib \
+        -I$(top_srcdir)/indexlib \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
         $(all_includes)
 
 lib_LTLIBRARIES = libkmailprivate.la
 libkmailprivate_la_LDFLAGS = $(all_libraries) -avoid-version -no-undefined
-libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) $(LIB_INDEX) \
+libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
         ../libkmime/libkmime.la ../libkpgp/libkpgp.la ../libkdepim/libkdepim.la \
         ../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
         ../libksieve/libksieve.la ../libemailfunctions/libemailfunctions.la \
-        ../certmanager/lib/libkleopatra.la \
+        ../certmanager/lib/libkleopatra.la ../indexlib/libindex.la \
         ../libkcal/libkcal.la
 
 kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
