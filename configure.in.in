@@ -1,0 +1,13 @@
+need_indexlib=0
+KDE_CHECK_HEADER(index/lockfile.h,
+	:
+	DO_NOT_COMPILE="kmail $DO_NOT_COMPILE"
+	need_indexlib=1
+	)
+KDE_CHECK_HEADER(index/index.h,
+	:
+	,
+	test "0" = "$need_indexlib" && DO_NOT_COMPILE="kmail $DO_NOT_COMPILE"
+	need_indexlib=1
+	)
+

@@ -1,0 +1,5 @@
+if test 1 = "$need_indexlib" ; then
+	echo "You are missing indexlib, which is required for KMail."
+	echo "KMail will not be compiled."
+fi
+
