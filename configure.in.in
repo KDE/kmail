@@ -11,3 +11,5 @@ KDE_CHECK_HEADER(index/index.h,
 	need_indexlib=1
 	)
 
+AM_CONDITIONAL(include_kmail, test 0 = "$need_indexlib")
+
