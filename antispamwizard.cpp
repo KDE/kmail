@@ -110,13 +110,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   if ( mMode == AntiSpam ) {
     mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
-    addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
+    addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( slotBuildSummary( void ) ) );
   }
   else {
     mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
-    addPage( mVirusRulesPage, i18n( "Please select the virus filters to be created inside KMail." ));
+    addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
     connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkVirusRulesSelections( void ) ) );
   }
@@ -128,7 +128,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   if ( mMode == AntiSpam ) {
     mSummaryPage = new ASWizSummaryPage( 0, "" );
-    addPage( mSummaryPage, i18n( "KMail will adjust it's settings to detect spam messages." ) );
+    addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
     setNextEnabled( mSpamRulesPage, true );
     setFinishEnabled( mSummaryPage, true );
   }
@@ -576,11 +576,7 @@ void AntiSpamWizard::slotBuildSummary()
         sortFilterOnExistance( (*it).getFilterName(), newFilters, replaceFilters );
       }
     }
-
-    if ( mSpamRulesPage->moveSpamSelected() ) {
-      sortFilterOnExistance( i18n( "Spam handling" ),
-                             newFilters, replaceFilters );
-    }
+    sortFilterOnExistance( i18n( "Spam handling" ), newFilters, replaceFilters );
 
     if ( mSpamRulesPage->moveUnsureSelected() ) {
       bool atLeastOneUnsurePattern = false;
