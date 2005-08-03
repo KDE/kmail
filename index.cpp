@@ -40,6 +40,7 @@
 #include <qfile.h>
 #include <qtimer.h>
 #include <qvaluestack.h>
+#include <qptrlist.h>
 #include <qfileinfo.h>
 #include <index/create.h>
 
@@ -323,9 +324,12 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s ) const {
 }
 
 bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
-	kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
-	KMSearchPattern* patnonconst = const_cast<KMSearchPattern*>(pat);
-	for ( KMSearchRule* rule = patnonconst->first(); rule; rule = patnonconst->next() ) {
+  kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
+	if ( !pat ) return false;
+	QPtrListIterator<KMSearchRule> it( *pat );
+	KMSearchRule* rule;
+	while ( (rule = it.current()) != 0 ) {
+		++it;
 		if ( !rule->field().isEmpty() && !rule->contents().isEmpty() &&
 				rule->function() == KMSearchRule::FuncContains &&
 				rule->field() == "<body>" )  return true;
