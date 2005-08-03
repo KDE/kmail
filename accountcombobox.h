@@ -36,6 +36,8 @@ namespace KMail {
 
 /**
  * A readonly combobox showing the accounts, to select one.
+ * WARNING: this widget is hardcoded to only display disconnected imap
+ * accounts, in this branch.
  */
 class AccountComboBox : public QComboBox
 {
