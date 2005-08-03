@@ -964,7 +964,10 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
   mFolderReqForSpamFolder->setShowImapFolders( false );
-  layout->addWidget( mFolderReqForSpamFolder );
+
+  QHBoxLayout *hLayout1 = new QHBoxLayout( layout );
+  hLayout1->addSpacing( KDialog::spacingHint() * 3 );
+  hLayout1->addWidget( mFolderReqForSpamFolder );
 
   mMoveUnsureRules = new QCheckBox( i18n("Move &probable spam to:"), this );
   QWhatsThis::add( mMoveUnsureRules,
@@ -979,7 +982,10 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
   mFolderReqForUnsureFolder->setShowImapFolders( false );
-  layout->addWidget( mFolderReqForUnsureFolder );
+
+  QHBoxLayout *hLayout2 = new QHBoxLayout( layout );
+  hLayout2->addSpacing( KDialog::spacingHint() * 3 );
+  hLayout2->addWidget( mFolderReqForUnsureFolder );
 
   layout->addStretch();
 
@@ -1037,6 +1043,8 @@ QString ASWizSpamRulesPage::selectedUnsureFolderName() const
 
 void ASWizSpamRulesPage::processSelectionChange()
 {
+  mFolderReqForSpamFolder->setEnabled( mMoveSpamRules->isChecked() );
+  mFolderReqForUnsureFolder->setEnabled( mMoveUnsureRules->isChecked() );
   emit selectionChanged();
 }
 
