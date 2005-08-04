@@ -1355,7 +1355,8 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
 #ifdef KLEO_CHIASMUS
-  if ( mEncryptWithChiasmus )
+  // FIXME temporarily disabled because it breaks signing
+  if ( false && mEncryptWithChiasmus )
   {
     composeChiasmusMessage( theMessage, format );
     return;
