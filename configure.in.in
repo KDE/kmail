@@ -12,6 +12,8 @@ AC_ARG_ENABLE(indexlib,
 	)
 
 
+AM_CONDITIONAL(add_indexlib, test no = "$missing_indexlib")
+
 
 
 ])
