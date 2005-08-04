@@ -65,9 +65,10 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 #include <iostream>
 
 bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const QString& s ) const {
-	return !mFiltering ||
-		std::binary_search( mResults.begin(), mResults.end(), static_cast<const KMail::HeaderItem*>( item )->msgSerNum() )
-		|| KListViewSearchLine::itemMatches( item, s );
+	if ( mFiltering && 
+			std::binary_search( mResults.begin(), mResults.end(), static_cast<const KMail::HeaderItem*>( item )->msgSerNum() ) )
+		return true;
+	return KListViewSearchLine::itemMatches( item, s );
 }
 
 #include "klistviewindexedsearchline.moc"

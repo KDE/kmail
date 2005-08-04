@@ -42,7 +42,9 @@
 #include <qvaluestack.h>
 #include <qptrlist.h>
 #include <qfileinfo.h>
+#ifdef HAVE_INDEXLIB
 #include <indexlib/create.h>
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -74,8 +76,10 @@ std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
 KMMsgIndex::KMMsgIndex( QObject* parent ):
 	QObject( parent, "index" ),
 	mState( s_idle ),
+#ifdef HAVE_INDEXLIB
 	mLockFile( std::string( static_cast<const char*>( QFile::encodeName( defaultPath() ) + "/lock" ) ) ),
 	mIndex( 0 ),
+#endif
 	mIndexPath( QFile::encodeName( defaultPath() ) ),
 	mTimer( new QTimer( this ) ),
 	//mSyncState( ss_none ),
@@ -95,8 +99,10 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 	//connect( mSyncTimer, SIGNAL( timeout() ), SLOT( syncIndex() ) );
 
+#ifdef HAVE_INDEXLIB
 	if ( !mLockFile.trylock() ) {
 		indexlib::remove( mIndexPath );
+
 		mLockFile.force_unlock();
 		mLockFile.trylock();
 	} else {
@@ -115,12 +121,17 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 			mRemovedMsgs = QValueListToVector( cfg.readIntListEntry( "removed" ) );
 		}
 	}
+	mIndex = 0;
+#else
+	mState = s_error;
+#endif
 	//if ( mState == s_idle ) mSyncState = ss_synced;
 }
 
 
 KMMsgIndex::~KMMsgIndex() {
 	kdDebug( 5006 ) << "KMMsgIndex::~KMMsgIndex()" << endl;
+#ifdef HAVE_INDEXLIB
 	KConfigGroup cfg( KMKernel::config(), "text-index" );
 	cfg.writeEntry( "creating", mState == s_creating );
 	QValueList<int> pendingMsg;
@@ -131,26 +142,32 @@ KMMsgIndex::~KMMsgIndex() {
 	cfg.writeEntry( "pending", pendingMsg );
 	cfg.writeEntry( "removed", vectorToQValueList( mRemovedMsgs ) );
 	delete mIndex;
+#endif
 }
 
 void KMMsgIndex::clear() {
+#ifdef HAVE_INDEXLIB
 	delete mIndex;
 	mLockFile.force_unlock();
 	mIndex = 0;
 	indexlib::remove( mIndexPath );
+#endif
 }
 
 void KMMsgIndex::cleanUp() {
+#ifdef HAVE_INDEXLIB
 	if ( mState != s_idle || kapp->hasPendingEvents() ) {
 		QTimer::singleShot( 8000, this, SLOT( cleanUp() ) );
 		return;
 	}
 	mIndex->maintenance();
+#endif
 }
 
 int KMMsgIndex::addMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::addMessage( " << serNum << " )" << endl;
 	if ( mState == s_error ) return 0;
+#ifdef HAVE_INDEXLIB
 	assert( mIndex );
 	if ( !mExisting.empty() && std::binary_search( mExisting.begin(), mExisting.end(), serNum ) ) return 0;
 
@@ -174,6 +191,7 @@ int KMMsgIndex::addMessage( Q_UINT32 serNum ) {
 		kdDebug( 5006 ) << "Funny, no body" << endl;
 	}
 	folder->unGetMsg( idx );
+#endif
 	return 0;
 }
 
@@ -224,6 +242,7 @@ void KMMsgIndex::act() {
 
 void KMMsgIndex::continueCreation() {
 	kdDebug( 5006 ) << "KMMsgIndex::continueCreation()" << endl;
+#ifdef HAVE_INDEXLIB
 	create();
 	unsigned count = mIndex->ndocs();
 	mExisting.clear();
@@ -232,10 +251,12 @@ void KMMsgIndex::continueCreation() {
 		mExisting.push_back( std::atoi( mIndex->lookup_docname( i ).c_str() ) );
 	}
 	std::sort( mExisting.begin(), mExisting.end() );
+#endif
 }
 
 void KMMsgIndex::create() {
 	kdDebug( 5006 ) << "KMMsgIndex::create()" << endl;
+#ifdef HAVE_INDEXLIB
 	mState = s_creating;
 	if ( !mIndex ) mIndex = indexlib::create( mIndexPath ).release();
 	if ( !mIndex ) {
@@ -257,6 +278,7 @@ void KMMsgIndex::create() {
 	}
 	mTimer->start( 4000 ); // wait a couple of seconds before starting up...
 	mSlowDown = true;
+#endif
 }
 
 bool KMMsgIndex::startQuery( KMSearch* s ) {
@@ -324,6 +346,7 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 		return std::vector<Q_UINT32>();
 	}
 	std::vector<Q_UINT32> res;
+#ifdef HAVE_INDEXLIB
 	assert( mIndex );
 	std::vector<unsigned> residx = mIndex->search( s.latin1() )->list();
 	res.reserve( residx.size() );
@@ -331,6 +354,7 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 		res.push_back( std::atoi( mIndex->lookup_docname( *first ).c_str() ) );
 	}
 	if ( ok ) *ok = true;
+#endif
 	return res;
 }
 
@@ -369,19 +393,23 @@ void KMMsgIndex::slotRemoveMessage( KMFolder* folder, Q_UINT32 serNum ) {
 }
 
 void KMMsgIndex::scheduleAction() {
+#ifdef HAVE_INDEXLIB
 	if ( mState == s_willcreate || !mIndex ) return;
 	if ( !mSlowDown ) mTimer->start( 0 );
+#endif
 }
 
 void KMMsgIndex::removeMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::removeMessage( " << serNum << " )" << endl;
 	if ( mState == s_error ) return;
 	
+#ifdef HAVE_INDEXLIB
 	mIndex->remove_doc( QString::number( serNum ).latin1() );
 	++mMaintenanceCount;
 	if ( mMaintenanceCount > MaintenanceLimit && mRemovedMsgs.empty() ) {
 		QTimer::singleShot( 100, this, SLOT( cleanUp() ) );
 	}
+#endif
 }
 
 QString KMMsgIndex::defaultPath() {

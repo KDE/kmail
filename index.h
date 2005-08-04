@@ -35,8 +35,11 @@
 #include <qcstring.h>
 #include <qvaluelist.h>
 #include <qtimer.h>
+#include <config.h>
+#ifdef HAVE_INDEXLIB
 #include <indexlib/index.h>
 #include <indexlib/lockfile.h>
+#endif
 #include <vector>
 #include <set>
 
@@ -120,6 +123,7 @@ class KMMsgIndex : public QObject {
 
 		unsigned mMaintenanceCount;
 
+#ifdef HAVE_INDEXLIB
 		/**
 		 * The lock below should be moved down into libindex itself
 		 * where things can be handled with a lot more granularity
@@ -128,9 +132,10 @@ class KMMsgIndex : public QObject {
 		//enum e_syncState { ss_none, ss_started, ss_synced } mSyncState;
 		//QTimer* mSyncTimer;
 
+		indexlib::index* mIndex;
+#endif
 		std::set<KMFolder*> mOpenedFolders;
 		std::vector<Search*> mSearches;
-		indexlib::index* mIndex;
 		QCString mIndexPath;
 		QTimer* mTimer;
 		bool mSlowDown;
