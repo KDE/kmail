@@ -62,8 +62,6 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 	KListViewSearchLine::updateSearch( s );
 }
 #include <iostream>
-#define kdDebug( x ) std::cerr
-#define endl std::endl
 
 bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const QString& s ) const {
 	return !mFiltering ||
