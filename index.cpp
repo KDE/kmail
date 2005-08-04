@@ -42,7 +42,7 @@
 #include <qvaluestack.h>
 #include <qptrlist.h>
 #include <qfileinfo.h>
-#include <index/create.h>
+#include <indexlib/create.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>

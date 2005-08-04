@@ -35,8 +35,8 @@
 #include <qcstring.h>
 #include <qvaluelist.h>
 #include <qtimer.h>
-#include <index/index.h>
-#include <index/lockfile.h>
+#include <indexlib/index.h>
+#include <indexlib/lockfile.h>
 #include <vector>
 #include <set>
 
