@@ -66,7 +66,7 @@ class KMMsgIndex : public QObject {
 		/**
 		 * Just return all the uids where the pattern exists
 		 */
-		std::vector<Q_UINT32> simpleSearch( QString ) const;
+		std::vector<Q_UINT32> simpleSearch( QString, bool* ) const;
 	public slots:
 		void clear();
 		void create();
@@ -114,7 +114,8 @@ class KMMsgIndex : public QObject {
 			s_idle, // doing nothing
 			s_willcreate, // just constructed, create() scheduled (mIndex == 0)
 			s_creating, // creating the index from the messages
-			s_processing // has messages to process
+			s_processing, // has messages to process
+			s_error // an error occurred
 		} mState;
 
 		unsigned mMaintenanceCount;

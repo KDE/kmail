@@ -54,10 +54,11 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 	kdDebug( 5006 ) << "updateSearch( -" << s << "- )" << endl;
 	mFiltering = false;
 	if ( !s.isNull() && !s.isEmpty() ) {
+		bool ok = false;
 		KMMsgIndex* index = kmkernel->msgIndex();
-		mResults = index->simpleSearch( s );
+		mResults = index->simpleSearch( s, &ok );
 		std::sort( mResults.begin(), mResults.end() );
-		mFiltering = true;
+		mFiltering = ok;
 	}
 	KListViewSearchLine::updateSearch( s );
 }

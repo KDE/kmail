@@ -150,6 +150,7 @@ void KMMsgIndex::cleanUp() {
 
 int KMMsgIndex::addMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::addMessage( " << serNum << " )" << endl;
+	if ( mState == s_error ) return 0;
 	assert( mIndex );
 	if ( !mExisting.empty() && std::binary_search( mExisting.begin(), mExisting.end(), serNum ) ) return 0;
 
@@ -237,7 +238,11 @@ void KMMsgIndex::create() {
 	kdDebug( 5006 ) << "KMMsgIndex::create()" << endl;
 	mState = s_creating;
 	if ( !mIndex ) mIndex = indexlib::create( mIndexPath ).release();
-	Q_ASSERT( mIndex );
+	if ( !mIndex ) {
+		kdDebug( 5006 ) << "Error creating index" << endl;
+		mState = s_error;
+		return;
+	}
 	QValueStack<KMFolderDir*> folders;
 	folders.push(&(kmkernel->folderMgr()->dir()));
 	folders.push(&(kmkernel->dimapFolderMgr()->dir()));
@@ -257,6 +262,7 @@ void KMMsgIndex::create() {
 bool KMMsgIndex::startQuery( KMSearch* s ) {
 	kdDebug( 5006 ) << "KMMsgIndex::startQuery( . )" << endl;
 	if ( mState == s_creating ) return false;
+	if ( mState == s_error ) return false;
 	if ( !isIndexed( s->root() ) || !canHandleQuery( s->searchPattern() ) ) return false;
 
 	kdDebug( 5006 ) << "KMMsgIndex::startQuery( . ) starting query" << endl;
@@ -311,8 +317,12 @@ bool KMMsgIndex::stopQuery( KMSearch* s ) {
 	return false;
 }
 
-std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s ) const {
+std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::simpleSearch( -" << s.latin1() << "- )" << endl;
+	if ( mState == s_error ) {
+		if ( ok ) *ok = false;
+		return std::vector<Q_UINT32>();
+	}
 	std::vector<Q_UINT32> res;
 	assert( mIndex );
 	std::vector<unsigned> residx = mIndex->search( s.latin1() )->list();
@@ -320,6 +330,7 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s ) const {
 	for ( std::vector<unsigned>::const_iterator first = residx.begin(), past = residx.end();first != past; ++first ) {
 		res.push_back( std::atoi( mIndex->lookup_docname( *first ).c_str() ) );
 	}
+	if ( ok ) *ok = true;
 	return res;
 }
 
@@ -339,6 +350,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 
 void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
+	if ( mState == s_error ) return;
 	
 	if ( mState == s_creating ) mAddedMsgs.push_back( serNum );
 	else mPendingMsgs.push_back( serNum );
@@ -349,6 +361,8 @@ void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 
 void KMMsgIndex::slotRemoveMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotRemoveMessage( . , " << serNum << " )" << endl;
+	if ( mState == s_error ) return;
+
 	if ( mState == s_idle ) mState = s_processing;
 	mRemovedMsgs.push_back( serNum );
 	scheduleAction();
@@ -360,6 +374,9 @@ void KMMsgIndex::scheduleAction() {
 }
 
 void KMMsgIndex::removeMessage( Q_UINT32 serNum ) {
+	kdDebug( 5006 ) << "KMMsgIndex::removeMessage( " << serNum << " )" << endl;
+	if ( mState == s_error ) return;
+	
 	mIndex->remove_doc( QString::number( serNum ).latin1() );
 	++mMaintenanceCount;
 	if ( mMaintenanceCount > MaintenanceLimit && mRemovedMsgs.empty() ) {
@@ -398,8 +415,7 @@ void KMMsgIndex::Search::act() {
 				terms += QString::fromLatin1( " %1 " ).arg( rule->contents() );
 			}
 
-			mValues = kmkernel->msgIndex()->simpleSearch( terms );
-			mState = s_emitting;
+			mValues = kmkernel->msgIndex()->simpleSearch( terms, 0  );
 			break;
 		 }
 		case s_emitstopped:
