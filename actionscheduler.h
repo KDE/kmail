@@ -54,7 +54,7 @@ public:
   enum ReturnCode { ResultOk, ResultError, ResultCriticalError };
 
   ActionScheduler(KMFilterMgr::FilterSet set,
-		  QPtrList<KMFilter> filters,
+		  QValueList<KMFilter*> filters,
                   KMHeaders *headers = 0,
 		  KMFolder *srcFolder = 0);
   ~ActionScheduler();
@@ -75,7 +75,7 @@ public:
   /** Set a list of filters to work with
    The current list will not be updated until the queue
    of messages left to process is empty */
-  void setFilterList( QPtrList<KMFilter> filters );
+  void setFilterList( QValueList<KMFilter*> filters );
 
   /* Set the id of the account associated with this scheduler */
   void setAccountId( uint id  ) { mAccountId = id; mAccount = true; }
@@ -88,10 +88,12 @@ public:
   void execFilters(const QPtrList<KMMsgBase> msgList);
   void execFilters(KMMsgBase* msgBase);
   void execFilters(Q_UINT32 serNum);
+  static QString debug();
 
 signals:
   /** Emitted when filtering is completed */
   void result(ReturnCode);
+  void filtered(Q_UINT32);
 
 public slots:
   /** Called back by asynchronous actions when they have completed */
@@ -118,8 +120,10 @@ private slots:
   void moveMessage();
   void moveMessageFinished( KMCommand *command );
   void timeOut();
+  void fetchTimeOut();
 
 private:
+  static QValueList<ActionScheduler*> *schedulerList; // for debugging
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
   QValueListIterator<Q_UINT32> mMessageIt;
@@ -144,9 +148,10 @@ private:
   ReturnCode mResult;
   QTimer *finishTimer, *fetchMessageTimer, *tempCloseFoldersTimer;
   QTimer *processMessageTimer, *filterMessageTimer;
-  QTimer *timeOutTimer;
-  QTime timeOutTime;
+  QTimer *timeOutTimer, *fetchTimeOutTimer;
+  QTime timeOutTime, fetchTimeOutTime;
   KMCommand *lastCommand;
+  FolderJob *lastJob;
 };
 
 }

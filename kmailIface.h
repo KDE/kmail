@@ -179,6 +179,8 @@ k_dcop_hidden:
    * DCOP-enabled for use in kaddressbook drop
    */
   virtual QString getFrom( Q_UINT32 serialNumber ) = 0;
+  virtual QString debugScheduler() = 0;
+  virtual QString debugSernum( Q_UINT32 serialNumber ) = 0;
 
   /** Does essentially the same as dcopAddMessage except that it doesn't reject
       duplicate messages.

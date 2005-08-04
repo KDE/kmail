@@ -66,6 +66,7 @@ using KMail::FolderIface;
 #include <kio/netaccess.h>
 #include <kwallet.h>
 using KWallet::Wallet;
+#include "actionscheduler.h"
 
 #include <qutf7codec.h>
 #include <qvbox.h>
@@ -1083,6 +1084,43 @@ QString KMKernel::getFrom( Q_UINT32 serialNumber )
   return result;
 }
 
+QString KMKernel::debugScheduler()
+{
+  QString res = KMail::ActionScheduler::debug();
+  return res;
+}
+
+QString KMKernel::debugSernum( Q_UINT32 serialNumber )
+{
+  QString res;
+  if (serialNumber != 0) {
+    int idx = -1;
+    KMFolder *folder = 0;
+    KMMsgBase *msg = 0;
+    KMMsgDict::instance()->getLocation( serialNumber, &folder, &idx );
+    // It's possible that the message has been deleted or moved into a
+    // different folder
+    if (folder && (idx != -1)) {
+      // everything is ok
+      folder->open();
+      msg = folder->getMsgBase( idx );
+      if (msg) {
+	res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
+		    .arg( msg->subject() )
+		    .arg( msg->fromStrip() )
+		    .arg( msg->dateStr() ) );
+      } else {
+	res.append( QString( "Invalid serial number." ) );
+      }
+      folder->close();
+    } else {
+      res.append( QString( "Invalid serial number." ) );
+    }
+  }
+  return res;  
+}
+
+
 void KMKernel::pauseBackgroundJobs()
 {
   mBackgroundTasksTimer->stop();
@@ -1385,7 +1423,8 @@ void KMKernel::init()
   readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
-  the_msgIndex = new KMMsgIndex(this); //create the indexer
+  the_msgIndex = 0;
+  //  the_msgIndex = new KMMsgIndex(this); //create the indexer
 
 #if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );

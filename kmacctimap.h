@@ -29,6 +29,7 @@ class KMFolderImap;
 class KMFolderTreeItem;
 namespace KMail {
   class ImapJob;
+  class ActionScheduler;
 }
 namespace KIO {
   class Job;
@@ -97,6 +98,7 @@ public slots:
   /**
    * updates the new-mail-check folderlist
    */
+  void slotFiltered(Q_UINT32 serNum);
   void slotUpdateFolderList();
 
 protected:
@@ -144,6 +146,7 @@ private:
   int mCountRemainChecks;
   QValueList<Q_UINT32> mFilterSerNums;
   QDict<int> mFilterSerNumsToSave;
+  KMail::ActionScheduler *mScheduler;
 };
 
 #endif /*KMAcctImap_h*/

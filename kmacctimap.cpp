@@ -38,6 +38,8 @@ using KPIM::BroadcastStatus;
 #include "kmfiltermgr.h"
 #include "folderstorage.h"
 #include "imapjob.h"
+#include "actionscheduler.h"
+using KMail::ActionScheduler;
 using KMail::ImapJob;
 using KMail::ImapAccountBase;
 #include "progressmanager.h"
@@ -55,6 +57,7 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
   mCountRemainChecks( 0 )
 {
   mFolder = 0;
+  mScheduler = 0;
   mNoopTimer.start( 60000 ); // // send a noop every minute
   mOpenFolders.setAutoDelete(true);
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
@@ -395,6 +398,25 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
   QValueList<Q_UINT32> inTransit;
 
+  static bool useAs = false;
+  static bool useAsChecked = false;
+  if (!useAsChecked) {
+    useAsChecked = true;
+    KConfig* config = KMKernel::config();
+    KConfigGroupSaver saver(config, "General");
+    useAs = config->readBoolEntry("action-scheduler", false);
+  }
+  if (useAs) {
+    KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
+    QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    if (!mScheduler) {
+	mScheduler = new KMail::ActionScheduler( set, filters );
+	connect( mScheduler, SIGNAL(filtered(Q_UINT32)), this, SLOT(slotFiltered(Q_UINT32)) );
+    } else {
+	mScheduler->setFilterList( filters );
+    }
+  }
+
   while (filterIt != mFilterSerNums.end()) {
     int idx = -1;
     KMFolder *folder = 0;
@@ -425,21 +447,25 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
         ++filterIt;
         continue;
       }
-	    
-      if (msg->transferInProgress()) {
-        inTransit.append( *filterIt );
-        ++filterIt;
-        continue;
-      }
-      msg->setTransferInProgress(true);
-      if ( !msg->isComplete() ) {
-        FolderJob *job = folder->createJob(msg);
-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotFilterMsg(KMMessage*)));
-        job->start();
+
+      if (useAs) {
+	mScheduler->execFilters( msg );
       } else {
-        mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-        if (slotFilterMsg(msg) == 2) break;
+	if (msg->transferInProgress()) {
+	  inTransit.append( *filterIt );
+	  ++filterIt;
+	  continue;
+	}
+	msg->setTransferInProgress(true);
+	if ( !msg->isComplete() ) {
+	  FolderJob *job = folder->createJob(msg);
+	  connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+		  SLOT(slotFilterMsg(KMMessage*)));
+	  job->start();
+	} else {
+	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+	  if (slotFilterMsg(msg) == 2) break;
+	}
       }
     }
     ++filterIt;
@@ -457,6 +483,12 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     mUnreadBeforeCheck.clear();
     mCheckingSingleFolder = false;
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotFiltered(Q_UINT32 serNum)
+{
+    mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
 }
 
 //-----------------------------------------------------------------------------

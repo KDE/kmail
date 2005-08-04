@@ -1314,51 +1314,58 @@ void KMHeaders::setFolderInfoStatus ()
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg()
 {
-#if 0 // uses action scheduler
-  KMFilterMgr::FilterSet set = KMFilterMgr::All;
-  QPtrList<KMFilter> filters;
-  filters = *( kmkernel->filterMgr() );
-  ActionScheduler *scheduler = new ActionScheduler( set, filters, this );
-  scheduler->setAutoDestruct( true );
-
-  int contentX, contentY;
-  HeaderItem *nextItem = prepareMove( &contentX, &contentY );
-  QPtrList<KMMsgBase> msgList = *selectedMsgs(true);
-  finalizeMove( nextItem, contentX, contentY );
-
-  for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
-    scheduler->execFilters( msg );
-#else
-  int contentX, contentY;
-  HeaderItem *nextItem = prepareMove( &contentX, &contentY );
-
-  KMMessageList* msgList = selectedMsgs();
-  if (msgList->isEmpty())
-    return;
-  finalizeMove( nextItem, contentX, contentY );
-
-  CREATE_TIMER(filter);
-  START_TIMER(filter);
-
-  for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-    int idx = msgBase->parent()->find(msgBase);
-    assert(idx != -1);
-    KMMessage * msg = msgBase->parent()->getMsg(idx);
-    if (msg->transferInProgress()) continue;
-    msg->setTransferInProgress(true);
-    if ( !msg->isComplete() )
-    {
-      FolderJob *job = mFolder->createJob(msg);
-      connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-              SLOT(slotFilterMsg(KMMessage*)));
-      job->start();
-    } else {
-      if (slotFilterMsg(msg) == 2) break;
-    }
+  static bool useAs = false;
+  static bool useAsChecked = false;
+  if (!useAsChecked) {
+    useAsChecked = true;
+    KConfig* config = KMKernel::config();
+    KConfigGroupSaver saver(config, "General");
+    useAs = config->readBoolEntry("action-scheduler", false);
   }
-  END_TIMER(filter);
-  SHOW_TIMER(filter);
-#endif
+  if (useAs) {  // uses action scheduler
+    KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
+    QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    ActionScheduler *scheduler = new ActionScheduler( set, filters, this );
+    scheduler->setAutoDestruct( true );
+
+    int contentX, contentY;
+    HeaderItem *nextItem = prepareMove( &contentX, &contentY );
+    QPtrList<KMMsgBase> msgList = *selectedMsgs(true);
+    finalizeMove( nextItem, contentX, contentY );
+
+    for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
+      scheduler->execFilters( msg );
+  } else {
+    int contentX, contentY;
+    HeaderItem *nextItem = prepareMove( &contentX, &contentY );
+
+    KMMessageList* msgList = selectedMsgs();
+    if (msgList->isEmpty())
+      return;
+    finalizeMove( nextItem, contentX, contentY );
+
+    CREATE_TIMER(filter);
+    START_TIMER(filter);
+
+    for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+      int idx = msgBase->parent()->find(msgBase);
+      assert(idx != -1);
+      KMMessage * msg = msgBase->parent()->getMsg(idx);
+      if (msg->transferInProgress()) continue;
+      msg->setTransferInProgress(true);
+      if ( !msg->isComplete() )
+      {
+	FolderJob *job = mFolder->createJob(msg);
+	connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+		SLOT(slotFilterMsg(KMMessage*)));
+	job->start();
+      } else {
+	if (slotFilterMsg(msg) == 2) break;
+      }
+    }
+    END_TIMER(filter);
+    SHOW_TIMER(filter);
+  }
 }
 
 

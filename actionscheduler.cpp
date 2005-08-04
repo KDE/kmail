@@ -41,6 +41,8 @@
 #include "kmmsgdict.h"
 #include "kmcommands.h"
 #include "kmheaders.h"
+#include "accountmanager.h"
+using KMail::AccountManager;
 
 #include <qtimer.h>
 #include <kconfig.h>
@@ -53,9 +55,10 @@ typedef QPtrList<KMMsgBase> KMMessageList;
 KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
 int ActionScheduler::refCount = 0;
 int ActionScheduler::count = 0;
+QValueList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
-				 QPtrList<KMFilter> filters,
+				 QValueList<KMFilter*> filters,
 				 KMHeaders *headers,
 				 KMFolder *srcFolder)
              :mSet( set ), mHeaders( headers )
@@ -72,7 +75,8 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   mAlwaysMatch = false;
   mAccountId = 0;
   mAccount = false;
-  KMFilter *filter;
+  lastCommand = 0;
+  lastJob = 0;
   finishTimer = new QTimer( this );
   connect( finishTimer, SIGNAL(timeout()), this, SLOT(finish()));
   fetchMessageTimer = new QTimer( this );
@@ -85,9 +89,12 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   connect( filterMessageTimer, SIGNAL(timeout()), this, SLOT(filterMessage()));
   timeOutTimer = new QTimer( this );
   connect( timeOutTimer, SIGNAL(timeout()), this, SLOT(timeOut()));
+  fetchTimeOutTimer = new QTimer( this );
+  connect( fetchTimeOutTimer, SIGNAL(timeout()), this, SLOT(fetchTimeOut()));
 
-  for (filter = filters.first(); filter; filter = filters.next())
-    mFilters.append( *filter );
+  QValueList<KMFilter*>::Iterator it = filters.begin();
+  for (; it != filters.end(); ++it)
+    mFilters.append( **it );
   mDestFolder = 0;
   if (srcFolder) {
     mDeleteSrcFolder = false;
@@ -102,10 +109,14 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
     mDeleteSrcFolder = true;
     setSourceFolder( tempFolder );
   }
+  if (!schedulerList)
+      schedulerList = new QValueList<ActionScheduler*>;
+  schedulerList->append( this );
 }
 
 ActionScheduler::~ActionScheduler()
 {
+  schedulerList->remove( this );
   tempCloseFolders();
   mSrcFolder->close();
 
@@ -151,13 +162,14 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 	     this, SLOT(msgAdded(KMFolder*, Q_UINT32)) );
 }
 
-void ActionScheduler::setFilterList( QPtrList<KMFilter> filters )
+void ActionScheduler::setFilterList( QValueList<KMFilter*> filters )
 {
   mFiltersAreQueued = true;
   mQueuedFilters.clear();
-  KMFilter *filter;
-  for (filter = filters.first(); filter; filter = filters.next())
-    mQueuedFilters.append( *filter );
+  
+  QValueList<KMFilter*>::Iterator it = filters.begin();
+  for (; it != filters.end(); ++it)
+    mQueuedFilters.append( **it );
   if (!mExecuting) {
       mFilters = mQueuedFilters;
       mFiltersAreQueued = false;
@@ -214,9 +226,17 @@ void ActionScheduler::execFilters(KMMsgBase* msgBase)
 
 void ActionScheduler::execFilters(Q_UINT32 serNum)
 {
-  if (mResult != ResultOk)
-    return; // An error has already occurred don't even try to process this msg
-
+  if (mResult != ResultOk) {
+      if ((mResult != ResultCriticalError) && 
+	  !mExecuting && !mExecutingLock && !mFetchExecuting) {
+	  mResult = ResultOk; // Recoverable error
+	  if (!mFetchSerNums.isEmpty()) {
+	      mFetchSerNums.push_back( mFetchSerNums.first() );
+	      mFetchSerNums.pop_front();
+	  }
+      } else
+	  return; // An error has already occurred don't even try to process this msg
+  }
   if (MessageProperty::filtering( serNum )) {
     // Not good someone else is already filtering this msg
     mResult = ResultError;
@@ -373,9 +393,12 @@ void ActionScheduler::fetchMessage()
   if (msg && msg->isComplete()) {
     messageFetched( msg );
   } else if (msg) {
+    fetchTimeOutTime = QTime::currentTime();
+    fetchTimeOutTimer->start( 60 * 1000, true );
     FolderJob *job = msg->parent()->createJob( msg );
     connect( job, SIGNAL(messageRetrieved( KMMessage* )),
 	     SLOT(messageFetched( KMMessage* )) );
+    lastJob = job;
     job->start();
   } else {
     mFetchExecuting = false;
@@ -387,6 +410,13 @@ void ActionScheduler::fetchMessage()
 
 void ActionScheduler::messageFetched( KMMessage *msg )
 {
+  fetchTimeOutTimer->stop();
+  if (!msg) {
+      // Should never happen, but sometimes does;
+      fetchMessageTimer->start( 0, true );
+      return;
+  }
+	
   mFetchSerNums.remove( msg->getMsgSerNum() );
 
   // Note: This may not be necessary. What about when it's time to 
@@ -618,7 +648,7 @@ void ActionScheduler::moveMessage()
   // sometimes the move command doesn't complete so time out after a minute
   // and move onto the next message
   lastCommand = cmd;
-  timeOutTimer->start( 6 * 1000, true );
+  timeOutTimer->start( 60 * 1000, true );
 }
 
 void ActionScheduler::moveMessageFinished( KMCommand *command )
@@ -635,8 +665,11 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
     mHeaders->clearSelectableAndAboutToBeDeleted( mOriginalSerNum );
   KMMessage *msg = 0;
   ReturnCode mOldReturnCode = mResult;
-  if (mOriginalSerNum)
+  if (mOriginalSerNum) {
     msg = message( mOriginalSerNum );
+    emit filtered( mOriginalSerNum );
+  }
+  
   mResult = mOldReturnCode; // ignore errors in deleting original message
   KMCommand *cmd = 0;
   if (msg && msg->parent()) {
@@ -676,6 +709,54 @@ void ActionScheduler::timeOut()
   mExecutingLock = false;
   mExecuting = false;
   finishTimer->start( 0, true );
+  if (mOriginalSerNum) // Try again
+      execFilters( mOriginalSerNum );
+}
+
+void ActionScheduler::fetchTimeOut()
+{
+  // Note: This is a good place for a debug statement
+  assert( lastJob );
+  // sometimes imap jobs seem to just stall so give up and move on
+  disconnect( lastJob, SIGNAL(messageRetrieved( KMMessage* )),
+	      this, SLOT(messageFetched( KMMessage* )) );
+  lastJob->kill();
+  lastJob = 0;
+  fetchMessageTimer->start( 0, true );
+}
+
+QString ActionScheduler::debug()
+{
+    QString res;
+    QValueList<ActionScheduler*>::iterator it;
+    int i = 1;
+    for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
+	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );
+	if ((*it)->mAccount && kmkernel->find( (*it)->mAccountId )) {
+	    res.append( QString( "Account %1, Name %2.\n" )
+			.arg( (*it)->mAccountId )
+			.arg( kmkernel->acctMgr()->find( (*it)->mAccountId )->name() ) );
+	}
+	res.append( QString( "mExecuting %1, " ).arg( (*it)->mExecuting ? "true" : "false" ) );
+	res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
+	res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );
+	res.append( QString( "mOriginalSerNum %1.\n" ).arg( (*it)->mOriginalSerNum ) );
+	res.append( QString( "mMessageIt %1.\n" ).arg( ((*it)->mMessageIt != 0) ? *(*it)->mMessageIt : 0 ) );
+	res.append( QString( "mSerNums count %1, " ).arg( (*it)->mSerNums.count() ) );
+	res.append( QString( "mFetchSerNums count %1.\n" ).arg( (*it)->mFetchSerNums.count() ) );
+	res.append( QString( "mResult " ) );
+	if ((*it)->mResult == ResultOk)
+	    res.append( QString( "ResultOk.\n" ) );
+	else if ((*it)->mResult == ResultError)
+	    res.append( QString( "ResultError.\n" ) );
+	else if ((*it)->mResult == ResultCriticalError)
+	    res.append( QString( "ResultCriticalError.\n" ) );
+	else
+	    res.append( QString( "Unknown.\n" ) );
+	    
+	++i;
+    }
+    return res;
 }
 
 #include "actionscheduler.moc"
