@@ -520,7 +520,7 @@ void KMMainWidget::createWidgets(void)
 
 
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-#ifdef INDEXERISREADY  
+#ifdef HAVE_INDEXLIB  
   mQuickSearchLine = new KListViewIndexedSearchLine( mSearchToolBar, mHeaders,
                                                     actionCollection(), "headers quick search line" );
 #else

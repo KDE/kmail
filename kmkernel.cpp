@@ -1423,7 +1423,7 @@ void KMKernel::init()
   readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
-#ifdef INDEXERISREADY
+#ifdef HAVE_INDEXLIB
   the_msgIndex = new KMMsgIndex(this); //create the indexer
 #else
   the_msgIndex = 0;
