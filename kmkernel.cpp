@@ -1423,8 +1423,11 @@ void KMKernel::init()
   readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
+#ifdef INDEXERISREADY
+  the_msgIndex = new KMMsgIndex(this); //create the indexer
+#else
   the_msgIndex = 0;
-  //  the_msgIndex = new KMMsgIndex(this); //create the indexer
+#endif  
 
 #if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );

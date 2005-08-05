@@ -520,8 +520,13 @@ void KMMainWidget::createWidgets(void)
 
 
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
+#ifdef INDEXERISREADY  
   mQuickSearchLine = new KListViewIndexedSearchLine( mSearchToolBar, mHeaders,
                                                     actionCollection(), "headers quick search line" );
+#else
+  mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders,
+						actionCollection(), "headers quick search line" );
+#endif
   label->setBuddy( mQuickSearchLine );
   mSearchToolBar->setStretchableWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
