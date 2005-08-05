@@ -398,15 +398,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
   QValueList<Q_UINT32> inTransit;
 
-  static bool useAs = false;
-  static bool useAsChecked = false;
-  if (!useAsChecked) {
-    useAsChecked = true;
-    KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
-    useAs = config->readBoolEntry("action-scheduler", false);
-  }
-  if (useAs) {
+  if (ActionScheduler::isEnabled()) {
     KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
     QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     if (!mScheduler) {
@@ -448,7 +440,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
         continue;
       }
 
-      if (useAs) {
+      if (ActionScheduler::isEnabled()) {
 	mScheduler->execFilters( msg );
       } else {
 	if (msg->transferInProgress()) {

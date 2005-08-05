@@ -56,6 +56,8 @@ KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
 int ActionScheduler::refCount = 0;
 int ActionScheduler::count = 0;
 QValueList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
+bool ActionScheduler::sEnabled = false;
+bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
 				 QValueList<KMFilter*> filters,
@@ -757,6 +759,18 @@ QString ActionScheduler::debug()
 	++i;
     }
     return res;
+}
+
+bool ActionScheduler::isEnabled()
+{
+    if (sEnabledChecked)
+	return sEnabled;
+
+    sEnabledChecked = true;
+    KConfig* config = KMKernel::config();
+    KConfigGroupSaver saver(config, "General");
+    sEnabled = config->readBoolEntry("action-scheduler", false);
+    return sEnabled;
 }
 
 #include "actionscheduler.moc"

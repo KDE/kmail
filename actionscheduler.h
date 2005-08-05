@@ -89,6 +89,7 @@ public:
   void execFilters(KMMsgBase* msgBase);
   void execFilters(Q_UINT32 serNum);
   static QString debug();
+  static bool isEnabled();
 
 signals:
   /** Emitted when filtering is completed */
@@ -126,6 +127,7 @@ private:
   static QValueList<ActionScheduler*> *schedulerList; // for debugging
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
+  static bool sEnabled, sEnabledChecked;
   QValueListIterator<Q_UINT32> mMessageIt;
   QValueListIterator<KMFilter> mFilterIt;
   QValueList<Q_UINT32> mSerNums, mFetchSerNums;

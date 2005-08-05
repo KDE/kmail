@@ -1314,15 +1314,7 @@ void KMHeaders::setFolderInfoStatus ()
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg()
 {
-  static bool useAs = false;
-  static bool useAsChecked = false;
-  if (!useAsChecked) {
-    useAsChecked = true;
-    KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
-    useAs = config->readBoolEntry("action-scheduler", false);
-  }
-  if (useAs) {  // uses action scheduler
+  if (ActionScheduler::isEnabled()) {  // uses action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
     QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     ActionScheduler *scheduler = new ActionScheduler( set, filters, this );

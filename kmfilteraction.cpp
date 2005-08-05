@@ -277,15 +277,7 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
   FolderRequester *req = new FolderRequester( parent,
       kmkernel->getKMMainWidget()->folderTree() );
-  static bool useAs = false;
-  static bool useAsChecked = false;
-  if (!useAsChecked) {
-    useAsChecked = true;
-    KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
-    useAs = config->readBoolEntry("action-scheduler", false);
-  }
-  if (!useAs)
+  if (!ActionScheduler::isEnabled())
     req->setShowImapFolders( false );
   setParamWidgetValue( req );
   return req;
