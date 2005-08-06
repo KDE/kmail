@@ -1961,7 +1961,6 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
     kdDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusNew()
 {
@@ -1987,45 +1986,9 @@ void KMMainWidget::slotSetMsgStatusFlag()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusSpam()
-{
-  mHeaders->setMsgStatus( KMMsgStatusSpam, true );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusHam()
-{
-  mHeaders->setMsgStatus( KMMsgStatusHam, true );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusReplied()
-{
-  mHeaders->setMsgStatus(KMMsgStatusReplied, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusForwarded()
-{
-  mHeaders->setMsgStatus(KMMsgStatusForwarded, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusQueued()
-{
-  mHeaders->setMsgStatus(KMMsgStatusQueued, true);
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusTodo()
 {
   mHeaders->setMsgStatus(KMMsgStatusTodo, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusSent()
-{
-  mHeaders->setMsgStatus(KMMsgStatusSent, true);
 }
 
 //-----------------------------------------------------------------------------
@@ -2053,33 +2016,9 @@ void KMMainWidget::slotSetThreadStatusRead()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusReplied()
-{
-  mHeaders->setThreadStatus(KMMsgStatusReplied, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusForwarded()
-{
-  mHeaders->setThreadStatus(KMMsgStatusForwarded, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusQueued()
-{
-  mHeaders->setThreadStatus(KMMsgStatusQueued, true);
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusTodo()
 {
   mHeaders->setThreadStatus(KMMsgStatusTodo, true);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusSent()
-{
-  mHeaders->setThreadStatus(KMMsgStatusSent, true);
 }
 
 //-----------------------------------------------------------------------------
@@ -2098,18 +2037,6 @@ void KMMainWidget::slotSetThreadStatusIgnored()
   if (mIgnoreThreadAction->isChecked()) {
     mWatchThreadAction->setChecked(false);
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusSpam()
-{
-  mHeaders->setThreadStatus( KMMsgStatusSpam, true );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSetThreadStatusHam()
-{
-  mHeaders->setThreadStatus( KMMsgStatusHam, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -2617,31 +2544,6 @@ void KMMainWidget::setupActions()
   mStatusMenu->insert( mToggleTodoAction );
 
 
-  mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
-                                 0, this, SLOT(slotSetMsgStatusReplied()),
-                                 actionCollection(), "status_replied");
-  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
-  mStatusMenu->insert( mToggleRepliedAction );
-
-  mToggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
-                                 0, this, SLOT(slotSetMsgStatusForwarded()),
-                                 actionCollection(), "status_forwarded");
-  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
-  mStatusMenu->insert( mToggleForwardedAction );
-
-  mToggleQueuedAction = new KToggleAction(i18n("Mark Message as &Queued"), "kmmsgqueued",
-                                 0, this, SLOT(slotSetMsgStatusQueued()),
-                                 actionCollection(), "status_queued");
-  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
-  mStatusMenu->insert( mToggleQueuedAction );
-
-  mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
-                                 0, this, SLOT(slotSetMsgStatusSent()),
-                                 actionCollection(), "status_sent");
-  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
-  mStatusMenu->insert( mToggleSentAction );
-
-
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
@@ -2678,32 +2580,6 @@ void KMMainWidget::setupActions()
                                        actionCollection(), "thread_todo");
   mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
   mThreadStatusMenu->insert( mToggleThreadTodoAction );
-
-  mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
-                                       0, this, SLOT(slotSetThreadStatusReplied()),
-                                       actionCollection(), "thread_replied");
-  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
-  mThreadStatusMenu->insert( mToggleThreadRepliedAction );
-
-  mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
-                                       0, this, SLOT(slotSetThreadStatusForwarded()),
-                                       actionCollection(), "thread_forwarded");
-  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
-  mThreadStatusMenu->insert( mToggleThreadForwardedAction );
-
-  mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
-                                       0, this, SLOT(slotSetThreadStatusQueued()),
-                                       actionCollection(), "thread_queued");
-  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
-  mThreadStatusMenu->insert( mToggleThreadQueuedAction );
-
-  mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
-                                       0, this, SLOT(slotSetThreadStatusSent()),
-                                       actionCollection(), "thread_sent");
-  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
-  mThreadStatusMenu->insert( mToggleThreadSentAction );
-
-  mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
@@ -3056,28 +2932,16 @@ void KMMainWidget::updateMessageActions()
     mMarkThreadAsNewAction->setEnabled( thread_actions );
     mMarkThreadAsReadAction->setEnabled( thread_actions );
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
-    mToggleThreadRepliedAction->setEnabled( thread_actions );
-    mToggleThreadForwardedAction->setEnabled( thread_actions );
-    mToggleThreadQueuedAction->setEnabled( thread_actions );
     mToggleThreadTodoAction->setEnabled( thread_actions );
-    mToggleThreadSentAction->setEnabled( thread_actions );
     mToggleThreadFlagAction->setEnabled( thread_actions );
     mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
-      mToggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
-      mToggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
-      mToggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
       mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-      mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
       mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
       if (thread_actions) {
-        mToggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
-        mToggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
-        mToggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
         mToggleThreadTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-        mToggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
         mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
         mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
         mIgnoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
