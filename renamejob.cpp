@@ -125,7 +125,7 @@ void RenameJob::execute()
           this, SLOT( slotMoveMessages() ) );
       KMFolderImap* imapFolder =
         static_cast<KMFolderImap*>(mNewParent->owner()->storage());
-      imapFolder->createFolder( mNewName, false ); 
+      imapFolder->createFolder( mNewName, QString::null, false ); 
     } else if ( mNewParent->type() == KMDImapDir )
     {
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mNewFolder->storage());

@@ -1614,18 +1614,30 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
 void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
                                 bool askUser)
 {
+  kdDebug(5006) << "KMFolderImap::createFolder - name=" << name << ",parent=" <<
+    parentPath << ",askUser=" << askUser << endl;
   if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
     kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
     return;
   }
   KURL url = mAccount->getUrl();
   QString parent = ( parentPath.isEmpty() ? imapPath() : parentPath );
-  if ( !parent.endsWith("/") ) {
-    parent += "/";
+  if ( parent.endsWith("/") ) {
+    // strip / (which kmail uses this internally)
+    parent = parent.left( parent.length()-1 );
+  }
+  QString delim = mAccount->delimiterForFolder( this );
+  if ( delim.isEmpty() ) {
+    // better be safe
+    delim = "/";
+  }
+  if ( !parent.endsWith(delim) ) {
+    // add the correct delimiter
+    parent += delim;
   }
   QString path = parent + name;
   if ( askUser ) {
-    path += ";INFO=ASKUSER";
+    path += "/;INFO=ASKUSER";
   }
   url.setPath( path );
 

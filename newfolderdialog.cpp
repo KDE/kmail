@@ -249,7 +249,7 @@ void NewFolderDialog::slotOk()
         QString imapPath, parent;
         if ( mNamespacesComboBox ) {
           // create folder with namespace
-          parent = mNamespacesComboBox->currentText();
+          parent = anAccount->addPathToNamespace( mNamespacesComboBox->currentText() );
           imapPath = anAccount->addPathToNamespace( parent ) + fldName;
         }
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );

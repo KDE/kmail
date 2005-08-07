@@ -745,8 +745,13 @@ namespace KMail {
       QStringList::Iterator strit;
       for ( strit = it.data().begin(); strit != it.data().end(); ++strit )
       {
+        QString ns = *strit;
+        if ( ns.endsWith("/") || ns.endsWith(".") ) {
+          // strip delimiter for the comparison
+          ns = ns.left( ns.length()-1 );
+        }
         // first ignore an empty prefix as it would match always
-        if ( !(*strit).isEmpty() && path.find( *strit ) != -1 ) {
+        if ( !ns.isEmpty() && path.find( ns ) != -1 ) {
           return (*strit);
         }
       }
@@ -783,9 +788,7 @@ namespace KMail {
   QString ImapAccountBase::delimiterForFolder( FolderStorage* storage )
   {
     QString prefix = namespaceForFolder( storage );
-    QString delim;
-    if ( mNamespaceToDelimiter.contains(prefix) )
-      delim = mNamespaceToDelimiter[prefix];
+    QString delim = delimiterForNamespace( prefix );
     return delim;
   }
 
