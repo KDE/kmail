@@ -38,6 +38,7 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialo
 
   /*int subjCol =*/ addColumn(i18n("Subject"), 180);
   /*int sendCol =*/ addColumn(i18n("Sender"), 150);
+  /*int recvCol =*/ addColumn(i18n("Receiver"), 150);
   int dateCol = addColumn(i18n("Date"), 120);
   int sizeCol = addColumn(i18n("Size"), 80);
 
@@ -313,8 +314,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
   mFilteredHeaders->hide();
   vbl->addWidget(lowerBox);
 
-  mFilteredHeaders->header()->setResizeEnabled(false, 7);
-  mFilteredHeaders->setColumnWidth(7, 0);
+  mFilteredHeaders->header()->setResizeEnabled(false, 8);
+  mFilteredHeaders->setColumnWidth(8, 0);
 
   // fill the listviews with data from the headers
   KMPopHeaders *headers;
@@ -388,17 +389,25 @@ void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg)
       if(tmp.isEmpty())
         tmp = i18n("no subject");
       lvi->setText(3, tmp);
+
       // set the sender
       tmp = msg->fromStrip();
       if(tmp.isEmpty())
         tmp = i18n("unknown");
-      lvi->setText(4, msg->fromStrip());
+      lvi->setText(4, tmp);
+
+      // set the receiver
+      tmp = msg->toStrip();
+      if(tmp.isEmpty())
+        tmp = i18n("unknown");
+      lvi->setText(5, tmp);
+
       // set the date
-      lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
+      lvi->setText(6, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
       // set the size
-      lvi->setText(6, KIO::convertSize(msg->msgLength()));
+      lvi->setText(7, KIO::convertSize(msg->msgLength()));
       // Date for sorting
-      lvi->setText(7, msg->dateIsoStr());
+      lvi->setText(8, msg->dateIsoStr());
 }
 
 void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAction)
