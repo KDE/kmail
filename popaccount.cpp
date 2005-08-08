@@ -874,16 +874,16 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
       QString msg;
       if (numBytes != numBytesToRead && mLeaveOnServer)
       {
-        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5 "
-                   "(%6 KB remain on the server).")
+        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6 "
+                   "(%7 KB remain on the server).")
           .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-          .arg(numBytesToRead/1024).arg(mHost).arg(numBytes/1024);
+          .arg(numBytesToRead/1024).arg(mLogin).arg(mHost).arg(numBytes/1024);
       }
       else
       {
-        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5.")
+        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) for %5@%6.")
           .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-          .arg(numBytesToRead/1024).arg(mHost);
+          .arg(numBytesToRead/1024).arg(mLogin).arg(mHost);
       }
       mMailCheckProgressItem->setStatus( msg );
       mMailCheckProgressItem->setProgress(
