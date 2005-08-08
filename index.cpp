@@ -323,6 +323,7 @@ void KMMsgIndex::removeSearch( QObject* destroyed ) {
 
 bool KMMsgIndex::isIndexed( const KMFolder* folder ) const {
 	if ( mState == s_creating || mState == s_willcreate ) return false;
+	if ( !folder || !folder->parent() ) return false;
 	const KMFolderMgr* manager = folder->parent()->manager();
 	return manager == kmkernel->folderMgr() || manager == kmkernel->dimapFolderMgr();
 }
