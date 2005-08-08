@@ -301,6 +301,7 @@ protected slots:
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
   void slotSetMsgStatusTodo();
+  void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
   void slotSetThreadStatusNew();
   void slotSetThreadStatusUnread();
@@ -423,6 +424,7 @@ private:
   KToggleAction *mToggleThreadTodoAction;
   KToggleAction *mToggleThreadFlagAction;
   KToggleAction *mToggleTodoAction;
+  KToggleAction *mToggleSentAction;
   KToggleAction *mToggleFlagAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
