@@ -213,7 +213,7 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( !emitsCompletedItself() )
     emit completed( this );
   if ( !deletesItself() )
-    delete this;
+    deleteLater();
 }
 
 void KMCommand::transferSelectedMsgs()
@@ -878,12 +878,12 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
       job->showErrorDialog();
       setResult( Failed );
       emit completed( this );
-      delete this;
+      deleteLater();
     }
   } else {
     setResult( OK );
     emit completed( this );
-    delete this;
+    deleteLater();
   }
 }
 
@@ -989,7 +989,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
     setResult( OK );
     emit completed( this );
   }
-  delete this;
+  deleteLater();
 }
 
 //-----------------------------------------------------------------------------
@@ -2132,7 +2132,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       KMessageBox::information( 0, i18n("Found no attachments to save.") );
       setResult( OK ); // The user has already been informed.
       emit completed( this );
-      delete this;
+      deleteLater();
       return;
     }
   }
@@ -2148,7 +2148,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     if ( fdlg.exec() == QDialog::Rejected || !fdlg.selectedURL().isValid() ) {
       setResult( Canceled );
       emit completed( this );
-      delete this;
+      deleteLater();
       return;
     }
     dirUrl = fdlg.selectedURL();
@@ -2168,7 +2168,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     if ( url.isEmpty() ) {
       setResult( Canceled );
       emit completed( this );
-      delete this;
+      deleteLater();
       return;
     }
   }
@@ -2213,7 +2213,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   }
   setResult( globalResult );
   emit completed( this );
-  delete this;
+  deleteLater();
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
@@ -2477,7 +2477,7 @@ void KMMailingListCommand::commandCompleted( KMCommand *command )
 {
   setResult( command->result() );
   emit completed( this );
-  delete this;
+  deleteLater();
 }
 
 KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, KMFolder *folder )
