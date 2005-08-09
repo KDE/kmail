@@ -264,7 +264,7 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   if ( !emitsCompletedItself() )
     emit completed( this );
   if ( !deletesItself() )
-    delete this;
+    deleteLater();
 }
 
 void KMCommand::transferSelectedMsgs()
