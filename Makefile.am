@@ -18,7 +18,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         $(all_includes)
 
 if add_indexlib
-INDEXLIB=../indexlib/indexlib.la
+INDEXLIB=../indexlib/libindex.la
 endif
 
 lib_LTLIBRARIES = libkmailprivate.la
