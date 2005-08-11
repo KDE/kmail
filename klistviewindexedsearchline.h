@@ -41,7 +41,10 @@ class KListView;
 class QListViewItem;
 class QToolButton;
 class KListViewSearchLine;
-class indexer;
+
+/**
+ * Extends HeaderListQuickSearch to also search inside message bodies using KMMsgIndex
+ */
 
 class KDEUI_EXPORT KListViewIndexedSearchLine: public KMail::HeaderListQuickSearch
 {
