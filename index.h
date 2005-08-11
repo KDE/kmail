@@ -64,23 +64,68 @@ class KMMsgIndex : public QObject {
 		 * @return false if the query cannot be handled
 		 */
 		bool startQuery( KMSearch* );
+		/**
+		 * Stops a query. nop if the query isn't running anymore.
+		 *
+		 * @return true if the query was found
+		 */
 		bool stopQuery( KMSearch* );
 
 		/**
 		 * Just return all the uids where the pattern exists
 		 */
 		std::vector<Q_UINT32> simpleSearch( QString, bool* ) const;
+
+		/**
+		 * Returns whether the folder is indexable. Only local and dimap
+		 * folders are currently indexable.
+		 *
+		 * Note that a folder might be indexable and not indexed if the user has
+		 * disabled it. @see isIndexed
+		 */
+		bool isIndexable( KMFolder* folder ) const;
+
+		/**
+		 * Returns whether the folder has indexing enabled.
+		 *
+		 * This returns true immediatelly after indexing has been enabled
+		 * even though the folder is probably still being indexed in the background.
+		 */
+		bool isIndexed( KMFolder* folder ) const;
 	public slots:
-		void clear();
-		void create();
-		void cleanUp();
+		/**
+		 * Either enable or disable indexing.
+		 *
+		 * Calling setEnabled( true ) will start building the whole index,
+		 * which is an expensive operation (time and disk-space).
+		 *
+		 * Calling setEnabled( false ) will remove the index immediatelly,
+		 * freeing up disk-space.
+		 */
+		void setEnabled( bool );
+
+		/**
+		 * Change the indexing override for a given folder
+		 *
+		 * If called with true, will start indexing all the messages in the folder
+		 * If called with false will remove all the messages in the folder
+		 */
+		void setIndexingEnabled( KMFolder*, bool );
 
 	private slots:
+		/**
+		 * Removes the index.
+		 *
+		 * If the index is enabled, then creation will start on the next time
+		 * KMMsgIndex is constructed.
+		 */
+		void clear();
+		void create();
+		void maintenance();
+
 		void act();
 		void removeSearch( QObject* );
 
-		//void syncIndex();
-		//void startSync();
 		void continueCreation();
 
 		void slotAddMessage( KMFolder*, Q_UINT32 message );
@@ -89,7 +134,6 @@ class KMMsgIndex : public QObject {
 		static QString defaultPath();
 
 		bool canHandleQuery( const KMSearchPattern* ) const;
-		bool isIndexed( const KMFolder* ) const;
 		int addMessage( Q_UINT32 );
 		void removeMessage( Q_UINT32 );
 
@@ -114,11 +158,12 @@ class KMMsgIndex : public QObject {
 		std::vector<Q_UINT32> mExisting;
 
 		enum e_state {
-			s_idle, // doing nothing
+			s_idle, // doing nothing, index waiting
 			s_willcreate, // just constructed, create() scheduled (mIndex == 0)
 			s_creating, // creating the index from the messages
 			s_processing, // has messages to process
-			s_error // an error occurred
+			s_error, // an error occurred
+			s_disabled, // disabled: the index is not working
 		} mState;
 
 		unsigned mMaintenanceCount;

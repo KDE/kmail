@@ -53,7 +53,10 @@
 #include <algorithm>
 #include <cstdlib>
 
+namespace {
 const unsigned int MaintenanceLimit = 1000;
+const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
+}
 
 static
 QValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
@@ -100,6 +103,13 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	//connect( mSyncTimer, SIGNAL( timeout() ), SLOT( syncIndex() ) );
 
 #ifdef HAVE_INDEXLIB
+	KConfigGroup cfg( KMKernel::config(), "text-index" );
+	if ( !cfg.readBoolEntry( "enabled", false ) ) {
+		indexlib::remove( mIndexPath );
+		mLockFile.force_unlock();
+		mState = s_disabled;
+		return;
+	}
 	if ( !mLockFile.trylock() ) {
 		indexlib::remove( mIndexPath );
 
@@ -112,7 +122,6 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 		QTimer::singleShot( 8000, this, SLOT( create() ) );
 		mState = s_willcreate;
 	} else {
-		KConfigGroup cfg( KMKernel::config(), "text-index" );
 		if ( cfg.readBoolEntry( "creating" ) ) {
 			QTimer::singleShot( 8000, this, SLOT( continueCreation() ) );
 			mState = s_creating;
@@ -145,19 +154,117 @@ KMMsgIndex::~KMMsgIndex() {
 #endif
 }
 
+bool KMMsgIndex::isIndexable( KMFolder* folder ) const {
+	if ( !folder || !folder->parent() ) return false;
+	const KMFolderMgr* manager = folder->parent()->manager();
+	return manager == kmkernel->folderMgr() || manager == kmkernel->dimapFolderMgr();
+}
+
+bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
+	if ( !isIndexable( folder ) ) return false;
+	KConfig* config = KMKernel::config();
+	KConfigGroupSaver saver( config, "Folder-" + folder->idString() );
+	return !config->readBoolEntry( folderIndexDisabledKey, false );
+}
+
+void KMMsgIndex::setEnabled( bool e ) {
+	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
+	if ( e ) {
+		switch ( mState ) {
+			case s_idle:
+			case s_willcreate:
+			case s_creating:
+			case s_processing:
+				// nothing to do
+				return;
+			case s_error:
+				// nothing can be done, probably
+				return;
+			case s_disabled:
+				QTimer::singleShot( 8000, this, SLOT( create() ) );
+				mState = s_willcreate;
+		}
+	} else {
+		clear();
+	}
+}
+
+void KMMsgIndex::setIndexingEnabled( KMFolder* folder, bool e ) {
+	KConfig* config = KMKernel::config();
+	KConfigGroupSaver saver( config, "Folder-" + folder->idString() );
+	if ( config->readBoolEntry( folderIndexDisabledKey, e ) == e ) return; // nothing to do
+	config->writeEntry( folderIndexDisabledKey, e );
+
+	if ( e ) {
+		switch ( mState ) {
+			case s_idle:
+			case s_creating:
+			case s_processing:
+				mPendingFolders.push_back( folder );
+				scheduleAction();
+				break;
+			case s_willcreate:
+				// do nothing, create() will handle this
+				break;
+			case s_error:
+			case s_disabled:
+				// nothing can be done
+				break;
+		}
+
+	} else {
+		switch ( mState ) {
+			case s_willcreate:
+				// create() will notice that folder is disabled
+				break;
+			case s_creating:
+				if ( std::find( mPendingFolders.begin(), mPendingFolders.end(), folder ) != mPendingFolders.end() ) {
+					// easy:
+					mPendingFolders.erase( std::find( mPendingFolders.begin(), mPendingFolders.end(), folder ) );
+					break;
+				}
+				//else  fall-through
+			case s_idle:
+			case s_processing:
+				
+			case s_error:
+			case s_disabled:
+				// nothing can be done
+				break;
+		}
+	}
+}
+
 void KMMsgIndex::clear() {
+	kdDebug( 5006 ) << "KMMsgIndex::clear()" << endl;
 #ifdef HAVE_INDEXLIB
 	delete mIndex;
 	mLockFile.force_unlock();
 	mIndex = 0;
 	indexlib::remove( mIndexPath );
+	mPendingMsgs.clear();
+	mPendingFolders.clear();
+	mMaintenanceCount = 0;
+	mAddedMsgs.clear();
+	mRemovedMsgs.clear();
+	mExisting.clear();
+	mState = s_disabled;
+	for ( std::set<KMFolder*>::const_iterator first = mOpenedFolders.begin(), past = mOpenedFolders.end(); first != past; ++first ) {
+		( *first )->close();
+	}
+	mOpenedFolders.clear();
+	for ( std::vector<Search*>::const_iterator first = mSearches.begin(), past = mSearches.end(); first != past; ++first ) {
+		delete *first;
+	}
+	mSearches.clear();
+	mTimer->stop();
 #endif
 }
 
-void KMMsgIndex::cleanUp() {
+void KMMsgIndex::maintenance() {
 #ifdef HAVE_INDEXLIB
 	if ( mState != s_idle || kapp->hasPendingEvents() ) {
-		QTimer::singleShot( 8000, this, SLOT( cleanUp() ) );
+		QTimer::singleShot( 8000, this, SLOT( maintenance() ) );
 		return;
 	}
 	mIndex->maintenance();
@@ -220,8 +327,12 @@ void KMMsgIndex::act() {
 			f->open();
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
-		for ( int i = 0; i < f->count(); ++i) {
-			mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
+		KConfig* config = KMKernel::config();
+		KConfigGroupSaver saver( config, "Folder-" + f->idString() );
+		if ( config->readBoolEntry( folderIndexDisabledKey, true ) ) {
+			for ( int i = 0; i < f->count(); ++i ) {
+				mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
+			}
 		}
 		return;
 	}
@@ -283,8 +394,7 @@ void KMMsgIndex::create() {
 
 bool KMMsgIndex::startQuery( KMSearch* s ) {
 	kdDebug( 5006 ) << "KMMsgIndex::startQuery( . )" << endl;
-	if ( mState == s_creating ) return false;
-	if ( mState == s_error ) return false;
+	if ( mState != s_idle ) return false;
 	if ( !isIndexed( s->root() ) || !canHandleQuery( s->searchPattern() ) ) return false;
 
 	kdDebug( 5006 ) << "KMMsgIndex::startQuery( . ) starting query" << endl;
@@ -321,12 +431,6 @@ void KMMsgIndex::removeSearch( QObject* destroyed ) {
 	mSearches.erase( std::find( mSearches.begin(), mSearches.end(), destroyed ) );
 }
 
-bool KMMsgIndex::isIndexed( const KMFolder* folder ) const {
-	if ( mState == s_creating || mState == s_willcreate ) return false;
-	if ( !folder || !folder->parent() ) return false;
-	const KMFolderMgr* manager = folder->parent()->manager();
-	return manager == kmkernel->folderMgr() || manager == kmkernel->dimapFolderMgr();
-}
 
 bool KMMsgIndex::stopQuery( KMSearch* s ) {
 	kdDebug( 5006 ) << "KMMsgIndex::stopQuery( . )" << endl;
@@ -360,7 +464,7 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 }
 
 bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
-  kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
+	kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
 	if ( !pat ) return false;
 	QPtrListIterator<KMSearchRule> it( *pat );
 	KMSearchRule* rule;
@@ -375,7 +479,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 
 void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
-	if ( mState == s_error ) return;
+	if ( mState == s_error || mState == s_disabled ) return;
 	
 	if ( mState == s_creating ) mAddedMsgs.push_back( serNum );
 	else mPendingMsgs.push_back( serNum );
@@ -386,7 +490,7 @@ void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 
 void KMMsgIndex::slotRemoveMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotRemoveMessage( . , " << serNum << " )" << endl;
-	if ( mState == s_error ) return;
+	if ( mState == s_error || mState == s_disabled ) return;
 
 	if ( mState == s_idle ) mState = s_processing;
 	mRemovedMsgs.push_back( serNum );
@@ -402,13 +506,13 @@ void KMMsgIndex::scheduleAction() {
 
 void KMMsgIndex::removeMessage( Q_UINT32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::removeMessage( " << serNum << " )" << endl;
-	if ( mState == s_error ) return;
+	if ( mState == s_error || mState == s_disabled ) return;
 	
 #ifdef HAVE_INDEXLIB
 	mIndex->remove_doc( QString::number( serNum ).latin1() );
 	++mMaintenanceCount;
 	if ( mMaintenanceCount > MaintenanceLimit && mRemovedMsgs.empty() ) {
-		QTimer::singleShot( 100, this, SLOT( cleanUp() ) );
+		QTimer::singleShot( 100, this, SLOT( maintenance() ) );
 	}
 #endif
 }
