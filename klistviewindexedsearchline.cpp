@@ -70,7 +70,7 @@ bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const Q
 	if ( mFiltering && 
 			std::binary_search( mResults.begin(), mResults.end(), static_cast<const KMail::HeaderItem*>( item )->msgSerNum() ) )
 		return true;
-	return KListViewSearchLine::itemMatches( item, s );
+	return KMail::HeaderListQuickSearch::itemMatches( item, s );
 }
 
 #include "klistviewindexedsearchline.moc"
