@@ -232,14 +232,11 @@ void AntiSpamWizard::accept()
     // ATM and needs to be replaced with a value from a (still missing)
     // checkbox in the GUI. At least, the replacement is announced in the GUI.
     replaceExistingFilters = true;
-    bool canClassify = false;
     for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
           it != mToolList.end(); ++it ) {
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) &&
          (*it).isSpamTool() && !(*it).isDetectionOnly() )
       {
-        if ( (*it).useBayesFilter() )
-          canClassify = true;
         // pipe messages through the anti-spam tools,
         // one single filter for each tool
         // (could get combined but so it's easier to understand for the user)
@@ -265,55 +262,54 @@ void AntiSpamWizard::accept()
       }
     }
 
+    // Sort out spam depending on header fields set by the tools
+    KMFilter* spamFilter = new KMFilter();
+    QPtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
     if ( mSpamRulesPage->moveSpamSelected() )
     {
-      // Sort out spam depending on header fields set by the tools
-      KMFilter* spamFilter = new KMFilter();
-      QPtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
       KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
       spamFilterAction1->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
       spamFilterActions->append( spamFilterAction1 );
-      KMFilterAction* spamFilterAction2 = dict["set status"]->create();
-      spamFilterAction2->argsFromString( "P" ); // Spam
-      spamFilterActions->append( spamFilterAction2 );
-      if ( mSpamRulesPage->markAsReadSelected() ) {
-        KMFilterAction* spamFilterAction3 = dict["set status"]->create();
-        spamFilterAction3->argsFromString( "R" ); // Read
-        spamFilterActions->append( spamFilterAction3 );
-      }
-      KMSearchPattern* spamFilterPattern = spamFilter->pattern();
-      if ( replaceExistingFilters )
-        spamFilterPattern->setName( i18n( "Spam handling" ) );
-      else
-        spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
-      spamFilterPattern->setOp( KMSearchPattern::OpOr );
-      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
-            it != mToolList.end(); ++it ) {
-        if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) )
-        {
-            if ( (*it).isSpamTool() )
-            {
-              const QCString header = (*it).getDetectionHeader().ascii();
-              const QString & pattern = (*it).getDetectionPattern();
-              if ( (*it).isUseRegExp() )
-                spamFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncRegExp, pattern ) );
-              else
-                spamFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncContains, pattern ) );
-            }
-        }
-      }
-      spamFilter->setApplyOnOutbound( FALSE);
-      spamFilter->setApplyOnInbound();
-      spamFilter->setApplyOnExplicit();
-      spamFilter->setStopProcessingHere( TRUE );
-      spamFilter->setConfigureShortcut( FALSE );
-
-      filterList.append( spamFilter );
     }
+    KMFilterAction* spamFilterAction2 = dict["set status"]->create();
+    spamFilterAction2->argsFromString( "P" ); // Spam
+    spamFilterActions->append( spamFilterAction2 );
+    if ( mSpamRulesPage->markAsReadSelected() ) {
+      KMFilterAction* spamFilterAction3 = dict["set status"]->create();
+      spamFilterAction3->argsFromString( "R" ); // Read
+      spamFilterActions->append( spamFilterAction3 );
+    }
+    KMSearchPattern* spamFilterPattern = spamFilter->pattern();
+    if ( replaceExistingFilters )
+      spamFilterPattern->setName( i18n( "Spam handling" ) );
+    else
+      spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
+    spamFilterPattern->setOp( KMSearchPattern::OpOr );
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) )
+      {
+          if ( (*it).isSpamTool() )
+          {
+            const QCString header = (*it).getDetectionHeader().ascii();
+            const QString & pattern = (*it).getDetectionPattern();
+            if ( (*it).isUseRegExp() )
+              spamFilterPattern->append(
+                KMSearchRule::createInstance( header,
+                KMSearchRule::FuncRegExp, pattern ) );
+            else
+              spamFilterPattern->append(
+                KMSearchRule::createInstance( header,
+                KMSearchRule::FuncContains, pattern ) );
+          }
+      }
+    }
+    spamFilter->setApplyOnOutbound( FALSE);
+    spamFilter->setApplyOnInbound();
+    spamFilter->setApplyOnExplicit();
+    spamFilter->setStopProcessingHere( TRUE );
+    spamFilter->setConfigureShortcut( FALSE );
+    filterList.append( spamFilter );
 
     if ( mSpamRulesPage->moveUnsureSelected() )
     {
@@ -362,76 +358,76 @@ void AntiSpamWizard::accept()
         delete unsureFilter;
     }
 
-    if ( canClassify )
-    {
-      // Classify messages manually as Spam
-      KMFilter* classSpamFilter = new KMFilter();
-      classSpamFilter->setIcon( "mail_spam" );
-      QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
-      KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
-      classSpamFilterActionFirst->argsFromString( "P" );
-      classSpamFilterActions->append( classSpamFilterActionFirst );
-      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
-            it != mToolList.end(); ++it ) {
-        if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
-            && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
-        {
-          KMFilterAction* classSpamFilterAction = dict["execute"]->create();
-          classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
-          classSpamFilterActions->append( classSpamFilterAction );
-        }
+    // Classify messages manually as Spam
+    KMFilter* classSpamFilter = new KMFilter();
+    classSpamFilter->setIcon( "mail_spam" );
+    QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
+    KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
+    classSpamFilterActionFirst->argsFromString( "P" );
+    classSpamFilterActions->append( classSpamFilterActionFirst );
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
+          && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
+      {
+        KMFilterAction* classSpamFilterAction = dict["execute"]->create();
+        classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
+        classSpamFilterActions->append( classSpamFilterAction );
       }
+    }
+    if ( mSpamRulesPage->moveSpamSelected() )
+    {
       KMFilterAction* classSpamFilterActionLast = dict["transfer"]->create();
       classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
       classSpamFilterActions->append( classSpamFilterActionLast );
-
-      KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
-      if ( replaceExistingFilters )
-        classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
-      else
-        classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
-      classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                      KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-      classSpamFilter->setApplyOnOutbound( FALSE);
-      classSpamFilter->setApplyOnInbound( FALSE );
-      classSpamFilter->setApplyOnExplicit( FALSE );
-      classSpamFilter->setStopProcessingHere( TRUE );
-      classSpamFilter->setConfigureShortcut( TRUE );
-      classSpamFilter->setConfigureToolbar( TRUE );
-      filterList.append( classSpamFilter );
-
-      // Classify messages manually as not Spam / as Ham
-      KMFilter* classHamFilter = new KMFilter();
-      classHamFilter->setIcon( "mail_ham" );
-      QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
-      KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
-      classHamFilterActionFirst->argsFromString( "H" );
-      classHamFilterActions->append( classHamFilterActionFirst );
-      for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
-            it != mToolList.end(); ++it ) {
-        if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
-            && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
-        {
-          KMFilterAction* classHamFilterAction = dict["execute"]->create();
-          classHamFilterAction->argsFromString( (*it).getHamCmd() );
-          classHamFilterActions->append( classHamFilterAction );
-        }
-      }
-      KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
-      if ( replaceExistingFilters )
-        classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
-      else
-        classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
-      classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-      classHamFilter->setApplyOnOutbound( FALSE);
-      classHamFilter->setApplyOnInbound( FALSE );
-      classHamFilter->setApplyOnExplicit( FALSE );
-      classHamFilter->setStopProcessingHere( TRUE );
-      classHamFilter->setConfigureShortcut( TRUE );
-      classHamFilter->setConfigureToolbar( TRUE );
-      filterList.append( classHamFilter );
     }
+
+    KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
+    if ( replaceExistingFilters )
+      classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
+    else
+      classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
+    classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+    classSpamFilter->setApplyOnOutbound( FALSE);
+    classSpamFilter->setApplyOnInbound( FALSE );
+    classSpamFilter->setApplyOnExplicit( FALSE );
+    classSpamFilter->setStopProcessingHere( TRUE );
+    classSpamFilter->setConfigureShortcut( TRUE );
+    classSpamFilter->setConfigureToolbar( TRUE );
+    filterList.append( classSpamFilter );
+
+    // Classify messages manually as not Spam / as Ham
+    KMFilter* classHamFilter = new KMFilter();
+    classHamFilter->setIcon( "mail_ham" );
+    QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
+    KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
+    classHamFilterActionFirst->argsFromString( "H" );
+    classHamFilterActions->append( classHamFilterActionFirst );
+    for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
+          it != mToolList.end(); ++it ) {
+      if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
+          && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
+      {
+        KMFilterAction* classHamFilterAction = dict["execute"]->create();
+        classHamFilterAction->argsFromString( (*it).getHamCmd() );
+        classHamFilterActions->append( classHamFilterAction );
+      }
+    }
+    KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
+    if ( replaceExistingFilters )
+      classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
+    else
+      classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
+    classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+    classHamFilter->setApplyOnOutbound( FALSE);
+    classHamFilter->setApplyOnInbound( FALSE );
+    classHamFilter->setApplyOnExplicit( FALSE );
+    classHamFilter->setStopProcessingHere( TRUE );
+    classHamFilter->setConfigureShortcut( TRUE );
+    classHamFilter->setConfigureToolbar( TRUE );
+    filterList.append( classHamFilter );
   }
 
   /* Now that all the filters have been added to the list, tell
@@ -566,18 +562,16 @@ void AntiSpamWizard::slotBuildSummary()
     else
       text += i18n( "<br>Spam messages are not moved into a certain folder.</p>" );
 
-    bool canClassify = false;
     for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
           it != mToolList.end(); ++it ) {
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) &&
          (*it).isSpamTool() && !(*it).isDetectionOnly() ) {
-        if ( (*it).useBayesFilter() )
-          canClassify = true;
         sortFilterOnExistance( (*it).getFilterName(), newFilters, replaceFilters );
       }
     }
     sortFilterOnExistance( i18n( "Spam handling" ), newFilters, replaceFilters );
 
+    // The need for a andling of status "probably spam" depends on the tools chosen
     if ( mSpamRulesPage->moveUnsureSelected() ) {
       bool atLeastOneUnsurePattern = false;
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
@@ -595,13 +589,13 @@ void AntiSpamWizard::slotBuildSummary()
       }
     }
 
-    if ( canClassify ) {
-      sortFilterOnExistance( i18n( "Classify as spam" ),
-                             newFilters, replaceFilters );
-      sortFilterOnExistance( i18n( "Classify as NOT spam" ),
-                             newFilters, replaceFilters );
-    }
+    // Manual classification via toolbar icon / manually applied filter action
+    sortFilterOnExistance( i18n( "Classify as spam" ),
+                            newFilters, replaceFilters );
+    sortFilterOnExistance( i18n( "Classify as NOT spam" ),
+                            newFilters, replaceFilters );
 
+    // Show the filters in the summary
     if ( !newFilters.isEmpty() )
       text += i18n( "<p>The wizard will create the following filters:<ul>" )
             + newFilters + "</ul></p>";
