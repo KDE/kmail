@@ -252,6 +252,8 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
   if ( isEmpty() )
     return false;
 
+  bool rc = false;
+
   const DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
 
   const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : field().length() ) + 2 ; // +1 for ': '
@@ -273,16 +275,18 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     // contain"); note that all negated string functions correspond
     // to an odd value
     if ( start == DwString::npos )
-      return ( ( function() & 1 ) == 1 );
-    start += headerLen;
-    size_t stop = aStr.find( '\n', start );
-    char ch = '\0';
-    while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
-      stop = aStr.find( '\n', stop + 1 );
-    const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
-    const QCString codedValue( aStr.data() + start, len + 1 );
-    const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace(); // FIXME: This needs to be changed for IDN support.
-    return matchesInternal( msgContents );
+      rc = ( ( function() & 1 ) == 1 );
+    else {
+      start += headerLen;
+      size_t stop = aStr.find( '\n', start );
+      char ch = '\0';
+      while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
+        stop = aStr.find( '\n', stop + 1 );
+      const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
+      const QCString codedValue( aStr.data() + start, len + 1 );
+      const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace(); // FIXME: This needs to be changed for IDN support.
+      rc = matchesInternal( msgContents );
+    }
   } else if ( field() == "<recipients>" ) {
     static const DwBoyerMoore to("\nTo: ");
     static const DwBoyerMoore cc("\nCc: ");
@@ -292,18 +296,28 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     // of the fields contains "foo"
     if ( ( function() & 1 ) == 0 ) {
       // positive function, e.g. "contains"
-      return ( matches( aStr, msg, &to, 2 ) ||
-               matches( aStr, msg, &cc, 2 ) ||
-               matches( aStr, msg, &bcc, 3 ) );
+      rc = ( matches( aStr, msg, &to, 2 ) ||
+             matches( aStr, msg, &cc, 2 ) ||
+             matches( aStr, msg, &bcc, 3 ) );
     }
     else {
       // negated function, e.g. "does not contain"
-      return ( matches( aStr, msg, &to, 2 ) &&
-               matches( aStr, msg, &cc, 2 ) &&
-               matches( aStr, msg, &bcc, 3 ) );
+      rc = ( matches( aStr, msg, &to, 2 ) &&
+             matches( aStr, msg, &cc, 2 ) &&
+             matches( aStr, msg, &bcc, 3 ) );
     }
   }
-  return false;
+  if ( FilterLog::instance()->isLogging() ) {
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
+                       : "<font color=#FF0000>0 = </font>" );
+    msg += FilterLog::recode( asString() );
+    // only log headers bcause messages and bodies can be pretty large
+// FIXME We have to separate the text which is used for filtering to be able to show it in the log
+//    if ( logContents )
+//      msg += " (<i>" + FilterLog::recode( msgContents ) + "</i>)";
+    FilterLog::instance()->add( msg, FilterLog::ruleResult );
+  }
+  return rc;
 }
 
 bool KMSearchRuleString::matches( const KMMessage * msg ) const

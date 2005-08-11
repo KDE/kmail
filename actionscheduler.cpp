@@ -34,6 +34,7 @@
 
 #include "actionscheduler.h"
 
+#include "filterlog.h"
 #include "messageproperty.h"
 #include "kmfilter.h"
 #include "kmfolderindex.h"
@@ -506,6 +507,9 @@ void ActionScheduler::processMessage()
   MessageProperty::setFiltering( *mMessageIt, true );
   MessageProperty::setFilterHandler( *mMessageIt, this );
   MessageProperty::setFilterFolder( *mMessageIt, mDestFolder );
+  if ( FilterLog::instance()->isLogging() ) {
+    FilterLog::instance()->addSeparator();
+  }
   mFilterIt = mFilters.begin();
 
   mUnget = msgBase->isMessage();
@@ -566,8 +570,17 @@ void ActionScheduler::filterMessage()
 	(mAccount && (*mFilterIt).applyOnAccount(mAccountId)))) ||
       ((mSet & KMFilterMgr::Explicit) && (*mFilterIt).applyOnExplicit())) {
       // filter is applicable
+    if ( FilterLog::instance()->isLogging() ) {
+      QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
+      logText.append( (*mFilterIt).pattern()->asString() );
+      FilterLog::instance()->add( logText, FilterLog::patternDesc );
+    }
     if (mAlwaysMatch ||
 	(*mFilterIt).pattern()->matches( *mMessageIt )) {
+      if ( FilterLog::instance()->isLogging() ) {
+        FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+                                    FilterLog::patternResult );
+      }
       mFilterAction = (*mFilterIt).actions()->first();
       actionMessage();
       return;
@@ -586,6 +599,11 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
   if (mFilterAction) {
     KMMessage *msg = message( *mMessageIt );
     if (msg) {
+      if ( FilterLog::instance()->isLogging() ) {
+        QString logText( i18n( "<b>Applying filter action:</b> %1" )
+                        .arg( mFilterAction->displayString() ) );
+        FilterLog::instance()->add( logText, FilterLog::appliedAction );
+      }
       KMFilterAction *action = mFilterAction;
       mFilterAction = (*mFilterIt).actions()->next();
       action->processAsync( msg );

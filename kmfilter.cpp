@@ -112,11 +112,8 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   for ( it.toFirst() ; it.current() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
-      // FIXME use the following after the string freeze:
-      // QString logText( i18n( "<b>Applying filter action:</b> %1" )
-      //                  .arg( (*it)->displayString() ) );
-      QString logText( i18n( "<b>Applying filter action:</b> " ) );
-      logText.append( (*it)->displayString() );
+      QString logText( i18n( "<b>Applying filter action:</b> %1" )
+                       .arg( (*it)->displayString() ) );
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
 
