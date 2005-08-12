@@ -42,7 +42,7 @@
 namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
-  : QWidget( parent ), mFolder( 0 ), mFolderTree( tree ), 
+  : QWidget( parent ), mFolder( 0 ), mFolderTree( tree ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
@@ -52,9 +52,6 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
   edit->setReadOnly( true );
 
   QToolButton* button = new QToolButton( this );
-  button->setAutoRaise(true);
-  button->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-  button->setFixedSize( 16, 16 );
   button->setIconSet( KGlobal::iconLoader()->loadIconSet( "folder", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotOpenDialog()) );
 
@@ -66,7 +63,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  KMFolderSelDlg dlg( this, mFolderTree, i18n("Select Folder"), 
+  KMFolderSelDlg dlg( this, mFolderTree, i18n("Select Folder"),
       mMustBeReadWrite, false );
   dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
   dlg.setFolder( mFolder );
