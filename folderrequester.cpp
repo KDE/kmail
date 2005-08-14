@@ -87,8 +87,10 @@ KMFolder * FolderRequester::folder( void ) const
 void FolderRequester::setFolder( KMFolder *folder )
 {
   mFolder = folder;
-  if ( mFolder )
+  if ( mFolder ) {
     edit->setText( mFolder->prettyURL() );
+    mFolderId = mFolder->idString();
+  }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected
     edit->setText( i18n("Local Folders") );
   emit folderChanged( folder );
@@ -97,7 +99,14 @@ void FolderRequester::setFolder( KMFolder *folder )
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
-  setFolder( kmkernel->findFolderById( idString ) );
+  KMFolder *folder = kmkernel->findFolderById( idString );
+  if ( folder )
+    setFolder( folder );
+  else {
+    edit->setText( i18n( "Unknown folder '%1'" ).arg( idString ) );
+    mFolder = 0;
+  }
+  mFolderId = idString;
 }
 
 //-----------------------------------------------------------------------------

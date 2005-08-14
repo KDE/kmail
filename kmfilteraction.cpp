@@ -286,14 +286,7 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
   mFolder = ((FolderRequester *)paramWidget)->folder();
-  if (mFolder)
-  {
-     mFolderName = QString::null;
-  }
-  else
-  {
-     mFolderName = ((FolderRequester *)paramWidget)->text();
-  }
+  mFolderName = ((FolderRequester *)paramWidget)->folderId();
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
@@ -317,7 +310,7 @@ void KMFilterActionWithFolder::argsFromString( const QString argsStr )
   if (!mFolder)
      mFolder = kmkernel->imapFolderMgr()->findIdString( argsStr );
   if (mFolder)
-     mFolderName = QString::null;
+     mFolderName = mFolder->idString();
   else
      mFolderName = argsStr;
 }
@@ -347,9 +340,7 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
   if ( aFolder == mFolder ) {
     mFolder = aNewFolder;
     if ( aNewFolder )
-      mFolderName = QString::null;
-    else
-      mFolderName = i18n( "<select a folder>" );
+      mFolderName = mFolder->idString();
     return TRUE;
   } else
     return FALSE;

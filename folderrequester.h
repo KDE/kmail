@@ -59,6 +59,9 @@ namespace KMail {
       /** Returns selected folder */
       KMFolder* folder( void ) const;
 
+      /** Returns the folder id */
+      QString folderId() const { return mFolderId; } 
+
       /** Returns current text */
       QString text() const { return edit->originalText(); } 
 
@@ -98,6 +101,7 @@ namespace KMail {
       KLineEdit* edit;
       KMFolder* mFolder;
       KMFolderTree* mFolderTree;
+      QString mFolderId;
       bool mMustBeReadWrite;
       bool mShowOutbox;
       bool mShowImapFolders;
