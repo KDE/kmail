@@ -231,7 +231,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
     bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
                  Ok|Cancel|User1, Ok, true,
-                 KGuiItem(i18n("&New Subfolder"), "folder_new",
+                 KGuiItem(i18n("&New Subfolder..."), "folder_new",
                    i18n("Create a new subfolder under the currently selected folder"))
                ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )
@@ -251,7 +251,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
     const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
                  Ok|Cancel|User1, Ok, true,
-                 KGuiItem(i18n("&New Subfolder"), "folder_new",
+                 KGuiItem(i18n("&New Subfolder..."), "folder_new",
                    i18n("Create a new subfolder under the currently selected folder"))
                ), // mainwin as parent, modal
     mUseGlobalSettings( useGlobalSettings )

@@ -62,7 +62,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 {
   setWFlags( getWFlags() | WDestructiveClose );
   if ( folder ) {
-    setCaption( i18n("New Subfolder of: %1").arg( folder->prettyURL() ) );
+    setCaption( i18n("New Subfolder of %1").arg( folder->prettyURL() ) );
   }
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
@@ -132,7 +132,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     mContentsHBox->addWidget( mContentsComboBox );
     mTopLevelLayout->addLayout( mContentsHBox );
   }
-  
+
   if ( mFolder &&
       ( mFolder->folderType() == KMFolderTypeImap ||
         mFolder->folderType() == KMFolderTypeCachedImap ) ) {
@@ -199,7 +199,7 @@ void NewFolderDialog::slotOk()
   if ( fldName.startsWith( "." ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
-  } else if ( mFolder && 
+  } else if ( mFolder &&
       ( mFolder->folderType() == KMFolderTypeImap ||
         mFolder->folderType() == KMFolderTypeCachedImap ) ) {
     QString delimiter;
@@ -267,7 +267,7 @@ void NewFolderDialog::slotOk()
       newStorage->initializeFrom( selectedStorage );
       if ( mNamespacesComboBox ) {
         // create folder with namespace
-        QString path = selectedStorage->account()->addPathToNamespace( 
+        QString path = selectedStorage->account()->addPathToNamespace(
             mNamespacesComboBox->currentText() ) + fldName;
         newStorage->setImapPathForCreation( path );
       }
