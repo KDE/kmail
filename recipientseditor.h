@@ -26,6 +26,7 @@
 
 #include <qwidget.h>
 #include <qscrollview.h>
+#include <qguardedptr.h>
 #include <qlineedit.h>
 #include <qtooltip.h>
 
@@ -232,7 +233,7 @@ class RecipientsView : public QScrollView
 
   private:
     QPtrList<RecipientLine> mLines;
-    RecipientLine* mCurDelLine;
+    QGuardedPtr<RecipientLine> mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
     bool mModified;

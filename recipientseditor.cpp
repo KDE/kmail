@@ -477,6 +477,9 @@ void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
 
 void RecipientsView::slotDeleteLine()
 {
+  if ( !mCurDelLine )
+    return;
+
   RecipientLine *line = mCurDelLine;
   int pos = mLines.find( line );
 
