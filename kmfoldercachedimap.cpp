@@ -1123,7 +1123,7 @@ void KMFolderCachedImap::uploadNewMessages()
             "<p>Do you want to move those messages to another folder now?</p>") );
       if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
-            i18n("Move Message to Folder", "Move Messages to Folder"), true );
+            i18n("Move Messages to Folder"), true );
         if ( dlg.exec() ) {
           KMFolder* dest = dlg.folder();
           if ( dest ) {
