@@ -61,6 +61,7 @@ using KMail::ImapAccountBase;
 using KRecentAddress::RecentAddresses;
 #include "completionordereditor.h"
 #include "ldapclient.h"
+#include "index.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -4378,6 +4379,16 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+#ifdef HAVE_INDEXLIB
+  // indexing enabled option:
+  mIndexingEnabled = new QCheckBox( i18n("Enable full text &indexing"), this );
+  vlay->addWidget( mIndexingEnabled );
+  connect( mIndexingEnabled, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+#endif
+
+
+
   vlay->addStretch( 1 );
 
   // and now: add QWhatsThis:
@@ -4412,6 +4423,22 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
             "the search will start from the bottom of the message list and continue to "
             "the previous folder depending on which option is selected.</p></qt>" );
   QWhatsThis::add( mLoopOnGotoUnread, msg );
+
+#ifdef HAVE_INDEXLIB
+ // this is probably overly pessimistic
+  msg = i18n( "what's this help",
+		  "<qt><p>Full text indexing allows very fast searches on the content "
+		  "of your messages. When enabled, the search dialog will work very fast. "
+		  "Also, the search tool bar will also select messages based on content.</p>"
+		  "<p>It takes up a certain amount of disk space "
+		  "(about half the disk space for the messages).</p>"
+		  "<p>After enabling, the index will need to be built, but you can continue to use KMail "
+		  "while this operation is running.</p>"
+		  "</qt>"
+	    );
+
+  QWhatsThis::add( mIndexingEnabled, msg );
+#endif
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings() {
@@ -4435,6 +4462,8 @@ void MiscPage::FolderTab::doLoadOther() {
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
   mMailboxPrefCombo->setCurrentItem( num );
+
+  mIndexingEnabled->setChecked( kmkernel->msgIndex() && kmkernel->msgIndex()->isEnabled() );
 }
 
 void MiscPage::FolderTab::save() {
@@ -4453,6 +4482,7 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
+  if ( kmkernel->msgIndex() ) kmkernel->msgIndex()->setEnabled( mIndexingEnabled->isChecked() );
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {

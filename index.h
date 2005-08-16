@@ -92,6 +92,11 @@ class KMMsgIndex : public QObject {
 		 * even though the folder is probably still being indexed in the background.
 		 */
 		bool isIndexed( KMFolder* folder ) const;
+
+		/**
+		 * Returns whether the index is enabled
+		 */
+		bool isEnabled() const { return mState != s_disabled; }
 	public slots:
 		/**
 		 * Either enable or disable indexing.

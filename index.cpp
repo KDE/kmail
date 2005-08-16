@@ -90,10 +90,6 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	mSlowDown( false ) {
 	kdDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
 	
-	if ( !QFileInfo( mIndexPath ).exists() ) {
-		::mkdir( mIndexPath, S_IRWXU );
-	}
-	
 	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
 	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( KMFolder*, Q_UINT32 ) ) );
 	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
@@ -169,6 +165,10 @@ bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
 
 void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
+	KConfig* config = KMKernel::config();
+	KConfigGroupSaver saver( config, "text-index" );
+	if ( config->readBoolEntry( "enabled", e ) == e ) return;
+	config->writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
 			case s_idle:
@@ -367,7 +367,11 @@ void KMMsgIndex::continueCreation() {
 
 void KMMsgIndex::create() {
 	kdDebug( 5006 ) << "KMMsgIndex::create()" << endl;
+	
 #ifdef HAVE_INDEXLIB
+	if ( !QFileInfo( mIndexPath ).exists() ) {
+		::mkdir( mIndexPath, S_IRWXU );
+	}
 	mState = s_creating;
 	if ( !mIndex ) mIndex = indexlib::create( mIndexPath ).release();
 	if ( !mIndex ) {
