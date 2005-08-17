@@ -48,8 +48,6 @@ KListViewIndexedSearchLine::~KListViewIndexedSearchLine() {
 }
 
 
-//std::string dirbase = std::string( getenv( "HOME" ) ) + "/.indexes/" + folder->location().latin1();
-
 void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 	kdDebug( 5006 ) << "updateSearch( -" << s << "- )" << endl;
 	mFiltering = false;
@@ -64,7 +62,6 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 	}
 	KListViewSearchLine::updateSearch( s );
 }
-#include <iostream>
 
 bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const QString& s ) const {
 	if ( mFiltering && 
