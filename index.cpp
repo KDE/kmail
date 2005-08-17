@@ -450,7 +450,7 @@ bool KMMsgIndex::stopQuery( KMSearch* s ) {
 
 std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::simpleSearch( -" << s.latin1() << "- )" << endl;
-	if ( mState == s_error ) {
+	if ( mState == s_error || mState == s_disabled ) {
 		if ( ok ) *ok = false;
 		return std::vector<Q_UINT32>();
 	}
