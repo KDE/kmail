@@ -493,13 +493,19 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 
 void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
 {
-  if ( sc == mKeyButton->shortcut() ) return;
-  if ( !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
+  KShortcut mySc(sc);
+  if ( mySc == mKeyButton->shortcut() ) return;
+  // FIXME work around a problem when reseting the shortcut via the shortcut dialog
+  // somehow the returned shortcut does not evaluate to true in KShortcut::isNull(),
+  // so we additionally have to check for an empty string
+  if ( mySc.isNull() || mySc.toString().isEmpty() )
+    mySc.clear();
+  if ( !mySc.isNull() && !( kmkernel->getKMMainWidget()->shortcutIsValid( mySc ) ) ) {
     QString msg( i18n( "The selected shortcut is already used, "
           "please select a different one." ) );
     KMessageBox::sorry( this, msg );
   } else {
-    mKeyButton->setShortcut( sc, false );
+    mKeyButton->setShortcut( mySc, false );
     if ( mFilter )
       mFilter->setShortcut( mKeyButton->shortcut() );
   }
