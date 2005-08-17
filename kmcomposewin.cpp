@@ -3940,11 +3940,10 @@ void KMComposeWin::slotAppendSignature()
   mOldSigText = ident.signatureText();
   if( !mOldSigText.isEmpty() )
   {
-    mEditor->sync();
     mEditor->append(mOldSigText);
-    mEditor->update();
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
+    mEditor->sync();
   }
 }
 
