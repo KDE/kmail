@@ -168,7 +168,7 @@ class KMMsgIndex : public QObject {
 			s_creating, // creating the index from the messages
 			s_processing, // has messages to process
 			s_error, // an error occurred
-			s_disabled, // disabled: the index is not working
+			s_disabled // disabled: the index is not working
 		} mState;
 
 		unsigned mMaintenanceCount;
