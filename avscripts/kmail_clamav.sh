@@ -28,7 +28,7 @@
 #    your version.
 #
 TEMPFILE=`mktemp` 
-if [ $? ] ; then 
+if [ $? != 0 ] ; then 
     TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
 fi 
 export TEMPFILE
