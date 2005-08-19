@@ -288,6 +288,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mSplitter->moveToFirst( mEditor );
   mSplitter->setOpaqueResize( true );
 
+  mEditor->initializeAutoSpellChecking();
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
 
@@ -4015,7 +4016,6 @@ void KMComposeWin::toggleMarkup(bool markup)
       QString text = mEditor->text();
       mEditor->setText(text); // otherwise the text still looks formatted
       mEditor->setModified(true);
-      mEditor->initializeAutoSpellChecking();
       slotAutoSpellCheckingToggled(true);
     }
   }
