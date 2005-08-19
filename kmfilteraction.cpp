@@ -30,6 +30,8 @@ using KMail::FolderRequester;
 #include "actionscheduler.h"
 using KMail::MessageProperty;
 using KMail::ActionScheduler;
+#include "regexplineedit.h"
+using KMail::RegExpLineEdit;
 #include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
@@ -1194,14 +1196,14 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  QLineEdit *le = new KLineEdit( w, "search" );
-  hbl->addWidget( le, 1 );
+  RegExpLineEdit *rele = new RegExpLineEdit( w, "search" );
+  hbl->addWidget( rele, 1 );
 
   l = new QLabel( i18n("With:"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  le = new KLineEdit( w, "replace" );
+  QLineEdit *le = new KLineEdit( w, "replace" );
   hbl->addWidget( le, 1 );
 
   setParamWidgetValue( w );
@@ -1223,11 +1225,11 @@ void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) co
     cb->setCurrentItem( idx );
   }
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
-  Q_ASSERT( le );
-  le->setText( mRegExp.pattern() );
+  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  Q_ASSERT( rele );
+  rele->setText( mRegExp.pattern() );
 
-  le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
   Q_ASSERT( le );
   le->setText( mReplacementString );
 }
@@ -1238,11 +1240,11 @@ void KMFilterActionRewriteHeader::applyParamWidgetValue( QWidget* paramWidget )
   Q_ASSERT( cb );
   mParameter = cb->currentText();
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
-  Q_ASSERT( le );
-  mRegExp.setPattern( le->text() );
+  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  Q_ASSERT( rele );
+  mRegExp.setPattern( rele->text() );
 
-  le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
   Q_ASSERT( le );
   mReplacementString = le->text();
 }
@@ -1253,11 +1255,11 @@ void KMFilterActionRewriteHeader::clearParamWidget( QWidget* paramWidget ) const
   Q_ASSERT( cb );
   cb->setCurrentItem(0);
 
-  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
-  Q_ASSERT( le );
-  le->clear();
+  RegExpLineEdit *rele = (RegExpLineEdit*)paramWidget->child("search");
+  Q_ASSERT( rele );
+  rele->clear();
 
-  le = (QLineEdit*)paramWidget->child("replace");
+  QLineEdit *le = (QLineEdit*)paramWidget->child("replace");
   Q_ASSERT( le );
   le->clear();
 }
