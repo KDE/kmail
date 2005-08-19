@@ -4463,7 +4463,9 @@ void MiscPage::FolderTab::doLoadOther() {
   if ( num < 0 || num > 1 ) num = 1;
   mMailboxPrefCombo->setCurrentItem( num );
 
+#ifdef HAVE_INDEXLIB
   mIndexingEnabled->setChecked( kmkernel->msgIndex() && kmkernel->msgIndex()->isEnabled() );
+#endif
 }
 
 void MiscPage::FolderTab::save() {
@@ -4482,7 +4484,9 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::self()->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
+#ifdef HAVE_INDEXLIB
   if ( kmkernel->msgIndex() ) kmkernel->msgIndex()->setEnabled( mIndexingEnabled->isChecked() );
+#endif
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {

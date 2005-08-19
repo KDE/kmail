@@ -916,7 +916,9 @@ private:
   QComboBox    *mMailboxPrefCombo;
   QComboBox    *mActionEnterFolder;
   QCheckBox    *mEmptyTrashCheck;
+#ifdef HAVE_INDEXLIB
   QCheckBox    *mIndexingEnabled;
+#endif
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
