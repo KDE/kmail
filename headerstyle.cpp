@@ -598,6 +598,11 @@ namespace KMail {
                            "<td>")
                            .arg(i18n("From: "))
                  + KMMessage::emailAddrAsAnchor( fromStr, false )
+                 + ( !message->headerField( "Resent-From" ).isEmpty() ? "&nbsp;"
+                                + i18n("(resent from %1)")
+                                  .arg( KMMessage::emailAddrAsAnchor(
+                                    message->headerField( "Resent-From" ),FALSE) )
+                              : QString("") )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
