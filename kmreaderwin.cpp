@@ -1248,7 +1248,10 @@ static const int numKMailChanges =
 static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Full namespace support for IMAP"),
   I18N_NOOP("Offline mode"),
-  I18N_NOOP("Sieve script management and editing")
+  I18N_NOOP("Sieve script management and editing"),
+  I18N_NOOP("Account specific filtering"),
+  I18N_NOOP("Filtering of incoming mail for online IMAP accounts"),
+  I18N_NOOP("Online IMAP folders can be used when filtering into folders")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
