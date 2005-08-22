@@ -1314,7 +1314,9 @@ void KMHeaders::setFolderInfoStatus ()
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg()
 {
-  if (ActionScheduler::isEnabled()) {  // uses action scheduler
+  if (ActionScheduler::isEnabled() ||
+      kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
+    // uses action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
     QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     ActionScheduler *scheduler = new ActionScheduler( set, filters, this );

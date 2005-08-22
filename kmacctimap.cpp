@@ -398,11 +398,13 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
   QValueList<Q_UINT32> inTransit;
 
-  if (ActionScheduler::isEnabled()) {
+  if (ActionScheduler::isEnabled() || 
+      kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
     KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
     QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     if (!mScheduler) {
 	mScheduler = new KMail::ActionScheduler( set, filters );
+	mScheduler->setAccountId( id() );
 	connect( mScheduler, SIGNAL(filtered(Q_UINT32)), this, SLOT(slotFiltered(Q_UINT32)) );
     } else {
 	mScheduler->setFilterList( filters );
@@ -440,7 +442,8 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
         continue;
       }
 
-      if (ActionScheduler::isEnabled()) {
+      if (ActionScheduler::isEnabled() || 
+	  kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
 	mScheduler->execFilters( msg );
       } else {
 	if (msg->transferInProgress()) {

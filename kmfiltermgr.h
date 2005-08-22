@@ -76,6 +76,10 @@ public:
    * for example;
    * */
   bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
+  /** Returns whether at least one filter targets a folder on an
+   * online IMAP account.
+   * */
+  bool atLeastOneOnlineImapFolderTarget();
 
   /** Check for existing filters with the &p name and extend the
       "name" to "name (i)" until no match is found for i=1..n */
@@ -177,6 +181,9 @@ private:
   QValueList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
+  bool mDirtyBufferedFolderTarget;
+  bool mBufferedFolderTarget;
+
   int mRefCount;
 };
 

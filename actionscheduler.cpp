@@ -569,6 +569,7 @@ void ActionScheduler::filterMessage()
        (!mAccount ||
 	(mAccount && (*mFilterIt).applyOnAccount(mAccountId)))) ||
       ((mSet & KMFilterMgr::Explicit) && (*mFilterIt).applyOnExplicit())) {
+      
       // filter is applicable
     if ( FilterLog::instance()->isLogging() ) {
       QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );

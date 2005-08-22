@@ -15,6 +15,7 @@ using KMail::FilterLog;
 #include "kmfolderindex.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
+#include "kmfoldermgr.h"
 
 // other KDE headers
 #include <kdebug.h>
@@ -34,6 +35,8 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   : mEditDialog( 0 ),
     bPopFilter( popFilter ),
     mShowLater( false ),
+    mDirtyBufferedFolderTarget( true ),
+    mBufferedFolderTarget( true ),
     mRefCount( 0 )
 {
   if (bPopFilter)
@@ -53,6 +56,7 @@ KMFilterMgr::~KMFilterMgr()
 
 void KMFilterMgr::clear()
 {
+  mDirtyBufferedFolderTarget = true;
   for ( QValueListIterator<KMFilter*> it = mFilters.begin() ; 
         it != mFilters.end() ; ++it ) {
     delete *it;
@@ -300,6 +304,33 @@ bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) co
   return false;
 }
 
+bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
+{
+  if (!mDirtyBufferedFolderTarget)
+    return mBufferedFolderTarget;
+  
+  mDirtyBufferedFolderTarget = false;
+      
+  QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
+  for ( ; it != mFilters.constEnd() ; ++it ) {
+    KMFilter *filter = *it;
+    QPtrListIterator<KMFilterAction> jt( *filter->actions() );
+    for ( jt.toFirst() ; jt.current() ; ++jt ) {
+      KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
+      if (!f)
+	continue;
+      QString name = f->argsAsString();
+      KMFolder *folder = kmkernel->imapFolderMgr()->findIdString( name );
+      if (folder) {
+	mBufferedFolderTarget = true;
+	return true;
+      }
+    }
+  }
+  mBufferedFolderTarget = false;
+  return false;
+}
+
 //-----------------------------------------------------------------------------
 void KMFilterMgr::ref(void)
 {
@@ -388,6 +419,7 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 void KMFilterMgr::appendFilters( const QValueList<KMFilter*> &filters,
                                  bool replaceIfNameExists )
 {
+  mDirtyBufferedFolderTarget = true;
   beginUpdate();
   if ( replaceIfNameExists ) {
     QValueListConstIterator<KMFilter*> it1 = filters.constBegin();
@@ -420,6 +452,7 @@ void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
 //-----------------------------------------------------------------------------
 bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
+  mDirtyBufferedFolderTarget = true;
   bool rem = false;
   QValueListConstIterator<KMFilter*> it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it )

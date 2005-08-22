@@ -279,8 +279,6 @@ QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
   FolderRequester *req = new FolderRequester( parent,
       kmkernel->getKMMainWidget()->folderTree() );
-  if (!ActionScheduler::isEnabled())
-    req->setShowImapFolders( false );
   setParamWidgetValue( req );
   return req;
 }
@@ -1328,7 +1326,18 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( !mFolder )
     return ErrorButGoOn;
 
-  MessageProperty::setFilterFolder( msg, mFolder );
+  ActionScheduler *handler = MessageProperty::filterHandler( msg );
+  if (handler) {
+    MessageProperty::setFilterFolder( msg, mFolder );
+  } else {
+    // The old filtering system does not support online imap targets.
+    // Skip online imap targets when using the old system.
+    KMFolder *check;
+    check = kmkernel->imapFolderMgr()->findIdString( argsAsString() );
+    if (mFolder && (check != mFolder)) {
+      MessageProperty::setFilterFolder( msg, mFolder );
+    }
+  }
   return GoOn;
 }
 
