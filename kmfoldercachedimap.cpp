@@ -355,12 +355,16 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
 /* Reimplemented from KMFolderMaildir */
 int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 {
-  // Strip the IMAP UID
-  msg->removeHeaderField( "X-UID" );
-  msg->setUID( 0 );
-
-  // Add it to storage
-  return addMsgInternal( msg, false, index_return );
+    /** 
+     * If the message is complete, remove the UID right away, if it isn't,
+     * we still need it to fetch the message, and the second time through
+     * will do it. */
+    if ( msg->isComplete() ) {
+      msg->removeHeaderField( "X-UID" );
+      msg->setUID( 0 );
+    }
+    // Add it to storage
+    return addMsgInternal( msg, false, index_return );
 }
 
 
