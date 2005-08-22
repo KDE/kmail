@@ -1209,6 +1209,10 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                       this, SLOT(slotConfigureAddressCompletion()),
                       actionCollection(), "setup_completion_order");
 
+  (void) new KAction ( i18n("Configure &Recent Addresses..." ), 0,
+                       mEdtTo, SLOT( editRecentAddresses() ),
+                       actionCollection(), "setup_recent_addresses" );
+
 #ifdef KLEO_CHIASMUS
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     K33ToggleAction * a = new K33ToggleAction( i18n( "Encrypt Message with Chiasmus..." ),
