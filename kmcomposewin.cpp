@@ -854,7 +854,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   row = 0;
   kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
-  mLabelWidth = mRecipientsEditor->setFirstColumnWidth( 0 );
+  if (mRecipientsEditor)
+    mLabelWidth = mRecipientsEditor->setFirstColumnWidth( 0 );
   mLabelWidth = calcColumnWidth( HDR_IDENTITY, showHeaders, mLabelWidth );
   mLabelWidth = calcColumnWidth( HDR_DICTIONARY, showHeaders, mLabelWidth );
   mLabelWidth = calcColumnWidth( HDR_FCC, showHeaders, mLabelWidth );
@@ -984,7 +985,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if ( mBccAction ) mBccAction->setEnabled(!mAllFieldsAction->isChecked());
   mFccAction->setEnabled(!mAllFieldsAction->isChecked());
   mSubjectAction->setEnabled(!mAllFieldsAction->isChecked());
-  mRecipientsEditor->setFirstColumnWidth( mLabelWidth );
+  if (mRecipientsEditor)
+    mRecipientsEditor->setFirstColumnWidth( mLabelWidth );
 }
 
 QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
