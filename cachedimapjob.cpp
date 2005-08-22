@@ -137,7 +137,7 @@ void CachedImapJob::execute()
     // No connection to the IMAP server
     kdDebug(5006) << "mAccount->makeConnection() failed" << endl;
     mPassiveDestructor = true;
-    delete this;
+    deleteLater();
     return;
   } else
     mPassiveDestructor = false;
@@ -182,13 +182,12 @@ void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
   if (job) {
     KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-      delete this;
+      deleteLater();
       return;
     }
 
     if( job->error() ) {
       mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
-      delete this;
       return;
     }
     mAccount->removeJob(it);
@@ -196,7 +195,7 @@ void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
 
   if( mFoldersOrMessages.isEmpty() ) {
     // No more messages to delete
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -232,7 +231,7 @@ void CachedImapJob::slotExpungeResult( KIO::Job * job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -243,7 +242,7 @@ void CachedImapJob::slotExpungeResult( KIO::Job * job )
   else
     mAccount->removeJob(it);
 
-  delete this;
+  deleteLater();
 }
 
 void CachedImapJob::slotGetNextMessage(KIO::Job * job)
@@ -251,14 +250,14 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   if (job) {
     KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-      delete this;
+      deleteLater();
       return;
     }
 
     if (job->error()) {
       mErrorCode = job->error();
       mAccount->handleJobError( job, i18n( "Error while retrieving message on the server: " ) + '\n' );
-      delete this;
+      deleteLater();
       return;
     }
 
@@ -297,7 +296,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   }
 
   if( mMsgsForDownload.isEmpty() ) {
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -357,7 +356,7 @@ void CachedImapJob::slotPutNextMessage()
 
   if( !mMsg ) {
     // No message found for upload
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -405,7 +404,7 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
   if ((*it).data.size() - (*it).offset > 0x8000) {
@@ -441,14 +440,14 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
 
   if ( job->error() ) {
     bool cont = mAccount->handlePutError( job, *it, mFolder->folder() );
     if ( !cont ) {
-      delete this;
+      deleteLater();
     } else {
       mMsg = 0;
       slotPutNextMessage();
@@ -494,7 +493,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   if (job) {
     KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-      delete this;
+      deleteLater();
       return;
     }
 
@@ -510,7 +509,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
     }
 
     if( job->error() ) {
-      delete this;
+      deleteLater();
       return;
     }
     mAccount->removeJob( it );
@@ -518,7 +517,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 
   if (mFolderList.isEmpty()) {
     // No more folders to add
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -545,7 +544,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   if (job) {
     KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
     if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-      delete this;
+      deleteLater();
       return;
     }
 
@@ -553,7 +552,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
 
     if( job->error() ) {
       mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: " ).arg( (*it).path ) + '\n' );
-      delete this;
+      deleteLater();
       return;
     }
     mAccount->removeJob(it);
@@ -561,7 +560,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
 
   if( mFoldersOrMessages.isEmpty() ) {
     // No more folders to delete
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -598,14 +597,14 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
 
   if( job->error() ) {
     mErrorCode = job->error();
     mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: " ).arg( (*it).parent->label() ) + '\n' );
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -637,7 +636,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
   }
 
   mAccount->removeJob(it);
-  delete this;
+  deleteLater();
 }
 
 
@@ -693,7 +692,7 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -724,14 +723,14 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
 
     mAccount->removeJob(it);
   }
-  delete this;
+  deleteLater();
 }
 
 void CachedImapJob::slotListMessagesResult( KIO::Job * job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
-    delete this;
+    deleteLater();
     return;
   }
 
@@ -742,7 +741,7 @@ void CachedImapJob::slotListMessagesResult( KIO::Job * job )
   else
     mAccount->removeJob(it);
 
-  delete this;
+  deleteLater();
 }
 
 //-----------------------------------------------------------------------------
