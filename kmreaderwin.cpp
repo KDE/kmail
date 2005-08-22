@@ -1251,7 +1251,8 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Sieve script management and editing"),
   I18N_NOOP("Account specific filtering"),
   I18N_NOOP("Filtering of incoming mail for online IMAP accounts"),
-  I18N_NOOP("Online IMAP folders can be used when filtering into folders")
+  I18N_NOOP("Online IMAP folders can be used when filtering into folders"),
+  I18N_NOOP("Automatically delete older mails on POP servers")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
