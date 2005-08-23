@@ -690,7 +690,7 @@ std::vector<Kleo::KeyResolver::Item> Kleo::KeyResolver::getEncryptionItems( cons
   items.reserve( addresses.size() );
   for ( QStringList::const_iterator it = addresses.begin() ; it != addresses.end() ; ++it ) {
     QString addr = canonicalAddress( *it ).lower();
-    ContactPreferences& pref = lookupContactPreferences( addr );
+    const ContactPreferences pref = lookupContactPreferences( addr );
 
     items.push_back( Item( *it, /*getEncryptionKeys( *it, true ),*/
 			   pref.encryptionPreference,
@@ -819,7 +819,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     if ( it->keys.empty() )
       return Kpgp::Canceled;
     QString addr = canonicalAddress( it->address ).lower();
-    ContactPreferences& pref = lookupContactPreferences( addr );
+    const ContactPreferences pref = lookupContactPreferences( addr );
     it->pref = pref.encryptionPreference;
     it->signPref = pref.signingPreference;
     it->format = pref.cryptoMessageFormat;
@@ -832,7 +832,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     if ( it->keys.empty() )
       return Kpgp::Canceled;
     QString addr = canonicalAddress( it->address ).lower();
-    ContactPreferences& pref = lookupContactPreferences( addr );
+    const ContactPreferences pref = lookupContactPreferences( addr );
     it->pref = pref.encryptionPreference;
     it->signPref = pref.signingPreference;
     it->format = pref.cryptoMessageFormat;
@@ -1186,11 +1186,12 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
 
   if ( dlg.preferencesChanged() ) {
     for ( uint i = 0; i < items.size(); ++i ) {
-      ContactPreferences& pref = lookupContactPreferences( items[i].address );
+      ContactPreferences pref = lookupContactPreferences( items[i].address );
       pref.encryptionPreference = items[i].pref;
       pref.pgpKeyFingerprints.clear();
       pref.smimeCertFingerprints.clear();
-      for ( std::vector<GpgME::Key>::const_iterator it = items[i].keys.begin(), end = items[i].keys.end() ; it != end ; ++it ) {
+      const std::vector<GpgME::Key> & keys = items[i].keys;
+      for ( std::vector<GpgME::Key>::const_iterator it = keys.begin(), end = keys.end() ; it != end ; ++it ) {
         if ( it->protocol() == GpgME::Context::OpenPGP ) {
           if ( const char * fpr = it->primaryFingerprint() )
             pref.pgpKeyFingerprints.push_back( fpr );
@@ -1453,35 +1454,35 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
   dump();
 }
 
-Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferences( const QString& address ) const
+Kleo::KeyResolver::ContactPreferences Kleo::KeyResolver::lookupContactPreferences( const QString& address ) const
 {
-  Private::ContactPreferencesMap::iterator pos =
+  const Private::ContactPreferencesMap::iterator it =
     d->mContactPreferencesMap.find( address );
-  if ( pos == d->mContactPreferencesMap.end() ) {
-    KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
-    KABC::Addressee::List res = ab->findByEmail( address );
-    ContactPreferences pref;
-    if ( !res.isEmpty() ) {
-      KABC::Addressee addr = res.first();
-      QString encryptPref = addr.custom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF" );
-      pref.encryptionPreference = Kleo::stringToEncryptionPreference( encryptPref );
-      QString signPref = addr.custom( "KADDRESSBOOK", "CRYPTOSIGNPREF" );
-      pref.signingPreference = Kleo::stringToSigningPreference( signPref );
-      QString cryptoFormats = addr.custom( "KADDRESSBOOK", "CRYPTOPROTOPREF" );
-      pref.cryptoMessageFormat = Kleo::stringToCryptoMessageFormat( cryptoFormats );
-      pref.pgpKeyFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "OPENPGPFP" ) );
-      pref.smimeCertFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "SMIMEFP" ) );
-    }
-    // insert into map and grab resulting iterator
-    pos = d->mContactPreferencesMap.insert(
-      Private::ContactPreferencesMap::value_type( address, pref ) ).first;
+  if ( it != d->mContactPreferencesMap.end() )
+    return it->second;
 
+  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
+  const KABC::Addressee::List res = ab->findByEmail( address );
+  ContactPreferences pref;
+  if ( !res.isEmpty() ) {
+    KABC::Addressee addr = res.first();
+    QString encryptPref = addr.custom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF" );
+    pref.encryptionPreference = Kleo::stringToEncryptionPreference( encryptPref );
+    QString signPref = addr.custom( "KADDRESSBOOK", "CRYPTOSIGNPREF" );
+    pref.signingPreference = Kleo::stringToSigningPreference( signPref );
+    QString cryptoFormats = addr.custom( "KADDRESSBOOK", "CRYPTOPROTOPREF" );
+    pref.cryptoMessageFormat = Kleo::stringToCryptoMessageFormat( cryptoFormats );
+    pref.pgpKeyFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "OPENPGPFP" ) );
+    pref.smimeCertFingerprints = QStringList::split( ',', addr.custom( "KADDRESSBOOK", "SMIMEFP" ) );
   }
-  return (*pos).second;
+  // insert into map and grab resulting iterator
+  d->mContactPreferencesMap.insert( std::make_pair( address, pref ) );
+  return pref;
 }
 
 void Kleo::KeyResolver::saveContactPreference( const QString& email, const ContactPreferences& pref ) const
 {
+  d->mContactPreferencesMap.insert( std::make_pair( email, pref ) );
   KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
   KABC::Addressee::List res = ab->findByEmail( email );
 
@@ -1523,7 +1524,7 @@ QStringList Kleo::KeyResolver::keysForAddress( const QString & address ) const {
     return QStringList();
   }
   QString addr = canonicalAddress( address ).lower();
-  ContactPreferences& pref = lookupContactPreferences( addr );
+  const ContactPreferences pref = lookupContactPreferences( addr );
   return pref.pgpKeyFingerprints + pref.smimeCertFingerprints;
 }
 
@@ -1532,7 +1533,7 @@ void Kleo::KeyResolver::setKeysForAddress( const QString& address, const QString
     return;
   }
   QString addr = canonicalAddress( address ).lower();
-  ContactPreferences& pref = lookupContactPreferences( addr );
+  ContactPreferences pref = lookupContactPreferences( addr );
   pref.pgpKeyFingerprints = pgpKeyFingerprints;
   pref.smimeCertFingerprints = smimeCertFingerprints;
   saveContactPreference( addr, pref );

@@ -289,7 +289,7 @@ namespace Kleo {
       QStringList smimeCertFingerprints;
     };
 
-    ContactPreferences& lookupContactPreferences( const QString& address ) const;
+    ContactPreferences lookupContactPreferences( const QString& address ) const;
     void saveContactPreference( const QString& email, const ContactPreferences& pref ) const;
 
   private:
