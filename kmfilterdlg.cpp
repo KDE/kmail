@@ -682,14 +682,8 @@ void KMFilterListBox::slotShowLaterToggled(bool aOn)
 
 void KMFilterListBox::slotApplyFilterChanges()
 {
-  int oIdxSelItem = mIdxSelItem;
-  // unselect all filters:
-  mListBox->selectAll( FALSE );
-  // maybe QListBox doesn't emit selected(-1) on unselect,
-  // so we make sure the edit widgets receive an equivalent:
-  emit resetWidgets();
-  mIdxSelItem = -1;
-  enableControls();
+  if ( mIdxSelItem >= 0 )
+    slotSelected( mListBox->currentItem() );
 
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
@@ -740,12 +734,6 @@ void KMFilterListBox::slotApplyFilterChanges()
 		       "rules).");
     KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
 				  "ShowInvalidFilterWarning" );
-  }
-
-  if ( oIdxSelItem >= 0 ) {
-    mIdxSelItem = oIdxSelItem;
-    mListBox->setSelected( oIdxSelItem, TRUE);
-    slotSelected( mListBox->currentItem() );
   }
 }
 
