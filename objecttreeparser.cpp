@@ -1768,7 +1768,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
     if( inlineImage )
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-                           "<img src=\"" + iconName + "\" border=\"0\"></a>"
+                           "<img src=\"" + iconName + "\" border=\"0\" style=\"max-width: 100%\"></a>"
                            "</div>"
                            "<div><a href=\"" + href + "\">" + label + "</a>"
                            "</div>"
@@ -1776,7 +1776,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
     else
       // show the filename next to the image
       htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
-                           iconName + "\" border=\"0\">" + label +
+                           iconName + "\" border=\"0\" style=\"max-width: 100%\">" + label +
                            "</a></div>"
                            "<div>" + comment + "</div><br>" );
   }
