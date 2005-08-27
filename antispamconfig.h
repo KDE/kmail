@@ -55,9 +55,9 @@ namespace KMail {
   public:
     SpamAgent() : mType( SpamAgentNone ) {}
     SpamAgent( const QString & name, SpamAgentTypes type, const QCString & field,
-	       const QRegExp & score, const QRegExp & threshold )
+               const QRegExp & score, const QRegExp & threshold )
       : mName( name ), mType( type ), mField( field ),
-	mScore( score ), mThreshold( threshold ) {}
+        mScore( score ), mThreshold( threshold ) {}
 
     QString name() const { return mName; }
     SpamAgentTypes scoreType() const { return mType; }
@@ -95,7 +95,19 @@ namespace KMail {
 
     static AntiSpamConfig * instance();
 
-    SpamAgents agents() const { return mAgents; }
+    /** 
+     * Returns a list of all agents found on the system. This
+     * might list SA twice, if both the C and the Perl version are present.
+     */
+    const SpamAgents agents() const { return mAgents; }
+    SpamAgents agents() { return mAgents; }
+
+    /** 
+     * Returns a list of unique agents, found on the system. SpamAssassin will
+     * only be listed once, even if both the C and the Perl version are
+     * installed.
+     */
+    const SpamAgents uniqueAgents() const;
 
   private:
     SpamAgents mAgents;

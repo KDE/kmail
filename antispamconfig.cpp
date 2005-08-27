@@ -80,3 +80,19 @@ void AntiSpamConfig::readConfig()
     }
   }
 }
+
+const SpamAgents AntiSpamConfig::uniqueAgents() const
+{
+    QStringList seenAgents;
+    SpamAgents agents;
+    SpamAgents::ConstIterator it( mAgents.begin() );
+    SpamAgents::ConstIterator end( mAgents.end() );
+    for ( ; it != end ; ++it ) {
+        const QString agent( ( *it ).name() );
+        if ( seenAgents.find( agent ) == seenAgents.end() ) {
+            agents.append( *it );
+            seenAgents.append( agent );
+        }
+    }
+    return agents;
+}
