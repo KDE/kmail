@@ -96,7 +96,7 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
   QValueList<KMAccount *> lst;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
        a = kmkernel->acctMgr()->next() ) {
-    if ( a && a->type() != "local" ) { //// ## proko2 hack. Need a list of allowed account types as ctor param
+    if ( a && a->type() == "cachedimap" ) { //// ## proko2 hack. Need a list of allowed account types as ctor param
       lst.append( a );
     }
   }
