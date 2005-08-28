@@ -483,10 +483,11 @@ KMMessage* FolderStorage::getMsg(int idx)
 
   }
   // Either isMessage and we had a sernum, or readMsg gives us one
-  // (via insertion into mMsgList).
-  if (msg->getMsgSerNum()==0)
-	  return NULL;//m assert( msg->getMsgSerNum() != 0);
-  msg->setEnableUndo(undo); 
+  // (via insertion into mMsgList). sernum == 0 may still occur due to
+  // an outdated or corrupt IMAP cache.
+  if ( msg->getMsgSerNum() == 0 )
+    return 0;
+  msg->setEnableUndo(undo);
   msg->setComplete( true );
   return msg;
 }
