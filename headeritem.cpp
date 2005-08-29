@@ -145,7 +145,8 @@ QString HeaderItem::text( int col) const
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
   QString tmp;
 
-  assert(mMsgBase);
+  if ( !mMsgBase )
+    return QString();
 
   if ( col == headers->paintInfo()->senderCol ) {
     if ( (headers->folder()->whoField().lower() == "to") && !headers->paintInfo()->showReceiver )
