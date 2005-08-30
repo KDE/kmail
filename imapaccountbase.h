@@ -352,7 +352,20 @@ namespace KMail {
       * Returns true if the account has the given capability
       */
      bool hasCapability( const QString& capa ) {
-      return mCapabilities.contains( capa ); } 
+      return mCapabilities.contains( capa ); }
+
+     /**
+      * Create an IMAP path for a parent folder and a foldername
+      * Parent and folder are separated with the delimiter of the account
+      * The path starts and ends with '/' 
+      */
+     QString createImapPath( FolderStorage* parent, const QString& folderName );
+
+     /**
+      * Create an IMAP path for a parent imapPath and a folderName
+      */
+     QString createImapPath( const QString& parent, const QString& folderName );
+
 
   public slots:
     /**

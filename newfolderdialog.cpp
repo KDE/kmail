@@ -250,7 +250,7 @@ void NewFolderDialog::slotOk()
         if ( mNamespacesComboBox ) {
           // create folder with namespace
           parent = anAccount->addPathToNamespace( mNamespacesComboBox->currentText() );
-          imapPath = anAccount->addPathToNamespace( parent ) + fldName;
+          imapPath = anAccount->createImapPath( parent, fldName );
         }
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
         selectedStorage->createFolder(fldName, parent); // create it on the server
@@ -267,8 +267,8 @@ void NewFolderDialog::slotOk()
       newStorage->initializeFrom( selectedStorage );
       if ( mNamespacesComboBox ) {
         // create folder with namespace
-        QString path = selectedStorage->account()->addPathToNamespace(
-            mNamespacesComboBox->currentText() ) + fldName;
+        QString path = selectedStorage->account()->createImapPath( 
+            mNamespacesComboBox->currentText(), fldName );
         newStorage->setImapPathForCreation( path );
       }
       success = true;

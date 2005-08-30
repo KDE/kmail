@@ -1622,20 +1622,7 @@ void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
   }
   KURL url = mAccount->getUrl();
   QString parent = ( parentPath.isEmpty() ? imapPath() : parentPath );
-  if ( parent.endsWith("/") ) {
-    // strip / (which kmail uses this internally)
-    parent = parent.left( parent.length()-1 );
-  }
-  QString delim = mAccount->delimiterForFolder( this );
-  if ( delim.isEmpty() ) {
-    // better be safe
-    delim = "/";
-  }
-  if ( !parent.endsWith(delim) ) {
-    // add the correct delimiter
-    parent += delim;
-  }
-  QString path = parent + name;
+  QString path = mAccount->createImapPath( parent, name );
   if ( askUser ) {
     path += "/;INFO=ASKUSER";
   }

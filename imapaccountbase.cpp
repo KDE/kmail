@@ -1263,6 +1263,50 @@ namespace KMail {
     return map;
   }
 
+  //------------------------------------------------------------------------------
+  QString ImapAccountBase::createImapPath( const QString& parent, 
+                                           const QString& folderName )
+  {
+    QString newName = parent;
+    // strip / at the end
+    if ( newName.endsWith("/") ) {
+      newName = newName.left( newName.length() - 1 );
+    }
+    // add correct delimiter
+    QString delim = delimiterForNamespace( parent );
+    // should not happen...
+    if ( delim.isEmpty() ) {
+      delim = "/";
+    }
+    if ( !newName.endsWith( delim ) && !folderName.startsWith( delim ) ) {
+      newName = newName + delim;
+    }
+    newName = newName + folderName;
+    // add / at the end
+    if ( !newName.endsWith("/") ) {
+      newName = newName + "/";
+    }
+
+    return newName;
+  }
+
+  //------------------------------------------------------------------------------
+  QString ImapAccountBase::createImapPath( FolderStorage* parent, 
+                                           const QString& folderName )
+  {
+    QString path;
+    if ( parent->folderType() == KMFolderTypeImap ) {
+      path = static_cast<KMFolderImap*>( parent )->imapPath();
+    } else if ( parent->folderType() == KMFolderTypeCachedImap ) {
+      path = static_cast<KMFolderCachedImap*>( parent )->imapPath();
+    } else {
+      // error
+      return path;
+    }
+    
+    return createImapPath( path, folderName );
+  }
+
 } // namespace KMail
 
 #include "imapaccountbase.moc"
