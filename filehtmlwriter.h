@@ -52,6 +52,7 @@ namespace KMail {
     void write( const QString & str );
     void queue( const QString & str );
     void flush();
+    void embedPart( const QCString & contentId, const QString & url );
 
   private:
     void openOrWarn();

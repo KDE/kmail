@@ -112,6 +112,10 @@ public:
   int subtype() const;
   void setSubtype(int aSubtype);
 
+  /** Content-Id */
+  QCString contentId() const { return mContentId; }
+  void setContentId( const QCString & aStr ) { mContentId = aStr; }
+
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
     If autoDecode is TRUE the decoded body will be used for mime type
     determination (this does not change the body itself). */
@@ -213,6 +217,7 @@ protected:
   QCString mCte;
   QCString mContentDescription;
   QCString mContentDisposition;
+  QCString mContentId;
   QByteArray mBody;
   QCString mAdditionalCTypeParamStr;
   QString mName;

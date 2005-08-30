@@ -98,7 +98,11 @@ namespace KMail {
     else
       mStream.setDevice( &mFile );
   }
-    
+
+  void FileHtmlWriter::embedPart( const QCString & contentId, const QString & url ) {
+    mStream << "<!-- embedPart(contentID=" << contentId << ", url=" << url << ") -->" << endl;
+    flush();
+  }
 
 
 } // namespace KMail

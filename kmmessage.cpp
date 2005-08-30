@@ -2903,6 +2903,12 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
     else
       aPart->setBody( "" );
 
+    // Content-id
+    if ( headers.HasContentId() ) {
+      const QCString contentId = headers.ContentId().AsString().c_str();
+      // ignore leading '<' and trailing '>'
+      aPart->setContentId( contentId.mid( 1, contentId.length() - 2 ) );
+    }
   }
   // If no valid body part was given,
   // set all MultipartBodyPart attributes to empty values.
@@ -2917,6 +2923,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
     aPart->setContentDescription("");
     aPart->setContentDisposition("");
     aPart->setBody("");
+    aPart->setContentId("");
   }
 }
 

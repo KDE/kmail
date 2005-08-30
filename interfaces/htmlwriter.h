@@ -33,6 +33,7 @@
 #ifndef __KMAIL_INTERFACES_HTMLWRITER_H__
 #define __KMAIL_INTERFACES_HTMLWRITER_H__
 
+class QCString;
 class QString;
 
 namespace KMail {
@@ -106,6 +107,11 @@ namespace KMail {
     virtual void queue( const QString & str ) = 0;
     /** (Start) flushing internal buffers, if any. */
     virtual void flush() = 0;
+
+    /**
+     * Embed a part with Content-ID @contentId, using url @url.
+     */
+    virtual void embedPart( const QCString & contentId, const QString & url ) = 0;
   };
 
 } // namespace KMail

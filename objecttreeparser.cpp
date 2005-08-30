@@ -1765,6 +1765,11 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
       }
     }
 
+    QCString contentId = msgPart->contentId();
+    if ( !contentId.isEmpty() ) {
+      htmlWriter()->embedPart( contentId, href );
+    }
+
     if( inlineImage )
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"

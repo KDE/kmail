@@ -46,6 +46,8 @@ namespace KMail {
   class KHtmlPartHtmlWriter : public QObject, public HtmlWriter {
     Q_OBJECT
   public:
+    // Key is Content-Id, value is URL
+    typedef QMap<QString, QString> EmbeddedPartMap;
     KHtmlPartHtmlWriter( KHTMLPart * part,
 			 QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
@@ -56,9 +58,13 @@ namespace KMail {
     void write( const QString & str );
     void queue( const QString & str );
     void flush();
+    void embedPart( const QCString & contentId, const QString & url );
 
   private slots:
     void slotWriteNextHtmlChunk();
+
+  private:
+    void resolveCidUrls();
 
   private:
     KHTMLPart * mHtmlPart;
@@ -69,6 +75,7 @@ namespace KMail {
       Queued,
       Ended
     } mState;
+    EmbeddedPartMap mEmbeddedPartMap;
   };
 
 } // namespace KMail
