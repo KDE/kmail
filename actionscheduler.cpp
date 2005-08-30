@@ -27,6 +27,7 @@
     you do not wish to do so, delete this exception statement from
     your version.
 */
+#include <kdebug.h> // FIXME
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -717,6 +718,16 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
   if (cmd)
     cmd->start();
   // else moveMessageFinished should call finish
+}
+
+void ActionScheduler::copyMessageFinished( KMCommand *command )
+{
+  // FIXME remove the debug output
+  kdDebug(5006) << "##### ActionScheduler::copyMessageFinished( KMCommand *command )" << endl;
+  if ( command->result() != KMCommand::OK )
+    actionMessage( KMFilterAction::ErrorButGoOn );
+  else 
+    actionMessage();
 }
 
 void ActionScheduler::timeOut()

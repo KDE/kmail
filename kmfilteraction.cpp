@@ -1356,6 +1356,7 @@ class KMFilterActionCopy: public KMFilterActionWithFolder
 public:
   KMFilterActionCopy();
   virtual ReturnCode process(KMMessage* msg) const;
+  virtual void processAsync(KMMessage* msg) const;
   virtual bool requiresBody(KMMsgBase*) const;
   static KMFilterAction* newAction(void);
 };
@@ -1389,6 +1390,18 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   mFolder->close();
 
   return GoOn;
+}
+
+void KMFilterActionCopy::processAsync(KMMessage* msg) const
+{
+  // FIXME remove the debug output
+  kdDebug(5006) << "##### KMFilterActionCopy::processAsync(KMMessage* msg)" << endl;
+  ActionScheduler *handler = MessageProperty::filterHandler( msg );
+
+  KMCommand *cmd = new KMCopyCommand( mFolder, msg );
+  QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
+                    handler, SLOT( copyMessageFinished( KMCommand * ) ) );
+  cmd->start();
 }
 
 bool KMFilterActionCopy::requiresBody(KMMsgBase*) const
