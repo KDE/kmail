@@ -473,7 +473,7 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
     kdDebug(5006) << "Didn't find uid: " << uid << "in cache!" << endl;
   }
   // Not found by now
-  if( mapReloaded )
+ // if( mapReloaded )
     // Not here then
     return 0;
   // There could be a problem in the maps. Rebuild them and try again
