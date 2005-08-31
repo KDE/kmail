@@ -93,7 +93,8 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mSignatureState( KMMsgSignatureStateUnknown ),
     mMDNSentState( KMMsgMDNStateUnknown ),
     mUnencryptedMsg(0),
-    mLastUpdated( 0 )
+    mLastUpdated( 0 ),
+    mComplete( false )
 {
 }
 
@@ -114,6 +115,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMsgBase(parent)
   mDate    = 0;
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
+  mComplete = false;
 }
 
 
@@ -136,6 +138,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   KMMsgBase::assign(&msgInfo);
   mUnencryptedMsg = 0;
   mLastUpdated = 0;
+  mComplete = false;
 }
 
 
@@ -178,6 +181,7 @@ void KMMessage::assign( const KMMessage& other )
   setDrafts( other.drafts() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //KMMsgBase::assign( &other );
+  mComplete = false;
 }
 
 //-----------------------------------------------------------------------------

@@ -781,6 +781,11 @@ public:
   ulong UID() const;
   void setUID(ulong uid);
 
+  /**  Return true if (the complete message is available without referring to the backing store.*/
+  bool isComplete() const { return mComplete; }
+  /**  Set if (the message is a complete message */
+  void setComplete(  bool v ) { mComplete = v; setReadyToShow( true ); }
+
   /** Status of the message. */
   KMMsgStatus status() const { return mStatus; }
   /** Set status and mark dirty. */
@@ -871,6 +876,7 @@ private:
   KMMsgMDNSentState mMDNSentState;
   KMMessage* mUnencryptedMsg;
   DwBodyPart* mLastUpdated;
+  bool mComplete;
 };
 
 

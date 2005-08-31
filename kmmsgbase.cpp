@@ -998,21 +998,6 @@ unsigned long KMMsgBase::getMsgSerNum() const
 
 
 //-----------------------------------------------------------------------------
-bool KMMsgBase::isComplete()
-{
-  return MessageProperty::complete( getMsgSerNum() );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgBase::setComplete(bool value)
-{
-  MessageProperty::setComplete( getMsgSerNum(), value );
-  if ( value )
-    setReadyToShow( true );
-}
-
-//-----------------------------------------------------------------------------
 bool KMMsgBase::readyToShow()
 {
   return MessageProperty::readyToShow( getMsgSerNum() );
