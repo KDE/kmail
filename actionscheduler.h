@@ -99,6 +99,8 @@ signals:
 public slots:
   /** Called back by asynchronous actions when they have completed */
   void actionMessage(KMFilterAction::ReturnCode = KMFilterAction::GoOn);
+
+  /** Called back by asynchronous copy actions when they have completed */
   void copyMessageFinished( KMCommand *command );
 
 private slots:
