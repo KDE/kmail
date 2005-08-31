@@ -2853,6 +2853,7 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
 
 bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
+    kdDebug(5006) << k_funcinfo << endl << kdBacktrace() << endl;
     //all cases
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     Q_INT32 deleted_count = 0;
