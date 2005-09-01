@@ -367,15 +367,18 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const KURL::List &attachURLs)
 {
   kdDebug(5006) << "KMKernel::openComposer called" << endl;
-
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
+  // tentatively decode to, cc and bcc because invokeMailer calls us with
+  // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
+  if (!to.isEmpty())
+    msg->setTo( KMMsgBase::decodeRFC2047String( to.latin1() ) );
+  if (!cc.isEmpty())
+    msg->setCc( KMMsgBase::decodeRFC2047String( cc.latin1() ) );
+  if (!bcc.isEmpty())
+    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.latin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!to.isEmpty()) msg->setTo(to);
-
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QCString str = KPIM::kFileToString( messageFile.path(), true, false );
     if( !str.isEmpty() )
@@ -1117,7 +1120,7 @@ QString KMKernel::debugSernum( Q_UINT32 serialNumber )
       res.append( QString( "Invalid serial number." ) );
     }
   }
-  return res;  
+  return res;
 }
 
 
@@ -1427,7 +1430,7 @@ void KMKernel::init()
   the_msgIndex = new KMMsgIndex(this); //create the indexer
 #else
   the_msgIndex = 0;
-#endif  
+#endif
 
 #if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
