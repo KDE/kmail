@@ -667,7 +667,6 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   QString result;
   QCString LWSP_buffer;
   bool lastWasEncodedWord = false;
-  static const int maxLen = 200;
 
   for ( const char * pos = str.data() ; *pos ; ++pos ) {
     // collect LWSP after encoded-words,
@@ -690,11 +689,12 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       // parse charset name
       QCString charset;
       int i = 2;
-      for (pos+=2; i<maxLen && (*pos!='?'&&(*pos==' '||ispunct(*pos)||isalnum(*pos))); ++i) {
+      pos += 2;
+      for ( ; *pos != '?' && ( *pos==' ' || ispunct(*pos) || isalnum(*pos) );
+            ++i, ++pos ) {
 	charset += *pos;
-	pos++;
       }
-      if (*pos!='?' || i<4 || i>=maxLen)
+      if ( *pos!='?' || i<4 )
 	goto invalid_encoded_word;
 
       // get encoding and check delimiting question marks
@@ -705,11 +705,11 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       pos+=3; i+=3; // skip ?x?
       const char * enc_start = pos;
       // search for end of encoded part
-      while (i<maxLen && *pos && !(*pos=='?' && *(pos+1)=='=')) {
+      while ( *pos && !(*pos=='?' && *(pos+1)=='=') ) {
 	i++;
 	pos++;
       }
-      if (i>=maxLen || !*pos)
+      if ( !*pos )
 	goto invalid_encoded_word;
 
       // valid encoding: decode and throw away separating LWSP
