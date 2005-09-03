@@ -48,6 +48,7 @@
 #include <errno.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#include <QX11Info>
 
 using namespace KMail;
 
@@ -159,7 +160,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
   // wrong (#76026), and should be done only for modals. CVS HEAD should get
   // proper fix in KWin (see also searchwindow.cpp)
-  XDeleteProperty( qt_xdisplay(), winId(), XA_WM_TRANSIENT_FOR );
+  XDeleteProperty( QX11Info::display(), winId(), XA_WM_TRANSIENT_FOR );
 #endif
 }
 

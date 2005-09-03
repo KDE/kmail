@@ -55,6 +55,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <QX11Info>
 
 namespace KMail {
 
@@ -80,7 +81,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
   // wrong (#76026), and should be done only for modals. CVS HEAD should get
   // proper fix in KWin (l.lunak@kde.org)
-  XDeleteProperty( qt_xdisplay(), winId(), XA_WM_TRANSIENT_FOR );
+  XDeleteProperty( QX11Info::display(), winId(), XA_WM_TRANSIENT_FOR );
 #endif
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 
