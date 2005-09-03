@@ -4,7 +4,7 @@
 #include <kmimemagic.h>
 #include <kmimetype.h>
 #include <kdebug.h>
-#include <kmdcodec.h>
+#include <kcodecs.h>
 
 #include "kmmsgpart.h"
 #include "kmkernel.h"

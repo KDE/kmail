@@ -105,7 +105,7 @@ using KMail::TeeHtmlWriter;
 #include <kdialog.h>
 #include <kaction.h>
 #include <kiconloader.h>
-#include <kmdcodec.h>
+#include <kcodecs.h>
 #include <kasciistricmp.h>
 
 #include <qclipboard.h>

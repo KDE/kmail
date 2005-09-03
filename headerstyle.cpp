@@ -56,7 +56,7 @@ using namespace KPIM;
 #include <kimproxy.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
-#include <kmdcodec.h>
+#include <kcodecs.h>
 #include <qdatetime.h>
 #include <qbuffer.h>
 #include <qbitmap.h>

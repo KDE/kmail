@@ -15,7 +15,7 @@ using KMail::MessageProperty;
 #include <kglobal.h>
 #include <kcharsets.h>
 #include <kasciistringtools.h>
-#include <kmdcodec.h>
+#include <kcodecs.h>
 #include <krfcdate.h>
 
 #include <mimelib/mimepp.h>

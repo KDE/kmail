@@ -82,7 +82,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
-#include <kmdcodec.h>
+#include <kcodecs.h>
 
 // other Qt headers
 #include <qtextcodec.h>
