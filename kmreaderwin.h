@@ -65,6 +65,11 @@ namespace KParts {
   struct URLArgs;
 }
 
+/** 
+   This class implements a "reader window", that is a window
+   used for reading or viewing messages.
+*/
+
 class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   Q_OBJECT
 
