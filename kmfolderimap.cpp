@@ -1942,8 +1942,10 @@ bool KMFolderImap::processNewMail(bool)
     kdDebug(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
     return false;
   }
-  if (imapPath().isEmpty()) {
+  if ( imapPath().isEmpty() ) {
     kdDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
+    // remove it locally
+    setAlreadyRemoved( true );
     kmkernel->imapFolderMgr()->remove( folder() );
     return false;
   }
