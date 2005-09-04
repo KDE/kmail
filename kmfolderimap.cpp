@@ -172,7 +172,9 @@ void KMFolderImap::readConfig()
   mCheckMail = config->readBoolEntry("checkmail", true);
 
   mUidValidity = config->readEntry("UidValidity");
-  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
+  if ( mImapPath.isEmpty() ) {
+    setImapPath( config->readEntry("ImapPath") );
+  }
   if (QString(name()).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder()->setSystemFolder( true );
@@ -2255,6 +2257,16 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
   }
   ulong serNum = msg->getMsgSerNum();
   mUidMetaDataMap.replace( uid, new KMMsgMetaData(msg->status(), serNum) );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::setImapPath( const QString& path )
+{
+  if ( path.isEmpty() ) {
+    kdWarning(5006) << k_funcinfo << "ignoring empty path";
+  } else {
+    mImapPath = path;
+  }
 }
 
 #include "kmfolderimap.moc"
