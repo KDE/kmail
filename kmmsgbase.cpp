@@ -9,6 +9,8 @@
 #include "kmheaders.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
+//Added by qt3to4:
+#include <Q3CString>
 using KMail::MessageProperty;
 
 #include <kdebug.h>
@@ -22,7 +24,7 @@ using KMail::MessageProperty;
 #include <kmime_codecs.h>
 
 #include <qtextcodec.h>
-#include <qdeepcopy.h>
+#include <q3deepcopy.h>
 #include <qregexp.h>
 
 #include <ctype.h>
@@ -470,9 +472,9 @@ bool KMMsgBase::isHam(void) const
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMsgBase::statusToStr(const KMMsgStatus status)
+Q3CString KMMsgBase::statusToStr(const KMMsgStatus status)
 {
-  QCString sstr;
+  Q3CString sstr;
   if (status & KMMsgStatusNew) sstr += 'N';
   if (status & KMMsgStatusUnread) sstr += 'U';
   if (status & KMMsgStatusOld) sstr += 'O';
@@ -525,7 +527,7 @@ QString KMMsgBase::statusToSortRank()
 
 
 //-----------------------------------------------------------------------------
-void KMMsgBase::setDate(const QCString& aDateStr)
+void KMMsgBase::setDate(const Q3CString& aDateStr)
 {
   setDate( KRFCDate::parseDate( aDateStr ) );
 }
@@ -568,17 +570,17 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 
 
 //-----------------------------------------------------------------------------
-const QTextCodec* KMMsgBase::codecForName(const QCString& _str)
+const QTextCodec* KMMsgBase::codecForName(const Q3CString& _str)
 {
   if (_str.isEmpty()) return 0;
-  QCString codec = _str;
+  Q3CString codec = _str;
   KPIM::kAsciiToLower(codec.data());
   return KGlobal::charsets()->codecForName(codec);
 }
 
 
 //-----------------------------------------------------------------------------
-QCString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
+Q3CString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
 {
   bool all_ok =true;
   QString result = _str;
@@ -625,11 +627,11 @@ namespace {
   // it's definition...
   inline bool isBlank( char ch ) { return ch == ' ' || ch == '\t' ; }
 
-  QCString unfold( const QCString & header ) {
+  Q3CString unfold( const Q3CString & header ) {
     if ( header.isEmpty() )
-      return QCString();
+      return Q3CString();
 
-    QCString result( header.size() ); // size() >= length()+1 and size() is O(1)
+    Q3CString result( header.size() ); // size() >= length()+1 and size() is O(1)
     char * d = result.data();
 
     for ( const char * s = header.data() ; *s ; )
@@ -651,12 +653,12 @@ namespace {
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
+QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
 {
   if ( aStr.isEmpty() )
     return QString::null;
 
-  const QCString str = unfold( aStr );
+  const Q3CString str = unfold( aStr );
 
   if ( str.isEmpty() )
     return QString::null;
@@ -665,7 +667,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     return kmkernel->networkCodec()->toUnicode( str );
 
   QString result;
-  QCString LWSP_buffer;
+  Q3CString LWSP_buffer;
   bool lastWasEncodedWord = false;
 
   for ( const char * pos = str.data() ; *pos ; ++pos ) {
@@ -687,7 +689,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     const char * const beg = pos;
     {
       // parse charset name
-      QCString charset;
+      Q3CString charset;
       int i = 2;
       pos += 2;
       for ( ; *pos != '?' && ( *pos==' ' || ispunct(*pos) || isalnum(*pos) );
@@ -744,27 +746,27 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 
 
 //-----------------------------------------------------------------------------
-static const QCString especials = "()<>@,;:\"/[]?.= \033";
+static const Q3CString especials = "()<>@,;:\"/[]?.= \033";
 
-QCString KMMsgBase::encodeRFC2047Quoted( const QCString & s, bool base64 ) {
+Q3CString KMMsgBase::encodeRFC2047Quoted( const Q3CString & s, bool base64 ) {
   const char * codecName = base64 ? "b" : "q" ;
   const KMime::Codec * codec = KMime::Codec::codecForName( codecName );
   kdFatal( !codec, 5006 ) << "No \"" << codecName << "\" found!?" << endl;
   QByteArray in; in.setRawData( s.data(), s.length() );
   const QByteArray result = codec->encode( in );
   in.resetRawData( s.data(), s.length() );
-  return QCString( result.data(), result.size() + 1 );
+  return Q3CString( result.data(), result.size() + 1 );
 }
 
-QCString KMMsgBase::encodeRFC2047String(const QString& _str,
-  const QCString& charset)
+Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
+  const Q3CString& charset)
 {
   static const QString dontQuote = "\"()<>,@";
 
-  if (_str.isEmpty()) return QCString();
+  if (_str.isEmpty()) return Q3CString();
   if (charset == "us-ascii") return toUsAscii(_str);
 
-  QCString cset;
+  Q3CString cset;
   if (charset.isEmpty())
   {
     cset = kmkernel->networkCodec()->mimeName();
@@ -782,7 +784,7 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
   bool useBase64 = (nonAscii * 6 > strLength);
 
   unsigned int start, stop, p, pos = 0, encLength;
-  QCString result;
+  Q3CString result;
   bool breakLine = FALSE;
   const unsigned int maxLen = 75 - 7 - cset.length();
 
@@ -849,13 +851,13 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-QCString KMMsgBase::encodeRFC2231String( const QString& _str,
-                                         const QCString& charset )
+Q3CString KMMsgBase::encodeRFC2231String( const QString& _str,
+                                         const Q3CString& charset )
 {
   if ( _str.isEmpty() )
-    return QCString();
+    return Q3CString();
 
-  QCString cset;
+  Q3CString cset;
   if ( charset.isEmpty() )
   {
     cset = kmkernel->networkCodec()->mimeName();
@@ -864,7 +866,7 @@ QCString KMMsgBase::encodeRFC2231String( const QString& _str,
   else
     cset = charset;
   const QTextCodec *codec = codecForName( cset );
-  QCString latin;
+  Q3CString latin;
   if ( charset == "us-ascii" )
     latin = toUsAscii( _str );
   else if ( codec )
@@ -881,7 +883,7 @@ QCString KMMsgBase::encodeRFC2231String( const QString& _str,
   if ( !*l )
     return latin;
 
-  QCString result = cset + "''";
+  Q3CString result = cset + "''";
   for ( l = latin.data(); *l; ++l ) {
     bool needsQuoting = ( *l & 0x80 );
     if( !needsQuoting ) {
@@ -912,14 +914,14 @@ QCString KMMsgBase::encodeRFC2231String( const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2231String(const QCString& _str)
+QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
 {
   int p = _str.find('\'');
   if (p < 0) return kmkernel->networkCodec()->toUnicode(_str);
 
-  QCString charset = _str.left(p);
+  Q3CString charset = _str.left(p);
 
-  QCString st = _str.mid(_str.findRev('\'') + 1);
+  Q3CString st = _str.mid(_str.findRev('\'') + 1);
   char ch, ch2;
   p = 0;
   while (p < (int)st.length())
@@ -950,7 +952,7 @@ QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
     return base64EncodedMD5( s.stripWhiteSpace().latin1() ); // const char * overload
 }
 
-QString KMMsgBase::base64EncodedMD5( const QCString & s ) {
+QString KMMsgBase::base64EncodedMD5( const Q3CString & s ) {
   if (s.stripWhiteSpace().isEmpty()) return "";
   return base64EncodedMD5( s.stripWhiteSpace().data() );
 }
@@ -964,7 +966,7 @@ QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
 
 
 //-----------------------------------------------------------------------------
-QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringList &encodingList, const QString &text)
+Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QStringList &encodingList, const QString &text)
 {
     QStringList charsets = encodingList;
     if (!_encoding.isEmpty())
@@ -977,7 +979,7 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
     QStringList::ConstIterator it = charsets.begin();
     for (; it != charsets.end(); ++it)
     {
-       QCString encoding = (*it).latin1();
+       Q3CString encoding = (*it).latin1();
        if (encoding == "locale")
        {
          encoding = kmkernel->networkCodec()->mimeName();

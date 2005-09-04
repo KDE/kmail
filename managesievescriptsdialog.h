@@ -5,8 +5,8 @@
 #include <kurl.h>
 #include <qmap.h>
 
-class QListView;
-class QCheckListItem;
+class Q3ListView;
+class Q3CheckListItem;
 
 namespace KMail {
 
@@ -23,9 +23,9 @@ private slots:
   void slotRefresh();
   void slotItem( KMail::SieveJob *, const QString &, bool );
   void slotResult( KMail::SieveJob *, bool, const QString &, bool );
-  void slotContextMenuRequested( QListViewItem *, const QPoint & );
-  void slotDoubleClicked( QListViewItem * );
-  void slotSelectionChanged( QListViewItem * );
+  void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
+  void slotDoubleClicked( Q3ListViewItem * );
+  void slotSelectionChanged( Q3ListViewItem * );
   void slotNewScript();
   void slotEditScript();
   void slotDeleteScript();
@@ -36,15 +36,15 @@ private slots:
 
 private:
   void killAllJobs();
-  void changeActiveScript( QCheckListItem * );
+  void changeActiveScript( Q3CheckListItem * );
 
 private:
-  QListView * mListView;
+  Q3ListView * mListView;
   SieveEditor * mSieveEditor;
-  QMap<KMail::SieveJob*,QCheckListItem*> mJobs;
-  QMap<QCheckListItem*,KURL> mUrls;
-  QMap<QCheckListItem*,QCheckListItem*> mSelectedItems;
-  QCheckListItem * mContextMenuItem;
+  QMap<KMail::SieveJob*,Q3CheckListItem*> mJobs;
+  QMap<Q3CheckListItem*,KURL> mUrls;
+  QMap<Q3CheckListItem*,Q3CheckListItem*> mSelectedItems;
+  Q3CheckListItem * mContextMenuItem;
   KURL mCurrentURL;
   bool mWasActive : 1;
 };

@@ -26,12 +26,18 @@
 #include <kdebug.h>
 
 // Qt headers:
-#include <qheader.h>
+#include <q3header.h>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qlabel.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QHBoxLayout>
+#include <QShowEvent>
+#include <QVBoxLayout>
+#include <QResizeEvent>
 
 // Other headers:
 #include <assert.h>
@@ -56,7 +62,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotEnableOK(const QString&)) );
 
-  mButtonGroup = new QButtonGroup( page );
+  mButtonGroup = new Q3ButtonGroup( page );
   mButtonGroup->hide();
 
   // row 1: radio button
@@ -178,7 +184,7 @@ void ListView::setVisibleItem( int visibleItem, bool updateSize )
 
 QSize ListView::sizeHint() const
 {
-  QSize s = QListView::sizeHint();
+  QSize s = Q3ListView::sizeHint();
 
   int h = fontMetrics().height() + 2*itemMargin();
   if( h % 2 > 0 ) { h++; }
@@ -307,7 +313,7 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
 
   connect( mListView, SIGNAL(selectionChanged()),
 	   SLOT(slotSelectionChanged()) );
-  connect( mListView, SIGNAL(doubleClicked ( QListViewItem *, const QPoint &, int ) ),
+  connect( mListView, SIGNAL(doubleClicked ( Q3ListViewItem *, const QPoint &, int ) ),
 	   SLOT(slotOk()) );
 
   connect( this, SIGNAL(finished()), SLOT(delayedDestruct()) );
@@ -330,7 +336,7 @@ void ProfileDialog::setup() {
 		<< " profiles:" << endl;
 
   // build the list and populate the list view:
-  QListViewItem * listItem = 0;
+  Q3ListViewItem * listItem = 0;
   for ( QStringList::const_iterator it = mProfileList.begin() ;
 	it != mProfileList.end() ; ++it ) {
     KConfig profile( *it, true /* read-only */, false /* no KDE global */ );
@@ -347,7 +353,7 @@ void ProfileDialog::setup() {
 		      << "\" doesn't provide a description!" << endl;
       desc = i18n("Missing profile description placeholder","Not available");
     }
-    listItem = new QListViewItem( mListView, listItem, name, desc );
+    listItem = new Q3ListViewItem( mListView, listItem, name, desc );
   }
 }
 

@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Q3ValueList>
 /*
     sievedebugdialog.h
 
@@ -24,8 +26,8 @@
 
 class QString;
 class QStringList;
-class QTextEdit;
-template <typename T> class QValueList;
+class Q3TextEdit;
+template <typename T> class Q3ValueList;
 
 class KMAccount;
 
@@ -34,7 +36,7 @@ namespace KMime
   namespace Types
   {
     struct AddrSpec;
-    typedef QValueList<AddrSpec> AddrSpecList;
+    typedef Q3ValueList<AddrSpec> AddrSpecList;
   }
 }
 
@@ -75,13 +77,13 @@ protected:
     KMail::SieveJob *mSieveJob;
     KURL mUrl;
 
-    QTextEdit *mEdit;
+    Q3TextEdit *mEdit;
 
     // Copied from AccountManager, because we have to do an async iteration
     // WARNING: When copy/pasting this code, be aware that accounts may
     //          get removed inbetween! For debugging this is good enough
     //          though. - Martijn
-    QValueList<KMAccount *> mAccountList;
+    Q3ValueList<KMAccount *> mAccountList;
     QStringList mScriptList;
     KMail::ImapAccountBase *mAccountBase;
 };

@@ -34,12 +34,17 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <Q3Frame>
+#include <QHBoxLayout>
+#include <QBoxLayout>
 
-class DistributionListItem : public QCheckListItem
+class DistributionListItem : public Q3CheckListItem
 {
   public:
-    DistributionListItem( QListView *list )
-      : QCheckListItem( list, QString::null, CheckBox )
+    DistributionListItem( Q3ListView *list )
+      : Q3CheckListItem( list, QString::null, CheckBox )
     {
     }
 
@@ -89,7 +94,7 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   : KDialogBase( Plain, i18n("Save Distribution List"), User1 | Cancel,
                  User1, parent, 0, false, false, i18n("Save List") )
 {
-  QFrame *topFrame = plainPage();
+  Q3Frame *topFrame = plainPage();
   
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );
@@ -148,7 +153,7 @@ void DistributionListDialog::slotUser1()
 
   KABC::StdAddressBook *ab = KABC::StdAddressBook::self( true );
 
-  QListViewItem *i = mRecipientsList->firstChild();
+  Q3ListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
     DistributionListItem *item = static_cast<DistributionListItem *>( i );
     if ( item->isOn() ) {

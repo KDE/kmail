@@ -22,7 +22,9 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QHideEvent>
 #include <kcmultidialog.h>
 
 class KConfig;
@@ -67,7 +69,7 @@ protected slots:
   void slotUser2();
 
 private:
-  QGuardedPtr<ProfileDialog>  mProfileDialog;
+  QPointer<ProfileDialog>  mProfileDialog;
 };
 
 /**

@@ -38,7 +38,7 @@ namespace KMail {
       void addChildFolder();
 
     protected slots:
-      void slotContextMenuRequested( QListViewItem *, const QPoint & );
+      void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
 
     private:
       KMFolderTree* mFolderTree;

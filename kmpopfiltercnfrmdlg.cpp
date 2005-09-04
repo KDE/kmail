@@ -14,10 +14,15 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qcheckbox.h>
 #include <qvgroupbox.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PtrList>
+#include <QKeyEvent>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <kio/global.h>
@@ -30,11 +35,11 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialo
       : KListView(aParent)
 {
   mDialog=aDialog;
-  int mDownIndex=addColumn(QIconSet(QPixmap(mDown)), QString::null, 24);
+  int mDownIndex=addColumn(QIcon(QPixmap(mDown)), QString::null, 24);
   assert( mDownIndex == Down ); //This code relies on the fact that radiobuttons are the first three columns for easier Column-Action mapping
 			        //it does not necessarily be true - you could redefine mapToColumn and mapToAction to eg. shift those numbers by 1
-  addColumn(QIconSet(QPixmap(mLater)), QString::null, 24);
-  addColumn(QIconSet(QPixmap(mDel)), QString::null, 24);
+  addColumn(QIcon(QPixmap(mLater)), QString::null, 24);
+  addColumn(QIcon(QPixmap(mDel)), QString::null, 24);
 
   /*int subjCol =*/ addColumn(i18n("Subject"), 180);
   /*int sendCol =*/ addColumn(i18n("Sender"), 150);
@@ -61,8 +66,8 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialo
   //we rely on fixed column order, so we forbid this
   header()->setMovingEnabled(false);
 
-  connect(this, SIGNAL(pressed(QListViewItem*, const QPoint&, int)),
-        SLOT(slotPressed(QListViewItem*, const QPoint&, int)));
+  connect(this, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
+        SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
 }
 
 KMPopHeadersView::~KMPopHeadersView()
@@ -89,11 +94,11 @@ void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
 		    }
 	    }
     } else {
-	    QListView::keyPressEvent( e );
+	    Q3ListView::keyPressEvent( e );
     }
 }
 
-void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint&, int aColumn) {
+void KMPopHeadersView::slotPressed(Q3ListViewItem* aItem, const QPoint&, int aColumn) {
   if ( !( aItem && aColumn>=0 && aColumn<NoAction ) ) return;
   KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>(aItem);
   assert( item );
@@ -281,7 +286,7 @@ QString KMPopHeadersViewItem::key(int col, bool) const
 ///  dlg
 /////////////////////////////////////////
 /////////////////////////////////////////
-KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
+KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
       : KDialogBase(aParent, aName, TRUE, i18n("POP Filter"), Ok | Help, Ok, FALSE)
 {
   unsigned int rulesetCount = 0;
@@ -367,10 +372,10 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       lowerBox->setTitle(i18n("Ruleset Filtered Messages: %1").arg(rulesetCount));
 
   // connect signals and slots
-  connect(lv, SIGNAL(pressed(QListViewItem*, const QPoint&, int)),
-      this, SLOT(slotPressed(QListViewItem*, const QPoint&, int)));
-  connect(mFilteredHeaders, SIGNAL(pressed(QListViewItem*, const QPoint&, int)),
-      this, SLOT(slotPressed(QListViewItem*, const QPoint&, int)));
+  connect(lv, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
+      this, SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
+  connect(mFilteredHeaders, SIGNAL(pressed(Q3ListViewItem*, const QPoint&, int)),
+      this, SLOT(slotPressed(Q3ListViewItem*, const QPoint&, int)));
   connect(cb, SIGNAL(toggled(bool)),
       this, SLOT(slotToggled(bool)));
 
@@ -410,7 +415,7 @@ void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg)
       lvi->setText(8, msg->dateIsoStr());
 }
 
-void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAction)
+void KMPopFilterCnfrmDlg::setAction(Q3ListViewItem *aItem, KMPopFilterAction aAction)
 {
     mItemMap[aItem]->setAction(aAction);
 }
@@ -420,7 +425,7 @@ void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAct
   click happened over a radio button column.
   Of course the radio button state is changed as well if the above is true.
 */
-void KMPopFilterCnfrmDlg::slotPressed(QListViewItem *aItem, const QPoint &, int aColumn)
+void KMPopFilterCnfrmDlg::slotPressed(Q3ListViewItem *aItem, const QPoint &, int aColumn)
 {
   if ( aColumn>=0 && aColumn<NoAction ) setAction(aItem,KMPopHeadersView::mapToAction(aColumn));
 }

@@ -21,10 +21,12 @@
 #include <ksystemtray.h>
 
 #include <qmap.h>
-#include <qguardedptr.h>
-#include <qvaluevector.h>
+#include <qpointer.h>
+#include <q3valuevector.h>
 #include <qpixmap.h>
 #include <qimage.h>
+//Added by qt3to4:
+#include <QMouseEvent>
 
 #include <time.h>
 
@@ -81,9 +83,9 @@ private:
   QPixmap mDefaultIcon;
   QImage mLightIconImage;
 
-  QValueVector<KMFolder*> mPopupFolders;
-  QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
-  QMap<QGuardedPtr<KMFolder>, bool> mPendingUpdates;
+  Q3ValueVector<KMFolder*> mPopupFolders;
+  QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
+  QMap<QPointer<KMFolder>, bool> mPendingUpdates;
   QTimer *mUpdateTimer;
   time_t mLastUpdate;
 };

@@ -36,7 +36,7 @@
 #include <qstringlist.h>
 #include <qstring.h>
 
-class QListBox;
+class Q3ListBox;
 class QPushButton;
 
 //
@@ -91,7 +91,7 @@ protected slots:
   void slotSelectionChanged();
 
 protected:
-  QListBox      *mListBox;
+  Q3ListBox      *mListBox;
   QPushButton   *mAddButton;
   QPushButton   *mRemoveButton;
   QPushButton   *mModifyButton;

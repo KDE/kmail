@@ -23,7 +23,7 @@
 #include <kdialogbase.h>
 #include <kabc/addressee.h>
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 class QString;
 
@@ -49,7 +49,7 @@ namespace KMail {
        KPIM::AddresseeView *  mAddresseeView;
        KABC::Addressee::List  mAddresseeList;
 
-       QValueListIterator<KABC::Addressee> itAddresseeList;
+       Q3ValueListIterator<KABC::Addressee> itAddresseeList;
   };
 
 }

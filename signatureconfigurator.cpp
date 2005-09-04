@@ -32,9 +32,12 @@
 #include <qfileinfo.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qtextedit.h>
-#include <qwhatsthis.h>
-#include <qwidgetstack.h>
+#include <q3textedit.h>
+
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <assert.h>
 
@@ -56,7 +59,7 @@ namespace KMail {
 
     // "enable signatue" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Enable signature"), this );
-    QWhatsThis::add(mEnableCheck, 
+    mEnableCheck->setWhatsThis( 
         i18n("Check this box if you want KMail to append a signature to mails "
              "written with this identity."));
     vlay->addWidget( mEnableCheck );
@@ -64,7 +67,7 @@ namespace KMail {
     // "obtain signature text from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
     mSourceCombo = new QComboBox( false, this );
-    QWhatsThis::add(mSourceCombo,
+    mSourceCombo->setWhatsThis(
         i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
@@ -82,7 +85,7 @@ namespace KMail {
     hlay->addWidget( mSourceCombo, 1 );
 
     // widget stack that is controlled by the source combo:
-    QWidgetStack * widgetStack = new QWidgetStack( this );
+    Q3WidgetStack * widgetStack = new Q3WidgetStack( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
@@ -101,12 +104,12 @@ namespace KMail {
 
     int pageno = 0;
     // page 0: input field for direct entering:
-    mTextEdit = new QTextEdit( widgetStack );
-    QWhatsThis::add(mTextEdit, 
+    mTextEdit = new Q3TextEdit( widgetStack );
+    mTextEdit->setWhatsThis( 
         i18n("Use this field to enter an arbitrary static signature."));
     widgetStack->addWidget( mTextEdit, pageno );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
-    mTextEdit->setWordWrap( QTextEdit::NoWrap );
+    mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
     mTextEdit->setTextFormat( Qt::PlainText );
 
     widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
@@ -118,7 +121,7 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KURLRequester( page );
-    QWhatsThis::add(mFileRequester, 
+    mFileRequester->setWhatsThis( 
         i18n("Use this requester to specify a text file that contains your "
              "signature. It will be read every time you create a new mail or "
              "append a new signature."));
@@ -129,7 +132,7 @@ namespace KMail {
     connect( mFileRequester, SIGNAL(textChanged(const QString &)),
 	     this, SLOT(slotEnableEditButton(const QString &)) );
     mEditButton = new QPushButton( i18n("Edit &File"), page );
-    QWhatsThis::add(mEditButton, i18n("Opens the specified file in a text editor."));
+    mEditButton->setWhatsThis( i18n("Opens the specified file in a text editor."));
     connect( mEditButton, SIGNAL(clicked()), SLOT(slotEdit()) );
     mEditButton->setAutoDefault( false );
     mEditButton->setEnabled( false ); // initially nothing to edit
@@ -145,7 +148,7 @@ namespace KMail {
     mCommandEdit = new KLineEdit( page );
     mCommandEdit->setCompletionObject( new KShellCompletion() );
     mCommandEdit->setAutoDeleteCompletionObject( true );
-    QWhatsThis::add(mCommandEdit, 
+    mCommandEdit->setWhatsThis( 
         i18n("You can add an arbitrary command here, either with or without path "
              "depending on whether or not the command is in your Path. For every "
              "new mail, KMail will execute the command and use what it outputs (to "

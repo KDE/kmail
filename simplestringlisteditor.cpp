@@ -42,6 +42,9 @@
 #include <kpushbutton.h>
 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 
 //********************************************************
@@ -49,8 +52,8 @@
 //********************************************************
 
 // small helper function:
-static inline QListBoxItem * findSelectedItem( QListBox * lb ) {
-  QListBoxItem * item = 0;
+static inline Q3ListBoxItem * findSelectedItem( Q3ListBox * lb ) {
+  Q3ListBoxItem * item = 0;
   for ( item = lb->firstItem() ; item && !item->isSelected() ;
 	item = item->next() ) ;
   return item;
@@ -71,7 +74,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
-  mListBox = new QListBox( this );
+  mListBox = new Q3ListBox( this );
   hlay->addWidget( mListBox, 1 );
 
   if ( buttons == None )
@@ -113,7 +116,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     vlay->addWidget( mModifyButton );
     connect( mModifyButton, SIGNAL(clicked()),
 	     this, SLOT(slotModify()) );
-    connect( mListBox, SIGNAL( doubleClicked( QListBoxItem* ) ),
+    connect( mListBox, SIGNAL( doubleClicked( Q3ListBoxItem* ) ),
              this, SLOT( slotModify() ) );
   }
 
@@ -160,7 +163,7 @@ void SimpleStringListEditor::appendStringList( const QStringList & strings ) {
 
 QStringList SimpleStringListEditor::stringList() const {
   QStringList result;
-  for ( QListBoxItem * item = mListBox->firstItem() ;
+  for ( Q3ListBoxItem * item = mListBox->firstItem() ;
 	item ; item = item->next() )
     result << item->text();
   return result;
@@ -218,7 +221,7 @@ void SimpleStringListEditor::slotRemove() {
 }
 
 void SimpleStringListEditor::slotModify() {
-  QListBoxItem * item = findSelectedItem( mListBox );
+  Q3ListBoxItem * item = findSelectedItem( mListBox );
   if ( !item ) return;
 
   bool ok = false;
@@ -236,11 +239,11 @@ void SimpleStringListEditor::slotModify() {
 }
 
 void SimpleStringListEditor::slotUp() {
-  QListBoxItem * item = findSelectedItem( mListBox );
+  Q3ListBoxItem * item = findSelectedItem( mListBox );
   if ( !item || !item->prev() ) return;
 
   // find the item that we want to insert after:
-  QListBoxItem * pprev = item->prev()->prev();
+  Q3ListBoxItem * pprev = item->prev()->prev();
   // take the item from it's current position...
   mListBox->takeItem( item );
   // ...and insert it after the above mentioned item:
@@ -260,11 +263,11 @@ void SimpleStringListEditor::slotUp() {
 }
 
 void SimpleStringListEditor::slotDown() {
-  QListBoxItem * item  = findSelectedItem( mListBox );
+  Q3ListBoxItem * item  = findSelectedItem( mListBox );
   if ( !item || !item->next() ) return;
 
   // find the item that we want to insert after:
-  QListBoxItem * next = item->next();
+  Q3ListBoxItem * next = item->next();
   // take the item from it's current position...
   mListBox->takeItem( item );
   // ...and insert it after the above mentioned item:
@@ -288,7 +291,7 @@ void SimpleStringListEditor::slotDown() {
 
 void SimpleStringListEditor::slotSelectionChanged() {
   // try to find a selected item:
-  QListBoxItem * item = findSelectedItem( mListBox );
+  Q3ListBoxItem * item = findSelectedItem( mListBox );
 
   // if there is one, item will be non-null (ie. true), else 0
   // (ie. false):

@@ -16,10 +16,10 @@
 #define __KMAIL_SIEVE_JOB_H__
 
 #include <qobject.h>
-#include <qvaluestack.h>
+#include <q3valuestack.h>
 #include <qstring.h>
 #include <qstringlist.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -36,7 +36,7 @@ namespace KMail {
   protected:
     enum Command { Get, Put, Activate, Deactivate, SearchActive, List, Delete };
     SieveJob( const KURL & url, const QString & script,
-	      const QValueStack<Command> & commands,
+	      const Q3ValueStack<Command> & commands,
 	      QObject * parent=0, const char * name=0 );
     virtual ~SieveJob();
 
@@ -110,7 +110,7 @@ namespace KMail {
     QString mActiveScriptName;
     Existence mFileExists;
     QStringList mSieveCapabilities;
-    QValueStack<Command> mCommands;
+    Q3ValueStack<Command> mCommands;
 
     // List of Sieve scripts on the server, used by @ref list()
     QStringList mAvailableScripts;

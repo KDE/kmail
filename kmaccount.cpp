@@ -4,6 +4,9 @@
 #include "kmaccount.h"
 
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 using KMail::AccountManager;
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
@@ -301,7 +304,7 @@ void KMAccount::deleteFolderJobs()
 void KMAccount::ignoreJobsForMessage( KMMessage* msg )
 {
   //FIXME: remove, make folders handle those
-  for( QPtrListIterator<FolderJob> it(mJobList); it.current(); ++it ) {
+  for( Q3PtrListIterator<FolderJob> it(mJobList); it.current(); ++it ) {
     if ( it.current()->msgList().first() == msg) {
       FolderJob *job = it.current();
       mJobList.remove( job );
@@ -383,7 +386,7 @@ void KMAccount::mailCheck()
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipts()
 {
-  QValueList<KMMessage*>::Iterator it;
+  Q3ValueList<KMMessage*>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
     kmkernel->msgSender()->send(*it); //might process events
   mReceipts.clear();
@@ -404,7 +407,7 @@ QString KMAccount::importPassword(const QString &aStr)
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
-  QCString result;
+  Q3CString result;
   result.resize(len+1);
 
   for (i=0; i<len; i++)

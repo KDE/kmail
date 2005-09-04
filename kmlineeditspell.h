@@ -6,8 +6,12 @@
 #define __KMAIL_KMLINEEDITSPELL_H__
 
 #include <libkdepim/addresseelineedit.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3PopupMenu>
+#include <QDropEvent>
 
-class QPopupMenu;
+class Q3PopupMenu;
 
 class KMLineEdit : public KPIM::AddresseeLineEdit
 {
@@ -26,7 +30,7 @@ protected:
 
     virtual void keyPressEvent(QKeyEvent*);
 
-    virtual QPopupMenu *createPopupMenu();
+    virtual Q3PopupMenu *createPopupMenu();
 
 private slots:
     void editRecentAddresses();

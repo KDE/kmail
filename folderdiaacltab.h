@@ -34,12 +34,14 @@
 
 #include "kmfolderdia.h"
 #include "kmfoldertype.h"
+//Added by qt3to4:
+#include <QLabel>
 
 class KMFolderImap;
 class KPushButton;
-class QWidgetStack;
-class QHBox;
-class QVButtonGroup;
+class Q3WidgetStack;
+class Q3HBox;
+class Q3VButtonGroup;
 class KListView;
 namespace KIO { class Job; }
 
@@ -48,7 +50,7 @@ namespace KMail {
 enum IMAPUserIdFormat { FullEmail, UserName };
 
 struct ACLListEntry;
-typedef QValueVector<KMail::ACLListEntry> ACLList;
+typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
 
 class ImapAccountBase;
 
@@ -73,7 +75,7 @@ private slots:
   void slotChanged();
 
 private:
-  QVButtonGroup* mButtonGroup;
+  Q3VButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
   IMAPUserIdFormat mUserIdFormat;
 };
@@ -105,8 +107,8 @@ private slots:
   void slotDirectoryListingFinished(KMFolderImap*);
 
   // User (KListView) slots
-  void slotEditACL(QListViewItem*);
-  void slotSelectionChanged(QListViewItem*);
+  void slotEditACL(Q3ListViewItem*);
+  void slotSelectionChanged(Q3ListViewItem*);
 
   // User (pushbuttons) slots
   void slotAddACL();
@@ -125,7 +127,7 @@ private:
 
 private:
   // The widget containing the ACL widgets (listview and buttons)
-  QHBox* mACLWidget;
+  Q3HBox* mACLWidget;
   //class ListView;
   class ListViewItem;
   KListView* mListView;
@@ -143,7 +145,7 @@ private:
   IMAPUserIdFormat mUserIdFormat;
 
   QLabel* mLabel;
-  QWidgetStack* mStack;
+  Q3WidgetStack* mStack;
   KMFolderDialog* mDlg;
 
   bool mChanged;

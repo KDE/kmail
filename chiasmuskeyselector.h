@@ -2,6 +2,8 @@
 #define CHIASMUSKEYSELECTOR_H
 
 #include <kdialogbase.h>
+//Added by qt3to4:
+#include <QLabel>
 class KListBox;
 class KLineEdit;
 class QLabel;

@@ -30,6 +30,9 @@
 #define KMWIZARD_H
 
 #include <kwizard.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3PtrList>
 
 class KLineEdit;
 class QCheckBox;
@@ -131,7 +134,7 @@ class AccountWizard : public KWizard
     KMKernel *mKernel;
     KMAccount *mAccount;
     KMTransportInfo *mTransportInfo;
-    QPtrList<KMTransportInfo> mTransportInfoList;
+    Q3PtrList<KMTransportInfo> mTransportInfoList;
     KMServerTest *mServerTest;
 };
 

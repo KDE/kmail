@@ -35,8 +35,8 @@
 #include "messageproperty.h"
 using namespace KMail;
 
-QMap<Q_UINT32, QGuardedPtr<KMFolder> > MessageProperty::sFolders;
-QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > MessageProperty::sHandlers;
+QMap<Q_UINT32, QPointer<KMFolder> > MessageProperty::sFolders;
+QMap<Q_UINT32, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 QMap<Q_UINT32, int > MessageProperty::sTransfers;
 QMap<const KMMsgBase*, long > MessageProperty::sSerialCache;
 
@@ -49,7 +49,7 @@ void MessageProperty::setFiltering( Q_UINT32 serNum, bool filter )
 {
   assert(!filtering(serNum) || !filter);
   if (filter && !filtering(serNum))
-    sFolders.replace(serNum, QGuardedPtr<KMFolder>(0) );
+    sFolders.replace(serNum, QPointer<KMFolder>(0) );
   else if (!filter)
     sFolders.remove(serNum);
 }
@@ -73,7 +73,7 @@ KMFolder* MessageProperty::filterFolder( Q_UINT32 serNum )
 
 void MessageProperty::setFilterFolder( Q_UINT32 serNum, KMFolder* folder )
 {
-  sFolders.replace(serNum, QGuardedPtr<KMFolder>(folder) );
+  sFolders.replace(serNum, QPointer<KMFolder>(folder) );
 }
 
 KMFolder* MessageProperty::filterFolder( const KMMsgBase *msgBase )
@@ -96,7 +96,7 @@ ActionScheduler* MessageProperty::filterHandler( Q_UINT32 serNum )
 void MessageProperty::setFilterHandler( Q_UINT32 serNum, ActionScheduler* handler )
 {
   if (handler)
-    sHandlers.replace( serNum, QGuardedPtr<ActionScheduler>(handler) );
+    sHandlers.replace( serNum, QPointer<ActionScheduler>(handler) );
   else
     sHandlers.remove( serNum );
 }

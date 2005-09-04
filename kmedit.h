@@ -9,6 +9,13 @@
 #include <keditcl.h>
 #include <qmap.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QKeyEvent>
+#include <QEvent>
+#include <Q3PopupMenu>
+#include <QDropEvent>
 
 class KMComposeWin;
 class KSpellConfig;
@@ -18,7 +25,7 @@ class KTempFile;
 class KDictSpellingHighlighter;
 class KDirWatch;
 class KProcess;
-class QPopupMenu;
+class Q3PopupMenu;
 
 
 class KMEdit : public KEdit {
@@ -58,7 +65,7 @@ public:
    */
   bool checkExternalEditorFinished();
 
-  QPopupMenu* createPopupMenu(const QPoint&);
+  Q3PopupMenu* createPopupMenu(const QPoint&);
   void setSpellCheckingActive(bool spellCheckingActive);
 
   /** Drag and drop methods */

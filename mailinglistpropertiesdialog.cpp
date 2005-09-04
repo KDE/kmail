@@ -28,9 +28,12 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QGridLayout>
 
 #include <klocale.h>
 #include <keditlistbox.h>
@@ -51,14 +54,14 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | WDestructiveClose );
+  setWFlags( getWFlags() | Qt::WDestructiveClose );
   QLabel* label;
   mLastItem = 0;
 
   QVBoxLayout *topLayout = new QVBoxLayout( layout(), spacingHint(),
                                             "topLayout" );
 
-  QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), this );
+  Q3GroupBox *mlGroup = new Q3GroupBox( i18n("Associated Mailing List" ), this );
   mlGroup->setColumnLayout( 0,  Qt::Vertical );
   QGridLayout *groupLayout = new QGridLayout( mlGroup->layout(), 6, 3, spacingHint() );
   topLayout->addWidget( mlGroup );

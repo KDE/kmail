@@ -21,13 +21,15 @@
 #define _KMTRANSPORT_H_
 
 #include <kdialogbase.h>
+//Added by qt3to4:
+#include <QLabel>
 
 class QCheckBox;
 class QLabel;
 class QLineEdit;
 class QRadioButton;
 class KMServerTest;
-class QButtonGroup;
+class Q3ButtonGroup;
 
 class KMTransportInfo : public QObject
 {
@@ -115,11 +117,11 @@ private:
     QLabel       *passwordLabel;
     QLineEdit    *passwordEdit;
     QLineEdit    *precommand;
-    QButtonGroup *encryptionGroup;
+    Q3ButtonGroup *encryptionGroup;
     QRadioButton *encryptionNone;
     QRadioButton *encryptionSSL;
     QRadioButton *encryptionTLS;
-    QButtonGroup *authGroup;
+    Q3ButtonGroup *authGroup;
     QRadioButton *authPlain;
     QRadioButton *authLogin;
     QRadioButton *authCramMd5;
@@ -137,7 +139,7 @@ private:
   void makeSmtpPage();
   void setupSettings();
   void saveSettings();
-  void checkHighest( QButtonGroup * );
+  void checkHighest( Q3ButtonGroup * );
   void enableAuthMethods( unsigned int which );
   bool sanityCheckSmtpInput();
   static unsigned int authMethodsFromString( const QString & s );

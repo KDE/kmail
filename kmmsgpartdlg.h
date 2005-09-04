@@ -22,6 +22,8 @@
 
 #include <kdialogbase.h>
 #include <kio/global.h>
+//Added by qt3to4:
+#include <QLabel>
 
 class KMMessagePart;
 class QPushButton;

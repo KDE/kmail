@@ -9,15 +9,17 @@
 #include "kmkernel.h"
 #include <assert.h>
 #include <stdlib.h>
+//Added by qt3to4:
+#include <Q3MemArray>
 
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize)
-  : QMemArray<KMMsgBase*>(initSize),
+  : Q3MemArray<KMMsgBase*>(initSize),
     mHigh( 0 ), mCount( 0 )
 {
   if ( size() > 0 )
     for (unsigned int i=size(); i>0; i--)
-	QMemArray<KMMsgBase*>::at(i-1) = 0;
+	Q3MemArray<KMMsgBase*>::at(i-1) = 0;
 }
 
 
@@ -69,7 +71,7 @@ bool KMMsgList::resize(unsigned int aSize)
   }
 
   // do the resizing
-  if (!QMemArray<KMMsgBase*>::resize(aSize)) return FALSE;
+  if (!Q3MemArray<KMMsgBase*>::resize(aSize)) return FALSE;
 
   // initialize new elements
   for (i=oldSize; i<aSize; i++)

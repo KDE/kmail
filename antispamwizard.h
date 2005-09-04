@@ -34,8 +34,13 @@
 #include <kwizard.h>
 
 #include <qcheckbox.h>
-#include <qdict.h>
+#include <q3dict.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QLabel>
+#include <Q3ValueList>
+#include <QBoxLayout>
 
 class KActionCollection;
 class KMFolder;
@@ -214,15 +219,15 @@ namespace KMail {
       {
         public:
           ConfigReader( WizardMode mode,
-                        QValueList<SpamToolConfig> & configList );
+                        Q3ValueList<SpamToolConfig> & configList );
           ~ConfigReader( );
 
-          QValueList<SpamToolConfig> & getToolList() { return mToolList; }
+          Q3ValueList<SpamToolConfig> & getToolList() { return mToolList; }
 
           void readAndMergeConfig();
 
         private:
-          QValueList<SpamToolConfig> & mToolList;
+          Q3ValueList<SpamToolConfig> & mToolList;
           KConfig *mConfig;
           WizardMode mMode;
 
@@ -267,7 +272,7 @@ namespace KMail {
       ASWizSummaryPage * mSummaryPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
-      QValueList<SpamToolConfig> mToolList;
+      Q3ValueList<SpamToolConfig> mToolList;
 
       /* Are any spam tools selected? */
       bool mSpamToolsUsed;

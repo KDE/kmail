@@ -669,7 +669,7 @@ namespace KMail {
   {
     QByteArray ba;
     QBuffer buffer( ba );
-    buffer.open( IO_WriteOnly );
+    buffer.open( QIODevice::WriteOnly );
     image.save( &buffer, fmt );
     return QString::fromLatin1("data:image/%1;base64,%2")
            .arg( fmt, KCodecs::base64Encode( ba ) );

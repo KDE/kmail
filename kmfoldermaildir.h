@@ -2,6 +2,10 @@
 #define kmfoldermaildir_h
 
 #include "kmfolderindex.h"
+//Added by qt3to4:
+#include <Q3StrList>
+#include <Q3CString>
+#include <Q3PtrList>
 
 
 class KMFolderMaildir;
@@ -29,7 +33,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeMaildir; }
 
   /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  virtual Q3CString& getMsgString(int idx, Q3CString& mDest);
   virtual DwString getDwString(int idx);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
@@ -46,7 +50,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(Q3PtrList<KMMessage> msgList, bool imapQuiet = FALSE)
   { return KMFolderIndex::removeMsg(msgList, imapQuiet); }
 
   // Called by KMMsgBase::setStatus when status of a message has changed
@@ -102,7 +106,7 @@ public:
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
@@ -147,7 +151,7 @@ private:
   */
   virtual IndexStatus indexStatus();
 
-  QStrList mIdxToFileList;
+  Q3StrList mIdxToFileList;
   int mIdxCount;
 };
 #endif /*kmfoldermaildir_h*/

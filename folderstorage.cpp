@@ -44,6 +44,9 @@
 #include "kmfoldermgr.h"
 #include "kmcommands.h"
 #include "listjob.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "globalsettings.h"
@@ -243,7 +246,7 @@ int FolderStorage::expungeOldMsg(int days)
   int i, msgnb=0;
   time_t msgTime, maxTime;
   const KMMsgBase* mb;
-  QValueList<int> rmvMsgList;
+  Q3ValueList<int> rmvMsgList;
 
   maxTime = time(0) - days * 3600 * 24;
 
@@ -342,9 +345,9 @@ int FolderStorage::find( const KMMessage * msg ) const {
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet)
+void FolderStorage::removeMsg(const Q3PtrList<KMMsgBase>& msgList, bool imapQuiet)
 {
-  for( QPtrListIterator<KMMsgBase> it( msgList ); *it; ++it )
+  for( Q3PtrListIterator<KMMsgBase> it( msgList ); *it; ++it )
   {
     int idx = find(it.current());
     assert( idx != -1);
@@ -353,9 +356,9 @@ void FolderStorage::removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet)
+void FolderStorage::removeMsg(const Q3PtrList<KMMessage>& msgList, bool imapQuiet)
 {
-  for( QPtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  for( Q3PtrListIterator<KMMessage> it( msgList ); *it; ++it )
   {
     int idx = find(it.current());
     assert( idx != -1);
@@ -444,7 +447,7 @@ KMMessage* FolderStorage::take(int idx)
   return msg;
 }
 
-void FolderStorage::take(QPtrList<KMMessage> msgList)
+void FolderStorage::take(Q3PtrList<KMMessage> msgList)
 {
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
@@ -568,7 +571,7 @@ FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
 }
 
 //-----------------------------------------------------------------------------
-FolderJob* FolderStorage::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+FolderJob* FolderStorage::createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
   FolderJob * job = doCreateJob( msgList, sets, jt, folder );
@@ -597,7 +600,7 @@ int FolderStorage::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
+int FolderStorage::moveMsg(Q3PtrList<KMMessage> msglist, int* aIndex_ret)
 {
   KMMessage* aMsg = msglist.first();
   assert(aMsg != 0);
@@ -606,7 +609,7 @@ int FolderStorage::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
   if (msgParent)
     msgParent->open();
 
-  QValueList<int> index;
+  Q3ValueList<int> index;
   open();
   int rc = addMsg(msglist, index);
   close();
@@ -999,9 +1002,9 @@ void FolderStorage::setStatus(int idx, KMMsgStatus status, bool toggle)
 
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
+void FolderStorage::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
-  for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
+  for ( Q3ValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
     FolderStorage::setStatus(*it, status, toggle);
   }
@@ -1012,7 +1015,7 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
   if ( !msg || msg->transferInProgress() )
     return;
 
-  QPtrListIterator<FolderJob> it( mJobList );
+  Q3PtrListIterator<FolderJob> it( mJobList );
   while ( it.current() )
   {
     //FIXME: the questions is : should we iterate through all
@@ -1079,7 +1082,7 @@ void FolderStorage::search( const KMSearchPattern* pattern )
 void FolderStorage::slotProcessNextSearchBatch()
 {
   if ( !mSearchPattern ) return;
-  QValueList<Q_UINT32> matchingSerNums;
+  Q3ValueList<Q_UINT32> matchingSerNums;
   int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
@@ -1103,11 +1106,11 @@ void FolderStorage::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::addMsg( QPtrList<KMMessage>& msgList, QValueList<int>& index_ret )
+int FolderStorage::addMsg( Q3PtrList<KMMessage>& msgList, Q3ValueList<int>& index_ret )
 {
   int ret = 0;
   int index;
-  for ( QPtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  for ( Q3PtrListIterator<KMMessage> it( msgList ); *it; ++it )
   {
     int aret = addMsg( *it, &index );
     index_ret << index;

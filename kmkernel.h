@@ -5,7 +5,11 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3ValueList>
+#include <Q3CString>
 #include <weaver.h>
 #include <weaverlogger.h>
 
@@ -117,26 +121,26 @@ public:
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
                     const QString &attachName,
-                    const QCString &attachCte,
-                    const QCString &attachData,
-                    const QCString &attachType,
-                    const QCString &attachSubType,
-                    const QCString &attachParamAttr,
+                    const Q3CString &attachCte,
+                    const Q3CString &attachData,
+                    const Q3CString &attachType,
+                    const Q3CString &attachSubType,
+                    const Q3CString &attachParamAttr,
                     const QString &attachParamValue,
-                    const QCString &attachContDisp);
+                    const Q3CString &attachContDisp);
 
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
                     const QString &attachName,
-                    const QCString &attachCte,
-                    const QCString &attachData,
-                    const QCString &attachType,
-                    const QCString &attachSubType,
-                    const QCString &attachParamAttr,
+                    const Q3CString &attachCte,
+                    const Q3CString &attachData,
+                    const Q3CString &attachType,
+                    const Q3CString &attachSubType,
+                    const Q3CString &attachParamAttr,
                     const QString &attachParamValue,
-                    const QCString &attachContDisp,
-                    const QCString &attachCharset);
+                    const Q3CString &attachContDisp,
+                    const Q3CString &attachCharset);
 
   DCOPRef openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
@@ -369,7 +373,7 @@ public:
   KMMainWidget *getKMMainWidget();
 
   /** @return a list of all folders from all folder managers. */
-  QValueList< QGuardedPtr<KMFolder> > allFolders();
+  Q3ValueList< QPointer<KMFolder> > allFolders();
 
   void raise();
 
@@ -469,7 +473,7 @@ private:
   // context menus and the pinentry program
   bool mContextMenuShown;
 
-  QValueList<const KSystemTray*> systemTrayApplets;
+  Q3ValueList<const KSystemTray*> systemTrayApplets;
 
   /* Weaver */
   KPIM::ThreadWeaver::Weaver *the_weaver;

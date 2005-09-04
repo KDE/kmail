@@ -42,10 +42,10 @@ using KRecentAddress::RecentAddresses;
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <qvbox.h>
-#include <qhbox.h>
+#include <q3vbox.h>
+#include <q3hbox.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qstringlist.h>
@@ -57,11 +57,11 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   : KDialogBase( parent, name, modal, i18n( "Redirect Message" ),
                  User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
 {
-  QVBox *vbox = makeVBoxMainWidget();
+  Q3VBox *vbox = makeVBoxMainWidget();
   mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
 
-  QHBox *hbox = new QHBox( vbox );
+  Q3HBox *hbox = new Q3HBox( vbox );
   hbox->setSpacing(4);
   mEditTo = new KMLineEdit( true, hbox, "toLine" );
   mEditTo->setMinimumWidth( 300 );
@@ -70,7 +70,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   mBtnTo->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
   mBtnTo->setMinimumSize( mBtnTo->sizeHint() * 1.2 );
   QToolTip::add( mBtnTo, i18n("Use the Address-Selection Dialog") );
-  QWhatsThis::add( mBtnTo, i18n("This button opens a separate dialog "
+  mBtnTo->setWhatsThis( i18n("This button opens a separate dialog "
                                  "where you can select recipients out "
                                  "of all available addresses." ) );
 

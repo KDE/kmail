@@ -32,6 +32,10 @@
 #include <stdlib.h>
 
 #include <klistview.h> // include for the base class
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 class KMMsgBase;
 class KPaintInfo;
@@ -82,7 +86,7 @@ public:
         { return mSortedChildren.count() || mUnsortedCount; }
     /** The sorted children are an array of sortcache items we know are below the
      * current one and are already properly sorted (as read from the cache ) */
-    const QPtrList<SortCacheItem> *sortedChildren() const
+    const Q3PtrList<SortCacheItem> *sortedChildren() const
         { return &mSortedChildren; }
     /** The unsorted children are an array of sortcache items we know are below the
      * current one, but are yet to be threaded and sorted properly. */
@@ -135,9 +139,9 @@ public:
 
     /** Set the list of mails with a certain subject that this item is on.
      * Used to remove the item from that list on deletion. */
-    void setSubjectThreadingList( QPtrList<SortCacheItem> *list ) { mSubjThreadingList = list; }
+    void setSubjectThreadingList( Q3PtrList<SortCacheItem> *list ) { mSubjThreadingList = list; }
     /** The list of mails with a certain subject that this item is on. */
-    QPtrList<SortCacheItem>* subjectThreadingList() const { return mSubjThreadingList; }
+    Q3PtrList<SortCacheItem>* subjectThreadingList() const { return mSubjThreadingList; }
 
 private:
     HeaderItem *mItem;
@@ -145,13 +149,13 @@ private:
     int mId, mSortOffset;
     QString mKey;
 
-    QPtrList<SortCacheItem> mSortedChildren;
+    Q3PtrList<SortCacheItem> mSortedChildren;
     int mUnsortedCount, mUnsortedSize;
     SortCacheItem **mUnsortedChildren;
     bool mImperfectlyThreaded;
     // pointer to the list it might be on so it can be remove from it
     // when the item goes away.
-    QPtrList<SortCacheItem>* mSubjThreadingList;
+    Q3PtrList<SortCacheItem>* mSubjThreadingList;
 };
 
 
@@ -163,8 +167,8 @@ private:
 class HeaderItem : public KListViewItem
 {
 public:
-  HeaderItem( QListView* parent, int msgId, const QString& key = QString::null );
-  HeaderItem( QListViewItem* parent, int msgId, const QString& key = QString::null );
+  HeaderItem( Q3ListView* parent, int msgId, const QString& key = QString::null );
+  HeaderItem( Q3ListViewItem* parent, int msgId, const QString& key = QString::null );
   ~HeaderItem ();
 
   /** Set the message id of this item, which is the offset/index in the folder
@@ -190,7 +194,7 @@ public:
 
   void setup();
 
-  typedef QValueList<QPixmap> PixmapList;
+  typedef Q3ValueList<QPixmap> PixmapList;
 
   QPixmap pixmapMerge( PixmapList pixmaps ) const;
 
@@ -209,9 +213,9 @@ public:
 
   void setTempKey( QString key );
 
-  int compare( QListViewItem *i, int col, bool ascending ) const;
+  int compare( Q3ListViewItem *i, int col, bool ascending ) const;
   
-  QListViewItem* firstChildNonConst(); /* Non const! */ 
+  Q3ListViewItem* firstChildNonConst(); /* Non const! */ 
 
   /** Returns whether the item is about to be removed from the list view as a
    * result of some user action. Such items are not selectable and painted with

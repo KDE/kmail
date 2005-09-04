@@ -46,7 +46,7 @@ using namespace KMail::BodyPartFormatterFactoryPrivate;
 
 // Qt
 #include <qstring.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qstringlist.h>
 
 #include <assert.h>
@@ -186,6 +186,6 @@ const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::cre
   return createFor( type.latin1(), subtype.latin1() );
 }
 
-const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::createFor( const QCString & type, const QCString & subtype ) const {
+const KMail::Interface::BodyPartFormatter * KMail::BodyPartFormatterFactory::createFor( const Q3CString & type, const Q3CString & subtype ) const {
   return createFor( type.data(), subtype.data() );
 }

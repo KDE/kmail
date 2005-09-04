@@ -34,10 +34,12 @@
 
 #include <kdialogbase.h>
 #include <kstandarddirs.h>
-#include <qvaluelist.h>
-#include <qvaluevector.h>
-#include <qptrlist.h>
+#include <q3valuelist.h>
+#include <q3valuevector.h>
+#include <q3ptrlist.h>
 #include <qdialog.h>
+//Added by qt3to4:
+#include <QTimerEvent>
 
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
@@ -170,7 +172,7 @@ public:
 
   /* Reimplemented from KMFolderMaildir */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+  virtual void removeMsg(Q3PtrList<KMMessage> msgList, bool imapQuiet = FALSE)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?
@@ -215,7 +217,7 @@ public:
   void setUserRights( unsigned int userRights );
 
   /// Return the list of ACL for this folder
-  typedef QValueVector<KMail::ACLListEntry> ACLList;
+  typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
   const ACLList& aclList() const { return mACLList; }
 
   /// Set the list of ACL for this folder (for FolderDiaACLTab)
@@ -223,7 +225,7 @@ public:
 
   // Reimplemented so the mStatusChangedLocally bool can be set
   virtual void setStatus( int id, KMMsgStatus status, bool toggle );
-  virtual void setStatus( QValueList<int>& ids, KMMsgStatus status, bool toggle );
+  virtual void setStatus( Q3ValueList<int>& ids, KMMsgStatus status, bool toggle );
 
   QString annotationFolderType() const { return mAnnotationFolderType; }
 
@@ -302,10 +304,10 @@ protected:
 
   /** Utility methods for syncing. Finds new messages
       in the local cache that must be uploaded */
-  virtual QValueList<unsigned long> findNewMessages();
+  virtual Q3ValueList<unsigned long> findNewMessages();
   /** Utility methods for syncing. Finds new subfolders
       in the local cache that must be created in the server */
-  virtual QValueList<KMFolderCachedImap*> findNewFolders();
+  virtual Q3ValueList<KMFolderCachedImap*> findNewFolders();
 
   /** This returns false if we have subfolders. Otherwise it returns ::canRemoveFolder() */
   virtual bool canRemoveFolder() const;
@@ -313,7 +315,7 @@ protected:
     /** Reimplemented from KMFolder */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
 
   virtual void timerEvent( QTimerEvent* );
@@ -410,15 +412,15 @@ private:
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;
-  mutable QGuardedPtr<KMAcctCachedImap> mAccount;
+  mutable QPointer<KMAcctCachedImap> mAccount;
 
-  QIntDict<int> uidsOnServer;
-  QValueList<ulong> uidsForDeletionOnServer;
-  QValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
-  QValueList<ulong> mUidsForDownload;
+  Q3IntDict<int> uidsOnServer;
+  Q3ValueList<ulong> uidsForDeletionOnServer;
+  Q3ValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
+  Q3ValueList<ulong> mUidsForDownload;
   QStringList       foldersForDeletionOnServer;
 
-  QValueList<KMFolderCachedImap*> mSubfoldersForSync;
+  Q3ValueList<KMFolderCachedImap*> mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
 
   /** Mapping uid -> index

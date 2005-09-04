@@ -31,6 +31,8 @@
 
 #include "mailinglist-magic.h"
 #include <kdialogbase.h> // include for the base class
+//Added by qt3to4:
+#include <QLabel>
 
 class KMFolder;
 class QCheckBox;

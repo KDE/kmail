@@ -17,6 +17,8 @@
 #include <time.h>
 
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -71,7 +73,7 @@ void KMFolderMgr::expireAll() {
 
 #define DO_FOR_ALL(function, folder_code) \
   KMFolderNode* node; \
-  QPtrListIterator<KMFolderNode> it(*dir); \
+  Q3PtrListIterator<KMFolderNode> it(*dir); \
   for ( ; (node = it.current()); ) { \
     ++it; \
     if (node->isDir()) continue; \
@@ -319,7 +321,7 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   {
     // call remove for every child
     KMFolderNode* node;
-    QPtrListIterator<KMFolderNode> it(*aFolder->child());
+    Q3PtrListIterator<KMFolderNode> it(*aFolder->child());
     for ( ; (node = it.current()); )
     {
       ++it;
@@ -405,21 +407,21 @@ void KMFolderMgr::reload(void)
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str,
-				   QValueList<QGuardedPtr<KMFolder> > *folders)
+				   Q3ValueList<QPointer<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, "" );
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createI18nFolderList(QStringList *str,
-				   QValueList<QGuardedPtr<KMFolder> > *folders)
+				   Q3ValueList<QPointer<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str,
-				   QValueList<QGuardedPtr<KMFolder> > *folders,
+				   Q3ValueList<QPointer<KMFolder> > *folders,
 				   KMFolderDir *adir,
 				   const QString& prefix,
 				   bool i18nized)

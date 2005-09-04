@@ -217,7 +217,7 @@ This is a default setting, you can still override it for each individual setting
                         <string>The signature certificate is configured on the &lt;em&gt;Certificates&lt;/em&gt; page.</string>
                     </property>
                     <property name="alignment">
-                        <set>AlignVCenter</set>
+                        <set>Qt::AlignVCenter</set>
                     </property>
                 </widget>
                 <widget class="QComboBox" row="1" column="1">
@@ -251,7 +251,7 @@ This setting is a default, you can override it for each individual message.
                         <string>Signature &amp;algorithm:</string>
                     </property>
                     <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
+                        <set>Qt::AlignVCenter|AlignRight</set>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>signatureAlgorithmCO</cstring>

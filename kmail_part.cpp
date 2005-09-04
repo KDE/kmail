@@ -37,6 +37,9 @@
 #include "aboutdata.h"
 #include "kmfolder.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <QVBoxLayout>
 using KMail::AccountManager;
 #include "sidebarextension.h"
 #include "infoextension.h"
@@ -97,7 +100,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget(parentWidget, widgetName);
-  canvas->setFocusPolicy(QWidget::ClickFocus);
+  canvas->setFocusPolicy(Qt::ClickFocus);
   setWidget(canvas);
   KGlobal::iconLoader()->addAppDir("kmail");
 #if 0
@@ -111,7 +114,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kmkernel->inboxFolder()->open();
   KMMessage *msg = kmkernel->inboxFolder()->getMsg(0);
   mReaderWin->setMsg( msg, true );
-  mReaderWin->setFocusPolicy(QWidget::ClickFocus);
+  mReaderWin->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   KGlobal::iconLoader()->addAppDir("kmail");
@@ -122,7 +125,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
                                  kapp->config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
-  mainWidget->setFocusPolicy(QWidget::ClickFocus);
+  mainWidget->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,

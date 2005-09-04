@@ -51,23 +51,27 @@
 
 #include <klocale.h>
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 
 
 namespace KMail {
 
 // Get messages
-CachedImapJob::CachedImapJob( const QValueList<MsgForDownload>& msgs,
+CachedImapJob::CachedImapJob( const Q3ValueList<MsgForDownload>& msgs,
                               JobType type, KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mMsgsForDownload( msgs ),
     mTotalBytes(0), mMsg(0), mParentFolder( 0 )
 {
-  QValueList<MsgForDownload>::ConstIterator it = msgs.begin();
+  Q3ValueList<MsgForDownload>::ConstIterator it = msgs.begin();
   for ( ; it != msgs.end() ; ++it )
     mTotalBytes += (*it).size;
 }
 
 // Put messages
-CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
+CachedImapJob::CachedImapJob( const Q3PtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
   : FolderJob( msgs, QString::null, type, folder?folder->folder():0 ), mFolder( folder ),
     mTotalBytes( msgs.count() ), // we abuse it as "total number of messages"
@@ -75,16 +79,16 @@ CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
 {
 }
 
-CachedImapJob::CachedImapJob( const QValueList<unsigned long>& msgs,
+CachedImapJob::CachedImapJob( const Q3ValueList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
-  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder?folder->folder():0 ),
+  : FolderJob( Q3PtrList<KMMessage>(), QString::null, type, folder?folder->folder():0 ),
     mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( msgs.count() ), mMsg( 0 ),
     mParentFolder ( 0 )
 {
 }
 
 // Add sub folders
-CachedImapJob::CachedImapJob( const QValueList<KMFolderCachedImap*>& fList,
+CachedImapJob::CachedImapJob( const Q3ValueList<KMFolderCachedImap*>& fList,
                               JobType type, KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg( 0 ),
     mParentFolder ( 0 )
@@ -371,11 +375,11 @@ void CachedImapJob::slotPutNextMessage()
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
 
   mMsg->setUID( 0 ); // for the index
-  QCString cstr(mMsg->asString());
+  Q3CString cstr(mMsg->asString());
   int a = cstr.find("\nX-UID: ");
   int b = cstr.find('\n', a);
   if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-  QCString mData(cstr.length() + cstr.contains('\n'));
+  Q3CString mData(cstr.length() + cstr.contains('\n'));
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
     if ( *ch == '\n' ) {
@@ -619,7 +623,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
   }
 
   // Check the uidValidity
-  QCString cstr((*it).data.data(), (*it).data.size() + 1);
+  Q3CString cstr((*it).data.data(), (*it).data.size() + 1);
   int a = cstr.find("X-uidValidity: ");
   if (a < 0) {
     // Something is seriously rotten here!

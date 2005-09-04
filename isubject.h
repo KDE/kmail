@@ -33,7 +33,7 @@
 
 #include "interfaces/observable.h"
 
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 namespace KMail {
 
@@ -55,7 +55,7 @@ namespace KMail {
       void notify();
 
   private:
-      QValueVector<Interface::Observer*> mObserverList;
+      Q3ValueVector<Interface::Observer*> mObserverList;
   };
 
 } // namespace KMail

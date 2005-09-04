@@ -37,7 +37,9 @@
 
 #include <kdebug.h>
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 namespace KMail {
 
@@ -51,7 +53,7 @@ namespace KMail {
   }
 
   TeeHtmlWriter::~TeeHtmlWriter() {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       delete (*it);
   }
 
@@ -61,37 +63,37 @@ namespace KMail {
   }
 
   void TeeHtmlWriter::begin( const QString & css ) {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->begin( css );
   }
 
   void TeeHtmlWriter::end() {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->end();
   }
 
   void TeeHtmlWriter::reset() {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->reset();
   }
 
   void TeeHtmlWriter::write( const QString & str ) {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->write( str );
   }
 
   void TeeHtmlWriter::queue( const QString & str ) {
-   for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+   for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->queue( str );
   }
 
   void TeeHtmlWriter::flush() {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->flush();
   }
 
-  void TeeHtmlWriter::embedPart( const QCString & contentId, const QString & url ) {
-    for ( QValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+  void TeeHtmlWriter::embedPart( const Q3CString & contentId, const QString & url ) {
+    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->embedPart( contentId, url );
   }
 

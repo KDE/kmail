@@ -59,12 +59,18 @@
 
 #include <qcheckbox.h>
 #include <qlayout.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qregexp.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+
+//Added by qt3to4:
+#include <QGridLayout>
+#include <Q3Frame>
+#include <QHBoxLayout>
+#include <Q3ValueList>
+#include <QVBoxLayout>
 
 #include <assert.h>
 #include <qhbuttongroup.h>
@@ -92,7 +98,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QStringList folderNames;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   // get all folders but search and folders that can not have children
   aParent->createFolderList(&folderNames, &folders, true, true,
                             true, false, true, false);
@@ -110,7 +116,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   }
 
   FolderDiaTab* tab;
-  QVBox* box;
+  Q3VBox* box;
 
   box = addVBoxPage( i18n("General") );
   tab = new FolderDiaGeneralTab( this, aName, box );
@@ -219,11 +225,11 @@ void KMFolderDialog::setFolder( KMFolder* folder )
 
 static void addLine( QWidget *parent, QVBoxLayout* layout )
 {
-   QFrame *line = new QFrame( parent, "line" );
+   Q3Frame *line = new Q3Frame( parent, "line" );
    line->setGeometry( QRect( 80, 150, 250, 20 ) );
-   line->setFrameShape( QFrame::HLine );
-   line->setFrameShadow( QFrame::Sunken );
-   line->setFrameShape( QFrame::HLine );
+   line->setFrameShape( Q3Frame::HLine );
+   line->setFrameShadow( Q3Frame::Sunken );
+   line->setFrameShape( Q3Frame::HLine );
    layout->addWidget( line );
 }
 
@@ -328,7 +334,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   hbl->setSpacing( KDialog::spacingHint() );
   mNotifyOnNewMailCheckBox =
     new QCheckBox( i18n("Act on new/unread mail in this folder" ), this );
-  QWhatsThis::add( mNotifyOnNewMailCheckBox,
+  mNotifyOnNewMailCheckBox->setWhatsThis(
       i18n( "<qt><p>If this option is enabled then you will be notified about "
             "new/unread mail in this folder. Moreover, going to the "
             "next/previous folder with unread messages will stop at this "
@@ -357,7 +363,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   hbl->setSpacing( KDialog::spacingHint() );
   mKeepRepliesInSameFolderCheckBox =
     new QCheckBox( i18n("Keep replies in this folder" ), this );
-  QWhatsThis::add( mKeepRepliesInSameFolderCheckBox,
+  mKeepRepliesInSameFolderCheckBox->setWhatsThis(
                    i18n( "Check this option if you want replies you write "
                          "to mails in this folder to be put in this same folder "
                          "after sending, instead of in the configured sent-mail folder." ) );
@@ -399,7 +405,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );
-  QWhatsThis::add( mIdentityComboBox,
+  mIdentityComboBox->setWhatsThis(
       i18n( "Select the sender identity to be used when writing new mail "
         "or replying to mail in this folder. This means that if you are in "
         "one of your work folders, you can make KMail use the corresponding "
@@ -446,7 +452,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     label->setBuddy( mIncidencesForComboBox );
     gl->addWidget( mIncidencesForComboBox, row, 1 );
 
-    QWhatsThis::add( mIncidencesForComboBox,
+    mIncidencesForComboBox->setWhatsThis(
                      i18n( "This setting defines which users sharing "
                            "this folder should get \"busy\" periods in their freebusy lists "
                            "and should see the alarms for the events or tasks in this folder. "

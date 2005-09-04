@@ -21,10 +21,15 @@
 #ifndef searchwindow_h
 #define searchwindow_h
 
-#include <qvaluelist.h>
-#include <qptrlist.h>
+#include <q3valuelist.h>
+#include <q3ptrlist.h>
 #include <qstringlist.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QGridLayout>
+#include <QCloseEvent>
+#include <QKeyEvent>
+#include <QLabel>
 
 #include <kdialogbase.h>
 #include <kxmlguiclient.h>
@@ -35,7 +40,7 @@ class QGridLayout;
 class QLabel;
 class QLineEdit;
 class KListView;
-class QListViewItem;
+class Q3ListViewItem;
 class QPushButton;
 class QRadioButton;
 class KAction;
@@ -54,7 +59,7 @@ namespace KMail {
   class FolderRequester;
 }
 
-typedef QPtrList<KMMsgBase> KMMessageList;
+typedef Q3PtrList<KMMsgBase> KMMessageList;
 
 namespace KMail {
 
@@ -110,9 +115,9 @@ protected slots:
   void renameSearchFolder();
   void openSearchFolder();
   void folderInvalidated(KMFolder *);
-  virtual bool slotShowMsg(QListViewItem *);
+  virtual bool slotShowMsg(Q3ListViewItem *);
   virtual void updateContextMenuActions();
-  virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
+  virtual void slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int );
   virtual void copySelectedToFolder( int menuId );
   virtual void moveSelectedToFolder( int menuId );
   virtual void slotFolderActivated( KMFolder* );
@@ -148,7 +153,7 @@ protected:
   int mFetchingInProgress;
   int mSortColumn;
   SortOrder mSortOrder;
-  QGuardedPtr<KMFolderSearch> mFolder;
+  QPointer<KMFolderSearch> mFolder;
   QTimer *mTimer;
 
   // GC'd by Qt
@@ -170,7 +175,7 @@ protected:
     *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;
-  QValueList<QGuardedPtr<KMFolder> > mFolders;
+  Q3ValueList<QPointer<KMFolder> > mFolders;
 
   // not owned by us
   KMMainWidget* mKMMainWidget;

@@ -12,6 +12,14 @@
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QGridLayout>
+#include <Q3CString>
+#include <Q3ValueList>
+#include <QVBoxLayout>
+#include <Q3PtrList>
+#include <QHBoxLayout>
 using KMail::AccountManager;
 
 // other KDE headers:
@@ -32,11 +40,11 @@ using KMail::AccountManager;
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+
 #include <qcheckbox.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qvalidator.h>
 #include <qtabwidget.h>
 
@@ -155,17 +163,17 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     mActionGroup = new KMPopFilterActionWidget( i18n("Filter Action"), w );
     vbl->addWidget( mActionGroup, 0, Qt::AlignTop );
 
-    mGlobalsBox = new QVGroupBox(i18n("Global Options"), w);
+    mGlobalsBox = new Q3GroupBox(1, Qt::Horizontal,i18n("Global Options"), w);
     mShowLaterBtn = new QCheckBox(i18n("Always &show matched 'Download Later' messages in confirmation dialog"), mGlobalsBox);
-    QWhatsThis::add( mShowLaterBtn, i18n(_wt_filterdlg_showLater) );
+    mShowLaterBtn->setWhatsThis( i18n(_wt_filterdlg_showLater) );
     vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
   }
   else {
-    QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), page1 );
+    Q3GroupBox *agb = new Q3GroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), page1 );
     mActionLister = new KMFilterActionWidgetLister( agb );
     vbl->addWidget( agb, 0, Qt::AlignTop );
 
-    mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical,
+    mAdvOptsGroup = new Q3GroupBox ( 1 /*columns*/, Vertical,
 				    i18n("Advanced Options"), page2);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
@@ -176,7 +184,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       vbl3->addStretch( 1 );
       mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), adv_w );
       vbl3->addWidget( mApplyOnIn );
-      QButtonGroup *bg = new QButtonGroup( 0, "bg" );
+      Q3ButtonGroup *bg = new Q3ButtonGroup( 0, "bg" );
       bg->setExclusive( true );
       mApplyOnForAll = new QRadioButton( i18n("from all accounts"), adv_w );
       bg->insert( mApplyOnForAll );
@@ -193,7 +201,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mAccountList->addColumn( i18n("Account Name") );
       mAccountList->addColumn( i18n("Type") );
       mAccountList->setAllColumnsShowFocus( true );
-      mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+      mAccountList->setFrameStyle( Q3Frame::WinPanel + Q3Frame::Sunken );
       mAccountList->setSorting( -1 );
       gl->addMultiCellWidget( mAccountList, 0, 3, 1, 3 );
 
@@ -210,7 +218,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
       gl->addMultiCellWidget( mConfigureShortcut, 7, 7, 0, 1 );
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), adv_w );
-      keyButtonLabel->setAlignment( AlignVCenter | AlignRight );
+      keyButtonLabel->setAlignment( Qt::AlignVCenter | AlignRight );
       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
@@ -218,7 +226,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
       mConfigureToolbar->setEnabled( false );
 
-      QHBox *hbox = new QHBox( adv_w );
+      Q3HBox *hbox = new Q3HBox( adv_w );
       mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
                                        hbox );
       mFilterActionLabel->setEnabled( false );
@@ -264,9 +272,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
   	     this, SLOT(slotApplicabilityChanged()) );
     connect( mApplyOnCtrlJ, SIGNAL(clicked()),
   	     this, SLOT(slotApplicabilityChanged()) );
-    connect( mAccountList, SIGNAL(clicked(QListViewItem*)),
+    connect( mAccountList, SIGNAL(clicked(Q3ListViewItem*)),
   	     this, SLOT(slotApplicableAccountsChanged()) );
-    connect( mAccountList, SIGNAL(spacePressed(QListViewItem*)),
+    connect( mAccountList, SIGNAL(spacePressed(Q3ListViewItem*)),
   	     this, SLOT(slotApplicableAccountsChanged()) );
     
     // transfer changes from the 'stop processing here'
@@ -441,9 +449,9 @@ void KMFilterDlg::slotApplicabilityChanged()
     mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
 
     // Advanced tab functionality - Update list of accounts this filter applies to
-    QListViewItemIterator it( mAccountList );
+    Q3ListViewItemIterator it( mAccountList );
     while ( it.current() ) {
-      QCheckListItem *item = dynamic_cast<QCheckListItem*>( it.current() );
+      Q3CheckListItem *item = dynamic_cast<Q3CheckListItem*>( it.current() );
       if (item) {
 	int id = item->text( 2 ).toInt();
 	  item->setOn( mFilter->applyOnAccount( id ) );
@@ -463,9 +471,9 @@ void KMFilterDlg::slotApplicableAccountsChanged()
 {
   if ( mFilter && mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() ) {
     // Advanced tab functionality - Update list of accounts this filter applies to
-    QListViewItemIterator it( mAccountList );
+    Q3ListViewItemIterator it( mAccountList );
     while ( it.current() ) {
-      QCheckListItem *item = dynamic_cast<QCheckListItem*>( it.current() );
+      Q3CheckListItem *item = dynamic_cast<Q3CheckListItem*>( it.current() );
       if (item) {
 	int id = item->text( 2 ).toInt();
 	mFilter->setApplyOnAccount( id, item->isOn() );
@@ -526,11 +534,11 @@ void KMFilterDlg::slotFilterActionIconChanged( QString icon )
 void KMFilterDlg::slotUpdateAccountList()
 {
   mAccountList->clear();
-  QListViewItem *top = 0;
+  Q3ListViewItem *top = 0;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next() ) {
-    QCheckListItem *listItem =
-      new QCheckListItem( mAccountList, top, a->name(), QCheckListItem::CheckBox );
+    Q3CheckListItem *listItem =
+      new Q3CheckListItem( mAccountList, top, a->name(), Q3CheckListItem::CheckBox );
     listItem->setText( 1, a->type() );
     listItem->setText( 2, QString( "%1" ).arg( a->id() ) );
     if ( mFilter )
@@ -538,7 +546,7 @@ void KMFilterDlg::slotUpdateAccountList()
     top = listItem;
   }
 
-  QListViewItem *listItem = mAccountList->firstChild();
+  Q3ListViewItem *listItem = mAccountList->firstChild();
   if ( listItem ) {
     mAccountList->setCurrentItem( listItem );
     mAccountList->setSelected( listItem, true );
@@ -552,19 +560,19 @@ void KMFilterDlg::slotUpdateAccountList()
 //=============================================================================
 
 KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const char* name, bool popFilter )
-  : QGroupBox( 1, Horizontal, title, parent, name ),
+  : Q3GroupBox( 1, Qt::Horizontal, title, parent, name ),
     bPopFilter(popFilter)
 {
   mFilterList.setAutoDelete(TRUE);
   mIdxSelItem = -1;
 
   //----------- the list box
-  mListBox = new QListBox(this);
+  mListBox = new Q3ListBox(this);
   mListBox->setMinimumWidth(150);
-  QWhatsThis::add( mListBox, i18n(_wt_filterlist) );
+  mListBox->setWhatsThis( i18n(_wt_filterlist) );
 
   //----------- the first row of buttons
-  QHBox *hb = new QHBox(this);
+  Q3HBox *hb = new Q3HBox(this);
   hb->setSpacing(4);
   mBtnUp = new KPushButton( QString::null, hb );
   mBtnUp->setAutoRepeat( true );
@@ -576,11 +584,11 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
   QToolTip::add( mBtnUp, i18n("Up") );
   QToolTip::add( mBtnDown, i18n("Down") );
-  QWhatsThis::add( mBtnUp, i18n(_wt_filterlist_up) );
-  QWhatsThis::add( mBtnDown, i18n(_wt_filterlist_down) );
+  mBtnUp->setWhatsThis( i18n(_wt_filterlist_up) );
+  mBtnDown->setWhatsThis( i18n(_wt_filterlist_down) );
 
   //----------- the second row of buttons
-  hb = new QHBox(this);
+  hb = new Q3HBox(this);
   hb->setSpacing(4);
   mBtnNew = new QPushButton( QString::null, hb );
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
@@ -595,16 +603,16 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   QToolTip::add( mBtnNew, i18n("New") );
   QToolTip::add( mBtnCopy, i18n("Copy") );
   QToolTip::add( mBtnDelete, i18n("Delete"));
-  QWhatsThis::add( mBtnNew, i18n(_wt_filterlist_new) );
-  QWhatsThis::add( mBtnCopy, i18n(_wt_filterlist_copy) );
-  QWhatsThis::add( mBtnDelete, i18n(_wt_filterlist_delete) );
-  QWhatsThis::add( mBtnRename, i18n(_wt_filterlist_rename) );
+  mBtnNew->setWhatsThis( i18n(_wt_filterlist_new) );
+  mBtnCopy->setWhatsThis( i18n(_wt_filterlist_copy) );
+  mBtnDelete->setWhatsThis( i18n(_wt_filterlist_delete) );
+  mBtnRename->setWhatsThis( i18n(_wt_filterlist_rename) );
 
 
   //----------- now connect everything
   connect( mListBox, SIGNAL(highlighted(int)),
 	   this, SLOT(slotSelected(int)) );
-  connect( mListBox, SIGNAL( doubleClicked ( QListBoxItem * )),
+  connect( mListBox, SIGNAL( doubleClicked ( Q3ListBoxItem * )),
            this, SLOT( slotRename()) );
   connect( mBtnUp, SIGNAL(clicked()),
 	   this, SLOT(slotUp()) );
@@ -625,7 +633,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 }
 
 
-void KMFilterListBox::createFilter( const QCString & field,
+void KMFilterListBox::createFilter( const Q3CString & field,
 				    const QString & value )
 {
   KMSearchRule *newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
@@ -694,9 +702,9 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  QValueList<KMFilter*> newFilters;
+  Q3ValueList<KMFilter*> newFilters;
   QStringList emptyFilters;
-  QPtrListIterator<KMFilter> it( mFilterList );
+  Q3PtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMFilter *f = new KMFilter( **it ); // deep copy
     f->purify();
@@ -922,7 +930,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   }
   Q_ASSERT( manager );
 
-  QValueListConstIterator<KMFilter*> it;
+  Q3ValueListConstIterator<KMFilter*> it;
   for ( it = manager->filters().constBegin() ; it != manager->filters().constEnd() ; ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
@@ -971,7 +979,7 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 
   // untouchedOne is at idx. to move it down(up),
   // remove item at idx+(-)1 w/o deleting it.
-  QListBoxItem *item = mListBox->item( movedOne );
+  Q3ListBoxItem *item = mListBox->item( movedOne );
   mListBox->takeItem( item );
   // now selected item is at idx(idx-1), so
   // insert the other item at idx, ie. above(below).
@@ -991,19 +999,19 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 //=============================================================================
 
 KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
-  : QHBox( parent, name )
+  : Q3HBox( parent, name )
 {
   int i;
   mActionList.setAutoDelete(TRUE);
 
   mComboBox = new QComboBox( FALSE, this );
   assert( mComboBox );
-  mWidgetStack = new QWidgetStack(this);
+  mWidgetStack = new Q3WidgetStack(this);
   assert( mWidgetStack );
 
   setSpacing( 4 );
 
-  QPtrListIterator<KMFilterActionDesc> it ( kmkernel->filterActionDict()->list() );
+  Q3PtrListIterator<KMFilterActionDesc> it ( kmkernel->filterActionDict()->list() );
   for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
     //create an instance:
     KMFilterAction *a = (*it)->create();
@@ -1101,7 +1109,7 @@ KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 {
 }
 
-void KMFilterActionWidgetLister::setActionList( QPtrList<KMFilterAction> *aList )
+void KMFilterActionWidgetLister::setActionList( Q3PtrList<KMFilterAction> *aList )
 {
   assert ( aList );
 
@@ -1130,8 +1138,8 @@ void KMFilterActionWidgetLister::setActionList( QPtrList<KMFilterAction> *aList 
   setNumberOfShownWidgetsTo( mActionList->count() );
 
   // load the actions into the widgets
-  QPtrListIterator<KMFilterAction> aIt( *mActionList );
-  QPtrListIterator<QWidget> wIt( mWidgetList );
+  Q3PtrListIterator<KMFilterAction> aIt( *mActionList );
+  Q3PtrListIterator<QWidget> wIt( mWidgetList );
   for ( aIt.toFirst(), wIt.toFirst() ;
 	aIt.current() && wIt.current() ; ++aIt, ++wIt )
     ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
@@ -1164,7 +1172,7 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 
   mActionList->clear();
 
-  QPtrListIterator<QWidget> it( mWidgetList );
+  Q3PtrListIterator<QWidget> it( mWidgetList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMFilterAction *a = ((KMFilterActionWidget*)(*it))->action();
     if ( a )
@@ -1180,7 +1188,7 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 //=============================================================================
 
 KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget *parent, const char* name )
-  : QVButtonGroup( title, parent, name )
+  : Q3VButtonGroup( title, parent, name )
 {
   mActionMap[Down] = new QRadioButton( i18n("&Download mail"), this );
   mActionMap[Later] = new QRadioButton( i18n("Download mail la&ter"), this );

@@ -16,17 +16,19 @@
 #include <kmessagebox.h>
 
 #include <qlayout.h>
-#include <qlistview.h>
-#include <qtextedit.h>
-#include <qpopupmenu.h>
+#include <q3listview.h>
+#include <q3textedit.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
 
 #include <cassert>
 
-inline QCheckListItem * qcli_cast( QListViewItem * lvi ) {
-  return lvi && lvi->rtti() == 1 ? static_cast<QCheckListItem*>( lvi ) : 0 ;
+inline Q3CheckListItem * qcli_cast( Q3ListViewItem * lvi ) {
+  return lvi && lvi->rtti() == 1 ? static_cast<Q3CheckListItem*>( lvi ) : 0 ;
 }
-inline const QCheckListItem * qcli_cast( const QListViewItem * lvi ) {
-  return lvi && lvi->rtti() == 1 ? static_cast<const QCheckListItem*>( lvi ) : 0 ;
+inline const Q3CheckListItem * qcli_cast( const Q3ListViewItem * lvi ) {
+  return lvi && lvi->rtti() == 1 ? static_cast<const Q3CheckListItem*>( lvi ) : 0 ;
 }
 
 KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, const char * name )
@@ -40,17 +42,17 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
 
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, 0 );
 
-  mListView = new QListView( plainPage() );
+  mListView = new Q3ListView( plainPage() );
   mListView->addColumn( i18n( "Available Scripts" ) );
-  mListView->setResizeMode( QListView::LastColumn );
+  mListView->setResizeMode( Q3ListView::LastColumn );
   mListView->setRootIsDecorated( true );
-  mListView->setSelectionMode( QListView::Single );
-  connect( mListView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)),
-           this, SLOT(slotContextMenuRequested(QListViewItem*, const QPoint&)) );
-  connect( mListView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
-           this, SLOT(slotDoubleClicked(QListViewItem*)) );
-  connect( mListView, SIGNAL(selectionChanged(QListViewItem*)),
-           this, SLOT(slotSelectionChanged(QListViewItem*)) );
+  mListView->setSelectionMode( Q3ListView::Single );
+  connect( mListView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)),
+           this, SLOT(slotContextMenuRequested(Q3ListViewItem*, const QPoint&)) );
+  connect( mListView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
+           this, SLOT(slotDoubleClicked(Q3ListViewItem*)) );
+  connect( mListView, SIGNAL(selectionChanged(Q3ListViewItem*)),
+           this, SLOT(slotSelectionChanged(Q3ListViewItem*)) );
   vlay->addWidget( mListView );
 
   resize( 2 * sizeHint().width(), sizeHint().height() );
@@ -63,7 +65,7 @@ KMail::ManageSieveScriptsDialog::~ManageSieveScriptsDialog() {
 }
 
 void KMail::ManageSieveScriptsDialog::killAllJobs() {
-  for ( QMap<SieveJob*,QCheckListItem*>::const_iterator it = mJobs.constBegin(), end = mJobs.constEnd() ; it != end ; ++it )
+  for ( QMap<SieveJob*,Q3CheckListItem*>::const_iterator it = mJobs.constBegin(), end = mJobs.constEnd() ; it != end ; ++it )
     it.key()->kill();
   mJobs.clear();
 }
@@ -94,9 +96,9 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
 
   KMail::AccountManager * am = kmkernel->acctMgr();
   assert( am );
-  QCheckListItem * last = 0;
+  Q3CheckListItem * last = 0;
   for ( KMAccount * a = am->first() ; a ; a = am->next() ) {
-    last = new QCheckListItem( mListView, last, a->name(), QCheckListItem::Controller );
+    last = new Q3CheckListItem( mListView, last, a->name(), Q3CheckListItem::Controller );
     last->setPixmap( 0, SmallIcon( "server" ) );
     if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
       const KURL u = ::findUrlForAccount( iab );
@@ -110,7 +112,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
       mJobs.insert( job, last );
       mUrls.insert( last, u );
     } else {
-      QListViewItem * item = new QListViewItem( last, i18n( "No Sieve URL configured" ) );
+      Q3ListViewItem * item = new Q3ListViewItem( last, i18n( "No Sieve URL configured" ) );
       item->setEnabled( false );
       last->setOpen( true );
     }
@@ -118,7 +120,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh() {
 }
 
 void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool success, const QString &, bool ) {
-  QCheckListItem * parent = mJobs[job];
+  Q3CheckListItem * parent = mJobs[job];
   if ( !parent )
     return;
 
@@ -129,28 +131,28 @@ void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool su
   if ( success )
     return;
 
-  QListViewItem * item = new QListViewItem( parent, i18n( "Failed to fetch the list of scripts" ) );
+  Q3ListViewItem * item = new Q3ListViewItem( parent, i18n( "Failed to fetch the list of scripts" ) );
   item->setEnabled( false );
 }
 
 void KMail::ManageSieveScriptsDialog::slotItem( KMail::SieveJob * job, const QString & filename, bool isActive ) {
-  QCheckListItem * parent = mJobs[job];
+  Q3CheckListItem * parent = mJobs[job];
   if ( !parent )
     return;
-  QCheckListItem * item = new QCheckListItem( parent, filename, QCheckListItem::RadioButton );
+  Q3CheckListItem * item = new Q3CheckListItem( parent, filename, Q3CheckListItem::RadioButton );
   if ( isActive ) {
     item->setOn( true );
     mSelectedItems[parent] = item;
   }
 }
 
-void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QListViewItem * i, const QPoint & p ) {
-  QCheckListItem * item = qcli_cast( i );
+void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem * i, const QPoint & p ) {
+  Q3CheckListItem * item = qcli_cast( i );
   if ( !item )
     return;
   if ( !item->depth() && !mUrls.count( item ) )
     return;
-  QPopupMenu menu;
+  Q3PopupMenu menu;
   mContextMenuItem = item;
   if ( item->depth() ) {
     // script items:
@@ -164,11 +166,11 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( QListViewItem * 
   mContextMenuItem = 0;
 }
 
-void KMail::ManageSieveScriptsDialog::slotSelectionChanged( QListViewItem * i ) {
-  QCheckListItem * item = qcli_cast( i );
+void KMail::ManageSieveScriptsDialog::slotSelectionChanged( Q3ListViewItem * i ) {
+  Q3CheckListItem * item = qcli_cast( i );
   if ( !item )
     return;
-  QCheckListItem * parent = qcli_cast( item->parent() );
+  Q3CheckListItem * parent = qcli_cast( item->parent() );
   if ( !parent )
     return;
   if ( item->isOn() && mSelectedItems[parent] != item ) {
@@ -177,7 +179,7 @@ void KMail::ManageSieveScriptsDialog::slotSelectionChanged( QListViewItem * i ) 
   }
 }
 
-void KMail::ManageSieveScriptsDialog::changeActiveScript( QCheckListItem * item ) {
+void KMail::ManageSieveScriptsDialog::changeActiveScript( Q3CheckListItem * item ) {
   if ( !item )
     return;
   if ( !mUrls.count( item ) )
@@ -187,7 +189,7 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( QCheckListItem * item 
   KURL u = mUrls[item];
   if ( u.isEmpty() )
     return;
-  QCheckListItem * selected = mSelectedItems[item];
+  Q3CheckListItem * selected = mSelectedItems[item];
   if ( !selected )
     return;
   u.setFileName( selected->text( 0 ) );
@@ -197,8 +199,8 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( QCheckListItem * item 
            this, SLOT(slotRefresh()) );
 }
 
-void KMail::ManageSieveScriptsDialog::slotDoubleClicked( QListViewItem * i ) {
-  QCheckListItem * item = qcli_cast( i );
+void KMail::ManageSieveScriptsDialog::slotDoubleClicked( Q3ListViewItem * i ) {
+  Q3CheckListItem * item = qcli_cast( i );
   if ( !item )
     return;
   if ( !item->depth() )
@@ -214,7 +216,7 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript() {
   if ( !mContextMenuItem->depth() )
     return;
 
-  QCheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
+  Q3CheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
   if ( !parent )
     return;
 
@@ -243,7 +245,7 @@ void KMail::ManageSieveScriptsDialog::slotEditScript() {
     return;
   if ( !mContextMenuItem->depth() )
     return;
-  QCheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
+  Q3CheckListItem * parent = qcli_cast( mContextMenuItem->parent() );
   if ( !mUrls.count( parent ) )
     return;
   KURL url = mUrls[parent];
@@ -280,7 +282,7 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
 
   u.setFileName( name );
 
-  (void) new QCheckListItem( mContextMenuItem, name, QCheckListItem::RadioButton );
+  (void) new Q3CheckListItem( mContextMenuItem, name, Q3CheckListItem::RadioButton );
 
   mCurrentURL = u;
   slotGetResult( 0, true, QString::null, false );
@@ -290,10 +292,10 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   : KDialogBase( Plain, i18n( "Edit Sieve Script" ), Ok|Cancel, Ok, parent, name )
 {
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
-  mTextEdit = new QTextEdit( plainPage() );
+  mTextEdit = new Q3TextEdit( plainPage() );
   vlay->addWidget( mTextEdit );
-  mTextEdit->setTextFormat( QTextEdit::PlainText );
-  mTextEdit->setWordWrap( QTextEdit::NoWrap );
+  mTextEdit->setTextFormat( Q3TextEdit::PlainText );
+  mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
 
   resize( 3 * sizeHint() );

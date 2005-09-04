@@ -23,7 +23,10 @@
 #define KMAcctImap_h
 
 #include "imapaccountbase.h"
-#include <qdict.h>
+#include <q3dict.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 class KMFolderImap;
 class KMFolderTreeItem;
@@ -111,8 +114,8 @@ protected:
   virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
   virtual void cancelMailCheck();
 
-  QPtrList<KMail::ImapJob> mJobList;
-  QGuardedPtr<KMFolderImap> mFolder;
+  Q3PtrList<KMail::ImapJob> mJobList;
+  QPointer<KMFolderImap> mFolder;
 
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
@@ -144,8 +147,8 @@ private:
   /** used to reset connection errors */
   QTimer mErrorTimer;
   int mCountRemainChecks;
-  QValueList<Q_UINT32> mFilterSerNums;
-  QDict<int> mFilterSerNumsToSave;
+  Q3ValueList<Q_UINT32> mFilterSerNums;
+  Q3Dict<int> mFilterSerNumsToSave;
   KMail::ActionScheduler *mScheduler;
 };
 

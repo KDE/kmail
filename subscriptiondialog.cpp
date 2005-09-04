@@ -41,6 +41,8 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 namespace KMail {
@@ -180,15 +182,15 @@ void SubscriptionDialog::createItems()
       if (oldItem)
       {
         // move the old childs to the new item
-        QPtrList<QListViewItem> itemsToMove;
-        QListViewItem * myChild = oldItem->firstChild();
+        Q3PtrList<Q3ListViewItem> itemsToMove;
+        Q3ListViewItem * myChild = oldItem->firstChild();
         while (myChild)
         {
           itemsToMove.append(myChild);
           myChild = myChild->nextSibling();
         }
-        QPtrListIterator<QListViewItem> it( itemsToMove );
-        QListViewItem *cur;
+        Q3PtrListIterator<Q3ListViewItem> it( itemsToMove );
+        Q3ListViewItem *cur;
         while ((cur = it.current()))
         {
           oldItem->takeItem(cur);
@@ -242,7 +244,7 @@ void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &
 void SubscriptionDialog::slotSave()
 {
   // subscribe
-  QListViewItemIterator it(subView);
+  Q3ListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(true,
@@ -250,7 +252,7 @@ void SubscriptionDialog::slotSave()
   }
 
   // unsubscribe
-  QListViewItemIterator it2(unsubView);
+  Q3ListViewItemIterator it2(unsubView);
   for ( ; it2.current(); ++it2)
   {
     static_cast<ImapAccountBase*>(account())->changeSubscription(false,

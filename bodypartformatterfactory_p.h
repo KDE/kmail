@@ -34,7 +34,7 @@
 #ifndef __KMAIL_BODYPARTFORMATTERFACTORY_P_H__
 #define __KMAIL_BODYPARTFORMATTERFACTORY_P_H__
 
-#include <qcstring.h>
+#include <q3cstring.h>
 
 #include <map>
 

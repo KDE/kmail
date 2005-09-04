@@ -75,8 +75,11 @@
 #include <kaction.h>
 #include <qfile.h>
 #include <qtextcodec.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 
 #include <gpgmepp/key.h>
 #include <gpgmepp/keylistresult.h>
@@ -300,7 +303,7 @@ void MessageComposer::applyChanges( bool disableCrypto )
 {
   // Do the initial setup
   if( getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0 ) {
-    QCString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
+    Q3CString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
     mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
     kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
   } else {
@@ -402,7 +405,7 @@ void MessageComposer::readFromComposeWin()
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if( mAutoCharset ) {
-    QCString charset = KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), mComposeWin->mEditor->text() );
+    Q3CString charset = KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), mComposeWin->mEditor->text() );
     if( charset.isEmpty() )
     {
       KMessageBox::sorry( mComposeWin,
@@ -493,8 +496,8 @@ void MessageComposer::readFromComposeWin()
   // according to the line breaks of the richtext version.
   mLineBreakColumn = mComposeWin->mEditor->lineBreakColumn();
 }
-static QCString escape_quoted_string( const QCString & str ) {
-  QCString result;
+static Q3CString escape_quoted_string( const Q3CString & str ) {
+  Q3CString result;
   const unsigned int str_len = str.length();
   result.resize( 2*str_len + 1 );
   char * d = result.data();
@@ -558,7 +561,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
   assert( chiasmus ); // kmcomposewin code should have made sure
 
 
-  for ( QValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
+  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
     const QString filename = part->fileName();
     if ( filename.endsWith( ".xia", false ) )
@@ -570,17 +573,17 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
       return;
     }
     // everything ok, so let's fill in the part again:
-    QValueList<int> dummy;
+    Q3ValueList<int> dummy;
     part->setBodyAndGuessCte( resultData, dummy );
     part->setTypeStr( "application" );
     part->setSubtypeStr( "vnd.de.bund.bsi.chiasmus" );
     part->setName( filename + ".xia" );
     // this is taken from kmmsgpartdlg.cpp:
-    QCString encoding = KMMsgBase::autoDetectCharset( part->charset(), KMMessage::preferredCharsets(), filename );
+    Q3CString encoding = KMMsgBase::autoDetectCharset( part->charset(), KMMessage::preferredCharsets(), filename );
     if ( encoding.isEmpty() )
       encoding = "utf-8";
-    const QCString enc_name = KMMsgBase::encodeRFC2231String( filename + ".xia", encoding );
-    const QCString cDisp = "attachment;\n\tfilename"
+    const Q3CString enc_name = KMMsgBase::encodeRFC2231String( filename + ".xia", encoding );
+    const Q3CString cDisp = "attachment;\n\tfilename"
                            + ( QString( enc_name ) != filename + ".xia"
                                ? "*=" + enc_name
                                : "=\"" + escape_quoted_string( enc_name ) + '\"' );
@@ -941,13 +944,13 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 
 void MessageComposer::markAllAttachmentsForSigning( bool sign ) {
   mSignBody = sign;
-  for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->sign = sign;
 }
 
 void MessageComposer::markAllAttachmentsForEncryption( bool enc ) {
   mEncryptBody = enc;
-  for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->encrypt = enc;
 }
 
@@ -1108,7 +1111,7 @@ static inline GpgME::Context::SignatureMode signingMode( Kleo::CryptoMessageForm
 class EncryptMessageJob : public MessageComposerJob {
 public:
   EncryptMessageJob( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
-                     bool doSign, bool doEncrypt, const QCString& encodedBody,
+                     bool doSign, bool doEncrypt, const Q3CString& encodedBody,
                      int boundaryLevel, const KMMessagePart& oldBodyPart,
                      KMMessagePart* newBodyPart, Kleo::CryptoMessageFormat format,
 		     MessageComposer* composer )
@@ -1136,7 +1139,7 @@ private:
   KMMessage* mMsg;
   Kleo::KeyResolver::SplitInfo mSplitInfo;
   bool mDoSign, mDoEncrypt;
-  QCString mEncodedBody;
+  Q3CString mEncodedBody;
   int mBoundaryLevel;
   KMMessagePart mOldBodyPart;
   KMMessagePart* mNewBodyPart;
@@ -1155,9 +1158,9 @@ public:
   }
 };
 
-QCString MessageComposer::bodyText()
+Q3CString MessageComposer::bodyText()
 {
-  QCString body = mText;
+  Q3CString body = mText;
 
   if (body.isNull()) return body;
 
@@ -1185,7 +1188,7 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
                                                    bool doSign, bool doEncrypt )
 {
   // preprocess the body text
-  QCString body = bodyText();
+  Q3CString body = bodyText();
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1267,7 +1270,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
   assert( chiasmus ); // kmcomposewin code should have made sure
 
   // preprocess the body text
-  QCString body = bodyText();
+  Q3CString body = bodyText();
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1306,7 +1309,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
     //mOldBodyPart.setBodyEncodedBinary( encryptedBody );
 
     bool doSign = false;
-    QValueList<int> allowedCTEs;
+    Q3ValueList<int> allowedCTEs;
     mOldBodyPart.setBodyAndGuessCte( encryptedBody, allowedCTEs,
                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
 				     doSign );
@@ -1318,7 +1321,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
     // Used in case of attachments
     mOldBodyPart.setTypeStr( "application" );
     mOldBodyPart.setSubtypeStr( "vnd.de.bund.bsi.chiasmus-text" );
-    mOldBodyPart.setAdditionalCTypeParamStr( QCString( "chiasmus-charset=" + mCharset ) );
+    mOldBodyPart.setAdditionalCTypeParamStr( Q3CString( "chiasmus-charset=" + mCharset ) );
     addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
     mMessageList.push_back( msg );
 
@@ -1354,7 +1357,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   theMessage.setBody( "This message is in MIME format." );
 
   // preprocess the body text
-  QCString body = bodyText();
+  Q3CString body = bodyText();
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1386,7 +1389,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   // test whether there ARE attachments that can be included into the body
   if( mEarlyAddAttachments ) {
     bool someOk = false;
-    for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( Q3ValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody )
         someOk = true;
       else
@@ -1411,21 +1414,21 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
 
   mOldBodyPart.setContentDisposition( "inline" );
 
-  QCString boundaryCStr;
+  Q3CString boundaryCStr;
   if ( mIsRichText ) { // create a multipart body
     // calculate a boundary string
-    QCString boundaryCStr;  // storing boundary string data
-    QCString newbody;
+    Q3CString boundaryCStr;  // storing boundary string data
+    Q3CString newbody;
     DwMediaType tmpCT;
     tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
     boundaryCStr = tmpCT.Boundary().c_str();
-    QValueList<int> allowedCTEs;
+    Q3ValueList<int> allowedCTEs;
 
     KMMessagePart textBodyPart;
     textBodyPart.setTypeStr("text");
     textBodyPart.setSubtypeStr("plain");
 
-    QCString textbody = plainTextFromMarkup( mText );
+    Q3CString textbody = plainTextFromMarkup( mText );
 
     // the signed body must not be 8bit encoded
     textBodyPart.setBodyAndGuessCte( textbody, allowedCTEs,
@@ -1445,7 +1448,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     KMMessagePart htmlBodyPart;
     htmlBodyPart.setTypeStr("text");
     htmlBodyPart.setSubtypeStr("html");
-    QCString htmlbody = mText;
+    Q3CString htmlbody = mText;
     // the signed body must not be 8bit encoded
     htmlBodyPart.setBodyAndGuessCte( htmlbody, allowedCTEs,
                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -1471,7 +1474,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   // Prepare attachments that will be signed/encrypted
-  for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+  for ( Q3ValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
     // signed/encrypted body parts must be either QP or base64 encoded
     // Why not 7 bit? Because the LF->CRLF canonicalization would render
     // e.g. 7 bit encoded shell scripts unusable because of the CRs.
@@ -1480,12 +1483,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // respect the CRLF->LF de-canonicalisation. We should
     // eventually get rid of this:
     if( it->sign || it->encrypt ) {
-      QCString cte = it->part->cteStr().lower();
+      Q3CString cte = it->part->cteStr().lower();
       if( ( "8bit" == cte )
           || ( ( it->part->type() == DwMime::kTypeText )
                && ( "7bit" == cte ) ) ) {
         const QByteArray body = it->part->bodyDecodedBinary();
-        QValueList<int> dummy;
+        Q3ValueList<int> dummy;
         it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
         kdDebug(5006) << "Changed encoding of message part from "
                       << cte << " to " << it->part->cteStr() << endl;
@@ -1509,7 +1512,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       innerBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
     }
     innerBodyPart.setContentDisposition( "inline" );
-    QValueList<int> allowedCTEs;
+    Q3ValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
                                       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -1520,10 +1523,10 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
     innerDwPart->Assemble();
     if ( mIsRichText ) { // and add our mp/a boundary
-        QCString tmpbody = innerDwPart->AsString().c_str();
+        Q3CString tmpbody = innerDwPart->AsString().c_str();
         int boundPos = tmpbody.find( '\n' );
         if( -1 < boundPos ) {
-          QCString bStr( ";\n  boundary=\"" );
+          Q3CString bStr( ";\n  boundary=\"" );
           bStr += mSaveBoundary.c_str();
           bStr += "\"";
           body = innerDwPart->AsString().c_str();
@@ -1537,7 +1540,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerDwPart = 0;
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
-    for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
@@ -1548,7 +1551,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     }
     body += "\n--" + boundaryCStr + "--\n";
   } else { // !earlyAddAttachments
-    QValueList<int> allowedCTEs;
+    Q3ValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                    doSign);
@@ -1585,7 +1588,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       int boundPos = mEncodedBody.find( '\n' );
       if( -1 < boundPos ) {
         // insert new "boundary" parameter
-        QCString bStr( ";\n  boundary=\"" );
+        Q3CString bStr( ";\n  boundary=\"" );
         bStr += boundaryCStr;
         bStr += "\"";
         mEncodedBody.insert( boundPos, bStr );
@@ -1677,7 +1680,7 @@ void MessageComposer::encryptMessage( KMMessage* msg,
   const bool doSignBody = doSign && mSignBody;
 
   if ( doEncryptBody ) {
-    QCString innerContent;
+    Q3CString innerContent;
     if ( doSignBody ) {
       // extract signed body from newBodyPart
       DwBodyPart* dwPart = msg->createDWBodyPart( &newBodyPart );
@@ -1756,7 +1759,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     // add Attachments
     // create additional bodyparts for the attachments (if any)
     KMMessagePart newAttachPart;
-    for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
 
       const bool cryptFlagsDifferent = ( it->encrypt != doEncryptBody || it->sign != doSignBody ) ;
 
@@ -1777,7 +1780,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 
       DwBodyPart* innerDwPart = msg->createDWBodyPart( it->part );
       innerDwPart->Assemble();
-      QCString encodedAttachment = innerDwPart->AsString().c_str();
+      Q3CString encodedAttachment = innerDwPart->AsString().c_str();
       delete innerDwPart;
       innerDwPart = 0;
 
@@ -1889,11 +1892,11 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 // This method does not call any crypto ops, so it does not need to be async
 bool MessageComposer::processStructuringInfo( const QString bugURL,
                                               const QString contentDescClear,
-                                              const QCString contentTypeClear,
-                                              const QCString contentSubtypeClear,
-                                              const QCString contentDispClear,
-                                              const QCString contentTEncClear,
-                                              const QCString& clearCStr,
+                                              const Q3CString contentTypeClear,
+                                              const Q3CString contentSubtypeClear,
+                                              const Q3CString contentDispClear,
+                                              const Q3CString contentTEncClear,
+                                              const Q3CString& clearCStr,
                                               const QString /*contentDescCiph*/,
                                               const QByteArray& ciphertext,
                                               KMMessagePart& resultingPart,
@@ -1902,7 +1905,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
   bool bOk = true;
 
   if ( makeMimeObject( format, signing ) ) {
-    QCString mainHeader = "Content-Type: ";
+    Q3CString mainHeader = "Content-Type: ";
     const char * toplevelCT = toplevelContentType( format, signing );
     if ( toplevelCT )
       mainHeader += toplevelCT;
@@ -1913,7 +1916,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
         mainHeader += contentTypeClear + '/' + contentSubtypeClear;
     }
 
-    const QCString boundaryCStr = KMime::multiPartBoundary();
+    const Q3CString boundaryCStr = KMime::multiPartBoundary();
     // add "boundary" parameter
     if ( makeMultiMime( format, signing ) )
       mainHeader.replace( "%boundary", boundaryCStr );
@@ -1946,9 +1949,9 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
     KMMessage::bodyPart( &mainDwPa, &resultingPart );
     if( !makeMultiMime( format, signing ) ) {
       if ( signing && includeCleartextWhenSigning( format ) ) {
-        QCString bodyText( clearCStr );
+        Q3CString bodyText( clearCStr );
         bodyText += '\n';
-        bodyText += QCString( ciphertext.data(), ciphertext.size() + 1 );
+        bodyText += Q3CString( ciphertext.data(), ciphertext.size() + 1 );
         resultingPart.setBodyEncoded( bodyText );
       } else
         resultingPart.setBodyEncodedBinary( ciphertext );
@@ -1957,7 +1960,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       // Build a MIME part holding the version information
       // taking the body contents returned in
       // structuring.data.bodyTextVersion.
-      QCString versCStr, codeCStr;
+      Q3CString versCStr, codeCStr;
       if ( !signing && format == Kleo::OpenPGPMIMEFormat )
         versCStr =
 	  "Content-Type: application/pgp-encrypted\n"
@@ -1981,10 +1984,10 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 	codeCStr += "Content-Transfer-Encoding: base64\n\n";
 	codeCStr += KMime::Codec::codecForName( "base64" )->encodeToQCString( ciphertext );
       } else
-	codeCStr += '\n' + QCString( ciphertext.data(), ciphertext.size() + 1 );
+	codeCStr += '\n' + Q3CString( ciphertext.data(), ciphertext.size() + 1 );
 
 
-      QCString mainStr = "--" + boundaryCStr;
+      Q3CString mainStr = "--" + boundaryCStr;
       if ( signing && includeCleartextWhenSigning( format ) &&
 	   !clearCStr.isEmpty() )
         mainStr += "\n" + clearCStr + "\n--" + boundaryCStr;
@@ -2005,14 +2008,14 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
     resultingPart.setSubtypeStr( contentSubtypeClear );
     resultingPart.setContentDisposition( contentDispClear );
     resultingPart.setContentTransferEncodingStr( contentTEncClear );
-    QCString resultingBody;
+    Q3CString resultingBody;
 
     if ( signing && includeCleartextWhenSigning( format ) ) {
       if( !clearCStr.isEmpty() )
         resultingBody += clearCStr;
     }
     if ( !ciphertext.isEmpty() )
-      resultingBody += QCString( ciphertext.data(), ciphertext.size() + 1 ); // null-terminate
+      resultingBody += Q3CString( ciphertext.data(), ciphertext.size() + 1 ); // null-terminate
     else {
       // Plugin error!
       KMessageBox::sorry( mComposeWin,
@@ -2029,16 +2032,16 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 }
 
 //-----------------------------------------------------------------------------
-QCString MessageComposer::plainTextFromMarkup( const QString& markupText )
+Q3CString MessageComposer::plainTextFromMarkup( const QString& markupText )
 {
-  QTextEdit *hackConspiratorTextEdit = new QTextEdit( markupText );
+  Q3TextEdit *hackConspiratorTextEdit = new Q3TextEdit( markupText );
   hackConspiratorTextEdit->setTextFormat(Qt::PlainText);
   if ( !mDisableBreaking ) {
-    hackConspiratorTextEdit->setWordWrap( QTextEdit::FixedColumnWidth );
+    hackConspiratorTextEdit->setWordWrap( Q3TextEdit::FixedColumnWidth );
     hackConspiratorTextEdit->setWrapColumnOrWidth( mLineBreakColumn );
   }
   QString text = hackConspiratorTextEdit->text();
-  QCString textbody;
+  Q3CString textbody;
 
   const QTextCodec *codec = KMMsgBase::codecForName( mCharset );
   if( mCharset == "us-ascii" ) {
@@ -2056,10 +2059,10 @@ QCString MessageComposer::plainTextFromMarkup( const QString& markupText )
 }
 
 //-----------------------------------------------------------------------------
-QCString MessageComposer::breakLinesAndApplyCodec()
+Q3CString MessageComposer::breakLinesAndApplyCodec()
 {
   QString text;
-  QCString cText;
+  Q3CString cText;
 
   if( mDisableBreaking || mIsRichText )
     text = mComposeWin->mEditor->text();
@@ -2094,7 +2097,7 @@ QCString MessageComposer::breakLinesAndApplyCodec()
                                                i18n("Lose Characters"), i18n("Change Encoding") ) == KMessageBox::Yes );
     if( !anyway ) {
       mComposeWin->mEditor->setText(oldText);
-      return QCString();
+      return Q3CString();
     }
   }
 
@@ -2103,7 +2106,7 @@ QCString MessageComposer::breakLinesAndApplyCodec()
 
 
 //-----------------------------------------------------------------------------
-void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageFormat format ) {
+void MessageComposer::pgpSignedMsg( const Q3CString & cText, Kleo::CryptoMessageFormat format ) {
 
   mSignature = QByteArray();
 
@@ -2154,7 +2157,7 @@ void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageF
 
 //-----------------------------------------------------------------------------
 Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
-                                               const QCString & cText,
+                                               const Q3CString & cText,
                                                const std::vector<GpgME::Key> & encryptionKeys,
 					       Kleo::CryptoMessageFormat format )
 {
@@ -2194,7 +2197,7 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
 }
 
 Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBody,
-							const QCString & cText,
+							const Q3CString & cText,
 							const std::vector<GpgME::Key> & signingKeys,
 							const std::vector<GpgME::Key> & encryptionKeys,
 							Kleo::CryptoMessageFormat format )

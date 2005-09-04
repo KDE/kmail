@@ -41,14 +41,21 @@
 
 #include <qcheckbox.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QKeyEvent>
+#include <Q3Frame>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QVBoxLayout>
 #include <klineedit.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcombobox.h>
-#include <qobjectlist.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
+#include <qobject.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <qcursor.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/boyermor.h>
@@ -71,7 +78,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
-  mSortOrder(Ascending),
+  mSortOrder(Qt::AscendingOrder),
   mFolder(0),
   mTimer(new QTimer(this)),
   mLastFocus(0),
@@ -91,7 +98,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   QWidget* searchWidget = new QWidget(this);
   QVBoxLayout *vbl = new QVBoxLayout( searchWidget, 0, spacingHint(), "kmfs_vbl" );
 
-  QButtonGroup * radioGroup = new QButtonGroup( searchWidget );
+  Q3ButtonGroup * radioGroup = new Q3ButtonGroup( searchWidget );
   radioGroup->hide();
 
   mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget);
@@ -119,7 +126,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   vbl->addWidget( spacer );
 
   mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false, true );
-  mPatternEdit->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
+  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
   mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
@@ -187,14 +194,14 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
                          config->readNumEntry("FolderWidth", 100));
 
   mLbxMatches->addColumn(""); // should be hidden
-  mLbxMatches->setColumnWidthMode( MSGID_COLUMN, QListView::Manual );
+  mLbxMatches->setColumnWidthMode( MSGID_COLUMN, Q3ListView::Manual );
   mLbxMatches->setColumnWidth(MSGID_COLUMN, 0);
   mLbxMatches->header()->setResizeEnabled(false, MSGID_COLUMN);
 
-  connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
-          this, SLOT(slotShowMsg(QListViewItem *)));
-  connect( mLbxMatches, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
-           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint &, int )));
+  connect(mLbxMatches, SIGNAL(doubleClicked(Q3ListViewItem *)),
+          this, SLOT(slotShowMsg(Q3ListViewItem *)));
+  connect( mLbxMatches, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int )),
+           this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint &, int )));
   vbl->addWidget(mLbxMatches);
 
   QHBoxLayout *hbl2 = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl2" );
@@ -223,9 +230,9 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   mStatusBar->changeItem(i18n("Ready."), 0);
-  mStatusBar->setItemAlignment(0, AlignLeft | AlignVCenter);
+  mStatusBar->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
   mStatusBar->insertItem(QString::null, 1, 1, true);
-  mStatusBar->setItemAlignment(1, AlignLeft | AlignVCenter);
+  mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
   vbl->addWidget(mStatusBar);
 
   int mainWidth = config->readNumEntry("SearchWidgetWidth", 0);
@@ -235,7 +242,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
     resize(mainWidth, mainHeight);
 
   setMainWidget(searchWidget);
-  setButtonBoxOrientation(QWidget::Vertical);
+  setButtonBoxOrientation(Qt::Vertical);
 
   mBtnSearch = actionButton(KDialogBase::User1);
   mBtnStop = actionButton(KDialogBase::User2);
@@ -299,7 +306,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
 //-----------------------------------------------------------------------------
 SearchWindow::~SearchWindow()
 {
-  QValueListIterator<QGuardedPtr<KMFolder> > fit;
+  Q3ValueListIterator<QPointer<KMFolder> > fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;
@@ -516,9 +523,9 @@ void SearchWindow::slotRemoveMsg(KMFolder *, Q_UINT32 serNum)
 {
     if (!mFolder)
         return;
-    QListViewItemIterator it(mLbxMatches);
+    Q3ListViewItemIterator it(mLbxMatches);
     while (it.current()) {
-        QListViewItem *item = *it;
+        Q3ListViewItem *item = *it;
         if (serNum == (*it)->text(MSGID_COLUMN).toUInt()) {
             delete item;
             return;
@@ -603,7 +610,7 @@ void SearchWindow::folderInvalidated(KMFolder *folder)
 }
 
 //-----------------------------------------------------------------------------
-bool SearchWindow::slotShowMsg(QListViewItem *item)
+bool SearchWindow::slotShowMsg(Q3ListViewItem *item)
 {
     if(!item)
         return false;
@@ -647,7 +654,7 @@ KMMessageList SearchWindow::selectedMessages()
     KMMessageList msgList;
     KMFolder* folder = 0;
     int msgIndex = -1;
-    for (QListViewItemIterator it(mLbxMatches); it.current(); it++)
+    for (Q3ListViewItemIterator it(mLbxMatches); it.current(); it++)
         if (it.current()->isSelected()) {
             KMMsgDict::instance()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
                                            &folder, &msgIndex);
@@ -660,7 +667,7 @@ KMMessageList SearchWindow::selectedMessages()
 //-----------------------------------------------------------------------------
 KMMessage* SearchWindow::message()
 {
-    QListViewItem *item = mLbxMatches->currentItem();
+    Q3ListViewItem *item = mLbxMatches->currentItem();
     KMFolder* folder = 0;
     int msgIndex = -1;
     if (!item)
@@ -709,7 +716,7 @@ void SearchWindow::updateContextMenuActions()
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &, int )
+void SearchWindow::slotContextMenuRequested( Q3ListViewItem *lvi, const QPoint &, int )
 {
     if (!lvi)
         return;
@@ -718,14 +725,14 @@ void SearchWindow::slotContextMenuRequested( QListViewItem *lvi, const QPoint &,
     // FIXME is this ever unGetMsg()'d?
     if (!message())
         return;
-    QPopupMenu *menu = new QPopupMenu(this);
+    Q3PopupMenu *menu = new Q3PopupMenu(this);
     updateContextMenuActions();
 
     mMenuToFolder.clear();
-    QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
+    Q3PopupMenu *msgMoveMenu = new Q3PopupMenu(menu);
     mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage,
         this, &mMenuToFolder, msgMoveMenu );
-    QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
+    Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
     mKMMainWidget->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage,
         this, &mMenuToFolder, msgCopyMenu );
 

@@ -23,6 +23,8 @@
 #include <config.h>
 #include <sys/types.h>
 #include "kmmsgbase.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 class KMMessage;
 
@@ -33,16 +35,16 @@ public:
   virtual ~KMMsgInfo();
 
   /** left for old style index files */
-  void compat_fromOldIndexString(const QCString& str, bool toUtf8);
+  void compat_fromOldIndexString(const Q3CString& str, bool toUtf8);
 
 
   /** Initialize with given values and set dirty flag to FALSE. */
-  virtual void init(const QCString& subject, const QCString& from,
-                    const QCString& to, time_t date,
-		    KMMsgStatus status, const QCString& xmark,
-                    const QCString& replyToId,
-                    const QCString& replyToAuxId,
-                    const QCString& msgId,
+  virtual void init(const Q3CString& subject, const Q3CString& from,
+                    const Q3CString& to, time_t date,
+		    KMMsgStatus status, const Q3CString& xmark,
+                    const Q3CString& replyToId,
+                    const Q3CString& replyToAuxId,
+                    const Q3CString& msgId,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
@@ -50,13 +52,13 @@ public:
             size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Initialize with given values and set dirty flag to FALSE. */
-  virtual void init(const QCString& subject, const QCString& from,
-                    const QCString& to, time_t date,
-		    KMMsgStatus status, const QCString& xmark,
-                    const QCString& replyToId,
-                    const QCString& replyToAuxId,
-                    const QCString& msgId,
-		    const QCString& fileName,
+  virtual void init(const Q3CString& subject, const Q3CString& from,
+                    const Q3CString& to, time_t date,
+		    KMMsgStatus status, const Q3CString& xmark,
+                    const Q3CString& replyToId,
+                    const Q3CString& replyToAuxId,
+                    const Q3CString& msgId,
+		    const Q3CString& fileName,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,

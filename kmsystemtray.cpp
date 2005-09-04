@@ -25,6 +25,10 @@
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <QMouseEvent>
+#include <Q3ValueList>
 using KMail::AccountManager;
 #include "globalsettings.h"
 
@@ -40,8 +44,8 @@ using KMail::AccountManager;
 #include <qpainter.h>
 #include <qbitmap.h>
 #include <qtooltip.h>
-#include <qwidgetlist.h>
-#include <qobjectlist.h>
+#include <qwidget.h>
+#include <qobject.h>
 
 #include <math.h>
 #include <assert.h>
@@ -261,7 +265,7 @@ void KMSystemTray::foldersChanged()
   disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
 
   QStringList folderNames;
-  QValueList<QGuardedPtr<KMFolder> > folderList;
+  Q3ValueList<QPointer<KMFolder> > folderList;
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
@@ -269,7 +273,7 @@ void KMSystemTray::foldersChanged()
 
   QStringList::iterator strIt = folderNames.begin();
 
-  for(QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
+  for(Q3ValueList<QPointer<KMFolder> >::iterator it = folderList.begin();
      it != folderList.end() && strIt != folderNames.end(); ++it, ++strIt)
   {
     KMFolder * currentFolder = *it;
@@ -323,7 +327,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
     {
       KPopupMenu *newMessagesPopup = new KPopupMenu();
 
-      QMap<QGuardedPtr<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
+      QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
       for(uint i=0; it != mFoldersWithUnread.end(); ++i)
       {
         kdDebug(5006) << "Adding folder" << endl;
@@ -463,7 +467,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
 void KMSystemTray::updateNewMessages()
 {
-  for ( QMap<QGuardedPtr<KMFolder>, bool>::Iterator it = mPendingUpdates.begin();
+  for ( QMap<QPointer<KMFolder>, bool>::Iterator it = mPendingUpdates.begin();
         it != mPendingUpdates.end(); ++it)
   {
   KMFolder *fldr = it.key();
@@ -473,7 +477,7 @@ void KMSystemTray::updateNewMessages()
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
 
-  QMap<QGuardedPtr<KMFolder>, int>::Iterator it =
+  QMap<QPointer<KMFolder>, int>::Iterator it =
       mFoldersWithUnread.find(fldr);
   bool unmapped = (it == mFoldersWithUnread.end());
 
@@ -574,7 +578,7 @@ void KMSystemTray::selectedAccount(int id)
   if(!fldr) return;
   KMFolderTree * ft = mainWidget->folderTree();
   if(!ft) return;
-  QListViewItem * fldrIdx = ft->indexOfFolder(fldr);
+  Q3ListViewItem * fldrIdx = ft->indexOfFolder(fldr);
   if(!fldrIdx) return;
 
   ft->setCurrentItem(fldrIdx);

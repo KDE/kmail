@@ -25,7 +25,9 @@
 
 #include <kshortcut.h>
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class QString;
 class KConfig;
@@ -124,10 +126,10 @@ public:
   /** Provides a reference to the internal action list. If your used
       the @p setAction() and @p action() functions before, please
       convert to using myFilter->actions()->at() and friends now. */
-  QPtrList<KMFilterAction>* actions() { return &mActions; }
+  Q3PtrList<KMFilterAction>* actions() { return &mActions; }
 
   /** Provides a reference to the internal action list. Const version. */
-  const QPtrList<KMFilterAction>* actions() const { return &mActions; }
+  const Q3PtrList<KMFilterAction>* actions() const { return &mActions; }
 
   /** Provides a reference to the internal pattern. If you used the
       @p matches() function before, please convert to using
@@ -293,8 +295,8 @@ public:
 
 private:
   KMSearchPattern mPattern;
-  QPtrList<KMFilterAction> mActions;
-  QValueList<int> mAccounts;
+  Q3PtrList<KMFilterAction> mActions;
+  Q3ValueList<int> mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
   KShortcut mShortcut;

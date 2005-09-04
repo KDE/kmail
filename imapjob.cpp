@@ -38,10 +38,14 @@
 #include "kmfolder.h"
 #include "kmmsgpart.h"
 #include "progressmanager.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 using KPIM::ProgressManager;
 #include "util.h"
 
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 #include <kio/scheduler.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -61,7 +65,7 @@ ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
 }
 
 //-----------------------------------------------------------------------------
-ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
+ImapJob::ImapJob( Q3PtrList<KMMessage>& msgList, QString sets, JobType jt,
                   KMFolderImap* folder )
   : FolderJob( msgList, sets, jt, folder? folder->folder() : 0 ),
     mAttachmentStrategy ( 0 ), mParentProgressItem(0)
@@ -69,7 +73,7 @@ ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
 }
 
 void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
-                    QPtrList<KMMessage>& msgList )
+                    Q3PtrList<KMMessage>& msgList )
 {
   mJob = 0;
 
@@ -112,7 +116,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   if ( jt == tPutMessage )
   {
     // transfers the complete message to the server
-    QPtrListIterator<KMMessage> it( msgList );
+    Q3PtrListIterator<KMMessage> it( msgList );
     KMMessage* curMsg;
     while ( ( curMsg = it.current() ) != 0 )
     {
@@ -130,7 +134,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       jd.total = ( curMsg->msgSizeServer() > 0 ) ? 
         curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
-      QCString cstr( curMsg->asString() );
+      Q3CString cstr( curMsg->asString() );
       int a = cstr.find("\nX-UID: ");
       int b = cstr.find('\n', a);
       if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
@@ -184,7 +188,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     jd.msgList = msgList;
 
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly );
+    QDataStream stream( packedArgs, QIODevice::WriteOnly );
 
     stream << (int) 'C' << url << destUrl;
     jd.progressItem = ProgressManager::createProgressItem(
@@ -231,7 +235,7 @@ ImapJob::~ImapJob()
           (*it).progressItem = 0;
         }
         if ( !(*it).msgList.isEmpty() ) {
-          for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+          for ( Q3PtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
             mit.current()->setTransferInProgress( false );
         }
       }
@@ -253,7 +257,7 @@ ImapJob::~ImapJob()
             (*it).progressItem = 0;
           }
           if ( !(*it).msgList.isEmpty() ) {
-            for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+            for ( Q3PtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
               mit.current()->setTransferInProgress( false );
           }
         }
@@ -306,7 +310,7 @@ void ImapJob::slotGetNextMessage()
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
-  const QString escapedSubject = QStyleSheet::escape( msg->subject() );
+  const QString escapedSubject = Q3StyleSheet::escape( msg->subject() );
   jd.progressItem = ProgressManager::createProgressItem(
                           mParentProgressItem,
                           "ImapJobDownloading"+ProgressManager::getUniqueID(),
@@ -482,7 +486,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
   } else {
     if ((*it).data.size() > 0)
     {
-      QDataStream stream( (*it).data, IO_ReadOnly );
+      QDataStream stream( (*it).data, QIODevice::ReadOnly );
       account->handleBodyStructure(stream, msg, mAttachmentStrategy);
     }
   }
@@ -567,8 +571,8 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
     QString newUid = data.section(' ', 2, 2);
 
     // get lists of uids
-    QValueList<ulong> olduids = KMFolderImap::splitSets(oldUid);
-    QValueList<ulong> newuids = KMFolderImap::splitSets(newUid);
+    Q3ValueList<ulong> olduids = KMFolderImap::splitSets(oldUid);
+    Q3ValueList<ulong> newuids = KMFolderImap::splitSets(newUid);
 
     int index = -1;
     KMMessage * msg;

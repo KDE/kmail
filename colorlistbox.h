@@ -22,13 +22,18 @@
 #define _COLOR_LISTBOX_H_
 
 #include <klistbox.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
 
 class ColorListBox : public KListBox
 {
   Q_OBJECT
 
   public:
-    ColorListBox( QWidget *parent=0, const char * name=0, WFlags f=0 );
+    ColorListBox( QWidget *parent=0, const char * name=0, Qt::WFlags f=0 );
     void setColor( uint index, const QColor &color );
     QColor color( uint index ) const;
 signals:
@@ -52,7 +57,7 @@ signals:
 };
 
 
-class ColorListItem : public QListBoxItem
+class ColorListItem : public Q3ListBoxItem
 {
   public:
     ColorListItem( const QString &text, const QColor &color=Qt::black );
@@ -61,8 +66,8 @@ class ColorListItem : public QListBoxItem
 
   protected:
     virtual void paint( QPainter * );
-    virtual int height( const QListBox * ) const;
-    virtual int width( const QListBox * ) const;
+    virtual int height( const Q3ListBox * ) const;
+    virtual int width( const Q3ListBox * ) const;
 
   private:
     QColor mColor;

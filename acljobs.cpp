@@ -31,6 +31,8 @@
 #include "acljobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 using namespace KMail;
 
@@ -68,8 +70,8 @@ static unsigned int IMAPRightsToPermission( const QString& str ) {
   return perm;
 }
 
-static QCString permissionsToIMAPRights( unsigned int permissions ) {
-  QCString str = "";
+static Q3CString permissionsToIMAPRights( unsigned int permissions ) {
+  Q3CString str = "";
   if ( permissions & ACLJobs::List )
     str += 'l';
   if ( permissions & ACLJobs::Read )
@@ -120,7 +122,7 @@ KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KURL& url, const QStri
   QString perm = QString::fromLatin1( permissionsToIMAPRights( permissions ) );
 
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'S' << url << user << perm;
 
   KIO::SimpleJob* job = KIO::special( url, packedArgs, false );
@@ -131,7 +133,7 @@ KIO::SimpleJob* ACLJobs::setACL( KIO::Slave* slave, const KURL& url, const QStri
 ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KURL& url, const QString& user )
 {
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'D' << url << user;
 
   ACLJobs::DeleteACLJob* job = new ACLJobs::DeleteACLJob( url, user, packedArgs, false );
@@ -142,7 +144,7 @@ ACLJobs::DeleteACLJob* ACLJobs::deleteACL( KIO::Slave* slave, const KURL& url, c
 ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KURL& url )
 {
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'G' << url;
 
   ACLJobs::GetACLJob* job = new ACLJobs::GetACLJob( url, packedArgs, false );
@@ -153,7 +155,7 @@ ACLJobs::GetACLJob* ACLJobs::getACL( KIO::Slave* slave, const KURL& url )
 ACLJobs::GetUserRightsJob* ACLJobs::getUserRights( KIO::Slave* slave, const KURL& url )
 {
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'A' << (int)'M' << url;
 
   ACLJobs::GetUserRightsJob* job = new ACLJobs::GetUserRightsJob( url, packedArgs, false );

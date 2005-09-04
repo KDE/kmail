@@ -47,8 +47,10 @@
 
 #include <qcolor.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QLabel>
 
-KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, WFlags f )
+KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, Qt::WFlags f )
   : QLabel( parent, name, f ),
     mMode( Normal )
 {

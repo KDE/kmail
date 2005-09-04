@@ -18,7 +18,9 @@
 #define __KMAIL_XFACECONFIGURATOR_H__
 
 #include <qwidget.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QLabel>
 
 class KURL;
 
@@ -44,7 +46,7 @@ namespace KMail {
 
   protected:
     QCheckBox     * mEnableCheck;
-    QTextEdit     * mTextEdit;
+    Q3TextEdit     * mTextEdit;
     QLabel        * mXFaceLabel;
     QComboBox     * mSourceCombo;
 

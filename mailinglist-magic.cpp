@@ -12,14 +12,16 @@
 #include <kdebug.h>
 
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 using namespace KMail;
 
-typedef QString (*MagicDetectorFunc) (const KMMessage *, QCString &, QString &);
+typedef QString (*MagicDetectorFunc) (const KMMessage *, Q3CString &, QString &);
 
 /* Sender: (owner-([^@]+)|([^@+]-owner)@ */
 static QString check_sender(const KMMessage  *message,
-                            QCString &header_name,
+                            Q3CString &header_name,
                             QString &header_value )
 {
   QString header = message->headerField( "Sender" );
@@ -48,7 +50,7 @@ static QString check_sender(const KMMessage  *message,
 
 /* X-BeenThere: ([^@]+) */
 static QString check_x_beenthere(const KMMessage  *message,
-                                 QCString &header_name,
+                                 Q3CString &header_name,
                                  QString &header_value )
 {
   QString header = message->headerField( "X-BeenThere" );
@@ -63,7 +65,7 @@ static QString check_x_beenthere(const KMMessage  *message,
 
 /* Delivered-To:: <([^@]+) */
 static QString check_delivered_to(const KMMessage  *message,
-                                  QCString &header_name,
+                                  Q3CString &header_name,
                                   QString &header_value )
 {
   QString header = message->headerField( "Delivered-To" );
@@ -79,7 +81,7 @@ static QString check_delivered_to(const KMMessage  *message,
 
 /* X-Mailing-List: <?([^@]+) */
 static QString check_x_mailing_list(const KMMessage  *message,
-                                    QCString &header_name,
+                                    Q3CString &header_name,
                                     QString &header_value )
 {
   QString header = message->headerField( "X-Mailing-List");
@@ -100,7 +102,7 @@ static QString check_x_mailing_list(const KMMessage  *message,
 
 /* List-Id: [^<]* <([^.]+) */
 static QString check_list_id(const KMMessage  *message,
-			     QCString &header_name,
+			     Q3CString &header_name,
 			     QString &header_value )
 {
   int lAnglePos, firstDotPos;
@@ -125,7 +127,7 @@ static QString check_list_id(const KMMessage  *message,
 
 /* List-Post: <mailto:[^< ]*>) */
 static QString check_list_post(const KMMessage  *message,
-                               QCString &header_name,
+                               Q3CString &header_name,
                                QString &header_value )
 {
   QString header = message->headerField( "List-Post" );
@@ -145,7 +147,7 @@ static QString check_list_post(const KMMessage  *message,
 
 /* Mailing-List: list ([^@]+) */
 static QString check_mailing_list(const KMMessage  *message,
-                                  QCString &header_name,
+                                  Q3CString &header_name,
                                   QString &header_value )
 {
   QString header = message->headerField( "Mailing-List");
@@ -164,7 +166,7 @@ static QString check_mailing_list(const KMMessage  *message,
 
 /* X-Loop: ([^@]+) */
 static QString check_x_loop(const KMMessage  *message,
-                            QCString &header_name,
+                            Q3CString &header_name,
                             QString &header_value ){
   QString header = message->headerField( "X-Loop");
   if ( header.isEmpty() )
@@ -181,7 +183,7 @@ static QString check_x_loop(const KMMessage  *message,
 
 /* X-ML-Name: (.+) */
 static QString check_x_ml_name(const KMMessage  *message,
-                               QCString &header_name,
+                               Q3CString &header_name,
                                QString &header_value ){
   QString header = message->headerField( "X-ML-Name");
   if ( header.isEmpty() )
@@ -250,11 +252,11 @@ MailingList::detect( const KMMessage *message )
 }
 
 QString
-MailingList::name( const KMMessage  *message, QCString &header_name,
+MailingList::name( const KMMessage  *message, Q3CString &header_name,
                    QString &header_value )
 {
   QString mlist;
-  header_name = QCString();
+  header_name = Q3CString();
   header_value = QString::null;
 
   if ( !message )

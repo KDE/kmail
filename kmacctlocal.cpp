@@ -8,6 +8,8 @@
 #include "kmfoldermbox.h"
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
+//Added by qt3to4:
+#include <Q3CString>
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -208,8 +210,8 @@ bool KMAcctLocal::fetchMsg()
 #if 0
     // debug code, don't remove
     QFile fileD0( "testdat_xx-0-0" );
-    if( fileD0.open( IO_WriteOnly ) ) {
-      QCString s = msg->asString();
+    if( fileD0.open( QIODevice::WriteOnly ) ) {
+      Q3CString s = msg->asString();
       uint l = s.length();
       if ( l > 0 ) {
         QDataStream ds( &fileD0 );

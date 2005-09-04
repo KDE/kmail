@@ -5,6 +5,15 @@
 
 #include "kmheaders.h"
 #include "headeritem.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3MemArray>
+#include <Q3PtrList>
+#include <QEvent>
+#include <QKeyEvent>
+#include <Q3ValueList>
+#include <Q3PopupMenu>
+#include <QMouseEvent>
 using KMail::HeaderItem;
 
 #include "kcursorsaver.h"
@@ -38,13 +47,13 @@ using namespace KPIM;
 
 #include <qbuffer.h>
 #include <qfile.h>
-#include <qheader.h>
-#include <qptrstack.h>
-#include <qptrqueue.h>
+#include <q3header.h>
+#include <q3ptrstack.h>
+#include <q3ptrqueue.h>
 #include <qpainter.h>
 #include <qtextcodec.h>
 #include <qstyle.h>
-#include <qlistview.h>
+#include <q3listview.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -96,7 +105,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   noRepaint = false;
   getMsgIndex = -1;
   mTopItem = 0;
-  setSelectionMode( QListView::Extended );
+  setSelectionMode( Q3ListView::Extended );
   setAllColumnsShowFocus( true );
   mNested = false;
   nestingPolicy = OpenUnread;
@@ -135,7 +144,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortDescending = false;
 
   setShowSortIndicator(true);
-  setFocusPolicy( WheelFocus );
+  setFocusPolicy( Qt::WheelFocus );
 
   if (!pixmapsLoaded)
   {
@@ -186,19 +195,19 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPaintInfo.signedCol         = addColumn( *pixFullySigned   , "", 0 );
   mPaintInfo.cryptoCol         = addColumn( *pixFullyEncrypted, "", 0 );
 
-  setResizeMode( QListView::NoColumn );
+  setResizeMode( Q3ListView::NoColumn );
 
   // only the non-optional columns shall be resizeable
   header()->setResizeEnabled( true, mPaintInfo.subCol );
   header()->setResizeEnabled( true, mPaintInfo.senderCol );
   header()->setResizeEnabled( true, mPaintInfo.dateCol );
 
-  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
-           this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int )));
-  connect(this, SIGNAL(doubleClicked(QListViewItem*)),
-          this,SLOT(selectMessage(QListViewItem*)));
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
+  connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int )),
+           this, SLOT( rightButtonPressed( Q3ListViewItem*, const QPoint &, int )));
+  connect(this, SIGNAL(doubleClicked(Q3ListViewItem*)),
+          this,SLOT(selectMessage(Q3ListViewItem*)));
+  connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+          this,SLOT(highlightMessage(Q3ListViewItem*)));
   resetCurrentTime();
 
   mSubjectLists.setAutoDelete( true );
@@ -761,7 +770,7 @@ void KMHeaders::msgChanged()
   int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;
   QString msgIdMD5;
-  QListViewItem *item = currentItem();
+  Q3ListViewItem *item = currentItem();
   HeaderItem *hi = dynamic_cast<HeaderItem*>(item);
   if (item && hi) {
     // get the msgIdMD5 to compare it later
@@ -771,15 +780,15 @@ void KMHeaders::msgChanged()
   }
 //  if (!isUpdatesEnabled()) return;
   // prevent IMAP messages from scrolling to top
-  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-             this,SLOT(highlightMessage(QListViewItem*)));
+  disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+             this,SLOT(highlightMessage(Q3ListViewItem*)));
   // remember all selected messages
-  QValueList<int> curItems = selectedItems();
+  Q3ValueList<int> curItems = selectedItems();
   updateMessageList(); // do not change the selection
   // restore the old state, but move up when there are unread message just out of view
   HeaderItem *topOfList = mItems[i];
   item = firstChild();
-  QListViewItem *unreadItem = 0;
+  Q3ListViewItem *unreadItem = 0;
   while(item && item != topOfList) {
     KMMsgBase *msg = mFolder->getMsgBase( static_cast<HeaderItem*>(item)->msgId() );
     if ( msg->isUnread() || msg->isNew() ) {
@@ -794,8 +803,8 @@ void KMHeaders::msgChanged()
   setContentsPos( 0, itemPos( unreadItem ));
   setCurrentMsg( cur );
   setSelectedByIndex( curItems, true );
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
+  connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+          this,SLOT(highlightMessage(Q3ListViewItem*)));
 
   // if the current message has changed then emit
   // the selected signal to force an update
@@ -892,10 +901,10 @@ void KMHeaders::msgAdded(int id)
       }
       if( !subjMD5.isEmpty()) {
         if ( !mSubjectLists.find(subjMD5) )
-          mSubjectLists.insert(subjMD5, new QPtrList<SortCacheItem>());
+          mSubjectLists.insert(subjMD5, new Q3PtrList<SortCacheItem>());
         // insertion sort by date. See buildThreadTrees for details.
         int p=0;
-        for (QPtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
+        for (Q3PtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
             it.current(); ++it) {
           KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
           if ( mb->date() < mFolder->getMsgBase(id)->date())
@@ -912,11 +921,11 @@ void KMHeaders::msgAdded(int id)
     /* In case the current item is taken during reparenting, prevent qlistview
      * from selecting some unrelated item as a result of take() emitting
      * currentChanged. */
-    disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
-           this, SLOT(highlightMessage(QListViewItem*)));
+    disconnect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+           this, SLOT(highlightMessage(Q3ListViewItem*)));
 
     if ( !msgId.isEmpty() ) {
-      QPtrListIterator<HeaderItem> it(mImperfectlyThreadedList);
+      Q3PtrListIterator<HeaderItem> it(mImperfectlyThreadedList);
       HeaderItem *cur;
       while ( (cur = it.current()) ) {
         ++it;
@@ -943,8 +952,8 @@ void KMHeaders::msgAdded(int id)
               perfectParent = false;
           }
         }
-        QListViewItem *newParent = mItems[id];
-        QListViewItem *msg = mItems[tryMe];
+        Q3ListViewItem *newParent = mItems[id];
+        Q3ListViewItem *msg = mItems[tryMe];
 
         if (msg->parent())
           msg->parent()->takeItem(msg);
@@ -998,8 +1007,8 @@ void KMHeaders::msgAdded(int id)
   }
 
   /* restore signal */
-  connect( this, SIGNAL(currentChanged(QListViewItem*)),
-           this, SLOT(highlightMessage(QListViewItem*)));
+  connect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+           this, SLOT(highlightMessage(Q3ListViewItem*)));
 
   emit msgAddedToListView( hi );
   END_TIMER(msgAdded);
@@ -1019,8 +1028,8 @@ void KMHeaders::msgRemoved(int id, QString msgId )
    * item once this one is removed. Sine we have already selected
    * something in prepare/finalizeMove that's counter productive
    */
-  disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
-              this, SLOT(highlightMessage(QListViewItem*)));
+  disconnect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+              this, SLOT(highlightMessage(Q3ListViewItem*)));
 
   HeaderItem *removedItem = mItems[id];
   if (!removedItem) return;
@@ -1045,14 +1054,14 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       removedItem->sortCacheItem()->subjectThreadingList()->removeRef( removedItem->sortCacheItem() );
 
     // Reparent children of item.
-    QListViewItem *myParent = removedItem;
-    QListViewItem *myChild = myParent->firstChild();
-    QListViewItem *threadRoot = myParent;
+    Q3ListViewItem *myParent = removedItem;
+    Q3ListViewItem *myChild = myParent->firstChild();
+    Q3ListViewItem *threadRoot = myParent;
     while (threadRoot->parent())
       threadRoot = threadRoot->parent();
     QString key = static_cast<HeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
 
-    QPtrList<QListViewItem> childList;
+    Q3PtrList<Q3ListViewItem> childList;
     while (myChild) {
       HeaderItem *item = static_cast<HeaderItem*>(myChild);
       // Just keep the item at top level, if it will be deleted anyhow
@@ -1073,8 +1082,8 @@ void KMHeaders::msgRemoved(int id, QString msgId )
       }
     }
 
-    for (QPtrListIterator<QListViewItem> it(childList); it.current() ; ++it ) {
-      QListViewItem *lvi = *it;
+    for (Q3PtrListIterator<Q3ListViewItem> it(childList); it.current() ; ++it ) {
+      Q3ListViewItem *lvi = *it;
       HeaderItem *item = static_cast<HeaderItem*>(lvi);
       SortCacheItem *sci = item->sortCacheItem();
       SortCacheItem *parent = findParent( sci );
@@ -1131,8 +1140,8 @@ void KMHeaders::msgRemoved(int id, QString msgId )
     }
   }
   /* restore signal */
-  connect( this, SIGNAL(currentChanged(QListViewItem*)),
-           this, SLOT(highlightMessage(QListViewItem*)));
+  connect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+           this, SLOT(highlightMessage(Q3ListViewItem*)));
 }
 
 
@@ -1152,7 +1161,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   SerNumList serNums;
-  for (QListViewItemIterator it(this); it.current(); ++it)
+  for (Q3ListViewItemIterator it(this); it.current(); ++it)
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
@@ -1166,23 +1175,23 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 }
 
 
-QPtrList<QListViewItem> KMHeaders::currentThread() const
+Q3PtrList<Q3ListViewItem> KMHeaders::currentThread() const
 {
-  if (!mFolder) return QPtrList<QListViewItem>();
+  if (!mFolder) return Q3PtrList<Q3ListViewItem>();
 
   // starting with the current item...
-  QListViewItem *curItem = currentItem();
-  if (!curItem) return QPtrList<QListViewItem>();
+  Q3ListViewItem *curItem = currentItem();
+  if (!curItem) return Q3PtrList<Q3ListViewItem>();
 
   // ...find the top-level item:
-  QListViewItem *topOfThread = curItem;
+  Q3ListViewItem *topOfThread = curItem;
   while ( topOfThread->parent() )
     topOfThread = topOfThread->parent();
 
   // collect the items in this thread:
-  QPtrList<QListViewItem> list;
-  QListViewItem *topOfNextThread = topOfThread->nextSibling();
-  for ( QListViewItemIterator it( topOfThread ) ;
+  Q3PtrList<Q3ListViewItem> list;
+  Q3ListViewItem *topOfNextThread = topOfThread->nextSibling();
+  for ( Q3ListViewItemIterator it( topOfThread ) ;
         it.current() && it.current() != topOfNextThread ; ++it )
     list.append( it.current() );
   return list;
@@ -1190,8 +1199,8 @@ QPtrList<QListViewItem> KMHeaders::currentThread() const
 
 void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 {
-  QPtrList<QListViewItem> curThread = currentThread();
-  QPtrListIterator<QListViewItem> it( curThread );
+  Q3PtrList<Q3ListViewItem> curThread = currentThread();
+  Q3PtrListIterator<Q3ListViewItem> it( curThread );
   SerNumList serNums;
 
   for ( it.toFirst() ; it.current() ; ++it ) {
@@ -1234,7 +1243,7 @@ void KMHeaders::slotExpandOrCollapseThread( bool expand )
 {
   if ( !isThreaded() ) return;
   // find top-level parent of currentItem().
-  QListViewItem *item = currentItem();
+  Q3ListViewItem *item = currentItem();
   if ( !item ) return;
   clearSelection();
   item->setSelected( true );
@@ -1251,17 +1260,17 @@ void KMHeaders::slotExpandOrCollapseAllThreads( bool expand )
 {
   if ( !isThreaded() ) return;
 
-  QListViewItem * item = currentItem();
+  Q3ListViewItem * item = currentItem();
   if( item ) {
     clearSelection();
     item->setSelected( true );
   }
 
-  for ( QListViewItem *item = firstChild() ;
+  for ( Q3ListViewItem *item = firstChild() ;
         item ; item = item->nextSibling() )
     static_cast<HeaderItem*>(item)->setOpenRecursive( expand );
   if ( !expand ) { // collapse can hide the current item:
-    QListViewItem * item = currentItem();
+    Q3ListViewItem * item = currentItem();
     if( item ) {
       while ( item->parent() )
         item = item->parent();
@@ -1318,13 +1327,13 @@ void KMHeaders::applyFiltersOnMsg()
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
     // uses action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
-    QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    Q3ValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     ActionScheduler *scheduler = new ActionScheduler( set, filters, this );
     scheduler->setAutoDestruct( true );
 
     int contentX, contentY;
     HeaderItem *nextItem = prepareMove( &contentX, &contentY );
-    QPtrList<KMMsgBase> msgList = *selectedMsgs(true);
+    Q3PtrList<KMMsgBase> msgList = *selectedMsgs(true);
     finalizeMove( nextItem, contentX, contentY );
 
     for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
@@ -1415,10 +1424,10 @@ HeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
   HeaderItem *ret = 0;
   emit maybeDeleting();
 
-  disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
-              this, SLOT(highlightMessage(QListViewItem*)));
+  disconnect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+              this, SLOT(highlightMessage(Q3ListViewItem*)));
 
-  QListViewItem *curItem;
+  Q3ListViewItem *curItem;
   HeaderItem *item;
   curItem = currentItem();
   while (curItem && curItem->isSelected() && curItem->itemBelow())
@@ -1452,8 +1461,8 @@ void KMHeaders::finalizeMove( HeaderItem *item, int contentX, int contentY )
 
   setContentsPos( contentX, contentY );
   makeHeaderVisible();
-  connect( this, SIGNAL(currentChanged(QListViewItem*)),
-           this, SLOT(highlightMessage(QListViewItem*)));
+  connect( this, SIGNAL(currentChanged(Q3ListViewItem*)),
+           this, SLOT(highlightMessage(Q3ListViewItem*)));
 }
 
 
@@ -1502,7 +1511,7 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
      * Note: This potentially resets too many items if there is more than one
      *       move going on. Oh well, I suppose no animals will be harmed.
      * */
-    for (QListViewItemIterator it(this); it.current(); it++) {
+    for (Q3ListViewItemIterator it(this); it.current(); it++) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       if ( item->aboutToBeDeleted() ) {
         item->setAboutToBeDeleted ( false );
@@ -1578,7 +1587,7 @@ void KMHeaders::setCurrentMsg(int cur)
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setSelected( QListViewItem *item, bool selected )
+void KMHeaders::setSelected( Q3ListViewItem *item, bool selected )
 {
   if ( !item )
     return;
@@ -1589,8 +1598,8 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   // If the item is the parent of a closed thread recursively select
   // children .
   if ( isThreaded() && !item->isOpen() && item->firstChild() ) {
-      QListViewItem *nextRoot = item->itemBelow();
-      QListViewItemIterator it( item->firstChild() );
+      Q3ListViewItem *nextRoot = item->itemBelow();
+      Q3ListViewItemIterator it( item->firstChild() );
       for( ; (*it) != nextRoot; ++it ) {
         if ( (*it)->isVisible() )
            (*it)->setSelected( selected );
@@ -1598,9 +1607,9 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   }
 }
 
-void KMHeaders::setSelectedByIndex( QValueList<int> items, bool selected )
+void KMHeaders::setSelectedByIndex( Q3ValueList<int> items, bool selected )
 {
-  for ( QValueList<int>::Iterator it = items.begin(); it != items.end(); ++it )
+  for ( Q3ValueList<int>::Iterator it = items.begin(); it != items.end(); ++it )
   {
     if ( ((*it) >= 0) && ((*it) < (int)mItems.size()) )
     {
@@ -1612,7 +1621,7 @@ void KMHeaders::setSelectedByIndex( QValueList<int> items, bool selected )
 void KMHeaders::clearSelectableAndAboutToBeDeleted( Q_UINT32 serNum )
 {
   // fugly, but I see no way around it
-  for (QListViewItemIterator it(this); it.current(); it++) {
+  for (Q3ListViewItemIterator it(this); it.current(); it++) {
     HeaderItem *item = static_cast<HeaderItem*>(it.current());
     if ( item->aboutToBeDeleted() ) {
       KMMsgBase *msgBase = mFolder->getMsgBase( item->msgId() );
@@ -1629,7 +1638,7 @@ void KMHeaders::clearSelectableAndAboutToBeDeleted( Q_UINT32 serNum )
 KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 {
   mSelMsgBaseList.clear();
-  for (QListViewItemIterator it(this); it.current(); it++) {
+  for (Q3ListViewItemIterator it(this); it.current(); it++) {
     if ( it.current()->isSelected() && it.current()->isVisible() ) {
       HeaderItem *item = static_cast<HeaderItem*>(it.current());
       if ( !item->aboutToBeDeleted() ) { // we are already working on this one
@@ -1647,10 +1656,10 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 }
 
 //-----------------------------------------------------------------------------
-QValueList<int> KMHeaders::selectedItems()
+Q3ValueList<int> KMHeaders::selectedItems()
 {
-  QValueList<int> items;
-  for ( QListViewItemIterator it(this); it.current(); it++ )
+  Q3ValueList<int> items;
+  for ( Q3ListViewItemIterator it(this); it.current(); it++ )
   {
     if ( it.current()->isSelected() && it.current()->isVisible() )
     {
@@ -1665,7 +1674,7 @@ QValueList<int> KMHeaders::selectedItems()
 int KMHeaders::firstSelectedMsg() const
 {
   int selectedMsg = -1;
-  QListViewItem *item;
+  Q3ListViewItem *item;
   for (item = firstChild(); item; item = item->itemBelow())
     if (item->isSelected()) {
       selectedMsg = (static_cast<HeaderItem*>(item))->msgId();
@@ -1677,7 +1686,7 @@ int KMHeaders::firstSelectedMsg() const
 //-----------------------------------------------------------------------------
 void KMHeaders::nextMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if (lvi && lvi->itemBelow()) {
     clearSelection();
     setSelected( lvi, false );
@@ -1689,10 +1698,10 @@ void KMHeaders::nextMessage()
 
 void KMHeaders::selectNextMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if( lvi ) {
-    QListViewItem *below = lvi->itemBelow();
-    QListViewItem *temp = lvi;
+    Q3ListViewItem *below = lvi->itemBelow();
+    Q3ListViewItem *temp = lvi;
     if (lvi && below ) {
       while (temp) {
         temp->firstChild();
@@ -1711,7 +1720,7 @@ void KMHeaders::selectNextMessage()
 //-----------------------------------------------------------------------------
 void KMHeaders::prevMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if (lvi && lvi->itemAbove()) {
     clearSelection();
     setSelected( lvi, false );
@@ -1723,10 +1732,10 @@ void KMHeaders::prevMessage()
 
 void KMHeaders::selectPrevMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if( lvi ) {
-    QListViewItem *above = lvi->itemAbove();
-    QListViewItem *temp = lvi;
+    Q3ListViewItem *above = lvi->itemAbove();
+    Q3ListViewItem *temp = lvi;
 
     if (lvi && above) {
       while (temp) {
@@ -1746,30 +1755,30 @@ void KMHeaders::selectPrevMessage()
 
 void KMHeaders::incCurrentMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemBelow() ) {
 
-    disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-               this,SLOT(highlightMessage(QListViewItem*)));
+    disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+               this,SLOT(highlightMessage(Q3ListViewItem*)));
     setCurrentItem( lvi->itemBelow() );
     ensureCurrentItemVisible();
     setFocus();
-    connect(this,SIGNAL(currentChanged(QListViewItem*)),
-               this,SLOT(highlightMessage(QListViewItem*)));
+    connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+               this,SLOT(highlightMessage(Q3ListViewItem*)));
   }
 }
 
 void KMHeaders::decCurrentMessage()
 {
-  QListViewItem *lvi = currentItem();
+  Q3ListViewItem *lvi = currentItem();
   if ( lvi && lvi->itemAbove() ) {
-    disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-               this,SLOT(highlightMessage(QListViewItem*)));
+    disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+               this,SLOT(highlightMessage(Q3ListViewItem*)));
     setCurrentItem( lvi->itemAbove() );
     ensureCurrentItemVisible();
     setFocus();
-    connect(this,SIGNAL(currentChanged(QListViewItem*)),
-            this,SLOT(highlightMessage(QListViewItem*)));
+    connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+            this,SLOT(highlightMessage(Q3ListViewItem*)));
   }
 }
 
@@ -1857,7 +1866,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
   // Find the ancestor of the unread item closest to the
   // root and recursively sort all of that ancestors children.
   if (item) {
-    QListViewItem *next = item;
+    Q3ListViewItem *next = item;
     while (next->parent())
       next = next->parent();
     next = static_cast<HeaderItem*>(next)->firstChildNonConst();
@@ -1956,7 +1965,7 @@ void KMHeaders::makeHeaderVisible()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
+void KMHeaders::highlightMessage(Q3ListViewItem* lvi, bool markitread)
 {
   // shouldnt happen but will crash if it does
   if (lvi && !lvi->isSelectable()) return;
@@ -2000,11 +2009,11 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
 
 void KMHeaders::highlightCurrentThread()
 {
-  QPtrList<QListViewItem> curThread = currentThread();
-  QPtrListIterator<QListViewItem> it( curThread );
+  Q3PtrList<Q3ListViewItem> curThread = currentThread();
+  Q3PtrListIterator<Q3ListViewItem> it( curThread );
 
   for ( it.toFirst() ; it.current() ; ++it ) {
-      QListViewItem *lvi = *it;
+      Q3ListViewItem *lvi = *it;
       lvi->setSelected( true );
       lvi->repaint();
   }
@@ -2017,7 +2026,7 @@ void KMHeaders::resetCurrentTime()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::selectMessage(QListViewItem* lvi)
+void KMHeaders::selectMessage(Q3ListViewItem* lvi)
 {
   HeaderItem *item = static_cast<HeaderItem*>(lvi);
   if (!item)
@@ -2073,7 +2082,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
 {
     bool cntrl = (e->state() & ControlButton );
     bool shft = (e->state() & ShiftButton );
-    QListViewItem *cur = currentItem();
+    Q3ListViewItem *cur = currentItem();
 
     if (!e || !firstChild())
       return;
@@ -2094,8 +2103,8 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
 
     if (cntrl) {
       if (!shft)
-        disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-                   this,SLOT(highlightMessage(QListViewItem*)));
+        disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+                   this,SLOT(highlightMessage(Q3ListViewItem*)));
       switch (e->key()) {
       case Key_Down:
       case Key_Up:
@@ -2107,14 +2116,14 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
         KListView::keyPressEvent( e );
       }
       if (!shft)
-        connect(this,SIGNAL(currentChanged(QListViewItem*)),
-                this,SLOT(highlightMessage(QListViewItem*)));
+        connect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
+                this,SLOT(highlightMessage(Q3ListViewItem*)));
     }
 }
 
 //-----------------------------------------------------------------------------
 // Handle RMB press, show pop up menu
-void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
+void KMHeaders::rightButtonPressed( Q3ListViewItem *lvi, const QPoint &, int )
 {
   if (!lvi)
     return;
@@ -2130,7 +2139,7 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
 void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
   mPressPos = e->pos();
-  QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
+  Q3ListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
   bool wasSelected = false;
   bool rootDecoClicked = false;
   if (lvi) {
@@ -2146,8 +2155,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
         // the thread. In that case, deselect all children, so opening the thread
         // doesn't cause a flicker.
         if ( !lvi->isOpen() && lvi->firstChild() ) {
-           QListViewItem *nextRoot = lvi->itemBelow();
-           QListViewItemIterator it( lvi->firstChild() );
+           Q3ListViewItem *nextRoot = lvi->itemBelow();
+           Q3ListViewItemIterator it( lvi->firstChild() );
            for( ; (*it) != nextRoot; ++it )
               (*it)->setSelected( false );
         }
@@ -2160,7 +2169,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
      fixed, we have to deselect hidden items here manually, so the quick
      search doesn't mess things up. */
   if ( e->state() & ShiftButton ) {
-    QListViewItemIterator it( this, QListViewItemIterator::Invisible );
+    Q3ListViewItemIterator it( this, Q3ListViewItemIterator::Invisible );
     while ( it.current() ) {
       it.current()->setSelected( false );
       ++it;
@@ -2206,11 +2215,11 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
   if (mMousePressed &&
       (e->pos() - mPressPos).manhattanLength() > KGlobalSettings::dndEventDelay()) {
     mMousePressed = false;
-    QListViewItem *item = itemAt( contentsToViewport(mPressPos) );
+    Q3ListViewItem *item = itemAt( contentsToViewport(mPressPos) );
     if ( item ) {
       MailList mailList;
       unsigned int count = 0;
-      for( QListViewItemIterator it(this); it.current(); it++ )
+      for( Q3ListViewItemIterator it(this); it.current(); it++ )
         if( it.current()->isSelected() ) {
           HeaderItem *item = static_cast<HeaderItem*>(it.current());
           KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
@@ -2241,7 +2250,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
   }
 }
 
-void KMHeaders::highlightMessage(QListViewItem* i)
+void KMHeaders::highlightMessage(Q3ListViewItem* i)
 {
     highlightMessage( i, false );
 }
@@ -2251,7 +2260,7 @@ void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
 
-  QPopupMenu *menu = new QPopupMenu(this);
+  Q3PopupMenu *menu = new Q3PopupMenu(this);
 
   mMenuToFolder.clear();
 
@@ -2271,7 +2280,7 @@ void KMHeaders::slotRMB()
   }
   menu->insertSeparator();
 
-  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
+  Q3PopupMenu *msgCopyMenu = new Q3PopupMenu(menu);
   mOwner->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
       &mMenuToFolder, msgCopyMenu );
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
@@ -2280,7 +2289,7 @@ void KMHeaders::slotRMB()
     int id = menu->insertItem( i18n("&Move To") );
     menu->setItemEnabled( id, false );
   } else {
-    QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
+    Q3PopupMenu *msgMoveMenu = new Q3PopupMenu(menu);
     mOwner->folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
         &mMenuToFolder, msgMoveMenu );
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
@@ -2378,7 +2387,7 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
   if ( aMsgIdx < 0 || static_cast<unsigned int>( aMsgIdx ) >= mItems.size() )
     return;
-  const QListViewItem * const item = mItems[aMsgIdx];
+  const Q3ListViewItem * const item = mItems[aMsgIdx];
   if ( item )
     setContentsPos( 0, itemPos( item ) );
 }
@@ -2406,14 +2415,14 @@ void KMHeaders::setSubjectThreading( bool aSubjThreading )
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setOpen( QListViewItem *item, bool open )
+void KMHeaders::setOpen( Q3ListViewItem *item, bool open )
 {
   if ((nestingPolicy != AlwaysOpen)|| open)
       ((HeaderItem*)item)->setOpenRecursive( open );
 }
 
 //-----------------------------------------------------------------------------
-const KMMsgBase* KMHeaders::getMsgBaseForItem( const QListViewItem *item ) const
+const KMMsgBase* KMHeaders::getMsgBaseForItem( const Q3ListViewItem *item ) const
 {
   const HeaderItem *hi = static_cast<const HeaderItem *> ( item );
   return mFolder->getMsgBase( hi->msgId() );
@@ -2542,10 +2551,10 @@ bool KMHeaders::writeSortOrder()
     fwrite(&discovered_count, sizeof(discovered_count), 1, sortStream);
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
 
-    QPtrStack<HeaderItem> items;
+    Q3PtrStack<HeaderItem> items;
     {
-      QPtrStack<QListViewItem> s;
-      for (QListViewItem * i = firstChild(); i; ) {
+      Q3PtrStack<Q3ListViewItem> s;
+      for (Q3ListViewItem * i = firstChild(); i; ) {
         items.push((HeaderItem *)i);
         if ( i->firstChild() ) {
           s.push( i );
@@ -2697,11 +2706,11 @@ static int compare_SortCacheItem(const void *s1, const void *s2)
 // Debugging helpers
 void KMHeaders::printSubjectThreadingTree()
 {
-    QDictIterator< QPtrList< SortCacheItem > > it ( mSubjectLists );
+    Q3DictIterator< Q3PtrList< SortCacheItem > > it ( mSubjectLists );
     kdDebug(5006) << "SubjectThreading tree: " << endl;
     for( ; it.current(); ++it ) {
-      QPtrList<SortCacheItem> list = *( it.current() );
-      QPtrListIterator<SortCacheItem> it2( list ) ;
+      Q3PtrList<SortCacheItem> list = *( it.current() );
+      Q3PtrListIterator<SortCacheItem> it2( list ) ;
       kdDebug(5006) << "Subject MD5: " << it.currentKey() << " list: " << endl;
       for( ; it2.current(); ++it2 ) {
         SortCacheItem *sci = it2.current();
@@ -2714,7 +2723,7 @@ void KMHeaders::printSubjectThreadingTree()
 void KMHeaders::printThreadingTree()
 {
     kdDebug(5006) << "Threading tree: " << endl;
-    QDictIterator<SortCacheItem> it( mSortCacheItems );
+    Q3DictIterator<SortCacheItem> it( mSortCacheItems );
     kdDebug(5006) << endl;
     for( ; it.current(); ++it ) {
       SortCacheItem *sci = it.current();
@@ -2731,7 +2740,7 @@ void KMHeaders::printThreadingTree()
 
 // -------------------------------------
 
-void KMHeaders::buildThreadingTree( QMemArray<SortCacheItem *> sortCache )
+void KMHeaders::buildThreadingTree( Q3MemArray<SortCacheItem *> sortCache )
 {
     mSortCacheItems.clear();
     mSortCacheItems.resize( mFolder->count() * 2 );
@@ -2746,7 +2755,7 @@ void KMHeaders::buildThreadingTree( QMemArray<SortCacheItem *> sortCache )
 }
 
 
-void KMHeaders::buildSubjectThreadingTree( QMemArray<SortCacheItem *> sortCache )
+void KMHeaders::buildSubjectThreadingTree( Q3MemArray<SortCacheItem *> sortCache )
 {
     mSubjectLists.clear();  // autoDelete is true
     mSubjectLists.resize( mFolder->count() * 2 );
@@ -2766,13 +2775,13 @@ void KMHeaders::buildSubjectThreadingTree( QMemArray<SortCacheItem *> sortCache 
         /* For each subject, keep a list of items with that subject
          * (stripped of prefixes) sorted by date. */
         if (!mSubjectLists.find(subjMD5))
-            mSubjectLists.insert(subjMD5, new QPtrList<SortCacheItem>());
+            mSubjectLists.insert(subjMD5, new Q3PtrList<SortCacheItem>());
         /* Insertion sort by date. These lists are expected to be very small.
          * Also, since the messages are roughly ordered by date in the store,
          * they should mostly be prepended at the very start, so insertion is
          * cheap. */
         int p=0;
-        for (QPtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
+        for (Q3PtrListIterator<SortCacheItem> it(*mSubjectLists[subjMD5]);
                 it.current(); ++it) {
             KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
             if ( mb->date() < mi->date())
@@ -2831,7 +2840,7 @@ SortCacheItem* KMHeaders::findParentBySubject(SortCacheItem *item)
     if (!subjMD5.isEmpty() && mSubjectLists[subjMD5]) {
         /* Iterate over the list of potential parents with the same
          * subject, and take the closest one by date. */
-        for (QPtrListIterator<SortCacheItem> it2(*mSubjectLists[subjMD5]);
+        for (Q3PtrListIterator<SortCacheItem> it2(*mSubjectLists[subjMD5]);
                 it2.current(); ++it2) {
             KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
             if ( !mb ) return parent;
@@ -2861,11 +2870,11 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     bool jumpToUnread = (GlobalSettings::self()->actionEnterFolder() ==
                          GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
                         forceJumpToUnread;
-    QMemArray<SortCacheItem *> sortCache(mFolder->count());
+    Q3MemArray<SortCacheItem *> sortCache(mFolder->count());
     bool error = false;
 
     //threaded cases
-    QPtrList<SortCacheItem> unparented;
+    Q3PtrList<SortCacheItem> unparented;
     mImperfectlyThreadedList.clear();
 
     //cleanup
@@ -3049,13 +3058,13 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     // Make sure we've placed everything in parent/child relationship. All
     // messages with a parent id of -1 in the sort file are reevaluated here.
     if (threaded) buildThreadingTree( sortCache );
-    QPtrList<SortCacheItem> toBeSubjThreaded;
+    Q3PtrList<SortCacheItem> toBeSubjThreaded;
 
     if (threaded && !unparented.isEmpty()) {
         CREATE_TIMER(reparent);
         START_TIMER(reparent);
 
-        for(QPtrListIterator<SortCacheItem> it(unparented); it.current(); ++it) {
+        for(Q3PtrListIterator<SortCacheItem> it(unparented); it.current(); ++it) {
             SortCacheItem *item = (*it);
             SortCacheItem *parent = findParent( item );
             // If we have a parent, make sure it's not ourselves
@@ -3075,7 +3084,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 
         if (mSubjThreading) {
             buildSubjectThreadingTree( sortCache );
-            for(QPtrListIterator<SortCacheItem> it(toBeSubjThreaded); it.current(); ++it) {
+            for(Q3PtrListIterator<SortCacheItem> it(toBeSubjThreaded); it.current(); ++it) {
                 SortCacheItem *item = (*it);
                 SortCacheItem *parent = findParentBySubject( item );
 
@@ -3097,12 +3106,12 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     START_TIMER(header_creation);
     HeaderItem *khi;
     SortCacheItem *i, *new_kci;
-    QPtrQueue<SortCacheItem> s;
+    Q3PtrQueue<SortCacheItem> s;
     s.enqueue(mRoot);
     compare_toplevel = true;
     do {
         i = s.dequeue();
-        const QPtrList<SortCacheItem> *sorted = i->sortedChildren();
+        const Q3PtrList<SortCacheItem> *sorted = i->sortedChildren();
         int unsorted_count, unsorted_off=0;
         SortCacheItem **unsorted = i->unsortedChildren(unsorted_count);
         if(unsorted)
@@ -3113,7 +3122,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
          * the (aptly named) unsorted array contains all as of yet unsorted
          * ones. It has just been qsorted, so it is in itself sorted. These two
          * sorted lists are now merged into one. */
-        for(QPtrListIterator<SortCacheItem> it(*sorted);
+        for(Q3PtrListIterator<SortCacheItem> it(*sorted);
             (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
             /* As long as we have something in the sorted list and there is
                nothing unsorted left, use the item from the sorted list. Also

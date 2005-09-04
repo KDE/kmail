@@ -13,11 +13,17 @@
 #endif
 
 #undef Unsorted // X headers...
-#include <qaccel.h>
+#include <q3accel.h>
 #include <qlayout.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qpopupmenu.h>
+#include <q3hbox.h>
+#include <q3vbox.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
+#include <QLabel>
+#include <Q3ValueList>
+#include <QVBoxLayout>
 
 #include <kopenwith.h>
 
@@ -112,12 +118,12 @@ using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
 
 #include "managesievescriptsdialog.h"
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 
 #include "kmmainwidget.moc"
 
-QValueList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
-static KStaticDeleter<QValueList<KMMainWidget*> > mwlsd;
+Q3ValueList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
+static KStaticDeleter<Q3ValueList<KMMainWidget*> > mwlsd;
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
@@ -156,7 +162,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mToolbarActionSeparator = new KActionSeparator( actionCollection );
 
   if( !s_mainWidgetList )
-    mwlsd.setObject( s_mainWidgetList, new QValueList<KMMainWidget*>() );
+    mwlsd.setObject( s_mainWidgetList, new Q3ValueList<KMMainWidget*>() );
   s_mainWidgetList->append( this );
 
   mPanner1Sep << 1 << 1;
@@ -187,8 +193,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
           this, SLOT( slotConfigChanged() ));
 
   // display the full path to the folder in the caption
-  connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
-      this, SLOT(slotChangeCaption(QListViewItem*)));
+  connect(mFolderTree, SIGNAL(currentChanged(Q3ListViewItem*)),
+      this, SLOT(slotChangeCaption(Q3ListViewItem*)));
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
@@ -335,8 +341,8 @@ void KMMainWidget::readConfig(void)
 
     mPanner1Sep.clear();
     mPanner2Sep.clear();
-    QValueList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
-    QValueList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
+    Q3ValueList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
+    Q3ValueList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
 
     widths << folderW << headerW;
     heights << headerH << readerH;
@@ -449,8 +455,8 @@ void KMMainWidget::writeConfig(void)
 
   geometry.writeEntry( "MainWin", this->geometry().size() );
 
-  const QValueList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
-  const QValueList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
+  const Q3ValueList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
+  const Q3ValueList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
 
   geometry.writeEntry( "FolderPaneWidth", widths[0] );
   geometry.writeEntry( "HeaderPaneWidth", widths[1] );
@@ -470,7 +476,7 @@ void KMMainWidget::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWidget::createWidgets(void)
 {
-  mAccel = new QAccel(this, "createWidgets()");
+  mAccel = new Q3Accel(this, "createWidgets()");
 
   // Create the splitters according to the layout settings
   QWidget *headerParent = 0, *folderParent = 0,
@@ -513,7 +519,7 @@ void KMMainWidget::createWidgets(void)
 #ifndef NDEBUG
   headerParent->dumpObjectTree();
 #endif
-  mSearchAndHeaders = new QVBox( headerParent );
+  mSearchAndHeaders = new Q3VBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
   mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
@@ -541,9 +547,9 @@ void KMMainWidget::createWidgets(void)
           this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
-  mAccel->connectItem(mAccel->insertItem(SHIFT+Key_Left),
+  mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Left),
                      mHeaders, SLOT(selectPrevMessage()));
-  mAccel->connectItem(mAccel->insertItem(SHIFT+Key_Right),
+  mAccel->connectItem(mAccel->insertItem(Qt::SHIFT+Qt::Key_Right),
                      mHeaders, SLOT(selectNextMessage()));
 
   if (mReaderWindowActive) {
@@ -559,27 +565,27 @@ void KMMainWidget::createWidgets(void)
         mMsgView, SLOT(clearCache()));
     connect(mMsgView, SIGNAL(noDrag()),
         mHeaders, SLOT(slotNoDrag()));
-    mAccel->connectItem(mAccel->insertItem(Key_Up),
+    mAccel->connectItem(mAccel->insertItem(Qt::Key_Up),
         mMsgView, SLOT(slotScrollUp()));
-    mAccel->connectItem(mAccel->insertItem(Key_Down),
+    mAccel->connectItem(mAccel->insertItem(Qt::Key_Down),
         mMsgView, SLOT(slotScrollDown()));
-    mAccel->connectItem(mAccel->insertItem(Key_Prior),
+    mAccel->connectItem(mAccel->insertItem(Qt::Key_PageUp),
         mMsgView, SLOT(slotScrollPrior()));
-    mAccel->connectItem(mAccel->insertItem(Key_Next),
+    mAccel->connectItem(mAccel->insertItem(Qt::Key_PageDown),
         mMsgView, SLOT(slotScrollNext()));
   } else {
     mMsgView = NULL;
   }
 
-  new KAction( i18n("Move Message to Folder"), Key_M, this,
+  new KAction( i18n("Move Message to Folder"), Qt::Key_M, this,
                SLOT(slotMoveMsg()), actionCollection(),
                "move_message_to_folder" );
-  new KAction( i18n("Copy Message to Folder"), Key_C, this,
+  new KAction( i18n("Copy Message to Folder"), Qt::Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(),
                "copy_message_to_folder" );
-  mAccel->connectItem(mAccel->insertItem(Key_M),
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_M),
 		     this, SLOT(slotMoveMsg()) );
-  mAccel->connectItem(mAccel->insertItem(Key_C),
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_C),
 		     this, SLOT(slotCopyMsg()) );
 
   // create list of folders
@@ -600,48 +606,48 @@ void KMMainWidget::createWidgets(void)
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
-    i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
+    i18n("Remove Duplicate Messages"), Qt::CTRL+Qt::Key_Asterisk, this,
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
 
   new KAction(
-    i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
+    i18n("Abort Current Operation"), Qt::Key_Escape, ProgressManager::instance(),
     SLOT(slotAbortAll()), actionCollection(), "cancel" );
-  mAccel->connectItem(mAccel->insertItem(Key_Escape),
+  mAccel->connectItem(mAccel->insertItem(Qt::Key_Escape),
                      ProgressManager::instance(), SLOT(slotAbortAll()));
 
   new KAction(
-   i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
+   i18n("Focus on Next Folder"), Qt::CTRL+Qt::Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Right),
+  mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Right),
                      mFolderTree, SLOT(incCurrentFolder()));
 
   new KAction(
-   i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
+   i18n("Focus on Previous Folder"), Qt::CTRL+Qt::Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Left),
+  mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Left),
                      mFolderTree, SLOT(decCurrentFolder()));
 
   new KAction(
-   i18n("Select Folder with Focus"), CTRL+Key_Space, mFolderTree,
+   i18n("Select Folder with Focus"), Qt::CTRL+Qt::Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
-  mAccel->connectItem(mAccel->insertItem(CTRL+Key_Space),
+  mAccel->connectItem(mAccel->insertItem(Qt::CTRL+Qt::Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
   new KAction(
-    i18n("Focus on Next Message"), ALT+Key_Right, mHeaders,
+    i18n("Focus on Next Message"), Qt::ALT+Qt::Key_Right, mHeaders,
     SLOT(incCurrentMessage()), actionCollection(), "inc_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Right ),
+    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Right ),
                         mHeaders, SLOT( incCurrentMessage() ) );
 
   new KAction(
-    i18n("Focus on Previous Message"), ALT+Key_Left, mHeaders,
+    i18n("Focus on Previous Message"), Qt::ALT+Qt::Key_Left, mHeaders,
     SLOT(decCurrentMessage()), actionCollection(), "dec_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Left ),
+    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Left ),
                         mHeaders, SLOT( decCurrentMessage() ) );
 
   new KAction(
-    i18n("Select Message with Focus"), ALT+Key_Space, mHeaders,
+    i18n("Select Message with Focus"), Qt::ALT+Qt::Key_Space, mHeaders,
     SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
-    mAccel->connectItem( mAccel->insertItem( ALT+Key_Space ),
+    mAccel->connectItem( mAccel->insertItem( Qt::ALT+Qt::Key_Space ),
                         mHeaders, SLOT( selectCurrentMessage() ) );
 
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
@@ -965,7 +971,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroupSaver saver(config, "General");
 
   if (config->readBoolEntry("warn-before-expire", true)) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(QStyleSheet::escape( mFolder->label() ));
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Q3StyleSheet::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
@@ -988,7 +994,7 @@ void KMMainWidget::slotEmptyFolder()
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
-           "folder <b>%1</b> to the trash?</qt>").arg( QStyleSheet::escape( mFolder->label() ) );
+           "folder <b>%1</b> to the trash?</qt>").arg( Q3StyleSheet::escape( mFolder->label() ) );
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edittrash"))
       != KMessageBox::Continue) return;
@@ -1027,33 +1033,33 @@ void KMMainWidget::slotRemoveFolder()
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br>"
                 "Any messages it shows will still be available in their original folder.</qt>")
-           .arg( QStyleSheet::escape( mFolder->label() ) );
+           .arg( Q3StyleSheet::escape( mFolder->label() ) );
   } else {
     title = i18n("Delete Folder");
     if ( mFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>")
-              .arg( QStyleSheet::escape( mFolder->label() ) );
+              .arg( Q3StyleSheet::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b> and all its subfolders? Those subfolders "
                    "might not be empty and their  contents will be "
                    "discarded as well.</qt>")
-              .arg( QStyleSheet::escape( mFolder->label() ) );
+              .arg( Q3StyleSheet::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b>, discarding its contents?</qt>")
-              .arg( QStyleSheet::escape( mFolder->label() ) );
+              .arg( Q3StyleSheet::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b> and all its subfolders, discarding their "
                  "contents?</qt>")
-            .arg( QStyleSheet::escape( mFolder->label() ) );
+            .arg( Q3StyleSheet::escape( mFolder->label() ) );
       }
     }
   }
@@ -1443,7 +1449,7 @@ void KMMainWidget::slotToFilter()
 void KMMainWidget::updateListFilterAction()
 {
   //Proxy the mListFilterAction to update the action text
-  QCString name;
+  Q3CString name;
   QString value;
   QString lname = MailingList::name( mHeaders->currentMsg(), name, value );
   mListFilterAction->setText( i18n("Filter on Mailing-List...") );
@@ -1882,7 +1888,7 @@ void KMMainWidget::slotMsgChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSelectFolder(KMFolder* folder)
 {
-  QListViewItem* item = mFolderTree->indexOfFolder(folder);
+  Q3ListViewItem* item = mFolderTree->indexOfFolder(folder);
   if ( item ) {
     mFolderTree->ensureItemVisible( item );
     mFolderTree->doFolderSelected( item );
@@ -2268,7 +2274,7 @@ void KMMainWidget::setupActions()
 		      KMKernel::self(), SLOT(slotEmptyTrash()),
 		      actionCollection(), "empty_trash" );
 
-  (void) new KAction( i18n("Check &Mail"), "mail_get", CTRL+Key_L,
+  (void) new KAction( i18n("Check &Mail"), "mail_get", Qt::CTRL+Qt::Key_L,
 		      this, SLOT(slotCheckMail()),
 		      actionCollection(), "check_mail" );
 
@@ -2342,27 +2348,27 @@ void KMMainWidget::setupActions()
   //----- Edit Menu
   mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
-                             Key_Delete, this, SLOT(slotTrashMsg()),
+                             Qt::Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
   /* The delete action is nowhere in the gui, by default, so we need to make 
    * sure it is plugged into the KAccel now, since that won't happen on 
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
-  mDeleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
+  mDeleteAction = new KAction( i18n("&Delete"), "editdelete", Qt::SHIFT+Qt::Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
   mDeleteAction->plugAccel( actionCollection()->kaccel() );
 
   mTrashThreadAction = new KAction( KGuiItem( i18n("M&ove Thread to Trash"), "edittrash",
                                        i18n("Move thread to trashcan") ),
-                             CTRL+Key_Delete, this, SLOT(slotTrashThread()),
+                             Qt::CTRL+Qt::Key_Delete, this, SLOT(slotTrashThread()),
                              actionCollection(), "move_thread_to_trash" );
 
-  mDeleteThreadAction = new KAction( i18n("Delete T&hread"), "editdelete", CTRL+SHIFT+Key_Delete, this,
+  mDeleteThreadAction = new KAction( i18n("Delete T&hread"), "editdelete", Qt::CTRL+Qt::SHIFT+Qt::Key_Delete, this,
                               SLOT(slotDeleteThread()), actionCollection(), "delete_thread" );
 
 
-  (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
+  (void) new KAction( i18n("&Find Messages..."), "mail_find", Qt::Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
   mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
@@ -2426,7 +2432,7 @@ void KMMainWidget::setupActions()
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
   (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
-                      CTRL+SHIFT+Key_N, this,
+                      Qt::CTRL+Qt::SHIFT+Qt::Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
 
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
@@ -2436,12 +2442,12 @@ void KMMainWidget::setupActions()
 	   SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
+				       "mail_forward", Qt::Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( forwardAttachedAction() );
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+				Qt::SHIFT+Qt::Key_F, this, SLOT(slotForwardMsg()),
 				actionCollection(), "message_forward_inline" );
 
   mForwardActionMenu->insert( forwardAction() );
@@ -2455,34 +2461,34 @@ void KMMainWidget::setupActions()
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
 
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
+  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Qt::Key_R, this,
 			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
   mReplyActionMenu->insert( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    SHIFT+Key_A, this,
+                                    Qt::SHIFT+Qt::Key_A, this,
                                     SLOT(slotReplyAuthorToMsg()),
                                     actionCollection(), "reply_author" );
   mReplyActionMenu->insert( mReplyAuthorAction );
 
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Key_A, this, SLOT(slotReplyAllToMsg()),
+				 Qt::Key_A, this, SLOT(slotReplyAllToMsg()),
 				 actionCollection(), "reply_all" );
   mReplyActionMenu->insert( mReplyAllAction );
 
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Key_L, this,
+				  "mail_replylist", Qt::Key_L, this,
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
                                  "mail_forward",
-				 Key_E, this, SLOT(slotRedirectMsg()),
+				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
 
-  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
+  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), Qt::SHIFT+Qt::Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   //----- Create filter actions
@@ -2511,7 +2517,7 @@ void KMMainWidget::setupActions()
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
+  mEditAction = new KAction( i18n("&Edit Message"), "edit", Qt::Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
   mEditAction->plugAccel( actionCollection()->kaccel() );
 
@@ -2612,7 +2618,7 @@ void KMMainWidget::setupActions()
                                     actionCollection(), "copy_to" );
 
   mApplyAllFiltersAction = new KAction( i18n("Appl&y All Filters"), "filter",
-				    CTRL+Key_J, this,
+				    Qt::CTRL+Qt::Key_J, this,
 				    SLOT(slotApplyFilters()),
 				    actionCollection(), "apply_filters" );
 
@@ -2648,33 +2654,33 @@ void KMMainWidget::setupActions()
 
   (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
 			       i18n("Expand the current thread") ),
-		     Key_Period, this,
+		     Qt::Key_Period, this,
 		     SLOT(slotExpandThread()),
 		     actionCollection(), "expand_thread" );
 
   (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString::null,
 			       i18n("Collapse the current thread") ),
-		     Key_Comma, this,
+		     Qt::Key_Comma, this,
 		     SLOT(slotCollapseThread()),
 		     actionCollection(), "collapse_thread" );
 
   (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString::null,
 			       i18n("Expand all threads in the current folder") ),
-		     CTRL+Key_Period, this,
+		     Qt::CTRL+Qt::Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
 		     actionCollection(), "expand_all_threads" );
 
   (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString::null,
 			       i18n("Collapse all threads in the current folder") ),
-		     CTRL+Key_Comma, this,
+		     Qt::CTRL+Qt::Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
+  mViewSourceAction = new KAction( i18n("&View Source"), Qt::Key_V, this,
                                    SLOT(slotShowMsgSrc()), actionCollection(),
                                    "view_source" );
 
-  KAction* dukeOfMonmoth = new KAction( i18n("&Display Message"), Key_Return, this,
+  KAction* dukeOfMonmoth = new KAction( i18n("&Display Message"), Qt::Key_Return, this,
                         SLOT( slotDisplayCurrentMessage() ), actionCollection(),
                         "display_message" );
   dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
@@ -2688,7 +2694,7 @@ void KMMainWidget::setupActions()
   new KAction( KGuiItem( i18n("Next &Unread Message"),
                          QApplication::reverseLayout() ? "previous" : "next",
                          i18n("Go to the next unread message") ),
-                         Key_Plus, this, SLOT(slotNextUnreadMessage()),
+                         Qt::Key_Plus, this, SLOT(slotNextUnreadMessage()),
                          actionCollection(), "go_next_unread_message" );
 
   /* ### needs better support from folders:
@@ -2706,7 +2712,7 @@ void KMMainWidget::setupActions()
   new KAction( KGuiItem( i18n("Previous Unread &Message"),
                          QApplication::reverseLayout() ? "next" : "previous",
                          i18n("Go to the previous unread message") ),
-                         Key_Minus, this, SLOT(slotPrevUnreadMessage()),
+                         Qt::Key_Minus, this, SLOT(slotPrevUnreadMessage()),
                          actionCollection(), "go_prev_unread_message" );
 
   /* needs better support from folders:
@@ -2719,19 +2725,19 @@ void KMMainWidget::setupActions()
   KAction *action =
     new KAction( KGuiItem( i18n("Next Unread &Folder"), QString::null,
                            i18n("Go to the next folder with unread messages") ),
-                           ALT+Key_Plus, this, SLOT(slotNextUnreadFolder()),
+                           Qt::ALT+Qt::Key_Plus, this, SLOT(slotNextUnreadFolder()),
                            actionCollection(), "go_next_unread_folder" );
   KShortcut shortcut = action->shortcut();
-  shortcut.append( KKey( CTRL+Key_Plus ) );
+  shortcut.append( KKey( Qt::CTRL+Qt::Key_Plus ) );
   action->setShortcut( shortcut );
 
   action =
     new KAction( KGuiItem( i18n("Previous Unread F&older"), QString::null,
                            i18n("Go to the previous folder with unread messages") ),
-                           ALT+Key_Minus, this, SLOT(slotPrevUnreadFolder()),
+                           Qt::ALT+Qt::Key_Minus, this, SLOT(slotPrevUnreadFolder()),
                            actionCollection(), "go_prev_unread_folder" );
   shortcut = action->shortcut();
-  shortcut.append( KKey( CTRL+Key_Minus ) );
+  shortcut.append( KKey( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
   new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString::null,
@@ -2739,7 +2745,7 @@ void KMMainWidget::setupActions()
                          i18n("Scroll down current message. "
                               "If at end of current message, "
                               "go to next unread message.") ),
-                         Key_Space, this, SLOT(slotReadOn()),
+                         Qt::Key_Space, this, SLOT(slotReadOn()),
                          actionCollection(), "go_next_unread_text" );
 
   //----- Settings Menu
@@ -2896,10 +2902,10 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 void KMMainWidget::updateMessageActions()
 {
     int count = 0;
-    QPtrList<QListViewItem> selectedItems;
+    Q3PtrList<Q3ListViewItem> selectedItems;
 
     if ( mFolder ) {
-      for (QListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
+      for (Q3ListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
         if (item->isSelected() )
           selectedItems.append(item);
       if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
@@ -2913,12 +2919,12 @@ void KMMainWidget::updateMessageActions()
     bool allSelectedInCommonThread = false;
     if ( mHeaders->isThreaded() && count > 1 ) {
       allSelectedInCommonThread = true;
-      QListViewItem * curItemParent = mHeaders->currentItem();
+      Q3ListViewItem * curItemParent = mHeaders->currentItem();
       while ( curItemParent->parent() )
         curItemParent = curItemParent->parent();
-      for ( QPtrListIterator<QListViewItem> it( selectedItems ) ;
+      for ( Q3PtrListIterator<Q3ListViewItem> it( selectedItems ) ;
             it.current() ; ++ it ) {
-        QListViewItem * item = *it;
+        Q3ListViewItem * item = *it;
         while ( item->parent() )
           item = item->parent();
         if ( item != curItemParent ) {
@@ -3165,12 +3171,12 @@ void KMMainWidget::slotShowTip()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotChangeCaption(QListViewItem * i)
+void KMMainWidget::slotChangeCaption(Q3ListViewItem * i)
 {
   if ( !i ) return;
   // set the caption to the current full path
   QStringList names;
-  for ( QListViewItem * item = i ; item ; item = item->parent() )
+  for ( Q3ListViewItem * item = i ; item ; item = item->parent() )
     names.prepend( item->text(0) );
   emit captionChangeRequest( names.join( "/" ) );
 }
@@ -3182,9 +3188,9 @@ void KMMainWidget::removeDuplicates()
     return;
   KMFolder *oFolder = mFolder;
   mHeaders->setFolder(0);
-  QMap< QString, QValueList<int> > idMD5s;
-  QValueList<int> redundantIds;
-  QValueList<int>::Iterator kt;
+  QMap< QString, Q3ValueList<int> > idMD5s;
+  Q3ValueList<int> redundantIds;
+  Q3ValueList<int>::Iterator kt;
   mFolder->open();
   for (int i = mFolder->count() - 1; i >= 0; --i) {
     QString id = (*mFolder)[i]->msgIdMD5();
@@ -3202,9 +3208,9 @@ void KMMainWidget::removeDuplicates()
       }
     }
   }
-  QMap< QString, QValueList<int> >::Iterator it;
+  QMap< QString, Q3ValueList<int> >::Iterator it;
   for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
-    QValueList<int>::Iterator jt;
+    Q3ValueList<int>::Iterator jt;
     bool finished = false;
     for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
       if (!((*mFolder)[*jt]->isUnread())) {
@@ -3271,8 +3277,8 @@ void KMMainWidget::initializeFolderShortcutActions()
   bool old = actionCollection()->isAutoConnectShortcuts();
 
   actionCollection()->setAutoConnectShortcuts( true );
-  QValueList< QGuardedPtr< KMFolder > > folders = kmkernel->allFolders();
-  QValueList< QGuardedPtr< KMFolder > >::Iterator it = folders.begin();
+  Q3ValueList< QPointer< KMFolder > > folders = kmkernel->allFolders();
+  Q3ValueList< QPointer< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
     KMFolder *folder = (*it);
     ++it;
@@ -3292,7 +3298,7 @@ void KMMainWidget::initializeFilterActions()
   clearFilterActions();
   mApplyAllFiltersAction->plug(mApplyFilterActionsMenu->popupMenu());
   bool addedSeparator = false;
-  QValueListConstIterator<KMFilter*> it = kmkernel->filterMgr()->filters().constBegin();
+  Q3ValueListConstIterator<KMFilter*> it = kmkernel->filterMgr()->filters().constBegin();
   for ( ;it != kmkernel->filterMgr()->filters().constEnd(); ++it ) {
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
       filterName = QString("Filter %1").arg((*it)->name());

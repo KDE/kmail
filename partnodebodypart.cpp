@@ -36,7 +36,7 @@
 #include "partNode.h"
 
 #include <qstring.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 static int serial = 0;
 

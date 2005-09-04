@@ -13,6 +13,16 @@
 #include "kmmainwidget.h"
 #include "kmailicalifaceimpl.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <QDragLeaveEvent>
+#include <QEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <Q3ValueList>
+#include <QResizeEvent>
+#include <QDragEnterEvent>
+#include <QMouseEvent>
 using KMail::AccountManager;
 #include "globalsettings.h"
 #include "kmcommands.h"
@@ -35,7 +45,7 @@ using namespace KPIM;
 #include <qpainter.h>
 #include <qcursor.h>
 #include <qregexp.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 
 #include <unistd.h>
 #include <assert.h>
@@ -378,17 +388,17 @@ void KMFolderTree::connectSignals()
   connect( &autoopen_timer, SIGNAL( timeout() ),
            this, SLOT( openFolder() ) );
 
-  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
-           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
+  connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ),
+           this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint & ) ) );
 
-  connect( this, SIGNAL( expanded( QListViewItem* ) ),
-           this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
+  connect( this, SIGNAL( expanded( Q3ListViewItem* ) ),
+           this, SLOT( slotFolderExpanded( Q3ListViewItem* ) ) );
 
-  connect( this, SIGNAL( collapsed( QListViewItem* ) ),
-           this, SLOT( slotFolderCollapsed( QListViewItem* ) ) );
+  connect( this, SIGNAL( collapsed( Q3ListViewItem* ) ),
+           this, SLOT( slotFolderCollapsed( Q3ListViewItem* ) ) );
 
-  connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString &)),
-           this, SLOT( slotRenameFolder( QListViewItem*, int, const QString &)));
+  connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString &)),
+           this, SLOT( slotRenameFolder( Q3ListViewItem*, int, const QString &)));
 }
 
 //-----------------------------------------------------------------------------
@@ -455,7 +465,7 @@ void KMFolderTree::readConfig (void)
 void KMFolderTree::writeConfig()
 {
   // save the current state of the folders
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti)
       writeIsListViewItemOpen(fti);
@@ -514,7 +524,7 @@ void KMFolderTree::reload(bool openFolders)
   KMFolder* selected = 0;
   KMFolder* oldCurrentFolder =
     ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     writeIsListViewItemOpen( fti );
     if ( fti->isSelected() )
@@ -548,11 +558,11 @@ void KMFolderTree::reload(bool openFolders)
   if (openFolders)
   {
     // we open all folders to update the count
-    mUpdateIterator = QListViewItemIterator (this);
+    mUpdateIterator = Q3ListViewItemIterator (this);
     QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
   }
 
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     if ( !fti || !fti->folder() )
       continue;
@@ -607,7 +617,7 @@ void KMFolderTree::reload(bool openFolders)
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
   // if current and selected folder did not change set it again
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it )
   {
     if ( last &&
          static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
@@ -716,7 +726,7 @@ void KMFolderTree::delayedUpdate()
   if ( upd ) {
     setUpdatesEnabled(FALSE);
 
-    for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
+    for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it ) {
       KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
       if (!fti || !fti->folder())
         continue;
@@ -752,7 +762,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
   if (!fti || !fti->folder()) return;
   if (fti == currentItem())
   {
-    QListViewItem *qlvi = fti->itemAbove();
+    Q3ListViewItem *qlvi = fti->itemAbove();
     if (!qlvi) qlvi = fti->itemBelow();
     doFolderSelected( qlvi );
   }
@@ -764,7 +774,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
 // Methods for navigating folders with the keyboard
 void KMFolderTree::prepareItem( KMFolderTreeItem* fti )
 {
-  for ( QListViewItem * parent = fti->parent() ; parent ; parent = parent->parent() )
+  for ( Q3ListViewItem * parent = fti->parent() ; parent ; parent = parent->parent() )
     parent->setOpen( TRUE );
   ensureItemVisible( fti );
 }
@@ -778,7 +788,7 @@ void KMFolderTree::nextUnreadFolder()
 //-----------------------------------------------------------------------------
 void KMFolderTree::nextUnreadFolder(bool confirm)
 {
-  QListViewItemIterator it( currentItem() ? currentItem() : firstChild() );
+  Q3ListViewItemIterator it( currentItem() ? currentItem() : firstChild() );
   if ( currentItem() )
     ++it; // don't find current item
   for ( ; it.current() ; ++it ) {
@@ -843,7 +853,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
 //-----------------------------------------------------------------------------
 void KMFolderTree::prevUnreadFolder()
 {
-  QListViewItemIterator it( currentItem() ? currentItem() : lastItem() );
+  Q3ListViewItemIterator it( currentItem() ? currentItem() : lastItem() );
   if ( currentItem() )
     --it; // don't find current item
   for ( ; it.current() ; --it ) {
@@ -855,7 +865,7 @@ void KMFolderTree::prevUnreadFolder()
 //-----------------------------------------------------------------------------
 void KMFolderTree::incCurrentFolder()
 {
-  QListViewItemIterator it( currentItem() );
+  Q3ListViewItemIterator it( currentItem() );
   ++it;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
   if (fti) {
@@ -868,7 +878,7 @@ void KMFolderTree::incCurrentFolder()
 //-----------------------------------------------------------------------------
 void KMFolderTree::decCurrentFolder()
 {
-  QListViewItemIterator it( currentItem() );
+  Q3ListViewItemIterator it( currentItem() );
   --it;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
   if (fti) {
@@ -902,7 +912,7 @@ KMFolder *KMFolderTree::currentFolder() const
 // When not dragging and dropping a change in the selected item
 // indicates the user has changed the active folder emit a signal
 // so that the header list and reader window can be udpated.
-void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
+void KMFolderTree::doFolderSelected( Q3ListViewItem* qlvi )
 {
   if (!qlvi) return;
   if ( mLastItem && mLastItem == qlvi )
@@ -947,7 +957,7 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
 
 //-----------------------------------------------------------------------------
 // show context menu
-void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
+void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
                                              const QPoint &p )
 {
   if (!lvi)
@@ -1005,7 +1015,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if ( fti->folder()->isMoveable() )
     {
-      QPopupMenu *moveMenu = new QPopupMenu( folderMenu );
+      Q3PopupMenu *moveMenu = new Q3PopupMenu( folderMenu );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
       folderMenu->insertItem( i18n("&Move Folder To"), moveMenu );
     }
@@ -1082,7 +1092,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 // If middle button and folder holds mailing-list, create a message to that list
 void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
 {
-  QListViewItem *lvi = currentItem(); // Needed for when branches are clicked on
+  Q3ListViewItem *lvi = currentItem(); // Needed for when branches are clicked on
   ButtonState btn = me->button();
   doFolderSelected(lvi);
 
@@ -1240,10 +1250,10 @@ void KMFolderTree::cleanupConfigFile()
     return; // just in case reload wasn't called before
   KConfig* config = KMKernel::config();
   QStringList existingFolders;
-  QListViewItemIterator fldIt(this);
+  Q3ListViewItemIterator fldIt(this);
   QMap<QString,bool> folderMap;
   KMFolderTreeItem *fti;
-  for (QListViewItemIterator fldIt(this); fldIt.current(); fldIt++)
+  for (Q3ListViewItemIterator fldIt(this); fldIt.current(); fldIt++)
   {
     fti = static_cast<KMFolderTreeItem*>(fldIt.current());
     if (fti && fti->folder())
@@ -1298,13 +1308,13 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   oldSelected = 0;
 
   oldCurrent = currentItem();
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it )
     if ( it.current()->isSelected() )
       oldSelected = it.current();
 
   setFocus();
 
-  QListViewItem *i = itemAt( contentsToViewport(e->pos()) );
+  Q3ListViewItem *i = itemAt( contentsToViewport(e->pos()) );
   if ( i ) {
     dropItem = i;
     autoopen_timer.start( autoopenTime );
@@ -1316,7 +1326,7 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
 void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
 {
     QPoint vp = contentsToViewport(e->pos());
-    QListViewItem *i = itemAt( vp );
+    Q3ListViewItem *i = itemAt( vp );
     if ( i ) {
         bool dragAccepted = acceptDrag( e );
         if ( dragAccepted ) {
@@ -1372,7 +1382,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 {
     autoopen_timer.stop();
 
-    QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
+    Q3ListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
     {
@@ -1423,7 +1433,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotFolderExpanded( QListViewItem * item )
+void KMFolderTree::slotFolderExpanded( Q3ListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 
@@ -1438,7 +1448,7 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
     if ( folder->getSubfolderState() == KMFolderImap::imapNoInformation )
     {
       // check if all parents are expanded
-      QListViewItem *parent = item->parent();
+      Q3ListViewItem *parent = item->parent();
       while ( parent )
       {
         if ( !parent->isOpen() )
@@ -1456,13 +1466,13 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
+void KMFolderTree::slotFolderCollapsed( Q3ListViewItem * item )
 {
   slotResetFolderList( item, false );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
+void KMFolderTree::slotRenameFolder(Q3ListViewItem *item, int col,
                 const QString &text)
 {
 
@@ -1529,7 +1539,7 @@ void KMFolderTree::slotUpdateCountTimeout()
 void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
  // kdDebug(5006) << "KMFolderTree::slotUpdateCounts()" << endl;
-  QListViewItem * current;
+  Q3ListViewItem * current;
   if (folder)
     current = indexOfFolder(folder);
   else
@@ -1637,7 +1647,7 @@ void KMFolderTree::slotToggleTotalColumn()
 bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
-      static_cast<QMouseEvent*>(e)->button() == RightButton &&
+      static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
       o->isA("QHeader") )
   {
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
@@ -1672,7 +1682,7 @@ void KMFolderTree::slotNewMessageToMailingList()
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::createFolderList( QStringList *str,
-                                     QValueList<QGuardedPtr<KMFolder> > *folders,
+                                     Q3ValueList<QPointer<KMFolder> > *folders,
                                      bool localFolders,
                                      bool imapFolders,
                                      bool dimapFolders,
@@ -1680,7 +1690,7 @@ void KMFolderTree::createFolderList( QStringList *str,
                                      bool includeNoContent,
                                      bool includeNoChildren )
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it )
   {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     if (!fti || !fti->folder()) continue;
@@ -1701,7 +1711,7 @@ void KMFolderTree::createFolderList( QStringList *str,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotResetFolderList( QListViewItem* item, bool startList )
+void KMFolderTree::slotResetFolderList( Q3ListViewItem* item, bool startList )
 {
   if ( !item )
     item = currentItem();
@@ -1721,7 +1731,7 @@ void KMFolderTree::slotResetFolderList( QListViewItem* item, bool startList )
 void KMFolderTree::showFolder( KMFolder* folder )
 {
   if ( !folder ) return;
-  QListViewItem* item = indexOfFolder( folder );
+  Q3ListViewItem* item = indexOfFolder( folder );
   if ( item )
   {
     doFolderSelected( item );
@@ -1731,11 +1741,11 @@ void KMFolderTree::showFolder( KMFolder* folder )
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
-    KMMenuToFolder *aMenuToFolder, QPopupMenu *menu, QListViewItem *item )
+    KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu, Q3ListViewItem *item )
 {
   while ( menu->count() )
   {
-    QPopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
+    Q3PopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
     if ( popup )
       delete popup;
     else
@@ -1785,7 +1795,7 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     if ( fti->firstChild() )
     {
       // new level
-      QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
+      Q3PopupMenu* popup = new Q3PopupMenu( menu, "subMenu" );
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
       bool subMenu = false;
       if ( ( action == MoveMessage || action == CopyMessage ) &&

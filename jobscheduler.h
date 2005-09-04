@@ -30,8 +30,8 @@
 #define KMAIL_JOBSCHEDULER_H
 
 #include <qobject.h>
-#include <qvaluelist.h>
-#include <qguardedptr.h>
+#include <q3valuelist.h>
+#include <qpointer.h>
 #include <qtimer.h>
 
 #include "folderjob.h"
@@ -81,7 +81,7 @@ public:
   bool isImmediate() const { return mImmediate; }
 
 private:
-  QGuardedPtr<KMFolder> mCurrentFolder;
+  QPointer<KMFolder> mCurrentFolder;
   bool mImmediate;
 };
 
@@ -123,7 +123,7 @@ private:
   void restartTimer();
   void interruptCurrentTask();
   void runTaskNow( ScheduledTask* task );
-  typedef QValueList<ScheduledTask *> TaskList;
+  typedef Q3ValueList<ScheduledTask *> TaskList;
   void removeTask( TaskList::Iterator& it );
 private:
   TaskList mTaskList; // FIFO of tasks to be run

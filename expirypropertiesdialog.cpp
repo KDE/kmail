@@ -6,16 +6,19 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
 #include <qlabel.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcombobox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -33,7 +36,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | WDestructiveClose );
+  setWFlags( getWFlags() | Qt::WDestructiveClose );
   QWidget* privateLayoutWidget = new QWidget( this, "globalVBox" );
   setMainWidget( privateLayoutWidget );
   privateLayoutWidget->setGeometry( QRect( 10, 20, 270, 138 ) );
@@ -73,7 +76,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   labelDays2 = new QLabel( privateLayoutWidget, "labelDays2" );
   labelDays2->setText( i18n( "days" ) );
-  labelDays2->setAlignment( int( QLabel::AlignTop ) );
+  labelDays2->setAlignment( int( Qt::AlignTop ) );
   unreadHBox->addWidget( labelDays2 );
   globalVBox->addLayout( unreadHBox );
 
@@ -81,11 +84,11 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   expiryActionLabel = new QLabel( privateLayoutWidget, "expiryActionLabel" );
   expiryActionLabel->setText( i18n( "Expiry action:" ) );
-  expiryActionLabel->setAlignment( int( QLabel::AlignVCenter ) );
+  expiryActionLabel->setAlignment( int( Qt::AlignVCenter ) );
   expiryActionHBox->addWidget( expiryActionLabel );
 
   actionsHBox = new QVBoxLayout( 0, 0, 6, "actionsHBox"); 
-  actionsGroup = new QButtonGroup( this );
+  actionsGroup = new Q3ButtonGroup( this );
   actionsGroup->hide(); // for mutual exclusion of the radio buttons
 
   moveToHBox = new QHBoxLayout( 0, 0, 6, "moveToHBox"); 
@@ -111,7 +114,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
 
   note = new QLabel( privateLayoutWidget, "note" );
   note->setText( i18n( "Note: Expiry action will be applied immediately after confirming settings." ) );
-  note->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+  note->setAlignment( int( Qt::TextWordWrap | Qt::AlignVCenter ) );
   globalVBox->addWidget( note );
 
   // Load the values from the folder

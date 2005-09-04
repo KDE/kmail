@@ -24,6 +24,9 @@
 #endif
 
 #include "kmacctimap.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 using KMail::SieveConfig;
 
 #include "kmmessage.h"
@@ -87,7 +90,7 @@ KMAcctImap::~KMAcctImap()
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums;
-  QDictIterator<int> it( mFilterSerNumsToSave );
+  Q3DictIterator<int> it( mFilterSerNumsToSave );
   for( ; it.current(); ++it )
       serNums.append( it.currentKey() );
   config.writeEntry( "unfiltered", serNums );
@@ -140,8 +143,8 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for ( ; it != mapJobData.end(); ++it)
   {
-    QPtrList<KMMessage> msgList = (*it).msgList;
-    QPtrList<KMMessage>::Iterator it2 = msgList.begin();
+    Q3PtrList<KMMessage> msgList = (*it).msgList;
+    Q3PtrList<KMMessage>::Iterator it2 = msgList.begin();
     for ( ; it2 != msgList.end(); ++it2 ) {
        KMMessage *msg = *it2;
        if ( msg->transferInProgress() ) {
@@ -188,7 +191,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
   if (!msg) return;
-  QPtrListIterator<ImapJob> it( mJobList );
+  Q3PtrListIterator<ImapJob> it( mJobList );
   while ( it.current() )
   {
     ImapJob *job = it.current();
@@ -203,7 +206,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 //-----------------------------------------------------------------------------
 void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
-  QPtrListIterator<ImapJob> it( mJobList );
+  Q3PtrListIterator<ImapJob> it( mJobList );
   while ( it.current() )
   {
     ImapJob *job = it.current();
@@ -235,7 +238,7 @@ void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
 void KMAcctImap::cancelMailCheck()
 {
   // Make list of folders to reset, like in killAllJobs
-  QValueList<KMFolderImap*> folderList;
+  Q3ValueList<KMFolderImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ( (*it).cancellable && (*it).parent ) {
@@ -248,7 +251,7 @@ void KMAcctImap::cancelMailCheck()
   killAllJobs( true );
   // emit folderComplete, this is important for
   // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
-  for( QValueList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+  for( Q3ValueList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderImap *fld = *it;
     fld->sendFolderComplete(FALSE);
   }
@@ -294,7 +297,7 @@ void KMAcctImap::processNewMail(bool interactive)
             this,
             SLOT( slotMailCheckCanceled() ) );
 
-  QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  Q3ValueList<QPointer<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
   mCountUnread = 0;
@@ -395,13 +398,13 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   }
 
   // Filter messages
-  QValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
-  QValueList<Q_UINT32> inTransit;
+  Q3ValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
+  Q3ValueList<Q_UINT32> inTransit;
 
   if (ActionScheduler::isEnabled() || 
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
     KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
-    QValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    Q3ValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     if (!mScheduler) {
 	mScheduler = new KMail::ActionScheduler( set, filters );
 	mScheduler->setAccountId( id() );
@@ -499,9 +502,9 @@ void KMAcctImap::slotUpdateFolderList()
   kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
     mFolder->folder()->child(), QString::null, false);
   // the new list
-  QValueList<QGuardedPtr<KMFolder> > includedFolders;
+  Q3ValueList<QPointer<KMFolder> > includedFolders;
   // check for excluded folders
-  QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  Q3ValueList<QPointer<KMFolder> >::Iterator it;
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolderImap* folder = static_cast<KMFolderImap*>(((KMFolder*)(*it))->storage());
@@ -565,7 +568,7 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
 void KMAcctImap::execFilters(Q_UINT32 serNum)
 {
   if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
-  QValueListIterator<Q_UINT32> findIt = mFilterSerNums.find( serNum );
+  Q3ValueListIterator<Q_UINT32> findIt = mFilterSerNums.find( serNum );
   if ( findIt != mFilterSerNums.end() )
       return;
   mFilterSerNums.append( serNum );

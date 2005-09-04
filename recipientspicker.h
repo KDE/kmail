@@ -30,6 +30,10 @@
 #include <qwidget.h>
 #include <qdialog.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3ValueList>
+#include <QKeyEvent>
 
 class QComboBox;
 
@@ -41,7 +45,7 @@ class DistributionListManager;
 class RecipientItem
 {
   public:
-    typedef QValueList<RecipientItem *> List;
+    typedef Q3ValueList<RecipientItem *> List;
 
     RecipientItem();
 
@@ -168,7 +172,7 @@ class RecipientsPicker : public QDialog
     void slotToClicked();
     void slotCcClicked();
     void slotBccClicked();
-    void slotPicked( QListViewItem * );
+    void slotPicked( Q3ListViewItem * );
     void slotPicked();
     void setFocusList();
     void resetSearch();

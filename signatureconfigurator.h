@@ -27,7 +27,7 @@ class KURLRequester;
 class KLineEdit;
 class QString;
 class QPushButton;
-class QTextEdit;
+class Q3TextEdit;
 
 namespace KMail {
 
@@ -72,7 +72,7 @@ namespace KMail {
     KURLRequester * mFileRequester;
     QPushButton   * mEditButton;
     KLineEdit     * mCommandEdit;
-    QTextEdit     * mTextEdit;
+    Q3TextEdit     * mTextEdit;
   };
 
 } // namespace KMail

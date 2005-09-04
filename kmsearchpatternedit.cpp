@@ -8,6 +8,10 @@
 
 #include "kmsearchpattern.h"
 #include "rulewidgethandlermanager.h"
+//Added by qt3to4:
+#include <QHBoxLayout>
+#include <Q3CString>
+#include <Q3PtrList>
 using KMail::RuleWidgetHandlerManager;
 
 #include <klocale.h>
@@ -16,8 +20,8 @@ using KMail::RuleWidgetHandlerManager;
 
 #include <qradiobutton.h>
 #include <qcombobox.h>
-#include <qbuttongroup.h>
-#include <qwidgetstack.h>
+#include <q3buttongroup.h>
+#include <q3widgetstack.h>
 #include <qlayout.h>
 
 #include <assert.h>
@@ -68,7 +72,7 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  QCString currentText = rule()->field();
+  Q3CString currentText = rule()->field();
   initFieldList( headersOnly, mAbsoluteDates );
   
   mRuleField->clear();
@@ -96,13 +100,13 @@ void KMSearchRuleWidget::initWidget()
   hlay->addWidget( mRuleField );
 
   // initialize the function/value widget stack
-  mFunctionStack = new QWidgetStack( this, "mFunctionStack" );
+  mFunctionStack = new Q3WidgetStack( this, "mFunctionStack" );
   //Don't expand the widget in vertical direction
   mFunctionStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
 
   hlay->addWidget( mFunctionStack );
 
-  mValueStack = new QWidgetStack( this, "mValueStack" );
+  mValueStack = new Q3WidgetStack( this, "mValueStack" );
   mValueStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
   hlay->addWidget( mValueStack );
   hlay->setStretchFactor( mValueStack, 10 );
@@ -149,7 +153,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const {
-  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   const KMSearchRule::Function function =
     RuleWidgetHandlerManager::instance()->function( ruleField,
                                                     mFunctionStack );
@@ -172,7 +176,7 @@ void KMSearchRuleWidget::reset()
 
 void KMSearchRuleWidget::slotFunctionChanged()
 {
-  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   RuleWidgetHandlerManager::instance()->update( ruleField,
                                                 mFunctionStack,
                                                 mValueStack );
@@ -180,7 +184,7 @@ void KMSearchRuleWidget::slotFunctionChanged()
 
 void KMSearchRuleWidget::slotValueChanged()
 {
-  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   const QString prettyValue =
     RuleWidgetHandlerManager::instance()->prettyValue( ruleField,
                                                        mFunctionStack,
@@ -188,7 +192,7 @@ void KMSearchRuleWidget::slotValueChanged()
   emit contentsChanged( prettyValue );
 }
 
-QCString KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
+Q3CString KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
     if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
@@ -206,7 +210,7 @@ int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
   return -1; // no pseudo header
 }
 
-int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
+int KMSearchRuleWidget::indexOfRuleField( const Q3CString & aName ) const
 {
   if ( aName.isEmpty() )
     return -1;
@@ -275,7 +279,7 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 {
 }
 
-void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
+void KMSearchRuleWidgetLister::setRuleList( Q3PtrList<KMSearchRule> *aList )
 {
   assert ( aList );
 
@@ -308,8 +312,8 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
   setNumberOfShownWidgetsTo( QMAX((int)mRuleList->count(),mMinWidgets) );
 
   // load the actions into the widgets
-  QPtrListIterator<KMSearchRule> rIt( *mRuleList );
-  QPtrListIterator<QWidget> wIt( mWidgetList );
+  Q3PtrListIterator<KMSearchRule> rIt( *mRuleList );
+  Q3PtrListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
     (static_cast<KMSearchRuleWidget*>(*wIt))->setRule( (*rIt) );
@@ -323,7 +327,7 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 
 void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
 {
-  QPtrListIterator<QWidget> wIt( mWidgetList );
+  Q3PtrListIterator<QWidget> wIt( mWidgetList );
   for ( wIt.toFirst() ; wIt.current() ; ++wIt ) {
     (static_cast<KMSearchRuleWidget*>(*wIt))->setHeadersOnly( headersOnly );
   }
@@ -355,7 +359,7 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 
   mRuleList->clear();
 
-  QPtrListIterator<QWidget> it( mWidgetList );
+  Q3PtrListIterator<QWidget> it( mWidgetList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMSearchRule *r = ((KMSearchRuleWidget*)(*it))->rule();
     if ( r )
@@ -373,14 +377,14 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //=============================================================================
 
 KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly, bool absoluteDates )
-  : QGroupBox( 1/*columns*/, Horizontal, parent, name )
+  : Q3GroupBox( 1/*columns*/, Qt::Horizontal, parent, name )
 {
   setTitle( i18n("Search Criteria") );
   initLayout( headersOnly, absoluteDates );
 }
 
 KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly, bool absoluteDates)
-  : QGroupBox( 1/*column*/, Horizontal, title, parent, name )
+  : Q3GroupBox( 1/*column*/, Qt::Horizontal, title, parent, name )
 {
   initLayout( headersOnly, absoluteDates );
 }
@@ -398,7 +402,7 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mAllRBtn->setChecked(TRUE);
   mAnyRBtn->setChecked(FALSE);
 
-  QButtonGroup *bg = new QButtonGroup( this );
+  Q3ButtonGroup *bg = new Q3ButtonGroup( this );
   bg->hide();
   bg->insert( mAllRBtn, (int)KMSearchPattern::OpAnd );
   bg->insert( mAnyRBtn, (int)KMSearchPattern::OpOr );

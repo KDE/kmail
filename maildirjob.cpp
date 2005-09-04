@@ -41,6 +41,8 @@
 
 #include <qtimer.h>
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 namespace KMail {
 
@@ -52,7 +54,7 @@ MaildirJob::MaildirJob( KMMessage *msg, JobType jt , KMFolder *folder )
 }
 
 //-----------------------------------------------------------------------------
-MaildirJob::MaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
+MaildirJob::MaildirJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                         JobType jt , KMFolder *folder )
   : FolderJob( msgList, sets, jt, folder ), mParentFolder( 0 )
 {

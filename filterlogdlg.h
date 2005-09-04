@@ -31,10 +31,10 @@
 
 #include <kdialogbase.h>
 
-class QTextEdit;
+class Q3TextEdit;
 class QCheckBox;
 class QSpinBox;
-class QGroupBox;
+class Q3GroupBox;
 
 namespace KMail {
 
@@ -65,9 +65,9 @@ namespace KMail {
       virtual void slotUser1();
       virtual void slotUser2();
       
-      QTextEdit * mTextEdit;
+      Q3TextEdit * mTextEdit;
       QCheckBox * mLogActiveBox;
-      QGroupBox * mLogDetailsBox;
+      Q3GroupBox * mLogDetailsBox;
       QCheckBox * mLogPatternDescBox;
       QCheckBox * mLogRuleEvaluationBox;
       QCheckBox * mLogPatternResultBox;

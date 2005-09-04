@@ -35,7 +35,10 @@
 #include "keyresolver.h"
 
 #include <qobject.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 
 #include <mimelib/mediatyp.h>
 #include <kleo/cryptobackend.h>
@@ -88,7 +91,7 @@ public:
 
   void setDisableBreaking( bool b ) { mDisableBreaking = b; }
 
-  const QValueVector<KMMessage*> & composedMessageList() const {
+  const Q3ValueVector<KMMessage*> & composedMessageList() const {
     return mMessageList;
   }
 
@@ -135,27 +138,27 @@ private:
    * Get message ready for sending or saving.
    * This must be done _before_ signing and/or encrypting it.
    */
-  QCString breakLinesAndApplyCodec();
+  Q3CString breakLinesAndApplyCodec();
   /// Same as above but ensure \n termination
-  QCString bodyText();
+  Q3CString bodyText();
 
   /**
    * Create a plain text version of a marked up mail for use as the plain
    * part in a multipart/alternative mail.
    */
-  QCString plainTextFromMarkup( const QString& markupText );
+  Q3CString plainTextFromMarkup( const QString& markupText );
 
   /**
    * Get signature for a message (into mMessage).
    * To build nice S/MIME objects signing and encoding must be separated.
    */
-  void pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageFormat f );
+  void pgpSignedMsg( const Q3CString & cText, Kleo::CryptoMessageFormat f );
   /**
    * Get encrypted message.
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpEncryptedMsg( QByteArray& rEncryptedBody,
-                                const QCString & cText,
+                                const Q3CString & cText,
                                 const std::vector<GpgME::Key> & encryptionKeys,
 				Kleo::CryptoMessageFormat f );
 
@@ -164,7 +167,7 @@ private:
    * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray& rEncryptedBody,
-					 const QCString & cText,
+					 const Q3CString & cText,
 					 const std::vector<GpgME::Key> & signingKeys,
 					 const std::vector<GpgME::Key> & encryptionKeys,
 					 Kleo::CryptoMessageFormat f );
@@ -173,7 +176,7 @@ private:
    * Check for expiry of various certificates.
    */
   bool checkForEncryptCertificateExpiry( const QString& recipient,
-                                         const QCString& certFingerprint );
+                                         const Q3CString& certFingerprint );
 
   /**
    * Build a MIME object (or a flat text resp.) based upon
@@ -188,11 +191,11 @@ private:
    */
   bool processStructuringInfo( const QString bugURL,
                                const QString contentDescriptionClear,
-                               const QCString contentTypeClear,
-                               const QCString contentSubtypeClear,
-                               const QCString contentDispClear,
-                               const QCString contentTEncClear,
-                               const QCString& bodytext,
+                               const Q3CString contentTypeClear,
+                               const Q3CString contentSubtypeClear,
+                               const Q3CString contentDispClear,
+                               const Q3CString contentTEncClear,
+                               const Q3CString& bodytext,
                                const QString contentDescriptionCiph,
                                const QByteArray& ciphertext,
                                KMMessagePart& resultingPart,
@@ -223,11 +226,11 @@ private:
   KMComposeWin* mComposeWin;
   MessageComposerJob * mCurrentJob;
   KMMessage* mReferenceMessage;
-  QValueVector<KMMessage*> mMessageList;
+  Q3ValueVector<KMMessage*> mMessageList;
 
   Kleo::KeyResolver * mKeyResolver;
 
-  QCString mSignCertFingerprint;
+  Q3CString mSignCertFingerprint;
 
   struct Attachment {
     Attachment( KMMessagePart * p=0, bool s=false, bool e=false )
@@ -236,7 +239,7 @@ private:
     bool sign;
     bool encrypt;
   };
-  QValueVector<Attachment> mAttachments;
+  Q3ValueVector<Attachment> mAttachments;
 
   QString mPGPSigningKey, mSMIMESigningKey;
   bool mUseOpportunisticEncryption;
@@ -250,20 +253,20 @@ private:
   QStringList mTo, mCc, mBccList;
   bool mDebugComposerCrypto;
   bool mAutoCharset;
-  QCString mCharset;
+  Q3CString mCharset;
   bool mIsRichText;
   uint mIdentityUid;
   bool mRc; // Set this to false, if something fails during the processes
   bool mHoldJobs; // Don't run the next job yet
 
-  QCString mText; // textual representation of the message text, encoded
+  Q3CString mText; // textual representation of the message text, encoded
   unsigned int mLineBreakColumn; // used for line breaking
 
   // These are the variables of the big composeMessage(X,Y,Z) message
   KMMessagePart* mNewBodyPart;
   QByteArray mSignature;
 
-  QCString mEncodedBody; // Only needed if signing and/or encrypting
+  Q3CString mEncodedBody; // Only needed if signing and/or encrypting
   bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
   KMMessagePart mOldBodyPart;
   int mPreviousBoundaryLevel;
@@ -271,7 +274,7 @@ private:
   // The boundary is saved for later addition into mp/a body
   DwString  mSaveBoundary;
 
-  QValueList<MessageComposerJob*> mJobs;
+  Q3ValueList<MessageComposerJob*> mJobs;
   bool mEncryptWithChiasmus;
 };
 

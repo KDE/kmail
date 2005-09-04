@@ -34,14 +34,14 @@
 
 #include <libkpimidentities/identity.h>
 
-#include <qdragobject.h> // is a qobject and a qmimesource
+#include <q3dragobject.h> // is a qobject and a qmimesource
 
 namespace KMail {
 
   /** @short A QDragObject for KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
-  class IdentityDrag : public QDragObject {
+  class IdentityDrag : public Q3DragObject {
     Q_OBJECT
   public:
     IdentityDrag( const KPIM::Identity & ident,

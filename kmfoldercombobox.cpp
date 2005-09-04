@@ -5,6 +5,8 @@
 
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 //-----------------------------------------------------------------------------
 
@@ -69,11 +71,11 @@ void KMFolderComboBox::showImapFolders(bool shown)
 //-----------------------------------------------------------------------------
 
 void KMFolderComboBox::createFolderList(QStringList *names,
-                                        QValueList<QGuardedPtr<KMFolder> > *folders)
+                                        Q3ValueList<QPointer<KMFolder> > *folders)
 {
   kmkernel->folderMgr()->createI18nFolderList( names, folders );
   if ( !mOutboxShown ) {
-    QValueList< QGuardedPtr<KMFolder> >::iterator folderIt = folders->begin();
+    Q3ValueList< QPointer<KMFolder> >::iterator folderIt = folders->begin();
     QStringList::iterator namesIt = names->begin();
     for ( ; folderIt != folders->end(); ++folderIt, ++namesIt ) {
       KMFolder *folder = *folderIt;
@@ -97,7 +99,7 @@ void KMFolderComboBox::createFolderList(QStringList *names,
 void KMFolderComboBox::refreshFolders()
 {
   QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   KMFolder *folder = getFolder();
@@ -111,7 +113,7 @@ void KMFolderComboBox::refreshFolders()
 void KMFolderComboBox::setFolder( KMFolder *aFolder )
 {
   QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   int idx = folders.findIndex( aFolder );
@@ -147,7 +149,7 @@ KMFolder *KMFolderComboBox::getFolder()
     return mFolder;
 
   QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   if (currentItem() == mSpecialIdx)
@@ -170,7 +172,7 @@ KMFolder *KMFolderComboBox::getFolder()
 void KMFolderComboBox::slotActivated(int index)
 {
   QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   if (index == mSpecialIdx)

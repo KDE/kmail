@@ -4,6 +4,8 @@
 
 #include <kurl.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class KMMessage;
 class KConfig;
@@ -39,7 +41,7 @@ public:
   };
 public:
   static MailingList detect( const KMMessage* msg );
-  static QString name( const KMMessage  *message, QCString &header_name,
+  static QString name( const KMMessage  *message, Q3CString &header_name,
 		       QString &header_value );
 public:
   MailingList();

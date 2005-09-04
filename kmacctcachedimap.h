@@ -34,7 +34,10 @@
 
 #include "imapaccountbase.h"
 
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 class KMFolderCachedImap;
 class KMFolderTreeItem;
@@ -198,11 +201,11 @@ protected slots:
   virtual void slotCheckQueuedFolders();
 
 private:
-  QValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
+  Q3ValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
   void processNewMail( KMFolderCachedImap* folder, bool recurse );
 
 private:
-  QPtrList<CachedImapJob> mJobList;
+  Q3PtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session

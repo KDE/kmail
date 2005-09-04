@@ -32,6 +32,8 @@
 #define MBOXJOB_H
 
 #include "folderjob.h"
+//Added by qt3to4:
+#include <Q3PtrList>
 
 class KMFolderMbox;
 class KMMessage;
@@ -44,7 +46,7 @@ class MboxJob : public FolderJob
   friend class ::KMFolderMbox;
 public:
   MboxJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
-  MboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  MboxJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
              JobType jt = tGetMessage, KMFolder *folder = 0 );
   virtual ~MboxJob();
 protected:

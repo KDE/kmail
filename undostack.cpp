@@ -32,6 +32,8 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 namespace KMail {
 
@@ -63,7 +65,7 @@ int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
 void UndoStack::addMsgToAction( int undoId, ulong serNum )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
-    QPtrListIterator<UndoInfo> itr( mStack );
+    Q3PtrListIterator<UndoInfo> itr( mStack );
     while ( itr.current() ) {
       if ( itr.current()->id == undoId ) {
         mCachedInfo = itr.current();
@@ -87,7 +89,7 @@ void UndoStack::undo()
   {
     UndoInfo *info = mStack.take(0);
     emit undoStackChanged();
-    QValueList<ulong>::iterator itr;
+    Q3ValueList<ulong>::iterator itr;
     info->destFolder->open();
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;

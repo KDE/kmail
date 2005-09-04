@@ -107,13 +107,13 @@ using KRecentAddress::RecentAddresses;
 #include <kzip.h>
 #include <ksavefile.h>
 
-#include <qtabdialog.h>
+#include <q3tabdialog.h>
 #include <qregexp.h>
 #include <qbuffer.h>
 #include <qtooltip.h>
 #include <qtextcodec.h>
-#include <qheader.h>
-#include <qwhatsthis.h>
+#include <q3header.h>
+#include <q3whatsthis.h>
 #include <qfontdatabase.h>
 
 #include <mimelib/mimepp.h>
@@ -128,9 +128,9 @@ using KRecentAddress::RecentAddresses;
 #include <fcntl.h>
 #include <assert.h>
 
-KMAtmListViewItem::KMAtmListViewItem(QListView *parent)
+KMAtmListViewItem::KMAtmListViewItem(Q3ListView *parent)
   : QObject(),
-    QListViewItem( parent ),
+    Q3ListViewItem( parent ),
     mListview( parent ),
     mCBSignEnabled( false ),
     mCBEncryptEnabled( false )
@@ -159,7 +159,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
 {
   // this is also called for the encrypt/sign columns to assure that the
   // background is cleared
-  QListViewItem::paintCell( p, cg, column, width, align );
+  Q3ListViewItem::paintCell( p, cg, column, width, align );
   if ( 4 == column ) {
     QRect r = mListview->itemRect( this );
     if ( !r.size().isValid() ) {

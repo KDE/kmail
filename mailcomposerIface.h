@@ -3,6 +3,8 @@
 
 #include <dcopobject.h>
 #include <kurl.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 /**
   DCOP interface for mail composer window. The address header fields are set,
@@ -41,13 +43,13 @@ class MailComposerIface : virtual public DCOPObject
       @param contDisp Content disposition
     */
     virtual void addAttachment(const QString &name,
-                              const QCString &cte,
+                              const Q3CString &cte,
                               const QByteArray &data,
-                              const QCString &type,
-                              const QCString &subType,
-                              const QCString &paramAttr,
+                              const Q3CString &type,
+                              const Q3CString &subType,
+                              const Q3CString &paramAttr,
                               const QString &paramValue,
-                              const QCString &contDisp) = 0;
+                              const Q3CString &contDisp) = 0;
 };
 
 #endif

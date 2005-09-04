@@ -24,6 +24,9 @@
 #include "mboxjob.h"
 
 #include <sys/types.h> // for size_t
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 
 namespace KMail {
   class FolderJob;
@@ -61,7 +64,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeMbox; }
 
   /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  virtual Q3CString& getMsgString(int idx, Q3CString& mDest);
   DwString getDwString(int idx);
 
   /** Add the given message to the folder. Usually the message
@@ -109,14 +112,14 @@ public:
 
   void setProcmailLockFileName( const QString& );
 
-  static QCString escapeFrom( const QCString & str );
+  static Q3CString escapeFrom( const Q3CString & str );
 
   virtual IndexStatus indexStatus();
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */

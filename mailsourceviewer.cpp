@@ -39,7 +39,7 @@
 #include <kwin.h>
 
 #include <qregexp.h>
-#include <qaccel.h>
+#include <q3accel.h>
 
 namespace KMail {
 
@@ -57,7 +57,7 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   : KTextBrowser( parent, name ), mSourceHighLighter( 0 )
 {
   setWFlags( WDestructiveClose );
-  QAccel *accel = new QAccel( this, "browser close-accel" );
+  Q3Accel *accel = new Q3Accel( this, "browser close-accel" );
   accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
   accel->connectItem( accel->insertItem( Qt::Key_W+CTRL ), this , SLOT( close() ));
   setWordWrap( KTextBrowser::NoWrap );

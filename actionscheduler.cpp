@@ -44,6 +44,9 @@
 #include "kmcommands.h"
 #include "kmheaders.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 using KMail::AccountManager;
 
 #include <qtimer.h>
@@ -51,18 +54,18 @@ using KMail::AccountManager;
 #include <kstandarddirs.h>
 
 using namespace KMail;
-typedef QPtrList<KMMsgBase> KMMessageList;
+typedef Q3PtrList<KMMsgBase> KMMessageList;
 
 
 KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
 int ActionScheduler::refCount = 0;
 int ActionScheduler::count = 0;
-QValueList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
+Q3ValueList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
 bool ActionScheduler::sEnabled = false;
 bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
-				 QValueList<KMFilter*> filters,
+				 Q3ValueList<KMFilter*> filters,
 				 KMHeaders *headers,
 				 KMFolder *srcFolder)
              :mSet( set ), mHeaders( headers )
@@ -96,7 +99,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   fetchTimeOutTimer = new QTimer( this );
   connect( fetchTimeOutTimer, SIGNAL(timeout()), this, SLOT(fetchTimeOut()));
 
-  QValueList<KMFilter*>::Iterator it = filters.begin();
+  Q3ValueList<KMFilter*>::Iterator it = filters.begin();
   for (; it != filters.end(); ++it)
     mFilters.append( **it );
   mDestFolder = 0;
@@ -114,7 +117,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
     setSourceFolder( tempFolder );
   }
   if (!schedulerList)
-      schedulerList = new QValueList<ActionScheduler*>;
+      schedulerList = new Q3ValueList<ActionScheduler*>;
   schedulerList->append( this );
 }
 
@@ -166,12 +169,12 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 	     this, SLOT(msgAdded(KMFolder*, Q_UINT32)) );
 }
 
-void ActionScheduler::setFilterList( QValueList<KMFilter*> filters )
+void ActionScheduler::setFilterList( Q3ValueList<KMFilter*> filters )
 {
   mFiltersAreQueued = true;
   mQueuedFilters.clear();
   
-  QValueList<KMFilter*>::Iterator it = filters.begin();
+  Q3ValueList<KMFilter*>::Iterator it = filters.begin();
   for (; it != filters.end(); ++it)
     mQueuedFilters.append( **it );
   if (!mExecuting) {
@@ -199,7 +202,7 @@ int ActionScheduler::tempOpenFolder( KMFolder* aFolder )
 void ActionScheduler::tempCloseFolders()
 {
   // close temp opened folders
-  QValueListConstIterator<QGuardedPtr<KMFolder> > it;
+  Q3ValueListConstIterator<QPointer<KMFolder> > it;
   for (it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it) {
     KMFolder *folder = *it;
     if (folder)
@@ -208,17 +211,17 @@ void ActionScheduler::tempCloseFolders()
   mOpenFolders.clear();
 }
 
-void ActionScheduler::execFilters(const QValueList<Q_UINT32> serNums)
+void ActionScheduler::execFilters(const Q3ValueList<Q_UINT32> serNums)
 {
-  QValueListConstIterator<Q_UINT32> it;
+  Q3ValueListConstIterator<Q_UINT32> it;
   for (it = serNums.begin(); it != serNums.end(); ++it)
     execFilters( *it );
 }
 
-void ActionScheduler::execFilters(const QPtrList<KMMsgBase> msgList)
+void ActionScheduler::execFilters(const Q3PtrList<KMMsgBase> msgList)
 {
   KMMsgBase *msgBase;
-  QPtrList<KMMsgBase> list = msgList;
+  Q3PtrList<KMMsgBase> list = msgList;
   for (msgBase = list.first(); msgBase; msgBase = list.next())
     execFilters( msgBase->getMsgSerNum() );
 }
@@ -358,7 +361,7 @@ void ActionScheduler::finish()
 
 void ActionScheduler::fetchMessage()
 {
-  QValueListIterator<Q_UINT32> mFetchMessageIt = mFetchSerNums.begin();
+  Q3ValueListIterator<Q_UINT32> mFetchMessageIt = mFetchSerNums.begin();
   while (mFetchMessageIt != mFetchSerNums.end()) {
     if (!MessageProperty::transferInProgress(*mFetchMessageIt))
       break;
@@ -760,7 +763,7 @@ void ActionScheduler::fetchTimeOut()
 QString ActionScheduler::debug()
 {
     QString res;
-    QValueList<ActionScheduler*>::iterator it;
+    Q3ValueList<ActionScheduler*>::iterator it;
     int i = 1;
     for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
 	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );

@@ -40,12 +40,18 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qscrollview.h>
+#include <q3scrollview.h>
 #include <qcombobox.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qtimer.h>
 #include <qpushbutton.h>
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <QHBoxLayout>
+#include <QBoxLayout>
+#include <QResizeEvent>
+#include <QVBoxLayout>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )
   : mEmail( email ), mType( type )
@@ -125,7 +131,7 @@ RecipientComboBox::RecipientComboBox( QWidget *parent )
 
 void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Right ) emit rightPressed();
+  if ( ev->key() == Qt::Key_Right ) emit rightPressed();
   else QComboBox::keyPressEvent( ev );
 }
 
@@ -318,13 +324,13 @@ void RecipientLine::setRemoveLineButtonEnabled( bool b )
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
-  : QScrollView( parent ), mCurDelLine( 0 ), mModified( false )
+  : Q3ScrollView( parent ), mCurDelLine( 0 ), mModified( false )
 {
   setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
 
   addLine();
-  setResizePolicy( QScrollView::Manual );
+  setResizePolicy( Q3ScrollView::Manual );
   setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 }
 
@@ -560,7 +566,7 @@ Recipient::List RecipientsView::recipients() const
 {
   Recipient::List recipients;
 
-  QPtrListIterator<RecipientLine> it( mLines );
+  Q3PtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
     if ( !line->recipient().isEmpty() ) {
@@ -577,7 +583,7 @@ void RecipientsView::removeRecipient( const QString & recipient,
                                       Recipient::Type type )
 {
   // search a line which matches recipient and type
-  QPtrListIterator<RecipientLine> it( mLines );
+  Q3PtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
     if ( ( line->recipient().email() == recipient ) &&
@@ -595,7 +601,7 @@ bool RecipientsView::isModified()
   if ( mModified )
     return true;
 
-  QPtrListIterator<RecipientLine> it( mLines );
+  Q3PtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
     if ( line->isModified() ) {
@@ -611,7 +617,7 @@ void RecipientsView::clearModified()
 {
   mModified = false;
 
-  QPtrListIterator<RecipientLine> it( mLines );
+  Q3PtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
     line->clearModified();
@@ -643,7 +649,7 @@ int RecipientsView::setFirstColumnWidth( int w )
 {
   mFirstColumnWidth = w;
 
-  QPtrListIterator<RecipientLine> it( mLines );
+  Q3PtrListIterator<RecipientLine> it( mLines );
   RecipientLine *line;
   while( ( line = it.current() ) ) {
     mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
@@ -663,7 +669,7 @@ QString RecipientsToolTip::line( const Recipient &r )
 {
   QString txt = r.email();
 
-  return "&nbsp;&nbsp;" + QStyleSheet::escape( txt ) + "<br/>";
+  return "&nbsp;&nbsp;" + Q3StyleSheet::escape( txt ) + "<br/>";
 }
 
 void RecipientsToolTip::maybeTip( const QPoint & p )

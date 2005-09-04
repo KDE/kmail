@@ -76,7 +76,7 @@ The certificates can either be generated in a centralized or a decentralized man
                 <string>On this page, you will enter some personal data that will be stored in your certificate and that will help other people to determine that it is actually you who is sending a message.</string>
             </property>
             <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
+                <set>WordBreak|Qt::AlignVCenter</set>
             </property>
         </widget>
         <widget class="QLineEdit">
@@ -251,7 +251,7 @@ The certificates can either be generated in a centralized or a decentralized man
                     <string>On this page, you will select whether certificate generation is done centralized or decentralized. Please check with your local help desk if you are unsure what to select here.</string>
                 </property>
                 <property name="alignment">
-                    <set>WordBreak|AlignVCenter</set>
+                    <set>WordBreak|Qt::AlignVCenter</set>
                 </property>
             </widget>
             <widget class="QButtonGroup">
@@ -355,7 +355,7 @@ If you want to change anything, press Back and make your changes. Otherwise pres
 &lt;/qt&gt;</string>
                 </property>
                 <property name="alignment">
-                    <set>WordBreak|AlignVCenter</set>
+                    <set>WordBreak|Qt::AlignVCenter</set>
                 </property>
             </widget>
             <widget class="QTextEdit">

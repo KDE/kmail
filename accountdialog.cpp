@@ -21,7 +21,7 @@
 
 #include "accountdialog.h"
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
@@ -29,12 +29,19 @@
 #include <qvalidator.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qhbox.h>
+
+#include <q3hbox.h>
 #include <qcombobox.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qtoolbutton.h>
-#include <qgrid.h>
+#include <q3grid.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QGridLayout>
+#include <QTextStream>
+#include <Q3ValueList>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -97,7 +104,7 @@ protected:
   QTextStream *mStream;
   QStringList mLockFiles;
   QStringList mSpoolFiles;
-  QAsciiDict<QString> mVars;
+  Q3AsciiDict<QString> mVars;
 };
 
 ProcmailRCParser::ProcmailRCParser(QString fname)
@@ -117,7 +124,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
   QRegExp lockFileGlobal("^LOCKFILE=", true);
   QRegExp lockFileLocal("^:0", true);
 
-  if(  mProcmailrc.open(IO_ReadOnly) ) {
+  if(  mProcmailrc.open(QIODevice::ReadOnly) ) {
 
     QString s;
 
@@ -251,7 +258,7 @@ ProcmailRCParser::expandVars(const QString &s)
 
   QString expS = s;
 
-  QAsciiDictIterator<QString> it( mVars ); // iterator for dict
+  Q3AsciiDictIterator<QString> it( mVars ); // iterator for dict
 
   while ( it.current() ) {
     expS.replace(QString::fromLatin1("$") + it.currentKey(), *it.current());
@@ -352,7 +359,7 @@ void AccountDialog::makeLocalAccountPage()
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
 
-  QButtonGroup *group = new QButtonGroup(i18n("Locking Method"), page );
+  Q3ButtonGroup *group = new Q3ButtonGroup(i18n("Locking Method"), page );
   group->setColumnLayout(0, Qt::Horizontal);
   group->layout()->setSpacing( 0 );
   group->layout()->setMargin( 0 );
@@ -391,13 +398,13 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
 
 #if 0
-  QHBox* resourceHB = new QHBox( page );
+  Q3HBox* resourceHB = new Q3HBox( page );
   resourceHB->setSpacing( 11 );
   mLocal.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
   mLocal.resourceClearButton =
       new QPushButton( i18n( "Clear" ), resourceHB );
-  QWhatsThis::add( mLocal.resourceClearButton,
+  mLocal.resourceClearButton->setWhatsThis(
                    i18n( "Delete all allocations for the resource represented by this account." ) );
   mLocal.resourceClearButton->setEnabled( false );
   connect( mLocal.resourceCheck, SIGNAL( toggled(bool) ),
@@ -409,7 +416,7 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.resourceClearPastButton->setEnabled( false );
   connect( mLocal.resourceCheck, SIGNAL( toggled(bool) ),
            mLocal.resourceClearPastButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mLocal.resourceClearPastButton,
+  mLocal.resourceClearPastButton->setWhatsThis(
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mLocal.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
@@ -465,8 +472,8 @@ void AccountDialog::makeMaildirAccountPage()
   QFont titleFont( mMaildir.titleLabel->font() );
   titleFont.setBold( true );
   mMaildir.titleLabel->setFont( titleFont );
-  QFrame *hline = new QFrame( page );
-  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  Q3Frame *hline = new Q3Frame( page );
+  hline->setFrameStyle( Q3Frame::Sunken | Q3Frame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
   mMaildir.nameEdit = new KLineEdit( page );
@@ -486,7 +493,7 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->addWidget( choose, 3, 2 );
 
 #if 0
-  QHBox* resourceHB = new QHBox( page );
+  Q3HBox* resourceHB = new Q3HBox( page );
   resourceHB->setSpacing( 11 );
   mMaildir.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -495,7 +502,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.resourceClearButton->setEnabled( false );
   connect( mMaildir.resourceCheck, SIGNAL( toggled(bool) ),
            mMaildir.resourceClearButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mMaildir.resourceClearButton,
+  mMaildir.resourceClearButton->setWhatsThis(
                    i18n( "Delete all allocations for the resource represented by this account." ) );
   connect( mMaildir.resourceClearButton, SIGNAL( clicked() ),
            this, SLOT( slotClearResourceAllocations() ) );
@@ -504,7 +511,7 @@ void AccountDialog::makeMaildirAccountPage()
   mMaildir.resourceClearPastButton->setEnabled( false );
   connect( mMaildir.resourceCheck, SIGNAL( toggled(bool) ),
            mMaildir.resourceClearPastButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mMaildir.resourceClearPastButton,
+  mMaildir.resourceClearPastButton->setWhatsThis(
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mMaildir.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
@@ -576,7 +583,7 @@ void AccountDialog::makePopAccountPage()
   grid->addWidget( mPop.nameEdit, 0, 1 );
 
   label = new QLabel( i18n("&Login:"), page1 );
-  QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
+  label->setWhatsThis( i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, 1, 0 );
   mPop.loginEdit = new KLineEdit( page1 );
   label->setBuddy( mPop.loginEdit );
@@ -607,7 +614,7 @@ void AccountDialog::makePopAccountPage()
 
   mPop.storePasswordCheck =
     new QCheckBox( i18n("Sto&re POP password"), page1 );
-  QWhatsThis::add( mPop.storePasswordCheck,
+  mPop.storePasswordCheck->setWhatsThis(
                    i18n("Check this option to have KMail store "
                    "the password.\nIf KWallet is available "
                    "the password will be stored there which is considered "
@@ -624,7 +631,7 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
   grid->addMultiCellWidget( mPop.leaveOnServerCheck, 6, 6, 0, 1 );
-  QHBox *afterDaysBox = new QHBox( page1 );
+  Q3HBox *afterDaysBox = new Q3HBox( page1 );
   afterDaysBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerDaysCheck =
     new QCheckBox( i18n("Leave messages on the server for"), afterDaysBox );
@@ -636,7 +643,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerDaysSpin->setValue( 1 );
   afterDaysBox->setStretchFactor( mPop.leaveOnServerDaysSpin, 1 );
   grid->addMultiCellWidget( afterDaysBox, 7, 7, 0, 1 );
-  QHBox *leaveOnServerCountBox = new QHBox( page1 );
+  Q3HBox *leaveOnServerCountBox = new Q3HBox( page1 );
   leaveOnServerCountBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerCountCheck =
     new QCheckBox( i18n("Keep only the last"), leaveOnServerCountBox );
@@ -647,7 +654,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerCountSpin->setSuffix( i18n(" messages") );
   mPop.leaveOnServerCountSpin->setValue( 100 );
   grid->addMultiCellWidget( leaveOnServerCountBox, 8, 8, 0, 1 );
-  QHBox *leaveOnServerSizeBox = new QHBox( page1 );
+  Q3HBox *leaveOnServerSizeBox = new Q3HBox( page1 );
   leaveOnServerSizeBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerSizeCheck =
     new QCheckBox( i18n("Keep only the last"), leaveOnServerSizeBox );
@@ -659,7 +666,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerSizeSpin->setValue( 10 );
   grid->addMultiCellWidget( leaveOnServerSizeBox, 9, 9, 0, 1 );
 #if 0
-  QHBox *resourceHB = new QHBox( page1 );
+  Q3HBox *resourceHB = new Q3HBox( page1 );
   resourceHB->setSpacing( 11 );
   mPop.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -668,7 +675,7 @@ void AccountDialog::makePopAccountPage()
   mPop.resourceClearButton->setEnabled( false );
   connect( mPop.resourceCheck, SIGNAL( toggled(bool) ),
            mPop.resourceClearButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mPop.resourceClearButton,
+  mPop.resourceClearButton->setWhatsThis(
                    i18n( "Delete all allocations for the resource represented by this account." ) );
   connect( mPop.resourceClearButton, SIGNAL( clicked() ),
            this, SLOT( slotClearResourceAllocations() ) );
@@ -677,7 +684,7 @@ void AccountDialog::makePopAccountPage()
   mPop.resourceClearPastButton->setEnabled( false );
   connect( mPop.resourceCheck, SIGNAL( toggled(bool) ),
            mPop.resourceClearPastButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mPop.resourceClearPastButton,
+  mPop.resourceClearPastButton->setWhatsThis(
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mPop.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
@@ -688,7 +695,7 @@ void AccountDialog::makePopAccountPage()
     new QCheckBox( i18n("Include in man&ual mail check"), page1 );
   grid->addMultiCellWidget( mPop.includeInCheck, 10, 10, 0, 1 );
 
-  QHBox * hbox = new QHBox( page1 );
+  Q3HBox * hbox = new Q3HBox( page1 );
   hbox->setSpacing( KDialog::spacingHint() );
   mPop.filterOnServerCheck =
     new QCheckBox( i18n("&Filter messages if they are greater than"), hbox );
@@ -706,8 +713,8 @@ void AccountDialog::makePopAccountPage()
   QString msg = i18n("If you select this option, POP Filters will be used to "
 		     "decide what to do with messages. You can then select "
 		     "to download, delete or keep them on the server." );
-  QWhatsThis::add( mPop.filterOnServerCheck, msg );
-  QWhatsThis::add( mPop.filterOnServerSizeSpin, msg );
+  mPop.filterOnServerCheck->setWhatsThis( msg );
+  mPop.filterOnServerSizeSpin->setWhatsThis( msg );
 
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
@@ -752,7 +759,7 @@ void AccountDialog::makePopAccountPage()
 
   vlay->addSpacing( KDialog::spacingHint() );
 
-  mPop.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mPop.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mPop.encryptionNone =
     new QRadioButton( i18n("&None"), mPop.encryptionGroup );
@@ -766,7 +773,7 @@ void AccountDialog::makePopAccountPage()
     SLOT(slotPopEncryptionChanged(int)));
   vlay->addWidget( mPop.encryptionGroup );
 
-  mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mPop.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup,
                                     "auth clear text" );
@@ -837,7 +844,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   ++row;
   label = new QLabel( i18n("&Login:"), page1 );
-  QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
+  label->setWhatsThis( i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, row, 0 );
   mImap.loginEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.loginEdit );
@@ -871,9 +878,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   // namespace list
   ++row;
-  QHBox* box = new QHBox( page1 );
+  Q3HBox* box = new Q3HBox( page1 );
   label = new QLabel( i18n("Namespaces:"), box );
-  QWhatsThis::add( label, i18n( "Here you see the different namespaces that your IMAP server supports."
+  label->setWhatsThis( i18n( "Here you see the different namespaces that your IMAP server supports."
         "Each namespace represents a prefix that separates groups of folders."
         "Namespaces allow KMail for example to display your personal folders and shared folders in one account." ) );
   // button to reload
@@ -884,14 +891,14 @@ void AccountDialog::makeImapAccountPage( bool connected )
   button->setIconSet( 
       KGlobal::iconLoader()->loadIconSet( "reload", KIcon::Small, 0 ) );
   connect( button, SIGNAL(clicked()), this, SLOT(slotReloadNamespaces()) );
-  QWhatsThis::add( button, 
+  button->setWhatsThis( 
       i18n("Reload the namespaces from the server. This overwrites any changes.") );
   grid->addWidget( box, row, 0 );
 
   // grid with label, namespace list and edit button
-  QGrid* listbox = new QGrid( 3, page1 );
+  Q3Grid* listbox = new Q3Grid( 3, page1 );
   label = new QLabel( i18n("Personal"), listbox );
-  QWhatsThis::add( label, i18n( "Personal namespaces include your personal folders." ) );
+  label->setWhatsThis( i18n( "Personal namespaces include your personal folders." ) );
   mImap.personalNS = new KLineEdit( listbox );
   mImap.personalNS->setReadOnly( true );
   mImap.editPNS = new QToolButton( listbox );
@@ -903,7 +910,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   connect( mImap.editPNS, SIGNAL(clicked()), this, SLOT(slotEditPersonalNamespace()) );
 
   label = new QLabel( i18n("Other Users"), listbox );
-  QWhatsThis::add( label, i18n( "These namespaces include the folders of other users." ) );
+  label->setWhatsThis( i18n( "These namespaces include the folders of other users." ) );
   mImap.otherUsersNS = new KLineEdit( listbox );
   mImap.otherUsersNS->setReadOnly( true );
   mImap.editONS = new QToolButton( listbox );
@@ -915,7 +922,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   connect( mImap.editONS, SIGNAL(clicked()), this, SLOT(slotEditOtherUsersNamespace()) );
 
   label = new QLabel( i18n("Shared"), listbox );
-  QWhatsThis::add( label, i18n( "These namespaces include the shared folders." ) );
+  label->setWhatsThis( i18n( "These namespaces include the shared folders." ) );
   mImap.sharedNS = new KLineEdit( listbox );
   mImap.sharedNS->setReadOnly( true );
   mImap.editSNS = new QToolButton( listbox );
@@ -932,7 +939,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   mImap.storePasswordCheck =
     new QCheckBox( i18n("Sto&re IMAP password"), page1 );
-  QWhatsThis::add( mImap.storePasswordCheck,
+  mImap.storePasswordCheck->setWhatsThis(
                    i18n("Check this option to have KMail store "
                    "the password.\nIf KWallet is available "
                    "the password will be stored there which is considered "
@@ -966,7 +973,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.loadOnDemandCheck = new QCheckBox(
         i18n("Load attach&ments on demand"), page1);
-    QWhatsThis::add( mImap.loadOnDemandCheck,
+    mImap.loadOnDemandCheck->setWhatsThis(
         i18n("Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.") );
     grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
   }
@@ -976,14 +983,14 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.listOnlyOpenCheck = new QCheckBox(
         i18n("List only open folders"), page1);
-    QWhatsThis::add( mImap.listOnlyOpenCheck,
+    mImap.listOnlyOpenCheck->setWhatsThis(
         i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
     grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
   }
 
 #if 0
   ++row;
-  QHBox* resourceHB = new QHBox( page1 );
+  Q3HBox* resourceHB = new Q3HBox( page1 );
   resourceHB->setSpacing( 11 );
   mImap.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -992,7 +999,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.resourceClearButton->setEnabled( false );
   connect( mImap.resourceCheck, SIGNAL( toggled(bool) ),
            mImap.resourceClearButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mImap.resourceClearButton,
+  mImap.resourceClearButton->setWhatsThis(
                    i18n( "Delete all allocations for the resource represented by this account." ) );
   connect( mImap.resourceClearButton, SIGNAL( clicked() ),
            this, SLOT( slotClearResourceAllocations() ) );
@@ -1001,7 +1008,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.resourceClearPastButton->setEnabled( false );
   connect( mImap.resourceCheck, SIGNAL( toggled(bool) ),
            mImap.resourceClearPastButton, SLOT( setEnabled(bool) ) );
-  QWhatsThis::add( mImap.resourceClearPastButton,
+  mImap.resourceClearPastButton->setWhatsThis(
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mImap.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
@@ -1055,7 +1062,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   vlay->addSpacing( KDialog::spacingHint() );
 
-  mImap.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mImap.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mImap.encryptionNone =
     new QRadioButton( i18n("&None"), mImap.encryptionGroup );
@@ -1069,7 +1076,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     SLOT(slotImapEncryptionChanged(int)));
   vlay->addWidget( mImap.encryptionGroup );
 
-  mImap.authGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mImap.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mImap.authUser = new QRadioButton( i18n("Clear te&xt"), mImap.authGroup );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
@@ -1360,7 +1367,7 @@ void AccountDialog::setupSettings()
     kmkernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
     while (i < mFolderNames.count())
     {
-      QValueList<QGuardedPtr<KMFolder> >::Iterator it = mFolderList.at(i);
+      Q3ValueList<QPointer<KMFolder> >::Iterator it = mFolderList.at(i);
       KMFolder *folder = *it;
       if (folder->isSystemFolder())
       {
@@ -1460,7 +1467,7 @@ void AccountDialog::slotPopEncryptionChanged(int id)
                            : ( id == SSL ) ? mCapaSSL
                                            : mCapaNormal;
   enablePopFeatures( mCurCapa );
-  const QButton *old = mPop.authGroup->selected();
+  const Q3Button *old = mPop.authGroup->selected();
   if ( !old->isEnabled() )
     checkHighest( mPop.authGroup );
 }
@@ -1478,7 +1485,7 @@ void AccountDialog::slotImapEncryptionChanged(int id)
                                   : ( id == SSL ) ? mCapaSSL
                                                   : mCapaNormal;
   enableImapAuthMethods( authMethods );
-  QButton *old = mImap.authGroup->selected();
+  Q3Button *old = mImap.authGroup->selected();
   if ( !old->isEnabled() )
     checkHighest( mImap.authGroup );
 }
@@ -1696,11 +1703,11 @@ void AccountDialog::enableImapAuthMethods( unsigned int capa )
 }
 
 
-void AccountDialog::checkHighest( QButtonGroup *btnGroup )
+void AccountDialog::checkHighest( Q3ButtonGroup *btnGroup )
 {
   kdDebug(5006) << "checkHighest( " << btnGroup << " )" << endl;
   for ( int i = btnGroup->count() - 1; i >= 0 ; --i ) {
-    QButton * btn = btnGroup->find( i );
+    Q3Button * btn = btnGroup->find( i );
     if ( btn && btn->isEnabled() ) {
       btn->animateClick();
       return;
@@ -2207,7 +2214,7 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
   : KDialogBase( parent, "edit_namespace", false, QString::null,
       Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
 {
-  QVBox *page = makeVBoxMainWidget();
+  Q3VBox *page = makeVBoxMainWidget();
 
   QString ns;
   if ( mType == ImapAccountBase::PersonalNS ) {
@@ -2218,9 +2225,9 @@ NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ns = i18n("Shared");
   }
   setCaption( i18n("Edit Namespace '%1'").arg(ns) );
-  QGrid* grid = new QGrid( 2, page );
+  Q3Grid* grid = new Q3Grid( 2, page );
 
-  mBg = new QButtonGroup( 0 );
+  mBg = new Q3ButtonGroup( 0 );
   connect( mBg, SIGNAL( clicked(int) ), this, SLOT( slotRemoveEntry(int) ) );
   mDelimMap = mNamespaceMap->find( mType ).data();
   ImapAccountBase::namespaceDelim::Iterator it;

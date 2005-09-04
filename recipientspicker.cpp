@@ -40,6 +40,13 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PtrList>
+#include <QKeyEvent>
+#include <QHBoxLayout>
+#include <QBoxLayout>
+#include <QVBoxLayout>
 
 RecipientItem::RecipientItem()
   : mDistributionList( 0 )
@@ -63,7 +70,7 @@ void RecipientItem::setAddressee( const KABC::Addressee &a,
 
   QImage img = a.photo().data();
   if ( !img.isNull() )
-    mIcon = img.smoothScale( 20, 20, QImage::ScaleMin );
+    mIcon = img.smoothScale( 20, 20, Qt::KeepAspectRatio );
   else
     mIcon = KGlobal::iconLoader()->loadIcon( "personal", KIcon::Small );
 
@@ -168,7 +175,7 @@ RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
 void RecipientsListToolTip::maybeTip( const QPoint & pos )
 {
   QRect r;
-  QListViewItem *item = mListView->itemAt( pos );
+  Q3ListViewItem *item = mListView->itemAt( pos );
   RecipientViewItem *i = static_cast<RecipientViewItem *>( item );
 
   if( item ) {
@@ -239,7 +246,7 @@ SearchLine::SearchLine( QWidget *parent, KListView *listView )
 
 void SearchLine::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Down ) emit downPressed();
+  if ( ev->key() == Qt::Key_Down ) emit downPressed();
 
   KListViewSearchLine::keyPressEvent( ev );
 }
@@ -283,16 +290,16 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
 
   mRecipientList = new KListView( this );
-  mRecipientList->setSelectionMode( QListView::Extended );
+  mRecipientList->setSelectionMode( Q3ListView::Extended );
   mRecipientList->setAllColumnsShowFocus( true );
   mRecipientList->setFullWidth( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
   mRecipientList->addColumn( i18n("Name") );
   mRecipientList->addColumn( i18n("Email") );
-  connect( mRecipientList, SIGNAL( doubleClicked( QListViewItem *,
+  connect( mRecipientList, SIGNAL( doubleClicked( Q3ListViewItem *,
     const QPoint &, int ) ), SLOT( slotPicked() ) );
-  connect( mRecipientList, SIGNAL( returnPressed( QListViewItem * ) ),
+  connect( mRecipientList, SIGNAL( returnPressed( Q3ListViewItem * ) ),
     SLOT( slotPicked() ) );
 
   new RecipientsListToolTip( mRecipientList->viewport(), mRecipientList );
@@ -359,7 +366,7 @@ void RecipientsPicker::initCollections()
 
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 
-  QPtrList<KABC::Resource> resources = addressbook->resources();
+  Q3PtrList<KABC::Resource> resources = addressbook->resources();
   KABC::Resource *res;
   for( res = resources.first(); res; res = resources.next() ) {
     RecipientsCollection *collection = new RecipientsCollection;
@@ -583,7 +590,7 @@ void RecipientsPicker::slotBccClicked()
   pick( Recipient::Bcc );
 }
 
-void RecipientsPicker::slotPicked( QListViewItem *viewItem )
+void RecipientsPicker::slotPicked( Q3ListViewItem *viewItem )
 {
   RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
   if ( item ) {
@@ -603,7 +610,7 @@ void RecipientsPicker::pick( Recipient::Type type )
   kdDebug() << "RecipientsPicker::pick " << int( type ) << endl;
 
   int count = 0;
-  QListViewItem *viewItem;
+  Q3ListViewItem *viewItem;
   for( viewItem = mRecipientList->firstChild(); viewItem;
        viewItem = viewItem->nextSibling() ) {
     if ( viewItem->isSelected() ) {

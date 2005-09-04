@@ -34,6 +34,8 @@
 #include "kmkernel.h"
 
 #include <kapplication.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 namespace KMail {
 

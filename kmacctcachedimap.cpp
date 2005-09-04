@@ -34,6 +34,8 @@
 #endif
 
 #include "kmacctcachedimap.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 using KMail::SieveConfig;
 
 #include "kmfoldertree.h"
@@ -113,8 +115,8 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
-  QValueList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
-  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+  Q3ValueList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
+  for( Q3ValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderCachedImap *fld = *it;
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
@@ -125,11 +127,11 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 
 //-----------------------------------------------------------------------------
 // Common between killAllJobs and the destructor - which shouldn't call sendFolderComplete
-QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnectSlave )
+Q3ValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnectSlave )
 {
   // Make list of folders to reset. This must be done last, since folderComplete
   // can trigger the next queued mail check already.
-  QValueList<KMFolderCachedImap*> folderList;
+  Q3ValueList<KMFolderCachedImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ((*it).parent)
@@ -143,7 +145,7 @@ QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disc
   mapJobData.clear();
 
   // Clear the joblist. Make SURE to stop the job emitting "finished"
-  for( QPtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
+  for( Q3PtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
     it.current()->setPassiveDestructor( true );
   KMAccount::deleteFolderJobs();
 
@@ -158,7 +160,7 @@ QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disc
 void KMAcctCachedImap::cancelMailCheck()
 {
   // Make list of folders to reset, like in killAllJobs
-  QValueList<KMFolderCachedImap*> folderList;
+  Q3ValueList<KMFolderCachedImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ( (*it).cancellable && (*it).parent )
@@ -168,7 +170,7 @@ void KMAcctCachedImap::cancelMailCheck()
   ImapAccountBase::cancelMailCheck();
   // Reset sync states and emit folderComplete, this is important for
   // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
-  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+  for( Q3ValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderCachedImap *fld = *it;
     fld->resetSyncState();
     fld->setContentState(KMFolderCachedImap::imapNoInformation);
@@ -333,9 +335,9 @@ void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
   ImapAccountBase::writeConfig( config );
   config.writeEntry( "deleted-folders", mDeletedFolders + mPreviouslyDeletedFolders );
   config.writeEntry( "renamed-folders-paths", mRenamedFolders.keys() );
-  const QValueList<RenamedFolder> values = mRenamedFolders.values();
+  const Q3ValueList<RenamedFolder> values = mRenamedFolders.values();
   QStringList lstNames;
-  QValueList<RenamedFolder>::const_iterator it = values.begin();
+  Q3ValueList<RenamedFolder>::const_iterator it = values.begin();
   for ( ; it != values.end() ; ++it )
     lstNames.append( (*it).mNewName );
   config.writeEntry( "renamed-folders-names", lstNames );
@@ -354,11 +356,11 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
   folder->setAccount(this);
 
   QStringList strList;
-  QValueList<QGuardedPtr<KMFolder> > folderList;
+  Q3ValueList<QPointer<KMFolder> > folderList;
   kmkernel->dimapFolderMgr()->createFolderList( &strList, &folderList,
 						folder->folder()->child(), QString::null,
 						false );
-  QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  Q3ValueList<QPointer<KMFolder> >::Iterator it;
   mCountLastUnread = 0;
   mUnreadBeforeCheck.clear();
 

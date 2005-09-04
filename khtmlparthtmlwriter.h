@@ -37,6 +37,8 @@
 
 #include <qstringlist.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class QString;
 class KHTMLPart;
@@ -58,7 +60,7 @@ namespace KMail {
     void write( const QString & str );
     void queue( const QString & str );
     void flush();
-    void embedPart( const QCString & contentId, const QString & url );
+    void embedPart( const Q3CString & contentId, const QString & url );
 
   private slots:
     void slotWriteNextHtmlChunk();

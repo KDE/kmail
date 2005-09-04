@@ -59,7 +59,9 @@
 #include <kmessagebox.h>
 
 #include <qstringlist.h>
-#include <qtl.h>
+#include <q3tl.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <algorithm>
 #include <memory>
@@ -406,7 +408,7 @@ struct FormatInfo {
 };
 
 struct Kleo::KeyResolver::Private {
-  std::set<QCString> alreadyWarnedFingerprints;
+  std::set<Q3CString> alreadyWarnedFingerprints;
 
   std::vector<GpgME::Key> mOpenPGPSigningKeys; // signing
   std::vector<GpgME::Key> mSMIMESigningKeys; // signing

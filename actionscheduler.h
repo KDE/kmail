@@ -38,8 +38,11 @@
 #include "kmcommands.h"
 
 #include <qobject.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 class KMHeaders;
 
@@ -54,7 +57,7 @@ public:
   enum ReturnCode { ResultOk, ResultError, ResultCriticalError };
 
   ActionScheduler(KMFilterMgr::FilterSet set,
-		  QValueList<KMFilter*> filters,
+		  Q3ValueList<KMFilter*> filters,
                   KMHeaders *headers = 0,
 		  KMFolder *srcFolder = 0);
   ~ActionScheduler();
@@ -75,7 +78,7 @@ public:
   /** Set a list of filters to work with
    The current list will not be updated until the queue
    of messages left to process is empty */
-  void setFilterList( QValueList<KMFilter*> filters );
+  void setFilterList( Q3ValueList<KMFilter*> filters );
 
   /* Set the id of the account associated with this scheduler */
   void setAccountId( uint id  ) { mAccountId = id; mAccount = true; }
@@ -84,8 +87,8 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(const QValueList<Q_UINT32> serNums);
-  void execFilters(const QPtrList<KMMsgBase> msgList);
+  void execFilters(const Q3ValueList<Q_UINT32> serNums);
+  void execFilters(const Q3PtrList<KMMsgBase> msgList);
   void execFilters(KMMsgBase* msgBase);
   void execFilters(Q_UINT32 serNum);
   static QString debug();
@@ -127,19 +130,19 @@ private slots:
   void fetchTimeOut();
 
 private:
-  static QValueList<ActionScheduler*> *schedulerList; // for debugging
+  static Q3ValueList<ActionScheduler*> *schedulerList; // for debugging
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
-  QValueListIterator<Q_UINT32> mMessageIt;
-  QValueListIterator<KMFilter> mFilterIt;
-  QValueList<Q_UINT32> mSerNums, mFetchSerNums;
-  QValueList<QGuardedPtr<KMFolder> > mOpenFolders;
-  QValueList<KMFilter> mFilters, mQueuedFilters;
+  Q3ValueListIterator<Q_UINT32> mMessageIt;
+  Q3ValueListIterator<KMFilter> mFilterIt;
+  Q3ValueList<Q_UINT32> mSerNums, mFetchSerNums;
+  Q3ValueList<QPointer<KMFolder> > mOpenFolders;
+  Q3ValueList<KMFilter> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
   KMFilterMgr::FilterSet mSet;
   KMHeaders *mHeaders;
-  QGuardedPtr<KMFolder> mSrcFolder, mDestFolder;
+  QPointer<KMFolder> mSrcFolder, mDestFolder;
   bool mExecuting, mExecutingLock, mFetchExecuting;
   bool mUnget, mFetchUnget;
   bool mIgnore;

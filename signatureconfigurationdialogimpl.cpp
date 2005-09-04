@@ -2,7 +2,7 @@
 #include "signatureconfigurationdialogimpl.h"
 #include "cryptplugwrapper.h"
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
@@ -19,7 +19,7 @@
  *  Constructs a SignatureConfigurationDialogImpl which is a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'
  */
-SignatureConfigurationDialogImpl::SignatureConfigurationDialogImpl( QWidget* parent,  const char* name, WFlags fl )
+SignatureConfigurationDialogImpl::SignatureConfigurationDialogImpl( QWidget* parent,  const char* name, Qt::WFlags fl )
     : SignatureConfigurationDialog( parent, name, fl )
 {
 }

@@ -42,6 +42,10 @@
 #include <kmessagebox.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
@@ -310,7 +314,7 @@ bool KMFolder::isMessage( int idx )
   return mStorage->isMessage( idx );
 }
 
-QCString& KMFolder::getMsgString( int idx, QCString& mDest )
+Q3CString& KMFolder::getMsgString( int idx, Q3CString& mDest )
 {
   return mStorage->getMsgString( idx,  mDest );
 }
@@ -332,7 +336,7 @@ FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
 }
 
-FolderJob* KMFolder::createJob( QPtrList<KMMessage>& msgList,
+FolderJob* KMFolder::createJob( Q3PtrList<KMMessage>& msgList,
                                 const QString& sets,
                                 FolderJob::JobType jt, KMFolder *folder ) const
 {
@@ -364,7 +368,7 @@ KMMessage* KMFolder::take( int idx )
   return mStorage->take( idx );
 }
 
-void KMFolder::take( QPtrList<KMMessage> msgList )
+void KMFolder::take( Q3PtrList<KMMessage> msgList )
 {
   mStorage->take( msgList );
 }
@@ -379,7 +383,7 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
-int KMFolder::addMsg( QPtrList<KMMessage>& list, QValueList<int>& index_return )
+int KMFolder::addMsg( Q3PtrList<KMMessage>& list, Q3ValueList<int>& index_return )
 {
   return mStorage->addMsg( list, index_return );
 }
@@ -394,7 +398,7 @@ void KMFolder::removeMsg( int i, bool imapQuiet )
   mStorage->removeMsg( i, imapQuiet );
 }
 
-void KMFolder::removeMsg( QPtrList<KMMessage> msgList, bool imapQuiet )
+void KMFolder::removeMsg( Q3PtrList<KMMessage> msgList, bool imapQuiet )
 {
   mStorage->removeMsg( msgList, imapQuiet );
 }
@@ -409,7 +413,7 @@ int KMFolder::moveMsg( KMMessage* msg, int* index_return )
   return mStorage->moveMsg( msg, index_return );
 }
 
-int KMFolder::moveMsg(QPtrList<KMMessage> q, int* index_return )
+int KMFolder::moveMsg(Q3PtrList<KMMessage> q, int* index_return )
 {
   return mStorage->moveMsg( q, index_return );
 }
@@ -442,7 +446,7 @@ int KMFolder::countUnreadRecursive()
   if (!dir)
     return count;
 
-  QPtrListIterator<KMFolderNode> it(*dir);
+  Q3PtrListIterator<KMFolderNode> it(*dir);
   for ( ; it.current(); ++it )
     if (!it.current()->isDir()) {
       folder = static_cast<KMFolder*>(it.current());
@@ -779,7 +783,7 @@ void KMFolder::setStatus( int idx, KMMsgStatus status, bool toggle )
   mStorage->setStatus( idx, status, toggle );
 }
 
-void KMFolder::setStatus( QValueList<int>& ids, KMMsgStatus status,
+void KMFolder::setStatus( Q3ValueList<int>& ids, KMMsgStatus status,
                           bool toggle )
 {
   mStorage->setStatus( ids, status, toggle);

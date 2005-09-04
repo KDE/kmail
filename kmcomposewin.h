@@ -15,16 +15,24 @@
 #include "messagesender.h"
 
 #include <qlabel.h>
-#include <qlistview.h>
+#include <q3listview.h>
 
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qclipboard.h>
 #include <qpalette.h>
 #include <qfont.h>
-#include <qptrlist.h>
-#include <qvaluevector.h>
+#include <q3ptrlist.h>
+#include <q3valuevector.h>
 #include <qsplitter.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QGridLayout>
+#include <QCloseEvent>
+#include <QEvent>
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <Q3PopupMenu>
 
 #include <kio/job.h>
 #include <kglobalsettings.h>
@@ -41,12 +49,12 @@
 
 class QCloseEvent;
 class QComboBox;
-class QFrame;
+class Q3Frame;
 class QGridLayout;
-class QListView;
-class QPopupMenu;
+class Q3ListView;
+class Q3PopupMenu;
 class QPushButton;
-class QCString;
+class Q3CString;
 class KCompletion;
 class KMEdit;
 class KMComposeWin;
@@ -113,13 +121,13 @@ public: // mailserviceimpl
   void send(int how);
   void addAttachment(KURL url,QString comment);
   void addAttachment(const QString &name,
-                    const QCString &cte,
+                    const Q3CString &cte,
                     const QByteArray &data,
-                    const QCString &type,
-                    const QCString &subType,
-                    const QCString &paramAttr,
+                    const Q3CString &type,
+                    const Q3CString &subType,
+                    const Q3CString &paramAttr,
                     const QString &paramValue,
-                    const QCString &contDisp);
+                    const Q3CString &contDisp);
 public: // kmcommand
   void setBody (QString body);
 
@@ -200,7 +208,7 @@ public: // kmkernel, kmcommand, mailserviceimpl
   /**
    * Recode to the specified charset
    */
-   void setCharset(const QCString& aCharset, bool forceDefault = FALSE);
+   void setCharset(const Q3CString& aCharset, bool forceDefault = FALSE);
 
 public: // kmcommand
   /**
@@ -382,7 +390,7 @@ private slots:
   /**
    * Open a popup-menu in the attachments-listbox.
    */
-  void slotAttachPopupMenu(QListViewItem *, const QPoint &, int);
+  void slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int);
 
   /**
    * Returns the number of the current attachment in the listbox,
@@ -613,7 +621,7 @@ private:
    * This function is for example used to restore the unencrypted/unsigned
    * message text for editting.
    */
-   static void decryptOrStripOffCleartextSignature( QCString& );
+   static void decryptOrStripOffCleartextSignature( Q3CString& );
 
   /**
    * Send the message. Returns true if the message was sent successfully.
@@ -676,7 +684,7 @@ private:
   KMEdit* mEditor;
   QGridLayout* mGrid;
   KMMessage *mMsg;
-  QValueVector<KMMessage*> mComposedMessages;
+  Q3ValueVector<KMMessage*> mComposedMessages;
   KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;
@@ -684,9 +692,9 @@ private:
   int mAtmEncryptColWidth;
   int mAtmSignColWidth;
   int mAtmCompressColWidth;
-  QPtrList<QListViewItem> mAtmItemList;
-  QPtrList<KMMessagePart> mAtmList;
-  QPopupMenu *mAttachMenu;
+  Q3PtrList<Q3ListViewItem> mAtmItemList;
+  Q3PtrList<KMMessagePart> mAtmList;
+  Q3PopupMenu *mAttachMenu;
   int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
@@ -700,7 +708,7 @@ private:
   bool mUseHTMLEditor;
   bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
-  QPtrList<KTempFile> mAtmTempList;
+  Q3PtrList<KTempFile> mAtmTempList;
   QPalette mPalette;
   uint mId;
   QString mOldSigText;
@@ -730,15 +738,15 @@ private:
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;
 
-  QCString mCharset;
-  QCString mDefCharset;
+  Q3CString mCharset;
+  Q3CString mDefCharset;
   QStringList mCharsets;
   bool mAutoCharset;
 
   bool mAlwaysSend;
 
   QStringList mFolderNames;
-  QValueList<QGuardedPtr<KMFolder> > mFolderList;
+  Q3ValueList<QPointer<KMFolder> > mFolderList;
 
 private:
   // helper method for slotInsert(My)PublicKey()
@@ -785,7 +793,7 @@ private:
     KURL url;
     QByteArray data;
     bool insert;
-    QCString encoding;
+    Q3CString encoding;
   };
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
 
@@ -818,8 +826,8 @@ private:
   QString mAutoSaveFilename;
   int mLastAutoSaveErrno; // holds the errno of the last try to autosave
 
-  QPopupMenu *mActNowMenu;
-  QPopupMenu *mActLaterMenu;
+  Q3PopupMenu *mActNowMenu;
+  Q3PopupMenu *mActLaterMenu;
 };
 
 #endif

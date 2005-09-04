@@ -32,6 +32,16 @@
 #include "partNode.h"
 #include "attachmentlistview.h"
 #include "transportmanager.h"
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <QGridLayout>
+#include <Q3StrList>
+#include <QKeyEvent>
+#include <QEvent>
+#include <Q3CString>
+#include <Q3ValueList>
+#include <Q3PtrList>
+#include <QLabel>
 using KMail::AttachmentListView;
 #include "dictionarycombobox.h"
 using KMail::DictionaryComboBox;
@@ -117,13 +127,13 @@ using KRecentAddress::RecentAddresses;
 #include <kzip.h>
 #include <ksavefile.h>
 
-#include <qtabdialog.h>
+#include <q3tabdialog.h>
 #include <qregexp.h>
 #include <qbuffer.h>
 #include <qtooltip.h>
 #include <qtextcodec.h>
-#include <qheader.h>
-#include <qwhatsthis.h>
+#include <q3header.h>
+
 #include <qfontdatabase.h>
 
 #include <mimelib/mimepp.h>
@@ -194,7 +204,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEdtReplyTo = new KMLineEdit(true,mMainWidget, "replyToLine");
   mLblReplyTo = new QLabel(mMainWidget);
   mBtnReplyTo = new QPushButton("...",mMainWidget);
-  mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
+  mBtnReplyTo->setFocusPolicy(Qt::NoFocus);
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
@@ -221,9 +231,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     QToolTip::add( mBtnBcc, tip );
     QToolTip::add( mBtnReplyTo, tip );
 
-    mBtnTo->setFocusPolicy(QWidget::NoFocus);
-    mBtnCc->setFocusPolicy(QWidget::NoFocus);
-    mBtnBcc->setFocusPolicy(QWidget::NoFocus);
+    mBtnTo->setFocusPolicy(Qt::NoFocus);
+    mBtnCc->setFocusPolicy(Qt::NoFocus);
+    mBtnBcc->setFocusPolicy(Qt::NoFocus);
     //mBtnFrom->setFocusPolicy(QWidget::NoFocus);
 
     connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
@@ -292,11 +302,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
 
-  QWhatsThis::add( mBtnIdentity,
+  mBtnIdentity->setWhatsThis(
     GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
-  QWhatsThis::add( mBtnFcc,
+  mBtnFcc->setWhatsThis(
     GlobalSettings::self()->stickyFccItem()->whatsThis() );
-  QWhatsThis::add( mBtnTransport,
+  mBtnTransport->setWhatsThis(
     GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
   mSpellCheckInProgress=FALSE;
@@ -304,13 +314,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setCaption( i18n("Composer") );
   setMinimumSize(200,200);
 
-  mBtnIdentity->setFocusPolicy(QWidget::NoFocus);
-  mBtnFcc->setFocusPolicy(QWidget::NoFocus);
-  mBtnTransport->setFocusPolicy(QWidget::NoFocus);
+  mBtnIdentity->setFocusPolicy(Qt::NoFocus);
+  mBtnFcc->setFocusPolicy(Qt::NoFocus);
+  mBtnTransport->setFocusPolicy(Qt::NoFocus);
 
   mAtmListView = new AttachmentListView( this, mSplitter,
                                          "attachment list view" );
-  mAtmListView->setSelectionMode( QListView::Extended );
+  mAtmListView->setSelectionMode( Q3ListView::Extended );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
   mAtmListView->addColumn( i18n("Encoding"), 120 );
@@ -331,11 +341,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAtmListView->setAllColumnsShowFocus( true );
 
   connect( mAtmListView,
-           SIGNAL( doubleClicked( QListViewItem* ) ),
+           SIGNAL( doubleClicked( Q3ListViewItem* ) ),
            SLOT( slotAttachProperties() ) );
   connect( mAtmListView,
-           SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
-           SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
+           SIGNAL( rightButtonPressed( Q3ListViewItem*, const QPoint&, int ) ),
+           SLOT( slotAttachPopupMenu( Q3ListViewItem*, const QPoint&, int ) ) );
   connect( mAtmListView,
            SIGNAL( selectionChanged() ),
            SLOT( slotUpdateAttachActions() ) );
@@ -460,18 +470,18 @@ void KMComposeWin::addAttachment(KURL url,QString /*comment*/)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment(const QString &name,
-                                 const QCString &/*cte*/,
+                                 const Q3CString &/*cte*/,
                                  const QByteArray &data,
-                                 const QCString &type,
-                                 const QCString &subType,
-                                 const QCString &paramAttr,
+                                 const Q3CString &type,
+                                 const Q3CString &subType,
+                                 const Q3CString &paramAttr,
                                  const QString &paramValue,
-                                 const QCString &contDisp)
+                                 const Q3CString &contDisp)
 {
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(name);
-    QValueList<int> dummy;
+    Q3ValueList<int> dummy;
     msgPart->setBodyAndGuessCte(data, dummy,
                                 kmkernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
@@ -704,7 +714,7 @@ void KMComposeWin::autoSaveMessage()
   if ( status == 0 ) { // no error
     kdDebug(5006) << "autosaving message in " << filename << endl;
     int fd = autoSaveFile.handle();
-    QCString msgStr = msg->asString();
+    Q3CString msgStr = msg->asString();
     if ( ::write( fd, msgStr, msgStr.length() ) == -1 )
       status = errno;
   }
@@ -1009,7 +1019,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     if ( !toolTip.isEmpty() )
       QToolTip::add( aLbl, toolTip );
     if ( !whatsThis.isEmpty() )
-      QWhatsThis::add( aLbl, whatsThis );
+      aLbl->setWhatsThis( whatsThis );
     aLbl->setFixedWidth( mLabelWidth );
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
@@ -1451,7 +1461,7 @@ void KMComposeWin::setupActions(void)
 void KMComposeWin::setupStatusBar(void)
 {
   statusBar()->insertItem("", 0, 1);
-  statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
+  statusBar()->setItemAlignment(0, AlignLeft | Qt::AlignVCenter);
 
   statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
   statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
@@ -1483,12 +1493,12 @@ void KMComposeWin::setupEditor(void)
 
   if (GlobalSettings::self()->wordWrap())
   {
-    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
+    mEditor->setWordWrap( Q3MultiLineEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
   else
   {
-    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+    mEditor->setWordWrap( Q3MultiLineEdit::NoWrap );
   }
 
   // Font setup
@@ -1599,7 +1609,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
   int maxLineLength = 0;
   int curPos;
   int oldPos = 0;
-  if (mEditor->QMultiLineEdit::wordWrap() == QMultiLineEdit::FixedColumnWidth) {
+  if (mEditor->Q3MultiLineEdit::wordWrap() == Q3MultiLineEdit::FixedColumnWidth) {
     for (curPos = 0; curPos < (int)body.length(); ++curPos)
         if (body[curPos] == '\n') {
           if ((curPos - oldPos) > maxLineLength)
@@ -1614,10 +1624,10 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
+void KMComposeWin::decryptOrStripOffCleartextSignature( Q3CString& body )
 {
-  QPtrList<Kpgp::Block> pgpBlocks;
-  QStrList nonPgpBlocks;
+  Q3PtrList<Kpgp::Block> pgpBlocks;
+  Q3StrList nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( body,
                                                  pgpBlocks, nonPgpBlocks ) )
   {
@@ -1817,7 +1827,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
 
-    QCString bodyDecoded = mMsg->bodyDecoded();
+    Q3CString bodyDecoded = mMsg->bodyDecoded();
 
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -1872,7 +1882,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       if ( mCharset.isEmpty() || mCharset == "default" )
         mCharset = mDefCharset;
 
-      QCString bodyDecoded = bodyPart.bodyDecoded();
+      Q3CString bodyDecoded = bodyPart.bodyDecoded();
 
       if( allowDecryption )
         decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -1894,7 +1904,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     {
       KMMessagePart *msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
-      QCString mimeType = msgPart->typeStr().lower() + '/'
+      Q3CString mimeType = msgPart->typeStr().lower() + '/'
                         + msgPart->subtypeStr().lower();
       // don't add the detached signature as attachment when editting a
       // PGP/MIME signed message
@@ -1907,7 +1917,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
 
-    QCString bodyDecoded = mMsg->bodyDecoded();
+    Q3CString bodyDecoded = mMsg->bodyDecoded();
 
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -2206,7 +2216,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 void KMComposeWin::slotUpdateAttachActions()
 {
   int selectedCount = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it ) {
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
     }
@@ -2410,7 +2420,7 @@ void KMComposeWin::addrBookSelIntoNew()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
+void KMComposeWin::setCharset(const Q3CString& aCharset, bool forceDefault)
 {
   if ((forceDefault && GlobalSettings::self()->forceReplyCharset()) || aCharset.isEmpty())
     mCharset = mDefCharset;
@@ -2500,7 +2510,7 @@ void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
   assert(it != mMapAtmLoadData.end());
   QBuffer buff((*it).data);
-  buff.open(IO_WriteOnly | IO_Append);
+  buff.open(QIODevice::WriteOnly | QIODevice::Append);
   buff.writeBlock(data.data(), data.size());
   buff.close();
 }
@@ -2528,9 +2538,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     mMapAtmLoadData.remove(it);
     return;
   }
-  const QCString partCharset = (*it).url.fileEncoding().isEmpty()
+  const Q3CString partCharset = (*it).url.fileEncoding().isEmpty()
                              ? mCharset
-                             : QCString((*it).url.fileEncoding().latin1());
+                             : Q3CString((*it).url.fileEncoding().latin1());
 
   KMMessagePart* msgPart;
 
@@ -2562,11 +2572,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   name.truncate( 256 ); // is this needed?
 
-  QCString encoding = KMMsgBase::autoDetectCharset(partCharset,
+  Q3CString encoding = KMMsgBase::autoDetectCharset(partCharset,
     KMMessage::preferredCharsets(), name);
   if (encoding.isEmpty()) encoding = "utf-8";
 
-  QCString encName;
+  Q3CString encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -2578,7 +2588,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(name);
-  QValueList<int> allowedCTEs;
+  Q3ValueList<int> allowedCTEs;
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
                               !kmkernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
@@ -2587,7 +2597,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     slash = mimeType.length();
   msgPart->setTypeStr( mimeType.left( slash ).latin1() );
   msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).latin1() );
-  msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
+  msgPart->setContentDisposition(Q3CString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
   mMapAtmLoadData.remove(it);
@@ -2597,10 +2607,10 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   // show message part dialog, if not configured away (default):
   KConfigGroup composer(KMKernel::config(), "Composer");
   if ( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
-    const KCursorSaver saver( QCursor::ArrowCursor );
+    const KCursorSaver saver( Qt::ArrowCursor );
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
-    for ( QValueListConstIterator<int> it = allowedCTEs.begin() ;
+    for ( Q3ValueListConstIterator<int> it = allowedCTEs.begin() ;
           it != allowedCTEs.end() ; ++it )
       switch ( *it ) {
       case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
@@ -2618,7 +2628,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     }
   }
   mAtmModified = TRUE;
-  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
+  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(Q3CString());
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2846,9 +2856,9 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
   msgPart->setName( i18n("OpenPGP key 0x%1").arg( mFingerprint ) );
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  QValueList<int> dummy;
+  Q3ValueList<int> dummy;
   msgPart->setBodyAndGuessCte(keydata, dummy, false);
-  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + QCString( mFingerprint.latin1() ) + ".asc" );
+  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + Q3CString( mFingerprint.latin1() ) + ".asc" );
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2875,11 +2885,11 @@ void KMComposeWin::slotInsertPublicKey()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
+void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
 {
   if (!mAttachMenu)
   {
-     mAttachMenu = new QPopupMenu(this);
+     mAttachMenu = new Q3PopupMenu(this);
 
      mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
                              SLOT(slotAttachOpen()));
@@ -2895,7 +2905,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   }
 
   int selectedCount = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it ) {
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it ) {
     if ( (*it)->isSelected() ) {
       ++selectedCount;
     }
@@ -2914,7 +2924,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 int KMComposeWin::currentAttachmentNum()
 {
   int i = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i )
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i )
     if ( *it == mAtmListView->currentItem() )
       return i;
   return -1;
@@ -2954,7 +2964,7 @@ void KMComposeWin::slotAttachProperties()
       }
     }
   }
-  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
+  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(Q3CString());
 }
 
 //-----------------------------------------------------------------------------
@@ -2976,7 +2986,7 @@ void KMComposeWin::compressAttach( int idx )
   QBuffer dev( array );
   KZip zip( &dev );
   QByteArray decoded = msgPart->bodyDecodedBinary();
-  if ( ! zip.open( IO_WriteOnly ) ) {
+  if ( ! zip.open( QIODevice::WriteOnly ) ) {
     KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
     static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
     return;
@@ -3007,13 +3017,13 @@ void KMComposeWin::compressAttach( int idx )
 
   msgPart->setName( name );
 
-  QCString cDisp = "attachment;";
-  QCString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
+  Q3CString cDisp = "attachment;";
+  Q3CString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
     KMMessage::preferredCharsets(), name );
   kdDebug(5006) << "encoding: " << encoding << endl;
   if ( encoding.isEmpty() ) encoding = "utf-8";
   kdDebug(5006) << "encoding after: " << encoding << endl;
-  QCString encName;
+  Q3CString encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -3057,7 +3067,7 @@ void KMComposeWin::uncompressAttach( int idx )
   QByteArray decoded;
 
   decoded = msgPart->bodyDecodedBinary();
-  if ( ! zip.open( IO_ReadOnly ) ) {
+  if ( ! zip.open( QIODevice::ReadOnly ) ) {
     KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
     static_cast<KMAtmListViewItem *>( mAtmItemList.at( i ) )->setCompress( true );
     return;
@@ -3081,12 +3091,12 @@ void KMComposeWin::uncompressAttach( int idx )
 
   zip.close();
 
-  QCString cDisp = "attachment;";
-  QCString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
+  Q3CString cDisp = "attachment;";
+  Q3CString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
     KMMessage::preferredCharsets(), name );
   if ( encoding.isEmpty() ) encoding = "utf-8";
 
-  QCString encName;
+  Q3CString encName;
   if ( GlobalSettings::self()->outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
@@ -3099,7 +3109,7 @@ void KMComposeWin::uncompressAttach( int idx )
     cDisp += "=\"" + encName + '"';
   msgPart->setContentDisposition( cDisp );
 
-  QCString type, subtype;
+  Q3CString type, subtype;
   static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->uncompressedMimeType( type,
         subtype );
 
@@ -3115,7 +3125,7 @@ void KMComposeWin::uncompressAttach( int idx )
 void KMComposeWin::slotAttachView()
 {
   int i = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
     if ( (*it)->isSelected() ) {
       viewAttach( i );
     }
@@ -3125,7 +3135,7 @@ void KMComposeWin::slotAttachView()
 void KMComposeWin::slotAttachOpen()
 {
   int i = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
     if ( (*it)->isSelected() ) {
       openAttach( i );
     }
@@ -3226,7 +3236,7 @@ void KMComposeWin::slotAttachRemove()
 {
   bool attachmentRemoved = false;
   int i = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ) {
+  for ( Q3PtrListIterator<Q3ListViewItem> it(mAtmItemList); *it; ) {
     if ( (*it)->isSelected() ) {
       removeAttach( i );
       attachmentRemoved = true;
@@ -3310,8 +3320,8 @@ void KMComposeWin::slotPasteAsAttachment()
       return;
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(attName);
-    QValueList<int> dummy;
-    msgPart->setBodyAndGuessCte(QCString(QApplication::clipboard()->text().latin1()), dummy,
+    Q3ValueList<int> dummy;
+    msgPart->setBodyAndGuessCte(Q3CString(QApplication::clipboard()->text().latin1()), dummy,
                                 kmkernel->msgSender()->sendQuotedPrintable());
     addAttach(msgPart);
   }
@@ -3384,7 +3394,7 @@ void KMComposeWin::slotUndo()
   if (!fw) return;
 
   if ( ::qt_cast<KEdit*>(fw) )
-      static_cast<QMultiLineEdit*>(fw)->undo();
+      static_cast<Q3MultiLineEdit*>(fw)->undo();
   else if (::qt_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->undo();
 }
@@ -3599,12 +3609,12 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 {
   if (on)
   {
-    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
+    mEditor->setWordWrap( Q3MultiLineEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth( GlobalSettings::self()->lineWrapWidth() );
   }
   else
   {
-    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+    mEditor->setWordWrap( Q3MultiLineEdit::NoWrap );
   }
 }
 
@@ -3788,7 +3798,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     return;
   }
 
-  for ( QValueVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
+  for ( Q3ValueVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
     (*it)->cleanupHeader();
@@ -4261,7 +4271,7 @@ void KMComposeWin::slotSpellcheckConfig()
                   KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok,
                   this, 0, true, true );
   KWin kwin;
-  QTabDialog qtd (this, "tabdialog", true);
+  Q3TabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
 
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
@@ -4421,26 +4431,26 @@ void KMComposeWin::slotListAction( const QString& style )
 {
     toggleMarkup(true);
     if ( style == i18n( "Standard" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayBlock, Q3StyleSheetItem::ListDisc );
     else if ( style == i18n( "Bulleted List (Disc)" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDisc );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListDisc );
     else if ( style == i18n( "Bulleted List (Circle)" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListCircle );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListCircle );
     else if ( style == i18n( "Bulleted List (Square)" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListSquare );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListSquare );
     else if ( style == i18n( "Ordered List (Decimal)" ))
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDecimal );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListDecimal );
     else if ( style == i18n( "Ordered List (Alpha lower)" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListLowerAlpha );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListLowerAlpha );
     else if ( style == i18n( "Ordered List (Alpha upper)" ) )
-       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListUpperAlpha );
+       mEditor->setParagType( Q3StyleSheetItem::DisplayListItem, Q3StyleSheetItem::ListUpperAlpha );
     mEditor->viewport()->setFocus();
 }
 
 void KMComposeWin::slotFontAction( const QString& font)
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setFamily( font );
+    mEditor->Q3TextEdit::setFamily( font );
     mEditor->viewport()->setFocus();
 }
 
@@ -4454,37 +4464,37 @@ void KMComposeWin::slotSizeAction( int size )
 void KMComposeWin::slotAlignLeft()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setAlignment( AlignLeft );
+    mEditor->Q3TextEdit::setAlignment( AlignLeft );
 }
 
 void KMComposeWin::slotAlignCenter()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setAlignment( AlignHCenter );
+    mEditor->Q3TextEdit::setAlignment( AlignHCenter );
 }
 
 void KMComposeWin::slotAlignRight()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setAlignment( AlignRight );
+    mEditor->Q3TextEdit::setAlignment( AlignRight );
 }
 
 void KMComposeWin::slotTextBold()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setBold( textBoldAction->isChecked() );
+    mEditor->Q3TextEdit::setBold( textBoldAction->isChecked() );
 }
 
 void KMComposeWin::slotTextItalic()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setItalic( textItalicAction->isChecked() );
+    mEditor->Q3TextEdit::setItalic( textItalicAction->isChecked() );
 }
 
 void KMComposeWin::slotTextUnder()
 {
     toggleMarkup(true);
-    mEditor->QTextEdit::setUnderline( textUnderAction->isChecked() );
+    mEditor->Q3TextEdit::setUnderline( textUnderAction->isChecked() );
 }
 
 void KMComposeWin::slotFormatReset()

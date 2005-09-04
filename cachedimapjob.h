@@ -48,9 +48,9 @@
 #include <kio/job.h>
 #include <kio/global.h>
 
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qcstring.h>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
+#include <q3cstring.h>
 
 class KMFolderCachedImap;
 class KMAcctCachedImap;
@@ -72,15 +72,15 @@ public:
   };
 
   // Get messages
-  CachedImapJob( const QValueList<MsgForDownload>& msgs,
+  CachedImapJob( const Q3ValueList<MsgForDownload>& msgs,
                  JobType type = tGetMessage, KMFolderCachedImap* folder = 0 );
   // Put messages
-  CachedImapJob( const QPtrList<KMMessage>& msgs,
+  CachedImapJob( const Q3PtrList<KMMessage>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
-  CachedImapJob( const QValueList<unsigned long>& msgs,
+  CachedImapJob( const Q3ValueList<unsigned long>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
   // Add sub folders
-  CachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
+  CachedImapJob( const Q3ValueList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
   // Rename folder
@@ -121,9 +121,9 @@ protected slots:
 private:
   KMFolderCachedImap *mFolder;
   KMAcctCachedImap   *mAccount;
-  QValueList<KMFolderCachedImap*> mFolderList;
-  QValueList<MsgForDownload> mMsgsForDownload;
-  QValueList<unsigned long> mSerNumMsgList;
+  Q3ValueList<KMFolderCachedImap*> mFolderList;
+  Q3ValueList<MsgForDownload> mMsgsForDownload;
+  Q3ValueList<unsigned long> mSerNumMsgList;
   ulong mSentBytes; // previous messages
   ulong mTotalBytes;
   QStringList mFoldersOrMessages; // Folder deletion: path list. Message deletion: sets of uids

@@ -23,13 +23,18 @@
 #endif
 
 #include <qpainter.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
 
 #include <kcolordialog.h>
 #include <kcolordrag.h>
 
 #include "colorlistbox.h"
 
-ColorListBox::ColorListBox( QWidget *parent, const char *name, WFlags f )
+ColorListBox::ColorListBox( QWidget *parent, const char *name, Qt::WFlags f )
   :KListBox( parent, name, f ), mCurrentOnDragEnter(-1)
 {
   connect( this, SIGNAL(selected(int)), this, SLOT(newColor(int)) );
@@ -44,7 +49,7 @@ void ColorListBox::setEnabled( bool state )
     return;
   }
 
-  QListBox::setEnabled( state );
+  Q3ListBox::setEnabled( state );
   for( uint i=0; i<count(); i++ )
   {
     updateItem( i );
@@ -153,7 +158,7 @@ void ColorListBox::dropEvent( QDropEvent *e )
 
 
 ColorListItem::ColorListItem( const QString &text, const QColor &color )
-  : QListBoxItem(), mColor( color ), mBoxWidth( 30 )
+  : Q3ListBoxItem(), mColor( color ), mBoxWidth( 30 )
 {
   setText( text );
 }
@@ -184,13 +189,13 @@ void ColorListItem::paint( QPainter *p )
 }
 
 
-int ColorListItem::height(const QListBox *lb ) const
+int ColorListItem::height(const Q3ListBox *lb ) const
 {
   return( lb->fontMetrics().lineSpacing()+1 );
 }
 
 
-int ColorListItem::width(const QListBox *lb ) const
+int ColorListItem::width(const Q3ListBox *lb ) const
 {
   return( mBoxWidth + lb->fontMetrics().width( text() ) + 6 );
 }

@@ -34,6 +34,9 @@
 
 #include <dcopobject.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 #include <kurl.h>
 
 // yes, this is this very header - but it tells dcopidl to include it
@@ -83,7 +86,7 @@ k_dcop:
                            Q_UINT32 sernum,
                            const QString& subject,
                            const QString& plainTextBody,
-                           const QMap<QCString, QString>& customHeaders,
+                           const QMap<Q3CString, QString>& customHeaders,
                            const QStringList& attachmentURLs,
                            const QStringList& attachmentMimetypes,
                            const QStringList& attachmentNames,
@@ -105,7 +108,7 @@ k_dcop:
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal
    */
-  virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
+  virtual Q3ValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
   /**
    * Causes all resource folders of the given type to be synced with the server.

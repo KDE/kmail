@@ -34,7 +34,7 @@
 #include "kmmessage.h"
 
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qstring.h>
 
 class KMFolder;
@@ -62,7 +62,7 @@ public:
    * set @sets, JobType @p jt and with the parent folder @p folder.
    *
    */
-  FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
+  FolderJob( const Q3PtrList<KMMessage>& msgList, const QString& sets,
 	     JobType jt = tGetMessage, KMFolder *folder = 0 );
   /**
    * This one should ONLY be used in derived folders, when a job
@@ -72,7 +72,7 @@ public:
   FolderJob( JobType jt );
   virtual ~FolderJob();
 
-  QPtrList<KMMessage> msgList() const;
+  Q3PtrList<KMMessage> msgList() const;
   /**
    * Start the job
    */
@@ -130,7 +130,7 @@ signals:
    * copied to the specified location. QPtrList contains
    * the list of the copied messages.
    */
-  void messageCopied( QPtrList<KMMessage> );
+  void messageCopied( Q3PtrList<KMMessage> );
 
   /**
    * Overloaded signal to the one above. A lot of copying
@@ -169,7 +169,7 @@ protected:
    */
   virtual void execute()=0;
 
-  QPtrList<KMMessage> mMsgList;
+  Q3PtrList<KMMessage> mMsgList;
   JobType             mType;
   QString             mSets;
   KMFolder*           mSrcFolder;

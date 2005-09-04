@@ -26,6 +26,10 @@
 #endif
 
 #include "imapaccountbase.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 using KMail::SieveConfig;
 
 #include "accountmanager.h"
@@ -67,7 +71,7 @@ using KIO::PasswordDialog;
 //using KIO::Scheduler; // use FQN below
 
 #include <qregexp.h>
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 
 namespace KMail {
 
@@ -353,7 +357,7 @@ namespace KMail {
     url.setPath(imapPath);
 
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
+    QDataStream stream( packedArgs, QIODevice::WriteOnly);
 
     if (subscribe)
       stream << (int) 'u' << url;
@@ -482,7 +486,7 @@ namespace KMail {
   {
     if ( mSlave ) {
       QByteArray packedArgs;
-      QDataStream stream( packedArgs, IO_WriteOnly );
+      QDataStream stream( packedArgs, QIODevice::WriteOnly );
 
       stream << ( int ) 'N';
 
@@ -555,7 +559,7 @@ namespace KMail {
 
     // get capabilities
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
+    QDataStream stream( packedArgs, QIODevice::WriteOnly);
     stream << (int) 'c';
     KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
     KIO::Scheduler::assignJobToSlave( mSlave, job );
@@ -588,7 +592,7 @@ namespace KMail {
     }
     
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
+    QDataStream stream( packedArgs, QIODevice::WriteOnly);
     stream << (int) 'n';
     jobData jd;
     jd.total = 1; jd.done = 0; jd.cancellable = true;
@@ -829,9 +833,9 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
+      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), Q3StyleSheet::escape( from ), Q3StyleSheet::escape( subject ) )
       + "</p><p>"
-      + i18n("The destination folder was %1, which has the URL %2.").arg( QStyleSheet::escape( folder->label() ), QStyleSheet::escape( jd.htmlURL() ) )
+      + i18n("The destination folder was %1, which has the URL %2.").arg( Q3StyleSheet::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) )
       + "</p><p>"
       + i18n("The error message from the server communication is here:") + "</p>";
     return handleJobError( job, myError );
@@ -931,7 +935,7 @@ namespace KMail {
         ++it;
     }
 
-    for( QPtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
+    for( Q3PtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
       if ( it.current()->isCancellable() ) {
         FolderJob* job = it.current();
         job->setPassiveDestructor( true );
@@ -972,7 +976,7 @@ namespace KMail {
     disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                 this, SLOT( slotCheckQueuedFolders() ) );
 
-    QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
+    Q3ValueList<QPointer<KMFolder> > mSaveList = mMailCheckFolders;
     mMailCheckFolders = mFoldersQueuedForChecking;
     kmkernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders = mSaveList;
@@ -1009,9 +1013,9 @@ namespace KMail {
     // see what parts have to loaded according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
     visitor->visit( mBodyPartList );
-    QPtrList<KMMessagePart> parts = visitor->partsToLoad();
+    Q3PtrList<KMMessagePart> parts = visitor->partsToLoad();
     delete visitor;
-    QPtrListIterator<KMMessagePart> it( parts );
+    Q3PtrListIterator<KMMessagePart> it( parts );
     KMMessagePart *part;
     int partsToLoad = 0;
     // check how many parts we have to load
@@ -1113,7 +1117,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const QCString& flags )
+  void ImapAccountBase::setImapStatus( KMFolder* folder, const QString& path, const Q3CString& flags )
   {
      // set the status on the server, the uids are integrated in the path
      kdDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
@@ -1121,7 +1125,7 @@ namespace KMail {
      url.setPath(path);
 
      QByteArray packedArgs;
-     QDataStream stream( packedArgs, IO_WriteOnly);
+     QDataStream stream( packedArgs, QIODevice::WriteOnly);
 
      stream << (int) 'S' << url << flags;
 

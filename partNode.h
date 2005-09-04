@@ -44,6 +44,8 @@
 
 #include <kio/global.h>
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class KMMimePartTreeItem;
 class KMMimePartTree;
@@ -101,7 +103,7 @@ public:
         return mMsgPart;
     }
 
-    const QCString & encodedBody();
+    const Q3CString & encodedBody();
 
     void setType( int type ) {
         mType = type;
@@ -115,13 +117,13 @@ public:
         return mType;
     }
 
-    QCString typeString() const;
+    Q3CString typeString() const;
 
     int subType() const {
         return mSubType;
     }
 
-    QCString subTypeString() const;
+    Q3CString subTypeString() const;
 
     bool hasType( int type ) {
       return mType == type;
@@ -243,7 +245,7 @@ private:
 private:
     DwBodyPart*   mDwPart;   // may be zero
     mutable KMMessagePart mMsgPart;  // is valid - even if mDwPart is zero
-    QCString      mEncodedBody;
+    Q3CString      mEncodedBody;
     QString       mFromAddress;
     int           mType;
     int           mSubType;

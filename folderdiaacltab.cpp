@@ -54,11 +54,15 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qvbuttongroup.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 #include <qradiobutton.h>
-#include <qwhatsthis.h>
+
+//Added by qt3to4:
+#include <QGridLayout>
+#include <Q3ValueList>
+#include <QVBoxLayout>
 
 #include <assert.h>
 #include <kmessagebox.h>
@@ -98,12 +102,12 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   mUserIdLineEdit = new KLineEdit( page );
   topLayout->addWidget( mUserIdLineEdit, 0, 1 );
   label->setBuddy( mUserIdLineEdit );
-  QWhatsThis::add( mUserIdLineEdit, i18n( "The User Identifier is the login of the user on the IMAP server. This can be a simple user name or the full email address of the user; the login for your own account on the server will tell you which one it is." ) );
+  mUserIdLineEdit->setWhatsThis( i18n( "The User Identifier is the login of the user on the IMAP server. This can be a simple user name or the full email address of the user; the login for your own account on the server will tell you which one it is." ) );
 
   QPushButton* kabBtn = new QPushButton( "...", page );
   topLayout->addWidget( kabBtn, 0, 2 );
 
-  mButtonGroup = new QVButtonGroup( i18n( "Permissions" ), page );
+  mButtonGroup = new Q3VButtonGroup( i18n( "Permissions" ), page );
   topLayout->addMultiCellWidget( mButtonGroup, 1, 1, 0, 2 );
 
   for ( unsigned int i = 0;
@@ -155,7 +159,7 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
   QString txt = distrLists.join( ", " );
   const KABC::Addressee::List lst = dlg.toAddresses();
   if ( !lst.isEmpty() ) {
-    for( QValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+    for( Q3ValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
       if ( !txt.isEmpty() )
         txt += ", ";
       txt += addresseeToUserId( *it, mUserIdFormat );
@@ -200,7 +204,7 @@ unsigned int KMail::ACLEntryDialog::permissions() const
 class KMail::FolderDiaACLTab::ListViewItem : public KListViewItem
 {
 public:
-  ListViewItem( QListView* listview )
+  ListViewItem( Q3ListView* listview )
     : KListViewItem( listview, listview->lastItem() ),
       mModified( false ), mNew( false ) {}
 
@@ -325,14 +329,14 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no acl support", "please wait"...)
   // or a listview.
-  mStack = new QWidgetStack( this );
+  mStack = new Q3WidgetStack( this );
   topLayout->addWidget( mStack );
 
   mLabel = new QLabel( mStack );
-  mLabel->setAlignment( AlignHCenter | AlignVCenter | WordBreak );
+  mLabel->setAlignment( AlignHCenter | Qt::AlignVCenter | WordBreak );
   mStack->addWidget( mLabel );
 
-  mACLWidget = new QHBox( mStack );
+  mACLWidget = new Q3HBox( mStack );
   mACLWidget->setSpacing( KDialog::spacingHint() );
   mListView = new KListView( mACLWidget );
   mListView->setAllColumnsShowFocus( true );
@@ -340,14 +344,14 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   mListView->addColumn( i18n( "User Id" ) );
   mListView->addColumn( i18n( "Permissions" ) );
 
-  connect( mListView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
-	   SLOT(slotEditACL(QListViewItem*)) );
-  connect( mListView, SIGNAL(returnPressed(QListViewItem*)),
-	   SLOT(slotEditACL(QListViewItem*)) );
-  connect( mListView, SIGNAL(selectionChanged(QListViewItem*)),
-	   SLOT(slotSelectionChanged(QListViewItem*)) );
+  connect( mListView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
+	   SLOT(slotEditACL(Q3ListViewItem*)) );
+  connect( mListView, SIGNAL(returnPressed(Q3ListViewItem*)),
+	   SLOT(slotEditACL(Q3ListViewItem*)) );
+  connect( mListView, SIGNAL(selectionChanged(Q3ListViewItem*)),
+	   SLOT(slotSelectionChanged(Q3ListViewItem*)) );
 
-  QVBox* buttonBox = new QVBox( mACLWidget );
+  Q3VBox* buttonBox = new Q3VBox( mACLWidget );
   buttonBox->setSpacing( KDialog::spacingHint() );
   mAddACL = new KPushButton( i18n( "Add Entry..." ), buttonBox );
   mEditACL = new KPushButton( i18n( "Modify Entry..." ), buttonBox );
@@ -547,7 +551,7 @@ void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
   slotSelectionChanged( mListView->selectedItem() );
 }
 
-void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
+void KMail::FolderDiaACLTab::slotEditACL(Q3ListViewItem* item)
 {
   if ( !item ) return;
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
@@ -603,7 +607,7 @@ void KMail::FolderDiaACLTab::slotAddACL()
   }
 }
 
-void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
+void KMail::FolderDiaACLTab::slotSelectionChanged(Q3ListViewItem* item)
 {
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
   bool canAdminThisItem = canAdmin;
@@ -675,7 +679,7 @@ bool KMail::FolderDiaACLTab::save()
   manager.load();
 #endif
   ACLList aclList;
-  for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+  for ( Q3ListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     ACLitem->save( aclList,
 #ifdef KDEPIM_NEW_DISTRLISTS
@@ -782,7 +786,7 @@ void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissi
   // -> we note that it's been done.
   bool ok = false;
   if ( permissions > -1 ) {
-    for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+    for ( Q3ListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
       ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
       if ( ACLitem->userId() == userId ) {
         ACLitem->setModified( false );

@@ -3,17 +3,20 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 
-#include <qguardedptr.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qvaluevector.h>
+#include <qpointer.h>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <Q3CString>
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
 #include <kdepimmacros.h>
 #include <kservice.h>
 
-class QPopupMenu;
+class Q3PopupMenu;
 class KMainWindow;
 class KAction;
 class KProgressDialog;
@@ -46,7 +49,7 @@ public:
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
   // Retrieve all messages in msgList when start is called.
-  KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList );
+  KMCommand( QWidget *parent, const Q3PtrList<KMMsgBase> &msgList );
   // Retrieve the single message msgBase when start is called.
   KMCommand( QWidget *parent, KMMsgBase *msgBase );
   // Retrieve the single message msgBase when start is called.
@@ -79,7 +82,7 @@ signals:
 
 protected:
   // Returns list of messages retrieved
-  const QPtrList<KMMessage> retrievedMsgs() const;
+  const Q3PtrList<KMMessage> retrievedMsgs() const;
   // Returns the single message retrieved
   KMMessage *retrievedMessage() const;
   // Returns the parent widget
@@ -141,9 +144,9 @@ private:
   bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
-  QPtrList<KMMessage> mRetrievedMsgs;
-  QPtrList<KMMsgBase> mMsgList;
-  QValueList<QGuardedPtr<KMFolder> > mFolders;
+  Q3PtrList<KMMessage> mRetrievedMsgs;
+  Q3PtrList<KMMsgBase> mMsgList;
+  Q3ValueList<QPointer<KMFolder> > mFolders;
 };
 
 class KDE_EXPORT KMMailtoComposeCommand : public KMCommand
@@ -303,7 +306,7 @@ class KDE_EXPORT KMSaveMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSaveMsgCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList );
+  KMSaveMsgCommand( QWidget *parent, const Q3PtrList<KMMsgBase> &msgList );
   KMSaveMsgCommand( QWidget *parent, KMMessage * msg );
   KURL url();
 
@@ -319,7 +322,7 @@ private slots:
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KURL mUrl;
-  QValueList<unsigned long> mMsgList;
+  Q3ValueList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
   KMMessage *mStandAloneMessage;
   QByteArray mData;
@@ -364,7 +367,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs );
+  KMSaveAttachmentsCommand( QWidget *parent, const Q3PtrList<KMMsgBase>& msgs );
   /** Use this to save the specified attachments of the given message.
       @param parent       The parent widget of the command used for message
                           boxes.
@@ -373,7 +376,7 @@ public:
       @param encoded      True if the transport encoding should not be removed
                           when the attachment is saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode> &attachments,
+  KMSaveAttachmentsCommand( QWidget *parent, Q3PtrList<partNode> &attachments,
                             KMMessage *msg, bool encoded = false  );
 
 private slots:
@@ -465,7 +468,7 @@ class KDE_EXPORT KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+  KMForwardCommand( QWidget *parent, const Q3PtrList<KMMsgBase> &msgList,
                     uint identity = 0 );
   KMForwardCommand( QWidget *parent, KMMessage * msg,
                     uint identity = 0 );
@@ -482,7 +485,7 @@ class KDE_EXPORT KMForwardAttachedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardAttachedCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+  KMForwardAttachedCommand( QWidget *parent, const Q3PtrList<KMMsgBase> &msgList,
 			    uint identity = 0, KMail::Composer *win = 0 );
   KMForwardAttachedCommand( QWidget *parent, KMMessage * msg,
 			    uint identity = 0, KMail::Composer *win = 0 );
@@ -491,7 +494,7 @@ private:
   virtual Result execute();
 
   uint mIdentity;
-  QGuardedPtr<KMail::Composer> mWin;
+  QPointer<KMail::Composer> mWin;
 };
 
 class KDE_EXPORT KMRedirectCommand : public KMCommand
@@ -531,15 +534,15 @@ class KDE_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( KMMsgStatus status, const QValueList<Q_UINT32> &,
+  KMSetStatusCommand( KMMsgStatus status, const Q3ValueList<Q_UINT32> &,
                       bool toggle=false );
 
 private:
   virtual Result execute();
 
   KMMsgStatus mStatus;
-  QValueList<Q_UINT32> mSerNums;
-  QValueList<int> mIds;
+  Q3ValueList<Q_UINT32> mSerNums;
+  Q3ValueList<int> mIds;
   bool mToggle;
 };
 
@@ -548,12 +551,12 @@ class KDE_EXPORT KMFilterCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMFilterCommand( const QCString &field, const QString &value );
+  KMFilterCommand( const Q3CString &field, const QString &value );
 
 private:
   virtual Result execute();
 
-  QCString mField;
+  Q3CString mField;
   QString mValue;
 };
 
@@ -564,7 +567,7 @@ class KDE_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-			 const QPtrList<KMMsgBase> &msgList,
+			 const Q3PtrList<KMMsgBase> &msgList,
 			 KMFilter *filter );
 
 private:
@@ -638,10 +641,10 @@ class KDE_EXPORT KMMenuCommand : public KMCommand
 
 public:
   static void folderToPopupMenu(bool move, QObject *receiver,
-    KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
+    KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu );
 
   static void makeFolderMenu(KMFolderNode* item, bool move,
-    QObject *receiver, KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
+    QObject *receiver, KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu );
 };
 
 class KDE_EXPORT KMCopyCommand : public KMMenuCommand
@@ -650,7 +653,7 @@ class KDE_EXPORT KMCopyCommand : public KMMenuCommand
 
 public:
   KMCopyCommand( KMFolder* destFolder,
-		 const QPtrList<KMMsgBase> &msgList );
+		 const Q3PtrList<KMMsgBase> &msgList );
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 protected slots:
@@ -662,10 +665,10 @@ private:
   virtual Result execute();
 
   KMFolder *mDestFolder;
-  QPtrList<KMMsgBase> mMsgList;
+  Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that need to be loaded
   // Ticked off as they come in via msgAdded signals.
-  QValueList<Q_UINT32> mWaitingForMsgs;
+  Q3ValueList<Q_UINT32> mWaitingForMsgs;
 };
 
 namespace KPIM {
@@ -676,7 +679,7 @@ class KDE_EXPORT KMMoveCommand : public KMMenuCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
+  KMMoveCommand( KMFolder* destFolder, const Q3PtrList<KMMsgBase> &msgList );
   KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
   KMMoveCommand( KMFolder* destFolder, KMMsgBase * msgBase );
   KMFolder* destFolder() const { return mDestFolder; }
@@ -691,17 +694,17 @@ protected:
   KMMoveCommand( Q_UINT32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
   void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
-  QValueVector<KMFolder*> mOpenedFolders;
+  Q3ValueVector<KMFolder*> mOpenedFolders;
 
 private:
   virtual Result execute();
   void completeMove( Result result );
 
   KMFolder *mDestFolder;
-  QPtrList<KMMsgBase> mMsgList;
+  Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
-  QValueList<Q_UINT32> mLostBoys;
+  Q3ValueList<Q_UINT32> mLostBoys;
   KPIM::ProgressItem *mProgressItem;
 };
 
@@ -710,7 +713,7 @@ class KDE_EXPORT KMDeleteMsgCommand : public KMMoveCommand
   Q_OBJECT
 
 public:
-  KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList );
+  KMDeleteMsgCommand( KMFolder* srcFolder, const Q3PtrList<KMMsgBase> &msgList );
   KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
   KMDeleteMsgCommand( Q_UINT32 sernum );
 
@@ -742,7 +745,7 @@ class KDE_EXPORT KMLoadPartsCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage* msg );
+  KMLoadPartsCommand( Q3PtrList<partNode>& parts, KMMessage* msg );
   KMLoadPartsCommand( partNode* node, KMMessage* msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 

@@ -17,6 +17,11 @@
 #define _KMAIL_ATTACHMENTLISTVIEW_H_
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QKeyEvent>
+#include <QDropEvent>
 
 class QDragEnterEvent;
 class QDragMoveEvent;

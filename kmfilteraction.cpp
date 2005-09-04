@@ -21,6 +21,11 @@
 #include <libkpimidentities/identitycombo.h>
 #include <libkdepim/kfileio.h>
 #include <libkdepim/collectingprocess.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
+#include <QHBoxLayout>
+#include <Q3ValueList>
 using KPIM::CollectingProcess;
 #include "kmfawidgets.h"
 #include "folderrequester.h"
@@ -45,7 +50,7 @@ using KMail::RegExpLineEdit;
 #include <qtextcodec.h>
 #include <qtimer.h>
 #include <qobject.h>
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 #include <assert.h>
 
 
@@ -111,7 +116,7 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 }
 
 void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
-                              const QValueList<KMime::MDN::DispositionModifier> & m ) {
+                              const Q3ValueList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
@@ -163,7 +168,7 @@ const QString KMFilterActionWithUOID::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 
@@ -214,7 +219,7 @@ const QString KMFilterActionWithString::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -332,7 +337,7 @@ const QString KMFilterActionWithFolder::displayString() const
     result = mFolder->prettyURL();
   else
     result = mFolderName;
-  return label() + " \"" + QStyleSheet::escape( result ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( result ) + "\"";
 }
 
 bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
@@ -410,10 +415,10 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
-QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QPtrList<KTempFile> & aTempFileList ) const
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, Q3PtrList<KTempFile> & aTempFileList ) const
 {
   QString result = mParameter;
-  QValueList<int> argList;
+  Q3ValueList<int> argList;
   QRegExp r( "%[0-9-]+" );
 
   // search for '%n'
@@ -433,7 +438,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   // and use QString::arg to substitute filenames for the %n's.
   int lastSeen = -2;
   QString tempFileName;
-  for ( QValueList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
+  for ( Q3ValueList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
     // setup temp files with check for duplicate %n's
     if ( (*it) != lastSeen ) {
       KTempFile *tf = new KTempFile();
@@ -493,7 +498,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(TRUE);
 
-  QPtrList<KTempFile> atmList;
+  Q3PtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
   atmList.append( inFile );
 
@@ -821,7 +826,7 @@ const QString KMFilterActionSetStatus::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -916,7 +921,7 @@ const QString KMFilterActionFakeDisposition::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -1101,7 +1106,7 @@ const QString KMFilterActionAddHeader::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 void KMFilterActionAddHeader::argsFromString( const QString argsStr )
@@ -1277,7 +1282,7 @@ const QString KMFilterActionRewriteHeader::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
@@ -1453,13 +1458,13 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->initFromMessage( aMsg );
 
   QString st = QString::fromUtf8( aMsg->createForwardBody() );
-  QCString
+  Q3CString
     encoding = KMMsgBase::autoDetectCharset( aMsg->charset(),
                                              KMMessage::preferredCharsets(),
                                              st );
   if( encoding.isEmpty() )
     encoding = "utf-8";
-  QCString str = KMMsgBase::codecForName( encoding )->fromUnicode( st );
+  Q3CString str = KMMsgBase::codecForName( encoding )->fromUnicode( st );
 
   msg->setCharset( encoding );
   msg->setTo( mParameter );
@@ -1472,7 +1477,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
     msg->setAutomaticFields( true );
     msg->setHeaderField( "Content-Type", "text/plain" );
     // msg->setCteStr( isQP ? "quoted-printable": "8bit" );
-    QValueList<int> dummy;
+    Q3ValueList<int> dummy;
     msg->setBodyAndGuessCte(str, dummy, !isQP);
     msg->setCharset( encoding );
     if( isQP )
@@ -1492,7 +1497,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
     bodyPart.setTypeStr( "text" );
     bodyPart.setSubtypeStr( "plain" );
     // bodyPart.setCteStr( isQP ? "quoted-printable": "8bit" );
-    QValueList<int> dummy;
+    Q3ValueList<int> dummy;
     bodyPart.setBodyAndGuessCte(str, dummy, !isQP);
     bodyPart.setCharset( encoding );
     bodyPart.setBodyEncoded( str );
@@ -1672,7 +1677,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(FALSE);
 
-  QPtrList<KTempFile> atmList;
+  Q3PtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
   atmList.append( inFile );
 
@@ -1759,7 +1764,7 @@ const QString KMFilterActionWithTest::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 
@@ -1836,7 +1841,7 @@ const QString KMFilterActionWithUrl::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
 }
 
 
@@ -1868,7 +1873,7 @@ void KMFilterActionDict::init(void)
 // The int in the QDict constructor (41) must be a prime
 // and should be greater than the double number of KMFilterAction types
 KMFilterActionDict::KMFilterActionDict()
-  : QDict<KMFilterActionDesc>(41)
+  : Q3Dict<KMFilterActionDesc>(41)
 {
   mList.setAutoDelete(TRUE);
   init();
@@ -1881,8 +1886,8 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   desc->name = action->name();
   desc->label = action->label();
   desc->create = aNewFunc;
-  QDict<KMFilterActionDesc>::insert( desc->name, desc );
-  QDict<KMFilterActionDesc>::insert( desc->label, desc );
+  Q3Dict<KMFilterActionDesc>::insert( desc->name, desc );
+  Q3Dict<KMFilterActionDesc>::insert( desc->label, desc );
   mList.append( desc );
   delete action;
 }

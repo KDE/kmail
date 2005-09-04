@@ -39,7 +39,7 @@ KIO::SimpleJob* AnnotationJobs::setAnnotation(
     const QMap<QString,QString>& attributes )
 {
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'M' << (int)'S' << url << entry << attributes;
 
   KIO::SimpleJob* job = KIO::special( url, packedArgs, false );
@@ -52,7 +52,7 @@ AnnotationJobs::GetAnnotationJob* AnnotationJobs::getAnnotation(
     const QStringList& attributes )
 {
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int)'M' << (int)'G' << url << entry << attributes;
 
   GetAnnotationJob* job = new GetAnnotationJob( url, entry, packedArgs, false );

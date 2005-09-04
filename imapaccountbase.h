@@ -27,7 +27,11 @@
 #include "networkaccount.h"
 
 #include <qtimer.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 #include <kio/global.h>
 
 class AccountManager;
@@ -37,7 +41,7 @@ class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
 class FolderStorage;
-template <typename T> class QValueVector;
+template <typename T> class Q3ValueVector;
 
 namespace KIO {
   class Job;
@@ -49,7 +53,7 @@ namespace KPIM {
 
 namespace KMail {
   struct ACLListEntry;
-  typedef QValueVector<KMail::ACLListEntry> ACLList;
+  typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
 
@@ -149,10 +153,10 @@ namespace KMail {
       QString url;
       QString curNamespace;
       QByteArray data;
-      QCString cdata;
+      Q3CString cdata;
       QStringList items;
       KMFolder *parent;
-      QPtrList<KMMessage> msgList;
+      Q3PtrList<KMMessage> msgList;
       int total, done, offset;
       KPIM::ProgressItem *progressItem;
       bool onlySubscribed, quiet, cancellable;
@@ -203,7 +207,7 @@ namespace KMail {
      * Set the status on the server
      * Emits imapStatusChanged signal on success/error.
      */
-    void setImapStatus( KMFolder* folder, const QString& path, const QCString& flags );
+    void setImapStatus( KMFolder* folder, const QString& path, const Q3CString& flags );
 
     /**
      * The KIO-Slave died
@@ -469,7 +473,7 @@ namespace KMail {
 
 
   protected:
-    QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
+    Q3PtrList<QPointer<KMFolder> > mOpenFolders;
     QStringList mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes;
     QMap<KIO::Job *, jobData> mapJobData;
@@ -495,15 +499,15 @@ namespace KMail {
     bool mCheckingSingleFolder : 1;
 
     // folders that should be checked for new mails
-    QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
+    Q3ValueList<QPointer<KMFolder> > mMailCheckFolders;
     // folders that should be checked after the current check is done
-    QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
+    Q3ValueList<QPointer<KMFolder> > mFoldersQueuedForChecking;
     // holds messageparts from the bodystructure
-    QPtrList<KMMessagePart> mBodyPartList;
+    Q3PtrList<KMMessagePart> mBodyPartList;
     // the current message for the bodystructure
     KMMessage* mCurrentMsg;
 
-    QGuardedPtr<KPIM::ProgressItem> mListDirProgressItem;
+    QPointer<KPIM::ProgressItem> mListDirProgressItem;
 
     // our namespaces in the form section=namespaceList
     nsMap mNamespaces;

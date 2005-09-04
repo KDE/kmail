@@ -33,8 +33,8 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
-#include <qptrlist.h>
-#include <qguardedptr.h>
+#include <q3ptrlist.h>
+#include <qpointer.h>
 #include <qobject.h>
 
 class KMFilter;
@@ -98,9 +98,9 @@ public:
 
 private:
   // The folder a message is to be moved into once filtering is finished if any
-  static QMap<Q_UINT32, QGuardedPtr<KMFolder> > sFolders;
+  static QMap<Q_UINT32, QPointer<KMFolder> > sFolders;
   // The action scheduler currently processing a message if any
-  static QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > sHandlers;
+  static QMap<Q_UINT32, QPointer<ActionScheduler> > sHandlers;
   // The transferInProgres state of a message if any.
   static QMap<Q_UINT32, int > sTransfers;
   // The cached serial number of a message if any.

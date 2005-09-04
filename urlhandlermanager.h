@@ -32,7 +32,7 @@
 #ifndef __KMAIL_URLHANDLERMANAGER_H__
 #define __KMAIL_URLHANDLERMANAGER_H__
 
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 class KURL;
 
@@ -76,7 +76,7 @@ namespace KMail {
     QString statusBarMessage( const KURL & url, KMReaderWin * w=0 ) const;
 
   private:
-    typedef QValueVector<const URLHandler*> HandlerList;
+    typedef Q3ValueVector<const URLHandler*> HandlerList;
     HandlerList mHandlers;
     class BodyPartURLHandlerManager;
     BodyPartURLHandlerManager * mBodyPartURLHandlerManager;

@@ -32,8 +32,10 @@
 #include <qapplication.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QEvent>
 
 #include <kaction.h>
 #include <kiconloader.h>
@@ -90,11 +92,11 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
    * in getMsgBaseForItem( item ) wanting to access items which are no longer
    * there. Rather rely on KMHeaders::msgAdded and its signal. */
-  disconnect(listView, SIGNAL(itemAdded(QListViewItem *)),
-             this, SLOT(itemAdded(QListViewItem *)));
+  disconnect(listView, SIGNAL(itemAdded(Q3ListViewItem *)),
+             this, SLOT(itemAdded(Q3ListViewItem *)));
   KMHeaders *headers = static_cast<KMHeaders*>( listView );
-  connect( headers, SIGNAL( msgAddedToListView( QListViewItem* ) ),
-           this, SLOT( itemAdded( QListViewItem* ) ) );
+  connect( headers, SIGNAL( msgAddedToListView( Q3ListViewItem* ) ),
+           this, SLOT( itemAdded( Q3ListViewItem* ) ) );
 
 }
 
@@ -135,7 +137,7 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 }
 
 
-bool HeaderListQuickSearch::itemMatches(const QListViewItem *item, const QString &s) const
+bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QString &s) const
 {
   if ( mStatus != 0 ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );

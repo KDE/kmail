@@ -27,6 +27,8 @@
 #include "popaccount.h"
 
 #include "broadcaststatus.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 #include "kmfoldermgr.h"
@@ -163,7 +165,7 @@ void PopAccount::processNewMail(bool _interactive)
                                        mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
-    QValueList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
+    Q3ValueList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     int idx = 1;
@@ -176,7 +178,7 @@ void PopAccount::processNewMail(bool _interactive)
     }
     mTimeOfSeenMsgsVector.clear();
     mTimeOfSeenMsgsVector.reserve( timeOfSeenMsgs.size() );
-    for ( QValueList<int>::ConstIterator it = timeOfSeenMsgs.begin();
+    for ( Q3ValueList<int>::ConstIterator it = timeOfSeenMsgs.begin();
           it != timeOfSeenMsgs.end(); ++it) {
       mTimeOfSeenMsgsVector.append( *it );
     }
@@ -307,7 +309,7 @@ void PopAccount::slotProcessPendingMsgs()
   mProcessing = true;
 
   bool addedOk;
-  QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
+  Q3ValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
 
@@ -808,8 +810,8 @@ void PopAccount::saveUidList()
   if (!mUidlFinished) return;
 
   QStringList uidsOfNextSeenMsgs;
-  QValueList<int> seenUidTimeList;
-  QDictIterator<int> it( mUidsOfNextSeenMsgsDict );
+  Q3ValueList<int> seenUidTimeList;
+  Q3DictIterator<int> it( mUidsOfNextSeenMsgsDict );
   for( ; it.current(); ++it ) {
     uidsOfNextSeenMsgs.append( it.currentKey() );
     seenUidTimeList.append( mTimeOfNextSeenMsgsMap[it.currentKey()] );
@@ -838,7 +840,7 @@ void PopAccount::slotGetNextMsg()
   if ( next != mMsgsPendingDownload.end() ) {
     // get the next message
     int nextLen = next.data();
-    curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
+    curMsgStrm = new QDataStream( curMsgData, QIODevice::WriteOnly );
     curMsgLen = nextLen;
     ++indexOfCurrentMsg;
     kdDebug(5006) << QString("Length of message about to get %1").arg( nextLen ) << endl;
@@ -1017,7 +1019,7 @@ void PopAccount::slotGetNextHdr(){
   delete curMsgStrm;
   curMsgStrm = 0;
 
-  curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
+  curMsgStrm = new QDataStream( curMsgData, QIODevice::WriteOnly );
 }
 
 void PopAccount::killAllJobs( bool ) {

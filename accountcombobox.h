@@ -29,6 +29,8 @@
 #define KMAIL_ACCOUNTCOMBOBOX_H
 
 #include <qcombobox.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class KMAccount;
 
@@ -52,7 +54,7 @@ public:
 private slots:
   void slotRefreshAccounts();
 private:
-  QValueList<KMAccount *> applicableAccounts() const;
+  Q3ValueList<KMAccount *> applicableAccounts() const;
 };
 
 

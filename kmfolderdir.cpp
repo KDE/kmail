@@ -2,6 +2,9 @@
 
 #include <config.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 
 #include "kmfolderdir.h"
 #include "kmfoldersearch.h"
@@ -60,7 +63,7 @@ QString KMFolderRootDir::prettyURL() const
 
 
 //-----------------------------------------------------------------------------
-void KMFolderRootDir::setBaseURL( const QCString &baseURL )
+void KMFolderRootDir::setBaseURL( const Q3CString &baseURL )
 {
   mBaseURL = baseURL;
 }
@@ -171,7 +174,7 @@ bool KMFolderDir::reload(void)
   KMFolder*          folder;
   QFileInfo*         fileInfo;
   QStringList        diList;
-  QPtrList<KMFolder> folderList;
+  Q3PtrList<KMFolder> folderList;
 
   clear();
 

@@ -16,6 +16,15 @@
 #include "kmcommands.h"
 
 #include <maillistdrag.h>
+//Added by qt3to4:
+#include <QFocusEvent>
+#include <Q3PtrList>
+#include <QDragMoveEvent>
+#include <QKeyEvent>
+#include <QDropEvent>
+#include <QContextMenuEvent>
+#include <Q3PopupMenu>
+#include <QDragEnterEvent>
 using KPIM::MailListDrag;
 
 #include <libkdepim/kfileio.h>
@@ -142,12 +151,12 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         QByteArray serNums;
         MailListDrag::decode( e, serNums );
         QBuffer serNumBuffer(serNums);
-        serNumBuffer.open(IO_ReadOnly);
+        serNumBuffer.open(QIODevice::ReadOnly);
         QDataStream serNumStream(&serNumBuffer);
         unsigned long serNum;
         KMFolder *folder = 0;
         int idx;
-        QPtrList<KMMsgBase> messageList;
+        Q3PtrList<KMMsgBase> messageList;
         while (!serNumStream.atEnd()) {
             KMMsgBase *msgBase = 0;
             serNumStream >> serNum;
@@ -186,9 +195,9 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
                 break;
             }
         }
-        else if ( QTextDrag::canDecode( e ) ) {
+        else if ( Q3TextDrag::canDecode( e ) ) {
           QString s;
-          if ( QTextDrag::decode( e, s ) )
+          if ( Q3TextDrag::decode( e, s ) )
             insert( s );
         }
         else
@@ -253,11 +262,11 @@ void KMEdit::initializeAutoSpellChecking()
 }
 
 
-QPopupMenu *KMEdit::createPopupMenu( const QPoint& pos )
+Q3PopupMenu *KMEdit::createPopupMenu( const QPoint& pos )
 {
   enum { IdUndo, IdRedo, IdSep1, IdCut, IdCopy, IdPaste, IdClear, IdSep2, IdSelectAll };
 
-  QPopupMenu *menu = KEdit::createPopupMenu( pos );
+  Q3PopupMenu *menu = KEdit::createPopupMenu( pos );
   if ( !QApplication::clipboard()->image().isNull() ) {
     int id = menu->idAt(0);
     menu->setItemEnabled( id - IdPaste, true);
@@ -343,15 +352,15 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     QKeyEvent *k = (QKeyEvent*)e;
 
     if (mUseExtEditor) {
-      if (k->key() == Key_Up)
+      if (k->key() == Qt::Key_Up)
       {
         emit focusUp();
         return TRUE;
       }
 
       // ignore modifier keys (cf. bug 48841)
-      if ( (k->key() == Key_Shift) || (k->key() == Key_Control) ||
-           (k->key() == Key_Meta) || (k->key() == Key_Alt) )
+      if ( (k->key() == Qt::Key_Shift) || (k->key() == Qt::Key_Control) ||
+           (k->key() == Qt::Key_Meta) || (k->key() == Qt::Key_Alt) )
         return true;
       if (mExtEditorTempFile) return TRUE;
       QString sysLine = mExtEditor;
@@ -389,7 +398,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     } else {
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
-    if (k->key() == Key_Up && k->state() != ShiftButton && currentLine() == 0
+    if (k->key() == Qt::Key_Up && k->state() != Qt::ShiftModifier && currentLine() == 0
       && lineOfChar(0, currentColumn()) == 0)
     {
       deselect();
@@ -398,7 +407,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
     // ---sven's Arrow key navigation end ---
 
-    if (k->key() == Key_Backtab && k->state() == ShiftButton)
+    if (k->key() == Qt::Key_Backtab && k->state() == Qt::ShiftModifier)
     {
       deselect();
       emit focusUp();
@@ -655,7 +664,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
         }
 
         kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
-        QTextEdit plaintext;
+        Q3TextEdit plaintext;
         plaintext.setText(text());
         plaintext.setTextFormat(Qt::PlainText);
         mSpellingFilter = new SpellingFilter(plaintext.text(), quotePrefix, SpellingFilter::FilterUrls,

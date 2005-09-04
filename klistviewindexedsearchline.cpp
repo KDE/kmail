@@ -63,7 +63,7 @@ void KListViewIndexedSearchLine::updateSearch( const QString& s ) {
 	KListViewSearchLine::updateSearch( s );
 }
 
-bool KListViewIndexedSearchLine::itemMatches( const QListViewItem* item, const QString& s ) const {
+bool KListViewIndexedSearchLine::itemMatches( const Q3ListViewItem* item, const QString& s ) const {
 	if ( mFiltering && 
 			std::binary_search( mResults.begin(), mResults.end(), static_cast<const KMail::HeaderItem*>( item )->msgSerNum() ) )
 		return true;

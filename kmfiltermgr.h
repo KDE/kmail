@@ -23,13 +23,16 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfolder.h"
 
-#include <qguardedptr.h>
+#include <qpointer.h>
 #include <qobject.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 
 class KMFilter;
 class KMFilterDlg;
-template <typename T> class QValueVector;
-template <typename T> class QValueList;
+template <typename T> class Q3ValueVector;
+template <typename T> class Q3ValueList;
 
 class KMFilterMgr: public QObject
 {
@@ -58,7 +61,7 @@ public:
 
   /** Open an edit dialog, create a new filter and preset the first
       rule with "field equals value" */
-  void createFilter( const QCString & field, const QString & value );
+  void createFilter( const Q3CString & field, const QString & value );
 
   bool beginFiltering(KMMsgBase *msgBase) const;
   int moveMessage(KMMessage *msg) const;
@@ -88,15 +91,15 @@ public:
   /** Append the list of filters to the current list of filters and
       write everything back into the configuration. The filter manager
       takes ownership of the filters in the list. */
-  void appendFilters( const QValueList<KMFilter*> &filters,
+  void appendFilters( const Q3ValueList<KMFilter*> &filters,
                       bool replaceIfNameExists = false );
 
   /** Replace the list of filters under control of the filter manager.
    * The manager takes ownershipt of the filters. */
-  void setFilters( const QValueList<KMFilter*> &filters );
+  void setFilters( const Q3ValueList<KMFilter*> &filters );
 
   /** @return the list of filters managed by this object */
-  const QValueList<KMFilter*> & filters() const { return mFilters; }
+  const Q3ValueList<KMFilter*> & filters() const { return mFilters; }
 
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
@@ -176,9 +179,9 @@ signals:
 private:
   int processPop( KMMessage * msg ) const;
 
-  QGuardedPtr<KMFilterDlg> mEditDialog;
-  QValueVector<KMFolder *> mOpenFolders;
-  QValueList<KMFilter *> mFilters;
+  QPointer<KMFilterDlg> mEditDialog;
+  Q3ValueVector<KMFolder *> mOpenFolders;
+  Q3ValueList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
   bool mDirtyBufferedFolderTarget;

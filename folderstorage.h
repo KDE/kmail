@@ -43,6 +43,10 @@
 #include "kmmsginfo.h"
 #include "kmglobal.h"
 #include "folderjob.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 using KMail::FolderJob;
 
 #include "mimelib/string.h"
@@ -62,7 +66,7 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-typedef QValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<Q_UINT32> SerNumList;
 
 /**
  * @short The FolderStorage class is the bass class for the storage related
@@ -146,7 +150,7 @@ public:
   virtual KMMessage* readTemporaryMsg(int idx);
 
   /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
+  virtual Q3CString& getMsgString(int idx, Q3CString& mDest) = 0;
 
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;
@@ -163,7 +167,7 @@ public:
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0, QString partSpecifier = QString::null,
                                 const AttachmentStrategy *as = 0 ) const;
-  virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
 
@@ -183,7 +187,7 @@ public:
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-  virtual void take(QPtrList<KMMessage> msgList);
+  virtual void take(Q3PtrList<KMMessage> msgList);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -204,7 +208,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical 
    * to addMsg(msg) 
    */
-  virtual int addMsg( QPtrList<KMMessage>&, QValueList<int>& index_return );
+  virtual int addMsg( Q3PtrList<KMMessage>&, Q3ValueList<int>& index_return );
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -216,8 +220,8 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const Q3PtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const Q3PtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */
@@ -228,7 +232,7 @@ public:
     code on failure. The index of the new message is stored in index_return
     if given. */
   virtual int moveMsg(KMMessage* msg, int* index_return = 0);
-  virtual int moveMsg(QPtrList<KMMessage>, int* index_return = 0);
+  virtual int moveMsg(Q3PtrList<KMMessage>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBase* msg) const = 0;
@@ -357,7 +361,7 @@ public:
   virtual void setStatus(int idx, KMMsgStatus status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
+  virtual void setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
   void removeJobs();
   
@@ -467,7 +471,7 @@ signals:
    * The matching serial numbers are included
    * If @p complete is true the search is done
    */
-  void searchResult( KMFolder*, QValueList<Q_UINT32>, 
+  void searchResult( KMFolder*, Q3ValueList<Q_UINT32>, 
                      const KMSearchPattern*, bool complete );
 
   /**
@@ -507,7 +511,7 @@ protected:
    */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                   QString partSpecifier, const AttachmentStrategy *as ) const = 0;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 
   /** Tell the folder that a header field that is usually used for
@@ -603,7 +607,7 @@ friend class KMMsgDict;
   /** Points at the reverse dictionary for this folder. */
   mutable KMMsgDictREntry *mRDict;
   /** List of jobs created by this folder. */
-  mutable QPtrList<FolderJob> mJobList;
+  mutable Q3PtrList<FolderJob> mJobList;
 
   QTimer *mDirtyTimer;
   enum { mDirtyTimerInterval = 600000 }; // 10 minutes

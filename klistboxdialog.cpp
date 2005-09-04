@@ -7,6 +7,9 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <Q3Frame>
 
 KListBoxDialog::KListBoxDialog( QString& _selectedString,
                                 const QString& caption,
@@ -29,7 +32,7 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
 
     topLayout->addWidget( labelAboveLA );
 
-    entriesLB = new QListBox( page, "entriesLB" );
+    entriesLB = new Q3ListBox( page, "entriesLB" );
 
     topLayout->addWidget( entriesLB );
 

@@ -8,6 +8,8 @@
 #undef REALLY_WANT_KMSENDER
 
 #include <kmime_header_parsing.h>
+//Added by qt3to4:
+#include <Q3CString>
 using namespace KMime::Types;
 
 #include <kio/passdlg.h>
@@ -261,7 +263,7 @@ void KMSender::doSendMsg()
       KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
       mCurrentMsg->dwContentType() = newMsg.dwContentType();
       mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
-      QCString newDispo = newMsg.headerField("Content-Disposition").latin1();
+      Q3CString newDispo = newMsg.headerField("Content-Disposition").latin1();
       if( newDispo.isEmpty() )
         mCurrentMsg->removeHeaderField( "Content-Disposition" );
       else
@@ -559,7 +561,7 @@ void KMSender::doSendMsgAux()
   QStringList to, cc, bcc;
   QString sender;
   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
-  const QCString message = mCurrentMsg->asSendableString();
+  const Q3CString message = mCurrentMsg->asSendableString();
   if ( sender.isEmpty() || !mSendProc->send( sender, to, cc, bcc, message ) ) {
     if ( mCurrentMsg )
       mCurrentMsg->setTransferInProgress( false );
@@ -917,7 +919,7 @@ void KMSendSendmail::abort()
   idle();
 }
 
-bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSendmail::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host
                << "-i" << "-f" << sender
@@ -1002,7 +1004,7 @@ KMSendSMTP::~KMSendSMTP()
   if (mJob) mJob->kill();
 }
 
-bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
   QString query = "headers=0&from=";
   query += KURL::encode_string( sender );
 

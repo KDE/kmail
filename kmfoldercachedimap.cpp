@@ -40,6 +40,13 @@
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <QTextStream>
+#include <Q3PtrList>
+#include <Q3Frame>
+#include <QTimerEvent>
+#include <QVBoxLayout>
 using KMail::AccountManager;
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
@@ -69,7 +76,7 @@ using KMail::ListJob;
 #include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include "annotationjobs.h"
 using namespace KMail;
 #include <globalsettings.h>
@@ -98,7 +105,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                  Cancel | User1 | User2, Cancel, parent, name, true ),
     rc( Cancel )
 {
-  QFrame* page = plainPage();
+  Q3Frame* page = plainPage();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
                       "<p>If you have problems with synchronizing an IMAP "
@@ -278,7 +285,7 @@ QString KMFolderCachedImap::uidCacheLocation() const
 int KMFolderCachedImap::readUidCache()
 {
   QFile uidcache( uidCacheLocation() );
-  if( uidcache.open( IO_ReadOnly ) ) {
+  if( uidcache.open( QIODevice::ReadOnly ) ) {
     char buf[1024];
     int len = uidcache.readLine( buf, sizeof(buf) );
     if( len > 0 ) {
@@ -311,7 +318,7 @@ int KMFolderCachedImap::writeUidCache()
   }
 
   QFile uidcache( uidCacheLocation() );
-  if( uidcache.open( IO_WriteOnly ) ) {
+  if( uidcache.open( QIODevice::WriteOnly ) ) {
     QTextStream str( &uidcache );
     str << "# KMail-UidCache V" << UIDCACHE_VERSION << endl;
     str << uidValidity() << endl;
@@ -1089,9 +1096,9 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
 }
 
 /* find new messages (messages without a UID) */
-QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
+Q3ValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 {
-  QValueList<unsigned long> result;
+  Q3ValueList<unsigned long> result;
   for( int i = 0; i < count(); ++i ) {
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue; /* what goes on if getMsg() returns 0? */
@@ -1104,7 +1111,7 @@ QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 /* Upload new messages to server */
 void KMFolderCachedImap::uploadNewMessages()
 {
-  QValueList<unsigned long> newMsgs = findNewMessages();
+  Q3ValueList<unsigned long> newMsgs = findNewMessages();
   if( !newMsgs.isEmpty() ) {
     if ( mUserRights <= 0 || ( mUserRights & ( KMail::ACLJobs::Insert ) ) ) {
       newState( mProgress, i18n("Uploading messages to server"));
@@ -1127,7 +1134,7 @@ void KMFolderCachedImap::uploadNewMessages()
         if ( dlg.exec() ) {
           KMFolder* dest = dlg.folder();
           if ( dest ) {
-            QPtrList<KMMsgBase> msgs;
+            Q3PtrList<KMMsgBase> msgs;
             for( int i = 0; i < count(); ++i ) {
               KMMsgBase *msg = getMsgBase( i );
               if( !msg ) continue; /* what goes on if getMsg() returns 0? */
@@ -1182,7 +1189,7 @@ void KMFolderCachedImap::uploadFlags()
     }
     QMapIterator< QString, QStringList > dit;
     for( dit = groups.begin(); dit != groups.end(); ++dit ) {
-      QCString flags = dit.key().latin1();
+      Q3CString flags = dit.key().latin1();
       QStringList sets = KMFolderImap::makeSets( (*dit), true );
       mStatusFlagsJobs += sets.count(); // ### that's not in kmfolderimap....
       // Send off a status setting job for each set.
@@ -1224,7 +1231,7 @@ void KMFolderCachedImap::setStatus( int idx, KMMsgStatus status, bool toggle)
   mStatusChangedLocally = true;
 }
 
-void KMFolderCachedImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
+void KMFolderCachedImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
   KMFolderMaildir::setStatus(ids, status, toggle);
   mStatusChangedLocally = true;
@@ -1233,7 +1240,7 @@ void KMFolderCachedImap::setStatus(QValueList<int>& ids, KMMsgStatus status, boo
 /* Upload new folders to server */
 void KMFolderCachedImap::createNewFolders()
 {
-  QValueList<KMFolderCachedImap*> newFolders = findNewFolders();
+  Q3ValueList<KMFolderCachedImap*> newFolders = findNewFolders();
   //kdDebug(5006) << label() << " createNewFolders:" << newFolders.count() << " new folders." << endl;
   if( !newFolders.isEmpty() ) {
     newState( mProgress, i18n("Creating subfolders on server"));
@@ -1246,9 +1253,9 @@ void KMFolderCachedImap::createNewFolders()
   }
 }
 
-QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
+Q3ValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 {
-  QValueList<KMFolderCachedImap*> newFolders;
+  Q3ValueList<KMFolderCachedImap*> newFolders;
   if( folder() && folder()->child() ) {
     KMFolderNode *node = folder()->child()->first();
     while( node ) {
@@ -1275,7 +1282,7 @@ bool KMFolderCachedImap::deleteMessages()
   if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
     return false;
   /* Delete messages from cache that are gone from the server */
-  QPtrList<KMMessage> msgsForDeletion;
+  Q3PtrList<KMMessage> msgsForDeletion;
 
   // It is not possible to just go over all indices and remove
   // them one by one because the index list can get resized under
@@ -1388,7 +1395,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
     return;
   }
-  (*it).cdata += QCString(data, data.size() + 1);
+  (*it).cdata += Q3CString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
   if (pos > 0) {
     int a = (*it).cdata.find("\r\nX-uidValidity:");
@@ -1682,7 +1689,7 @@ void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
   KMFolderNode *node = folder()->child()->first();
   bool root = ( this == mAccount->rootFolder() );
 
-  QPtrList<KMFolder> toRemove;
+  Q3PtrList<KMFolder> toRemove;
   bool emptyList = ( root && mSubfolderNames.empty() );
   if ( !emptyList ) {
     while (node) {
@@ -1892,7 +1899,7 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if (it == mAccount->jobsEnd()) return;
   QBuffer buff((*it).data);
-  buff.open(IO_WriteOnly | IO_Append);
+  buff.open(QIODevice::WriteOnly | QIODevice::Append);
   buff.writeBlock(data.data(), data.size());
   buff.close();
 }
@@ -1902,7 +1909,7 @@ FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
                                  QString, const AttachmentStrategy* ) const
 {
-  QPtrList<KMMessage> msgList;
+  Q3PtrList<KMMessage> msgList;
   msgList.append( msg );
   CachedImapJob *job = new CachedImapJob( msgList, jt, folder? static_cast<KMFolderCachedImap*>( folder->storage() ):0 );
   job->setParentFolder( this );
@@ -1910,7 +1917,7 @@ KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder
 }
 
 FolderJob*
-KMFolderCachedImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+KMFolderCachedImap::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder ) const
 {
   //FIXME: how to handle sets here?
@@ -2048,7 +2055,7 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
   {
     // pass through to childs
     KMFolderNode* node;
-    QPtrListIterator<KMFolderNode> it( *folder()->child() );
+    Q3PtrListIterator<KMFolderNode> it( *folder()->child() );
     for ( ; (node = it.current()); )
     {
       ++it;

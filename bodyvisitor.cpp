@@ -6,6 +6,8 @@
 #include "kmmsgpart.h"
 #include "attachmentstrategy.h"
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 namespace KMail {
 
@@ -59,16 +61,16 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void BodyVisitor::visit( QPtrList<KMMessagePart> & list )
+  void BodyVisitor::visit( Q3PtrList<KMMessagePart> & list )
   {
     mParts = list;
   }
 
   //-----------------------------------------------------------------------------
-  QPtrList<KMMessagePart> BodyVisitor::partsToLoad()
+  Q3PtrList<KMMessagePart> BodyVisitor::partsToLoad()
   {
-    QPtrListIterator<KMMessagePart> it( mParts );
-    QPtrList<KMMessagePart> selected;
+    Q3PtrListIterator<KMMessagePart> it( mParts );
+    Q3PtrList<KMMessagePart> selected;
     KMMessagePart *part = 0;
     bool headerCheck = false;
     while ( (part = it.current()) != 0 )

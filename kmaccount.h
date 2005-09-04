@@ -24,9 +24,11 @@
 #include <kaccount.h>
 
 #include <qstring.h>
-#include <qguardedptr.h>
-#include <qvaluelist.h>
+#include <qpointer.h>
+#include <q3valuelist.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include "kmmessage.h"
 class QTimer;
@@ -47,7 +49,7 @@ using KMail::FolderJob;
 using KPIM::ProgressItem;
 
 class KMAccount;
-typedef QValueList< ::KMAccount* > AccountList;
+typedef Q3ValueList< ::KMAccount* > AccountList;
 
 class KMPrecommand : public QObject
 {
@@ -246,18 +248,19 @@ public:
   }
 
 signals:
+#warning "kde4: signal can be signal"  
   /**
    * Emitted after the mail check is finished.
    * @param newMail true if there was new mail
    * @param status the status of the mail check
    **/
-  virtual void finishedCheck( bool newMail, CheckStatus status );
+  /*virtual*/ void finishedCheck( bool newMail, CheckStatus status );
 
   /**
    * Emitted after the mail check is finished.
    * @param newInFolder number of new messages for each folder
    **/
-  virtual void newMailsProcessed( const QMap<QString, int> & newInFolder );
+  /*virtual*/ void newMailsProcessed( const QMap<QString, int> & newInFolder );
 
 protected slots:
   virtual void mailCheck();
@@ -300,14 +303,14 @@ protected:
   QString       mPrecommand;
   QString       mTrash;
   AccountManager*    mOwner;
-  QGuardedPtr<KMAcctFolder> mFolder;
+  QPointer<KMAcctFolder> mFolder;
   QTimer *mTimer;
   int mInterval;
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
-  QValueList<KMMessage*> mReceipts;
-  QPtrList<FolderJob>  mJobList;
+  Q3ValueList<KMMessage*> mReceipts;
+  Q3PtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
   ProgressItem *mMailCheckProgressItem;
 

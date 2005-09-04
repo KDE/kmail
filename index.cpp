@@ -39,9 +39,11 @@
 #include <kapplication.h>
 #include <qfile.h>
 #include <qtimer.h>
-#include <qvaluestack.h>
-#include <qptrlist.h>
+#include <q3valuestack.h>
+#include <q3ptrlist.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 #ifdef HAVE_INDEXLIB
 #include <indexlib/create.h>
 #endif
@@ -59,18 +61,18 @@ const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
 
 static
-QValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
-	QValueList<int> res;
+Q3ValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
+	Q3ValueList<int> res;
 	std::copy( input.begin(), input.end(), std::back_inserter( res ) );
 	return res;
 }
 
 
 static
-std::vector<Q_UINT32> QValueListToVector( const QValueList<int>& input ) {
+std::vector<Q_UINT32> QValueListToVector( const Q3ValueList<int>& input ) {
 	std::vector<Q_UINT32> res;
 	// res.assign( input.begin(), input.end() ) doesn't work for some reason
-	for ( QValueList<int>::const_iterator first = input.begin(), past = input.end(); first != past; ++first ) {
+	for ( Q3ValueList<int>::const_iterator first = input.begin(), past = input.end(); first != past; ++first ) {
 		res.push_back( *first );
 	}
 	return res;
@@ -139,7 +141,7 @@ KMMsgIndex::~KMMsgIndex() {
 #ifdef HAVE_INDEXLIB
 	KConfigGroup cfg( KMKernel::config(), "text-index" );
 	cfg.writeEntry( "creating", mState == s_creating );
-	QValueList<int> pendingMsg;
+	Q3ValueList<int> pendingMsg;
 	if ( mState == s_processing ) {
 		Q_ASSERT( mAddedMsgs.empty() );
 		pendingMsg = vectorToQValueList( mPendingMsgs );
@@ -379,7 +381,7 @@ void KMMsgIndex::create() {
 		mState = s_error;
 		return;
 	}
-	QValueStack<KMFolderDir*> folders;
+	Q3ValueStack<KMFolderDir*> folders;
 	folders.push(&(kmkernel->folderMgr()->dir()));
 	folders.push(&(kmkernel->dimapFolderMgr()->dir()));
 	while ( !folders.empty() ) {
@@ -470,7 +472,7 @@ std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
 	if ( !pat ) return false;
-	QPtrListIterator<KMSearchRule> it( *pat );
+	Q3PtrListIterator<KMSearchRule> it( *pat );
 	KMSearchRule* rule;
 	while ( (rule = it.current()) != 0 ) {
 		++it;

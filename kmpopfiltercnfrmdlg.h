@@ -23,8 +23,10 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 class QWidget;
 class QString;
@@ -51,7 +53,7 @@ protected:
   void keyPressEvent( QKeyEvent *k);
 
 protected slots: // Protected slots
-  void slotPressed(QListViewItem* aItem, const QPoint& aPoint, int aColumn);
+  void slotPressed(Q3ListViewItem* aItem, const QPoint& aPoint, int aColumn);
 
 private:
   KMPopFilterCnfrmDlg *mDialog;
@@ -80,9 +82,9 @@ class KMPopFilterCnfrmDlg : public KDialogBase
   Q_OBJECT
 protected:
   KMPopFilterCnfrmDlg() { };
-  QMap<QListViewItem*, KMPopHeaders*> mItemMap;
-  QPtrList<KMPopHeadersViewItem> mDelList;
-  QPtrList<KMPopHeaders> mDDLList;
+  QMap<Q3ListViewItem*, KMPopHeaders*> mItemMap;
+  Q3PtrList<KMPopHeadersViewItem> mDelList;
+  Q3PtrList<KMPopHeaders> mDDLList;
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
@@ -90,11 +92,11 @@ protected:
 	
 
 public:
-  KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs = false, QWidget *aParent=0, const char *aName=0);
+  KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs = false, QWidget *aParent=0, const char *aName=0);
   ~KMPopFilterCnfrmDlg();
 
 public:
-  void setAction(QListViewItem *aItem, KMPopFilterAction aAction);
+  void setAction(Q3ListViewItem *aItem, KMPopFilterAction aAction);
 
 protected slots: // Protected slots
   /**
@@ -103,7 +105,7 @@ protected slots: // Protected slots
     click happened over a radio button column.
     Of course the radio button state is changed as well if the above is true.
 */
-  void slotPressed(QListViewItem *aItem, const QPoint &aPnt, int aColumn);
+  void slotPressed(Q3ListViewItem *aItem, const QPoint &aPnt, int aColumn);
   void slotToggled(bool aOn);
   void slotUpdateMinimumSize();
 };

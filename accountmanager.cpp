@@ -24,7 +24,9 @@
 #include <kapplication.h>
 
 #include <qregexp.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 using namespace KMail;
 
@@ -77,7 +79,7 @@ void AccountManager::readConfig(void)
   KConfig* config = KMKernel::config();
   KMAccount* acct;
   QString acctType, acctName;
-  QCString groupName;
+  Q3CString groupName;
   int i, num;
   uint id;
 
@@ -365,7 +367,7 @@ void AccountManager::addToTotalNewMailCount( const QMap<QString, int> & newInFol
 //-----------------------------------------------------------------------------
 uint AccountManager::createId()
 {
-  QValueList<uint> usedIds;
+  Q3ValueList<uint> usedIds;
   for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     usedIds << (*it)->id();
   }

@@ -32,7 +32,7 @@
 #ifndef __SUBSCRIPTIONDIALOG
 #define __SUBSCRIPTIONDIALOG
 
-#include <qdict.h>
+#include <q3dict.h>
 #include <ksubscription.h>
 #include "imapaccountbase.h"
 
@@ -102,7 +102,7 @@ namespace KMail {
                   mFolderMimeTypes, mFolderAttributes;
       ImapAccountBase::jobData mJobData;
       uint mCount;
-      QDict<GroupItem> mItemDict;
+      Q3Dict<GroupItem> mItemDict;
       QString mStartPath;
       bool mSubscribed, mForceSubscriptionEnable;
       QStringList mPrefixList;

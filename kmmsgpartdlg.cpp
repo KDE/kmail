@@ -24,7 +24,10 @@
 // other Qt includes:
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qwhatsthis.h>
+
+//Added by qt3to4:
+#include <QGridLayout>
+#include <Q3CString>
 #include <klineedit.h>
 #include <qcheckbox.h>
 
@@ -90,7 +93,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "type of the file is automatically checked; but, sometimes, %1 "
 	     "may not detect the type correctly -- here is where you can fix "
 	     "that.</p></qt>").arg( kapp->aboutData()->programName() );
-  QWhatsThis::add( mMimeType, msg );
+  mMimeType->setWhatsThis( msg );
 
   // row 1: Size label:
   mSize = new QLabel( plainPage() );
@@ -103,7 +106,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "when this is the case, it will be made visible by adding "
 	     "\"(est.)\" to the size displayed.</p></qt>")
     .arg( kapp->aboutData()->programName() );
-  QWhatsThis::add( mSize, msg );
+  mSize->setWhatsThis( msg );
 
   // row 2: "Name" lineedit and label:
   mFileName = new KLineEdit( plainPage() );
@@ -116,8 +119,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "it does not specify the file to be attached; rather, it "
 	     "suggests a file name to be used by the recipient's mail agent "
 	     "when saving the part to disk.</p></qt>");
-  QWhatsThis::add( label, msg );
-  QWhatsThis::add( mFileName, msg );
+  label->setWhatsThis( msg );
+  mFileName->setWhatsThis( msg );
 
   // row 3: "Description" lineedit and label:
   mDescription = new KLineEdit( plainPage() );
@@ -130,8 +133,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "much like the Subject is for the whole message; most "
 	     "mail agents will show this information in their message "
 	     "previews alongside the attachment's icon.</p></qt>");
-  QWhatsThis::add( label, msg );
-  QWhatsThis::add( mDescription, msg );
+  label->setWhatsThis( msg );
+  mDescription->setWhatsThis( msg );
 
   // row 4: "Encoding" combobox and label:
   mEncoding = new QComboBox( false, plainPage() );
@@ -149,8 +152,8 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "\"quoted-printable\" over the default \"base64\" will save up "
 	     "to 25% in resulting message size.</p></qt>")
     .arg( kapp->aboutData()->programName() );
-  QWhatsThis::add( label, msg );
-  QWhatsThis::add( mEncoding, msg );
+  label->setWhatsThis( msg );
+  mEncoding->setWhatsThis( msg );
 
   // row 5: "Suggest automatic display..." checkbox:
   mInline = new QCheckBox( i18n("Suggest &automatic display"), plainPage() );
@@ -162,7 +165,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "<p>technically, this is carried out by setting this part's "
 	     "<em>Content-Disposition</em> header field to \"inline\" "
 	     "instead of the default \"attachment\".</p></qt>");
-  QWhatsThis::add( mInline, msg );
+  mInline->setWhatsThis( msg );
 
   // row 6: "Sign" checkbox:
   mSigned = new QCheckBox( i18n("&Sign this part"), plainPage() );
@@ -172,7 +175,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "signed;</p>"
 	     "<p>the signature will be made with the key that you associated "
 	     "with the currently-selected identity.</p></qt>");
-  QWhatsThis::add( mSigned, msg );
+  mSigned->setWhatsThis( msg );
 
   // row 7: "Encrypt" checkbox:
   mEncrypted = new QCheckBox( i18n("Encr&ypt this part"), plainPage() );
@@ -182,7 +185,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "encrypted;</p>"
 	     "<p>the part will be encrypted for the recipients of this "
 	     "message</p></qt>");
-  QWhatsThis::add( mEncrypted, msg );
+  mEncrypted->setWhatsThis( msg );
   // (row 8: spacer)
 }
 
@@ -355,7 +358,7 @@ void KMMsgPartDialogCompat::setMsgPart( KMMessagePart * aMsgPart )
   mMsgPart = aMsgPart;
   assert( mMsgPart );
 
-  QCString enc = mMsgPart->cteStr();
+  Q3CString enc = mMsgPart->cteStr();
   if ( enc == "7bit" )
     setEncoding( SevenBit );
   else if ( enc == "8bit" )
@@ -381,7 +384,7 @@ void KMMsgPartDialogCompat::applyChanges()
   KCursorSaver busy(KBusyPtr::busy());
 
   // apply Content-Disposition:
-  QCString cDisp;
+  Q3CString cDisp;
   if ( isInline() )
     cDisp = "inline;";
   else
@@ -390,10 +393,10 @@ void KMMsgPartDialogCompat::applyChanges()
   QString name = fileName();
   if ( !name.isEmpty() || !mMsgPart->name().isEmpty()) {
     mMsgPart->setName( name );
-    QCString encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
+    Q3CString encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
       KMMessage::preferredCharsets(), name );
     if ( encoding.isEmpty() ) encoding = "utf-8";
-    QCString encName = KMMsgBase::encodeRFC2231String( name, encoding );
+    Q3CString encName = KMMsgBase::encodeRFC2231String( name, encoding );
 
     cDisp += "\n\tfilename";
     if ( name != QString( encName ) )
@@ -409,8 +412,8 @@ void KMMsgPartDialogCompat::applyChanges()
     mMsgPart->setContentDescription( desc );
 
   // apply Content-Type:
-  QCString type = mimeType().latin1();
-  QCString subtype;
+  Q3CString type = mimeType().latin1();
+  Q3CString subtype;
   int idx = type.find('/');
   if ( idx < 0 )
     subtype = "";
@@ -422,7 +425,7 @@ void KMMsgPartDialogCompat::applyChanges()
   mMsgPart->setSubtypeStr(subtype);
 
   // apply Content-Transfer-Encoding:
-  QCString cte;
+  Q3CString cte;
   if (subtype == "rfc822" && type == "message")
     kdWarning( encoding() != SevenBit && encoding() != EightBit, 5006 )
       << "encoding on rfc822/message must be \"7bit\" or \"8bit\"" << endl;

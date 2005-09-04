@@ -31,6 +31,9 @@
 #include <qregexp.h>
 #include <qbitmap.h>
 #include <qpainter.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3ValueList>
 
 #include <kio/netaccess.h>
 
@@ -42,7 +45,7 @@
 using namespace KMail;
 
 // Constuction a new list view item with the given colors and pixmap
-HeaderItem::HeaderItem( QListView* parent, int msgId, const QString& key )
+HeaderItem::HeaderItem( Q3ListView* parent, int msgId, const QString& key )
   : KListViewItem( parent ),
   mMsgId( msgId ),
   mKey( key ),
@@ -53,7 +56,7 @@ HeaderItem::HeaderItem( QListView* parent, int msgId, const QString& key )
 }
 
 // Constuction a new list view item with the given parent, colors, & pixmap
-HeaderItem::HeaderItem( QListViewItem* parent, int msgId, const QString& key )
+HeaderItem::HeaderItem( Q3ListViewItem* parent, int msgId, const QString& key )
   : KListViewItem( parent ),
   mMsgId( msgId ),
   mKey( key ),
@@ -127,7 +130,7 @@ Q_UINT32 HeaderItem::msgSerNum() const
 void HeaderItem::setOpenRecursive( bool open )
 {
   if (open){
-    QListViewItem * lvchild;
+    Q3ListViewItem * lvchild;
     lvchild = firstChild();
     while (lvchild){
       ((HeaderItem*)lvchild)->setOpenRecursive( true );
@@ -189,7 +192,7 @@ void HeaderItem::setup()
 {
   widthChanged();
   const int ph = KMHeaders::pixNew->height();
-  QListView *v = listView();
+  Q3ListView *v = listView();
   int h = QMAX( v->fontMetrics().height(), ph ) + 2*v->itemMargin();
   h = QMAX( h, QApplication::globalStrut().height());
   if ( h % 2 > 0 )
@@ -197,7 +200,7 @@ void HeaderItem::setup()
   setHeight( h );
 }
 
-typedef QValueList<QPixmap> PixmapList;
+typedef Q3ValueList<QPixmap> PixmapList;
 
 QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
 {
@@ -545,7 +548,7 @@ void HeaderItem::setTempKey( QString key ) {
   mKey = key;
 }
 
-int HeaderItem::compare( QListViewItem *i, int col, bool ascending ) const
+int HeaderItem::compare( Q3ListViewItem *i, int col, bool ascending ) const
 {
   int res = 0;
   KMHeaders *headers = static_cast<KMHeaders*>(listView());
@@ -571,7 +574,7 @@ int HeaderItem::compare( QListViewItem *i, int col, bool ascending ) const
   return res;
 }
 
-QListViewItem* HeaderItem::firstChildNonConst() /* Non const! */
+Q3ListViewItem* HeaderItem::firstChildNonConst() /* Non const! */
 {
   enforceSortOrder(); // Try not to rely on QListView implementation details
   return firstChild();

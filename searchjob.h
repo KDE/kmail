@@ -29,6 +29,8 @@
 #define SEARCHJOB_H
 
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 #include "folderjob.h"
 
 class KMFolderImap;
@@ -107,7 +109,7 @@ protected slots:
 
 signals:
   // emitted when a list of matching serial numbers was found
-  void searchDone( QValueList<Q_UINT32>, const KMSearchPattern*, bool complete );
+  void searchDone( Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool complete );
 
   // emitted when a single message (identified by the serial number) was checked
   void searchDone( Q_UINT32, const KMSearchPattern*, bool matches );
@@ -121,7 +123,7 @@ protected:
     // saves the results of the imap search
   QStringList mImapSearchHits;
   // collects the serial numbers from imap and local search
-  QValueList<Q_UINT32> mSearchSerNums;
+  Q3ValueList<Q_UINT32> mSearchSerNums;
   // the remaining messages that have to be downloaded for local search
   uint mRemainingMsgs;
   // progress item for local searches

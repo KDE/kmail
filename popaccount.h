@@ -4,11 +4,13 @@
 
 #include "networkaccount.h"
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qtimer.h>
-#include <qdict.h>
+#include <q3dict.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 class KMPopHeaders;
 class KMMessage;
@@ -133,8 +135,8 @@ protected:
   //Map of ID's vs. sizes of messages which should be downloaded
   QMap<QString, int> mMsgsPendingDownload;
 
-  QPtrList<KMPopHeaders> headersOnServer;
-  QPtrListIterator<KMPopHeaders> headerIt;
+  Q3PtrList<KMPopHeaders> headersOnServer;
+  Q3PtrListIterator<KMPopHeaders> headerIt;
   bool headers;
 
   QMap<QString, bool> mHeaderDeleteUids;
@@ -142,17 +144,17 @@ protected:
   QMap<QString, bool> mHeaderLaterUids;
 
   QStringList idsOfMsgs; //used for ids and for count
-  QValueList<int> lensOfMsgs;
+  Q3ValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
-  QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
-  QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
-  QValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
+  Q3Dict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
+  Q3Dict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
+  Q3ValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
   QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
-  QDict<int> mSizeOfNextSeenMsgsDict;
+  Q3Dict<int> mSizeOfNextSeenMsgsDict;
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 
-  QValueList<KMMessage*> msgsAwaitingProcessing;
+  Q3ValueList<KMMessage*> msgsAwaitingProcessing;
   QStringList msgIdsAwaitingProcessing;
   QStringList msgUidsAwaitingProcessing;
 

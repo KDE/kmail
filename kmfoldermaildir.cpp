@@ -8,6 +8,9 @@
 
 #include <qdir.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 
 #include <libkdepim/kfileio.h>
 #include "kmfoldermaildir.h"
@@ -350,7 +353,7 @@ KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMaildir::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+KMFolderMaildir::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                               FolderJob::JobType jt, KMFolder *folder ) const
 {
   MaildirJob *job = new MaildirJob( msgList, sets, jt, folder );
@@ -381,7 +384,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   unsigned long size;
   bool opened = false;
   KMFolder* msgParent;
-  QCString msgText;
+  Q3CString msgText;
   int idx(-1);
   int rc;
 
@@ -593,7 +596,7 @@ DwString KMFolderMaildir::getDwString(int idx)
 }
 
 
-QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
+Q3CString& KMFolderMaildir::getMsgString(int idx, Q3CString& mDest)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
@@ -635,7 +638,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
   // open the file and get a pointer to it
   QFile f(file);
-  if ( f.open( IO_ReadOnly ) == false ) {
+  if ( f.open( QIODevice::ReadOnly ) == false ) {
     kdWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
                     << "' could not be opened for reading the message. "
                        "Please check ownership and permissions."
@@ -646,11 +649,11 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   char line[MAX_LINE];
   bool atEof    = false;
   bool inHeader = true;
-  QCString *lastStr = 0;
+  Q3CString *lastStr = 0;
 
-  QCString dateStr, fromStr, toStr, subjStr;
-  QCString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
-  QCString statusStr, replyToAuxIdStr, uidStr;
+  Q3CString dateStr, fromStr, toStr, subjStr;
+  Q3CString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
+  Q3CString statusStr, replyToAuxIdStr, uidStr;
 
   // iterate through this file until done
   while (!atEof)
@@ -775,50 +778,50 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
     if (strncasecmp(line, "Date:", 5) == 0)
     {
-      dateStr = QCString(line+5);
+      dateStr = Q3CString(line+5);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line, "From:", 5) == 0)
     {
-      fromStr = QCString(line+5);
+      fromStr = Q3CString(line+5);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line, "To:", 3) == 0)
     {
-      toStr = QCString(line+3);
+      toStr = Q3CString(line+3);
       lastStr = &toStr;
     }
     else if (strncasecmp(line, "Subject:", 8) == 0)
     {
-      subjStr = QCString(line+8);
+      subjStr = Q3CString(line+8);
       lastStr = &subjStr;
     }
     else if (strncasecmp(line, "References:", 11) == 0)
     {
-      referencesStr = QCString(line+11);
+      referencesStr = Q3CString(line+11);
       lastStr = &referencesStr;
     }
     else if (strncasecmp(line, "Message-Id:", 11) == 0)
     {
-      msgIdStr = QCString(line+11);
+      msgIdStr = Q3CString(line+11);
       lastStr = &msgIdStr;
     }
     else if (strncasecmp(line, "X-KMail-Mark:", 13) == 0)
     {
-      xmarkStr = QCString(line+13);
+      xmarkStr = Q3CString(line+13);
     }
     else if (strncasecmp(line, "X-Status:", 9) == 0)
     {
-      statusStr = QCString(line+9);
+      statusStr = Q3CString(line+9);
     }
     else if (strncasecmp(line, "In-Reply-To:", 12) == 0)
     {
-      replyToIdStr = QCString(line+12);
+      replyToIdStr = Q3CString(line+12);
       lastStr = &replyToIdStr;
     }
     else if (strncasecmp(line, "X-UID:", 6) == 0)
     {
-      uidStr = QCString(line+6);
+      uidStr = Q3CString(line+6);
       lastStr = &uidStr;
     }
 
@@ -959,7 +962,7 @@ bool KMFolderMaildir::removeFile( const QString & folderPath,
   // delete a message before the folder is compacted. Since the file
   // naming and moving is done in ::compact, we can't assume any
   // location at this point.
-  QCString abs_file( QFile::encodeName( folderPath + "/cur/" + filename ) );
+  Q3CString abs_file( QFile::encodeName( folderPath + "/cur/" + filename ) );
   if ( ::unlink( abs_file ) == 0 )
     return true;
 

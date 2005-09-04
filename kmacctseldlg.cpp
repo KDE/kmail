@@ -24,9 +24,12 @@
 #include <config.h>
 #endif
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qlayout.h>
 #include <qradiobutton.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <Q3Frame>
 
 #include <klocale.h>
 
@@ -38,7 +41,7 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
 
-  QButtonGroup *group = new QButtonGroup( i18n("Account Type"), page );
+  Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Account Type"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );

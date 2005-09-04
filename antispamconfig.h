@@ -34,11 +34,13 @@
 #ifndef __KMAIL_ANTISPAMCONFIG_H__
 #define __KMAIL_ANTISPAMCONFIG_H__
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class QString;
-class QCString;
+class Q3CString;
 
 namespace KMail {
 
@@ -54,26 +56,26 @@ namespace KMail {
   class SpamAgent {
   public:
     SpamAgent() : mType( SpamAgentNone ) {}
-    SpamAgent( const QString & name, SpamAgentTypes type, const QCString & field,
+    SpamAgent( const QString & name, SpamAgentTypes type, const Q3CString & field,
                const QRegExp & score, const QRegExp & threshold )
       : mName( name ), mType( type ), mField( field ),
         mScore( score ), mThreshold( threshold ) {}
 
     QString name() const { return mName; }
     SpamAgentTypes scoreType() const { return mType; }
-    QCString header() const { return mField; }
+    Q3CString header() const { return mField; }
     QRegExp scorePattern() const { return mScore; }
     QRegExp thresholdPattern() const { return mThreshold; }
 
   private:
     QString mName;
     SpamAgentTypes mType;
-    QCString mField;
+    Q3CString mField;
     QRegExp mScore;
     QRegExp mThreshold;
   };
-  typedef QValueList<SpamAgent> SpamAgents;
-  typedef QValueListIterator<SpamAgent> SpamAgentsIterator;
+  typedef Q3ValueList<SpamAgent> SpamAgents;
+  typedef Q3ValueListIterator<SpamAgent> SpamAgentsIterator;
 
   /**
      @short Singleton to manage loading the kmail.antispamrc file.

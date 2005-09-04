@@ -33,12 +33,12 @@
 #include <klineedit.h>
 #include <klistviewsearchline.h>
 #include "headerlistquicksearch.h"
-#include <qhbox.h>
+#include <q3hbox.h>
 
 #include <vector>
 
 class KListView;
-class QListViewItem;
+class Q3ListViewItem;
 class QToolButton;
 class KListViewSearchLine;
 
@@ -63,7 +63,7 @@ public slots:
     virtual void updateSearch(const QString &s = QString::null);
 
 protected:
-    virtual bool itemMatches(const QListViewItem *item, const QString &s) const;
+    virtual bool itemMatches(const Q3ListViewItem *item, const QString &s) const;
 
 private:
     std::vector<unsigned> mResults;

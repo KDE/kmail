@@ -40,10 +40,10 @@
 #include <qlabel.h>
 #include <qspinbox.h>
 #include <qstringlist.h>
-#include <qtextedit.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
+#include <q3textedit.h>
+#include <q3vbox.h>
+
+
 
 #include <errno.h>
 #include <X11/Xlib.h>
@@ -57,13 +57,13 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "Filter Log Viewer" ),
               User1|User2|Close, Close, true, KStdGuiItem::clear(), KStdGuiItem::saveAs() )
 {
-  setWFlags( WDestructiveClose );
-  QVBox *page = makeVBoxMainWidget();
+  setWFlags( Qt::WDestructiveClose );
+  Q3VBox *page = makeVBoxMainWidget();
 
-  mTextEdit = new QTextEdit( page );
+  mTextEdit = new Q3TextEdit( page );
   mTextEdit->setReadOnly( true );
-  mTextEdit->setWordWrap( QTextEdit::NoWrap );
-  mTextEdit->setTextFormat( QTextEdit::LogText );
+  mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
+  mTextEdit->setTextFormat( Qt::LogText );
 
   QStringList logEntries = FilterLog::instance()->getLogEntries();
   for ( QStringList::Iterator it = logEntries.begin();
@@ -76,12 +76,12 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
            this, SLOT(slotSwitchLogState(void)) );
-  QWhatsThis::add( mLogActiveBox,
+  mLogActiveBox->setWhatsThis(
       i18n( "You can turn logging of filter activities on and off here. "
             "Of course, log data is collected and shown only when logging "
             "is turned on. " ) );
 
-  mLogDetailsBox = new QVGroupBox( i18n( "Logging Details" ), page );
+  mLogDetailsBox = new Q3GroupBox(1, Qt::Horizontal, i18n( "Logging Details" ), page );
   mLogDetailsBox->setEnabled( mLogActiveBox->isChecked() );
   connect( mLogActiveBox, SIGNAL( toggled( bool ) ),
            mLogDetailsBox, SLOT( setEnabled( bool ) ) );
@@ -102,7 +102,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
            this, SLOT(slotChangeLogDetail(void)) );
-  QWhatsThis::add( mLogRuleEvaluationBox,
+  mLogRuleEvaluationBox->setWhatsThis(
       i18n( "You can control the feedback in the log concerning the "
             "evaluation of the filter rules of applied filters: "
             "having this option checked will give detailed feedback "
@@ -130,7 +130,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   //QWhatsThis::add( mLogFilterActionBox,
   //    i18n( "" ) );
 
-  QHBox * hbox = new QHBox( page );
+  Q3HBox * hbox = new Q3HBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
   mLogMemLimitSpin = new QSpinBox( hbox );
   mLogMemLimitSpin->setMinValue( 1 );
@@ -141,7 +141,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
            this, SLOT(slotChangeLogMemLimit(int)) );
-  QWhatsThis::add( mLogMemLimitSpin,
+  mLogMemLimitSpin->setWhatsThis(
       i18n( "Collecting log data uses memory to temporarily store the "
 	    "log data; here you can limit the maximum amount of memory "
 	    "to be used: if the size of the collected log data exceeds "

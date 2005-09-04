@@ -33,7 +33,7 @@
 #define MAILSOURCEVIEWER_H
 
 #include <ktextbrowser.h>
-#include <qsyntaxhighlighter.h>
+#include <q3syntaxhighlighter.h>
 
 
 /**
@@ -46,11 +46,11 @@
  */
 namespace KMail {
 
-class MailSourceHighlighter : public QSyntaxHighlighter
+class MailSourceHighlighter : public Q3SyntaxHighlighter
 {
 public:
-  MailSourceHighlighter( QTextEdit* edit )
-    : QSyntaxHighlighter( edit )
+  MailSourceHighlighter( Q3TextEdit* edit )
+    : Q3SyntaxHighlighter( edit )
   {}
   int highlightParagraph( const QString& text, int ); 
 };

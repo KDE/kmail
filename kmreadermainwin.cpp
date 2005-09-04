@@ -26,7 +26,9 @@
 #include <config.h>
 #endif
 
-#include <qaccel.h>
+#include <q3accel.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kstdaccel.h>
@@ -287,7 +289,7 @@ void KMReaderMainWin::setupAccel()
 
 
 
-  QAccel *accel = new QAccel(mReaderWin, "showMsg()");
+  Q3Accel *accel = new Q3Accel(mReaderWin, "showMsg()");
   accel->connectItem(accel->insertItem(Key_Up),
                      mReaderWin, SLOT(slotScrollUp()));
   accel->connectItem(accel->insertItem(Key_Down),
@@ -356,7 +358,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       menu->insertSeparator();
     }
 
-    QPopupMenu* copyMenu = new QPopupMenu(menu);
+    Q3PopupMenu* copyMenu = new Q3PopupMenu(menu);
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
     if ( mainwin )
       mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,

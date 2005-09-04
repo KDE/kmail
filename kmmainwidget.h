@@ -23,14 +23,19 @@
 
 #include <kurl.h>
 #include <kxmlguiclient.h>
-#include <qlistview.h>
-#include <qvbox.h>
+#include <q3listview.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <Q3ValueList>
+#include <Q3PopupMenu>
+#include <Q3PtrList>
 
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
 
-class QAccel;
+class Q3Accel;
 class QVBoxLayout;
 class QSplitter;
 
@@ -55,9 +60,9 @@ class SearchWindow;
 class KMSystemTray;
 class KMHeaders;
 
-template <typename T> class QValueList;
+template <typename T> class Q3ValueList;
 template <typename T, typename S> class QMap;
-template <typename T> class QGuardedPtr;
+template <typename T> class QPointer;
 
 namespace KIO {
   class Job;
@@ -148,7 +153,7 @@ public:
 
   /** Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
    * @return the list of all main widgets, or 0 if it is not yet initialized */
-  static const QValueList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
+  static const Q3ValueList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
 
@@ -364,7 +369,7 @@ protected slots:
   void slotEditKeys();
 
   /** changes the caption and displays the foldername */
-  void slotChangeCaption(QListViewItem*);
+  void slotChangeCaption(Q3ListViewItem*);
   void removeDuplicates();
 
   /** Slot to reply to a message */
@@ -440,22 +445,22 @@ private:
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
-  QVBox        *mSearchAndHeaders;
+  Q3VBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
-  QPopupMenu   *mViewMenu, *mBodyPartsMenu;
+  Q3PopupMenu   *mViewMenu, *mBodyPartsMenu;
   KAction       *mlistFilterAction;
   bool		mIntegrated;
   bool          mBeepOnNew;
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
-  QValueList<int> mPanner1Sep, mPanner2Sep;
+  Q3ValueList<int> mPanner1Sep, mPanner2Sep;
   KURL          mUrlCurrent;
-  QPopupMenu	*mActMenu;
-  QPopupMenu    *mSendMenu;
-  QPopupMenu	*mFileMenu;
+  Q3PopupMenu	*mActMenu;
+  Q3PopupMenu    *mSendMenu;
+  Q3PopupMenu	*mFileMenu;
 
   bool mLongFolderList;
 
@@ -480,27 +485,27 @@ private:
   QTimer *menutimer;
   QTimer *mShowBusySplashTimer;
 
-  QGuardedPtr<KMail::Vacation> mVacation;
+  QPointer<KMail::Vacation> mVacation;
 #if !defined(NDEBUG)
-  QGuardedPtr<KMail::SieveDebugDialog> mSieveDebugDialog;
+  QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
 #endif
   KActionCollection *mActionCollection;
   KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
-  QPtrList<KAction> mFilterMenuActions;
-  QPtrList<KAction> mFilterTBarActions;
-  QPtrList<KMMetaFilterActionCommand> mFilterCommands;
-  QDict<FolderShortcutCommand> mFolderShortcutCommands;
-  QGuardedPtr <KMail::FolderJob> mJob;
+  Q3PtrList<KAction> mFilterMenuActions;
+  Q3PtrList<KAction> mFilterTBarActions;
+  Q3PtrList<KMMetaFilterActionCommand> mFilterCommands;
+  Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
+  QPointer <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
 
-  static QValueList<KMMainWidget*>* s_mainWidgetList;
+  static Q3ValueList<KMMainWidget*>* s_mainWidgetList;
 
-  QAccel *mAccel;
+  Q3Accel *mAccel;
 };
 
 #endif

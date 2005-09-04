@@ -8,19 +8,25 @@
 #include <qwidget.h>
 #include <qtimer.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QEvent>
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <QResizeEvent>
 #include <kurl.h>
 #include <kservice.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 
-class QFrame;
+class Q3Frame;
 class QSplitter;
-class QHBox;
-class QListViewItem;
+class Q3HBox;
+class Q3ListViewItem;
 class QScrollBar;
 class QString;
-class QTabDialog;
+class Q3TabDialog;
 class QTextCodec;
 
 class DwHeaders;
@@ -68,8 +74,8 @@ namespace KParts {
 class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   Q_OBJECT
 
-  friend void KMMimePartTree::itemClicked( QListViewItem* item );
-  friend void KMMimePartTree::itemRightClicked( QListViewItem* item, const QPoint & );
+  friend void KMMimePartTree::itemClicked( Q3ListViewItem* item );
+  friend void KMMimePartTree::itemRightClicked( Q3ListViewItem* item, const QPoint & );
   friend void KMMimePartTree::slotSaveAs();
 
   friend class KMail::ObjectTreeParser;
@@ -438,7 +444,7 @@ private:
   KMMessage *mMessage;
   // widgets:
   QSplitter * mSplitter;
-  QHBox *mBox;
+  Q3HBox *mBox;
   KMail::HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
@@ -469,7 +475,7 @@ private:
   QStringList mTempDirs;
   int mMimeTreeMode;
   bool mMimeTreeAtBottom;
-  QValueList<int> mSplitterSizes;
+  Q3ValueList<int> mSplitterSizes;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;

@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Q3PopupMenu>
 /****************************************************************************
 ** ui.h extension file, included from the uic-generated form implementation.
 **
@@ -9,7 +11,7 @@
 
 void CertificateHandlingDialog::init()
 {
-    requestPopup = new QPopupMenu(this);
+    requestPopup = new Q3PopupMenu(this);
     requestPopup->insertItem(i18n("New"), 0);
     requestPopup->insertItem(i18n("Extension"), 1);
     requestPopup->insertItem(i18n("Change"), 2);
@@ -22,7 +24,7 @@ void CertificateHandlingDialog::slotDeleteCertificate()
 
 }
 
-void CertificateHandlingDialog::slotCertificateSelectionChanged( QListViewItem * )
+void CertificateHandlingDialog::slotCertificateSelectionChanged( Q3ListViewItem * )
 {
 
 }

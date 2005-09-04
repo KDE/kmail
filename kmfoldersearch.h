@@ -20,11 +20,14 @@
 #ifndef kmfoldersearch_h
 #define kmfoldersearch_h
 
-#include <qguardedptr.h>
-#include <qvaluelist.h>
-#include <qvaluevector.h>
-#include <qvaluestack.h>
+#include <qpointer.h>
+#include <q3valuelist.h>
+#include <q3valuevector.h>
+#include <q3valuestack.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 #include "kmfolder.h"
 #include "folderstorage.h"
 
@@ -37,7 +40,7 @@
     numbers of all messages that currently match the search.
 **/
 
-typedef QValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<Q_UINT32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
 class KMFolderSearchJob;
@@ -82,7 +85,7 @@ signals:
 
 protected slots:
   void slotProcessNextBatch();
-  void slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
+  void slotSearchFolderResult( KMFolder*, Q3ValueList<Q_UINT32>,
                                const KMSearchPattern*, bool );
 
 protected:
@@ -94,10 +97,10 @@ protected:
 private:
   int mRemainingFolders;
   bool mRecursive, mRunning, mIdle, mRunByIndex;
-  QGuardedPtr<KMFolder> mRoot;
+  QPointer<KMFolder> mRoot;
   KMSearchPattern* mSearchPattern;
-  QValueList<QGuardedPtr<KMFolder> > mFolders, mOpenedFolders;
-  QValueList<QGuardedPtr<KMFolderImap> > mIncompleteFolders;
+  Q3ValueList<QPointer<KMFolder> > mFolders, mOpenedFolders;
+  Q3ValueList<QPointer<KMFolderImap> > mIncompleteFolders;
   SerNumList mSerNums;
   QString mLastFolder;
   int mFoundCount;
@@ -167,7 +170,7 @@ public slots:
 
 public:
   //See base class for documentation
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  virtual Q3CString& getMsgString(int idx, Q3CString& mDest);
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
   virtual int open();
   virtual int canAccess();
@@ -188,7 +191,7 @@ protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
                                  KMFolder *folder, QString partSpecifier,
                                  const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob(QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob(Q3PtrList<KMMessage>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;
   virtual KMMessage* readMsg(int idx);
   virtual bool readIndex();
@@ -201,9 +204,9 @@ protected:
   virtual void truncateIndex();
 
 private:
-  QValueVector<Q_UINT32> mSerNums;
-  QValueList<QGuardedPtr<KMFolder> > mFolders;
-  QValueStack<Q_UINT32> mUnexaminedMessages;
+  Q3ValueVector<Q_UINT32> mSerNums;
+  Q3ValueList<QPointer<KMFolder> > mFolders;
+  Q3ValueStack<Q_UINT32> mUnexaminedMessages;
   FILE *mIdsStream;
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;

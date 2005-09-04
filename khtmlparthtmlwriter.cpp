@@ -43,6 +43,8 @@
 #include <dom/html_misc.h>
 
 #include <cassert>
+//Added by qt3to4:
+#include <Q3CString>
 
 namespace KMail {
 
@@ -70,7 +72,7 @@ namespace KMail {
     // clear the widget:
     mHtmlPart->view()->setUpdatesEnabled( false );
     mHtmlPart->view()->viewport()->setUpdatesEnabled( false );
-    static_cast<QScrollView *>(mHtmlPart->widget())->ensureVisible( 0, 0 );
+    static_cast<Q3ScrollView *>(mHtmlPart->widget())->ensureVisible( 0, 0 );
 
     mHtmlPart->begin( KURL( "file:/" ) );
     if ( !css.isEmpty() )
@@ -127,7 +129,7 @@ namespace KMail {
     }
   }
 
-  void KHtmlPartHtmlWriter::embedPart( const QCString & contentId,
+  void KHtmlPartHtmlWriter::embedPart( const Q3CString & contentId,
                                        const QString & contentURL ) {
     mEmbeddedPartMap[QString(contentId)] = contentURL;
   }

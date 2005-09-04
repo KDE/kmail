@@ -46,6 +46,9 @@
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3ValueList>
 using KMail::AccountManager;
 #include "kmfolderimap.h"
 #include "globalsettings.h"
@@ -229,7 +232,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
   if ( url.isValid() && url.isLocalFile() ) {
     const QString fileName( url.path() );
     QFile file( fileName );
-    if( file.open( IO_ReadOnly ) ) {
+    if( file.open( QIODevice::ReadOnly ) ) {
       QByteArray rawData = file.readAll();
       file.close();
 
@@ -238,15 +241,15 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart.setName( attachmentName );
 
       const int iSlash = attachmentMimetype.find('/');
-      const QCString sType    = attachmentMimetype.left( iSlash   ).latin1();
-      const QCString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
+      const Q3CString sType    = attachmentMimetype.left( iSlash   ).latin1();
+      const Q3CString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
-      QCString ctd("attachment;\n  filename=\"");
+      Q3CString ctd("attachment;\n  filename=\"");
       ctd.append( attachmentName.latin1() );
       ctd.append("\"");
       msgPart.setContentDisposition( ctd );
-      QValueList<int> dummy;
+      Q3ValueList<int> dummy;
       msgPart.setBodyAndGuessCte( rawData, dummy );
       msgPart.setPartSpecifier( fileName );
 
@@ -287,8 +290,8 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s )
 {
   const int iSlash = mimetype.find('/');
-  const QCString sType    = mimetype.left( iSlash   ).latin1();
-  const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+  const Q3CString sType    = mimetype.left( iSlash   ).latin1();
+  const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
   DwBodyPart* part = findBodyPartByMimeType( msg, sType, sSubtype, true /* starts with sSubtype, to accept application/x-vnd.kolab.contact.distlist */ );
   if ( part ) {
     KMMessagePart msgPart;
@@ -367,7 +370,7 @@ static void setXMLContentTypeHeader( KMMessage *msg, const QString plainTextBody
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
                                                 const QString& plainTextBody,
-                                                const QMap<QCString, QString>& customHeaders,
+                                                const QMap<Q3CString, QString>& customHeaders,
                                                 const QStringList& attachmentURLs,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
@@ -383,8 +386,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
 
-  QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
-  const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.end();
+  QMap<Q3CString, QString>::ConstIterator ith = customHeaders.begin();
+  const QMap<Q3CString, QString>::ConstIterator ithEnd = customHeaders.end();
   for ( ; ith != ithEnd ; ++ith ) {
     msg->setHeaderField( ith.key(), ith.data() );
   }
@@ -523,8 +526,8 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 #endif
     if ( msg ) {
       const int iSlash = mimetype.find('/');
-      const QCString sType    = mimetype.left( iSlash   ).latin1();
-      const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+      const Q3CString sType    = mimetype.left( iSlash   ).latin1();
+      const Q3CString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
       if ( sType.isEmpty() || sSubtype.isEmpty() ) {
         kdError(5006) << mimetype << " not an type/subtype combination" << endl;
       } else {
@@ -537,8 +540,8 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
           // Check if the whole message has the right types. This is what
           // happens in the case of ical storage, where the whole mail is
           // the data
-          const QCString type( msg->typeStr() );
-          const QCString subtype( msg->subtypeStr() );
+          const Q3CString type( msg->typeStr() );
+          const Q3CString subtype( msg->subtypeStr() );
           if (type.lower() == sType && subtype.lower() == sSubtype ) {
             aMap.insert( msg->getMsgSerNum(), msg->bodyToUnicode() );
           }
@@ -600,9 +603,9 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 }
 
 /* list all available subresources */
-QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
+Q3ValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
-  QValueList<SubResource> subResources;
+  Q3ValueList<SubResource> subResources;
 
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
@@ -614,7 +617,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
 
   // get the extra ones
   const KMail::FolderContentsType t = folderContentsType( contentsType );
-  QDictIterator<ExtraFolder> it( mExtraFolders );
+  Q3DictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t ) {
@@ -632,8 +635,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
 bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
 {
   kdDebug(5006) << k_funcinfo << endl;
-  QValueList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
-  for ( QValueList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
+  Q3ValueList<KMailICalIfaceImpl::SubResource> folderList = subresourcesKolab( contentsType );
+  for ( Q3ValueList<KMailICalIfaceImpl::SubResource>::const_iterator it( folderList.begin() ),
                                                                     end( folderList.end() ); 
         it != end ; ++it ) {
     KMFolder * const f = findResourceFolder( (*it).location );
@@ -697,7 +700,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
                                      const QString& plainTextBody,
-                                     const QMap<QCString, QString>& customHeaders,
+                                     const QMap<Q3CString, QString>& customHeaders,
                                      const QStringList& attachmentURLs,
                                      const QStringList& attachmentMimetypes,
                                      const QStringList& attachmentNames,
@@ -732,8 +735,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
-    QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
-    const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.begin();
+    QMap<Q3CString, QString>::ConstIterator ith = customHeaders.begin();
+    const QMap<Q3CString, QString>::ConstIterator ithEnd = customHeaders.begin();
     for ( ; ith != ithEnd ; ++ith )
       newMsg->setHeaderField( ith.key(), ith.data() );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
@@ -749,8 +752,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     const KMail::FolderContentsType t = f->storage()->contentsType();
-    const QCString type = msg->typeStr();
-    const QCString subtype = msg->subtypeStr();
+    const Q3CString type = msg->typeStr();
+    const Q3CString subtype = msg->subtypeStr();
     const bool messageWasIcalVcardFormat = ( type.lower() == "text" && 
         ( subtype.lower() == "calendar" || subtype.lower() == "x-vcard" ) );
 
@@ -1500,7 +1503,7 @@ void KMailICalIfaceImpl::readConfig()
   // Globally there are 3 cases: nothing found, some stuff found by type/name heuristics, or everything found OK
   bool noneFound = true;
   bool mustFix = false; // true when at least one was found by heuristics
-  QValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
+  Q3ValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
   for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
     if ( i != KMail::ContentsTypeMail ) {
       results[i] = findStandardResourceFolder( folderParentDir, static_cast<KMail::FolderContentsType>(i) );
@@ -1608,9 +1611,9 @@ void KMailICalIfaceImpl::readConfig()
 
   // Find all extra folders
   QStringList folderNames;
-  QValueList<QGuardedPtr<KMFolder> > folderList;
+  Q3ValueList<QPointer<KMFolder> > folderList;
   kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
-  for(QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
+  for(Q3ValueList<QPointer<KMFolder> >::iterator it = folderList.begin();
       it != folderList.end(); ++it)
   {
     FolderStorage* storage = (*it)->storage();
@@ -1808,7 +1811,7 @@ static void vPartMicroParser( const QString& str, QString& s )
 // Returns the first child folder having the given annotation
 static KMFolder* findFolderByAnnotation( KMFolderDir* folderParentDir, const QString& annotation )
 {
-    QPtrListIterator<KMFolderNode> it( *folderParentDir );
+    Q3PtrListIterator<KMFolderNode> it( *folderParentDir );
     for ( ; it.current(); ++it ) {
       if ( !it.current()->isDir() ) {
         KMFolder* folder = static_cast<KMFolder *>( it.current() );

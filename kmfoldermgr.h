@@ -5,9 +5,9 @@
 #define kmfoldermgr_h
 
 #include <qstring.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qobject.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
 
 #include "kmfolderdir.h"
 
@@ -74,12 +74,12 @@ public:
   /** Create a list of formatted formatted folder labels and corresponding
    folders*/
   virtual void createFolderList( QStringList *str,
-				 QValueList<QGuardedPtr<KMFolder> > *folders );
+				 Q3ValueList<QPointer<KMFolder> > *folders );
 
   /** Auxillary function to facilitate creating a list of formatted
       folder names, suitable for showing in QComboBox */
   virtual void createFolderList( QStringList *str,
- 				 QValueList<QGuardedPtr<KMFolder> > *folders,
+ 				 Q3ValueList<QPointer<KMFolder> > *folders,
   				 KMFolderDir *adir,
   				 const QString& prefix,
 				 bool i18nized=FALSE );
@@ -87,7 +87,7 @@ public:
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */
   virtual void createI18nFolderList( QStringList *str,
-				 QValueList<QGuardedPtr<KMFolder> > *folders );
+				 Q3ValueList<QPointer<KMFolder> > *folders );
 
   /** fsync all open folders to disk */
   void syncAllFolders( KMFolderDir *adir = 0 );

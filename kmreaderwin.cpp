@@ -19,6 +19,14 @@
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
 #include "mailsourceviewer.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <QImageIO>
+#include <QCloseEvent>
+#include <QEvent>
+#include <QVBoxLayout>
+#include <QResizeEvent>
+#include <QMouseEvent>
 using KMail::MailSourceViewer;
 #include "partNode.h"
 #include "kmmsgdict.h"
@@ -109,9 +117,9 @@ using KMail::TeeHtmlWriter;
 #include <kasciistricmp.h>
 
 #include <qclipboard.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qtextcodec.h>
-#include <qpaintdevicemetrics.h>
+#include <q3paintdevicemetrics.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qsplitter.h>
@@ -139,7 +147,7 @@ public:
     NewByteArray &appendNULL();
     NewByteArray &operator+=( const char * );
     NewByteArray &operator+=( const QByteArray & );
-    NewByteArray &operator+=( const QCString & );
+    NewByteArray &operator+=( const Q3CString & );
     QByteArray& qByteArray();
 };
 
@@ -176,7 +184,7 @@ NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
 }
-NewByteArray& NewByteArray::operator+=( const QCString & newData )
+NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
 {
     if ( newData.isEmpty() )
         return *this;
@@ -390,15 +398,15 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
 kdDebug(5006) << "is valid Multipart, processing children:" << endl;
-        QCString boundary = headers->ContentType().Boundary().c_str();
+        Q3CString boundary = headers->ContentType().Boundary().c_str();
         curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
 kdDebug(5006) << "--boundary" << endl;
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
-            resultingData += QCString( "\n" );
-          resultingData += QCString( "\n" );
+            resultingData += Q3CString( "\n" );
+          resultingData += Q3CString( "\n" );
           resultingData += "--";
           resultingData += boundary;
           resultingData += "\n";
@@ -468,7 +476,7 @@ void KMReaderWin::createWidgets() {
   mSplitter = new QSplitter( Qt::Vertical, this, "mSplitter" );
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter, "mMimePartTree" );
-  mBox = new QHBox( mSplitter, "mBox" );
+  mBox = new Q3HBox( mSplitter, "mBox" );
   setStyleDependantFrameWidth();
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
@@ -744,7 +752,7 @@ void KMReaderWin::slotLevelQuote( int l )
 {
   kdDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
 	mLevelQuote = l;
-  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+  Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
   mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
 
   update(true);
@@ -886,7 +894,7 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
     delete mCSSHelper;
-    mCSSHelper = new KMail::CSSHelper( 	QPaintDeviceMetrics( mViewer->view() ) );
+    mCSSHelper = new KMail::CSSHelper( 	Q3PaintDeviceMetrics( mViewer->view() ) );
     if (message())
       message()->readConfig();
     update( true ); // Force update
@@ -903,7 +911,7 @@ void KMReaderWin::readConfig(void)
   /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
-  mCSSHelper = new KMail::CSSHelper( QPaintDeviceMetrics( mViewer->view() ) );
+  mCSSHelper = new KMail::CSSHelper( Q3PaintDeviceMetrics( mViewer->view() ) );
 
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
 
@@ -1262,7 +1270,7 @@ static const int numKMailNewFeatures =
 //static
 QString KMReaderWin::newFeaturesMD5()
 {
-  QCString str;
+  Q3CString str;
   for ( int i = 0 ; i < numKMailChanges ; ++i )
     str += kmailChanges[i];
   for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
@@ -1415,7 +1423,7 @@ void KMReaderWin::updateReaderWin()
 
   if (mSavedRelativePosition)
   {
-    QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+    Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
     scrollview->setContentsPos ( 0, qRound(  scrollview->contentsHeight() * mSavedRelativePosition ) );
     mSavedRelativePosition = 0;
   }
@@ -1424,7 +1432,7 @@ void KMReaderWin::updateReaderWin()
 //-----------------------------------------------------------------------------
 int KMReaderWin::pointsToPixel(int pointSize) const
 {
-  const QPaintDeviceMetrics pdm(mViewer->view());
+  const Q3PaintDeviceMetrics pdm(mViewer->view());
 
   return (pointSize * pdm.logicalDpiY() + 36) / 72;
 }
@@ -1486,14 +1494,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 #endif
 
   KMMessagePart msgPart;
-  QCString subtype, contDisp;
+  Q3CString subtype, contDisp;
   QByteArray str;
 
   assert(aMsg!=0);
 
   delete mRootNode;
   mRootNode = partNode::fromMessage( aMsg );
-  const QCString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
+  const Q3CString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
   QString cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
@@ -1590,7 +1598,7 @@ kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
     objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
     // add a \0 to the data
     decryptedData.appendNULL();
-    QCString resultString( decryptedData.data() );
+    Q3CString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
 
     if( !resultString.isEmpty() ) {
@@ -1938,7 +1946,7 @@ void KMReaderWin::slotFind()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
-  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+  Q3ScrollView * scrollview = static_cast<Q3ScrollView *>(mViewer->widget());
   mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
 
   mUseFixedFont = !mUseFixedFont;
@@ -2019,7 +2027,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
         htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
         mColorBar->setHtmlMode();
       } else { // plain text
-        const QCString str = aMsgPart->bodyDecoded();
+        const Q3CString str = aMsgPart->bodyDecoded();
         ObjectTreeParser otp( this );
         otp.writeBodyStr( str,
                           overrideCodec() ? overrideCodec() : aMsgPart->codec(),
@@ -2077,7 +2085,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
           "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
           str.length());
     }
-    htmlWriter()->write( QStyleSheet::escape( str ) );
+    htmlWriter()->write( Q3StyleSheet::escape( str ) );
     htmlWriter()->queue("</body></html>");
     htmlWriter()->flush();
     mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
@@ -2134,7 +2142,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     return;
   }
 
-  QCString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
+  Q3CString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
   KPIM::kAsciiToLower( contentTypeStr.data() );
 
   if ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) {
@@ -2203,26 +2211,26 @@ void KMReaderWin::openAttachment( int id, const QString & name )
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -10);
+  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, -10);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollDown()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, 10);
+  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, 10);
 }
 
 bool KMReaderWin::atBottom() const
 {
-    const QScrollView *view = static_cast<const QScrollView *>(mViewer->widget());
+    const Q3ScrollView *view = static_cast<const Q3ScrollView *>(mViewer->widget());
     return view->contentsY() + view->visibleHeight() >= view->contentsHeight();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotJumpDown()
 {
-    QScrollView *view = static_cast<QScrollView *>(mViewer->widget());
+    Q3ScrollView *view = static_cast<Q3ScrollView *>(mViewer->widget());
     int offs = (view->clipper()->height() < 30) ? view->clipper()->height() : 30;
     view->scrollBy( 0, view->clipper()->height() - offs );
 }
@@ -2230,14 +2238,14 @@ void KMReaderWin::slotJumpDown()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -(int)(height()*0.8));
+  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, -(int)(height()*0.8));
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));
+  static_cast<Q3ScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));
 }
 
 //-----------------------------------------------------------------------------

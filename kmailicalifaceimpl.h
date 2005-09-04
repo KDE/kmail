@@ -42,9 +42,12 @@
 #include "kmfoldertype.h"
 #include <kfoldertree.h>
 
-#include <qdict.h>
-#include <qguardedptr.h>
+#include <q3dict.h>
+#include <qpointer.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 
 class KMFolder;
 class KMMessage;
@@ -57,7 +60,7 @@ namespace {
 class ExtraFolder {
 public:
   ExtraFolder( KMFolder* f ) : folder( f ) {}
-  QGuardedPtr<KMFolder> folder;
+  QPointer<KMFolder> folder;
 };
 
 class Accumulator {
@@ -98,7 +101,7 @@ public:
                    Q_UINT32 sernum,
                    const QString& subject,
                    const QString& plainTextBody,
-                   const QMap<QCString, QString>& customHeaders,
+                   const QMap<Q3CString, QString>& customHeaders,
                    const QStringList& attachmentURLs,
                    const QStringList& attachmentMimetypes,
                    const QStringList& attachmentNames,
@@ -113,7 +116,7 @@ public:
                                            int startIndex,
                                            int nbMessages );
 
-  QValueList<SubResource> subresourcesKolab( const QString& contentsType );
+  Q3ValueList<SubResource> subresourcesKolab( const QString& contentsType );
 
   bool triggerSync( const QString& contentsType );
 
@@ -254,7 +257,7 @@ private:
   Q_UINT32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
                               const QString& plainTextBody,
-                              const QMap<QCString, QString>& customHeaders,
+                              const QMap<Q3CString, QString>& customHeaders,
                               const QStringList& attachmentURLs,
                               const QStringList& attachmentNames,
                               const QStringList& attachmentMimetypes );
@@ -268,17 +271,17 @@ private:
   StorageFormat globalStorageFormat() const;
 
 private:
-  QGuardedPtr<KMFolder> mContacts;
-  QGuardedPtr<KMFolder> mCalendar;
-  QGuardedPtr<KMFolder> mNotes;
-  QGuardedPtr<KMFolder> mTasks;
-  QGuardedPtr<KMFolder> mJournals;
+  QPointer<KMFolder> mContacts;
+  QPointer<KMFolder> mCalendar;
+  QPointer<KMFolder> mNotes;
+  QPointer<KMFolder> mTasks;
+  QPointer<KMFolder> mJournals;
 
   // The extra IMAP resource folders
   // Key: folder location. Data: folder.
-  QDict<ExtraFolder> mExtraFolders;
+  Q3Dict<ExtraFolder> mExtraFolders;
   // used for collecting incidences during async loading
-  QDict<Accumulator> mAccumulators;
+  Q3Dict<Accumulator> mAccumulators;
   // More info for each folder we care about (mContacts etc. as well as the extra folders)
   // The reason for storing it here is that it can be shared between
   // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.

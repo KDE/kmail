@@ -54,8 +54,8 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
 
   reload( mustBeReadWrite, true, true, preSelection );
 
-  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
-           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
+  connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ),
+           this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint & ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
   if ( selected.isEmpty() && folder() )
     selected = folder()->idString();
 
-  for ( QListViewItemIterator it( mFolderTree ) ; it.current() ; ++it )
+  for ( Q3ListViewItemIterator it( mFolderTree ) ; it.current() ; ++it )
   {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( it.current() );
 
@@ -160,7 +160,7 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
 //-----------------------------------------------------------------------------
 const KMFolder * SimpleFolderTree::folder() const
 {
-  QListViewItem * item = currentItem();
+  Q3ListViewItem * item = currentItem();
   if ( item ) {
     const KMFolder * folder = static_cast<FolderItem *>( item )->folder();
     if( folder ) return folder;
@@ -171,7 +171,7 @@ const KMFolder * SimpleFolderTree::folder() const
 //-----------------------------------------------------------------------------
 void SimpleFolderTree::setFolder( KMFolder *folder )
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+  for ( Q3ListViewItemIterator it( this ) ; it.current() ; ++it )
   {
     const KMFolder *fld = static_cast<FolderItem *>( it.current() )->folder();
     if ( fld == folder )
@@ -200,7 +200,7 @@ void SimpleFolderTree::addChildFolder()
 }
 
 //-----------------------------------------------------------------------------
-void SimpleFolderTree::slotContextMenuRequested( QListViewItem *lvi,
+void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
                                                  const QPoint &p )
 {
   if (!lvi)
@@ -267,7 +267,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
 void KMFolderSelDlg::init()
 {
   mTreeView->setFocus();
-  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
+  connect( mTreeView, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
   connect( mTreeView, SIGNAL( selectionChanged() ),
            this, SLOT( slotUpdateBtnStatus() ) );

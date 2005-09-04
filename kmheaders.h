@@ -5,6 +5,13 @@
 
 #include "kmime_util.h"
 #include "headeritem.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PtrList>
+#include <QEvent>
+#include <QKeyEvent>
+#include <Q3ValueList>
+#include <QMouseEvent>
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
 
@@ -13,12 +20,12 @@ using KMail::HeaderItem;
 #include <kmmsgbase.h>   // for KMMsgStatus
 
 #include <qwidget.h>
-#include <qstrlist.h>
-#include <qmemarray.h>
+#include <q3strlist.h>
+#include <q3memarray.h>
 #include <qmap.h>
-#include <qdragobject.h>
-#include <qdict.h>
-#include <qguardedptr.h>
+#include <q3dragobject.h>
+#include <q3dict.h>
+#include <qpointer.h>
 
 class KMFolder;
 class KMMessage;
@@ -28,11 +35,11 @@ class KMMainWidget;
 class KPopupMenu;
 class QPalette;
 class QPixmap;
-class QIconSet;
+class QIcon;
 class QDateTime;
 
-typedef QPtrList<KMMsgBase> KMMessageList;
-typedef QValueList<Q_UINT32> SerNumList;
+typedef Q3PtrList<KMMsgBase> KMMessageList;
+typedef Q3ValueList<Q_UINT32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
@@ -72,7 +79,7 @@ public:
   virtual void setCurrentMsg(int msgId);
 
   /** Get a list of all items in the current thread */
-  QPtrList<QListViewItem> currentThread() const;
+  Q3PtrList<Q3ListViewItem> currentThread() const;
 
   /** Set all messages in the current thread to status @p status
       or toggle it, if specified. */
@@ -108,7 +115,7 @@ public:
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);
 
   /** Returns the index values of currently selected items */
-  QValueList<int> selectedItems();
+  Q3ValueList<int> selectedItems();
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
@@ -143,7 +150,7 @@ public:
   virtual void setNestedOverride( bool override );
   virtual void setSubjectThreading( bool subjThreading );
   /** Double force items to always be open */
-  virtual void setOpen ( QListViewItem *, bool );
+  virtual void setOpen ( Q3ListViewItem *, bool );
 
   NestingPolicy getNestingPolicy() const { return nestingPolicy; }
   /** Returns true if the current header list is threaded. */
@@ -155,7 +162,7 @@ public:
     is unset. */
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
-  void highlightMessage(QListViewItem*, bool markitread);
+  void highlightMessage(Q3ListViewItem*, bool markitread);
   void highlightCurrentThread();
 
   /** return a string relativ to the current time */
@@ -167,7 +174,7 @@ public:
   bool eventFilter ( QObject *o, QEvent *e );
 
     /** gets the message represented by the item as a KMMsgBase. */
-  const KMMsgBase * getMsgBaseForItem( const QListViewItem *item ) const;
+  const KMMsgBase * getMsgBaseForItem( const Q3ListViewItem *item ) const;
 
   // accessors
   QFont newFont() const { return mNewFont; }
@@ -193,13 +200,13 @@ signals:
    * from the ctor of the item, at which point the building of the item
    * is not yet far enough along to update the quick search, which is 
    * what is connected to this signal. */
-  void msgAddedToListView( QListViewItem* );
+  void msgAddedToListView( Q3ListViewItem* );
 
 public slots:
   /** For when a list view item has been double clicked */
-  void selectMessage(QListViewItem*);
+  void selectMessage(Q3ListViewItem*);
   /** For when a list view item has been selected */
-  void highlightMessage(QListViewItem*);
+  void highlightMessage(Q3ListViewItem*);
   /** For when righ mouse button is pressed */
   void slotRMB();
   /** Refresh list view item corresponding to the messae with the given id */
@@ -251,12 +258,12 @@ public slots:
 
   /** Select an item and if it is the parent of a closed thread, also
     recursively select its children. */
-  virtual void setSelected(QListViewItem *item, bool selected);
+  virtual void setSelected(Q3ListViewItem *item, bool selected);
 
   /** Select several items by message index
    * and if they are the parent of a closed thread, also
    * recursively select their children. */
-  void setSelectedByIndex(QValueList<int> items, bool selected);
+  void setSelectedByIndex(Q3ValueList<int> items, bool selected);
 
   /** switch a column with the given id (see KPaintInfo enum)
       1 for activate, 0 for deactivate, -1 for toggle*/
@@ -331,7 +338,7 @@ protected slots:
   /** dirties the sort order */
   void dirtySortOrder(int);
   /** show context menu */
-  void rightButtonPressed( QListViewItem *, const QPoint &, int );
+  void rightButtonPressed( Q3ListViewItem *, const QPoint &, int );
 
 private slots:
   void slotMoveCompleted( KMCommand * );
@@ -343,7 +350,7 @@ private:
       bool forceJumpToUnread = false );
 
   /** Currently associated folder */
-  QGuardedPtr<KMFolder> mFolder;
+  QPointer<KMFolder> mFolder;
   /** The KMMainWin for status bar updates */
   KMMainWidget* mOwner;
   /** Top most visible item */
@@ -353,7 +360,7 @@ private:
   /** Serial number of the current item */
   unsigned long mCurrentItemSerNum;
   /** Map messages ids into HeaderItems */
-  QMemArray<HeaderItem*> mItems;
+  Q3MemArray<HeaderItem*> mItems;
 
   // ===== threading and sorting ==========
   bool mNested, mNestedOverride, mSubjThreading;
@@ -371,19 +378,19 @@ private:
 
 
   /** */
-  QDict< SortCacheItem > mSortCacheItems;
+  Q3Dict< SortCacheItem > mSortCacheItems;
   /** */
-  QDict< QPtrList< SortCacheItem > > mSubjectLists;
+  Q3Dict< Q3PtrList< SortCacheItem > > mSubjectLists;
   /** */
-  QPtrList<HeaderItem> mImperfectlyThreadedList;
+  Q3PtrList<HeaderItem> mImperfectlyThreadedList;
 
   /** Debugging helpers for outputting the threading data structures. */
   void printSubjectThreadingTree( );
   void printThreadingTree( );
   /** Initializes the mSortCacheItems tree with the contents of the folder */
-  void buildThreadingTree( QMemArray<SortCacheItem *> sortCache );
+  void buildThreadingTree( Q3MemArray<SortCacheItem *> sortCache );
   /** Initializes the mSubjectLists tree with the contents of the folder */
-  void buildSubjectThreadingTree( QMemArray<SortCacheItem *> sortCache );
+  void buildSubjectThreadingTree( Q3MemArray<SortCacheItem *> sortCache );
   /** Find a msg to thread item below */
   SortCacheItem* findParent(SortCacheItem *item);
   /** Find a msg to thread item below by subject */
@@ -414,7 +421,7 @@ private:
   QFont mNewFont, mUnreadFont, mImportantFont, mDateFont,mTodoFont;
 
   /** Icons shown in header */
-  static QIconSet *up, *down;
+  static QIcon *up, *down;
   /** Map menu id into a folder */
   KMMenuToFolder mMenuToFolder;
 

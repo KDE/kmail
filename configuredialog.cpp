@@ -34,6 +34,14 @@
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
+//Added by qt3to4:
+#include <QBoxLayout>
+#include <QGridLayout>
+#include <QHideEvent>
+#include <Q3CString>
+#include <Q3ValueList>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 using KMail::AccountDialog;
 #include "colorlistbox.h"
 #include "kmacctseldlg.h"
@@ -99,20 +107,20 @@ using KMime::DateFormatter;
 
 // Qt headers:
 #include <qvalidator.h>
-#include <qwhatsthis.h>
-#include <qvgroupbox.h>
-#include <qvbox.h>
+
+
+#include <q3vbox.h>
 #include <qvbuttongroup.h>
 #include <qhbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
 #include <qtextcodec.h>
-#include <qheader.h>
-#include <qpopupmenu.h>
+#include <q3header.h>
+#include <q3popupmenu.h>
 #include <qradiobutton.h>
 #include <qlayout.h>
 #include <qcheckbox.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 
 // other headers:
 #include <assert.h>
@@ -161,7 +169,7 @@ namespace {
     }
   }
 
-  void populateButtonGroup( QButtonGroup * g, const EnumConfigEntry & e ) {
+  void populateButtonGroup( Q3ButtonGroup * g, const EnumConfigEntry & e ) {
     g->setTitle( i18n( e.desc ) );
     g->layout()->setSpacing( KDialog::spacingHint() );
     for ( int i = 0 ; i < e.numItems ; ++i )
@@ -178,7 +186,7 @@ namespace {
     b->setChecked( c.readBoolEntry( e.key, e.defaultValue ) );
   }
 
-  void loadWidget( QButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
+  void loadWidget( Q3ButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     checkLockDown( g, c, e.key );
@@ -196,7 +204,7 @@ namespace {
     c.writeEntry( e.key, b->isChecked() );
   }
 
-  void saveButtonGroup( QButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
+  void saveButtonGroup( Q3ButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     c.writeEntry( e.key, e.items[ g->id( g->selected() ) ].key );
@@ -287,12 +295,12 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mIdentityList = new IdentityListView( this );
   connect( mIdentityList, SIGNAL(selectionChanged()),
            SLOT(slotIdentitySelectionChanged()) );
-  connect( mIdentityList, SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
-           SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
-  connect( mIdentityList, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
+  connect( mIdentityList, SIGNAL(itemRenamed(Q3ListViewItem*,const QString&,int)),
+           SLOT(slotRenameIdentity(Q3ListViewItem*,const QString&,int)) );
+  connect( mIdentityList, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)),
            SLOT(slotModifyIdentity()) );
-  connect( mIdentityList, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
-           SLOT(slotContextMenu(KListView*,QListViewItem*,const QPoint&)) );
+  connect( mIdentityList, SIGNAL(contextMenu(KListView*,Q3ListViewItem*,const QPoint&)),
+           SLOT(slotContextMenu(KListView*,Q3ListViewItem*,const QPoint&)) );
   // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
@@ -338,7 +346,7 @@ void IdentityPage::load()
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
-  QListViewItem * item = 0;
+  Q3ListViewItem * item = 0;
   for ( KPIM::IdentityManager::Iterator it = im->modifyBegin() ; it != im->modifyEnd() ; ++it )
     item = new IdentityListViewItem( mIdentityList, item, *it  );
   mIdentityList->setSelected( mIdentityList->currentItem(), true );
@@ -401,7 +409,7 @@ void IdentityPage::slotNewIdentity()
     // Insert into listview:
     //
     KPIM::Identity & newIdent = im->modifyIdentityForName( identityName );
-    QListViewItem * item = mIdentityList->selectedItem();
+    Q3ListViewItem * item = mIdentityList->selectedItem();
     if ( item )
       item = item->itemAbove();
     mIdentityList->setSelected( new IdentityListViewItem( mIdentityList,
@@ -458,13 +466,13 @@ void IdentityPage::slotRemoveIdentity()
 void IdentityPage::slotRenameIdentity() {
   assert( !mIdentityDialog );
 
-  QListViewItem * item = mIdentityList->selectedItem();
+  Q3ListViewItem * item = mIdentityList->selectedItem();
   if ( !item ) return;
 
   mIdentityList->rename( item, 0 );
 }
 
-void IdentityPage::slotRenameIdentity( QListViewItem * i,
+void IdentityPage::slotRenameIdentity( Q3ListViewItem * i,
                                        const QString & s, int col ) {
   assert( col == 0 );
   Q_UNUSED( col );
@@ -482,11 +490,11 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
   item->redisplay();
 }
 
-void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
+void IdentityPage::slotContextMenu( KListView *, Q3ListViewItem * i,
                                     const QPoint & pos ) {
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
-  QPopupMenu * menu = new QPopupMenu( this );
+  Q3PopupMenu * menu = new Q3PopupMenu( this );
   menu->insertItem( i18n("Add..."), this, SLOT(slotNewIdentity()) );
   if ( item ) {
     menu->insertItem( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
@@ -513,7 +521,7 @@ void IdentityPage::slotSetAsDefault() {
 }
 
 void IdentityPage::refreshList() {
-  for ( QListViewItemIterator it( mIdentityList ) ; it.current() ; ++it ) {
+  for ( Q3ListViewItemIterator it( mIdentityList ) ; it.current() ; ++it ) {
     IdentityListViewItem * item =
       dynamic_cast<IdentityListViewItem*>(it.current());
     if ( item )
@@ -585,7 +593,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   QHBoxLayout *hlay;
   QGridLayout *glay;
   QPushButton *button;
-  QGroupBox   *group;
+  Q3GroupBox   *group;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   // label: zero stretch ### FIXME more
@@ -604,7 +612,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   mTransportList->setSorting( -1 );
   connect( mTransportList, SIGNAL(selectionChanged()),
            this, SLOT(slotTransportSelected()) );
-  connect( mTransportList, SIGNAL(doubleClicked( QListViewItem *)),
+  connect( mTransportList, SIGNAL(doubleClicked( Q3ListViewItem *)),
            this, SLOT(slotModifySelectedTransport()) );
   hlay->addWidget( mTransportList, 1 );
 
@@ -643,7 +651,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   btn_vlay->addStretch( 1 ); // spacer
 
   // "Common options" groupbox:
-  group = new QGroupBox( 0, Qt::Vertical,
+  group = new Q3GroupBox( 0, Qt::Vertical,
                          i18n("Common Options"), this );
   vlay->addWidget(group);
 
@@ -699,8 +707,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   glay->addWidget( l, 1, 0 );
 
   QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().utf8() );
-  QWhatsThis::add( l, msg );
-  QWhatsThis::add( mSendOnCheckCombo, msg );
+  l->setWhatsThis( msg );
+  mSendOnCheckCombo->setWhatsThis( msg );
 
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
                                i18n("Defa&ult send method:"), group ), 2, 0 );
@@ -714,14 +722,14 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   msg = i18n( "<qt><p>The default domain is used to complete email "
               "addresses that only consist of the user's name."
               "</p></qt>" );
-  QWhatsThis::add( l, msg );
-  QWhatsThis::add( mDefaultDomainEdit, msg );
+  l->setWhatsThis( msg );
+  mDefaultDomainEdit->setWhatsThis( msg );
 }
 
 
 void AccountsPage::SendingTab::slotTransportSelected()
 {
-  QListViewItem *cur = mTransportList->selectedItem();
+  Q3ListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
   mRemoveTransportButton->setEnabled( cur );
   mSetDefaultTransportButton->setEnabled( cur );
@@ -744,12 +752,12 @@ static inline QString uniqueName( const QStringList & list,
 
 void AccountsPage::SendingTab::slotSetDefaultTransport()
 {
-  QListViewItem *item = mTransportList->selectedItem();
+  Q3ListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
   KMTransportInfo ti;
 
-  QListViewItemIterator it( mTransportList );
+  Q3ListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
   ti.readConfig( KMTransportInfo::findTransport( it.current()->text(0) ));
   if ( ti.type != "sendmail" ) {
@@ -798,7 +806,7 @@ void AccountsPage::SendingTab::slotAddTransport()
   // create list of names:
   // ### move behind dialog.exec()?
   QStringList transportNames;
-  QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
+  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( it.toFirst() ; it.current() ; ++it )
     transportNames << (*it)->name;
 
@@ -816,7 +824,7 @@ void AccountsPage::SendingTab::slotAddTransport()
 
   // append to listview:
   // ### FIXME: insert before the selected item, append on empty selection
-  QListViewItem *lastItem = mTransportList->firstChild();
+  Q3ListViewItem *lastItem = mTransportList->firstChild();
   QString typeDisplayName;
   if ( lastItem ) {
     typeDisplayName = transportInfo->type;
@@ -828,7 +836,7 @@ void AccountsPage::SendingTab::slotAddTransport()
       .arg( transportInfo->type );
     GlobalSettings::self()->setDefaultTransport( transportInfo->name );
   }
-  (void) new QListViewItem( mTransportList, lastItem, transportInfo->name,
+  (void) new Q3ListViewItem( mTransportList, lastItem, transportInfo->name,
                             typeDisplayName );
 
   // notify anyone who cares:
@@ -838,10 +846,10 @@ void AccountsPage::SendingTab::slotAddTransport()
 
 void AccountsPage::SendingTab::slotModifySelectedTransport()
 {
-  QListViewItem *item = mTransportList->selectedItem();
+  Q3ListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
-  QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
+  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->name == item->text(0) ) break;
   if ( !it.current() ) return;
@@ -853,7 +861,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   // create the list of names of transports, but leave out the current
   // item:
   QStringList transportNames;
-  QPtrListIterator<KMTransportInfo> jt( mTransportInfoList );
+  Q3PtrListIterator<KMTransportInfo> jt( mTransportInfoList );
   int entryLocation = -1;
   for ( jt.toFirst() ; jt.current() ; ++jt )
     if ( jt != it )
@@ -875,7 +883,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
 
 void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 {
-  QListViewItem *item = mTransportList->selectedItem();
+  Q3ListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
 
   QStringList changedIdents;
@@ -900,14 +908,14 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
     KMessageBox::informationList( this, information, changedIdents );
   }
 
-  QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
+  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->name == item->text(0) ) break;
   if ( !it.current() ) return;
 
   KMTransportInfo ti;
 
-  QListViewItem *newCurrent = item->itemBelow();
+  Q3ListViewItem *newCurrent = item->itemBelow();
   if ( !newCurrent ) newCurrent = item->itemAbove();
   //mTransportList->removeItem( item );
   if ( newCurrent ) {
@@ -946,7 +954,7 @@ void AccountsPage::SendingTab::doLoadOther() {
 
   int numTransports = general.readNumEntry("transports", 0);
 
-  QListViewItem *top = 0;
+  Q3ListViewItem *top = 0;
   mTransportInfoList.clear();
   mTransportList->clear();
   QStringList transportNames;
@@ -955,13 +963,13 @@ void AccountsPage::SendingTab::doLoadOther() {
     ti->readConfig(i);
     mTransportInfoList.append( ti );
     transportNames << ti->name;
-    top = new QListViewItem( mTransportList, top, ti->name, ti->type );
+    top = new Q3ListViewItem( mTransportList, top, ti->name, ti->type );
   }
   emit transportListChanged( transportNames );
 
   const QString &defaultTransport = GlobalSettings::self()->defaultTransport();
 
-  QListViewItemIterator it( mTransportList );
+  Q3ListViewItemIterator it( mTransportList );
   for ( ; it.current(); ++it ) {
     if ( it.current()->text(0) == defaultTransport ) {
       if ( it.current()->text(1) != "sendmail" ) {
@@ -1008,7 +1016,7 @@ void AccountsPage::SendingTab::save() {
 
   // Save transports:
   general.writeEntry( "transports", mTransportInfoList.count() );
-  QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
+  Q3PtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( int i = 1 ; it.current() ; ++it, ++i )
     (*it)->writeConfig(i);
 
@@ -1035,7 +1043,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   QVBoxLayout *btn_vlay;
   QHBoxLayout *hlay;
   QPushButton *button;
-  QGroupBox   *group;
+  Q3GroupBox   *group;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -1055,7 +1063,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   mAccountList->setSorting( -1 );
   connect( mAccountList, SIGNAL(selectionChanged()),
            this, SLOT(slotAccountSelected()) );
-  connect( mAccountList, SIGNAL(doubleClicked( QListViewItem *)),
+  connect( mAccountList, SIGNAL(doubleClicked( Q3ListViewItem *)),
            this, SLOT(slotModifySelectedAccount()) );
   hlay->addWidget( mAccountList, 1 );
 
@@ -1092,7 +1100,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "New Mail Notification" group box: stretch 0
-  group = new QVGroupBox( i18n("New Mail Notification"), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n("New Mail Notification"), this );
   vlay->addWidget( group );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -1111,7 +1119,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   QToolTip::add( mVerboseNotificationCheck,
                  i18n( "Show for each folder the number of newly arrived "
                        "messages" ) );
-  QWhatsThis::add( mVerboseNotificationCheck,
+  mVerboseNotificationCheck->setWhatsThis(
     GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
   connect( mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -1127,7 +1135,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
 
 void AccountsPage::ReceivingTab::slotAccountSelected()
 {
-  QListViewItem * item = mAccountList->selectedItem();
+  Q3ListViewItem * item = mAccountList->selectedItem();
   mModifyAccountButton->setEnabled( item );
   mRemoveAccountButton->setEnabled( item );
 }
@@ -1136,22 +1144,22 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
 {
   QStringList accountNames = kmkernel->acctMgr()->getAccounts();
 
-  QValueList<ModifiedAccountsType*>::Iterator k;
+  Q3ValueList<ModifiedAccountsType*>::Iterator k;
   for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
     if ((*k)->oldAccount)
       accountNames.remove( (*k)->oldAccount->name() );
 
-  QValueList< QGuardedPtr<KMAccount> >::Iterator l;
+  Q3ValueList< QPointer<KMAccount> >::Iterator l;
   for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
     if (*l)
       accountNames.remove( (*l)->name() );
 
-  QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+  Q3ValueList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
     if (*it)
       accountNames += (*it)->name();
 
-  QValueList<ModifiedAccountsType*>::Iterator j;
+  Q3ValueList<ModifiedAccountsType*>::Iterator j;
   for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
     accountNames += (*j)->newAccount->name();
 
@@ -1200,12 +1208,12 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
   account->deinstallTimer();
   account->setName( uniqueName( accountNames, account->name() ) );
 
-  QListViewItem *after = mAccountList->firstChild();
+  Q3ListViewItem *after = mAccountList->firstChild();
   while ( after && after->nextSibling() )
     after = after->nextSibling();
 
-  QListViewItem *listItem =
-    new QListViewItem( mAccountList, after, account->name(), account->type() );
+  Q3ListViewItem *listItem =
+    new Q3ListViewItem( mAccountList, after, account->name(), account->type() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
 
@@ -1217,11 +1225,11 @@ void AccountsPage::ReceivingTab::slotAddAccount() {
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
-  QListViewItem *listItem = mAccountList->selectedItem();
+  Q3ListViewItem *listItem = mAccountList->selectedItem();
   if( !listItem ) return;
 
   KMAccount *account = 0;
-  QValueList<ModifiedAccountsType*>::Iterator j;
+  Q3ValueList<ModifiedAccountsType*>::Iterator j;
   for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
     if ( (*j)->newAccount->name() == listItem->text(0) ) {
       account = (*j)->newAccount;
@@ -1229,7 +1237,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     }
 
   if ( !account ) {
-    QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+    Q3ValueList< QPointer<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
         account = *it;
@@ -1284,11 +1292,11 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
-  QListViewItem *listItem = mAccountList->selectedItem();
+  Q3ListViewItem *listItem = mAccountList->selectedItem();
   if( !listItem ) return;
 
   KMAccount *acct = 0;
-  QValueList<ModifiedAccountsType*>::Iterator j;
+  Q3ValueList<ModifiedAccountsType*>::Iterator j;
   for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j )
     if ( (*j)->newAccount->name() == listItem->text(0) ) {
       acct = (*j)->oldAccount;
@@ -1297,7 +1305,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
       break;
     }
   if ( !acct ) {
-    QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+    Q3ValueList< QPointer<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
         acct = *it;
@@ -1317,7 +1325,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
     return;
   }
 
-  QListViewItem * item = listItem->itemBelow();
+  Q3ListViewItem * item = listItem->itemBelow();
   if ( !item ) item = listItem->itemAbove();
   delete listItem;
 
@@ -1343,17 +1351,17 @@ void AccountsPage::ReceivingTab::doLoadOther() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
-  QListViewItem *top = 0;
+  Q3ListViewItem *top = 0;
 
   for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
        a = kmkernel->acctMgr()->next() ) {
-    QListViewItem *listItem =
-      new QListViewItem( mAccountList, top, a->name(), a->type() );
+    Q3ListViewItem *listItem =
+      new Q3ListViewItem( mAccountList, top, a->name(), a->type() );
     if( a->folder() )
       listItem->setText( 2, a->folder()->label() );
     top = listItem;
   }
-  QListViewItem *listItem = mAccountList->firstChild();
+  Q3ListViewItem *listItem = mAccountList->firstChild();
   if ( listItem ) {
     mAccountList->setCurrentItem( listItem );
     mAccountList->setSelected( listItem, true );
@@ -1373,14 +1381,14 @@ void AccountsPage::ReceivingTab::slotTweakAccountList()
 
 void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
-  QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+  Q3ValueList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     kmkernel->acctMgr()->add( *it );
     (*it)->installTimer();
   }
 
   // Update accounts that have been modified
-  QValueList<ModifiedAccountsType*>::Iterator j;
+  Q3ValueList<ModifiedAccountsType*>::Iterator j;
   for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
     (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
     delete (*j)->newAccount;
@@ -1835,25 +1843,25 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "folder list" radio buttons:
-  populateButtonGroup( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
+  populateButtonGroup( mFolderListGroup = new Q3HButtonGroup( this ), folderListMode );
   vlay->addWidget( mFolderListGroup );
   connect( mFolderListGroup, SIGNAL ( clicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "show reader window" radio buttons:
-  populateButtonGroup( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
+  populateButtonGroup( mReaderWindowModeGroup = new Q3VButtonGroup( this ), readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroup );
   connect( mReaderWindowModeGroup, SIGNAL ( clicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
-  populateButtonGroup( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
+  populateButtonGroup( mMIMETreeModeGroup = new Q3VButtonGroup( this ), mimeTreeMode );
   vlay->addWidget( mMIMETreeModeGroup );
   connect( mMIMETreeModeGroup, SIGNAL ( clicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populateButtonGroup( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
+  populateButtonGroup( mMIMETreeLocationGroup = new Q3HButtonGroup( this ), mimeTreeLocation );
   vlay->addWidget( mMIMETreeLocationGroup );
   connect( mMIMETreeLocationGroup, SIGNAL ( clicked( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -1917,13 +1925,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
     mCustomDateFormatEdit( 0 )
 {
   // tmp. vars:
-  QButtonGroup * group;
+  Q3ButtonGroup * group;
   QRadioButton * radio;
 
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "General Options" group:
-  group = new QVButtonGroup( i18n( "General Options" ), this );
+  group = new Q3VButtonGroup( i18n( "General Options" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mMessageSizeCheck = new QCheckBox( i18n("Display messa&ge sizes"), group );
@@ -1949,7 +1957,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 
   // "Message Header Threading Options" group:
   mNestingPolicy =
-    new QVButtonGroup( i18n("Threaded Message List Options"), this );
+    new Q3VButtonGroup( i18n("Threaded Message List Options"), this );
   mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
 
   mNestingPolicy->insert(
@@ -1972,7 +1980,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Date Display" group:
-  mDateDisplay = new QVButtonGroup( i18n("Date Display"), this );
+  mDateDisplay = new Q3VButtonGroup( i18n("Date Display"), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
@@ -2020,8 +2028,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
              "</ul>"
              "<p><strong>All other input characters will be ignored."
              "</strong></p></qt>");
-      QWhatsThis::add( mCustomDateFormatEdit, customDateWhatsThis );
-      QWhatsThis::add( radio, customDateWhatsThis );
+      mCustomDateFormatEdit->setWhatsThis( customDateWhatsThis );
+      radio->setWhatsThis( customDateWhatsThis );
     }
   } // end for loop populating mDateDisplay
 
@@ -2227,7 +2235,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
 
   QString fallbackCharsetWhatsThis =
     i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
-  QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
+  mCharsetCombo->setWhatsThis( fallbackCharsetWhatsThis );
 
   label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
   label->setBuddy( mCharsetCombo );
@@ -2248,7 +2256,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
 
   QString overrideCharsetWhatsThis =
     i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
-  QWhatsThis::add( mOverrideCharsetCombo, overrideCharsetWhatsThis );
+  mOverrideCharsetCombo->setWhatsThis( overrideCharsetWhatsThis );
 
   label = new QLabel( i18n("&Override character encoding:"), this );
   label->setBuddy( mOverrideCharsetCombo );
@@ -2365,7 +2373,7 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
            this, SLOT( slotEmitChanged( void ) ) );
 
   // System tray modes
-  mSystemTrayGroup = new QVButtonGroup( i18n("System Tray Mode"), this );
+  mSystemTrayGroup = new Q3VButtonGroup( i18n("System Tray Mode"), this );
   mSystemTrayGroup->layout()->setSpacing( KDialog::spacingHint() );
   vlay->addWidget( mSystemTrayGroup );
   connect( mSystemTrayGroup, SIGNAL( clicked( int ) ),
@@ -2469,9 +2477,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   // tmp. vars:
   QVBoxLayout *vlay;
   QHBoxLayout *hlay;
-  QGroupBox   *group;
+  Q3GroupBox   *group;
   QLabel      *label;
-  QHBox       *hbox;
+  Q3HBox       *hbox;
   QString      msg;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
@@ -2555,7 +2563,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hlay->addItem( new QSpacerItem(0, 0) );
 
   // The "external editor" group:
-  group = new QVGroupBox( i18n("External Editor"), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n("External Editor"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mExternalEditorCheck = new QCheckBox(
@@ -2564,7 +2572,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hbox = new QHBox( group );
+  hbox = new Q3HBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KURLRequester( hbox, "kcfg_ExternalEditor" );
@@ -2895,19 +2903,19 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 {
   // tmp. vars:
   QVBoxLayout *vlay;
-  QGroupBox   *group;
+  Q3GroupBox   *group;
   QLabel      *label;
 
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  group = new QVGroupBox( i18n("Repl&y Subject Prefixes"), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n("Repl&y Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
   label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
                            "(entries are case-insensitive regular expressions):"), group );
-  label->setAlignment( AlignLeft|WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
 
   // row 1, string list editor:
   SimpleStringListEditor::ButtonCode buttonCode =
@@ -2930,13 +2938,13 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 
 
-  group = new QVGroupBox( i18n("For&ward Subject Prefixes"), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n("For&ward Subject Prefixes"), this );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
   label= new QLabel( i18n("Recognize any sequence of the following prefixes\n"
                           "(entries are case-insensitive regular expressions):"), group );
-  label->setAlignment( AlignLeft|WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
 
   // row 1: string list editor
   mForwardListEditor =
@@ -3021,7 +3029,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   if ( charset.lower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
+      .arg( Q3CString( kmkernel->networkCodec()->mimeName() ).lower() );
     return;
   }
 
@@ -3043,7 +3051,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
-      QCString cset = kmkernel->networkCodec()->mimeName();
+      Q3CString cset = kmkernel->networkCodec()->mimeName();
       KPIM::kAsciiToLower( cset.data() );
       (*it) = QString("%1 (locale)").arg( cset );
     }
@@ -3158,7 +3166,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 {
-  QListViewItem * item = mTagList->selectedItem();
+  Q3ListViewItem * item = mTagList->selectedItem();
 
   if ( item ) {
     mTagNameEdit->setText( item->text( 0 ) );
@@ -3178,7 +3186,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text ) {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  QListViewItem * item = mTagList->selectedItem();
+  Q3ListViewItem * item = mTagList->selectedItem();
   if ( item )
     item->setText( 0, text );
   emit changed( true );
@@ -3188,7 +3196,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
 void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text ) {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  QListViewItem * item = mTagList->selectedItem();
+  Q3ListViewItem * item = mTagList->selectedItem();
   if ( item )
     item->setText( 1, text );
   emit changed( true );
@@ -3197,7 +3205,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
 
 void ComposerPage::HeadersTab::slotNewMimeHeader()
 {
-  QListViewItem *listItem = new QListViewItem( mTagList );
+  Q3ListViewItem *listItem = new Q3ListViewItem( mTagList );
   mTagList->setCurrentItem( listItem );
   mTagList->setSelected( listItem, true );
   emit changed( true );
@@ -3207,7 +3215,7 @@ void ComposerPage::HeadersTab::slotNewMimeHeader()
 void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 {
   // calling this w/o selection is a programming error:
-  QListViewItem * item = mTagList->selectedItem();
+  Q3ListViewItem * item = mTagList->selectedItem();
   if ( !item ) {
     kdDebug(5006) << "==================================================\n"
                   << "Error: Remove button was pressed although no custom header was selected\n"
@@ -3215,7 +3223,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     return;
   }
 
-  QListViewItem * below = item->nextSibling();
+  Q3ListViewItem * below = item->nextSibling();
   delete item;
 
   if ( below )
@@ -3238,16 +3246,16 @@ void ComposerPage::HeadersTab::doLoadOther() {
   mTagNameEdit->clear();
   mTagValueEdit->clear();
 
-  QListViewItem * item = 0;
+  Q3ListViewItem * item = 0;
 
   int count = general.readNumEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
-                         QCString("Mime #") + QCString().setNum(i) );
+                         Q3CString("Mime #") + Q3CString().setNum(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
     if( !name.isEmpty() )
-      item = new QListViewItem( mTagList, item, name, value );
+      item = new Q3ListViewItem( mTagList, item, name, value );
   }
   if ( mTagList->childCount() ) {
     mTagList->setCurrentItem( mTagList->firstChild() );
@@ -3268,11 +3276,11 @@ void ComposerPage::HeadersTab::save() {
                       mMessageIdSuffixEdit->text() );
 
   int numValidEntries = 0;
-  QListViewItem * item = mTagList->firstChild();
+  Q3ListViewItem * item = mTagList->firstChild();
   for ( ; item ; item = item->itemBelow() )
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::config(), QCString("Mime #")
-                             + QCString().setNum( numValidEntries ) );
+      KConfigGroup config( KMKernel::config(), Q3CString("Mime #")
+                             + Q3CString().setNum( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
@@ -3318,7 +3326,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
   // "Attachment key words" label and string list editor
   label = new QLabel( i18n("Recognize any of the following key words as "
                            "intention to attach a file:"), this );
-  label->setAlignment( AlignLeft|WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
   vlay->addWidget( label );
 
   SimpleStringListEditor::ButtonCode buttonCode =
@@ -3445,8 +3453,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
-  QHBox        *hbox;
-  QGroupBox    *group;
+  Q3HBox        *hbox;
+  Q3GroupBox    *group;
   QRadioButton *radio;
   KActiveLabel *label;
   QWidget      *w;
@@ -3518,16 +3526,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
 
   // "HTML Messages" group box:
-  group = new QVGroupBox( i18n( "HTML Messages" ), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n( "HTML Messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
-  QWhatsThis::add( mHtmlMailCheck, htmlWhatsThis );
+  mHtmlMailCheck->setWhatsThis( htmlWhatsThis );
   connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
                                             "references from the Internet" ), group );
-  QWhatsThis::add( mExternalReferences, externalWhatsThis );
+  mExternalReferences->setWhatsThis( externalWhatsThis );
   connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   label = new KActiveLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
@@ -3542,16 +3550,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 
   // "Message Disposition Notification" groupbox:
-  group = new QVGroupBox( i18n("Message Disposition Notifications"), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n("Message Disposition Notifications"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
 
   // "ignore", "ask", "deny", "always send" radiobutton line:
-  mMDNGroup = new QButtonGroup( group );
+  mMDNGroup = new Q3ButtonGroup( group );
   mMDNGroup->hide();
   connect( mMDNGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  hbox = new QHBox( group );
+  hbox = new Q3HBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
   (void)new QLabel( i18n("Send policy:"), hbox );
@@ -3569,18 +3577,18 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   mMDNGroup->insert( radio );
 
   for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
-      QWhatsThis::add( mMDNGroup->find( i ), receiptWhatsThis );
+      mMDNGroup->find( i )->setWhatsThis( receiptWhatsThis );
 
   w = new QWidget( hbox ); // spacer
   hbox->setStretchFactor( w, 1 );
 
   // "Original Message quote" radiobutton line:
-  mOrigQuoteGroup = new QButtonGroup( group );
+  mOrigQuoteGroup = new Q3ButtonGroup( group );
   mOrigQuoteGroup->hide();
   connect( mOrigQuoteGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hbox = new QHBox( group );
+  hbox = new Q3HBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
   (void)new QLabel( i18n("Quote original message:"), hbox );
@@ -3610,7 +3618,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addWidget( group );
 
   // "Attached keys" group box:
-  group = new QVGroupBox( i18n( "Certificate && Key Bundle Attachments" ), this );
+  group = new Q3GroupBox(1, Qt::Horizontal, i18n( "Certificate && Key Bundle Attachments" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mAutomaticallyImportAttachedKeysCheck = new QCheckBox( i18n("Automatically import keys and certificates"), group );
@@ -3678,12 +3686,12 @@ void SecurityPage::GeneralTab::save() {
     {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
       QStringList names;
-      QValueList<QGuardedPtr<KMFolder> > folders;
+      Q3ValueList<QPointer<KMFolder> > folders;
       kmkernel->folderMgr()->createFolderList(&names, &folders);
       kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
-      for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
+      for (Q3ValueList<QPointer<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
       {
         if (*it)
@@ -3901,7 +3909,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   vlay->addWidget( mWidget );
 
   // Button-group for exclusive radiobuttons
-  QButtonGroup* bg = new QButtonGroup( mWidget );
+  Q3ButtonGroup* bg = new Q3ButtonGroup( mWidget );
   bg->hide();
   bg->insert( mWidget->CRLRB );
   bg->insert( mWidget->OCSPRB );
@@ -3941,7 +3949,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
            this, SLOT( slotUpdateHTTPActions() ) );
 
   // Button-group for exclusive radiobuttons
-  QButtonGroup* bgHTTPProxy = new QButtonGroup( mWidget );
+  Q3ButtonGroup* bgHTTPProxy = new Q3ButtonGroup( mWidget );
   bgHTTPProxy->hide();
   bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
@@ -3958,8 +3966,8 @@ SecurityPageSMimeTab::~SecurityPageSMimeTab()
 
 static void disableDirmngrWidget( QWidget* w ) {
   w->setEnabled( false );
-  QWhatsThis::remove( w );
-  QWhatsThis::add( w, i18n( "This option requires dirmngr >= 0.9.0" ) );
+  Q3WhatsThis::remove( w );
+  w->setWhatsThis( i18n( "This option requires dirmngr >= 0.9.0" ) );
 }
 
 static void initializeDirmngrCheckbox( QCheckBox* cb, Kleo::CryptoConfigEntry* entry ) {
@@ -4161,7 +4169,7 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
-bool SecurityPageSMimeTab::process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)
+bool SecurityPageSMimeTab::process(const Q3CString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {
     if ( fun == "load()" ) {
         replyType = "void";
@@ -4406,8 +4414,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                       "are separate files. This may waste a bit of space on "
                       "disk, but should be more robust, e.g. when moving "
                       "messages between folders.</p></qt>");
-  QWhatsThis::add( mMailboxPrefCombo, msg );
-  QWhatsThis::add( label, msg );
+  mMailboxPrefCombo->setWhatsThis( msg );
+  label->setWhatsThis( msg );
   // @TODO: Till, move into .kcgc file
   msg = i18n( "what's this help",
             "<qt><p>When jumping to the next unread message, it may occur "
@@ -4422,7 +4430,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
             "<p>Similarly, when searching for the previous unread message, "
             "the search will start from the bottom of the message list and continue to "
             "the previous folder depending on which option is selected.</p></qt>" );
-  QWhatsThis::add( mLoopOnGotoUnread, msg );
+  mLoopOnGotoUnread->setWhatsThis( msg );
 
 #ifdef HAVE_INDEXLIB
  // this is probably overly pessimistic
@@ -4437,7 +4445,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 		  "</qt>"
 	    );
 
-  QWhatsThis::add( mIndexingEnabled, msg );
+  mIndexingEnabled->setWhatsThis( msg );
 #endif
 }
 
@@ -4501,14 +4509,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   vlay->setAutoAdd( true );
 
   // IMAP resource setup
-  QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"),
+  Q3GroupBox * b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("&IMAP Resource Folder Options"),
                                    this );
 
   mEnableImapResCB =
     new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
   QToolTip::add( mEnableImapResCB,  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
-  QWhatsThis::add( mEnableImapResCB,
+  mEnableImapResCB->setWhatsThis(
         i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().utf8() ) );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -4526,7 +4534,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
         ->theIMAPResourceStorageFormatItem()->whatsThis().utf8() );
   grid->addWidget( storageFormatLA, 0, 0 );
   QToolTip::add( storageFormatLA, toolTip );
-  QWhatsThis::add( storageFormatLA, whatsThis );
+  storageFormatLA->setWhatsThis( whatsThis );
   mStorageFormatCombo = new QComboBox( false, mBox );
   storageFormatLA->setBuddy( mStorageFormatCombo );
   QStringList formatLst;
@@ -4534,7 +4542,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mStorageFormatCombo->insertStringList( formatLst );
   grid->addWidget( mStorageFormatCombo, 0, 1 );
   QToolTip::add( mStorageFormatCombo, toolTip );
-  QWhatsThis::add( mStorageFormatCombo, whatsThis );
+  mStorageFormatCombo->setWhatsThis( whatsThis );
   connect( mStorageFormatCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotStorageFormatChanged( int ) ) );
 
@@ -4546,7 +4554,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
         ->theIMAPResourceFolderLanguageItem()->whatsThis().utf8() );
   grid->addWidget( languageLA, 1, 0 );
   QToolTip::add( languageLA, toolTip );
-  QWhatsThis::add( languageLA, whatsThis );
+  languageLA->setWhatsThis( whatsThis );
   mLanguageCombo = new QComboBox( false, mBox );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;
@@ -4554,7 +4562,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mLanguageCombo->insertStringList( lst );
   grid->addWidget( mLanguageCombo, 1, 1 );
   QToolTip::add( mLanguageCombo, toolTip );
-  QWhatsThis::add( mLanguageCombo, whatsThis );
+  mLanguageCombo->setWhatsThis( whatsThis );
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -4562,10 +4570,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().utf8() );
   QToolTip::add( mFolderComboLabel, toolTip );
-  QWhatsThis::add( mFolderComboLabel, whatsThis );
+  mFolderComboLabel->setWhatsThis( whatsThis );
   grid->addWidget( mFolderComboLabel, 2, 0 );
 
-  mFolderComboStack = new QWidgetStack( mBox );
+  mFolderComboStack = new Q3WidgetStack( mBox );
   grid->addWidget( mFolderComboStack, 2, 1 );
 
   // First possibility in the widgetstack: a combo showing the list of all folders
@@ -4574,7 +4582,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
       kmkernel->getKMMainWidget()->folderTree() );
   mFolderComboStack->addWidget( mFolderCombo, 0 );
   QToolTip::add( mFolderCombo, toolTip );
-  QWhatsThis::add( mFolderCombo, whatsThis );
+  mFolderCombo->setWhatsThis( whatsThis );
   connect( mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
            this, SLOT( slotEmitChanged() ) );
 
@@ -4584,7 +4592,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mAccountCombo = new KMail::AccountComboBox( mBox );
   mFolderComboStack->addWidget( mAccountCombo, 1 );
   QToolTip::add( mAccountCombo, toolTip );
-  QWhatsThis::add( mAccountCombo, whatsThis );
+  mAccountCombo->setWhatsThis( whatsThis );
   connect( mAccountCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
@@ -4594,15 +4602,15 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QToolTip::add( mHideGroupwareFolders,
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
-  QWhatsThis::add( mHideGroupwareFolders, i18n( GlobalSettings::self()
+  mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
            ->hideGroupwareFoldersItem()->whatsThis().utf8() ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
-  b1 = new QVGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
+  b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("Groupware Compatibility && Legacy Options"), this );
 
-  gBox = new QVBox( b1 );
+  gBox = new Q3VBox( b1 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
@@ -4615,13 +4623,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mEnableGwCB = 0;
   mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
-  QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
+  mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().utf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
   QToolTip::add( mLegacyBodyInvites, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
-  QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
+  mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().utf8() ) );
   connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
@@ -4629,7 +4637,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
   QToolTip::add( mAutomaticSending, i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
-  QWhatsThis::add( mAutomaticSending, i18n( GlobalSettings::self()->
+  mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().utf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );

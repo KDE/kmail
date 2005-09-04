@@ -35,6 +35,8 @@
 #include "kmmsgdict.h"
 #include "kmfolder.h"
 #include "kmfolderindex.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 KMTextSource::KMTextSource() : MailTextSource() {
 }
@@ -44,8 +46,8 @@ KMTextSource::~KMTextSource() {
 }
 
 
-QCString KMTextSource::text(Q_UINT32 serialNumber) const {
-    QCString rc;
+Q3CString KMTextSource::text(Q_UINT32 serialNumber) const {
+    Q3CString rc;
     KMFolder *folder = 0;
     int idx;
     KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);

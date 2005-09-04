@@ -8,18 +8,22 @@
 
 #include "kwidgetlister.h"
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3CString>
+#include <Q3PtrList>
 
 class KMSearchRule;
 class KMSearchPattern;
 
-template <typename T> class QPtrList;
+template <typename T> class Q3PtrList;
 class QString;
 class QComboBox;
 class QLineEdit;
 class QRadioButton;
-class QWidgetStack;
+class Q3WidgetStack;
 class QLabel;
 class KMSearchPatternEdit;
 
@@ -81,10 +85,10 @@ signals:
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english. */
-  static QCString ruleFieldToEnglish(const QString & i18nVal);
+  static Q3CString ruleFieldToEnglish(const QString & i18nVal);
   /** Used internally to find the corresponding index into the field
       ComboBox. Returns the index if found or -1 if the search failed, */
-  int indexOfRuleField( const QCString & aName ) const;
+  int indexOfRuleField( const Q3CString & aName ) const;
 
 protected slots:
   void slotRuleFieldChanged( const QString & );
@@ -95,8 +99,8 @@ private:
 
   QStringList mFilterFieldList;
   QComboBox *mRuleField;
-  QWidgetStack *mFunctionStack;
-  QWidgetStack *mValueStack;
+  Q3WidgetStack *mFunctionStack;
+  Q3WidgetStack *mValueStack;
   bool mAbsoluteDates;
 };
 
@@ -112,7 +116,7 @@ public:
 
   virtual ~KMSearchRuleWidgetLister();
 
-  void setRuleList( QPtrList<KMSearchRule> * aList );
+  void setRuleList( Q3PtrList<KMSearchRule> * aList );
   void setHeadersOnly( bool headersOnly );
 
 public slots:
@@ -124,7 +128,7 @@ protected:
 
 private:
   void regenerateRuleListFromWidgets();
-  QPtrList<KMSearchRule> *mRuleList;
+  Q3PtrList<KMSearchRule> *mRuleList;
   bool mHeadersOnly;
   bool mAbsoluteDates;
 };
@@ -162,7 +166,7 @@ private:
     @author Marc Mutz <Marc@Mutz.com>
 */
 
-class KMSearchPatternEdit : public QGroupBox  {
+class KMSearchPatternEdit : public Q3GroupBox  {
   Q_OBJECT
 public:
   /** Constructor. The parent and name parameters are passed to the underlying

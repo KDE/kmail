@@ -24,8 +24,12 @@
 
 #include <qevent.h>
 #include <qfile.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qcursor.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3PopupMenu>
+#include <QDropEvent>
 
 
 KMLineEdit::KMLineEdit(bool useCompletion,
@@ -105,7 +109,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       for ( it = urls.begin(); it != urls.end(); ++it ) {
         if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
           QFile file( fileName );
-          file.open( IO_ReadOnly );
+          file.open( QIODevice::ReadOnly );
           QByteArray rawData = file.readAll();
           file.close();
           QString data = QString::fromUtf8( rawData.data(), rawData.size() + 1 );
@@ -125,9 +129,9 @@ void KMLineEdit::dropEvent(QDropEvent *event)
   }
 }
 
-QPopupMenu *KMLineEdit::createPopupMenu()
+Q3PopupMenu *KMLineEdit::createPopupMenu()
 {
-    QPopupMenu *menu = KPIM::AddresseeLineEdit::createPopupMenu();
+    Q3PopupMenu *menu = KPIM::AddresseeLineEdit::createPopupMenu();
     if ( !menu )
         return 0;
 

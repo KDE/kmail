@@ -35,12 +35,14 @@
 
 #include "kmsearchpattern.h"
 
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class QObject;
-class QCString;
+class Q3CString;
 class QString;
-class QWidgetStack;
+class Q3WidgetStack;
 
 namespace KMail {
 
@@ -65,34 +67,34 @@ namespace KMail {
     void registerHandler( const RuleWidgetHandler * handler );
     void unregisterHandler( const RuleWidgetHandler * handler );
 
-    void createWidgets( QWidgetStack *functionStack,
-                        QWidgetStack *valueStack,
+    void createWidgets( Q3WidgetStack *functionStack,
+                        Q3WidgetStack *valueStack,
                         const QObject *receiver ) const;
-    KMSearchRule::Function function( const QCString & field,
-                                     const QWidgetStack *functionStack ) const;
-    QString value( const QCString & field,
-                   const QWidgetStack *functionStack,
-                   const QWidgetStack *valueStack ) const;
-    QString prettyValue( const QCString & field,
-                         const QWidgetStack *functionStack,
-                         const QWidgetStack *valueStack ) const;
-    bool handlesField( const QCString & field,
-                       const QWidgetStack *functionStack,
-                       const QWidgetStack *valueStack ) const;
-    void reset( QWidgetStack *functionStack,
-                QWidgetStack *valueStack ) const;
-    void setRule( QWidgetStack *functionStack,
-                  QWidgetStack *valueStack,
+    KMSearchRule::Function function( const Q3CString & field,
+                                     const Q3WidgetStack *functionStack ) const;
+    QString value( const Q3CString & field,
+                   const Q3WidgetStack *functionStack,
+                   const Q3WidgetStack *valueStack ) const;
+    QString prettyValue( const Q3CString & field,
+                         const Q3WidgetStack *functionStack,
+                         const Q3WidgetStack *valueStack ) const;
+    bool handlesField( const Q3CString & field,
+                       const Q3WidgetStack *functionStack,
+                       const Q3WidgetStack *valueStack ) const;
+    void reset( Q3WidgetStack *functionStack,
+                Q3WidgetStack *valueStack ) const;
+    void setRule( Q3WidgetStack *functionStack,
+                  Q3WidgetStack *valueStack,
                   const KMSearchRule *rule ) const;
-    void update( const QCString & field,
-                 QWidgetStack *functionStack,
-                 QWidgetStack *valueStack ) const;
+    void update( const Q3CString & field,
+                 Q3WidgetStack *functionStack,
+                 Q3WidgetStack *valueStack ) const;
 
   private:
-    typedef QValueVector<const RuleWidgetHandler*>::const_iterator const_iterator;
-    typedef QValueVector<const RuleWidgetHandler*>::iterator iterator;
+    typedef Q3ValueVector<const RuleWidgetHandler*>::const_iterator const_iterator;
+    typedef Q3ValueVector<const RuleWidgetHandler*>::iterator iterator;
 
-    QValueVector<const RuleWidgetHandler*> mHandlers;
+    Q3ValueVector<const RuleWidgetHandler*> mHandlers;
   };
 
 } // namespace KMail

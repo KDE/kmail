@@ -45,6 +45,11 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kio/netaccess.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QVBoxLayout>
+#include <Q3Frame>
+#include <QHBoxLayout>
 using namespace KIO;
 #include <kxface.h>
 using namespace KPIM;
@@ -59,8 +64,8 @@ using namespace KABC;
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qwidgetstack.h>
+
+#include <q3widgetstack.h>
 
 
 // #include <assert.h>
@@ -89,17 +94,17 @@ namespace KMail {
 
     // "enable X-Face" checkbox:
     mEnableCheck = new QCheckBox( i18n("&Send picture with every message"), this );
-    QWhatsThis::add( mEnableCheck,
+    mEnableCheck->setWhatsThis(
         i18n( "Check this box if you want KMail to add a so-called X-Face header to messages "
             "written with this identity. An X-Face is a small (48x48 pixels) black and "
             "white image that some mail clients are able to display." ) );
     hlay->addWidget( mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter );
 
     mXFaceLabel = new QLabel( this );
-    QWhatsThis::add(mXFaceLabel,
+    mXFaceLabel->setWhatsThis(
                     i18n( "This is a preview of the picture selected/entered below." ) );
     mXFaceLabel->setFixedSize(48, 48);
-    mXFaceLabel->setFrameShape( QFrame::Box );
+    mXFaceLabel->setFrameShape( Q3Frame::Box );
     hlay->addWidget( mXFaceLabel );
 
 //     label1 = new QLabel( "X-Face:", this );
@@ -108,7 +113,7 @@ namespace KMail {
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
     mSourceCombo = new QComboBox( false, this );
-    QWhatsThis::add(mSourceCombo,
+    mSourceCombo->setWhatsThis(
                     i18n("Click on the widgets below to obtain help on the input methods."));
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
@@ -123,7 +128,7 @@ namespace KMail {
     hlay->addWidget( mSourceCombo, 1 );
 
     // widget stack that is controlled by the source combo:
-    QWidgetStack * widgetStack = new QWidgetStack( this );
+    Q3WidgetStack * widgetStack = new Q3WidgetStack( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
@@ -145,7 +150,7 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFromFileBtn = new QPushButton( i18n("Select File..."), page );
-    QWhatsThis::add( mFromFileBtn,
+    mFromFileBtn->setWhatsThis(
                      i18n("Use this to select an image file to create the picture from. "
                          "The image should be of high contrast and nearly quadratic shape. "
                          "A light background helps improve the result." ) );
@@ -154,7 +159,7 @@ namespace KMail {
     connect( mFromFileBtn, SIGNAL(released()),
              this, SLOT(slotSelectFile()) );
     mFromAddrbkBtn = new QPushButton( i18n("Set From Address Book"), page );
-    QWhatsThis::add( mFromAddrbkBtn,
+    mFromAddrbkBtn->setWhatsThis(
                      i18n( "You can use a scaled-down version of the picture "
                          "you have set in your address book entry." ) );
     mFromAddrbkBtn->setAutoDefault( false );
@@ -165,7 +170,7 @@ namespace KMail {
         "monochrome picture with every message. "
         "For example, this could be a picture of you or a glyph. "
         "It is shown in the recipient's mail client (if supported)." ), page );
-    label1->setAlignment( QLabel::WordBreak | QLabel::AlignVCenter );
+    label1->setAlignment( QLabel::WordBreak | QLabel::Qt::AlignVCenter );
     page_vlay->addWidget( label1 );
 
     widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
@@ -175,11 +180,11 @@ namespace KMail {
     page = new QWidget( widgetStack );
     widgetStack->addWidget( page, pageno );
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
-    mTextEdit = new QTextEdit( page );
+    mTextEdit = new Q3TextEdit( page );
     page_vlay->addWidget( mTextEdit );
-    QWhatsThis::add( mTextEdit, i18n( "Use this field to enter an arbitrary X-Face string." ) );
+    mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
-    mTextEdit->setWrapPolicy( QTextEdit::Anywhere );
+    mTextEdit->setWrapPolicy( Q3TextEdit::Anywhere );
     mTextEdit->setTextFormat( Qt::PlainText );
     label2 = new KActiveLabel( i18n("Examples are available at <a href=\"http://www.xs4all.nl/~ace/X-Faces/\">http://www.xs4all.nl/~ace/X-Faces/</a>."), page );
     page_vlay->addWidget( label2 );

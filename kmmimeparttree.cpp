@@ -46,9 +46,11 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
-#include <qheader.h>
-#include <qpopupmenu.h>
+#include <q3header.h>
+#include <q3popupmenu.h>
 #include <qstyle.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,
@@ -64,12 +66,12 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     setColumnAlignment( 3, Qt::AlignRight );
 
     restoreLayoutIfPresent();
-    connect( this, SIGNAL( clicked( QListViewItem* ) ),
-             this, SLOT( itemClicked( QListViewItem* ) ) );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*,
+    connect( this, SIGNAL( clicked( Q3ListViewItem* ) ),
+             this, SLOT( itemClicked( Q3ListViewItem* ) ) );
+    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*,
                                                  const QPoint&, int ) ),
-             this, SLOT( itemRightClicked( QListViewItem*, const QPoint& ) ) );
-    setSelectionMode( QListView::Extended );
+             this, SLOT( itemRightClicked( Q3ListViewItem*, const QPoint& ) ) );
+    setSelectionMode( Q3ListView::Extended );
     setRootIsDecorated( false );
     setAllColumnsShowFocus( true );
     setShowToolTips( true );
@@ -103,7 +105,7 @@ void KMMimePartTree::restoreLayoutIfPresent() {
 }
 
 
-void KMMimePartTree::itemClicked( QListViewItem* item )
+void KMMimePartTree::itemClicked( Q3ListViewItem* item )
 {
   if ( const KMMimePartTreeItem * i = dynamic_cast<KMMimePartTreeItem*>( item ) ) {
     if( mReaderWin->mRootNode == i->node() )
@@ -115,7 +117,7 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
 }
 
 
-void KMMimePartTree::itemRightClicked( QListViewItem* item,
+void KMMimePartTree::itemRightClicked( Q3ListViewItem* item,
                                        const QPoint& point )
 {
     // TODO: remove this member var?
@@ -126,7 +128,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
     else {
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
 
-        QPopupMenu* popup = new QPopupMenu;
+        Q3PopupMenu* popup = new Q3PopupMenu;
         popup->insertItem( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
         popup->insertItem( i18n( "Save as &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
@@ -153,14 +155,14 @@ void KMMimePartTree::slotSaveAsEncoded()
 //-----------------------------------------------------------------------------
 void KMMimePartTree::saveSelectedBodyParts( bool encoded )
 {
-  QPtrList<QListViewItem> selected = selectedItems();
+  Q3PtrList<Q3ListViewItem> selected = selectedItems();
 
   Q_ASSERT( !selected.isEmpty() );
   if ( selected.isEmpty() )
     return;
 
-  QPtrListIterator<QListViewItem> it( selected );
-  QPtrList<partNode> parts;
+  Q3PtrListIterator<Q3ListViewItem> it( selected );
+  Q3PtrList<partNode> parts;
   while ( it.current() ) {
     parts.append( static_cast<KMMimePartTreeItem *>(it.current())->node() );
     ++it;
@@ -207,12 +209,12 @@ void KMMimePartTree::styleChange( QStyle& oldStyle )
 }
 
 //-----------------------------------------------------------------------------
-void KMMimePartTree::correctSize( QListViewItem * item )
+void KMMimePartTree::correctSize( Q3ListViewItem * item )
 {
   if (!item) return;
 
   KIO::filesize_t totalSize = 0;
-  QListViewItem * myChild = item->firstChild();
+  Q3ListViewItem * myChild = item->firstChild();
   while ( myChild )
   {
     totalSize += static_cast<KMMimePartTreeItem*>(myChild)->origSize();
@@ -231,7 +233,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         const QString & mimetype,
                                         const QString & encoding,
                                         KIO::filesize_t size )
-  : QListViewItem( parent, description,
+  : Q3ListViewItem( parent, description,
 		   QString::null, // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
@@ -251,14 +253,14 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
                                         const QString & encoding,
                                         KIO::filesize_t size,
                                         bool revertOrder )
-  : QListViewItem( parent, description,
+  : Q3ListViewItem( parent, description,
 		   QString::null, // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
     mPartNode( node ), mOrigSize(size)
 {
   if( revertOrder && nextSibling() ){
-    QListViewItem* sib = nextSibling();
+    Q3ListViewItem* sib = nextSibling();
     while( sib->nextSibling() )
       sib = sib->nextSibling();
     moveItem( sib );

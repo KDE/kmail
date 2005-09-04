@@ -24,12 +24,23 @@
 
 #include <qwidget.h>
 #include <qtimer.h>
-#include <qheader.h>
+#include <q3header.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QDragLeaveEvent>
+#include <QEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <Q3ValueList>
+#include <QResizeEvent>
+#include <Q3PopupMenu>
+#include <QDragEnterEvent>
+#include <QMouseEvent>
 
 class QDropEvent;
 class QPixmap;
 class QPainter;
-class QPopupMenu;
+class Q3PopupMenu;
 class KPopupMenu;
 class KMFolder;
 class KMFolderDir;
@@ -39,7 +50,7 @@ class KMMainWidget;
 class KMAccount;
 // duplication from kmcommands.h, to avoid the include
 typedef QMap<int,KMFolder*> KMMenuToFolder; 
-template <typename T> class QGuardedPtr;
+template <typename T> class QPointer;
 
 class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
 {
@@ -66,7 +77,7 @@ public:
 
   /** associated folder */
   KMFolder* folder() const { return mFolder; }
-  QListViewItem* parent() const { return KFolderTreeItem::parent(); }
+  Q3ListViewItem* parent() const { return KFolderTreeItem::parent(); }
 
   /** Adjust the unread count from the folder and update the
    * pixmaps accordingly. */
@@ -115,7 +126,7 @@ public:
   virtual void addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent );
 
   /** Find index of given folder. Returns 0 if not found */
-  virtual QListViewItem* indexOfFolder( const KMFolder* folder ) const
+  virtual Q3ListViewItem* indexOfFolder( const KMFolder* folder ) const
   {
      if ( mFolderToItem.contains( folder ) )
        return mFolderToItem[ folder ];
@@ -125,7 +136,7 @@ public:
   
   /** create a folderlist */
   void createFolderList( QStringList *str,
-                         QValueList<QGuardedPtr<KMFolder> > *folders,
+                         Q3ValueList<QPointer<KMFolder> > *folders,
                          bool localFolders=true,
                          bool imapFolders=true,
                          bool dimapFolders=true,
@@ -184,7 +195,7 @@ public:
   
   /** Generate a popup menu that contains all folders that can have content */
   void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *, 
-      QPopupMenu *menu, QListViewItem *start = 0 );
+      Q3PopupMenu *menu, Q3ListViewItem *start = 0 );
   
 signals:
   /** The selected folder has changed */
@@ -231,14 +242,14 @@ public slots:
   void slotAccountRemoved(KMAccount*);
 
   /** Select the item and switch to the folder */
-  void doFolderSelected(QListViewItem*);
+  void doFolderSelected(Q3ListViewItem*);
 
   /**
    * Reset current folder and all childs
    * If no item is given we take the current one
    * If startListing is true a folder listing is started
    */
-  void slotResetFolderList( QListViewItem* item = 0, bool startList = true );
+  void slotResetFolderList( Q3ListViewItem* item = 0, bool startList = true );
 
   /** Create a child folder */
   void addChildFolder( KMFolder *folder = 0, QWidget * parent = 0 );
@@ -258,13 +269,13 @@ protected slots:
   void openFolder();
 
   /** Expand an IMAP folder */
-  void slotFolderExpanded( QListViewItem * item );
+  void slotFolderExpanded( Q3ListViewItem * item );
 
   /** Tell the folder to refresh the contents on the next expansion */
-  void slotFolderCollapsed( QListViewItem * item );
+  void slotFolderCollapsed( Q3ListViewItem * item );
 
   /** Check if the new name is valid and confirm the new name */
-  void slotRenameFolder( QListViewItem * item, int col, const QString& text);
+  void slotRenameFolder( Q3ListViewItem * item, int col, const QString& text);
 
   /** Update the total and unread columns (if available) */
   void slotUpdateCounts(KMFolder * folder);
@@ -278,7 +289,7 @@ protected slots:
   void slotToggleUnreadColumn();
   void slotToggleTotalColumn();
 
-  void slotContextMenuRequested( QListViewItem *, const QPoint & );
+  void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
 
   /** Fires a new-mail-check of the account that is accociated with currentItem */
   void slotCheckMail();
@@ -312,8 +323,8 @@ protected:
   void contentsDropEvent( QDropEvent *e );
 
   /** Drag and drop variables */
-  QListViewItem *oldCurrent, *oldSelected;
-  QListViewItem *dropItem;
+  Q3ListViewItem *oldCurrent, *oldSelected;
+  Q3ListViewItem *dropItem;
   KMFolderTreeItem *mLastItem;
   QTimer autoopen_timer;
 
@@ -331,7 +342,7 @@ protected:
 
 private:
   /** total column */
-  QListViewItemIterator mUpdateIterator;
+  Q3ListViewItemIterator mUpdateIterator;
 
   /** popup for unread/total */
   KPopupMenu* mPopup;

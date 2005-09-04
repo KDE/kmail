@@ -36,7 +36,7 @@
 #include "kmmsgbase.h"
 
 #include <cryptplugwrapper.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 class KMReaderWin;
 class KMMessagePart;
@@ -108,13 +108,13 @@ namespace KMail {
                       KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
-    QCString rawReplyString() const { return mRawReplyString; }
+    Q3CString rawReplyString() const { return mRawReplyString; }
 
     /*! @return the text of the message, ie. what would appear in the
         composer's text editor if this was edited. */
     QString textualContent() const { return mTextualContent; }
 
-    QCString textualContentCharset() const { return mTextualContentCharset; }
+    Q3CString textualContentCharset() const { return mTextualContentCharset; }
 
     void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
       mCryptPlugWrapper = wrapper;
@@ -183,14 +183,14 @@ namespace KMail {
                                            partNode & sign,
                                            const QString & fromAddress,
                                            bool doCheck=true,
-                                           QCString * cleartextData=0,
+                                           Q3CString * cleartextData=0,
                                            CryptPlug::SignatureMetaData * paramSigMeta=0,
                                            bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
-                        QCString& decryptedData,
+                        Q3CString& decryptedData,
                         bool& signatureFound,
                         CryptPlug::SignatureMetaData& sigMeta,
                         bool showWarning,
@@ -203,7 +203,7 @@ namespace KMail {
         we only check whether @p str contains 'xxx="http[s]:' where xxx is
         not href. Obfuscated external references are ignored on purpose.
     */
-    static bool containsExternalReferences( const QCString & str );
+    static bool containsExternalReferences( const Q3CString & str );
 
   public:// (during refactoring)
 
@@ -225,7 +225,7 @@ namespace KMail {
 
   private:
     bool decryptChiasmus( const QByteArray& data, QByteArray& bodyDecoded, QString& errorText );
-    void writeBodyString( const QCString & bodyString,
+    void writeBodyString( const Q3CString & bodyString,
                           const QString & fromAddress,
                           const QTextCodec * codec,
                           ProcessResult & result, bool decorate );
@@ -243,14 +243,14 @@ namespace KMail {
                                 const QString & filename = QString::null );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
-    void writeBodyStr( const QCString & bodyString,
+    void writeBodyStr( const Q3CString & bodyString,
                        const QTextCodec * aCodec,
                        const QString & fromAddress,
                        KMMsgSignatureState &  inlineSignatureState,
                        KMMsgEncryptionState & inlineEncryptionState,
                        bool decorate );
   public: // KMReaderWin still needs this...
-    void writeBodyStr( const QCString & bodyString,
+    void writeBodyStr( const Q3CString & bodyString,
                        const QTextCodec * aCodec,
                        const QString & fromAddress );
 
@@ -269,8 +269,8 @@ namespace KMail {
 
   private:
     KMReaderWin * mReader;
-    QCString mRawReplyString;
-    QCString mTextualContentCharset;
+    Q3CString mRawReplyString;
+    Q3CString mTextualContentCharset;
     QString mTextualContent;
     CryptPlugWrapper * mCryptPlugWrapper;
     bool mShowOnlyOneMimePart;

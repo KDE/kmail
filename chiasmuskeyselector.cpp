@@ -6,6 +6,8 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
 
 ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& caption,
                                           const QStringList& keys, const QString& currentKey,
@@ -35,8 +37,8 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
 
   layout->addStretch();
 
-  connect( mListBox, SIGNAL( doubleClicked( QListBoxItem * ) ), this, SLOT( slotOk() ) );
-  connect( mListBox, SIGNAL( returnPressed( QListBoxItem * ) ), this, SLOT( slotOk() ) );
+  connect( mListBox, SIGNAL( doubleClicked( Q3ListBoxItem * ) ), this, SLOT( slotOk() ) );
+  connect( mListBox, SIGNAL( returnPressed( Q3ListBoxItem * ) ), this, SLOT( slotOk() ) );
 
   mListBox->setFocus();
 }

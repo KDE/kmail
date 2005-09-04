@@ -84,7 +84,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     mIcon = aFilter.icon();
     mShortcut = aFilter.shortcut();
 
-    QPtrListIterator<KMFilterAction> it( aFilter.mActions );
+    Q3PtrListIterator<KMFilterAction> it( aFilter.mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ (*it)->name() ];
       if ( desc ) {
@@ -97,7 +97,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     }
 
     mAccounts.clear();
-    QValueListConstIterator<int> it2;
+    Q3ValueListConstIterator<int> it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
   }
@@ -108,7 +108,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
-  QPtrListIterator<KMFilterAction> it( mActions );
+  Q3PtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
@@ -151,7 +151,7 @@ bool KMFilter::requiresBody( KMMsgBase* msg )
 {
   if (pattern() && pattern()->requiresBody())
     return true; // no pattern means always matches?
-  QPtrListIterator<KMFilterAction> it( *actions() );
+  Q3PtrListIterator<KMFilterAction> it( *actions() );
   for ( it.toFirst() ; it.current() ; ++it )
     if ((*it)->requiresBody( msg ))
       return true;
@@ -176,7 +176,7 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 {
   bool rem = false;
 
-  QPtrListIterator<KMFilterAction> it( mActions );
+  Q3PtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->folderRemoved( aFolder, aNewFolder ) )
       rem = true;
@@ -335,7 +335,7 @@ void KMFilter::writeConfig(KConfig* config) const
     QString key;
     int i;
 
-    QPtrListIterator<KMFilterAction> it( mActions );
+    Q3PtrListIterator<KMFilterAction> it( mActions );
     for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
       config->writeEntry( key.sprintf("action-name-%d", i),
                           (*it)->name() );
@@ -352,7 +352,7 @@ void KMFilter::purify()
   mPattern.purify();
 
   if (!bPopFilter) {
-    QPtrListIterator<KMFilterAction> it( mActions );
+    Q3PtrListIterator<KMFilterAction> it( mActions );
     it.toLast();
     while ( it.current() )
       if ( (*it)->isEmpty() )
@@ -361,7 +361,7 @@ void KMFilter::purify()
         --it;
 
     // Remove invalid accounts from mAccounts - just to be tidy
-    QValueListConstIterator<int> it2 = mAccounts.begin();
+    Q3ValueListConstIterator<int> it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
       if ( !kmkernel->acctMgr()->find( *it2 ) )
          mAccounts.remove( *it2 );
@@ -392,7 +392,7 @@ const QString KMFilter::asString() const
     result += "\n";
   }
   else {
-    QPtrListIterator<KMFilterAction> it( mActions );
+    Q3PtrListIterator<KMFilterAction> it( mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
       result += "    action: ";
       result += (*it)->label();
@@ -413,7 +413,7 @@ const QString KMFilter::asString() const
     } else if ( bApplyOnInbound && mApplicability == ButImap ) {
       result += "This filter applies to all but online IMAP accounts.\n";
     } else if ( bApplyOnInbound ) {
-      QValueListConstIterator<int> it2;
+      Q3ValueListConstIterator<int> it2;
       result += "This filter applies to the following accounts:";
       if ( mAccounts.isEmpty() )
         result += " None";

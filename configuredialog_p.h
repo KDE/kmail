@@ -7,11 +7,15 @@
 
 #include <klineedit.h>
 #include <qcombobox.h>
-#include <qguardedptr.h>
-#include <qptrlist.h>
+#include <qpointer.h>
+#include <q3ptrlist.h>
 #include <qstring.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QShowEvent>
+#include <QResizeEvent>
 #include <dcopobject.h>
 
 #include <kdialogbase.h>
@@ -28,12 +32,12 @@ class KFontChooser;
 class QRadioButton;
 class ColorListBox;
 class QFont;
-class QListViewItem;
+class Q3ListViewItem;
 class QTabWidget;
-class QListBox;
-class QButtonGroup;
+class Q3ListBox;
+class Q3ButtonGroup;
 class QRegExpValidator;
-class QVBox;
+class Q3VBox;
 class KMAccount;
 class KMTransportInfo;
 class ListView;
@@ -81,7 +85,7 @@ protected slots:
 private:
   QLineEdit  *mLineEdit;
   QComboBox  *mComboBox;
-  QButtonGroup *mButtonGroup;
+  Q3ButtonGroup *mButtonGroup;
 };
 
 
@@ -104,7 +108,7 @@ struct LanguageItem
   QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
 };
 
-typedef QValueList<LanguageItem> LanguageItemList;
+typedef Q3ValueList<LanguageItem> LanguageItemList;
 
 class NewLanguageDialog : public KDialogBase
 {
@@ -269,8 +273,8 @@ private slots:
   void slotRenameIdentity();
   /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KPIM::IdentityManager */
-  void slotRenameIdentity( QListViewItem *, const QString &, int );
-  void slotContextMenu( KListView*, QListViewItem *, const QPoint & );
+  void slotRenameIdentity( Q3ListViewItem *, const QString &, int );
+  void slotContextMenu( KListView*, Q3ListViewItem *, const QPoint & );
   void slotSetAsDefault();
   void slotIdentitySelectionChanged();
 
@@ -329,7 +333,7 @@ private:
   QComboBox   *mMessagePropertyCombo;
   QLineEdit   *mDefaultDomainEdit;
 
-  QPtrList< KMTransportInfo > mTransportInfoList;
+  Q3PtrList< KMTransportInfo > mTransportInfoList;
 };
 
 
@@ -366,14 +370,14 @@ private:
   QCheckBox     *mCheckmailStartupCheck;
   QPushButton   *mOtherNewMailActionsButton;
 
-  QValueList< QGuardedPtr<KMAccount> > mAccountsToDelete;
-  QValueList< QGuardedPtr<KMAccount> > mNewAccounts;
+  Q3ValueList< QPointer<KMAccount> > mAccountsToDelete;
+  Q3ValueList< QPointer<KMAccount> > mNewAccounts;
   struct ModifiedAccountsType {
-    QGuardedPtr< KMAccount > oldAccount;
-    QGuardedPtr< KMAccount > newAccount;
+    QPointer< KMAccount > oldAccount;
+    QPointer< KMAccount > newAccount;
   };
   // ### make this a qptrlist:
-  QValueList< ModifiedAccountsType* >  mModifiedAccounts;
+  Q3ValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
 class KDE_EXPORT AccountsPage : public ConfigModuleWithTabs {
@@ -465,10 +469,10 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private: // data
-  QButtonGroup *mFolderListGroup;
-  QButtonGroup *mMIMETreeLocationGroup;
-  QButtonGroup *mMIMETreeModeGroup;
-  QButtonGroup *mReaderWindowModeGroup;
+  Q3ButtonGroup *mFolderListGroup;
+  Q3ButtonGroup *mMIMETreeLocationGroup;
+  Q3ButtonGroup *mMIMETreeModeGroup;
+  Q3ButtonGroup *mReaderWindowModeGroup;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
@@ -492,8 +496,8 @@ private: // data
   QCheckBox    *mAttachmentCheck;
   QCheckBox    *mNestedMessagesCheck;
   QCheckBox    *mCryptoIconsCheck;
-  QButtonGroup *mNestingPolicy;
-  QButtonGroup *mDateDisplay;
+  Q3ButtonGroup *mNestingPolicy;
+  Q3ButtonGroup *mDateDisplay;
   QLineEdit    *mCustomDateFormatEdit;
 };
 
@@ -541,7 +545,7 @@ private:
 
 private: // data
   QCheckBox    *mSystemTrayCheck;
-  QButtonGroup *mSystemTrayGroup;
+  Q3ButtonGroup *mSystemTrayGroup;
 };
 
 class KDE_EXPORT AppearancePage : public ConfigModuleWithTabs {
@@ -695,7 +699,7 @@ private:
   QCheckBox   *mCreateOwnMessageIdCheck;
   QLineEdit   *mMessageIdSuffixEdit;
   QRegExpValidator *mMessageIdSuffixValidator;
-  QListView   *mTagList;
+  Q3ListView   *mTagList;
   QPushButton *mRemoveHeaderButton;
   QLineEdit   *mTagNameEdit;
   QLineEdit   *mTagValueEdit;
@@ -773,8 +777,8 @@ private:
   QCheckBox    *mExternalReferences;
   QCheckBox    *mHtmlMailCheck;
   QCheckBox    *mNoMDNsWhenEncryptedCheck;
-  QButtonGroup *mMDNGroup;
-  QButtonGroup *mOrigQuoteGroup;
+  Q3ButtonGroup *mMDNGroup;
+  Q3ButtonGroup *mOrigQuoteGroup;
   QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
 };
 
@@ -944,13 +948,13 @@ private:
   QCheckBox* mEnableImapResCB;
 
   QWidget* mBox;
-  QVBox* gBox;
+  Q3VBox* gBox;
 
   QComboBox* mStorageFormatCombo;
   QComboBox* mLanguageCombo;
 
   QLabel* mFolderComboLabel;
-  QWidgetStack* mFolderComboStack;
+  Q3WidgetStack* mFolderComboStack;
   KMail::FolderRequester* mFolderCombo; // in the widgetstack
   KMail::AccountComboBox* mAccountCombo; // in the widgetstack
 

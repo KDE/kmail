@@ -33,6 +33,8 @@
 #define __KMAIL_IDENTITYLIST_H__
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <QDropEvent>
 
 namespace KPIM { class Identity; }
 class QDropEvent;
@@ -49,7 +51,7 @@ namespace KMail {
   public:
     IdentityListViewItem( IdentityListView * parent,
 			  const KPIM::Identity & ident );
-    IdentityListViewItem( IdentityListView * parent, QListViewItem * after,
+    IdentityListViewItem( IdentityListView * parent, Q3ListViewItem * after,
 			  const KPIM::Identity & ident );
 
     uint uoid() const { return mUOID; }
@@ -73,11 +75,11 @@ namespace KMail {
     virtual ~IdentityListView() {}
 
   public slots:
-    void rename( QListViewItem *, int );
+    void rename( Q3ListViewItem *, int );
 
   protected:
     bool acceptDrag( QDropEvent * ) const;
-    QDragObject * dragObject();
+    Q3DragObject * dragObject();
   };
 
 

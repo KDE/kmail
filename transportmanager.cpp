@@ -22,6 +22,8 @@
 #include "kmkernel.h"
 #include <kapplication.h>
 #include <kconfig.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 namespace KMail {
 
@@ -44,7 +46,7 @@ namespace KMail {
   // more or less copied from AccountManager
   uint TransportManager::createId()
   {
-    QValueList<unsigned int> usedIds;
+    Q3ValueList<unsigned int> usedIds;
 
     KConfigGroup general( KMKernel::config(), "General");
     int numTransports = general.readNumEntry( "transports", 0 );

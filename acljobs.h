@@ -33,7 +33,7 @@
 #define KMACLJOBS_H
 
 #include <kio/job.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 namespace KMail {
 
@@ -48,7 +48,7 @@ namespace KMail {
     bool changed; ///< special flag for KMFolderCachedImap
   };
 
-  typedef QValueVector<ACLListEntry> ACLList;
+  typedef Q3ValueVector<ACLListEntry> ACLList;
 
 /**
  * This namespace contains functions that return jobs for ACL operations.

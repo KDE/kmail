@@ -9,6 +9,8 @@
 #include "folderstorage.h"
 
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3MemArray>
 
 #include <kdebug.h>
 #include <kstaticdeleter.h>
@@ -133,7 +135,7 @@ public:
   }
 
 public:
-  QMemArray<KMMsgDictEntry *> array;
+  Q3MemArray<KMMsgDictEntry *> array;
   FILE *fp;
   bool swapByteOrder;
   off_t baseOffset;

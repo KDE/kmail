@@ -2,9 +2,11 @@
 #define KLISTBOXDIALOG_H
 
 #include <kdialogbase.h>
+//Added by qt3to4:
+#include <QLabel>
 
 class QLabel;
-class QListBox;
+class Q3ListBox;
 
 class KListBoxDialog : public KDialogBase
 {
@@ -22,7 +24,7 @@ public:
     void setLabelAbove(  const QString& label  );
     void setCommentBelow(const QString& comment);
     
-    QListBox* entriesLB;
+    Q3ListBox* entriesLB;
 
 private slots:
     void highlighted( const QString& );

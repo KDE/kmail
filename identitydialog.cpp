@@ -39,6 +39,9 @@
 #include "signatureconfigurator.h"
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QGridLayout>
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
@@ -68,7 +71,7 @@ using KMail::FolderRequester;
 // Qt headers:
 #include <qtabwidget.h>
 #include <qlabel.h>
-#include <qwhatsthis.h>
+
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qcheckbox.h>
@@ -119,8 +122,8 @@ namespace KMail {
                "it to appear in the email header that is sent out;</p>"
                "<p>if you leave this blank your real name will not "
                "appear, only the email address.</p></qt>");
-    QWhatsThis::add( label, msg );
-    QWhatsThis::add( mNameEdit, msg );
+    label->setWhatsThis( msg );
+    mNameEdit->setWhatsThis( msg );
 
     // "Organization" line edit and label:
     ++row;
@@ -133,8 +136,8 @@ namespace KMail {
                "if you'd like it to be shown in the email header that "
                "is sent out.</p>"
                "<p>It is safe (and normal) to leave this blank.</p></qt>");
-    QWhatsThis::add( label, msg );
-    QWhatsThis::add( mOrganizationEdit, msg );
+    label->setWhatsThis( msg );
+    mOrganizationEdit->setWhatsThis( msg );
 
     // "Email Address" line edit and label:
     // (row 3: spacer)
@@ -147,8 +150,8 @@ namespace KMail {
                "<p>This field should have your full email address.</p>"
                "<p>If you leave this blank, or get it wrong, people "
                "will have trouble replying to you.</p></qt>");
-    QWhatsThis::add( label, msg );
-    QWhatsThis::add( mEmailEdit, msg );
+    label->setWhatsThis( msg );
+    mEmailEdit->setWhatsThis( msg );
 
     //
     // Tab Widget: Cryptography
@@ -176,8 +179,8 @@ namespace KMail {
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
     label = new QLabel( mPGPSigningKeyRequester, i18n("OpenPGP signing key:"), tab );
-    QWhatsThis::add( mPGPSigningKeyRequester, msg );
-    QWhatsThis::add( label, msg );
+    mPGPSigningKeyRequester->setWhatsThis( msg );
+    label->setWhatsThis( msg );
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPGPSigningKeyRequester, row, 1 );
@@ -201,8 +204,8 @@ namespace KMail {
 	       "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
     label = new QLabel( mPGPEncryptionKeyRequester, i18n("OpenPGP encryption key:"), tab );
-    QWhatsThis::add( mPGPEncryptionKeyRequester, msg );
-    QWhatsThis::add( label, msg );
+    mPGPEncryptionKeyRequester->setWhatsThis( msg );
+    label->setWhatsThis( msg );
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPGPEncryptionKeyRequester, row, 1 );
@@ -223,8 +226,8 @@ namespace KMail {
                "to digitally sign emails using S/MIME; "
 	       "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( mSMIMESigningKeyRequester, i18n("S/MIME signing certificate:"), tab );
-    QWhatsThis::add( mSMIMESigningKeyRequester, msg );
-    QWhatsThis::add( label, msg );
+    mSMIMESigningKeyRequester->setWhatsThis( msg );
+    label->setWhatsThis( msg );
     glay->addWidget( label, row, 0 );
     glay->addWidget( mSMIMESigningKeyRequester, row, 1 );
 
@@ -251,8 +254,8 @@ namespace KMail {
                "to encrypt copies of outgoing messages to you using S/MIME; "
 	       "normal mail functions will not be affected.</p></qt>");
     label = new QLabel( mSMIMEEncryptionKeyRequester, i18n("S/MIME encryption certificate:"), tab );
-    QWhatsThis::add( mSMIMEEncryptionKeyRequester, msg );
-    QWhatsThis::add( label, msg );
+    mSMIMEEncryptionKeyRequester->setWhatsThis( msg );
+    label->setWhatsThis( msg );
 
     glay->addWidget( label, row, 0 );
     glay->addWidget( mSMIMEEncryptionKeyRequester, row, 1 );
@@ -306,8 +309,8 @@ namespace KMail {
                "<tt>From:</tt> field, but any responses to go to "
                "a group address.</p>"
                "<p>If in doubt, leave this field blank.</p></qt>");
-    QWhatsThis::add( label, msg );
-    QWhatsThis::add( mReplyToEdit, msg );
+    label->setWhatsThis( msg );
+    mReplyToEdit->setWhatsThis( msg );
 
     // "BCC addresses" line edit and label:
     ++row;
@@ -324,8 +327,8 @@ namespace KMail {
                "<p>To specify more than one address, use commas to separate "
                "the list of BCC recipients.</p>"
                "<p>If in doubt, leave this field blank.</p></qt>");
-    QWhatsThis::add( label, msg );
-    QWhatsThis::add( mBccEdit, msg );
+    label->setWhatsThis( msg );
+    mBccEdit->setWhatsThis( msg );
 
     // "Dictionary" combo box and label:
     ++row;

@@ -43,6 +43,8 @@
 #include <kiconloader.h> // SmallIcon
 
 #include <cassert>
+//Added by qt3to4:
+#include <QDropEvent>
 
 namespace KMail {
 
@@ -57,7 +59,7 @@ namespace KMail {
     init( ident );
   }
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, QListViewItem * after, const KPIM::Identity & ident )
+  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, Q3ListViewItem * after, const KPIM::Identity & ident )
     : KListViewItem( parent, after ), mUOID( ident.uoid() ) {
     init( ident );
   }
@@ -114,7 +116,7 @@ namespace KMail {
     setSelectionModeExt( Single ); // ### Extended would be nicer...
   }
 
-  void IdentityListView::rename( QListViewItem * i, int col ) {
+  void IdentityListView::rename( Q3ListViewItem * i, int col ) {
     if ( col == 0 && isRenameable( col ) ) {
       IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
       if ( item ) {
@@ -131,7 +133,7 @@ namespace KMail {
     return e->source() != viewport() && IdentityDrag::canDecode( e );
   }
 
-  QDragObject * IdentityListView::dragObject() {
+  Q3DragObject * IdentityListView::dragObject() {
     IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
     if ( !item ) return 0;
 

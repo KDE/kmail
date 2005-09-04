@@ -28,6 +28,11 @@
 
 // other module headers
 #include <maillistdrag.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QKeyEvent>
+#include <QDropEvent>
 using KPIM::MailListDrag;
 
 // other KDE headers
@@ -35,9 +40,9 @@ using KPIM::MailListDrag;
 
 // other Qt headers
 #include <qevent.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qbuffer.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qdatastream.h>
 #include <qstring.h>
 
@@ -90,12 +95,12 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     QByteArray serNums;
     MailListDrag::decode( e, serNums );
     QBuffer serNumBuffer( serNums );
-    serNumBuffer.open( IO_ReadOnly );
+    serNumBuffer.open( QIODevice::ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
     unsigned long serNum;
     KMFolder *folder = 0;
     int idx;
-    QPtrList<KMMsgBase> messageList;
+    Q3PtrList<KMMsgBase> messageList;
     while( !serNumStream.atEnd() ) {
       KMMsgBase *msgBase = 0;
       serNumStream >> serNum;

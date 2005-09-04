@@ -6,7 +6,7 @@
 #define __KMAIL_SENDER_P_H__
 #include "kmsender.h"
 
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qobject.h>
@@ -33,7 +33,7 @@ public:
   void start() { emit started( doStart() ); }
 
   /** Send given message. May return before message is sent. */
-  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) {
+  bool send( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) {
     reset(); return doSend( sender, to, cc, bcc, message );
   }
 
@@ -72,7 +72,7 @@ private:
 
 private:
   virtual void doFinish() = 0;
-  virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message ) = 0;
+  virtual bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message ) = 0;
   virtual bool doStart() = 0;
 
 protected:
@@ -102,12 +102,12 @@ private:
   /** implemented from KMSendProc */
   void doFinish();
   /** implemented from KMSendProc */
-  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message );
   /** implemented from KMSendProc */
   bool doStart();
 
 private:
-  QCString mMsgStr;
+  Q3CString mMsgStr;
   char* mMsgPos;
   int mMsgRest;
   KProcess* mMailerProc;
@@ -132,14 +132,14 @@ private:
   /** implemented from KMSendProc */
   void doFinish();
   /** implemented from KMSendProc */
-  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const QCString & message );
+  bool doSend( const QString & sender, const QStringList & to, const QStringList & cc, const QStringList & bcc, const Q3CString & message );
   /** implemented from KMSendProc */
   bool doStart() { return true; }
 
   void cleanup();
 
 private:
-  QCString mMessage;
+  Q3CString mMessage;
   uint mMessageLength;
   uint mMessageOffset;
 

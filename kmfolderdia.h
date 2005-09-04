@@ -34,12 +34,15 @@
 
 #include <kdialogbase.h>
 #include "configuredialog_p.h"
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3ValueList>
 
 class QCheckBox;
 class QPushButton;
 class QLineEdit;
-class QListBox;
+class Q3ListBox;
 class QComboBox;
 class KMFolder;
 class KMFolderTreeItem;
@@ -50,7 +53,7 @@ class KEditListBox;
 namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
-template <typename T> class QGuardedPtr;
+template <typename T> class QPointer;
 
 namespace KMail {
   class FolderRequester; 
@@ -171,7 +174,7 @@ public:
   bool isNewFolder() const { return mIsNewFolder; }
 
   KMFolderDir* folderDir() const { return mFolderDir; }
-  typedef QValueList<QGuardedPtr<KMFolder> > FolderList;
+  typedef Q3ValueList<QPointer<KMFolder> > FolderList;
 
   KMFolder* parentFolder() const { return mParentFolder; }
 
@@ -190,13 +193,13 @@ private:
 
 private:
   // Can be 0 initially when creating a folder, but will be set by save() in the first tab.
-  QGuardedPtr<KMFolder> mFolder;
-  QGuardedPtr<KMFolderDir> mFolderDir;
-  QGuardedPtr<KMFolder> mParentFolder;
+  QPointer<KMFolder> mFolder;
+  QPointer<KMFolderDir> mFolderDir;
+  QPointer<KMFolder> mParentFolder;
 
   bool mIsNewFolder; // if true, save() did set mFolder.
 
-  QValueVector<KMail::FolderDiaTab*> mTabs;
+  Q3ValueVector<KMail::FolderDiaTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day
   KMFolderTree* mFolderTree;
 };

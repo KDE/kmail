@@ -12,6 +12,9 @@
 #include "kmkernel.h"
 #include "kmmsgdict.h"
 #include "kmfolder.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 using KMail::FilterLog;
 
 #include <libemailfunctions/email.h>
@@ -70,7 +73,7 @@ static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNa
 //
 //==================================================
 
-KMSearchRule::KMSearchRule( const QCString & field, Function func, const QString & contents )
+KMSearchRule::KMSearchRule( const Q3CString & field, Function func, const QString & contents )
   : mField( field ),
     mFunction( func ),
     mContents( contents )
@@ -95,7 +98,7 @@ const KMSearchRule & KMSearchRule::operator=( const KMSearchRule & other ) {
   return *this;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QCString & field,
+KMSearchRule * KMSearchRule::createInstance( const Q3CString & field,
                                              Function func,
                                              const QString & contents )
 {
@@ -110,7 +113,7 @@ KMSearchRule * KMSearchRule::createInstance( const QCString & field,
   return ret;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QCString & field,
+KMSearchRule * KMSearchRule::createInstance( const Q3CString & field,
                                      const char *func,
                                      const QString & contents )
 {
@@ -130,7 +133,7 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const QCString &field2 = config->readEntry( field + cIdx ).latin1();
+  const Q3CString &field2 = config->readEntry( field + cIdx ).latin1();
   Function func2 = configValueToFunc( config->readEntry( func + cIdx ).latin1() );
   const QString & contents2 = config->readEntry( contents + cIdx );
 
@@ -194,7 +197,7 @@ const QString KMSearchRule::asString() const
 //
 //==================================================
 
-KMSearchRuleString::KMSearchRuleString( const QCString & field,
+KMSearchRuleString::KMSearchRuleString( const Q3CString & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
@@ -283,7 +286,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
       while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
         stop = aStr.find( '\n', stop + 1 );
       const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
-      const QCString codedValue( aStr.data() + start, len + 1 );
+      const Q3CString codedValue( aStr.data() + start, len + 1 );
       const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace(); // FIXME: This needs to be changed for IDN support.
       rc = matchesInternal( msgContents );
     }
@@ -506,7 +509,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 //
 //==================================================
 
-KMSearchRuleNumerical::KMSearchRuleNumerical( const QCString & field,
+KMSearchRuleNumerical::KMSearchRuleNumerical( const Q3CString & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
@@ -612,7 +615,7 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 //==================================================
 
 
-KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
+KMSearchRuleStatus::KMSearchRuleStatus( const Q3CString & field,
                                         Function func, const QString & aContents )
           : KMSearchRule(field, func, aContents)
 {
@@ -685,7 +688,7 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 //==================================================
 
 KMSearchPattern::KMSearchPattern( const KConfig * config )
-  : QPtrList<KMSearchRule>()
+  : Q3PtrList<KMSearchRule>()
 {
   setAutoDelete( true );
   if ( config )
@@ -703,7 +706,7 @@ bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
   if ( isEmpty() )
     return true;
 
-  QPtrListIterator<KMSearchRule> it( *this );
+  Q3PtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it.toFirst() ; it.current() ; ++it )
@@ -728,7 +731,7 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
     return true;
 
   KMMessage msg;
-  QPtrListIterator<KMSearchRule> it( *this );
+  Q3PtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it.toFirst() ; it.current() ; ++it )
@@ -779,7 +782,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
 }
 
 bool KMSearchPattern::requiresBody() const {
-  QPtrListIterator<KMSearchRule> it( *this );
+  Q3PtrListIterator<KMSearchRule> it( *this );
     for ( it.toFirst() ; it.current() ; ++it )
       if ( (*it)->requiresBody() )
 	return true;
@@ -787,7 +790,7 @@ bool KMSearchPattern::requiresBody() const {
 }
 
 void KMSearchPattern::purify() {
-  QPtrListIterator<KMSearchRule> it( *this );
+  Q3PtrListIterator<KMSearchRule> it( *this );
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() ) {
@@ -871,7 +874,7 @@ void KMSearchPattern::writeConfig( KConfig * config ) const {
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
   int i = 0;
-  for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it )
+  for ( Q3PtrListIterator<KMSearchRule> it( *this ) ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it )
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
     (*it)->writeConfig( config, i );
@@ -893,7 +896,7 @@ QString KMSearchPattern::asString() const {
   else
     result = i18n("(match all of the following)");
 
-  for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
+  for ( Q3PtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
     result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
   return result;
@@ -907,7 +910,7 @@ const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & othe
   setName( other.name() );
 
   clear(); // ###
-  for ( QPtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
+  for ( Q3PtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
     append( KMSearchRule::createInstance( **it ) ); // deep copy
 
   return *this;

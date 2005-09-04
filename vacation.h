@@ -16,12 +16,14 @@
 #define __KMAIL_VACATION_H__
 
 #include <qobject.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <kurl.h>
 
 class QString;
 class QStringList;
-template <typename T> class QValueList;
+template <typename T> class Q3ValueList;
 namespace KMail {
   class SieveJob;
   class VacationDialog;
@@ -29,7 +31,7 @@ namespace KMail {
 namespace KMime {
   namespace Types {
     struct AddrSpec;
-    typedef QValueList<AddrSpec> AddrSpecList;
+    typedef Q3ValueList<AddrSpec> AddrSpecList;
   }
 }
 

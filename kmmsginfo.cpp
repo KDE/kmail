@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <mimelib/datetime.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class KMMsgInfo::KMMsgInfoPrivate
 {
@@ -178,11 +180,11 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
-                     const QCString& aTo, time_t aDate,
-                     KMMsgStatus aStatus, const QCString& aXMark,
-                     const QCString& replyToId, const QCString& replyToAuxId,
-                     const QCString& msgId,
+void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
+                     const Q3CString& aTo, time_t aDate,
+                     KMMsgStatus aStatus, const Q3CString& aXMark,
+                     const Q3CString& replyToId, const Q3CString& replyToAuxId,
+                     const Q3CString& msgId,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
@@ -215,12 +217,12 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     mDirty     = false;
 }
 
-void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
-                     const QCString& aTo, time_t aDate,
-                     KMMsgStatus aStatus, const QCString& aXMark,
-                     const QCString& replyToId, const QCString& replyToAuxId,
-                     const QCString& msgId,
-                     const QCString& aFileName,
+void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
+                     const Q3CString& aTo, time_t aDate,
+                     KMMsgStatus aStatus, const Q3CString& aXMark,
+                     const Q3CString& replyToId, const Q3CString& replyToAuxId,
+                     const Q3CString& msgId,
+                     const Q3CString& aFileName,
                      KMMsgEncryptionState encryptionState,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
@@ -655,7 +657,7 @@ void KMMsgInfo::setDate(time_t aUnixTime)
 }
 
 //--- For compatability with old index files
-void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
+void KMMsgInfo::compat_fromOldIndexString(const Q3CString& str, bool toUtf8)
 {
     char *start, *offset;
 

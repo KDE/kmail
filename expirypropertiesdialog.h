@@ -11,18 +11,23 @@
 #define EXPIRYPROPERTIESDIALOG_H
 
 #include <qvariant.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
 #include <kdialogbase.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
 class QSpacerItem;
-class QGroupBox;
+class Q3GroupBox;
 class QCheckBox;
 class QSpinBox;
 class QLabel;
 class QRadioButton;
-class QButtonGroup;
+class Q3ButtonGroup;
 class KMFolderTree;
 class KMFolder;
 
@@ -49,7 +54,7 @@ public:
     FolderRequester *folderSelector;
     QRadioButton* deletePermanentlyRB;
     QLabel* note;
-    QButtonGroup* actionsGroup;
+    Q3ButtonGroup* actionsGroup;
 
 protected slots:
     void slotOk();

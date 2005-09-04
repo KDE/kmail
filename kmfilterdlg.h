@@ -14,19 +14,22 @@
 #include <kdialogbase.h>
 
 #include <qvgroupbox.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
+#include <q3groupbox.h>
+#include <q3hbox.h>
 #include <qstring.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qradiobutton.h>
 #include <qvbuttongroup.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QLabel>
 
 class KMSearchPatternEdit;
-class QListBox;
+class Q3ListBox;
 class QPushButton;
 class QComboBox;
-class QWidgetStack;
+class Q3WidgetStack;
 class QCheckBox;
 class KIconButton;
 class KKeyButton;
@@ -57,7 +60,7 @@ class KListView;
     @see KMFilter KMFilterDlg KMFilterActionEdit KMSearchPatternEdit
 
  */
-class KMFilterListBox : public QGroupBox
+class KMFilterListBox : public Q3GroupBox
 {
   Q_OBJECT
 public:
@@ -70,7 +73,7 @@ public:
       instead call KMFilterMgr::createFilter.
       @see KMFilterMgr::createFilter KMFilterDlg::createFilter
   */
-  void createFilter( const QCString & field, const QString & value );
+  void createFilter( const Q3CString & field, const QString & value );
 
   /** Loads the filter list and selects the first filter. Should be
       called when all signals are connected properly. If createDummyFilter
@@ -136,9 +139,9 @@ protected slots:
 
 protected:
   /** The deep copy of the filter list. */
-  QPtrList<KMFilter> mFilterList;
+  Q3PtrList<KMFilter> mFilterList;
   /** The listbox displaying the filter list. */
-  QListBox *mListBox;
+  Q3ListBox *mListBox;
   /** The various action buttons. */
   QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
   /** The index of the currently selected item. */
@@ -173,7 +176,7 @@ private:
     @see KMFilterAction KMFilter KMFilterActionWidgetLister
 
  */
-class KMFilterActionWidget : public QHBox
+class KMFilterActionWidget : public Q3HBox
 {
   Q_OBJECT
 public:
@@ -196,17 +199,17 @@ private:
       subclass. The only reason that these 'slave' actions exist is
       that they are 'forced' to create parameter widgets for the
       widget stack and to clear them on setAction. */
-  QPtrList<KMFilterAction> mActionList;
+  Q3PtrList<KMFilterAction> mActionList;
   /** The combo box that contains the labels of all KMFilterActions.
       It's @p activated(int) signal is internally
       connected to the @p raiseWidget(int) slot of @p mWidgetStack. */
   QComboBox      *mComboBox;
   /** The widget stack that holds all the parameter widgets for the
       filter actions. */
-  QWidgetStack   *mWidgetStack;
+  Q3WidgetStack   *mWidgetStack;
 };
 
-class KMPopFilterActionWidget : public QVButtonGroup
+class KMPopFilterActionWidget : public Q3VButtonGroup
 {
   Q_OBJECT
 public:
@@ -238,7 +241,7 @@ public:
 
   virtual ~KMFilterActionWidgetLister();
 
-  void setActionList( QPtrList<KMFilterAction> * aList );
+  void setActionList( Q3PtrList<KMFilterAction> * aList );
 
   /** Updates the action list according to the current widget values */
   void updateActionList() { regenerateActionListFromWidgets(); }
@@ -252,7 +255,7 @@ protected:
 
 private:
   void regenerateActionListFromWidgets();
-  QPtrList<KMFilterAction> *mActionList;
+  Q3PtrList<KMFilterAction> *mActionList;
 
 };
 
@@ -327,7 +330,7 @@ public:
       the first rule with "field equals value". Internally forwarded
       to KMFilterListBox::createFilter. You should instead call
       KMFilterMgr::createFilter. */
-  void createFilter( const QCString & field, const QString & value )
+  void createFilter( const Q3CString & field, const QString & value )
     { mFilterList->createFilter( field, value ); }
 
 public slots:
@@ -381,7 +384,7 @@ protected:
   QLabel *mFilterActionLabel;
   KIconButton *mFilterActionIconButton;
   KKeyButton *mKeyButton;
-  QGroupBox *mAdvOptsGroup;
+  Q3GroupBox *mAdvOptsGroup;
   QVGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;
 

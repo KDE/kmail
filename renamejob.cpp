@@ -49,6 +49,8 @@
 #include <config.h>
 
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 using namespace KMail;
 
@@ -218,7 +220,7 @@ void RenameJob::slotMoveMessages()
       this, SLOT( slotMoveMessages() ) );
   mStorage->blockSignals( true );
   // move all messages to the new folder
-  QPtrList<KMMsgBase> msgList;
+  Q3PtrList<KMMsgBase> msgList;
   for ( int i = 0; i < mStorage->count(); i++ )
   {
     KMMsgBase* msgBase = mStorage->getMsgBase( i );

@@ -25,10 +25,16 @@
 #define RECIPIENTSEDITOR_H
 
 #include <qwidget.h>
-#include <qscrollview.h>
-#include <qguardedptr.h>
+#include <q3scrollview.h>
+#include <qpointer.h>
 #include <qlineedit.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3ValueList>
+#include <QKeyEvent>
+#include <QResizeEvent>
+#include <Q3PtrList>
 
 #include "kmlineeditspell.h"
 #include <qcombobox.h>
@@ -44,7 +50,7 @@ class SideWidget;
 class Recipient
 {
   public:
-    typedef QValueList<Recipient> List;
+    typedef Q3ValueList<Recipient> List;
 
     enum Type { To, Cc, Bcc, Undefined };
 
@@ -165,7 +171,7 @@ class RecipientLine : public QWidget
     bool mModified;
 };
 
-class RecipientsView : public QScrollView
+class RecipientsView : public Q3ScrollView
 {
     Q_OBJECT
   public:
@@ -232,8 +238,8 @@ class RecipientsView : public QScrollView
     void slotTypeModified( RecipientLine * );
 
   private:
-    QPtrList<RecipientLine> mLines;
-    QGuardedPtr<RecipientLine> mCurDelLine;
+    Q3PtrList<RecipientLine> mLines;
+    QPointer<RecipientLine> mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
     bool mModified;

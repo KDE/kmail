@@ -32,6 +32,8 @@
 #define MAILDIRJOB_H
 
 #include "folderjob.h"
+//Added by qt3to4:
+#include <Q3PtrList>
 
 class KMFolderMaildir;
 class KMMessage;
@@ -43,7 +45,7 @@ class MaildirJob : public FolderJob
   Q_OBJECT
 public:
   MaildirJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
-  MaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  MaildirJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
               JobType jt = tGetMessage, KMFolder *folder = 0 );
   virtual ~MaildirJob();
 

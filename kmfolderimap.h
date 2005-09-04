@@ -33,10 +33,13 @@
 
 #include <kstandarddirs.h>
 
-#include <qintdict.h>
-#include <qdict.h>
-template< typename T> class QPtrList;
-template< typename T> class QValueList;
+#include <q3intdict.h>
+#include <q3dict.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
+template< typename T> class Q3PtrList;
+template< typename T> class Q3ValueList;
 
 class KMFolderTreeItem;
 class KMFolderImap;
@@ -119,7 +122,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
-  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool quiet = FALSE);
+  virtual void removeMsg(const Q3PtrList<KMMessage>& msgList, bool quiet = FALSE);
 
   virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
@@ -171,7 +174,7 @@ public:
    * Delete a message
    */
   void deleteMessage(KMMessage * msg);
-  void deleteMessage(const QPtrList<KMMessage>& msgList);
+  void deleteMessage(const Q3PtrList<KMMessage>& msgList);
 
   /**
    * Change the status of the message indicated by @p index
@@ -182,21 +185,21 @@ public:
   /**
    * Change the status of several messages indicated by @p ids
    */
-  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
+  virtual void setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle);
 
   /** generates sets of uids */
-  static QStringList makeSets( QValueList<ulong>&, bool sort = true);
+  static QStringList makeSets( Q3ValueList<ulong>&, bool sort = true);
   static QStringList makeSets(const QStringList&, bool sort = true);
 
   /** splits the message list according to sets. Modifies the @msgList. */
-  static QPtrList<KMMessage> splitMessageList(const QString& set,
-                                              QPtrList<KMMessage>& msgList);
+  static Q3PtrList<KMMessage> splitMessageList(const QString& set,
+                                              Q3PtrList<KMMessage>& msgList);
 
   /** gets the uids of the given ids */
-  void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
+  void getUids(Q3ValueList<int>& ids, Q3ValueList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids);
+  void getUids(const Q3PtrList<KMMessage>& msgList, Q3ValueList<ulong>& uids);
 
   /**
    * Expunge deleted messages from the folder
@@ -256,7 +259,7 @@ public:
   /**
    * Splits a uid-set into single uids
    */
-  static QValueList<ulong> splitSets(const QString);
+  static Q3ValueList<ulong> splitSets(const QString);
 
   virtual void ignoreJobsForMessage( KMMessage* );
 
@@ -331,7 +334,7 @@ signals:
 public slots:
   /** Add a message to a folder after is has been added on an IMAP server */
   virtual void addMsgQuiet(KMMessage *);
-  virtual void addMsgQuiet(QPtrList<KMMessage>);
+  virtual void addMsgQuiet(Q3PtrList<KMMessage>);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -340,16 +343,16 @@ public slots:
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int addMsg(QPtrList<KMMessage>&, QValueList<int>& index_return);
+  virtual int addMsg(Q3PtrList<KMMessage>&, Q3ValueList<int>& index_return);
 
   /** Copy the messages to this folder */
-  void copyMsg(QPtrList<KMMessage>& msgList/*, KMFolder* parent*/);
+  void copyMsg(Q3PtrList<KMMessage>& msgList/*, KMFolder* parent*/);
 
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);
-  virtual void take(QPtrList<KMMessage>);
+  virtual void take(Q3PtrList<KMMessage>);
 
   /**
    * Add the data a KIO::Job retrieves to the buffer
@@ -370,7 +373,7 @@ public slots:
   /**
    * Called from the SearchJob when the folder is done or messages where found
    */
-  void slotSearchDone( QValueList<Q_UINT32> serNums,
+  void slotSearchDone( Q3ValueList<Q_UINT32> serNums,
                        const KMSearchPattern* pattern,
                        bool complete );
 
@@ -397,7 +400,7 @@ protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                   KMFolder *folder, QString partSpecifier,
                                   const AttachmentStrategy *as ) const;
-  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  virtual FolderJob* doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
 
   void getMessagesResult(KIO::Job * job, bool lastSet);
@@ -490,7 +493,7 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   bool        mCheckMail;
-  QGuardedPtr<KMAcctImap> mAccount;
+  QPointer<KMAcctImap> mAccount;
   // the current uidvalidity
   QString mUidValidity;
   unsigned int mUserRights;
@@ -499,13 +502,13 @@ private:
   // if we're checking validity currently
   bool        mCheckingValidity;
   // uid - metadata cache
-  QIntDict<KMMsgMetaData> mUidMetaDataMap;
+  Q3IntDict<KMMsgMetaData> mUidMetaDataMap;
   // msgidMD5 - status map
-  QDict<KMMsgMetaData> mMetaDataMap;
+  Q3Dict<KMMsgMetaData> mMetaDataMap;
   // if the folder should be deleted without server roundtrip
   bool        mAlreadyRemoved;
   // the progress for mailchecks
-  QGuardedPtr<ProgressItem> mMailCheckProgressItem;
+  QPointer<ProgressItem> mMailCheckProgressItem;
   // the progress for listings
   ProgressItem *mListDirProgressItem;
   // the progress for addMsg

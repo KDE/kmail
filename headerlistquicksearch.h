@@ -34,7 +34,10 @@
 #include "kmmsgbase.h" // for KMMsgStatus
 #include "kmsearchpattern.h"
 #include <klistviewsearchline.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QEvent>
 class QComboBox;
 class QLabel;
 class KListView;
@@ -66,7 +69,7 @@ protected:
      * checks whether @param item contains the search string and has the status
      * currently in mStatus
      */
-    virtual bool itemMatches(const QListViewItem *item, const QString &s) const;
+    virtual bool itemMatches(const Q3ListViewItem *item, const QString &s) const;
 
 private slots:
   /**
@@ -80,7 +83,7 @@ private:
     void insertStatus(KMail::StatusValueTypes which);
     QComboBox *mStatusCombo;
     KMMsgStatus mStatus;
-    QValueVector<QString> statusList;
+    Q3ValueVector<QString> statusList;
 };
 
 }

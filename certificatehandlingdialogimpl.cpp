@@ -5,8 +5,8 @@
 #include "certificatehandlingdialogimpl.h"
 #include "certificatewizardimpl.h"
 
-#include <qlistview.h>
-#include <qpopupmenu.h>
+#include <q3listview.h>
+#include <q3popupmenu.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 
@@ -16,7 +16,7 @@
  *  Constructs a CertificateHandlingDialogImpl which is a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'
  */
-CertificateHandlingDialogImpl::CertificateHandlingDialogImpl( QWidget* parent,  const char* name, WFlags fl )
+CertificateHandlingDialogImpl::CertificateHandlingDialogImpl( QWidget* parent,  const char* name, Qt::WFlags fl )
     : CertificateHandlingDialog( parent, name, fl )
 {
 }
@@ -36,7 +36,7 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 {
     // PENDING(khz) Add code to delete certificate.
 
-    QListViewItem* item = certificatesLV->selectedItem();
+    Q3ListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
     delete item;
 }
@@ -44,7 +44,7 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 /*
  * protected slot
  */
-void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewItem* item )
+void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( Q3ListViewItem* item )
 {
     if( item ) {
         requestPopup->setItemEnabled(1, true);
@@ -102,7 +102,7 @@ void CertificateHandlingDialogImpl::slotRequestNewCertificate()
 
         // Insert a dummy certificate.
         // PENDING(khz) Remove this code.
-        new QListViewItem( certificatesLV, "BlahCertificate", "0x58643BFE", i18n( "Sign/Encrypt" ) );
+        new Q3ListViewItem( certificatesLV, "BlahCertificate", "0x58643BFE", i18n( "Sign/Encrypt" ) );
     }
 }
 
@@ -111,15 +111,15 @@ void CertificateHandlingDialogImpl::slotRequestNewCertificate()
  */
 void CertificateHandlingDialogImpl::slotUseForEncrypting()
 {
-    QListViewItem* item = certificatesLV->selectedItem();
+    Q3ListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
     if( item ) {
         // show the used certificate in label
         encryptCertLA->setText( item->text( 0 ) );
 
         // iterate over the listview and reset all usage markings
-        QListViewItemIterator it( certificatesLV );
-        QListViewItem* current;
+        Q3ListViewItemIterator it( certificatesLV );
+        Q3ListViewItem* current;
         while( ( current = it.current() ) ) {
             if( current->text( 3 ) == i18n( "Sign/Encrypt" ) )
                 current->setText( 3, i18n( "Sign" ) );
@@ -141,15 +141,15 @@ void CertificateHandlingDialogImpl::slotUseForEncrypting()
  */
 void CertificateHandlingDialogImpl::slotUseForSigning()
 {
-    QListViewItem* item = certificatesLV->selectedItem();
+    Q3ListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
     if( item ) {
         // show the used certificate in label
         signCertLA->setText( item->text( 0 ) );
 
         // iterate over the listview and reset all usage markings
-        QListViewItemIterator it( certificatesLV );
-        QListViewItem* current;
+        Q3ListViewItemIterator it( certificatesLV );
+        Q3ListViewItem* current;
         while( ( current = it.current() ) ) {
             ++it;
             if( current->text( 3 ) == i18n( "Sign/Encrypt" ) )

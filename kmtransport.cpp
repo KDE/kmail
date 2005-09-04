@@ -22,16 +22,21 @@
 
 #include "kmtransport.h"
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QGridLayout>
+#include <Q3Frame>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <klineedit.h>
 #include <qradiobutton.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qwhatsthis.h>
+
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -250,7 +255,7 @@ KMTransportSelDlg::KMTransportSelDlg( QWidget *parent, const char *name,
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
 
-  QButtonGroup *group = new QButtonGroup( i18n("Transport"), page );
+  Q3ButtonGroup *group = new Q3ButtonGroup( i18n("Transport"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );
@@ -383,7 +388,7 @@ void KMTransportDialog::makeSmtpPage()
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, 0, 0 );
   mSmtp.nameEdit = new KLineEdit( page1 );
-  QWhatsThis::add(mSmtp.nameEdit,
+  mSmtp.nameEdit->setWhatsThis(
                   i18n("The name that KMail will use when "
                        "referring to this server."));
   label->setBuddy( mSmtp.nameEdit );
@@ -392,7 +397,7 @@ void KMTransportDialog::makeSmtpPage()
   label = new QLabel( i18n("&Host:"), page1 );
   grid->addWidget( label, 3, 0 );
   mSmtp.hostEdit = new KLineEdit( page1 );
-  QWhatsThis::add(mSmtp.hostEdit,
+  mSmtp.hostEdit->setWhatsThis(
                   i18n("The domain name or numerical address "
                        "of the SMTP server."));
   label->setBuddy( mSmtp.hostEdit );
@@ -402,7 +407,7 @@ void KMTransportDialog::makeSmtpPage()
   grid->addWidget( label, 4, 0 );
   mSmtp.portEdit = new KLineEdit( page1 );
   mSmtp.portEdit->setValidator( new QIntValidator(this) );
-  QWhatsThis::add(mSmtp.portEdit,
+  mSmtp.portEdit->setWhatsThis(
                   i18n("The port number that the SMTP server "
                        "is listening on. The default port is 25."));
   label->setBuddy( mSmtp.portEdit );
@@ -411,7 +416,7 @@ void KMTransportDialog::makeSmtpPage()
   label = new QLabel( i18n("Preco&mmand:"), page1 );
   grid->addWidget( label, 5, 0 );
   mSmtp.precommand = new KLineEdit( page1 );
-  QWhatsThis::add(mSmtp.precommand,
+  mSmtp.precommand->setWhatsThis(
                   i18n("A command to run locally, prior "
                        "to sending email. This can be used "
                        "to set up ssh tunnels, for example. "
@@ -419,13 +424,13 @@ void KMTransportDialog::makeSmtpPage()
   label->setBuddy(mSmtp.precommand);
   grid->addWidget( mSmtp.precommand, 5, 1 );
 
-  QFrame* line = new QFrame( page1 );
-  line->setFrameStyle( QFrame::HLine | QFrame::Plain );
+  Q3Frame* line = new Q3Frame( page1 );
+  line->setFrameStyle( Q3Frame::HLine | Q3Frame::Plain );
   grid->addMultiCellWidget( line, 6, 6, 0, 1 );
 
   mSmtp.authCheck =
     new QCheckBox( i18n("Server &requires authentication"), page1 );
-  QWhatsThis::add(mSmtp.authCheck,
+  mSmtp.authCheck->setWhatsThis(
                   i18n("Check this option if your SMTP server "
                        "requires authentication before accepting "
                        "mail. This is known as "
@@ -438,7 +443,7 @@ void KMTransportDialog::makeSmtpPage()
   grid->addWidget( mSmtp.loginLabel, 8, 0 );
   mSmtp.loginEdit = new KLineEdit( page1 );
   mSmtp.loginLabel->setBuddy( mSmtp.loginEdit );
-  QWhatsThis::add(mSmtp.loginEdit,
+  mSmtp.loginEdit->setWhatsThis(
                   i18n("The user name to send to the server "
                        "for authorization"));
   grid->addWidget( mSmtp.loginEdit, 8, 1 );
@@ -448,14 +453,14 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.passwordEdit = new KLineEdit( page1 );
   mSmtp.passwordEdit->setEchoMode( QLineEdit::Password );
   mSmtp.passwordLabel->setBuddy( mSmtp.passwordEdit );
-  QWhatsThis::add(mSmtp.passwordEdit,
+  mSmtp.passwordEdit->setWhatsThis(
                   i18n("The password to send to the server "
                        "for authorization"));
   grid->addWidget( mSmtp.passwordEdit, 9, 1 );
 
   mSmtp.storePasswordCheck =
     new QCheckBox( i18n("&Store SMTP password"), page1 );
-  QWhatsThis::add(mSmtp.storePasswordCheck,
+  mSmtp.storePasswordCheck->setWhatsThis(
                   i18n("Check this option to have KMail store "
                   "the password.\nIf KWallet is available "
                   "the password will be stored there which is considered "
@@ -467,14 +472,14 @@ void KMTransportDialog::makeSmtpPage()
                   "if access to the configuration file is obtained."));
   grid->addMultiCellWidget( mSmtp.storePasswordCheck, 10, 10, 0, 1 );
 
-  line = new QFrame( page1 );
-  line->setFrameStyle( QFrame::HLine | QFrame::Plain );
+  line = new Q3Frame( page1 );
+  line->setFrameStyle( Q3Frame::HLine | Q3Frame::Plain );
   grid->addMultiCellWidget( line, 11, 11, 0, 1 );
 
   mSmtp.specifyHostnameCheck =
     new QCheckBox( i18n("Sen&d custom hostname to server"), page1 );
   grid->addMultiCellWidget( mSmtp.specifyHostnameCheck, 12, 12, 0, 1 );
-  QWhatsThis::add(mSmtp.specifyHostnameCheck,
+  mSmtp.specifyHostnameCheck->setWhatsThis(
                   i18n("Check this option to have KMail use "
                        "a custom hostname when identifying itself "
                        "to the mail server."
@@ -485,7 +490,7 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.localHostnameLabel = new QLabel( i18n("Hos&tname:"), page1 );
   grid->addWidget( mSmtp.localHostnameLabel, 13, 0);
   mSmtp.localHostnameEdit = new KLineEdit( page1 );
-  QWhatsThis::add(mSmtp.localHostnameEdit,
+  mSmtp.localHostnameEdit->setWhatsThis(
                   i18n("Enter the hostname KMail should use when "
                        "identifying itself to the server."));
   mSmtp.localHostnameLabel->setBuddy( mSmtp.localHostnameEdit );
@@ -498,7 +503,7 @@ void KMTransportDialog::makeSmtpPage()
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
-  mSmtp.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mSmtp.encryptionGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mSmtp.encryptionNone =
     new QRadioButton( i18n("&None"), mSmtp.encryptionGroup );
@@ -510,7 +515,7 @@ void KMTransportDialog::makeSmtpPage()
     SLOT(slotSmtpEncryptionChanged(int)));
   vlay->addWidget( mSmtp.encryptionGroup );
 
-  mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
+  mSmtp.authGroup = new Q3ButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
   mSmtp.authLogin = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
@@ -657,7 +662,7 @@ void KMTransportDialog::slotSmtpEncryptionChanged(int id)
     mSmtp.portEdit->setText((id == SSL) ? "465" : "25");
 
   // switch supported auth methods:
-  QButton * old = mSmtp.authGroup->selected();
+  Q3Button * old = mSmtp.authGroup->selected();
   int authMethods = id == TLS ? mAuthTLS : id == SSL ? mAuthSSL : mAuthNone ;
   enableAuthMethods( authMethods );
   if ( !old->isEnabled() )
@@ -731,11 +736,11 @@ void KMTransportDialog::slotCheckSmtpCapabilities()
 }
 
 
-void KMTransportDialog::checkHighest(QButtonGroup *btnGroup)
+void KMTransportDialog::checkHighest(Q3ButtonGroup *btnGroup)
 {
   for ( int i = btnGroup->count() - 1; i >= 0 ; --i )
   {
-    QButton * btn = btnGroup->find(i);
+    Q3Button * btn = btnGroup->find(i);
     if (btn && btn->isEnabled())
     {
       btn->animateClick();

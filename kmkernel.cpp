@@ -26,6 +26,9 @@
 #undef REALLY_WANT_KMSENDER
 #include "undostack.h"
 #include "accountmanager.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3ValueList>
 using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
 #include "kmversion.h"
@@ -69,10 +72,10 @@ using KWallet::Wallet;
 #include "actionscheduler.h"
 
 #include <qutf7codec.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qdir.h>
-#include <qwidgetlist.h>
-#include <qobjectlist.h>
+#include <qwidget.h>
+#include <qobject.h>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -149,7 +152,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // In the case of Japan. Japanese locale name is "eucjp" but
   // The Japanese mail systems normally used "iso-2022-jp" of locale name.
   // We want to change locale name from eucjp to iso-2022-jp at KMail only.
-  if ( QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp" )
+  if ( Q3CString(QTextCodec::codecForLocale()->name()).lower() == "eucjp" )
   {
     netCodec = QTextCodec::codecForName("jis7");
     // QTextCodec *cdc = QTextCodec::codecForName("jis7");
@@ -380,7 +383,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.latin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    QCString str = KPIM::kFileToString( messageFile.path(), true, false );
+    Q3CString str = KPIM::kFileToString( messageFile.path(), true, false );
     if( !str.isEmpty() )
       msg->setBody( QString::fromLocal8Bit( str ).utf8() );
   }
@@ -407,34 +410,34 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const QCString &attachCte,
-                            const QCString &attachData,
-                            const QCString &attachType,
-                            const QCString &attachSubType,
-                            const QCString &attachParamAttr,
+                            const Q3CString &attachCte,
+                            const Q3CString &attachData,
+                            const Q3CString &attachType,
+                            const Q3CString &attachSubType,
+                            const Q3CString &attachParamAttr,
                             const QString &attachParamValue,
-                            const QCString &attachContDisp )
+                            const Q3CString &attachContDisp )
 {
   kdDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
 
   return openComposer ( to, cc, bcc, subject, body, hidden,
                         attachName, attachCte, attachData,
                         attachType, attachSubType, attachParamAttr,
-                        attachParamValue, attachContDisp, QCString() );
+                        attachParamValue, attachContDisp, Q3CString() );
 }
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const QCString &attachCte,
-                            const QCString &attachData,
-                            const QCString &attachType,
-                            const QCString &attachSubType,
-                            const QCString &attachParamAttr,
+                            const Q3CString &attachCte,
+                            const Q3CString &attachData,
+                            const Q3CString &attachType,
+                            const Q3CString &attachSubType,
+                            const Q3CString &attachParamAttr,
                             const QString &attachParamValue,
-                            const QCString &attachContDisp,
-                            const QCString &attachCharset )
+                            const Q3CString &attachContDisp,
+                            const Q3CString &attachCharset )
 {
   kdDebug(5006) << "KMKernel::openComposer()" << endl;
 
@@ -731,7 +734,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
     // because of the implicit sharing this poses
     // no memory or performance penalty.
 
-    const QCString messageText =
+    const Q3CString messageText =
       KPIM::kFileToString( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
@@ -911,7 +914,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
 
 
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
-    const QCString messageText =
+    const Q3CString messageText =
       KPIM::kFileToString( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
@@ -1558,7 +1561,7 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::closeAllKMailWindows()
 {
-  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList);
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
     ++it;
@@ -1608,7 +1611,7 @@ void KMKernel::cleanup(void)
 
   mICalIface->cleanup();
 
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
   the_folderMgr->createFolderList(&strList, &folders);
@@ -1779,7 +1782,7 @@ void KMKernel::dumpDeadLetters()
   if ( !KMainWindow::memberList )
     return;
 
-  for ( QPtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it )
+  for ( Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it )
     if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) )
       win->autoSaveMessage();
 }
@@ -1910,7 +1913,7 @@ bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
 
 bool KMKernel::unregisterSystemTrayApplet( const KSystemTray* applet )
 {
-  QValueList<const KSystemTray*>::iterator it =
+  Q3ValueList<const KSystemTray*>::iterator it =
     systemTrayApplets.find( applet );
   if ( it != systemTrayApplets.end() ) {
     systemTrayApplets.remove( it );
@@ -2250,10 +2253,10 @@ Wallet *KMKernel::wallet() {
   return mWallet;
 }
 
-QValueList< QGuardedPtr<KMFolder> > KMKernel::allFolders()
+Q3ValueList< QPointer<KMFolder> > KMKernel::allFolders()
 {
   QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
+  Q3ValueList<QPointer<KMFolder> > folders;
   folderMgr()->createFolderList(&names, &folders);
   imapFolderMgr()->createFolderList(&names, &folders);
   dimapFolderMgr()->createFolderList(&names, &folders);

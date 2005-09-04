@@ -20,6 +20,9 @@
 
 #include <kiconloader.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 
 #include <assert.h>
 
@@ -61,18 +64,18 @@ KMMessagePart::~KMMessagePart()
 //-----------------------------------------------------------------------------
 void KMMessagePart::clear()
 {
-  mOriginalContentTypeStr = QCString();
+  mOriginalContentTypeStr = Q3CString();
   mType = "text";
   mSubtype = "plain";
   mCte = "7bit";
-  mContentDescription = QCString();
-  mContentDisposition = QCString();
+  mContentDescription = Q3CString();
+  mContentDisposition = Q3CString();
   mBody.truncate( 0 );
-  mAdditionalCTypeParamStr = QCString();
+  mAdditionalCTypeParamStr = Q3CString();
   mName = QString::null;
-  mParameterAttribute = QCString();
+  mParameterAttribute = Q3CString();
   mParameterValue = QString::null;
-  mCharset = QCString();
+  mCharset = Q3CString();
   mPartSpecifier = QString::null;
   mBodyDecodedSize = 0;
   mParent = 0;
@@ -100,7 +103,7 @@ int KMMessagePart::decodedSize(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBody(const QCString &aStr)
+void KMMessagePart::setBody(const Q3CString &aStr)
 {
   mBody.duplicate( aStr.data(), aStr.length() );
 
@@ -112,12 +115,12 @@ void KMMessagePart::setBody(const QCString &aStr)
 }
 
 void KMMessagePart::setBodyFromUnicode( const QString & str ) {
-  QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  Q3CString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
-  QValueList<int> dummy;
+  Q3ValueList<int> dummy;
   setCharset( encoding );
   setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
@@ -147,7 +150,7 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
   return codec->toUnicode( bodyDecoded() );
 }
 
-void KMMessagePart::setCharset( const QCString & c ) {
+void KMMessagePart::setCharset( const Q3CString & c ) {
   if ( type() != DwMime::kTypeText )
     kdWarning()
       << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
@@ -159,7 +162,7 @@ void KMMessagePart::setCharset( const QCString & c ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBodyEncoded(const QCString& aStr)
+void KMMessagePart::setBodyEncoded(const Q3CString& aStr)
 {
   mBodyDecodedSize = aStr.length();
 
@@ -173,8 +176,8 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
       // we can't use the convenience function here, since aStr is not
       // a QByteArray...:
       mBody.resize( codec->maxEncodedSizeFor( mBodyDecodedSize ) );
-      QCString::ConstIterator iit = aStr.data();
-      QCString::ConstIterator iend = aStr.data() + mBodyDecodedSize;
+      Q3CString::ConstIterator iit = aStr.data();
+      Q3CString::ConstIterator iend = aStr.data() + mBodyDecodedSize;
       QByteArray::Iterator oit = mBody.begin();
       QByteArray::ConstIterator oend = mBody.end();
       if ( !codec->encode( iit, iend, oit, oend ) )
@@ -196,7 +199,7 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
 }
 
 void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
-				       QValueList<int> & allowedCte,
+				       Q3ValueList<int> & allowedCte,
 				       bool allow8Bit,
                                        bool willBeSigned )
 {
@@ -218,8 +221,8 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
   setBodyEncodedBinary( aBuf );
 }
 
-void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
-				       QValueList<int> & allowedCte,
+void KMMessagePart::setBodyAndGuessCte(const Q3CString& aBuf,
+				       Q3ValueList<int> & allowedCte,
 				       bool allow8Bit,
                                        bool willBeSigned )
 {
@@ -306,11 +309,11 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
   return result;
 }
 
-QCString KMMessagePart::bodyDecoded(void) const
+Q3CString KMMessagePart::bodyDecoded(void) const
 {
-  if (mBody.isEmpty()) return QCString("");
+  if (mBody.isEmpty()) return Q3CString("");
   bool decodeBinary = false;
-  QCString result;
+  Q3CString result;
   int len;
 
   switch (cte())
@@ -329,8 +332,8 @@ QCString KMMessagePart::bodyDecoded(void) const
         int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
         result.resize( bufSize );
         QByteArray::ConstIterator iit = mBody.begin();
-        QCString::Iterator oit = result.begin();
-        QCString::ConstIterator oend = result.begin() + bufSize;
+        Q3CString::Iterator oit = result.begin();
+        Q3CString::ConstIterator oend = result.begin() + bufSize;
         if ( !codec->decode( iit, mBody.end(), oit, oend ) )
           kdWarning(5006) << codec->name()
                           << " lies about it's maxDecodedSizeFor( "
@@ -382,7 +385,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::iconName() const
 {
-  QCString mimeType( mType + "/" + mSubtype );
+  Q3CString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
   QString fileName =
     KMimeType::mimeType( mimeType )->icon( QString::null, false );
@@ -421,7 +424,7 @@ void KMMessagePart::setSubtype(int aSubtype)
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessagePart::parameterAttribute(void) const
+Q3CString KMMessagePart::parameterAttribute(void) const
 {
   return mParameterAttribute;
 }
@@ -433,7 +436,7 @@ QString KMMessagePart::parameterValue(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setParameter(const QCString &attribute,
+void KMMessagePart::setParameter(const Q3CString &attribute,
                                  const QString &value)
 {
   mParameterAttribute = attribute;
@@ -441,7 +444,7 @@ void KMMessagePart::setParameter(const QCString &attribute,
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessagePart::contentTransferEncodingStr(void) const
+Q3CString KMMessagePart::contentTransferEncodingStr(void) const
 {
   return mCte;
 }
@@ -455,7 +458,7 @@ int KMMessagePart::contentTransferEncoding(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentTransferEncodingStr(const QCString &aStr)
+void KMMessagePart::setContentTransferEncodingStr(const Q3CString &aStr)
 {
     mCte = aStr;
 }
@@ -481,7 +484,7 @@ QString KMMessagePart::contentDescription(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDescription(const QString &aStr)
 {
-  QCString encoding = KMMsgBase::autoDetectCharset(charset(),
+  Q3CString encoding = KMMsgBase::autoDetectCharset(charset(),
     KMMessage::preferredCharsets(), aStr);
   if (encoding.isEmpty()) encoding = "utf-8";
   mContentDescription = KMMsgBase::encodeRFC2047String(aStr, encoding);
@@ -518,7 +521,7 @@ QString KMMessagePart::fileName(void) const
   if (endOfFilename < 0)
     endOfFilename = 32767;
 
-  const QCString str = mContentDisposition.mid(startOfFilename,
+  const Q3CString str = mContentDisposition.mid(startOfFilename,
                                 endOfFilename-startOfFilename+1)
                            .stripWhiteSpace();
 
@@ -530,8 +533,8 @@ QString KMMessagePart::fileName(void) const
 
 
 
-QCString KMMessagePart::body() const
+Q3CString KMMessagePart::body() const
 {
-  return QCString( mBody.data(), mBody.size() + 1 ); // space for trailing NUL
+  return Q3CString( mBody.data(), mBody.size() + 1 ); // space for trailing NUL
 }
 

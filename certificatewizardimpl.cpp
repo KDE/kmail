@@ -11,7 +11,7 @@
  *  The wizard will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal wizard.
  */
-CertificateWizardImpl::CertificateWizardImpl( QWidget* parent,  const char* name, bool modal, WFlags fl )
+CertificateWizardImpl::CertificateWizardImpl( QWidget* parent,  const char* name, bool modal, Qt::WFlags fl )
     : CertificateWizard( parent, name, modal, fl )
 {
 }

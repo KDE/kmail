@@ -20,6 +20,9 @@
 #include <config.h>
 #include <qfileinfo.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 
 #include "kmfoldermbox.h"
 #include "folderstorage.h"
@@ -317,7 +320,7 @@ int KMFolderMbox::lock()
   fl.l_start=0;
   fl.l_len=0;
   fl.l_pid=-1;
-  QCString cmd_str;
+  Q3CString cmd_str;
   assert(mStream != 0);
   mFilesLocked = false;
   mReadOnly = false;
@@ -451,7 +454,7 @@ KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
 
 //-------------------------------------------------------------
 FolderJob*
-KMFolderMbox::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+KMFolderMbox::doCreateJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
   MboxJob *job = new MboxJob( msgList, sets, jt, folder );
@@ -468,7 +471,7 @@ int KMFolderMbox::unlock()
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-  QCString cmd_str;
+  Q3CString cmd_str;
 
   assert(mStream != 0);
   mFilesLocked = false;
@@ -549,9 +552,9 @@ int KMFolderMbox::createIndexFromContents()
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
-  QCString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
-  QCString sizeServerStr, uidStr;
+  Q3CString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
+  Q3CString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
+  Q3CString sizeServerStr, uidStr;
   bool atEof = false;
   bool inHeader = true;
   KMMsgInfo* mi;
@@ -721,48 +724,48 @@ int KMFolderMbox::createIndexFromContents()
       needStatus &= ~2;
     }
     else if (strncasecmp(line,"X-KMail-Mark:",13)==0)
-        xmarkStr = QCString(line+13);
+        xmarkStr = Q3CString(line+13);
     else if (strncasecmp(line,"In-Reply-To:",12)==0) {
-      replyToIdStr = QCString(line+12);
+      replyToIdStr = Q3CString(line+12);
       lastStr = &replyToIdStr;
     }
     else if (strncasecmp(line,"References:",11)==0) {
-      referencesStr = QCString(line+11);
+      referencesStr = Q3CString(line+11);
       lastStr = &referencesStr;
     }
     else if (strncasecmp(line,"Message-Id:",11)==0) {
-      msgIdStr = QCString(line+11);
+      msgIdStr = Q3CString(line+11);
       lastStr = &msgIdStr;
     }
     else if (strncasecmp(line,"Date:",5)==0)
     {
-      dateStr = QCString(line+5);
+      dateStr = Q3CString(line+5);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line,"From:", 5)==0)
     {
-      fromStr = QCString(line+5);
+      fromStr = Q3CString(line+5);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line,"To:", 3)==0)
     {
-      toStr = QCString(line+3);
+      toStr = Q3CString(line+3);
       lastStr = &toStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0)
     {
-      subjStr = QCString(line+8);
+      subjStr = Q3CString(line+8);
       lastStr = &subjStr;
     }
     else if (strncasecmp(line,"X-Length:",9)==0)
     {
-      sizeServerStr = QCString(line+9);
+      sizeServerStr = Q3CString(line+9);
       sizeServer = sizeServerStr.toULong();
       lastStr = &sizeServerStr;
     }
     else if (strncasecmp(line,"X-UID:",6)==0)
     {
-      uidStr = QCString(line+6);
+      uidStr = Q3CString(line+6);
       uid = uidStr.toULong();
       lastStr = &uidStr;
     }
@@ -840,12 +843,12 @@ static size_t unescapeFrom( char* str, size_t strLen ) {
 }
 
 //static
-QCString KMFolderMbox::escapeFrom( const QCString & str ) {
+Q3CString KMFolderMbox::escapeFrom( const Q3CString & str ) {
   const unsigned int strLen = str.length();
   if ( strLen <= STRDIM("From ") )
     return str;
   // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
-  QCString result( int( strLen + 5 ) / 6 * 7 + 1 );
+  Q3CString result( int( strLen + 5 ) / 6 * 7 + 1 );
 
   const char * s = str.data();
   const char * const e = s + strLen - STRDIM("From ");
@@ -879,7 +882,7 @@ QCString KMFolderMbox::escapeFrom( const QCString & str ) {
 #undef STRDIM
 
 //-----------------------------------------------------------------------------
-QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
+Q3CString& KMFolderMbox::getMsgString(int idx, Q3CString &mDest)
 {
   unsigned long msgSize;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
@@ -931,7 +934,7 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
   bool opened = false;
-  QCString msgText;
+  Q3CString msgText;
   char endStr[3];
   int idx = -1, rc;
   KMFolder* msgParent;
@@ -1026,7 +1029,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     return error;
   }
 
-  QCString messageSeparator( aMsg->mboxMessageSeparator() );
+  Q3CString messageSeparator( aMsg->mboxMessageSeparator() );
   fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
   off_t offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
@@ -1154,7 +1157,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
 int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
 {
   int rc = 0;
-  QCString mtext;
+  Q3CString mtext;
   unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
                            QMIN( mMsgList.count(), startIndex + nbMessages );
   //kdDebug(5006) << "KMFolderMbox: compacting from " << startIndex << " to " << stopIndex << endl;

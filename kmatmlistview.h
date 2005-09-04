@@ -5,33 +5,33 @@
 #ifndef __KMAIL_KMATMLISTVIEW_H__
 #define __KMAIL_KMATMLISTVIEW_H__
 
-#include <qlistview.h>
-#include <qcstring.h>
+#include <q3listview.h>
+#include <q3cstring.h>
 
 class KMComposeWin;
 class MessageComposer;
 class QCheckBox;
 
-class KMAtmListViewItem : public QObject, public QListViewItem
+class KMAtmListViewItem : public QObject, public Q3ListViewItem
 {
   Q_OBJECT
   friend class ::KMComposeWin;
   friend class ::MessageComposer;
 
 public:
-  KMAtmListViewItem(QListView * parent);
+  KMAtmListViewItem(Q3ListView * parent);
   virtual ~KMAtmListViewItem();
   virtual void paintCell( QPainter * p, const QColorGroup & cg,
                           int column, int width, int align );
 
-  void setUncompressedMimeType( const QCString & type, const QCString & subtype ) {
+  void setUncompressedMimeType( const Q3CString & type, const Q3CString & subtype ) {
     mType = type; mSubtype = subtype;
   }
-  void uncompressedMimeType( QCString & type, QCString & subtype ) const {
+  void uncompressedMimeType( Q3CString & type, Q3CString & subtype ) const {
     type = mType; subtype = mSubtype;
   }
-  void setUncompressedCodec( const QCString & codec ) { mCodec = codec; }
-  QCString uncompressedCodec() const { return mCodec; }
+  void setUncompressedCodec( const Q3CString & codec ) { mCodec = codec; }
+  Q3CString uncompressedCodec() const { return mCodec; }
 
 signals:
   void compress( int );
@@ -50,12 +50,12 @@ private slots:
   void slotCompress();
 
 private:
-  QListView* mListview;
+  Q3ListView* mListview;
   QCheckBox* mCBEncrypt;
   QCheckBox* mCBSign;
   QCheckBox* mCBCompress;
   bool mCBSignEnabled, mCBEncryptEnabled;
-  QCString mType, mSubtype, mCodec;
+  Q3CString mType, mSubtype, mCodec;
 };
 
 

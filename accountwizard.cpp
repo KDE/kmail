@@ -34,11 +34,14 @@
 
 #include <qcheckbox.h>
 #include <qdir.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qvbox.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QGridLayout>
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"
@@ -179,13 +182,13 @@ void AccountWizard::showPage( QWidget *page )
     setFinishEnabled( mServerInformationPage, true );
   }
 
-  QWizard::showPage( page );
+  Q3Wizard::showPage( page );
 }
 
 void AccountWizard::setupWelcomePage()
 {
-  mWelcomePage = new QVBox( this );
-  ((QVBox*)mWelcomePage)->setSpacing( KDialog::spacingHint() );
+  mWelcomePage = new Q3VBox( this );
+  ((Q3VBox*)mWelcomePage)->setSpacing( KDialog::spacingHint() );
 
   QLabel *label = new QLabel( i18n( "Welcome to KMail" ), mWelcomePage );
   QFont font = label->font();
@@ -202,8 +205,8 @@ void AccountWizard::setupWelcomePage()
 
 void AccountWizard::setupAccountTypePage()
 {
-  mAccountTypePage = new QVBox( this );
-  ((QVBox*)mAccountTypePage)->setSpacing( KDialog::spacingHint() );
+  mAccountTypePage = new Q3VBox( this );
+  ((Q3VBox*)mAccountTypePage)->setSpacing( KDialog::spacingHint() );
 
   new QLabel( i18n( "Select what kind of account you would like to create" ), mAccountTypePage );
 
@@ -274,11 +277,11 @@ void AccountWizard::setupServerInformationPage()
 
   mIncomingLabel = new QLabel( mServerInformationPage );
 
-  mIncomingServerWdg = new QVBox( mServerInformationPage );
+  mIncomingServerWdg = new Q3VBox( mServerInformationPage );
   mIncomingServer = new KLineEdit( mIncomingServerWdg );
   mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), mIncomingServerWdg );
 
-  mIncomingLocationWdg = new QHBox( mServerInformationPage );
+  mIncomingLocationWdg = new Q3HBox( mServerInformationPage );
   mIncomingLocation = new KLineEdit( mIncomingLocationWdg );
   mChooseLocation = new QPushButton( i18n( "Choose..." ), mIncomingLocationWdg );
 
@@ -341,7 +344,7 @@ QString AccountWizard::accountName() const
 QLabel *AccountWizard::createInfoLabel( const QString &msg )
 {
   QLabel *label = new QLabel( msg, this );
-  label->setFrameStyle( QFrame::Panel | QFrame::Raised );
+  label->setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
   label->move( width() / 2 - label->width() / 2, height() / 2 - label->height() / 2 );
   label->show();
@@ -487,7 +490,7 @@ void AccountWizard::finished()
 {
   GlobalSettings::self()->writeConfig();
 
-  QWizard::accept();
+  Q3Wizard::accept();
 }
 
 // ----- Security Checks --------------

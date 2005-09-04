@@ -37,7 +37,9 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QGridLayout>
 
 Composer::Composer( QWidget *parent )
   : QWidget( parent )
@@ -58,7 +60,7 @@ Composer::Composer( QWidget *parent )
 
 //  mRecipients->setFixedHeight( 10 );
   
-  QTextEdit *editor = new QTextEdit( this );
+  Q3TextEdit *editor = new Q3TextEdit( this );
   topLayout->addMultiCellWidget( editor, 2, 2, 0, 1 );
   topLayout->setRowStretch( 2, 1 );
   

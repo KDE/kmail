@@ -35,6 +35,8 @@
 #include "kmmsgdict.h"
 
 #include <progressmanager.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 
@@ -84,7 +86,7 @@ void SearchJob::searchCompleteFolder()
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly );
+  QDataStream stream( packedArgs, QIODevice::WriteOnly );
   stream << (int) 'E' << url;
   KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -102,7 +104,7 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
   mLocalSearchPattern = new KMSearchPattern();
   mLocalSearchPattern->setOp( pattern->op() );
 
-  for ( QPtrListIterator<KMSearchRule> it( *pattern ) ; it.current() ; ++it )
+  for ( Q3PtrListIterator<KMSearchRule> it( *pattern ) ; it.current() ; ++it )
   {
     // construct an imap search command
     bool accept = true;
@@ -176,7 +178,7 @@ void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
   if ( mLocalSearchPattern->isEmpty() && data.isEmpty() )
   {
     // no local search and the server found nothing
-    QValueList<Q_UINT32> serNums;
+    Q3ValueList<Q_UINT32> serNums;
     emit searchDone( serNums, mSearchPattern, true );
   } else
   {
@@ -216,7 +218,7 @@ void SearchJob::slotSearchFolder()
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // pure imap search - now get the serial number for the UIDs
-    QValueList<Q_UINT32> serNums;
+    Q3ValueList<Q_UINT32> serNums;
     for ( QStringList::Iterator it = mImapSearchHits.begin(); 
         it != mImapSearchHits.end(); ++it ) 
     {
@@ -242,7 +244,7 @@ void SearchJob::slotSearchFolder()
             i18n("Continue Search"), i18n("&Search"), 
             "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
       {
-        QValueList<Q_UINT32> serNums;
+        Q3ValueList<Q_UINT32> serNums;
         emit searchDone( serNums, mSearchPattern, true );
         return;
       }
@@ -337,7 +339,7 @@ void SearchJob::slotSearchResult( KIO::Job *job )
     if ( mSerNum == 0 )
     {
       // folder
-      QValueList<Q_UINT32> serNums;
+      Q3ValueList<Q_UINT32> serNums;
       emit searchDone( serNums, mSearchPattern, true );
     } else {
       // message
@@ -368,7 +370,7 @@ void SearchJob::searchSingleMessage()
     KURL url = mAccount->getUrl();
     url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly );
+    QDataStream stream( packedArgs, QIODevice::WriteOnly );
     stream << (int) 'E' << url;
     KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -419,14 +421,14 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
   if ( item )
     item->setComplete();
   mAccount->killAllJobs();
-  QValueList<Q_UINT32> serNums;
+  Q3ValueList<Q_UINT32> serNums;
   emit searchDone( serNums, mSearchPattern, true );
 }
 
 //-----------------------------------------------------------------------------
 bool SearchJob::needsDownload()
 {
-  for ( QPtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
+  for ( Q3PtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
     if ( (*it)->field() != "<status>" ) {
       return true;
     }

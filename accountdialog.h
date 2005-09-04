@@ -26,7 +26,10 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 #include <klineedit.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3ValueList>
 #include "imapaccountbase.h"
 
 class QRegExpValidator;
@@ -41,7 +44,7 @@ class KIntNumInput;
 class KMAccount;
 class KMFolder;
 class KMServerTest;
-class QButtonGroup;
+class Q3ButtonGroup;
 
 namespace KMail {
 
@@ -110,11 +113,11 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *precommand;
-      QButtonGroup *encryptionGroup;
+      Q3ButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
-      QButtonGroup *authGroup;
+      Q3ButtonGroup *authGroup;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -173,11 +176,11 @@ class AccountDialog : public KDialogBase
       QCheckBox    *listOnlyOpenCheck;
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
-      QButtonGroup *encryptionGroup;
+      Q3ButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
-      QButtonGroup *authGroup;
+      Q3ButtonGroup *authGroup;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -237,7 +240,7 @@ class AccountDialog : public KDialogBase
     void makeImapAccountPage( bool disconnected = false );
     void setupSettings();
     void saveSettings();
-    void checkHighest( QButtonGroup * );
+    void checkHighest( Q3ButtonGroup * );
     static unsigned int popCapabilitiesFromStringList( const QStringList & );
     static unsigned int imapCapabilitiesFromStringList( const QStringList & );
     void enablePopFeatures( unsigned int );
@@ -251,7 +254,7 @@ class AccountDialog : public KDialogBase
     PopWidgets   mPop;
     ImapWidgets  mImap;
     KMAccount    *mAccount;
-    QValueList<QGuardedPtr<KMFolder> > mFolderList;
+    Q3ValueList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
     enum EncryptionMethods {
@@ -316,7 +319,7 @@ class NamespaceEditDialog: public KDialogBase
     ImapAccountBase::nsDelimMap* mNamespaceMap;
     ImapAccountBase::namespaceDelim mDelimMap;
     QMap<int, NamespaceLineEdit*> mLineEditMap;
-    QButtonGroup* mBg;
+    Q3ButtonGroup* mBg;
 };
 
 } // namespace KMail

@@ -43,7 +43,7 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const cha
 {
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->enableLinks( 0 );
-  mAddresseeView->setVScrollBarMode(QScrollView::Auto);
+  mAddresseeView->setVScrollBarMode(Q3ScrollView::Auto);
   setMainWidget(mAddresseeView);
 
   VCardConverter vcc;

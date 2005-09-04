@@ -40,7 +40,7 @@
 
 #include <stdlib.h>
 #include <qobject.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 namespace KMail
 {
@@ -65,7 +65,7 @@ namespace Util {
      * @param src The source string to convert.
      * @return The result string.
      */
-    QCString lf2crlf( const QCString & src );
+    Q3CString lf2crlf( const Q3CString & src );
 
     /**
      * A LaterDeleter is intended to be used with the RAII ( Resource

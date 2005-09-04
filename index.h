@@ -32,8 +32,8 @@
 
 
 #include <qobject.h>
-#include <qcstring.h>
-#include <qvaluelist.h>
+#include <q3cstring.h>
+#include <q3valuelist.h>
 #include <qtimer.h>
 #include <config.h>
 #ifdef HAVE_INDEXLIB
@@ -186,7 +186,7 @@ class KMMsgIndex : public QObject {
 #endif
 		std::set<KMFolder*> mOpenedFolders;
 		std::vector<Search*> mSearches;
-		QCString mIndexPath;
+		Q3CString mIndexPath;
 		QTimer* mTimer;
 		bool mSlowDown;
 };

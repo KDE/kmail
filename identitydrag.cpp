@@ -42,7 +42,7 @@ namespace KMail {
 
   IdentityDrag::IdentityDrag( const KPIM::Identity & ident,
 			      QWidget * dragSource, const char * name )
-    : QDragObject( dragSource, name ), mIdent( ident )
+    : Q3DragObject( dragSource, name ), mIdent( ident )
   {
 
   }
@@ -58,7 +58,7 @@ namespace KMail {
     QByteArray a;
 
     if ( !qstrcmp( mimetype, kmailIdentityMimeType ) ) {
-      QDataStream s( a, IO_WriteOnly );
+      QDataStream s( a, QIODevice::WriteOnly );
       s << mIdent;
     }
 
@@ -73,7 +73,7 @@ namespace KMail {
   bool IdentityDrag::decode( const QMimeSource * e, KPIM::Identity & i ) {
 
     if ( e->provides( kmailIdentityMimeType ) ) {
-      QDataStream s( e->encodedData( kmailIdentityMimeType ), IO_ReadOnly );
+      QDataStream s( e->encodedData( kmailIdentityMimeType ), QIODevice::ReadOnly );
       s >> i;
       return true;
     }

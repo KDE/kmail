@@ -21,6 +21,8 @@
 #include <config.h>
 #include <qfileinfo.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3CString>
 #include <kdebug.h>
 
 
@@ -247,7 +249,7 @@ bool KMFolderIndex::readIndex()
     }
     else
     {
-      QCString line(MAX_LINE);
+      Q3CString line(MAX_LINE);
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {

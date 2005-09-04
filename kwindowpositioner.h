@@ -22,6 +22,8 @@
 #define KWINDOWPOSITIONER_H
 
 #include <qobject.h>
+//Added by qt3to4:
+#include <QEvent>
 
 class QWindow;
 
@@ -31,7 +33,7 @@ class KWindowPositioner : public QObject
   public:
     enum Mode { Right, Bottom };
 
-    KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Bottom );
+    KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Qt::DockBottom );
 
     bool eventFilter( QObject *watched, QEvent *e );
 

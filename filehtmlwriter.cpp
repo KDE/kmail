@@ -36,6 +36,9 @@
 #include "filehtmlwriter.h"
 
 #include <kdebug.h>
+//Added by qt3to4:
+#include <QTextStream>
+#include <Q3CString>
 
 
 namespace KMail {
@@ -93,13 +96,13 @@ namespace KMail {
       mStream.unsetDevice();
       mFile.close();
     }
-    if ( !mFile.open( IO_WriteOnly ) )
+    if ( !mFile.open( QIODevice::WriteOnly ) )
       kdWarning( 5006 ) << "FileHtmlWriter: Cannot open file " << mFile.name() << endl;
     else
       mStream.setDevice( &mFile );
   }
 
-  void FileHtmlWriter::embedPart( const QCString & contentId, const QString & url ) {
+  void FileHtmlWriter::embedPart( const Q3CString & contentId, const QString & url ) {
     mStream << "<!-- embedPart(contentID=" << contentId << ", url=" << url << ") -->" << endl;
     flush();
   }

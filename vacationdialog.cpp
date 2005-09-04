@@ -19,6 +19,9 @@
 #include "vacationdialog.h"
 
 #include <kmime_header_parsing.h>
+//Added by qt3to4:
+#include <QGridLayout>
+#include <Q3CString>
 using KMime::Types::AddrSpecList;
 using KMime::Types::AddressList;
 using KMime::Types::MailboxList;
@@ -34,7 +37,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 
 namespace KMail {
 
@@ -64,8 +67,8 @@ namespace KMail {
     // Message text edit:
     ++row;
     glay->setRowStretch( row, 1 );
-    mTextEdit = new QTextEdit( plainPage(), "mTextEdit" );
-    mTextEdit->setTextFormat( QTextEdit::PlainText );
+    mTextEdit = new Q3TextEdit( plainPage(), "mTextEdit" );
+    mTextEdit->setTextFormat( Q3TextEdit::PlainText );
     glay->addMultiCellWidget( mTextEdit, row, row, 0, 1 );
 
     // "Resent only after" spinbox and label:
@@ -114,7 +117,7 @@ namespace KMail {
   }
 
   AddrSpecList VacationDialog::mailAliases() const {
-    QCString text = mMailAliasesEdit->text().latin1(); // ### IMAA: !ok
+    Q3CString text = mMailAliasesEdit->text().latin1(); // ### IMAA: !ok
     AddressList al;
     const char * s = text.begin();
     parseAddressList( s, text.end(), al );

@@ -34,13 +34,15 @@
 #define _TEXTSOURCE_H
 
 #include <maillistdrag.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class KMTextSource : public KPIM::MailTextSource {
 public:
     KMTextSource();
     ~KMTextSource();
 
-    QCString text(Q_UINT32 serialNumber) const;
+    Q3CString text(Q_UINT32 serialNumber) const;
 };
 
 #endif

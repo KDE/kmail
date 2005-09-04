@@ -88,6 +88,10 @@
 #include <qtextcodec.h>
 #include <qfile.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3StrList>
+#include <Q3PtrList>
 #include <kstyle.h>
 #include <qbuffer.h>
 #include <qpixmap.h>
@@ -344,7 +348,7 @@ namespace KMail {
                                                       partNode& sign,
                                                       const QString& fromAddress,
                                                       bool doCheck,
-                                                      QCString* cleartextData,
+                                                      Q3CString* cleartextData,
                                                       CryptPlug::SignatureMetaData* paramSigMeta,
                                                       bool hideErrors )
   {
@@ -391,7 +395,7 @@ namespace KMail {
       }
     }
 
-    QCString cleartext;
+    Q3CString cleartext;
     char* new_cleartext = 0;
     QByteArray signaturetext;
     bool signatureIsBinary = false;
@@ -415,7 +419,7 @@ namespace KMail {
                   cleartext.data(), cleartext.length() );
 
       signaturetext = sign.msgPart().bodyDecodedBinary();
-      QCString signatureStr( signaturetext, signaturetext.size() + 1 );
+      Q3CString signatureStr( signaturetext, signaturetext.size() + 1 );
       signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
                           (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
                           (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
@@ -621,7 +625,7 @@ namespace KMail {
 
 
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
-                                      QCString& decryptedData,
+                                      Q3CString& decryptedData,
                                       bool& signatureFound,
                                       CryptPlug::SignatureMetaData& sigMeta,
                                       bool showWarning,
@@ -656,7 +660,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   if ( cryptPlug && !kmkernel->contextMenuShown() ) {
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
-    QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
+    Q3CString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
     bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
@@ -665,7 +669,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
 
 #ifdef MARCS_DEBUG
-    QCString deb;
+    Q3CString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
     if ( cipherIsBinary )
       deb += "[binary data]";
@@ -741,7 +745,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     // ### Workaround for bug 56693 (kmail freeze with the complete desktop
     // ### while pinentry-qt appears)
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
-    QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
+    Q3CString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
     bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
@@ -762,7 +766,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 }
 
   //static
-  bool ObjectTreeParser::containsExternalReferences( const QCString & str )
+  bool ObjectTreeParser::containsExternalReferences( const Q3CString & str )
   {
     int httpPos = str.find( "\"http:", 0, true );
     int httpsPos = str.find( "\"https:", 0, true );
@@ -793,7 +797,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
-    QCString cstr( curNode->msgPart().bodyDecoded() );
+    Q3CString cstr( curNode->msgPart().bodyDecoded() );
 
     mRawReplyString = cstr;
     if ( curNode->isFirstTextPart() ) {
@@ -864,7 +868,7 @@ static bool isMailmanMessage( partNode * curNode ) {
   if ( headers.HasField("X-Mailman-Version") )
     return true;
   if ( headers.HasField("X-Mailer") &&
-       0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
+       0 == Q3CString( headers.FieldBody("X-Mailer").AsString().c_str() )
        .find("MAILMAN", 0, false) )
     return true;
   return false;
@@ -873,14 +877,14 @@ static bool isMailmanMessage( partNode * curNode ) {
 namespace KMail {
 
   bool ObjectTreeParser::processMailmanMessage( partNode * curNode ) {
-    const QCString cstr = curNode->msgPart().bodyDecoded();
+    const Q3CString cstr = curNode->msgPart().bodyDecoded();
 
     //###
-    const QCString delim1( "--__--__--\n\nMessage:");
-    const QCString delim2( "--__--__--\r\n\r\nMessage:");
-    const QCString delimZ2("--__--__--\n\n_____________");
-    const QCString delimZ1("--__--__--\r\n\r\n_____________");
-    QCString partStr, digestHeaderStr;
+    const Q3CString delim1( "--__--__--\n\nMessage:");
+    const Q3CString delim2( "--__--__--\r\n\r\nMessage:");
+    const Q3CString delimZ2("--__--__--\n\n_____________");
+    const Q3CString delimZ1("--__--__--\r\n\r\n_____________");
+    Q3CString partStr, digestHeaderStr;
     int thisDelim = cstr.find(delim1, 0, false);
     if ( thisDelim == -1 )
       thisDelim = cstr.find(delim2, 0, false);
@@ -933,8 +937,8 @@ namespace KMail {
 
       partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
       partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
-      QCString subject("embedded message");
-      QCString subSearch("\nSubject:");
+      Q3CString subject("embedded message");
+      Q3CString subSearch("\nSubject:");
       int subPos = partStr.find(subSearch, 0, false);
       if ( -1 < subPos ){
         subject = partStr.mid(subPos+subSearch.length());
@@ -977,7 +981,7 @@ namespace KMail {
   }
 
   bool ObjectTreeParser::processTextPlainSubtype( partNode * curNode, ProcessResult & result ) {
-    const QCString cstr = curNode->msgPart().bodyDecoded();
+    const Q3CString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
       mRawReplyString = cstr;
       if ( curNode->isFirstTextPart() ) {
@@ -1154,7 +1158,7 @@ namespace KMail {
 
     if ( keepEncryptions() ) {
       node->setEncryptionState( KMMsgFullyEncrypted );
-      const QCString cstr = node->msgPart().bodyDecoded();
+      const Q3CString cstr = node->msgPart().bodyDecoded();
       if ( mReader )
         writeBodyString( cstr, node->trueFromAddress(),
                          codecFor( node ), result, false );
@@ -1200,7 +1204,7 @@ namespace KMail {
     kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
     PartMetaData messagePart;
     node->setEncryptionState( KMMsgFullyEncrypted );
-    QCString decryptedData;
+    Q3CString decryptedData;
     bool signatureFound;
     CryptPlug::SignatureMetaData sigMeta;
     sigMeta.status              = 0;
@@ -1300,7 +1304,7 @@ namespace KMail {
                                                node->trueFromAddress(),
                                                filename ) );
     }
-    QCString rfc822messageStr( node->msgPart().bodyDecoded() );
+    Q3CString rfc822messageStr( node->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
     DwMessage* rfc822DwMessage = 0; // will be deleted by c'tor of rfc822headers
     if ( node->dwPart()->Body().Message() )
@@ -1347,7 +1351,7 @@ namespace KMail {
       kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       node->setEncryptionState( KMMsgFullyEncrypted );
       if ( keepEncryptions() ) {
-        const QCString cstr = node->msgPart().bodyDecoded();
+        const Q3CString cstr = node->msgPart().bodyDecoded();
         if ( mReader )
           writeBodyString( cstr, node->trueFromAddress(),
                            codecFor( node ), result, false );
@@ -1358,7 +1362,7 @@ namespace KMail {
         */
         PartMetaData messagePart;
         setCryptPlugWrapper( KMail::CryptPlugFactory::instance()->openpgp() );
-        QCString decryptedData;
+        Q3CString decryptedData;
         bool signatureFound;
         CryptPlug::SignatureMetaData sigMeta;
         sigMeta.status              = 0;
@@ -1517,7 +1521,7 @@ namespace KMail {
         kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
       else
         kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
-      QCString decryptedData;
+      Q3CString decryptedData;
       PartMetaData messagePart;
       messagePart.isEncrypted = true;
       messagePart.isSigned = false;
@@ -1718,7 +1722,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
   return true;
 }
 
-  void ObjectTreeParser::writeBodyString( const QCString & bodyString,
+  void ObjectTreeParser::writeBodyString( const Q3CString & bodyString,
                                           const QString & fromAddress,
                                           const QTextCodec * codec,
                                           ProcessResult & result,
@@ -1765,7 +1769,7 @@ bool ObjectTreeParser::processApplicationChiasmusTextSubtype( partNode * curNode
       }
     }
 
-    QCString contentId = msgPart->contentId();
+    Q3CString contentId = msgPart->contentId();
     if ( !contentId.isEmpty() ) {
       htmlWriter()->embedPart( contentId, href );
     }
@@ -2367,7 +2371,7 @@ QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
 }
 
 //-----------------------------------------------------------------------------
-void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
+void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress )
 {
   KMMsgSignatureState dummy1;
@@ -2376,7 +2380,7 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 }
 
 //-----------------------------------------------------------------------------
-void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
+void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress,
                                 KMMsgSignatureState&  inlineSignatureState,
                                 KMMsgEncryptionState& inlineEncryptionState,
@@ -2392,8 +2396,8 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 
   inlineSignatureState  = KMMsgNotSigned;
   inlineEncryptionState = KMMsgNotEncrypted;
-  QPtrList<Kpgp::Block> pgpBlocks;
-  QStrList nonPgpBlocks;
+  Q3PtrList<Kpgp::Block> pgpBlocks;
+  Q3StrList nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
       bool isEncrypted = false, isSigned = false;
@@ -2401,11 +2405,11 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
       bool firstNonPgpBlock = true;
       bool couldDecrypt = false;
       QString signer;
-      QCString keyId;
+      Q3CString keyId;
       QString decryptionError;
       Kpgp::Validity keyTrust = Kpgp::KPGP_VALIDITY_FULL;
 
-      QPtrListIterator<Kpgp::Block> pbit( pgpBlocks );
+      Q3PtrListIterator<Kpgp::Block> pbit( pgpBlocks );
 
       QStrListIterator npbit( nonPgpBlocks );
 
@@ -2413,7 +2417,7 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
       for( ; *pbit != 0; ++pbit, ++npbit )
       {
           // insert the next Non-OpenPGP block
-          QCString str( *npbit );
+          Q3CString str( *npbit );
           if( !str.isEmpty() ) {
             htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
             kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
@@ -2422,7 +2426,7 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
             // block as fully signed/encrypted
             if( firstNonPgpBlock ) {
               // check whether str only consists of \n
-              for( QCString::ConstIterator c = str.begin(); *c; ++c ) {
+              for( Q3CString::ConstIterator c = str.begin(); *c; ++c ) {
                 if( *c != '\n' ) {
                   fullySignedOrEncrypted = false;
                   break;
@@ -2514,7 +2518,7 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
       }
 
       // add the last Non-OpenPGP block
-      QCString str( nonPgpBlocks.last() );
+      Q3CString str( nonPgpBlocks.last() );
       if( !str.isEmpty() ) {
         htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
         // Even if the trailing Non-OpenPGP block isn't empty we still
@@ -2712,7 +2716,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     assert( filename );
 
     QFile f( filename );
-    if ( f.open( IO_WriteOnly ) ) {
+    if ( f.open( QIODevice::WriteOnly ) ) {
       if ( start ) {
         QDataStream ds( &f );
         ds.writeRawBytes( start, len );

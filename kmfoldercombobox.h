@@ -9,7 +9,9 @@
 #include "kmfolder.h"
 
 #include <qcombobox.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class KMFolderComboBox : public QComboBox
 {
@@ -39,10 +41,10 @@ private slots:
 private:
   /** Create folder list using the folder manager. */
   void createFolderList(QStringList *names,
-                        QValueList<QGuardedPtr<KMFolder> > *folders);
+                        Q3ValueList<QPointer<KMFolder> > *folders);
   void init();
 
-  QGuardedPtr<KMFolder> mFolder;
+  QPointer<KMFolder> mFolder;
   bool mOutboxShown;
   bool mImapShown;
   int mSpecialIdx;

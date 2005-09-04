@@ -38,7 +38,7 @@
 #include "util.h"
 
 #include <stdlib.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
 {
@@ -70,12 +70,12 @@ size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
     return target - str;
 }
 
-QCString KMail::Util::lf2crlf( const QCString & src )
+Q3CString KMail::Util::lf2crlf( const Q3CString & src )
 {
-    QCString result( 1 + 2*src.length() );  // maximal possible length
+    Q3CString result( 1 + 2*src.length() );  // maximal possible length
 
-    QCString::ConstIterator s = src.begin();
-    QCString::Iterator d = result.begin();
+    Q3CString::ConstIterator s = src.begin();
+    Q3CString::Iterator d = result.begin();
   // we use cPrev to make sure we insert '\r' only there where it is missing
     char cPrev = '?';
     while ( *s ) {

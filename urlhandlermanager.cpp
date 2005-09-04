@@ -161,7 +161,7 @@ public:
   void unregisterHandler( const Interface::BodyPartURLHandler * handler );
 
 private:
-  typedef QValueVector<const Interface::BodyPartURLHandler*> BodyPartHandlerList;
+  typedef Q3ValueVector<const Interface::BodyPartURLHandler*> BodyPartHandlerList;
   BodyPartHandlerList mHandlers;
 };
 
@@ -452,7 +452,7 @@ namespace {
     if ( url.hasHost() || url.path() != "/" || !url.hasRef() )
       return false;
     if ( w && !w->htmlPart()->gotoAnchor( url.ref() ) )
-      static_cast<QScrollView*>( w->htmlPart()->widget() )->ensureVisible( 0, 0 );
+      static_cast<Q3ScrollView*>( w->htmlPart()->widget() )->ensureVisible( 0, 0 );
     return true;
   }
 }

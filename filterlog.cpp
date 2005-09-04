@@ -33,6 +33,8 @@
 
 #include <qdatetime.h>
 #include <qfile.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <sys/stat.h>
 
@@ -121,7 +123,7 @@ void FilterLog::checkLogSize()
     // avoid some kind of hysteresis, shrink the log to 90% of its maximum
     while ( mCurrentLogSize > ( mMaxLogSize * 0.9 ) )
     {
-      QValueListIterator<QString> it = mLogEntries.begin();
+      Q3ValueListIterator<QString> it = mLogEntries.begin();
       if ( it != mLogEntries.end())
       {
         mCurrentLogSize -= (*it).length();
@@ -143,7 +145,7 @@ void FilterLog::checkLogSize()
 bool FilterLog::saveToFile( QString fileName )
 {
     QFile file( fileName );
-    if( file.open( IO_WriteOnly ) ) {
+    if( file.open( QIODevice::WriteOnly ) ) {
       fchmod( file.handle(), S_IRUSR | S_IWUSR );
       {
         QDataStream ds( &file );
@@ -151,7 +153,7 @@ bool FilterLog::saveToFile( QString fileName )
               it != mLogEntries.end(); ++it ) 
         {
           QString tmpString = *it + '\n';
-          QCString cstr( tmpString.local8Bit() );
+          Q3CString cstr( tmpString.local8Bit() );
           ds.writeRawBytes( cstr, cstr.size() );
         }
       }

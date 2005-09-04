@@ -21,7 +21,7 @@
 
 #include <kpgp.h>
 #include <qstring.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <time.h>
 
 namespace KMail {
@@ -42,7 +42,7 @@ namespace KMail {
     QString signClass;
     QString signer;
     QStringList signerMailAddresses;
-    QCString keyId;
+    Q3CString keyId;
     Kpgp::Validity keyTrust;
     QString status;  // to be used for unknown plug-ins
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs

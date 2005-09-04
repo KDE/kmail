@@ -33,8 +33,11 @@
 #include <qcombobox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+
 #include <qregexp.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <klocale.h>
 #include <kdialogbase.h>
@@ -60,7 +63,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | WDestructiveClose );
+  setWFlags( getWFlags() | Qt::WDestructiveClose );
   if ( folder ) {
     setCaption( i18n("New Subfolder of %1").arg( folder->prettyURL() ) );
   }
@@ -77,7 +80,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
   mNameLineEdit = new QLineEdit( privateLayoutWidget, "mNameLineEdit" );
   mNameLabel->setBuddy( mNameLineEdit );
-  QWhatsThis::add( mNameLineEdit, i18n( "Enter a name for the new folder." ) );
+  mNameLineEdit->setWhatsThis( i18n( "Enter a name for the new folder." ) );
   mNameLineEdit->setFocus();
   mNameHBox->addWidget( mNameLineEdit );
   mTopLevelLayout->addLayout( mNameHBox );
@@ -93,7 +96,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
     mFormatComboBox = new QComboBox( FALSE, privateLayoutWidget, "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
-    QWhatsThis::add( mFormatComboBox, i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
+    mFormatComboBox->setWhatsThis( i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
 
     mFormatComboBox->insertItem("mbox", 0);
     mFormatComboBox->insertItem("maildir", 1);
@@ -120,7 +123,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
     mContentsComboBox = new QComboBox( FALSE, privateLayoutWidget, "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
-    QWhatsThis::add( mContentsComboBox, i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
+    mContentsComboBox->setWhatsThis( i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
     mContentsComboBox->insertItem( i18n( "Mail" ) );
     mContentsComboBox->insertItem( i18n( "Calendar" ) );
     mContentsComboBox->insertItem( i18n( "Contacts" ) );
@@ -161,7 +164,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
       mNamespacesComboBox = new QComboBox( FALSE, privateLayoutWidget, "mNamespacesComboBox" );
       mNamespacesLabel->setBuddy( mNamespacesComboBox );
-      QWhatsThis::add( mNamespacesComboBox, i18n( "Select the personal namespace the folder should be created in." ) );
+      mNamespacesComboBox->setWhatsThis( i18n( "Select the personal namespace the folder should be created in." ) );
       mNamespacesComboBox->insertStringList( namespaces );
       mNamespacesHBox->addWidget( mNamespacesComboBox );
       mTopLevelLayout->addLayout( mNamespacesHBox );

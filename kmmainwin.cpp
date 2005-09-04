@@ -89,7 +89,7 @@ KMMainWin::~KMMainWin()
   if ( !kmkernel->haveSystemTrayApplet() ) {
     // Check if this was the last KMMainWin
     int not_withdrawn = 0;
-    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+    Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList);
     for (it.toFirst(); it.current(); ++it){
       if ( !it.current()->isHidden() &&
            it.current()->isTopLevel() &&
@@ -174,7 +174,7 @@ void KMMainWin::setupStatusBar()
 
   statusBar()->addWidget( mLittleProgress, 0 , true );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
-  statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
+  statusBar()->setItemAlignment( 1, AlignLeft | Qt::AlignVCenter );
   mLittleProgress->show();
 }
 

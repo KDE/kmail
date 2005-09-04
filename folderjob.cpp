@@ -38,6 +38,8 @@
 #include "folderstorage.h"
 
 #include <kdebug.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 namespace KMail {
 
@@ -56,7 +58,7 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
 }
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
+FolderJob::FolderJob( const Q3PtrList<KMMessage>& msgList, const QString& sets,
                           JobType jt, KMFolder *folder )
   : mMsgList( msgList ),mType( jt ),
     mSets( sets ), mSrcFolder( 0 ), mDestFolder( folder ),
@@ -117,7 +119,7 @@ void FolderJob::kill()
 }
 
 //----------------------------------------------------------------------------
-QPtrList<KMMessage>
+Q3PtrList<KMMessage>
 FolderJob::msgList() const
 {
   return mMsgList;

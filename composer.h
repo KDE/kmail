@@ -11,12 +11,12 @@
 #include <kglobalsettings.h>
 
 #include <qstring.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 
 class KMMessage;
 class KMFolder;
 class KMMessagePart;
-class QListViewItem;
+class Q3ListViewItem;
 class MailComposerIface;
 
 namespace KIO {
@@ -44,13 +44,13 @@ namespace KMail {
     virtual void send( int how ) = 0;
     virtual void addAttachment( KURL url, QString comment ) = 0;
     virtual void addAttachment( const QString & name,
-                                const QCString & cte,
+                                const Q3CString & cte,
                                 const QByteArray & data,
-                                const QCString & type,
-                                const QCString & subType,
-                                const QCString & paramAttr,
+                                const Q3CString & type,
+                                const Q3CString & subType,
+                                const Q3CString & paramAttr,
                                 const QString & paramValue,
-                                const QCString & contDisp) = 0;
+                                const Q3CString & contDisp) = 0;
   public: // kmcommand
     virtual void setBody( QString body ) = 0;
 
@@ -95,7 +95,7 @@ namespace KMail {
     /**
      * Recode to the specified charset
      */
-    virtual void setCharset( const QCString & aCharset, bool forceDefault=false ) = 0;
+    virtual void setCharset( const Q3CString & aCharset, bool forceDefault=false ) = 0;
 
   public: // kmcommand
     /**

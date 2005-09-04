@@ -33,7 +33,7 @@
 #define ANNOTATIONJOBS_H
 
 #include <kio/job.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 namespace KMail {
 
@@ -47,7 +47,7 @@ struct AnnotationAttribute {
   QString value;
 };
 
-typedef QValueVector<AnnotationAttribute> AnnotationList;
+typedef Q3ValueVector<AnnotationAttribute> AnnotationList;
 
 /**
  * This namespace contains functions that return jobs for annotation operations.

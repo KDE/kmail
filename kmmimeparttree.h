@@ -55,11 +55,11 @@ public:
                   const char* name = 0 );
   virtual ~KMMimePartTree();
 
-  void correctSize( QListViewItem * item );
+  void correctSize( Q3ListViewItem * item );
 
 protected slots:
-  void itemClicked( QListViewItem* );
-  void itemRightClicked( QListViewItem*, const QPoint& );
+  void itemClicked( Q3ListViewItem* );
+  void itemRightClicked( Q3ListViewItem*, const QPoint& );
   void slotSaveAs();
   void slotSaveAsEncoded();
   void slotSaveAll();
@@ -82,7 +82,7 @@ protected:
   int mSizeColumn;
 };
 
-class KMMimePartTreeItem :public QListViewItem
+class KMMimePartTreeItem :public Q3ListViewItem
 {
 public:
   KMMimePartTreeItem( KMMimePartTree * parent,
