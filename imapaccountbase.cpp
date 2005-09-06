@@ -762,6 +762,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::delimiterForNamespace( const QString& prefix )
   {
+    kdDebug(5006) << "delimiterForNamespace " << prefix << endl;
     // try to match exactly
     if ( mNamespaceToDelimiter.contains(prefix) ) {
       return mNamespaceToDelimiter[prefix];
@@ -772,7 +773,11 @@ namespace KMail {
     for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
           it != mNamespaceToDelimiter.end(); ++it )
     {
-      if ( !it.key().isEmpty() && prefix.contains( it.key() ) ) {
+      // the namespace definition sometimes contains the delimiter
+      // make sure we also match this version
+      QString stripped = it.key().left( it.key().length() - 1 );
+      if ( !it.key().isEmpty() && 
+          ( prefix.contains( it.key() ) || prefix.contains( stripped ) ) ) {
         return it.data();
       }
     }
@@ -781,6 +786,7 @@ namespace KMail {
       return mNamespaceToDelimiter[QString::null];
     }
     // well, we tried
+    kdDebug(5006) << "delimiterForNamespace - not found" << endl;
     return QString::null;
   }
 
@@ -1273,7 +1279,7 @@ namespace KMail {
       newName = newName.left( newName.length() - 1 );
     }
     // add correct delimiter
-    QString delim = delimiterForNamespace( parent );
+    QString delim = delimiterForNamespace( newName );
     // should not happen...
     if ( delim.isEmpty() ) {
       delim = "/";

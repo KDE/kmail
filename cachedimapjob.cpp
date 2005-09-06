@@ -528,7 +528,8 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KMFolderCachedImap *folder = mFolderList.front();
   mFolderList.pop_front();
   KURL url = mAccount->getUrl();
-  QString path = mFolder->imapPath() + folder->folder()->name();
+  QString path = mAccount->createImapPath( mFolder->imapPath(), 
+      folder->folder()->name() );
   if ( !folder->imapPathForCreation().isEmpty() ) {
     // the folder knows it's namespace
     path = folder->imapPathForCreation();
