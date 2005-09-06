@@ -565,6 +565,17 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
     = Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
   assert( chiasmus ); // kmcomposewin code should have made sure
 
+  if ( !mEncryptBodyWithChiasmus ) {
+      int ret = KMessageBox::warningContinueCancel( mComposeWin, 
+              i18n("You have chosen to only encrypt attachments, but not the body "
+                  "using chiasmus. If this is not what you want, press cancel now "
+                  "and enable chiasmus body encryption as well." ),
+              i18n("Encrypting attachments, but not the body") );
+      if ( ret == KMessageBox::Cancel ) {
+          mRc = false;
+          return;
+      }
+  }
 
   for ( QValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
