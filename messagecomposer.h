@@ -259,6 +259,7 @@ private:
   QValueList<MessageComposerJob*> mJobs;
 #ifdef KLEO_CHIASMUS
   bool mEncryptWithChiasmus;
+  bool mEncryptBodyWithChiasmus;
   QString mChiasmusKey;
   QString mChiasmusOptions;
 #endif

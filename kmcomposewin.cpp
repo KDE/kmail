@@ -151,7 +151,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
 #ifdef KLEO_CHIASMUS
     mEncryptChiasmusAction( 0 ),
+    mEncryptBodyChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
+    mEncryptBodyWithChiasmus( false ),
 #endif
     mComposer( 0 )
 {
@@ -1220,10 +1222,21 @@ void KMComposeWin::setupActions(int aCryptoMessageFormat)
                                                "encrypt_message_chiasmus" );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
     mEncryptChiasmusAction = a;
+    a = new K33ToggleAction( i18n( "Encrypt Message Body with Chiasmus..." ),
+                                               "chidecrypted", 0, actionCollection(),
+                                               "encrypt_message_body_chiasmus" );
+    a->setCheckedState( KGuiItem( i18n( "Encrypt Message Body with Chiasmus..." ), "chiencrypted" ) );
+    mEncryptBodyChiasmusAction = a;
+    mEncryptBodyChiasmusAction->setEnabled( false );
+
     connect( mEncryptChiasmusAction, SIGNAL(toggled(bool)),
              this, SLOT(slotEncryptChiasmusToggled(bool)) );
+    connect( mEncryptBodyChiasmusAction, SIGNAL(toggled(bool)),
+             this, SLOT(slotEncryptBodyChiasmusToggled(bool)) );
+
   } else {
     mEncryptChiasmusAction = 0;
+    mEncryptBodyChiasmusAction = 0;
   }
 #endif // KLEO_CHIASMUS
 
@@ -2976,6 +2989,22 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEncryptToggled(bool on)
 {
+  if ( on && mEncryptBodyWithChiasmus ) {
+    int ret = KMessageBox::warningContinueCancel( this,
+        i18n("You have chosen to encrypt the body of your message using "
+             "chiasmus. Additionally encrypting such messages by other means "
+             "is currently not supported. Do you want to continue, which "
+             "will disable encryption of the body (but not of attachments ) "
+             "using chiasmus, or cancel, which will disable additional "
+             "(non-chiasmus) encryption?" ),
+        i18n("Chiasmus Body Encryption Conflict") );
+    if ( ret == KMessageBox::Cancel ) {
+      mEncryptAction->setChecked( false );
+      return;
+    }
+    slotEncryptBodyChiasmusToggled( false );
+    mEncryptBodyChiasmusAction->setChecked( false );
+  }
   setEncryption( on, true /* set by the user */ );
 }
 
@@ -3024,6 +3053,20 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSignToggled(bool on)
 {
+  if ( on && mEncryptBodyWithChiasmus ) {
+    int ret = KMessageBox::warningContinueCancel( this,
+        i18n("You have chosen to encrypt the body of your message using "
+             "chiasmus. Signing such messages is currently not supported. Do you "
+             "want to continue, which will disable encryption of the body (but not "
+             "of attachments ) using chiasmus, or cancel, which will disable signing?"),
+          i18n("Chiasmus Body Encryption Conflict" ) );
+    if ( ret == KMessageBox::Cancel ) {
+      mSignAction->setChecked( false );
+      return;
+    }
+    slotEncryptBodyChiasmusToggled( false );
+    mEncryptBodyChiasmusAction->setChecked( false );
+  }
   setSigning( on, true /* set by the user */ );
 }
 
@@ -3888,9 +3931,41 @@ namespace {
   };
 }
 
+
+void KMComposeWin::slotEncryptBodyChiasmusToggled( bool on ) {
+#ifdef KLEO_CHIASMUS
+    Q_ASSERT( mEncryptChiasmusAction->isEnabled() );
+    if ( on ) {
+      // FIXME remove once body encryption is fixed
+      // user wants to enable body chiamsus encryption, which means
+      // we currently need to disable signing and encryption using the
+      // other mechanisms. Warn the user.
+      if ( mEncryptAction->isChecked() || mSignAction->isChecked() ) {
+        int ret = KMessageBox::warningContinueCancel( this,
+            i18n("It is currently not possible to use chiasmus body encryption "
+              "with signed or otherwise encrypted messages. Do you want to "
+              "continue with chiasmus body encryption and disable other signature "
+              "and encryption methods, or cancel, which will not encrypt the body "
+              "using chiasmus?" ),
+            i18n("Chiasmus body encryption not possible") );
+        if ( ret == KMessageBox::Continue ) {
+          setSigning( false, true );
+          setEncryption( false, true );
+        } else {
+          mEncryptBodyChiasmusAction->setEnabled( false ); // reset
+          return;
+        }
+
+      }
+    }
+    mEncryptBodyWithChiasmus = on;
+#endif
+}
+
 void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
 #ifdef KLEO_CHIASMUS
     mEncryptWithChiasmus = false;
+    mEncryptBodyChiasmusAction->setEnabled( on );
 #endif
 
   if ( !on )

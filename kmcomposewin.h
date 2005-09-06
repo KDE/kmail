@@ -833,6 +833,7 @@ private slots:
   void slotContinuePrint( bool );
   void slotContinueDeadLetter( bool );
 
+  void slotEncryptBodyChiasmusToggled( bool );
   void slotEncryptChiasmusToggled( bool );
 
   /**
@@ -865,7 +866,9 @@ private:
 
 #ifdef KLEO_CHIASMUS
   KToggleAction *mEncryptChiasmusAction;
+  KToggleAction *mEncryptBodyChiasmusAction;
   bool mEncryptWithChiasmus;
+  bool mEncryptBodyWithChiasmus;
   QString mChiasmusKey;
   QString mChiasmusOptions;
 #endif
