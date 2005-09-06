@@ -564,6 +564,12 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
     = Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
   assert( chiasmus ); // kmcomposewin code should have made sure
 
+  // FIXME remove once body encryption is fixed
+  KMessageBox::sorry( mComposeWin,
+                      i18n("Encrytion of the mail body with Chiasmus is currently not possible. "
+                           "Only the attachments will be encrypted." ),
+                      i18n("Chiasmus body encryption not possible") );
+
 
   for ( QValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
