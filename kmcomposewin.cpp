@@ -2989,6 +2989,7 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEncryptToggled(bool on)
 {
+#ifdef KLEO_CHIASMUS
   if ( on && mEncryptBodyWithChiasmus ) {
     int ret = KMessageBox::warningContinueCancel( this,
         i18n("You have chosen to encrypt the body of your message using "
@@ -3005,6 +3006,7 @@ void KMComposeWin::slotEncryptToggled(bool on)
     slotEncryptBodyChiasmusToggled( false );
     mEncryptBodyChiasmusAction->setChecked( false );
   }
+#endif
   setEncryption( on, true /* set by the user */ );
 }
 
@@ -3053,6 +3055,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSignToggled(bool on)
 {
+#ifdef KLEO_CHIASMUS
   if ( on && mEncryptBodyWithChiasmus ) {
     int ret = KMessageBox::warningContinueCancel( this,
         i18n("You have chosen to encrypt the body of your message using "
@@ -3067,6 +3070,7 @@ void KMComposeWin::slotSignToggled(bool on)
     slotEncryptBodyChiasmusToggled( false );
     mEncryptBodyChiasmusAction->setChecked( false );
   }
+#endif
   setSigning( on, true /* set by the user */ );
 }
 
