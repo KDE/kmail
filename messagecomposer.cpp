@@ -559,11 +559,6 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
   if ( !mEncryptWithChiasmus )
     return;
   assert( !mChiasmusKey.isEmpty() ); // kmcomposewin code should have made sure
-  if ( mAttachments.empty() )
-    return;
-  const Kleo::CryptoBackend::Protocol * chiasmus
-    = Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
-  assert( chiasmus ); // kmcomposewin code should have made sure
 
   if ( !mEncryptBodyWithChiasmus ) {
       int ret = KMessageBox::warningContinueCancel( mComposeWin, 
@@ -576,6 +571,12 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
           return;
       }
   }
+
+  if ( mAttachments.empty() )
+    return;
+  const Kleo::CryptoBackend::Protocol * chiasmus
+    = Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" );
+  assert( chiasmus ); // kmcomposewin code should have made sure
 
   for ( QValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
