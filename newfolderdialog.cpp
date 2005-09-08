@@ -67,7 +67,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   QWidget* privateLayoutWidget = new QWidget( this, "mTopLevelLayout" );
   privateLayoutWidget->setGeometry( QRect( 10, 10, 260, 80 ) );
   setMainWidget( privateLayoutWidget );
-  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 11, 6, "mTopLevelLayout");
+  mTopLevelLayout = new QVBoxLayout( privateLayoutWidget, 0, spacingHint(),
+                                     "mTopLevelLayout");
 
   mNameHBox = new QHBoxLayout( 0, 0, 6, "mNameHBox");
 
