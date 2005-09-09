@@ -2263,4 +2263,14 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
   mUidMetaDataMap.replace( uid, new KMMsgMetaData(msg->status(), serNum) );
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderImap::setImapPath( const QString& path )
+{
+  if ( path.isEmpty() ) {
+    kdWarning(5006) << k_funcinfo << "ignoring empty path";
+  } else {
+    mImapPath = path;
+  }
+}
+
 #include "kmfolderimap.moc"

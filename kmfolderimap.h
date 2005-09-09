@@ -106,7 +106,7 @@ public:
 
   virtual KMMessage* getMsg(int idx);
   /** The path to the imap folder on the server */
-  void setImapPath(const QString &path) { mImapPath = path; }
+  void setImapPath( const QString &path );
   QString imapPath() { return mImapPath; }
 
   /** The highest UID in the folder */
