@@ -176,7 +176,9 @@ void KMFolderImap::readConfig()
   mCheckMail = config->readBoolEntry("checkmail", true);
 
   mUidValidity = config->readEntry("UidValidity");
-  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
+  if ( mImapPath.isEmpty() ) {
+    setImapPath( config->readEntry("ImapPath") );
+  }
   if (QString(name()).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder()->setSystemFolder( true );
