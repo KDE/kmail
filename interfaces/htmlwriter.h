@@ -109,7 +109,7 @@ namespace KMail {
     virtual void flush() = 0;
 
     /**
-     * Embed a part with Content-ID @contentId, using url @url.
+     * Embed a part with Content-ID @p contentId, using url @p url.
      */
     virtual void embedPart( const QCString & contentId, const QString & url ) = 0;
   };
