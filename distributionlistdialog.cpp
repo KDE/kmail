@@ -94,7 +94,7 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   : KDialogBase( Plain, i18n("Save Distribution List"), User1 | Cancel,
                  User1, parent, 0, false, false, i18n("Save List") )
 {
-  Q3Frame *topFrame = plainPage();
+  QFrame *topFrame = plainPage();
   
   QBoxLayout *topLayout = new QVBoxLayout( topFrame );
   topLayout->setSpacing( spacingHint() );

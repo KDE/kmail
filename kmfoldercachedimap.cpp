@@ -105,7 +105,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                  Cancel | User1 | User2, Cancel, parent, name, true ),
     rc( Cancel )
 {
-  Q3Frame* page = plainPage();
+  QFrame* page = plainPage();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
                       "<p>If you have problems with synchronizing an IMAP "

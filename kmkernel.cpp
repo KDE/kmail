@@ -335,9 +335,9 @@ void KMKernel::openReader( bool onlyCheck )
   KMainWindow *ktmw = 0;
   kdDebug(5006) << "KMKernel::openReader called" << endl;
 
-  if (KMainWindow::memberList)
-    for (ktmw = KMainWindow::memberList->first(); ktmw;
-         ktmw = KMainWindow::memberList->next())
+  if (KMainWindow::memberList())
+    for (ktmw = KMainWindow::memberList()->first(); ktmw;
+         ktmw = KMainWindow::memberList()->next())
       if (ktmw->isA("KMMainWin"))
         break;
 
@@ -1023,13 +1023,13 @@ void KMKernel::raise()
 bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
-  if (KMainWindow::memberList) {
+  if (KMainWindow::memberList()) {
     KMainWindow *win = 0;
     QObjectList *l;
 
     // First look for a KMainWindow.
-    for (win = KMainWindow::memberList->first(); win;
-         win = KMainWindow::memberList->next()) {
+    for (win = KMainWindow::memberList()->first(); win;
+         win = KMainWindow::memberList()->next()) {
       // Then look for a KMMainWidget.
       l	= win->queryList("KMMainWidget");
       if (l && l->first()) {
@@ -1561,7 +1561,7 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::closeAllKMailWindows()
 {
-  Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList());
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
     ++it;
@@ -1736,8 +1736,8 @@ bool KMKernel::transferMail( QString & destinationDir )
 
 void KMKernel::ungrabPtrKb(void)
 {
-  if(!KMainWindow::memberList) return;
-  QWidget* widg = KMainWindow::memberList->first();
+  if(!KMainWindow::memberList()) return;
+  QWidget* widg = KMainWindow::memberList()->first();
   Display* dpy;
 
   if (!widg) return;
@@ -1779,10 +1779,10 @@ void KMKernel::dumpDeadLetters()
     return; //All documents should be saved before shutting down is set!
 
   // make all composer windows autosave their contents
-  if ( !KMainWindow::memberList )
+  if ( !KMainWindow::memberList() )
     return;
 
-  for ( Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList) ; it.current() != 0; ++it )
+  for ( Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList()) ; it.current() != 0; ++it )
     if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) )
       win->autoSaveMessage();
 }
@@ -2012,19 +2012,19 @@ KMMsgIndex *KMKernel::msgIndex()
 
 KMainWindow* KMKernel::mainWin()
 {
-  if (KMainWindow::memberList) {
+  if (KMainWindow::memberList()) {
     KMainWindow *kmWin = 0;
 
     // First look for a KMMainWin.
-    for (kmWin = KMainWindow::memberList->first(); kmWin;
-         kmWin = KMainWindow::memberList->next())
+    for (kmWin = KMainWindow::memberList()->first(); kmWin;
+         kmWin = KMainWindow::memberList()->next())
       if (kmWin->isA("KMMainWin"))
         return kmWin;
 
     // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
     // case we are running inside Kontact) because we anyway only need
     // it for modal message boxes and for KNotify events.
-    kmWin = KMainWindow::memberList->first();
+    kmWin = KMainWindow::memberList()->first();
     if ( kmWin )
       return kmWin;
   }
