@@ -145,7 +145,7 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		kmail-3.3b1-misc.pl 
 
 confdir = $(kde_confdir)
-conf_DATA = kmail.antispamrc
+conf_DATA = kmail.antispamrc kmail.antivirusrc
 
 tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
