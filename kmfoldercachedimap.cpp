@@ -1236,6 +1236,14 @@ bool KMFolderCachedImap::deleteMessages()
 
   /* Delete messages from the server that we dont have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
+    if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) ) {
+        kdWarning(5006) << k_funcinfo << 
+            "Mails ended up in the queue for being deleted on the "
+            "server although the user does not have delete permissions. This should "
+            "not happen." << endl;
+      return false;
+    }
+
     newState( mProgress, i18n("Deleting removed messages from server"));
     QStringList sets = KMFolderImap::makeSets( uidsForDeletionOnServer, true );
     uidsForDeletionOnServer.clear();
