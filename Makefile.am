@@ -11,7 +11,8 @@ INCLUDES = -I$(top_srcdir)/libkmime \
         -I$(top_srcdir)/libemailfunctions \
         -I$(top_srcdir)/libksieve \
         -I$(top_srcdir)/mimelib \
-        -I$(top_srcdir)/certmanager/lib \
+	-I$(top_srcdir)/certmanager/lib \
+        -I$(top_srcdir)/certmanager/lib/ui \
         -I$(top_srcdir)/indexlib \
         -I$(top_srcdir) \
         $(GPGME_CFLAGS) \
