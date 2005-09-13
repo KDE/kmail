@@ -1209,8 +1209,13 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 
 bool KMFolderCachedImap::deleteMessages()
 {
-  if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
-    return false;
+    /**
+     * The below is a Bad Idea (TM), since it makes it impossible to
+     * locally delete mails vanishing on the server in someone else's
+     * folder we have access to.
+     * if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
+     *   return false;
+     */
   /* Delete messages from cache that are gone from the server */
   QPtrList<KMMessage> msgsForDeletion;
 
