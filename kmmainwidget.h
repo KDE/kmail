@@ -51,7 +51,6 @@ class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
-class SearchWindow;
 class KMSystemTray;
 class KMHeaders;
 
@@ -68,6 +67,7 @@ namespace KMail {
   class SieveDebugDialog;
   class FolderJob;
   class HeaderListQuickSearch;
+  class SearchWindow;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -467,7 +467,7 @@ private:
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
 
 //  QPopupMenu *mMessageMenu;
-  SearchWindow *mSearchWin;
+  KMail::SearchWindow *mSearchWin;
 
   KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
       *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
