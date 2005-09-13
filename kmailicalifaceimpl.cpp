@@ -184,6 +184,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
   // Mark the message as read and store it in the folder
   msg->touch();
+  msg->setComplete( true );
   f->addMsg( msg );
 
   rc = true;
@@ -435,6 +436,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     msg->cleanupHeader();
     //debugBodyParts( "after cleanup", *msg );
     msg->touch();
+    msg->setComplete( true );
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
       sernum = msg->getMsgSerNum();
@@ -865,6 +867,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     //debugBodyParts( "in update, after cleanup", *newMsg );
 
     deleteMsg( msg );
+    newMsg->setComplete( true );
     if ( f->addMsg( newMsg ) == 0 ) {
       // Message stored
       rc = newMsg->getMsgSerNum();
