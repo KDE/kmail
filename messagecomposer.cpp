@@ -1882,8 +1882,9 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     }
     if ( !ourFineBodyPart.charset().isEmpty() )
       msg->setCharset( ourFineBodyPart.charset() );
+
     msg->setHeaderField( "Content-Transfer-Encoding",
-                         ourFineBodyPart.contentTransferEncodingStr() );
+            ourFineBodyPart.contentTransferEncodingStr() );
     msg->setHeaderField( "Content-Description",
                          ourFineBodyPart.contentDescription() );
     msg->setHeaderField( "Content-Disposition",
@@ -1899,6 +1900,18 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     }
     if ( !ourFineBodyPart.body().isNull() )
       msg->setBody(ourFineBodyPart.body() );
+
+    /*
+     * Nasty Outlook compatability hack. As soon as there are umlauts in the CN
+     * of an ical attachment KMail will auto-transfer encode it as qp or
+     * base64. Since OL cannot cope with that, we have to manually override it
+     * here.
+     */
+    if ( msg->typeStr() == "text" && msg->subtypeStr() == "calendar" ) {
+      msg->setBody( QCString( msg->bodyDecodedBinary() ) );
+      msg->setHeaderField( "Content-Transfer-Encoding", "7bit" );
+    }
+
   }
 
   msg->setHeaderField( "X-KMail-Recipients",
