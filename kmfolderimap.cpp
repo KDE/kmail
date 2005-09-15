@@ -2263,7 +2263,7 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
 void KMFolderImap::setImapPath( const QString& path )
 {
   if ( path.isEmpty() ) {
-    kdWarning(5006) << k_funcinfo << "ignoring empty path";
+    kdWarning(5006) << k_funcinfo << "ignoring empty path" << endl;
   } else {
     mImapPath = path;
   }
