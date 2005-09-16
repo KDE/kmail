@@ -123,7 +123,7 @@ void FilterLog::checkLogSize()
     // avoid some kind of hysteresis, shrink the log to 90% of its maximum
     while ( mCurrentLogSize > ( mMaxLogSize * 0.9 ) )
     {
-      Q3ValueListIterator<QString> it = mLogEntries.begin();
+      QStringList::Iterator it = mLogEntries.begin();
       if ( it != mLogEntries.end())
       {
         mCurrentLogSize -= (*it).length();

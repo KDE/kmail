@@ -49,7 +49,7 @@ namespace KMail {
        KPIM::AddresseeView *  mAddresseeView;
        KABC::Addressee::List  mAddresseeList;
 
-       Q3ValueListIterator<KABC::Addressee> itAddresseeList;
+       KABC::Addressee::List::Iterator itAddresseeList;
   };
 
 }

@@ -1312,7 +1312,8 @@ namespace {
     if ( number != 0 )
       return 0;
 
-    KIntNumInput *numInput = new KIntNumInput( valueStack, "KIntNumInput" );
+    KIntNumInput *numInput = new KIntNumInput( valueStack );
+    numInput->setObjectName( "KIntNumInput" );
     QObject::connect( numInput, SIGNAL( valueChanged( int ) ),
                       receiver, SLOT( slotValueChanged() ) );
     return numInput;

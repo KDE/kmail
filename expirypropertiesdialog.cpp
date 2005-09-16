@@ -36,7 +36,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | Qt::WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose );
   QWidget* privateLayoutWidget = new QWidget( this, "globalVBox" );
   setMainWidget( privateLayoutWidget );
   privateLayoutWidget->setGeometry( QRect( 10, 20, 270, 138 ) );
@@ -148,7 +148,8 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   }
   slotUpdateControls();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
-  clearWState( WState_Polished );
+#warning Port me!
+//  clearWState( WState_Polished );
 }
 
 /*

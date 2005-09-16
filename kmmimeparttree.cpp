@@ -190,10 +190,10 @@ void KMMimePartTree::setStyleDependantFrameWidth()
 {
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style().isA("KeramikStyle") )
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if( style()->isA("KeramikStyle") )
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth );
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
   if ( frameWidth < 0 )
     frameWidth = 0;
   if ( frameWidth != lineWidth() )

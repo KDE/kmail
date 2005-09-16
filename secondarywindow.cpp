@@ -45,7 +45,7 @@ namespace KMail {
   {
     // Set this to be the group leader for all subdialogs - this means
     // modal subdialogs will only affect this window, not the other windows
-    setWFlags( getWFlags() | WGroupLeader );
+    setAttribute( Qt::WA_GroupLeader );
 
     kapp->ref();
   }

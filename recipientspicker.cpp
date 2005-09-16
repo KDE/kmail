@@ -644,7 +644,7 @@ void RecipientsPicker::pick( Recipient::Type type )
 
 void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Escape ) close();
+  if ( ev->key() == Qt::Key_Escape ) close();
 
   QWidget::keyPressEvent( ev );
 }

@@ -33,7 +33,7 @@ class KWindowPositioner : public QObject
   public:
     enum Mode { Right, Bottom };
 
-    KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Qt::DockBottom );
+    KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Bottom );
 
     bool eventFilter( QObject *watched, QEvent *e );
 

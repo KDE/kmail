@@ -83,7 +83,7 @@ void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 
 void KMEdit::keyPressEvent( QKeyEvent* e )
 {
-    if( e->key() == Key_Return ) {
+    if( e->key() == Qt::Key_Return ) {
         int line, col;
         getCursorPosition( &line, &col );
         QString lineText = text( line );
@@ -150,7 +150,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         // Decode the list of serial numbers stored as the drag data
         QByteArray serNums;
         MailListDrag::decode( e, serNums );
-        QBuffer serNumBuffer(serNums);
+        QBuffer serNumBuffer(&serNums);
         serNumBuffer.open(QIODevice::ReadOnly);
         QDataStream serNumStream(&serNumBuffer);
         unsigned long serNum;
@@ -336,7 +336,7 @@ unsigned int KMEdit::lineBreakColumn() const
   unsigned int lineBreakColumn = 0;
   unsigned int numlines = numLines();
   while ( numlines-- ) {
-    lineBreakColumn = QMAX( lineBreakColumn, textLine( numlines ).length() );
+    lineBreakColumn = QMAX( lineBreakColumn, (unsigned int)textLine( numlines ).length() );
   }
   return lineBreakColumn;
 }

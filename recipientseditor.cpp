@@ -138,12 +138,12 @@ void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
 
 void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Backspace  &&  text().isEmpty() ) {
+  if ( ev->key() == Qt::Key_Backspace  &&  text().isEmpty() ) {
     ev->accept();
     emit deleteMe();
-  } else if ( ev->key() == Key_Left && cursorPosition() == 0 ) {
+  } else if ( ev->key() == Qt::Key_Left && cursorPosition() == 0 ) {
     emit leftPressed();
-  } else if ( ev->key() == Key_Right && cursorPosition() == (int)text().length() ) {
+  } else if ( ev->key() == Qt::Key_Right && cursorPosition() == (int)text().length() ) {
     emit rightPressed();
   } else {
     KMLineEdit::keyPressEvent( ev );
@@ -282,9 +282,9 @@ void RecipientLine::slotPropagateDeletion()
 
 void RecipientLine::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Up ) {
+  if ( ev->key() == Qt::Key_Up ) {
     emit upPressed( this );
-  } else if ( ev->key() == Key_Down ) {
+  } else if ( ev->key() == Qt::Key_Down ) {
     emit downPressed( this );
   }
 }
@@ -719,7 +719,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addStretch( 1 );
 
   mTotalLabel = new QLabel( this );
-  mTotalLabel->setAlignment( AlignCenter );
+  mTotalLabel->setAlignment( Qt::AlignCenter );
   topLayout->addWidget( mTotalLabel );
   mTotalLabel->hide();
 

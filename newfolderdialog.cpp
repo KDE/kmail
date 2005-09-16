@@ -63,7 +63,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | Qt::WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose );
   if ( folder ) {
     setCaption( i18n("New Subfolder of %1").arg( folder->prettyURL() ) );
   }
@@ -175,7 +175,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
   }
 
   resize( QSize(282, 108).expandedTo(minimumSizeHint()) );
-  clearWState( WState_Polished );
+#warning Port me!
+//  clearWState( WState_Polished );
   slotFolderNameChanged( mNameLineEdit->text());
 }
 

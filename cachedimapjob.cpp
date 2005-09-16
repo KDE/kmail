@@ -379,14 +379,14 @@ void CachedImapJob::slotPutNextMessage()
   int a = cstr.find("\nX-UID: ");
   int b = cstr.find('\n', a);
   if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-  Q3CString mData(cstr.length() + cstr.contains('\n'));
+  Q3CString mData(cstr.length() + cstr.count('\n'));
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
     if ( *ch == '\n' ) {
-      mData.at(i) = '\r';
+      mData[i] = '\r';
       i++;
     }
-    mData.at(i) = *ch; i++;
+    mData[i] = *ch; i++;
   }
   jd.data = mData;
   jd.msgList.append( mMsg );

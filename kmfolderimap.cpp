@@ -1315,7 +1315,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->insertJob(newJob, jd);
     connect(newJob, SIGNAL(result(KIO::Job *)),
-        this, (i == sets.at(sets.count() - 1))
+        this, (*i == sets.at(sets.size() - 1))
         ? SLOT(slotGetLastMessagesResult(KIO::Job *))
         : SLOT(slotGetMessagesResult(KIO::Job *)));
     connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
@@ -1637,7 +1637,7 @@ void KMFolderImap::createFolder(const QString &name, const QString& parentPath,
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), folder() );
-  jd.items = name;
+  jd.items = QStringList( name );
   mAccount->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotCreateFolderResult(KIO::Job *)));
@@ -1704,7 +1704,7 @@ void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   if ( data.isEmpty() ) return; // optimization
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
-  QBuffer buff((*it).data);
+  QBuffer buff(&(*it).data);
   buff.open(QIODevice::WriteOnly | QIODevice::Append);
   buff.writeBlock(data.data(), data.size());
   buff.close();
@@ -1804,7 +1804,7 @@ void KMFolderImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool tog
     groups[flags].append(QString::number(msg->UID()));
     if (unget) unGetMsg(*it);
   }
-  QMapIterator< QString, QStringList > dit;
+  QMap< QString, QStringList >::Iterator dit;
   for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
      Q3CString flags = dit.key().latin1();
      QStringList sets = makeSets( (*dit), true );

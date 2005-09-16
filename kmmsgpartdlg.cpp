@@ -247,7 +247,7 @@ void KMMsgPartDialog::setDescription( const QString & description ) {
 KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
   QString s = mEncoding->currentText();
   for ( unsigned int i = 0 ; i < mI18nizedEncodings.count() ; ++i )
-    if ( s == *mI18nizedEncodings.at(i) )
+    if ( s == mI18nizedEncodings.at(i) )
       return encodingTypes[i].encoding;
   kdFatal(5006) << "KMMsgPartDialog::encoding(): Unknown encoding encountered!"
 		<< endl;
@@ -257,7 +257,7 @@ KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
 void KMMsgPartDialog::setEncoding( Encoding encoding ) {
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     if ( encodingTypes[i].encoding == encoding ) {
-      QString text = *mI18nizedEncodings.at(i);
+      QString text = mI18nizedEncodings.at(i);
       for ( int j = 0 ; j < mEncoding->count() ; ++j )
 	if ( mEncoding->text(j) == text ) {
 	  mEncoding->setCurrentItem( j );
@@ -274,7 +274,7 @@ void KMMsgPartDialog::setShownEncodings( int encodings ) {
   mEncoding->clear();
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     if ( encodingTypes[i].encoding & encodings )
-      mEncoding->insertItem( *mI18nizedEncodings.at(i) );
+      mEncoding->insertItem( mI18nizedEncodings.at(i) );
 }
 
 bool KMMsgPartDialog::isInline() const {

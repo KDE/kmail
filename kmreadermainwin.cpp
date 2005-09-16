@@ -229,11 +229,11 @@ void KMReaderMainWin::setupAccel()
 
   KAction *closeAction = KStdAction::close( this, SLOT( close() ), actionCollection() );
   KShortcut closeShortcut = closeAction->shortcut();
-  closeShortcut.append( KKey(Key_Escape));
+  closeShortcut.append( KKey(Qt::Key_Escape));
   closeAction->setShortcut(closeShortcut);
 
   //----- View Menu
-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
+  mViewSourceAction = new KAction( i18n("&View Source"), Qt::Key_V, this,
                                    SLOT(slotShowMsgSrc()), actionCollection(),
                                    "view_source" );
 
@@ -245,18 +245,18 @@ void KMReaderMainWin::setupAccel()
            SLOT( slotForwardMsg() ) );
 
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+				Qt::SHIFT+Qt::Key_F, this, SLOT(slotForwardMsg()),
 				actionCollection(), "message_forward_inline" );
   mForwardActionMenu->insert( mForwardAction );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
+				       "mail_forward", Qt::Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 Key_E, this, SLOT(slotRedirectMsg()),
+				 Qt::Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
 
@@ -266,23 +266,23 @@ void KMReaderMainWin::setupAccel()
   connect( mReplyActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotReplyToMsg()) );
 
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
+  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Qt::Key_R, this,
 			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
   mReplyActionMenu->insert( mReplyAction );
 
   mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
-                                    SHIFT+Key_A, this,
+                                    Qt::SHIFT+Qt::Key_A, this,
                                     SLOT(slotReplyAuthorToMsg()),
                                     actionCollection(), "reply_author" );
   mReplyActionMenu->insert( mReplyAuthorAction );
 
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Key_A, this, SLOT(slotReplyAllToMsg()),
+				 Qt::Key_A, this, SLOT(slotReplyAllToMsg()),
 				 actionCollection(), "reply_all" );
   mReplyActionMenu->insert( mReplyAllAction );
 
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Key_L, this,
+				  "mail_replylist", Qt::Key_L, this,
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
@@ -290,13 +290,13 @@ void KMReaderMainWin::setupAccel()
 
 
   Q3Accel *accel = new Q3Accel(mReaderWin, "showMsg()");
-  accel->connectItem(accel->insertItem(Key_Up),
+  accel->connectItem(accel->insertItem(Qt::Key_Up),
                      mReaderWin, SLOT(slotScrollUp()));
-  accel->connectItem(accel->insertItem(Key_Down),
+  accel->connectItem(accel->insertItem(Qt::Key_Down),
                      mReaderWin, SLOT(slotScrollDown()));
-  accel->connectItem(accel->insertItem(Key_Prior),
+  accel->connectItem(accel->insertItem(Qt::Key_Prior),
                      mReaderWin, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Key_Next),
+  accel->connectItem(accel->insertItem(Qt::Key_Next),
                      mReaderWin, SLOT(slotScrollNext()));
   accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
                      mReaderWin, SLOT(slotCopySelectedText()));

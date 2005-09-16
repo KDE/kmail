@@ -11,12 +11,13 @@
 #include <config.h>
 #include "kmpopfiltercnfrmdlg.h"
 #include "kmheaders.h"
+#include "kmfolder.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <q3header.h>
 #include <qcheckbox.h>
-#include <qvgroupbox.h>
+#include <q3groupbox.h>
 #include <qtimer.h>
 //Added by qt3to4:
 #include <QPixmap>
@@ -77,7 +78,7 @@ KMPopHeadersView::~KMPopHeadersView()
 //Handle keystrokes - Left and Right key select previous/next action correspondingly
 void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
 {
-    if (e->key() == Key_Left) {
+    if (e->key() == Qt::Key_Left) {
 	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
 	    if (item&&mDialog) {
 		    if (item->action()) { //here we rely on the fact that the leftmost action is equal to 0!
@@ -85,7 +86,7 @@ void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
 			    mDialog->setAction( selectedItem(), item->action());
 		    }
 	    }
-    } else if (e->key() == Key_Right) {
+    } else if (e->key() == Qt::Key_Right) {
 	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
 	    if (item&&mDialog) {
 		    if (item->action()<NoAction-1) { //here we rely on the fact that right most action is one less than NoAction!
@@ -304,12 +305,12 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, cons
       "what you want to do with them by checking the appropriate button.").arg(aAccount), w);
   vbl->addWidget(l);
 
-  QVGroupBox *upperBox = new QVGroupBox(i18n("Messages Exceeding Size"), w);
+  Q3GroupBox *upperBox = new Q3GroupBox(i18n("Messages Exceeding Size"), w);
   upperBox->hide();
   KMPopHeadersView *lv = new KMPopHeadersView(upperBox, this);
   vbl->addWidget(upperBox);
 
-  QVGroupBox *lowerBox = new QVGroupBox(i18n("Ruleset Filtered Messages: none"), w);
+  Q3GroupBox *lowerBox = new Q3GroupBox(i18n("Ruleset Filtered Messages: none"), w);
   QString checkBoxText((aShowLaterMsgs)?
       i18n("Show messages matched by a ruleset and tagged 'Download' or 'Delete'"):
       i18n("Show messages matched by a filter ruleset"));

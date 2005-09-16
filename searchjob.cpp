@@ -86,7 +86,7 @@ void SearchJob::searchCompleteFolder()
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, QIODevice::WriteOnly );
+  QDataStream stream( &packedArgs, QIODevice::WriteOnly );
   stream << (int) 'E' << url;
   KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -370,7 +370,7 @@ void SearchJob::searchSingleMessage()
     KURL url = mAccount->getUrl();
     url.setPath( mFolder->imapPath() + ";SECTION=" + searchString );
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, QIODevice::WriteOnly );
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly );
     stream << (int) 'E' << url;
     KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);

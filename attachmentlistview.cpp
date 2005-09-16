@@ -94,7 +94,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     // Decode the list of serial numbers stored as the drag data
     QByteArray serNums;
     MailListDrag::decode( e, serNums );
-    QBuffer serNumBuffer( serNums );
+    QBuffer serNumBuffer( &serNums );
     serNumBuffer.open( QIODevice::ReadOnly );
     QDataStream serNumStream( &serNumBuffer );
     unsigned long serNum;
@@ -134,7 +134,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
 
 void AttachmentListView::keyPressEvent( QKeyEvent * e )
 {
-  if ( e->key() == Key_Delete ) {
+  if ( e->key() == Qt::Key_Delete ) {
     emit attachmentDeleted();
   }
 }

@@ -138,17 +138,17 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       int a = cstr.find("\nX-UID: ");
       int b = cstr.find('\n', a);
       if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-      jd.data.resize( cstr.length() + cstr.contains( "\n" ) - cstr.contains( "\r\n" ) );
+      jd.data.resize( cstr.length() + cstr.count( "\n" ) - cstr.count( "\r\n" ) );
       unsigned int i = 0;
       char prevChar = '\0';
       // according to RFC 2060 we need CRLF
       for ( char *ch = cstr.data(); *ch; ch++ )
       {
         if ( *ch == '\n' && (prevChar != '\r') ) {
-          jd.data.at( i ) = '\r';
+          jd.data[i] = '\r';
           i++;
         }
-        jd.data.at( i ) = *ch;
+        jd.data[i] = *ch;
         prevChar = *ch;
         i++;
       }
@@ -188,7 +188,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     jd.msgList = msgList;
 
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, QIODevice::WriteOnly );
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly );
 
     stream << (int) 'C' << url << destUrl;
     jd.progressItem = ProgressManager::createProgressItem(
@@ -486,7 +486,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
   } else {
     if ((*it).data.size() > 0)
     {
-      QDataStream stream( (*it).data, QIODevice::ReadOnly );
+      QDataStream stream( &(*it).data, QIODevice::ReadOnly );
       account->handleBodyStructure(stream, msg, mAttachmentStrategy);
     }
   }

@@ -38,7 +38,7 @@
 
 #include <qlabel.h>
 #include <q3vbox.h>
-
+#include <Q3GroupBox>
 
 
 #include <kkeybutton.h>

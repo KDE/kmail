@@ -60,7 +60,7 @@ FolderRequester::FolderRequester( QWidget *parent, KMFolderTree *tree )
 
   setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
         QSizePolicy::Fixed ) );
-  setFocusPolicy( QWidget::StrongFocus );
+  setFocusPolicy( Qt::StrongFocus );
 }
 
 //-----------------------------------------------------------------------------

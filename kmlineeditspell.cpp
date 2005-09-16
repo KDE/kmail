@@ -42,19 +42,19 @@ KMLineEdit::KMLineEdit(bool useCompletion,
 //-----------------------------------------------------------------------------
 void KMLineEdit::keyPressEvent(QKeyEvent *e)
 {
-  if ((e->key() == Key_Enter || e->key() == Key_Return) &&
+  if ((e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) &&
       !completionBox()->isVisible())
   {
     emit focusDown();
     AddresseeLineEdit::keyPressEvent(e);
     return;
   }
-  if (e->key() == Key_Up)
+  if (e->key() == Qt::Key_Up)
   {
     emit focusUp();
     return;
   }
-  if (e->key() == Key_Down)
+  if (e->key() == Qt::Key_Down)
   {
     emit focusDown();
     return;
@@ -131,7 +131,8 @@ void KMLineEdit::dropEvent(QDropEvent *event)
 
 Q3PopupMenu *KMLineEdit::createPopupMenu()
 {
-    Q3PopupMenu *menu = KPIM::AddresseeLineEdit::createPopupMenu();
+#warning Port me!
+    Q3PopupMenu *menu = 0;//KPIM::AddresseeLineEdit::createPopupMenu();
     if ( !menu )
         return 0;
 

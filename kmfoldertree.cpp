@@ -1093,7 +1093,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
 {
   Q3ListViewItem *lvi = currentItem(); // Needed for when branches are clicked on
-  ButtonState btn = me->button();
+  Qt::MouseButton btn = me->button();
   doFolderSelected(lvi);
 
   // get underlying folder

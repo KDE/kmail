@@ -34,10 +34,12 @@
 #define __KMAIL_INTERFACES_RULEWIDGETHANDLER_H__
 
 #include "../kmsearchpattern.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 class QWidget;
-class QWidgetStack;
-class QCString;
+class Q3WidgetStack;
+class Q3CString;
 class QString;
 class QObject;
 
@@ -50,28 +52,28 @@ namespace KMail {
     virtual ~RuleWidgetHandler() {}
 
     virtual QWidget * createFunctionWidget( int number,
-                                            QWidgetStack *functionStack,
+                                            Q3WidgetStack *functionStack,
                                             const QObject *receiver ) const = 0;
     virtual QWidget * createValueWidget( int number,
-                                         QWidgetStack *valueStack,
+                                         Q3WidgetStack *valueStack,
                                          const QObject *receiver ) const = 0;
-    virtual KMSearchRule::Function function( const QCString & field,
-                                             const QWidgetStack *functionStack ) const = 0;
-    virtual QString value( const QCString & field,
-                           const QWidgetStack *functionStack,
-                           const QWidgetStack *valueStack ) const = 0;
-    virtual QString prettyValue( const QCString & field,
-                                 const QWidgetStack *functionStack,
-                                 const QWidgetStack *valueStack ) const = 0;
-    virtual bool handlesField( const QCString & field ) const = 0;
-    virtual void reset( QWidgetStack *functionStack,
-                        QWidgetStack *valueStack ) const = 0;
-    virtual bool setRule( QWidgetStack *functionStack,
-                          QWidgetStack *valueStack,
+    virtual KMSearchRule::Function function( const Q3CString & field,
+                                             const Q3WidgetStack *functionStack ) const = 0;
+    virtual QString value( const Q3CString & field,
+                           const Q3WidgetStack *functionStack,
+                           const Q3WidgetStack *valueStack ) const = 0;
+    virtual QString prettyValue( const Q3CString & field,
+                                 const Q3WidgetStack *functionStack,
+                                 const Q3WidgetStack *valueStack ) const = 0;
+    virtual bool handlesField( const Q3CString & field ) const = 0;
+    virtual void reset( Q3WidgetStack *functionStack,
+                        Q3WidgetStack *valueStack ) const = 0;
+    virtual bool setRule( Q3WidgetStack *functionStack,
+                          Q3WidgetStack *valueStack,
                           const KMSearchRule *rule ) const = 0;
-    virtual bool update( const QCString & field,
-                         QWidgetStack *functionStack,
-                         QWidgetStack *valueStack ) const = 0;
+    virtual bool update( const Q3CString & field,
+                         Q3WidgetStack *functionStack,
+                         Q3WidgetStack *valueStack ) const = 0;
 
   };
 

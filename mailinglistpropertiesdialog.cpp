@@ -54,7 +54,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
-  setWFlags( getWFlags() | Qt::WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose );
   QLabel* label;
   mLastItem = 0;
 
@@ -148,7 +148,8 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
 
   load();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
-  clearWState( WState_Polished );
+#warning Port me!
+//  clearWState( WState_Polished );
 }
 
 void MailingListFolderPropertiesDialog::slotOk()

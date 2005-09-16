@@ -155,8 +155,7 @@ NewByteArray& NewByteArray::appendNULL()
 {
     QByteArray::detach();
     uint len1 = size();
-    if ( !QByteArray::resize( len1 + 1 ) )
-        return *this;
+    QByteArray::resize( len1 + 1 );
     *(data() + len1) = '\0';
     return *this;
 }
@@ -167,8 +166,7 @@ NewByteArray& NewByteArray::operator+=( const char * newData )
     QByteArray::detach();
     uint len1 = size();
     uint len2 = qstrlen( newData );
-    if ( !QByteArray::resize( len1 + len2 ) )
-        return *this;
+    QByteArray::resize( len1 + len2 );
     memcpy( data() + len1, newData, len2 );
     return *this;
 }
@@ -179,8 +177,7 @@ NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
     QByteArray::detach();
     uint len1 = size();
     uint len2 = newData.size();
-    if ( !QByteArray::resize( len1 + len2 ) )
-        return *this;
+    QByteArray::resize( len1 + len2 );
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
 }
@@ -191,8 +188,7 @@ NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
     QByteArray::detach();
     uint len1 = size();
     uint len2 = newData.length(); // forget about the trailing 0x00 !
-    if ( !QByteArray::resize( len1 + len2 ) )
-        return *this;
+    QByteArray::resize( len1 + len2 )
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
 }
@@ -660,7 +656,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
                                      0, this, SLOT(slotMailtoOpenAddrBook()),
                                      ac, "openin_addr_book" );
   mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
-  mSelectAllAction = new KAction( i18n("Select All Text"), CTRL+SHIFT+Key_A, this,
+  mSelectAllAction = new KAction( i18n("Select All Text"), Qt::CTRL+Qt::SHIFT+Qt::Key_A, this,
                                   SLOT(selectAll()), ac, "mark_all_text" );
   mCopyURLAction = new KAction( i18n("Copy Link Address"), 0, this,
 				SLOT(slotUrlCopy()), ac, "copy_url" );
@@ -674,7 +670,7 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
                                   SLOT(slotUrlSave()), ac, "saveas_url" );
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
-                                            Key_X, this, SLOT(slotToggleFixedFont()),
+                                            Qt::Key_X, this, SLOT(slotToggleFixedFont()),
                                             ac, "toggle_fixedfont" );
 
   mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
@@ -1018,7 +1014,7 @@ void KMReaderWin::writeConfig( bool sync ) const {
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  mViewer->widget()->setFocusPolicy(WheelFocus);
+  mViewer->widget()->setFocusPolicy(Qt::WheelFocus);
   // Let's better be paranoid and disable plugins (it defaults to enabled):
   mViewer->setPluginsEnabled(false);
   mViewer->setJScriptEnabled(false); // just make this explicit
@@ -1907,10 +1903,10 @@ void KMReaderWin::setStyleDependantFrameWidth()
     return;
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style().isA("KeramikStyle") )
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if( style()->isA("KeramikStyle") )
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth );
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
   if ( frameWidth < 0 )
     frameWidth = 0;
   if ( frameWidth != mBox->lineWidth() )
@@ -2494,7 +2490,7 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress ) {
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
-    if ( me->button() == LeftButton && ( me->state() & ShiftButton ) ) {
+    if ( me->button() == Qt::LeftButton && ( me->state() & Qt::ShiftButton ) ) {
       // special processing for shift+click
       mAtmCurrent = msgPartFromUrl( mUrlClicked );
       if ( mAtmCurrent < 0 ) return false; // not an attachment

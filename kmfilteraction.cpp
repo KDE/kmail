@@ -37,7 +37,8 @@ using KMail::MessageProperty;
 using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
-#include <kregexp3.h>
+#warning Port me!
+//#include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -264,7 +265,7 @@ void KMFilterActionWithStringList::argsFromString( const QString argsStr )
     mParameterList.append( argsStr );
     idx = mParameterList.count() - 1;
   }
-  mParameter = *mParameterList.at( idx );
+  mParameter = mParameterList.at( idx );
 }
 
 
@@ -418,7 +419,7 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
 QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, Q3PtrList<KTempFile> & aTempFileList ) const
 {
   QString result = mParameter;
-  Q3ValueList<int> argList;
+  QList<int> argList;
   QRegExp r( "%[0-9-]+" );
 
   // search for '%n'
@@ -433,12 +434,12 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   }
 
   // sort the list of n's
-  qHeapSort( argList );
+  qSort( argList );
 
   // and use QString::arg to substitute filenames for the %n's.
   int lastSeen = -2;
   QString tempFileName;
-  for ( Q3ValueList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
+  for ( QList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
     // setup temp files with check for duplicate %n's
     if ( (*it) != lastSeen ) {
       KTempFile *tf = new KTempFile();
@@ -783,7 +784,7 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   mParameterList.append( i18n("msg status","Spam") );
   mParameterList.append( i18n("msg status","Ham") );
 
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) const
@@ -805,12 +806,12 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 {
   if ( argsStr.length() == 1 ) {
     for ( int i = 0 ; i < StatiCount ; i++ )
-      if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0] ) {
-        mParameter = *mParameterList.at(i+1);
+      if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0].toLatin1() ) {
+        mParameter = mParameterList.at(i+1);
         return;
       }
   }
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 const QString KMFilterActionSetStatus::argsAsString() const
@@ -878,7 +879,7 @@ KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
   mParameterList.append( i18n("MDN type","Denied") );
   mParameterList.append( i18n("MDN type","Failed") );
 
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMMessage* msg) const
@@ -897,16 +898,16 @@ void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
 {
   if ( argsStr.length() == 1 ) {
     if ( argsStr[0] == 'I' ) { // ignore
-      mParameter = *mParameterList.at(1);
+      mParameter = mParameterList.at(1);
       return;
     }
     for ( int i = 0 ; i < numMDNs ; i++ )
       if ( char(mdns[i]) == argsStr[0] ) { // send
-        mParameter = *mParameterList.at(i+2);
+        mParameter = mParameterList.at(i+2);
         return;
       }
   }
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 const QString KMFilterActionFakeDisposition::argsAsString() const
@@ -953,7 +954,7 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
                  << "X-KDE-PR-Message"
                  << "X-KDE-PR-Package"
                  << "X-KDE-PR-Keywords";
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
@@ -1026,7 +1027,7 @@ KMFilterActionAddHeader::KMFilterActionAddHeader()
                  << "X-KDE-PR-Message"
                  << "X-KDE-PR-Package"
                  << "X-KDE-PR-Keywords";
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMMessage* msg) const
@@ -1126,7 +1127,7 @@ void KMFilterActionAddHeader::argsFromString( const QString argsStr )
     mParameterList.append( s );
     idx = mParameterList.count() - 1;
   }
-  mParameter = *mParameterList.at( idx );
+  mParameter = mParameterList.at( idx );
 }
 
 
@@ -1154,7 +1155,8 @@ public:
     return (new KMFilterActionRewriteHeader);
   }
 private:
-  KRegExp3 mRegExp;
+#warning Port me!
+  /*KRegExp3*/QRegExp mRegExp;
   QString mReplacementString;
 };
 
@@ -1168,7 +1170,7 @@ KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
                  << "X-KDE-PR-Message"
                  << "X-KDE-PR-Package"
                  << "X-KDE-PR-Keywords";
-  mParameter = *mParameterList.at(0);
+  mParameter = mParameterList.at(0);
 }
 
 KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) const
@@ -1176,12 +1178,13 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
 
-  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
+#warning Port me!
+//  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
 
-  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
-                                     mReplacementString );
+//  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
+//                                     mReplacementString );
 
-  msg->setHeaderField( mParameter.latin1(), newValue );
+//  msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
 }
 
@@ -1299,7 +1302,7 @@ void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
     mParameterList.append( s );
     idx = mParameterList.count() - 1;
   }
-  mParameter = *mParameterList.at( idx );
+  mParameter = mParameterList.at( idx );
 }
 
 
@@ -1444,7 +1447,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
-  if ( KMMessage::addressIsInAddressList( mParameter, aMsg->to() ) )
+  if ( KMMessage::addressIsInAddressList( mParameter, QStringList( aMsg->to() ) ) )
     return ErrorButGoOn;
 
   // Create the forwarded message by hand to make forwarding of messages with
@@ -1596,6 +1599,8 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 // on stdin; altered message is expected on stdout.
 //=============================================================================
 
+#warning Port me!
+#if 0
 #include <weaver.h>
 class PipeJob : public KPIM::ThreadWeaver::Job
 {
@@ -1646,6 +1651,7 @@ class PipeJob : public KPIM::ThreadWeaver::Job
     QString mCmd;
     KMMessage *mMsg;
 };
+#endif
 
 class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
@@ -1700,9 +1706,10 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
       false, false, false );
   inFile->close();
 
-  PipeJob *job = new PipeJob(0, 0, aMsg, commandLine, tempFileName);
-  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
-  kmkernel->weaver()->enqueue(job);
+#warning Port me!
+//  PipeJob *job = new PipeJob(0, 0, aMsg, commandLine, tempFileName);
+//  QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
+//  kmkernel->weaver()->enqueue(job);
 }
 
 //=============================================================================

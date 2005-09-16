@@ -231,7 +231,7 @@ KMHeaders::~KMHeaders ()
 bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
-      static_cast<QMouseEvent*>(e)->button() == RightButton &&
+      static_cast<QMouseEvent*>(e)->button() == Qt::RightButton &&
       o->isA("QHeader") )
   {
     // if we currently only show one of either sender/receiver column
@@ -1285,10 +1285,10 @@ void KMHeaders::setStyleDependantFrameWidth()
 {
   // set the width of the frame to a reasonable value for the current GUI style
   int frameWidth;
-  if( style().isA("KeramikStyle") )
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if( style()->isA("KeramikStyle") )
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
   else
-    frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth );
+    frameWidth = style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
   if ( frameWidth < 0 )
     frameWidth = 0;
   if ( frameWidth != lineWidth() )
@@ -2080,8 +2080,8 @@ void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
 // window is updated regardless of whether of not the selection has changed.
 void KMHeaders::keyPressEvent( QKeyEvent * e )
 {
-    bool cntrl = (e->state() & ControlButton );
-    bool shft = (e->state() & ShiftButton );
+    bool cntrl = (e->state() & Qt::ControlButton );
+    bool shft = (e->state() & Qt::ShiftButton );
     Q3ListViewItem *cur = currentItem();
 
     if (!e || !firstChild())
@@ -2106,13 +2106,13 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
         disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
                    this,SLOT(highlightMessage(Q3ListViewItem*)));
       switch (e->key()) {
-      case Key_Down:
-      case Key_Up:
-      case Key_Home:
-      case Key_End:
-      case Key_Next:
-      case Key_Prior:
-      case Key_Escape:
+      case Qt::Key_Down:
+      case Qt::Key_Up:
+      case Qt::Key_Home:
+      case Qt::Key_End:
+      case Qt::Key_Next:
+      case Qt::Key_Prior:
+      case Qt::Key_Escape:
         KListView::keyPressEvent( e );
       }
       if (!shft)
@@ -2168,7 +2168,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   /* QListView's shift-select selects also invisible items. Until that is
      fixed, we have to deselect hidden items here manually, so the quick
      search doesn't mess things up. */
-  if ( e->state() & ShiftButton ) {
+  if ( e->state() & Qt::ShiftButton ) {
     Q3ListViewItemIterator it( this, Q3ListViewItemIterator::Invisible );
     while ( it.current() ) {
       it.current()->setSelected( false );
@@ -2189,13 +2189,13 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
      * also select all children of closed threads when the parent is selected. */
 
     // unless ctrl mask, set selected if it isn't already
-    if ( !( e->state() & ControlButton ) && !wasSelected )
+    if ( !( e->state() & Qt::ControlButton ) && !wasSelected )
       setSelected( lvi, true );
     // if ctrl mask, toggle selection
-    if ( e->state() & ControlButton )
+    if ( e->state() & Qt::ControlButton )
       setSelected( lvi, !wasSelected );
 
-    if ((e->button() == LeftButton) )
+    if ((e->button() == Qt::LeftButton) )
       mMousePressed = true;
   }
 }
@@ -2203,7 +2203,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
-  if (e->button() != RightButton)
+  if (e->button() != Qt::RightButton)
     KListView::contentsMouseReleaseEvent(e);
 
   mMousePressed = false;
