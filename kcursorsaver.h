@@ -10,7 +10,7 @@
  * As soon as it gets out of scope, it will restore the original
  * cursor.
  */
-class KCursorSaver : public Qt
+class KCursorSaver 
 {
 public:
     /// constructor taking QCursor shapes
@@ -51,10 +51,10 @@ private:
  */
 namespace KBusyPtr {
     inline KCursorSaver idle() {
-        return KCursorSaver(QCursor::ArrowCursor);
+        return KCursorSaver(Qt::ArrowCursor);
     }
     inline KCursorSaver busy() {
-        return KCursorSaver(QCursor::WaitCursor);
+        return KCursorSaver(Qt::WaitCursor);
     }
 }
 

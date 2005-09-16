@@ -31,6 +31,7 @@
 #include <Q3PtrList>
 
 #include "kmmessage.h"
+#include "kmacctfolder.h"
 class QTimer;
 
 class KMFolder;

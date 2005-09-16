@@ -73,7 +73,7 @@
 #include <QVBoxLayout>
 
 #include <assert.h>
-#include <qhbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 
 #include "kmfolderdia.moc"

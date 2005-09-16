@@ -78,7 +78,7 @@ QColor ColorListBox::color( uint index ) const
   }
   else
   {
-    return( black );
+    return( Qt::black );
   }
 }
 

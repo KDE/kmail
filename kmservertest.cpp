@@ -89,7 +89,7 @@ void KMServerTest::startOffSlave( int port ) {
 	   SLOT(slotMetaData(const KIO::MetaData&)) );
 
   QByteArray packedArgs;
-  QDataStream stream( packedArgs, QIODevice::WriteOnly );
+  QDataStream stream( &packedArgs, QIODevice::WriteOnly );
 
   stream << (int) 'c';
 

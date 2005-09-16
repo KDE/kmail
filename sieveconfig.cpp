@@ -84,7 +84,7 @@ namespace KMail {
 
     // "Managesieve port" spinbox and label:
     ++row;
-    mPortSpin = new KIntSpinBox( 1, USHRT_MAX, 1, 2000, 10, this );
+    mPortSpin = new KIntSpinBox( 1, USHRT_MAX, 1, 2000, this );
     mPortSpin->setEnabled( false );
     label = new QLabel( mPortSpin, i18n("Managesieve &port:"), this );
     glay->addWidget( label, row, 0 );

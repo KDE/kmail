@@ -42,6 +42,7 @@
 #include <klistview.h>
 #include <klocale.h>
 
+#include "kmfolder.h"
 #include "kmheaders.h"
 #include "kmsearchpattern.h"
 #include "kmmainwidget.h"
@@ -112,7 +113,7 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 
     // Travel up the parents list until we find the main widget
     for ( QWidget *curWidget = parentWidget(); curWidget; curWidget = curWidget->parentWidget() ) {
-      mainWidget = ::qt_cast<KMMainWidget *>( curWidget );
+      mainWidget = ::qobject_cast<KMMainWidget *>( curWidget );
       if ( mainWidget )
         break;
     }

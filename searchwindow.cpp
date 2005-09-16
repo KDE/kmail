@@ -120,7 +120,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   vbl->addWidget( spacer );
 
   mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false, true );
-  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
+#warning Port me!
+//  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
   mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
@@ -146,7 +147,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   if ( list )
       object = list->first();
   delete list;
-  if (!searchFolder && object && ::qt_cast<QComboBox*>(object))
+  if (!searchFolder && object && ::qobject_cast<QComboBox*>(object))
       static_cast<QComboBox*>(object)->setCurrentText("Subject");
 
   vbl->addWidget( mPatternEdit );
@@ -369,7 +370,7 @@ void SearchWindow::keyPressEvent(QKeyEvent *evt)
 {
     KMSearch const *search = (mFolder) ? mFolder->search() : 0;
     bool searching = (search) ? search->running() : false;
-    if (evt->key() == Key_Escape && searching) {
+    if (evt->key() == Qt::Key_Escape && searching) {
         mFolder->stopSearch();
         return;
     }
@@ -480,7 +481,7 @@ void SearchWindow::searchDone()
     if (mCloseRequested)
         close();
 
-    mLbxMatches->setSorting(mSortColumn, mSortOrder == Ascending);
+    mLbxMatches->setSorting(mSortColumn, mSortOrder == Qt::Ascending);
     mLbxMatches->setShowSortIndicator(true);
 }
 

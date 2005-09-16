@@ -56,10 +56,10 @@ int MailSourceHighlighter::highlightParagraph( const QString& text, int ) {
 MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   : KTextBrowser( parent, name ), mSourceHighLighter( 0 )
 {
-  setWFlags( WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose );
   Q3Accel *accel = new Q3Accel( this, "browser close-accel" );
   accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
-  accel->connectItem( accel->insertItem( Qt::Key_W+CTRL ), this , SLOT( close() ));
+  accel->connectItem( accel->insertItem( Qt::Key_W+Qt::CTRL ), this , SLOT( close() ));
   setWordWrap( KTextBrowser::NoWrap );
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 }

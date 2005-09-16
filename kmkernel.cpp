@@ -6,8 +6,9 @@
 #include "config.h"
 #include "kmkernel.h"
 
-#include <weaver.h>
-#include <weaverlogger.h>
+#warning Port me!
+//#include <weaver.h>
+//#include <weaverlogger.h>
 
 #include "globalsettings.h"
 #include "kmstartup.h"
@@ -1783,7 +1784,7 @@ void KMKernel::dumpDeadLetters()
     return;
 
   for ( Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList()) ; it.current() != 0; ++it )
-    if ( KMail::Composer * win = ::qt_cast<KMail::Composer*>( it.current() ) )
+    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( it.current() ) )
       win->autoSaveMessage();
 }
 

@@ -71,7 +71,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
     mNewMessagePopupId(-1),
     mPopupMenu(0)
 {
-  setAlignment( AlignCenter );
+  setAlignment( Qt::AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
 
   mLastUpdate = time( 0 );
@@ -136,7 +136,7 @@ void KMSystemTray::buildPopupMenu()
     action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
 
-  KMainWindow *mainWin = ::qt_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
+  KMainWindow *mainWin = ::qobject_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
       action->plug( mPopupMenu );
@@ -300,7 +300,7 @@ void KMSystemTray::foldersChanged()
 void KMSystemTray::mousePressEvent(QMouseEvent *e)
 {
   // switch to kmail on left mouse button
-  if( e->button() == LeftButton )
+  if( e->button() == Qt::LeftButton )
   {
     if( mParentVisible && mainWindowIsOnCurrentDesktop() )
       hideKMail();
@@ -309,7 +309,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   }
 
   // open popup menu on right mouse button
-  if( e->button() == RightButton )
+  if( e->button() == Qt::RightButton )
   {
     mPopupFolders.clear();
     mPopupFolders.reserve( mFoldersWithUnread.count() );

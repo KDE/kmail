@@ -152,7 +152,7 @@ protected:
   bool mCloseRequested;
   int mFetchingInProgress;
   int mSortColumn;
-  SortOrder mSortOrder;
+  Qt::SortOrder mSortOrder;
   QPointer<KMFolderSearch> mFolder;
   QTimer *mTimer;
 

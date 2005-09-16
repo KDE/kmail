@@ -840,7 +840,7 @@ void PopAccount::slotGetNextMsg()
   if ( next != mMsgsPendingDownload.end() ) {
     // get the next message
     int nextLen = next.data();
-    curMsgStrm = new QDataStream( curMsgData, QIODevice::WriteOnly );
+    curMsgStrm = new QDataStream( &curMsgData, QIODevice::WriteOnly );
     curMsgLen = nextLen;
     ++indexOfCurrentMsg;
     kdDebug(5006) << QString("Length of message about to get %1").arg( nextLen ) << endl;
@@ -1019,7 +1019,7 @@ void PopAccount::slotGetNextHdr(){
   delete curMsgStrm;
   curMsgStrm = 0;
 
-  curMsgStrm = new QDataStream( curMsgData, QIODevice::WriteOnly );
+  curMsgStrm = new QDataStream( &curMsgData, QIODevice::WriteOnly );
 }
 
 void PopAccount::killAllJobs( bool ) {

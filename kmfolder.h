@@ -36,7 +36,9 @@
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
 using KMail::MailingList;
-#include "kmaccount.h" // for AccountList
+//#include "kmaccount.h" // for AccountList
+class KMAccount;
+typedef Q3ValueList<KMAccount*> AccountList;
 
 #include "mimelib/string.h"
 

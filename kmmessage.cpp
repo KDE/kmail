@@ -202,7 +202,7 @@ KMMessage::~KMMessage()
 //-----------------------------------------------------------------------------
 void KMMessage::setReferences(const Q3CString& aStr)
 {
-  if (!aStr) return;
+  if (aStr.isNull()) return;
   mMsg->Headers().References().FromString(aStr);
   mNeedsAssembly = TRUE;
 }
@@ -432,7 +432,7 @@ QString KMMessage::formatString(const QString& aStr) const
     ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
-      switch ((char)ch) {
+      switch (ch.toLatin1()) {
       case 'D':
 	/* I'm not too sure about this change. Is it not possible
 	   to have a long form of the date used? I don't

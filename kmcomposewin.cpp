@@ -440,10 +440,7 @@ KMComposeWin::~KMComposeWin()
 
 void KMComposeWin::setAutoDeleteWindow( bool f )
 {
-  if ( f )
-    setWFlags( getWFlags() | WDestructiveClose );
-  else
-    setWFlags( getWFlags() & ~WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose, f );
 }
 
 //-----------------------------------------------------------------------------
@@ -1104,7 +1101,7 @@ void KMComposeWin::setupActions(void)
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    ( void )  new KAction( i18n("&Send Mail"), "mail_send", CTRL+Key_Return,
+    ( void )  new KAction( i18n("&Send Mail"), "mail_send", Qt::CTRL+Qt::Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),"send_default");
 
     // FIXME: change to mail_send_via icon when this exits.
@@ -1121,7 +1118,7 @@ void KMComposeWin::setupActions(void)
   {
     //default = queue, alternative = send now
     (void) new KAction (i18n("Send &Later"), "queue",
-                        CTRL+Key_Return,
+                        Qt::CTRL+Qt::Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),"send_default");
     actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue",
 		    actionCollection(), "send_default_via" );
@@ -1186,7 +1183,7 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "open_mailreader");
 
   if ( !mClassicalRecipients ) {
-    new KAction( i18n("Select &Recipients..."), CTRL + Key_L, mRecipientsEditor,
+    new KAction( i18n("Select &Recipients..."), Qt::CTRL + Qt::Key_L, mRecipientsEditor,
       SLOT( selectRecipients() ), actionCollection(), "select_recipients" );
     new KAction( i18n("Save &Distribution List..."), 0, mRecipientsEditor,
       SLOT( saveDistributionList() ), actionCollection(),
@@ -1437,13 +1434,13 @@ void KMComposeWin::setupActions(void)
   alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
                        this, SLOT(slotAlignCenter()), actionCollection(),
                        "align_center");
-  textBoldAction = new KToggleAction( i18n("&Bold"), "text_bold", CTRL+Key_B,
+  textBoldAction = new KToggleAction( i18n("&Bold"), "text_bold", Qt::CTRL+Qt::Key_B,
                                      this, SLOT(slotTextBold()),
                                      actionCollection(), "text_bold");
-  textItalicAction = new KToggleAction( i18n("&Italic"), "text_italic", CTRL+Key_I,
+  textItalicAction = new KToggleAction( i18n("&Italic"), "text_italic", Qt::CTRL+Qt::Key_I,
                                        this, SLOT(slotTextItalic()),
                                        actionCollection(), "text_italic");
-  textUnderAction = new KToggleAction( i18n("&Underline"), "text_under", CTRL+Key_U,
+  textUnderAction = new KToggleAction( i18n("&Underline"), "text_under", Qt::CTRL+Qt::Key_U,
                                      this, SLOT(slotTextUnder()),
                                      actionCollection(), "text_under");
   actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
@@ -1461,7 +1458,7 @@ void KMComposeWin::setupActions(void)
 void KMComposeWin::setupStatusBar(void)
 {
   statusBar()->insertItem("", 0, 1);
-  statusBar()->setItemAlignment(0, AlignLeft | Qt::AlignVCenter);
+  statusBar()->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
 
   statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
   statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
@@ -2509,7 +2506,7 @@ void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
 {
   QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
   assert(it != mMapAtmLoadData.end());
-  QBuffer buff((*it).data);
+  QBuffer buff(&(*it).data);
   buff.open(QIODevice::WriteOnly | QIODevice::Append);
   buff.writeBlock(data.data(), data.size());
   buff.close();
@@ -2838,7 +2835,7 @@ void KMComposeWin::startPublicKeyExport() {
   connect( job, SIGNAL(result(const GpgME::Error&,const QByteArray&)),
 	   this, SLOT(slotPublicKeyExportResult(const GpgME::Error&,const QByteArray&)) );
 
-  const GpgME::Error err = job->start( mFingerprint );
+  const GpgME::Error err = job->start( QStringList( mFingerprint ) );
   if ( err )
     showExportError( this, err );
   else
@@ -2983,7 +2980,7 @@ void KMComposeWin::compressAttach( int idx )
   KMMessagePart* msgPart;
   msgPart = mAtmList.at( i );
   QByteArray array;
-  QBuffer dev( array );
+  QBuffer dev( &array );
   KZip zip( &dev );
   QByteArray decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( QIODevice::WriteOnly ) ) {
@@ -3062,7 +3059,8 @@ void KMComposeWin::uncompressAttach( int idx )
   KMMessagePart* msgPart;
   msgPart = mAtmList.at( i );
 
-  QBuffer dev( msgPart->bodyDecodedBinary() );
+  QByteArray ba = msgPart->bodyDecodedBinary();
+  QBuffer dev( &ba );
   KZip zip( &dev );
   QByteArray decoded;
 
@@ -3393,9 +3391,9 @@ void KMComposeWin::slotUndo()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if ( ::qt_cast<KEdit*>(fw) )
+  if ( ::qobject_cast<KEdit*>(fw) )
       static_cast<Q3MultiLineEdit*>(fw)->undo();
-  else if (::qt_cast<QLineEdit*>(fw))
+  else if (::qobject_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->undo();
 }
 
@@ -3404,9 +3402,9 @@ void KMComposeWin::slotRedo()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (::qt_cast<KEdit*>(fw))
+  if (::qobject_cast<KEdit*>(fw))
       static_cast<KEdit*>(fw)->redo();
-  else if (::qt_cast<QLineEdit*>(fw))
+  else if (::qobject_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->redo();
 }
 
@@ -3416,9 +3414,9 @@ void KMComposeWin::slotCut()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (::qt_cast<KEdit*>(fw))
+  if (::qobject_cast<KEdit*>(fw))
       static_cast<KEdit*>(fw)->cut();
-  else if (::qt_cast<QLineEdit*>(fw))
+  else if (::qobject_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->cut();
 }
 
@@ -3433,7 +3431,7 @@ void KMComposeWin::slotCopy()
 #undef KeyPress
 #endif
 
-  QKeyEvent k(QEvent::KeyPress, Key_C , 0 , ControlButton);
+  QKeyEvent k(QEvent::KeyPress, Qt::Key_C , 0 , Qt::ControlModifier);
   kapp->notify(fw, &k);
 }
 
@@ -3453,7 +3451,7 @@ void KMComposeWin::slotPaste()
 #undef KeyPress
 #endif
 
-    QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
+    QKeyEvent k(QEvent::KeyPress, Qt::Key_V , 0 , Qt::ControlModifier);
     kapp->notify(fw, &k);
   }
 
@@ -3466,9 +3464,9 @@ void KMComposeWin::slotMarkAll()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (::qt_cast<QLineEdit*>(fw))
+  if (::qobject_cast<QLineEdit*>(fw))
       static_cast<QLineEdit*>(fw)->selectAll();
-  else if (::qt_cast<KEdit*>(fw))
+  else if (::qobject_cast<KEdit*>(fw))
       static_cast<KEdit*>(fw)->selectAll();
 }
 
@@ -4464,19 +4462,19 @@ void KMComposeWin::slotSizeAction( int size )
 void KMComposeWin::slotAlignLeft()
 {
     toggleMarkup(true);
-    mEditor->Q3TextEdit::setAlignment( AlignLeft );
+    mEditor->Q3TextEdit::setAlignment( Qt::AlignLeft );
 }
 
 void KMComposeWin::slotAlignCenter()
 {
     toggleMarkup(true);
-    mEditor->Q3TextEdit::setAlignment( AlignHCenter );
+    mEditor->Q3TextEdit::setAlignment( Qt::AlignHCenter );
 }
 
 void KMComposeWin::slotAlignRight()
 {
     toggleMarkup(true);
-    mEditor->Q3TextEdit::setAlignment( AlignRight );
+    mEditor->Q3TextEdit::setAlignment( Qt::AlignRight );
 }
 
 void KMComposeWin::slotTextBold()
@@ -4540,9 +4538,9 @@ void KMComposeWin::fontChanged( const QFont &f )
 void KMComposeWin::alignmentChanged( int a )
 {
     //toggleMarkup();
-    alignLeftAction->setChecked( ( a == AlignAuto ) || ( a & AlignLeft ) );
-    alignCenterAction->setChecked( ( a & AlignHCenter ) );
-    alignRightAction->setChecked( ( a & AlignRight ) );
+    alignLeftAction->setChecked( ( a == Qt::AlignAuto ) || ( a & Qt::AlignLeft ) );
+    alignCenterAction->setChecked( ( a & Qt::AlignHCenter ) );
+    alignRightAction->setChecked( ( a & Qt::AlignRight ) );
 }
 
 namespace {

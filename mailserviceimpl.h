@@ -31,13 +31,10 @@
 #define MAILSERVICEIMPL_H
 
 #include "interfaces/MailTransportServiceIface.h"
-//Added by qt3to4:
-#include <Q3MemArray>
 
+class QByteArray;
 class QString;
 class KURL;
-template <typename T> class Q3MemArray;
-typedef Q3MemArray<char> QByteArray;
 
 
 namespace KMail {

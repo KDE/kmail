@@ -31,7 +31,7 @@ KMMainWin::KMMainWin(QWidget *)
 {
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
-  setWFlags( getWFlags() | WGroupLeader );
+  setAttribute( Qt::WA_GroupLeader );
 
   kapp->ref();
 
@@ -94,7 +94,7 @@ KMMainWin::~KMMainWin()
       if ( !it.current()->isHidden() &&
            it.current()->isTopLevel() &&
            it.current() != this &&
-           ::qt_cast<KMMainWin *>( it.current() )
+           ::qobject_cast<KMMainWin *>( it.current() )
         )
         not_withdrawn++;
     }
@@ -174,7 +174,7 @@ void KMMainWin::setupStatusBar()
 
   statusBar()->addWidget( mLittleProgress, 0 , true );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
-  statusBar()->setItemAlignment( 1, AlignLeft | Qt::AlignVCenter );
+  statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
   mLittleProgress->show();
 }
 

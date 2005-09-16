@@ -288,7 +288,7 @@ void AccountWizard::setupServerInformationPage()
   connect( mChooseLocation, SIGNAL( clicked() ),
            this, SLOT( chooseLocation() ) );
 
-  layout->addWidget( mIncomingLabel, 0, 0, AlignTop );
+  layout->addWidget( mIncomingLabel, 0, 0, Qt::AlignTop );
   layout->addWidget( mIncomingLocationWdg, 0, 1 );
   layout->addWidget( mIncomingServerWdg, 0, 1 );
 

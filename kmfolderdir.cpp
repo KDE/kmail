@@ -172,7 +172,7 @@ bool KMFolderDir::reload(void)
 {
   QDir               dir;
   KMFolder*          folder;
-  QFileInfo*         fileInfo;
+  QFileInfo          fileInfo;
   QStringList        diList;
   Q3PtrList<KMFolder> folderList;
 
@@ -182,24 +182,24 @@ bool KMFolderDir::reload(void)
   dir.setFilter(QDir::Files | QDir::Dirs | QDir::Hidden);
   dir.setNameFilter("*");
 
-  if (!dir.cd(fldPath, TRUE))
+  if (!dir.cd(fldPath))
   {
     QString msg = i18n("<qt>Cannot enter folder <b>%1</b>.</qt>").arg(fldPath);
     KMessageBox::information(0, msg);
     return FALSE;
   }
 
-  QFileInfoList* fiList=(QFileInfoList*)dir.entryInfoList();
-  if (!fiList)
+  QFileInfoList fiList = dir.entryInfoList();
+  if (fiList.isEmpty())
   {
     QString msg = i18n("<qt>Folder <b>%1</b> is unreadable.</qt>").arg(fldPath);
     KMessageBox::information(0, msg);
     return FALSE;
   }
 
-  for (fileInfo=fiList->first(); fileInfo; fileInfo=fiList->next())
+  Q_FOREACH( fileInfo, fiList )
   {
-    const QString fname = fileInfo->fileName();
+    const QString fname = fileInfo.fileName();
     if( ( fname[0] == '.' ) && !fname.endsWith( ".directory" ) ) {
       // ignore all hidden files except our subfolder containers
       continue;
@@ -209,7 +209,7 @@ bool KMFolderDir::reload(void)
       continue;
     }
     // Collect subdirectories.
-    if ( fileInfo->isDir() &&
+    if ( fileInfo.isDir() &&
          fname.startsWith( "." ) && fname.endsWith( ".directory" ) ) {
        diList.append(fname);
        continue;
@@ -231,7 +231,7 @@ bool KMFolderDir::reload(void)
     else if ( mDirType == KMDImapDir
            && path().startsWith( KMFolderCachedImap::cacheLocation() ) )
     {
-       if (fileInfo->isDir()) // a directory
+       if (fileInfo.isDir()) // a directory
        {
           // For this to be a cached IMAP folder, it must be in the KMail dimap
           // subdir and must be have a uidcache file or be a maildir folder
@@ -255,7 +255,7 @@ bool KMFolderDir::reload(void)
     {
        // This is neither an imap, dimap nor a search folder. Can be either
        // mbox or maildir.
-       if (fileInfo->isDir())
+       if (fileInfo.isDir())
        {
           // Maildir folder
           if( dir.exists( fname + "/new" ) )

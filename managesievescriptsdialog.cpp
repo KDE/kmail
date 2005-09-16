@@ -37,7 +37,8 @@ KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, con
     mContextMenuItem( 0 ),
     mWasActive( false )
 {
-  setWFlags( WGroupLeader|WDestructiveClose );
+  setAttribute( Qt::WA_GroupLeader );
+  setAttribute( Qt::WA_DeleteOnClose );
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
 
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, 0 );
@@ -294,7 +295,7 @@ KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )
   QVBoxLayout * vlay = new QVBoxLayout( plainPage(), 0, spacingHint() );
   mTextEdit = new Q3TextEdit( plainPage() );
   vlay->addWidget( mTextEdit );
-  mTextEdit->setTextFormat( Q3TextEdit::PlainText );
+  mTextEdit->setTextFormat( Qt::PlainText );
   mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
   mTextEdit->setFont( KGlobalSettings::fixedFont() );
 

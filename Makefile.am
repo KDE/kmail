@@ -144,9 +144,6 @@ recipienteditortest_SOURCES = recipientseditortest.cpp
 recipienteditortest_LDADD = libkmailprivate.la ../libkdepim/libkdepim.la $(LIB_KIO) $(LIB_KABC)
 recipienteditortest_LDFLAGS = $(all_libraries)
 
-kmailIface_DCOPIDLNG = true
-kmailicalIface_DCOPIDLNG = true
-
 korganizeriface_DIR = $(top_srcdir)/korganizer
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h

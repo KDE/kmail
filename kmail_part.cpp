@@ -41,8 +41,6 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 using KMail::AccountManager;
-#include "sidebarextension.h"
-#include "infoextension.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
@@ -127,19 +125,13 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
   mStatusBar  = new KMailStatusBarExtension(this);
-  new KParts::SideBarExtension( mainWidget->folderTree(),
-                                this,
-                                "KMailSidebar" );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
   connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
   connect( mainWidget->folderTree(), SIGNAL(iconChanged(KMFolderTreeItem*)),
            this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
-  connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
-  connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
   KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmail_part.rc" );

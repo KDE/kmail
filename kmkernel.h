@@ -10,8 +10,8 @@
 #include <QLabel>
 #include <Q3ValueList>
 #include <Q3CString>
-#include <weaver.h>
-#include <weaverlogger.h>
+//#include <weaver.h>
+//#include <weaverlogger.h>
 
 #include <kconfig.h>
 #include <kdeversion.h>
@@ -284,7 +284,7 @@ public:
   KMail::MessageSender *msgSender();
   KMMsgIndex *msgIndex();
 
-  KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
+//  KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
   KPIM::IdentityManager *identityManager();
 
@@ -476,8 +476,8 @@ private:
   Q3ValueList<const KSystemTray*> systemTrayApplets;
 
   /* Weaver */
-  KPIM::ThreadWeaver::Weaver *the_weaver;
-  KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
+//  KPIM::ThreadWeaver::Weaver *the_weaver;
+//  KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
 
   KWallet::Wallet *mWallet;
 

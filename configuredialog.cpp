@@ -2210,7 +2210,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
 
   hlay->addStretch( 1 );
   mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
-      3/*init*/,10/*base*/,this );
+      3/*init*/,this );
 
   QLabel *label = new QLabel( mCollapseQuoteLevelSpin,
            GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
@@ -2524,7 +2524,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            this, SLOT( slotEmitChanged( void ) ) );
 
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
-           78/*init*/, 10 /*base*/, this, "kcfg_LineWrapWidth" );
+           78/*init*/, this );
+  mWrapColumnSpin->setObjectName( "kcfg_LineWrapWidth" );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
   connect( mWrapColumnSpin, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2536,7 +2537,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
+  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
+  mAutoSave->setObjectName( "kcfg_AutosaveInterval" );
   label = new QLabel( mAutoSave,
            GlobalSettings::self()->autosaveIntervalItem()->label(), this );
   hlay->addWidget( label );
@@ -4333,7 +4335,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
   hlay->addWidget( mDelayedMarkAsRead );
   mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
-                                      0 /*init*/, 10 /*base*/, this);
+                                      0 /*init*/, this);
   mDelayedMarkTime->setSuffix( i18n(" sec") );
   mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
   hlay->addWidget( mDelayedMarkTime );

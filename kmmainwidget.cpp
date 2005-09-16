@@ -3189,8 +3189,8 @@ void KMMainWidget::removeDuplicates()
   KMFolder *oFolder = mFolder;
   mHeaders->setFolder(0);
   QMap< QString, Q3ValueList<int> > idMD5s;
-  Q3ValueList<int> redundantIds;
-  Q3ValueList<int>::Iterator kt;
+  QList<int> redundantIds;
+  QList<int>::Iterator kt;
   mFolder->open();
   for (int i = mFolder->count() - 1; i >= 0; --i) {
     QString id = (*mFolder)[i]->msgIdMD5();
@@ -3221,7 +3221,7 @@ void KMMainWidget::removeDuplicates()
     for ( jt = (*it).begin(), ++jt; jt != (*it).end(); ++jt )
       redundantIds.append( *jt );
   }
-  qHeapSort( redundantIds );
+  qSort( redundantIds );
   kt = redundantIds.end();
   int numDuplicates = 0;
   if (kt != redundantIds.begin()) do {

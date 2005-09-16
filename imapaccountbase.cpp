@@ -357,7 +357,7 @@ namespace KMail {
     url.setPath(imapPath);
 
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, QIODevice::WriteOnly);
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly);
 
     if (subscribe)
       stream << (int) 'u' << url;
@@ -486,7 +486,7 @@ namespace KMail {
   {
     if ( mSlave ) {
       QByteArray packedArgs;
-      QDataStream stream( packedArgs, QIODevice::WriteOnly );
+      QDataStream stream( &packedArgs, QIODevice::WriteOnly );
 
       stream << ( int ) 'N';
 
@@ -559,7 +559,7 @@ namespace KMail {
 
     // get capabilities
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, QIODevice::WriteOnly);
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly);
     stream << (int) 'c';
     KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
     KIO::Scheduler::assignJobToSlave( mSlave, job );
@@ -592,7 +592,7 @@ namespace KMail {
     }
     
     QByteArray packedArgs;
-    QDataStream stream( packedArgs, QIODevice::WriteOnly);
+    QDataStream stream( &packedArgs, QIODevice::WriteOnly);
     stream << (int) 'n';
     jobData jd;
     jd.total = 1; jd.done = 0; jd.cancellable = true;
@@ -1131,7 +1131,7 @@ namespace KMail {
      url.setPath(path);
 
      QByteArray packedArgs;
-     QDataStream stream( packedArgs, QIODevice::WriteOnly);
+     QDataStream stream( &packedArgs, QIODevice::WriteOnly);
 
      stream << (int) 'S' << url << flags;
 

@@ -29,6 +29,7 @@
 #ifndef HEADERITEM_H
 #define HEADERITEM_H
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <klistview.h> // include for the base class

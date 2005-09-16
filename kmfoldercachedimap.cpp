@@ -1187,7 +1187,7 @@ void KMFolderCachedImap::uploadFlags()
       uid.setNum( msg->UID() );
       groups[flags].append(uid);
     }
-    QMapIterator< QString, QStringList > dit;
+    QMap< QString, QStringList >::Iterator dit;
     for( dit = groups.begin(); dit != groups.end(); ++dit ) {
       Q3CString flags = dit.key().latin1();
       QStringList sets = KMFolderImap::makeSets( (*dit), true );
@@ -1898,7 +1898,7 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if (it == mAccount->jobsEnd()) return;
-  QBuffer buff((*it).data);
+  QBuffer buff(&(*it).data);
   buff.open(QIODevice::WriteOnly | QIODevice::Append);
   buff.writeBlock(data.data(), data.size());
   buff.close();

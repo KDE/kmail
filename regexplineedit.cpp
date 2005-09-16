@@ -125,7 +125,7 @@ namespace KMail {
       mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString::null, this );
 
     KRegExpEditorInterface *iface =
-      static_cast<KRegExpEditorInterface *>( mRegExpEditDialog->qt_cast( "KRegExpEditorInterface" ) );
+     dynamic_cast<KRegExpEditorInterface *>( mRegExpEditDialog );
     if( iface ) {
       iface->setRegExp( mLineEdit->text() );
       if( mRegExpEditDialog->exec() == QDialog::Accepted )

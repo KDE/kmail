@@ -68,12 +68,13 @@ namespace KMail {
     ++row;
     glay->setRowStretch( row, 1 );
     mTextEdit = new Q3TextEdit( plainPage(), "mTextEdit" );
-    mTextEdit->setTextFormat( Q3TextEdit::PlainText );
+    mTextEdit->setTextFormat( Qt::PlainText );
     glay->addMultiCellWidget( mTextEdit, row, row, 0, 1 );
 
     // "Resent only after" spinbox and label:
     ++row;
-    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, 10, plainPage(), "mIntervalSpin" );
+    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, plainPage() );
+    mIntervalSpin->setObjectName( "mIntervalSpin" );
     mIntervalSpin->setSuffix( i18n(" days") );
     glay->addWidget( new QLabel( mIntervalSpin, i18n("&Resend notification only after:"), plainPage() ), row, 0 );
     glay->addWidget( mIntervalSpin, row, 1 );

@@ -38,6 +38,7 @@
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
+#include "kmfolderdir.h"
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
@@ -55,7 +56,6 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <q3vbox.h>
-#include <qvbuttongroup.h>
 #include <q3widgetstack.h>
 #include <qradiobutton.h>
 
@@ -63,6 +63,7 @@
 #include <QGridLayout>
 #include <Q3ValueList>
 #include <QVBoxLayout>
+#include <Q3ButtonGroup>
 
 #include <assert.h>
 #include <kmessagebox.h>
@@ -159,7 +160,7 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
   QString txt = distrLists.join( ", " );
   const KABC::Addressee::List lst = dlg.toAddresses();
   if ( !lst.isEmpty() ) {
-    for( Q3ValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+    for( QList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
       if ( !txt.isEmpty() )
         txt += ", ";
       txt += addresseeToUserId( *it, mUserIdFormat );
@@ -333,7 +334,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   topLayout->addWidget( mStack );
 
   mLabel = new QLabel( mStack );
-  mLabel->setAlignment( AlignHCenter | Qt::AlignVCenter | WordBreak );
+  mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter | Qt::WordBreak );
   mStack->addWidget( mLabel );
 
   mACLWidget = new Q3HBox( mStack );
