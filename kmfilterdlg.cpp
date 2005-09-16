@@ -169,11 +169,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
   }
   else {
-    Q3GroupBox *agb = new Q3GroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), page1 );
+    Q3GroupBox *agb = new Q3GroupBox( 1 /*column*/, Qt::Vertical, i18n("Filter Actions"), page1 );
     mActionLister = new KMFilterActionWidgetLister( agb );
     vbl->addWidget( agb, 0, Qt::AlignTop );
 
-    mAdvOptsGroup = new Q3GroupBox ( 1 /*columns*/, Vertical,
+    mAdvOptsGroup = new Q3GroupBox ( 1 /*columns*/, Qt::Vertical,
 				    i18n("Advanced Options"), page2);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
@@ -218,7 +218,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
       gl->addMultiCellWidget( mConfigureShortcut, 7, 7, 0, 1 );
       QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), adv_w );
-      keyButtonLabel->setAlignment( Qt::AlignVCenter | AlignRight );
+      keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
@@ -640,7 +640,7 @@ void KMFilterListBox::createFilter( const Q3CString & field,
 
   KMFilter *newFilter = new KMFilter(0, bPopFilter);
   newFilter->pattern()->append( newRule );
-  newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
+  newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
   KMFilterActionDesc *desc = (*kmkernel->filterActionDict())["transfer"];
   if ( desc )
@@ -670,7 +670,7 @@ void KMFilterListBox::slotUpdateFilterName()
   if ( mFilterList.at(mIdxSelItem)->isAutoNaming() ) {
     // auto-naming of patterns
     if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
-      shouldBeName = QString( "<%1>: %2" ).arg( p->first()->field() ).arg( p->first()->contents() );
+      shouldBeName = QString( "<%1>: %2" ).arg( QString::fromLatin1( p->first()->field() ) ).arg( p->first()->contents() );
     else
       shouldBeName = "<" + i18n("unnamed") + ">";
     p->setName( shouldBeName );
@@ -1029,7 +1029,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   mComboBox->setCurrentItem(i);
 
   // don't show scroll bars.
-  mComboBox->setSizeLimit( mComboBox->count() );
+  mComboBox->setMaxCount( mComboBox->count() );
   // layout management:
   // o the combo box is not to be made larger than it's sizeHint(),
   //   the parameter widget should grow instead.

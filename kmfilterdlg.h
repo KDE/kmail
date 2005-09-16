@@ -13,13 +13,12 @@
 
 #include <kdialogbase.h>
 
-#include <qvgroupbox.h>
 #include <q3groupbox.h>
 #include <q3hbox.h>
 #include <qstring.h>
 #include <q3ptrlist.h>
 #include <qradiobutton.h>
-#include <qvbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qmap.h>
 //Added by qt3to4:
 #include <Q3CString>
@@ -385,7 +384,7 @@ protected:
   KIconButton *mFilterActionIconButton;
   KKeyButton *mKeyButton;
   Q3GroupBox *mAdvOptsGroup;
-  QVGroupBox *mGlobalsBox;
+  Q3GroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;
 
   KMFilter *mFilter;

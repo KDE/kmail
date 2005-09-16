@@ -170,7 +170,7 @@ namespace KMail {
         "monochrome picture with every message. "
         "For example, this could be a picture of you or a glyph. "
         "It is shown in the recipient's mail client (if supported)." ), page );
-    label1->setAlignment( QLabel::WordBreak | QLabel::Qt::AlignVCenter );
+    label1->setAlignment( Qt::WordBreak | Qt::AlignVCenter );
     page_vlay->addWidget( label1 );
 
     widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
@@ -277,7 +277,7 @@ namespace KMail {
         mTextEdit->setText(str);
       }
       KXFace xf;
-      QPixmap p( 48, 48, true );
+      QPixmap p( 48, 48 );
       p.convertFromImage( xf.toImage(str) );
       mXFaceLabel->setPixmap( p );
     }

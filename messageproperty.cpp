@@ -33,6 +33,7 @@
 #endif
 
 #include "messageproperty.h"
+#include "actionscheduler.h"
 using namespace KMail;
 
 QMap<Q_UINT32, QPointer<KMFolder> > MessageProperty::sFolders;

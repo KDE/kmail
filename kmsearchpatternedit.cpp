@@ -77,7 +77,7 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
   
   mRuleField->clear();
   mRuleField->insertStringList( mFilterFieldList );
-  mRuleField->setSizeLimit( mRuleField->count() );
+  mRuleField->setMaxCount( mRuleField->count() );
   mRuleField->adjustSize();
 
   if ((currentText != "<message>") &&
@@ -95,7 +95,7 @@ void KMSearchRuleWidget::initWidget()
   mRuleField = new QComboBox( true, this, "mRuleField" );
   mRuleField->insertStringList( mFilterFieldList );
   // don't show sliders when popping up this menu
-  mRuleField->setSizeLimit( mRuleField->count() );
+  mRuleField->setMaxCount( mRuleField->count() );
   mRuleField->adjustSize();
   hlay->addWidget( mRuleField );
 

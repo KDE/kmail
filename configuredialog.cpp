@@ -110,8 +110,7 @@ using KMime::DateFormatter;
 
 
 #include <q3vbox.h>
-#include <qvbuttongroup.h>
-#include <qhbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
 #include <qtextcodec.h>
@@ -121,6 +120,7 @@ using KMime::DateFormatter;
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <q3widgetstack.h>
+#include <q3whatsthis.h>
 
 // other headers:
 #include <assert.h>
@@ -876,7 +876,7 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   item->setText( 0, (*it)->name );
   // and insert the new name at the position of the old in the list of
   // strings; then broadcast the new list:
-  transportNames.insert( transportNames.at( entryLocation ), (*it)->name );
+  transportNames.insert( entryLocation, (*it)->name );
   emit transportListChanged( transportNames );
   emit changed( true );
 }
@@ -2996,7 +2996,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
   label = new QLabel( i18n("This list is checked for every outgoing message "
                            "from the top to the bottom for a charset that "
                            "contains all required characters."), this );
-  label->setAlignment( WordBreak);
+  label->setAlignment( Qt::WordBreak);
   vlay->addWidget( label );
 
   mCharsetListEditor =
@@ -3031,7 +3031,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   if ( charset.lower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( Q3CString( kmkernel->networkCodec()->mimeName() ).lower() );
+      .arg( QString( kmkernel->networkCodec()->mimeName() ).lower() );
     return;
   }
 
@@ -3055,7 +3055,7 @@ void ComposerPage::CharsetTab::doLoadOther() {
     if ( (*it) == QString::fromLatin1("locale") ) {
       Q3CString cset = kmkernel->networkCodec()->mimeName();
       KPIM::kAsciiToLower( cset.data() );
-      (*it) = QString("%1 (locale)").arg( cset );
+      (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }
 
   mCharsetListEditor->setStringList( charsets );
@@ -4171,7 +4171,7 @@ void SecurityPage::SMimeTab::save() {
   mConfig->sync( true );
 }
 
-bool SecurityPageSMimeTab::process(const Q3CString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
+bool SecurityPageSMimeTab::process(const DCOPCString &fun, const QByteArray &data, DCOPCString& replyType, QByteArray &replyData)
 {
     if ( fun == "load()" ) {
         replyType = "void";
@@ -4182,14 +4182,14 @@ bool SecurityPageSMimeTab::process(const Q3CString &fun, const QByteArray &data,
     return true;
 }
 
-QCStringList SecurityPageSMimeTab::interfaces()
+DCOPCStringList SecurityPageSMimeTab::interfaces()
 {
-  QCStringList ifaces = DCOPObject::interfaces();
+  DCOPCStringList ifaces = DCOPObject::interfaces();
   ifaces += "SecurityPageSMimeTab";
   return ifaces;
 }
 
-QCStringList SecurityPageSMimeTab::functions()
+DCOPCStringList SecurityPageSMimeTab::functions()
 {
   // Hide our slot, just because it's simpler to do so.
   return DCOPObject::functions();

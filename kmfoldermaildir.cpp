@@ -869,24 +869,20 @@ int KMFolderMaildir::createIndexFromContents()
   curDir.setFilter(QDir::Files);
 
   // then, we look for all the 'cur' files
-  const QFileInfoList *list = curDir.entryInfoList();
-  QFileInfoListIterator it(*list);
-  QFileInfo *fi;
+  QFileInfoList list = curDir.entryInfoList();
+  QFileInfo fi;
 
-  while ((fi = it.current()))
+  Q_FOREACH( fi, list )
   {
-    readFileHeaderIntern(curDir.path(), fi->fileName(), KMMsgStatusRead);
-    ++it;
+    readFileHeaderIntern(curDir.path(), fi.fileName(), KMMsgStatusRead);
   }
 
   // then, we look for all the 'new' files
   list = newDir.entryInfoList();
-  it = *list;
-
-  while ((fi=it.current()))
+  
+  Q_FOREACH( fi, list )
   {
-    readFileHeaderIntern(newDir.path(), fi->fileName(), KMMsgStatusNew);
-    ++it;
+    readFileHeaderIntern(newDir.path(), fi.fileName(), KMMsgStatusNew);
   }
 
   if ( autoCreateIndex() ) {
@@ -930,7 +926,7 @@ KMFolderIndex::IndexStatus KMFolderMaildir::indexStatus()
 void KMFolderMaildir::removeMsg(int idx, bool)
 {
   KMMsgBase* msg = mMsgList[idx];
-  if (!msg || !msg->fileName()) return;
+  if (!msg || msg->fileName().isNull()) return;
 
   removeFile(msg->fileName());
 
@@ -943,7 +939,7 @@ KMMessage* KMFolderMaildir::take(int idx)
   // first, we do the high-level stuff.. then delete later
   KMMessage *msg = KMFolderIndex::take(idx);
 
-  if (!msg || !msg->fileName()) {
+  if (!msg || msg->fileName().isNull()) {
     return 0;
   }
 
@@ -991,18 +987,16 @@ static bool removeDirAndContentsRecursively( const QString & path )
   d.setPath( path );
   d.setFilter( QDir::Files | QDir::Dirs | QDir::Hidden | QDir::NoSymLinks );
 
-  const QFileInfoList *list = d.entryInfoList();
-  QFileInfoListIterator it( *list );
-  QFileInfo *fi;
+  QFileInfoList list = d.entryInfoList();
+  QFileInfo fi;
 
-  while ( (fi = it.current()) != 0 ) {
-    if( fi->isDir() ) {
-      if ( fi->fileName() != "." && fi->fileName() != ".." )
-        success = success && removeDirAndContentsRecursively( fi->absFilePath() );
+  Q_FOREACH( fi, list ) {
+    if( fi.isDir() ) {
+      if ( fi.fileName() != "." && fi.fileName() != ".." )
+        success = success && removeDirAndContentsRecursively( fi.absFilePath() );
     } else {
-      success = success && d.remove( fi->absFilePath() );
+      success = success && d.remove( fi.absFilePath() );
     }
-    ++it;
   }
 
   if ( success ) {

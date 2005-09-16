@@ -5,6 +5,7 @@
 #endif
 
 #include "kmacctfolder.h"
+#include "kmaccount.h"
 
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctFolder::account()

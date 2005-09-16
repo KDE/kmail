@@ -239,7 +239,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
   if ( !mComboBox->count() ) {
     mComboBox->insertItem( i18n("No More Languages Available") );
     enableButtonOK( false );
-  } else mComboBox->listBox()->sort();
+  } else mComboBox->model()->sort( 0 );
 }
 
 QString NewLanguageDialog::language() const
@@ -263,7 +263,7 @@ int LanguageComboBox::insertLanguage( const QString & language )
   QString name = entry.readEntry( "Name" );
   QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
   insertItem( QPixmap( locate("locale", language + flagPng ) ), output );
-  return listBox()->index( listBox()->findItem(output) );
+  return findText(output);
 }
 
 QString LanguageComboBox::language() const
@@ -364,7 +364,7 @@ void ProfileDialog::slotOk() {
 
   assert( (unsigned int)index < mProfileList.count() );
 
-  KConfig profile( *mProfileList.at(index), true, false );
+  KConfig profile( mProfileList.at(index), true, false );
   emit profileSelected( &profile );
   KDialogBase::slotOk();
 }

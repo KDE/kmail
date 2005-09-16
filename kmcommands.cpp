@@ -60,6 +60,7 @@
 #include <Q3CString>
 #include <Q3PtrList>
 #include <Q3ValueList>
+#include <QDesktopWidget>
 
 #include <libemailfunctions/email.h>
 #include <kdebug.h>
@@ -576,17 +577,13 @@ KMCommand::Result KMUrlCopyCommand::execute()
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
     QString address = KMMessage::decodeMailtoUrl( mUrl.path() );
-    clip->setSelectionMode( true );
-    clip->setText( address );
-    clip->setSelectionMode( false );
-    clip->setText( address );
+    clip->setText( address, QClipboard::Clipboard );
+    clip->setText( address, QClipboard::Selection );
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));
   } else {
     // put the url into the mouse selection and the clipboard
-    clip->setSelectionMode( true );
-    clip->setText( mUrl.url() );
-    clip->setSelectionMode( false );
-    clip->setText( mUrl.url() );
+    clip->setText( mUrl.url(), QClipboard::Clipboard );
+    clip->setText( mUrl.url(), QClipboard::Selection );
     KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "URL copied to clipboard." ));
   }
 
@@ -1173,7 +1170,7 @@ KMCommand::Result KMForwardCommand::execute()
         msgPartText += "--";
         msgPartText += QString::fromLatin1( boundary );
         msgPartText += "\nContent-Type: MESSAGE/RFC822";
-        msgPartText += QString("; CHARSET=%1").arg(msg->charset());
+        msgPartText += QString("; CHARSET=%1").arg( QString::fromLatin1( msg->charset() ) );
         msgPartText += "\n";
         DwHeaders dwh;
         dwh.MessageId().CreateDefault();
@@ -1433,7 +1430,7 @@ KMCommand::Result KMSetStatusCommand::execute()
       folderMap[folder].append(idx);
     }
   }
-  QMapIterator< KMFolder*, Q3ValueList<int> > it2 = folderMap.begin();
+  QMap< KMFolder*, Q3ValueList<int> >::Iterator it2 = folderMap.begin();
   while ( it2 != folderMap.end() ) {
      KMFolder *f = it2.key();
      f->setStatus( (*it2), mStatus, mToggle );

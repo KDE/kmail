@@ -42,6 +42,7 @@
 #include <qstringlist.h>
 #include <q3textedit.h>
 #include <q3vbox.h>
+#include <q3groupbox.h>
 
 
 
@@ -57,7 +58,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "Filter Log Viewer" ),
               User1|User2|Close, Close, true, KStdGuiItem::clear(), KStdGuiItem::saveAs() )
 {
-  setWFlags( Qt::WDestructiveClose );
+  setAttribute( Qt::WA_DeleteOnClose );
   Q3VBox *page = makeVBoxMainWidget();
 
   mTextEdit = new Q3TextEdit( page );

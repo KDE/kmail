@@ -668,11 +668,11 @@ namespace KMail {
   QString FancyHeaderStyle::imgToDataUrl( const QImage &image, const char* fmt  )
   {
     QByteArray ba;
-    QBuffer buffer( ba );
+    QBuffer buffer( &ba );
     buffer.open( QIODevice::WriteOnly );
     image.save( &buffer, fmt );
     return QString::fromLatin1("data:image/%1;base64,%2")
-           .arg( fmt, KCodecs::base64Encode( ba ) );
+           .arg( QString::fromLatin1( fmt ), QString::fromLatin1( KCodecs::base64Encode( ba ) ) );
   }
 
   //

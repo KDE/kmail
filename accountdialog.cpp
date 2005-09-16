@@ -128,7 +128,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 
     QString s;
 
-    while( !mStream->eof() ) {
+    while( !mStream->atEnd() ) {
 
       s = mStream->readLine().stripWhiteSpace();
 
@@ -204,7 +204,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
   do {
     prevLine = line;
     line = mStream->readLine().stripWhiteSpace();
-  } while ( !mStream->eof() && (line[0] == '*' ||
+  } while ( !mStream->atEnd() && (line[0] == '*' ||
                                 prevLine[prevLine.length() - 1] == '\\' ));
 
   if( line[0] != '!' && line[0] != '|' &&  line[0] != '{' ) {
@@ -221,7 +221,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
     if ( !mSpoolFiles.contains(line) )
       mSpoolFiles << line;
 
-    if( colonPos > 0 && (!val || val.isEmpty()) ) {
+    if( colonPos > 0 && val.isEmpty() ) {
       // there is a local lockfile, but the user didn't
       // specify the name so compute it from the spoolfile's name
       val = line;
