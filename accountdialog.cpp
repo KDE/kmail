@@ -42,6 +42,7 @@
 #include <Q3ValueList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <Q3AsciiDict>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -116,7 +117,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
   // predefined
   mVars.insert( "HOME", new QString( QDir::homeDirPath() ) );
 
-  if( !fname || fname.isEmpty() ) {
+  if( fname.isEmpty() ) {
     fname = QDir::homeDirPath() + "/.procmailrc";
     mProcmailrc.setName(fname);
   }
@@ -1467,7 +1468,7 @@ void AccountDialog::slotPopEncryptionChanged(int id)
                            : ( id == SSL ) ? mCapaSSL
                                            : mCapaNormal;
   enablePopFeatures( mCurCapa );
-  const Q3Button *old = mPop.authGroup->selected();
+  const QAbstractButton *old = mPop.authGroup->selected();
   if ( !old->isEnabled() )
     checkHighest( mPop.authGroup );
 }
@@ -1485,7 +1486,7 @@ void AccountDialog::slotImapEncryptionChanged(int id)
                                   : ( id == SSL ) ? mCapaSSL
                                                   : mCapaNormal;
   enableImapAuthMethods( authMethods );
-  Q3Button *old = mImap.authGroup->selected();
+  QAbstractButton *old = mImap.authGroup->selected();
   if ( !old->isEnabled() )
     checkHighest( mImap.authGroup );
 }
@@ -1707,7 +1708,7 @@ void AccountDialog::checkHighest( Q3ButtonGroup *btnGroup )
 {
   kdDebug(5006) << "checkHighest( " << btnGroup << " )" << endl;
   for ( int i = btnGroup->count() - 1; i >= 0 ; --i ) {
-    Q3Button * btn = btnGroup->find( i );
+    QAbstractButton * btn = btnGroup->find( i );
     if ( btn && btn->isEnabled() ) {
       btn->animateClick();
       return;

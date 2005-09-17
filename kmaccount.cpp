@@ -363,7 +363,8 @@ bool KMAccount::runPrecommand(const QString &precommand)
   kdDebug(5006) << "Running precommand " << precommand << endl;
   if (!precommandProcess.start()) return false;
 
-  kapp->eventLoop()->enterLoop();
+#warning Port me!
+//  kapp->eventLoop()->enterLoop();
 
   return mPrecommandSuccess;
 }
@@ -372,7 +373,8 @@ bool KMAccount::runPrecommand(const QString &precommand)
 void KMAccount::precommandExited(bool success)
 {
   mPrecommandSuccess = success;
-  kapp->eventLoop()->exitLoop();
+#warning Port me!
+//  kapp->eventLoop()->exitLoop();
 }
 
 //-----------------------------------------------------------------------------
@@ -412,7 +414,7 @@ QString KMAccount::importPassword(const QString &aStr)
 
   for (i=0; i<len; i++)
   {
-    val = aStr[i] - ' ';
+    val = aStr[i].toLatin1() - ' ';
     val = (255-' ') - val;
     result[i] = (char)(val + ' ');
   }

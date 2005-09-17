@@ -357,7 +357,7 @@ public:
       signs). If @p utf8 is false, uses QString::latin1() to calculate
       the md5sum of, else uses QString::utf8() */
   static QString base64EncodedMD5( const QString & aStr, bool utf8=false );
-  static QString base64EncodedMD5( const Q3CString & aStr );
+  static QString base64EncodedMD5( const QByteArray & aStr );
   static QString base64EncodedMD5( const char * aStr, int len=-1 );
 
   /**

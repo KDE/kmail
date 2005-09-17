@@ -142,11 +142,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
       mFolder = searchFolder;
   }
   mPatternEdit->setSearchPattern( mSearchPattern );
-  QObjectList *list = mPatternEdit->queryList( 0, "mRuleField" );
+  QObjectList list = mPatternEdit->queryList( 0, "mRuleField" );
   QObject *object = 0;
-  if ( list )
-      object = list->first();
-  delete list;
+  if ( !list.isEmpty() )
+      object = list.first();
   if (!searchFolder && object && ::qobject_cast<QComboBox*>(object))
       static_cast<QComboBox*>(object)->setCurrentText("Subject");
 

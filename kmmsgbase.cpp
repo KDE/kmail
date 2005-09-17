@@ -587,7 +587,7 @@ Q3CString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
   int len = result.length();
   for (int i = 0; i < len; i++)
     if (result.at(i).unicode() >= 128) {
-      result.at(i) = '?';
+      result[i] = '?';
       all_ok = false;
     }
   if (ok)
@@ -932,7 +932,7 @@ QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
       if (ch > 16) ch -= 7;
       ch2 = st.at(p+2) - 48;
       if (ch2 > 16) ch2 -= 7;
-      st.at(p) = ch * 16 + ch2;
+      st[p] = ch * 16 + ch2;
       st.remove( p+1, 2 );
     }
     p++;
@@ -952,7 +952,7 @@ QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
     return base64EncodedMD5( s.stripWhiteSpace().latin1() ); // const char * overload
 }
 
-QString KMMsgBase::base64EncodedMD5( const Q3CString & s ) {
+QString KMMsgBase::base64EncodedMD5( const QByteArray & s ) {
   if (s.stripWhiteSpace().isEmpty()) return "";
   return base64EncodedMD5( s.stripWhiteSpace().data() );
 }
@@ -1040,7 +1040,7 @@ KMMsgAttachmentState KMMsgBase::attachmentState() const
 static void swapEndian(QString &str)
 {
   uint len = str.length();
-  str = QDeepCopy<QString>(str);
+  str = Q3DeepCopy<QString>(str);
   QChar *unicode = const_cast<QChar*>( str.unicode() );
   for (uint i = 0; i < len; i++)
     unicode[i] = kmail_swap_16(unicode[i].unicode());

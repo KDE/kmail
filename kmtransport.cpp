@@ -662,7 +662,7 @@ void KMTransportDialog::slotSmtpEncryptionChanged(int id)
     mSmtp.portEdit->setText((id == SSL) ? "465" : "25");
 
   // switch supported auth methods:
-  Q3Button * old = mSmtp.authGroup->selected();
+  QAbstractButton *old = mSmtp.authGroup->selected();
   int authMethods = id == TLS ? mAuthTLS : id == SSL ? mAuthSSL : mAuthNone ;
   enableAuthMethods( authMethods );
   if ( !old->isEnabled() )
@@ -740,7 +740,7 @@ void KMTransportDialog::checkHighest(Q3ButtonGroup *btnGroup)
 {
   for ( int i = btnGroup->count() - 1; i >= 0 ; --i )
   {
-    Q3Button * btn = btnGroup->find(i);
+    QAbstractButton * btn = btnGroup->find(i);
     if (btn && btn->isEnabled())
     {
       btn->animateClick();

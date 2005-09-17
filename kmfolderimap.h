@@ -188,7 +188,7 @@ public:
   virtual void setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle);
 
   /** generates sets of uids */
-  static QStringList makeSets( Q3ValueList<ulong>&, bool sort = true);
+  static QStringList makeSets( QList<ulong>&, bool sort = true);
   static QStringList makeSets(const QStringList&, bool sort = true);
 
   /** splits the message list according to sets. Modifies the @msgList. */
@@ -196,10 +196,10 @@ public:
                                               Q3PtrList<KMMessage>& msgList);
 
   /** gets the uids of the given ids */
-  void getUids(Q3ValueList<int>& ids, Q3ValueList<ulong>& uids);
+  void getUids(Q3ValueList<int>& ids, QList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(const Q3PtrList<KMMessage>& msgList, Q3ValueList<ulong>& uids);
+  void getUids(const Q3PtrList<KMMessage>& msgList, QList<ulong>& uids);
 
   /**
    * Expunge deleted messages from the folder

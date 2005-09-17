@@ -408,7 +408,7 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, Q3ValueList<int>& aIndex
         } else {
 
           // get the messages and the uids
-          Q3ValueList<ulong> uids;
+          QList<ulong> uids;
           getUids(msgList, uids);
 
           // get the sets (do not sort the uids)
@@ -503,7 +503,7 @@ void KMFolderImap::copyMsg(Q3PtrList<KMMessage>& msgList)
     }
   }
   
-  Q3ValueList<ulong> uids;
+  QList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids, false);
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
@@ -1747,7 +1747,7 @@ void KMFolderImap::deleteMessage(const Q3PtrList<KMMessage>& msgList)
     mMetaDataMap.remove( msg->msgIdMD5() );
   }
 
-  Q3ValueList<ulong> uids;
+  QList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);
 
@@ -1826,13 +1826,13 @@ void KMFolderImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool tog
 //-----------------------------------------------------------------------------
 QStringList KMFolderImap::makeSets(const QStringList& uids, bool sort)
 {
-  Q3ValueList<ulong> tmp;
+  QList<ulong> tmp;
   for ( QStringList::ConstIterator it = uids.begin(); it != uids.end(); ++it )
     tmp.append( (*it).toInt() );
   return makeSets(tmp, sort);
 }
 
-QStringList KMFolderImap::makeSets( Q3ValueList<ulong>& uids, bool sort )
+QStringList KMFolderImap::makeSets( QList<ulong>& uids, bool sort )
 {
   QStringList sets;
   QString set;
@@ -1843,13 +1843,13 @@ QStringList KMFolderImap::makeSets( Q3ValueList<ulong>& uids, bool sort )
     return sets;
   }
 
-  if (sort) qHeapSort(uids);
+  if (sort) qSort(uids);
 
   ulong last = 0;
   // needed to make a uid like 124 instead of 124:124
   bool inserted = false;
   /* iterate over uids and build sets like 120:122,124,126:150 */
-  for ( Q3ValueList<ulong>::Iterator it = uids.begin(); it != uids.end(); ++it )
+  for ( QList<ulong>::Iterator it = uids.begin(); it != uids.end(); ++it )
   {
     if (it == uids.begin() || set.isEmpty()) {
       set = QString::number(*it);
@@ -1886,7 +1886,7 @@ QStringList KMFolderImap::makeSets( Q3ValueList<ulong>& uids, bool sort )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::getUids(Q3ValueList<int>& ids, Q3ValueList<ulong>& uids)
+void KMFolderImap::getUids(Q3ValueList<int>& ids, QList<ulong>& uids)
 {
   KMMsgBase *msg = 0;
   // get the uids
@@ -1898,7 +1898,7 @@ void KMFolderImap::getUids(Q3ValueList<int>& ids, Q3ValueList<ulong>& uids)
   }
 }
 
-void KMFolderImap::getUids(const Q3PtrList<KMMessage>& msgList, Q3ValueList<ulong>& uids)
+void KMFolderImap::getUids(const Q3PtrList<KMMessage>& msgList, QList<ulong>& uids)
 {
   KMMessage *msg = 0;
 

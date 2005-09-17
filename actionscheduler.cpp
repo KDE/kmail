@@ -776,7 +776,8 @@ QString ActionScheduler::debug()
 	res.append( QString( "mExecutingLock %1, " ).arg( (*it)->mExecutingLock ? "true" : "false" ) );
 	res.append( QString( "mFetchExecuting %1.\n" ).arg( (*it)->mFetchExecuting ? "true" : "false" ) );
 	res.append( QString( "mOriginalSerNum %1.\n" ).arg( (*it)->mOriginalSerNum ) );
-	res.append( QString( "mMessageIt %1.\n" ).arg( ((*it)->mMessageIt != 0) ? *(*it)->mMessageIt : 0 ) );
+#warning Port me!
+//	res.append( QString( "mMessageIt %1.\n" ).arg( ((*it)->mMessageIt != 0) ? *(*it)->mMessageIt : 0 ) );
 	res.append( QString( "mSerNums count %1, " ).arg( (*it)->mSerNums.count() ) );
 	res.append( QString( "mFetchSerNums count %1.\n" ).arg( (*it)->mFetchSerNums.count() ) );
 	res.append( QString( "mResult " ) );

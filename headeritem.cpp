@@ -219,7 +219,7 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
   for ( PixmapList::ConstIterator it = pixmaps.begin();
       it != pixmaps.end(); ++it ) {
     bitBlt( &res, x, (height - (*it).height()) / 2, &(*it) );
-    bitBlt( &mask, x, (height - (*it).height()) / 2, (*it).mask() );
+    bitBlt( &mask, x, (height - (*it).height()) / 2, &(*it).mask() );
     x += (*it).width();
   }
 
@@ -423,7 +423,7 @@ QString HeaderItem::generate_key( KMHeaders *headers,
   if (!msg) return QString::null;
 
   int column = sortOrder & ((1 << 5) - 1);
-  QString ret = QChar( (char)sortOrder );
+  QString ret = QString( (char)sortOrder );
   QString sortArrival = QString( "%1" ).arg( msg->getMsgSerNum(), 0, 36 );
   while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
