@@ -126,6 +126,7 @@ using namespace KMime;
 
 #include <qclipboard.h>
 
+#include <memory>
 
 class LaterDeleterWithCommandCompletion : public KMail::Util::LaterDeleter
 {
@@ -2888,7 +2889,7 @@ void KMHandleAttachmentCommand::atmEncryptWithChiasmus()
   if ( !chiasmus )
     return;
 
-  const std::auto_ptr<Kleo::SpecialJob> listjob( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  const STD_NAMESPACE_PREFIX auto_ptr<Kleo::SpecialJob> listjob( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
   if ( !listjob.get() ) {
     const QString msg = i18n( "Chiasmus backend does not offer the "
                               "\"x-obtain-keys\" function. Please report this bug." );

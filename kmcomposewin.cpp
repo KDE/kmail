@@ -129,6 +129,7 @@ using KRecentAddress::RecentAddresses;
 #include <mimelib/mimepp.h>
 
 #include <algorithm>
+#include <memory>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -4574,7 +4575,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
     return;
   }
 
-  std::auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
+  STD_NAMESPACE_PREFIX auto_ptr<Kleo::SpecialJob> job( chiasmus->specialJob( "x-obtain-keys", QMap<QString,QVariant>() ) );
   if ( !job.get() ) {
     const QString msg = i18n( "Chiasmus backend does not offer the "
                               "\"x-obtain-keys\" function. Please report this bug." );
