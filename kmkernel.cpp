@@ -245,11 +245,11 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      body = QString::fromLocal8Bit(args->getOption("body"));
   }
 
-  QCStringList attachList = args->getOptionList("attach");
+  QByteArrayList attachList = args->getOptionList("attach");
   if (!attachList.isEmpty())
   {
      mailto = true;
-     for ( QCStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
+     for ( QByteArrayList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
        if ( !(*it).isEmpty() )
          attachURLs += KURL( QString::fromLocal8Bit( *it ) );
   }
@@ -641,7 +641,7 @@ KMMsgStatus KMKernel::strToStatus(const QString &flags)
     KMMsgStatus status = 0;
     if (!flags.isEmpty()) {
         for (uint n = 0; n < flags.length() ; n++) {
-            switch (flags[n]) {
+            switch (flags[n].toLatin1()) {
                 case 'N':
                     status |= KMMsgStatusNew;
                     break;
@@ -1026,15 +1026,15 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
   KMMainWidget *mainWidget = 0;
   if (KMainWindow::memberList()) {
     KMainWindow *win = 0;
-    QObjectList *l;
+    QObjectList l;
 
     // First look for a KMainWindow.
     for (win = KMainWindow::memberList()->first(); win;
          win = KMainWindow::memberList()->next()) {
       // Then look for a KMMainWidget.
       l	= win->queryList("KMMainWidget");
-      if (l && l->first()) {
-	mainWidget = dynamic_cast<KMMainWidget *>(l->first());
+      if (!l.isEmpty() && l.first()) {
+	mainWidget = dynamic_cast<KMMainWidget *>(l.first());
 	if (win->isActiveWindow())
 	  break;
       }
@@ -2107,23 +2107,17 @@ void KMKernel::selectFolder( QString folderPath )
 KMMainWidget *KMKernel::getKMMainWidget()
 {
   //This could definitely use a speadup
-  QWidgetList *l = kapp->topLevelWidgets();
-  QWidgetListIt it( *l );
+  QWidgetList l = kapp->topLevelWidgets();
   QWidget *wid;
 
-  while ( ( wid = it.current() ) != 0 ) {
-    ++it;
-    QObjectList *l2 = wid->topLevelWidget()->queryList( "KMMainWidget" );
-    if (l2 && l2->first()) {
-      KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>( l2->first() );
+  Q_FOREACH( wid, l ) {
+    QObjectList l2 = wid->topLevelWidget()->queryList( "KMMainWidget" );
+    if (!l2.isEmpty() && l2.first()) {
+      KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>( l2.first() );
       Q_ASSERT( kmmw );
-      delete l2;
-      delete l;
       return kmmw;
     }
-    delete l2;
   }
-  delete l;
   return 0;
 }
 

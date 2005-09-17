@@ -233,11 +233,10 @@ namespace {
   */
   int childCount( const QObject *parent, const char *objName )
   {
-    QObjectList *list = parent->queryList( 0, objName, false, false );
-    if ( !list )
+    QObjectList list = parent->queryList( 0, objName, false, false );
+    if ( list.isEmpty() )
       return 0;
-    const int count = list->count();
-    delete list; list = 0;
+    const int count = list.count();
     return count;
   }
 }
@@ -360,14 +359,12 @@ namespace {
   QObject* QObject_child_const( const QObject *parent,
                                 const char *objName )
   {
-    const QObjectList *list = parent->children();
-    if ( !list )
+    const QObjectList list = parent->children();
+    if ( list.isEmpty() )
       return 0;
 
-    QObjectListIterator it( *list );
-    QObject *obj;
-    while ( ( obj = it.current() ) ) {
-      ++it;
+    QObject *obj = 0;
+    Q_FOREACH( obj, list ) {
       if ( !objName || qstrcmp( objName, obj->name() ) == 0 )
         break;
     }

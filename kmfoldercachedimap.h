@@ -415,7 +415,7 @@ private:
   mutable QPointer<KMAcctCachedImap> mAccount;
 
   Q3IntDict<int> uidsOnServer;
-  Q3ValueList<ulong> uidsForDeletionOnServer;
+  QList<ulong> uidsForDeletionOnServer;
   Q3ValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
   Q3ValueList<ulong> mUidsForDownload;
   QStringList       foldersForDeletionOnServer;

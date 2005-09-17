@@ -1743,14 +1743,15 @@ void KMFolderTree::showFolder( KMFolder* folder )
 void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu, Q3ListViewItem *item )
 {
-  while ( menu->count() )
+#warning Port me!
+/*  while ( menu->count() )
   {
     Q3PopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
     if ( popup )
       delete popup;
     else
       menu->removeItemAt( 0 );
-  }
+  }*/
   // connect the signals
   if ( action == MoveMessage || action == MoveFolder )
   {

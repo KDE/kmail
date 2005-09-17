@@ -665,7 +665,7 @@ int KMFolderMbox::createIndexFromContents()
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                     KMMsgMDNStateUnknown, offs, size, sizeServer, uid );
           mi->setStatus(status, xstatus);
-          mi->setDate( dateStr.stripWhiteSpace() );
+          mi->setDate( dateStr.stripWhiteSpace().constData() );
           mi->setDirty(false);
           mMsgList.append(mi, mExportsSernums );
 

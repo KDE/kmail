@@ -660,6 +660,8 @@ int RecipientsView::setFirstColumnWidth( int w )
   return mFirstColumnWidth;
 }
 
+#warning Port me!
+#if 0
 RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
   : QToolTip( parent ), mView( view )
 {
@@ -708,6 +710,7 @@ void RecipientsToolTip::maybeTip( const QPoint & p )
 
   tip( QRect( p.x() - 20, p.y() - 20, 40, 40 ), text, geometry );
 }
+#endif
 
 
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )

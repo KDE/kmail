@@ -739,7 +739,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
       dateStr = dateStr.stripWhiteSpace();
       if (!dateStr.isEmpty())
-        mi->setDate(dateStr);
+        mi->setDate(dateStr.constData());
       if ( !uidStr.isEmpty() )
          mi->setUID( uidStr.toULong() );
       mi->setDirty(false);

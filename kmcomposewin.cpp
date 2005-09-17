@@ -1643,9 +1643,9 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( Q3CString& body )
           // strip off the signature
           block->verify();
 
-        body = nonPgpBlocks.first()
-             + block->text()
-             + nonPgpBlocks.last();
+        body = nonPgpBlocks.first();
+        body.append( block->text() );
+        body.append( nonPgpBlocks.last() );
       }
     }
   }

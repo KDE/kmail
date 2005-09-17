@@ -21,7 +21,7 @@
 #include "mailsourceviewer.h"
 //Added by qt3to4:
 #include <Q3CString>
-#include <QImageIO>
+#include <QImageReader>
 #include <QCloseEvent>
 #include <QEvent>
 #include <QVBoxLayout>
@@ -181,7 +181,7 @@ NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
 }
-NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
+/*NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
 {
     if ( newData.isEmpty() )
         return *this;
@@ -191,7 +191,7 @@ NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
     QByteArray::resize( len1 + len2 )
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
-}
+}*/
 QByteArray& NewByteArray::qByteArray()
 {
     return *((QByteArray*)this);
@@ -488,7 +488,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 			 QWidget *mainWindow,
 			 KActionCollection* actionCollection,
                          const char *aName,
-                         int aFlags )
+                         Qt::WindowFlags aFlags )
   : QWidget(aParent, aName, aFlags | Qt::WDestructiveClose),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
@@ -2038,10 +2038,10 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
   {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
-      QImageIO *iio = new QImageIO();
+      QImageReader *iio = new QImageReader();
       iio->setFileName(aFileName);
-      if( iio->read() ) {
-          QImage img = iio->image();
+      if( iio->canRead() ) {
+          QImage img = iio->read();
           QRect desk = KGlobalSettings::desktopGeometry(mMainWindow);
           // determine a reasonable window size
           int width, height;

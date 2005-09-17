@@ -91,7 +91,7 @@ public:
 	       QWidget *mainWindow,
 	       KActionCollection *actionCollection,
                const char *name=0,
-	       int f=0 );
+	       Qt::WindowFlags f=0 );
   virtual ~KMReaderWin();
 
   /**

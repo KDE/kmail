@@ -577,7 +577,7 @@ Kpgp::Result Kleo::KeyResolver::checkKeyNearExpiry( const GpgME::Key & key, cons
   if ( key.isRoot() )
     return Kpgp::Ok;
   else if ( const char * chain_id = key.chainID() ) {
-    const std::vector<GpgME::Key> issuer = lookup( chain_id, false );
+    const std::vector<GpgME::Key> issuer = lookup( QStringList( chain_id ), false );
     if ( issuer.empty() )
       return Kpgp::Ok;
     else
@@ -1352,14 +1352,14 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   }
 
   // Now search all public keys for matching keys
-  std::vector<GpgME::Key> matchingKeys = lookup( person );
+  std::vector<GpgME::Key> matchingKeys = lookup( QStringList( person ) );
   matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
 				      NotValidTrustedEncryptionKey ),
 		      matchingKeys.end() );
   // if no keys match the complete address look for keys which match
   // the canonical mail address
   if ( matchingKeys.empty() ) {
-    matchingKeys = lookup( address );
+    matchingKeys = lookup( QStringList( address ) );
     matchingKeys.erase( std::remove_if( matchingKeys.begin(), matchingKeys.end(),
 					NotValidTrustedEncryptionKey ),
 			matchingKeys.end() );
@@ -1421,7 +1421,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::lookup( const QStringList & patterns,
 void Kleo::KeyResolver::addKeys( const std::vector<Item> & items, CryptoMessageFormat f ) {
   dump();
   for ( std::vector<Item>::const_iterator it = items.begin() ; it != items.end() ; ++it ) {
-    SplitInfo si( it->address );
+    SplitInfo si( QStringList( it->address ) );
     std::remove_copy_if( it->keys.begin(), it->keys.end(),
 			 std::back_inserter( si.keys ), IsNotForFormat( f ) );
     dump();
@@ -1437,7 +1437,7 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items, CryptoMessageF
 void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
   dump();
   for ( std::vector<Item>::const_iterator it = items.begin() ; it != items.end() ; ++it ) {
-    SplitInfo si( it->address );
+    SplitInfo si( QStringList( it->address ) );
     CryptoMessageFormat f = AutoFormat;
     for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
       if ( concreteCryptoMessageFormats[i] & it->format ) {

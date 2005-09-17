@@ -165,6 +165,8 @@ RecipientItem *RecipientViewItem::recipientItem() const
 }
 
 
+#warning Port me!
+#if 0
 RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
   KListView *listView )
   : QToolTip( parent )
@@ -186,6 +188,7 @@ void RecipientsListToolTip::maybeTip( const QPoint & pos )
     }
   }
 }
+#endif
 
 
 RecipientsCollection::RecipientsCollection()

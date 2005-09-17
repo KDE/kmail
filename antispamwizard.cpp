@@ -522,7 +522,8 @@ void AntiSpamWizard::checkToolAvailability()
     }
     else {
       // check the availability of the application
-      KApplication::kApplication()->processEvents( 200 );
+#warning Port me!
+//      KApplication::kApplication()->processEvents( 200 );
       if ( !checkForProgram( (*it).getExecutable() ) ) {
         mInfoPage->addAvailableTool( (*it).getVisibleName() );
         found = true;
