@@ -31,7 +31,7 @@
 //----------------------------
 extern "C"
 {
-  KCModule *create_kmail_config_misc( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char * )
   {
     MiscPage *page = new MiscPage( parent, "kcmkmail_config_misc" );
     return page;
@@ -40,7 +40,7 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
   {
     AppearancePage *page =
        new AppearancePage( parent, "kcmkmail_config_appearance" );
@@ -50,7 +50,7 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_composer( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char * )
   {
     ComposerPage *page = new ComposerPage( parent, "kcmkmail_config_composer" );
     return page;
@@ -59,7 +59,7 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_identity( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char * )
   {
     IdentityPage *page = new IdentityPage( parent, "kcmkmail_config_identity" );
     return page;
@@ -68,7 +68,7 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_accounts( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char * )
   {
     AccountsPage *page = new AccountsPage( parent, "kcmkmail_config_accounts" );
     return page;
@@ -77,7 +77,7 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_security( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_security( QWidget *parent, const char * )
   {
     SecurityPage *page = new SecurityPage( parent, "kcmkmail_config_security" );
     return page;
