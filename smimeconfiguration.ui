@@ -410,7 +410,4 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
     </connection>
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>kleo::keyrequester.h</includehint>
-</includehints>
 </UI>
