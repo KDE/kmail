@@ -81,6 +81,8 @@ static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
     u.setUser( a->login() );
     u.setPass( a->passwd() );
     u.setPort( sieve.port() );
+    // Translate IMAP LOGIN to PLAIN:
+    u.setQuery( "x-mech=" + ( a->auth() == "*" ? "PLAIN" : a->auth() ) );
     return u;
   } else {
     return sieve.alternateURL();
