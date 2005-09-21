@@ -216,9 +216,9 @@ namespace KMail {
       // was last command; report success and delete this object:
       emit result( this, true, mScript, mUrl.fileName() == mActiveScriptName );
       if ( lastCmd == List )
-	emit gotList( this, false, mAvailableScripts, mActiveScriptName );
+	emit gotList( this, true, mAvailableScripts, mActiveScriptName );
       else
-	emit gotScript( this, false, mScript, mUrl.fileName() == mActiveScriptName );
+	emit gotScript( this, true, mScript, mUrl.fileName() == mActiveScriptName );
 
       mJob = 0; // deletes itself on returning from this slot
       delete this;
