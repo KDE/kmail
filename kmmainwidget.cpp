@@ -1991,10 +1991,17 @@ void KMMainWidget::slotPrevImportantMessage() {
   //mHeaders->prevImportantMessage();
 }
 
+void KMMainWidget::slotDisplayCurrentMessage()
+{
+  if ( mHeaders->currentMsg() )
+    slotMsgActivated( mHeaders->currentMsg() );
+}
+
 //-----------------------------------------------------------------------------
 //called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
+  if ( !msg ) return;
   if (msg->parent() && !msg->isComplete())
   {
     FolderJob *job = msg->parent()->createJob(msg);
@@ -2734,6 +2741,10 @@ void KMMainWidget::setupActions()
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
+  KAction* dukeOfMonmoth = new KAction( i18n("&Display Message"), Key_Return, this,
+                        SLOT( slotDisplayCurrentMessage() ), actionCollection(),
+                        "display_message" );
+  dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,

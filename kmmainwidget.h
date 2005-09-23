@@ -329,6 +329,7 @@ protected slots:
   void slotPrevUnreadFolder();
 
   /** etc. */
+  void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
   /** Update the undo action */
