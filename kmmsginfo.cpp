@@ -659,7 +659,7 @@ void KMMsgInfo::setDate(time_t aUnixTime)
 //--- For compatability with old index files
 void KMMsgInfo::compat_fromOldIndexString(const Q3CString& str, bool toUtf8)
 {
-    char *start, *offset;
+    const char *start, *offset;
 
     if(!kd)
         kd = new KMMsgInfoPrivate;
