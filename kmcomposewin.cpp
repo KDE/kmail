@@ -4271,6 +4271,7 @@ void KMComposeWin::slotSpellcheckConfig()
   KWin kwin;
   Q3TabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
+  mKSpellConfig.layout()->setMargin( KDialog::marginHint() );
 
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
   qtd.setCancelButton ();
