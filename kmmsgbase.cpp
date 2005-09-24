@@ -132,14 +132,8 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
     // That is an arbitrary restriction on my part. HAR HAR HAR :) -till
     if (aStatus == KMMsgStatusWatched)
       mStatus &= ~KMMsgStatusIgnored;
-    if (aStatus == KMMsgStatusIgnored) {
+    if (aStatus == KMMsgStatusIgnored)
       mStatus &= ~KMMsgStatusWatched;
-      // Set to read. Don't use setStatus, that emits msgStatusChanged
-      // and we only want to do that once.
-      mStatus &= ~KMMsgStatusUnread;
-      mStatus &= ~KMMsgStatusNew;
-      mStatus |= KMMsgStatusRead;
-    }
     if (aStatus == KMMsgStatusSpam)
       mStatus &= ~KMMsgStatusHam;
     if (aStatus == KMMsgStatusHam)
@@ -361,14 +355,14 @@ void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 bool KMMsgBase::isUnread(void) const
 {
   KMMsgStatus st = status();
-  return (st & KMMsgStatusUnread);
+  return (st & KMMsgStatusUnread && !(st & KMMsgStatusIgnored));
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isNew(void) const
 {
   KMMsgStatus st = status();
-  return (st & KMMsgStatusNew);
+  return (st & KMMsgStatusNew && !(st & KMMsgStatusIgnored));
 }
 
 //-----------------------------------------------------------------------------
@@ -389,7 +383,7 @@ bool KMMsgBase::isOld(void) const
 bool KMMsgBase::isRead(void) const
 {
   KMMsgStatus st = status();
-  return (st & KMMsgStatusRead);
+  return (st & KMMsgStatusRead || st & KMMsgStatusIgnored);
 }
 
 //-----------------------------------------------------------------------------
