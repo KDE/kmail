@@ -756,7 +756,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
   // decrypt
   if ( allowDecryption ) {
     Q3PtrList<Kpgp::Block> pgpBlocks;
-    Q3StrList nonPgpBlocks;
+    QList<QByteArray>  nonPgpBlocks;
     if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
 						    pgpBlocks,
 						    nonPgpBlocks ) ) {
@@ -2238,11 +2238,12 @@ void KMMessage::setHeaderField( const Q3CString& aName, const QString& bValue,
       kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
 #endif
   }
-  str = aName;
+  // FIXME PORTING
+  str = (const char*)aName;
   if (str[str.length()-1] != ':') str += ": ";
   else str += ' ';
   if ( !aValue.isEmpty() )
-    str += aValue;
+    str += (const char*)aValue;
   if (str[str.length()-1] != '\n') str += '\n';
 
   field = new DwField(str, mMsg);
@@ -2420,7 +2421,7 @@ Q3CString KMMessage::body() const
 {
   DwString body = mMsg->Body().AsString();
   Q3CString str = body.c_str();
-  kdWarning( str.length() != body.length(), 5006 )
+  kdWarning( str.length() != static_cast<int>( body.length() ), 5006 )
     << "KMMessage::body(): body is binary but used as text!" << endl;
   return str;
 }
@@ -2471,7 +2472,7 @@ Q3CString KMMessage::bodyDecoded() const
     break;
   }
 
-  unsigned int len = dwstr.size();
+  int len = dwstr.size();
   Q3CString result(len+1);
   memcpy(result.data(),dwstr.data(),len);
   result[len] = 0;
@@ -2991,15 +2992,15 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     }
   }
 
-  Q3CString additionalParam = aPart->additionalCTypeParamStr();
+  QByteArray additionalParam = aPart->additionalCTypeParamStr();
   if( !additionalParam.isEmpty() )
   {
-    Q3CString parAV;
+    QByteArray parAV;
     DwString parA, parV;
     int iL, i1, i2, iM;
     iL = additionalParam.length();
     i1 = 0;
-    i2 = additionalParam.find(';', i1, false);
+    i2 = additionalParam.indexOf(';', i1);
     while ( i1 < iL )
     {
       if( -1 == i2 )
@@ -3009,8 +3010,8 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 	iM = parAV.find('=');
 	if( -1 < iM )
         {
-	  parA = parAV.left( iM );
-	  parV = parAV.right( parAV.length() - iM - 1 );
+	  parA = parAV.left( iM ).data();
+	  parV = parAV.right( parAV.length() - iM - 1 ).data();
 	  if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
           {
 	    parV.erase( 0,  1);
@@ -3019,7 +3020,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 	}
 	else
         {
-	  parA = parAV;
+	  parA = parAV.data();
 	  parV = "";
 	}
 	DwParameter *param;
@@ -3029,7 +3030,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 	ct.AddParameter( param );
       }
       i1 = i2+1;
-      i2 = additionalParam.find(';', i1, false);
+      i2 = additionalParam.find( ';', i1 );
     }
   }
 
@@ -3246,7 +3247,7 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
   bool inQuotedString = false;
   int commentLevel = 0;
 
-  for ( char* p = aStr.data(); *p; ++p ) {
+  for ( const char* p = aStr.data(); *p; ++p ) {
     switch ( context ) {
     case TopLevel : {
       switch ( *p ) {
@@ -3406,7 +3407,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   int commentLevel = 0;
 
   QChar ch;
-  unsigned int strLength(aStr.length());
+  int strLength(aStr.length());
   for ( int index = 0; index < strLength; ++index ) {
     ch = aStr[index];
     switch ( context ) {

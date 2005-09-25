@@ -12,7 +12,7 @@
  *  TRUE to construct a modal wizard.
  */
 CertificateWizardImpl::CertificateWizardImpl( QWidget* parent,  const char* name, bool modal, Qt::WFlags fl )
-    : CertificateWizard( parent, name, modal, fl )
+    : CertificateWizard( parent, name ) // FIXME KDE4 porting modal? flags?
 {
 }
 

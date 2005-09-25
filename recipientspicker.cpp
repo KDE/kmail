@@ -305,8 +305,10 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mRecipientList, SIGNAL( returnPressed( Q3ListViewItem * ) ),
     SLOT( slotPicked() ) );
 
+#warning Port me!
+#if 0
   new RecipientsListToolTip( mRecipientList->viewport(), mRecipientList );
-
+#endif
   mSearchLine = new SearchLine( this, mRecipientList );
   searchLayout->addWidget( mSearchLine );
   label->setBuddy( label );

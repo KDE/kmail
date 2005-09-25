@@ -1144,7 +1144,7 @@ void Kleo::KeyResolver::dump() const {
 	std::cerr << kit->shortKeyID() << " ";
       std::cerr << std::endl
 		<< "  SplitInfo #" << i << " recipients: "
-		<< sit->recipients.join(", ").utf8() << std::endl;
+		<< qPrintable(sit->recipients.join(", ")) << std::endl;
     }
   }
 #endif

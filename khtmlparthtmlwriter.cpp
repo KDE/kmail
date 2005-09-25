@@ -109,7 +109,7 @@ namespace KMail {
 
   void KHtmlPartHtmlWriter::queue( const QString & str ) {
     static const uint chunksize = 16384;
-    for ( uint pos = 0 ; pos < str.length() ; pos += chunksize )
+    for ( int pos = 0 ; pos < str.length() ; pos += chunksize )
       mHtmlQueue.push_back( str.mid( pos, chunksize ) );
     mState = Queued;
   }

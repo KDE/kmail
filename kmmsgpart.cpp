@@ -301,8 +301,7 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
       }
   }
 
-  assert( mBodyDecodedSize < 0
-	  || (unsigned int)mBodyDecodedSize == result.size() );
+  assert( mBodyDecodedSize < 0 || mBodyDecodedSize == result.size() );
   if ( mBodyDecodedSize < 0 )
     mBodyDecodedSize = result.size(); // cache the decoded size.
 
@@ -354,7 +353,7 @@ Q3CString KMMessagePart::bodyDecoded(void) const
     result[len] = 0;
   }
 
-  kdWarning( result.length() != (unsigned int)len, 5006 )
+  kdWarning( result.length() != len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
 
   result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
@@ -497,13 +496,14 @@ QString KMMessagePart::fileName(void) const
   bool bRFC2231encoded = false;
 
   // search the start of the filename
-  int startOfFilename = mContentDisposition.find("filename*=", 0, FALSE);
+  QString cd( mContentDisposition );
+  int startOfFilename = cd.indexOf("filename*=");
   if (startOfFilename >= 0) {
     bRFC2231encoded = true;
     startOfFilename += 10;
   }
   else {
-    startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
+    startOfFilename = cd.indexOf("filename=");
     if (startOfFilename < 0)
       return QString::null;
     startOfFilename += 9;

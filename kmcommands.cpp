@@ -2652,7 +2652,7 @@ KMCommand::Result KMIMChatCommand::execute()
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-  KABC::AddresseeList addressees = addressBook->findByEmail( KPIM::getEmailAddress( addr ) ) ;
+  KABC::Addressee::List addressees = addressBook->findByEmail( KPIM::getEmailAddress( addr ) ) ;
 
   // start chat
   if( addressees.count() == 1 ) {
@@ -2670,8 +2670,8 @@ KMCommand::Result KMIMChatCommand::execute()
     {
       apology = i18n( "More than one Address Book entry uses this email address:\n %1\n it is not possible to determine who to chat with." );
       QStringList nameList;
-      KABC::AddresseeList::const_iterator it = addressees.begin();
-      KABC::AddresseeList::const_iterator end = addressees.end();
+      KABC::Addressee::List::const_iterator it = addressees.begin();
+      KABC::Addressee::List::const_iterator end = addressees.end();
       for ( ; it != end; ++it )
       {
           nameList.append( (*it).realName() );

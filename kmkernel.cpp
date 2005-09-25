@@ -203,7 +203,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 
   // process args:
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  if (args->getOption("subject"))
+  if (args->isSet("subject"))
   {
      subj = QString::fromLocal8Bit(args->getOption("subject"));
      // if kmail is called with 'kmail -session abc' then this doesn't mean
@@ -221,25 +221,25 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
        mailto = true;
   }
 
-  if (args->getOption("cc"))
+  if (args->isSet("cc"))
   {
      mailto = true;
      cc = QString::fromLocal8Bit(args->getOption("cc"));
   }
 
-  if (args->getOption("bcc"))
+  if (args->isSet("bcc"))
   {
      mailto = true;
      bcc = QString::fromLocal8Bit(args->getOption("bcc"));
   }
 
-  if (args->getOption("msg"))
+  if (args->isSet("msg"))
   {
      mailto = true;
      messageFile.setPath( QString::fromLocal8Bit(args->getOption("msg")) );
   }
 
-  if (args->getOption("body"))
+  if (args->isSet("body"))
   {
      mailto = true;
      body = QString::fromLocal8Bit(args->getOption("body"));
@@ -260,7 +260,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   if (args->isSet("check"))
     checkMail = true;
 
-  if ( args->getOption( "view" ) ) {
+  if ( args->isSet( "view" ) ) {
     viewOnly = true;
     const QString filename =
       QString::fromLocal8Bit( args->getOption( "view" ) );

@@ -418,11 +418,10 @@ namespace KMail {
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
                   cleartext.data(), cleartext.length() );
 
-      signaturetext = sign.msgPart().bodyDecodedBinary();
-      Q3CString signatureStr( signaturetext, signaturetext.size() + 1 );
-      signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
-                          (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
-                          (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
+      QString signatureStr = QString::fromLatin1( sign.msgPart().bodyDecodedBinary() );
+      signatureIsBinary = ( !signatureStr.contains("BEGIN SIGNED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !signatureStr.contains("BEGIN PGP SIGNED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !signatureStr.contains("BEGIN PGP MESSAGE", Qt::CaseInsensitive ) );
       signatureLen = signaturetext.size();
 
       dumpToFile( "dat_03_reader.sig", signaturetext.data(),
@@ -659,11 +658,11 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   }
 
   if ( cryptPlug && !kmkernel->contextMenuShown() ) {
-    QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
-    Q3CString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
-    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
-                          (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
-                          (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
+    QByteArray ciphertext = data.msgPart().bodyDecodedBinary();
+    QString cipherStr = QString::fromLatin1( ciphertext );
+    bool cipherIsBinary = ( !cipherStr.contains("BEGIN ENCRYPTED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !cipherStr.contains("BEGIN PGP ENCRYPTED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !cipherStr.contains("BEGIN PGP MESSAGE", Qt::CaseInsensitive ) );
     int cipherLen = ciphertext.size();
 
     dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
@@ -745,12 +744,12 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     // ### Workaround for bug 56693 (kmail freeze with the complete desktop
     // ### while pinentry-qt appears)
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
-    Q3CString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
-    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
-                          (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
-                          (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
+    QString cipherStr = QString::fromLatin1( ciphertext );
+    bool cipherIsBinary = ( !cipherStr.contains("BEGIN ENCRYPTED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !cipherStr.contains("BEGIN PGP ENCRYPTED MESSAGE", Qt::CaseInsensitive ) ) &&
+                          ( !cipherStr.contains("BEGIN PGP MESSAGE", Qt::CaseInsensitive ) );
     if ( !cipherIsBinary ) {
-      decryptedData = cipherStr;
+      decryptedData = ciphertext;
     }
     else {
       decryptedData = "<div style=\"font-size:x-large; text-align:center;"
@@ -766,10 +765,10 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 }
 
   //static
-  bool ObjectTreeParser::containsExternalReferences( const Q3CString & str )
+  bool ObjectTreeParser::containsExternalReferences( const QString & str )
   {
-    int httpPos = str.find( "\"http:", 0, true );
-    int httpsPos = str.find( "\"https:", 0, true );
+    int httpPos = str.indexOf( "\"http:", Qt::CaseInsensitive );
+    int httpsPos = str.indexOf( "\"https:", Qt::CaseInsensitive );
 
     while ( httpPos >= 0 || httpsPos >= 0 ) {
       // pos = index of next occurrence of "http: or "https: whichever comes first
@@ -778,7 +777,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                 : ( ( httpsPos >= 0 ) ? httpsPos : httpPos );
       // look backwards for "href"
       if ( pos > 5 ) {
-        int hrefPos = str.findRev( "href", pos - 5, true );
+        int hrefPos = str.lastIndexOf( "href", pos - 5, Qt::CaseInsensitive );
         // if no 'href' is found or the distance between 'href' and '"http[s]:'
         // is larger than 7 (7 is the distance in 'href = "http[s]:') then
         // we assume that we have found an external reference
@@ -787,17 +786,17 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       }
       // find next occurrence of "http: or "https:
       if ( pos == httpPos ) {
-        httpPos = str.find( "\"http:", httpPos + 6, true );
+        httpPos = str.indexOf( "\"http:", httpPos + 6, Qt::CaseInsensitive );
       }
       else {
-        httpsPos = str.find( "\"https:", httpsPos + 7, true );
+        httpsPos = str.indexOf( "\"https:", httpsPos + 7, Qt::CaseInsensitive );
       }
     }
     return false;
   }
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
-    Q3CString cstr( curNode->msgPart().bodyDecoded() );
+    QByteArray cstr( curNode->msgPart().bodyDecoded() );
 
     mRawReplyString = cstr;
     if ( curNode->isFirstTextPart() ) {
@@ -817,13 +816,14 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         // We must fo this, or else we will see only 1st inlined html
         // attachment.  It is IMHO enough to search only for </BODY> and
         // put \0 there.
-        int i = cstr.findRev("</body>", -1, false); //case insensitive
+        QString str = QString::fromLatin1( cstr );
+        int i = str.lastIndexOf("</body>", Qt::CaseInsensitive );
         if ( 0 <= i )
-          cstr.truncate(i);
+          str.truncate(i);
         else // just in case - search for </html>
         {
-          i = cstr.findRev("</html>", -1, false); //case insensitive
-          if ( 0 <= i ) cstr.truncate(i);
+          i = str.lastIndexOf("</html>", Qt::CaseInsensitive );
+          if ( 0 <= i ) str.truncate(i);
         }
         // ---Sven's strip </BODY> and </HTML> from end of attachment end-
         // Show the "external references" warning (with possibility to load
@@ -833,7 +833,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         // have an easy way to load them but that shouldn't be a problem
         // because only spam contains obfuscated external references.
         if ( !mReader->htmlLoadExternal() &&
-             containsExternalReferences( cstr ) ) {
+             containsExternalReferences( str ) ) {
           htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
           htmlWriter()->queue( i18n("<b>Note:</b> This HTML message may contain external "
                                     "references to images etc. For security/privacy reasons "
@@ -868,8 +868,8 @@ static bool isMailmanMessage( partNode * curNode ) {
   if ( headers.HasField("X-Mailman-Version") )
     return true;
   if ( headers.HasField("X-Mailer") &&
-       0 == Q3CString( headers.FieldBody("X-Mailer").AsString().c_str() )
-       .find("MAILMAN", 0, false) )
+       0 == QString::fromLatin1( headers.FieldBody("X-Mailer").AsString().c_str() )
+       .contains("MAILMAN", Qt::CaseInsensitive ) )
     return true;
   return false;
 }
@@ -877,29 +877,29 @@ static bool isMailmanMessage( partNode * curNode ) {
 namespace KMail {
 
   bool ObjectTreeParser::processMailmanMessage( partNode * curNode ) {
-    const Q3CString cstr = curNode->msgPart().bodyDecoded();
+    const QString str = QString::fromLatin1( curNode->msgPart().bodyDecoded() );
 
     //###
-    const Q3CString delim1( "--__--__--\n\nMessage:");
-    const Q3CString delim2( "--__--__--\r\n\r\nMessage:");
-    const Q3CString delimZ2("--__--__--\n\n_____________");
-    const Q3CString delimZ1("--__--__--\r\n\r\n_____________");
-    Q3CString partStr, digestHeaderStr;
-    int thisDelim = cstr.find(delim1, 0, false);
+    const QLatin1String delim1( "--__--__--\n\nMessage:");
+    const QLatin1String delim2( "--__--__--\r\n\r\nMessage:");
+    const QLatin1String delimZ2("--__--__--\n\n_____________");
+    const QLatin1String delimZ1("--__--__--\r\n\r\n_____________");
+    QString partStr, digestHeaderStr;
+    int thisDelim = str.indexOf(delim1, Qt::CaseInsensitive );
     if ( thisDelim == -1 )
-      thisDelim = cstr.find(delim2, 0, false);
+      thisDelim = str.indexOf(delim2, Qt::CaseInsensitive );
     if ( thisDelim == -1 ) {
       kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
       return false;
     }
 
-    int nextDelim = cstr.find(delim1, thisDelim+1, false);
+    int nextDelim = str.indexOf( delim1, thisDelim+1, Qt::CaseInsensitive );
     if ( -1 == nextDelim )
-      nextDelim = cstr.find(delim2, thisDelim+1, false);
+      nextDelim = str.indexOf( delim2, thisDelim+1, Qt::CaseInsensitive );
     if ( -1 == nextDelim )
-      nextDelim = cstr.find(delimZ1, thisDelim+1, false);
+      nextDelim = str.indexOf( delimZ1, thisDelim+1, Qt::CaseInsensitive );
     if ( -1 == nextDelim )
-      nextDelim = cstr.find(delimZ2, thisDelim+1, false);
+      nextDelim = str.indexOf( delimZ2, thisDelim+1, Qt::CaseInsensitive );
     if ( nextDelim < 0)
       return false;
 
@@ -909,9 +909,9 @@ namespace KMail {
 
     // at least one message found: build a mime tree
     digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
-    digestHeaderStr += cstr.mid( 0, thisDelim );
+    digestHeaderStr += str.mid( 0, thisDelim );
     insertAndParseNewChildNode( *curNode,
-                                &*digestHeaderStr,
+                                digestHeaderStr.latin1(),
                                 "Digest Header", true );
     //mReader->queueHtml("<br><hr><br>");
     // temporarily change curent node's Content-Type
@@ -919,15 +919,15 @@ namespace KMail {
     curNode->setType(    DwMime::kTypeMultipart );
     curNode->setSubType( DwMime::kSubtypeDigest );
     while( -1 < nextDelim ){
-      int thisEoL = cstr.find("\nMessage:", thisDelim, false);
+      int thisEoL = str.indexOf("\nMessage:", thisDelim, Qt::CaseInsensitive );
       if ( -1 < thisEoL )
         thisDelim = thisEoL+1;
       else{
-        thisEoL = cstr.find("\n_____________", thisDelim, false);
+        thisEoL = str.indexOf("\n_____________", thisDelim, Qt::CaseInsensitive );
         if ( -1 < thisEoL )
           thisDelim = thisEoL+1;
       }
-      thisEoL = cstr.find('\n', thisDelim);
+      thisEoL = str.indexOf( '\n', thisDelim );
       if ( -1 < thisEoL )
         thisDelim = thisEoL+1;
       else
@@ -936,10 +936,10 @@ namespace KMail {
       //  ++thisDelim;
 
       partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
-      partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
-      Q3CString subject("embedded message");
-      Q3CString subSearch("\nSubject:");
-      int subPos = partStr.find(subSearch, 0, false);
+      partStr += str.mid( thisDelim, nextDelim-thisDelim );
+      QString subject = QString::fromLatin1("embedded message");
+      QString subSearch = QString::fromLatin1("\nSubject:");
+      int subPos = partStr.indexOf(subSearch, 0, Qt::CaseInsensitive );
       if ( -1 < subPos ){
         subject = partStr.mid(subPos+subSearch.length());
         thisEoL = subject.find('\n');
@@ -948,34 +948,34 @@ namespace KMail {
       }
       kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
       insertAndParseNewChildNode( *curNode,
-                                  &*partStr,
-                                  subject, true );
+                                  partStr.latin1(),
+                                  subject.latin1(), true );
       //mReader->queueHtml("<br><hr><br>");
       thisDelim = nextDelim+1;
-      nextDelim = cstr.find(delim1, thisDelim, false);
+      nextDelim = str.indexOf(delim1, thisDelim, Qt::CaseInsensitive );
       if ( -1 == nextDelim )
-        nextDelim = cstr.find(delim2, thisDelim, false);
+        nextDelim = str.indexOf(delim2, thisDelim, Qt::CaseInsensitive);
       if ( -1 == nextDelim )
-        nextDelim = cstr.find(delimZ1, thisDelim, false);
+        nextDelim = str.indexOf(delimZ1, thisDelim, Qt::CaseInsensitive);
       if ( -1 == nextDelim )
-        nextDelim = cstr.find(delimZ2, thisDelim, false);
+        nextDelim = str.indexOf(delimZ2, thisDelim, Qt::CaseInsensitive);
     }
     // reset curent node's Content-Type
     curNode->setType(    DwMime::kTypeText );
     curNode->setSubType( DwMime::kSubtypePlain );
-    int thisEoL = cstr.find("_____________", thisDelim);
+    int thisEoL = str.indexOf( "_____________", thisDelim );
     if ( -1 < thisEoL ){
       thisDelim = thisEoL;
-      thisEoL = cstr.find('\n', thisDelim);
+      thisEoL = str.indexOf( '\n', thisDelim );
       if ( -1 < thisEoL )
         thisDelim = thisEoL+1;
     }
     else
       thisDelim = thisDelim+1;
     partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
-    partStr += cstr.mid( thisDelim );
+    partStr += str.mid( thisDelim );
     insertAndParseNewChildNode( *curNode,
-                                &*partStr,
+                                partStr.latin1(),
                                 "Digest Footer", true );
     return true;
   }
@@ -2055,7 +2055,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                 QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
                 .arg( cryptPlug->displayName() )
                 .arg( cryptPlug->libName() )
-                .arg( block.keyId );
+                .arg( QString::fromLatin1( block.keyId ) );
         QString keyWithWithoutURL
             = isSMIME
             ? QString("%1%2</a>")
@@ -2397,7 +2397,7 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
   inlineSignatureState  = KMMsgNotSigned;
   inlineEncryptionState = KMMsgNotEncrypted;
   Q3PtrList<Kpgp::Block> pgpBlocks;
-  Q3StrList nonPgpBlocks;
+  QList<QByteArray> nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
       bool isEncrypted = false, isSigned = false;
@@ -2411,13 +2411,13 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
 
       Q3PtrListIterator<Kpgp::Block> pbit( pgpBlocks );
 
-      QStrListIterator npbit( nonPgpBlocks );
+      QListIterator<QByteArray> npbit( nonPgpBlocks );
 
       QString htmlStr;
-      for( ; *pbit != 0; ++pbit, ++npbit )
+      for( ; *pbit != 0; ++pbit )
       {
           // insert the next Non-OpenPGP block
-          Q3CString str( *npbit );
+          QByteArray str( npbit.next() );
           if( !str.isEmpty() ) {
             htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
             kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
@@ -2598,7 +2598,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
             KGlobal::instance()->iconLoader()->iconPath( "quoteexpand",0 ));
     }
 
-    for (unsigned int p=0; p<line.length(); p++) {
+    for (int p=0; p<line.length(); p++) {
       switch (line[p].latin1()) {
         case '>':
         case '|':

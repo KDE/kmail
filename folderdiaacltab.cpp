@@ -160,7 +160,7 @@ void KMail::ACLEntryDialog::slotSelectAddresses()
   QString txt = distrLists.join( ", " );
   const KABC::Addressee::List lst = dlg.toAddresses();
   if ( !lst.isEmpty() ) {
-    for( QList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+    for( QLinkedList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
       if ( !txt.isEmpty() )
         txt += ", ";
       txt += addresseeToUserId( *it, mUserIdFormat );

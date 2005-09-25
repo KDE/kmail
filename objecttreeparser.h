@@ -203,7 +203,7 @@ namespace KMail {
         we only check whether @p str contains 'xxx="http[s]:' where xxx is
         not href. Obfuscated external references are ignored on purpose.
     */
-    static bool containsExternalReferences( const Q3CString & str );
+    static bool containsExternalReferences( const QString & str );
 
   public:// (during refactoring)
 

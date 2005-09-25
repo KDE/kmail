@@ -884,7 +884,7 @@ Q3CString KMFolderMbox::escapeFrom( const Q3CString & str ) {
 //-----------------------------------------------------------------------------
 Q3CString& KMFolderMbox::getMsgString(int idx, Q3CString &mDest)
 {
-  unsigned long msgSize;
+  size_t msgSize;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
   assert(mi!=0);
@@ -1154,14 +1154,14 @@ if( fileD1.open( IO_WriteOnly ) ) {
   return 0;
 }
 
-int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
+int KMFolderMbox::compact( int startIndex, int nbMessages, FILE* tmpfile, off_t& offs, bool& done )
 {
   int rc = 0;
   Q3CString mtext;
-  unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
-                           QMIN( mMsgList.count(), startIndex + nbMessages );
+  int stopIndex = nbMessages == -1 ? mMsgList.count() :
+                           qMin( (int)mMsgList.count(), startIndex + nbMessages );
   //kdDebug(5006) << "KMFolderMbox: compacting from " << startIndex << " to " << stopIndex << endl;
-  for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
+  for(int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);
     size_t msize = mi->msgSize();
     if (mtext.size() < msize + 2)
@@ -1179,7 +1179,7 @@ int KMFolderMbox::compact( unsigned int startIndex, int nbMessages, FILE* tmpfil
         mtext.resize(20);
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
-        if ( mtext.contains( "from ", false ) ) {
+        if ( mtext.find( "from " ) ) {
           if (mtext.size() < (size_t)folder_offset)
               mtext.resize(folder_offset);
           if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||

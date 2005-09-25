@@ -246,7 +246,7 @@ void KMMsgPartDialog::setDescription( const QString & description ) {
 
 KMMsgPartDialog::Encoding KMMsgPartDialog::encoding() const {
   QString s = mEncoding->currentText();
-  for ( unsigned int i = 0 ; i < mI18nizedEncodings.count() ; ++i )
+  for ( int i = 0 ; i < mI18nizedEncodings.count() ; ++i )
     if ( s == mI18nizedEncodings.at(i) )
       return encodingTypes[i].encoding;
   kdFatal(5006) << "KMMsgPartDialog::encoding(): Unknown encoding encountered!"
@@ -372,8 +372,8 @@ void KMMsgPartDialogCompat::setMsgPart( KMMessagePart * aMsgPart )
   setFileName( mMsgPart->fileName() );
   setMimeType( mMsgPart->typeStr(), mMsgPart->subtypeStr() );
   setSize( mMsgPart->decodedSize() );
-  setInline( mMsgPart->contentDisposition()
-	     .find( QRegExp("^\\s*inline", false) ) >= 0 );
+  QString cd(mMsgPart->contentDisposition());
+  setInline( cd.indexOf( QRegExp("^\\s*inline", false) ) >= 0 );
 }
 
 

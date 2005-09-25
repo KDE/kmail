@@ -394,15 +394,15 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
 kdDebug(5006) << "is valid Multipart, processing children:" << endl;
-        Q3CString boundary = headers->ContentType().Boundary().c_str();
+        QByteArray boundary = headers->ContentType().Boundary().c_str();
         curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
 kdDebug(5006) << "--boundary" << endl;
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
-            resultingData += Q3CString( "\n" );
-          resultingData += Q3CString( "\n" );
+            resultingData += QByteArray( "\n" );
+          resultingData += QByteArray( "\n" );
           resultingData += "--";
           resultingData += boundary;
           resultingData += "\n";
@@ -2076,7 +2076,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
     QString str = aMsgPart->bodyDecoded();
     // A QString cannot handle binary data. So if it's shorter than the
     // attachment, we assume the attachment is binary:
-    if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
+    if( str.length() < aMsgPart->decodedSize() ) {
       str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]",
           "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
           str.length());

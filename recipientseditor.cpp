@@ -727,8 +727,10 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   mTotalLabel->hide();
 
   topLayout->addStretch( 1 );
-
+#warning Port me!
+#if 0
   new RecipientsToolTip( view, mTotalLabel );
+#endif
 
   mDistributionListButton = new QPushButton( i18n("Save List..."), this );
   topLayout->addWidget( mDistributionListButton );

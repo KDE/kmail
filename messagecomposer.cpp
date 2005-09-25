@@ -623,13 +623,13 @@ void MessageComposer::adjustCryptFlags()
       mAllowedCryptoMessageFormats |= Kleo::OpenPGPMIMEFormat;
       if ( mSigningRequested ) {
         // The composer window disabled signing on the attachments, re-enable it
-        for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx )
+        for ( int idx = 0 ; idx < mAttachments.size() ; ++idx )
           mAttachments[idx].sign = true;
       }
       if ( mEncryptionRequested ) {
         // The composer window disabled encrypting on the attachments, re-enable it
         // We assume this is what the user wants - after all he chose OpenPGP/MIME for this.
-        for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx )
+        for ( int idx = 0 ; idx < mAttachments.size() ; ++idx )
           mAttachments[idx].encrypt = true;
       }
     }
@@ -676,7 +676,7 @@ void MessageComposer::adjustCryptFlags()
   // check settings of composer buttons *and* attachment check boxes
   bool doSignCompletely    = mSigningRequested;
   bool doEncryptCompletely = mEncryptionRequested;
-  for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx ) {
+  for ( int idx = 0 ; idx < mAttachments.size() ; ++idx ) {
     if ( mAttachments[idx].encrypt )
       mEncryptionRequested = true;
     else
@@ -1357,7 +1357,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   theMessage.setBody( "This message is in MIME format." );
 
   // preprocess the body text
-  Q3CString body = bodyText();
+  QByteArray body = bodyText();
   if (body.isNull()) {
     mRc = false;
     return;
@@ -1526,7 +1526,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
         Q3CString tmpbody = innerDwPart->AsString().c_str();
         int boundPos = tmpbody.find( '\n' );
         if( -1 < boundPos ) {
-          Q3CString bStr( ";\n  boundary=\"" );
+          QByteArray bStr( ";\n  boundary=\"" );
           bStr += mSaveBoundary.c_str();
           bStr += "\"";
           body = innerDwPart->AsString().c_str();
@@ -1588,10 +1588,10 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       int boundPos = mEncodedBody.find( '\n' );
       if( -1 < boundPos ) {
         // insert new "boundary" parameter
-        Q3CString bStr( ";\n  boundary=\"" );
+        QByteArray bStr( ";\n  boundary=\"" );
         bStr += boundaryCStr;
         bStr += "\"";
-        mEncodedBody.insert( boundPos, bStr );
+        mEncodedBody.insert( boundPos, bStr.data() );
       }
     }
 
@@ -1849,7 +1849,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       (void)msg->asDwMessage(); // Assemble the message. One gets a completely empty message otherwise :/
     }
   } else { // no attachments in the final message
-    if( ourFineBodyPart.originalContentTypeStr() ) {
+    if( !ourFineBodyPart.originalContentTypeStr().isEmpty() ) {
       msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
       msg->headers().ContentType().Parse();
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
@@ -1905,7 +1905,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
   bool bOk = true;
 
   if ( makeMimeObject( format, signing ) ) {
-    Q3CString mainHeader = "Content-Type: ";
+    QByteArray mainHeader = "Content-Type: ";
     const char * toplevelCT = toplevelContentType( format, signing );
     if ( toplevelCT )
       mainHeader += toplevelCT;
@@ -1916,7 +1916,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
         mainHeader += contentTypeClear + '/' + contentSubtypeClear;
     }
 
-    const Q3CString boundaryCStr = KMime::multiPartBoundary();
+    const QByteArray boundaryCStr = KMime::multiPartBoundary();
     // add "boundary" parameter
     if ( makeMultiMime( format, signing ) )
       mainHeader.replace( "%boundary", boundaryCStr );
@@ -1942,8 +1942,8 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
 
     //kdDebug(5006) << "processStructuringInfo: mainHeader=" << mainHeader << endl;
 
-    DwString mainDwStr;
-    mainDwStr = mainHeader + "\n\n";
+    DwString mainDwStr( mainHeader.data() );
+    mainDwStr += "\n\n";
     DwBodyPart mainDwPa( mainDwStr, 0 );
     mainDwPa.Parse();
     KMMessage::bodyPart( &mainDwPa, &resultingPart );
