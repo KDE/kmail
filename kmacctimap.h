@@ -23,9 +23,8 @@
 #define KMAcctImap_h
 
 #include "imapaccountbase.h"
-#include <q3dict.h>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QHash>
+#include <QList>
 #include <Q3PtrList>
 
 class KMFolderImap;
@@ -147,8 +146,8 @@ private:
   /** used to reset connection errors */
   QTimer mErrorTimer;
   int mCountRemainChecks;
-  Q3ValueList<Q_UINT32> mFilterSerNums;
-  Q3Dict<int> mFilterSerNumsToSave;
+  QList<Q_UINT32> mFilterSerNums;
+  QHash<QString, int> mFilterSerNumsToSave;
   KMail::ActionScheduler *mScheduler;
 };
 

@@ -24,8 +24,7 @@
 #endif
 
 #include "kmacctimap.h"
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 using KMail::SieveConfig;
 
@@ -71,12 +70,11 @@ KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums = config.readListEntry( "unfiltered" );
-  mFilterSerNumsToSave.setAutoDelete( false );
   
   for ( QStringList::ConstIterator it = serNums.begin();
 	it != serNums.end(); ++it ) {
       mFilterSerNums.append( (*it).toUInt() );
-      mFilterSerNumsToSave.insert( *it, (const int *)1 );
+      mFilterSerNumsToSave.insert( *it, 1 );
     }
 }
 
@@ -90,9 +88,10 @@ KMAcctImap::~KMAcctImap()
 				   QString("%1").arg(KAccount::id()) );
   KConfig config( serNumUri );
   QStringList serNums;
-  Q3DictIterator<int> it( mFilterSerNumsToSave );
-  for( ; it.current(); ++it )
-      serNums.append( it.currentKey() );
+  QHashIterator<QString, int> it( mFilterSerNumsToSave );
+  while ( it.hasNext() ) {
+    serNums.append( it.key() );
+  }
   config.writeEntry( "unfiltered", serNums );
 }
 
@@ -238,7 +237,7 @@ void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
 void KMAcctImap::cancelMailCheck()
 {
   // Make list of folders to reset, like in killAllJobs
-  Q3ValueList<KMFolderImap*> folderList;
+  QList<KMFolderImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (; it != mapJobData.end(); ++it) {
     if ( (*it).cancellable && (*it).parent ) {
@@ -251,7 +250,7 @@ void KMAcctImap::cancelMailCheck()
   killAllJobs( true );
   // emit folderComplete, this is important for
   // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
-  for( Q3ValueList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+  for( QList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderImap *fld = *it;
     fld->sendFolderComplete(FALSE);
   }
@@ -297,7 +296,7 @@ void KMAcctImap::processNewMail(bool interactive)
             this,
             SLOT( slotMailCheckCanceled() ) );
 
-  Q3ValueList<QPointer<KMFolder> >::Iterator it;
+  QLinkedList<QPointer<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
   mCountUnread = 0;
@@ -398,8 +397,8 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   }
 
   // Filter messages
-  Q3ValueListIterator<Q_UINT32> filterIt = mFilterSerNums.begin();
-  Q3ValueList<Q_UINT32> inTransit;
+  QListIterator<Q_UINT32> filterIt( mFilterSerNums );
+  QList<Q_UINT32> inTransit;
 
   if (ActionScheduler::isEnabled() || 
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
@@ -414,16 +413,16 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     }
   }
 
-  while (filterIt != mFilterSerNums.end()) {
+  while ( filterIt.hasNext() ) {
     int idx = -1;
     KMFolder *folder = 0;
     KMMessage *msg = 0;
-    KMMsgDict::instance()->getLocation( *filterIt, &folder, &idx );
+    Q_UINT32 sernum = filterIt.next();
+    KMMsgDict::instance()->getLocation( sernum, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
     // different folder, or that the serNum is stale
     if ( !folder ) {
-      mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-      ++filterIt;
+      mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
       continue;
     }
     
@@ -431,8 +430,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     if (!imapFolder ||
 	!imapFolder->folder()->isSystemFolder() ||
         !(imapFolder->imapPath() == "/INBOX/") ) { // sanity checking
-      mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-      ++filterIt;
+      mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
       continue;
     }
 
@@ -440,8 +438,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
 
       msg = folder->getMsg( idx );
       if (!msg) { // sanity checking
-        mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
-        ++filterIt;
+        mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
         continue;
       }
 
@@ -450,8 +447,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
 	mScheduler->execFilters( msg );
       } else {
 	if (msg->transferInProgress()) {
-	  inTransit.append( *filterIt );
-	  ++filterIt;
+	  inTransit.append( sernum );
 	  continue;
 	}
 	msg->setTransferInProgress(true);
@@ -461,12 +457,11 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
 		  SLOT(slotFilterMsg(KMMessage*)));
 	  job->start();
 	} else {
-	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( *filterIt ) );
+	  mFilterSerNumsToSave.remove( QString( "%1" ).arg( sernum ) );
 	  if (slotFilterMsg(msg) == 2) break;
 	}
       }
     }
-    ++filterIt;
   }
   mFilterSerNums = inTransit;
   
@@ -502,9 +497,9 @@ void KMAcctImap::slotUpdateFolderList()
   kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
     mFolder->folder()->child(), QString::null, false);
   // the new list
-  Q3ValueList<QPointer<KMFolder> > includedFolders;
+  QList<QPointer<KMFolder> > includedFolders;
   // check for excluded folders
-  Q3ValueList<QPointer<KMFolder> >::Iterator it;
+  QLinkedList<QPointer<KMFolder> >::Iterator it;
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolderImap* folder = static_cast<KMFolderImap*>(((KMFolder*)(*it))->storage());
@@ -568,11 +563,11 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
 void KMAcctImap::execFilters(Q_UINT32 serNum)
 {
   if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
-  Q3ValueListIterator<Q_UINT32> findIt = mFilterSerNums.find( serNum );
+  QList<Q_UINT32>::iterator findIt = mFilterSerNums.find( serNum );
   if ( findIt != mFilterSerNums.end() )
       return;
   mFilterSerNums.append( serNum );
-  mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), (const int *)1 );
+  mFilterSerNumsToSave.insert( QString( "%1" ).arg( serNum ), 1 );
 }
 
 int KMAcctImap::slotFilterMsg( KMMessage *msg )
