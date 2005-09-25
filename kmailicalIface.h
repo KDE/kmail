@@ -33,11 +33,10 @@
 #define KMAILICALIFACE_H
 
 #include <dcopobject.h>
-#include <qstringlist.h>
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <Q3CString>
 #include <kurl.h>
+
+#include <QList>
+#include <QStringList>
 
 // yes, this is this very header - but it tells dcopidl to include it
 // in _stub.cpp and _skel.cpp files, to get the definition of the structs.
@@ -86,7 +85,7 @@ k_dcop:
                            Q_UINT32 sernum,
                            const QString& subject,
                            const QString& plainTextBody,
-                           const QMap<Q3CString, QString>& customHeaders,
+                           const QMap<QByteArray, QString>& customHeaders,
                            const QStringList& attachmentURLs,
                            const QStringList& attachmentMimetypes,
                            const QStringList& attachmentNames,
@@ -108,7 +107,7 @@ k_dcop:
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal
    */
-  virtual Q3ValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
+  virtual QList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
   /**
    * Causes all resource folders of the given type to be synced with the server.

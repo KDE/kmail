@@ -1,4 +1,4 @@
-/*
+/* 
     This file is part of KMail.
 
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
@@ -370,7 +370,7 @@ static void setXMLContentTypeHeader( KMMessage *msg, const QString plainTextBody
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
                                                 const QString& plainTextBody,
-                                                const QMap<Q3CString, QString>& customHeaders,
+                                                const QMap<QByteArray, QString>& customHeaders,
                                                 const QStringList& attachmentURLs,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
@@ -386,8 +386,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
 
-  QMap<Q3CString, QString>::ConstIterator ith = customHeaders.begin();
-  const QMap<Q3CString, QString>::ConstIterator ithEnd = customHeaders.end();
+  QMap<QByteArray, QString>::ConstIterator ith = customHeaders.begin();
+  const QMap<QByteArray, QString>::ConstIterator ithEnd = customHeaders.end();
   for ( ; ith != ithEnd ; ++ith ) {
     msg->setHeaderField( ith.key(), ith.data() );
   }
@@ -603,9 +603,9 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 }
 
 /* list all available subresources */
-Q3ValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
+QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
-  Q3ValueList<SubResource> subResources;
+  QList<SubResource> subResources;
 
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
@@ -700,7 +700,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
                                      const QString& plainTextBody,
-                                     const QMap<Q3CString, QString>& customHeaders,
+                                     const QMap<QByteArray, QString>& customHeaders,
                                      const QStringList& attachmentURLs,
                                      const QStringList& attachmentMimetypes,
                                      const QStringList& attachmentNames,
@@ -735,8 +735,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
-    QMap<Q3CString, QString>::ConstIterator ith = customHeaders.begin();
-    const QMap<Q3CString, QString>::ConstIterator ithEnd = customHeaders.begin();
+    QMap<QByteArray, QString>::ConstIterator ith = customHeaders.begin();
+    const QMap<QByteArray, QString>::ConstIterator ithEnd = customHeaders.begin();
     for ( ; ith != ithEnd ; ++ith )
       newMsg->setHeaderField( ith.key(), ith.data() );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.

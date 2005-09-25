@@ -101,7 +101,7 @@ public:
                    Q_UINT32 sernum,
                    const QString& subject,
                    const QString& plainTextBody,
-                   const QMap<Q3CString, QString>& customHeaders,
+                   const QMap<QByteArray, QString>& customHeaders,
                    const QStringList& attachmentURLs,
                    const QStringList& attachmentMimetypes,
                    const QStringList& attachmentNames,
@@ -116,7 +116,7 @@ public:
                                            int startIndex,
                                            int nbMessages );
 
-  Q3ValueList<SubResource> subresourcesKolab( const QString& contentsType );
+  QList<SubResource> subresourcesKolab( const QString& contentsType );
 
   bool triggerSync( const QString& contentsType );
 
@@ -257,7 +257,7 @@ private:
   Q_UINT32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
                               const QString& plainTextBody,
-                              const QMap<Q3CString, QString>& customHeaders,
+                              const QMap<QByteArray, QString>& customHeaders,
                               const QStringList& attachmentURLs,
                               const QStringList& attachmentNames,
                               const QStringList& attachmentMimetypes );

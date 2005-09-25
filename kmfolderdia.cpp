@@ -133,7 +133,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     }
   }
 
-  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
+  for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->load();
 }
 
@@ -155,7 +155,7 @@ void KMFolderDialog::slotApply()
     KDialogBase::slotApply();
     return;
   }
-  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
+  for ( int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
     mIsNewFolder = false; // so it's not new anymore :)
@@ -173,7 +173,7 @@ void KMFolderDialog::slotOk()
   }
 
   mDelayedSavingTabs = 0; // number of tabs which need delayed saving
-  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i ) {
+  for ( int i = 0 ; i < mTabs.count() ; ++i ) {
     FolderDiaTab::AcceptStatus s = mTabs[i]->accept();
     if ( s == FolderDiaTab::Canceled ) {
       slotCancelAccept();

@@ -640,7 +640,7 @@ KMMsgStatus KMKernel::strToStatus(const QString &flags)
 {
     KMMsgStatus status = 0;
     if (!flags.isEmpty()) {
-        for (uint n = 0; n < flags.length() ; n++) {
+        for (int n = 0; n < flags.length() ; n++) {
             switch (flags[n].toLatin1()) {
                 case 'N':
                     status |= KMMsgStatusNew;
