@@ -1472,6 +1472,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   if ( destFolder == mFolder ) return; // Catch the noop case
 
   KMMessageList msgList = *selectedMsgs();
+  if ( msgList.isEmpty( ) ) return;
   if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          i18n("<qt>Do you really want to delete the selected message?<br>"
