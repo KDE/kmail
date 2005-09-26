@@ -1748,32 +1748,6 @@ void KMKernel::ungrabPtrKb(void)
 }
 
 
-// Message handler
-void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
-{
-  static int recurse=-1;
-
-  recurse++;
-
-  switch (aType)
-  {
-  case QtDebugMsg:
-  case QtWarningMsg:
-    kdDebug(5006) << aMsg << endl;
-    break;
-
-  case QtFatalMsg: // Hm, what about using kdFatal() here?
-    ungrabPtrKb();
-    kdDebug(5006) << kapp->caption() << " fatal error "
-		  << aMsg << endl;
-    KMessageBox::error(0, aMsg);
-    abort();
-  }
-
-  recurse--;
-}
-
-
 void KMKernel::dumpDeadLetters()
 {
   if ( shuttingDown() )

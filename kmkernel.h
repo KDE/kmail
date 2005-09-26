@@ -242,7 +242,6 @@ public:
    */
   bool transferMail( QString & destinationDir );
   void ungrabPtrKb(void);
-  void kmailMsgHandler(QtMsgType aType, const char* aMsg);
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
