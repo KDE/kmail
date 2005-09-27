@@ -2023,6 +2023,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
+  newMessage->setComplete( msg->isComplete() );
   win->showMsg( mCodec, newMessage );
   win->show();
 }
