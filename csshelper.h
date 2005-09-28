@@ -38,7 +38,7 @@ namespace KMail {
 
   class CSSHelper : public KPIM::CSSHelper {
   public:
-    CSSHelper( const Q3PaintDeviceMetrics &pdm );
+    CSSHelper( const QPaintDevice *pd );
   };
 
 } // namespace KMail

@@ -41,8 +41,8 @@
 
 namespace KMail {
 
-  CSSHelper::CSSHelper( const Q3PaintDeviceMetrics &pdm ) :
-    KPIM::CSSHelper( pdm )
+  CSSHelper::CSSHelper( const QPaintDevice *pd ) :
+    KPIM::CSSHelper( pd )
   {
     KConfig * config = KMKernel::config();
 
