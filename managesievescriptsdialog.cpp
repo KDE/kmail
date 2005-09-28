@@ -32,7 +32,8 @@ inline const Q3CheckListItem * qcli_cast( const Q3ListViewItem * lvi ) {
 }
 
 KMail::ManageSieveScriptsDialog::ManageSieveScriptsDialog( QWidget * parent, const char * name )
-  : KDialogBase( Plain, i18n( "Manage Sieve Scripts" ), Ok|Close, Ok, parent, name, false ),
+  : KDialogBase( Plain, i18n( "Manage Sieve Scripts" ), Close, Close,
+    parent, name, false ),
     mSieveEditor( 0 ),
     mContextMenuItem( 0 ),
     mWasActive( false )
