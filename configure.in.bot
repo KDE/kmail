@@ -9,6 +9,7 @@ no)
 	;;
 ignore)
 	echo "You have not enabled indexlib. Full-text indexing"
-	echo "in KMail is disabled."
+	echo "in KMail is disabled. You can use --with-indexlib to"
+	echo "enable indexlib and full-text indexing."
 	;;
 esac
