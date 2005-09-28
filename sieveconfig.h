@@ -39,7 +39,8 @@ namespace KMail {
       : mManagesieveSupported( other.managesieveSupported() ),
 	mReuseConfig( other.reuseConfig() ),
 	mPort( other.port() ),
-	mAlternateURL( other.alternateURL() ) {}
+	mAlternateURL( other.alternateURL() ),
+	mVacationFileName( other.vacationFileName() ) {}
 
     bool managesieveSupported() const {
       return mManagesieveSupported;
