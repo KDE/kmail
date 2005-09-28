@@ -34,7 +34,12 @@ class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
 
-/** The new status format. These can be or'd together. */
+/** The new status format. These can be or'd together. 
+    Note, that the KMMsgStatusIgnored implies the
+    status to be Read even if the flags are set
+    to Unread or New. This is done in KMMsgBase::isRead()
+    and related getters. So we can preserve the state
+    when switching a thread to Ignored and back. */
 enum MsgStatus
 {
     KMMsgStatusUnknown =           0x00000000,
@@ -49,7 +54,7 @@ enum MsgStatus
     KMMsgStatusSent =              0x00000100,
     KMMsgStatusFlag =              0x00000200, // flag means important
     KMMsgStatusWatched =           0x00000400,
-    KMMsgStatusIgnored =           0x00000800,
+    KMMsgStatusIgnored =           0x00000800, // forces isRead()
     KMMsgStatusTodo =              0x00001000,
     KMMsgStatusSpam =              0x00002000,
     KMMsgStatusHam =               0x00004000,

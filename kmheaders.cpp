@@ -872,10 +872,8 @@ void KMHeaders::msgAdded(int id)
 
     if (parent && mFolder->getMsgBase(parent->id())->isWatched())
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
-    else if (parent && mFolder->getMsgBase(parent->id())->isIgnored()) {
+    else if (parent && mFolder->getMsgBase(parent->id())->isIgnored())
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
-      mFolder->setStatus( id, KMMsgStatusRead );
-    }
     if (parent)
       hi = new HeaderItem( parent->item(), id );
     else
@@ -3154,10 +3152,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 // children
                 if (mFolder->getMsgBase(i->id())->isWatched())
                   mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusWatched);
-                if (mFolder->getMsgBase(i->id())->isIgnored()) {
+                if (mFolder->getMsgBase(i->id())->isIgnored())
                   mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusIgnored);
-                  mFolder->setStatus(new_kci->id(), KMMsgStatusRead);
-                }
                 khi = new HeaderItem(i->item(), new_kci->id(), new_kci->key());
             } else {
                 khi = new HeaderItem(this, new_kci->id(), new_kci->key());
