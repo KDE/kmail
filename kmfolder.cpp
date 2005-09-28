@@ -549,7 +549,7 @@ QString KMFolder::label() const
   if ( !mLabel.isEmpty() )
      return mLabel;
   if ( isSystemFolder() )
-     return i18n( name().latin1() );
+     return i18n( name().utf8() );
   return name();
 }
 
