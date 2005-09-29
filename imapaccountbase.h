@@ -1,4 +1,4 @@
-/** -*- c++ -*-
+/* -*- c++ -*-
  * imapaccountbase.h
  *
  * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>

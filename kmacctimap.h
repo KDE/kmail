@@ -1,4 +1,4 @@
-/** -*- mode: C++ -*-
+/* -*- mode: C++ -*-
  * kmacctimap.h
  *
  * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
