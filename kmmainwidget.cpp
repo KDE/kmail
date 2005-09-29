@@ -1650,11 +1650,11 @@ void KMMainWidget::slotOnlineStatus()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     // if online; then toggle and set it offline.
-    actionCollection()->action( "online_status" )->setText( i18n("Network State (online)") );
+    actionCollection()->action( "online_status" )->setText( i18n("Go Online") );
     kmkernel->stopNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   } else {
-    actionCollection()->action( "online_status" )->setText( i18n("Network State (offline)") );
+    actionCollection()->action( "online_status" )->setText( i18n("Go Offline)") );
     kmkernel->resumeNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
@@ -3006,9 +3006,9 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
-      actionCollection()->action( "online_status" )->setText( i18n("Network State (offline)") );
+      actionCollection()->action( "online_status" )->setText( i18n("Go Offline") );
     else
-      actionCollection()->action( "online_status" )->setText( i18n("Network State (online)") );
+      actionCollection()->action( "online_status" )->setText( i18n("Go Online") );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
