@@ -1042,7 +1042,9 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
   if (!suffix_regex)
       suffix_regex_sd.setObject(suffix_regex, new QRegExp(":2,?R?S?$"));
 
-  aFileName.truncate(aFileName.findRev(*suffix_regex));
+  int pos = aFileName.lastIndexOf( *suffix_regex );
+  if ( pos >= 0 )
+    aFileName.truncate( pos );
 
   // only add status suffix if the message is neither new nor unread
   if (! ((status & KMMsgStatusNew) || (status & KMMsgStatusUnread)) )
