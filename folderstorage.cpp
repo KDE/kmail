@@ -818,10 +818,12 @@ void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
   int oldUnread = 0;
   int newUnread = 0;
 
-  if (oldStatus & KMMsgStatusUnread || oldStatus & KMMsgStatusNew ||
+  if (((oldStatus & KMMsgStatusUnread || oldStatus & KMMsgStatusNew) &&
+      !(oldStatus & KMMsgStatusIgnored)) ||
       (folder() == kmkernel->outboxFolder()))
     oldUnread = 1;
-  if (newStatus & KMMsgStatusUnread || newStatus & KMMsgStatusNew ||
+  if (((newStatus & KMMsgStatusUnread || newStatus & KMMsgStatusNew) &&
+      !(newStatus & KMMsgStatusIgnored)) ||
       (folder() == kmkernel->outboxFolder()))
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
