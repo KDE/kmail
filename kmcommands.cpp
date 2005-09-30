@@ -2756,12 +2756,12 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
     kdDebug(5006) << k_funcinfo << "rewriting attachment" << endl;
     // there is something wrong so write the file again
     QByteArray data = mNode->msgPart().bodyDecodedBinary();
-    size_t size = data.size();
-    if ( mNode->msgPart().type() == DwMime::kTypeText && size) {
+    if ( mNode->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
       // convert CRLF to LF before writing text attachments to disk
-      size = KMail::Util::crlf2lf( data.data(), size );
+      const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
+      data.truncate( newsize );
     }
-    KPIM::kBytesToFile( data.data(), size, mAtmName, false, false, false );
+    KPIM::kByteArrayToFile( data, mAtmName, false, false, false );
   }
 
   KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),

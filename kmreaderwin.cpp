@@ -858,11 +858,12 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
   // we have to set it writeable temporarily
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
   QByteArray data = node->msgPart().bodyDecodedBinary();
-  size_t size = data.size();
-  if ( node->msgPart().type() == DwMime::kTypeText && size) {
-    size = KMail::Util::crlf2lf( data.data(), size );
+  if ( node->msgPart().type() == DwMime::kTypeText && data.size() > 0 ) {
+    // convert CRLF to LF before writing text attachments to disk
+    const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
+    data.truncate( newsize );
   }
-  KPIM::kBytesToFile( data.data(), size, mAtmCurrentName, false, false, false );
+  KPIM::kByteArrayToFile( data, mAtmCurrentName, false, false, false );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
 }
 
@@ -1683,12 +1684,12 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
   fname += "/" + fileName;
 
   QByteArray data = aMsgPart->bodyDecodedBinary();
-  size_t size = data.size();
-  if ( aMsgPart->type() == DwMime::kTypeText && size) {
+  if ( aMsgPart->type() == DwMime::kTypeText && data.size() > 0 ) {
     // convert CRLF to LF before writing text attachments to disk
-    size = KMail::Util::crlf2lf( data.data(), size );
+    const size_t newsize = KMail::Util::crlf2lf( data.data(), data.size() );
+    data.truncate( newsize );
   }
-  if( !KPIM::kBytesToFile( data.data(), size, fname, false, false, false ) )
+  if( !KPIM::kByteArrayToFile( data, fname, false, false, false ) )
     return QString::null;
 
   mTempFiles.append( fname );
