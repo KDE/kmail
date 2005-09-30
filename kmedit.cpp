@@ -510,7 +510,8 @@ void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   setAutoUpdate(false);
   clear();
 
-  insertLine(QString::fromLocal8Bit(KPIM::kFileToString( fileName, true, false )), -1);
+  QByteArray ba = KPIM::kFileToByteArray( fileName, true, false );
+  insertLine( QString::fromLocal8Bit( ba.data(), ba.size() ), -1 );
   setAutoUpdate(true);
   repaint();
 }

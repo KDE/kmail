@@ -613,9 +613,9 @@ Q3CString& KMFolderMaildir::getMsgString(int idx, Q3CString& mDest)
 
   QFileInfo fi( abs_file );
   mDest.resize(fi.size()+2);
-  mDest = KPIM::kFileToString(abs_file, false, false);
-  size_t newMsgSize = KMail::Util::crlf2lf( mDest.data(), fi.size() );
-  mDest[newMsgSize] = '\0';
+  mDest = KPIM::kFileToByteArray( abs_file, false, false );
+  const size_t newMsgSize = KMail::Util::crlf2lf( mDest.data(), fi.size() );
+  mDest.truncate( newMsgSize );
   return mDest;
 }
 

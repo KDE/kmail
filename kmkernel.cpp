@@ -384,9 +384,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.latin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    Q3CString str = KPIM::kFileToString( messageFile.path(), true, false );
+    QByteArray str = KPIM::kFileToByteArray( messageFile.path(), true, false );
     if( !str.isEmpty() )
-      msg->setBody( QString::fromLocal8Bit( str ).utf8() );
+      msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).utf8() );
   }
   else if (!body.isEmpty())
     msg->setBody(body.utf8());
@@ -728,15 +728,8 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
 
   if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
 
-    // This is a proposed change by Daniel Andor.
-    // He proposed to change from the fopen(blah)
-    // to a KPIM::kFileToString(blah).
-    // Although it assigns a QString to a QString,
-    // because of the implicit sharing this poses
-    // no memory or performance penalty.
-
-    const Q3CString messageText =
-      KPIM::kFileToString( msgUrl.path(), true, false );
+    const QByteArray messageText =
+      KPIM::kFileToByteArray( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 
@@ -915,8 +908,8 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
 
 
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
-    const Q3CString messageText =
-      KPIM::kFileToString( msgUrl.path(), true, false );
+    const QByteArray messageText =
+      KPIM::kFileToByteArray( msgUrl.path(), true, false );
     if ( messageText.isEmpty() )
       return -2;
 
