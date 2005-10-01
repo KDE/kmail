@@ -306,8 +306,8 @@ const DwMessage *KMMessage::asDwMessage()
 }
 
 //-----------------------------------------------------------------------------
-Q3CString KMMessage::asString() const {
-  return asDwString().c_str();
+QByteArray KMMessage::asString() const {
+  return QByteArray( asDwString().c_str() );
 }
 
 

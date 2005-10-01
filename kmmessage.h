@@ -227,7 +227,7 @@ public:
       underlying mimelib, then you should use the asDwString function.
       @see asDwString
   */
-  Q3CString asString() const;
+  QByteArray asString() const;
 
   /**
    * Return the message contents with the headers that should not be
