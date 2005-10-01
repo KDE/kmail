@@ -362,7 +362,7 @@ void ProfileDialog::slotOk() {
   if ( index < 0 )
     return; // none selected
 
-  assert( (unsigned int)index < mProfileList.count() );
+  assert( index < mProfileList.count() );
 
   KConfig profile( mProfileList.at(index), true, false );
   emit profileSelected( &profile );

@@ -622,7 +622,7 @@ void KMComposeWin::readConfig(void)
 
   mTransport->clear();
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
-  while ( transportHistory.count() > (uint)GlobalSettings::self()->maxTransportEntries() )
+  while ( transportHistory.count() > GlobalSettings::self()->maxTransportEntries() )
     transportHistory.remove( transportHistory.last() );
   mTransport->insertStringList( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
@@ -2660,9 +2660,9 @@ void KMComposeWin::slotInsertFile()
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
     uint mMaxRecentFiles = 30;
-    while (urls.count() > mMaxRecentFiles)
+    while ((uint)urls.count() > mMaxRecentFiles)
       urls.erase( urls.fromLast() );
-    while (encodings.count() > mMaxRecentFiles)
+    while ((uint)encodings.count() > mMaxRecentFiles)
       urls.erase( encodings.fromLast() );
     // sanity check
     if (urls.count() != encodings.count()) {
