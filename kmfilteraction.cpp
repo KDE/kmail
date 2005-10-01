@@ -453,7 +453,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       aTempFileList.append( tf );
       tempFileName = tf->name();
       if ((*it) == -1)
-        KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
+        KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                           false, false, false );
       else if (aMsg->numBodyParts() == 0)
         KPIM::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
@@ -518,7 +518,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // write message to file
   QString tempFileName = inFile->name();
-  KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
+  KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
                   false, false, false );
   inFile->close();
 
@@ -1702,7 +1702,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   // write message to file
   QString tempFileName = inFile->name();
-  KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
+  KPIM::kByteArrayToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
   inFile->close();
 

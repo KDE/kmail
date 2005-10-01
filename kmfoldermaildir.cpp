@@ -380,11 +380,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
-  long len;
-  unsigned long size;
   bool opened = false;
   KMFolder* msgParent;
-  Q3CString msgText;
   int idx(-1);
   int rc;
 
@@ -408,16 +405,14 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->removeHeaderField( "X-UID" );
 
-  msgText = aMsg->asString();
-  len = msgText.length();
+  const QByteArray msgText = aMsg->asString();
 
   // Re-add the uid so that the take can make use of it, in case the
   // message is currently in an imap folder
   if ( !uidHeader.isEmpty() && stripUid )
     aMsg->setHeaderField( "X-UID", uidHeader );
 
-  if (len <= 0)
-  {
+  if ( msgText.length() <= 0 ) {
     kdDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
     return 0;
   }
@@ -428,11 +423,10 @@ if( fileD0.open( IO_WriteOnly ) ) {
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
 
-  if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, false))
+  if ( ! KPIM::kByteArrayToFile( msgText, tmp_file, false, false, false ) )
     kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") ); 
 
   QFile file(tmp_file);
-  size = msgText.length();
 
   if (!isOpened())
   {
@@ -486,7 +480,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
-  aMsg->setMsgSize(size);
+  aMsg->setMsgSize( msgText.length() );
   idx = mMsgList.append( &aMsg->toMsgBase(), mExportsSernums );
   if (aMsg->getMsgSerNum() <= 0)
     aMsg->setMsgSerNum();
