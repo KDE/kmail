@@ -156,6 +156,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       // clear folder state
       KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent->storage());
       fld->setCheckingValidity(false);
+      fld->quiet(false);
       fld->setContentState(KMFolderImap::imapNoInformation);
       fld->setSubfolderState(KMFolderImap::imapNoInformation);
       fld->sendFolderComplete(FALSE);
