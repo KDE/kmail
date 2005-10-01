@@ -249,19 +249,18 @@ public:
   }
 
 signals:
-#warning "kde4: signal can be signal"  
   /**
    * Emitted after the mail check is finished.
    * @param newMail true if there was new mail
    * @param status the status of the mail check
    **/
-  /*virtual*/ void finishedCheck( bool newMail, CheckStatus status );
+  void finishedCheck( bool newMail, CheckStatus status );
 
   /**
    * Emitted after the mail check is finished.
    * @param newInFolder number of new messages for each folder
    **/
-  /*virtual*/ void newMailsProcessed( const QMap<QString, int> & newInFolder );
+  void newMailsProcessed( const QMap<QString, int> & newInFolder );
 
 protected slots:
   virtual void mailCheck();
