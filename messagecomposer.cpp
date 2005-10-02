@@ -1982,7 +1982,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
       if ( binaryHint( format ) ) {
 	codeCStr += "Content-Transfer-Encoding: base64\n\n";
-	codeCStr += KMime::Codec::codecForName( "base64" )->encodeToQCString( ciphertext );
+	codeCStr += KMime::Codec::codecForName( "base64" )->encode( ciphertext );
       } else
 	codeCStr += '\n' + Q3CString( ciphertext.data(), ciphertext.size() + 1 );
 
