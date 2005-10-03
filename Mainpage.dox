@@ -786,13 +786,12 @@ What happens when a message is to displayed in the reader window?
   to be written that need or want to asynchronously update their HTML
   representation. This set of interfaces consists of the following:
 
-  BodyPartFormatterPlugin
+  - @em BodyPartFormatterPlugin
 	the plugin base class. Allows the BodyPartFormatterFactory to
 	query it for an arbitray number of BodyPartFormatters and
 	their associated metadata and url handlers.
 
-  BodyPartFormatter
-
+  - @em BodyPartFormatter
 	the formatter interface. Contains a single method format()
 	that takes a BodyPart to process and a HTMLWriter to write the
 	generated HTML to and returns a result code with which it can
@@ -801,7 +800,7 @@ What happens when a message is to displayed in the reader window?
 	Flyweights, implying that the format() method is not allowed
 	to maintain state between calls, but see Mememto below.
 
-  BodyPart
+  - @em BodyPart
 	body part interface. Contains methods to retrieve the content
 	of a message part and some of the more interesting header
 	information. This interface decouples the bodypart formatters
@@ -810,7 +809,7 @@ What happens when a message is to displayed in the reader window?
 	which is used by BodyPartFormatters to maintain state between
 	calls of format().
 
-  BodyPartMemento
+  - @em BodyPartMemento
 	interface for opaque state storage and event handling.
 	Contains only a virtual destructor to enable the backend
 	processing code to destroy the object without the help of the
@@ -833,6 +832,7 @@ display after 10 seconds. Initially, we just write out an icon, and
 after 10 seconds, we want to replace the icon by a "Hello world!"
 line. The following code does exactly this:
 
+@code
 class DelayedHelloWorldBodyPartFormatter
       : public KMail::BodyPartFormatter {
 public:
@@ -865,5 +865,6 @@ private:
   // need to reimplement this abstract method...
   bool update() { return true; }
 };
+@endcode
 
 */
