@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C)  2005  Till Adam <adam@kde.org>
  *
  * This file is subject to the GPL version 2.

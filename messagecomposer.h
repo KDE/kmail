@@ -1,4 +1,4 @@
-/**
+/*
  *  messagecomposer.cpp
  *
  *  Copyright (c) 2004 Bo Thorsen <bo@sonofthor.dk>

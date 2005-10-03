@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2004 David Faure <faure@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify

@@ -1,4 +1,4 @@
-/**
+/*
  * kmfolderimap.h
  *
  * Copyright (c) 2001 Kurt Granroth <granroth@kde.org>

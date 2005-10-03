@@ -1,4 +1,4 @@
-/**
+/*
  *  kmacctcachedimap.h
  *
  *  Copyright (c) 2002-2004 Bo Thorsen <bo@sonofthor.dk>
