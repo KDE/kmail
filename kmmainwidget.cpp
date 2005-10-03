@@ -1074,7 +1074,7 @@ void KMMainWidget::slotRemoveFolder()
              end( mFolder->acctList()->end() ); it != end; ++it ) {
         (*it)->setFolder( kmkernel->inboxFolder() );
         KMessageBox::information(this,
-            i18n("<qt>The folder you deleted was assoicated with the account "
+            i18n("<qt>The folder you deleted was associated with the account "
               "<b>%1</b> which delivered mail into it. The folder the account "
               "delivers new mail into was reset to the main Inbox folder.</qt>").arg( (*it)->name()));
       }
