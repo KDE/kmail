@@ -590,9 +590,9 @@ void KMFolderImap::slotListNamespaces()
     return;
   }
   kdDebug(5006) << "slotListNamespaces" << endl;
-  // reset subfolder states
+  // reset subfolder states recursively
   setSubfolderState( imapNoInformation );
-  mSubfolderState = imapInProgress;
+  mSubfolderState = imapListingInProgress;
   mAccount->setHasInbox( false );
 
   ImapAccountBase::ListType type = ImapAccountBase::List;
@@ -715,7 +715,7 @@ bool KMFolderImap::listDirectory()
     slotListNamespaces();
     return true;
   }
-  mSubfolderState = imapInProgress;
+  mSubfolderState = imapListingInProgress;
 
   // get the folders
   ImapAccountBase::ListType type = ImapAccountBase::List;
@@ -1158,7 +1158,7 @@ void KMFolderImap::getFolder(bool force)
     return;
   }
   open();
-  mContentState = imapInProgress;
+  mContentState = imapListingInProgress;
   if (force) {
     // force an update
     mCheckFlags = TRUE;
@@ -1195,6 +1195,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
   } else {
+    mContentState = imapDownloadInProgress;
     if ( mMailCheckProgressItem )
       mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
     url.setPath(imapPath() + ";UID=" + startUid
@@ -1221,12 +1222,9 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   if (job->error())
   {
     mAccount->handleJobError( job,
-        i18n("Error while listing the contents of the folder %1.").arg( label() ) );
-    quiet( false );
-    mContentState = imapNoInformation;
-    emit folderComplete(this, FALSE);
+         i18n("Error while listing the contents of the folder %1.").arg( label() ) );
     mAccount->removeJob(it);
-    close();
+    finishMailCheck( imapNoInformation );
     return;
   }
   mCheckFlags = FALSE;
@@ -1279,11 +1277,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
-    quiet(false);
-    mContentState = imapFinished;
-    emit folderComplete(this, TRUE);
+    finishMailCheck( imapFinished );
     mAccount->removeJob(it);
-    close();
     return;
   }
   if ( mMailCheckProgressItem )
@@ -1304,6 +1299,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   // Now kick off the getting of envelopes for the new mails in the folder
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
   {
+    mContentState = imapDownloadInProgress;
     KURL url = mAccount->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
@@ -1576,23 +1572,13 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
 {
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
-  if (job->error())
-  {
+  if (job->error()) {
     mAccount->handleJobError( job, i18n("Error while retrieving messages.") );
-    mContentState = imapNoInformation;
-    quiet( false );
-    emit folderComplete(this, false);
-    close();
+    finishMailCheck( imapNoInformation );
+    return;
   }
-  else
-  {
-    if (lastSet)
-    {
-      mContentState = imapFinished;
-      quiet(false);
-      emit folderComplete(this, true);
-      close();
-    }
+  if (lastSet) {
+    finishMailCheck( imapFinished );
     mAccount->removeJob(it);
   }
 }
@@ -1810,11 +1796,13 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
        mAccount->setImapStatus(folder(), imappath, flags);
      }
   }
-  if ( mContentState == imapInProgress ) {
+  if ( mContentState == imapListingInProgress ) {
     // we're currently get'ing this folder
     // to make sure that we get the latest flags abort the current listing and
     // create a new one
+    kdDebug(5006) << "Set status during folder listing, restarting listing." << endl;
     disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
+    quiet( false );
     reallyGetFolder( QString::null );
   }
 }
@@ -2129,7 +2117,7 @@ void KMFolderImap::setSubfolderState( imapState state )
   mSubfolderState = state;
   if ( state == imapNoInformation && folder()->child() )
   {
-    // pass through to childs
+    // pass through to children
     KMFolderNode* node;
     QPtrListIterator<KMFolderNode> it( *folder()->child() );
     for ( ; (node = it.current()); )
@@ -2267,6 +2255,14 @@ void KMFolderImap::setImapPath( const QString& path )
   } else {
     mImapPath = path;
   }
+}
+
+void KMFolderImap::finishMailCheck( imapState state )
+{
+  quiet( false );
+  mContentState = state;
+  emit folderComplete( this, mContentState == imapFinished );
+  close();
 }
 
 #include "kmfolderimap.moc"
