@@ -318,7 +318,8 @@ void KMAcctImap::processNewMail(bool interactive)
     if (folder && !folder->noContent())
     {
       KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
-      if (imapFolder->getContentState() != KMFolderImap::imapInProgress)
+      if ( imapFolder->getContentState() != KMFolderImap::imapListingInProgress
+        && imapFolder->getContentState() != KMFolderImap::imapDownloadInProgress )
       {
         // connect the result-signals for new-mail-notification
         mCountRemainChecks++;

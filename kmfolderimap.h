@@ -87,7 +87,12 @@ public:
      return locateLocal("data", "kmail/imap" );
   }
 
-  enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
+  enum imapState {
+    imapNoInformation = 0,
+    imapListingInProgress = 1,
+    imapDownloadInProgress = 2,
+    imapFinished = 3
+  };
 
   virtual imapState getContentState() { return mContentState; }
   virtual void setContentState(imapState state) { mContentState = state; }
@@ -420,6 +425,8 @@ protected:
 
   /** See if all folders are still present on server, otherwise delete them */
   void checkFolders( const QStringList& folderNames, const QString& ns );
+
+  void finishMailCheck( imapState state );
 
 protected slots:
 
