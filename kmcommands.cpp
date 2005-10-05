@@ -2138,7 +2138,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         .arg( mUrl.prettyURL() ), QString::null, i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
-    (void) new KRun( mUrl );
+    (void) new KRun( mUrl, mMainWidget );
   }
   else
     return Failed;

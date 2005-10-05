@@ -770,7 +770,7 @@ private slots:
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
   void slotContinueAutoSave( bool );
-  
+
   void slotEncryptChiasmusToggled( bool );
 
   /**
@@ -826,8 +826,8 @@ private:
   QString mAutoSaveFilename;
   int mLastAutoSaveErrno; // holds the errno of the last try to autosave
 
-  Q3PopupMenu *mActNowMenu;
-  Q3PopupMenu *mActLaterMenu;
+  QMenu *mActNowMenu;
+  QMenu *mActLaterMenu;
 };
 
 #endif

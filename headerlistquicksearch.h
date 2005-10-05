@@ -51,8 +51,7 @@ Q_OBJECT
 public:
     HeaderListQuickSearch( QWidget *parent,
                                              KListView *listView,
-                                             KActionCollection *actionCollection,
-                                             const char *name = 0 );
+                                             KActionCollection *actionCollection );
     virtual ~HeaderListQuickSearch();
 
     /**

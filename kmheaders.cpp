@@ -93,9 +93,8 @@ QPixmap* KMHeaders::pixReadFwdReplied = 0;
 
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
-                     const char *name) :
-  KListView(parent, name)
+KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
+  KListView( parent )
 {
   static bool pixmapsLoaded = false;
   //qInitImageIO();

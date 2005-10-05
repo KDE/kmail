@@ -38,6 +38,7 @@
 #include <kwin.h>
 #include <kconfig.h>
 #include <kstdaction.h>
+#include <kpushbutton.h>
 
 #include <qcheckbox.h>
 #include <qlayout.h>
@@ -159,7 +160,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
-  mLbxMatches = new KListView(searchWidget, "Find Messages");
+  mLbxMatches = new KListView( searchWidget );
+  mLbxMatches->setObjectName( "Find Messages" );
 
   /*
      Default is to sort by date. TODO: Unfortunately this sorts *while*

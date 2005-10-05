@@ -53,9 +53,8 @@
 #include <Q3PtrList>
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
-                                QWidget* parent,
-                                const char* name )
-    : KListView(  parent, name ),
+                                QWidget* parent )
+    : KListView( parent ),
       mReaderWin( readerWin ), mSizeColumn(0)
 {
     setStyleDependantFrameWidth();

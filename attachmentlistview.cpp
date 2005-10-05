@@ -52,9 +52,8 @@ using KPIM::MailListDrag;
 namespace KMail {
 
 AttachmentListView::AttachmentListView( KMail::Composer * composer,
-                                        QWidget* parent,
-                                        const char* name )
-  : KListView( parent, name ),
+                                        QWidget* parent )
+  : KListView( parent ),
     mComposer( composer )
 {
   setAcceptDrops( true );

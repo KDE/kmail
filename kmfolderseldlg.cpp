@@ -11,6 +11,7 @@
 #include <klineedit.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
+#include <kvbox.h>
 
 #include <qlayout.h>
 #include <qtoolbutton.h>

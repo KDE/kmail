@@ -42,13 +42,14 @@ using KRecentAddress::RecentAddresses;
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <q3vbox.h>
 #include <q3hbox.h>
 #include <qtooltip.h>
 
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qstringlist.h>
+
+#include <QFrame>
 
 using namespace KMail;
 
@@ -57,7 +58,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   : KDialogBase( parent, name, modal, i18n( "Redirect Message" ),
                  User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
 {
-  Q3VBox *vbox = makeVBoxMainWidget();
+  QFrame *vbox = makeVBoxMainWidget();
   mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
 

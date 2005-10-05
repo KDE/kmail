@@ -605,7 +605,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
 
   // transport list: left widget in hlay; stretch 1
   // ### FIXME: allow inline renaming of the account:
-  mTransportList = new ListView( this, "transportList", 5 );
+  mTransportList = new ListView( this, 5 );
+  mTransportList->setObjectName( "transportList" );
   mTransportList->addColumn( i18n("Name") );
   mTransportList->addColumn( i18n("Type") );
   mTransportList->setAllColumnsShowFocus( true );
@@ -1055,7 +1056,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   vlay->addLayout( hlay, 10 ); // high stretch to suppress groupbox's growing
 
   // account list: left widget in hlay; stretch 1
-  mAccountList = new ListView( this, "accountList", 5 );
+  mAccountList = new ListView( this, 5 );
+  mAccountList->setObjectName( "accountList" );
   mAccountList->addColumn( i18n("Name") );
   mAccountList->addColumn( i18n("Type") );
   mAccountList->addColumn( i18n("Folder") );
@@ -2577,7 +2579,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hbox = new Q3HBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
-  mEditorRequester = new KURLRequester( hbox, "kcfg_ExternalEditor" );
+  mEditorRequester = new KURLRequester( hbox );
+  mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
   connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mEditorRequester, SIGNAL( textChanged(const QString&) ),
@@ -3126,7 +3129,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay = new QGridLayout( vlay, 5, 3 ); // inherits spacing
   glay->setRowStretch( 2, 1 );
   glay->setColStretch( 1, 1 );
-  mTagList = new ListView( this, "tagList" );
+  mTagList = new ListView( this );
+  mTagList->setObjectName( "tagList" );
   mTagList->addColumn( i18n("Name") );
   mTagList->addColumn( i18n("Value") );
   mTagList->setAllColumnsShowFocus( true );

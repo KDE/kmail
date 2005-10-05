@@ -97,8 +97,8 @@ namespace KMail {
   //
   //
 
-  IdentityListView::IdentityListView( QWidget * parent, const char * name )
-    : KListView( parent, name )
+  IdentityListView::IdentityListView( QWidget * parent )
+    : KListView( parent )
   {
     setFullWidth( true );
     setDragEnabled( true );

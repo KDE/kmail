@@ -36,8 +36,7 @@ class AttachmentListView : public KListView
 {
   Q_OBJECT
 public:
-  AttachmentListView( KMail::Composer * composer = 0, QWidget* parent = 0,
-                      const char* name = 0 );
+  AttachmentListView( KMail::Composer * composer = 0, QWidget* parent = 0 );
   virtual ~AttachmentListView();
 
   /** Drag and drop methods */

@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QShowEvent>
 #include <QResizeEvent>
+#include <Q3WidgetStack>
 #include <dcopobject.h>
 
 #include <kdialogbase.h>
@@ -991,7 +992,7 @@ private:
 class ListView : public KListView {
   Q_OBJECT
 public:
-  ListView( QWidget *parent=0, const char *name=0, int visibleItem=10 );
+  ListView( QWidget *parent=0, int visibleItem=10 );
   void resizeColums();
 
   void setVisibleItem( int visibleItem, bool updateSize=true );

@@ -19,6 +19,8 @@ using KPIM::ProgressManager;
 #include <kdebug.h>
 #include <kconfig.h>
 
+#include <QTime>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>

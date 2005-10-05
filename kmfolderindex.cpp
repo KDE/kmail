@@ -25,6 +25,7 @@
 #include <Q3CString>
 #include <kdebug.h>
 
+#include <QDateTime>
 
 #define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
 #include <unistd.h>

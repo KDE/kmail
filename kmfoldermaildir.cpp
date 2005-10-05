@@ -31,6 +31,8 @@ using KMail::MaildirJob;
 #include <kstaticdeleter.h>
 #include <kmessagebox.h>
 
+#include <QDateTime>
+
 #include <dirent.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -424,7 +426,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   tmp_file += filename;
 
   if ( ! KPIM::kByteArrayToFile( msgText, tmp_file, false, false, false ) )
-    kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") ); 
+    kmkernel->emergencyExit( i18n("Message could not be added to the folder, possibly disk space is low.") );
 
   QFile file(tmp_file);
 
@@ -474,10 +476,10 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
   ++mTotalMsgs;
 
-  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown && 
+  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
     aMsg->updateAttachmentState();
-  
+
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setMsgSize( msgText.length() );
@@ -873,7 +875,7 @@ int KMFolderMaildir::createIndexFromContents()
 
   // then, we look for all the 'new' files
   list = newDir.entryInfoList();
-  
+
   Q_FOREACH( fi, list )
   {
     readFileHeaderIntern(newDir.path(), fi.fileName(), KMMsgStatusNew);

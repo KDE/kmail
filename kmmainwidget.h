@@ -449,7 +449,7 @@ private:
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
-  Q3PopupMenu   *mViewMenu, *mBodyPartsMenu;
+  QMenu         *mViewMenu, *mBodyPartsMenu;
   KAction       *mlistFilterAction;
   bool		mIntegrated;
   bool          mBeepOnNew;
@@ -458,9 +458,9 @@ private:
   int		mMessageStatusId;
   Q3ValueList<int> mPanner1Sep, mPanner2Sep;
   KURL          mUrlCurrent;
-  Q3PopupMenu	*mActMenu;
-  Q3PopupMenu    *mSendMenu;
-  Q3PopupMenu	*mFileMenu;
+  QMenu         *mActMenu;
+  QMenu         *mSendMenu;
+  QMenu         *mFileMenu;
 
   bool mLongFolderList;
 

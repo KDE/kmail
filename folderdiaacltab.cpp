@@ -1,5 +1,5 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
-/**
+/*
  * folderdiaacltab.cpp
  *
  * Copyright (c) 2004 David Faure <faure@kde.org>
@@ -195,12 +195,6 @@ unsigned int KMail::ACLEntryDialog::permissions() const
 {
   return mButtonGroup->selectedId();
 }
-
-// class KMail::FolderDiaACLTab::ListView : public KListView
-// {
-// public:
-//   ListView( QWidget* parent, const char* name = 0 ) : KListView( parent, name ) {}
-// };
 
 class KMail::FolderDiaACLTab::ListViewItem : public KListViewItem
 {

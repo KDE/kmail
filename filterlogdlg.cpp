@@ -35,6 +35,7 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 #include <qcheckbox.h>
 #include <qlabel.h>
@@ -59,7 +60,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
               User1|User2|Close, Close, true, KStdGuiItem::clear(), KStdGuiItem::saveAs() )
 {
   setAttribute( Qt::WA_DeleteOnClose );
-  Q3VBox *page = makeVBoxMainWidget();
+  QFrame *page = makeVBoxMainWidget();
 
   mTextEdit = new Q3TextEdit( page );
   mTextEdit->setReadOnly( true );

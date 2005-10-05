@@ -92,7 +92,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcursor.h>
 #include <kcombobox.h>
 #include <kstdaccel.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
@@ -100,7 +100,6 @@ using KRecentAddress::RecentAddresses;
 #include <kwin.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <kurldrag.h>
 #include <kio/scheduler.h>
 #include <ktempfile.h>
 #include <klocale.h>
@@ -126,6 +125,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcolordialog.h>
 #include <kzip.h>
 #include <ksavefile.h>
+#include <ktoolinvocation.h>
 
 #include <q3tabdialog.h>
 #include <qregexp.h>
@@ -318,8 +318,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnFcc->setFocusPolicy(Qt::NoFocus);
   mBtnTransport->setFocusPolicy(Qt::NoFocus);
 
-  mAtmListView = new AttachmentListView( this, mSplitter,
-                                         "attachment list view" );
+  mAtmListView = new AttachmentListView( this, mSplitter );
+  mAtmListView->setObjectName( "attachment list view" );
   mAtmListView->setSelectionMode( Q3ListView::Extended );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
@@ -3962,7 +3962,7 @@ void KMComposeWin::slotAppendSignature()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
-  kapp->invokeHelp();
+  KToolInvocation::invokeHelp();
 }
 
 //-----------------------------------------------------------------------------

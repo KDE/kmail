@@ -51,9 +51,8 @@ namespace KMail {
 
 HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KListView *listView,
-                                              KActionCollection *actionCollection,
-                                              const char *name )
-  : KListViewSearchLine(parent, listView, name), mStatusCombo(0), mStatus(0),  statusList()
+                                              KActionCollection *actionCollection )
+  : KListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(0),  statusList()
 {
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
                                            QApplication::reverseLayout()
@@ -89,7 +88,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
 
   label->setBuddy( mStatusCombo );
 
-  /* Disable the signal connected by KListViewSearchLine since it will call 
+  /* Disable the signal connected by KListViewSearchLine since it will call
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
    * in getMsgBaseForItem( item ) wanting to access items which are no longer
    * there. Rather rely on KMHeaders::msgAdded and its signal. */

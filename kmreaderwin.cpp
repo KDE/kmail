@@ -471,7 +471,8 @@ void KMReaderWin::createWidgets() {
   QVBoxLayout * vlay = new QVBoxLayout( this );
   mSplitter = new QSplitter( Qt::Vertical, this, "mSplitter" );
   vlay->addWidget( mSplitter );
-  mMimePartTree = new KMMimePartTree( this, mSplitter, "mMimePartTree" );
+  mMimePartTree = new KMMimePartTree( this, mSplitter );
+  mMimePartTree->setObjectName( "mMimePartTree" );
   mBox = new Q3HBox( mSplitter, "mBox" );
   setStyleDependantFrameWidth();
   mBox->setFrameStyle( mMimePartTree->frameStyle() );

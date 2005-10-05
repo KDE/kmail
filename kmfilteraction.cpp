@@ -1049,7 +1049,8 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QLabel *l = new QLabel( i18n("With value:"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
-  QLineEdit *le = new KLineEdit( w, "ledit" );
+  QLineEdit *le = new KLineEdit( w );
+  le->setObjectName( "ledit" );
   hbl->addWidget( le, 1 );
   setParamWidgetValue( w );
   return w;
@@ -1209,7 +1210,8 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  QLineEdit *le = new KLineEdit( w, "replace" );
+  QLineEdit *le = new KLineEdit( w );
+  le->setObjectName( "replace" );
   hbl->addWidget( le, 1 );
 
   setParamWidgetValue( w );

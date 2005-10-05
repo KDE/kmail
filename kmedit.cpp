@@ -36,7 +36,7 @@ using KPIM::MailListDrag;
 #include <kpopupmenu.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <kurldrag.h>
+#include <kurl.h>
 
 #include <ktempfile.h>
 #include <klocale.h>
@@ -173,35 +173,35 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
                                          identity, mComposer);
         command->start();
     }
-    else if( KURLDrag::canDecode( e ) ) {
-        KURL::List urlList;
-        if( KURLDrag::decode( e, urlList ) ) {
-            KPopupMenu p;
-            p.insertItem( i18n("Add as Text"), 0 );
-            p.insertItem( i18n("Add as Attachment"), 1 );
-            int id = p.exec( mapToGlobal( e->pos() ) );
-            switch ( id) {
-              case 0:
-                for ( KURL::List::Iterator it = urlList.begin();
-                     it != urlList.end(); ++it ) {
-                  insert( (*it).url() );
-                }
-                break;
-              case 1:
-                for ( KURL::List::Iterator it = urlList.begin();
-                     it != urlList.end(); ++it ) {
-                  mComposer->addAttach( *it );
-                }
-                break;
+    else {
+      KURL::List urlList = KURL::List::fromMimeData( e->mimeData() );
+      if ( !urlList.isEmpty() ) {
+        KPopupMenu p;
+        p.insertItem( i18n("Add as Text"), 0 );
+        p.insertItem( i18n("Add as Attachment"), 1 );
+        int id = p.exec( mapToGlobal( e->pos() ) );
+        switch ( id) {
+          case 0:
+            for ( KURL::List::Iterator it = urlList.begin();
+                 it != urlList.end(); ++it ) {
+              insert( (*it).url() );
             }
+            break;
+          case 1:
+            for ( KURL::List::Iterator it = urlList.begin();
+                 it != urlList.end(); ++it ) {
+              mComposer->addAttach( *it );
+            }
+            break;
         }
-        else if ( Q3TextDrag::canDecode( e ) ) {
-          QString s;
-          if ( Q3TextDrag::decode( e, s ) )
-            insert( s );
-        }
-        else
-          kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
+      }
+      else if ( Q3TextDrag::canDecode( e ) ) {
+        QString s;
+        if ( Q3TextDrag::decode( e, s ) )
+          insert( s );
+      }
+      else
+        kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
     }
     else {
         return KEdit::contentsDropEvent(e);
@@ -389,7 +389,8 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
                             i18n("Unable to start external editor.") );
         killExternalEditor();
       } else {
-        mExtEditorTempFileWatcher = new KDirWatch( this, "mExtEditorTempFileWatcher" );
+        mExtEditorTempFileWatcher = new KDirWatch( this );
+        mExtEditorTempFileWatcher->setObjectName( "mExtEditorTempFileWatcher" );
         connect( mExtEditorTempFileWatcher, SIGNAL(dirty(const QString&)),
                  SLOT(slotExternalEditorTempFileChanged(const QString&)) );
         mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );

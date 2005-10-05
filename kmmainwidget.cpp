@@ -104,6 +104,10 @@ using KMail::HeaderListQuickSearch;
     using KMail::SieveDebugDialog;
 #endif
 
+#include <ktoolinvocation.h>
+
+#include <QSplitter>
+
 #include <assert.h>
 #include <kstatusbar.h>
 #include <kstaticdeleter.h>
@@ -525,14 +529,16 @@ void KMMainWidget::createWidgets(void)
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
 
 
-  mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-#ifdef HAVE_INDEXLIB  
+  mHeaders = new KMHeaders( this, mSearchAndHeaders );
+  mHeaders->setObjectName( "headers" );
+#ifdef HAVE_INDEXLIB
   mQuickSearchLine = new KListViewIndexedSearchLine( mSearchToolBar, mHeaders,
-                                                    actionCollection(), "headers quick search line" );
+                                                    actionCollection() );
 #else
   mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders,
-						actionCollection(), "headers quick search line" );
+                                                actionCollection() );
 #endif
+  mQuickSearchLine->setObjectName( "headers quick search line" );
   label->setBuddy( mQuickSearchLine );
   mSearchToolBar->setStretchableWidget( mQuickSearchLine );
     connect( mHeaders, SIGNAL( messageListUpdated() ),
@@ -750,7 +756,7 @@ void KMMainWidget::slotFind()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotHelp()
 {
-  kapp->invokeHelp();
+  KToolInvocation::invokeHelp();
 }
 
 
@@ -767,7 +773,7 @@ void KMMainWidget::slotPopFilter()
   kmkernel->popFilterMgr()->openDialog( this );
 }
 
-void KMMainWidget::slotManageSieveScripts() 
+void KMMainWidget::slotManageSieveScripts()
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
@@ -2351,8 +2357,8 @@ void KMMainWidget::setupActions()
                              Qt::Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
-  /* The delete action is nowhere in the gui, by default, so we need to make 
-   * sure it is plugged into the KAccel now, since that won't happen on 
+  /* The delete action is nowhere in the gui, by default, so we need to make
+   * sure it is plugged into the KAccel now, since that won't happen on
    * XMLGui construction or manual ->plug(). This is only a problem when run
    * as a part, though. */
   mDeleteAction = new KAction( i18n("&Delete"), "editdelete", Qt::SHIFT+Qt::Key_Delete, this,
@@ -2540,7 +2546,7 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  mStatusMenu->insert( new KActionSeparator( this ) );
+  mStatusMenu->insert( new KActionSeparator( actionCollection() ) );
 
   // -------- Toggle Actions
   mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "mail_flag",
@@ -2583,7 +2589,7 @@ void KMMainWidget::setupActions()
                                                 actionCollection(), "thread_unread");
   mThreadStatusMenu->insert( mMarkThreadAsUnreadAction );
 
-  mThreadStatusMenu->insert( new KActionSeparator( this ) );
+  mThreadStatusMenu->insert( new KActionSeparator( actionCollection() ) );
 
   //----- "Mark Thread" toggle actions
   mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "mail_flag",

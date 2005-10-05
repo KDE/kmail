@@ -23,6 +23,7 @@ using KPIM::ProgressManager;
 #include <kconfig.h>
 
 #include <qfileinfo.h>
+#include <QTime>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -151,7 +152,7 @@ bool KMAcctLocal::preProcess()
     BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     return false;
   }
-  
+
   const int rc = mMailFolder->open();
   if ( rc != 0 ) {
     QString aStr;

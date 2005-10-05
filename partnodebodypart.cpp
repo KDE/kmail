@@ -35,6 +35,8 @@
 
 #include "partNode.h"
 
+#include <kurl.h>
+
 #include <qstring.h>
 #include <q3cstring.h>
 

@@ -17,7 +17,6 @@
 
 #include <kpopupmenu.h>
 #include <kurl.h>
-#include <kurldrag.h>
 #include <kmessagebox.h>
 #include <kcompletionbox.h>
 #include <klocale.h>
@@ -98,8 +97,8 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       insertEmails( (*ait).emails() );
     }
   } else {
-    KURL::List urls;
-    if ( KURLDrag::decode( event, urls) ) {
+    KURL::List urls = KURL::List::fromMimeData( event->mimeData() );
+    if ( !urls.isEmpty() ) {
       //kdDebug(5006) << "urlList" << endl;
       KURL::List::Iterator it = urls.begin();
       KABC::VCardConverter converter;

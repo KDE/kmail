@@ -59,7 +59,7 @@ class KMHeaders : public KListView
   friend class ::KMail::HeaderItem; // For easy access to the pixmaps
 
 public:
-  KMHeaders(KMMainWidget *owner, QWidget *parent=0, const char *name=0);
+  KMHeaders( KMMainWidget *owner, QWidget *parent=0 );
   virtual ~KMHeaders();
 
   /** A new folder has been selected update the list of headers shown
@@ -195,10 +195,10 @@ signals:
   /** emitted when the list of messages has been completely rebuilt */
   void messageListUpdated();
 
-  /** emitted after a new item has been fully built and added to the 
+  /** emitted after a new item has been fully built and added to the
    * list view. We can't use KListView::itemAdded, as that is emitted
    * from the ctor of the item, at which point the building of the item
-   * is not yet far enough along to update the quick search, which is 
+   * is not yet far enough along to update the quick search, which is
    * what is connected to this signal. */
   void msgAddedToListView( Q3ListViewItem* );
 

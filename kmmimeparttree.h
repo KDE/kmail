@@ -51,8 +51,7 @@ class KMMimePartTree : public KListView
 
 public:
   KMMimePartTree( KMReaderWin* readerWin,
-                  QWidget* parent,
-                  const char* name = 0 );
+                  QWidget* parent );
   virtual ~KMMimePartTree();
 
   void correctSize( Q3ListViewItem * item );

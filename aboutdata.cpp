@@ -37,6 +37,8 @@
 
 #include "kmversion.h"
 
+#include <klocale.h>
+
 namespace KMail {
 
   struct about_data {

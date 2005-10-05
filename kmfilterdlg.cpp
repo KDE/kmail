@@ -197,7 +197,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       vbl3->addWidget( mApplyOnForChecked );
       vbl3->addStretch( 2 );
 
-      mAccountList = new KListView( adv_w, "accountList" );
+      mAccountList = new KListView( adv_w );
+      mAccountList->setObjectName( "accountList" );
       mAccountList->addColumn( i18n("Account Name") );
       mAccountList->addColumn( i18n("Type") );
       mAccountList->setAllColumnsShowFocus( true );
@@ -276,7 +277,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
   	     this, SLOT(slotApplicableAccountsChanged()) );
     connect( mAccountList, SIGNAL(spacePressed(Q3ListViewItem*)),
   	     this, SLOT(slotApplicableAccountsChanged()) );
-    
+
     // transfer changes from the 'stop processing here'
     // check box to the filter
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
@@ -442,7 +443,7 @@ void KMFilterDlg::slotApplicabilityChanged()
       mFilter->setApplicability( KMFilter::ButImap );
     else if ( mApplyOnForChecked->isChecked() )
       mFilter->setApplicability( KMFilter::Checked );
-      
+
     mApplyOnForAll->setEnabled( mApplyOnIn->isChecked() );
     mApplyOnForTraditional->setEnabled(  mApplyOnIn->isChecked() );
     mApplyOnForChecked->setEnabled( mApplyOnIn->isChecked() );
@@ -728,7 +729,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 		       "IMAP account. Such filters will only be applied "
 		       "when manually filtering and when filtering "
 		       "incoming online IMAP mail.");
-    KMessageBox::information( this, str, QString::null, 
+    KMessageBox::information( this, str, QString::null,
 			      "filterDlgOnlineImapCheck" );
   }
   // allow usage of the filters again.

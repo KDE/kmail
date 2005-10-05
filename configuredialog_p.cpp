@@ -128,9 +128,8 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   enableButtonOK( true );
 }
 
-ListView::ListView( QWidget *parent, const char *name,
-				     int visibleItem )
-  : KListView( parent, name )
+ListView::ListView( QWidget *parent, int visibleItem )
+  : KListView( parent )
 {
   setVisibleItem(visibleItem);
 }
@@ -297,7 +296,8 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   QWidget * page = makeMainWidget();
   QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
 
-  mListView = new KListView( page, "mListView" );
+  mListView = new KListView( page );
+  mListView->setObjectName( "mListView" );
   mListView->addColumn( i18n("Available Profiles") );
   mListView->addColumn( i18n("Description") );
   mListView->setFullWidth( true );

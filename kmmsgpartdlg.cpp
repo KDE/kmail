@@ -20,6 +20,7 @@
 #include <kstringvalidator.h>
 #include <kcombobox.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 // other Qt includes:
 #include <qlabel.h>

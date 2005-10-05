@@ -48,6 +48,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <ktoolinvocation.h>
 
 #include <qdom.h>
 #include <qlabel.h>
@@ -445,7 +446,7 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-    KMKernel::self()->filterMgr()->appendFilters( 
+    KMKernel::self()->filterMgr()->appendFilters(
           filterList, replaceExistingFilters );
 
   QDialog::accept();
@@ -546,9 +547,9 @@ void AntiSpamWizard::checkToolAvailability()
 void AntiSpamWizard::slotHelpClicked()
 {
   if ( mMode == AntiSpam )
-    kapp->invokeHelp( "the-anti-spam-wizard", "kmail" );
+    KToolInvocation::invokeHelp( "the-anti-spam-wizard", "kmail" );
   else
-    kapp->invokeHelp( "the-anti-virus-wizard", "kmail" );
+    KToolInvocation::invokeHelp( "the-anti-virus-wizard", "kmail" );
 }
 
 
@@ -643,8 +644,8 @@ const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 }
 
 
-void AntiSpamWizard::sortFilterOnExistance( 
-        const QString & intendedFilterName, 
+void AntiSpamWizard::sortFilterOnExistance(
+        const QString & intendedFilterName,
         QString & newFilters, QString & replaceFilters )
 {
   if ( uniqueNameFor( intendedFilterName ) == intendedFilterName )
@@ -836,7 +837,7 @@ void AntiSpamWizard::ConfigReader::sortToolList()
 
 
 //---------------------------------------------------------------------------
-ASWizPage::ASWizPage( QWidget * parent, const char * name, 
+ASWizPage::ASWizPage( QWidget * parent, const char * name,
                       const QString *bannerName )
   : QWidget( parent, name )
 {
@@ -919,7 +920,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 {
   QString listName = visibleName;
   mToolsList->insertItem( listName );
-  if ( !mToolsList->isVisible() ) 
+  if ( !mToolsList->isVisible() )
   {
     mToolsList->show();
     mToolsList->setSelected( 0, true );

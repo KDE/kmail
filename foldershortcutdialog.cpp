@@ -37,7 +37,6 @@
 *******************************************************************************/
 
 #include <qlabel.h>
-#include <q3vbox.h>
 #include <Q3GroupBox>
 
 
@@ -48,6 +47,8 @@
 #include "kmmainwidget.h"
 #include "foldershortcutdialog.h"
 #include "kmfolder.h"
+
+#include <QFrame>
 
 using namespace KMail;
 
@@ -60,7 +61,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                KDialogBase::Ok | KDialogBase::Cancel ),
    mFolder( folder ), mMainWidget( mainwidget )
 {
-  Q3VBox *box = makeVBoxMainWidget();
+  QFrame *box = makeVBoxMainWidget();
   Q3GroupBox *gb = new Q3GroupBox(1, Qt::Horizontal, i18n("Select Shortcut for Folder"), box );
   gb->setWhatsThis( i18n( "<qt>To choose a key or a combination "
                              "of keys which select the current folder, "

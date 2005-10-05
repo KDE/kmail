@@ -42,6 +42,8 @@
 #include <kprocess.h>
 #include <kconfig.h>
 
+#include <QDateTime>
+
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
@@ -1074,10 +1076,10 @@ if( fileD1.open( IO_WriteOnly ) ) {
   }
   ++mTotalMsgs;
 
-  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown && 
+  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown &&
        aMsg->readyToShow() )
     aMsg->updateAttachmentState();
-  
+
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setFolderOffset(offs);

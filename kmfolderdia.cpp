@@ -56,13 +56,13 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klistview.h>
+#include <kvbox.h>
 
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <q3groupbox.h>
 #include <qregexp.h>
 #include <qlabel.h>
-#include <q3vbox.h>
 #include <qtooltip.h>
 
 //Added by qt3to4:
@@ -116,7 +116,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   }
 
   FolderDiaTab* tab;
-  Q3VBox* box;
+  QFrame *box;
 
   box = addVBoxPage( i18n("General") );
   tab = new FolderDiaGeneralTab( this, aName, box );
