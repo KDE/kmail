@@ -30,7 +30,7 @@
 #include <kmessagebox.h>
 
 #include <kmenu.h>
-#include <kaccelmanager.h>
+#include <kacceleratormanager.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
 #include <kkeydialog.h>

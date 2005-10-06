@@ -76,7 +76,8 @@ void KMLineEdit::insertEmails( const QStringList & emails )
     return;
   }
   //multiple emails, let the user choose one
-  KMenu menu( this, "Addresschooser" );
+  KMenu menu( this );
+  menu.setObjectName( "Addresschooser" );
   for ( QStringList::const_iterator it = emails.begin(), end = emails.end() ; it != end; ++it )
     menu.addAction( *it );
   const QAction *result = menu.exec( QCursor::pos() );

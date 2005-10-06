@@ -35,7 +35,7 @@ using KMail::ActionScheduler;
 using namespace KPIM;
 
 #include <kapplication.h>
-#include <kaccelmanager.h>
+#include <kacceleratormanager.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>

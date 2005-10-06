@@ -36,7 +36,7 @@
 using KPIM::MailListDrag;
 
 // other KDE headers
-#include <kurldrag.h>
+#include <kurl.h>
 
 // other Qt headers
 #include <qevent.h>
@@ -115,17 +115,17 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
                                                        identity, mComposer );
     command->start();
   }
-  else if( KURLDrag::canDecode( e ) ) {
-    KURL::List urlList;
-    if( KURLDrag::decode( e, urlList ) ) {
+  else {
+    KURL::List urlList = KURL::List::fromMimeData( e->mimeData() );
+    if ( !urlList.isEmpty() ) {
       for( KURL::List::Iterator it = urlList.begin();
            it != urlList.end(); ++it ) {
         mComposer->addAttach( *it );
       }
     }
-  }
-  else {
-    KListView::dropEvent( e );
+    else {
+      KListView::dropEvent( e );
+    }
   }
 }
 
