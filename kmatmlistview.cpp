@@ -72,7 +72,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcursor.h>
 #include <kcombobox.h>
 #include <kstdaccel.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>

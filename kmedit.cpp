@@ -33,7 +33,7 @@ using KPIM::MailListDrag;
 #include <kcursor.h>
 #include <kprocess.h>
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kurl.h>
@@ -176,23 +176,21 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
     else {
       KURL::List urlList = KURL::List::fromMimeData( e->mimeData() );
       if ( !urlList.isEmpty() ) {
-        KPopupMenu p;
-        p.insertItem( i18n("Add as Text"), 0 );
-        p.insertItem( i18n("Add as Attachment"), 1 );
-        int id = p.exec( mapToGlobal( e->pos() ) );
-        switch ( id) {
-          case 0:
-            for ( KURL::List::Iterator it = urlList.begin();
-                 it != urlList.end(); ++it ) {
-              insert( (*it).url() );
-            }
-            break;
-          case 1:
-            for ( KURL::List::Iterator it = urlList.begin();
-                 it != urlList.end(); ++it ) {
-              mComposer->addAttach( *it );
-            }
-            break;
+        KMenu p;
+        const QAction *addAsTextAction = p.addAction( i18n("Add as Text") );
+        const QAction *addAsAtmAction = p.addAction( i18n("Add as Attachment") );
+        const QAction *selectedAction = p.exec( mapToGlobal( e->pos() ) );
+        if ( selectedAction == addAsTextAction ) {
+          for ( KURL::List::Iterator it = urlList.begin();
+                it != urlList.end(); ++it ) {
+            insert( (*it).url() );
+          }
+        }
+        else if ( selectedAction == addAsAtmAction ) {
+          for ( KURL::List::Iterator it = urlList.begin();
+                it != urlList.end(); ++it ) {
+            mComposer->addAttach( *it );
+          }
         }
       }
       else if ( Q3TextDrag::canDecode( e ) ) {
@@ -200,11 +198,10 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         if ( Q3TextDrag::decode( e, s ) )
           insert( s );
       }
-      else
+      else {
         kdDebug(5006) << "KMEdit::contentsDropEvent, unable to add dropped object" << endl;
-    }
-    else {
         return KEdit::contentsDropEvent(e);
+      }
     }
 }
 
@@ -437,38 +434,34 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       //Continue if this word was misspelled
       if( !word.isEmpty() && mReplacements.contains( word ) )
       {
-        KPopupMenu p;
-        p.insertTitle( i18n("Suggestions") );
+        KMenu p;
+        p.addTitle( i18n("Suggestions") );
 
         //Add the suggestions to the popup menu
         QStringList reps = mReplacements[word];
-        if( reps.count() > 0 )
-        {
-          int listPos = 0;
+        if ( reps.count() > 0 ) {
           for ( QStringList::Iterator it = reps.begin(); it != reps.end(); ++it ) {
-            p.insertItem( *it, listPos );
-            listPos++;
+            p.addAction( *it );
           }
         }
-        else
-        {
-          p.insertItem( QString::fromLatin1("No Suggestions"), -2 );
+        else {
+          p.insertItem( QString::fromLatin1("No Suggestions") );
         }
 
         //Execute the popup inline
-        int id = p.exec( mapToGlobal( event->pos() ) );
+        const QAction *selectedAction = p.exec( mapToGlobal( event->pos() ) );
 
-        if( id > -1 )
-        {
+        if ( selectedAction && ( reps.count() > 0 ) ) {
           //Save the cursor position
           int parIdx = 1, txtIdx = 1;
           getCursorPosition(&parIdx, &txtIdx);
           setSelection(para, firstSpace, para, lastSpace);
-          insert(mReplacements[word][id]);
+          const QString replacement = selectedAction->text();
+          insert( replacement );
           // Restore the cursor position; if the cursor was behind the
           // misspelled word then adjust the cursor position
           if ( para == parIdx && txtIdx >= lastSpace )
-            txtIdx += mReplacements[word][id].length() - word.length();
+            txtIdx += replacement.length() - word.length();
           setCursorPosition(parIdx, txtIdx);
         }
         //Cancel original event
@@ -477,7 +470,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
   } else if ( e->type() == QEvent::FocusIn || e->type() == QEvent::FocusOut ) {
     QFocusEvent *fe = static_cast<QFocusEvent*>(e);
-    if(! (fe->reason() == QFocusEvent::ActiveWindow || fe->reason() == QFocusEvent::Popup) )
+    if ( ! ( fe->reason() == Qt::ActiveWindowFocusReason || fe->reason() == Qt::PopupFocusReason ) )
       emit focusChanged( fe->gotFocus() );
   }
 

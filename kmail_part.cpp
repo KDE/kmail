@@ -60,9 +60,10 @@ K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
-  DCOPObject("KMailIface"), KParts::ReadOnlyPart(parent, name),
+  DCOPObject("KMailIface"), KParts::ReadOnlyPart( parent ),
   mParentWidget( parentWidget )
 {
+  setObjectName( name );
   kdDebug(5006) << "KMailPart()" << endl;
   kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
@@ -97,7 +98,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
 
   // create a canvas to insert our widget
-  QWidget *canvas = new QWidget(parentWidget, widgetName);
+  QWidget *canvas = new QWidget( parentWidget );
+  canvas->setObjectName( widgetName );
   canvas->setFocusPolicy(Qt::ClickFocus);
   setWidget(canvas);
   KGlobal::iconLoader()->addAppDir("kmail");

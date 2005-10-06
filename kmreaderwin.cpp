@@ -99,7 +99,7 @@ using KMail::TeeHtmlWriter;
 // for the click on attachment stuff (dnaber):
 #include <kuserprofile.h>
 #include <kcharsets.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>  // Sven's : for access and getpid
 #include <kcursor.h>
 #include <kdebug.h>
@@ -1882,7 +1882,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
 {
   mAtmCurrent = id;
   mAtmCurrentName = name;
-  KPopupMenu *menu = new KPopupMenu();
+  KMenu *menu = new KMenu();
   menu->insertItem(SmallIcon("fileopen"),i18n("to open", "Open"), 1);
   menu->insertItem(i18n("Open With..."), 2);
   menu->insertItem(i18n("to view something", "View"), 3);

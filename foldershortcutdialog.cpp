@@ -43,6 +43,7 @@
 #include <kkeybutton.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 #include "kmmainwidget.h"
 #include "foldershortcutdialog.h"

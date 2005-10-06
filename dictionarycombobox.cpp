@@ -131,7 +131,7 @@ namespace KMail {
   void DictionaryComboBox::reloadCombo()
   {
     delete mSpellConfig;
-    mSpellConfig = new KSpellConfig( 0, 0, 0, false );
+    mSpellConfig = new KSpellConfig( 0, 0, false );
     mSpellConfig->fillDicts( this, &mDictionaries );
     mDefaultDictionary = currentItem();
   }

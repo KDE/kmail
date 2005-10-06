@@ -9,7 +9,7 @@
 
 #include <kdebug.h>
 #include <klineedit.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kiconloader.h>
 #include <kvbox.h>
 
@@ -213,8 +213,8 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   if ( !folder || folder->noContent() || folder->noChildren() )
     return;
 
-  KPopupMenu *folderMenu = new KPopupMenu;
-  folderMenu->insertTitle( folder->label() );
+  KMenu *folderMenu = new KMenu;
+  folderMenu->addTitle( folder->label() );
   folderMenu->insertSeparator();
   folderMenu->insertItem(SmallIconSet("folder_new"),
                           i18n("&New Subfolder..."), this,

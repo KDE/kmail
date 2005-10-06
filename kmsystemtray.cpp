@@ -39,7 +39,7 @@ using KMail::AccountManager;
 #include <kiconeffect.h>
 #include <kwin.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 
 #include <qpainter.h>
 #include <qbitmap.h>
@@ -114,12 +114,12 @@ void KMSystemTray::buildPopupMenu()
   delete mPopupMenu;
   mPopupMenu = 0;
 
-  mPopupMenu = new KPopupMenu();
+  mPopupMenu = new KMenu();
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return;
 
-  mPopupMenu->insertTitle(*(this->pixmap()), "KMail");
+  mPopupMenu->addTitle(*(this->pixmap()), "KMail");
   KAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
     action->plug( mPopupMenu );
@@ -325,7 +325,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
 
     if(mFoldersWithUnread.count() > 0)
     {
-      KPopupMenu *newMessagesPopup = new KPopupMenu();
+      KMenu *newMessagesPopup = new KMenu();
 
       QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
       for(uint i=0; it != mFoldersWithUnread.end(); ++i)

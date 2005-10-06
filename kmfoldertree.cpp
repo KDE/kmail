@@ -39,13 +39,13 @@ using namespace KPIM;
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kdebug.h>
 
 #include <qpainter.h>
 #include <qcursor.h>
 #include <qregexp.h>
-#include <q3popupmenu.h>
+#include <QMenu>
 
 #include <unistd.h>
 #include <assert.h>
@@ -341,8 +341,8 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   // popup to switch columns
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
-  mPopup = new KPopupMenu(this);
-  mPopup->insertTitle(i18n("View Columns"));
+  mPopup = new KMenu(this);
+  mPopup->addTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
@@ -974,8 +974,8 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   if (!fti )
     return;
 
-  KPopupMenu *folderMenu = new KPopupMenu;
-  if (fti->folder()) folderMenu->insertTitle(fti->folder()->label());
+  KMenu *folderMenu = new KMenu;
+  if (fti->folder()) folderMenu->addTitle(fti->folder()->label());
 
   // outbox specific, but there it's the most used action
   if ( (fti->folder() == kmkernel->outboxFolder()) && fti->folder()->count() )
@@ -1015,7 +1015,7 @@ void KMFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
 
     if ( fti->folder()->isMoveable() )
     {
-      Q3PopupMenu *moveMenu = new Q3PopupMenu( folderMenu );
+      QMenu *moveMenu = new QMenu( folderMenu );
       folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
       folderMenu->insertItem( i18n("&Move Folder To"), moveMenu );
     }
@@ -1393,26 +1393,16 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         emit folderDrop(fti->folder());
       } else {
         if ( GlobalSettings::self()->showPopupAfterDnD() ) {
-          KPopupMenu *menu = new KPopupMenu( this );
-          menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
-          menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
-          menu->insertSeparator();
-          menu->insertItem( SmallIcon("cancel"), i18n("C&ancel"), DRAG_CANCEL, 3 );
-          int id = menu->exec( QCursor::pos(), 0 );
-          switch(id) {
-            case DRAG_COPY:
-              emit folderDropCopy(fti->folder());
-              break;
-            case DRAG_MOVE:
-              emit folderDrop(fti->folder());
-              break;
-            case DRAG_CANCEL: // cancelled by menuitem
-            case -1: // cancelled by Esc
-              //just chill, doing nothing
-              break;
-            default:
-              kdDebug(5006) << "Unknown dnd-type! " << id << endl;
-          }
+          KMenu *menu = new KMenu( this );
+          const QAction *dragMove = menu->addAction( i18n("&Move Here") );
+          const QAction *dragCopy = menu->addAction( SmallIcon("editcopy"), i18n("&Copy Here") );
+          menu->addSeparator();
+          menu->addAction( SmallIcon("cancel"), i18n("C&ancel") );
+          const QAction *selectedAction = menu->exec( QCursor::pos() );
+          if ( selectedAction == dragMove )
+            emit folderDrop( fti->folder() );
+          else if ( selectedAction == dragCopy )
+            emit folderDropCopy( fti->folder() );
         }
         else
           emit folderDrop(fti->folder());
@@ -1608,7 +1598,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       addUnreadColumn( i18n("Unread"), 70 );
       reload();
     }
-    // toggle KPopupMenu
+    // toggle KMenu
     mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
 
   } else if (column == total) {
@@ -1621,7 +1611,7 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       addTotalColumn( i18n("Total"), 70 );
       reload(openFolders);
     }
-    // toggle KPopupMenu
+    // toggle KMenu
     mPopup->setItemChecked( mTotalPop, isTotalActive() );
 
   } else kdDebug(5006) << "unknown column:" << column << endl;
@@ -1741,7 +1731,7 @@ void KMFolderTree::showFolder( KMFolder* folder )
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
-    KMMenuToFolder *aMenuToFolder, Q3PopupMenu *menu, Q3ListViewItem *item )
+    KMMenuToFolder *aMenuToFolder, QMenu *menu, Q3ListViewItem *item )
 {
 #warning Port me!
 /*  while ( menu->count() )
@@ -1796,7 +1786,8 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     if ( fti->firstChild() )
     {
       // new level
-      Q3PopupMenu* popup = new Q3PopupMenu( menu, "subMenu" );
+      QMenu* popup = new QMenu( menu );
+      popup->setObjectName( "subMenu" );
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
       bool subMenu = false;
       if ( ( action == MoveMessage || action == CopyMessage ) &&

@@ -33,15 +33,14 @@
 #include <QDropEvent>
 #include <Q3ValueList>
 #include <QResizeEvent>
-#include <Q3PopupMenu>
 #include <QDragEnterEvent>
 #include <QMouseEvent>
 
 class QDropEvent;
 class QPixmap;
 class QPainter;
-class Q3PopupMenu;
-class KPopupMenu;
+class QMenu;
+class KMenu;
 class KMFolder;
 class KMFolderDir;
 class KMFolderImap;
@@ -49,7 +48,7 @@ class KMFolderTree;
 class KMMainWidget;
 class KMAccount;
 // duplication from kmcommands.h, to avoid the include
-typedef QMap<int,KMFolder*> KMMenuToFolder; 
+typedef QMap<int,KMFolder*> KMMenuToFolder;
 template <typename T> class QPointer;
 
 class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
@@ -133,7 +132,7 @@ public:
      else
        return 0;
   }
-  
+
   /** create a folderlist */
   void createFolderList( QStringList *str,
                          Q3ValueList<QPointer<KMFolder> > *folders,
@@ -192,11 +191,11 @@ public:
     MoveMessage,
     MoveFolder
   };
-  
+
   /** Generate a popup menu that contains all folders that can have content */
-  void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *, 
-      Q3PopupMenu *menu, Q3ListViewItem *start = 0 );
-  
+  void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *,
+      QMenu *menu, Q3ListViewItem *start = 0 );
+
 signals:
   /** The selected folder has changed */
   void folderSelected(KMFolder*);
@@ -345,7 +344,7 @@ private:
   Q3ListViewItemIterator mUpdateIterator;
 
   /** popup for unread/total */
-  KPopupMenu* mPopup;
+  KMenu* mPopup;
   int mUnreadPop;
   int mTotalPop;
 

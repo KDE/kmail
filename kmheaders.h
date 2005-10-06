@@ -32,7 +32,7 @@ class KMMessage;
 class KMMsgBase;
 class KMCommand;
 class KMMainWidget;
-class KPopupMenu;
+class KMenu;
 class QPalette;
 class QPixmap;
 class QIcon;
@@ -434,7 +434,7 @@ private:
   bool mReaderWindowActive;
 
   /** popup to switch columns */
-  KPopupMenu* mPopup;
+  KMenu* mPopup;
 
 }; // class
 #endif

@@ -38,7 +38,7 @@
 #include <kdebug.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
-#include "kpopupmenu.h"
+#include "kmenu.h"
 #include "kmreaderwin.h"
 #include "kmfolder.h"
 #include "kmmainwidget.h"
@@ -310,7 +310,7 @@ void KMReaderMainWin::setupAccel()
 
 void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
 {
-  KPopupMenu * menu = new KPopupMenu;
+  KMenu * menu = new KMenu;
   mUrl = aUrl;
   mMsg = &aMsg;
   bool urlMenuAdded=false;

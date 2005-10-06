@@ -33,7 +33,7 @@
 class KMFolder;
 class KMMainWidget;
 class QMouseEvent;
-class KPopupMenu;
+class KMenu;
 class QPoint;
 
 /**
@@ -79,7 +79,7 @@ private:
   int mCount;
   int mNewMessagePopupId;
 
-  KPopupMenu * mPopupMenu;
+  KMenu * mPopupMenu;
   QPixmap mDefaultIcon;
   QImage mLightIconImage;
 

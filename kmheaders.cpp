@@ -39,7 +39,7 @@ using namespace KPIM;
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kimageio.h>
 #include <kconfig.h>
 #include <klocale.h>
@@ -123,8 +123,8 @@ KMHeaders::KMHeaders( KMMainWidget *aOwner, QWidget *parent ) :
   // popup-menu
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
-  mPopup = new KPopupMenu(this);
-  mPopup->insertTitle(i18n("View Columns"));
+  mPopup = new KMenu(this);
+  mPopup->addTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
   mPopup->insertItem(i18n("Status"),          KPaintInfo::COL_STATUS);
   mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);

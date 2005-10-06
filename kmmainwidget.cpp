@@ -29,7 +29,7 @@
 
 #include <kmessagebox.h>
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kaccelmanager.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
@@ -105,6 +105,8 @@ using KMail::HeaderListQuickSearch;
 #endif
 
 #include <ktoolinvocation.h>
+#include <kmenu.h>
+#include <kxmlguifactory.h>
 
 #include <QSplitter>
 
@@ -2128,7 +2130,7 @@ void KMMainWidget::slotMarkAll()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoint)
 {
-  KPopupMenu * menu = new KPopupMenu;
+  KMenu * menu = new KMenu;
   updateMessageMenu();
   mUrlCurrent = aUrl;
 

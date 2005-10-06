@@ -15,7 +15,7 @@
 #include <kabc/vcardconverter.h>
 #include <kio/netaccess.h>
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <kcompletionbox.h>
@@ -76,13 +76,13 @@ void KMLineEdit::insertEmails( const QStringList & emails )
     return;
   }
   //multiple emails, let the user choose one
-  KPopupMenu menu( this, "Addresschooser" );
+  KMenu menu( this, "Addresschooser" );
   for ( QStringList::const_iterator it = emails.begin(), end = emails.end() ; it != end; ++it )
-    menu.insertItem( *it );
-  const int result = menu.exec( QCursor::pos() );
-  if ( result < 0 )
+    menu.addAction( *it );
+  const QAction *result = menu.exec( QCursor::pos() );
+  if ( !result )
     return;
-  setText( contents + menu.text( result ) );
+  setText( contents + result->text() );
 }
 
 void KMLineEdit::dropEvent(QDropEvent *event)

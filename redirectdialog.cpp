@@ -41,6 +41,7 @@ using KRecentAddress::RecentAddresses;
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 #include <q3hbox.h>
 #include <qtooltip.h>
