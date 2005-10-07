@@ -302,18 +302,18 @@ with questions...
 
    magic := "# KMail-Index V" 1*DIGITS
 
-   header-length := Q_UINT32
+   header-length := quint32
 
-   byte-order-marker := Q_UINT32( 0x12345678 )
+   byte-order-marker := quint32( 0x12345678 )
 
-   sizeof-long := Q_UINT32( 4 / 8 )
+   sizeof-long := quint32( 4 / 8 )
 
 
    entry := tag length value
 
-   tag := Q_UINT32 ; little endian (native?)
+   tag := quint32 ; little endian (native?)
 
-   length := Q_UINT16 ; little endian (native?)
+   length := quint16 ; little endian (native?)
 
    value := unicode-string-value / ulong-value
 
@@ -351,20 +351,20 @@ Proposed new (KDE 3.2 / KMail 1.6) entry format:
 
    entry := sync 1*( tag type content ) crc-tag crc-value
 
-   sync := Q_UINT16 (32?) ; resync mark, some magic bit pattern
+   sync := quint16 (32?) ; resync mark, some magic bit pattern
 			  ; (together with preceding crc-tag provides
 			  ;  24(40)bits to resync on in case of index
 			  ;  corruption)
 
-   tag := Q_UINT8
+   tag := quint8
 
-   type := Q_UINT8
+   type := quint8
 
    content := variable-length-content / fixed-length-content
 
    crc-tag := tag type   ; tag=CRC16, type=CRC16
 
-   crc-value := Q_UINT16 ; the CRC16 sum is calculated over all of
+   crc-value := quint16 ; the CRC16 sum is calculated over all of
 			 ; 1*( tag type content )
 
    variable-length-content := length *512byte padding
@@ -373,9 +373,9 @@ Proposed new (KDE 3.2 / KMail 1.6) entry format:
 
    fixed-length-content := 1*byte
 
-   length := Q_UINT16 (Q_UINT8?)
+   length := quint16 (quint8?)
 
-   byte := Q_UINT8
+   byte := quint8
 
 The type field is pseudo-structured:
 
@@ -421,7 +421,7 @@ uniq: 3 bits = max. 8 different types with same chunk size:
 	111 Extend
 
 len: length in chunks
-     000 (variable width -> Q_UINT16 with the real width follows)
+     000 (variable width -> quint16 with the real width follows)
      001..111: fixed-width data of length 2^len (2^1=2..2^6=128)
 
 You find all defined values for the type field in indexentrybase.cpp
