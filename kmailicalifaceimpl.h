@@ -97,8 +97,8 @@ public:
   /// given the subject as Subject: header.
   /// Returns the new mail serial number,
   /// or 0 if something went wrong,
-  Q_UINT32 update( const QString& resource,
-                   Q_UINT32 sernum,
+  quint32 update( const QString& resource,
+                   quint32 sernum,
                    const QString& subject,
                    const QString& plainTextBody,
                    const QMap<QByteArray, QString>& customHeaders,
@@ -108,10 +108,10 @@ public:
                    const QStringList& deletedAttachments );
 
   bool deleteIncidenceKolab( const QString& resource,
-                             Q_UINT32 sernum );
+                             quint32 sernum );
   int incidencesKolabCount( const QString& mimetype,
                             const QString& resource );
-  QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
+  QMap<quint32, QString> incidencesKolab( const QString& mimetype,
                                            const QString& resource,
                                            int startIndex,
                                            int nbMessages );
@@ -123,7 +123,7 @@ public:
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
   KURL getAttachment( const QString& resource,
-                      Q_UINT32 sernum,
+                      quint32 sernum,
                       const QString& filename );
 
 
@@ -177,7 +177,7 @@ public:
   /** Find message matching a given UID. */
   KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
   /** Find message matching a given serial number. */
-  static KMMessage* findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder );
+  static KMMessage* findMessageBySerNum( quint32 serNum, KMFolder* folder );
 
   /** Convenience function to delete a message. */
   void deleteMsg( KMMessage* msg );
@@ -211,8 +211,8 @@ public slots:
   void readConfig();
   void slotFolderRemoved( KMFolder* folder );
 
-  void slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum );
-  void slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum );
+  void slotIncidenceAdded( KMFolder* folder, quint32 sernum );
+  void slotIncidenceDeleted( KMFolder* folder, quint32 sernum );
   void slotRefresh( const QString& type);
 
   // Called when a folder is made readonly or readwrite, or renamed,
@@ -254,7 +254,7 @@ private:
                          bool lookupByName );
   bool deleteAttachment( KMMessage& msg,
                          const QString& attachmentURL );
-  Q_UINT32 addIncidenceKolab( KMFolder& folder,
+  quint32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
                               const QString& plainTextBody,
                               const QMap<QByteArray, QString>& customHeaders,
@@ -315,8 +315,8 @@ private:
    * Since these are transient attributes of only a small but changing number
    * of incidences they are not encapsulated in a struct or somesuch.
    */
-  QMap<QString, Q_UINT32> mUIDToSerNum;
-  QMap<Q_UINT32, bool> mTheUnGetMes;
+  QMap<QString, quint32> mUIDToSerNum;
+  QMap<quint32, bool> mTheUnGetMes;
   QMap<QString, QString> mPendingUpdates;
   QMap<QString, bool> mInTransit;
 

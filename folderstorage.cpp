@@ -273,7 +273,7 @@ void FolderStorage::slotEmitChangedTimer()
 //-----------------------------------------------------------------------------
 void FolderStorage::emitMsgAddedSignals(int idx)
 {
-  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder() , idx );
+  quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder() , idx );
   if (!mQuiet) {
     emit msgAdded(idx);
   } else {
@@ -378,7 +378,7 @@ void FolderStorage::removeMsg(int idx, bool)
 
   KMMsgBase* mb = getMsgBase(idx);
 
-  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
+  quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   if (serNum != 0)
     emit msgRemoved( folder(), serNum );
   mb = takeIndexEntry( idx );
@@ -419,7 +419,7 @@ KMMessage* FolderStorage::take(int idx)
   mb = getMsgBase(idx);
   if (!mb) return 0;
   if (!mb->isMessage()) readMsg(idx);
-  Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
+  quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), idx );
   emit msgRemoved( folder(), serNum );
 
   msg = (KMMessage*)takeIndexEntry(idx);
@@ -843,7 +843,7 @@ void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
       }
       mChanged = true;
     }
-    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum(folder(), idx);
+    quint32 serNum = KMMsgDict::instance()->getMsgSerNum(folder(), idx);
     emit msgChanged( folder(), serNum, deltaUnread );
   }
 }
@@ -1084,11 +1084,11 @@ void FolderStorage::search( const KMSearchPattern* pattern )
 void FolderStorage::slotProcessNextSearchBatch()
 {
   if ( !mSearchPattern ) return;
-  Q3ValueList<Q_UINT32> matchingSerNums;
+  Q3ValueList<quint32> matchingSerNums;
   int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
-    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
+    quint32 serNum = KMMsgDict::instance()->getMsgSerNum( folder(), i );
     if ( mSearchPattern->matches( serNum ) )
       matchingSerNums.append( serNum );
   }
@@ -1100,7 +1100,7 @@ void FolderStorage::slotProcessNextSearchBatch()
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
+void FolderStorage::search( const KMSearchPattern* pattern, quint32 serNum )
 {
   bool matches = pattern && pattern->matches( serNum );
 

@@ -66,7 +66,7 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-typedef Q3ValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<quint32> SerNumList;
 
 /**
  * @short The FolderStorage class is the bass class for the storage related
@@ -404,7 +404,7 @@ public:
    * Check if the message matches the search criteria
    * The end is signaled with searchDone()
    */
-  virtual void search( const KMSearchPattern*, Q_UINT32 serNum );
+  virtual void search( const KMSearchPattern*, quint32 serNum );
 
   /** Returns true if this folder can be moved */
   virtual bool isMoveable() const;  
@@ -441,7 +441,7 @@ signals:
   void readOnlyChanged(KMFolder*);
 
   /** Emitted before a message is removed from the folder. */
-  void msgRemoved(KMFolder*, Q_UINT32 sernum);
+  void msgRemoved(KMFolder*, quint32 sernum);
 
   /** Emitted after a message is removed from the folder. */
   void msgRemoved( int idx, QString msgIdMD5 );
@@ -449,10 +449,10 @@ signals:
 
   /** Emitted when a message is added from the folder. */
   void msgAdded(int idx);
-  void msgAdded(KMFolder*, Q_UINT32 sernum);
+  void msgAdded(KMFolder*, quint32 sernum);
 
   /** Emitted, when the status of a message is changed */
-  void msgChanged(KMFolder*, Q_UINT32 sernum, int delta);
+  void msgChanged(KMFolder*, quint32 sernum, int delta);
 
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int);
@@ -471,14 +471,14 @@ signals:
    * The matching serial numbers are included
    * If @p complete is true the search is done
    */
-  void searchResult( KMFolder*, Q3ValueList<Q_UINT32>, 
+  void searchResult( KMFolder*, Q3ValueList<quint32>, 
                      const KMSearchPattern*, bool complete );
 
   /**
    * Emitted when a search for a single message is completed
    * The serial number and a bool matching yes/no is included
    */
-  void searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool );
+  void searchDone( KMFolder*, quint32, const KMSearchPattern*, bool );
 
 
 public slots:

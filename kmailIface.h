@@ -164,7 +164,7 @@ k_dcop_hidden:
       @param messageId this parameter is ignored.
   */
   /*  @TODO Get rid of the messageId parameter.  */
-  virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
+  virtual bool showMail( quint32 serialNumber, QString messageId ) = 0;
 
   /**
    * DCOP-enabled for KMailUniqueAppHandler in the kontact plugin
@@ -180,9 +180,9 @@ k_dcop_hidden:
    *
    * DCOP-enabled for use in kaddressbook drop
    */
-  virtual QString getFrom( Q_UINT32 serialNumber ) = 0;
+  virtual QString getFrom( quint32 serialNumber ) = 0;
   virtual QString debugScheduler() = 0;
-  virtual QString debugSernum( Q_UINT32 serialNumber ) = 0;
+  virtual QString debugSernum( quint32 serialNumber ) = 0;
 
   /** Does essentially the same as dcopAddMessage except that it doesn't reject
       duplicate messages.

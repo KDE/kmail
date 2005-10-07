@@ -1616,7 +1616,7 @@ void KMHeaders::setSelectedByIndex( Q3ValueList<int> items, bool selected )
   }
 }
 
-void KMHeaders::clearSelectableAndAboutToBeDeleted( Q_UINT32 serNum )
+void KMHeaders::clearSelectableAndAboutToBeDeleted( quint32 serNum )
 {
   // fugly, but I see no way around it
   for (Q3ListViewItemIterator it(this); it.current(); it++) {
@@ -2482,14 +2482,14 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
 
   fwrite(&msgSerNum, sizeof(msgSerNum), 1, sortStream);
   fwrite(&parentSerNum, sizeof(parentSerNum), 1, sortStream);
-  Q_INT32 len = key.length() * sizeof(QChar);
+  qint32 len = key.length() * sizeof(QChar);
   fwrite(&len, sizeof(len), 1, sortStream);
   if (len)
-    fwrite(key.unicode(), QMIN(len, KMAIL_MAX_KEY_LEN), 1, sortStream);
+    fwrite(key.unicode(), qMin(len, KMAIL_MAX_KEY_LEN), 1, sortStream);
 
   if (update_discover) {
     //update the discovered change count
-      Q_INT32 discovered_count = 0;
+      qint32 discovered_count = 0;
       fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET);
       fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
       discovered_count++;
@@ -2534,13 +2534,13 @@ bool KMHeaders::writeSortOrder()
     mSortInfo.column = mSortCol;
     fprintf(sortStream, KMAIL_SORT_HEADER, KMAIL_SORT_VERSION);
     //magic header information
-    Q_INT32 byteOrder = 0x12345678;
-    Q_INT32 column = mSortCol;
-    Q_INT32 ascending= !mSortDescending;
-    Q_INT32 threaded = isThreaded();
-    Q_INT32 appended=0;
-    Q_INT32 discovered_count = 0;
-    Q_INT32 sorted_count=0;
+    qint32 byteOrder = 0x12345678;
+    qint32 column = mSortCol;
+    qint32 ascending= !mSortDescending;
+    qint32 threaded = isThreaded();
+    qint32 appended=0;
+    qint32 discovered_count = 0;
+    qint32 sorted_count=0;
     fwrite(&byteOrder, sizeof(byteOrder), 1, sortStream);
     fwrite(&column, sizeof(column), 1, sortStream);
     fwrite(&ascending, sizeof(ascending), 1, sortStream);
@@ -2643,7 +2643,7 @@ void KMHeaders::appendItemToSortFile(HeaderItem *khi)
                       khi->key(mSortCol, !mSortDescending), false);
 
     //update the appended flag FIXME obsolete?
-    Q_INT32 appended = 1;
+    qint32 appended = 1;
     fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
     fwrite(&appended, sizeof(appended), 1, sortStream);
     fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
@@ -2862,8 +2862,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
     kdDebug(5006) << k_funcinfo << endl << kdBacktrace() << endl;
     //all cases
-    Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
-    Q_INT32 deleted_count = 0;
+    qint32 column, ascending, threaded, discovered_count, sorted_count, appended;
+    qint32 deleted_count = 0;
     bool unread_exists = false;
     bool jumpToUnread = (GlobalSettings::self()->actionEnterFolder() ==
                          GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
@@ -2891,7 +2891,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         if (fscanf(sortStream, KMAIL_SORT_HEADER, &version) != 1)
           version = -1;
         if(version == KMAIL_SORT_VERSION) {
-          Q_INT32 byteOrder = 0;
+          qint32 byteOrder = 0;
           fread(&byteOrder, sizeof(byteOrder), 1, sortStream);
           if (byteOrder == 0x12345678)
           {

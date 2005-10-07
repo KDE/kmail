@@ -2,7 +2,7 @@
 #define LPC_INDEX_H1110724080_INCLUDE_GUARD_
 
 /* This file is part of KMail
- * Copyright (C) 2005 Luís Pedro Coelho <luis@luispedro.org>
+ * Copyright (C) 2005 Luï¿½ Pedro Coelho <luis@luispedro.org>
  * (based on the old kmmsgindex by Sam Magnuson)
  *
  * KMail is free software; you can redistribute it and/or modify it
@@ -74,7 +74,7 @@ class KMMsgIndex : public QObject {
 		/**
 		 * Just return all the uids where the pattern exists
 		 */
-		std::vector<Q_UINT32> simpleSearch( QString, bool* ) const;
+		std::vector<quint32> simpleSearch( QString, bool* ) const;
 
 		/**
 		 * Returns whether the folder is indexable. Only local and dimap
@@ -133,14 +133,14 @@ class KMMsgIndex : public QObject {
 
 		void continueCreation();
 
-		void slotAddMessage( KMFolder*, Q_UINT32 message );
-		void slotRemoveMessage( KMFolder*, Q_UINT32 message );
+		void slotAddMessage( KMFolder*, quint32 message );
+		void slotRemoveMessage( KMFolder*, quint32 message );
 	private:
 		static QString defaultPath();
 
 		bool canHandleQuery( const KMSearchPattern* ) const;
-		int addMessage( Q_UINT32 );
-		void removeMessage( Q_UINT32 );
+		int addMessage( quint32 );
+		void removeMessage( quint32 );
 
 		void scheduleAction();
 		bool creating() const;
@@ -156,11 +156,11 @@ class KMMsgIndex : public QObject {
 		class Search;
 	private:
 
-		std::vector<Q_UINT32> mPendingMsgs;
+		std::vector<quint32> mPendingMsgs;
 		std::vector<KMFolder*> mPendingFolders;
-		std::vector<Q_UINT32> mAddedMsgs;
-		std::vector<Q_UINT32> mRemovedMsgs;
-		std::vector<Q_UINT32> mExisting;
+		std::vector<quint32> mAddedMsgs;
+		std::vector<quint32> mRemovedMsgs;
+		std::vector<quint32> mExisting;
 
 		enum e_state {
 			s_idle, // doing nothing, index waiting
@@ -199,7 +199,7 @@ class KMMsgIndex::Search : public QObject {
 		~Search();
 		KMSearch* search() const { return mSearch; }
 	signals:
-		void found( Q_UINT32 );
+		void found( quint32 );
 		void finished( bool );
 	private slots:
 		void act();
@@ -211,7 +211,7 @@ class KMMsgIndex::Search : public QObject {
 		 * handled by the index
 		 */
 		KMSearchPattern* mResidual;
-		std::vector<Q_UINT32> mValues;
+		std::vector<quint32> mValues;
 		enum { s_none = 0, s_starting, s_emitting, s_emitstopped, s_done } mState;
 };
 

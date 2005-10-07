@@ -42,7 +42,7 @@ public:
     KMTextSource();
     ~KMTextSource();
 
-    Q3CString text(Q_UINT32 serialNumber) const;
+    Q3CString text(quint32 serialNumber) const;
 };
 
 #endif

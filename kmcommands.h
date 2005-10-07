@@ -534,14 +534,14 @@ class KDE_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( KMMsgStatus status, const Q3ValueList<Q_UINT32> &,
+  KMSetStatusCommand( KMMsgStatus status, const Q3ValueList<quint32> &,
                       bool toggle=false );
 
 private:
   virtual Result execute();
 
   KMMsgStatus mStatus;
-  Q3ValueList<Q_UINT32> mSerNums;
+  Q3ValueList<quint32> mSerNums;
   Q3ValueList<int> mIds;
   bool mToggle;
 };
@@ -657,7 +657,7 @@ public:
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 protected slots:
-  void slotMsgAdded( KMFolder*, Q_UINT32 );
+  void slotMsgAdded( KMFolder*, quint32 );
 
   void slotFolderComplete();
 
@@ -668,7 +668,7 @@ private:
   Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that need to be loaded
   // Ticked off as they come in via msgAdded signals.
-  Q3ValueList<Q_UINT32> mWaitingForMsgs;
+  Q3ValueList<quint32> mWaitingForMsgs;
 };
 
 namespace KPIM {
@@ -686,12 +686,12 @@ public:
 
 public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
-  void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
+  void slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum);
   void slotMoveCanceled();
 
 protected:
   // Needed for KMDeleteCommand for "move to trash"
-  KMMoveCommand( Q_UINT32 sernum );
+  KMMoveCommand( quint32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
   void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
   Q3ValueVector<KMFolder*> mOpenedFolders;
@@ -704,7 +704,7 @@ private:
   Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
-  Q3ValueList<Q_UINT32> mLostBoys;
+  Q3ValueList<quint32> mLostBoys;
   KPIM::ProgressItem *mProgressItem;
 };
 
@@ -715,7 +715,7 @@ class KDE_EXPORT KMDeleteMsgCommand : public KMMoveCommand
 public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const Q3PtrList<KMMsgBase> &msgList );
   KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
-  KMDeleteMsgCommand( Q_UINT32 sernum );
+  KMDeleteMsgCommand( quint32 sernum );
 
 private:
   static KMFolder * findTrashFolder( KMFolder * srcFolder );

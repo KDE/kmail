@@ -119,7 +119,7 @@ int HeaderItem::msgId() const
 }
 
 // Return the serial number
-Q_UINT32 HeaderItem::msgSerNum() const
+quint32 HeaderItem::msgSerNum() const
 {
   return mSerNum;
 }
@@ -193,8 +193,8 @@ void HeaderItem::setup()
   widthChanged();
   const int ph = KMHeaders::pixNew->height();
   Q3ListView *v = listView();
-  int h = QMAX( v->fontMetrics().height(), ph ) + 2*v->itemMargin();
-  h = QMAX( h, QApplication::globalStrut().height());
+  int h = qMax( v->fontMetrics().height(), ph ) + 2*v->itemMargin();
+  h = qMax( h, QApplication::globalStrut().height());
   if ( h % 2 > 0 )
     h++;
   setHeight( h );
@@ -209,7 +209,7 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
   for ( PixmapList::ConstIterator it = pixmaps.begin();
       it != pixmaps.end(); ++it ) {
     width += (*it).width();
-    height = QMAX( height, (*it).height() );
+    height = qMax( height, (*it).height() );
   }
 
   QPixmap res( width, height );
@@ -374,23 +374,23 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   if ( mMsgBase->isTodo() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colTodo );
     font = headers->todoFont();
-    weight = QMAX( weight, font.weight() );
+    weight = qMax( weight, font.weight() );
   }
   if ( mMsgBase->isUnread() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colUnread );
     font = headers->unreadFont();
-    weight = QMAX( weight, font.weight() );
+    weight = qMax( weight, font.weight() );
   }
   if ( mMsgBase->isNew() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colNew );
     font = headers->newFont();
-    weight = QMAX( weight, font.weight() );
+    weight = qMax( weight, font.weight() );
   }
 
   if ( mMsgBase->isImportant() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colFlag );
     font = headers->importantFont();
-    weight = QMAX( weight, font.weight() );
+    weight = qMax( weight, font.weight() );
   }
   if ( column == headers->paintInfo()->dateCol ) {
     font = headers->dateFont();

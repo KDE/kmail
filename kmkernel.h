@@ -178,10 +178,10 @@ public:
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
   int timeOfLastMessageCountChange() const;
-  virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
-  virtual QString getFrom( Q_UINT32 serialNumber );
+  virtual bool showMail( quint32 serialNumber, QString messageId );
+  virtual QString getFrom( quint32 serialNumber );
   virtual QString debugScheduler();
-  virtual QString debugSernum( Q_UINT32 serialNumber );
+  virtual QString debugSernum( quint32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
   /**

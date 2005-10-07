@@ -252,9 +252,9 @@ void KMSearch::slotProcessNextBatch()
             folder->open();
             mOpenedFolders.append( folder );
             connect( folder->storage(),
-                SIGNAL( searchResult( KMFolder*, Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool ) ),
+                SIGNAL( searchResult( KMFolder*, Q3ValueList<quint32>, const KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool ) ) );
+                SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>, const KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -264,14 +264,14 @@ void KMSearch::slotProcessNextBatch()
 }
 
 void KMSearch::slotSearchFolderResult( KMFolder* folder,
-                                       Q3ValueList<Q_UINT32> serNums,
+                                       Q3ValueList<quint32> serNums,
                                        const KMSearchPattern* pattern,
                                        bool complete )
 {
     if ( pattern != mSearchPattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     mLastFolder = folder->label();
-    Q3ValueListIterator<Q_UINT32> it;
+    Q3ValueListIterator<quint32> it;
     for ( it = serNums.begin(); it != serNums.end(); ++it )
     {
       emit found( *it );
@@ -280,10 +280,10 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
     if ( complete )
     {
       disconnect( folder->storage(),
-          SIGNAL( searchResult( KMFolder*, Q3ValueList<Q_UINT32>,
+          SIGNAL( searchResult( KMFolder*, Q3ValueList<quint32>,
                                 const KMSearchPattern*, bool ) ),
           this,
-          SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<Q_UINT32>,
+          SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>,
                                         const KMSearchPattern*, bool ) ) );
       --mRemainingFolders;
       folder->close();
@@ -313,12 +313,12 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
 
     //Hook up some slots for live updating of search folders
     //TODO: Optimize folderInvalidated, folderAdded, folderRemoved
-    connect(kmkernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->folderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+    connect(kmkernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, quint32)),
+            this, SLOT(examineAddedMessage(KMFolder*, quint32)));
+    connect(kmkernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, quint32)),
+            this, SLOT(examineRemovedMessage(KMFolder*, quint32)));
+    connect(kmkernel->folderMgr(), SIGNAL(msgChanged(KMFolder*, quint32, int)),
+            this, SLOT(examineChangedMessage(KMFolder*, quint32, int)));
     connect(kmkernel->folderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
             this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->folderMgr(), SIGNAL(folderAdded(KMFolder*)),
@@ -328,12 +328,12 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
     connect(kmkernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
             this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
-    connect(kmkernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->imapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->imapFolderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+    connect(kmkernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, quint32)),
+            this, SLOT(examineAddedMessage(KMFolder*, quint32)));
+    connect(kmkernel->imapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, quint32)),
+            this, SLOT(examineRemovedMessage(KMFolder*, quint32)));
+    connect(kmkernel->imapFolderMgr(), SIGNAL(msgChanged(KMFolder*, quint32, int)),
+            this, SLOT(examineChangedMessage(KMFolder*, quint32, int)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
             this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
@@ -343,12 +343,12 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
             this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
-    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
-    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgAdded(KMFolder*, quint32)),
+            this, SLOT(examineAddedMessage(KMFolder*, quint32)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, quint32)),
+            this, SLOT(examineRemovedMessage(KMFolder*, quint32)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgChanged(KMFolder*, quint32, int)),
+            this, SLOT(examineChangedMessage(KMFolder*, quint32, int)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
             this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
@@ -387,8 +387,8 @@ void KMFolderSearch::setSearch(KMSearch *search)
         delete mSearch;
         mSearch = search; // take ownership
         if (mSearch) {
-            QObject::connect(search, SIGNAL(found(Q_UINT32)),
-                    SLOT(addSerNum(Q_UINT32)));
+            QObject::connect(search, SIGNAL(found(quint32)),
+                    SLOT(addSerNum(quint32)));
             QObject::connect(search, SIGNAL(finished(bool)),
                     SLOT(searchFinished(bool)));
         }
@@ -426,7 +426,7 @@ void KMFolderSearch::searchFinished(bool success)
     close();
 }
 
-void KMFolderSearch::addSerNum(Q_UINT32 serNum)
+void KMFolderSearch::addSerNum(quint32 serNum)
 {
     if (mInvalid) // A new search is scheduled don't bother doing anything
         return;
@@ -457,9 +457,9 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     emitMsgAddedSignals(mSerNums.count()-1);
 }
 
-void KMFolderSearch::removeSerNum(Q_UINT32 serNum)
+void KMFolderSearch::removeSerNum(quint32 serNum)
 {
-    Q3ValueVector<Q_UINT32>::const_iterator it;
+    Q3ValueVector<quint32>::const_iterator it;
     int i = 0;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it, ++i)
         if ((*it) == serNum) {
@@ -494,7 +494,7 @@ int KMFolderSearch::addMsg(KMMessage*, int* index_return)
 bool KMFolderSearch::readSearch()
 {
     mSearch = new KMSearch;
-    QObject::connect(mSearch, SIGNAL(found(Q_UINT32)), SLOT(addSerNum(Q_UINT32)));
+    QObject::connect(mSearch, SIGNAL(found(quint32)), SLOT(addSerNum(quint32)));
     QObject::connect(mSearch, SIGNAL(finished(bool)), SLOT(searchFinished(bool)));
     return mSearch->read(location());
 }
@@ -598,7 +598,7 @@ int KMFolderSearch::create()
     clearIndex();
     if (!mSearch) {
         mSearch = new KMSearch();
-        QObject::connect(mSearch, SIGNAL(found(Q_UINT32)), SLOT(addSerNum(Q_UINT32)));
+        QObject::connect(mSearch, SIGNAL(found(quint32)), SLOT(addSerNum(quint32)));
         QObject::connect(mSearch, SIGNAL(finished(bool)), SLOT(searchFinished(bool)));
     }
     mSearch->write(location());
@@ -640,7 +640,7 @@ const KMMsgBase* KMFolderSearch::getMsgBase(int idx) const
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+    if (idx < 0 || (quint32)idx >= mSerNums.count())
         return 0;
     KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
@@ -651,7 +651,7 @@ KMMsgBase* KMFolderSearch::getMsgBase(int idx)
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+    if (idx < 0 || (quint32)idx >= mSerNums.count())
         return 0;
     KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     if (!folder || folderIdx == -1)
@@ -664,7 +664,7 @@ KMMessage* KMFolderSearch::getMsg(int idx)
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+    if (idx < 0 || (quint32)idx >= mSerNums.count())
         return 0;
     KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
@@ -696,8 +696,8 @@ KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
 int KMFolderSearch::find(const KMMsgBase* msg) const
 {
     int pos = 0;
-    Q_UINT32 serNum = msg->getMsgSerNum();
-    Q3ValueVector<Q_UINT32>::const_iterator it;
+    quint32 serNum = msg->getMsgSerNum();
+    Q3ValueVector<quint32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum)
             return pos;
@@ -752,19 +752,19 @@ int KMFolderSearch::writeIndex( bool )
         return -1;
     }
     fprintf(tmpIndexStream, IDS_SEARCH_HEADER, IDS_SEARCH_VERSION);
-    Q_UINT32 byteOrder = 0x12345678;
+    quint32 byteOrder = 0x12345678;
     fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
 
-    Q_UINT32 count = mSerNums.count();
+    quint32 count = mSerNums.count();
     if (!fwrite(&count, sizeof(count), 1, tmpIndexStream)) {
         fclose(tmpIndexStream);
         truncate(QFile::encodeName(filename), 0);
         return -1;
     }
 
-    Q3ValueVector<Q_UINT32>::iterator it;
+    Q3ValueVector<quint32>::iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
-        Q_UINT32 serNum = *it;
+        quint32 serNum = *it;
         if (!fwrite(&serNum, sizeof(serNum), 1, tmpIndexStream))
             return -1;
     }
@@ -810,7 +810,7 @@ bool KMFolderSearch::readIndex()
         return false;
     }
     bool swapByteOrder;
-    Q_UINT32 byte_order;
+    quint32 byte_order;
     if (!fread(&byte_order, sizeof(byte_order), 1, mIdsStream)) {
         fclose(mIdsStream);
         mIdsStream = 0;
@@ -818,7 +818,7 @@ bool KMFolderSearch::readIndex()
     }
     swapByteOrder = (byte_order == 0x78563412);
 
-    Q_UINT32 count;
+    quint32 count;
     if (!fread(&count, sizeof(count), 1, mIdsStream)) {
         fclose(mIdsStream);
         mIdsStream = 0;
@@ -830,7 +830,7 @@ bool KMFolderSearch::readIndex()
     mUnreadMsgs = 0;
     mSerNums.reserve(count);
     for (unsigned int index = 0; index < count; index++) {
-        Q_UINT32 serNum;
+        quint32 serNum;
         int folderIdx = -1;
         KMFolder *folder = 0;
         bool readOk = fread(&serNum, sizeof(serNum), 1, mIdsStream);
@@ -896,7 +896,7 @@ KMMsgBase* KMFolderSearch::takeIndexEntry(int idx)
 {
     assert(idx >= 0 && idx < (int)mSerNums.count());
     KMMsgBase *msgBase = getMsgBase(idx);
-    Q3ValueVector<Q_UINT32>::iterator it = mSerNums.begin();
+    Q3ValueVector<quint32>::iterator it = mSerNums.begin();
     mSerNums.erase(&it[idx]);
     return msgBase;
 }
@@ -918,7 +918,7 @@ void KMFolderSearch::truncateIndex()
     truncate(QFile::encodeName(indexLocation()), IDS_SEARCH_HEADER_LEN);
 }
 
-void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
+void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, quint32 serNum)
 {
     if (!search() && !readSearch())
         return;
@@ -945,9 +945,9 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
       connect( folder->storage(), 
-              SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
+              SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32, 
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
@@ -955,7 +955,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 }
 
 void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
-                                               Q_UINT32 serNum, 
+                                               quint32 serNum, 
                                                const KMSearchPattern* pattern,
                                                bool matches )
 {
@@ -967,10 +967,10 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       if ( count == 1 ) {
         disconnect( folder->storage(),
-                    SIGNAL( searchDone( KMFolder*, Q_UINT32,
+                    SIGNAL( searchDone( KMFolder*, quint32,
                                         const KMSearchPattern*, bool ) ),
                     this,
-                    SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
+                    SLOT( slotSearchExamineMsgDone( KMFolder*, quint32,
                                                     const KMSearchPattern*, bool ) ) );
         mFoldersCurrentlyBeingSearched.remove( folder );
       } else {
@@ -982,7 +982,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     folder->close();
 
     if ( !matches ) {
-        Q3ValueVector<Q_UINT32>::const_iterator it;
+        Q3ValueVector<quint32>::const_iterator it;
         it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
         if (it != mSerNums.end()) {
             removeSerNum( serNum );
@@ -994,7 +994,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
 //        mSearch->stop();
 //        mExecuteSearchTimer->start( 0, true );
 //    } else {
-        Q3ValueVector<Q_UINT32>::const_iterator it;
+        Q3ValueVector<quint32>::const_iterator it;
         it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
         if (it == mSerNums.end()) {
             addSerNum( serNum );
@@ -1002,7 +1002,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
 //    }
 }
 
-void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
+void KMFolderSearch::examineRemovedMessage(KMFolder *folder, quint32 serNum)
 {
     if (!search() && !readSearch())
         return;
@@ -1020,7 +1020,7 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
     }
 }
 
-void KMFolderSearch::examineChangedMessage(KMFolder *aFolder, Q_UINT32 serNum, int delta)
+void KMFolderSearch::examineChangedMessage(KMFolder *aFolder, quint32 serNum, int delta)
 {
     if (!search() && !readSearch())
         return;
@@ -1030,7 +1030,7 @@ void KMFolderSearch::examineChangedMessage(KMFolder *aFolder, Q_UINT32 serNum, i
         open();
         mTempOpened = true;
     }
-    Q3ValueVector<Q_UINT32>::const_iterator it;
+    Q3ValueVector<quint32>::const_iterator it;
     it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
     if (it != mSerNums.end()) {
         mUnreadMsgs += delta;
@@ -1090,8 +1090,8 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
         mTempOpened = true;
     }
 
-    Q_UINT32 serNum = KMMsgDict::instance()->getMsgSerNum(aFolder, idx);
-    Q3ValueVector<Q_UINT32>::const_iterator it;
+    quint32 serNum = KMMsgDict::instance()->getMsgSerNum(aFolder, idx);
+    Q3ValueVector<quint32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum) {
             emit msgHeaderChanged(folder(), pos);
@@ -1108,9 +1108,9 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
       mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
     } else {
       connect( aFolder->storage(), 
-              SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
+              SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32, 
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
     }

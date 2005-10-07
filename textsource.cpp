@@ -46,7 +46,7 @@ KMTextSource::~KMTextSource() {
 }
 
 
-Q3CString KMTextSource::text(Q_UINT32 serialNumber) const {
+Q3CString KMTextSource::text(quint32 serialNumber) const {
     Q3CString rc;
     KMFolder *folder = 0;
     int idx;

@@ -117,7 +117,7 @@ void ExpireJob::slotDoWork()
 {
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   FolderStorage* storage = mSrcFolder->storage();
-  int stopIndex = mImmediate ? 0 : QMAX( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
+  int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
 #ifdef DEBUG_SCHEDULER
   kdDebug(5006) << "ExpireJob: checking messages " << mCurrentIndex << " to " << stopIndex << endl;
 #endif

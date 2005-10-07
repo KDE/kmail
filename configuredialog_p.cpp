@@ -171,7 +171,7 @@ void ListView::resizeColums()
 
 void ListView::setVisibleItem( int visibleItem, bool updateSize )
 {
-  mVisibleItem = QMAX( 1, visibleItem );
+  mVisibleItem = qMax( 1, visibleItem );
   if( updateSize == true )
   {
     QSize s = sizeHint();

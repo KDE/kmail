@@ -148,13 +148,13 @@ signals:
   void folderInvalidated(KMFolder*);
 
   /** Emitted, when a message has been appended to a folder */
-  void msgAdded(KMFolder*, Q_UINT32);
+  void msgAdded(KMFolder*, quint32);
 
   /** Emitted, when a message has been removed from a folder */
-  void msgRemoved(KMFolder*, Q_UINT32);
+  void msgRemoved(KMFolder*, quint32);
 
   /** Emitted, when the status of a message is changed */
-  void msgChanged(KMFolder*, Q_UINT32, int delta);
+  void msgChanged(KMFolder*, quint32, int delta);
 
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int idx);

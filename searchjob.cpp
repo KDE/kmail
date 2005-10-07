@@ -51,7 +51,7 @@ using KPIM::ProgressManager;
 namespace KMail {
 
 SearchJob::SearchJob( KMFolderImap* folder, ImapAccountBase* account,
-                      const KMSearchPattern* pattern, Q_UINT32 serNum )
+                      const KMSearchPattern* pattern, quint32 serNum )
  : FolderJob( 0, tOther, (folder ? folder->folder() : 0) ),
    mFolder( folder ), mAccount( account ), mSearchPattern( pattern ),
    mSerNum( serNum ), mRemainingMsgs( 0 ), mProgress( 0 ),
@@ -178,7 +178,7 @@ void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
   if ( mLocalSearchPattern->isEmpty() && data.isEmpty() )
   {
     // no local search and the server found nothing
-    Q3ValueList<Q_UINT32> serNums;
+    Q3ValueList<quint32> serNums;
     emit searchDone( serNums, mSearchPattern, true );
   } else
   {
@@ -218,7 +218,7 @@ void SearchJob::slotSearchFolder()
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // pure imap search - now get the serial number for the UIDs
-    Q3ValueList<Q_UINT32> serNums;
+    Q3ValueList<quint32> serNums;
     for ( QStringList::Iterator it = mImapSearchHits.begin(); 
         it != mImapSearchHits.end(); ++it ) 
     {
@@ -244,7 +244,7 @@ void SearchJob::slotSearchFolder()
             i18n("Continue Search"), i18n("&Search"), 
             "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
       {
-        Q3ValueList<Q_UINT32> serNums;
+        Q3ValueList<quint32> serNums;
         emit searchDone( serNums, mSearchPattern, true );
         return;
       }
@@ -293,7 +293,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
       if ( mLocalSearchPattern->matches( msg ) &&
           ( mImapSearchHits.isEmpty() ||
            mImapSearchHits.find( QString::number(msg->UID() ) ) != mImapSearchHits.end() ) ) {
-        Q_UINT32 serNum = msg->getMsgSerNum();
+        quint32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
         matches = true;
       }
@@ -301,7 +301,7 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
       // imap or local search have to match
       if ( mLocalSearchPattern->matches( msg ) ||
           mImapSearchHits.find( QString::number(msg->UID()) ) != mImapSearchHits.end() ) {
-        Q_UINT32 serNum = msg->getMsgSerNum();
+        quint32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
         matches = true;
       }
@@ -339,7 +339,7 @@ void SearchJob::slotSearchResult( KIO::Job *job )
     if ( mSerNum == 0 )
     {
       // folder
-      Q3ValueList<Q_UINT32> serNums;
+      Q3ValueList<quint32> serNums;
       emit searchDone( serNums, mSearchPattern, true );
     } else {
       // message
@@ -421,7 +421,7 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
   if ( item )
     item->setComplete();
   mAccount->killAllJobs();
-  Q3ValueList<Q_UINT32> serNums;
+  Q3ValueList<quint32> serNums;
   emit searchDone( serNums, mSearchPattern, true );
 }
 

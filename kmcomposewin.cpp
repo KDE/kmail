@@ -833,7 +833,7 @@ int KMComposeWin::calcColumnWidth(int which, long allShowing, int width)
   w->setBuddy( mEditor ); // set dummy so we don't calculate width of '&' for this label.
   w->adjustSize();
   w->show();
-  return QMAX( width, w->sizeHint().width() );
+  return qMax( width, w->sizeHint().width() );
 }
 
 void KMComposeWin::rethinkFields(bool fromSlot)

@@ -399,8 +399,8 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   }
 
   // Filter messages
-  QListIterator<Q_UINT32> filterIt( mFilterSerNums );
-  QList<Q_UINT32> inTransit;
+  QListIterator<quint32> filterIt( mFilterSerNums );
+  QList<quint32> inTransit;
 
   if (ActionScheduler::isEnabled() || 
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
@@ -409,7 +409,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     if (!mScheduler) {
 	mScheduler = new KMail::ActionScheduler( set, filters );
 	mScheduler->setAccountId( id() );
-	connect( mScheduler, SIGNAL(filtered(Q_UINT32)), this, SLOT(slotFiltered(Q_UINT32)) );
+	connect( mScheduler, SIGNAL(filtered(quint32)), this, SLOT(slotFiltered(quint32)) );
     } else {
 	mScheduler->setFilterList( filters );
     }
@@ -419,7 +419,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
     int idx = -1;
     KMFolder *folder = 0;
     KMMessage *msg = 0;
-    Q_UINT32 sernum = filterIt.next();
+    quint32 sernum = filterIt.next();
     KMMsgDict::instance()->getLocation( sernum, &folder, &idx );
     // It's possible that the message has been deleted or moved into a
     // different folder, or that the serNum is stale
@@ -481,7 +481,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::slotFiltered(Q_UINT32 serNum)
+void KMAcctImap::slotFiltered(quint32 serNum)
 {
     mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
 }
@@ -562,10 +562,10 @@ void KMAcctImap::slotFolderSelected( KMFolderImap* folder, bool )
   folder->close();
 }
 
-void KMAcctImap::execFilters(Q_UINT32 serNum)
+void KMAcctImap::execFilters(quint32 serNum)
 {
   if ( !kmkernel->filterMgr()->atLeastOneFilterAppliesTo( id() ) ) return;
-  QList<Q_UINT32>::iterator findIt = mFilterSerNums.find( serNum );
+  QList<quint32>::iterator findIt = mFilterSerNums.find( serNum );
   if ( findIt != mFilterSerNums.end() )
       return;
   mFilterSerNums.append( serNum );
@@ -579,7 +579,7 @@ int KMAcctImap::slotFilterMsg( KMMessage *msg )
     return -1;
   }
   msg->setTransferInProgress(false);
-  Q_UINT32 serNum = msg->getMsgSerNum();
+  quint32 serNum = msg->getMsgSerNum();
   if ( serNum )
     mFilterSerNumsToSave.remove( QString( "%1" ).arg( serNum ) );
 

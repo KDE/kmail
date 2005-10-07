@@ -39,7 +39,7 @@ class QIcon;
 class QDateTime;
 
 typedef Q3PtrList<KMMsgBase> KMMessageList;
-typedef Q3ValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<quint32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
@@ -109,7 +109,7 @@ public:
                                KMMessage* aMsg = 0);
 
   /** Resets toBeDeleted and selectable status of all selected items. */
-  virtual void clearSelectableAndAboutToBeDeleted(Q_UINT32 serNum);
+  virtual void clearSelectableAndAboutToBeDeleted(quint32 serNum);
   /** Returns list of selected messages. Mark the corresponding
       header items to be deleted, if specified. */
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);

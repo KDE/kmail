@@ -94,7 +94,7 @@ public:
     if (index >= 0) {
       int size = array.size();
       if (index >= size) {
-        int newsize = QMAX(size + 25, index + 1);
+        int newsize = qMax(size + 25, index + 1);
         array.resize(newsize);
         for (int j = size; j < newsize; j++)
           array.at(j) = 0;
@@ -379,14 +379,14 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   }
 
   bool swapByteOrder;
-  Q_UINT32 byte_order;
+  quint32 byte_order;
   if (!fread(&byte_order, sizeof(byte_order), 1, fp)) {
     fclose(fp);
     return -1;
   }
   swapByteOrder = (byte_order == 0x78563412);
 
-  Q_UINT32 count;
+  quint32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
     fclose(fp);
     return -1;
@@ -397,7 +397,7 @@ int KMMsgDict::readFolderIds( FolderStorage& storage )
   KMMsgDictREntry *rentry = new KMMsgDictREntry(count);
 
   for (unsigned int index = 0; index < count; index++) {
-    Q_UINT32 msn;
+    quint32 msn;
 
     bool readOk = fread(&msn, sizeof(msn), 1, fp);
     if (swapByteOrder)
@@ -454,7 +454,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
       fscanf(fp, IDS_HEADER, &version);
       if (version == IDS_VERSION)
       {
-         Q_UINT32 byte_order = 0;
+         quint32 byte_order = 0;
          fread(&byte_order, sizeof(byte_order), 1, fp);
          rentry->swapByteOrder = (byte_order == 0x78563412);
       }
@@ -478,7 +478,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds( const FolderStorage& storage, bool tr
          return 0;
       }
       fprintf(fp, IDS_HEADER, IDS_VERSION);
-      Q_UINT32 byteOrder = 0x12345678;
+      quint32 byteOrder = 0x12345678;
       fwrite(&byteOrder, sizeof(byteOrder), 1, fp);
       rentry->swapByteOrder = false;
     }
@@ -500,7 +500,7 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
   // kdDebug(5006) << "Dict writing for folder " << storage.label() << endl;
-  Q_UINT32 count = rentry->getRealSize();
+  quint32 count = rentry->getRealSize();
   if (!fwrite(&count, sizeof(count), 1, fp)) {
     kdDebug(5006) << "Dict cannot write count with folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
@@ -508,7 +508,7 @@ int KMMsgDict::writeFolderIds( const FolderStorage &storage )
   }
 
   for (unsigned int index = 0; index < count; index++) {
-    Q_UINT32 msn = rentry->getMsn(index);
+    quint32 msn = rentry->getMsn(index);
     if (!fwrite(&msn, sizeof(msn), 1, fp))
       return -1;
   }
@@ -549,7 +549,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
 //  kdDebug(5006) << "Dict appending for folder " << storage.label() << endl;
 
   fseek(fp, rentry->baseOffset, SEEK_SET);
-  Q_UINT32 count;
+  quint32 count;
   if (!fread(&count, sizeof(count), 1, fp)) {
     kdDebug(5006) << "Dict cannot read count for folder " << storage.label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
@@ -573,7 +573,7 @@ int KMMsgDict::appendToFolderIds( FolderStorage& storage, int index)
   if (ofs > 0)
     fseek(fp, ofs, SEEK_CUR);
 
-  Q_UINT32 msn = rentry->getMsn(index);
+  quint32 msn = rentry->getMsn(index);
   if (rentry->swapByteOrder)
      msn = kmail_swap_32(msn);
   if (!fwrite(&msn, sizeof(msn), 1, fp)) {

@@ -156,8 +156,8 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 {
   srcFolder->open();
   if (mSrcFolder) {
-    disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-		this, SLOT(msgAdded(KMFolder*, Q_UINT32)) );
+    disconnect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+		this, SLOT(msgAdded(KMFolder*, quint32)) );
     mSrcFolder->close();
   }
   mSrcFolder = srcFolder;
@@ -165,8 +165,8 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
   for (i = 0; i < mSrcFolder->count(); ++i)
     enqueue( mSrcFolder->getMsgBase( i )->getMsgSerNum() );
   if (mSrcFolder)
-    connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-	     this, SLOT(msgAdded(KMFolder*, Q_UINT32)) );
+    connect( mSrcFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+	     this, SLOT(msgAdded(KMFolder*, quint32)) );
 }
 
 void ActionScheduler::setFilterList( Q3ValueList<KMFilter*> filters )
@@ -211,9 +211,9 @@ void ActionScheduler::tempCloseFolders()
   mOpenFolders.clear();
 }
 
-void ActionScheduler::execFilters(const Q3ValueList<Q_UINT32> serNums)
+void ActionScheduler::execFilters(const Q3ValueList<quint32> serNums)
 {
-  Q3ValueListConstIterator<Q_UINT32> it;
+  Q3ValueListConstIterator<quint32> it;
   for (it = serNums.begin(); it != serNums.end(); ++it)
     execFilters( *it );
 }
@@ -231,7 +231,7 @@ void ActionScheduler::execFilters(KMMsgBase* msgBase)
   execFilters( msgBase->getMsgSerNum() );
 }
 
-void ActionScheduler::execFilters(Q_UINT32 serNum)
+void ActionScheduler::execFilters(quint32 serNum)
 {
   if (mResult != ResultOk) {
       if ((mResult != ResultCriticalError) && 
@@ -260,7 +260,7 @@ void ActionScheduler::execFilters(Q_UINT32 serNum)
   }
 }
 
-KMMsgBase *ActionScheduler::messageBase(Q_UINT32 serNum)
+KMMsgBase *ActionScheduler::messageBase(quint32 serNum)
 {
   int idx = -1;
   KMFolder *folder = 0;
@@ -280,7 +280,7 @@ KMMsgBase *ActionScheduler::messageBase(Q_UINT32 serNum)
   return msg;
 }
 
-KMMessage *ActionScheduler::message(Q_UINT32 serNum)
+KMMessage *ActionScheduler::message(quint32 serNum)
 {
   int idx = -1;
   KMFolder *folder = 0;
@@ -361,7 +361,7 @@ void ActionScheduler::finish()
 
 void ActionScheduler::fetchMessage()
 {
-  Q3ValueListIterator<Q_UINT32> mFetchMessageIt = mFetchSerNums.begin();
+  Q3ValueListIterator<quint32> mFetchMessageIt = mFetchSerNums.begin();
   while (mFetchMessageIt != mFetchSerNums.end()) {
     if (!MessageProperty::transferInProgress(*mFetchMessageIt))
       break;
@@ -447,13 +447,13 @@ void ActionScheduler::messageFetched( KMMessage *msg )
   return;
 }
 
-void ActionScheduler::msgAdded( KMFolder*, Q_UINT32 serNum )
+void ActionScheduler::msgAdded( KMFolder*, quint32 serNum )
 {
   if (!mIgnore)
     enqueue( serNum );
 }
 
-void ActionScheduler::enqueue(Q_UINT32 serNum)
+void ActionScheduler::enqueue(quint32 serNum)
 {
   if (mResult != ResultOk)
     return; // An error has already occurred don't even try to process this msg

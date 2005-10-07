@@ -439,12 +439,12 @@ void SearchWindow::slotSearch()
     mFolder->stopSearch();
     disconnect(mFolder, SIGNAL(msgAdded(int)),
             this, SLOT(slotAddMsg(int)));
-    disconnect(mFolder, SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-            this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
+    disconnect(mFolder, SIGNAL(msgRemoved(KMFolder*, quint32)),
+            this, SLOT(slotRemoveMsg(KMFolder*, quint32)));
     connect(mFolder, SIGNAL(msgAdded(int)),
             this, SLOT(slotAddMsg(int)));
-    connect(mFolder, SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-            this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
+    connect(mFolder, SIGNAL(msgRemoved(KMFolder*, quint32)),
+            this, SLOT(slotRemoveMsg(KMFolder*, quint32)));
     KMSearch *search = new KMSearch();
     connect(search, SIGNAL(finished(bool)),
             this, SLOT(searchDone()));
@@ -515,7 +515,7 @@ void SearchWindow::slotAddMsg(int idx)
         mFolder->unGetMsg(idx);
 }
 
-void SearchWindow::slotRemoveMsg(KMFolder *, Q_UINT32 serNum)
+void SearchWindow::slotRemoveMsg(KMFolder *, quint32 serNum)
 {
     if (!mFolder)
         return;

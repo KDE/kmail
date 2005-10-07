@@ -92,12 +92,12 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mStorage->setAutoCreateIndex( false );
 
   if ( aParent ) {
-    connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-             aParent->manager(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( mStorage, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-             parent()->manager(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ) );
-    connect( this, SIGNAL( msgChanged( KMFolder*, Q_UINT32, int ) ),
-             parent()->manager(), SIGNAL( msgChanged( KMFolder*, Q_UINT32, int ) ) );
+    connect( mStorage, SIGNAL( msgAdded( KMFolder*, quint32 ) ),
+             aParent->manager(), SIGNAL( msgAdded( KMFolder*, quint32 ) ) );
+    connect( mStorage, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
+             parent()->manager(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ) );
+    connect( this, SIGNAL( msgChanged( KMFolder*, quint32, int ) ),
+             parent()->manager(), SIGNAL( msgChanged( KMFolder*, quint32, int ) ) );
     connect( this, SIGNAL( msgHeaderChanged( KMFolder*,  int ) ),
              parent()->manager(), SIGNAL( msgHeaderChanged( KMFolder*, int ) ) );
     connect( mStorage, SIGNAL( invalidated( KMFolder* ) ),
@@ -110,17 +110,17 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   connect( mStorage, SIGNAL( expunged( KMFolder* ) ),
            SIGNAL( expunged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( nameChanged() ), SIGNAL( nameChanged() ) );
-  connect( mStorage, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-           SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ) );
+  connect( mStorage, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
+           SIGNAL( msgRemoved( KMFolder*, quint32 ) ) );
   connect( mStorage, SIGNAL( msgRemoved( int, QString ) ),
            SIGNAL( msgRemoved( int, QString ) ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder* ) ),
            SIGNAL( msgRemoved( KMFolder* ) ) );
   connect( mStorage, SIGNAL( msgAdded( int ) ), SIGNAL( msgAdded( int ) ) );
-  connect( mStorage, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-           SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ) );
-  connect( mStorage, SIGNAL( msgChanged( KMFolder*, Q_UINT32 , int ) ),
-           SIGNAL( msgChanged( KMFolder*, Q_UINT32 , int ) ) );
+  connect( mStorage, SIGNAL( msgAdded( KMFolder*, quint32 ) ),
+           SIGNAL( msgAdded( KMFolder*, quint32 ) ) );
+  connect( mStorage, SIGNAL( msgChanged( KMFolder*, quint32 , int ) ),
+           SIGNAL( msgChanged( KMFolder*, quint32 , int ) ) );
   connect( mStorage, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
            SIGNAL( msgHeaderChanged( KMFolder*, int ) ) );
   connect( mStorage, SIGNAL( statusMsg( const QString& ) ),

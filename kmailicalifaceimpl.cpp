@@ -367,7 +367,7 @@ static void setXMLContentTypeHeader( KMMessage *msg, const QString plainTextBody
 }
 
 // Store a new entry that was received from the resource
-Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
+quint32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
                                                 const QString& plainTextBody,
                                                 const QMap<QByteArray, QString>& customHeaders,
@@ -377,7 +377,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidenceKolab( " << attachmentNames << " )" << endl;
 
-  Q_UINT32 sernum = 0;
+  quint32 sernum = 0;
   bool bAttachOK = true;
 
   // Make a new message for the incidence
@@ -441,7 +441,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
 }
 
 bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
-                                               Q_UINT32 sernum )
+                                               quint32 sernum )
 {
   // Find the message from the serial number and delete it.
   if( !mUseResourceIMAP )
@@ -491,7 +491,7 @@ int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
   return n;
 }
 
-QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
+QMap<quint32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
                                                              const QString& resource,
                                                              int startIndex,
                                                              int nbMessages )
@@ -500,7 +500,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   /// QMap with serialNumber/attachment pairs.
   /// (serial numbers of the mail are provided for easier later update)
 
-  QMap<Q_UINT32, QString> aMap;
+  QMap<quint32, QString> aMap;
   if( !mUseResourceIMAP )
     return aMap;
 
@@ -513,7 +513,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   f->open();
 
   int stopIndex = nbMessages == -1 ? f->count() :
-                  QMIN( f->count(), startIndex + nbMessages );
+                  qMin( f->count(), startIndex + nbMessages );
   kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
                 << resource << " ) from " << startIndex << " to " << stopIndex << endl;
 
@@ -569,7 +569,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 
   KMFolder *parent = msg->parent();
   Q_ASSERT( parent );
-  Q_UINT32 sernum = msg->getMsgSerNum();
+  quint32 sernum = msg->getMsgSerNum();
 
   // do we have an accumulator for this folder?
   Accumulator *ac = mAccumulators.find( parent->location() );
@@ -578,7 +578,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
     if ( !vPartFoundAndDecoded( msg, s ) ) return;
     QString uid( "UID" );
     vPartMicroParser( s, uid );
-    const Q_UINT32 sernum = msg->getMsgSerNum();
+    const quint32 sernum = msg->getMsgSerNum();
     mUIDToSerNum.insert( uid, sernum );
     ac->add( s );
     if( ac->isFull() ) {
@@ -696,8 +696,8 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( const QStri
   // number, and the mail is just added instead. In this case
   // the deletedAttachments can be forgotten.
 */
-Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
-                                     Q_UINT32 sernum,
+quint32 KMailICalIfaceImpl::update( const QString& resource,
+                                     quint32 sernum,
                                      const QString& subject,
                                      const QString& plainTextBody,
                                      const QMap<QByteArray, QString>& customHeaders,
@@ -706,7 +706,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      const QStringList& attachmentNames,
                                      const QStringList& deletedAttachments )
 {
-  Q_UINT32 rc = 0;
+  quint32 rc = 0;
 
    if( !mUseResourceIMAP )
     return rc;
@@ -814,7 +814,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 }
 
 KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
-                                        Q_UINT32 sernum,
+                                        quint32 sernum,
                                         const QString& filename )
 {
   // This finds the attachment with the filename, saves it to a
@@ -891,7 +891,7 @@ void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
 
 // KMail added a file to one of the groupware folders
 void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
-                                             Q_UINT32 sernum )
+                                             quint32 sernum )
 {
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
@@ -938,7 +938,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
         folder->unGetMsg( i );
       return;
     }
-    const Q_UINT32 sernum = msg->getMsgSerNum();
+    const quint32 sernum = msg->getMsgSerNum();
     mUIDToSerNum.insert( uid, sernum );
 
     // tell the resource if we didn't trigger this ourselves
@@ -961,7 +961,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 
 // KMail deleted a file
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
-                                               Q_UINT32 sernum )
+                                               quint32 sernum )
 {
   if( mResourceQuiet || !mUseResourceIMAP )
     return;
@@ -1161,7 +1161,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
 }
 
 // Find message matching a given serial number
-KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder )
+KMMessage *KMailICalIfaceImpl::findMessageBySerNum( quint32 serNum, KMFolder* folder )
 {
   if( !folder ) return 0;
 
@@ -1702,10 +1702,10 @@ KMFolder* KMailICalIfaceImpl::initFolder( KMail::FolderContentsType contentsType
 void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
 {
   // avoid multiple connections
-  disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-  disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  disconnect( folder, SIGNAL( msgAdded( KMFolder*, quint32 ) ),
+              this, SLOT( slotIncidenceAdded( KMFolder*, quint32 ) ) );
+  disconnect( folder, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
+              this, SLOT( slotIncidenceDeleted( KMFolder*, quint32 ) ) );
   disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
               this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
@@ -1716,10 +1716,10 @@ void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
               this, SLOT( slotFolderLocationChanged( const QString&, const QString&) ) );
 
   // Setup the signals to listen for changes
-  connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-           this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-  connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-           this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  connect( folder, SIGNAL( msgAdded( KMFolder*, quint32 ) ),
+           this, SLOT( slotIncidenceAdded( KMFolder*, quint32 ) ) );
+  connect( folder, SIGNAL( msgRemoved( KMFolder*, quint32 ) ),
+           this, SLOT( slotIncidenceDeleted( KMFolder*, quint32 ) ) );
   connect( folder, SIGNAL( expunged( KMFolder* ) ),
            this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),

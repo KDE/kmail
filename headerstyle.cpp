@@ -392,7 +392,7 @@ namespace KMail {
       meterBar.fill( 22 );
     else {
       meterBar.fill( 21 );
-      int max = QMIN( 20, static_cast<int>( percent ) / 5 );
+      int max = qMin( 20, static_cast<int>( percent ) / 5 );
       for ( int i = 0; i < max; ++i ) {
         meterBar.setColor( i+1, qRgb( gradient[i][0], gradient[i][1],
                                       gradient[i][2] ) );

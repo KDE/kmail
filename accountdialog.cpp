@@ -1141,7 +1141,7 @@ void AccountDialog::setupSettings()
     else if (acctLocal->lockType() == lock_none)
       mLocal.lockNone->setChecked(true);
 
-    mLocal.intervalSpin->setValue( QMAX(1, interval) );
+    mLocal.intervalSpin->setValue( qMax(1, interval) );
     mLocal.intervalCheck->setChecked( interval >= 1 );
 #if 0
     mLocal.resourceCheck->setChecked( mAccount->resource() );
@@ -1179,7 +1179,7 @@ void AccountDialog::setupSettings()
     mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
     mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
-    mPop.intervalSpin->setValue( QMAX(1, interval) );
+    mPop.intervalSpin->setValue( qMax(1, interval) );
 #if 0
     mPop.resourceCheck->setChecked( mAccount->resource() );
 #endif
@@ -1231,13 +1231,13 @@ void AccountDialog::setupSettings()
     mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    mImap.intervalSpin->setValue( qMax(1, interval) );
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
     mImap.includeInCheck->setChecked( !ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    mImap.intervalSpin->setValue( qMax(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
@@ -1282,10 +1282,10 @@ void AccountDialog::setupSettings()
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    mImap.intervalSpin->setValue( qMax(1, interval) );
     mImap.includeInCheck->setChecked( !ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
-    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    mImap.intervalSpin->setValue( qMax(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kmkernel->trashFolder()->idString();
@@ -1322,7 +1322,7 @@ void AccountDialog::setupSettings()
     mMaildir.nameEdit->setFocus();
     mMaildir.locationEdit->setEditText( acctMaildir->location() );
 
-    mMaildir.intervalSpin->setValue( QMAX(1, interval) );
+    mMaildir.intervalSpin->setValue( qMax(1, interval) );
     mMaildir.intervalCheck->setChecked( interval >= 1 );
 #if 0
     mMaildir.resourceCheck->setChecked( mAccount->resource() );

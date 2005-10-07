@@ -291,7 +291,7 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
 
 int RecipientLine::setComboWidth( int w )
 {
-  w = QMAX( w, mCombo->sizeHint().width() );
+  w = qMax( w, mCombo->sizeHint().width() );
   mCombo->setFixedWidth( w );
   mCombo->updateGeometry();
   parentWidget()->updateGeometry();

@@ -1086,9 +1086,9 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   }
 
   MsgPartType type;
-  Q_UINT16 l;
+  quint16 l;
   while(g_chunk_offset < mIndexLength) {
-    Q_UINT32 tmp;
+    quint32 tmp;
     copy_from_stream(tmp);
     copy_from_stream(l);
     if (swapByteOrder)
@@ -1157,9 +1157,9 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   }
 
   MsgPartType type;
-  Q_UINT16 l;
+  quint16 l;
   while (g_chunk_offset < mIndexLength) {
-    Q_UINT32 tmp;
+    quint32 tmp;
     copy_from_stream(tmp);
     copy_from_stream(l);
     if (swapByteOrder)
@@ -1189,7 +1189,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
       else if (sizeOfLong == 4)
       {
          // Long is stored as 4 bytes in index file, sizeof(long) = 8
-         Q_UINT32 ret_32;
+         quint32 ret_32;
          copy_from_stream(ret_32);
          if (swapByteOrder)
             ret_32 = kmail_swap_32(ret_32);
@@ -1198,8 +1198,8 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
       else if (sizeOfLong == 8)
       {
          // Long is stored as 8 bytes in index file, sizeof(long) = 4
-         Q_UINT32 ret_1;
-         Q_UINT32 ret_2;
+         quint32 ret_1;
+         quint32 ret_2;
          copy_from_stream(ret_1);
          copy_from_stream(ret_2);
          if (!swapByteOrder)
@@ -1251,8 +1251,8 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 	int len2 = (len > 256) ? 256 : len; \
 	if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
     	   ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
-        Q_UINT32 t = (Q_UINT32) type; memcpy(ret+length, &t, sizeof(t)); \
-        Q_UINT16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
+        quint32 t = (quint32) type; memcpy(ret+length, &t, sizeof(t)); \
+        quint16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
         if (network_order) \
            memcpy_networkorder(ret+length+sizeof(t)+sizeof(l), x, len2); \
         else \

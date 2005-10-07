@@ -750,7 +750,7 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
   }
 }
 
-bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
+bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;

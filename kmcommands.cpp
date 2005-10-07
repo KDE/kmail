@@ -1383,14 +1383,14 @@ KMCommand::Result KMPrintCommand::execute()
 
 
 KMSetStatusCommand::KMSetStatusCommand( KMMsgStatus status,
-  const Q3ValueList<Q_UINT32> &serNums, bool toggle )
+  const Q3ValueList<quint32> &serNums, bool toggle )
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
 }
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
-  Q3ValueListIterator<Q_UINT32> it;
+  Q3ValueListIterator<quint32> it;
   int idx = -1;
   KMFolder *folder = 0;
   bool parentStatus = false;
@@ -1740,10 +1740,10 @@ KMCommand::Result KMCopyCommand::execute()
       {
         // imap => others
         mWaitingForMsgs.append( msg->getMsgSerNum() );
-        disconnect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(slotMsgAdded(KMFolder*, Q_UINT32)));
-        connect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-            this, SLOT(slotMsgAdded(KMFolder*, Q_UINT32)));
+        disconnect(mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+            this, SLOT(slotMsgAdded(KMFolder*, quint32)));
+        connect(mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+            this, SLOT(slotMsgAdded(KMFolder*, quint32)));
         newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         job->setCancellable( false );
@@ -1807,7 +1807,7 @@ KMCommand::Result KMCopyCommand::execute()
   return OK;
 }
 
-void KMCopyCommand::slotMsgAdded( KMFolder*, Q_UINT32 serNum )
+void KMCopyCommand::slotMsgAdded( KMFolder*, quint32 serNum )
 {
   mWaitingForMsgs.remove( serNum );
   if ( mWaitingForMsgs.isEmpty() )
@@ -1844,7 +1844,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
   mMsgList.append( msgBase );
 }
 
-KMMoveCommand::KMMoveCommand( Q_UINT32 )
+KMMoveCommand::KMMoveCommand( quint32 )
   : mProgressItem( 0 )
 {
 }
@@ -1879,8 +1879,8 @@ KMCommand::Result KMMoveCommand::execute()
   int undoId = -1;
 
   if (mDestFolder) {
-    connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
+    connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
     for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
       mLostBoys.append( msgBase->getMsgSerNum() );
     }
@@ -1989,7 +1989,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap* imapFolder, bool succe
   }
 }
 
-void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
+void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum)
 {
   if ( folder != mDestFolder || mLostBoys.find( serNum ) == mLostBoys.end() ) {
     //kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
@@ -1999,8 +1999,8 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
   mLostBoys.remove(serNum);
   if ( mLostBoys.isEmpty() ) {
     // we are done. All messages transferred to the host succesfully
-    disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
+    disconnect (mDestFolder, SIGNAL(msgAdded(KMFolder*, quint32)),
+             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, quint32)));
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
     }
@@ -2051,7 +2051,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
   mOpenedFolders.push_back( srcFolder );
 }
 
-KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
+KMDeleteMsgCommand::KMDeleteMsgCommand( quint32 sernum )
 :KMMoveCommand( sernum )
 {
   KMFolder *srcFolder;

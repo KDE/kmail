@@ -592,9 +592,9 @@ void KMFolderTree::reload(bool openFolders)
 #endif
 
     // we want to be noticed of changes to update the unread/total columns
-    disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+    disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,quint32)),
         this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
-    connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+    connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,quint32)),
         this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
     //}
 

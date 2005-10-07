@@ -333,7 +333,7 @@ unsigned int KMEdit::lineBreakColumn() const
   unsigned int lineBreakColumn = 0;
   unsigned int numlines = numLines();
   while ( numlines-- ) {
-    lineBreakColumn = QMAX( lineBreakColumn, (unsigned int)textLine( numlines ).length() );
+    lineBreakColumn = qMax( lineBreakColumn, (unsigned int)textLine( numlines ).length() );
   }
   return lineBreakColumn;
 }

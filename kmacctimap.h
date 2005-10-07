@@ -94,13 +94,13 @@ public:
   /**
    * Queues a message for automatic filtering
    */
-  void execFilters(Q_UINT32 serNum);
+  void execFilters(quint32 serNum);
     
 public slots:
   /**
    * updates the new-mail-check folderlist
    */
-  void slotFiltered(Q_UINT32 serNum);
+  void slotFiltered(quint32 serNum);
   void slotUpdateFolderList();
 
 protected:
@@ -146,7 +146,7 @@ private:
   /** used to reset connection errors */
   QTimer mErrorTimer;
   int mCountRemainChecks;
-  QList<Q_UINT32> mFilterSerNums;
+  QList<quint32> mFilterSerNums;
   QHash<QString, int> mFilterSerNumsToSave;
   KMail::ActionScheduler *mScheduler;
 };

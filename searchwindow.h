@@ -134,7 +134,7 @@ protected slots:
   /** GUI cleanup after search */
   virtual void searchDone();
   virtual void slotAddMsg(int idx);
-  virtual void slotRemoveMsg(KMFolder *, Q_UINT32 serNum);
+  virtual void slotRemoveMsg(KMFolder *, quint32 serNum);
   void enableGUI();
 
   void setEnabledSearchButton(bool);

@@ -40,7 +40,7 @@
     numbers of all messages that currently match the search.
 **/
 
-typedef Q3ValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<quint32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
 class KMFolderSearchJob;
@@ -80,12 +80,12 @@ public slots:
   void indexFinished();
 
 signals:
-  void found(Q_UINT32 serNum);
+  void found(quint32 serNum);
   void finished(bool success);
 
 protected slots:
   void slotProcessNextBatch();
-  void slotSearchFolderResult( KMFolder*, Q3ValueList<Q_UINT32>,
+  void slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>,
                                const KMSearchPattern*, bool );
 
 protected:
@@ -141,11 +141,11 @@ protected slots:
   // Called when the search is finished
   void searchFinished(bool success);
   // Look at a new message and if it matches search() add it to the cache
-  void examineAddedMessage(KMFolder *folder, Q_UINT32 serNum);
+  void examineAddedMessage(KMFolder *folder, quint32 serNum);
   // Look at a removed message and remove it from the cache
-  void examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum);
+  void examineRemovedMessage(KMFolder *folder, quint32 serNum);
   // Look at a message whose status has changed
-  void examineChangedMessage(KMFolder *folder, Q_UINT32 serNum, int delta);
+  void examineChangedMessage(KMFolder *folder, quint32 serNum, int delta);
   // The serial numbers for a folder have been invalidated, deal with it
   void examineInvalidatedFolder(KMFolder *folder);
   // A folder has been deleted, deal with it
@@ -156,16 +156,16 @@ protected slots:
 public slots:
   // Appends the serial number to the cached list of messages that match
   // the search for this folder
-  void addSerNum(Q_UINT32 serNum);
+  void addSerNum(quint32 serNum);
   // Removes the serial number from the cached list of messages that match
   // the search for this folder
-  void removeSerNum(Q_UINT32 serNum);
+  void removeSerNum(quint32 serNum);
 
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex();
 
   // Examine the message
-  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, 
+  void slotSearchExamineMsgDone( KMFolder*, quint32 serNum, 
                                  const KMSearchPattern*, bool );
 
 public:
@@ -185,7 +185,7 @@ public:
   virtual QString indexLocation() const;
   virtual int writeIndex( bool createEmptyIndex = false );
   DwString getDwString(int idx);
-  Q_UINT32 serNum(int idx) { return mSerNums[idx]; }
+  quint32 serNum(int idx) { return mSerNums[idx]; }
 
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
@@ -204,9 +204,9 @@ protected:
   virtual void truncateIndex();
 
 private:
-  Q3ValueVector<Q_UINT32> mSerNums;
+  Q3ValueVector<quint32> mSerNums;
   Q3ValueList<QPointer<KMFolder> > mFolders;
-  Q3ValueStack<Q_UINT32> mUnexaminedMessages;
+  Q3ValueStack<quint32> mUnexaminedMessages;
   FILE *mIdsStream;
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;

@@ -185,7 +185,7 @@ public:
   int msgId() const;
 
   // Return the serial number of the message associated with this item;
-  Q_UINT32 msgSerNum() const;
+  quint32 msgSerNum() const;
 
   /** Expands all children of the list view item. */
   void setOpenRecursive( bool open );
@@ -234,7 +234,7 @@ public:
 
 private:
   int mMsgId;
-  Q_UINT32 mSerNum;
+  quint32 mSerNum;
   QString mKey;
   bool mAboutToBeDeleted;
   SortCacheItem *mSortCacheItem;

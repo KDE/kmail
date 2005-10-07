@@ -307,9 +307,9 @@ void KMSearchRuleWidgetLister::setRuleList( Q3PtrList<KMSearchRule> *aList )
   }
 
   // HACK to workaround regression in Qt 3.1.3 and Qt 3.2.0 (fixes bug #63537)
-  setNumberOfShownWidgetsTo( QMAX((int)mRuleList->count(),mMinWidgets)+1 );
+  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(),mMinWidgets)+1 );
   // set the right number of widgets
-  setNumberOfShownWidgetsTo( QMAX((int)mRuleList->count(),mMinWidgets) );
+  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(),mMinWidgets) );
 
   // load the actions into the widgets
   Q3PtrListIterator<KMSearchRule> rIt( *mRuleList );

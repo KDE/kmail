@@ -76,13 +76,13 @@ k_dcop:
   virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
   
   virtual KURL getAttachment( const QString& resource,
-                              Q_UINT32 sernum,
+                              quint32 sernum,
                               const QString& filename ) = 0;
 
   /// Update a kolab storage entry. Returns the new mail serial number,
   /// or 0 if something went wrong. Can be used for adding as well.
-  virtual Q_UINT32 update( const QString& resource,
-                           Q_UINT32 sernum,
+  virtual quint32 update( const QString& resource,
+                           quint32 sernum,
                            const QString& subject,
                            const QString& plainTextBody,
                            const QMap<QByteArray, QString>& customHeaders,
@@ -92,14 +92,14 @@ k_dcop:
                            const QStringList& deletedAttachments ) = 0;
 
   virtual bool deleteIncidenceKolab( const QString& resource,
-                                     Q_UINT32 sernum ) = 0;
+                                     quint32 sernum ) = 0;
 
   /// Return the number of mails that need to be looked at by incidencesKolab.
   /// This allows to call incidencesKolab in chunks.
   virtual int incidencesKolabCount( const QString& mimetype,
                                     const QString& resource ) = 0;
 
-  virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
+  virtual QMap<quint32, QString> incidencesKolab( const QString& mimetype,
                                                    const QString& resource,
                                                    int startIndex,
                                                    int nbMessages ) = 0;
@@ -116,8 +116,8 @@ k_dcop:
 
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
-                       Q_UINT32 sernum, int format, const QString& entry );
-  void asyncLoadResult( const QMap<Q_UINT32, QString>, const QString& type,
+                       quint32 sernum, int format, const QString& entry );
+  void asyncLoadResult( const QMap<quint32, QString>, const QString& type,
                         const QString& folder );
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
@@ -140,14 +140,14 @@ inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& s
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::StorageFormat& format  )
 {
-  Q_UINT32 foo = format;
+  quint32 foo = format;
   str << foo; 
   return str;
 }
 
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::StorageFormat& format  )
 {
-  Q_UINT32 foo;
+  quint32 foo;
   str >> foo; 
   format = ( KMailICalIface::StorageFormat )foo;
   return str;

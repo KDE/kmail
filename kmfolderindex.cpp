@@ -148,10 +148,10 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   fprintf(tmpIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
 
   // Header
-  Q_UINT32 byteOrder = 0x12345678;
-  Q_UINT32 sizeOfLong = sizeof(long);
+  quint32 byteOrder = 0x12345678;
+  quint32 sizeOfLong = sizeof(long);
 
-  Q_UINT32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong);
+  quint32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong);
   char pad_char = '\0';
   fwrite(&pad_char, sizeof(pad_char), 1, tmpIndexStream);
   fwrite(&header_length, sizeof(header_length), 1, tmpIndexStream);
@@ -215,7 +215,7 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
 
 bool KMFolderIndex::readIndex()
 {
-  Q_INT32 len;
+  qint32 len;
   KMMsgInfo* mi;
 
   assert(mIndexStream != 0);
@@ -345,10 +345,10 @@ bool KMFolderIndex::readIndexHeader(int *gv)
   }
   else {
       // Header
-      Q_UINT32 byteOrder = 0;
-      Q_UINT32 sizeOfLong = sizeof(long); // default
+      quint32 byteOrder = 0;
+      quint32 sizeOfLong = sizeof(long); // default
 
-      Q_UINT32 header_length = 0;
+      quint32 header_length = 0;
       fseek(mIndexStream, sizeof(char), SEEK_CUR );
       fread(&header_length, sizeof(header_length), 1, mIndexStream);
       if (header_length > 0xFFFF)

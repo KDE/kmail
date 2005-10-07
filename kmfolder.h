@@ -59,7 +59,7 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-typedef Q3ValueList<Q_UINT32> SerNumList;
+typedef Q3ValueList<quint32> SerNumList;
 
 /** Mail folder.
  * (description will be here).
@@ -551,7 +551,7 @@ signals:
   void shortcutChanged( KMFolder * );
 
   /** Emitted before a message is removed from the folder. */
-  void msgRemoved(KMFolder*, Q_UINT32 sernum);
+  void msgRemoved(KMFolder*, quint32 sernum);
 
   /** Emitted after a message is removed from the folder. */
   void msgRemoved( int idx, QString msgIdMD5 );
@@ -559,10 +559,10 @@ signals:
 
   /** Emitted when a message is added from the folder. */
   void msgAdded(int idx);
-  void msgAdded(KMFolder*, Q_UINT32 sernum);
+  void msgAdded(KMFolder*, quint32 sernum);
 
   /** Emitted, when the status of a message is changed */
-  void msgChanged(KMFolder*, Q_UINT32 sernum, int delta);
+  void msgChanged(KMFolder*, quint32 sernum, int delta);
 
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int);

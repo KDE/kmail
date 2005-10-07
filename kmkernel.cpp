@@ -1014,7 +1014,7 @@ void KMKernel::raise()
   kmail.call( "newInstance" );
 }
 
-bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
+bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
   if (KMainWindow::memberList()) {
@@ -1064,7 +1064,7 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
   return false;
 }
 
-QString KMKernel::getFrom( Q_UINT32 serialNumber )
+QString KMKernel::getFrom( quint32 serialNumber )
 {
   int idx = -1;
   KMFolder *folder = 0;
@@ -1090,7 +1090,7 @@ QString KMKernel::debugScheduler()
   return res;
 }
 
-QString KMKernel::debugSernum( Q_UINT32 serialNumber )
+QString KMKernel::debugSernum( quint32 serialNumber )
 {
   QString res;
   if (serialNumber != 0) {

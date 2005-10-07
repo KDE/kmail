@@ -303,7 +303,7 @@ int KMFolderImap::rename( const QString& newName, KMFolderDir *aParent )
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *aFolder = aMsg->parent();
-  Q_UINT32 serNum = 0;
+  quint32 serNum = 0;
   aMsg->setTransferInProgress( false );
   if (aFolder) {
     serNum = aMsg->getMsgSerNum();
@@ -2182,18 +2182,18 @@ void KMFolderImap::search( const KMSearchPattern* pattern )
   if ( !pattern || pattern->isEmpty() )
   {
     // not much to do here
-    Q3ValueList<Q_UINT32> serNums;
+    Q3ValueList<quint32> serNums;
     emit searchResult( folder(), serNums, pattern, true );
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern );
-  connect( job, SIGNAL( searchDone( Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool ) ),
-           this, SLOT( slotSearchDone( Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool ) ) );
+  connect( job, SIGNAL( searchDone( Q3ValueList<quint32>, const KMSearchPattern*, bool ) ),
+           this, SLOT( slotSearchDone( Q3ValueList<quint32>, const KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotSearchDone( Q3ValueList<Q_UINT32> serNums,
+void KMFolderImap::slotSearchDone( Q3ValueList<quint32> serNums,
                                    const KMSearchPattern* pattern,
                                    bool complete )
 {
@@ -2201,7 +2201,7 @@ void KMFolderImap::slotSearchDone( Q3ValueList<Q_UINT32> serNums,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
+void KMFolderImap::search( const KMSearchPattern* pattern, quint32 serNum )
 {
   if ( !pattern || pattern->isEmpty() )
   {
@@ -2210,13 +2210,13 @@ void KMFolderImap::search( const KMSearchPattern* pattern, Q_UINT32 serNum )
     return;
   }
   SearchJob* job = new SearchJob( this, mAccount, pattern, serNum );
-  connect( job, SIGNAL( searchDone( Q_UINT32, const KMSearchPattern*, bool ) ),
-           this, SLOT( slotSearchDone( Q_UINT32, const KMSearchPattern*, bool ) ) );
+  connect( job, SIGNAL( searchDone( quint32, const KMSearchPattern*, bool ) ),
+           this, SLOT( slotSearchDone( quint32, const KMSearchPattern*, bool ) ) );
   job->start();
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotSearchDone( Q_UINT32 serNum, const KMSearchPattern* pattern,
+void KMFolderImap::slotSearchDone( quint32 serNum, const KMSearchPattern* pattern,
                                    bool matches )
 {
   emit searchDone( folder(), serNum, pattern, matches );

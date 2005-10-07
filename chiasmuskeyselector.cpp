@@ -24,7 +24,7 @@ ChiasmusKeySelector::ChiasmusKeySelector( QWidget* parent, const QString& captio
   mListBox = new KListBox( page );
   mListBox->insertStringList( keys );
   const int current = keys.findIndex( currentKey );
-  mListBox->setSelected( QMAX( 0, current ), true );
+  mListBox->setSelected( qMax( 0, current ), true );
   mListBox->ensureCurrentVisible();
   layout->addWidget( mListBox, 1 );
 

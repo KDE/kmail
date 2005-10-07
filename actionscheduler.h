@@ -88,17 +88,17 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(const Q3ValueList<Q_UINT32> serNums);
+  void execFilters(const Q3ValueList<quint32> serNums);
   void execFilters(const Q3PtrList<KMMsgBase> msgList);
   void execFilters(KMMsgBase* msgBase);
-  void execFilters(Q_UINT32 serNum);
+  void execFilters(quint32 serNum);
   static QString debug();
   static bool isEnabled();
 
 signals:
   /** Emitted when filtering is completed */
   void result(ReturnCode);
-  void filtered(Q_UINT32);
+  void filtered(quint32);
 
 public slots:
   /** Called back by asynchronous actions when they have completed */
@@ -108,8 +108,8 @@ public slots:
   void copyMessageFinished( KMCommand *command );
 
 private slots:
-  KMMsgBase* messageBase(Q_UINT32 serNum);
-  KMMessage* message(Q_UINT32 serNum);
+  KMMsgBase* messageBase(quint32 serNum);
+  KMMessage* message(quint32 serNum);
   void finish();
 
   int tempOpenFolder(KMFolder* aFolder);
@@ -118,8 +118,8 @@ private slots:
   //Fetching slots
   void fetchMessage();
   void messageFetched( KMMessage *msg );
-  void msgAdded( KMFolder*, Q_UINT32 );
-  void enqueue(Q_UINT32 serNum);
+  void msgAdded( KMFolder*, quint32 );
+  void enqueue(quint32 serNum);
 
   //Filtering slots
   void processMessage();
@@ -135,9 +135,9 @@ private:
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
-  Q3ValueListIterator<Q_UINT32> mMessageIt;
+  Q3ValueListIterator<quint32> mMessageIt;
   Q3ValueListIterator<KMFilter> mFilterIt;
-  Q3ValueList<Q_UINT32> mSerNums, mFetchSerNums;
+  Q3ValueList<quint32> mSerNums, mFetchSerNums;
   Q3ValueList<QPointer<KMFolder> > mOpenFolders;
   Q3ValueList<KMFilter> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
@@ -152,7 +152,7 @@ private:
   bool mAlwaysMatch;
   bool mAccount;
   uint mAccountId;
-  Q_UINT32 mOriginalSerNum;
+  quint32 mOriginalSerNum;
   bool mDeleteSrcFolder;
   ReturnCode mResult;
   QTimer *finishTimer, *fetchMessageTimer, *tempCloseFoldersTimer;

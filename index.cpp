@@ -1,5 +1,5 @@
 /* This file is part of KMail
- * Copyright (C) 2005 Luís Pedro Coelho <luis@luispedro.org>
+ * Copyright (C) 2005 Luï¿½ Pedro Coelho <luis@luispedro.org>
  *
  * KMail is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as
@@ -61,7 +61,7 @@ const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
 
 static
-Q3ValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
+Q3ValueList<int> vectorToQValueList( const std::vector<quint32>& input ) {
 	Q3ValueList<int> res;
 	std::copy( input.begin(), input.end(), std::back_inserter( res ) );
 	return res;
@@ -69,8 +69,8 @@ Q3ValueList<int> vectorToQValueList( const std::vector<Q_UINT32>& input ) {
 
 
 static
-std::vector<Q_UINT32> QValueListToVector( const Q3ValueList<int>& input ) {
-	std::vector<Q_UINT32> res;
+std::vector<quint32> QValueListToVector( const Q3ValueList<int>& input ) {
+	std::vector<quint32> res;
 	// res.assign( input.begin(), input.end() ) doesn't work for some reason
 	for ( Q3ValueList<int>::const_iterator first = input.begin(), past = input.end(); first != past; ++first ) {
 		res.push_back( *first );
@@ -92,10 +92,10 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	mSlowDown( false ) {
 	kdDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
 	
-	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ), SLOT( slotRemoveMessage( KMFolder*, Q_UINT32 ) ) );
-	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ), SLOT( slotAddMessage( KMFolder*, Q_UINT32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
+	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
+	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );
 
 	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 	//connect( mSyncTimer, SIGNAL( timeout() ), SLOT( syncIndex() ) );
@@ -273,7 +273,7 @@ void KMMsgIndex::maintenance() {
 #endif
 }
 
-int KMMsgIndex::addMessage( Q_UINT32 serNum ) {
+int KMMsgIndex::addMessage( quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::addMessage( " << serNum << " )" << endl;
 	if ( mState == s_error ) return 0;
 #ifdef HAVE_INDEXLIB
@@ -408,7 +408,7 @@ bool KMMsgIndex::startQuery( KMSearch* s ) {
 	connect( search, SIGNAL( finished( bool ) ), s, SIGNAL( finished( bool ) ) );
 	connect( search, SIGNAL( finished( bool ) ), s, SLOT( indexFinished() ) );
 	connect( search, SIGNAL( destroyed( QObject* ) ), SLOT( removeSearch( QObject* ) ) );
-	connect( search, SIGNAL( found( Q_UINT32 ) ), s, SIGNAL( found( Q_UINT32 ) ) );
+	connect( search, SIGNAL( found( quint32 ) ), s, SIGNAL( found( quint32 ) ) );
 	mSearches.push_back( search );
 	return true;
 }
@@ -450,13 +450,13 @@ bool KMMsgIndex::stopQuery( KMSearch* s ) {
 	return false;
 }
 
-std::vector<Q_UINT32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
+std::vector<quint32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::simpleSearch( -" << s.latin1() << "- )" << endl;
 	if ( mState == s_error || mState == s_disabled ) {
 		if ( ok ) *ok = false;
-		return std::vector<Q_UINT32>();
+		return std::vector<quint32>();
 	}
-	std::vector<Q_UINT32> res;
+	std::vector<quint32> res;
 #ifdef HAVE_INDEXLIB
 	assert( mIndex );
 	std::vector<unsigned> residx = mIndex->search( s.latin1() )->list();
@@ -483,7 +483,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	return false;
 }
 
-void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
+void KMMsgIndex::slotAddMessage( KMFolder* folder, quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 	
@@ -494,7 +494,7 @@ void KMMsgIndex::slotAddMessage( KMFolder* folder, Q_UINT32 serNum ) {
 	scheduleAction();
 }
 
-void KMMsgIndex::slotRemoveMessage( KMFolder* folder, Q_UINT32 serNum ) {
+void KMMsgIndex::slotRemoveMessage( KMFolder* folder, quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotRemoveMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 
@@ -510,7 +510,7 @@ void KMMsgIndex::scheduleAction() {
 #endif
 }
 
-void KMMsgIndex::removeMessage( Q_UINT32 serNum ) {
+void KMMsgIndex::removeMessage( quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::removeMessage( " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
 	

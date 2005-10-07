@@ -294,7 +294,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
   QString subdirCur(location() + "/cur/");
 
   unsigned int stopIndex = nbMessages == -1 ? mMsgList.count() :
-                           QMIN( mMsgList.count(), startIndex + nbMessages );
+                           qMin( mMsgList.count(), startIndex + nbMessages );
   //kdDebug(5006) << "KMFolderMaildir: compacting from " << startIndex << " to " << stopIndex << endl;
   for(unsigned int idx = startIndex; idx < stopIndex; ++idx) {
     KMMsgInfo* mi = (KMMsgInfo*)mMsgList.at(idx);

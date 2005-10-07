@@ -64,7 +64,7 @@ public:
    * @param serNum if you specify the serNum only this is checked
    */
   SearchJob( KMFolderImap* folder, ImapAccountBase* account,
-             const KMSearchPattern* pattern, Q_UINT32 serNum = 0 );
+             const KMSearchPattern* pattern, quint32 serNum = 0 );
 
   virtual ~SearchJob();
 
@@ -109,21 +109,21 @@ protected slots:
 
 signals:
   // emitted when a list of matching serial numbers was found
-  void searchDone( Q3ValueList<Q_UINT32>, const KMSearchPattern*, bool complete );
+  void searchDone( Q3ValueList<quint32>, const KMSearchPattern*, bool complete );
 
   // emitted when a single message (identified by the serial number) was checked
-  void searchDone( Q_UINT32, const KMSearchPattern*, bool matches );
+  void searchDone( quint32, const KMSearchPattern*, bool matches );
 
 protected:
   KMFolderImap* mFolder;
   ImapAccountBase* mAccount;
   const KMSearchPattern* mSearchPattern;
   KMSearchPattern* mLocalSearchPattern;
-  Q_UINT32 mSerNum;
+  quint32 mSerNum;
     // saves the results of the imap search
   QStringList mImapSearchHits;
   // collects the serial numbers from imap and local search
-  Q3ValueList<Q_UINT32> mSearchSerNums;
+  Q3ValueList<quint32> mSearchSerNums;
   // the remaining messages that have to be downloaded for local search
   uint mRemainingMsgs;
   // progress item for local searches
