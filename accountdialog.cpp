@@ -42,7 +42,7 @@
 #include <Q3ValueList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <Q3AsciiDict>
+#include <QHash>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -106,17 +106,15 @@ protected:
   QTextStream *mStream;
   QStringList mLockFiles;
   QStringList mSpoolFiles;
-  Q3AsciiDict<QString> mVars;
+  QHash<QByteArray, QString> mVars;
 };
 
 ProcmailRCParser::ProcmailRCParser(QString fname)
   : mProcmailrc(fname),
     mStream(new QTextStream(&mProcmailrc))
 {
-  mVars.setAutoDelete(true);
-
   // predefined
-  mVars.insert( "HOME", new QString( QDir::homeDirPath() ) );
+  mVars.insert( "HOME", QDir::homeDirPath() );
 
   if( fname.isEmpty() ) {
     fname = QDir::homeDirPath() + "/.procmailrc";
@@ -195,8 +193,8 @@ ProcmailRCParser::processLocalLock(const QString &s)
       // user specified a lockfile, so process it
       //
       val = expandVars(val);
-      if( val[0] != '/' && mVars.find("MAILDIR") )
-        val.insert(0, *(mVars["MAILDIR"]) + '/');
+      if ( val[0] != '/' && mVars.contains("MAILDIR") )
+        val.insert(0, mVars["MAILDIR"] + '/');
     } // else we'll deduce the lockfile name one we
     // get the spoolfile name
   }
@@ -216,8 +214,8 @@ ProcmailRCParser::processLocalLock(const QString &s)
     line = expandVars(line);
 
     // prepend default MAILDIR if needed
-    if( line[0] != '/' && mVars.find("MAILDIR") )
-      line.insert(0, *(mVars["MAILDIR"]) + '/');
+    if( line[0] != '/' && mVars.contains("MAILDIR") )
+      line.insert(0, mVars["MAILDIR"] + '/');
 
     // now we have the spoolfile name
     if ( !mSpoolFiles.contains(line) )
@@ -229,8 +227,8 @@ ProcmailRCParser::processLocalLock(const QString &s)
       val = line;
 
       // append lock extension
-      if( mVars.find("LOCKEXT") )
-        val += *(mVars["LOCKEXT"]);
+      if( mVars.contains("LOCKEXT") )
+        val += mVars["LOCKEXT"];
       else
         val += ".lock";
     }
@@ -250,7 +248,7 @@ ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
   QString varName = s.left(eqPos),
     varValue = expandVars(s.mid(eqPos + 1).stripWhiteSpace());
 
-  mVars.insert(varName.latin1(), new QString(varValue));
+  mVars.insert( varName.latin1(), varValue );
 }
 
 QString
@@ -260,11 +258,8 @@ ProcmailRCParser::expandVars(const QString &s)
 
   QString expS = s;
 
-  Q3AsciiDictIterator<QString> it( mVars ); // iterator for dict
-
-  while ( it.current() ) {
-    expS.replace(QString::fromLatin1("$") + it.currentKey(), *it.current());
-    ++it;
+  for ( QHash<QByteArray, QString>::const_iterator it = mVars.begin(); it != mVars.end(); ++it ) {
+    expS.replace( QString::fromLatin1("$") + it.key(), it.value() );
   }
 
   return expS;
