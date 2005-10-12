@@ -405,9 +405,12 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
 
   if (aSetStatus) {
     setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
-    setEncryptionStateChar( headerField("X-KMail-EncryptionState").at(0) );
-    setSignatureStateChar(  headerField("X-KMail-SignatureState").at(0) );
-    setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
+    if ( headerField( "X-KMail-EncryptionState" ).size() )
+      setEncryptionStateChar( headerField( "X-KMail-EncryptionState" ).at(0) );
+    if ( headerField( "X-KMail-SignatureState" ).size() )
+      setSignatureStateChar( headerField( "X-KMail-SignatureState" ).at(0));
+    if ( headerField("X-KMail-MDN-Sent").size() )
+      setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
   }
   if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
     updateAttachmentState();

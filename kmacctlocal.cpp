@@ -223,13 +223,10 @@ bool KMAcctLocal::fetchMsg()
 #endif
     msg->setStatus( msg->headerField( "Status" ).latin1(),
                     msg->headerField( "X-Status" ).latin1());
-    // FIXME Empty headers give a QString with size == 0 which results in an assertion
-    // in QString::at() because of Q_ASSERT(i >= 0 && i < size()) although
-    // size == 0 should return '\0' as described in QString::size() documentation
-    // If it's no bug in qt-copy, then we have to check for the size ourself.
-    // At least, commenting the next two lines lets you receive mail from a local acocunt!
-    //msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
-    //msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
+    if ( msg->headerField( "X-KMail-EncryptionState" ).size() )
+      msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
+    if ( msg->headerField( "X-KMail-SignatureState" ).size() )
+      msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
     msg->setComplete(true);
     msg->updateAttachmentState();
 
