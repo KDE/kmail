@@ -975,6 +975,7 @@ bool KMFolderMaildir::removeFile( const QString & filename )
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <krandom.h>
 static bool removeDirAndContentsRecursively( const QString & path )
 {
   bool success = true;
@@ -1032,7 +1033,7 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
   if (aFileName.isEmpty())
   {
     aFileName.sprintf("%ld.%d.", (long)time(0), getpid());
-    aFileName += KApplication::randomString(5);
+    aFileName += KRandom::randomString(5);
   }
 
   if (!suffix_regex)

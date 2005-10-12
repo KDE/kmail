@@ -58,7 +58,7 @@ int KMailApplication::newInstance()
   if (!kmkernel)
      return 0;
 
-  if (!kmkernel->firstInstance() || !kapp->isRestored())
+  if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
     kmkernel->handleCommandLine( true );
   kmkernel->setFirstInstance(FALSE);
   return 0;
