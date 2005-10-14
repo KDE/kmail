@@ -2104,7 +2104,7 @@ void AppearancePage::HeadersTab::save() {
     int result = KMessageBox::warningContinueCancel( this,
                    i18n("Changing the global threading setting will override "
                         "all folder specific values."),
-                   QString::null, QString::null, "threadOverride" );
+                   QString::null, KStdGuiItem::cont(), "threadOverride" );
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
@@ -3674,7 +3674,7 @@ void SecurityPage::GeneralTab::save() {
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString::null,
-      QString::null, "htmlMailOverride") == KMessageBox::Continue)
+      KStdGuiItem::cont(), "htmlMailOverride") == KMessageBox::Continue)
     {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
       QStringList names;
