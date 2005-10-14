@@ -1609,7 +1609,10 @@ void KMKernel::cleanup(void)
   QStringList strList;
   KMFolder *folder;
   the_folderMgr->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
+#warning Port me!
+  // FIXME KMail crashes without the additional size() check bolow:
+  //for (int i = 0; folders.at(i) != folders.end(); i++)
+  for (int i = 0; i < folders.size() && folders.at(i) != folders.end(); i++)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
@@ -1618,7 +1621,10 @@ void KMKernel::cleanup(void)
   strList.clear();
   folders.clear();
   the_searchFolderMgr->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
+#warning Port me!
+  // FIXME KMail crashes without the additional size() check bolow:
+  //for (int i = 0; folders.at(i) != folders.end(); i++)
+  for (int i = 0; i < folders.size() && folders.at(i) != folders.end(); i++)
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
