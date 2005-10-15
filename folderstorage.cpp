@@ -460,7 +460,7 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 KMMessage* FolderStorage::getMsg(int idx)
 {
-  if(!(idx >= 0 && idx <= count()))
+  if ( idx < 0 || idx >= count() )
     return 0;
 
   KMMsgBase* mb = getMsgBase(idx);
