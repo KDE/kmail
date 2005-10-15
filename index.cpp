@@ -167,7 +167,7 @@ void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
 	KConfig* config = KMKernel::config();
 	KConfigGroupSaver saver( config, "text-index" );
-	if ( config->readBoolEntry( "enabled", e ) == e ) return;
+	if ( config->readBoolEntry( "enabled", !e ) == e ) return;
 	config->writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
