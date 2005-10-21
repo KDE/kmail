@@ -249,8 +249,8 @@ QString NewLanguageDialog::language() const
 }
 
 
-LanguageComboBox::LanguageComboBox( bool rw, QWidget *parent, const char *name )
-  : QComboBox( rw, parent, name )
+LanguageComboBox::LanguageComboBox( bool rw, QWidget *parent )
+  : QComboBox( rw, parent )
 {
 }
 
@@ -370,9 +370,8 @@ void ProfileDialog::slotOk() {
 }
 
 
-ConfigModuleWithTabs::ConfigModuleWithTabs( QWidget * parent,
-						  const char * name )
-  : ConfigModule( parent, name )
+ConfigModuleWithTabs::ConfigModuleWithTabs( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModule( instance, parent, args )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
   mTabWidget = new QTabWidget( this );

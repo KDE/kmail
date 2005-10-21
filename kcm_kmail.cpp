@@ -31,55 +31,61 @@
 //----------------------------
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_misc( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
-    MiscPage *page = new MiscPage( parent, "kcmkmail_config_misc" );
+    MiscPage *page = new MiscPage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_misc" );
     return page;
   }
 }
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_appearance( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
     AppearancePage *page =
-       new AppearancePage( parent, "kcmkmail_config_appearance" );
+       new AppearancePage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_appearance" );
     return page;
   }
 }
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_composer( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
-    ComposerPage *page = new ComposerPage( parent, "kcmkmail_config_composer" );
+    ComposerPage *page = new ComposerPage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_composer" );
     return page;
   }
 }
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_identity( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
-    IdentityPage *page = new IdentityPage( parent, "kcmkmail_config_identity" );
+    IdentityPage *page = new IdentityPage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_identity" );
     return page;
   }
 }
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_accounts( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
-    AccountsPage *page = new AccountsPage( parent, "kcmkmail_config_accounts" );
+    AccountsPage *page = new AccountsPage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_accounts" );
     return page;
   }
 }
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_kmail_config_security( QWidget *parent, const char * )
+  KDE_EXPORT KCModule *create_kmail_config_security( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
   {
-    SecurityPage *page = new SecurityPage( parent, "kcmkmail_config_security" );
+    SecurityPage *page = new SecurityPage( instance, parent, args );
+    page->setObjectName( "kcmkmail_config_security" );
     return page;
   }
 }

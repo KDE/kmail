@@ -286,8 +286,8 @@ QString IdentityPage::helpAnchor() const {
   return QString::fromLatin1("configure-identity");
 }
 
-IdentityPage::IdentityPage( QWidget * parent, const char * name )
-  : ConfigModule( parent, name ),
+IdentityPage::IdentityPage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModule( instance, parent, args ),
     mIdentityDialog( 0 )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
@@ -557,8 +557,8 @@ QString AccountsPage::helpAnchor() const {
   return QString::fromLatin1("configure-accounts");
 }
 
-AccountsPage::AccountsPage( QWidget * parent, const char * name )
-  : ConfigModuleWithTabs( parent, name )
+AccountsPage::AccountsPage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModuleWithTabs( instance, parent, args )
 {
   //
   // "Receiving" tab:
@@ -583,8 +583,8 @@ QString AccountsPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-accounts-sending");
 }
 
-AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   mTransportInfoList.setAutoDelete( true );
   // temp. vars:
@@ -1036,8 +1036,8 @@ QString AccountsPage::ReceivingTab::helpAnchor() const {
   return QString::fromLatin1("configure-accounts-receiving");
 }
 
-AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char * name )
-  : ConfigModuleTab ( parent, name )
+AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // temp. vars:
   QVBoxLayout *vlay;
@@ -1441,8 +1441,8 @@ QString AppearancePage::helpAnchor() const {
   return QString::fromLatin1("configure-appearance");
 }
 
-AppearancePage::AppearancePage( QWidget * parent, const char * name )
-  : ConfigModuleWithTabs( parent, name )
+AppearancePage::AppearancePage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModuleWithTabs( instance, parent, args )
 {
   //
   // "Fonts" tab:
@@ -1511,8 +1511,8 @@ static const struct {
 };
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
-AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name ), mActiveFontIndex( -1 )
+AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
+  : ConfigModuleTab( parent ), mActiveFontIndex( -1 )
 {
   assert( numFontNames == sizeof mFont / sizeof *mFont );
   // tmp. vars:
@@ -1688,8 +1688,8 @@ static const struct {
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
-AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -1836,8 +1836,8 @@ static const EnumConfigEntry readerWindowMode = {
   readerWindowModes, DIM(readerWindowModes), 1
 };
 
-AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout * vlay;
@@ -1922,8 +1922,8 @@ static const struct {
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
 
-AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name ),
+AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
+  : ConfigModuleTab( parent ),
     mCustomDateFormatEdit( 0 )
 {
   // tmp. vars:
@@ -2172,9 +2172,8 @@ QString AppearancePage::ReaderTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-reader");
 }
 
-AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
-                                                  const char * name )
-  : ConfigModuleTab( parent, name )
+AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -2361,9 +2360,8 @@ QString AppearancePage::SystemTrayTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-systemtray");
 }
 
-AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
-                                                          const char * name )
-  : ConfigModuleTab( parent, name )
+AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(),
                                         KDialog::spacingHint() );
@@ -2426,8 +2424,8 @@ QString ComposerPage::helpAnchor() const {
   return QString::fromLatin1("configure-composer");
 }
 
-ComposerPage::ComposerPage( QWidget * parent, const char * name )
-  : ConfigModuleWithTabs( parent, name )
+ComposerPage::ComposerPage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModuleWithTabs( instance, parent, args )
 {
   //
   // "General" tab:
@@ -2473,8 +2471,8 @@ QString ComposerPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-general");
 }
 
-ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2691,8 +2689,8 @@ QString ComposerPage::PhrasesTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-phrases");
 }
 
-ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QGridLayout *glay;
@@ -2903,8 +2901,8 @@ QString ComposerPage::SubjectTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-subject");
 }
 
-ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2987,8 +2985,8 @@ QString ComposerPage::CharsetTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-charset");
 }
 
-ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -3082,8 +3080,8 @@ QString ComposerPage::HeadersTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-headers");
 }
 
-ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -3298,9 +3296,8 @@ QString ComposerPage::AttachmentsTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-attachments");
 }
 
-ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
-                                                        const char * name )
-  : ConfigModuleTab( parent, name ) {
+ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
+  : ConfigModuleTab( parent ) {
   // tmp. vars:
   QVBoxLayout *vlay;
   QLabel      *label;
@@ -3407,8 +3404,8 @@ QString SecurityPage::helpAnchor() const {
   return QString::fromLatin1("configure-security");
 }
 
-SecurityPage::SecurityPage( QWidget * parent, const char * name )
-  : ConfigModuleWithTabs( parent, name )
+SecurityPage::SecurityPage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModuleWithTabs( instance, parent, args )
 {
   //
   // "Reading" tab:
@@ -3454,8 +3451,8 @@ QString SecurityPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-reading");
 }
 
-SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * name )
-  : ConfigModuleTab ( parent, name )
+SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
@@ -3721,8 +3718,8 @@ QString SecurityPage::ComposerCryptoTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-composing");
 }
 
-SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent, const char * name )
-  : ConfigModuleTab ( parent, name )
+SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
   QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
@@ -3796,8 +3793,8 @@ QString SecurityPage::WarningTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-warnings");
 }
 
-SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
   QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
@@ -3905,8 +3902,8 @@ QString SecurityPage::SMimeTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-smime-validation");
 }
 
-SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // the margins are inside mWidget itself
   QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
@@ -4223,8 +4220,8 @@ QString SecurityPage::CryptPlugTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-crypto-backends");
 }
 
-SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -4256,8 +4253,8 @@ QString MiscPage::helpAnchor() const {
   return QString::fromLatin1("configure-misc");
 }
 
-MiscPage::MiscPage( QWidget * parent, const char * name )
-  : ConfigModuleWithTabs( parent, name )
+MiscPage::MiscPage( KInstance *instance, QWidget *parent, const QStringList &args )
+  : ConfigModuleWithTabs( instance, parent, args )
 {
   mFolderTab = new FolderTab();
   addTab( mFolderTab, i18n("&Folders") );
@@ -4271,8 +4268,8 @@ QString MiscPage::FolderTab::helpAnchor() const {
   return QString::fromLatin1("configure-misc-folders");
 }
 
-MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
-  : ConfigModuleTab( parent, name )
+MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
+  : ConfigModuleTab( parent )
 {
   // temp. vars:
   QVBoxLayout *vlay;
@@ -4507,8 +4504,8 @@ QString MiscPage::GroupwareTab::helpAnchor() const {
   return QString::fromLatin1("configure-misc-groupware");
 }
 
-MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
-  : ConfigModuleTab( parent, name )
+MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
+  : ConfigModuleTab( parent )
 {
   QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(),
                                       KDialog::spacingHint() );

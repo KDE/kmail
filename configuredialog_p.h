@@ -130,7 +130,7 @@ class LanguageComboBox : public QComboBox
   Q_OBJECT
 
   public:
-    LanguageComboBox( bool rw, QWidget *parent=0, const char *name=0 );
+    LanguageComboBox( bool rw, QWidget *parent=0 );
     int insertLanguage( const QString & language );
     QString language() const;
     void setLanguage( const QString & language );
@@ -166,8 +166,8 @@ private:
 class ConfigModule : public KCModule {
   Q_OBJECT
 public:
-  ConfigModule( QWidget * parent=0, const char * name=0 )
-     : KCModule ( parent, name )
+  ConfigModule( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() )
+     : KCModule ( instance, parent, args )
      {}
   ~ConfigModule() {}
 
@@ -193,8 +193,8 @@ signals:
 class ConfigModuleTab : public QWidget {
   Q_OBJECT
 public:
-   ConfigModuleTab( QWidget *parent=0, const char* name=0 )
-      :QWidget( parent, name )
+   ConfigModuleTab( QWidget *parent=0 )
+      : QWidget( parent )
       {}
   ~ConfigModuleTab() {}
   void load();
@@ -227,7 +227,7 @@ private:
 class ConfigModuleWithTabs : public ConfigModule {
   Q_OBJECT
 public:
-  ConfigModuleWithTabs( QWidget * parent=0, const char * name=0 );
+  ConfigModuleWithTabs( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
    ~ConfigModuleWithTabs() {}
 
   // don't reimplement any of those methods
@@ -254,7 +254,7 @@ private:
 class KDE_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
-  IdentityPage( QWidget * parent=0, const char * name=0 );
+  IdentityPage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
   ~IdentityPage() {}
 
   QString helpAnchor() const;
@@ -304,7 +304,7 @@ private: // data members
 class AccountsPageSendingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AccountsPageSendingTab( QWidget * parent=0, const char * name=0 );
+  AccountsPageSendingTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -341,7 +341,7 @@ private:
 class AccountsPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AccountsPageReceivingTab( QWidget * parent=0, const char * name=0 );
+  AccountsPageReceivingTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -384,7 +384,7 @@ private:
 class KDE_EXPORT AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  AccountsPage( QWidget * parent=0, const char * name=0 );
+  AccountsPage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
   QString helpAnchor() const;
 
 
@@ -411,7 +411,7 @@ private:
 class AppearancePageFontsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageFontsTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageFontsTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -438,7 +438,7 @@ private:
 class AppearancePageColorsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageColorsTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageColorsTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -458,7 +458,7 @@ private:
 class AppearancePageLayoutTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageLayoutTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageLayoutTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -479,7 +479,7 @@ private: // data
 class AppearancePageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageHeadersTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageHeadersTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -505,7 +505,7 @@ private: // data
 class AppearancePageReaderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageReaderTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageReaderTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -534,7 +534,7 @@ private: // data
 class AppearancePageSystemTrayTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageSystemTrayTab( QWidget * parent=0, const char * name=0 );
+  AppearancePageSystemTrayTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -552,7 +552,7 @@ private: // data
 class KDE_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  AppearancePage( QWidget * parent=0, const char * name=0 );
+  AppearancePage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -582,7 +582,7 @@ private:
 class ComposerPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageGeneralTab( QWidget * parent=0, const char * name=0 );
+  ComposerPageGeneralTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -609,7 +609,7 @@ private:
 class ComposerPagePhrasesTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPagePhrasesTab( QWidget * parent=0, const char * name=0 );
+  ComposerPagePhrasesTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -640,7 +640,7 @@ private:
 class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageSubjectTab( QWidget * parent=0, const char * name=0 );
+  ComposerPageSubjectTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -658,7 +658,7 @@ private:
 class ComposerPageCharsetTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageCharsetTab( QWidget * parent=0, const char * name=0 );
+  ComposerPageCharsetTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -679,7 +679,7 @@ private:
 class ComposerPageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageHeadersTab( QWidget * parent=0, const char * name=0 );
+  ComposerPageHeadersTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -711,7 +711,7 @@ private:
 class ComposerPageAttachmentsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageAttachmentsTab( QWidget * parent=0, const char * name=0 );
+  ComposerPageAttachmentsTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -733,7 +733,7 @@ private:
 class KDE_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  ComposerPage( QWidget * parent=0, const char * name=0 );
+  ComposerPage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -763,7 +763,7 @@ private:
 class SecurityPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageGeneralTab( QWidget * parent=0, const char * name=0 );
+  SecurityPageGeneralTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -787,7 +787,7 @@ private:
 class SecurityPageComposerCryptoTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageComposerCryptoTab( QWidget * parent=0, const char * name=0 );
+  SecurityPageComposerCryptoTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -806,7 +806,7 @@ private:
 class SecurityPageWarningTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageWarningTab( QWidget * parent=0, const char * name=0 );
+  SecurityPageWarningTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -829,7 +829,7 @@ class SecurityPageSMimeTab : public ConfigModuleTab, public DCOPObject {
   Q_OBJECT
   K_DCOP
 public:
-  SecurityPageSMimeTab( QWidget * parent=0, const char * name=0 );
+  SecurityPageSMimeTab( QWidget * parent=0 );
   ~SecurityPageSMimeTab();
 
   QString helpAnchor() const;
@@ -855,7 +855,7 @@ class SecurityPageCryptPlugTab : public ConfigModuleTab
 {
   Q_OBJECT
 public:
-  SecurityPageCryptPlugTab( QWidget * parent = 0, const char* name = 0 );
+  SecurityPageCryptPlugTab( QWidget * parent = 0 );
   ~SecurityPageCryptPlugTab();
 
   QString helpAnchor() const;
@@ -873,7 +873,7 @@ private:
 class KDE_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  SecurityPage( QWidget * parent=0, const char * name=0 );
+  SecurityPage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
 
   QString helpAnchor() const;
 
@@ -904,7 +904,7 @@ private:
 class MiscPageFolderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  MiscPageFolderTab( QWidget * parent=0, const char * name=0 );
+  MiscPageFolderTab( QWidget * parent=0 );
 
   void save();
  QString helpAnchor() const;
@@ -933,7 +933,7 @@ private:
 class MiscPageGroupwareTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
-  MiscPageGroupwareTab( QWidget * parent=0, const char * name=0 );
+  MiscPageGroupwareTab( QWidget * parent=0 );
   void save();
   QString helpAnchor() const;
 
@@ -972,7 +972,7 @@ private:
 class KDE_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  MiscPage( QWidget * parent=0, const char * name=0 );
+  MiscPage( KInstance *instance, QWidget *parent=0, const QStringList &args=QStringList() );
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;
