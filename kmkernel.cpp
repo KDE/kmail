@@ -1540,7 +1540,7 @@ bool KMKernel::doSessionManagement()
 {
 
   // Do session management
-  if (kapp->isRestored()){
+  if (kapp->isSessionRestored()){
     int n = 1;
     while (KMMainWin::canBeRestored(n)){
       //only restore main windows! (Matthias);
