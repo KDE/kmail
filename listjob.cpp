@@ -99,7 +99,7 @@ void ListJob::execute()
   jd.total = 1; jd.done = 0;
   jd.cancellable = true;
   jd.parent = mDestFolder;
-  jd.onlySubscribed = ( mType == ImapAccountBase::ListSubscribed || 
+  jd.onlySubscribed = ( mType == ImapAccountBase::ListSubscribed ||
                         mType == ImapAccountBase::ListSubscribedNoCheck ||
                         mType == ImapAccountBase::ListFolderOnlySubscribed );
   jd.path = mPath;
@@ -128,12 +128,12 @@ void ListJob::execute()
   QString section;
   if ( mComplete )
     section = ";SECTION=COMPLETE";
-  else if ( mType == ImapAccountBase::ListFolderOnly || 
+  else if ( mType == ImapAccountBase::ListFolderOnly ||
             mType == ImapAccountBase::ListFolderOnlySubscribed )
     section = ";SECTION=FOLDERONLY";
-  
+
   KURL url = mAccount->getUrl();
-  url.setPath( mPath 
+  url.setPath( mPath
       + ";TYPE=" + ltype
       + section );
   // go
@@ -192,28 +192,14 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   }
   if( (*it).progressItem )
     (*it).progressItem->setProgress( 50 );
-  QString name;
-  KURL url;
-  QString mimeType;
-  QString attributes;
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
         udsIt != uds.end(); udsIt++ )
   {
-    mimeType = QString::null;
-    attributes = QString::null;
-    for ( KIO::UDSEntry::ConstIterator eIt = (*udsIt).begin();
-          eIt != (*udsIt).end(); eIt++ )
-    {
-      // get the needed information
-      if ( (*eIt).m_uds == KIO::UDS_NAME )
-        name = (*eIt).m_str;
-      else if ( (*eIt).m_uds == KIO::UDS_URL )
-        url = KURL((*eIt).m_str, 106); // utf-8
-      else if ( (*eIt).m_uds == KIO::UDS_MIME_TYPE )
-        mimeType = (*eIt).m_str;
-      else if ( (*eIt).m_uds == KIO::UDS_EXTRA )
-        attributes = (*eIt).m_str;
-    }
+    // get the needed information
+    const QString name = udsIt->stringValue( KIO::UDS_NAME );
+    const KURL url = KURL( udsIt->stringValue( KIO::UDS_URL ), 106 ); // utf-8
+    const QString mimeType = udsIt->stringValue( KIO::UDS_MIME_TYPE );
+    const QString attributes = udsIt->stringValue( KIO::UDS_EXTRA );
     if ( (mimeType == "inode/directory" || mimeType == "message/digest"
           || mimeType == "message/directory")
          && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.') )

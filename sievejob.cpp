@@ -21,7 +21,6 @@
 #include <kio/job.h>
 using KIO::Job;
 // <kio/global.h>
-using KIO::UDSAtomTypes;
 using KIO::UDSEntryList;
 using KIO::UDSEntry;
 #include <kdebug.h>
@@ -148,15 +147,9 @@ namespace KMail {
       // Loop over all UDS atoms to find the UDS_ACCESS and UDS_NAME atoms;
       // note if we find an exec'able file ( == active script )
       // or the requested filename (mUrl.fileName()).
-      QString filename;
-      bool isActive = false;
-      for ( UDSEntry::const_iterator et = (*it).begin() ; et != (*it).end() ; ++ et ) {
-	if ( ( *et ).m_uds == KIO::UDS_NAME ) {
-	  filename = ( *et ).m_str;
-	  mAvailableScripts.append( filename );
-	} else if ( ( *et ).m_uds == KIO::UDS_ACCESS && ( *et ).m_long == 0700 )
-	  isActive = true;
-      }
+      const QString filename = it->stringValue( KIO::UDS_NAME );
+      mAvailableScripts.append( filename );
+      bool isActive = ( it->numberValue( KIO::UDS_ACCESS ) == 0700 );
 
       if ( isActive )
 	mActiveScriptName = filename;
