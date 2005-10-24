@@ -223,9 +223,9 @@ bool KMAcctLocal::fetchMsg()
 #endif
     msg->setStatus( msg->headerField( "Status" ).latin1(),
                     msg->headerField( "X-Status" ).latin1());
-    if ( msg->headerField( "X-KMail-EncryptionState" ).size() )
+    if ( !msg->headerField( "X-KMail-EncryptionState" ).isEmpty() )
       msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
-    if ( msg->headerField( "X-KMail-SignatureState" ).size() )
+    if ( !msg->headerField( "X-KMail-SignatureState" ).isEmpty() )
       msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
     msg->setComplete(true);
     msg->updateAttachmentState();
