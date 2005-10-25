@@ -1471,7 +1471,10 @@ void KMKernel::cleanupImapFolders()
     {
       node = the_imapFolderMgr->dir().next();
     } else {
-      the_imapFolderMgr->remove(static_cast<KMFolder*>(node));
+      KMFolder* folder = static_cast<KMFolder*>(node);
+      // delete only local
+      static_cast<KMFolderImap*>( folder->storage() )->setAlreadyRemoved( true );
+      the_imapFolderMgr->remove(folder);
       node = the_imapFolderMgr->dir().first();
     }
   }
