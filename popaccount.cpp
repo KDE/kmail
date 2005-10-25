@@ -699,7 +699,7 @@ void PopAccount::slotJobFinished() {
             idsToSave.remove( cur );
           }
         }
-        else if ( numToDelete > 0 && (unsigned)numToDelete >= idsToSave.count() )
+        else if ( numToDelete > 0 && numToDelete >= idsToSave.count() )
           idsToSave.clear();
       }
       // Delete more old messages until we're under mLeaveOnServerSize MBs

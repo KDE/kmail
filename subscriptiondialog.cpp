@@ -94,7 +94,7 @@ void SubscriptionDialog::createItems()
 //  kdDebug(5006) << "createItems subscribed=" << onlySubscribed <<",folders="
 //    << mFolderNames.join(",") << endl;
 
-  for (uint i = mCount; i < mFolderNames.count(); ++i)
+  for (int i = mCount; i < mFolderNames.count(); ++i)
   {
     // give the dialog a chance to repaint
     if (done == 1000)

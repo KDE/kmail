@@ -1359,7 +1359,7 @@ void AccountDialog::setupSettings()
   }
   else
   {
-    uint i = 0;
+    int i = 0;
     int curIndex = -1;
     kmkernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
     while (i < mFolderNames.count())

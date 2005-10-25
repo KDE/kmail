@@ -854,7 +854,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
     QByteArray data;
     int size;
     // Unless it is great than 64 k send the whole message. kio buffers for us.
-    if( mData.size() > (unsigned int) MAX_CHUNK_SIZE )
+    if( mData.size() >  MAX_CHUNK_SIZE )
       size = MAX_CHUNK_SIZE;
     else
       size = mData.size();
