@@ -73,7 +73,7 @@ using KMail::MessageProperty;
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
   : mParent( aParentFolder ), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
+    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), mStatus()
 {
 }
 
@@ -126,20 +126,85 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = true;
   KMMsgStatus oldStatus = status();
-  if ( status() & aStatus ) {
-    mStatus &= ~aStatus;
-  } else {
-    mStatus |= aStatus;
-    // Ignored and Watched are toggleable, yet mutually exclusive.
-    // That is an arbitrary restriction on my part. HAR HAR HAR :) -till
-    if (aStatus == KMMsgStatusWatched)
-      mStatus &= ~KMMsgStatusIgnored;
-    if (aStatus == KMMsgStatusIgnored)
-      mStatus &= ~KMMsgStatusWatched;
-    if (aStatus == KMMsgStatusSpam)
-      mStatus &= ~KMMsgStatusHam;
-    if (aStatus == KMMsgStatusHam)
-      mStatus &= ~KMMsgStatusSpam;
+  switch (aStatus) {
+    case KMMsgStatusRead:
+      if ( !mStatus.isRead() )
+        mStatus.setRead();
+      else 
+        mStatus.setUnread();
+      break;
+
+    case KMMsgStatusUnread:
+      if ( !mStatus.isUnread() )
+        mStatus.setUnread();
+      else 
+        mStatus.setRead();
+      break;
+
+    case KMMsgStatusOld:
+      if ( !mStatus.isOld() )
+        mStatus.setOld();
+      else 
+        mStatus.setNew();
+      break;
+
+    case KMMsgStatusNew:
+      if ( !mStatus.isNew() )
+        mStatus.setNew();
+      else 
+        mStatus.setOld();
+      break;
+
+    case KMMsgStatusDeleted:
+      mStatus.setDeleted( !mStatus.isDeleted() );
+      break;
+
+    case KMMsgStatusReplied:
+      mStatus.setReplied( !mStatus.isReplied() );
+      break;
+
+    case KMMsgStatusForwarded:
+      mStatus.setForwarded( !mStatus.isForwarded() );
+      break;
+
+    case KMMsgStatusQueued:
+      mStatus.setQueued( !mStatus.isQueued() );
+      break;
+
+    case KMMsgStatusTodo:
+      mStatus.setTodo( !mStatus.isTodo() );
+      break;
+
+    case KMMsgStatusSent:
+      mStatus.setSent( !mStatus.isSent() );
+      break;
+
+    case KMMsgStatusFlag:
+      mStatus.setImportant( !mStatus.isImportant() );
+      break;
+
+    // Watched and ignored are mutually exclusive
+    case KMMsgStatusWatched:
+      mStatus.setWatched( !mStatus.isWatched() );
+      break;
+
+    case KMMsgStatusIgnored:
+      mStatus.setIgnored( !mStatus.isIgnored() );
+      break;
+
+    // as are ham and spam
+    case KMMsgStatusSpam:
+      mStatus.setSpam( !mStatus.isSpam() );
+      break;
+
+    case KMMsgStatusHam:
+      mStatus.setHam( !mStatus.isHam() );
+      break;
+
+    case KMMsgStatusHasAttach:
+    case KMMsgStatusHasNoAttach:
+      mStatus.setHasAttachment( !mStatus.hasAttachment() );
+      break;
   }
   if (storage()) {
      if (idx < 0)
@@ -157,99 +222,81 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
   KMMsgStatus oldStatus = status();
   switch (aStatus) {
     case KMMsgStatusRead:
-      // Unset unread and new, set read
-      mStatus &= ~KMMsgStatusUnread;
-      mStatus &= ~KMMsgStatusNew;
-      mStatus |= KMMsgStatusRead;
+      mStatus.setRead();
       break;
 
     case KMMsgStatusUnread:
-      // unread overrides read
-      mStatus &= ~KMMsgStatusOld;
-      mStatus &= ~KMMsgStatusRead;
-      mStatus &= ~KMMsgStatusNew;
-      mStatus |= KMMsgStatusUnread;
+      mStatus.setUnread();
       break;
 
     case KMMsgStatusOld:
-      // old can't be new or unread
-      mStatus &= ~KMMsgStatusNew;
-      mStatus &= ~KMMsgStatusUnread;
-      mStatus |= KMMsgStatusOld;
+      mStatus.setOld();
       break;
 
     case KMMsgStatusNew:
-      // new overrides old and read
-      mStatus &= ~KMMsgStatusOld;
-      mStatus &= ~KMMsgStatusRead;
-      mStatus &= ~KMMsgStatusUnread;
-      mStatus |= KMMsgStatusNew;
+      mStatus.setNew();
       break;
 
     case KMMsgStatusDeleted:
-      mStatus |= KMMsgStatusDeleted;
+      mStatus.setDeleted();
       break;
 
     case KMMsgStatusReplied:
-      mStatus |= KMMsgStatusReplied;
+      mStatus.setReplied();
       break;
 
     case KMMsgStatusForwarded:
-      mStatus |= KMMsgStatusForwarded;
+      mStatus.setForwarded();
       break;
 
     case KMMsgStatusQueued:
-      mStatus |= KMMsgStatusQueued;
+      mStatus.setQueued();
       break;
 
     case KMMsgStatusTodo:
-      mStatus |= KMMsgStatusTodo;
+      mStatus.setTodo();
       break;
 
     case KMMsgStatusSent:
-      mStatus &= ~KMMsgStatusQueued;
-      mStatus &= ~KMMsgStatusUnread;
-      mStatus &= ~KMMsgStatusNew;
-      mStatus |= KMMsgStatusSent;
+      mStatus.setSent();
       break;
 
     case KMMsgStatusFlag:
-      mStatus |= KMMsgStatusFlag;
+      mStatus.setImportant();
       break;
 
     // Watched and ignored are mutually exclusive
     case KMMsgStatusWatched:
-      mStatus &= ~KMMsgStatusIgnored;
-      mStatus |= KMMsgStatusWatched;
+      mStatus.setWatched();
       break;
 
     case KMMsgStatusIgnored:
-      mStatus &= ~KMMsgStatusWatched;
-      mStatus |= KMMsgStatusIgnored;
+      mStatus.setIgnored();
       break;
+
     // as are ham and spam
     case KMMsgStatusSpam:
-      mStatus &= ~KMMsgStatusHam;
-      mStatus |= KMMsgStatusSpam;
+      mStatus.setSpam();
       break;
+
     case KMMsgStatusHam:
-      mStatus &= ~KMMsgStatusSpam;
-      mStatus |= KMMsgStatusHam;
+      mStatus.setHam();
       break;
+
     case KMMsgStatusHasAttach:
-      mStatus &= ~KMMsgStatusHasNoAttach;
-      mStatus |= KMMsgStatusHasAttach;
+      mStatus.setHasAttachment();
       break;
+
     case KMMsgStatusHasNoAttach:
-      mStatus &= ~KMMsgStatusHasAttach;
-      mStatus |= KMMsgStatusHasNoAttach;
+      mStatus.setHasAttachment( false );
       break;
+
     default:
-      mStatus = aStatus;
+      mStatus.setStatus( aStatus );
       break;
   }
 
-  if ( oldStatus != mStatus && storage() ) {
+  if ( oldStatus != mStatus.getStatus() && storage() ) {
     if (idx < 0)
       idx = storage()->find( this );
     storage()->msgStatusChanged( oldStatus, status(), idx );
@@ -356,113 +403,109 @@ void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isUnread(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusUnread && !(st & KMMsgStatusIgnored));
+  return mStatus.isUnread();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isNew(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusNew && !(st & KMMsgStatusIgnored));
+  return mStatus.isIgnored();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isOfUnknownStatus(void) const
 {
-  KMMsgStatus st = status();
-  return (st == KMMsgStatusUnknown);
+  return mStatus.isOfUnknownStatus();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isOld(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusOld);
+  return mStatus.isOld();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isRead(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusRead || st & KMMsgStatusIgnored);
+  return mStatus.isRead();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isDeleted(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusDeleted);
+  return mStatus.isDeleted();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isReplied(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusReplied);
+  return mStatus.isReplied();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isForwarded(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusForwarded);
+  return mStatus.isForwarded();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isQueued(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusQueued);
+  return mStatus.isQueued();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isTodo(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusTodo);
+  return mStatus.isTodo();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isSent(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusSent);
+  return mStatus.isSent();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isImportant(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusFlag);
+  return mStatus.isImportant();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isWatched(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusWatched);
+  return mStatus.isWatched();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isIgnored(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusIgnored);
+  return mStatus.isIgnored();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isSpam(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusSpam);
+  return mStatus.isSpam();
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isHam(void) const
 {
-  KMMsgStatus st = status();
-  return (st & KMMsgStatusHam);
+  return mStatus.isHam();
+}
+
+//-----------------------------------------------------------------------------
+MessageStatus& KMMsgBase::messageStatus()
+{
+  return mStatus;
+}
+
+//-----------------------------------------------------------------------------
+const MessageStatus& KMMsgBase::getMessageStatus() const
+{
+  return mStatus;
 }
 
 //-----------------------------------------------------------------------------

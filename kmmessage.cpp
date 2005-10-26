@@ -121,7 +121,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   // now overwrite a few from the msgInfo
   mMsgSize = msgInfo.msgSize();
   mFolderOffset = msgInfo.folderOffset();
-  mStatus = msgInfo.status();
+  mStatus = msgInfo.messageStatus();
   mEncryptionState = msgInfo.encryptionState();
   mSignatureState = msgInfo.signatureState();
   mMDNSentState = msgInfo.mdnSentState();
@@ -152,7 +152,8 @@ void KMMessage::init()
   mMsgSize = 0;
   mMsgLength = 0;
   mFolderOffset = 0;
-  mStatus  = KMMsgStatusNew;
+  mStatus.clear();
+  mStatus.setNew();
   mEncryptionState = KMMsgEncryptionStateUnknown;
   mSignatureState = KMMsgSignatureStateUnknown;
   mMDNSentState = KMMsgMDNStateUnknown;
@@ -3871,7 +3872,7 @@ void KMMessage::setCharset(const Q3CString& bStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 {
-  if (mStatus == aStatus)
+  if (mStatus.getStatus() == aStatus)
     return;
   KMMsgBase::setStatus(aStatus, idx);
 }

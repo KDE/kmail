@@ -763,7 +763,7 @@ public:
   void setUID(ulong uid);
 
   /** Status of the message. */
-  KMMsgStatus status() const { return mStatus; }
+  KMMsgStatus status() const { return mStatus.getStatus(); }
   /** Set status and mark dirty. */
   void setStatus(const KMMsgStatus status, int idx = -1);
   void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }

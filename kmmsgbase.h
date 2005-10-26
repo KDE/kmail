@@ -20,6 +20,9 @@
 #ifndef kmmsgbase_h
 #define kmmsgbase_h
 
+#include "messagestatus.h"
+using KPIM::MessageStatus;
+
 // for large file support flags
 #include <config.h>
 #include <sys/types.h>
@@ -34,39 +37,8 @@ class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
 
-/** The new status format. These can be or'd together. 
-    Note, that the KMMsgStatusIgnored implies the
-    status to be Read even if the flags are set
-    to Unread or New. This is done in KMMsgBase::isRead()
-    and related getters. So we can preserve the state
-    when switching a thread to Ignored and back. */
-enum MsgStatus
-{
-    KMMsgStatusUnknown =           0x00000000,
-    KMMsgStatusNew =               0x00000001,
-    KMMsgStatusUnread =            0x00000002,
-    KMMsgStatusRead =              0x00000004,
-    KMMsgStatusOld =               0x00000008,
-    KMMsgStatusDeleted =           0x00000010,
-    KMMsgStatusReplied =           0x00000020,
-    KMMsgStatusForwarded =         0x00000040,
-    KMMsgStatusQueued =            0x00000080,
-    KMMsgStatusSent =              0x00000100,
-    KMMsgStatusFlag =              0x00000200, // flag means important
-    KMMsgStatusWatched =           0x00000400,
-    KMMsgStatusIgnored =           0x00000800, // forces isRead()
-    KMMsgStatusTodo =              0x00001000,
-    KMMsgStatusSpam =              0x00002000,
-    KMMsgStatusHam =               0x00004000,
-    KMMsgStatusHasAttach =         0x00008000,
-    KMMsgStatusHasNoAttach =       0x00010000
-};
-
-typedef uint KMMsgStatus;
-
 /** The old status format, only one at a time possible. Needed
     for upgrade path purposes. */
-
 typedef enum
 {
     KMLegacyMsgStatusUnknown=' ',
@@ -81,8 +53,6 @@ typedef enum
     KMLegacyMsgStatusSent='S',
     KMLegacyMsgStatusFlag='G'
 } KMLegacyMsgStatus;
-
-
 
 /** Flags for the encryption state. */
 typedef enum
@@ -210,6 +180,12 @@ public:
 
   /** Status of the message. */
   virtual KMMsgStatus status(void) const = 0;
+
+  /** Status object of a message. */
+  MessageStatus& messageStatus();
+
+  /** Const reference to a status object of a message. */
+  const MessageStatus& getMessageStatus() const;
 
   /** Set status and mark dirty.  Optional optimization: @p idx may
    * specify the index of this message within the parent folder. */
@@ -426,7 +402,7 @@ protected:
   short mIndexLength;
   bool mDirty;
   bool mEnableUndo;
-  mutable KMMsgStatus mStatus;
+  mutable MessageStatus mStatus;
   // This is kept to provide an upgrade path from the the old single status
   // to the new multiple status scheme.
   mutable KMLegacyMsgStatus mLegacyStatus;

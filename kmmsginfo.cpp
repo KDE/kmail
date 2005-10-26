@@ -166,7 +166,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->strippedSubjectMD5 = msg.strippedSubjectMD5();
     kd->msgIdMD5 = msg.msgIdMD5();
     kd->xmark = msg.xmark();
-    mStatus = msg.status();
+    mStatus = msg.getMessageStatus();
     kd->folderOffset = msg.folderOffset();
     kd->msgSize = msg.msgSize();
     kd->date = msg.date();
@@ -205,7 +205,7 @@ void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
     kd->msgIdMD5 = base64EncodedMD5( msgId );
     kd->xmark = aXMark;
     kd->folderOffset = aFolderOffset;
-    mStatus    = aStatus;
+    mStatus.setStatus( aStatus );
     kd->msgSize = aMsgSize;
     kd->date = aDate;
     kd->file = "";
@@ -449,7 +449,7 @@ void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 //-----------------------------------------------------------------------------
 KMMsgStatus KMMsgInfo::status(void) const
 {
-    if (mStatus == KMMsgStatusUnknown) {
+    if ( mStatus.isOfUnknownStatus() ) {
         KMMsgStatus st = (KMMsgStatus)getLongPart(MsgStatusPart);
         if (!st) {
             // We are opening an old index for the first time, get the legacy
@@ -495,9 +495,9 @@ KMMsgStatus KMMsgInfo::status(void) const
             }
 
         }
-        mStatus = st;
+        mStatus.setStatus( st );
     }
-    return mStatus;
+    return mStatus.getStatus();
 }
 
 
@@ -668,7 +668,7 @@ void KMMsgInfo::compat_fromOldIndexString(const Q3CString& str, bool toUtf8)
     kd->folderOffset = str.mid(2,9).toULong();
     kd->msgSize = str.mid(12,9).toULong();
     kd->date = (time_t)str.mid(22,10).toULong();
-    mStatus = (KMMsgStatus)str.at(0);
+    mStatus.setStatusFromStr( str );
     if (toUtf8) {
         kd->subject = str.mid(37, 100).stripWhiteSpace();
         kd->from = str.mid(138, 50).stripWhiteSpace();
