@@ -1240,8 +1240,6 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   }
   KConfigGroupSaver saver(config, name);
   config->writeEntry("isOpen", fti->isOpen() );
-  if ( folder )
-    folder->storage()->writeConfig();
 }
 
 
