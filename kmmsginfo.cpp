@@ -205,7 +205,7 @@ void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
     kd->msgIdMD5 = base64EncodedMD5( msgId );
     kd->xmark = aXMark;
     kd->folderOffset = aFolderOffset;
-    mStatus.setStatus( aStatus );
+    mStatus.fromQInt32( aStatus );
     kd->msgSize = aMsgSize;
     kd->date = aDate;
     kd->file = "";
@@ -495,9 +495,9 @@ KMMsgStatus KMMsgInfo::status(void) const
             }
 
         }
-        mStatus.setStatus( st );
+        mStatus.fromQInt32( st );
     }
-    return mStatus.getStatus();
+    return mStatus.toQInt32();
 }
 
 

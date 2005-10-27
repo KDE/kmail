@@ -708,8 +708,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   writeConfig();
 
   // delete the old entry as we get two entries with the same ID otherwise
-  if ( oldConfigString != "Folder-" + folder()->idString() )
-    KMKernel::config()->deleteGroup( oldConfigString );
+  KMKernel::config()->deleteGroup( oldConfigString );
 
   emit locationChanged( oldLoc, newLoc );
   emit nameChanged();
@@ -816,18 +815,16 @@ int FolderStorage::countUnread()
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
-  const KMMsgStatus newStatus, int idx)
+void FolderStorage::msgStatusChanged( const MessageStatus& oldStatus,
+                                      const MessageStatus& newStatus, int idx)
 {
   int oldUnread = 0;
   int newUnread = 0;
 
-  if (((oldStatus & KMMsgStatusUnread || oldStatus & KMMsgStatusNew) &&
-      !(oldStatus & KMMsgStatusIgnored)) ||
+  if ((oldStatus.isUnread() || oldStatus.isNew()) &&
       (folder() == kmkernel->outboxFolder()))
     oldUnread = 1;
-  if (((newStatus & KMMsgStatusUnread || newStatus & KMMsgStatusNew) &&
-      !(newStatus & KMMsgStatusIgnored)) ||
+  if ((newStatus.isUnread() || newStatus.isNew()) &&
       (folder() == kmkernel->outboxFolder()))
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;

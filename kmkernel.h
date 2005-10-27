@@ -406,7 +406,6 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
-  KMMsgStatus strToStatus(const QString &flags);
   KMFolder *currentFolder();
 
   KMFolder *the_inboxFolder;

@@ -277,9 +277,9 @@ public:
   int countUnreadRecursive();
 
   /** Called by KMMsgBase::setStatus when status of a message has changed
-      required to keep the number unread messages variable current. */
-  void msgStatusChanged( const KMMsgStatus oldStatus,
-                         const KMMsgStatus newStatus,
+      required to keep the number of unread messages variable current. */
+  void msgStatusChanged( const MessageStatus& oldStatus,
+                         const MessageStatus& newStatus,
                          int idx);
 
   /** Open folder for access.

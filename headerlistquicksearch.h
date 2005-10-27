@@ -31,7 +31,7 @@
 #ifndef KMAILHEADERLISTQUICKSEARCH_H
 #define KMAILHEADERLISTQUICKSEARCH_H
 
-#include "kmmsgbase.h" // for KMMsgStatus
+#include <messagestatus.h>
 #include "kmsearchpattern.h"
 #include <klistviewsearchline.h>
 #include <q3valuevector.h>
@@ -81,7 +81,7 @@ private:
     /** Helper method for the filling of the status combo. */
     void insertStatus(KMail::StatusValueTypes which);
     QComboBox *mStatusCombo;
-    KMMsgStatus mStatus;
+    KPIM::MessageStatus mStatus;
     Q3ValueVector<QString> statusList;
 };
 

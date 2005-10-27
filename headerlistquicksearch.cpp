@@ -52,7 +52,7 @@ namespace KMail {
 HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                               KListView *listView,
                                               KActionCollection *actionCollection )
-  : KListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(0),  statusList()
+  : KListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
                                            QApplication::reverseLayout()
@@ -139,10 +139,10 @@ bool HeaderListQuickSearch::eventFilter( QObject *watched, QEvent *event )
 
 bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QString &s) const
 {
-  if ( mStatus != 0 ) {
+  if ( !mStatus.isOfUnknownStatus() ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
-    if ( !msg || ! ( msg->status() & mStatus ) )
+    if ( !msg || ! ( msg->getMessageStatus() & mStatus ) )
       return false;
   }
   return KListViewSearchLine::itemMatches(item, s);
@@ -159,9 +159,11 @@ void HeaderListQuickSearch::reset()
 void HeaderListQuickSearch::slotStatusChanged( int index )
 {
   if ( index == 0 )
-    mStatus = 0;
+    mStatus.clear();
   else
-    mStatus = KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] );
+    // FIXME
+    mStatus.fromQInt32(mStatus.toQInt32() |
+        KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] ));
   updateSearch();
 }
 

@@ -3872,7 +3872,7 @@ void KMMessage::setCharset(const Q3CString& bStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 {
-  if (mStatus.getStatus() == aStatus)
+  if (mStatus.toQInt32() == aStatus)
     return;
   KMMsgBase::setStatus(aStatus, idx);
 }

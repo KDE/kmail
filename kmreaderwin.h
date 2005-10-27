@@ -16,7 +16,8 @@
 #include <QResizeEvent>
 #include <kurl.h>
 #include <kservice.h>
-#include "kmmsgbase.h"
+#include <messagestatus.h>
+using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 
@@ -469,7 +470,7 @@ private:
   bool mMsgDisplay;
   bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
-  KMMsgStatus mLastStatus;
+  MessageStatus mLastStatus;
 
   KMail::CSSHelper * mCSSHelper;
   bool mUseFixedFont;

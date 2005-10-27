@@ -523,7 +523,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mLastSerNum = 0;
   mWaitingForSerNum = 0;
   mMessage = 0;
-  mLastStatus = KMMsgStatusUnknown;
+  mLastStatus.clear();
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
@@ -1195,14 +1195,14 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (aMsg) {
     aMsg->setOverrideCodec( overrideCodec() );
     aMsg->setDecodeHTML( htmlMail() );
-    mLastStatus = aMsg->status();
+    mLastStatus = aMsg->messageStatus();
     // FIXME: workaround to disable DND for IMAP load-on-demand
     if ( !aMsg->isComplete() )
       mViewer->setDNDEnabled( false );
     else
       mViewer->setDNDEnabled( true );
   } else {
-    mLastStatus = KMMsgStatusUnknown;
+    mLastStatus.clear();
   }
 
   // only display the msg if it is complete
@@ -1566,11 +1566,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
 
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
-kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
-kdDebug(5006) << "   (KMMsgStatusUnknown == mLastStatus) = "           << (KMMsgStatusUnknown == mLastStatus) << endl;
-kdDebug(5006) << "|| (KMMsgStatusNew     == mLastStatus) = "           << (KMMsgStatusNew     == mLastStatus) << endl;
-kdDebug(5006) << "|| (KMMsgStatusUnread  == mLastStatus) = "           << (KMMsgStatusUnread  == mLastStatus) << endl;
-kdDebug(5006) << "(mIdOfLastViewedMessage != aMsg->msgId()) = "    << (mIdOfLastViewedMessage != aMsg->msgId()) << endl;
+kdDebug(5006) << "(aMsg == msg) = "                      << (aMsg == message()) << endl;
+kdDebug(5006) << "   mLastStatus.isOfUnknownStatus() = " << mLastStatus.isOfUnknownStatus() << endl;
+kdDebug(5006) << "|| mLastStatus.isNew() = "             << mLastStatus.isNew() << endl;
+kdDebug(5006) << "|| mLastStatus.isUnread) = "           << mLastStatus.isUnread() << endl;
+kdDebug(5006) << "(mIdOfLastViewedMessage != aMsg->msgId()) = "       << (mIdOfLastViewedMessage != aMsg->msgId()) << endl;
 kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
 kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
          // only proceed if we were called the normal way - not by
@@ -1578,9 +1578,9 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
   if(    (aMsg == message())
          // only proceed if this message was not saved encryptedly before
          // to make sure only *new* messages are saved in decrypted form
-      && (    (KMMsgStatusUnknown == mLastStatus)
-           || (KMMsgStatusNew     == mLastStatus)
-           || (KMMsgStatusUnread  == mLastStatus) )
+      && (    mLastStatus.isOfUnknownStatus()
+           || mLastStatus.isNew()
+           || mLastStatus.isUnread() )
          // avoid endless recursions
       && (mIdOfLastViewedMessage != aMsg->msgId())
          // only proceed if this message is (at least partially) encrypted

@@ -125,7 +125,7 @@ bool KMMsgBase::isMessage(void) const
 void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = true;
-  KMMsgStatus oldStatus = status();
+  MessageStatus oldStatus = mStatus;
   switch (aStatus) {
     case KMMsgStatusRead:
       if ( !mStatus.isRead() )
@@ -209,7 +209,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
   if (storage()) {
      if (idx < 0)
        idx = storage()->find( this );
-     storage()->msgStatusChanged( oldStatus, status(), idx );
+     storage()->msgStatusChanged( oldStatus, mStatus, idx );
      storage()->headerOfMsgChanged(this, idx);
   }
 
@@ -219,7 +219,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = TRUE;
-  KMMsgStatus oldStatus = status();
+  MessageStatus oldStatus = mStatus;
   switch (aStatus) {
     case KMMsgStatusRead:
       mStatus.setRead();
@@ -292,14 +292,14 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       break;
 
     default:
-      mStatus.setStatus( aStatus );
+      mStatus.fromQInt32( aStatus );
       break;
   }
 
-  if ( oldStatus != mStatus.getStatus() && storage() ) {
+  if ( oldStatus != mStatus && storage() ) {
     if (idx < 0)
       idx = storage()->find( this );
-    storage()->msgStatusChanged( oldStatus, status(), idx );
+    storage()->msgStatusChanged( oldStatus, mStatus, idx );
     storage()->headerOfMsgChanged( this, idx );
   }
 }

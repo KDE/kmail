@@ -55,9 +55,9 @@ public:
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
-  virtual void msgStatusChanged( const KMMsgStatus oldStatus,
-                                 const KMMsgStatus newStatus,
-				 int idx);
+  virtual void msgStatusChanged( const MessageStatus& oldStatus,
+                                 const MessageStatus& newStatus,
+                                 int idx);
 
   /** Open folder for access.
     Does nothing if the folder is already opened. To reopen a folder
@@ -84,7 +84,7 @@ public:
   static int createMaildirFolders( const QString & folderPath );
 
   static QString constructValidFileName( const QString & filename = QString(),
-                                         KMMsgStatus status = KMMsgStatusNew );
+                                         const MessageStatus & status = MessageStatus::statusNew() );
 
   static bool removeFile( const QString & folderPath,
                           const QString & filename );
@@ -139,10 +139,13 @@ protected:
   int addMsgInternal( KMMessage* msg, int* index_return = 0, bool stripUid=false );
 
 private:
-  void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
-  QString moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo* mi);
-  QString moveInternal(const QString& oldLoc, const QString& newLoc, QString& aFileName, KMMsgStatus status);
-  bool removeFile(const QString& filename);
+  void readFileHeaderIntern( const QString& dir, const QString& file, 
+                             MessageStatus& status);
+  QString moveInternal( const QString& oldLoc, const QString& newLoc, 
+                        KMMsgInfo* mi);
+  QString moveInternal( const QString& oldLoc, const QString& newLoc, 
+                        QString& aFileName, const MessageStatus& status );
+  bool removeFile( const QString& filename );
 
   /** Tests whether the contents of this folder is newer than the index.
       Returns IndexTooOld if the index is older than the contents.

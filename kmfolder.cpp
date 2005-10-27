@@ -456,8 +456,8 @@ int KMFolder::countUnreadRecursive()
   return count;
 }
 
-void KMFolder::msgStatusChanged( const KMMsgStatus oldStatus,
-                                 const KMMsgStatus newStatus, int idx )
+void KMFolder::msgStatusChanged( const MessageStatus& oldStatus,
+                                 const MessageStatus& newStatus, int idx )
 {
   mStorage->msgStatusChanged( oldStatus, newStatus, idx );
 }
