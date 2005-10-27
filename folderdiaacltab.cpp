@@ -328,7 +328,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   topLayout->addWidget( mStack );
 
   mLabel = new QLabel( mStack );
-  mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter | Qt::WordBreak );
+  mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap );
   mStack->addWidget( mLabel );
 
   mACLWidget = new Q3HBox( mStack );

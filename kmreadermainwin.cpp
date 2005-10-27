@@ -294,9 +294,9 @@ void KMReaderMainWin::setupAccel()
                      mReaderWin, SLOT(slotScrollUp()));
   accel->connectItem(accel->insertItem(Qt::Key_Down),
                      mReaderWin, SLOT(slotScrollDown()));
-  accel->connectItem(accel->insertItem(Qt::Key_Prior),
+  accel->connectItem(accel->insertItem(Qt::Key_PageUp),
                      mReaderWin, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Qt::Key_Next),
+  accel->connectItem(accel->insertItem(Qt::Key_PageDown),
                      mReaderWin, SLOT(slotScrollNext()));
   accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
                      mReaderWin, SLOT(slotCopySelectedText()));

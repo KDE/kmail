@@ -120,7 +120,7 @@ static inline int encryptKeyNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-encr-key-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 static inline int signingKeyNearExpiryWarningThresholdInDays() {
@@ -128,7 +128,7 @@ static inline int signingKeyNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 static inline int encryptRootCertNearExpiryWarningThresholdInDays() {
@@ -136,7 +136,7 @@ static inline int encryptRootCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-encr-root-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 static inline int signingRootCertNearExpiryWarningThresholdInDays() {
@@ -144,7 +144,7 @@ static inline int signingRootCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-sign-root-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 static inline int encryptChainCertNearExpiryWarningThresholdInDays() {
@@ -152,7 +152,7 @@ static inline int encryptChainCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 static inline int signingChainCertNearExpiryWarningThresholdInDays() {
@@ -160,7 +160,7 @@ static inline int signingChainCertNearExpiryWarningThresholdInDays() {
   if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
     return -1;
   const int num = composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
-  return kMax( 1, num );
+  return qMax( 1, num );
 }
 
 /*

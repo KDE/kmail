@@ -27,6 +27,7 @@
 #include <q3valuelist.h>
 //Added by qt3to4:
 #include <Q3CString>
+#include <krandom.h>
 
 using namespace KMail;
 
@@ -376,7 +377,7 @@ uint AccountManager::createId()
   int newId;
   do
   {
-    newId = kapp->random();
+    newId = KRandom::random();
   } while ( usedIds.find(newId) != usedIds.end() );
 
   return newId;

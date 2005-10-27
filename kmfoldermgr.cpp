@@ -25,6 +25,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kapplication.h>
+#include <krandom.h>
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
@@ -517,7 +518,7 @@ uint KMFolderMgr::createId()
   int newId;
   do
   {
-    newId = kapp->random();
+    newId = KRandom::random();
   } while ( findById( newId ) != 0 );
 
   return newId;

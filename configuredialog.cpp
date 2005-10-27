@@ -2918,7 +2918,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   // row 0: help text:
   label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
                            "(entries are case-insensitive regular expressions):"), group );
-  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::TextWordWrap );
 
   // row 1, string list editor:
   SimpleStringListEditor::ButtonCode buttonCode =
@@ -2947,7 +2947,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   // row 0: help text:
   label= new QLabel( i18n("Recognize any sequence of the following prefixes\n"
                           "(entries are case-insensitive regular expressions):"), group );
-  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::TextWordWrap );
 
   // row 1: string list editor
   mForwardListEditor =
@@ -2997,7 +2997,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
   label = new QLabel( i18n("This list is checked for every outgoing message "
                            "from the top to the bottom for a charset that "
                            "contains all required characters."), this );
-  label->setAlignment( Qt::WordBreak);
+  label->setAlignment( Qt::TextWordWrap);
   vlay->addWidget( label );
 
   mCharsetListEditor =
@@ -3329,7 +3329,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
   // "Attachment key words" label and string list editor
   label = new QLabel( i18n("Recognize any of the following key words as "
                            "intention to attach a file:"), this );
-  label->setAlignment( Qt::AlignLeft|Qt::WordBreak );
+  label->setAlignment( Qt::AlignLeft|Qt::TextWordWrap );
   vlay->addWidget( label );
 
   SimpleStringListEditor::ButtonCode buttonCode =

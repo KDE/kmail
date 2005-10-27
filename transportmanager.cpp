@@ -24,6 +24,7 @@
 #include <kconfig.h>
 //Added by qt3to4:
 #include <Q3ValueList>
+#include <krandom.h>
 
 namespace KMail {
 
@@ -61,7 +62,7 @@ namespace KMail {
     int newId;
     do
     {
-      newId = kapp->random();
+      newId = KRandom::random();
     } while ( usedIds.find(newId) != usedIds.end() );
 
     return newId;
