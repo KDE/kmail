@@ -78,12 +78,6 @@ public:
   using KMMsgBase::setParent;
   using KMMsgBase::enableUndo; // KMFolder
   using KMMsgBase::setEnableUndo; // dto.
-  using KMMsgBase::isRead; // dto.
-  using KMMsgBase::isUnread; // dto.
-  using KMMsgBase::isNew; // dto.
-  using KMMsgBase::isOld;
-  using KMMsgBase::isWatched;
-  using KMMsgBase::isIgnored;
   using KMMsgBase::setEncryptionStateChar; // KMAcct*
   using KMMsgBase::setSignatureStateChar; // dto.
 
@@ -153,13 +147,13 @@ public:
   }
 
   /** Mark the message as deleted */
-  void del() { setStatus(KMMsgStatusDeleted); }
+  void del() { setStatus( MessageStatus::statusDeleted() ); }
 
   /** Undelete the message. Same as touch */
-  void undel() { setStatus(KMMsgStatusOld); }
+  void undel() { setStatus( MessageStatus::statusOld() ); }
 
   /** Touch the message - mark it as read */
-  void touch() { setStatus(KMMsgStatusOld); }
+  void touch() { setStatus( MessageStatus::statusOld() ); }
 
   /** Create a new message that is a reply to this message, filling all
       required header fields with the proper values. The returned message
@@ -763,9 +757,9 @@ public:
   void setUID(ulong uid);
 
   /** Status of the message. */
-  KMMsgStatus status() const { return mStatus.toQInt32(); }
+  MessageStatus& status() { return mStatus; }
   /** Set status and mark dirty. */
-  void setStatus(const KMMsgStatus status, int idx = -1);
+  void setStatus(const MessageStatus& status, int idx = -1);
   void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
   /** Set encryption status of the message. */
@@ -785,10 +779,10 @@ public:
   KMMsgMDNSentState mdnSentState() const { return mMDNSentState; }
 
   /** Links this message to @p aMsg, setting link type to @p aStatus. */
-  void link(const KMMessage *aMsg, KMMsgStatus aStatus);
+  void link(const KMMessage *aMsg, const MessageStatus& aStatus);
   /** Returns the information for the Nth link into @p retMsg
    * and @p retStatus. */
-  void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
+  void getLink(int n, ulong *retMsgSerNum, MessageStatus& retStatus) const;
 
   /** Convert wildcards into normal string */
   QString formatString(const QString&) const;

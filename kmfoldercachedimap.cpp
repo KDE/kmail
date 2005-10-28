@@ -1181,7 +1181,7 @@ void KMFolderCachedImap::uploadFlags()
         // Either not a valid message or not one that is on the server yet
         continue;
 
-      QString flags = KMFolderImap::statusToFlags(msg->status());
+      QString flags = KMFolderImap::statusToFlags( msg->status() );
       // Collect uids for each typem of flags.
       QString uid;
       uid.setNum( msg->UID() );
@@ -1225,13 +1225,13 @@ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&,
 }
 
 // This is not perfect, what if the status didn't really change? Oh well ...
-void KMFolderCachedImap::setStatus( int idx, KMMsgStatus status, bool toggle)
+void KMFolderCachedImap::setStatus( int idx, const MessageStatus& status, bool toggle)
 {
   KMFolderMaildir::setStatus( idx, status, toggle );
   mStatusChangedLocally = true;
 }
 
-void KMFolderCachedImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle)
+void KMFolderCachedImap::setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle)
 {
   KMFolderMaildir::setStatus(ids, status, toggle);
   mStatusChangedLocally = true;

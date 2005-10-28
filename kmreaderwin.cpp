@@ -1195,7 +1195,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (aMsg) {
     aMsg->setOverrideCodec( overrideCodec() );
     aMsg->setDecodeHTML( htmlMail() );
-    mLastStatus = aMsg->messageStatus();
+    mLastStatus = aMsg->status();
     // FIXME: workaround to disable DND for IMAP load-on-demand
     if ( !aMsg->isComplete() )
       mViewer->setDNDEnabled( false );
@@ -1221,7 +1221,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
+  if ( aMsg && (aMsg->status().isUnread() || aMsg->status().isNew())
+       && GlobalSettings::self()->delayedMarkAsRead() ) {
     if ( GlobalSettings::self()->delayedMarkTime() != 0 )
       mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
     else
@@ -1762,12 +1763,12 @@ void KMReaderWin::slotTouchMessage()
   if ( !message() )
     return;
 
-  if ( !message()->isNew() && !message()->isUnread() )
+  if ( !message()->status().isNew() && !message()->status().isUnread() )
     return;
 
   SerNumList serNums;
   serNums.append( message()->getMsgSerNum() );
-  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
   if ( mNoMDNsWhenEncrypted &&
        message()->encryptionState() != KMMsgNotEncrypted &&

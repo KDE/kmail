@@ -661,7 +661,7 @@ int KMFolderMbox::createIndexFromContents()
           mi->init( subjStr.stripWhiteSpace(),
                     fromStr.stripWhiteSpace(),
                     toStr.stripWhiteSpace(),
-                    0, KMMsgStatusNew,
+                    0, MessageStatus::statusNew(),
                     xmarkStr.stripWhiteSpace(),
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
@@ -1067,7 +1067,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   }
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
-  if (aMsg->isUnread() || aMsg->isNew() ||
+  if (aMsg->status().isUnread() || aMsg->status().isNew() ||
       (folder() == kmkernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;

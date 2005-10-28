@@ -166,7 +166,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->strippedSubjectMD5 = msg.strippedSubjectMD5();
     kd->msgIdMD5 = msg.msgIdMD5();
     kd->xmark = msg.xmark();
-    mStatus = msg.getMessageStatus();
+    mStatus = msg.messageStatus();
     kd->folderOffset = msg.folderOffset();
     kd->msgSize = msg.msgSize();
     kd->date = msg.date();
@@ -182,7 +182,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
                      const Q3CString& aTo, time_t aDate,
-                     KMMsgStatus aStatus, const Q3CString& aXMark,
+                     const MessageStatus& aStatus, const Q3CString& aXMark,
                      const Q3CString& replyToId, const Q3CString& replyToAuxId,
                      const Q3CString& msgId,
                      KMMsgEncryptionState encryptionState,
@@ -205,7 +205,7 @@ void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
     kd->msgIdMD5 = base64EncodedMD5( msgId );
     kd->xmark = aXMark;
     kd->folderOffset = aFolderOffset;
-    mStatus.fromQInt32( aStatus );
+    mStatus = aStatus;
     kd->msgSize = aMsgSize;
     kd->date = aDate;
     kd->file = "";
@@ -219,7 +219,7 @@ void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
 
 void KMMsgInfo::init(const Q3CString& aSubject, const Q3CString& aFrom,
                      const Q3CString& aTo, time_t aDate,
-                     KMMsgStatus aStatus, const Q3CString& aXMark,
+                     const MessageStatus& aStatus, const Q3CString& aXMark,
                      const Q3CString& replyToId, const Q3CString& replyToAuxId,
                      const Q3CString& msgId,
                      const Q3CString& aFileName,
@@ -447,7 +447,7 @@ void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 }
 
 //-----------------------------------------------------------------------------
-KMMsgStatus KMMsgInfo::status(void) const
+const MessageStatus& KMMsgInfo::status(void) const
 {
     if ( mStatus.isOfUnknownStatus() ) {
         KMMsgStatus st = (KMMsgStatus)getLongPart(MsgStatusPart);
@@ -497,7 +497,7 @@ KMMsgStatus KMMsgInfo::status(void) const
         }
         mStatus.fromQInt32( st );
     }
-    return mStatus.toQInt32();
+    return mStatus;
 }
 
 
@@ -636,11 +636,11 @@ void KMMsgInfo::setFileName(const QString& file)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
+void KMMsgInfo::setStatus(const MessageStatus& aStatus, int idx)
 {
-    if(aStatus == status())
+    if( aStatus == mStatus )
         return;
-    KMMsgBase::setStatus(aStatus, idx); //base does more "stuff"
+    KMMsgBase::setStatus( aStatus, idx ); //base does more "stuff"
 }
 
 //-----------------------------------------------------------------------------

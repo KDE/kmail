@@ -11,8 +11,9 @@
 #include <Q3PopupMenu>
 #include <Q3CString>
 #include <kio/job.h>
-#include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
+#include <messagestatus.h>
+using KPIM::MessageStatus;
 #include <kdepimmacros.h>
 #include <kservice.h>
 
@@ -534,13 +535,13 @@ class KDE_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( KMMsgStatus status, const Q3ValueList<quint32> &,
+  KMSetStatusCommand( const MessageStatus& status, const Q3ValueList<quint32> &,
                       bool toggle=false );
 
 private:
   virtual Result execute();
 
-  KMMsgStatus mStatus;
+  MessageStatus mStatus;
   Q3ValueList<quint32> mSerNums;
   Q3ValueList<int> mIds;
   bool mToggle;

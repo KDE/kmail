@@ -10,7 +10,8 @@
 #include <q3ptrlist.h>
 #include <qstring.h>
 #include <q3cstring.h>
-#include "kmmsgbase.h" // for KMMsgStatus
+#include <messagestatus.h>
+using KPIM::MessageStatus;
 
 class KMMessage;
 class KConfig;
@@ -276,9 +277,9 @@ public:
   virtual bool matches( const DwString &, KMMessage &,
                         const DwBoyerMoore *,
 			int ) const;
-  static KMMsgStatus statusFromEnglishName(const QString&);
+  static MessageStatus statusFromEnglishName(const QString&);
   private:
-  KMMsgStatus mStatus;
+  MessageStatus mStatus;
 };
 
 // ------------------------------------------------------------------------

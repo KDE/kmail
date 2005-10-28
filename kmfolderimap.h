@@ -59,19 +59,21 @@ using KMail::ImapJob;
 using KMail::AttachmentStrategy;
 using KMail::ImapAccountBase;
 using KPIM::ProgressItem;
+using KPIM::MessageStatus;
 
 class KMMsgMetaData
 {
 public:
-  KMMsgMetaData(KMMsgStatus aStatus)
+  KMMsgMetaData( const MessageStatus& aStatus)
     :mStatus(aStatus), mSerNum(0) {}
-  KMMsgMetaData(KMMsgStatus aStatus, quint32 aSerNum)
+  KMMsgMetaData(const MessageStatus& aStatus, quint32 aSerNum)
     :mStatus(aStatus), mSerNum(aSerNum) {}
   ~KMMsgMetaData() {};
-  const KMMsgStatus status() const { return mStatus; }
+  const MessageStatus& status() const { return mStatus; }
+  const MessageStatus& messageStatus() const { return mStatus; }
   const quint32 serNum() const { return mSerNum; }
 private:
-  KMMsgStatus mStatus;
+  MessageStatus mStatus;
   quint32 mSerNum;
 };
 
@@ -185,12 +187,12 @@ public:
    * Change the status of the message indicated by @p index
    * Overloaded function for the following one
    */
-  virtual void setStatus(int idx, KMMsgStatus status, bool toggle);
+  virtual void setStatus(int idx, const MessageStatus& status, bool toggle);
 
   /**
    * Change the status of several messages indicated by @p ids
    */
-  virtual void setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle);
+  virtual void setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle);
 
   /** generates sets of uids */
   static QStringList makeSets( QList<ulong>&, bool sort = true);
@@ -242,7 +244,7 @@ public:
   /**
    * Convert message status to a list of IMAP flags
    */
-  static QString statusToFlags(KMMsgStatus status);
+  static QString statusToFlags( const MessageStatus& status );
 
   /**
    * Return the filename of the folder (reimplemented from KFolder)

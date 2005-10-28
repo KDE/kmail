@@ -41,7 +41,7 @@ public:
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const Q3CString& subject, const Q3CString& from,
                     const Q3CString& to, time_t date,
-		    KMMsgStatus status, const Q3CString& xmark,
+                    const MessageStatus& status, const Q3CString& xmark,
                     const Q3CString& replyToId,
                     const Q3CString& replyToAuxId,
                     const Q3CString& msgId,
@@ -54,7 +54,7 @@ public:
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const Q3CString& subject, const Q3CString& from,
                     const Q3CString& to, time_t date,
-		    KMMsgStatus status, const Q3CString& xmark,
+                    const MessageStatus& status, const Q3CString& xmark,
                     const Q3CString& replyToId,
                     const Q3CString& replyToAuxId,
                     const Q3CString& msgId,
@@ -76,7 +76,7 @@ public:
   virtual bool subjectIsPrefixed() const;
   virtual QString msgIdMD5(void) const;
   virtual QString fileName(void) const;
-  virtual KMMsgStatus status(void) const;
+  virtual const MessageStatus& status() const;
   virtual KMMsgEncryptionState encryptionState() const;
   virtual KMMsgSignatureState signatureState() const;
   virtual KMMsgMDNSentState mdnSentState() const;
@@ -89,7 +89,7 @@ public:
   void setMsgSizeServer(size_t sz);
   void setFolderOffset(off_t offs);
   void setFileName(const QString& file);
-  virtual void setStatus(const KMMsgStatus status, int idx = -1);
+  virtual void setStatus(const MessageStatus& status, int idx = -1);
   virtual void setDate(time_t aUnixTime);
   virtual void setSubject(const QString&);
   virtual void setXMark(const QString&);

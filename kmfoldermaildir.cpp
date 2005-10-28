@@ -311,7 +311,7 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
 
     // construct a valid filename.  if it's already valid, then
     // nothing happens
-    filename = constructValidFileName( filename, mi->getMessageStatus() );
+    filename = constructValidFileName( filename, mi->messageStatus() );
 
     // if the name changed, then we need to update the actual filename
     if (filename != mi->fileName())
@@ -420,7 +420,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
 
   // make sure the filename has the correct extension
-  QString filename = constructValidFileName( aMsg->fileName(), aMsg->getMessageStatus() );
+  QString filename = constructValidFileName( aMsg->fileName(), aMsg->messageStatus() );
 
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
@@ -441,7 +441,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // now move the file to the correct location
   QString new_loc(location() + "/cur/");
   new_loc += filename;
-  if (moveInternal(tmp_file, new_loc, filename, aMsg->getMessageStatus()).isNull())
+  if (moveInternal(tmp_file, new_loc, filename, aMsg->messageStatus()).isNull())
   {
     file.remove();
     if (opened) close();
@@ -457,7 +457,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if (aMsg->isUnread() || aMsg->isNew() || folder() == kmkernel->outboxFolder())
+  if ( aMsg->status().isUnread() || aMsg->status().isNew() ||
+       folder() == kmkernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
       mUnreadMsgs = 1;
@@ -728,8 +729,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
       mi->init( subjStr.stripWhiteSpace(),
                 fromStr.stripWhiteSpace(),
                 toStr.stripWhiteSpace(),
-                // FIXME avoid the internal representation
-                0, status.toQInt32(),
+                0, status,
                 xmarkStr.stripWhiteSpace(),
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
 				file.local8Bit(),
@@ -1066,7 +1066,7 @@ QString KMFolderMaildir::constructValidFileName( const QString & filename,
 QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo *mi)
 {
   QString filename(mi->fileName());
-  QString ret(moveInternal(oldLoc, newLoc, filename, mi->getMessageStatus()));
+  QString ret(moveInternal(oldLoc, newLoc, filename, mi->messageStatus()));
 
   if (filename != mi->fileName())
     mi->setFileName(filename);

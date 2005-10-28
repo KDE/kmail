@@ -162,9 +162,9 @@ void FolderStorage::markNewAsUnread()
   for (i=0; i< count(); ++i)
   {
     if (!(msgBase = getMsgBase(i))) continue;
-    if (msgBase->isNew())
+    if (msgBase->status().isNew())
     {
-      msgBase->setStatus(KMMsgStatusUnread);
+      msgBase->setStatus( MessageStatus::statusUnread() );
       msgBase->setDirty(true);
     }
   }
@@ -179,7 +179,7 @@ void FolderStorage::markUnreadAsRead()
   {
     msgBase = getMsgBase(i);
     assert(msgBase);
-    if (msgBase->isNew() || msgBase->isUnread())
+    if (msgBase->status().isNew() || msgBase->status().isUnread())
     {
       serNums.append( msgBase->getMsgSerNum() );
     }
@@ -187,7 +187,7 @@ void FolderStorage::markUnreadAsRead()
   if (serNums.empty())
     return;
 
-  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
 }
 
@@ -386,7 +386,7 @@ void FolderStorage::removeMsg(int idx, bool)
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
 
-  if (mb->isUnread() || mb->isNew() ||
+  if (mb->status().isUnread() || mb->status().isNew() ||
       (folder() == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
     if ( !mQuiet ) {
@@ -424,7 +424,7 @@ KMMessage* FolderStorage::take(int idx)
 
   msg = (KMMessage*)takeIndexEntry(idx);
 
-  if (msg->isUnread() || msg->isNew() ||
+  if (msg->status().isUnread() || msg->status().isNew() ||
       ( folder() == kmkernel->outboxFolder() )) {
     --mUnreadMsgs;
     if ( !mQuiet ) {
@@ -989,7 +989,7 @@ void FolderStorage::setRDict( KMMsgDictREntry *rentry ) const
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setStatus(int idx, KMMsgStatus status, bool toggle)
+void FolderStorage::setStatus(int idx, const MessageStatus& status, bool toggle)
 {
   KMMsgBase *msg = getMsgBase(idx);
   if ( msg ) {
@@ -1002,7 +1002,7 @@ void FolderStorage::setStatus(int idx, KMMsgStatus status, bool toggle)
 
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle)
+void FolderStorage::setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle)
 {
   for ( Q3ValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {

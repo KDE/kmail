@@ -121,7 +121,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
   // now overwrite a few from the msgInfo
   mMsgSize = msgInfo.msgSize();
   mFolderOffset = msgInfo.folderOffset();
-  mStatus = msgInfo.messageStatus();
+  mStatus = msgInfo.status();
   mEncryptionState = msgInfo.encryptionState();
   mSignatureState = msgInfo.signatureState();
   mMDNSentState = msgInfo.mdnSentState();
@@ -350,8 +350,8 @@ void KMMessage::setStatusFields()
 {
   char str[2] = { 0, 0 };
 
-  setHeaderField("Status", status() & KMMsgStatusNew ? "R" : "RO");
-  setHeaderField("X-Status", statusToStr(status()));
+  setHeaderField( "Status", mStatus.isNew() ? "R" : "RO" );
+  setHeaderField( "X-Status", mStatus.getStatusStr() );
 
   str[0] = (char)encryptionState();
   setHeaderField("X-KMail-EncryptionState", str);
@@ -1047,9 +1047,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
 
   msg->setSubject( replySubject() );
-
-  // setStatus(KMMsgStatusReplied);
-  msg->link(this, KMMsgStatusReplied);
+  msg->link( this, MessageStatus::statusReplied() );
 
   if ( parent() && parent()->putRepliesInSameFolder() )
     msg->setFcc( parent()->idString() );
@@ -1139,7 +1137,7 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   msg->setHeaderField( "X-KMail-Redirect-From", strByWayOf );
   msg->setHeaderField( "X-KMail-Recipients", toStr, Address );
 
-  msg->link(this, KMMsgStatusForwarded);
+  msg->link( this, MessageStatus::statusForwarded() );
 
   return msg;
 }
@@ -1245,7 +1243,7 @@ KMMessage* KMMessage::createForward()
   msg->setCharset(encoding);
 
   msg->setSubject( forwardSubject() );
-  msg->link(this, KMMsgStatusForwarded);
+  msg->link( this, MessageStatus::statusForwarded() );
   return msg;
 }
 
@@ -3870,11 +3868,11 @@ void KMMessage::setCharset(const Q3CString& bStr)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
+void KMMessage::setStatus(const MessageStatus& aStatus, int idx)
 {
-  if (mStatus.toQInt32() == aStatus)
+  if ( mStatus == aStatus )
     return;
-  KMMsgBase::setStatus(aStatus, idx);
+  KMMsgBase::setStatus( aStatus, idx );
 }
 
 void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)
@@ -3906,11 +3904,9 @@ void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
+void KMMessage::link( const KMMessage *aMsg, const MessageStatus& aStatus )
 {
-  Q_ASSERT( aStatus == KMMsgStatusReplied
-      || aStatus == KMMsgStatusForwarded
-      || aStatus == KMMsgStatusDeleted );
+  Q_ASSERT( aStatus.isReplied() || aStatus.isForwarded() || aStatus.isDeleted() );
 
   QString message = headerField( "X-KMail-Link-Message" );
   if ( !message.isEmpty() )
@@ -3920,11 +3916,11 @@ void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
     type += ',';
 
   message += QString::number( aMsg->getMsgSerNum() );
-  if ( aStatus == KMMsgStatusReplied )
+  if ( aStatus.isReplied() )
     type += "reply";
-  else if ( aStatus == KMMsgStatusForwarded )
+  else if ( aStatus.isForwarded() )
     type += "forward";
-  else if ( aStatus == KMMsgStatusDeleted )
+  else if ( aStatus.isDeleted() )
     type += "deleted";
 
   setHeaderField( "X-KMail-Link-Message", message );
@@ -3932,10 +3928,10 @@ void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const
+void KMMessage::getLink(int n, ulong *retMsgSerNum, MessageStatus& retStatus) const
 {
   *retMsgSerNum = 0;
-  *retStatus = KMMsgStatusUnknown;
+  retStatus.clear();
 
   QString message = headerField("X-KMail-Link-Message");
   QString type = headerField("X-KMail-Link-Type");
@@ -3945,11 +3941,11 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
   if ( !message.isEmpty() && !type.isEmpty() ) {
     *retMsgSerNum = message.toULong();
     if ( type == "reply" )
-      *retStatus = KMMsgStatusReplied;
+      retStatus.setReplied();
     else if ( type == "forward" )
-      *retStatus = KMMsgStatusForwarded;
+      retStatus.setForwarded();
     else if ( type == "deleted" )
-      *retStatus = KMMsgStatusDeleted;
+      retStatus.setDeleted();
   }
 }
 
@@ -4067,10 +4063,10 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( !part )
     part = getFirstDwBodyPart();
 
-  if ( !part )
+  if ( !part && mStatus.hasAttachment() )
   {
     // kdDebug(5006) << "updateAttachmentState - no part!" << endl;
-    setStatus( KMMsgStatusHasNoAttach );
+    toggleStatus( MessageStatus::statusHasAttachment() );
     return;
   }
 
@@ -4086,7 +4082,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
            part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
            part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) )
     {
-      setStatus( KMMsgStatusHasAttach );
+      setStatus( MessageStatus::statusHasAttachment() );
     }
     return;
   }
@@ -4110,8 +4106,9 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   // next part
   if ( part->Next() )
     updateAttachmentState( part->Next() );
-  else if ( attachmentState() == KMMsgAttachmentUnknown )
-    setStatus( KMMsgStatusHasNoAttach );
+  else if ( attachmentState() == KMMsgAttachmentUnknown
+            && mStatus.hasAttachment() )
+    toggleStatus( MessageStatus::statusHasAttachment() );
 }
 
 void KMMessage::setBodyFromUnicode( const QString & str ) {

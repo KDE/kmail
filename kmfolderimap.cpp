@@ -318,7 +318,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     // Remember the status with the MD5 as key
     // so it can be transfered to the new message
     mMetaDataMap.insert( aMsg->msgIdMD5(),
-        new KMMsgMetaData(aMsg->status(), serNum) );
+        new KMMsgMetaData( aMsg->status(), serNum ) );
   }
 
   delete aMsg;
@@ -347,7 +347,7 @@ void KMFolderImap::addMsgQuiet(Q3PtrList<KMMessage> msgList)
       // Remember the status with the MD5 as key
       // so it can be transfered to the new message
       mMetaDataMap.insert( msg->msgIdMD5(),
-          new KMMsgMetaData(msg->status(), msg->getMsgSerNum()) );
+          new KMMsgMetaData( msg->status(), msg->getMsgSerNum() ) );
     }
     msg->setTransferInProgress( false );
   }
@@ -499,7 +499,7 @@ void KMFolderImap::copyMsg(Q3PtrList<KMMessage>& msgList)
     for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
       // Remember the status with the MD5 as key
       // so it can be transfered to the new message
-      mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData(msg->status()) );
+      mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData( msg->status() ) );
     }
   }
 
@@ -1347,37 +1347,40 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 //-----------------------------------------------------------------------------
 void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
+  MessageStatus status;
+
   if (flags & 4)
-    msg->setStatus( KMMsgStatusFlag );
+    status.setImportant();
   if (flags & 2)
-    msg->setStatus( KMMsgStatusReplied );
+    status.setReplied();
   if (flags & 1)
-    msg->setStatus( KMMsgStatusOld );
+    status.setOld();
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
   // number of messages which actually show up as read can go out of sync.
-  if (msg->isOfUnknownStatus() || !(flags&1) ) {
+  if (msg->status().isOfUnknownStatus() || !(flags&1) ) {
     if (newMsg)
-      msg->setStatus( KMMsgStatusNew );
+      status.setNew();
     else
-      msg->setStatus( KMMsgStatusUnread );
+      status.setUnread();
   }
+  msg->setStatus( status );
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMFolderImap::statusToFlags(KMMsgStatus status)
+QString KMFolderImap::statusToFlags( const MessageStatus& status )
 {
   QString flags;
-  if (status & KMMsgStatusDeleted)
+  if ( status.isDeleted() )
     flags = "\\DELETED";
   else {
-    if (status & KMMsgStatusOld || status & KMMsgStatusRead)
+    if ( status.isOld() || status.isRead() )
       flags = "\\SEEN ";
-    if (status & KMMsgStatusReplied)
+    if ( status.isReplied() )
       flags += "\\ANSWERED ";
-    if (status & KMMsgStatusFlag)
+    if ( status.isImportant() )
       flags += "\\FLAGGED";
   }
 
@@ -1472,14 +1475,14 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         }
         // Transfer the status, if it is cached.
         if ( md ) {
-          msg->setStatus( md->status() );
+          msg->setStatus( md->messageStatus() );
         } else if ( !mAccount->hasCapability("uidplus") ) {
           // see if we have cached the msgIdMD5 and get the status +
           // serial number from there
           QString id = msg->msgIdMD5();
           if ( mMetaDataMap.find( id ) ) {
             md =  mMetaDataMap[id];
-            msg->setStatus( md->status() );
+            msg->setStatus( md->messageStatus() );
             if ( md->serNum() != 0 && serNum == 0 ) {
               msg->setMsgSerNum( md->serNum() );
             }
@@ -1749,13 +1752,13 @@ void KMFolderImap::deleteMessage(const Q3PtrList<KMMessage>& msgList)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::setStatus(int idx, KMMsgStatus status, bool toggle)
+void KMFolderImap::setStatus(int idx, const MessageStatus& status, bool toggle)
 {
   Q3ValueList<int> ids; ids.append(idx);
   setStatus(ids, status, toggle);
 }
 
-void KMFolderImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle)
+void KMFolderImap::setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle)
 {
   FolderStorage::setStatus(ids, status, toggle);
   if (mReadOnly) return;
@@ -1776,7 +1779,7 @@ void KMFolderImap::setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool tog
     bool unget = !isMessage(*it);
     msg = getMsg(*it);
     if (!msg) continue;
-    QString flags = statusToFlags(msg->status());
+    QString flags = statusToFlags( msg->status() );
     // Collect uids for each type of flags.
     groups[flags].append(QString::number(msg->UID()));
     if (unget) unGetMsg(*it);
@@ -2233,7 +2236,7 @@ void KMFolderImap::saveMsgMetaData( KMMessage* msg, ulong uid )
     uid = msg->UID();
   }
   ulong serNum = msg->getMsgSerNum();
-  mUidMetaDataMap.replace( uid, new KMMsgMetaData(msg->status(), serNum) );
+  mUidMetaDataMap.replace( uid, new KMMsgMetaData( msg->status(), serNum ) );
 }
 
 //-----------------------------------------------------------------------------

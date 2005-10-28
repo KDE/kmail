@@ -142,7 +142,7 @@ bool HeaderListQuickSearch::itemMatches(const Q3ListViewItem *item, const QStrin
   if ( !mStatus.isOfUnknownStatus() ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
-    if ( !msg || ! ( msg->getMessageStatus() & mStatus ) )
+    if ( !msg || ! ( msg->messageStatus() & mStatus ) )
       return false;
   }
   return KListViewSearchLine::itemMatches(item, s);
@@ -161,9 +161,7 @@ void HeaderListQuickSearch::slotStatusChanged( int index )
   if ( index == 0 )
     mStatus.clear();
   else
-    // FIXME
-    mStatus.fromQInt32(mStatus.toQInt32() |
-        KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] ));
+    mStatus = KMSearchRuleStatus::statusFromEnglishName( statusList[index - 1] );
   updateSearch();
 }
 

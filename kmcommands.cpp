@@ -1188,7 +1188,7 @@ KMCommand::Result KMForwardCommand::execute()
         msgPartText += msg->body();
         msgPartText += "\n";     // eot
         msgCnt++;
-        fwdMsg->link(msg, KMMsgStatusForwarded);
+        fwdMsg->link( msg, MessageStatus::statusForwarded() );
       }
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
@@ -1231,7 +1231,7 @@ KMCommand::Result KMForwardCommand::execute()
       fwdMsg->setBody(msgText);
 
       for (KMMessage *msg = linklist.first(); msg; msg = linklist.next())
-        fwdMsg->link(msg, KMMsgStatusForwarded);
+        fwdMsg->link( msg, MessageStatus::statusForwarded() );
 
       KCursorSaver busy(KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
@@ -1317,7 +1317,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setBodyAndGuessCte(msg->asString(), dummy, true);
     msgPart->setCharset("");
 
-    fwdMsg->link(msg, KMMsgStatusForwarded);
+    fwdMsg->link( msg, MessageStatus::statusForwarded() );
     mWin->addAttach(msgPart);
   }
 
@@ -1382,7 +1382,7 @@ KMCommand::Result KMPrintCommand::execute()
 }
 
 
-KMSetStatusCommand::KMSetStatusCommand( KMMsgStatus status,
+KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   const Q3ValueList<quint32> &serNums, bool toggle )
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
@@ -1402,7 +1402,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     KMMsgDict::instance()->getLocation( *mSerNums.begin(), &folder, &idx );
     if (folder) {
       msg = folder->getMsgBase(idx);
-      if (msg && (msg->status()&mStatus))
+      if ( msg && ( msg->status() & mStatus ))
         parentStatus = true;
       else
         parentStatus = false;
@@ -1417,7 +1417,7 @@ KMCommand::Result KMSetStatusCommand::execute()
         // check if we are already at the target toggle state
         if (msg) {
           bool myStatus;
-          if (msg->status()&mStatus)
+          if ( msg->status() & mStatus)
             myStatus = true;
           else
             myStatus = false;
@@ -1734,7 +1734,7 @@ KMCommand::Result KMCopyCommand::execute()
       if (!newMsg->isComplete())
         newMsg->setReadyToShow(false);
       newMsg->fromString(msg->asString());
-      newMsg->setStatus(msg->status());
+      newMsg->setStatus( msg->messageStatus() );
 
       if (srcFolder && !newMsg->isComplete())
       {

@@ -286,7 +286,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       mFolder->addMsgInternal( mMsg, true, &index );
 
       if ( kmkernel->iCalIface().isResourceFolder( mFolder->folder() ) ) {
-        mFolder->setStatus( index, KMMsgStatusRead, false );
+        mFolder->setStatus( index, MessageStatus::statusRead(), false );
       }
 
       emit messageRetrieved( mMsg );

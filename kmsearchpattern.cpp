@@ -42,26 +42,26 @@ static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfi
 
 struct _statusNames {
   const char* name;
-  KMMsgStatus status;
+  MessageStatus status;
 };
 
 static struct _statusNames statusNames[] = {
-  { "Important", KMMsgStatusFlag },
-  { "New", KMMsgStatusNew },
-  { "Unread", KMMsgStatusUnread | KMMsgStatusNew },
-  { "Read", KMMsgStatusRead },
-  { "Old", KMMsgStatusOld },
-  { "Deleted", KMMsgStatusDeleted },
-  { "Replied", KMMsgStatusReplied },
-  { "Forwarded", KMMsgStatusForwarded },
-  { "Queued", KMMsgStatusQueued },
-  { "Sent", KMMsgStatusSent },
-  { "Watched", KMMsgStatusWatched },
-  { "Ignored", KMMsgStatusIgnored },
-  { "To Do", KMMsgStatusTodo },
-  { "Spam", KMMsgStatusSpam },
-  { "Ham", KMMsgStatusHam },
-  { "Has Attachment", KMMsgStatusHasAttach }
+  { "Important", MessageStatus::statusImportant() },
+  { "New", MessageStatus::statusNew() },
+  { "Unread", MessageStatus::statusNewAndUnread() },
+  { "Read", MessageStatus::statusRead() },
+  { "Old", MessageStatus::statusOld() },
+  { "Deleted", MessageStatus::statusDeleted() },
+  { "Replied", MessageStatus::statusReplied() },
+  { "Forwarded", MessageStatus::statusForwarded() },
+  { "Queued", MessageStatus::statusQueued() },
+  { "Sent", MessageStatus::statusSent() },
+  { "Watched", MessageStatus::statusWatched() },
+  { "Ignored", MessageStatus::statusIgnored() },
+  { "To Do", MessageStatus::statusTodo() },
+  { "Spam", MessageStatus::statusSpam() },
+  { "Ham", MessageStatus::statusHam() },
+  { "Has Attachment", MessageStatus::statusHasAttachment() }
 };
 
 static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );
@@ -624,7 +624,7 @@ KMSearchRuleStatus::KMSearchRuleStatus( const Q3CString & field,
   mStatus = statusFromEnglishName( aContents );
 }
 
-KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
+MessageStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
   for ( int i=0; i< numStatusNames; i++ ) {
@@ -632,7 +632,8 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       return statusNames[i].status;
     }
   }
-  return KMMsgStatusUnknown;
+  MessageStatus unknown;
+  return unknown;
 }
 
 bool KMSearchRuleStatus::isEmpty() const
@@ -650,18 +651,17 @@ bool KMSearchRuleStatus::matches( const DwString &, KMMessage &,
 bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 {
 
-  KMMsgStatus msgStatus = msg->status();
   bool rc = false;
 
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
-      if (msgStatus & mStatus)
+      if (msg->messageStatus() & mStatus)
         rc = true;
       break;
     case FuncNotEqual: // fallthrough. So that "<status> 'is not' 'read'" works
     case FuncContainsNot:
-      if (! (msgStatus & mStatus) )
+      if (! (msg->messageStatus() & mStatus) )
         rc = true;
       break;
     // FIXME what about the remaining funcs, how can they make sense for

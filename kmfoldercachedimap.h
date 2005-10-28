@@ -224,8 +224,8 @@ public:
   void setACLList( const ACLList& arr );
 
   // Reimplemented so the mStatusChangedLocally bool can be set
-  virtual void setStatus( int id, KMMsgStatus status, bool toggle );
-  virtual void setStatus( Q3ValueList<int>& ids, KMMsgStatus status, bool toggle );
+  virtual void setStatus( int id, const MessageStatus& status, bool toggle );
+  virtual void setStatus( Q3ValueList<int>& ids, const MessageStatus& status, bool toggle );
 
   QString annotationFolderType() const { return mAnnotationFolderType; }
 

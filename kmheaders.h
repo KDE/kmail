@@ -17,7 +17,8 @@ using KMail::HeaderItem;
 
 #include <klistview.h>
 #include <kfoldertree.h> // for KPaintInfo
-#include <kmmsgbase.h>   // for KMMsgStatus
+#include <messagestatus.h>
+using KPIM::MessageStatus;
 
 #include <qwidget.h>
 #include <q3strlist.h>
@@ -83,13 +84,13 @@ public:
 
   /** Set all messages in the current thread to status @p status
       or toggle it, if specified. */
-  virtual void setThreadStatus(KMMsgStatus status, bool toggle=false);
+  virtual void setThreadStatus( const MessageStatus& status, bool toggle=false );
 
   /* Set message status to read if it is new, or unread */
   virtual void setMsgRead(int msgId);
 
   /** The following methods processes all selected messages. */
-  virtual void setMsgStatus(KMMsgStatus status, bool toggle=false);
+  virtual void setMsgStatus( const MessageStatus& status, bool toggle=false);
   virtual void deleteMsg();
   virtual void applyFiltersOnMsg();
   virtual void undo();

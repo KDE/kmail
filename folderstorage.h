@@ -358,10 +358,10 @@ public:
   void deregisterFromMessageDict();
 
   /** Set the status of the message at index @p idx to @p status. */
-  virtual void setStatus(int idx, KMMsgStatus status, bool toggle=false);
+  virtual void setStatus(int idx, const MessageStatus& status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  virtual void setStatus(Q3ValueList<int>& ids, KMMsgStatus status, bool toggle=false);
+  virtual void setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle=false);
 
   void removeJobs();
   

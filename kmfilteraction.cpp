@@ -792,7 +792,9 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) cons
   int idx = mParameterList.findIndex( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
-  KMMsgStatus status = stati[idx-1] ;
+  KMMsgStatus _status = stati[idx-1] ;
+  MessageStatus status;
+  status.fromQInt32( _status );
   msg->setStatus( status );
   return GoOn;
 }
@@ -805,8 +807,11 @@ bool KMFilterActionSetStatus::requiresBody(KMMsgBase*) const
 void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 {
   if ( argsStr.length() == 1 ) {
-    for ( int i = 0 ; i < StatiCount ; i++ )
-      if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0].toLatin1() ) {
+    MessageStatus status;
+    int i;
+    for ( i = 0 ; i < StatiCount ; i++ )
+      status.fromQInt32(stati[i]);
+      if ( status.getStatusStr()[0] == argsStr[0].toLatin1() ) {
         mParameter = mParameterList.at(i+1);
         return;
       }
@@ -819,8 +824,10 @@ const QString KMFilterActionSetStatus::argsAsString() const
   int idx = mParameterList.findIndex( mParameter );
   if ( idx < 1 ) return QString::null;
 
-  KMMsgStatus status = stati[idx-1];
-  return KMMsgBase::statusToStr(status);
+  KMMsgStatus _status = stati[idx-1];
+  MessageStatus status;
+  status.fromQInt32( _status );
+  return status.getStatusStr();
 }
 
 const QString KMFilterActionSetStatus::displayString() const
@@ -1516,7 +1523,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
     }
   }
   msg->cleanupHeader();
-  msg->link( aMsg, KMMsgStatusForwarded );
+  msg->link( aMsg, MessageStatus::statusForwarded() );
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 

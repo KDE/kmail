@@ -125,11 +125,11 @@ void ExpireJob::slotDoWork()
     const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
     if (mb == 0)
       continue;
-    if ( mb->isImportant()
+    if ( mb->messageStatus().isImportant()
       && GlobalSettings::self()->excludeImportantMailFromExpiry() )
        continue;
 
-    time_t maxTime = mb->isUnread() ? mMaxUnreadTime : mMaxReadTime;
+    time_t maxTime = mb->messageStatus().isUnread() ? mMaxUnreadTime : mMaxReadTime;
 
     if (mb->date() < maxTime) {
       mRemovedMsgs.append( storage->getMsgBase( mCurrentIndex ) );

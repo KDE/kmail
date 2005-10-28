@@ -211,11 +211,11 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   // the user won't see which messages newly arrived.
   // This is only valid for pop accounts and produces wrong stati for imap.
   if ( type() != "cachedimap" && type() != "imap" ) {
-    if ( aMsg->isOld() )
-      aMsg->setStatus(KMMsgStatusUnread);  // -sanders
-    //    aMsg->setStatus(KMMsgStatusRead);
+    if ( aMsg->status().isOld() )
+      aMsg->setStatus( MessageStatus::statusUnread() );  // -sanders
+    //    aMsg->setStatus( MessageStatus::statusRead() );
     else
-      aMsg->setStatus(KMMsgStatusNew);
+      aMsg->setStatus( MessageStatus::statusNew() );
   }
 /*
 QFile fileD0( "testdat_xx-kmaccount-0" );

@@ -265,7 +265,7 @@ bool KMFolderIndex::readIndex()
     if(!mi)
       break;
 
-    if (mi->isDeleted())
+    if (mi->status().isDeleted())
     {
       delete mi;  // skip messages that are marked as deleted
       setDirty( true );
@@ -279,7 +279,7 @@ bool KMFolderIndex::readIndex()
       mi->setDirty(FALSE);
     }
 #endif
-    if ((mi->isNew()) || (mi->isUnread()) ||
+    if ((mi->status().isNew()) || (mi->status().isUnread()) ||
         (folder() == kmkernel->outboxFolder()))
     {
       ++mUnreadMsgs;

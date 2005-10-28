@@ -102,8 +102,9 @@ void HeaderItem::irefresh()
 
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
   mSerNum = mMsgBase->getMsgSerNum();
-  if (mMsgBase->isNew() || mMsgBase->isUnread()
-      || mMsgBase->isImportant() || mMsgBase->isTodo() || mMsgBase->isWatched() ) {
+  MessageStatus status = mMsgBase->status();
+  if ( status.isNew() || status.isUnread() || status.isImportant()
+      || status.isTodo() || status.isWatched() ) {
     setOpen(true);
     HeaderItem * topOfThread = this;
     while(topOfThread->parent())
@@ -254,18 +255,19 @@ const QPixmap *HeaderItem::signatureIcon(KMMsgBase *msgBase) const
 const QPixmap *HeaderItem::statusIcon(KMMsgBase *msgBase) const
 {
   // forwarded, replied have precedence over the other states
-  if (  msgBase->isForwarded() && !msgBase->isReplied() ) return KMHeaders::pixReadFwd;
-  if ( !msgBase->isForwarded() &&  msgBase->isReplied() ) return KMHeaders::pixReadReplied;
-  if (  msgBase->isForwarded() &&  msgBase->isReplied() ) return KMHeaders::pixReadFwdReplied;
+  MessageStatus status = msgBase->status();
+  if (  status.isForwarded() && !status.isReplied() ) return KMHeaders::pixReadFwd;
+  if ( !status.isForwarded() &&  status.isReplied() ) return KMHeaders::pixReadReplied;
+  if (  status.isForwarded() &&  status.isReplied() ) return KMHeaders::pixReadFwdReplied;
 
   // a queued or sent mail is usually also read
-  if ( msgBase->isQueued() ) return KMHeaders::pixQueued;
-  if ( msgBase->isSent()   ) return KMHeaders::pixSent;
+  if ( status.isQueued() ) return KMHeaders::pixQueued;
+  if ( status.isSent()   ) return KMHeaders::pixSent;
 
-  if ( msgBase->isNew()                      ) return KMHeaders::pixNew;
-  if ( msgBase->isRead() || msgBase->isOld() ) return KMHeaders::pixRead;
-  if ( msgBase->isUnread()                   ) return KMHeaders::pixUns;
-  if ( msgBase->isDeleted()                  ) return KMHeaders::pixDel;
+  if ( status.isNew()                    ) return KMHeaders::pixNew;
+  if ( status.isRead() || status.isOld() ) return KMHeaders::pixRead;
+  if ( status.isUnread()                 ) return KMHeaders::pixUns;
+  if ( status.isDeleted()                ) return KMHeaders::pixDel;
 
   return 0;
 }
@@ -274,6 +276,7 @@ const QPixmap *HeaderItem::pixmap(int col) const
 {
   KMHeaders *headers = static_cast<KMHeaders*>(listView());
   KMMsgBase *msgBase = headers->folder()->getMsgBase( mMsgId );
+  MessageStatus status = msgBase->status();
 
   if ( col == headers->paintInfo()->subCol ) {
 
@@ -281,13 +284,13 @@ const QPixmap *HeaderItem::pixmap(int col) const
 
     if ( !headers->mPaintInfo.showSpamHam ) {
       // Have the spam/ham and watched/ignored icons first, I guess.
-      if ( msgBase->isSpam() ) pixmaps << *KMHeaders::pixSpam;
-      if ( msgBase->isHam()  ) pixmaps << *KMHeaders::pixHam;
+      if ( status.isSpam() ) pixmaps << *KMHeaders::pixSpam;
+      if ( status.isHam()  ) pixmaps << *KMHeaders::pixHam;
     }
 
     if ( !headers->mPaintInfo.showWatchedIgnored ) {
-      if ( msgBase->isIgnored() ) pixmaps << *KMHeaders::pixIgnored;
-      if ( msgBase->isWatched() ) pixmaps << *KMHeaders::pixWatched;
+      if ( status.isIgnored() ) pixmaps << *KMHeaders::pixIgnored;
+      if ( status.isWatched() ) pixmaps << *KMHeaders::pixWatched;
     }
 
     if ( !headers->mPaintInfo.showStatus ) {
@@ -313,10 +316,10 @@ const QPixmap *HeaderItem::pixmap(int col) const
     }
 
     if ( !headers->mPaintInfo.showImportant )
-      if ( msgBase->isImportant() ) pixmaps << *KMHeaders::pixFlag;
+      if ( status.isImportant() ) pixmaps << *KMHeaders::pixFlag;
 
     if ( !headers->mPaintInfo.showTodo )
-      if ( msgBase->isTodo() ) pixmaps << *KMHeaders::pixTodo;
+      if ( status.isTodo() ) pixmaps << *KMHeaders::pixTodo;
 
     static QPixmap mergedpix;
     mergedpix = pixmapMerge( pixmaps );
@@ -330,20 +333,20 @@ const QPixmap *HeaderItem::pixmap(int col) const
       return KMHeaders::pixAttachment;
   }
   else if ( col == headers->paintInfo()->importantCol ) {
-    if ( msgBase->isImportant() )
+    if ( status.isImportant() )
       return KMHeaders::pixFlag;
   }
   else if ( col == headers->paintInfo()->todoCol ) {
-    if ( msgBase->isTodo() )
+    if ( status.isTodo() )
       return KMHeaders::pixTodo;
   }
   else if ( col == headers->paintInfo()->spamHamCol ) {
-    if ( msgBase->isSpam() ) return KMHeaders::pixSpam;
-    if ( msgBase->isHam()  ) return KMHeaders::pixHam;
+    if ( status.isSpam() ) return KMHeaders::pixSpam;
+    if ( status.isHam()  ) return KMHeaders::pixHam;
   }
   else if ( col == headers->paintInfo()->watchedIgnoredCol ) {
-    if ( msgBase->isWatched() ) return KMHeaders::pixWatched;
-    if ( msgBase->isIgnored() ) return KMHeaders::pixIgnored;
+    if ( status.isWatched() ) return KMHeaders::pixWatched;
+    if ( status.isIgnored() ) return KMHeaders::pixIgnored;
   }
   else if ( col == headers->paintInfo()->signedCol ) {
     return signatureIcon(msgBase);
@@ -362,6 +365,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   if (!headers->folder()) return;
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
   if (!mMsgBase) return;
+  MessageStatus status = mMsgBase->status();
 
   QColorGroup _cg( cg );
   QColor c = _cg.text();
@@ -371,23 +375,23 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
 
   // for color and font family "important" overrides "new" overrides "unread"
   // overrides "todo" for the weight we use the maximal weight
-  if ( mMsgBase->isTodo() ) {
+  if ( status.isTodo() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colTodo );
     font = headers->todoFont();
     weight = qMax( weight, font.weight() );
   }
-  if ( mMsgBase->isUnread() ) {
+  if ( status.isUnread() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colUnread );
     font = headers->unreadFont();
     weight = qMax( weight, font.weight() );
   }
-  if ( mMsgBase->isNew() ) {
+  if ( status.isNew() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colNew );
     font = headers->newFont();
     weight = qMax( weight, font.weight() );
   }
 
-  if ( mMsgBase->isImportant() ) {
+  if ( status.isImportant() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colFlag );
     font = headers->importantFont();
     weight = qMax( weight, font.weight() );
@@ -421,6 +425,7 @@ QString HeaderItem::generate_key( KMHeaders *headers,
   // in QListView::clear(), which is called from
   // readSortOrder()
   if (!msg) return QString::null;
+  MessageStatus status = msg->status();
 
   int column = sortOrder & ((1 << 5) - 1);
   QString ret = QString( (char)sortOrder );
@@ -449,7 +454,7 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     QString tmp;
     tmp = ret;
     if (paintInfo->status) {
-      tmp += msg->statusToSortRank() + ' ';
+      tmp += msg->status().getSortRank() + ' ';
     }
     tmp += KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
     return tmp;
@@ -467,15 +472,15 @@ QString HeaderItem::generate_key( KMHeaders *headers,
   }
   else if (column == paintInfo->statusCol) {
     QString s;
-    if      ( msg->isNew()                            ) s = "1";
-    else if ( msg->isUnread()                         ) s = "2";
-    else if (!msg->isForwarded() &&  msg->isReplied() ) s = "3";
-    else if ( msg->isForwarded() &&  msg->isReplied() ) s = "4";
-    else if ( msg->isForwarded() && !msg->isReplied() ) s = "5";
-    else if ( msg->isRead() || msg->isOld()           ) s = "6";
-    else if ( msg->isQueued()                         ) s = "7";
-    else if ( msg->isSent()                           ) s = "8";
-    else if ( msg->isDeleted()                        ) s = "9";
+    if      ( status.isNew()                              ) s = "1";
+    else if ( status.isUnread()                           ) s = "2";
+    else if (!status.isForwarded() &&  status.isReplied() ) s = "3";
+    else if ( status.isForwarded() &&  status.isReplied() ) s = "4";
+    else if ( status.isForwarded() && !status.isReplied() ) s = "5";
+    else if ( status.isRead() || status.isOld()           ) s = "6";
+    else if ( status.isQueued()                           ) s = "7";
+    else if ( status.isSent()                             ) s = "8";
+    else if ( status.isDeleted()                          ) s = "9";
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->attachmentCol) {
@@ -483,19 +488,19 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->importantCol) {
-    QString s(msg->isImportant() ? "1" : "0");
+    QString s( status.isImportant() ? "1" : "0" );
     return ret + s + sortArrival;
   }
   else if ( column == paintInfo->todoCol ) {
-    QString s( msg->isTodo() ? "1": "0" );
+    QString s( status.isTodo() ? "1": "0" );
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->spamHamCol) {
-    QString s((msg->isSpam() || msg->isHam()) ? "1" : "0");
+    QString s(( status.isSpam() || status.isHam() ) ? "1" : "0" );
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->watchedIgnoredCol) {
-    QString s((msg->isWatched() || msg->isIgnored()) ? "1" : "0");
+    QString s(( status.isWatched() || status.isIgnored() ) ? "1" : "0" );
     return ret + s + sortArrival;
   }
   else if (column == paintInfo->signedCol) {

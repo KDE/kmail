@@ -778,12 +778,12 @@ int KMFolder::writeIndex( bool createEmptyIndex )
   return mStorage->writeIndex( createEmptyIndex );
 }
 
-void KMFolder::setStatus( int idx, KMMsgStatus status, bool toggle )
+void KMFolder::setStatus( int idx, const MessageStatus& status, bool toggle )
 {
   mStorage->setStatus( idx, status, toggle );
 }
 
-void KMFolder::setStatus( Q3ValueList<int>& ids, KMMsgStatus status,
+void KMFolder::setStatus( Q3ValueList<int>& ids, const MessageStatus& status,
                           bool toggle )
 {
   mStorage->setStatus( ids, status, toggle);

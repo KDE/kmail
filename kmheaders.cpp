@@ -790,7 +790,7 @@ void KMHeaders::msgChanged()
   Q3ListViewItem *unreadItem = 0;
   while(item && item != topOfList) {
     KMMsgBase *msg = mFolder->getMsgBase( static_cast<HeaderItem*>(item)->msgId() );
-    if ( msg->isUnread() || msg->isNew() ) {
+    if ( msg->status().isUnread() || msg->status().isNew() ) {
       if ( !unreadItem )
         unreadItem = item;
     } else
@@ -869,10 +869,10 @@ void KMHeaders::msgAdded(int id)
       }
     }
 
-    if (parent && mFolder->getMsgBase(parent->id())->isWatched())
-      mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
-    else if (parent && mFolder->getMsgBase(parent->id())->isIgnored())
-      mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
+    if (parent && mFolder->getMsgBase(parent->id())->status().isWatched())
+      mFolder->getMsgBase(id)->setStatus( MessageStatus::statusWatched() );
+    else if (parent && mFolder->getMsgBase(parent->id())->status().isIgnored())
+      mFolder->getMsgBase(id)->setStatus( MessageStatus::statusIgnored() );
     if (parent)
       hi = new HeaderItem( parent->item(), id );
     else
@@ -1155,7 +1155,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
+void KMHeaders::setMsgStatus( const MessageStatus& status, bool toggle)
 {
   SerNumList serNums;
   for (Q3ListViewItemIterator it(this); it.current(); ++it)
@@ -1194,7 +1194,7 @@ Q3PtrList<Q3ListViewItem> KMHeaders::currentThread() const
   return list;
 }
 
-void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
+void KMHeaders::setThreadStatus( const MessageStatus& status, bool toggle)
 {
   Q3PtrList<Q3ListViewItem> curThread = currentThread();
   Q3PtrListIterator<Q3ListViewItem> it( curThread );
@@ -1377,11 +1377,11 @@ void KMHeaders::setMsgRead (int msgId)
     return;
 
   SerNumList serNums;
-  if (msgBase->isNew() || msgBase->isUnread()) {
+  if (msgBase->status().isNew() || msgBase->status().isUnread()) {
     serNums.append( msgBase->getMsgSerNum() );
   }
 
-  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), serNums );
   command->start();
 }
 
@@ -1800,11 +1800,14 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
     while (item) {
       msgBase = mFolder->getMsgBase(item->msgId());
       if (!msgBase) continue;
-      if (msgBase->isUnread() || msgBase->isNew())
+      MessageStatus status = msgBase->status();
+      if ( status.isUnread() || status.isNew() )
         foundUnreadMessage = true;
 
-      if (!onlyNew && (msgBase->isUnread() || msgBase->isNew())) break;
-      if (onlyNew && msgBase->isNew()) break;
+      if ( !onlyNew && ( status.isUnread() || status.isNew() ) )
+        break;
+      if ( onlyNew && status.isNew() )
+        break;
       item = static_cast<HeaderItem*>(item->itemBelow());
     }
   } else {
@@ -1813,10 +1816,11 @@ void KMHeaders::findUnreadAux( HeaderItem*& item,
     {
       msgBase = mFolder->getMsgBase(newItem->msgId());
       if (!msgBase) continue;
-      if (msgBase->isUnread() || msgBase->isNew())
+      MessageStatus status = msgBase->status();
+      if ( status.isUnread() || status.isNew() )
         foundUnreadMessage = true;
-      if (!onlyNew && (msgBase->isUnread() || msgBase->isNew())
-          || onlyNew && msgBase->isNew())
+      if ( !onlyNew && ( status.isUnread() || status.isNew() )
+          || onlyNew && status.isNew())
         lastUnread = newItem;
       if (newItem == item) break;
       newItem = static_cast<HeaderItem*>(newItem->itemBelow());
@@ -2108,8 +2112,8 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
       case Qt::Key_Up:
       case Qt::Key_Home:
       case Qt::Key_End:
-      case Qt::Key_PageDown:
-      case Qt::Key_PageUp:
+      case Qt::Key_Next:
+      case Qt::Key_Prior:
       case Qt::Key_Escape:
         KListView::keyPressEvent( e );
       }
@@ -3149,10 +3153,10 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             if(threaded && i->item()) {
                 // If the parent is watched or ignored, propagate that to it's
                 // children
-                if (mFolder->getMsgBase(i->id())->isWatched())
-                  mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusWatched);
-                if (mFolder->getMsgBase(i->id())->isIgnored())
-                  mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusIgnored);
+                if (mFolder->getMsgBase(i->id())->status().isWatched())
+                  mFolder->getMsgBase(new_kci->id())->setStatus( MessageStatus::statusWatched() );
+                if (mFolder->getMsgBase(i->id())->status().isIgnored())
+                  mFolder->getMsgBase(new_kci->id())->setStatus( MessageStatus::statusIgnored() );
                 khi = new HeaderItem(i->item(), new_kci->id(), new_kci->key());
             } else {
                 khi = new HeaderItem(this, new_kci->id(), new_kci->key());
@@ -3162,11 +3166,11 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 s.enqueue(new_kci);
             // we always jump to new messages, but we only jump to
             // unread messages if we are told to do so
-            if ( ( mFolder->getMsgBase(new_kci->id())->isNew() &&
+            if ( ( mFolder->getMsgBase(new_kci->id())->status().isNew() &&
                    GlobalSettings::self()->actionEnterFolder() ==
                    GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
-                 ( ( mFolder->getMsgBase(new_kci->id())->isNew() ||
-                     mFolder->getMsgBase(new_kci->id())->isUnread() ) &&
+                 ( ( mFolder->getMsgBase(new_kci->id())->status().isNew() ||
+                     mFolder->getMsgBase(new_kci->id())->status().isUnread() ) &&
                    jumpToUnread ) )
             {
               unread_exists = true;
@@ -3228,11 +3232,11 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         if (unread_exists) {
             HeaderItem *item = static_cast<HeaderItem*>(firstChild());
             while (item) {
-              if ( ( mFolder->getMsgBase(item->msgId())->isNew() &&
+              if ( ( mFolder->getMsgBase(item->msgId())->status().isNew() &&
                      GlobalSettings::self()->actionEnterFolder() ==
                      GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
-                   ( ( mFolder->getMsgBase(item->msgId())->isNew() ||
-                       mFolder->getMsgBase(item->msgId())->isUnread() ) &&
+                   ( ( mFolder->getMsgBase(item->msgId())->status().isNew() ||
+                       mFolder->getMsgBase(item->msgId())->status().isUnread() ) &&
                      jumpToUnread ) )
               {
                 first_unread = item->msgId();

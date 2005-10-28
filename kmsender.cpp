@@ -163,7 +163,7 @@ bool KMSender::doSend(KMMessage* aMsg, short sendNow)
   kmkernel->outboxFolder()->open();
   const KMFolderCloser openOutbox( kmkernel->outboxFolder() );
 
-  aMsg->setStatus(KMMsgStatusQueued);
+  aMsg->setStatus( MessageStatus::statusQueued() );
 
   if ( const int err = openOutbox.folder()->addMsg(aMsg) ) {
     Q_UNUSED( err );
@@ -277,8 +277,9 @@ void KMSender::doSendMsg()
         mCurrentMsg->addBodyPart( &msgPart );
       }
     }
-    mCurrentMsg->setStatus(KMMsgStatusSent);
-    mCurrentMsg->setStatus(KMMsgStatusRead); // otherwise it defaults to new on imap
+    MessageStatus status = MessageStatus::statusSent();
+    status.setRead(); // otherwise it defaults to new on imap
+    mCurrentMsg->setStatus( status );
     mCurrentMsg->updateAttachmentState();
 
     const KPIM::Identity & id = kmkernel->identityManager()
@@ -800,9 +801,9 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
   int n = 0;
   while (1) {
     ulong msn;
-    KMMsgStatus status;
-    aMsg->getLink(n, &msn, &status);
-    if (!msn || !status)
+    MessageStatus status;
+    aMsg->getLink(n, &msn, status);
+    if ( !msn || status.isOfUnknownStatus() )
       break;
     n++;
 
@@ -811,7 +812,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
     KMMsgDict::instance()->getLocation(msn, &folder, &index);
     if (folder && index != -1) {
       folder->open();
-      if ( status == KMMsgStatusDeleted ) {
+      if ( status.isDeleted() ) {
         // Move the message to the trash folder
         KMDeleteMsgCommand *cmd =
           new KMDeleteMsgCommand( folder, folder->getMsg( index ) );

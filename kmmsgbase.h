@@ -120,77 +120,19 @@ public:
   /** Set owning folder. */
   void setParent(KMFolder* p) { mParent = p; }
 
-  /** Convert the given message status to a string. */
-  static Q3CString statusToStr(const KMMsgStatus status);
-
-  /** Convert the given message status to a string. */
-  QString statusToSortRank();
-
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
 
-  /** Returns TRUE if status unread.  Note that new messages are not unread.*/
-  virtual bool isUnread(void) const;
-
-  /** Returns TRUE if status is new. */
-  virtual bool isNew(void) const;
-
-  /** Returns TRUE if status is unknown. */
-  virtual bool isOfUnknownStatus(void) const;
-
-  /** Returns TRUE if status is old. */
-  virtual bool isOld(void) const;
-
-  /** Returns TRUE if status is read. */
-  virtual bool isRead(void) const;
-
-  /** Returns TRUE if status is deleted. */
-  virtual bool isDeleted(void) const;
-
-  /** Returns TRUE if status is replied. */
-  virtual bool isReplied(void) const;
-
-  /** Returns TRUE if status is forwarded. */
-  virtual bool isForwarded(void) const;
-
-  /** Returns TRUE if status is queued. */
-  virtual bool isQueued(void) const;
-
-  /** Returns TRUE if status is todo flaged. */
-  virtual bool isTodo(void) const;
-
-  /** Returns TRUE if status is sent. */
-  virtual bool isSent(void) const;
-
-  /** Returns TRUE if status is important. */
-  virtual bool isImportant(void) const;
-
-  /** Returns TRUE if status is watched. */
-  virtual bool isWatched(void) const;
-
-  /** Returns TRUE if status is ignored. */
-  virtual bool isIgnored(void) const;
-
-  /** Returns TRUE if status is spam. */
-  virtual bool isSpam(void) const;
-
-  /** Returns TRUE if status is not spam. */
-  virtual bool isHam(void) const;
-
-
-  /** Status of the message. */
-  virtual KMMsgStatus status(void) const = 0;
-
-  /** Status object of a message. */
-  MessageStatus& messageStatus();
+  /** Status object of the message. */
+  virtual MessageStatus& status();
 
   /** Const reference to a status object of a message. */
-  const MessageStatus& getMessageStatus() const;
+  const MessageStatus& messageStatus() const;
 
   /** Set status and mark dirty.  Optional optimization: @p idx may
    * specify the index of this message within the parent folder. */
-  virtual void setStatus(const KMMsgStatus status, int idx = -1);
-  virtual void toggleStatus(const KMMsgStatus status, int idx = -1);
+  virtual void setStatus(const MessageStatus& status, int idx = -1);
+  virtual void toggleStatus(const MessageStatus& status, int idx = -1);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
   /** Encryption status of the message. */

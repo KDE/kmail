@@ -780,7 +780,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
         }
 
         if ( !MsgStatusFlags.isEmpty() ) {
-          msg->messageStatus().setStatusFromStr(MsgStatusFlags);
+          msg->status().setStatusFromStr(MsgStatusFlags);
         }
 
         int index;
@@ -894,7 +894,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
       int index;
 
       if( !MsgStatusFlags.isEmpty() ) {
-        msg->messageStatus().setStatusFromStr(MsgStatusFlags);
+        msg->status().setStatusFromStr(MsgStatusFlags);
       }
 
       if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {

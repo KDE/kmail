@@ -1978,73 +1978,73 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusNew()
 {
-  mHeaders->setMsgStatus(KMMsgStatusNew);
+  mHeaders->setMsgStatus( MessageStatus::statusNew() );
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusUnread()
 {
-  mHeaders->setMsgStatus(KMMsgStatusUnread);
+  mHeaders->setMsgStatus( MessageStatus::statusUnread() );
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusRead()
 {
-  mHeaders->setMsgStatus(KMMsgStatusRead);
+  mHeaders->setMsgStatus( MessageStatus::statusRead() );
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusFlag()
 {
-  mHeaders->setMsgStatus(KMMsgStatusFlag, true);
+  mHeaders->setMsgStatus( MessageStatus::statusImportant(), true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusTodo()
 {
-  mHeaders->setMsgStatus(KMMsgStatusTodo, true);
+  mHeaders->setMsgStatus( MessageStatus::statusTodo(), true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusSent()
 {
-  mHeaders->setMsgStatus(KMMsgStatusSent, true);
+  mHeaders->setMsgStatus( MessageStatus::statusSent(), true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusNew()
 {
-  mHeaders->setThreadStatus(KMMsgStatusNew);
+  mHeaders->setThreadStatus( MessageStatus::statusNew() );
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusUnread()
 {
-  mHeaders->setThreadStatus(KMMsgStatusUnread);
+  mHeaders->setThreadStatus( MessageStatus::statusUnread() );
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusFlag()
 {
-  mHeaders->setThreadStatus(KMMsgStatusFlag, true);
+  mHeaders->setThreadStatus( MessageStatus::statusImportant(), true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusRead()
 {
-  mHeaders->setThreadStatus(KMMsgStatusRead);
+  mHeaders->setThreadStatus( MessageStatus::statusRead());
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusTodo()
 {
-  mHeaders->setThreadStatus(KMMsgStatusTodo, true);
+  mHeaders->setThreadStatus( MessageStatus::statusTodo(), true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusWatched()
 {
-  mHeaders->setThreadStatus(KMMsgStatusWatched, true);
+  mHeaders->setThreadStatus( MessageStatus::statusWatched(), true);
   if (mWatchThreadAction->isChecked()) {
     mIgnoreThreadAction->setChecked(false);
   }
@@ -2053,7 +2053,7 @@ void KMMainWidget::slotSetThreadStatusWatched()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusIgnored()
 {
-  mHeaders->setThreadStatus(KMMsgStatusIgnored, true);
+  mHeaders->setThreadStatus( MessageStatus::statusIgnored(), true);
   if (mIgnoreThreadAction->isChecked()) {
     mWatchThreadAction->setChecked(false);
   }
@@ -2962,15 +2962,16 @@ void KMMainWidget::updateMessageActions()
     mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
     mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
-    if (mFolder && mHeaders && mHeaders->currentMsg()) {
-      mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-      mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
-      mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
+    if ( mFolder && mHeaders && mHeaders->currentMsg() ) {
+      MessageStatus status = mHeaders->currentMsg()->status();
+      mToggleTodoAction->setChecked( status.isTodo() );
+      mToggleSentAction->setChecked( status.isSent() );
+      mToggleFlagAction->setChecked( status.isImportant() );
       if (thread_actions) {
-        mToggleThreadTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
-        mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
-        mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
-        mIgnoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
+        mToggleThreadTodoAction->setChecked( status.isTodo() );
+        mToggleThreadFlagAction->setChecked( status.isImportant() );
+        mWatchThreadAction->setChecked( status.isWatched() );
+        mIgnoreThreadAction->setChecked( status.isIgnored() );
       }
     }
 
@@ -2999,7 +3000,7 @@ void KMMainWidget::updateMessageActions()
     viewSourceAction()->setEnabled( single_actions );
 
     mSendAgainAction->setEnabled( single_actions &&
-             ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
+             ( mHeaders->currentMsg() && mHeaders->currentMsg()->status().isSent() )
           || ( mFolder && kmkernel->folderIsDraftOrOutbox( mFolder ) )
           || ( mFolder && kmkernel->folderIsSentMailFolder( mFolder ) )
              );
@@ -3221,7 +3222,7 @@ void KMMainWidget::removeDuplicates()
     Q3ValueList<int>::Iterator jt;
     bool finished = false;
     for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
-      if (!((*mFolder)[*jt]->isUnread())) {
+      if (!((*mFolder)[*jt]->status().isUnread())) {
         (*it).remove( jt );
         (*it).prepend( *jt );
         finished = true;
