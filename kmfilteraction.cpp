@@ -745,21 +745,21 @@ public:
 };
 
 
-static const KMMsgStatus stati[] =
+static const MessageStatus stati[] =
 {
-  KMMsgStatusFlag,
-  KMMsgStatusRead,
-  KMMsgStatusUnread,
-  KMMsgStatusReplied,
-  KMMsgStatusForwarded,
-  KMMsgStatusOld,
-  KMMsgStatusNew,
-  KMMsgStatusWatched,
-  KMMsgStatusIgnored,
-  KMMsgStatusSpam,
-  KMMsgStatusHam
+  MessageStatus::statusImportant(),
+  MessageStatus::statusRead(),
+  MessageStatus::statusUnread(),
+  MessageStatus::statusReplied(),
+  MessageStatus::statusForwarded(),
+  MessageStatus::statusOld(),
+  MessageStatus::statusNew(),
+  MessageStatus::statusWatched(),
+  MessageStatus::statusIgnored(),
+  MessageStatus::statusSpam(),
+  MessageStatus::statusHam()
 };
-static const int StatiCount = sizeof( stati ) / sizeof( KMMsgStatus );
+static const int StatiCount = sizeof( stati ) / sizeof( MessageStatus );
 
 KMFilterAction* KMFilterActionSetStatus::newAction()
 {
@@ -792,10 +792,7 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) cons
   int idx = mParameterList.findIndex( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
-  KMMsgStatus _status = stati[idx-1] ;
-  MessageStatus status;
-  status.fromQInt32( _status );
-  msg->setStatus( status );
+  msg->setStatus( stati[idx-1] );
   return GoOn;
 }
 
@@ -810,7 +807,7 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
     MessageStatus status;
     int i;
     for ( i = 0 ; i < StatiCount ; i++ )
-      status.fromQInt32(stati[i]);
+      status = stati[i];
       if ( status.getStatusStr()[0] == argsStr[0].toLatin1() ) {
         mParameter = mParameterList.at(i+1);
         return;
@@ -824,10 +821,7 @@ const QString KMFilterActionSetStatus::argsAsString() const
   int idx = mParameterList.findIndex( mParameter );
   if ( idx < 1 ) return QString::null;
 
-  KMMsgStatus _status = stati[idx-1];
-  MessageStatus status;
-  status.fromQInt32( _status );
-  return status.getStatusStr();
+  return stati[idx-1].getStatusStr();
 }
 
 const QString KMFilterActionSetStatus::displayString() const

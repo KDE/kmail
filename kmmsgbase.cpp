@@ -1005,7 +1005,7 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   //these is at the beginning because it is queried quite often
   tmp_str = msgIdMD5().stripWhiteSpace();
   STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp = mLegacyStatus;
+  tmp = 0;
   STORE_DATA(MsgLegacyStatusPart, tmp);
 
   //these are completely arbitrary order

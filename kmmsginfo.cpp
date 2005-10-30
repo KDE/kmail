@@ -16,6 +16,24 @@
 //Added by qt3to4:
 #include <Q3CString>
 
+/** The old status format, only one at a time possible. Needed
+    for upgrade path purposes. */
+typedef enum
+{
+    KMLegacyMsgStatusUnknown=' ',
+    KMLegacyMsgStatusNew='N',
+    KMLegacyMsgStatusUnread='U',
+    KMLegacyMsgStatusRead='R',
+    KMLegacyMsgStatusOld='O',
+    KMLegacyMsgStatusDeleted='D',
+    KMLegacyMsgStatusReplied='A',
+    KMLegacyMsgStatusForwarded='F',
+    KMLegacyMsgStatusQueued='Q',
+    KMLegacyMsgStatusSent='S',
+    KMLegacyMsgStatusFlag='G'
+} KMLegacyMsgStatus;
+
+
 class KMMsgInfo::KMMsgInfoPrivate
 {
 public:
@@ -450,52 +468,53 @@ void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 const MessageStatus& KMMsgInfo::status(void) const
 {
     if ( mStatus.isOfUnknownStatus() ) {
-        KMMsgStatus st = (KMMsgStatus)getLongPart(MsgStatusPart);
-        if (!st) {
+        mStatus.fromQInt32( getLongPart( MsgStatusPart ) );
+        if ( mStatus.isOfUnknownStatus() ) {
             // We are opening an old index for the first time, get the legacy
             // status and merge it in.
-            mLegacyStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart);
-            st = KMMsgStatusRead;
-            switch (mLegacyStatus) {
+            // This is kept to provide an upgrade path from the the old single
+            // status to the new multiple status scheme.
+            KMLegacyMsgStatus legacyMsgStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart);
+            mStatus.setRead();
+            switch (legacyMsgStatus) {
                 case KMLegacyMsgStatusUnknown:
-                    st = KMMsgStatusUnknown;
+                    mStatus.clear();
                     break;
                 case KMLegacyMsgStatusNew:
-                    st = KMMsgStatusNew;
+                    mStatus.setNew();
                     break;
                 case KMLegacyMsgStatusUnread:
-                    st = KMMsgStatusUnread;
+                    mStatus.setUnread();
                     break;
                 case KMLegacyMsgStatusRead:
-                    st = KMMsgStatusRead;
+                    mStatus.setRead();
                     break;
                 case KMLegacyMsgStatusOld:
-                    st = KMMsgStatusOld;
+                    mStatus.setOld();
                     break;
                 case KMLegacyMsgStatusDeleted:
-                    st |= KMMsgStatusDeleted;
+                    mStatus.setDeleted();
                     break;
                 case KMLegacyMsgStatusReplied:
-                    st |= KMMsgStatusReplied;
+                    mStatus.setReplied();
                     break;
                 case KMLegacyMsgStatusForwarded:
-                    st |= KMMsgStatusForwarded;
+                    mStatus.setForwarded();
                     break;
                 case KMLegacyMsgStatusQueued:
-                    st |= KMMsgStatusQueued;
+                    mStatus.setQueued();
                     break;
                 case KMLegacyMsgStatusSent:
-                    st |= KMMsgStatusSent;
+                    mStatus.setSent();
                     break;
                 case KMLegacyMsgStatusFlag:
-                    st |= KMMsgStatusFlag;
+                    mStatus.setImportant();
                     break;
                 default:
                     break;
             }
 
         }
-        mStatus.fromQInt32( st );
     }
     return mStatus;
 }

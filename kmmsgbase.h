@@ -37,23 +37,6 @@ class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
 
-/** The old status format, only one at a time possible. Needed
-    for upgrade path purposes. */
-typedef enum
-{
-    KMLegacyMsgStatusUnknown=' ',
-    KMLegacyMsgStatusNew='N',
-    KMLegacyMsgStatusUnread='U',
-    KMLegacyMsgStatusRead='R',
-    KMLegacyMsgStatusOld='O',
-    KMLegacyMsgStatusDeleted='D',
-    KMLegacyMsgStatusReplied='A',
-    KMLegacyMsgStatusForwarded='F',
-    KMLegacyMsgStatusQueued='Q',
-    KMLegacyMsgStatusSent='S',
-    KMLegacyMsgStatusFlag='G'
-} KMLegacyMsgStatus;
-
 /** Flags for the encryption state. */
 typedef enum
 {
@@ -345,9 +328,6 @@ protected:
   bool mDirty;
   bool mEnableUndo;
   mutable MessageStatus mStatus;
-  // This is kept to provide an upgrade path from the the old single status
-  // to the new multiple status scheme.
-  mutable KMLegacyMsgStatus mLegacyStatus;
 
 public:
   enum MsgPartType
