@@ -71,22 +71,21 @@ KMTransportInfo::~KMTransportInfo()
 
 void KMTransportInfo::readConfig(int id)
 {
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Transport " + QString::number(id));
-  mId = config->readUnsignedNumEntry( "id", 0 );
-  type = config->readEntry("type", "smtp");
-  name = config->readEntry("name", i18n("Unnamed"));
-  host = config->readEntry("host", "localhost");
-  port = config->readEntry("port", "25");
-  user = config->readEntry("user");
-  mPasswd = KMAccount::decryptStr(config->readEntry("pass"));
-  precommand = config->readPathEntry("precommand");
-  encryption = config->readEntry("encryption");
-  authType = config->readEntry("authtype");
-  auth = config->readBoolEntry("auth");
-  mStorePasswd = config->readBoolEntry("storepass");
-  specifyHostname = config->readBoolEntry("specifyHostname", false);
-  localHostname = config->readEntry("localHostname");
+  KConfigGroup config( KMKernel::config(), "Transport " + QString::number(id) );
+  mId = config.readUnsignedNumEntry( "id", 0 );
+  type = config.readEntry("type", "smtp");
+  name = config.readEntry("name", i18n("Unnamed"));
+  host = config.readEntry("host", "localhost");
+  port = config.readEntry("port", "25");
+  user = config.readEntry("user");
+  mPasswd = KMAccount::decryptStr(config.readEntry("pass"));
+  precommand = config.readPathEntry("precommand");
+  encryption = config.readEntry("encryption");
+  authType = config.readEntry("authtype");
+  auth = config.readBoolEntry("auth");
+  mStorePasswd = config.readBoolEntry("storepass");
+  specifyHostname = config.readBoolEntry("specifyHostname", false);
+  localHostname = config.readEntry("localHostname");
 
   if ( !storePasswd() )
     return;
@@ -94,7 +93,7 @@ void KMTransportInfo::readConfig(int id)
   if ( !mPasswd.isEmpty() ) {
     // migration to kwallet if available
     if ( Wallet::isEnabled() ) {
-      config->deleteEntry( "pass" );
+      config.deleteEntry( "pass" );
       mPasswdDirty = true;
       mStorePasswdInConfig = false;
       writeConfig( id );
@@ -110,23 +109,22 @@ void KMTransportInfo::readConfig(int id)
 
 void KMTransportInfo::writeConfig(int id)
 {
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Transport " + QString::number(id));
+  KConfigGroup config( KMKernel::config(), "Transport " + QString::number(id) );
   if (!mId)
     mId = TransportManager::createId();
-  config->writeEntry("id", mId);
-  config->writeEntry("type", type);
-  config->writeEntry("name", name);
-  config->writeEntry("host", host);
-  config->writeEntry("port", port);
-  config->writeEntry("user", user);
-  config->writePathEntry("precommand", precommand);
-  config->writeEntry("encryption", encryption);
-  config->writeEntry("authtype", authType);
-  config->writeEntry("auth", auth);
-  config->writeEntry("storepass", storePasswd());
-  config->writeEntry("specifyHostname", specifyHostname);
-  config->writeEntry("localHostname", localHostname);
+  config.writeEntry("id", mId);
+  config.writeEntry("type", type);
+  config.writeEntry("name", name);
+  config.writeEntry("host", host);
+  config.writeEntry("port", port);
+  config.writeEntry("user", user);
+  config.writePathEntry("precommand", precommand);
+  config.writeEntry("encryption", encryption);
+  config.writeEntry("authtype", authType);
+  config.writeEntry("auth", auth);
+  config.writeEntry("storepass", storePasswd());
+  config.writeEntry("specifyHostname", specifyHostname);
+  config.writeEntry("localHostname", localHostname);
 
   if ( storePasswd() ) {
     // write password into the wallet if possible and necessary
@@ -155,7 +153,7 @@ void KMTransportInfo::writeConfig(int id)
          KGuiItem( i18n("Store Password") ),
          KGuiItem( i18n("Do Not Store Password") ) )
          == KMessageBox::Yes ) ) {
-      config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
+      config.writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
       mStorePasswdInConfig = true;
     }
   }
@@ -168,20 +166,19 @@ void KMTransportInfo::writeConfig(int id)
       if ( wallet )
         wallet->removeEntry( "transport-" + QString::number(mId) );
     }
-    config->deleteEntry( "pass" );
+    config.deleteEntry( "pass" );
   }
 }
 
 
 int KMTransportInfo::findTransport(const QString &name)
 {
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-  int numTransports = config->readNumEntry("transports", 0);
+  KConfigGroup config( KMKernel::config(), "General" );
+  int numTransports = config.readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)
   {
-    KConfigGroupSaver saver(config, "Transport " + QString::number(i));
-    if (config->readEntry("name") == name) return i;
+    KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );
+    if (config.readEntry("name") == name) return i;
   }
   return 0;
 }
@@ -190,13 +187,12 @@ int KMTransportInfo::findTransport(const QString &name)
 QStringList KMTransportInfo::availableTransports()
 {
   QStringList result;
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-  int numTransports = config->readNumEntry("transports", 0);
+  KConfigGroup config( KMKernel::config(), "General" );
+  int numTransports = config.readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)
   {
-    KConfigGroupSaver saver(config, "Transport " + QString::number(i));
-    result.append(config->readEntry("name"));
+    KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );
+    result.append(config.readEntry("name"));
   }
   return result;
 }

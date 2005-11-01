@@ -223,7 +223,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
                    KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
   , mProfileDialog( 0 )
 {
-  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIcon::Desktop ), IconSize( KIcon::Desktop ) ),
+                  qApp->windowIcon().pixmap(IconSize( KIcon::Small ), IconSize( KIcon::Small ) ) );
   showButton( User1, true );
 
   addModule ( "kmail_config_identity", false );
@@ -3699,9 +3700,9 @@ void SecurityPage::GeneralTab::save() {
       {
         if (*it)
         {
-          KConfigGroupSaver saver(KMKernel::config(),
+          KConfigGroup config(KMKernel::config(),
             "Folder-" + (*it)->idString());
-          KMKernel::config()->writeEntry("htmlMailOverride", false);
+          config.writeEntry("htmlMailOverride", false);
         }
       }
     }

@@ -175,12 +175,11 @@ void KMAccount::writeConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipt(KMMessage* aMsg)
 {
-  KConfig* cfg = KMKernel::config();
   bool sendReceipts;
 
-  KConfigGroupSaver saver(cfg, "General");
+  KConfigGroup cfg( KMKernel::config(), "General" );
 
-  sendReceipts = cfg->readBoolEntry("send-receipts", false);
+  sendReceipts = cfg.readBoolEntry("send-receipts", false);
   if (!sendReceipts) return;
 
   KMMessage *newMsg = aMsg->createDeliveryReceipt();

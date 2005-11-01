@@ -160,17 +160,15 @@ bool KMMsgIndex::isIndexable( KMFolder* folder ) const {
 
 bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
 	if ( !isIndexable( folder ) ) return false;
-	KConfig* config = KMKernel::config();
-	KConfigGroupSaver saver( config, "Folder-" + folder->idString() );
-	return !config->readBoolEntry( folderIndexDisabledKey, false );
+	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
+	return !config.readBoolEntry( folderIndexDisabledKey, false );
 }
 
 void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
-	KConfig* config = KMKernel::config();
-	KConfigGroupSaver saver( config, "text-index" );
-	if ( config->readBoolEntry( "enabled", e ) == e ) return;
-	config->writeEntry( "enabled", e );
+	KConfigGroup config( KMKernel::config(), "text-index" );
+	if ( config.readBoolEntry( "enabled", e ) == e ) return;
+	config.writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
 			case s_idle:
@@ -192,10 +190,9 @@ void KMMsgIndex::setEnabled( bool e ) {
 }
 
 void KMMsgIndex::setIndexingEnabled( KMFolder* folder, bool e ) {
-	KConfig* config = KMKernel::config();
-	KConfigGroupSaver saver( config, "Folder-" + folder->idString() );
-	if ( config->readBoolEntry( folderIndexDisabledKey, e ) == e ) return; // nothing to do
-	config->writeEntry( folderIndexDisabledKey, e );
+	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
+	if ( config.readBoolEntry( folderIndexDisabledKey, e ) == e ) return; // nothing to do
+	config.writeEntry( folderIndexDisabledKey, e );
 
 	if ( e ) {
 		switch ( mState ) {
@@ -329,9 +326,8 @@ void KMMsgIndex::act() {
 			f->open();
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
-		KConfig* config = KMKernel::config();
-		KConfigGroupSaver saver( config, "Folder-" + f->idString() );
-		if ( config->readBoolEntry( folderIndexDisabledKey, true ) ) {
+		KConfigGroup config( KMKernel::config(), "Folder-" + f->idString() );
+		if ( config.readBoolEntry( folderIndexDisabledKey, true ) ) {
 			for ( int i = 0; i < f->count(); ++i ) {
 				mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
 			}

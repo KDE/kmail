@@ -3763,27 +3763,24 @@ void KMMessage::readConfig()
 {
   KMMsgBase::readConfig();
 
-  KConfig *config=KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup config( KMKernel::config(), "General" );
 
-  config->setGroup("General");
-
-  int languageNr = config->readNumEntry("reply-current-language",0);
+  int languageNr = config.readNumEntry("reply-current-language",0);
 
   { // area for config group "KMMessage #n"
-    KConfigGroupSaver saver(config, QString("KMMessage #%1").arg(languageNr));
-    sReplyLanguage = config->readEntry("language",KGlobal::locale()->language());
-    sReplyStr = config->readEntry("phrase-reply",
+    KConfigGroup config( KMKernel::config(), QString("KMMessage #%1").arg(languageNr) );
+    sReplyLanguage = config.readEntry("language",KGlobal::locale()->language());
+    sReplyStr = config.readEntry("phrase-reply",
       i18n("On %D, you wrote:"));
-    sReplyAllStr = config->readEntry("phrase-reply-all",
+    sReplyAllStr = config.readEntry("phrase-reply-all",
       i18n("On %D, %F wrote:"));
-    sForwardStr = config->readEntry("phrase-forward",
+    sForwardStr = config.readEntry("phrase-forward",
       i18n("Forwarded Message"));
-    sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
+    sIndentPrefixStr = config.readEntry("indent-prefix",">%_");
   }
 
   { // area for config group "Composer"
-    KConfigGroupSaver saver(config, "Composer");
+    KConfigGroup config( KMKernel::config(), "Composer" );
     sSmartQuote = GlobalSettings::self()->smartQuote();
     sWordWrap = GlobalSettings::self()->wordWrap();
     sWrapCol = GlobalSettings::self()->lineWrapWidth();
@@ -3792,12 +3789,12 @@ void KMMessage::readConfig()
     if (sWrapCol < 30)
       sWrapCol = 30;
 
-    sPrefCharsets = config->readListEntry("pref-charsets");
+    sPrefCharsets = config.readListEntry("pref-charsets");
   }
 
   { // area for config group "Reader"
-    KConfigGroupSaver saver(config, "Reader");
-    sHeaderStrategy = HeaderStrategy::create( config->readEntry( "header-set-displayed", "rich" ) );
+    KConfigGroup config( KMKernel::config(), "Reader" );
+    sHeaderStrategy = HeaderStrategy::create( config.readEntry( "header-set-displayed", "rich" ) );
   }
 }
 

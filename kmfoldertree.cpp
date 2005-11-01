@@ -415,17 +415,16 @@ bool KMFolderTree::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMFolderTree::readColorConfig (void)
 {
-  KConfig* conf = KMKernel::config();
   // Custom/System color support
-  KConfigGroupSaver saver(conf, "Reader");
+  KConfigGroup conf( KMKernel::config(), "Reader" );
   QColor c1=QColor(kapp->palette().active().text());
   QColor c2=QColor("blue");
   QColor c4=QColor(kapp->palette().active().base());
 
-  if (!conf->readBoolEntry("defaultColors",TRUE)) {
-    mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
-    mPaintInfo.colUnread = conf->readColorEntry("UnreadMessage",&c2);
-    mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
+  if (!conf.readBoolEntry("defaultColors",TRUE)) {
+    mPaintInfo.colFore = conf.readColorEntry("ForegroundColor",&c1);
+    mPaintInfo.colUnread = conf.readColorEntry("UnreadMessage",&c2);
+    mPaintInfo.colBack = conf.readColorEntry("BackgroundColor",&c4);
   }
   else {
     mPaintInfo.colFore = c1;
@@ -441,23 +440,21 @@ void KMFolderTree::readColorConfig (void)
 //-----------------------------------------------------------------------------
 void KMFolderTree::readConfig (void)
 {
-  KConfig* conf = KMKernel::config();
-
   readColorConfig();
 
   // Custom/Ssystem font support
   {
-    KConfigGroupSaver saver(conf, "Fonts");
-    if (!conf->readBoolEntry("defaultFonts",TRUE)) {
+    KConfigGroup conf( KMKernel::config(), "Fonts" );
+    if (!conf.readBoolEntry("defaultFonts",TRUE)) {
       QFont folderFont( KGlobalSettings::generalFont() );
-      setFont(conf->readFontEntry("folder-font", &folderFont));
+      setFont(conf.readFontEntry("folder-font", &folderFont));
     }
     else
       setFont(KGlobalSettings::generalFont());
   }
 
   // restore the layout
-  restoreLayout(conf, "Geometry");
+  restoreLayout( KMKernel::config(), "Geometry" );
 }
 
 //-----------------------------------------------------------------------------
@@ -947,10 +944,8 @@ void KMFolderTree::doFolderSelected( Q3ListViewItem* qlvi )
 //-----------------------------------------------------------------------------
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
-  KConfig* conf = KMKernel::config();
-
-  KConfigGroupSaver saver(conf, "Geometry");
-  conf->writeEntry(name(), size().width());
+  KConfigGroup conf( KMKernel::config(), "Geometry" );
+  conf.writeEntry(name(), size().width());
 
   KListView::resizeEvent(e);
 }
@@ -1195,7 +1190,6 @@ void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
 // config file.
 bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = KMKernel::config();
   KMFolder *folder = fti->folder();
   QString name;
   if (folder)
@@ -1212,16 +1206,15 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   } else {
     return false;
   }
-  KConfigGroupSaver saver(config, name);
+  KConfigGroup config( KMKernel::config(), name );
 
-  return config->readBoolEntry("isOpen", false);
+  return config.readBoolEntry("isOpen", false);
 }
 
 //-----------------------------------------------------------------------------
 // Saves open/closed state of a folder directory into the config file
 void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = KMKernel::config();
   KMFolder *folder = fti->folder();
   QString name;
   if (folder && !folder->idString().isEmpty())
@@ -1238,8 +1231,8 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   } else {
     return;
   }
-  KConfigGroupSaver saver(config, name);
-  config->writeEntry("isOpen", fti->isOpen() );
+  KConfigGroup config( KMKernel::config(), name );
+  config.writeEntry("isOpen", fti->isOpen() );
 }
 
 
@@ -1387,9 +1380,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
     {
       int keybstate = kapp->keyboardModifiers();
-      if ( keybstate & KApplication::ControlModifier ) {
+      if ( keybstate & Qt::ControlModifier ) {
         emit folderDropCopy(fti->folder());
-      } else if ( keybstate & KApplication::ShiftModifier ) {
+      } else if ( keybstate & Qt::ShiftModifier ) {
         emit folderDrop(fti->folder());
       } else {
         if ( GlobalSettings::self()->showPopupAfterDnD() ) {
