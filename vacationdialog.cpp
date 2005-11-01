@@ -38,6 +38,7 @@ using KMime::HeaderParsing::parseAddressList;
 #include <qcheckbox.h>
 #include <qlineedit.h>
 #include <q3textedit.h>
+#include <kiconloader.h>
 
 namespace KMail {
 
@@ -45,7 +46,7 @@ namespace KMail {
 				  const char * name, bool modal )
     : KDialogBase( Plain, caption, Ok|Cancel|Default, Ok, parent, name, modal )
   {
-    KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
+    KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
 
     static const int rows = 4;
     int row = -1;

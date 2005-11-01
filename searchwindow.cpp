@@ -64,6 +64,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <QX11Info>
+#include <kiconloader.h>
 
 namespace KMail {
 
@@ -85,7 +86,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLastFocus(0),
   mKMMainWidget(w)
 {
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
+  KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)));
 
   KConfig* config = KMKernel::config();
   config->setGroup("SearchDialog");

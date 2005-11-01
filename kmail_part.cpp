@@ -53,6 +53,7 @@ using KRecentAddress::RecentAddresses;
 #include <kdebug.h>
 
 #include <qlayout.h>
+#include <kglobal.h>
 
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
@@ -122,7 +123,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kmkernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
-                                 kapp->config());
+                                 KGlobal::config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(Qt::ClickFocus);

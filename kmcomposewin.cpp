@@ -4276,7 +4276,7 @@ void KMComposeWin::slotSpellcheckConfig()
   qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
   qtd.setCancelButton ();
 
-  kwin.setIcons (qtd.winId(), kapp->icon(), kapp->miniIcon());
+  kwin.setIcons (qtd.winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)));
   qtd.setCancelButton(KStdGuiItem::cancel().text());
   qtd.setOkButton(KStdGuiItem::ok().text());
 

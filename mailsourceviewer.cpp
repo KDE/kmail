@@ -40,6 +40,7 @@
 
 #include <qregexp.h>
 #include <q3accel.h>
+#include <kiconloader.h>
 
 namespace KMail {
 
@@ -61,7 +62,7 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
   accel->connectItem( accel->insertItem( Qt::Key_Escape ), this , SLOT( close() ));
   accel->connectItem( accel->insertItem( Qt::Key_W+Qt::CTRL ), this , SLOT( close() ));
   setWordWrap( KTextBrowser::NoWrap );
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
+  KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)));
 }
 
 MailSourceViewer::~MailSourceViewer()

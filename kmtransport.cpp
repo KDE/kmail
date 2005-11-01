@@ -323,7 +323,7 @@ void KMTransportDialog::makeSendmailPage()
   titleFont.setBold( true );
   mSendmail.titleLabel->setFont( titleFont );
   topLayout->addWidget( mSendmail.titleLabel );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
+  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
   QGridLayout *grid = new QGridLayout( topLayout, 3, 3, spacingHint() );
@@ -371,7 +371,7 @@ void KMTransportDialog::makeSmtpPage()
   titleFont.setBold( true );
   mSmtp.titleLabel->setFont( titleFont );
   topLayout->addWidget( mSmtp.titleLabel );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
+  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
   QTabWidget *tabWidget = new QTabWidget(page);

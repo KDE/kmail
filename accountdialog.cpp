@@ -335,7 +335,7 @@ void AccountDialog::makeLocalAccountPage()
   QFont titleFont( mLocal.titleLabel->font() );
   titleFont.setBold( true );
   mLocal.titleLabel->setFont( titleFont );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
+  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
   QLabel *label = new QLabel( i18n("Account &name:"), page );
@@ -559,7 +559,7 @@ void AccountDialog::makePopAccountPage()
   titleFont.setBold( true );
   mPop.titleLabel->setFont( titleFont );
   topLayout->addWidget( mPop.titleLabel );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
+  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
   QTabWidget *tabWidget = new QTabWidget(page);
@@ -819,7 +819,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   titleFont.setBold( true );
   mImap.titleLabel->setFont( titleFont );
   topLayout->addWidget( mImap.titleLabel );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, page);
+  KSeparator *hline = new KSeparator( Qt::Horizontal, page);
   topLayout->addWidget( hline );
 
   QTabWidget *tabWidget = new QTabWidget(page);

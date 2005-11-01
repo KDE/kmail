@@ -223,7 +223,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
                    KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
   , mProfileDialog( 0 )
 {
-  KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
   showButton( User1, true );
 
   addModule ( "kmail_config_identity", false );
@@ -1524,7 +1524,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   mCustomFontCheck = new QCheckBox( i18n("&Use custom fonts"), this );
   vlay->addWidget( mCustomFontCheck );
-  vlay->addWidget( new KSeparator( KSeparator::HLine, this ) );
+  vlay->addWidget( new KSeparator( Qt::Horizontal, this ) );
   connect ( mCustomFontCheck, SIGNAL( stateChanged( int ) ),
             this, SLOT( slotEmitChanged( void ) ) );
 
@@ -3120,7 +3120,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // horizontal rule and "custom header fields" label:
-  vlay->addWidget( new KSeparator( KSeparator::HLine, this ) );
+  vlay->addWidget( new KSeparator( Qt::Horizontal, this ) );
   vlay->addWidget( new QLabel( i18n("Define custom mime header fields:"), this) );
 
   // "custom header fields" listbox:

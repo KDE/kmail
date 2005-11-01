@@ -2112,8 +2112,8 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
       case Qt::Key_Up:
       case Qt::Key_Home:
       case Qt::Key_End:
-      case Qt::Key_Next:
-      case Qt::Key_Prior:
+      case Qt::Key_PageDown:
+      case Qt::Key_PageUp:
       case Qt::Key_Escape:
         KListView::keyPressEvent( e );
       }

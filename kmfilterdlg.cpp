@@ -125,7 +125,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 		 Ok /* default btn */, FALSE /* separator */),
   bPopFilter(popFilter)
 {
-  KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
+  KWin::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)) );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget( this );
