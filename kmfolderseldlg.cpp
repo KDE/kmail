@@ -54,6 +54,7 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
   mFolderColumn = addColumn( i18n( "Folder" ) );
 
   reload( mustBeReadWrite, true, true, preSelection );
+  readColorConfig();
 
   connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ),
            this, SLOT( slotContextMenuRequested( Q3ListViewItem*, const QPoint & ) ) );
@@ -224,6 +225,21 @@ void SimpleFolderTree::slotContextMenuRequested( Q3ListViewItem *lvi,
   kmkernel->setContextMenuShown( false );
   delete folderMenu;
   folderMenu = 0;
+}
+
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::readColorConfig (void)
+{
+  QColor c1=QColor(kapp->palette().active().text());
+  QColor c2=QColor(kapp->palette().active().base());
+
+  mPaintInfo.colFore = c1;
+  mPaintInfo.colBack = c2;
+
+  QPalette newPal = kapp->palette();
+  newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+  newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
+  setPalette( newPal );
 }
 
 

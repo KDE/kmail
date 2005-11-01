@@ -40,6 +40,10 @@ namespace KMail {
     protected slots:
       void slotContextMenuRequested( Q3ListViewItem *, const QPoint & );
 
+    protected:
+      /** Read color options and set palette. */
+      virtual void readColorConfig(void);
+
     private:
       KMFolderTree* mFolderTree;
       int mFolderColumn;
