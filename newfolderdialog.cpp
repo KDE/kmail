@@ -105,8 +105,8 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     //  mFormatComboBox->insertItem("search", 2);
     {
       KConfig *config = KMKernel::config();
-      KConfigGroupSaver saver(config, "General");
-      int type = config->readNumEntry("default-mailbox-format", 1);
+      KConfigGroup group(config, "General");
+      int type = group.readNumEntry("default-mailbox-format", 1);
       if ( type < 0 || type > 1 ) type = 1;
       mFormatComboBox->setCurrentItem( type );
     }

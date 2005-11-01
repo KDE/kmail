@@ -670,7 +670,7 @@ void KMComposeWin::writeConfig(void)
   GlobalSettings::self()->setUseHtmlMarkup( mHtmlMarkup );
   GlobalSettings::self()->setComposerSize( size() );
 
-  KConfigGroupSaver saver( KMKernel::config(), "Geometry" );
+  KConfigGroup group( KMKernel::config(), "Geometry" );
   saveMainWindowSettings( KMKernel::config(), "Composer" );
 }
 
@@ -2653,10 +2653,10 @@ void KMComposeWin::slotInsertFile()
   // Prevent race condition updating list when multiple composers are open
   {
     KConfig *config = KMKernel::config();
-    KConfigGroupSaver saver( config, "Composer" );
+    KConfigGroup group( config, "Composer" );
     QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).latin1();
-    QStringList urls = config->readListEntry( "recent-urls" );
-    QStringList encodings = config->readListEntry( "recent-encodings" );
+    QStringList urls = group.readListEntry( "recent-urls" );
+    QStringList encodings = group.readListEntry( "recent-encodings" );
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
     uint mMaxRecentFiles = 30;
@@ -2671,8 +2671,8 @@ void KMComposeWin::slotInsertFile()
     }
     urls.prepend( u.prettyURL() );
     encodings.prepend( encoding );
-    config->writeEntry( "recent-urls", urls );
-    config->writeEntry( "recent-encodings", encodings );
+    group.writeEntry( "recent-urls", urls );
+    group.writeEntry( "recent-encodings", encodings );
     mRecentAction->saveEntries( config );
   }
   slotInsertRecentFile(u);
@@ -2692,9 +2692,9 @@ void KMComposeWin::slotInsertRecentFile(const KURL& u)
   // Get the encoding previously used when inserting this file
   {
     KConfig *config = KMKernel::config();
-    KConfigGroupSaver saver( config, "Composer" );
-    QStringList urls = config->readListEntry( "recent-urls" );
-    QStringList encodings = config->readListEntry( "recent-encodings" );
+    KConfigGroup group( config, "Composer" );
+    QStringList urls = group.readListEntry( "recent-urls" );
+    QStringList encodings = group.readListEntry( "recent-encodings" );
     int index = urls.findIndex( u.prettyURL() );
     if (index != -1) {
       QString encoding = encodings[ index ];

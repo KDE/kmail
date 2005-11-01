@@ -268,11 +268,11 @@ void KMMainWidget::readFolderConfig(void)
     return;
 
   KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
-  mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
-  mFolderThreadSubjPref = config->readBoolEntry( "threadMessagesBySubject", true );
-  mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
-  mFolderHtmlLoadExtPref = config->readBoolEntry( "htmlLoadExternalOverride", false );
+  KConfigGroup group(config, "Folder-" + mFolder->idString());
+  mFolderThreadPref = group.readBoolEntry( "threadMessagesOverride", false );
+  mFolderThreadSubjPref = group.readBoolEntry( "threadMessagesBySubject", true );
+  mFolderHtmlPref = group.readBoolEntry( "htmlMailOverride", false );
+  mFolderHtmlLoadExtPref = group.readBoolEntry( "htmlLoadExternalOverride", false );
 }
 
 
@@ -283,11 +283,11 @@ void KMMainWidget::writeFolderConfig(void)
     return;
 
   KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
-  config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
-  config->writeEntry( "threadMessagesBySubject", mFolderThreadSubjPref );
-  config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
-  config->writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
+  KConfigGroup group(config, "Folder-" + mFolder->idString());
+  group.writeEntry( "threadMessagesOverride", mFolderThreadPref );
+  group.writeEntry( "threadMessagesBySubject", mFolderThreadSubjPref );
+  group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
+  group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
 
 
@@ -330,20 +330,20 @@ void KMMainWidget::readConfig(void)
   mHtmlLoadExtPref = readerConfig.readBoolEntry( "htmlLoadExternal", false );
 
   { // area for config group "Geometry"
-    KConfigGroupSaver saver(config, "Geometry");
-    mThreadPref = config->readBoolEntry( "nestedMessages", false );
+    KConfigGroup group(config, "Geometry");
+    mThreadPref = group.readBoolEntry( "nestedMessages", false );
     // size of the mainwin
     QSize defaultSize(750,560);
-    siz = config->readSizeEntry("MainWin", &defaultSize);
+    siz = group.readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
     // default width of the foldertree
     static const int folderpanewidth = 250;
 
-    const int folderW = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-    const int headerW = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-    const int headerH = config->readNumEntry( "HeaderPaneHeight", 180 );
-    const int readerH = config->readNumEntry( "ReaderPaneHeight", 280 );
+    const int folderW = group.readNumEntry( "FolderPaneWidth", folderpanewidth );
+    const int headerW = group.readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
+    const int headerH = group.readNumEntry( "HeaderPaneHeight", 180 );
+    const int readerH = group.readNumEntry( "ReaderPaneHeight", 280 );
 
     mPanner1Sep.clear();
     mPanner2Sep.clear();
@@ -364,8 +364,8 @@ void KMMainWidget::readConfig(void)
        * it's better to manage these here */
       // The columns are shown by default.
 
-      const int unreadColumn = config->readNumEntry("UnreadColumn", 1);
-      const int totalColumn = config->readNumEntry("TotalColumn", 2);
+      const int unreadColumn = group.readNumEntry("UnreadColumn", 1);
+      const int totalColumn = group.readNumEntry("TotalColumn", 2);
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
@@ -394,15 +394,15 @@ void KMMainWidget::readConfig(void)
   mFolderTree->readConfig();
 
   { // area for config group "General"
-    KConfigGroupSaver saver(config, "General");
-    mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
-    mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
+    KConfigGroup group(config, "General");
+    mBeepOnNew = group.readBoolEntry("beep-on-mail", false);
+    mConfirmEmpty = group.readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
-	mStartupFolder = config->readEntry("startupFolder", kmkernel->inboxFolder()->idString());
+	mStartupFolder = group.readEntry("startupFolder", kmkernel->inboxFolder()->idString());
     if (!mStartupDone)
     {
       // check mail on startup
-      bool check = config->readBoolEntry("checkmail-startup", false);
+      bool check = group.readBoolEntry("checkmail-startup", false);
       if (check)
         // do it after building the kmmainwin, so that the progressdialog is available
         QTimer::singleShot( 0, this, SLOT( slotCheckMail() ) );
@@ -976,9 +976,9 @@ void KMMainWidget::slotExpireFolder()
     return;
   }
   KConfig           *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup group(config, "General");
 
-  if (config->readBoolEntry("warn-before-expire", true)) {
+  if (group.readBoolEntry("warn-before-expire", true)) {
     str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Q3StyleSheet::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
@@ -1175,9 +1175,9 @@ void KMMainWidget::slotExpireAll() {
   KConfig    *config = KMKernel::config();
   int        ret = 0;
 
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup group(config, "General");
 
-  if (config->readBoolEntry("warn-before-expire", true)) {
+  if (group.readBoolEntry("warn-before-expire", true)) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList()->first(),
 			 i18n("Are you sure you want to expire all old messages?"),
 			 i18n("Expire Old Messages?"), i18n("Expire"));

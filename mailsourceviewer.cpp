@@ -34,7 +34,7 @@
 #endif
 
 #include "mailsourceviewer.h"
-
+#include <QIcon>
 #include <kapplication.h>
 #include <kwin.h>
 

@@ -187,38 +187,38 @@ void KMFolderCachedImap::initializeFrom( KMFolderCachedImap* parent )
 void KMFolderCachedImap::readConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver( config, "Folder-" + folder()->idString() );
-  if( mImapPath.isEmpty() ) mImapPath = config->readEntry( "ImapPath" );
+  KConfigGroup group( config, "Folder-" + folder()->idString() );
+  if( mImapPath.isEmpty() ) mImapPath = group.readEntry( "ImapPath" );
   if( QString( name() ).upper() == "INBOX" && mImapPath == "/INBOX/" )
   {
     folder()->setLabel( i18n( "inbox" ) );
     // for the icon
     folder()->setSystemFolder( true );
   }
-  mNoContent = config->readBoolEntry( "NoContent", false );
-  mReadOnly = config->readBoolEntry( "ReadOnly", false );
+  mNoContent = group.readBoolEntry( "NoContent", false );
+  mReadOnly = group.readBoolEntry( "ReadOnly", false );
 
   if ( mAnnotationFolderType != "FROMSERVER" ) {
-    mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
+    mAnnotationFolderType = group.readEntry( "Annotation-FolderType" );
     // if there is an annotation, it has to be XML
     if ( !mAnnotationFolderType.isEmpty() && !mAnnotationFolderType.startsWith( "mail" ) )
       kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
 //    kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
   }
-  mIncidencesFor = incidencesForFromString( config->readEntry( "IncidencesFor" ) );
+  mIncidencesFor = incidencesForFromString( group.readEntry( "IncidencesFor" ) );
 //  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally =
-    config->readBoolEntry( "StatusChangedLocally", false );
+    group.readBoolEntry( "StatusChangedLocally", false );
 
-  mAnnotationFolderTypeChanged = config->readBoolEntry( "AnnotationFolderTypeChanged", false );
-  mIncidencesForChanged = config->readBoolEntry( "IncidencesForChanged", false );
+  mAnnotationFolderTypeChanged = group.readBoolEntry( "AnnotationFolderTypeChanged", false );
+  mIncidencesForChanged = group.readBoolEntry( "IncidencesForChanged", false );
   if ( mImapPath.isEmpty() ) {
-    mImapPathCreation = config->readEntry("ImapPathCreation");
+    mImapPathCreation = group.readEntry("ImapPathCreation");
   }
 }
 

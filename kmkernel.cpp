@@ -1304,18 +1304,18 @@ void KMKernel::init()
 
   QDir dir;
 
-  KConfigGroupSaver saver(cfg, "General");
-  the_firstStart = cfg->readBoolEntry("first-start", true);
-  cfg->writeEntry("first-start", false);
-  the_previousVersion = cfg->readEntry("previous-version");
-  cfg->writeEntry("previous-version", KMAIL_VERSION);
-  QString foldersPath = cfg->readPathEntry( "folders" );
+  KConfigGroup group(cfg, "General");
+  the_firstStart = group.readBoolEntry("first-start", true);
+  group.writeEntry("first-start", false);
+  the_previousVersion = group.readEntry("previous-version");
+  group.writeEntry("previous-version", KMAIL_VERSION);
+  QString foldersPath = group.readPathEntry( "folders" );
   kdDebug(5006) << k_funcinfo << "foldersPath (from config): '" << foldersPath << "'" << endl;
 
   if ( foldersPath.isEmpty() ) {
     foldersPath = localDataPath() + "mail";
     if ( transferMail( foldersPath ) ) {
-      cfg->writePathEntry( "folders", foldersPath );
+      group.writePathEntry( "folders", foldersPath );
     }
     kdDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
   }
@@ -1347,10 +1347,10 @@ void KMKernel::init()
   the_server_is_ready = true;
   imProxy()->initialize();
   { // area for config group "Composer"
-    KConfigGroupSaver saver(cfg, "Composer");
-    if (cfg->readListEntry("pref-charsets").isEmpty())
+    KConfigGroup group(cfg, "Composer");
+    if (group.readListEntry("pref-charsets").isEmpty())
     {
-      cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
+      group.writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
   readConfig();
@@ -1523,13 +1523,13 @@ void KMKernel::cleanup(void)
 #endif
 
   KConfig* config =  KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup group(config, "General");
 
   if (the_trashFolder) {
 
     the_trashFolder->close(TRUE);
 
-    if (config->readBoolEntry("empty-trash-on-exit", true))
+    if (group.readBoolEntry("empty-trash-on-exit", true))
     {
       if ( the_trashFolder->count( true ) > 0 )
         the_trashFolder->expunge();
@@ -1978,7 +1978,7 @@ KConfig* KMKernel::config()
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
   }
-  return mySelf->mConfig;
+  return mySelf->mConfig.data();
 }
 
 KMailICalIfaceImpl& KMKernel::iCalIface()

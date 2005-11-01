@@ -53,8 +53,8 @@ void AccountManager::writeConfig( bool withSync )
   KConfig* config = KMKernel::config();
   QString groupName;
 
-  KConfigGroupSaver saver(config, "General");
-  config->writeEntry("accounts", mAcctList.count());
+  KConfigGroup group(config, "General");
+  group.writeEntry("accounts", mAcctList.count());
 
   // first delete all account groups in the config file:
   QStringList accountGroups =
@@ -67,7 +67,7 @@ void AccountManager::writeConfig( bool withSync )
   int i = 1;
   for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it, ++i ) {
     groupName.sprintf("Account %d", i);
-    KConfigGroupSaver saver(config, groupName);
+    KConfigGroup group(config, groupName);
     (*it)->writeConfig(*config);
   }
   if (withSync) config->sync();
@@ -94,12 +94,12 @@ void AccountManager::readConfig(void)
   for (i=1; i<=num; i++)
   {
     groupName.sprintf("Account %d", i);
-    KConfigGroupSaver saver(config, groupName);
-    acctType = config->readEntry("Type");
+    KConfigGroup group(config, groupName);
+    acctType = group.readEntry("Type");
     // Provide backwards compatibility
     if (acctType == "advanced pop" || acctType == "experimental pop")
       acctType = "pop";
-    acctName = config->readEntry("Name");
+    acctName = group.readEntry("Name");
     id = config->readUnsignedNumEntry("Id", 0);
     if (acctName.isEmpty()) acctName = i18n("Account %1").arg(i);
     acct = create(acctType, acctName, id);

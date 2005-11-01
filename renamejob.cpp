@@ -97,8 +97,8 @@ void RenameJob::execute()
 
     // get the default mailbox type
     KConfig *config = KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
-    int deftype = config->readNumEntry("default-mailbox-format", 1);
+    KConfigGroup group(config, "General");
+    int deftype = group.readNumEntry("default-mailbox-format", 1);
     if ( deftype < 0 || deftype > 1 ) deftype = 1;
 
     // the type of the new folder
@@ -255,14 +255,14 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     QString oldconfig = "Folder-" + mStorage->folder()->idString();
     KConfig* config = KMKernel::config();
     QMap<QString, QString> entries = config->entryMap( oldconfig );
-    KConfigGroupSaver saver(config, "Folder-" + mNewFolder->idString());
+    KConfigGroup group(config, "Folder-" + mNewFolder->idString());
     for ( QMap<QString, QString>::Iterator it = entries.begin();
           it != entries.end(); ++it )
     {
       if ( it.key() == "Id" || it.key() == "ImapPath" ||
            it.key() == "UidValidity" )
         continue;
-      config->writeEntry( it.key(), it.data() );
+      group.writeEntry( it.key(), it.data() );
     }
     mNewFolder->readConfig( config );
 

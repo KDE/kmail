@@ -172,20 +172,20 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
 void KMFolderImap::readConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  mCheckMail = config->readBoolEntry("checkmail", true);
+  KConfigGroup group(config, "Folder-" + folder()->idString());
+  mCheckMail = group.readBoolEntry("checkmail", true);
 
-  mUidValidity = config->readEntry("UidValidity");
+  mUidValidity = group.readEntry("UidValidity");
   if ( mImapPath.isEmpty() ) {
-    setImapPath( config->readEntry("ImapPath") );
+    setImapPath( group.readEntry("ImapPath") );
   }
   if (QString(name()).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder()->setSystemFolder( true );
     folder()->setLabel( i18n("inbox") );
   }
-  mNoContent = config->readBoolEntry("NoContent", FALSE);
-  mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
+  mNoContent = group.readBoolEntry("NoContent", FALSE);
+  mReadOnly = group.readBoolEntry("ReadOnly", FALSE);
 
   KMFolderMbox::readConfig();
 }
@@ -194,12 +194,12 @@ void KMFolderImap::readConfig()
 void KMFolderImap::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  config->writeEntry("checkmail", mCheckMail);
-  config->writeEntry("UidValidity", mUidValidity);
-  config->writeEntry("ImapPath", mImapPath);
-  config->writeEntry("NoContent", mNoContent);
-  config->writeEntry("ReadOnly", mReadOnly);
+  KConfigGroup group(config, "Folder-" + folder()->idString());
+  group.writeEntry("checkmail", mCheckMail);
+  group.writeEntry("UidValidity", mUidValidity);
+  group.writeEntry("ImapPath", mImapPath);
+  group.writeEntry("NoContent", mNoContent);
+  group.writeEntry("ReadOnly", mReadOnly);
   KMFolderMbox::writeConfig();
 }
 

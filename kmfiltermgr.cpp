@@ -75,18 +75,18 @@ void KMFilterMgr::readConfig(void)
 
   clear();
 
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup group(config, "General");
 
   if (bPopFilter) {
-    numFilters = config->readNumEntry("popfilters",0);
-    mShowLater = config->readNumEntry("popshowDLmsgs",0);
+    numFilters = group.readNumEntry("popfilters",0);
+    mShowLater = group.readNumEntry("popshowDLmsgs",0);
   } else {
-    numFilters = config->readNumEntry("filters",0);
+    numFilters = group.readNumEntry("filters",0);
   }
 
   for ( int i=0 ; i < numFilters ; ++i ) {
     grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
-    KConfigGroupSaver saver(config, grpName);
+    KConfigGroup group(config, grpName);
     KMFilter * filter = new KMFilter(config, bPopFilter);
     filter->purify();
     if ( filter->isEmpty() ) {
@@ -123,18 +123,18 @@ void KMFilterMgr::writeConfig(bool withSync)
         grpName.sprintf("PopFilter #%d", i);
       else
         grpName.sprintf("Filter #%d", i);
-      KConfigGroupSaver saver(config, grpName);
+      KConfigGroup group(config, grpName);
       (*it)->writeConfig(config);
       ++i;
     }
   }
 
-  KConfigGroupSaver saver(config, "General");
+  KConfigGroup group(config, "General");
   if (bPopFilter) {
-    config->writeEntry("popfilters", i);
-    config->writeEntry("popshowDLmsgs", mShowLater);
+    group.writeEntry("popfilters", i);
+    group.writeEntry("popshowDLmsgs", mShowLater);
   } else
-    config->writeEntry("filters", i);
+    group.writeEntry("filters", i);
 
   if (withSync) config->sync();
 }

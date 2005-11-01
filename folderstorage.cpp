@@ -871,14 +871,14 @@ void FolderStorage::readConfig()
 {
   //kdDebug(5006)<<"#### READING CONFIG  = "<< name() <<endl;
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
+  KConfigGroup group(config, "Folder-" + folder()->idString());
   if (mUnreadMsgs == -1)
-    mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
+    mUnreadMsgs = group.readNumEntry("UnreadMsgs", -1);
   if (mTotalMsgs == -1)
-    mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
-  mCompactable = config->readBoolEntry("Compactable", true);
+    mTotalMsgs = group.readNumEntry("TotalMsgs", -1);
+  mCompactable = group.readBoolEntry("Compactable", true);
 
-  int type = config->readNumEntry( "ContentsType", 0 );
+  int type = group.readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
 
@@ -889,12 +889,12 @@ void FolderStorage::readConfig()
 void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  config->writeEntry("UnreadMsgs",
+  KConfigGroup group(config, "Folder-" + folder()->idString());
+  group.writeEntry("UnreadMsgs",
       mGuessedUnreadMsgs == -1 ? mUnreadMsgs : mGuessedUnreadMsgs);
-  config->writeEntry("TotalMsgs", mTotalMsgs);
-  config->writeEntry("Compactable", mCompactable);
-  config->writeEntry("ContentsType", mContentsType);
+  group.writeEntry("TotalMsgs", mTotalMsgs);
+  group.writeEntry("Compactable", mCompactable);
+  group.writeEntry("ContentsType", mContentsType);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
