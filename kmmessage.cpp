@@ -4060,10 +4060,11 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( !part )
     part = getFirstDwBodyPart();
 
-  if ( !part && mStatus.hasAttachment() )
+  if ( !part )
   {
     // kdDebug(5006) << "updateAttachmentState - no part!" << endl;
-    toggleStatus( MessageStatus::statusHasAttachment() );
+    if ( mStatus.hasAttachment() )
+      toggleStatus( MessageStatus::statusHasAttachment() );
     return;
   }
 
