@@ -294,11 +294,11 @@ int KMFolderCachedImap::readUidCache()
       if( cacheVersion == UIDCACHE_VERSION ) {
         len = uidcache.readLine( buf, sizeof(buf) );
         if( len > 0 ) {
-          setUidValidity( QString::fromLocal8Bit( buf).stripWhiteSpace() );
+          setUidValidity( QString::fromLocal8Bit( buf).trimmed() );
           len = uidcache.readLine( buf, sizeof(buf) );
           if( len > 0 ) {
             // load the last known highest uid from the on disk cache
-            setLastUid( QString::fromLocal8Bit( buf).stripWhiteSpace().toULong() );
+            setLastUid( QString::fromLocal8Bit( buf).trimmed().toULong() );
             return 0;
           }
         }

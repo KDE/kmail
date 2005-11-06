@@ -618,7 +618,7 @@ static bool flushPart(QString &msg, QStringList &part,
          if (text.isEmpty())
             text = line;
          else
-            text += ' '+line.stripWhiteSpace();
+            text += ' '+line.trimmed();
 
          if (((int) text.length() < maxLength) || ((int) line.length() < (maxLength-10)))
             msg += flowText(text, indent, maxLength);
@@ -1068,7 +1068,7 @@ Q3CString KMMessage::getRefStr() const
   Q3CString firstRef, lastRef, refStr, retRefStr;
   int i, j;
 
-  refStr = headerField("References").stripWhiteSpace().latin1();
+  refStr = headerField("References").trimmed().latin1();
 
   if (refStr.isEmpty())
     return headerField("Message-Id").latin1();
@@ -1100,7 +1100,7 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   msg->fromDwString(this->asDwString());
 
   uint id = 0;
-  QString strId = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace();
+  QString strId = msg->headerField( "X-KMail-Identity" ).trimmed();
   if ( !strId.isEmpty())
     id = strId.toUInt();
   const KPIM::Identity & ident =
@@ -1342,7 +1342,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   // extract where to send to:
   QString receiptTo = headerField("Disposition-Notification-To");
-  if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
+  if ( receiptTo.trimmed().isEmpty() ) return 0;
   receiptTo.remove( '\n' );
 
 
@@ -1544,7 +1544,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   KMMessage *receipt;
 
   receiptTo = headerField("Disposition-Notification-To");
-  if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
+  if ( receiptTo.trimmed().isEmpty() ) return 0;
   receiptTo.remove( '\n' );
 
   receipt = new KMMessage;
@@ -1625,7 +1625,7 @@ void KMMessage::initHeader( uint id )
 }
 
 uint KMMessage::identityUoid() const {
-  QString idString = headerField("X-KMail-Identity").stripWhiteSpace();
+  QString idString = headerField("X-KMail-Identity").trimmed();
   bool ok = false;
   int id = idString.toUInt( &ok );
 
@@ -3277,9 +3277,9 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
                    // next email address
                    if ( !result.isEmpty() )
                      result += ", ";
-                   name = name.stripWhiteSpace();
-                   comment = comment.stripWhiteSpace();
-                   angleAddress = angleAddress.stripWhiteSpace();
+                   name = name.trimmed();
+                   comment = comment.trimmed();
+                   angleAddress = angleAddress.trimmed();
                    /*
                    kdDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
@@ -3359,9 +3359,9 @@ Q3CString KMMessage::stripEmailAddr( const Q3CString& aStr )
   }
   if ( !result.isEmpty() )
     result += ", ";
-  name = name.stripWhiteSpace();
-  comment = comment.stripWhiteSpace();
-  angleAddress = angleAddress.stripWhiteSpace();
+  name = name.trimmed();
+  comment = comment.trimmed();
+  angleAddress = angleAddress.trimmed();
   /*
   kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
   kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
@@ -3439,9 +3439,9 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
                    // next email address
                    if ( !result.isEmpty() )
                      result += ", ";
-                   name = name.stripWhiteSpace();
-                   comment = comment.stripWhiteSpace();
-                   angleAddress = angleAddress.stripWhiteSpace();
+                   name = name.trimmed();
+                   comment = comment.trimmed();
+                   angleAddress = angleAddress.trimmed();
                    /*
                    kdDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
@@ -3521,9 +3521,9 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   }
   if ( !result.isEmpty() )
     result += ", ";
-  name = name.stripWhiteSpace();
-  comment = comment.stripWhiteSpace();
-  angleAddress = angleAddress.stripWhiteSpace();
+  name = name.trimmed();
+  comment = comment.trimmed();
+  angleAddress = angleAddress.trimmed();
   /*
   kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
   kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
@@ -3691,7 +3691,7 @@ QString KMMessage::expandAliases( const QString& recipients )
         it != recipientList.end(); ++it ) {
     if ( !expandedRecipients.isEmpty() )
       expandedRecipients += ", ";
-    QString receiver = (*it).stripWhiteSpace();
+    QString receiver = (*it).trimmed();
 
     // try to expand distribution list
     QString expandedList = KAddrBookExternal::expandDistributionList( receiver );

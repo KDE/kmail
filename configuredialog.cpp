@@ -385,7 +385,7 @@ void IdentityPage::slotNewIdentity()
   NewIdentityDialog dialog( im->shadowIdentities(), this, "new", true );
 
   if( dialog.exec() == QDialog::Accepted ) {
-    QString identityName = dialog.identityName().stripWhiteSpace();
+    QString identityName = dialog.identityName().trimmed();
     assert( !identityName.isEmpty() );
 
     //
@@ -481,7 +481,7 @@ void IdentityPage::slotRenameIdentity( Q3ListViewItem * i,
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
   if ( !item ) return;
 
-  QString newName = s.stripWhiteSpace();
+  QString newName = s.trimmed();
   if ( !newName.isEmpty() &&
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
     KPIM::Identity & ident = item->identity();

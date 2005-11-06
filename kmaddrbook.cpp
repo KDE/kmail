@@ -47,7 +47,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 		(*it).additionalName() + " " +
 	        (*it).familyName() + " " +
 		(*it).suffix();
-    n = n.simplifyWhiteSpace();
+    n = n.simplified();
 
     QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
     QString endQuote = "\" ";
@@ -72,7 +72,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 	  addr += '<' + email + '>';
 	else
 	  addr += email;
-	addr = addr.stripWhiteSpace();
+	addr = addr.trimmed();
 	result.append( addr );
       }
     }

@@ -713,7 +713,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 }
 
 static KURL subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveURL( subject.stripWhiteSpace()
+    return KFileDialog::getSaveURL( subject.trimmed()
                                            .replace( QDir::separator(), '_' ),
                                     QString::null );
 }
@@ -1165,7 +1165,7 @@ KMCommand::Result KMForwardCommand::execute()
       for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
         // set the identity
         if (id == 0)
-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+          id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
         // set the part header
         msgPartText += "--";
         msgPartText += QString::fromLatin1( boundary );
@@ -1217,7 +1217,7 @@ KMCommand::Result KMForwardCommand::execute()
       for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
         // set the identity
         if (id == 0)
-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+          id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
 
         msgText += msg->createForwardBody();
         linklist.append(msg);
@@ -1249,7 +1249,7 @@ KMCommand::Result KMForwardCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *fwdMsg = msg->createForward();
 
-  uint id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+  uint id = msg->headerField("X-KMail-Identity").trimmed().toUInt();
   if ( id == 0 )
     id = mIdentity;
   {
@@ -2205,8 +2205,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       // only body parts which have a filename or a name parameter (except for
       // the root node for which name is set to the message's subject) are
       // considered attachments
-      if ( it.key()->msgPart().fileName().stripWhiteSpace().isEmpty() &&
-           ( it.key()->msgPart().name().stripWhiteSpace().isEmpty() ||
+      if ( it.key()->msgPart().fileName().trimmed().isEmpty() &&
+           ( it.key()->msgPart().name().trimmed().isEmpty() ||
              !it.key()->parentNode() ) ) {
         PartNodeMessageMap::iterator delIt = it;
         ++it;
@@ -2245,9 +2245,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     partNode *node = mAttachmentMap.begin().key();
     // replace all ':' with '_' because ':' isn't allowed on FAT volumes
     QString s =
-      node->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+      node->msgPart().fileName().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
-      s = node->msgPart().name().stripWhiteSpace().replace( ':', '_' );
+      s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18n("filename for an unnamed attachment", "attachment.1");
     url = KFileDialog::getSaveURL( s, QString::null, parentWidget(),
@@ -2271,9 +2271,9 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
       QString s =
-        it.key()->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+        it.key()->msgPart().fileName().trimmed().replace( ':', '_' );
       if ( s.isEmpty() )
-        s = it.key()->msgPart().name().stripWhiteSpace().replace( ':', '_' );
+        s = it.key()->msgPart().name().trimmed().replace( ':', '_' );
       if ( s.isEmpty() ) {
         ++unnamedAtmCount;
         s = i18n("filename for the %1-th unnamed attachment",

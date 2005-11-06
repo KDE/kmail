@@ -128,7 +128,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
 
   if (aBasePath[0] == '~')
   {
-    mBasePath = QDir::homeDirPath();
+    mBasePath = QDir::homePath();
     mBasePath.append("/");
     mBasePath.append(aBasePath.mid(1));
   }
@@ -160,7 +160,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
                                  "modify the content of the folder '%2'.")
-                            .arg( mBasePath ).arg( QDir::homeDirPath() ) );
+                            .arg( mBasePath ).arg( QDir::homePath() ) );
       ::exit(-1);
     }
   }

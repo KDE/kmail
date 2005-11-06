@@ -186,7 +186,7 @@ QStringList KMail::ACLEntryDialog::userIds() const
   QStringList lst = QStringList::split( ",", mUserIdLineEdit->text() );
   for( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
     // Strip white space (in particular, due to ", ")
-    *it = (*it).stripWhiteSpace();
+    *it = (*it).trimmed();
   }
   return lst;
 }

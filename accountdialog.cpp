@@ -114,10 +114,10 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
     mStream(new QTextStream(&mProcmailrc))
 {
   // predefined
-  mVars.insert( "HOME", QDir::homeDirPath() );
+  mVars.insert( "HOME", QDir::homePath() );
 
   if( fname.isEmpty() ) {
-    fname = QDir::homeDirPath() + "/.procmailrc";
+    fname = QDir::homePath() + "/.procmailrc";
     mProcmailrc.setName(fname);
   }
 
@@ -130,7 +130,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 
     while( !mStream->atEnd() ) {
 
-      s = mStream->readLine().stripWhiteSpace();
+      s = mStream->readLine().trimmed();
 
       if(  s[0] == '#' ) continue; // skip comments
 
@@ -139,7 +139,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
       if( (commentPos = s.find('#')) > -1 ) {
         // get rid of trailing comment
         s.truncate(commentPos);
-        s = s.stripWhiteSpace();
+        s = s.trimmed();
       }
 
       if(  lockFileGlobal.search(s) != -1 ) {
@@ -175,7 +175,7 @@ ProcmailRCParser::~ProcmailRCParser()
 void
 ProcmailRCParser::processGlobalLock(const QString &s)
 {
-  QString val = expandVars(s.mid(s.find('=') + 1).stripWhiteSpace());
+  QString val = expandVars(s.mid(s.find('=') + 1).trimmed());
   if ( !mLockFiles.contains(val) )
     mLockFiles << val;
 }
@@ -187,7 +187,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
   int colonPos = s.findRev(':');
 
   if (colonPos > 0) { // we don't care about the leading one
-    val = s.mid(colonPos + 1).stripWhiteSpace();
+    val = s.mid(colonPos + 1).trimmed();
 
     if ( val.length() ) {
       // user specified a lockfile, so process it
@@ -203,14 +203,14 @@ ProcmailRCParser::processLocalLock(const QString &s)
   QString line, prevLine;
   do {
     prevLine = line;
-    line = mStream->readLine().stripWhiteSpace();
+    line = mStream->readLine().trimmed();
   } while ( !mStream->atEnd() && (line[0] == '*' ||
                                 prevLine[prevLine.length() - 1] == '\\' ));
 
   if( line[0] != '!' && line[0] != '|' &&  line[0] != '{' ) {
     // this is a filename, expand it
     //
-    line =  line.stripWhiteSpace();
+    line =  line.trimmed();
     line = expandVars(line);
 
     // prepend default MAILDIR if needed
@@ -246,7 +246,7 @@ ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
   if( eqPos == -1) return;
 
   QString varName = s.left(eqPos),
-    varValue = expandVars(s.mid(eqPos + 1).stripWhiteSpace());
+    varValue = expandVars(s.mid(eqPos + 1).trimmed());
 
   mVars.insert( varName.latin1(), varValue );
 }
@@ -2120,9 +2120,9 @@ void AccountDialog::initAccountForConnect()
   NetworkAccount &na = *(NetworkAccount*)mAccount;
 
   if ( type == "pop" ) {
-    na.setHost( mPop.hostEdit->text().stripWhiteSpace() );
+    na.setHost( mPop.hostEdit->text().trimmed() );
     na.setPort( mPop.portEdit->text().toInt() );
-    na.setLogin( mPop.loginEdit->text().stripWhiteSpace() );
+    na.setLogin( mPop.loginEdit->text().trimmed() );
     na.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     na.setPasswd( mPop.passwordEdit->text(), na.storePasswd() );
     na.setUseSSL( mPop.encryptionSSL->isChecked() );
@@ -2146,9 +2146,9 @@ void AccountDialog::initAccountForConnect()
     else na.setAuth("AUTO");
   }
   else if ( type == "imap" || type == "cachedimap" ) {
-    na.setHost( mImap.hostEdit->text().stripWhiteSpace() );
+    na.setHost( mImap.hostEdit->text().trimmed() );
     na.setPort( mImap.portEdit->text().toInt() );
-    na.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
+    na.setLogin( mImap.loginEdit->text().trimmed() );
     na.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     na.setPasswd( mImap.passwordEdit->text(), na.storePasswd() );
     na.setUseSSL( mImap.encryptionSSL->isChecked() );

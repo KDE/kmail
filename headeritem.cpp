@@ -160,14 +160,14 @@ QString HeaderItem::text( int col) const
     if (tmp.isEmpty())
       tmp = i18n("Unknown");
     else
-      tmp = tmp.simplifyWhiteSpace();
+      tmp = tmp.simplified();
 
   } else if ( col == headers->paintInfo()->receiverCol ) {
     tmp = mMsgBase->toStrip();
     if (tmp.isEmpty())
       tmp = i18n("Unknown");
     else
-      tmp = tmp.simplifyWhiteSpace();
+      tmp = tmp.simplified();
 
   } else if(col == headers->paintInfo()->subCol) {
     tmp = mMsgBase->subject();

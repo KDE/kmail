@@ -283,7 +283,7 @@ void KMSender::doSendMsg()
     mCurrentMsg->updateAttachmentState();
 
     const KPIM::Identity & id = kmkernel->identityManager()
-      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
     if ( !mCurrentMsg->fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
@@ -382,7 +382,7 @@ void KMSender::doSendMsg()
     // message's identity or of the default identity unless those two are also
     // empty
     const KPIM::Identity & id = kmkernel->identityManager()
-      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
     if ( !id.emailAddr().isEmpty() ) {
       mCurrentMsg->setFrom( id.fullEmailAddr() );
     }

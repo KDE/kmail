@@ -207,7 +207,7 @@ namespace KMail {
   }
 
   QString SignatureConfigurator::fileURL() const {
-    QString file = mFileRequester->url().stripWhiteSpace();
+    QString file = mFileRequester->url().trimmed();
 
     // Force the filename to be relative to ~ instead of $PWD depending
     // on the rest of the code (KRun::run in Edit and KFileItem on save)
@@ -261,7 +261,7 @@ namespace KMail {
   }
 
   void SignatureConfigurator::slotEnableEditButton( const QString & url ) {
-    mEditButton->setDisabled( url.stripWhiteSpace().isEmpty() );
+    mEditButton->setDisabled( url.trimmed().isEmpty() );
   }
 
   void SignatureConfigurator::slotEdit() {

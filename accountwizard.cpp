@@ -170,9 +170,9 @@ void AccountWizard::showPage( QWidget *page )
       mIncomingLabel->setText( i18n( "Location:" ) );
 
       if ( mTypeBox->type() == AccountTypeBox::Local )
-        mIncomingLocation->setText( QDir::homeDirPath() + "/inbox" );
+        mIncomingLocation->setText( QDir::homePath() + "/inbox" );
       else
-        mIncomingLocation->setText( QDir::homeDirPath() + "/Mail/" );
+        mIncomingLocation->setText( QDir::homePath() + "/Mail/" );
     } else {
       mIncomingLocationWdg->hide();
       mIncomingServerWdg->show();

@@ -712,7 +712,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 // Initiate a delayed refresh of the tree
 void KMFolderTree::refresh()
 {
-  mUpdateTimer.changeInterval(200);
+  mUpdateTimer.start(200);
 }
 
 //-----------------------------------------------------------------------------

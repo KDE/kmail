@@ -157,7 +157,7 @@ KMFilterActionWithUOID::KMFilterActionWithUOID( const char* aName, const QString
 
 void KMFilterActionWithUOID::argsFromString( const QString argsStr )
 {
-  mParameter = argsStr.stripWhiteSpace().toUInt();
+  mParameter = argsStr.trimmed().toUInt();
 }
 
 const QString KMFilterActionWithUOID::argsAsString() const

@@ -103,7 +103,7 @@ namespace KMail {
   }
 
   QString VacationDialog::messageText() const {
-    return mTextEdit->text().stripWhiteSpace();
+    return mTextEdit->text().trimmed();
   }
 
   void VacationDialog::setMessageText( const QString & text ) {

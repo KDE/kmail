@@ -613,7 +613,7 @@ int KMFolderMbox::createIndexFromContents()
 
         if (size > 0)
         {
-          msgIdStr = msgIdStr.stripWhiteSpace();
+          msgIdStr = msgIdStr.trimmed();
           if( !msgIdStr.isEmpty() ) {
             int rightAngle;
             rightAngle = msgIdStr.find( '>' );
@@ -621,7 +621,7 @@ int KMFolderMbox::createIndexFromContents()
               msgIdStr.truncate( rightAngle + 1 );
           }
 
-          replyToIdStr = replyToIdStr.stripWhiteSpace();
+          replyToIdStr = replyToIdStr.trimmed();
           if( !replyToIdStr.isEmpty() ) {
             int rightAngle;
             rightAngle = replyToIdStr.find( '>' );
@@ -629,7 +629,7 @@ int KMFolderMbox::createIndexFromContents()
               replyToIdStr.truncate( rightAngle + 1 );
           }
 
-          referencesStr = referencesStr.stripWhiteSpace();
+          referencesStr = referencesStr.trimmed();
           if( !referencesStr.isEmpty() ) {
             int leftAngle, rightAngle;
             leftAngle = referencesStr.findRev( '<' );
@@ -658,16 +658,16 @@ int KMFolderMbox::createIndexFromContents()
           }
 
           mi = new KMMsgInfo(folder());
-          mi->init( subjStr.stripWhiteSpace(),
-                    fromStr.stripWhiteSpace(),
-                    toStr.stripWhiteSpace(),
+          mi->init( subjStr.trimmed(),
+                    fromStr.trimmed(),
+                    toStr.trimmed(),
                     0, MessageStatus::statusNew(),
-                    xmarkStr.stripWhiteSpace(),
+                    xmarkStr.trimmed(),
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                     KMMsgMDNStateUnknown, offs, size, sizeServer, uid );
           mi->setStatus(status, xstatus);
-          mi->setDate( dateStr.stripWhiteSpace().constData() );
+          mi->setDate( dateStr.trimmed().constData() );
           mi->setDirty(false);
           mMsgList.append(mi, mExportsSernums );
 

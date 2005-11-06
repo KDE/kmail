@@ -1539,7 +1539,7 @@ static QString cleanedUpHeaderString( const QString & s )
   QString res( s );
   res.replace( '\r', "" );
   res.replace( '\n', " " );
-  return res.stripWhiteSpace();
+  return res.trimmed();
 }
 
 //-----------------------------------------------------------------------------
@@ -1677,7 +1677,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   mEdtSubject->setText(mMsg->subject());
 
   if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
-    mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+    mId = newMsg->headerField("X-KMail-Identity").trimmed().toUInt();
 
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
@@ -3153,7 +3153,7 @@ void KMComposeWin::viewAttach( int index )
   QString pname;
   KMMessagePart* msgPart;
   msgPart = mAtmList.at(index);
-  pname = msgPart->name().stripWhiteSpace();
+  pname = msgPart->name().trimmed();
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
@@ -3696,15 +3696,15 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInD
     }
 
     // Validate the To:, CC: and BCC fields
-    if ( !validateAddresses( this, to().stripWhiteSpace() ) ) {
+    if ( !validateAddresses( this, to().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, cc().stripWhiteSpace() ) ) {
+    if ( !validateAddresses( this, cc().trimmed() ) ) {
       return;
     }
 
-    if ( !validateAddresses( this, bcc().stripWhiteSpace() ) ) {
+    if ( !validateAddresses( this, bcc().trimmed() ) ) {
       return;
     }
 
@@ -3817,7 +3817,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
           imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
         if ( !draftsFolder && !imapDraftsFolder ) {
           const KPIM::Identity & id = kmkernel->identityManager()
-            ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+            ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).trimmed().toUInt() );
           KMessageBox::information(0, i18n("The custom drafts folder for identity "
                                            "\"%1\" does not exist (anymore); "
                                            "therefore, the default drafts folder "

@@ -477,9 +477,9 @@ void MessageComposer::readFromComposeWin()
   // mReferenceMessage->bcc() later and also not now. So get the Bcc from
   // the composer window.)
   mBcc = mComposeWin->bcc();
-  mTo = KPIM::splitEmailAddrList( mComposeWin->to().stripWhiteSpace() );
-  mCc = KPIM::splitEmailAddrList( mComposeWin->cc().stripWhiteSpace() );
-  mBccList = KPIM::splitEmailAddrList( mBcc.stripWhiteSpace() );
+  mTo = KPIM::splitEmailAddrList( mComposeWin->to().trimmed() );
+  mCc = KPIM::splitEmailAddrList( mComposeWin->cc().trimmed() );
+  mBccList = KPIM::splitEmailAddrList( mBcc.trimmed() );
 
   for ( unsigned int i = 0 ; i < mComposeWin->mAtmList.count() ; ++i )
     mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),

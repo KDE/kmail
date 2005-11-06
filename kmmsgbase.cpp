@@ -553,7 +553,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
         start--; result.truncate(result.length() - 1);
       }
       int lastNewLine = result.findRev("\n ");
-      if (!result.mid(lastNewLine).stripWhiteSpace().isEmpty()
+      if (!result.mid(lastNewLine).trimmed().isEmpty()
         && result.length() - lastNewLine + encLength + 2 > maxLen)
           result += "\n ";
       result += "=?";
@@ -668,16 +668,16 @@ QString KMMsgBase::decodeRFC2231String(const Q3CString& _str)
 }
 
 QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
-  if (s.stripWhiteSpace().isEmpty()) return "";
+  if (s.trimmed().isEmpty()) return "";
   if ( utf8 )
-    return base64EncodedMD5( s.stripWhiteSpace().utf8() ); // QCString overload
+    return base64EncodedMD5( s.trimmed().utf8() ); // QCString overload
   else
-    return base64EncodedMD5( s.stripWhiteSpace().latin1() ); // const char * overload
+    return base64EncodedMD5( s.trimmed().latin1() ); // const char * overload
 }
 
 QString KMMsgBase::base64EncodedMD5( const QByteArray & s ) {
-  if (s.stripWhiteSpace().isEmpty()) return "";
-  return base64EncodedMD5( s.stripWhiteSpace().data() );
+  if (s.trimmed().isEmpty()) return "";
+  return base64EncodedMD5( s.trimmed().data() );
 }
 
 QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
@@ -1003,23 +1003,23 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   QString tmp_str;
 
   //these is at the beginning because it is queried quite often
-  tmp_str = msgIdMD5().stripWhiteSpace();
+  tmp_str = msgIdMD5().trimmed();
   STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp = 0;
   STORE_DATA(MsgLegacyStatusPart, tmp);
 
   //these are completely arbitrary order
-  tmp_str = fromStrip().stripWhiteSpace();
+  tmp_str = fromStrip().trimmed();
   STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = subject().stripWhiteSpace();
+  tmp_str = subject().trimmed();
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = toStrip().stripWhiteSpace();
+  tmp_str = toStrip().trimmed();
   STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = replyToIdMD5().stripWhiteSpace();
+  tmp_str = replyToIdMD5().trimmed();
   STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = xmark().stripWhiteSpace();
+  tmp_str = xmark().trimmed();
   STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp_str = fileName().stripWhiteSpace();
+  tmp_str = fileName().trimmed();
   STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp = msgSize();
   STORE_DATA(MsgSizePart, tmp);
@@ -1032,10 +1032,10 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   tmp = mdnSentState();
   STORE_DATA(MsgMDNSentPart, tmp);
 
-  tmp_str = replyToAuxIdMD5().stripWhiteSpace();
+  tmp_str = replyToAuxIdMD5().trimmed();
   STORE_DATA_LEN(MsgReplyToAuxIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
 
-  tmp_str = strippedSubjectMD5().stripWhiteSpace();
+  tmp_str = strippedSubjectMD5().trimmed();
   STORE_DATA_LEN(MsgStrippedSubjectMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
 
   tmp = mStatus.toQInt32();
@@ -1089,7 +1089,7 @@ void KMMsgBase::readConfig()
 QString KMMsgBase::stripOffPrefixes( const QString& str )
 {
   return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
-                          true, QString::null ).stripWhiteSpace();
+                          true, QString::null ).trimmed();
 }
 
 //-----------------------------------------------------------------------------
@@ -1130,7 +1130,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
 QString KMMsgBase::cleanSubject() const
 {
   return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
-		       true, QString::null ).stripWhiteSpace();
+		       true, QString::null ).trimmed();
 }
 
 //-----------------------------------------------------------------------------

@@ -665,7 +665,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
     // it in a KMMsgInfo object
     if (atEof || !inHeader)
     {
-      msgIdStr = msgIdStr.stripWhiteSpace();
+      msgIdStr = msgIdStr.trimmed();
       if( !msgIdStr.isEmpty() ) {
         int rightAngle;
         rightAngle = msgIdStr.find( '>' );
@@ -673,7 +673,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
           msgIdStr.truncate( rightAngle + 1 );
       }
 
-      replyToIdStr = replyToIdStr.stripWhiteSpace();
+      replyToIdStr = replyToIdStr.trimmed();
       if( !replyToIdStr.isEmpty() ) {
         int rightAngle;
         rightAngle = replyToIdStr.find( '>' );
@@ -681,7 +681,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
           replyToIdStr.truncate( rightAngle + 1 );
       }
 
-      referencesStr = referencesStr.stripWhiteSpace();
+      referencesStr = referencesStr.trimmed();
       if( !referencesStr.isEmpty() ) {
         int leftAngle, rightAngle;
         leftAngle = referencesStr.findRev( '<' );
@@ -709,7 +709,7 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
           replyToAuxIdStr.truncate( rightAngle + 1 );
       }
 
-      statusStr = statusStr.stripWhiteSpace();
+      statusStr = statusStr.trimmed();
       if (!statusStr.isEmpty())
       {
         // only handle those states not determined by the file suffix
@@ -726,17 +726,17 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
       }
 
       KMMsgInfo *mi = new KMMsgInfo(folder());
-      mi->init( subjStr.stripWhiteSpace(),
-                fromStr.stripWhiteSpace(),
-                toStr.stripWhiteSpace(),
+      mi->init( subjStr.trimmed(),
+                fromStr.trimmed(),
+                toStr.trimmed(),
                 0, status,
-                xmarkStr.stripWhiteSpace(),
+                xmarkStr.trimmed(),
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
 				file.local8Bit(),
                 KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                 KMMsgMDNStateUnknown, f.size() );
 
-      dateStr = dateStr.stripWhiteSpace();
+      dateStr = dateStr.trimmed();
       if (!dateStr.isEmpty())
         mi->setDate(dateStr.constData());
       if ( !uidStr.isEmpty() )
@@ -995,9 +995,9 @@ static bool removeDirAndContentsRecursively( const QString & path )
   Q_FOREACH( fi, list ) {
     if( fi.isDir() ) {
       if ( fi.fileName() != "." && fi.fileName() != ".." )
-        success = success && removeDirAndContentsRecursively( fi.absFilePath() );
+        success = success && removeDirAndContentsRecursively( fi.absoluteFilePath() );
     } else {
-      success = success && d.remove( fi.absFilePath() );
+      success = success && d.remove( fi.absoluteFilePath() );
     }
   }
 

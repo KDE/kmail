@@ -652,7 +652,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
 
   int retval;
   bool readFolderMsgIds = false;
-  QString _foldername = foldername.stripWhiteSpace();
+  QString _foldername = foldername.trimmed();
   _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
 
   if ( foldername != mAddMessageLastFolder ) {
@@ -832,7 +832,7 @@ int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
   int retval;
   bool createNewFolder = false;
 
-  QString _foldername = foldername.stripWhiteSpace();
+  QString _foldername = foldername.trimmed();
   _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
 
   if ( foldername != mAddMessageLastFolder ) {
@@ -1172,14 +1172,14 @@ void KMKernel::slotSenderFinished()
 /********************************************************************/
 void KMKernel::testDir(const char *_name)
 {
-  QString foldersPath = QDir::homeDirPath() + QString( _name );
+  QString foldersPath = QDir::homePath() + QString( _name );
   QFileInfo info( foldersPath );
   if ( !info.exists() ) {
     if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
       KMessageBox::sorry(0, i18n("KMail could not create folder '%1';\n"
                                  "please make sure that you can view and "
                                  "modify the content of the folder '%2'.")
-                            .arg( foldersPath ).arg( QDir::homeDirPath() ) );
+                            .arg( foldersPath ).arg( QDir::homePath() ) );
       ::exit(-1);
     }
   }
@@ -1591,7 +1591,7 @@ bool KMKernel::transferMail( QString & destinationDir )
   // check whether the user has a ~/KMail folder
   QFileInfo fi( QDir::home(), "KMail" );
   if ( fi.exists() && fi.isDir() ) {
-    dir = QDir::homeDirPath() + "/KMail";
+    dir = QDir::homePath() + "/KMail";
     // the following two lines can be removed once moving mail is reactivated
     destinationDir = dir;
     return true;
@@ -1601,10 +1601,10 @@ bool KMKernel::transferMail( QString & destinationDir )
     // check whether the user has a ~/Mail folder
     fi.setFile( QDir::home(), "Mail" );
     if ( fi.exists() && fi.isDir() &&
-         QFile::exists( QDir::homeDirPath() + "/Mail/.inbox.index" ) ) {
+         QFile::exists( QDir::homePath() + "/Mail/.inbox.index" ) ) {
       // there's a ~/Mail folder which seems to be used by KMail (because of the
       // index file)
-      dir = QDir::homeDirPath() + "/Mail";
+      dir = QDir::homePath() + "/Mail";
       // the following two lines can be removed once moving mail is reactivated
       destinationDir = dir;
       return true;

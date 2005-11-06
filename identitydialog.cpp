@@ -397,7 +397,7 @@ namespace KMail {
     if ( w == mCryptographyTab ) {
       // set the configured email address as inital query of the key
       // requesters:
-      const QString email = mEmailEdit->text().stripWhiteSpace();
+      const QString email = mEmailEdit->text().trimmed();
       mPGPEncryptionKeyRequester->setInitialQuery( email );
       mPGPSigningKeyRequester->setInitialQuery( email );
       mSMIMEEncryptionKeyRequester->setInitialQuery( email );
@@ -408,7 +408,7 @@ namespace KMail {
   namespace {
     struct DoesntMatchEMailAddress {
       explicit DoesntMatchEMailAddress( const QString & s )
-	: email( s.stripWhiteSpace().lower() ) {}
+	: email( s.trimmed().lower() ) {}
       bool operator()( const GpgME::Key & key ) const;
     private:
       bool checkForEmail( const char * email ) const;
@@ -455,7 +455,7 @@ bool IdentityDialog::validateAddresses( const QString & addresses )
 }
 
 void IdentityDialog::slotOk() {
-    const QString email = mEmailEdit->text().stripWhiteSpace();
+    const QString email = mEmailEdit->text().trimmed();
  
     // Validate email addresses
     if ( !isValidSimpleEmailAddress( email )) {
@@ -464,11 +464,11 @@ void IdentityDialog::slotOk() {
       return;
     }
 
-    if ( !validateAddresses( mReplyToEdit->text().stripWhiteSpace() ) ) {
+    if ( !validateAddresses( mReplyToEdit->text().trimmed() ) ) {
       return;
     }
  
-    if ( !validateAddresses( mBccEdit->text().stripWhiteSpace() ) ) {
+    if ( !validateAddresses( mBccEdit->text().trimmed() ) ) {
       return;
     }
 

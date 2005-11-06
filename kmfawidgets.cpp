@@ -54,7 +54,7 @@ void KMFilterActionWithAddressWidget::slotAddrBook()
   for( KABC::Addressee::List::const_iterator it = lst.begin(); it != lst.end(); ++it )
     addrList << (*it).fullEmail();
 
-  QString txt = mLineEdit->text().stripWhiteSpace();
+  QString txt = mLineEdit->text().trimmed();
 
   if ( !txt.isEmpty() ) {
     if ( !txt.endsWith( "," ) )

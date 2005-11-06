@@ -1216,7 +1216,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWin();
     }
     else if (updateReaderWinTimer.isActive())
-      updateReaderWinTimer.changeInterval( delay );
+      updateReaderWinTimer.start( delay );
     else
       updateReaderWinTimer.start( 0, TRUE );
   }
@@ -1836,7 +1836,7 @@ bool foundSMIMEData( const QString aUrl,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
-  if ( aUrl.stripWhiteSpace().isEmpty() ) {
+  if ( aUrl.trimmed().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     return;
   }
@@ -2491,7 +2491,7 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress ) {
     QMouseEvent* me = static_cast<QMouseEvent*>(e);
-    if ( me->button() == Qt::LeftButton && ( me->state() & Qt::ShiftButton ) ) {
+    if ( me->button() == Qt::LeftButton && ( me->state() & Qt::ShiftModifier ) ) {
       // special processing for shift+click
       mAtmCurrent = msgPartFromUrl( mUrlClicked );
       if ( mAtmCurrent < 0 ) return false; // not an attachment

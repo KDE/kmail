@@ -664,13 +664,13 @@ void KMFilterListBox::slotUpdateFilterName()
   QString shouldBeName = p->name();
   QString displayedName = mListBox->text( mIdxSelItem );
 
-  if ( shouldBeName.stripWhiteSpace().isEmpty() ) {
+  if ( shouldBeName.trimmed().isEmpty() ) {
     mFilterList.at(mIdxSelItem)->setAutoNaming( true );
   }
 
   if ( mFilterList.at(mIdxSelItem)->isAutoNaming() ) {
     // auto-naming of patterns
-    if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
+    if ( p->first() && !p->first()->field().trimmed().isEmpty() )
       shouldBeName = QString( "<%1>: %2" ).arg( QString::fromLatin1( p->first()->field() ) ).arg( p->first()->contents() );
     else
       shouldBeName = "<" + i18n("unnamed") + ">";

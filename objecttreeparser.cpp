@@ -1003,9 +1003,9 @@ namespace KMail {
       mTextualContentCharset = curNode->msgPart().charset();
     }
 
-    QString label = curNode->msgPart().fileName().stripWhiteSpace();
+    QString label = curNode->msgPart().fileName().trimmed();
     if ( label.isEmpty() )
-      label = curNode->msgPart().name().stripWhiteSpace();
+      label = curNode->msgPart().name().trimmed();
 
     const bool bDrawFrame = !curNode->isFirstTextPart()
                           && !showOnlyOneMimePart()

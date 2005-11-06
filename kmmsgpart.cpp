@@ -523,7 +523,7 @@ QString KMMessagePart::fileName(void) const
 
   const Q3CString str = mContentDisposition.mid(startOfFilename,
                                 endOfFilename-startOfFilename+1)
-                           .stripWhiteSpace();
+                           .trimmed();
 
   if (bRFC2231encoded)
     return KMMsgBase::decodeRFC2231String(str);

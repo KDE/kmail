@@ -474,7 +474,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         if( cntDesc.isEmpty() )
             cntDesc = msgPart().contentDescription();
         if( cntDesc.isEmpty() )
-            cntDesc = msgPart().name().stripWhiteSpace();
+            cntDesc = msgPart().name().trimmed();
         if( cntDesc.isEmpty() )
             cntDesc = msgPart().fileName();
         if( cntDesc.isEmpty() ) {

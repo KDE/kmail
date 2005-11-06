@@ -113,7 +113,7 @@ NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
 
 void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   // OK button is disabled if
-  QString name = proposedIdentityName.stripWhiteSpace();
+  QString name = proposedIdentityName.trimmed();
   // name isn't empty
   if ( name.isEmpty() ) {
     enableButtonOK( false );

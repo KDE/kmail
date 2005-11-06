@@ -588,19 +588,19 @@ void KMTransportDialog::saveSettings()
 {
   if (mTransportInfo->type == "sendmail")
   {
-    mTransportInfo->name = mSendmail.nameEdit->text().stripWhiteSpace();
-    mTransportInfo->host = mSendmail.locationEdit->text().stripWhiteSpace();
+    mTransportInfo->name = mSendmail.nameEdit->text().trimmed();
+    mTransportInfo->host = mSendmail.locationEdit->text().trimmed();
   } else {
     mTransportInfo->name = mSmtp.nameEdit->text();
-    mTransportInfo->host = mSmtp.hostEdit->text().stripWhiteSpace();
-    mTransportInfo->port = mSmtp.portEdit->text().stripWhiteSpace();
+    mTransportInfo->host = mSmtp.hostEdit->text().trimmed();
+    mTransportInfo->port = mSmtp.portEdit->text().trimmed();
     mTransportInfo->auth = mSmtp.authCheck->isChecked();
-    mTransportInfo->user = mSmtp.loginEdit->text().stripWhiteSpace();
+    mTransportInfo->user = mSmtp.loginEdit->text().trimmed();
     mTransportInfo->setPasswd( mSmtp.passwordEdit->text() );
     mTransportInfo->setStorePasswd( mSmtp.storePasswordCheck->isChecked() );
-    mTransportInfo->precommand = mSmtp.precommand->text().stripWhiteSpace();
+    mTransportInfo->precommand = mSmtp.precommand->text().trimmed();
     mTransportInfo->specifyHostname = mSmtp.specifyHostnameCheck->isChecked();
-    mTransportInfo->localHostname = mSmtp.localHostnameEdit->text().stripWhiteSpace();
+    mTransportInfo->localHostname = mSmtp.localHostnameEdit->text().trimmed();
 
     mTransportInfo->encryption = (mSmtp.encryptionTLS->isChecked()) ? "TLS" :
     (mSmtp.encryptionSSL->isChecked()) ? "SSL" : "NONE";

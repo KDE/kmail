@@ -253,17 +253,17 @@ namespace KMail {
 
   bool Vacation::parseScript( const QString & script, QString & messageText,
 			      int & notificationInterval, QStringList & aliases ) {
-    if ( script.stripWhiteSpace().isEmpty() ) {
+    if ( script.trimmed().isEmpty() ) {
       messageText = defaultMessageText();
       notificationInterval = defaultNotificationInterval();
       aliases = defaultMailAliases();
       return true;
     }
 
-    // The stripWhiteSpace() call below prevents parsing errors. The
+    // The trimmed() call below prevents parsing errors. The
     // slave somehow omits the last \n, which results in a lone \r at
     // the end, leading to a parse error.
-    const Q3CString scriptUTF8 = script.stripWhiteSpace().utf8();
+    const Q3CString scriptUTF8 = script.trimmed().utf8();
     kdDebug(5006) << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
     KSieve::Parser parser( scriptUTF8.begin(),
 			   scriptUTF8.begin() + scriptUTF8.length() );
@@ -271,7 +271,7 @@ namespace KMail {
     parser.setScriptBuilder( &vdx );
     if ( !parser.parse() )
       return false;
-    messageText = vdx.messageText().stripWhiteSpace();
+    messageText = vdx.messageText().trimmed();
     notificationInterval = vdx.notificationInterval();
     aliases = vdx.aliases();
     return true;

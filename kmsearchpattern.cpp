@@ -239,7 +239,7 @@ KMSearchRuleString::~KMSearchRuleString()
 
 bool KMSearchRuleString::isEmpty() const
 {
-  return field().stripWhiteSpace().isEmpty() || contents().isEmpty();
+  return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
 bool KMSearchRuleString::requiresBody() const
@@ -287,7 +287,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
         stop = aStr.find( '\n', stop + 1 );
       const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
       const Q3CString codedValue( aStr.data() + start, len + 1 );
-      const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace(); // FIXME: This needs to be changed for IDN support.
+      const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
       rc = matchesInternal( msgContents );
     }
   } else if ( field() == "<recipients>" ) {
@@ -638,7 +638,7 @@ MessageStatus KMSearchRuleStatus::statusFromEnglishName(
 
 bool KMSearchRuleStatus::isEmpty() const
 {
-  return field().stripWhiteSpace().isEmpty() || contents().isEmpty();
+  return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
 bool KMSearchRuleStatus::matches( const DwString &, KMMessage &,

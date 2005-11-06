@@ -1384,7 +1384,7 @@ QString KMFolderImap::statusToFlags( const MessageStatus& status )
       flags += "\\FLAGGED";
   }
 
-  return flags.simplifyWhiteSpace();
+  return flags.simplified();
 }
 
 //-------------------------------------------------------------

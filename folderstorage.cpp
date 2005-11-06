@@ -148,7 +148,7 @@ void FolderStorage::setDirty(bool f)
 {
   mDirty = f;
   if (mDirty  && mAutoCreateIndex)
-    mDirtyTimer->changeInterval( mDirtyTimerInterval );
+    mDirtyTimer->start( mDirtyTimerInterval );
   else
     mDirtyTimer->stop();
 }
@@ -829,7 +829,7 @@ void FolderStorage::msgStatusChanged( const MessageStatus& oldStatus,
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
 
-  mDirtyTimer->changeInterval(mDirtyTimerInterval);
+  mDirtyTimer->start(mDirtyTimerInterval);
   if (deltaUnread != 0) {
     if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;

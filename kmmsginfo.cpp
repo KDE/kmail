@@ -326,7 +326,7 @@ QString KMMsgInfo::strippedSubjectMD5() const
 //-----------------------------------------------------------------------------
 bool KMMsgInfo::subjectIsPrefixed() const
 {
-    return strippedSubjectMD5() != base64EncodedMD5( subject().stripWhiteSpace(), true /*utf8*/ );
+    return strippedSubjectMD5() != base64EncodedMD5( subject().trimmed(), true /*utf8*/ );
 }
 
 //-----------------------------------------------------------------------------
@@ -683,15 +683,15 @@ void KMMsgInfo::compat_fromOldIndexString(const Q3CString& str, bool toUtf8)
     if(!kd)
         kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
-    kd->xmark   = str.mid(33, 3).stripWhiteSpace();
+    kd->xmark   = str.mid(33, 3).trimmed();
     kd->folderOffset = str.mid(2,9).toULong();
     kd->msgSize = str.mid(12,9).toULong();
     kd->date = (time_t)str.mid(22,10).toULong();
     mStatus.setStatusFromStr( str );
     if (toUtf8) {
-        kd->subject = str.mid(37, 100).stripWhiteSpace();
-        kd->from = str.mid(138, 50).stripWhiteSpace();
-        kd->to = str.mid(189, 50).stripWhiteSpace();
+        kd->subject = str.mid(37, 100).trimmed();
+        kd->from = str.mid(138, 50).trimmed();
+        kd->to = str.mid(189, 50).trimmed();
     } else {
         start = offset = str.data() + 37;
         while (*start == ' ' && start - offset < 100) start++;
@@ -706,8 +706,8 @@ void KMMsgInfo::compat_fromOldIndexString(const Q3CString& str, bool toUtf8)
         kd->to = QString::fromUtf8(str.mid(start - str.data(),
             50 - (start - offset)), 50 - (start - offset));
     }
-    kd->replyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
-    kd->msgIdMD5 = str.mid(263, 22).stripWhiteSpace();
+    kd->replyToIdMD5 = str.mid(240, 22).trimmed();
+    kd->msgIdMD5 = str.mid(263, 22).trimmed();
     mDirty = false;
 }
 

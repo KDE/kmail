@@ -93,8 +93,8 @@ namespace KMail {
 	// explicit "attachment" disposition:
 	return AsIcon;
       if ( node->type() == DwMime::kTypeText &&
-	   node->msgPart().fileName().stripWhiteSpace().isEmpty() &&
-	   node->msgPart().name().stripWhiteSpace().isEmpty() )
+	   node->msgPart().fileName().trimmed().isEmpty() &&
+	   node->msgPart().name().trimmed().isEmpty() )
 	// text/* w/o filename parameter:
 	return Inline;
       return AsIcon;

@@ -903,7 +903,7 @@ void PopAccount::slotData( KIO::Job* job, const QByteArray &data)
 
   // otherwise stage is List Or Uidl
   QString qdata = data;
-  qdata = qdata.simplifyWhiteSpace(); // Workaround for Maillennium POP3/UNIBOX
+  qdata = qdata.simplified(); // Workaround for Maillennium POP3/UNIBOX
   int spc = qdata.find( ' ' );
   if (spc > 0) {
     if (stage == List) {
