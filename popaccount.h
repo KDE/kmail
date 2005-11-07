@@ -4,17 +4,16 @@
 
 #include "networkaccount.h"
 
-#include <q3valuelist.h>
-#include <qstringlist.h>
-#include <q3valuevector.h>
-#include <qtimer.h>
-#include <q3dict.h>
-//Added by qt3to4:
-#include <Q3PtrList>
+#include <QTimer>
+#include <QSet>
+#include <QQueue>
 
 class KMPopHeaders;
 class KMMessage;
+
 class QDataStream;
+class QByteArray;
+
 namespace KIO {
   class MetaData;
   class Slave;
@@ -47,7 +46,7 @@ public:
    */
   bool usePipelining(void) const { return mUsePipelining; }
   virtual void setUsePipelining(bool);
- 
+
   /**
    * Shall messages be left on the server upon retreival (TRUE)
    * or deleted (FALSE).
@@ -97,7 +96,7 @@ public:
 
   virtual void killAllJobs( bool disconnectSlave=false ); // NOOP currently
 
-protected:
+private:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
   friend class ::AccountManager;
   PopAccount(AccountManager* owner, const QString& accountName, uint id);
@@ -132,31 +131,31 @@ protected:
   unsigned int mFilterOnServerCheckSize;
 
   KIO::SimpleJob *job;
-  //Map of ID's vs. sizes of messages which should be downloaded
-  QMap<QString, int> mMsgsPendingDownload;
+  // Map of ID's vs. sizes of messages which should be downloaded; use QMap because the order needs to be
+  // predictable
+  QMap<QByteArray, int> mMsgsPendingDownload;
 
-  Q3PtrList<KMPopHeaders> headersOnServer;
-  Q3PtrListIterator<KMPopHeaders> headerIt;
+  QList<KMPopHeaders *> mHeadersOnServer;
+  int mHeaderIndex;
   bool headers;
 
-  QMap<QString, bool> mHeaderDeleteUids;
-  QMap<QString, bool> mHeaderDownUids;
-  QMap<QString, bool> mHeaderLaterUids;
+  QSet<QByteArray> mHeaderDeleteUids;
+  QSet<QByteArray> mHeaderDownUids;
+  QSet<QByteArray> mHeaderLaterUids;
 
-  QStringList idsOfMsgs; //used for ids and for count
-  QList<int> lensOfMsgs;
-  QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
-  Q3Dict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
-  Q3Dict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
-  Q3ValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
-  QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
-  Q3Dict<int> mSizeOfNextSeenMsgsDict;
-  QStringList idsOfMsgsToDelete;
+  QList<QByteArray> idsOfMsgs; //used for ids and for count
+  QHash<QByteArray, QByteArray> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
+  QHash<QByteArray, int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
+  QHash<QByteArray, int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
+  QVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
+  QHash<QByteArray, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
+  QHash<QByteArray, int> mSizeOfNextSeenMsgsDict;
+  QSet<QByteArray> idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 
-  Q3ValueList<KMMessage*> msgsAwaitingProcessing;
-  QStringList msgIdsAwaitingProcessing;
-  QStringList msgUidsAwaitingProcessing;
+  QQueue<KMMessage*> msgsAwaitingProcessing;
+  QQueue<QByteArray> msgIdsAwaitingProcessing;
+  QQueue<QByteArray> msgUidsAwaitingProcessing;
 
   QByteArray curMsgData;
   QDataStream *curMsgStrm;
