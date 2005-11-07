@@ -26,8 +26,6 @@
 #include <kshortcut.h>
 
 #include <q3ptrlist.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 class QString;
 class KConfig;
@@ -296,7 +294,7 @@ public:
 private:
   KMSearchPattern mPattern;
   Q3PtrList<KMFilterAction> mActions;
-  Q3ValueList<int> mAccounts;
+  QList<int> mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
   KShortcut mShortcut;

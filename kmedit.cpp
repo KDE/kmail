@@ -93,7 +93,7 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
         // the begin nor at the end of the line
         if( ( col > 0 ) && ( col < int( lineText.length() ) ) ) {
             bool isQuotedLine = false;
-            uint bot = 0; // bot = begin of text after quote indicators
+            int bot = 0; // bot = begin of text after quote indicators
             while( bot < lineText.length() ) {
                 if( ( lineText[bot] == '>' ) || ( lineText[bot] == '|' ) ) {
                     isQuotedLine = true;
@@ -122,7 +122,7 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
                 QString newLine = text( line );
                 // remove leading white space from the new line and instead
                 // add the quote indicators of the previous line
-                unsigned int leadingWhiteSpaceCount = 0;
+                int leadingWhiteSpaceCount = 0;
                 while( ( leadingWhiteSpaceCount < newLine.length() )
                        && newLine[leadingWhiteSpaceCount].isSpace() ) {
                     ++leadingWhiteSpaceCount;

@@ -97,7 +97,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     }
 
     mAccounts.clear();
-    Q3ValueListConstIterator<int> it2;
+	QList<int>::ConstIterator it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
   }
@@ -361,7 +361,7 @@ void KMFilter::purify()
         --it;
 
     // Remove invalid accounts from mAccounts - just to be tidy
-    Q3ValueListConstIterator<int> it2 = mAccounts.begin();
+	QList<int>::ConstIterator it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
       if ( !kmkernel->acctMgr()->find( *it2 ) )
          mAccounts.remove( *it2 );
@@ -413,7 +413,7 @@ const QString KMFilter::asString() const
     } else if ( bApplyOnInbound && mApplicability == ButImap ) {
       result += "This filter applies to all but online IMAP accounts.\n";
     } else if ( bApplyOnInbound ) {
-      Q3ValueListConstIterator<int> it2;
+      QList<int>::ConstIterator it2;
       result += "This filter applies to the following accounts:";
       if ( mAccounts.isEmpty() )
         result += " None";

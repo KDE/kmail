@@ -165,7 +165,7 @@ void PopAccount::processNewMail(bool _interactive)
                                        mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
-    Q3ValueList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
+    QList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     int idx = 1;
@@ -178,7 +178,7 @@ void PopAccount::processNewMail(bool _interactive)
     }
     mTimeOfSeenMsgsVector.clear();
     mTimeOfSeenMsgsVector.reserve( timeOfSeenMsgs.size() );
-    for ( Q3ValueList<int>::ConstIterator it = timeOfSeenMsgs.begin();
+    for ( QList<int>::ConstIterator it = timeOfSeenMsgs.begin();
           it != timeOfSeenMsgs.end(); ++it) {
       mTimeOfSeenMsgsVector.append( *it );
     }
@@ -691,7 +691,7 @@ void PopAccount::slotJobFinished() {
       if ( mLeaveOnServerCount > 0 ) {
         int numToDelete = idsToSave.count() - mLeaveOnServerCount;
         kdDebug() << "numToDelete is " << numToDelete << endl;
-        if ( numToDelete > 0 && (unsigned)numToDelete < idsToSave.count() ) {
+        if ( numToDelete > 0 && numToDelete < idsToSave.count() ) {
           QMap< QPair<time_t, QString>, int >::Iterator cur = idsToSave.begin();
           for ( int deleted = 0; deleted < numToDelete && cur != idsToSave.end()
                 ; deleted++, cur++ ) {
@@ -810,7 +810,7 @@ void PopAccount::saveUidList()
   if (!mUidlFinished) return;
 
   QStringList uidsOfNextSeenMsgs;
-  Q3ValueList<int> seenUidTimeList;
+  QList<int> seenUidTimeList;
   Q3DictIterator<int> it( mUidsOfNextSeenMsgsDict );
   for( ; it.current(); ++it ) {
     uidsOfNextSeenMsgs.append( it.currentKey() );

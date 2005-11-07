@@ -144,7 +144,7 @@ protected:
   QMap<QString, bool> mHeaderLaterUids;
 
   QStringList idsOfMsgs; //used for ids and for count
-  Q3ValueList<int> lensOfMsgs;
+  QList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
   Q3Dict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
   Q3Dict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
