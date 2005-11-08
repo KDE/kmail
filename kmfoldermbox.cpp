@@ -975,7 +975,7 @@ int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
   {
 /*
 QFile fileD0( "testdat_xx-kmfoldermbox-0" );
-if( fileD0.open( IO_WriteOnly ) ) {
+if( fileD0.open( QIODevice::WriteOnly ) ) {
     QDataStream ds( &fileD0 );
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
@@ -984,7 +984,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     aMsg->setStatusFields();
 /*
 QFile fileD1( "testdat_xx-kmfoldermbox-1" );
-if( fileD1.open( IO_WriteOnly ) ) {
+if( fileD1.open( QIODevice::WriteOnly ) ) {
     QDataStream ds( &fileD1 );
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD1.close();  // If data is 0 we just create a zero length file.

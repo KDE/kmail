@@ -2429,7 +2429,7 @@ void KMHeaders::setSorting( int column, bool ascending )
   if (column != -1) {
   // carsten: really needed?
 //    if (column != mSortCol)
-//      setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
+//      setColumnText( mSortCol, QIcon( QPixmap()), columnText( mSortCol ));
     if(mSortInfo.dirty || column != mSortInfo.column || ascending != mSortInfo.ascending) { //dirtied
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
         mSortInfo.dirty = true;
