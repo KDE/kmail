@@ -1020,7 +1020,7 @@ namespace KMail {
         mReader->writeMessagePartToTempFile( &curNode->msgPart(),
                                              curNode->nodeId() );
 
-      const QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
+      const QString dir = QApplication::isRightToLeft() ? "rtl" : "ltr" ;
 
       QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
                  "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
@@ -1981,7 +1981,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
     QString signer = block.signer;
 
     QString htmlStr;
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
     QString cellPadding("cellpadding=\"1\"");
 
     if( block.isEncapsulatedRfc822Message )
@@ -2343,7 +2343,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
 
 QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
 {
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
 
     QString htmlStr;
 
@@ -2391,7 +2391,7 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
   assert(pgp != 0);
   bool isPgpMessage = false; // true if the message contains at least one
                              // PGP MESSAGE or one PGP SIGNED MESSAGE block
-  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+  QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
   QString headerStr = QString("<div dir=\"%1\">").arg(dir);
 
   inlineSignatureState  = KMMsgNotSigned;

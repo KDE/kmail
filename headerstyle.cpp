@@ -123,7 +123,7 @@ namespace KMail {
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
+    QString dir = QApplication::isRightToLeft() ? "rtl" : "ltr" ;
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -221,7 +221,7 @@ namespace KMail {
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -420,7 +420,7 @@ namespace KMail {
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+    QString dir = ( QApplication::isRightToLeft() ? "rtl" : "ltr" );
     QString headerStr = QString("<div class=\"fancy header\" dir=\"%1\">\n").arg(dir);
 
     // However, the direction of the message subject within the header is

@@ -2700,7 +2700,7 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_message" );
 
   new KAction( KGuiItem( i18n("Next &Unread Message"),
-                         QApplication::reverseLayout() ? "previous" : "next",
+                         QApplication::isRightToLeft() ? "previous" : "next",
                          i18n("Go to the next unread message") ),
                          Qt::Key_Plus, this, SLOT(slotNextUnreadMessage()),
                          actionCollection(), "go_next_unread_message" );
@@ -2718,7 +2718,7 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_prev_message" );
 
   new KAction( KGuiItem( i18n("Previous Unread &Message"),
-                         QApplication::reverseLayout() ? "next" : "previous",
+                         QApplication::isRightToLeft() ? "next" : "previous",
                          i18n("Go to the previous unread message") ),
                          Qt::Key_Minus, this, SLOT(slotPrevUnreadMessage()),
                          actionCollection(), "go_prev_unread_message" );

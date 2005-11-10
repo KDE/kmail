@@ -55,7 +55,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   : KListViewSearchLine( parent, listView ), mStatusCombo(0), mStatus(),  statusList()
 {
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
-                                           QApplication::reverseLayout()
+                                           QApplication::isRightToLeft()
                                            ? "clear_left"
                                            : "locationbar_erase",
                                            0, this,
