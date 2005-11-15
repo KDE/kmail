@@ -543,6 +543,7 @@ protected:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KURLRequester *mEditorRequester;
+  QComboBox     *mCompletionTypeCombo;
 };
 
 class ComposerPagePhrasesTab : public ConfigModuleTab {
