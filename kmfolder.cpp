@@ -56,7 +56,10 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
     mUseCustomIcons( false ), mMailingListEnabled( false ),
-    mAcctList( 0 )
+    mAcctList( 0 ),
+    mIdentity( 0 ), // default identity
+    mPutRepliesInSameFolder( false ),
+    mIgnoreNewMail( false )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
