@@ -122,6 +122,8 @@ void KMAcctMaildir::processNewMail(bool)
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     checkDone( hasNewMail, CheckError );
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
+    return;
   }
 
   rc = mailFolder.open();
