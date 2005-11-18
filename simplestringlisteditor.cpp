@@ -45,7 +45,7 @@
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-
+#include <Q3ListBox>
 
 //********************************************************
 // SimpleStringListEditor

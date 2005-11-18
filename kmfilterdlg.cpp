@@ -20,6 +20,7 @@
 #include <QVBoxLayout>
 #include <Q3PtrList>
 #include <QHBoxLayout>
+#include <Q3ListBox>
 using KMail::AccountManager;
 
 // other KDE headers:

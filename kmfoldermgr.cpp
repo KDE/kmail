@@ -61,7 +61,7 @@ void KMFolderMgr::expireAll() {
   int                 ret = KMessageBox::Continue;
 
   if (group.readBoolEntry("warn-before-expire", true)) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList()->first(),
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
 			 i18n("Are you sure you want to expire old messages?"),
 			 i18n("Expire Old Messages?"), i18n("Expire"));
   }
