@@ -507,7 +507,7 @@ void PopAccount::slotJobFinished() {
     // if there are mails which should be checkedc download the headers
     if ( ( mHeadersOnServer.count() > 0 ) && ( mFilterOnServer == true ) ) {
       KURL url = getUrl();
-      QString headerIds = mHeadersOnServer[0]->id();
+      QByteArray headerIds = mHeadersOnServer[0]->id();
       for ( int i = 1; i < mHeadersOnServer.count(); ++i ) {
         headerIds += ',';
         headerIds += mHeadersOnServer[i]->id();

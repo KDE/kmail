@@ -21,13 +21,14 @@ KMPopHeaders::KMPopHeaders()
 {
 }
 
-KMPopHeaders::~KMPopHeaders(){
+KMPopHeaders::~KMPopHeaders()
+{
   if (mHeader)
     delete mHeader;
 }
 
 /** No descriptions */
-KMPopHeaders::KMPopHeaders(const QString& aId, const QString& aUid, KMPopFilterAction aAction)
+KMPopHeaders::KMPopHeaders( const QByteArray & aId, const QByteArray & aUid, KMPopFilterAction aAction )
   : mAction(aAction),
     mId(aId),
     mUid(aUid),
@@ -37,39 +38,47 @@ KMPopHeaders::KMPopHeaders(const QString& aId, const QString& aUid, KMPopFilterA
 }
 
 /** No descriptions */
-QString KMPopHeaders::id() const{
+QByteArray KMPopHeaders::id() const
+{
   return mId;
 }
 
 /** No descriptions */
-QString KMPopHeaders::uid() const{
+QByteArray KMPopHeaders::uid() const
+{
   return mUid;
 }
 
 /** No descriptions */
-KMMessage * KMPopHeaders::header() const{
+KMMessage * KMPopHeaders::header() const
+{
   return mHeader;
 }
 
 /** No descriptions */
-void KMPopHeaders::setHeader(KMMessage *aHeader){
+void KMPopHeaders::setHeader(KMMessage *aHeader)
+{
   mHeader = aHeader;
 }
 
 /** No descriptions */
-KMPopFilterAction KMPopHeaders::action() const{
+KMPopFilterAction KMPopHeaders::action() const
+{
   return mAction;
 }
 
 /** No descriptions */
-void KMPopHeaders::setAction(KMPopFilterAction aAction){
+void KMPopHeaders::setAction(KMPopFilterAction aAction)
+{
   mAction = aAction;
 }
 /** No descriptions */
-void KMPopHeaders::setRuleMatched(bool b){
+void KMPopHeaders::setRuleMatched(bool b)
+{
   mRuleMatched = b;
 }
 /** No descriptions */
-bool KMPopHeaders::ruleMatched(){
+bool KMPopHeaders::ruleMatched() const
+{
   return mRuleMatched;
 }

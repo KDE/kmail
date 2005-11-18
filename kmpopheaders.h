@@ -11,9 +11,9 @@
 #ifndef KMPopHeaders_H
 #define KMPopHeaders_H
 
-#include <qstring.h>
 #include "kmmessage.h"
 
+class QByteArray;
 
 enum KMPopFilterAction {Down=0, Later=1, Delete=2, NoAction=3}; //Keep these corresponding to the column numbers in the dialog for easier coding
 								//or change mapToAction and mapToColumn in KMPopHeadersView
@@ -24,13 +24,13 @@ public:
   KMPopHeaders();
   ~KMPopHeaders();
   /** constructor */
-  KMPopHeaders(const QString& aId, const QString& aUid, KMPopFilterAction aAction);
+  KMPopHeaders( const QByteArray & aId, const QByteArray & aUid, KMPopFilterAction aAction );
 
   /** returns the id of the message */
-  QString id() const;
+  QByteArray id() const;
 
   /** returns the uid of the message */
-  QString uid() const;
+  QByteArray uid() const;
 
   /** returns the header of the message */
   KMMessage * header() const;
@@ -44,16 +44,17 @@ public:
   /** No descriptions */
   void setAction(KMPopFilterAction aAction);
   /** No descriptions */
-  bool ruleMatched();
+  bool ruleMatched() const;
   /** No descriptions */
   void setRuleMatched(bool b);
-protected: // Protected attributes
+
+private:
   /** */
   KMPopFilterAction mAction;
   /**  */
-  QString mId;
+  QByteArray mId;
   /**  */
-  QString mUid;
+  QByteArray mUid;
   /**  */
   bool mRuleMatched;
   /**  */
