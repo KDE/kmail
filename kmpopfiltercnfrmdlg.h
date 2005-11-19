@@ -23,10 +23,9 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
-#include <q3ptrlist.h>
-#include <qmap.h>
-//Added by qt3to4:
+#include <QMap>
 #include <QKeyEvent>
+#include <QList>
 
 class QWidget;
 class QString;
@@ -83,16 +82,17 @@ class KMPopFilterCnfrmDlg : public KDialogBase
 protected:
   KMPopFilterCnfrmDlg() { };
   QMap<Q3ListViewItem*, KMPopHeaders*> mItemMap;
-  Q3PtrList<KMPopHeadersViewItem> mDelList;
-  Q3PtrList<KMPopHeaders> mDDLList;
+  QList<KMPopHeadersViewItem *> mDelList;
+  QList<KMPopHeaders *> mDDLList;
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
   void setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg);
-	
+
 
 public:
-  KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs = false, QWidget *aParent=0, const char *aName=0);
+  KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders, const QString & aAccount,
+                       bool aShowLaterMsgs = false, QWidget *aParent = 0 );
   ~KMPopFilterCnfrmDlg();
 
 public:

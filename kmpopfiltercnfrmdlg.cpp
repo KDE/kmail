@@ -19,10 +19,7 @@
 #include <qcheckbox.h>
 #include <q3groupbox.h>
 #include <qtimer.h>
-//Added by qt3to4:
 #include <QPixmap>
-#include <Q3PtrList>
-#include <QKeyEvent>
 #include <QVBoxLayout>
 
 #include <klocale.h>
@@ -287,8 +284,9 @@ QString KMPopHeadersViewItem::key(int col, bool) const
 ///  dlg
 /////////////////////////////////////////
 /////////////////////////////////////////
-KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
-      : KDialogBase(aParent, aName, TRUE, i18n("POP Filter"), Ok | Help, Ok, FALSE)
+KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & aHeaders, const QString & aAccount,
+                                          bool aShowLaterMsgs, QWidget *aParent )
+      : KDialogBase( aParent, "", TRUE, i18n("POP Filter"), Ok | Help, Ok, FALSE )
 {
   unsigned int rulesetCount = 0;
   //mHeaders = aHeaders;
@@ -324,9 +322,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(Q3PtrList<KMPopHeaders> *aHeaders, cons
   mFilteredHeaders->setColumnWidth(8, 0);
 
   // fill the listviews with data from the headers
-  KMPopHeaders *headers;
-  for(headers = aHeaders->first(); headers; headers = aHeaders->next())
-  {
+  for ( int i = 0; i < aHeaders.count(); ++i ) {
+    KMPopHeaders *headers = aHeaders[i];
     KMPopHeadersViewItem *lvi = 0;
 
     if(headers->ruleMatched())
@@ -438,8 +435,8 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
     if(mShowLaterMsgs)
     {
       // show download and delete msgs in the list view too
-      for(KMPopHeaders* headers = mDDLList.first(); headers; headers = mDDLList.next())
-      {
+      for ( int i = 0; i < mDDLList.count(); ++i ) {
+        KMPopHeaders *headers = mDDLList[i];
         KMPopHeadersViewItem *lvi = new KMPopHeadersViewItem(mFilteredHeaders, headers->action());
         mItemMap[lvi] = headers;
         mDelList.append(lvi);
@@ -457,9 +454,8 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
     if(mShowLaterMsgs)
     {
       // delete download and delete msgs from the lower listview
-      for(KMPopHeadersViewItem* item = mDelList.first(); item; item = mDelList.next())
-      {
-        mFilteredHeaders->takeItem(item);
+      for ( int i = 0; i < mDelList.count(); ++i ) {
+        mFilteredHeaders->takeItem( mDelList[i] );
       }
       mDelList.clear();
     }
