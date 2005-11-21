@@ -1,3 +1,6 @@
+<!-- This file should be synchronized with kmmainwin.rc to provide
+     the same menu entries at the same place in KMail and Kontact  -->
+
 <!DOCTYPE kpartgui>
 <kpartgui version="4" name="kmail_part" >
  <MenuBar>
@@ -142,6 +145,7 @@
    <text>&amp;Tools</text>
    <Action name="tools_start_certman"/>
    <Action name="tools_start_kwatchgnupg"/>
+   <Action name="import"/>
    <Separator/>
    <Action name="tools_edit_vacation"/>
    <Separator/>

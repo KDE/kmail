@@ -1,3 +1,6 @@
+<!-- This file should be synchronized with kmail_part.rc to provide
+     the same menu entries at the same place in KMail and Kontact  -->
+
 <!DOCTYPE kpartgui>
 <kpartgui version="86" name="kmmainwin" >
  <MenuBar>
