@@ -267,8 +267,13 @@ KMFolderDir* KMFolder::createChildFolder()
     }
   }
 
-  mChild = new KMFolderDir( this, parent(), childName,
-    (folderType() == KMFolderTypeImap) ? KMImapDir : KMStandardDir);
+  KMFolderDirType newType = KMStandardDir;
+  if( folderType() == KMFolderTypeCachedImap )
+    newType = KMDImapDir;
+  else if( folderType() == KMFolderTypeImap )
+    newType = KMImapDir;
+
+  mChild = new KMFolderDir( this, parent(), childName, newType );
   if( !mChild )
     return 0;
   mChild->reload();

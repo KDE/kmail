@@ -73,12 +73,17 @@ protected slots:
   /** All messages are moved so remove the original folder */
   void slotMoveCompleted( KMCommand *command );
 
+  void slotMoveSubFolders( QString newName, bool success );
+
 signals:
   /** Emitted when the job is done, check the success bool */
   void renameDone( QString newName, bool success );
 
 protected:
+  void moveSubFoldersBeforeMessages();
+
   FolderStorage* mStorage;
+  FolderStorage* mStorageTempOpened;
   KMFolderDir* mNewParent;
   QString mNewName;
   QString mNewImapPath;
