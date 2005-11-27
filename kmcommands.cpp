@@ -1471,11 +1471,15 @@ KMCommand::Result KMFilterActionCommand::execute()
       kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
   int msgCount = 0;
+  int msgCountToFilter = msgList.count();
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
-    QString statusMsg = i18n("Filtering message %1 of %2");
-    statusMsg = statusMsg.arg( ++msgCount ).arg( msgList.count() );
-    KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-    KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
+    int diff = msgCountToFilter - ++msgCount;
+    if ( diff < 10 || !( msgCount % 10 ) ) {
+      QString statusMsg = i18n("Filtering message %1 of %2");
+      statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+      KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
+    }
     msg->setTransferInProgress(false);
 
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
