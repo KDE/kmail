@@ -6,6 +6,7 @@
 #include <qmap.h>
 
 class Q3ListView;
+class Q3ListViewItem;
 class Q3CheckListItem;
 
 namespace KMail {
