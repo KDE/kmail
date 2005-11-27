@@ -548,7 +548,7 @@ private:
 };
 
 
-/* This command is used to create a filter based on the user'S
+/* This command is used to create a filter based on the user's
     decision, e.g. filter by From header */
 class KDE_EXPORT KMFilterCommand : public KMCommand
 {

@@ -43,11 +43,12 @@
 #include "kmmsgdict.h"
 #include "kmcommands.h"
 #include "kmheaders.h"
+#include "broadcaststatus.h"
 #include "accountmanager.h"
+using KMail::AccountManager;
 //Added by qt3to4:
 #include <Q3ValueList>
 #include <Q3PtrList>
-using KMail::AccountManager;
 
 #include <qtimer.h>
 #include <kconfig.h>
@@ -479,6 +480,11 @@ void ActionScheduler::enqueue(quint32 serNum)
 
 void ActionScheduler::processMessage()
 {
+kdDebug(5006) << debug() << endl;
+  QString statusMsg = i18n("%1 messages waiting to be filtered");
+  statusMsg = statusMsg.arg( mFetchSerNums.count() );
+  KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+
   if (mExecutingLock)
     return;
   mExecutingLock = true;
