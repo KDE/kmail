@@ -932,8 +932,8 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   }
   Q_ASSERT( manager );
 
-  Q3ValueListConstIterator<KMFilter*> it;
-  for ( it = manager->filters().constBegin() ; it != manager->filters().constEnd() ; ++it ) {
+  QList<KMFilter*>::const_iterator it;
+  for ( it = manager->filters().begin() ; it != manager->filters().end() ; ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
   }

@@ -10,9 +10,6 @@
 
 // other kmail headers
 #include "filterlog.h"
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <Q3CString>
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
@@ -60,10 +57,8 @@ KMFilterMgr::~KMFilterMgr()
 void KMFilterMgr::clear()
 {
   mDirtyBufferedFolderTarget = true;
-  for ( Q3ValueListIterator<KMFilter*> it = mFilters.begin() ; 
-        it != mFilters.end() ; ++it ) {
-    delete *it;
-  }
+  while (!mFilters.isEmpty())
+            delete mFilters.takeFirst();
 }
 
 //-----------------------------------------------------------------------------
@@ -92,7 +87,7 @@ void KMFilterMgr::readConfig(void)
     if ( filter->isEmpty() ) {
 #ifndef NDEBUG
       kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
-		<< "is empty!" << endl;
+                    << "is empty!" << endl;
 #endif
       delete filter;
     } else
@@ -116,8 +111,8 @@ void KMFilterMgr::writeConfig(bool withSync)
   // Now, write out the new stuff:
   int i = 0;
   QString grpName;
-  for ( Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin() ; 
-        it != mFilters.constEnd() ; ++it ) {
+  for ( QList<KMFilter*>::const_iterator it = mFilters.begin() ;
+        it != mFilters.end() ; ++it ) {
     if ( !(*it)->isEmpty() ) {
       if ( bPopFilter )
         grpName.sprintf("PopFilter #%d", i);
@@ -141,8 +136,8 @@ void KMFilterMgr::writeConfig(bool withSync)
 
 
 int KMFilterMgr::processPop( KMMessage * msg ) const {
-  for ( Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-        it != mFilters.constEnd() ; ++it )
+  for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
+        it != mFilters.end() ; ++it )
     if ( (*it)->pattern()->matches( msg ) )
       return (*it)->action();
   return NoAction;
@@ -224,13 +219,13 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
 }
 
 int KMFilterMgr::process( KMMessage * msg, FilterSet set,
-			  bool account, uint accountId ) {
+                          bool account, uint accountId ) {
   if ( bPopFilter )
     return processPop( msg );
 
   if ( set == NoSet ) {
     kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
-		  << endl;
+                  << endl;
     return 1;
   }
 
@@ -239,12 +234,12 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
   if (!beginFiltering( msg ))
     return 1;
-  for ( Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-        !stopIt && it != mFilters.constEnd() ; ++it ) {
+  for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
+        !stopIt && it != mFilters.end() ; ++it ) {
 
     if ( ( ( (set&Inbound) && (*it)->applyOnInbound() ) &&
-	   ( !account || 
-	     ( account && (*it)->applyOnAccount( accountId ) ) ) ) ||
+         ( !account ||
+             ( account && (*it)->applyOnAccount( accountId ) ) ) ) ||
          ( (set&Outbound)  && (*it)->applyOnOutbound() ) ||
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
@@ -287,8 +282,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
-  Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.begin();
+  for ( ; it != mFilters.end() ; ++it ) {
     if ( (*it)->applyOnAccount( accountID ) ) {
       return true;
     }
@@ -298,8 +293,8 @@ bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 
 bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const
 {
-  Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.begin();
+  for ( ; it != mFilters.end() ; ++it ) {
     if ( (*it)->applyOnInbound() && (*it)->applyOnAccount( accountID ) ) {
       return true;
     }
@@ -311,22 +306,22 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
 {
   if (!mDirtyBufferedFolderTarget)
     return mBufferedFolderTarget;
-  
+
   mDirtyBufferedFolderTarget = false;
-      
-  Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it ) {
+
+  QList<KMFilter*>::const_iterator it = mFilters.begin();
+  for ( ; it != mFilters.end() ; ++it ) {
     KMFilter *filter = *it;
     Q3PtrListIterator<KMFilterAction> jt( *filter->actions() );
     for ( jt.toFirst() ; jt.current() ; ++jt ) {
       KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
       if (!f)
-	continue;
+        continue;
       QString name = f->argsAsString();
       KMFolder *folder = kmkernel->imapFolderMgr()->findIdString( name );
       if (folder) {
-	mBufferedFolderTarget = true;
-	return true;
+        mBufferedFolderTarget = true;
+        return true;
       }
     }
   }
@@ -386,7 +381,7 @@ void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::createFilter( const Q3CString & field, const QString & value )
+void KMFilterMgr::createFilter( const QByteArray & field, const QString & value )
 {
   openDialog( 0, false );
   mEditDialog->createFilter( field, value );
@@ -399,11 +394,11 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
   QString uniqueName = name;
   int counter = 0;
   bool found = true;
-  
+
   while ( found ) {
     found = false;
-    for ( Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-          it != mFilters.constEnd(); ++it ) {
+    for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
+          it != mFilters.end(); ++it ) {
       if ( !( (*it)->name().compare( uniqueName ) ) ) {
         found = true;
         ++counter;
@@ -419,16 +414,16 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::appendFilters( const Q3ValueList<KMFilter*> &filters,
+void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
                                  bool replaceIfNameExists )
 {
   mDirtyBufferedFolderTarget = true;
   beginUpdate();
   if ( replaceIfNameExists ) {
-    Q3ValueListConstIterator<KMFilter*> it1 = filters.constBegin();
-    for ( ; it1 != filters.constEnd() ; ++it1 ) {
-      Q3ValueListConstIterator<KMFilter*> it2 = mFilters.constBegin();
-      for ( ; it2 != mFilters.constEnd() ; ++it2 ) {
+    QList<KMFilter*>::const_iterator it1 = filters.begin();
+    for ( ; it1 != filters.end() ; ++it1 ) {
+      QList<KMFilter*>::const_iterator it2 = mFilters.begin();
+      for ( ; it2 != mFilters.end() ; ++it2 ) {
         if ( (*it1)->name() == (*it2)->name() ) {
           mFilters.remove( (*it2) );
           it2 = mFilters.constBegin();
@@ -441,7 +436,7 @@ void KMFilterMgr::appendFilters( const Q3ValueList<KMFilter*> &filters,
   endUpdate();
 }
 
-void KMFilterMgr::setFilters( const Q3ValueList<KMFilter*> &filters )
+void KMFilterMgr::setFilters( const QList<KMFilter*> &filters )
 {
   clear();
   mFilters = filters;
@@ -457,8 +452,8 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
   mDirtyBufferedFolderTarget = true;
   bool rem = false;
-  Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it )
+  QList<KMFilter*>::const_iterator it = mFilters.begin();
+  for ( ; it != mFilters.end() ; ++it )
     if ( (*it)->folderRemoved(aFolder, aNewFolder) ) 
       rem = true;
 
@@ -470,9 +465,8 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 #ifndef NDEBUG
 void KMFilterMgr::dump(void) const
 {
-  
-  Q3ValueListConstIterator<KMFilter*> it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it ) {
+  QList<KMFilter*>::const_iterator it = mFilters.begin();
+  for ( ; it != mFilters.end() ; ++it ) {
     kdDebug(5006) << (*it)->asString() << endl;
   }
 }

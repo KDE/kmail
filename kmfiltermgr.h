@@ -25,9 +25,6 @@
 
 #include <qpointer.h>
 #include <qobject.h>
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <Q3CString>
 
 class KMFilter;
 class KMFilterDlg;
@@ -61,7 +58,7 @@ public:
 
   /** Open an edit dialog, create a new filter and preset the first
       rule with "field equals value" */
-  void createFilter( const Q3CString & field, const QString & value );
+  void createFilter( const QByteArray & field, const QString & value );
 
   bool beginFiltering(KMMsgBase *msgBase) const;
   int moveMessage(KMMessage *msg) const;
@@ -73,12 +70,14 @@ public:
    * for example;
    * */
   bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
+
   /**
    * Returns whether at least one incoming filter applies to this account,
    * which means that mail must be downloaded in order to be filtered, 
    * for example;
    * */
   bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
+
   /** Returns whether at least one filter targets a folder on an
    * online IMAP account.
    * */
@@ -91,15 +90,15 @@ public:
   /** Append the list of filters to the current list of filters and
       write everything back into the configuration. The filter manager
       takes ownership of the filters in the list. */
-  void appendFilters( const Q3ValueList<KMFilter*> &filters,
+  void appendFilters( const QList<KMFilter*> &filters,
                       bool replaceIfNameExists = false );
 
   /** Replace the list of filters under control of the filter manager.
    * The manager takes ownershipt of the filters. */
-  void setFilters( const Q3ValueList<KMFilter*> &filters );
+  void setFilters( const QList<KMFilter*> &filters );
 
   /** @return the list of filters managed by this object */
-  const Q3ValueList<KMFilter*> & filters() const { return mFilters; }
+  const QList<KMFilter*> & filters() const { return mFilters; }
 
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
@@ -123,6 +122,7 @@ public:
   int process( KMMessage * msg, const KMFilter * filter );
 
   void cleanup();
+
   /** Increment the reference count for the filter manager.
       Call this method before processing messages with process() */
   void ref();
@@ -180,8 +180,8 @@ private:
   int processPop( KMMessage * msg ) const;
 
   QPointer<KMFilterDlg> mEditDialog;
-  Q3ValueVector<KMFolder *> mOpenFolders;
-  Q3ValueList<KMFilter *> mFilters;
+  QVector<KMFolder *> mOpenFolders;
+  QList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
   bool mDirtyBufferedFolderTarget;
