@@ -1470,7 +1470,11 @@ KMCommand::Result KMFilterActionCommand::execute()
     if( msg->parent() )
       kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
+  int msgCount = 0;
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+    QString statusMsg = i18n("Filtering message %1 of %2");
+    statusMsg = statusMsg.arg( ++msgCount ).arg( msgList.count() );
+    KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
     msg->setTransferInProgress(false);
 
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);

@@ -151,7 +151,7 @@ public:
   /** Automates the sending of MDNs from filter actions. */
   static void sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 		       const Q3ValueList<KMime::MDN::DispositionModifier> & m
-		       =Q3ValueList<KMime::MDN::DispositionModifier>() );
+		       = Q3ValueList<KMime::MDN::DispositionModifier>() );
 
 private:
   QString mName;

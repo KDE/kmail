@@ -1,7 +1,4 @@
 // kmfilteraction.cpp
-// The process methods really should use an enum instead of an int
-// -1 -> status unchanged, 0 -> success, 1 -> failure, 2-> critical failure
-// (GoOn),                 (Ok),         (ErrorButGoOn), (CriticalError)
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
