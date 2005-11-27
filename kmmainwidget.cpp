@@ -156,8 +156,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
-  mFilterMenuActions.setAutoDelete(true);
-  mFilterTBarActions.setAutoDelete(false);
   mFilterCommands.setAutoDelete(true);
   mFolderShortcutCommands.setAutoDelete(true);
   mJob = 0;
@@ -1178,7 +1176,7 @@ void KMMainWidget::slotExpireAll() {
   KConfigGroup group(config, "General");
 
   if (group.readBoolEntry("warn-before-expire", true)) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList()->first(),
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
 			 i18n("Are you sure you want to expire all old messages?"),
 			 i18n("Expire Old Messages?"), i18n("Expire"));
     if (ret != KMessageBox::Continue) {
@@ -3265,13 +3263,15 @@ void KMMainWidget::clearFilterActions()
   if ( !mFilterTBarActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
-    mFilterTBarActions.clear();
+    while ( !mFilterTBarActions.isEmpty() )
+      delete mFilterTBarActions.takeFirst();
   }
   mApplyFilterActionsMenu->popupMenu()->clear();
   if ( !mFilterMenuActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
-    mFilterMenuActions.clear();
+    while ( !mFilterMenuActions.isEmpty() )
+      delete mFilterMenuActions.takeFirst();
   }
   mFilterCommands.clear();
 }

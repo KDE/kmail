@@ -493,8 +493,8 @@ private:
   KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
-  Q3PtrList<KAction> mFilterMenuActions;
-  Q3PtrList<KAction> mFilterTBarActions;
+  QList<KAction*> mFilterMenuActions;
+  QList<KAction*> mFilterTBarActions;
   Q3PtrList<KMMetaFilterActionCommand> mFilterCommands;
   Q3Dict<FolderShortcutCommand> mFolderShortcutCommands;
   QPointer <KMail::FolderJob> mJob;
