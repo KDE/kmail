@@ -523,8 +523,7 @@ void AntiSpamWizard::checkToolAvailability()
     }
     else {
       // check the availability of the application
-#warning Port me!
-//      KApplication::kApplication()->processEvents( 200 );
+      KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 200 );
       if ( !checkForProgram( (*it).getExecutable() ) ) {
         mInfoPage->addAvailableTool( (*it).getVisibleName() );
         found = true;
