@@ -336,11 +336,13 @@ void KMKernel::openReader( bool onlyCheck )
   KMainWindow *ktmw = 0;
   kdDebug(5006) << "KMKernel::openReader called" << endl;
 
-  if (KMainWindow::memberList())
-    for (ktmw = KMainWindow::memberList()->first(); ktmw;
-         ktmw = KMainWindow::memberList()->next())
-      if (ktmw->isA("KMMainWin"))
-        break;
+  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
+       it != KMainWindow::memberList().end(); ++it ) {
+    if ( (*it)->isA("KMMainWin") ) {
+      ktmw = (*it);
+      break;
+    }
+  }
 
   bool activate;
   if (ktmw) {
@@ -950,20 +952,18 @@ void KMKernel::raise()
 bool KMKernel::showMail( quint32 serialNumber, QString /* messageId */ )
 {
   KMMainWidget *mainWidget = 0;
-  if (KMainWindow::memberList()) {
-    KMainWindow *win = 0;
-    QObjectList l;
+  KMainWindow *win = 0;
+  QObjectList l;
 
-    // First look for a KMainWindow.
-    for (win = KMainWindow::memberList()->first(); win;
-         win = KMainWindow::memberList()->next()) {
-      // Then look for a KMMainWidget.
-      l	= win->queryList("KMMainWidget");
-      if (!l.isEmpty() && l.first()) {
-	mainWidget = dynamic_cast<KMMainWidget *>(l.first());
-	if (win->isActiveWindow())
-	  break;
-      }
+  // First look for a KMainWindow.
+  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
+       it != KMainWindow::memberList().end(); ++it ) {
+    // Then look for a KMMainWidget.
+    l	= (*it)->queryList("KMMainWidget");
+    if (!l.isEmpty() && l.first()) {
+      mainWidget = dynamic_cast<KMMainWidget *>(l.first());
+      if ( (*it)->isActiveWindow() )
+        break;
     }
   }
 
@@ -1488,12 +1488,12 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::closeAllKMailWindows()
 {
-  Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList());
+  QListIterator<KMainWindow*> it( KMainWindow::memberList() );
   KMainWindow *window = 0;
-  while ((window = it.current()) != 0) {
-    ++it;
-    if (window->isA("KMMainWindow") ||
-	window->inherits("KMail::SecondaryWindow"))
+  while ( it.hasNext() ) {
+    window = it.next();
+    if ( window && ( window->isA("KMMainWindow") ||
+                     window->inherits("KMail::SecondaryWindow") ) )
       window->close( true ); // close and delete the window
   }
 }
@@ -1669,8 +1669,7 @@ bool KMKernel::transferMail( QString & destinationDir )
 
 void KMKernel::ungrabPtrKb(void)
 {
-  if(!KMainWindow::memberList()) return;
-  QWidget* widg = KMainWindow::memberList()->first();
+  QWidget* widg = KMainWindow::memberList().first();
   Display* dpy;
 
   if (!widg) return;
@@ -1686,11 +1685,9 @@ void KMKernel::dumpDeadLetters()
     return; //All documents should be saved before shutting down is set!
 
   // make all composer windows autosave their contents
-  if ( !KMainWindow::memberList() )
-    return;
-
-  for ( Q3PtrListIterator<KMainWindow> it(*KMainWindow::memberList()) ; it.current() != 0; ++it )
-    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( it.current() ) )
+  QListIterator<KMainWindow*> it( KMainWindow::memberList() );
+  while ( it.hasNext() )
+    if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( it.next() ) )
       win->autoSaveMessage();
 }
 
@@ -1919,22 +1916,20 @@ KMMsgIndex *KMKernel::msgIndex()
 
 KMainWindow* KMKernel::mainWin()
 {
-  if (KMainWindow::memberList()) {
-    KMainWindow *kmWin = 0;
+  KMainWindow *kmWin = 0;
 
-    // First look for a KMMainWin.
-    for (kmWin = KMainWindow::memberList()->first(); kmWin;
-         kmWin = KMainWindow::memberList()->next())
-      if (kmWin->isA("KMMainWin"))
-        return kmWin;
-
-    // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
-    // case we are running inside Kontact) because we anyway only need
-    // it for modal message boxes and for KNotify events.
-    kmWin = KMainWindow::memberList()->first();
-    if ( kmWin )
+  // First look for a KMMainWin.
+  for ( QList<KMainWindow*>::const_iterator it = KMainWindow::memberList().begin();
+       it != KMainWindow::memberList().end(); ++it )
+    if ( (*it)->isA("KMMainWin") )
       return kmWin;
-  }
+
+  // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
+  // case we are running inside Kontact) because we anyway only need
+  // it for modal message boxes and for KNotify events.
+  kmWin = KMainWindow::memberList().first();
+  if ( kmWin )
+    return kmWin;
 
   // There's not a single KMainWindow. Create a KMMainWin.
   // This could happen if we want to pop up an error message
