@@ -124,10 +124,10 @@ public:
   /** Provides a reference to the internal action list. If your used
       the @p setAction() and @p action() functions before, please
       convert to using myFilter->actions()->at() and friends now. */
-  Q3PtrList<KMFilterAction>* actions() { return &mActions; }
+  QList<KMFilterAction*>* actions() { return &mActions; }
 
   /** Provides a reference to the internal action list. Const version. */
-  const Q3PtrList<KMFilterAction>* actions() const { return &mActions; }
+  const QList<KMFilterAction*>* actions() const { return &mActions; }
 
   /** Provides a reference to the internal pattern. If you used the
       @p matches() function before, please convert to using
@@ -293,7 +293,7 @@ public:
 
 private:
   KMSearchPattern mPattern;
-  Q3PtrList<KMFilterAction> mActions;
+  QList<KMFilterAction*> mActions;
   QList<int> mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;

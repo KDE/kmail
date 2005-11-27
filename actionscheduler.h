@@ -58,7 +58,7 @@ public:
   enum ReturnCode { ResultOk, ResultError, ResultCriticalError };
 
   ActionScheduler(KMFilterMgr::FilterSet set,
-		  Q3ValueList<KMFilter*> filters,
+		  QList<KMFilter*> filters,
                   KMHeaders *headers = 0,
 		  KMFolder *srcFolder = 0);
   ~ActionScheduler();
@@ -79,7 +79,7 @@ public:
   /** Set a list of filters to work with
    The current list will not be updated until the queue
    of messages left to process is empty */
-  void setFilterList( Q3ValueList<KMFilter*> filters );
+  void setFilterList( QList<KMFilter*> filters );
 
   /* Set the id of the account associated with this scheduler */
   void setAccountId( uint id  ) { mAccountId = id; mAccount = true; }
@@ -136,10 +136,11 @@ private:
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
   Q3ValueListIterator<quint32> mMessageIt;
-  Q3ValueListIterator<KMFilter> mFilterIt;
+  QList<KMFilter*>::iterator mFilterIt;
+  QList<KMFilterAction*>::iterator mFilterActionIt;
   Q3ValueList<quint32> mSerNums, mFetchSerNums;
   Q3ValueList<QPointer<KMFolder> > mOpenFolders;
-  Q3ValueList<KMFilter> mFilters, mQueuedFilters;
+  QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
   KMFilterMgr::FilterSet mSet;
   KMHeaders *mHeaders;

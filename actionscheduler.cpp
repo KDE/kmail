@@ -66,10 +66,10 @@ bool ActionScheduler::sEnabled = false;
 bool ActionScheduler::sEnabledChecked = false;
 
 ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
-				 Q3ValueList<KMFilter*> filters,
+				 QList<KMFilter*> filters,
 				 KMHeaders *headers,
 				 KMFolder *srcFolder)
-             :mSet( set ), mHeaders( headers )
+  : mSet( set ), mHeaders( headers )
 {
   ++count;
   ++refCount;
@@ -100,9 +100,9 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   fetchTimeOutTimer = new QTimer( this );
   connect( fetchTimeOutTimer, SIGNAL(timeout()), this, SLOT(fetchTimeOut()));
 
-  Q3ValueList<KMFilter*>::Iterator it = filters.begin();
+  QList<KMFilter*>::Iterator it = filters.begin();
   for (; it != filters.end(); ++it)
-    mFilters.append( **it );
+    mFilters.append( *it );
   mDestFolder = 0;
   if (srcFolder) {
     mDeleteSrcFolder = false;
@@ -170,14 +170,14 @@ void ActionScheduler::setSourceFolder( KMFolder *srcFolder )
 	     this, SLOT(msgAdded(KMFolder*, quint32)) );
 }
 
-void ActionScheduler::setFilterList( Q3ValueList<KMFilter*> filters )
+void ActionScheduler::setFilterList( QList<KMFilter*> filters )
 {
   mFiltersAreQueued = true;
   mQueuedFilters.clear();
-  
-  Q3ValueList<KMFilter*>::Iterator it = filters.begin();
+
+  QList<KMFilter*>::Iterator it = filters.begin();
   for (; it != filters.end(); ++it)
-    mQueuedFilters.append( **it );
+    mQueuedFilters.append( *it );
   if (!mExecuting) {
       mFilters = mQueuedFilters;
       mFiltersAreQueued = false;
@@ -539,7 +539,7 @@ kdDebug(5006) << debug() << endl;
   mdnEnabled = true; // For 3.2 force all mails to be complete
 
   if ((msg && msg->isComplete()) ||
-      (msg && !(*mFilterIt).requiresBody(msg) && !mdnEnabled))
+      (msg && !(*mFilterIt)->requiresBody(msg) && !mdnEnabled))
   {
     // We have a complete message or
     // we can work with an incomplete message
@@ -574,25 +574,25 @@ void ActionScheduler::filterMessage()
     moveMessage();
     return;
   }
-  if (((mSet & KMFilterMgr::Outbound) && (*mFilterIt).applyOnOutbound()) ||
-      ((mSet & KMFilterMgr::Inbound) && (*mFilterIt).applyOnInbound() &&
+  if (((mSet & KMFilterMgr::Outbound) && (*mFilterIt)->applyOnOutbound()) ||
+      ((mSet & KMFilterMgr::Inbound) && (*mFilterIt)->applyOnInbound() &&
        (!mAccount ||
-	(mAccount && (*mFilterIt).applyOnAccount(mAccountId)))) ||
-      ((mSet & KMFilterMgr::Explicit) && (*mFilterIt).applyOnExplicit())) {
-      
+        (mAccount && (*mFilterIt)->applyOnAccount(mAccountId)))) ||
+      ((mSet & KMFilterMgr::Explicit) && (*mFilterIt)->applyOnExplicit())) {
+
       // filter is applicable
     if ( FilterLog::instance()->isLogging() ) {
       QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
-      logText.append( (*mFilterIt).pattern()->asString() );
+      logText.append( (*mFilterIt)->pattern()->asString() );
       FilterLog::instance()->add( logText, FilterLog::patternDesc );
     }
-    if (mAlwaysMatch ||
-	(*mFilterIt).pattern()->matches( *mMessageIt )) {
+    if (mAlwaysMatch || (*mFilterIt)->pattern()->matches( *mMessageIt )) {
       if ( FilterLog::instance()->isLogging() ) {
         FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
                                     FilterLog::patternResult );
       }
-      mFilterAction = (*mFilterIt).actions()->first();
+      mFilterActionIt = (*mFilterIt)->actions()->begin();
+      mFilterAction = (*mFilterActionIt)++;
       actionMessage();
       return;
     }
@@ -616,12 +616,13 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }
       KMFilterAction *action = mFilterAction;
-      mFilterAction = (*mFilterIt).actions()->next();
+//      mFilterAction = (*mFilterIt).actions()->next();
+      mFilterAction = (*mFilterActionIt)++;
       action->processAsync( msg );
     }
   } else {
     // there are no more actions
-    if ((*mFilterIt).stopProcessingHere())
+    if ((*mFilterIt)->stopProcessingHere())
       mFilterIt = mFilters.end();
     else
       ++mFilterIt;

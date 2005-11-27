@@ -42,8 +42,9 @@ using KMail::FilterLog;
 KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
   : bPopFilter(popFilter)
 {
-  if (!bPopFilter)
-    mActions.setAutoDelete( true );
+#warning Port me!
+//  if (!bPopFilter)
+//    mActions.setAutoDelete( true );
 
   if ( aConfig )
     readConfig( aConfig );
@@ -66,8 +67,9 @@ KMFilter::KMFilter( const KMFilter & aFilter )
 {
   bPopFilter = aFilter.isPopFilter();
 
-  if ( !bPopFilter )
-    mActions.setAutoDelete( true );
+#warning Port me!
+//  if (!bPopFilter)
+//    mActions.setAutoDelete( true );
 
   mPattern = aFilter.mPattern;
 
@@ -84,20 +86,21 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     mIcon = aFilter.icon();
     mShortcut = aFilter.shortcut();
 
-    Q3PtrListIterator<KMFilterAction> it( aFilter.mActions );
-    for ( it.toFirst() ; it.current() ; ++it ) {
-      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ (*it)->name() ];
+    QListIterator<KMFilterAction*> it( aFilter.mActions );
+    while ( it.hasNext() ) {
+      KMFilterAction *action = it.next();
+      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ action->name() ];
       if ( desc ) {
         KMFilterAction *f = desc->create();
         if ( f ) {
-          f->argsFromString( (*it)->argsAsString() );
+          f->argsFromString( action->argsAsString() );
           mActions.append( f );
         }
       }
     }
 
     mAccounts.clear();
-	QList<int>::ConstIterator it2;
+    QList<int>::ConstIterator it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
   }
@@ -108,8 +111,8 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
-  Q3PtrListIterator<KMFilterAction> it( mActions );
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  QList<KMFilterAction*>::const_iterator it( mActions.begin() );
+  for ( ; it != mActions.end() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
       QString logText( i18n( "<b>Applying filter action:</b> %1" )
@@ -151,9 +154,9 @@ bool KMFilter::requiresBody( KMMsgBase* msg )
 {
   if (pattern() && pattern()->requiresBody())
     return true; // no pattern means always matches?
-  Q3PtrListIterator<KMFilterAction> it( *actions() );
-  for ( it.toFirst() ; it.current() ; ++it )
-    if ((*it)->requiresBody( msg ))
+  QListIterator<KMFilterAction*> it( *actions() );
+  while ( it.hasNext() )
+    if ( it.next()->requiresBody( msg ))
       return true;
   return false;
 }
@@ -176,9 +179,9 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 {
   bool rem = false;
 
-  Q3PtrListIterator<KMFilterAction> it( mActions );
-  for ( it.toFirst() ; it.current() ; ++it )
-    if ( (*it)->folderRemoved( aFolder, aNewFolder ) )
+  QListIterator<KMFilterAction*> it( mActions );
+  while ( it.hasNext() )
+    if ( it.next()->folderRemoved( aFolder, aNewFolder ) )
       rem = true;
 
   return rem;
@@ -335,8 +338,8 @@ void KMFilter::writeConfig(KConfig* config) const
     QString key;
     int i;
 
-    Q3PtrListIterator<KMFilterAction> it( mActions );
-    for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
+    QList<KMFilterAction*>::const_iterator it;
+    for ( i=0, it != mActions.begin() ; it != mActions.end() ; ++it, ++i ) {
       config->writeEntry( key.sprintf("action-name-%d", i),
                           (*it)->name() );
       config->writeEntry( key.sprintf("action-args-%d", i),
@@ -352,16 +355,16 @@ void KMFilter::purify()
   mPattern.purify();
 
   if (!bPopFilter) {
-    Q3PtrListIterator<KMFilterAction> it( mActions );
-    it.toLast();
-    while ( it.current() )
-      if ( (*it)->isEmpty() )
-        mActions.remove ( (*it) );
-      else
-        --it;
+    QListIterator<KMFilterAction*> it( mActions );
+    it.toBack();
+    while ( it.hasPrevious() ) {
+      KMFilterAction *action = it.previous();
+      if ( action->isEmpty() )
+        mActions.remove ( action );
+    }
 
     // Remove invalid accounts from mAccounts - just to be tidy
-	QList<int>::ConstIterator it2 = mAccounts.begin();
+    QList<int>::ConstIterator it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
       if ( !kmkernel->acctMgr()->find( *it2 ) )
          mAccounts.remove( *it2 );
@@ -392,8 +395,8 @@ const QString KMFilter::asString() const
     result += "\n";
   }
   else {
-    Q3PtrListIterator<KMFilterAction> it( mActions );
-    for ( it.toFirst() ; it.current() ; ++it ) {
+    QList<KMFilterAction*>::const_iterator it( mActions.begin() );
+    for ( ; it != mActions.end() ; ++it ) {
       result += "    action: ";
       result += (*it)->label();
       result += " ";

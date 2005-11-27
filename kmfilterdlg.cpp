@@ -635,7 +635,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 }
 
 
-void KMFilterListBox::createFilter( const Q3CString & field,
+void KMFilterListBox::createFilter( const QByteArray & field,
 				    const QString & value )
 {
   KMSearchRule *newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
@@ -654,7 +654,7 @@ void KMFilterListBox::createFilter( const Q3CString & field,
 
 bool KMFilterListBox::showLaterMsgs()
 {
-	return mShowLater;
+  return mShowLater;
 }
 
 void KMFilterListBox::slotUpdateFilterName()
@@ -1111,7 +1111,7 @@ KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 {
 }
 
-void KMFilterActionWidgetLister::setActionList( Q3PtrList<KMFilterAction> *aList )
+void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 {
   assert ( aList );
 
@@ -1140,10 +1140,10 @@ void KMFilterActionWidgetLister::setActionList( Q3PtrList<KMFilterAction> *aList
   setNumberOfShownWidgetsTo( mActionList->count() );
 
   // load the actions into the widgets
-  Q3PtrListIterator<KMFilterAction> aIt( *mActionList );
+  QList<KMFilterAction*>::const_iterator aIt;
   Q3PtrListIterator<QWidget> wIt( mWidgetList );
-  for ( aIt.toFirst(), wIt.toFirst() ;
-	aIt.current() && wIt.current() ; ++aIt, ++wIt )
+  for ( aIt = mActionList->begin(), wIt.toFirst() ;
+        (aIt != mActionList->end()) && wIt.current() ; ++aIt, ++wIt )
     ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
 }
 

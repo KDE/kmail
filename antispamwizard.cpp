@@ -59,11 +59,9 @@
 #include <QPixmap>
 #include <Q3CString>
 #include <QGridLayout>
-#include <Q3PtrList>
 #include <Q3Frame>
 #include <QHBoxLayout>
 #include <QBoxLayout>
-#include <Q3ValueList>
 #include <QVBoxLayout>
 
 using namespace KMail;
@@ -161,7 +159,7 @@ void AntiSpamWizard::accept()
                     << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
-  Q3ValueList<KMFilter*> filterList;
+  QList<KMFilter*> filterList;
   bool replaceExistingFilters = false;
 
   // Let's start with virus detection and handling,
@@ -176,7 +174,7 @@ void AntiSpamWizard::accept()
         // one single filter for each tool
         // (could get combined but so it's easier to understand for the user)
         KMFilter* pipeFilter = new KMFilter();
-        Q3PtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
+        QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
         KMFilterAction* pipeFilterAction = dict["filter app"]->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
@@ -198,7 +196,7 @@ void AntiSpamWizard::accept()
     {
       // Sort out viruses depending on header fields set by the tools
       KMFilter* virusFilter = new KMFilter();
-      Q3PtrList<KMFilterAction>* virusFilterActions = virusFilter->actions();
+      QList<KMFilterAction*> *virusFilterActions = virusFilter->actions();
       KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
       virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
       virusFilterActions->append( virusFilterAction1 );
@@ -252,7 +250,7 @@ void AntiSpamWizard::accept()
         // one single filter for each tool
         // (could get combined but so it's easier to understand for the user)
         KMFilter* pipeFilter = new KMFilter();
-        Q3PtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
+        QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
         KMFilterAction* pipeFilterAction = dict["filter app"]->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
@@ -275,7 +273,7 @@ void AntiSpamWizard::accept()
 
     // Sort out spam depending on header fields set by the tools
     KMFilter* spamFilter = new KMFilter();
-    Q3PtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
+    QList<KMFilterAction*> *spamFilterActions = spamFilter->actions();
     if ( mSpamRulesPage->moveSpamSelected() )
     {
       KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
@@ -327,7 +325,7 @@ void AntiSpamWizard::accept()
       // Sort out messages classified as unsure
       bool atLeastOneUnsurePattern = false;
       KMFilter* unsureFilter = new KMFilter();
-      Q3PtrList<KMFilterAction>* unsureFilterActions = unsureFilter->actions();
+      QList<KMFilterAction*> *unsureFilterActions = unsureFilter->actions();
       KMFilterAction* unsureFilterAction1 = dict["transfer"]->create();
       unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureFolderName() );
       unsureFilterActions->append( unsureFilterAction1 );
@@ -372,7 +370,7 @@ void AntiSpamWizard::accept()
     // Classify messages manually as Spam
     KMFilter* classSpamFilter = new KMFilter();
     classSpamFilter->setIcon( "mail_spam" );
-    Q3PtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
+    QList<KMFilterAction*> *classSpamFilterActions = classSpamFilter->actions();
     KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
     classSpamFilterActionFirst->argsFromString( "P" );
     classSpamFilterActions->append( classSpamFilterActionFirst );
@@ -411,7 +409,7 @@ void AntiSpamWizard::accept()
     // Classify messages manually as not Spam / as Ham
     KMFilter* classHamFilter = new KMFilter();
     classHamFilter->setIcon( "mail_ham" );
-    Q3PtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
+    QList<KMFilterAction*> *classHamFilterActions = classHamFilter->actions();
     KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
     classHamFilterActionFirst->argsFromString( "H" );
     classHamFilterActions->append( classHamFilterActionFirst );

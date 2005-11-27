@@ -16,12 +16,11 @@
 #include <q3groupbox.h>
 #include <q3hbox.h>
 #include <qstring.h>
-#include <q3ptrlist.h>
+#include <qlist.h>
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
 #include <qmap.h>
 //Added by qt3to4:
-#include <Q3CString>
 #include <QLabel>
 
 class KMSearchPatternEdit;
@@ -72,7 +71,7 @@ public:
       instead call KMFilterMgr::createFilter.
       @see KMFilterMgr::createFilter KMFilterDlg::createFilter
   */
-  void createFilter( const Q3CString & field, const QString & value );
+  void createFilter( const QByteArray & field, const QString & value );
 
   /** Loads the filter list and selects the first filter. Should be
       called when all signals are connected properly. If createDummyFilter
@@ -240,7 +239,7 @@ public:
 
   virtual ~KMFilterActionWidgetLister();
 
-  void setActionList( Q3PtrList<KMFilterAction> * aList );
+  void setActionList( QList<KMFilterAction*> * aList );
 
   /** Updates the action list according to the current widget values */
   void updateActionList() { regenerateActionListFromWidgets(); }
@@ -254,7 +253,7 @@ protected:
 
 private:
   void regenerateActionListFromWidgets();
-  Q3PtrList<KMFilterAction> *mActionList;
+  QList<KMFilterAction*> *mActionList;
 
 };
 
@@ -329,7 +328,7 @@ public:
       the first rule with "field equals value". Internally forwarded
       to KMFilterListBox::createFilter. You should instead call
       KMFilterMgr::createFilter. */
-  void createFilter( const Q3CString & field, const QString & value )
+  void createFilter( const QByteArray & field, const QString & value )
     { mFilterList->createFilter( field, value ); }
 
 public slots:
