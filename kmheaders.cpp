@@ -1340,7 +1340,12 @@ void KMHeaders::applyFiltersOnMsg()
     CREATE_TIMER(filter);
     START_TIMER(filter);
 
+    int msgCount = 0;
     for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+      QString statusMsg = i18n("Filtering message %1 of %2");
+      statusMsg = statusMsg.arg( ++msgCount ).arg( msgList->count() );
+      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+      KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
       int idx = msgBase->parent()->find(msgBase);
       assert(idx != -1);
       KMMessage * msg = msgBase->parent()->getMsg(idx);

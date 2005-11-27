@@ -547,6 +547,9 @@ private:
   bool mToggle;
 };
 
+
+/* This command is used to create a filter based on the user'S
+    decision, e.g. filter by From header */
 class KDE_EXPORT KMFilterCommand : public KMCommand
 {
   Q_OBJECT
@@ -562,6 +565,8 @@ private:
 };
 
 
+/* This command is used to apply a single filter (AKA ad-hoc filter)
+    to a set of messages */
 class KDE_EXPORT KMFilterActionCommand : public KMCommand
 {
   Q_OBJECT

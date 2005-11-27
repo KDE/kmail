@@ -1475,6 +1475,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     QString statusMsg = i18n("Filtering message %1 of %2");
     statusMsg = statusMsg.arg( ++msgCount ).arg( msgList.count() );
     KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+    KApplication::kApplication()->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     msg->setTransferInProgress(false);
 
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
