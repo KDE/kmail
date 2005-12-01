@@ -816,7 +816,14 @@ void PopAccount::saveUidList()
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   config.writeEntry( "seenUidTimeList", seenUidTimeList );
-  config.writeEntry( "downloadLater", mHeaderLaterUids.values() );
+  QByteArray laterList;
+  laterList.reserve( mHeaderLaterUids.count() * 5 ); // what's the average size of a uid?
+  foreach( const QByteArray& uid, mHeaderLaterUids.values() ) {
+      if ( !laterList.isEmpty() )
+          laterList += ',';
+      laterList.append( uid );
+  }
+  config.writeEntry( "downloadLater", laterList.constData() );
   config.sync();
 }
 
