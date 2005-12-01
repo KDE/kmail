@@ -12,15 +12,6 @@
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
 #include "accountmanager.h"
-//Added by qt3to4:
-#include <Q3Frame>
-#include <QGridLayout>
-#include <Q3CString>
-#include <Q3ValueList>
-#include <QVBoxLayout>
-#include <Q3PtrList>
-#include <QHBoxLayout>
-#include <Q3ListBox>
 using KMail::AccountManager;
 
 // other KDE headers:
@@ -38,16 +29,24 @@ using KMail::AccountManager;
 #include <kpushbutton.h>
 
 // other Qt headers:
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <q3widgetstack.h>
-#include <qtooltip.h>
-
 #include <qcheckbox.h>
+#include <qcombobox.h>
 #include <q3hbox.h>
-#include <qvalidator.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qtabwidget.h>
+#include <qtooltip.h>
+#include <qvalidator.h>
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QGridLayout>
+#include <Q3CString>
+#include <Q3ValueList>
+#include <QVBoxLayout>
+#include <Q3PtrList>
+#include <QHBoxLayout>
+#include <Q3ListBox>
 
 // other headers:
 #include <assert.h>

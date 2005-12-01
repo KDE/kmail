@@ -24,7 +24,7 @@ using KMail::MessageProperty;
 
 // other Qt headers
 #include <qregexp.h>
-#include <q3valuevector.h>
+//#include <q3valuevector.h>
 
 // other headers
 #include <assert.h>
@@ -312,8 +312,8 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
   QList<KMFilter*>::const_iterator it = mFilters.begin();
   for ( ; it != mFilters.end() ; ++it ) {
     KMFilter *filter = *it;
-    Q3PtrListIterator<KMFilterAction> jt( *filter->actions() );
-    for ( jt.toFirst() ; jt.current() ; ++jt ) {
+    QList<KMFilterAction*>::const_iterator jt( filter->actions()->begin() );
+    for ( ; jt != filter->actions()->end() ; ++jt ) {
       KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
       if (!f)
         continue;
@@ -344,8 +344,8 @@ void KMFilterMgr::deref(bool force)
     mRefCount = 0;
   if (mRefCount && !force)
     return;
-  Q3ValueVector< KMFolder *>::const_iterator it;
-  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it )
+  QVector< KMFolder *>::const_iterator it;
+  for ( it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it )
     (*it)->close();
   mOpenFolders.clear();
 }

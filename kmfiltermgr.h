@@ -28,8 +28,6 @@
 
 class KMFilter;
 class KMFilterDlg;
-template <typename T> class Q3ValueVector;
-template <typename T> class Q3ValueList;
 
 class KMFilterMgr: public QObject
 {
@@ -43,7 +41,7 @@ public:
   void clear();
 
   enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, Explicit = 0x4,
-		   All = Inbound|Outbound|Explicit };
+                   All = Inbound|Outbound|Explicit };
 
   /** Reload filter rules from config file. */
   void readConfig(void);

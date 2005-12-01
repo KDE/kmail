@@ -20,10 +20,9 @@
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
 #include <qmap.h>
-//Added by qt3to4:
-#include <QLabel>
 
 class KMSearchPatternEdit;
+class QLabel;
 class Q3ListBox;
 class QPushButton;
 class QComboBox;

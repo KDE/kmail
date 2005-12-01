@@ -25,7 +25,7 @@
 
 #include <kshortcut.h>
 
-#include <q3ptrlist.h>
+//#include <q3ptrlist.h>
 
 class QString;
 class KConfig;
