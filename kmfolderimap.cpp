@@ -2013,7 +2013,7 @@ Q3ValueList<ulong> KMFolderImap::splitSets(const QString uids)
   QString buffer = QString::null;
   int setstart = -1;
   // iterate over the uids
-  for (uint i = 0; i < uids.length(); i++)
+  for (int i = 0; i < uids.length(); i++)
   {
     QChar chr = uids[i];
     if (chr == ',')
