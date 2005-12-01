@@ -41,7 +41,6 @@ Name[tg]=Аз ҳама бехавфнокаш
 Name[tr]=En Güvenli
 Name[uk]=Найбільш безпечний
 Name[uz]=Жуда хавфсиз
-Name[xx]=xxMost Securexx
 Name[zh_CN]=最安全
 Comment=Sets all necessary options to achieve maximum security
 Comment[bg]=Режим, в който всички настройки за сигурност за включени
@@ -82,7 +81,6 @@ Comment[ta]=எல்லா தேர்வுகளையும் மிகு
 Comment[tg]=Тамоми параметрҳоро, ки барои ноилшавии амнияти максималӣ лозим аст, сабт мекунад
 Comment[tr]=En yüksek güvenliği yakalamak için gerekli bütün takım seçenekleri
 Comment[uk]=Встановлює всі необхідні параметри для забезпечення максимальної безпеки
-Comment[xx]=xxSets all necessary options to achieve maximum securityxx
 Comment[zh_CN]=设置所有必要的选项来达到最大的安全性
 
 [Composer]
