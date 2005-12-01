@@ -1660,7 +1660,7 @@ void KMMainWidget::slotOnlineStatus()
     kmkernel->stopNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   } else {
-    actionCollection()->action( "online_status" )->setText( i18n("Go Offline)") );
+    actionCollection()->action( "online_status" )->setText( i18n("Go Offline") );
     kmkernel->resumeNetworkJobs();
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
