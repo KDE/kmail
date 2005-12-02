@@ -199,7 +199,7 @@ void KMMessagePart::setBodyEncoded(const Q3CString& aStr)
 }
 
 void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
-				       Q3ValueList<int> & allowedCte,
+				       QList<int> & allowedCte,
 				       bool allow8Bit,
                                        bool willBeSigned )
 {
