@@ -344,7 +344,7 @@ void KMFilter::writeConfig(KConfig* config) const
     int i;
 
     QList<KMFilterAction*>::const_iterator it;
-    for ( i=0, it != mActions.begin() ; it != mActions.end() ; ++it, ++i ) {
+    for ( i=0, it = mActions.begin() ; it != mActions.end() ; ++it, ++i ) {
       config->writeEntry( key.sprintf("action-name-%d", i),
                           (*it)->name() );
       config->writeEntry( key.sprintf("action-args-%d", i),
