@@ -18,11 +18,6 @@
 #include <libkpimidentities/identitycombo.h>
 #include <libkdepim/kfileio.h>
 #include <libkdepim/collectingprocess.h>
-//Added by qt3to4:
-#include <Q3CString>
-#include <Q3PtrList>
-#include <QHBoxLayout>
-#include <Q3ValueList>
 using KPIM::CollectingProcess;
 #include "kmfawidgets.h"
 #include "folderrequester.h"
@@ -34,6 +29,7 @@ using KMail::MessageProperty;
 using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
+
 #warning Port me!
 //#include <kregexp3.h>
 #include <ktempfile.h>
@@ -43,12 +39,14 @@ using KMail::RegExpLineEdit;
 #include <kaudioplayer.h>
 #include <kurlrequester.h>
 
+//Added by qt3to4:
+#include <q3stylesheet.h>
+#include <QHBoxLayout>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextcodec.h>
 #include <qtimer.h>
-#include <qobject.h>
-#include <q3stylesheet.h>
+
 #include <assert.h>
 
 
@@ -114,7 +112,7 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 }
 
 void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
-                              const Q3ValueList<KMime::MDN::DispositionModifier> & m ) {
+                              const QList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
@@ -413,7 +411,7 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
-QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, Q3PtrList<KTempFile> & aTempFileList ) const
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile*> & aTempFileList ) const
 {
   QString result = mParameter;
   QList<int> argList;
@@ -496,8 +494,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(TRUE);
 
-  Q3PtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
+  QList<KTempFile*> atmList;
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
@@ -526,10 +523,15 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // run process:
   if ( !shProc.start( KProcess::Block,
                       withOutput ? KProcess::Stdout
-                                 : KProcess::NoCommunication ) )
+                                 : KProcess::NoCommunication ) ) {
+    while (!atmList.isEmpty())
+      delete atmList.takeFirst();
     return ErrorButGoOn;
+  }
 
   if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
+    while (!atmList.isEmpty())
+      delete atmList.takeFirst();
     return ErrorButGoOn;
   }
 
@@ -547,9 +549,14 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
       aMsg->fromByteArray( msgText );
       aMsg->setHeaderField("X-UID",uid);
     }
-    else
+    else {
+      while (!atmList.isEmpty())
+        delete atmList.takeFirst();
       return ErrorButGoOn;
+    }
   }
+  while (!atmList.isEmpty())
+    delete atmList.takeFirst();
   return GoOn;
 }
 
@@ -1461,13 +1468,13 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->initFromMessage( aMsg );
 
   QString st = QString::fromUtf8( aMsg->createForwardBody() );
-  Q3CString
+  QByteArray
     encoding = KMMsgBase::autoDetectCharset( aMsg->charset(),
                                              KMMessage::preferredCharsets(),
                                              st );
   if( encoding.isEmpty() )
     encoding = "utf-8";
-  Q3CString str = KMMsgBase::codecForName( encoding )->fromUnicode( st );
+  QByteArray str = KMMsgBase::codecForName( encoding )->fromUnicode( st );
 
   msg->setCharset( encoding );
   msg->setTo( mParameter );
@@ -1480,7 +1487,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
     msg->setAutomaticFields( true );
     msg->setHeaderField( "Content-Type", "text/plain" );
     // msg->setCteStr( isQP ? "quoted-printable": "8bit" );
-    Q3ValueList<int> dummy;
+    QList<int> dummy;
     msg->setBodyAndGuessCte(str, dummy, !isQP);
     msg->setCharset( encoding );
     if( isQP )
@@ -1500,7 +1507,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
     bodyPart.setTypeStr( "text" );
     bodyPart.setSubtypeStr( "plain" );
     // bodyPart.setCteStr( isQP ? "quoted-printable": "8bit" );
-    Q3ValueList<int> dummy;
+    QList<int> dummy;
     bodyPart.setBodyAndGuessCte(str, dummy, !isQP);
     bodyPart.setCharset( encoding );
     bodyPart.setBodyEncoded( str );
@@ -1683,11 +1690,12 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(FALSE);
 
-  Q3PtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
+  QList<KTempFile*> atmList;
   atmList.append( inFile );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  while (!atmList.isEmpty())
+    delete atmList.takeFirst();
   if ( commandLine.isEmpty() )
     handler->actionMessage( ErrorButGoOn );
 
@@ -1857,6 +1865,12 @@ const QString KMFilterActionWithUrl::displayString() const
 //   Filter  Action  Dictionary
 //
 //=============================================================================
+KMFilterActionDict::~KMFilterActionDict()
+{
+  while (!mList.isEmpty())
+    delete mList.takeFirst();
+}
+
 void KMFilterActionDict::init(void)
 {
   insert( KMFilterActionMove::newAction );
@@ -1880,9 +1894,8 @@ void KMFilterActionDict::init(void)
 // The int in the QDict constructor (41) must be a prime
 // and should be greater than the double number of KMFilterAction types
 KMFilterActionDict::KMFilterActionDict()
-  : Q3Dict<KMFilterActionDesc>(41)
+  : QMultiHash<QString, KMFilterActionDesc*>()
 {
-  mList.setAutoDelete(TRUE);
   init();
 }
 
@@ -1893,8 +1906,8 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   desc->name = action->name();
   desc->label = action->label();
   desc->create = aNewFunc;
-  Q3Dict<KMFilterActionDesc>::insert( desc->name, desc );
-  Q3Dict<KMFilterActionDesc>::insert( desc->label, desc );
+  QMultiHash<QString, KMFilterActionDesc*>::insert( desc->name, desc );
+  QMultiHash<QString, KMFilterActionDesc*>::insert( desc->label, desc );
   mList.append( desc );
   delete action;
 }

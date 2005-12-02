@@ -22,19 +22,17 @@
 
 #include <kmime_mdn.h>
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <q3dict.h>
-#include <q3ptrlist.h>
-#include <q3valuelist.h>
-#include <qpointer.h>
-#include <qwidget.h>
+#include <QList>
+#include <QMultiHash>
+#include <QPointer>
+#include <QStringList>
 
 class KMMsgBase;
 class KMMessage;
-class QWidget;
 class KMFolder;
 class KTempFile;
+
+class QWidget;
 
 //=========================================================
 //
@@ -150,8 +148,8 @@ public:
 
   /** Automates the sending of MDNs from filter actions. */
   static void sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
-		       const Q3ValueList<KMime::MDN::DispositionModifier> & m
-		       = Q3ValueList<KMime::MDN::DispositionModifier>() );
+		       const QList<KMime::MDN::DispositionModifier> & m
+		       = QList<KMime::MDN::DispositionModifier>() );
 
 private:
   QString mName;
@@ -585,7 +583,7 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, Q3PtrList<KTempFile> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile*> & aTempFileList  ) const;
 
   virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
 };
@@ -670,10 +668,11 @@ struct KMFilterActionDesc
     @see KMFilterAction KMFilterActionDesc KMFilter
 
 */
-class KMFilterActionDict: public Q3Dict<KMFilterActionDesc>
+class KMFilterActionDict : public QMultiHash<QString, KMFilterActionDesc*>
 {
 public:
   KMFilterActionDict();
+  virtual ~KMFilterActionDict();
 
   /** Overloaded member function, provided for convenience. Thin
       wrapper around QDict::insert and QPtrList::insert.
@@ -686,7 +685,7 @@ public:
 
   /** Provides read-only access to a list of all known filter
       actions. */
-  const Q3PtrList<KMFilterActionDesc>& list() const { return mList; }
+  const QList<KMFilterActionDesc*>& list() const { return mList; }
 
 protected:
   /** Populate the dictionary with all known  KMFilterAction
@@ -694,7 +693,7 @@ protected:
   virtual void init(void);
 
 private:
-  Q3PtrList<KMFilterActionDesc> mList;
+  QList<KMFilterActionDesc*> mList;
 };
 
 #endif /*kmfilteraction_h*/

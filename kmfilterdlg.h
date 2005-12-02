@@ -10,7 +10,6 @@
 #include "kmfilteraction.h"
 
 #include <kwidgetlister.h>
-
 #include <kdialogbase.h>
 
 #include <q3groupbox.h>

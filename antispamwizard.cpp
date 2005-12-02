@@ -175,7 +175,7 @@ void AntiSpamWizard::accept()
         // (could get combined but so it's easier to understand for the user)
         KMFilter* pipeFilter = new KMFilter();
         QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
-        KMFilterAction* pipeFilterAction = dict["filter app"]->create();
+        KMFilterAction* pipeFilterAction = dict.value( "filter app" )->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
@@ -197,11 +197,11 @@ void AntiSpamWizard::accept()
       // Sort out viruses depending on header fields set by the tools
       KMFilter* virusFilter = new KMFilter();
       QList<KMFilterAction*> *virusFilterActions = virusFilter->actions();
-      KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
+      KMFilterAction* virusFilterAction1 = dict.value( "transfer" )->create();
       virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
       virusFilterActions->append( virusFilterAction1 );
       if ( mVirusRulesPage->markReadRulesSelected() ) {
-        KMFilterAction* virusFilterAction2 = dict["set status"]->create();
+        KMFilterAction* virusFilterAction2 = dict.value( "set status" )->create();
         virusFilterAction2->argsFromString( "R" ); // Read
         virusFilterActions->append( virusFilterAction2 );
       }
@@ -251,7 +251,7 @@ void AntiSpamWizard::accept()
         // (could get combined but so it's easier to understand for the user)
         KMFilter* pipeFilter = new KMFilter();
         QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
-        KMFilterAction* pipeFilterAction = dict["filter app"]->create();
+        KMFilterAction* pipeFilterAction = dict.value( "filter app" )->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
@@ -276,15 +276,15 @@ void AntiSpamWizard::accept()
     QList<KMFilterAction*> *spamFilterActions = spamFilter->actions();
     if ( mSpamRulesPage->moveSpamSelected() )
     {
-      KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
+      KMFilterAction* spamFilterAction1 = dict.value( "transfer" )->create();
       spamFilterAction1->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
       spamFilterActions->append( spamFilterAction1 );
     }
-    KMFilterAction* spamFilterAction2 = dict["set status"]->create();
+    KMFilterAction* spamFilterAction2 = dict.value( "set status" )->create();
     spamFilterAction2->argsFromString( "P" ); // Spam
     spamFilterActions->append( spamFilterAction2 );
     if ( mSpamRulesPage->markAsReadSelected() ) {
-      KMFilterAction* spamFilterAction3 = dict["set status"]->create();
+      KMFilterAction* spamFilterAction3 = dict.value( "set status" )->create();
       spamFilterAction3->argsFromString( "R" ); // Read
       spamFilterActions->append( spamFilterAction3 );
     }
@@ -326,7 +326,7 @@ void AntiSpamWizard::accept()
       bool atLeastOneUnsurePattern = false;
       KMFilter* unsureFilter = new KMFilter();
       QList<KMFilterAction*> *unsureFilterActions = unsureFilter->actions();
-      KMFilterAction* unsureFilterAction1 = dict["transfer"]->create();
+      KMFilterAction* unsureFilterAction1 = dict.value( "transfer" )->create();
       unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureFolderName() );
       unsureFilterActions->append( unsureFilterAction1 );
       KMSearchPattern* unsureFilterPattern = unsureFilter->pattern();
@@ -371,7 +371,7 @@ void AntiSpamWizard::accept()
     KMFilter* classSpamFilter = new KMFilter();
     classSpamFilter->setIcon( "mail_spam" );
     QList<KMFilterAction*> *classSpamFilterActions = classSpamFilter->actions();
-    KMFilterAction* classSpamFilterActionFirst = dict["set status"]->create();
+    KMFilterAction* classSpamFilterActionFirst = dict.value( "set status" )->create();
     classSpamFilterActionFirst->argsFromString( "P" );
     classSpamFilterActions->append( classSpamFilterActionFirst );
     for ( Q3ValueListIterator<SpamToolConfig> it = mToolList.begin();
@@ -379,14 +379,14 @@ void AntiSpamWizard::accept()
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
       {
-        KMFilterAction* classSpamFilterAction = dict["execute"]->create();
+        KMFilterAction* classSpamFilterAction = dict.value( "execute" )->create();
         classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
         classSpamFilterActions->append( classSpamFilterAction );
       }
     }
     if ( mSpamRulesPage->moveSpamSelected() )
     {
-      KMFilterAction* classSpamFilterActionLast = dict["transfer"]->create();
+      KMFilterAction* classSpamFilterActionLast = dict.value( "transfer" )->create();
       classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
       classSpamFilterActions->append( classSpamFilterActionLast );
     }
@@ -410,7 +410,7 @@ void AntiSpamWizard::accept()
     KMFilter* classHamFilter = new KMFilter();
     classHamFilter->setIcon( "mail_ham" );
     QList<KMFilterAction*> *classHamFilterActions = classHamFilter->actions();
-    KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
+    KMFilterAction* classHamFilterActionFirst = dict.value( "set status" )->create();
     classHamFilterActionFirst->argsFromString( "H" );
     classHamFilterActions->append( classHamFilterActionFirst );
     for ( Q3ValueListIterator<SpamToolConfig> it = mToolList.begin();
@@ -418,7 +418,7 @@ void AntiSpamWizard::accept()
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
       {
-        KMFilterAction* classHamFilterAction = dict["execute"]->create();
+        KMFilterAction* classHamFilterAction = dict.value( "execute" )->create();
         classHamFilterAction->argsFromString( (*it).getHamCmd() );
         classHamFilterActions->append( classHamFilterAction );
       }

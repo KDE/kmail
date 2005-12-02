@@ -2534,7 +2534,7 @@ Q3ValueList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
-                                    Q3ValueList<int> & allowedCte,
+                                    QList<int> & allowedCte,
                                     bool allow8Bit,
                                     bool willBeSigned )
 {

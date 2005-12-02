@@ -643,7 +643,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
-  KMFilterActionDesc *desc = (*kmkernel->filterActionDict())["transfer"];
+  KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( "transfer" );
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
@@ -1012,8 +1012,9 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   setSpacing( 4 );
 
-  Q3PtrListIterator<KMFilterActionDesc> it ( kmkernel->filterActionDict()->list() );
-  for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
+  QList<KMFilterActionDesc*> list = kmkernel->filterActionDict()->list();
+  QList<KMFilterActionDesc*>::const_iterator it;
+  for ( i=0, it = list.begin() ; it != list.end() ; ++it, ++i ) {
     //create an instance:
     KMFilterAction *a = (*it)->create();
     // append to the list of actions:
@@ -1080,7 +1081,7 @@ KMFilterAction * KMFilterActionWidget::action()
 {
   // look up the action description via the label
   // returned by QComboBox::currentText()...
-  KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ mComboBox->currentText() ];
+  KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( mComboBox->currentText() );
   if ( desc ) {
     // ...create an instance...
     KMFilterAction *fa = desc->create();

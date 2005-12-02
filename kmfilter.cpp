@@ -21,7 +21,10 @@
 #include <config.h>
 #endif
 
+// my header
 #include "kmfilter.h"
+
+// other kmail headers
 #include "kmkernel.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
@@ -31,11 +34,13 @@ using KMail::AccountManager;
 #include "filterlog.h"
 using KMail::FilterLog;
 
+// other KDE headers
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kconfig.h>
 
+// other headers
 #include <assert.h>
 
 
@@ -89,7 +94,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     QListIterator<KMFilterAction*> it( aFilter.mActions );
     while ( it.hasNext() ) {
       KMFilterAction *action = it.next();
-      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ action->name() ];
+      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( action->name() );
       if ( desc ) {
         KMFilterAction *f = desc->create();
         if ( f ) {
@@ -272,7 +277,7 @@ void KMFilter::readConfig(KConfig* config)
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
       // get the action description...
-      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ config->readEntry( actName ) ];
+      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( config->readEntry( actName ) );
       if ( desc ) {
         //...create an instance...
         KMFilterAction *fa = desc->create();

@@ -546,9 +546,9 @@ public:
     @param willBeSigned whether "7bit"/"8bit" is allowed as cte according to RFC 3156
   */
   void setBodyAndGuessCte( const QByteArray& aBuf,
-                                   Q3ValueList<int>& allowedCte,
-                                   bool allow8Bit = false,
-                                   bool willBeSigned = false );
+                                 QList<int>& allowedCte,
+                                 bool allow8Bit = false,
+                                 bool willBeSigned = false );
   void setBodyAndGuessCte( const Q3CString& aBuf,
                                    Q3ValueList<int>& allowedCte,
                                    bool allow8Bit = false,

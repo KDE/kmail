@@ -1,11 +1,11 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmfiltermgr.cpp
 
-// my header
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
+// my header
 #include "kmfiltermgr.h"
 
 // other kmail headers
@@ -24,7 +24,6 @@ using KMail::MessageProperty;
 
 // other Qt headers
 #include <qregexp.h>
-//#include <q3valuevector.h>
 
 // other headers
 #include <assert.h>
