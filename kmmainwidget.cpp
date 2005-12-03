@@ -3311,6 +3311,7 @@ void KMMainWidget::initializeFilterActions()
       if(!addedSeparator) {
         mApplyFilterActionsMenu->popupMenu()->insertSeparator();
         addedSeparator = !addedSeparator;
+	mFilterMenuActions.append( new KActionSeparator());
       }
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
