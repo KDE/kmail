@@ -1432,11 +1432,11 @@ void KMKernel::init()
   the_msgIndex = 0;
 #endif
 
-#if 0
+//#if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
   the_weaverLogger = new KPIM::ThreadWeaver::WeaverThreadLogger(this);
   the_weaverLogger->attach (the_weaver);
-#endif
+//#endif
 
   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SIGNAL( folderRemoved(KMFolder*) ) );
