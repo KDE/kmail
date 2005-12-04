@@ -1366,6 +1366,9 @@ void KMKernel::init()
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
   the_weaverLogger = new KPIM::ThreadWeaver::WeaverThreadLogger(this);
   the_weaverLogger->attach (the_weaver);
+#else
+  // make it obvious that this instance has not been initialized
+  // the_weaver = 0;
 #endif
 
   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),

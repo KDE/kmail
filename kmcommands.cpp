@@ -1506,30 +1506,32 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
 
 void KMMetaFilterActionCommand::start()
 {
-#if 0 // use action scheduler
-  KMFilterMgr::FilterSet set = KMFilterMgr::All;
-  Q3PtrList<KMFilter> filters;
-  filters.append( mFilter );
-  ActionScheduler *scheduler = new ActionScheduler( set, filters, mHeaders );
-  scheduler->setAlwaysMatch( true );
-  scheduler->setAutoDestruct( true );
+  if ( ActionScheduler::isEnabled() && false ) { // don't use it for now
+    // use action scheduler
+    KMFilterMgr::FilterSet set = KMFilterMgr::All;
+    QList<KMFilter*> filters;
+    filters.append( mFilter );
+    ActionScheduler *scheduler = new ActionScheduler( set, filters, mHeaders );
+    scheduler->setAlwaysMatch( true );
+    scheduler->setAutoDestruct( true );
 
-  int contentX, contentY;
-  HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
-  Q3PtrList<KMMsgBase> msgList = *mHeaders->selectedMsgs(true);
-  mHeaders->finalizeMove( nextItem, contentX, contentY );
+    int contentX, contentY;
+    HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
+#warning Port me!
+    QList<KMMsgBase*> msgList; // = *mHeaders->selectedMsgs(true);
+    mHeaders->finalizeMove( nextItem, contentX, contentY );
 
-
-  for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
-    scheduler->execFilters( msg );
-#else
-  KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
-  *mHeaders->selectedMsgs(), mFilter);
-  filterCommand->start();
-  int contentX, contentY;
-  HeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
-  mHeaders->finalizeMove( item, contentX, contentY );
-#endif
+    QListIterator<KMMsgBase*> it( msgList );
+    while ( it.hasNext())
+      scheduler->execFilters( it.next() );
+  } else {
+    KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
+    *mHeaders->selectedMsgs(), mFilter);
+    filterCommand->start();
+    int contentX, contentY;
+    HeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
+    mHeaders->finalizeMove( item, contentX, contentY );
+  }
 }
 
 FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
