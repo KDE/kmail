@@ -1340,6 +1340,7 @@ void KMHeaders::applyFiltersOnMsg()
     CREATE_TIMER(filter);
     START_TIMER(filter);
 
+    KCursorSaver busy( KBusyPtr::busy() );
     int msgCount = 0;
     int msgCountToFilter = msgList->count();
     for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {

@@ -1464,6 +1464,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
+  KCursorSaver busy( KBusyPtr::busy() );
   Q3PtrList<KMMessage> msgList = retrievedMsgs();
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
