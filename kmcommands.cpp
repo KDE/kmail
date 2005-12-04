@@ -1464,14 +1464,19 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
+  KCursorSaver busy( KBusyPtr::busy() );
   QPtrList<KMMessage> msgList = retrievedMsgs();
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
     if( msg->parent() )
       kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
+  int counter = 0;
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
     msg->setTransferInProgress(false);
+
+    if ( !( ++counter % 20 ) )
+      KApplication::kApplication()->processEvents( 50 );
 
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {

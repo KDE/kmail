@@ -1339,7 +1339,11 @@ void KMHeaders::applyFiltersOnMsg()
     CREATE_TIMER(filter);
     START_TIMER(filter);
 
+    KCursorSaver busy( KBusyPtr::busy() );
+    int counter = 0;
     for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+      if ( !( ++counter % 20 ) )
+        KApplication::kApplication()->processEvents( 50 );
       int idx = msgBase->parent()->find(msgBase);
       assert(idx != -1);
       KMMessage * msg = msgBase->parent()->getMsg(idx);
