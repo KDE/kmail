@@ -154,17 +154,15 @@ void KMMimePartTree::slotSaveAsEncoded()
 //-----------------------------------------------------------------------------
 void KMMimePartTree::saveSelectedBodyParts( bool encoded )
 {
-  Q3PtrList<Q3ListViewItem> selected = selectedItems();
+  QList<Q3ListViewItem*> selected = selectedItems();
 
   Q_ASSERT( !selected.isEmpty() );
   if ( selected.isEmpty() )
     return;
 
-  Q3PtrListIterator<Q3ListViewItem> it( selected );
   Q3PtrList<partNode> parts;
-  while ( it.current() ) {
-    parts.append( static_cast<KMMimePartTreeItem *>(it.current())->node() );
-    ++it;
+  for ( QList<Q3ListViewItem*>::Iterator it = selected.begin(); it != selected.end(); ++it ) {
+    parts.append( static_cast<KMMimePartTreeItem *>( *it )->node() );
   }
   mReaderWin->setUpdateAttachment();
   KMSaveAttachmentsCommand *command =

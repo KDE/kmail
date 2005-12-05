@@ -897,7 +897,7 @@ Q3CString& KMFolderMbox::getMsgString(int idx, Q3CString &mDest)
 
   fseek(mStream, mi->folderOffset(), SEEK_SET);
   fread(mDest.data(), msgSize, 1, mStream);
-  mDest[msgSize] = '\0';
+  mDest[(uint)msgSize] = '\0';
 
   size_t newMsgSize = unescapeFrom( mDest.data(), msgSize );
   newMsgSize = KMail::Util::crlf2lf( mDest.data(), newMsgSize );
