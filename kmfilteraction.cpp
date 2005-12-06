@@ -1630,7 +1630,14 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       pclose(p);
       if ( !ba.isEmpty() ) {
         KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).latin1() );
+        KMFolder *filterFolder =  mMsg->parent();
         mMsg->fromByteArray( ba );
+        if ( filterFolder ) {
+          filterFolder->take( filterFolder->find( mMsg ) );
+          filterFolder->addMsg( mMsg );
+        } else {
+          kdDebug(5006) << "Warning: Cannot refresh the message from the external filter." << endl;
+        }
       }
 
       KPIM::ThreadWeaver::debug (1, "PipeJob::run: done.\n" );

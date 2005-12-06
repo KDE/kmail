@@ -570,7 +570,7 @@ void ActionScheduler::filterMessage()
        (!mAccount ||
 	(mAccount && (*mFilterIt).applyOnAccount(mAccountId)))) ||
       ((mSet & KMFilterMgr::Explicit) && (*mFilterIt).applyOnExplicit())) {
-      
+
       // filter is applicable
     if ( FilterLog::instance()->isLogging() ) {
       QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
@@ -646,8 +646,11 @@ void ActionScheduler::moveMessage()
   if (!orgMsg || !orgMsg->parent()) {
     // Original message is gone, no point filtering it anymore
     mSrcFolder->removeMsg( mSrcFolder->find( msg ) );
+    kdDebug(5006) << "The original serial number is missing. "
+                  << "Cannot complete the filtering." << endl;
     mExecutingLock = false;
     processMessageTimer->start( 0, true );
+    return;
   } else {
     if (!folder) // no filter folder specified leave in current place
       folder = orgMsg->parent();
@@ -659,7 +662,7 @@ void ActionScheduler::moveMessage()
   mSrcFolder->addMsg( msg );
   mIgnore = false;
 
-  if (msg && kmkernel->folderIsTrash( folder ))
+  if (msg && folder && kmkernel->folderIsTrash( folder ))
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
 
   timeOutTime = QTime::currentTime();
@@ -722,8 +725,6 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
 
 void ActionScheduler::copyMessageFinished( KMCommand *command )
 {
-  // FIXME remove the debug output
-  kdDebug(5006) << "##### ActionScheduler::copyMessageFinished( KMCommand *command )" << endl;
   if ( command->result() != KMCommand::OK )
     actionMessage( KMFilterAction::ErrorButGoOn );
   else 
