@@ -2,7 +2,7 @@
     partNode.cpp A node in a MIME tree.
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2002 Klar√§lvdalens Datakonsult AB
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License, version 2, as

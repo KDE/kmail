@@ -2,7 +2,7 @@
     messagesender.h
 
     This file is part of KMail, the KDE mail client
-    Copyright (c) 2005 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2005 Klar√§lvdalens Datakonsult AB
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by

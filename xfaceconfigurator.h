@@ -2,7 +2,7 @@
     xfaceconfigurator.cpp
 
     KMail, the KDE mail client.
-    Copyright (c) 2004 Jakob Schröter <js@camaya.net>
+    Copyright (c) 2004 Jakob SchrÃ¶ter <js@camaya.net>
     Copyright (c) 2002 the KMail authors.
     See file AUTHORS for details
 

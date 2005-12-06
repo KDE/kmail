@@ -2,7 +2,7 @@
     keyresolver.h
 
     This file is part of libkleopatra, the KDE keymanagement library
-    Copyright (c) 2004 Klar‰lvdalens Datakonsult AB
+    Copyright (c) 2004 Klar√§lvdalens Datakonsult AB
 
     Based on kpgp.h
     Copyright (C) 2001,2002 the KPGP authors
