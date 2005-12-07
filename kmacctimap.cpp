@@ -405,7 +405,7 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder )
   if (ActionScheduler::isEnabled() || 
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
     KMFilterMgr::FilterSet set = KMFilterMgr::Inbound;
-    Q3ValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     if (!mScheduler) {
 	mScheduler = new KMail::ActionScheduler( set, filters );
 	mScheduler->setAccountId( id() );
