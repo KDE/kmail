@@ -35,7 +35,6 @@
 #endif
 
 #include "xfaceconfigurator.h"
-
 #include <kactivelabel.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
@@ -269,6 +268,7 @@ namespace KMail {
   void XFaceConfigurator::slotUpdateXFace()
   {
     QString str = mTextEdit->text();
+    
     if ( !str.isEmpty() )
     {
       if ( str.startsWith("x-face:", false) )
@@ -282,7 +282,9 @@ namespace KMail {
       mXFaceLabel->setPixmap( p );
     }
     else
-      mXFaceLabel->setPixmap( 0L );
+    {
+      mXFaceLabel->clear();
+    }
   }
 
 } // namespace KMail
