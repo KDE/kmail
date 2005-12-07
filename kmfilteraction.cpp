@@ -1617,6 +1617,9 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       FILE *p;
       QByteArray ba;
 
+      // backup the serial number in case the header gets lost
+      QString origSerNum = mMsg->headerField( "X-KMail-Filtered" );
+
       p = popen(QFile::encodeName(mCmd), "r");
       int len =100;
       char buffer[100];
@@ -1631,10 +1634,16 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       if ( !ba.isEmpty() ) {
         KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).latin1() );
         KMFolder *filterFolder =  mMsg->parent();
+        ActionScheduler *handler = MessageProperty::filterHandler( mMsg->getMsgSerNum() );
+
         mMsg->fromByteArray( ba );
-        if ( filterFolder ) {
+        if ( !origSerNum.isEmpty() )
+          mMsg->setHeaderField( "X-KMail-Filtered", origSerNum );
+        if ( filterFolder && handler ) {
+          bool oldStatus = handler->ignoreChanges( true );
           filterFolder->take( filterFolder->find( mMsg ) );
           filterFolder->addMsg( mMsg );
+          handler->ignoreChanges( oldStatus );
         } else {
           kdDebug(5006) << "Warning: Cannot refresh the message from the external filter." << endl;
         }

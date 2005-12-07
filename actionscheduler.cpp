@@ -804,4 +804,11 @@ bool ActionScheduler::isEnabled()
     return sEnabled;
 }
 
+bool ActionScheduler::ignoreChanges( bool ignore )
+{
+  bool oldValue = mIgnore;
+  mIgnore = ignore;
+  return oldValue;
+}
+
 #include "actionscheduler.moc"
