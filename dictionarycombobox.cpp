@@ -140,7 +140,8 @@ namespace KMail {
   {
     kdDebug( 5006 ) << "DictionaryComboBox::slotDictionaryChanged( " << idx
                     << " )" << endl;
-    emit dictionaryChanged( mDictionaries[idx] );
+    if( !mDictionaries.isEmpty())
+    	emit dictionaryChanged( mDictionaries[idx] );
     emit dictionaryChanged( idx );
   }
 
