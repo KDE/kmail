@@ -68,7 +68,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
                              "of keys which select the current folder, "
                              "click the button below and then press the key(s) "
                              "you wish to associate with this folder.</qt>" ) );
-  Q3HBox *hb = new Q3HBox( gb );
+  KHBox *hb = new KHBox( gb );
   new QWidget(hb);
   mKeyButton = new KKeyButton( hb, "FolderShortcutSelector" );
   new QWidget(hb);

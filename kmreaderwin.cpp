@@ -117,7 +117,7 @@ using KMail::TeeHtmlWriter;
 #include <kasciistricmp.h>
 
 #include <qclipboard.h>
-#include <q3hbox.h>
+
 #include <qtextcodec.h>
 #include <q3paintdevicemetrics.h>
 #include <qlayout.h>
@@ -139,6 +139,7 @@ using KMail::TeeHtmlWriter;
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
+#include <kvbox.h>
 #endif
 
 class NewByteArray : public QByteArray
@@ -473,7 +474,7 @@ void KMReaderWin::createWidgets() {
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter );
   mMimePartTree->setObjectName( "mMimePartTree" );
-  mBox = new Q3HBox( mSplitter, "mBox" );
+  mBox = new KHBox( mSplitter );
   setStyleDependantFrameWidth();
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );

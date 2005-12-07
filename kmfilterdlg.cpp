@@ -31,7 +31,7 @@ using KMail::AccountManager;
 // other Qt headers:
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <q3hbox.h>
+
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
@@ -50,6 +50,7 @@ using KMail::AccountManager;
 
 // other headers:
 #include <assert.h>
+#include <kvbox.h>
 
 
 // What's this help texts
@@ -227,7 +228,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
       mConfigureToolbar->setEnabled( false );
 
-      Q3HBox *hbox = new Q3HBox( adv_w );
+      KHBox *hbox = new KHBox( adv_w );
       mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
                                        hbox );
       mFilterActionLabel->setEnabled( false );
@@ -573,7 +574,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mListBox->setWhatsThis( i18n(_wt_filterlist) );
 
   //----------- the first row of buttons
-  Q3HBox *hb = new Q3HBox(this);
+  KHBox *hb = new KHBox(this);
   hb->setSpacing(4);
   mBtnUp = new KPushButton( QString::null, hb );
   mBtnUp->setAutoRepeat( true );
@@ -589,7 +590,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown->setWhatsThis( i18n(_wt_filterlist_down) );
 
   //----------- the second row of buttons
-  hb = new Q3HBox(this);
+  hb = new KHBox(this);
   hb->setSpacing(4);
   mBtnNew = new QPushButton( QString::null, hb );
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
@@ -1000,7 +1001,7 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 //=============================================================================
 
 KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
-  : Q3HBox( parent, name )
+  : KHBox( parent )
 {
   int i;
   mActionList.setAutoDelete(TRUE);

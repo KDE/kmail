@@ -30,7 +30,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 
-#include <q3hbox.h>
+
 #include <qcombobox.h>
 #include <q3header.h>
 #include <qtoolbutton.h>
@@ -395,7 +395,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
 
 #if 0
-  Q3HBox* resourceHB = new Q3HBox( page );
+  KHBox* resourceHB = new KHBox( page );
   resourceHB->setSpacing( 11 );
   mLocal.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -490,7 +490,7 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->addWidget( choose, 3, 2 );
 
 #if 0
-  Q3HBox* resourceHB = new Q3HBox( page );
+  KHBox* resourceHB = new KHBox( page );
   resourceHB->setSpacing( 11 );
   mMaildir.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -628,7 +628,7 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
   grid->addMultiCellWidget( mPop.leaveOnServerCheck, 6, 6, 0, 1 );
-  Q3HBox *afterDaysBox = new Q3HBox( page1 );
+  KHBox *afterDaysBox = new KHBox( page1 );
   afterDaysBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerDaysCheck =
     new QCheckBox( i18n("Leave messages on the server for"), afterDaysBox );
@@ -640,7 +640,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerDaysSpin->setValue( 1 );
   afterDaysBox->setStretchFactor( mPop.leaveOnServerDaysSpin, 1 );
   grid->addMultiCellWidget( afterDaysBox, 7, 7, 0, 1 );
-  Q3HBox *leaveOnServerCountBox = new Q3HBox( page1 );
+  KHBox *leaveOnServerCountBox = new KHBox( page1 );
   leaveOnServerCountBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerCountCheck =
     new QCheckBox( i18n("Keep only the last"), leaveOnServerCountBox );
@@ -651,7 +651,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerCountSpin->setSuffix( i18n(" messages") );
   mPop.leaveOnServerCountSpin->setValue( 100 );
   grid->addMultiCellWidget( leaveOnServerCountBox, 8, 8, 0, 1 );
-  Q3HBox *leaveOnServerSizeBox = new Q3HBox( page1 );
+  KHBox *leaveOnServerSizeBox = new KHBox( page1 );
   leaveOnServerSizeBox->setSpacing( KDialog::spacingHint() );
   mPop.leaveOnServerSizeCheck =
     new QCheckBox( i18n("Keep only the last"), leaveOnServerSizeBox );
@@ -663,7 +663,7 @@ void AccountDialog::makePopAccountPage()
   mPop.leaveOnServerSizeSpin->setValue( 10 );
   grid->addMultiCellWidget( leaveOnServerSizeBox, 9, 9, 0, 1 );
 #if 0
-  Q3HBox *resourceHB = new Q3HBox( page1 );
+  KHBox *resourceHB = new KHBox( page1 );
   resourceHB->setSpacing( 11 );
   mPop.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
@@ -692,7 +692,7 @@ void AccountDialog::makePopAccountPage()
     new QCheckBox( i18n("Include in man&ual mail check"), page1 );
   grid->addMultiCellWidget( mPop.includeInCheck, 10, 10, 0, 1 );
 
-  Q3HBox * hbox = new Q3HBox( page1 );
+  KHBox * hbox = new KHBox( page1 );
   hbox->setSpacing( KDialog::spacingHint() );
   mPop.filterOnServerCheck =
     new QCheckBox( i18n("&Filter messages if they are greater than"), hbox );
@@ -875,7 +875,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   // namespace list
   ++row;
-  Q3HBox* box = new Q3HBox( page1 );
+  KHBox* box = new KHBox( page1 );
   label = new QLabel( i18n("Namespaces:"), box );
   label->setWhatsThis( i18n( "Here you see the different namespaces that your IMAP server supports."
         "Each namespace represents a prefix that separates groups of folders."
@@ -987,7 +987,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
 #if 0
   ++row;
-  Q3HBox* resourceHB = new Q3HBox( page1 );
+  KHBox* resourceHB = new KHBox( page1 );
   resourceHB->setSpacing( 11 );
   mImap.resourceCheck =
       new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );

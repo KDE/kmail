@@ -55,7 +55,7 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <q3vbox.h>
+
 #include <q3widgetstack.h>
 #include <qradiobutton.h>
 
@@ -67,6 +67,7 @@
 
 #include <assert.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 using namespace KMail;
 
@@ -331,7 +332,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap );
   mStack->addWidget( mLabel );
 
-  mACLWidget = new Q3HBox( mStack );
+  mACLWidget = new KHBox( mStack );
   mACLWidget->setSpacing( KDialog::spacingHint() );
   mListView = new KListView( mACLWidget );
   mListView->setAllColumnsShowFocus( true );
@@ -346,7 +347,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   connect( mListView, SIGNAL(selectionChanged(Q3ListViewItem*)),
 	   SLOT(slotSelectionChanged(Q3ListViewItem*)) );
 
-  Q3VBox* buttonBox = new Q3VBox( mACLWidget );
+  KVBox* buttonBox = new KVBox( mACLWidget );
   buttonBox->setSpacing( KDialog::spacingHint() );
   mAddACL = new KPushButton( i18n( "Add Entry..." ), buttonBox );
   mEditACL = new KPushButton( i18n( "Modify Entry..." ), buttonBox );

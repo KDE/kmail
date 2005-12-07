@@ -34,14 +34,15 @@
 
 #include <qcheckbox.h>
 #include <qdir.h>
-#include <q3hbox.h>
+
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <q3vbox.h>
+
 //Added by qt3to4:
 #include <Q3Frame>
 #include <QGridLayout>
+#include <kvbox.h>
 
 #include "kmacctlocal.h"
 #include "kmkernel.h"
@@ -187,8 +188,8 @@ void AccountWizard::showPage( QWidget *page )
 
 void AccountWizard::setupWelcomePage()
 {
-  mWelcomePage = new Q3VBox( this );
-  ((Q3VBox*)mWelcomePage)->setSpacing( KDialog::spacingHint() );
+  mWelcomePage = new KVBox( this );
+  ((KVBox*)mWelcomePage)->setSpacing( KDialog::spacingHint() );
 
   QLabel *label = new QLabel( i18n( "Welcome to KMail" ), mWelcomePage );
   QFont font = label->font();
@@ -205,8 +206,8 @@ void AccountWizard::setupWelcomePage()
 
 void AccountWizard::setupAccountTypePage()
 {
-  mAccountTypePage = new Q3VBox( this );
-  ((Q3VBox*)mAccountTypePage)->setSpacing( KDialog::spacingHint() );
+  mAccountTypePage = new KVBox( this );
+  ((KVBox*)mAccountTypePage)->setSpacing( KDialog::spacingHint() );
 
   new QLabel( i18n( "Select what kind of account you would like to create" ), mAccountTypePage );
 
@@ -277,11 +278,11 @@ void AccountWizard::setupServerInformationPage()
 
   mIncomingLabel = new QLabel( mServerInformationPage );
 
-  mIncomingServerWdg = new Q3VBox( mServerInformationPage );
+  mIncomingServerWdg = new KVBox( mServerInformationPage );
   mIncomingServer = new KLineEdit( mIncomingServerWdg );
   mIncomingUseSSL = new QCheckBox( i18n( "Use secure connection (SSL)" ), mIncomingServerWdg );
 
-  mIncomingLocationWdg = new Q3HBox( mServerInformationPage );
+  mIncomingLocationWdg = new KHBox( mServerInformationPage );
   mIncomingLocation = new KLineEdit( mIncomingLocationWdg );
   mChooseLocation = new QPushButton( i18n( "Choose..." ), mIncomingLocationWdg );
 

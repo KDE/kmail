@@ -42,7 +42,7 @@
 #include <qspinbox.h>
 #include <qstringlist.h>
 #include <q3textedit.h>
-#include <q3vbox.h>
+
 #include <q3groupbox.h>
 
 
@@ -132,7 +132,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   //QWhatsThis::add( mLogFilterActionBox,
   //    i18n( "" ) );
 
-  Q3HBox * hbox = new Q3HBox( page );
+  KHBox * hbox = new KHBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
   mLogMemLimitSpin = new QSpinBox( hbox );
   mLogMemLimitSpin->setMinValue( 1 );

@@ -15,8 +15,8 @@
 #undef Unsorted // X headers...
 #include <q3accel.h>
 #include <qlayout.h>
-#include <q3hbox.h>
-#include <q3vbox.h>
+
+
 #include <q3popupmenu.h>
 //Added by qt3to4:
 #include <Q3CString>
@@ -125,6 +125,7 @@ using KPIM::ProgressManager;
 
 #include "managesievescriptsdialog.h"
 #include <q3stylesheet.h>
+#include <kvbox.h>
 
 #include "kmmainwidget.moc"
 
@@ -523,7 +524,7 @@ void KMMainWidget::createWidgets(void)
 #ifndef NDEBUG
   headerParent->dumpObjectTree();
 #endif
-  mSearchAndHeaders = new Q3VBox( headerParent );
+  mSearchAndHeaders = new KVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
   mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
   QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );

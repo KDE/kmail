@@ -109,7 +109,7 @@ using KMime::DateFormatter;
 #include <qvalidator.h>
 
 
-#include <q3vbox.h>
+
 #include <q3buttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
@@ -125,6 +125,7 @@ using KMime::DateFormatter;
 // other headers:
 #include <assert.h>
 #include <stdlib.h>
+#include <kvbox.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
@@ -2480,7 +2481,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   QHBoxLayout *hlay;
   Q3GroupBox   *group;
   QLabel      *label;
-  Q3HBox       *hbox;
+  KHBox       *hbox;
   QString      msg;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
@@ -2575,7 +2576,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hbox = new Q3HBox( group );
+  hbox = new KHBox( group );
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KURLRequester( hbox );
@@ -3457,7 +3458,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
-  Q3HBox        *hbox;
+  KHBox        *hbox;
   Q3GroupBox    *group;
   QRadioButton *radio;
   KActiveLabel *label;
@@ -3563,7 +3564,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   mMDNGroup->hide();
   connect( mMDNGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  hbox = new Q3HBox( group );
+  hbox = new KHBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
   (void)new QLabel( i18n("Send policy:"), hbox );
@@ -3592,7 +3593,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   connect( mOrigQuoteGroup, SIGNAL( clicked( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  hbox = new Q3HBox( group );
+  hbox = new KHBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
   (void)new QLabel( i18n("Quote original message:"), hbox );
@@ -4613,7 +4614,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   // Groupware functionality compatibility setup
   b1 = new Q3GroupBox(1, Qt::Horizontal, i18n("Groupware Compatibility && Legacy Options"), this );
 
-  gBox = new Q3VBox( b1 );
+  gBox = new KVBox( b1 );
 #if 0
   // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );

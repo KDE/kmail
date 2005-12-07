@@ -38,7 +38,7 @@ class QTabWidget;
 class Q3ListBox;
 class Q3ButtonGroup;
 class QRegExpValidator;
-class Q3VBox;
+class KVBox;
 class KMAccount;
 class KMTransportInfo;
 class ListView;
@@ -163,6 +163,7 @@ private:
 };
 
 #include <kdialog.h>
+#include <kvbox.h>
 class ConfigModule : public KCModule {
   Q_OBJECT
 public:
@@ -949,7 +950,7 @@ private:
   QCheckBox* mEnableImapResCB;
 
   QWidget* mBox;
-  Q3VBox* gBox;
+  KVBox* gBox;
 
   QComboBox* mStorageFormatCombo;
   QComboBox* mLanguageCombo;

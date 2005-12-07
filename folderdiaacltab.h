@@ -40,7 +40,7 @@
 class KMFolderImap;
 class KPushButton;
 class Q3WidgetStack;
-class Q3HBox;
+class KHBox;
 class Q3VButtonGroup;
 class KListView;
 namespace KIO { class Job; }
@@ -127,7 +127,7 @@ private:
 
 private:
   // The widget containing the ACL widgets (listview and buttons)
-  Q3HBox* mACLWidget;
+  KHBox* mACLWidget;
   //class ListView;
   class ListViewItem;
   KListView* mListView;

@@ -13,12 +13,13 @@
 #include <kdialogbase.h>
 
 #include <q3groupbox.h>
-#include <q3hbox.h>
+
 #include <qstring.h>
 #include <qlist.h>
 #include <qradiobutton.h>
 #include <q3buttongroup.h>
 #include <qmap.h>
+#include <kvbox.h>
 
 class KMSearchPatternEdit;
 class QLabel;
@@ -172,7 +173,7 @@ private:
     @see KMFilterAction KMFilter KMFilterActionWidgetLister
 
  */
-class KMFilterActionWidget : public Q3HBox
+class KMFilterActionWidget : public KHBox
 {
   Q_OBJECT
 public:

@@ -43,7 +43,7 @@ using KRecentAddress::RecentAddresses;
 #include <kmessagebox.h>
 #include <kvbox.h>
 
-#include <q3hbox.h>
+
 #include <qtooltip.h>
 
 #include <qlabel.h>
@@ -63,7 +63,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
 
-  Q3HBox *hbox = new Q3HBox( vbox );
+  KHBox *hbox = new KHBox( vbox );
   hbox->setSpacing(4);
   mEditTo = new KMLineEdit( true, hbox, "toLine" );
   mEditTo->setMinimumWidth( 300 );

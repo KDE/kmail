@@ -24,7 +24,7 @@
 #include <kurl.h>
 #include <kxmlguiclient.h>
 #include <q3listview.h>
-#include <q3vbox.h>
+
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QList>
@@ -34,6 +34,7 @@
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 #include <kaction.h>
+#include <kvbox.h>
 
 class Q3Accel;
 class QVBoxLayout;
@@ -445,7 +446,7 @@ private:
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
-  Q3VBox        *mSearchAndHeaders;
+  KVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;

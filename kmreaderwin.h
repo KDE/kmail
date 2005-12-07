@@ -17,13 +17,14 @@
 #include <kurl.h>
 #include <kservice.h>
 #include <messagestatus.h>
+#include <kvbox.h>
 using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 
 class Q3Frame;
 class QSplitter;
-class Q3HBox;
+class KHBox;
 class Q3ListViewItem;
 class QScrollBar;
 class QString;
@@ -450,7 +451,7 @@ private:
   KMMessage *mMessage;
   // widgets:
   QSplitter * mSplitter;
-  Q3HBox *mBox;
+  KHBox *mBox;
   KMail::HtmlStatusBar *mColorBar;
   KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
