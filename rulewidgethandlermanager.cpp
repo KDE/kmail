@@ -34,6 +34,7 @@
 #include <config.h>
 #endif
 
+
 #include "rulewidgethandlermanager.h"
 
 #include "interfaces/rulewidgethandler.h"
@@ -42,7 +43,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 
-#include <q3widgetstack.h>
+#include <QStackedWidget>
 #include <qstring.h>
 #include <q3cstring.h>
 #include <qobject.h>
@@ -63,32 +64,32 @@ namespace {
     ~TextRuleWidgetHandler() {}
 
     QWidget * createFunctionWidget( int number,
-                                    Q3WidgetStack *functionStack,
+                                    QStackedWidget *functionStack,
                                     const QObject *receiver ) const;
     QWidget * createValueWidget( int number,
-                                 Q3WidgetStack *valueStack,
+                                 QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
     KMSearchRule::Function function( const Q3CString & field,
-                                     const Q3WidgetStack *functionStack ) const;
+                                     const QStackedWidget *functionStack ) const;
     QString value( const Q3CString & field,
-                   const Q3WidgetStack *functionStack,
-                   const Q3WidgetStack *valueStack ) const;
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
     QString prettyValue( const Q3CString & field,
-                         const Q3WidgetStack *functionStack,
-                         const Q3WidgetStack *valueStack ) const;
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
     bool handlesField( const Q3CString & field ) const;
-    void reset( Q3WidgetStack *functionStack,
-                Q3WidgetStack *valueStack ) const;
-    bool setRule( Q3WidgetStack *functionStack,
-                  Q3WidgetStack *valueStack,
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    bool setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
     bool update( const Q3CString & field,
-                 Q3WidgetStack *functionStack,
-                 Q3WidgetStack *valueStack ) const;
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
 
  private:
-    KMSearchRule::Function currentFunction( const Q3WidgetStack *functionStack ) const;
-    QString currentValue( const Q3WidgetStack *valueStack,
+    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    QString currentValue( const QStackedWidget *valueStack,
                           KMSearchRule::Function func ) const;
   };
 
@@ -98,32 +99,32 @@ namespace {
     ~MessageRuleWidgetHandler() {}
 
     QWidget * createFunctionWidget( int number,
-                                    Q3WidgetStack *functionStack,
+                                    QStackedWidget *functionStack,
                                     const QObject *receiver ) const;
     QWidget * createValueWidget( int number,
-                                 Q3WidgetStack *valueStack,
+                                 QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
     KMSearchRule::Function function( const Q3CString & field,
-                                     const Q3WidgetStack *functionStack ) const;
+                                     const QStackedWidget *functionStack ) const;
     QString value( const Q3CString & field,
-                   const Q3WidgetStack *functionStack,
-                   const Q3WidgetStack *valueStack ) const;
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
     QString prettyValue( const Q3CString & field,
-                         const Q3WidgetStack *functionStack,
-                         const Q3WidgetStack *valueStack ) const;
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
     bool handlesField( const Q3CString & field ) const;
-    void reset( Q3WidgetStack *functionStack,
-                Q3WidgetStack *valueStack ) const;
-    bool setRule( Q3WidgetStack *functionStack,
-                  Q3WidgetStack *valueStack,
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    bool setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
     bool update( const Q3CString & field,
-                 Q3WidgetStack *functionStack,
-                 Q3WidgetStack *valueStack ) const;
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
 
  private:
-    KMSearchRule::Function currentFunction( const Q3WidgetStack *functionStack ) const;
-    QString currentValue( const Q3WidgetStack *valueStack,
+    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    QString currentValue( const QStackedWidget *valueStack,
                           KMSearchRule::Function func ) const;
   };
 
@@ -134,32 +135,32 @@ namespace {
     ~StatusRuleWidgetHandler() {}
 
     QWidget * createFunctionWidget( int number,
-                                    Q3WidgetStack *functionStack,
+                                    QStackedWidget *functionStack,
                                     const QObject *receiver ) const;
     QWidget * createValueWidget( int number,
-                                 Q3WidgetStack *valueStack,
+                                 QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
     KMSearchRule::Function function( const Q3CString & field,
-                                     const Q3WidgetStack *functionStack ) const;
+                                     const QStackedWidget *functionStack ) const;
     QString value( const Q3CString & field,
-                   const Q3WidgetStack *functionStack,
-                   const Q3WidgetStack *valueStack ) const;
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
     QString prettyValue( const Q3CString & field,
-                         const Q3WidgetStack *functionStack,
-                         const Q3WidgetStack *valueStack ) const;
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
     bool handlesField( const Q3CString & field ) const;
-    void reset( Q3WidgetStack *functionStack,
-                Q3WidgetStack *valueStack ) const;
-    bool setRule( Q3WidgetStack *functionStack,
-                  Q3WidgetStack *valueStack,
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    bool setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
     bool update( const Q3CString & field,
-                 Q3WidgetStack *functionStack,
-                 Q3WidgetStack *valueStack ) const;
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
 
   private:
-    KMSearchRule::Function currentFunction( const Q3WidgetStack *functionStack ) const;
-    int currentStatusValue( const Q3WidgetStack *valueStack ) const;
+    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    int currentStatusValue( const QStackedWidget *valueStack ) const;
   };
 
   class NumericRuleWidgetHandler : public KMail::RuleWidgetHandler {
@@ -168,32 +169,32 @@ namespace {
     ~NumericRuleWidgetHandler() {}
 
     QWidget * createFunctionWidget( int number,
-                                    Q3WidgetStack *functionStack,
+                                    QStackedWidget *functionStack,
                                     const QObject *receiver ) const;
     QWidget * createValueWidget( int number,
-                                 Q3WidgetStack *valueStack,
+                                 QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
     KMSearchRule::Function function( const Q3CString & field,
-                                     const Q3WidgetStack *functionStack ) const;
+                                     const QStackedWidget *functionStack ) const;
     QString value( const Q3CString & field,
-                   const Q3WidgetStack *functionStack,
-                   const Q3WidgetStack *valueStack ) const;
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
     QString prettyValue( const Q3CString & field,
-                         const Q3WidgetStack *functionStack,
-                         const Q3WidgetStack *valueStack ) const;
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
     bool handlesField( const Q3CString & field ) const;
-    void reset( Q3WidgetStack *functionStack,
-                Q3WidgetStack *valueStack ) const;
-    bool setRule( Q3WidgetStack *functionStack,
-                  Q3WidgetStack *valueStack,
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    bool setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
     bool update( const Q3CString & field,
-                 Q3WidgetStack *functionStack,
-                 Q3WidgetStack *valueStack ) const;
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
 
   private:
-    KMSearchRule::Function currentFunction( const Q3WidgetStack *functionStack ) const;
-    QString currentValue( const Q3WidgetStack *valueStack ) const;
+    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    QString currentValue( const QStackedWidget *valueStack ) const;
   };
 }
 
@@ -241,8 +242,8 @@ namespace {
   }
 }
 
-void KMail::RuleWidgetHandlerManager::createWidgets( Q3WidgetStack *functionStack,
-                                                     Q3WidgetStack *valueStack,
+void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionStack,
+                                                     QStackedWidget *valueStack,
                                                      const QObject *receiver ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
@@ -281,7 +282,7 @@ void KMail::RuleWidgetHandlerManager::createWidgets( Q3WidgetStack *functionStac
 }
 
 KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const Q3CString& field,
-                                                                  const Q3WidgetStack *functionStack ) const
+                                                                  const QStackedWidget *functionStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     const KMSearchRule::Function func = (*it)->function( field,
@@ -293,8 +294,8 @@ KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const Q3CStrin
 }
 
 QString KMail::RuleWidgetHandlerManager::value( const Q3CString& field,
-                                                const Q3WidgetStack *functionStack,
-                                                const Q3WidgetStack *valueStack ) const
+                                                const QStackedWidget *functionStack,
+                                                const QStackedWidget *valueStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     const QString val = (*it)->value( field, functionStack, valueStack );
@@ -305,8 +306,8 @@ QString KMail::RuleWidgetHandlerManager::value( const Q3CString& field,
 }
 
 QString KMail::RuleWidgetHandlerManager::prettyValue( const Q3CString& field,
-                                                      const Q3WidgetStack *functionStack,
-                                                      const Q3WidgetStack *valueStack ) const
+                                                      const QStackedWidget *functionStack,
+                                                      const QStackedWidget *valueStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     const QString val = (*it)->prettyValue( field, functionStack, valueStack );
@@ -316,8 +317,8 @@ QString KMail::RuleWidgetHandlerManager::prettyValue( const Q3CString& field,
   return QString::null;
 }
 
-void KMail::RuleWidgetHandlerManager::reset( Q3WidgetStack *functionStack,
-                                             Q3WidgetStack *valueStack ) const
+void KMail::RuleWidgetHandlerManager::reset( QStackedWidget *functionStack,
+                                             QStackedWidget *valueStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     (*it)->reset( functionStack, valueStack );
@@ -325,8 +326,8 @@ void KMail::RuleWidgetHandlerManager::reset( Q3WidgetStack *functionStack,
   update( "", functionStack, valueStack );
 }
 
-void KMail::RuleWidgetHandlerManager::setRule( Q3WidgetStack *functionStack,
-                                               Q3WidgetStack *valueStack,
+void KMail::RuleWidgetHandlerManager::setRule( QStackedWidget *functionStack,
+                                               QStackedWidget *valueStack,
                                                const KMSearchRule *rule ) const
 {
   assert( rule );
@@ -338,8 +339,8 @@ void KMail::RuleWidgetHandlerManager::setRule( Q3WidgetStack *functionStack,
 }
 
 void KMail::RuleWidgetHandlerManager::update( const Q3CString &field,
-                                              Q3WidgetStack *functionStack,
-                                              Q3WidgetStack *valueStack ) const
+                                              QStackedWidget *functionStack,
+                                              QStackedWidget *valueStack ) const
 {
   //kdDebug(5006) << "RuleWidgetHandlerManager::update( \"" << field
   //              << "\", ... )" << endl;
@@ -417,7 +418,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * TextRuleWidgetHandler::createFunctionWidget( int number,
-                                                         Q3WidgetStack *functionStack,
+                                                         QStackedWidget *functionStack,
                                                          const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -436,7 +437,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * TextRuleWidgetHandler::createValueWidget( int number,
-                                                      Q3WidgetStack *valueStack,
+                                                      QStackedWidget *valueStack,
                                                       const QObject *receiver ) const
   {
     if ( number == 0 ) {
@@ -466,7 +467,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function TextRuleWidgetHandler::currentFunction( const Q3WidgetStack *functionStack ) const
+  KMSearchRule::Function TextRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
@@ -486,14 +487,14 @@ namespace {
   //---------------------------------------------------------------------------
 
   KMSearchRule::Function TextRuleWidgetHandler::function( const Q3CString &,
-                                                          const Q3WidgetStack *functionStack ) const
+                                                          const QStackedWidget *functionStack ) const
   {
     return currentFunction( functionStack );
   }
 
   //---------------------------------------------------------------------------
 
-  QString TextRuleWidgetHandler::currentValue( const Q3WidgetStack *valueStack,
+  QString TextRuleWidgetHandler::currentValue( const QStackedWidget *valueStack,
                                                KMSearchRule::Function func ) const
   {
     // here we gotta check the combobox which contains the categories
@@ -536,8 +537,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString TextRuleWidgetHandler::value( const Q3CString &,
-                                        const Q3WidgetStack *functionStack,
-                                        const Q3WidgetStack *valueStack ) const
+                                        const QStackedWidget *functionStack,
+                                        const QStackedWidget *valueStack ) const
   {
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncIsInAddressbook )
@@ -551,8 +552,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString TextRuleWidgetHandler::prettyValue( const Q3CString &,
-                                              const Q3WidgetStack *functionStack,
-                                              const Q3WidgetStack *valueStack ) const
+                                              const QStackedWidget *functionStack,
+                                              const QStackedWidget *valueStack ) const
   {
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncIsInAddressbook )
@@ -572,8 +573,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  void TextRuleWidgetHandler::reset( Q3WidgetStack *functionStack,
-                                     Q3WidgetStack *valueStack ) const
+  void TextRuleWidgetHandler::reset( QStackedWidget *functionStack,
+                                     QStackedWidget *valueStack ) const
   {
     // reset the function combo box
     QComboBox *funcCombo =
@@ -594,7 +595,7 @@ namespace {
       lineEdit->clear();
       lineEdit->blockSignals( false );
       lineEdit->showEditButton( false );
-      valueStack->raiseWidget( lineEdit );
+      valueStack->setCurrentWidget( lineEdit );
     }
 
     QComboBox *combo =
@@ -609,8 +610,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool TextRuleWidgetHandler::setRule( Q3WidgetStack *functionStack,
-                                       Q3WidgetStack *valueStack,
+  bool TextRuleWidgetHandler::setRule( QStackedWidget *functionStack,
+                                       QStackedWidget *valueStack,
                                        const KMSearchRule *rule ) const
   {
     if ( !rule ) {
@@ -637,7 +638,7 @@ namespace {
         funcCombo->setCurrentItem( 0 );
       }
       funcCombo->blockSignals( false );
-      functionStack->raiseWidget( funcCombo );
+      functionStack->setCurrentWidget( funcCombo );
     }
 
     if ( func == KMSearchRule::FuncIsInAddressbook ||
@@ -645,7 +646,7 @@ namespace {
       QWidget *w =
         static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
                                                   0, false ) );
-      valueStack->raiseWidget( w );
+      valueStack->setCurrentWidget( w );
     }
     else if ( func == KMSearchRule::FuncIsInCategory ||
               func == KMSearchRule::FuncIsNotInCategory) {
@@ -662,7 +663,7 @@ namespace {
         combo->setCurrentItem( 0 );
 
       combo->blockSignals( false );
-      valueStack->raiseWidget( combo );
+      valueStack->setCurrentWidget( combo );
     }
     else {
       RegExpLineEdit *lineEdit =
@@ -674,7 +675,7 @@ namespace {
         lineEdit->blockSignals( false );
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
-        valueStack->raiseWidget( lineEdit );
+        valueStack->setCurrentWidget( lineEdit );
       }
     }
     return true;
@@ -684,11 +685,11 @@ namespace {
   //---------------------------------------------------------------------------
 
   bool TextRuleWidgetHandler::update( const Q3CString &,
-                                      Q3WidgetStack *functionStack,
-                                      Q3WidgetStack *valueStack ) const
+                                      QStackedWidget *functionStack,
+                                      QStackedWidget *valueStack ) const
   {
     // raise the correct function widget
-    functionStack->raiseWidget(
+    functionStack->setCurrentWidget(
       static_cast<QWidget*>( functionStack->child( "textRuleFuncCombo",
                                                    0, false ) ) );
 
@@ -696,13 +697,13 @@ namespace {
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncIsInAddressbook ||
          func == KMSearchRule::FuncIsNotInAddressbook ) {
-      valueStack->raiseWidget(
+      valueStack->setCurrentWidget(
         static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
                                                   0, false ) ) );
     }
     else if ( func == KMSearchRule::FuncIsInCategory ||
               func == KMSearchRule::FuncIsNotInCategory) {
-      valueStack->raiseWidget(
+      valueStack->setCurrentWidget(
         static_cast<QWidget*>( valueStack->child( "categoryCombo",
                                                   0, false ) ) );
     }
@@ -713,7 +714,7 @@ namespace {
       if ( lineEdit ) {
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
-        valueStack->raiseWidget( lineEdit );
+        valueStack->setCurrentWidget( lineEdit );
       }
     }
     return true;
@@ -748,7 +749,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * MessageRuleWidgetHandler::createFunctionWidget( int number,
-                                                            Q3WidgetStack *functionStack,
+                                                            QStackedWidget *functionStack,
                                                             const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -767,7 +768,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * MessageRuleWidgetHandler::createValueWidget( int number,
-                                                         Q3WidgetStack *valueStack,
+                                                         QStackedWidget *valueStack,
                                                          const QObject *receiver ) const
   {
     if ( number == 0 ) {
@@ -788,7 +789,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const Q3WidgetStack *functionStack ) const
+  KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
@@ -808,7 +809,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   KMSearchRule::Function MessageRuleWidgetHandler::function( const Q3CString & field,
-                                                             const Q3WidgetStack *functionStack ) const
+                                                             const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
       return KMSearchRule::FuncNone;
@@ -818,7 +819,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString MessageRuleWidgetHandler::currentValue( const Q3WidgetStack *valueStack,
+  QString MessageRuleWidgetHandler::currentValue( const QStackedWidget *valueStack,
                                                   KMSearchRule::Function ) const
   {
     const RegExpLineEdit *lineEdit =
@@ -840,8 +841,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString MessageRuleWidgetHandler::value( const Q3CString & field,
-                                           const Q3WidgetStack *functionStack,
-                                           const Q3WidgetStack *valueStack ) const
+                                           const QStackedWidget *functionStack,
+                                           const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -858,8 +859,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString MessageRuleWidgetHandler::prettyValue( const Q3CString & field,
-                                                 const Q3WidgetStack *functionStack,
-                                                 const Q3WidgetStack *valueStack ) const
+                                                 const QStackedWidget *functionStack,
+                                                 const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -882,8 +883,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  void MessageRuleWidgetHandler::reset( Q3WidgetStack *functionStack,
-                                        Q3WidgetStack *valueStack ) const
+  void MessageRuleWidgetHandler::reset( QStackedWidget *functionStack,
+                                        QStackedWidget *valueStack ) const
   {
     // reset the function combo box
     QComboBox *funcCombo =
@@ -904,14 +905,14 @@ namespace {
       lineEdit->clear();
       lineEdit->blockSignals( false );
       lineEdit->showEditButton( false );
-      valueStack->raiseWidget( lineEdit );
+      valueStack->setCurrentWidget( lineEdit );
     }
   }
 
   //---------------------------------------------------------------------------
 
-  bool MessageRuleWidgetHandler::setRule( Q3WidgetStack *functionStack,
-                                          Q3WidgetStack *valueStack,
+  bool MessageRuleWidgetHandler::setRule( QStackedWidget *functionStack,
+                                          QStackedWidget *valueStack,
                                           const KMSearchRule *rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
@@ -938,7 +939,7 @@ namespace {
         funcCombo->setCurrentItem( 0 );
       }
       funcCombo->blockSignals( false );
-      functionStack->raiseWidget( funcCombo );
+      functionStack->setCurrentWidget( funcCombo );
     }
 
     if ( func == KMSearchRule::FuncHasAttachment  ||
@@ -946,7 +947,7 @@ namespace {
       QWidget *w =
         static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
                                                   0, false ) );
-      valueStack->raiseWidget( w );
+      valueStack->setCurrentWidget( w );
     }
     else {
       RegExpLineEdit *lineEdit =
@@ -958,7 +959,7 @@ namespace {
         lineEdit->blockSignals( false );
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
-        valueStack->raiseWidget( lineEdit );
+        valueStack->setCurrentWidget( lineEdit );
       }
     }
     return true;
@@ -968,13 +969,13 @@ namespace {
   //---------------------------------------------------------------------------
 
   bool MessageRuleWidgetHandler::update( const Q3CString & field,
-                                      Q3WidgetStack *functionStack,
-                                      Q3WidgetStack *valueStack ) const
+                                      QStackedWidget *functionStack,
+                                      QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return false;
     // raise the correct function widget
-    functionStack->raiseWidget(
+    functionStack->setCurrentWidget(
       static_cast<QWidget*>( functionStack->child( "messageRuleFuncCombo",
                                                    0, false ) ) );
 
@@ -985,7 +986,7 @@ namespace {
       QWidget *w =
         static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
                                                   0, false ) );
-      valueStack->raiseWidget( w );
+      valueStack->setCurrentWidget( w );
     }
     else {
       RegExpLineEdit *lineEdit =
@@ -994,7 +995,7 @@ namespace {
       if ( lineEdit ) {
         lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
                                   func == KMSearchRule::FuncNotRegExp );
-        valueStack->raiseWidget( lineEdit );
+        valueStack->setCurrentWidget( lineEdit );
       }
     }
     return true;
@@ -1023,7 +1024,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * StatusRuleWidgetHandler::createFunctionWidget( int number,
-                                                           Q3WidgetStack *functionStack,
+                                                           QStackedWidget *functionStack,
                                                            const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -1043,7 +1044,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * StatusRuleWidgetHandler::createValueWidget( int number,
-                                                        Q3WidgetStack *valueStack,
+                                                        QStackedWidget *valueStack,
                                                         const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -1062,7 +1063,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const Q3WidgetStack *functionStack ) const
+  KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
@@ -1082,7 +1083,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   KMSearchRule::Function StatusRuleWidgetHandler::function( const Q3CString & field,
-                                                            const Q3WidgetStack *functionStack ) const
+                                                            const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
       return KMSearchRule::FuncNone;
@@ -1092,7 +1093,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  int StatusRuleWidgetHandler::currentStatusValue( const Q3WidgetStack *valueStack ) const
+  int StatusRuleWidgetHandler::currentStatusValue( const QStackedWidget *valueStack ) const
   {
     const QComboBox *statusCombo =
       dynamic_cast<QComboBox*>( QObject_child_const( valueStack,
@@ -1112,8 +1113,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString StatusRuleWidgetHandler::value( const Q3CString & field,
-                                          const Q3WidgetStack *,
-                                          const Q3WidgetStack *valueStack ) const
+                                          const QStackedWidget *,
+                                          const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -1128,8 +1129,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString StatusRuleWidgetHandler::prettyValue( const Q3CString & field,
-                                                const Q3WidgetStack *,
-                                                const Q3WidgetStack *valueStack ) const
+                                                const QStackedWidget *,
+                                                const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -1150,8 +1151,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  void StatusRuleWidgetHandler::reset( Q3WidgetStack *functionStack,
-                                       Q3WidgetStack *valueStack ) const
+  void StatusRuleWidgetHandler::reset( QStackedWidget *functionStack,
+                                       QStackedWidget *valueStack ) const
   {
     // reset the function combo box
     QComboBox *funcCombo =
@@ -1176,8 +1177,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool StatusRuleWidgetHandler::setRule( Q3WidgetStack *functionStack,
-                                         Q3WidgetStack *valueStack,
+  bool StatusRuleWidgetHandler::setRule( QStackedWidget *functionStack,
+                                         QStackedWidget *valueStack,
                                          const KMSearchRule *rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
@@ -1205,7 +1206,7 @@ namespace {
         funcCombo->setCurrentItem( 0 );
       }
       funcCombo->blockSignals( false );
-      functionStack->raiseWidget( funcCombo );
+      functionStack->setCurrentWidget( funcCombo );
     }
 
     // set the value
@@ -1229,7 +1230,7 @@ namespace {
         statusCombo->setCurrentItem( 0 );
       }
       statusCombo->blockSignals( false );
-      valueStack->raiseWidget( statusCombo );
+      valueStack->setCurrentWidget( statusCombo );
     }
     return true;
   }
@@ -1238,19 +1239,19 @@ namespace {
   //---------------------------------------------------------------------------
 
   bool StatusRuleWidgetHandler::update( const Q3CString &field,
-                                        Q3WidgetStack *functionStack,
-                                        Q3WidgetStack *valueStack ) const
+                                        QStackedWidget *functionStack,
+                                        QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return false;
 
     // raise the correct function widget
-    functionStack->raiseWidget(
+    functionStack->setCurrentWidget(
       static_cast<QWidget*>( functionStack->child( "statusRuleFuncCombo",
                                                    0, false ) ) );
 
     // raise the correct value widget
-    valueStack->raiseWidget(
+    valueStack->setCurrentWidget(
       static_cast<QWidget*>( valueStack->child( "statusRuleValueCombo",
                                                 0, false ) ) );
     return true;
@@ -1283,7 +1284,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * NumericRuleWidgetHandler::createFunctionWidget( int number,
-                                                            Q3WidgetStack *functionStack,
+                                                            QStackedWidget *functionStack,
                                                             const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -1303,7 +1304,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QWidget * NumericRuleWidgetHandler::createValueWidget( int number,
-                                                         Q3WidgetStack *valueStack,
+                                                         QStackedWidget *valueStack,
                                                          const QObject *receiver ) const
   {
     if ( number != 0 )
@@ -1318,7 +1319,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const Q3WidgetStack *functionStack ) const
+  KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
@@ -1338,7 +1339,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   KMSearchRule::Function NumericRuleWidgetHandler::function( const Q3CString & field,
-                                                             const Q3WidgetStack *functionStack ) const
+                                                             const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
       return KMSearchRule::FuncNone;
@@ -1348,7 +1349,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString NumericRuleWidgetHandler::currentValue( const Q3WidgetStack *valueStack ) const
+  QString NumericRuleWidgetHandler::currentValue( const QStackedWidget *valueStack ) const
   {
     const KIntNumInput *numInput =
       dynamic_cast<KIntNumInput*>( QObject_child_const( valueStack,
@@ -1368,8 +1369,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString NumericRuleWidgetHandler::value( const Q3CString & field,
-                                           const Q3WidgetStack *,
-                                           const Q3WidgetStack *valueStack ) const
+                                           const QStackedWidget *,
+                                           const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -1380,8 +1381,8 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString NumericRuleWidgetHandler::prettyValue( const Q3CString & field,
-                                                 const Q3WidgetStack *,
-                                                 const Q3WidgetStack *valueStack ) const
+                                                 const QStackedWidget *,
+                                                 const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return QString::null;
@@ -1398,8 +1399,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  void NumericRuleWidgetHandler::reset( Q3WidgetStack *functionStack,
-                                        Q3WidgetStack *valueStack ) const
+  void NumericRuleWidgetHandler::reset( QStackedWidget *functionStack,
+                                        QStackedWidget *valueStack ) const
   {
     // reset the function combo box
     QComboBox *funcCombo =
@@ -1438,8 +1439,8 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool NumericRuleWidgetHandler::setRule( Q3WidgetStack *functionStack,
-                                          Q3WidgetStack *valueStack,
+  bool NumericRuleWidgetHandler::setRule( QStackedWidget *functionStack,
+                                          QStackedWidget *valueStack,
                                           const KMSearchRule *rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
@@ -1467,7 +1468,7 @@ namespace {
         funcCombo->setCurrentItem( 0 );
       }
       funcCombo->blockSignals( false );
-      functionStack->raiseWidget( funcCombo );
+      functionStack->setCurrentWidget( funcCombo );
     }
 
     // set the value
@@ -1483,7 +1484,7 @@ namespace {
       numInput->blockSignals( true );
       numInput->setValue( value );
       numInput->blockSignals( false );
-      valueStack->raiseWidget( numInput );
+      valueStack->setCurrentWidget( numInput );
     }
     return true;
   }
@@ -1492,14 +1493,14 @@ namespace {
   //---------------------------------------------------------------------------
 
   bool NumericRuleWidgetHandler::update( const Q3CString &field,
-                                         Q3WidgetStack *functionStack,
-                                         Q3WidgetStack *valueStack ) const
+                                         QStackedWidget *functionStack,
+                                         QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
       return false;
 
     // raise the correct function widget
-    functionStack->raiseWidget(
+    functionStack->setCurrentWidget(
       static_cast<QWidget*>( functionStack->child( "numericRuleFuncCombo",
                                                    0, false ) ) );
 
@@ -1509,7 +1510,7 @@ namespace {
                                                       0, false ) );
     if ( numInput ) {
       initNumInput( numInput, field );
-      valueStack->raiseWidget( numInput );
+      valueStack->setCurrentWidget( numInput );
     }
     return true;
   }

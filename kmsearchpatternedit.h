@@ -23,7 +23,7 @@ class QString;
 class QComboBox;
 class QLineEdit;
 class QRadioButton;
-class Q3WidgetStack;
+class QStackedWidget;
 class QLabel;
 class KMSearchPatternEdit;
 
@@ -99,8 +99,8 @@ private:
 
   QStringList mFilterFieldList;
   QComboBox *mRuleField;
-  Q3WidgetStack *mFunctionStack;
-  Q3WidgetStack *mValueStack;
+  QStackedWidget *mFunctionStack;
+  QStackedWidget *mValueStack;
   bool mAbsoluteDates;
 };
 

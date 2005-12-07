@@ -65,7 +65,7 @@ using namespace KABC;
 #include <qlayout.h>
 #include <qpushbutton.h>
 
-#include <q3widgetstack.h>
+#include <QStackedWidget>
 
 
 // #include <assert.h>
@@ -128,7 +128,7 @@ namespace KMail {
     hlay->addWidget( mSourceCombo, 1 );
 
     // widget stack that is controlled by the source combo:
-    Q3WidgetStack * widgetStack = new Q3WidgetStack( this );
+    QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
@@ -146,7 +146,7 @@ namespace KMail {
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
     page = new QWidget( widgetStack );
-    widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
+    widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFromFileBtn = new QPushButton( i18n("Select File..."), page );
@@ -173,12 +173,12 @@ namespace KMail {
     label1->setAlignment( Qt::TextWordWrap | Qt::AlignVCenter );
     page_vlay->addWidget( label1 );
 
-    widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
+    widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0
 
     // page 1: input field for direct entering
     ++pageno;
     page = new QWidget( widgetStack );
-    widgetStack->addWidget( page, pageno );
+    widgetStack->insertWidget( pageno,page );
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     mTextEdit = new Q3TextEdit( page );
     page_vlay->addWidget( mTextEdit );

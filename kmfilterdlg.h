@@ -26,7 +26,7 @@ class QLabel;
 class Q3ListBox;
 class QPushButton;
 class QComboBox;
-class Q3WidgetStack;
+class QStackedWidget;
 class QCheckBox;
 class KIconButton;
 class KKeyButton;
@@ -203,7 +203,7 @@ private:
   QComboBox      *mComboBox;
   /** The widget stack that holds all the parameter widgets for the
       filter actions. */
-  Q3WidgetStack   *mWidgetStack;
+  QStackedWidget   *mWidgetStack;
 };
 
 class KMPopFilterActionWidget : public Q3VButtonGroup

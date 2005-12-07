@@ -4577,14 +4577,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mFolderComboLabel->setWhatsThis( whatsThis );
   grid->addWidget( mFolderComboLabel, 2, 0 );
 
-  mFolderComboStack = new Q3WidgetStack( mBox );
+  mFolderComboStack = new QStackedWidget( mBox );
   grid->addWidget( mFolderComboStack, 2, 1 );
 
   // First possibility in the widgetstack: a combo showing the list of all folders
   // This is used with the ical/vcard storage
   mFolderCombo = new FolderRequester( mBox,
       kmkernel->getKMMainWidget()->folderTree() );
-  mFolderComboStack->addWidget( mFolderCombo, 0 );
+  mFolderComboStack->insertWidget( 0,mFolderCombo );
   mFolderCombo->setToolTip( toolTip );
   mFolderCombo->setWhatsThis( whatsThis );
   connect( mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
@@ -4594,7 +4594,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   // This is used with the kolab xml storage since the groupware folders
   // are always under the inbox.
   mAccountCombo = new KMail::AccountComboBox( mBox );
-  mFolderComboStack->addWidget( mAccountCombo, 1 );
+  mFolderComboStack->insertWidget( 1, mAccountCombo );
   mAccountCombo->setToolTip( toolTip );
   mAccountCombo->setWhatsThis( whatsThis );
   connect( mAccountCombo, SIGNAL( activated( int ) ),
@@ -4770,7 +4770,7 @@ void MiscPage::GroupwareTab::save() {
 void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
 {
   mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
-  mFolderComboStack->raiseWidget( format );
+  mFolderComboStack->setCurrentIndex( format );
   if ( format == 0 ) {
     mFolderComboLabel->setText( i18n("&Resource folders are subfolders of:") );
     mFolderComboLabel->setBuddy( mFolderCombo );

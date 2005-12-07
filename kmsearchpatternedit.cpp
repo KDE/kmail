@@ -6,6 +6,7 @@
 #include <config.h>
 #include "kmsearchpatternedit.h"
 
+#include <QStackedWidget>
 #include "kmsearchpattern.h"
 #include "rulewidgethandlermanager.h"
 //Added by qt3to4:
@@ -100,13 +101,13 @@ void KMSearchRuleWidget::initWidget()
   hlay->addWidget( mRuleField );
 
   // initialize the function/value widget stack
-  mFunctionStack = new Q3WidgetStack( this, "mFunctionStack" );
+  mFunctionStack = new QStackedWidget( this );
   //Don't expand the widget in vertical direction
   mFunctionStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
 
   hlay->addWidget( mFunctionStack );
 
-  mValueStack = new Q3WidgetStack( this, "mValueStack" );
+  mValueStack = new QStackedWidget( this );
   mValueStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
   hlay->addWidget( mValueStack );
   hlay->setStretchFactor( mValueStack, 10 );

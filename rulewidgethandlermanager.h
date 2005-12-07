@@ -42,7 +42,7 @@
 class QObject;
 class Q3CString;
 class QString;
-class Q3WidgetStack;
+class QStackedWidget;
 
 namespace KMail {
 
@@ -67,28 +67,28 @@ namespace KMail {
     void registerHandler( const RuleWidgetHandler * handler );
     void unregisterHandler( const RuleWidgetHandler * handler );
 
-    void createWidgets( Q3WidgetStack *functionStack,
-                        Q3WidgetStack *valueStack,
+    void createWidgets( QStackedWidget *functionStack,
+                        QStackedWidget *valueStack,
                         const QObject *receiver ) const;
     KMSearchRule::Function function( const Q3CString & field,
-                                     const Q3WidgetStack *functionStack ) const;
+                                     const QStackedWidget *functionStack ) const;
     QString value( const Q3CString & field,
-                   const Q3WidgetStack *functionStack,
-                   const Q3WidgetStack *valueStack ) const;
+                   const QStackedWidget *functionStack,
+                   const QStackedWidget *valueStack ) const;
     QString prettyValue( const Q3CString & field,
-                         const Q3WidgetStack *functionStack,
-                         const Q3WidgetStack *valueStack ) const;
+                         const QStackedWidget *functionStack,
+                         const QStackedWidget *valueStack ) const;
     bool handlesField( const Q3CString & field,
-                       const Q3WidgetStack *functionStack,
-                       const Q3WidgetStack *valueStack ) const;
-    void reset( Q3WidgetStack *functionStack,
-                Q3WidgetStack *valueStack ) const;
-    void setRule( Q3WidgetStack *functionStack,
-                  Q3WidgetStack *valueStack,
+                       const QStackedWidget *functionStack,
+                       const QStackedWidget *valueStack ) const;
+    void reset( QStackedWidget *functionStack,
+                QStackedWidget *valueStack ) const;
+    void setRule( QStackedWidget *functionStack,
+                  QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
     void update( const Q3CString & field,
-                 Q3WidgetStack *functionStack,
-                 Q3WidgetStack *valueStack ) const;
+                 QStackedWidget *functionStack,
+                 QStackedWidget *valueStack ) const;
 
   private:
     typedef Q3ValueVector<const RuleWidgetHandler*>::const_iterator const_iterator;

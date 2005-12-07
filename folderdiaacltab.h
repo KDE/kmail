@@ -39,7 +39,7 @@
 
 class KMFolderImap;
 class KPushButton;
-class Q3WidgetStack;
+class QStackedWidget;
 class KHBox;
 class Q3VButtonGroup;
 class KListView;
@@ -145,7 +145,7 @@ private:
   IMAPUserIdFormat mUserIdFormat;
 
   QLabel* mLabel;
-  Q3WidgetStack* mStack;
+  QStackedWidget* mStack;
   KMFolderDialog* mDlg;
 
   bool mChanged;

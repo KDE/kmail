@@ -325,7 +325,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no acl support", "please wait"...)
   // or a listview.
-  mStack = new Q3WidgetStack( this );
+  mStack = new QStackedWidget( this );
   topLayout->addWidget( mStack );
 
   mLabel = new QLabel( mStack );
@@ -441,7 +441,7 @@ void KMail::FolderDiaACLTab::load()
   // 3) load ACLs
 
   // First ensure we are connected
-  mStack->raiseWidget( mLabel );
+  mStack->setCurrentWidget( mLabel );
   if ( !mImapAccount ) { // hmmm?
     mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
     return;
@@ -543,7 +543,7 @@ void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
   loadListView( aclList );
   if ( mDlg->folder() ) // not when creating a new folder
     mInitialACLList = aclList;
-  mStack->raiseWidget( mACLWidget );
+  mStack->setCurrentWidget( mACLWidget );
   slotSelectionChanged( mListView->selectedItem() );
 }
 
@@ -614,7 +614,7 @@ void KMail::FolderDiaACLTab::slotSelectionChanged(Q3ListViewItem* item)
       canAdminThisItem = false;
   }
 
-  bool lvVisible = mStack->visibleWidget() == mACLWidget;
+  bool lvVisible = mStack->currentWidget() == mACLWidget;
   mAddACL->setEnabled( lvVisible && canAdmin && !mSaving );
   mEditACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
   mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );

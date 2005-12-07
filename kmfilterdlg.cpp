@@ -37,7 +37,7 @@ using KMail::AccountManager;
 #include <qtabwidget.h>
 #include <qtooltip.h>
 #include <qvalidator.h>
-#include <q3widgetstack.h>
+#include <QStackedWidget>
 //Added by qt3to4:
 #include <Q3Frame>
 #include <QGridLayout>
@@ -1008,7 +1008,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   mComboBox = new QComboBox( FALSE, this );
   assert( mComboBox );
-  mWidgetStack = new Q3WidgetStack(this);
+  mWidgetStack = new QStackedWidget(this);
   assert( mWidgetStack );
 
   setSpacing( 4 );
@@ -1021,13 +1021,13 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
     // append to the list of actions:
     mActionList.append( a );
     // add parameter widget to widget stack:
-    mWidgetStack->addWidget( a->createParamWidget( mWidgetStack ), i );
+    mWidgetStack->insertWidget( i, a->createParamWidget( mWidgetStack ) );
     // add (i18n-ized) name to combo box
     mComboBox->insertItem( (*it)->label );
   }
   // widget for the case where no action is selected.
-  mWidgetStack->addWidget( new QLabel( i18n("Please select an action."), mWidgetStack ), i );
-  mWidgetStack->raiseWidget(i);
+  mWidgetStack->insertWidget( i,new QLabel( i18n("Please select an action."), mWidgetStack ) );
+  mWidgetStack->setCurrentIndex(i);
   mComboBox->insertItem( " " );
   mComboBox->setCurrentItem(i);
 
@@ -1067,7 +1067,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
       //...and show the correct entry of
       // the combo box
       mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
-      mWidgetStack->raiseWidget(i);
+      mWidgetStack->setCurrentIndex(i);
       found = TRUE;
     } else // clear the parameter widget
       mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
@@ -1075,7 +1075,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 
   // not found, so set the empty widget
   mComboBox->setCurrentItem( count ); // last item
-  mWidgetStack->raiseWidget( count) ;
+  mWidgetStack->setCurrentIndex( count) ;
 }
 
 KMFilterAction * KMFilterActionWidget::action()
@@ -1088,7 +1088,7 @@ KMFilterAction * KMFilterActionWidget::action()
     KMFilterAction *fa = desc->create();
     if ( fa ) {
       // ...and apply the setting of the parameter widget.
-      fa->applyParamWidgetValue( mWidgetStack->visibleWidget() );
+      fa->applyParamWidgetValue( mWidgetStack->currentWidget() );
       return fa;
     }
   }

@@ -34,7 +34,7 @@
 #include <qlayout.h>
 #include <q3textedit.h>
 
-#include <q3widgetstack.h>
+#include <QStackedWidget>
 //Added by qt3to4:
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -85,7 +85,7 @@ namespace KMail {
     hlay->addWidget( mSourceCombo, 1 );
 
     // widget stack that is controlled by the source combo:
-    Q3WidgetStack * widgetStack = new Q3WidgetStack( this );
+    QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
@@ -107,17 +107,17 @@ namespace KMail {
     mTextEdit = new Q3TextEdit( widgetStack );
     mTextEdit->setWhatsThis( 
         i18n("Use this field to enter an arbitrary static signature."));
-    widgetStack->addWidget( mTextEdit, pageno );
+    widgetStack->insertWidget( pageno,mTextEdit );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrap( Q3TextEdit::NoWrap );
     mTextEdit->setTextFormat( Qt::PlainText );
 
-    widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
+    widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0
 
     // page 1: "signature file" requester, label, "edit file" button:
     ++pageno;
 	page = new QWidget( widgetStack );
-    widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
+    widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mFileRequester = new KURLRequester( page );
@@ -142,7 +142,7 @@ namespace KMail {
     // page 2: "signature command" requester and label:
     ++pageno;
     page = new QWidget( widgetStack );
-    widgetStack->addWidget( page, pageno );
+    widgetStack->insertWidget( pageno,page );
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
     mCommandEdit = new KLineEdit( page );

@@ -16,7 +16,7 @@
 #include <QLabel>
 #include <QShowEvent>
 #include <QResizeEvent>
-#include <Q3WidgetStack>
+#include <QStackedWidget>
 #include <dcopobject.h>
 
 #include <kdialogbase.h>
@@ -956,7 +956,7 @@ private:
   QComboBox* mLanguageCombo;
 
   QLabel* mFolderComboLabel;
-  Q3WidgetStack* mFolderComboStack;
+  QStackedWidget* mFolderComboStack;
   KMail::FolderRequester* mFolderCombo; // in the widgetstack
   KMail::AccountComboBox* mAccountCombo; // in the widgetstack
 
