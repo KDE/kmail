@@ -81,10 +81,10 @@ public:
    of messages left to process is empty */
   void setFilterList( QList<KMFilter*> filters );
 
-  /* Set the id of the account associated with this scheduler */
+  /** Set the id of the account associated with this scheduler */
   void setAccountId( uint id  ) { mAccountId = id; mAccount = true; }
 
-  /* Clear the id of the account associated with this scheduler */
+  /** Clear the id of the account associated with this scheduler */
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
@@ -92,8 +92,15 @@ public:
   void execFilters(const Q3PtrList<KMMsgBase> msgList);
   void execFilters(KMMsgBase* msgBase);
   void execFilters(quint32 serNum);
+
   static QString debug();
   static bool isEnabled();
+
+  /** Allow or deny manipulations on the message to be filtered.
+      This is needed when using pipe-through filters, because the
+      changes made by the filter have to be written back.
+      The old value before applying the new value is returned. */
+  bool ignoreChanges( bool ignore );
 
 signals:
   /** Emitted when filtering is completed */
