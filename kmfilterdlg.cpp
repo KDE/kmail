@@ -1047,7 +1047,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   // now connect the combo box and the widget stack
   connect( mComboBox, SIGNAL(activated(int)),
-	   mWidgetStack, SLOT(raiseWidget(int)) );
+	   mWidgetStack, SLOT(setCurrentIndex (int)) );
 }
 
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )

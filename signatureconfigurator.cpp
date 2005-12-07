@@ -89,7 +89,7 @@ namespace KMail {
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
-	     widgetStack, SLOT(raiseWidget(int)) );
+	     widgetStack, SLOT(setCurrentIndex (int)) );
     // connects for the enabling of the widgets depending on
     // signatureEnabled:
     connect( mEnableCheck, SIGNAL(toggled(bool)),

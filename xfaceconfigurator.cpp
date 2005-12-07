@@ -131,7 +131,7 @@ namespace KMail {
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
     connect( mSourceCombo, SIGNAL(highlighted(int)),
-             widgetStack, SLOT(raiseWidget(int)) );
+             widgetStack, SLOT(setCurrentIndex(int)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
              mSourceCombo, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
