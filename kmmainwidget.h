@@ -27,7 +27,7 @@
 #include <q3vbox.h>
 //Added by qt3to4:
 #include <QVBoxLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PopupMenu>
 #include <Q3PtrList>
 
@@ -60,7 +60,7 @@ class SearchWindow;
 class KMSystemTray;
 class KMHeaders;
 
-template <typename T> class Q3ValueList;
+template <typename T> class QList;
 template <typename T, typename S> class QMap;
 template <typename T> class QPointer;
 
@@ -153,7 +153,7 @@ public:
 
   /** Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
    * @return the list of all main widgets, or 0 if it is not yet initialized */
-  static const Q3ValueList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
+  static const QList<KMMainWidget*>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
 
@@ -456,7 +456,7 @@ private:
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
-  Q3ValueList<int> mPanner1Sep, mPanner2Sep;
+  QList<int> mPanner1Sep, mPanner2Sep;
   KURL          mUrlCurrent;
   QMenu         *mActMenu;
   QMenu         *mSendMenu;
@@ -503,7 +503,7 @@ private:
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
 
-  static Q3ValueList<KMMainWidget*>* s_mainWidgetList;
+  static QList<KMMainWidget*>* s_mainWidgetList;
 
   Q3Accel *mAccel;
 };

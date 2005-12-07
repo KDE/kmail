@@ -26,7 +26,7 @@
 #include <qstring.h>
 #include <qobject.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 class KMFolder;
 class KMMsgBase;
@@ -38,7 +38,7 @@ class UndoInfo
 {
 public:
   int               id;
-  Q3ValueList<ulong> serNums;
+  QList<ulong> serNums;
   KMFolder         *srcFolder;
   KMFolder         *destFolder;
 };

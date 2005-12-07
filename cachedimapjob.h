@@ -72,15 +72,15 @@ public:
   };
 
   // Get messages
-  CachedImapJob( const Q3ValueList<MsgForDownload>& msgs,
+  CachedImapJob( const QList<MsgForDownload>& msgs,
                  JobType type = tGetMessage, KMFolderCachedImap* folder = 0 );
   // Put messages
   CachedImapJob( const Q3PtrList<KMMessage>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
-  CachedImapJob( const Q3ValueList<unsigned long>& msgs,
+  CachedImapJob( const QList<unsigned long>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
   // Add sub folders
-  CachedImapJob( const Q3ValueList<KMFolderCachedImap*>& folders,
+  CachedImapJob( const QList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
   // Rename folder
@@ -121,9 +121,9 @@ protected slots:
 private:
   KMFolderCachedImap *mFolder;
   KMAcctCachedImap   *mAccount;
-  Q3ValueList<KMFolderCachedImap*> mFolderList;
-  Q3ValueList<MsgForDownload> mMsgsForDownload;
-  Q3ValueList<unsigned long> mSerNumMsgList;
+  QList<KMFolderCachedImap*> mFolderList;
+  QList<MsgForDownload> mMsgsForDownload;
+  QList<unsigned long> mSerNumMsgList;
   ulong mSentBytes; // previous messages
   ulong mTotalBytes;
   QStringList mFoldersOrMessages; // Folder deletion: path list. Message deletion: sets of uids

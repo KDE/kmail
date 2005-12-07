@@ -189,7 +189,7 @@ void KMFolderCachedImap::readConfig()
   KConfig* config = KMKernel::config();
   KConfigGroup group( config, "Folder-" + folder()->idString() );
   if( mImapPath.isEmpty() ) mImapPath = group.readEntry( "ImapPath" );
-  if( QString( name() ).upper() == "INBOX" && mImapPath == "/INBOX/" )
+  if( QString( name() ).toUpper() == "INBOX" && mImapPath == "/INBOX/" )
   {
     folder()->setLabel( i18n( "inbox" ) );
     // for the icon
@@ -1096,9 +1096,9 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
 }
 
 /* find new messages (messages without a UID) */
-Q3ValueList<unsigned long> KMFolderCachedImap::findNewMessages()
+QList<unsigned long> KMFolderCachedImap::findNewMessages()
 {
-  Q3ValueList<unsigned long> result;
+  QList<unsigned long> result;
   for( int i = 0; i < count(); ++i ) {
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue; /* what goes on if getMsg() returns 0? */
@@ -1111,7 +1111,7 @@ Q3ValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 /* Upload new messages to server */
 void KMFolderCachedImap::uploadNewMessages()
 {
-  Q3ValueList<unsigned long> newMsgs = findNewMessages();
+  QList<unsigned long> newMsgs = findNewMessages();
   if( !newMsgs.isEmpty() ) {
     if ( mUserRights <= 0 || ( mUserRights & ( KMail::ACLJobs::Insert ) ) ) {
       newState( mProgress, i18n("Uploading messages to server"));
@@ -1189,7 +1189,7 @@ void KMFolderCachedImap::uploadFlags()
     }
     QMap< QString, QStringList >::Iterator dit;
     for( dit = groups.begin(); dit != groups.end(); ++dit ) {
-      Q3CString flags = dit.key().latin1();
+      Q3CString flags = dit.key().toLatin1();
       QStringList sets = KMFolderImap::makeSets( (*dit), true );
       mStatusFlagsJobs += sets.count(); // ### that's not in kmfolderimap....
       // Send off a status setting job for each set.
@@ -1231,7 +1231,7 @@ void KMFolderCachedImap::setStatus( int idx, const MessageStatus& status, bool t
   mStatusChangedLocally = true;
 }
 
-void KMFolderCachedImap::setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle)
+void KMFolderCachedImap::setStatus(QList<int>& ids, const MessageStatus& status, bool toggle)
 {
   KMFolderMaildir::setStatus(ids, status, toggle);
   mStatusChangedLocally = true;
@@ -1240,7 +1240,7 @@ void KMFolderCachedImap::setStatus(Q3ValueList<int>& ids, const MessageStatus& s
 /* Upload new folders to server */
 void KMFolderCachedImap::createNewFolders()
 {
-  Q3ValueList<KMFolderCachedImap*> newFolders = findNewFolders();
+  QList<KMFolderCachedImap*> newFolders = findNewFolders();
   //kdDebug(5006) << label() << " createNewFolders:" << newFolders.count() << " new folders." << endl;
   if( !newFolders.isEmpty() ) {
     newState( mProgress, i18n("Creating subfolders on server"));
@@ -1253,9 +1253,9 @@ void KMFolderCachedImap::createNewFolders()
   }
 }
 
-Q3ValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
+QList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 {
-  Q3ValueList<KMFolderCachedImap*> newFolders;
+  QList<KMFolderCachedImap*> newFolders;
   if( folder() && folder()->child() ) {
     KMFolderNode *node = folder()->child()->first();
     while( node ) {
@@ -1900,7 +1900,7 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   if (it == mAccount->jobsEnd()) return;
   QBuffer buff(&(*it).data);
   buff.open(QIODevice::WriteOnly | QIODevice::Append);
-  buff.writeBlock(data.data(), data.size());
+  buff.write(data.data(), data.size());
   buff.close();
 }
 

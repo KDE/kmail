@@ -175,7 +175,7 @@ protected:
     *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;
-  Q3ValueList<QPointer<KMFolder> > mFolders;
+  QList<QPointer<KMFolder> > mFolders;
 
   // not owned by us
   KMMainWidget* mKMMainWidget;

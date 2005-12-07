@@ -36,7 +36,7 @@
 
 #include <progressmanager.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 
@@ -178,7 +178,7 @@ void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
   if ( mLocalSearchPattern->isEmpty() && data.isEmpty() )
   {
     // no local search and the server found nothing
-    Q3ValueList<quint32> serNums;
+    QList<quint32> serNums;
     emit searchDone( serNums, mSearchPattern, true );
   } else
   {
@@ -218,7 +218,7 @@ void SearchJob::slotSearchFolder()
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // pure imap search - now get the serial number for the UIDs
-    Q3ValueList<quint32> serNums;
+    QList<quint32> serNums;
     for ( QStringList::Iterator it = mImapSearchHits.begin(); 
         it != mImapSearchHits.end(); ++it ) 
     {
@@ -244,7 +244,7 @@ void SearchJob::slotSearchFolder()
             i18n("Continue Search"), i18n("&Search"), 
             "continuedownloadingforsearch" ) != KMessageBox::Continue ) 
       {
-        Q3ValueList<quint32> serNums;
+        QList<quint32> serNums;
         emit searchDone( serNums, mSearchPattern, true );
         return;
       }
@@ -339,7 +339,7 @@ void SearchJob::slotSearchResult( KIO::Job *job )
     if ( mSerNum == 0 )
     {
       // folder
-      Q3ValueList<quint32> serNums;
+      QList<quint32> serNums;
       emit searchDone( serNums, mSearchPattern, true );
     } else {
       // message
@@ -421,7 +421,7 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
   if ( item )
     item->setComplete();
   mAccount->killAllJobs();
-  Q3ValueList<quint32> serNums;
+  QList<quint32> serNums;
   emit searchDone( serNums, mSearchPattern, true );
 }
 

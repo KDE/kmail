@@ -29,7 +29,7 @@
 #include <qpointer.h>
 //Added by qt3to4:
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 #include "imapaccountbase.h"
 
 class QRegExpValidator;
@@ -254,7 +254,7 @@ class AccountDialog : public KDialogBase
     PopWidgets   mPop;
     ImapWidgets  mImap;
     KMAccount    *mAccount;
-    Q3ValueList<QPointer<KMFolder> > mFolderList;
+    QList<QPointer<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
     enum EncryptionMethods {

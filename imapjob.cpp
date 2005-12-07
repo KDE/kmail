@@ -39,7 +39,7 @@
 #include "kmmsgpart.h"
 #include "progressmanager.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 using KPIM::ProgressManager;
@@ -571,8 +571,8 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
     QString newUid = data.section(' ', 2, 2);
 
     // get lists of uids
-    Q3ValueList<ulong> olduids = KMFolderImap::splitSets(oldUid);
-    Q3ValueList<ulong> newuids = KMFolderImap::splitSets(newUid);
+    QList<ulong> olduids = KMFolderImap::splitSets(oldUid);
+    QList<ulong> newuids = KMFolderImap::splitSets(newUid);
 
     int index = -1;
     KMMessage * msg;

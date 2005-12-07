@@ -27,7 +27,7 @@
 
 #include "imapaccountbase.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 using KMail::SieveConfig;
@@ -570,7 +570,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotCapabilitiesResult( KIO::Job*, const QString& result )
   {
-    mCapabilities = QStringList::split(' ', result.lower() );
+    mCapabilities = QStringList::split(' ', result.toLower() );
     kdDebug(5006) << "capabilities:" << mCapabilities << endl;
   }
 
@@ -982,7 +982,7 @@ namespace KMail {
     disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                 this, SLOT( slotCheckQueuedFolders() ) );
 
-    Q3ValueList<QPointer<KMFolder> > mSaveList = mMailCheckFolders;
+    QList<QPointer<KMFolder> > mSaveList = mMailCheckFolders;
     mMailCheckFolders = mFoldersQueuedForChecking;
     kmkernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders = mSaveList;

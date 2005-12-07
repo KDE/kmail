@@ -198,7 +198,7 @@ Q3CString KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
     if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
       return SpecialRuleFields[i].internalName;
   }
-  return i18nVal.latin1();
+  return i18nVal.toLatin1();
 }
 
 int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )

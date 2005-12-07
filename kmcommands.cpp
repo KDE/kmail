@@ -59,7 +59,7 @@
 //Added by qt3to4:
 #include <Q3CString>
 #include <Q3PtrList>
-#include <Q3ValueList>
+#include <QList>
 #include <QDesktopWidget>
 
 #include <libemailfunctions/email.h>
@@ -179,7 +179,7 @@ KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
 
 KMCommand::~KMCommand()
 {
-  Q3ValueListIterator<QPointer<KMFolder> > fit;
+  QList<QPointer<KMFolder> >::Iterator fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;
@@ -409,7 +409,7 @@ void KMCommand::slotJobFinished()
 void KMCommand::slotTransferCancelled()
 {
   // kill the pending jobs
-  Q3ValueListIterator<QPointer<KMFolder> > fit;
+  QList<QPointer<KMFolder> >::Iterator fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;
@@ -1313,7 +1313,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgPart->setContentDescription(msg->from()+": "+msg->subject());
     msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
-    Q3ValueList<int> dummy;
+    QList<int> dummy;
     msgPart->setBodyAndGuessCte(msg->asString(), dummy, true);
     msgPart->setCharset("");
 
@@ -1383,14 +1383,14 @@ KMCommand::Result KMPrintCommand::execute()
 
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
-  const Q3ValueList<quint32> &serNums, bool toggle )
+  const QList<quint32> &serNums, bool toggle )
   : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
 }
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
-  Q3ValueListIterator<quint32> it;
+  QList<quint32>::Iterator it;
   int idx = -1;
   KMFolder *folder = 0;
   bool parentStatus = false;
@@ -1408,7 +1408,7 @@ KMCommand::Result KMSetStatusCommand::execute()
         parentStatus = false;
     }
   }
-  QMap< KMFolder*, Q3ValueList<int> > folderMap;
+  QMap< KMFolder*, QList<int> > folderMap;
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
     KMMsgDict::instance()->getLocation( *it, &folder, &idx );
     if (folder) {
@@ -1430,7 +1430,7 @@ KMCommand::Result KMSetStatusCommand::execute()
       folderMap[folder].append(idx);
     }
   }
-  QMap< KMFolder*, Q3ValueList<int> >::Iterator it2 = folderMap.begin();
+  QMap< KMFolder*, QList<int> >::Iterator it2 = folderMap.begin();
   while ( it2 != folderMap.end() ) {
      KMFolder *f = it2.key();
      f->setStatus( (*it2), mStatus, mToggle );
@@ -1779,9 +1779,9 @@ KMCommand::Result KMCopyCommand::execute()
   bool deleteNow = false;
   if (!localList.isEmpty())
   {
-    Q3ValueList<int> index;
+    QList<int> index;
     mDestFolder->addMsg( localList, index );
-    for ( Q3ValueListIterator<int> it = index.begin(); it != index.end(); ++it ) {
+    for ( QList<int>::Iterator it = index.begin(); it != index.end(); ++it ) {
       mDestFolder->unGetMsg( *it );
     }
     if ( mDestFolder->folderType() == KMFolderTypeImap ) {
@@ -2119,7 +2119,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
       else if (queryPart.left(6) == "?body=")
         // It is correct to convert to latin1() as URL should not contain
         // anything except ascii.
-        msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
+        msg->setBody( KURL::decode_string(queryPart.mid(6)).toLatin1() );
       else if (queryPart.left(4) == "?cc=")
         msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
@@ -2793,7 +2793,7 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
 {
   KMMessagePart& msgPart = mNode->msgPart();
   const QString contentTypeStr =
-    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).lower();
+    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).toLower();
 
   if ( contentTypeStr == "text/x-vcard" ) {
     atmView();

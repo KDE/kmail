@@ -212,7 +212,7 @@ namespace KMail {
     // Force the filename to be relative to ~ instead of $PWD depending
     // on the rest of the code (KRun::run in Edit and KFileItem on save)
     if ( !file.isEmpty() && QFileInfo( file ).isRelative() )
-        file = QDir::home().absPath() + QDir::separator() + file;
+        file = QDir::home().absolutePath() + QDir::separator() + file;
 
     return file;
   }

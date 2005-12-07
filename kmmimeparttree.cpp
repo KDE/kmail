@@ -271,7 +271,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
 
 void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
 {
-  QString mimetype = mime.lower();
+  QString mimetype = mime.toLower();
   if ( mimetype.startsWith( "multipart/" ) ) {
     setText( 1, mimetype );
     setPixmap( 0, SmallIcon("folder") );

@@ -30,7 +30,7 @@
 
 #include <qcombobox.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 class KMAccount;
 
@@ -54,7 +54,7 @@ public:
 private slots:
   void slotRefreshAccounts();
 private:
-  Q3ValueList<KMAccount *> applicableAccounts() const;
+  QList<KMAccount *> applicableAccounts() const;
 };
 
 

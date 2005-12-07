@@ -147,7 +147,7 @@ private:
   QWidget *mParent;
   Q3PtrList<KMMessage> mRetrievedMsgs;
   Q3PtrList<KMMsgBase> mMsgList;
-  Q3ValueList<QPointer<KMFolder> > mFolders;
+  QList<QPointer<KMFolder> > mFolders;
 };
 
 class KDE_EXPORT KMMailtoComposeCommand : public KMCommand
@@ -323,7 +323,7 @@ private slots:
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KURL mUrl;
-  Q3ValueList<unsigned long> mMsgList;
+  QList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
   KMMessage *mStandAloneMessage;
   QByteArray mData;
@@ -535,15 +535,15 @@ class KDE_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( const MessageStatus& status, const Q3ValueList<quint32> &,
+  KMSetStatusCommand( const MessageStatus& status, const QList<quint32> &,
                       bool toggle=false );
 
 private:
   virtual Result execute();
 
   MessageStatus mStatus;
-  Q3ValueList<quint32> mSerNums;
-  Q3ValueList<int> mIds;
+  QList<quint32> mSerNums;
+  QList<int> mIds;
   bool mToggle;
 };
 
@@ -674,7 +674,7 @@ private:
   Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that need to be loaded
   // Ticked off as they come in via msgAdded signals.
-  Q3ValueList<quint32> mWaitingForMsgs;
+  QList<quint32> mWaitingForMsgs;
 };
 
 namespace KPIM {
@@ -710,7 +710,7 @@ private:
   Q3PtrList<KMMsgBase> mMsgList;
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
-  Q3ValueList<quint32> mLostBoys;
+  QList<quint32> mLostBoys;
   KPIM::ProgressItem *mProgressItem;
 };
 

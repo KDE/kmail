@@ -22,7 +22,7 @@
 #include <Q3CString>
 #include <Q3PtrList>
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 
 #include <kopenwith.h>
@@ -128,8 +128,8 @@ using KPIM::ProgressManager;
 
 #include "kmmainwidget.moc"
 
-Q3ValueList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
-static KStaticDeleter<Q3ValueList<KMMainWidget*> > mwlsd;
+QList<KMMainWidget*>* KMMainWidget::s_mainWidgetList = 0;
+static KStaticDeleter<QList<KMMainWidget*> > mwlsd;
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
@@ -166,7 +166,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mToolbarActionSeparator = new KActionSeparator( actionCollection );
 
   if( !s_mainWidgetList )
-    mwlsd.setObject( s_mainWidgetList, new Q3ValueList<KMMainWidget*>() );
+    mwlsd.setObject( s_mainWidgetList, new QList<KMMainWidget*>() );
   s_mainWidgetList->append( this );
 
   mPanner1Sep << 1 << 1;
@@ -345,8 +345,8 @@ void KMMainWidget::readConfig(void)
 
     mPanner1Sep.clear();
     mPanner2Sep.clear();
-    Q3ValueList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
-    Q3ValueList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
+    QList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
+    QList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
 
     widths << folderW << headerW;
     heights << headerH << readerH;
@@ -459,8 +459,8 @@ void KMMainWidget::writeConfig(void)
 
   geometry.writeEntry( "MainWin", this->geometry().size() );
 
-  const Q3ValueList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
-  const Q3ValueList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
+  const QList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
+  const QList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
 
   geometry.writeEntry( "FolderPaneWidth", widths[0] );
   geometry.writeEntry( "HeaderPaneWidth", widths[1] );
@@ -3195,7 +3195,7 @@ void KMMainWidget::removeDuplicates()
     return;
   KMFolder *oFolder = mFolder;
   mHeaders->setFolder(0);
-  QMap< QString, Q3ValueList<int> > idMD5s;
+  QMap< QString, QList<int> > idMD5s;
   QList<int> redundantIds;
   QList<int>::Iterator kt;
   mFolder->open();
@@ -3215,9 +3215,9 @@ void KMMainWidget::removeDuplicates()
       }
     }
   }
-  QMap< QString, Q3ValueList<int> >::Iterator it;
+  QMap< QString, QList<int> >::Iterator it;
   for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
-    Q3ValueList<int>::Iterator jt;
+    QList<int>::Iterator jt;
     bool finished = false;
     for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
       if (!((*mFolder)[*jt]->status().isUnread())) {
@@ -3286,8 +3286,8 @@ void KMMainWidget::initializeFolderShortcutActions()
   bool old = actionCollection()->isAutoConnectShortcuts();
 
   actionCollection()->setAutoConnectShortcuts( true );
-  Q3ValueList< QPointer< KMFolder > > folders = kmkernel->allFolders();
-  Q3ValueList< QPointer< KMFolder > >::Iterator it = folders.begin();
+  QList< QPointer< KMFolder > > folders = kmkernel->allFolders();
+  QList< QPointer< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
     KMFolder *folder = (*it);
     ++it;

@@ -39,7 +39,7 @@
 #include <QGridLayout>
 #include <QHideEvent>
 #include <Q3CString>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 using KMail::AccountDialog;
@@ -1147,22 +1147,22 @@ QStringList AccountsPage::ReceivingTab::occupiedNames()
 {
   QStringList accountNames = kmkernel->acctMgr()->getAccounts();
 
-  Q3ValueList<ModifiedAccountsType*>::Iterator k;
+  QList<ModifiedAccountsType*>::Iterator k;
   for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
     if ((*k)->oldAccount)
       accountNames.remove( (*k)->oldAccount->name() );
 
-  Q3ValueList< QPointer<KMAccount> >::Iterator l;
+  QList< QPointer<KMAccount> >::Iterator l;
   for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
     if (*l)
       accountNames.remove( (*l)->name() );
 
-  Q3ValueList< QPointer<KMAccount> >::Iterator it;
+  QList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
     if (*it)
       accountNames += (*it)->name();
 
-  Q3ValueList<ModifiedAccountsType*>::Iterator j;
+  QList<ModifiedAccountsType*>::Iterator j;
   for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
     accountNames += (*j)->newAccount->name();
 
@@ -1232,7 +1232,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
   if( !listItem ) return;
 
   KMAccount *account = 0;
-  Q3ValueList<ModifiedAccountsType*>::Iterator j;
+  QList<ModifiedAccountsType*>::Iterator j;
   for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
     if ( (*j)->newAccount->name() == listItem->text(0) ) {
       account = (*j)->newAccount;
@@ -1240,7 +1240,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     }
 
   if ( !account ) {
-    Q3ValueList< QPointer<KMAccount> >::Iterator it;
+    QList< QPointer<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
         account = *it;
@@ -1299,7 +1299,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
   if( !listItem ) return;
 
   KMAccount *acct = 0;
-  Q3ValueList<ModifiedAccountsType*>::Iterator j;
+  QList<ModifiedAccountsType*>::Iterator j;
   for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j )
     if ( (*j)->newAccount->name() == listItem->text(0) ) {
       acct = (*j)->oldAccount;
@@ -1308,7 +1308,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
       break;
     }
   if ( !acct ) {
-    Q3ValueList< QPointer<KMAccount> >::Iterator it;
+    QList< QPointer<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
         acct = *it;
@@ -1384,14 +1384,14 @@ void AccountsPage::ReceivingTab::slotTweakAccountList()
 
 void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
-  Q3ValueList< QPointer<KMAccount> >::Iterator it;
+  QList< QPointer<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     kmkernel->acctMgr()->add( *it );
     (*it)->installTimer();
   }
 
   // Update accounts that have been modified
-  Q3ValueList<ModifiedAccountsType*>::Iterator j;
+  QList<ModifiedAccountsType*>::Iterator j;
   for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
     (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
     delete (*j)->newAccount;
@@ -2774,7 +2774,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent )
 void ComposerPage::PhrasesTab::setLanguageItemInformation( int index ) {
   assert( 0 <= index && index < (int)mLanguageList.count() );
 
-  LanguageItem &l = *mLanguageList.at( index );
+  LanguageItem l = mLanguageList.at( index );
 
   mPhraseReplyEdit->setText( l.mReply );
   mPhraseReplyAllEdit->setText( l.mReplyAll );
@@ -2787,7 +2787,7 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
   if (index == -1) return;
   assert( 0 <= index && index < (int)mLanguageList.count() );
 
-  LanguageItem &l = *mLanguageList.at( index );
+  LanguageItem l = mLanguageList.at( index );
 
   l.mReply = mPhraseReplyEdit->text();
   l.mReplyAll = mPhraseReplyAllEdit->text();
@@ -2824,7 +2824,7 @@ void ComposerPage::PhrasesTab::slotRemoveLanguage()
   assert( 0 <= index && index < (int)mLanguageList.count() );
 
   // remove current item from internal list and combobox:
-  mLanguageList.remove( mLanguageList.at( index ) );
+  mLanguageList.removeAt(  index );
   mPhraseLanguageCombo->removeItem( index );
 
   if ( index >= (int)mLanguageList.count() ) index--;
@@ -3026,21 +3026,21 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   // KCharsets::codecForName("us-ascii") returns "iso-8859-1" (cf. Bug #49812)
   // therefore we have to treat this case specially
-  if ( charset.lower() == QString::fromLatin1("us-ascii") ) {
+  if ( charset.toLower() == QString::fromLatin1("us-ascii") ) {
     charset = QString::fromLatin1("us-ascii");
     return;
   }
 
-  if ( charset.lower() == QString::fromLatin1("locale") ) {
+  if ( charset.toLower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QString( kmkernel->networkCodec()->mimeName() ).lower() );
+      .arg( QString( kmkernel->networkCodec()->mimeName() ).toLower() );
     return;
   }
 
   bool ok = false;
   QTextCodec *codec = KGlobal::charsets()->codecForName( charset, ok );
   if ( ok && codec ) {
-    charset = QString::fromLatin1( codec->mimeName() ).lower();
+    charset = QString::fromLatin1( codec->mimeName() ).toLower();
     return;
   }
 
@@ -3690,12 +3690,12 @@ void SecurityPage::GeneralTab::save() {
     {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
       QStringList names;
-      Q3ValueList<QPointer<KMFolder> > folders;
+      QList<QPointer<KMFolder> > folders;
       kmkernel->folderMgr()->createFolderList(&names, &folders);
       kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
       kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
-      for (Q3ValueList<QPointer<KMFolder> >::iterator it = folders.begin();
+      for (QList<QPointer<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
       {
         if (*it)

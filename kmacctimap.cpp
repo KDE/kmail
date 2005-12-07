@@ -297,7 +297,7 @@ void KMAcctImap::processNewMail(bool interactive)
             this,
             SLOT( slotMailCheckCanceled() ) );
 
-  QLinkedList<QPointer<KMFolder> >::Iterator it;
+  QList<QPointer<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
   mCountUnread = 0;
@@ -501,7 +501,7 @@ void KMAcctImap::slotUpdateFolderList()
   // the new list
   QList<QPointer<KMFolder> > includedFolders;
   // check for excluded folders
-  QLinkedList<QPointer<KMFolder> >::Iterator it;
+  QList<QPointer<KMFolder> >::Iterator it;
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolderImap* folder = static_cast<KMFolderImap*>(((KMFolder*)(*it))->storage());

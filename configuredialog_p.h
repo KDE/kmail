@@ -109,7 +109,7 @@ struct LanguageItem
   QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
 };
 
-typedef Q3ValueList<LanguageItem> LanguageItemList;
+typedef QList<LanguageItem> LanguageItemList;
 
 class NewLanguageDialog : public KDialogBase
 {
@@ -371,14 +371,14 @@ private:
   QCheckBox     *mCheckmailStartupCheck;
   QPushButton   *mOtherNewMailActionsButton;
 
-  Q3ValueList< QPointer<KMAccount> > mAccountsToDelete;
-  Q3ValueList< QPointer<KMAccount> > mNewAccounts;
+  QList< QPointer<KMAccount> > mAccountsToDelete;
+  QList< QPointer<KMAccount> > mNewAccounts;
   struct ModifiedAccountsType {
     QPointer< KMAccount > oldAccount;
     QPointer< KMAccount > newAccount;
   };
   // ### make this a qptrlist:
-  Q3ValueList< ModifiedAccountsType* >  mModifiedAccounts;
+  QList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
 class KDE_EXPORT AccountsPage : public ConfigModuleWithTabs {

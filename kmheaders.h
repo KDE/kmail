@@ -10,7 +10,7 @@
 #include <Q3PtrList>
 #include <QEvent>
 #include <QKeyEvent>
-#include <Q3ValueList>
+#include <QList>
 #include <QMouseEvent>
 using KMail::SortCacheItem;
 using KMail::HeaderItem;
@@ -40,7 +40,7 @@ class QIcon;
 class QDateTime;
 
 typedef Q3PtrList<KMMsgBase> KMMessageList;
-typedef Q3ValueList<quint32> SerNumList;
+typedef QList<quint32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
@@ -116,7 +116,7 @@ public:
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);
 
   /** Returns the index values of currently selected items */
-  Q3ValueList<int> selectedItems();
+  QList<int> selectedItems();
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
@@ -264,7 +264,7 @@ public slots:
   /** Select several items by message index
    * and if they are the parent of a closed thread, also
    * recursively select their children. */
-  void setSelectedByIndex(Q3ValueList<int> items, bool selected);
+  void setSelectedByIndex(QList<int> items, bool selected);
 
   /** switch a column with the given id (see KPaintInfo enum)
       1 for activate, 0 for deactivate, -1 for toggle*/

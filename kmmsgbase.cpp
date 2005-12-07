@@ -191,15 +191,15 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int i
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
-    //kdDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
+    //kdDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
 
-    if( status.latin1() == (char)KMMsgEncryptionStateUnknown )
+    if( status.toLatin1() == (char)KMMsgEncryptionStateUnknown )
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
-    else if( status.latin1() == (char)KMMsgNotEncrypted )
+    else if( status.toLatin1() == (char)KMMsgNotEncrypted )
         setEncryptionState( KMMsgNotEncrypted, idx );
-    else if( status.latin1() == (char)KMMsgPartiallyEncrypted )
+    else if( status.toLatin1() == (char)KMMsgPartiallyEncrypted )
         setEncryptionState( KMMsgPartiallyEncrypted, idx );
-    else if( status.latin1() == (char)KMMsgFullyEncrypted )
+    else if( status.toLatin1() == (char)KMMsgFullyEncrypted )
         setEncryptionState( KMMsgFullyEncrypted, idx );
     else
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -222,15 +222,15 @@ void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
-    //kdDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
+    //kdDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.toLatin1()) << " )" << endl;
 
-    if( status.latin1() == (char)KMMsgSignatureStateUnknown )
+    if( status.toLatin1() == (char)KMMsgSignatureStateUnknown )
         setSignatureState( KMMsgSignatureStateUnknown, idx );
-    else if( status.latin1() == (char)KMMsgNotSigned )
+    else if( status.toLatin1() == (char)KMMsgNotSigned )
         setSignatureState( KMMsgNotSigned, idx );
-    else if( status.latin1() == (char)KMMsgPartiallySigned )
+    else if( status.toLatin1() == (char)KMMsgPartiallySigned )
         setSignatureState( KMMsgPartiallySigned,idx );
-    else if( status.latin1() == (char)KMMsgFullySigned )
+    else if( status.toLatin1() == (char)KMMsgFullySigned )
         setSignatureState( KMMsgFullySigned, idx );
     else
         setSignatureState( KMMsgSignatureStateUnknown, idx );
@@ -315,7 +315,7 @@ Q3CString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
     }
   if (ok)
     *ok = all_ok;
-  return result.latin1();
+  return result.toLatin1();
 }
 
 
@@ -329,7 +329,7 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
     it != encodingNames.end(); it++)
   {
     QTextCodec *codec = KGlobal::charsets()->codecForName(*it);
-    QString mimeName = (codec) ? QString(codec->mimeName()).lower() : (*it);
+    QString mimeName = (codec) ? QString(codec->mimeName()).toLower() : (*it);
     if (mimeNames.find(mimeName) == mimeNames.end())
     {
       encodings.append(KGlobal::charsets()->languageForEncoding(*it)
@@ -528,7 +528,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
       stop = start;
       while (stop < strLength && dontQuote.find(_str.at(stop)) == -1)
         stop++;
-      result += _str.mid(pos, start - pos).latin1();
+      result += _str.mid(pos, start - pos).toLatin1();
       encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
         mid(start, stop - start)), useBase64).length();
       breakLine = (encLength > maxLen);
@@ -565,7 +565,7 @@ Q3CString KMMsgBase::encodeRFC2047String(const QString& _str,
       if (breakLine) result += "\n ";
       pos = stop;
     } else {
-      result += _str.mid(pos).latin1();
+      result += _str.mid(pos).toLatin1();
       break;
     }
   }
@@ -672,7 +672,7 @@ QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
   if ( utf8 )
     return base64EncodedMD5( s.trimmed().utf8() ); // QCString overload
   else
-    return base64EncodedMD5( s.trimmed().latin1() ); // const char * overload
+    return base64EncodedMD5( s.trimmed().toLatin1() ); // const char * overload
 }
 
 QString KMMsgBase::base64EncodedMD5( const QByteArray & s ) {
@@ -702,7 +702,7 @@ Q3CString KMMsgBase::autoDetectCharset(const Q3CString &_encoding, const QString
     QStringList::ConstIterator it = charsets.begin();
     for (; it != charsets.end(); ++it)
     {
-       Q3CString encoding = (*it).latin1();
+       Q3CString encoding = (*it).toLatin1();
        if (encoding == "locale")
        {
          encoding = kmkernel->networkCodec()->mimeName();

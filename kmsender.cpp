@@ -263,7 +263,7 @@ void KMSender::doSendMsg()
       KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
       mCurrentMsg->dwContentType() = newMsg.dwContentType();
       mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
-      Q3CString newDispo = newMsg.headerField("Content-Disposition").latin1();
+      Q3CString newDispo = newMsg.headerField("Content-Disposition").toLatin1();
       if( newDispo.isEmpty() )
         mCurrentMsg->removeHeaderField( "Content-Disposition" );
       else

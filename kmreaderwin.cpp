@@ -1115,7 +1115,7 @@ const QTextCodec * KMReaderWin::overrideCodec() const
   if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
     return 0;
   else
-    return KMMsgBase::codecForName( mOverrideEncoding.latin1() );
+    return KMMsgBase::codecForName( mOverrideEncoding.toLatin1() );
 }
 
 //-----------------------------------------------------------------------------

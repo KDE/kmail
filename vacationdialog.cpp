@@ -119,7 +119,7 @@ namespace KMail {
   }
 
   AddrSpecList VacationDialog::mailAliases() const {
-    Q3CString text = mMailAliasesEdit->text().latin1(); // ### IMAA: !ok
+    Q3CString text = mMailAliasesEdit->text().toLatin1(); // ### IMAA: !ok
     AddressList al;
     const char * s = text.begin();
     parseAddressList( s, text.end(), al );

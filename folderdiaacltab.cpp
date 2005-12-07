@@ -61,7 +61,7 @@
 
 //Added by qt3to4:
 #include <QGridLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 #include <Q3ButtonGroup>
 

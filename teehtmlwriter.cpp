@@ -53,7 +53,7 @@ namespace KMail {
   }
 
   TeeHtmlWriter::~TeeHtmlWriter() {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       delete (*it);
   }
 
@@ -63,37 +63,37 @@ namespace KMail {
   }
 
   void TeeHtmlWriter::begin( const QString & css ) {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->begin( css );
   }
 
   void TeeHtmlWriter::end() {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->end();
   }
 
   void TeeHtmlWriter::reset() {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->reset();
   }
 
   void TeeHtmlWriter::write( const QString & str ) {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->write( str );
   }
 
   void TeeHtmlWriter::queue( const QString & str ) {
-   for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+   for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->queue( str );
   }
 
   void TeeHtmlWriter::flush() {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->flush();
   }
 
   void TeeHtmlWriter::embedPart( const Q3CString & contentId, const QString & url ) {
-    for ( Q3ValueListIterator<HtmlWriter*> it = mWriters.begin(); it != mWriters.end(); ++it )
+    for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->embedPart( contentId, url );
   }
 

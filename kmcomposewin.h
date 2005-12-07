@@ -31,7 +31,7 @@
 #include <QCloseEvent>
 #include <QEvent>
 #include <Q3Frame>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PopupMenu>
 
 #include <kio/job.h>
@@ -746,7 +746,7 @@ private:
   bool mAlwaysSend;
 
   QStringList mFolderNames;
-  Q3ValueList<QPointer<KMFolder> > mFolderList;
+  QList<QPointer<KMFolder> > mFolderList;
 
 private:
   // helper method for slotInsert(My)PublicKey()

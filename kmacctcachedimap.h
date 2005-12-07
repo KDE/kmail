@@ -36,7 +36,7 @@
 
 #include <qpointer.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 
 class KMFolderCachedImap;
@@ -201,7 +201,7 @@ protected slots:
   virtual void slotCheckQueuedFolders();
 
 private:
-  Q3ValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
+  QList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
   void processNewMail( KMFolderCachedImap* folder, bool recurse );
 
 private:

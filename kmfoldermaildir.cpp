@@ -1084,7 +1084,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
     aFileName = constructValidFileName( QString(), status );
 
     QFileInfo fi(dest);
-    dest = fi.dirPath(true) + "/" + aFileName;
+    dest = fi.absolutePath() + "/" + aFileName;
     setDirty( true );
   }
 

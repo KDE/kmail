@@ -17,7 +17,7 @@
 
 #include "kdialogbase.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 class QString;
 class QCheckBox;
@@ -25,12 +25,12 @@ class QLineEdit;
 class Q3TextEdit;
 class KDateWidget;
 class KIntSpinBox;
-template <typename T> class Q3ValueList;
+template <typename T> class QList;
 
 namespace KMime {
   namespace Types {
     struct AddrSpec;
-    typedef Q3ValueList<AddrSpec> AddrSpecList;
+    typedef QList<AddrSpec> AddrSpecList;
   }
 }
 

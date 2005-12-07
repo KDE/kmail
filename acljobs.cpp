@@ -42,7 +42,7 @@ static unsigned int IMAPRightsToPermission( const QString& str ) {
   uint len = str.length();
   for (uint i = 0; i < len; ++i) {
     QChar ch = str[i];
-    switch ( ch.latin1() ) {
+    switch ( ch.toLatin1() ) {
     case 'l': perm |= ACLJobs::List; break;
     case 'r': perm |= ACLJobs::Read; break;
     case 's': foundSeenPerm = true; break;

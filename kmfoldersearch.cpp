@@ -44,7 +44,7 @@
 
 #include <qfile.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -172,7 +172,7 @@ void KMSearch::start()
         //Append all descendants to folders
         KMFolderNode* node;
         KMFolder* folder;
-        Q3ValueListConstIterator<QPointer<KMFolder> > it;
+        QList<QPointer<KMFolder> >::ConstIterator it;
         for ( it = mFolders.begin(); it != mFolders.end(); ++it )
         {
             folder = *it;
@@ -209,7 +209,7 @@ void KMSearch::stop()
             kmkernel->msgIndex()->stopQuery( this );
     } else {
         mIncompleteFolders.clear();
-        Q3ValueListConstIterator<QPointer<KMFolder> > jt;
+        QList<QPointer<KMFolder> >::ConstIterator jt;
         for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
             if ( !folder ) continue;
@@ -252,9 +252,9 @@ void KMSearch::slotProcessNextBatch()
             folder->open();
             mOpenedFolders.append( folder );
             connect( folder->storage(),
-                SIGNAL( searchResult( KMFolder*, Q3ValueList<quint32>, const KMSearchPattern*, bool ) ),
+                SIGNAL( searchResult( KMFolder*, QList<quint32>, const KMSearchPattern*, bool ) ),
                 this,
-                SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>, const KMSearchPattern*, bool ) ) );
+                SLOT( slotSearchFolderResult( KMFolder*, QList<quint32>, const KMSearchPattern*, bool ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -264,14 +264,14 @@ void KMSearch::slotProcessNextBatch()
 }
 
 void KMSearch::slotSearchFolderResult( KMFolder* folder,
-                                       Q3ValueList<quint32> serNums,
+                                       QList<quint32> serNums,
                                        const KMSearchPattern* pattern,
                                        bool complete )
 {
     if ( pattern != mSearchPattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     mLastFolder = folder->label();
-    Q3ValueListIterator<quint32> it;
+    QList<quint32>::Iterator it;
     for ( it = serNums.begin(); it != serNums.end(); ++it )
     {
       emit found( *it );
@@ -280,10 +280,10 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
     if ( complete )
     {
       disconnect( folder->storage(),
-          SIGNAL( searchResult( KMFolder*, Q3ValueList<quint32>,
+          SIGNAL( searchResult( KMFolder*, QList<quint32>,
                                 const KMSearchPattern*, bool ) ),
           this,
-          SLOT( slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>,
+          SLOT( slotSearchFolderResult( KMFolder*, QList<quint32>,
                                         const KMSearchPattern*, bool ) ) );
       --mRemainingFolders;
       folder->close();
@@ -553,7 +553,7 @@ void KMFolderSearch::close(bool force)
     }
 
     //close all referenced folders
-    Q3ValueListIterator<QPointer<KMFolder> > fit;
+    QList<QPointer<KMFolder> >::Iterator fit;
     for (fit = mFolders.begin(); fit != mFolders.end(); ++fit) {
         if (!(*fit))
             continue;

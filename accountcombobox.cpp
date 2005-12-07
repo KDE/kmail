@@ -32,7 +32,7 @@
 #include "accountmanager.h"
 #include <kdebug.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 using namespace KMail;
 
@@ -55,8 +55,8 @@ void AccountComboBox::slotRefreshAccounts()
   // (this would have to be different depending on whether this combo is in the
   // configuration dialog or not...)
   QStringList accountNames;
-  Q3ValueList<KMAccount *> lst = applicableAccounts();
-  Q3ValueList<KMAccount *>::ConstIterator it = lst.begin();
+  QList<KMAccount *> lst = applicableAccounts();
+  QList<KMAccount *>::ConstIterator it = lst.begin();
   for ( ; it != lst.end() ; ++it )
     accountNames.append( (*it)->name() );
   kdDebug() << k_funcinfo << accountNames << endl;
@@ -69,8 +69,8 @@ void AccountComboBox::slotRefreshAccounts()
 void AccountComboBox::setCurrentAccount( KMAccount* account )
 {
   int i = 0;
-  Q3ValueList<KMAccount *> lst = applicableAccounts();
-  Q3ValueList<KMAccount *>::ConstIterator it = lst.begin();
+  QList<KMAccount *> lst = applicableAccounts();
+  QList<KMAccount *>::ConstIterator it = lst.begin();
   for ( ; it != lst.end() ; ++it, ++i ) {
     if ( (*it) == account ) {
       setCurrentItem( i );
@@ -82,8 +82,8 @@ void AccountComboBox::setCurrentAccount( KMAccount* account )
 KMAccount* AccountComboBox::currentAccount() const
 {
   int i = 0;
-  Q3ValueList<KMAccount *> lst = applicableAccounts();
-  Q3ValueList<KMAccount *>::ConstIterator it = lst.begin();
+  QList<KMAccount *> lst = applicableAccounts();
+  QList<KMAccount *>::ConstIterator it = lst.begin();
   while ( it != lst.end() && i < currentItem() ) {
     ++it;
     ++i;
@@ -93,9 +93,9 @@ KMAccount* AccountComboBox::currentAccount() const
   return 0;
 }
 
-Q3ValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
+QList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
 {
-  Q3ValueList<KMAccount *> lst;
+  QList<KMAccount *> lst;
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
        a = kmkernel->acctMgr()->next() ) {
     if ( a && a->type() == "cachedimap" ) { //// ## proko2 hack. Need a list of allowed account types as ctor param

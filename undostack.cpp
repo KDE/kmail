@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 namespace KMail {
 
@@ -89,7 +89,7 @@ void UndoStack::undo()
   {
     UndoInfo *info = mStack.take(0);
     emit undoStackChanged();
-    Q3ValueList<ulong>::iterator itr;
+    QList<ulong>::iterator itr;
     info->destFolder->open();
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;

@@ -69,7 +69,7 @@
 #include <QGridLayout>
 #include <Q3Frame>
 #include <QHBoxLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 
 #include <assert.h>
@@ -98,7 +98,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QStringList folderNames;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   // get all folders but search and folders that can not have children
   aParent->createFolderList(&folderNames, &folders, true, true,
                             true, false, true, false);

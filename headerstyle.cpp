@@ -699,7 +699,7 @@ namespace KMail {
   }
 
   const HeaderStyle * HeaderStyle::create( const QString & type ) {
-    QString lowerType = type.lower();
+    QString lowerType = type.toLower();
     if ( lowerType == "brief" ) return brief();
     if ( lowerType == "plain" )  return plain();
     //if ( lowerType == "fancy" ) return fancy(); // not needed, see below

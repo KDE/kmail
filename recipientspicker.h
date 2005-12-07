@@ -32,7 +32,7 @@
 #include <qtooltip.h>
 //Added by qt3to4:
 #include <QPixmap>
-#include <Q3ValueList>
+#include <QList>
 #include <QKeyEvent>
 
 class QComboBox;
@@ -45,7 +45,7 @@ class DistributionListManager;
 class RecipientItem
 {
   public:
-    typedef Q3ValueList<RecipientItem *> List;
+    typedef QList<RecipientItem *> List;
 
     RecipientItem();
 

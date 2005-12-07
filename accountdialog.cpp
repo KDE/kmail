@@ -39,7 +39,7 @@
 #include <Q3Frame>
 #include <QGridLayout>
 #include <QTextStream>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHash>
@@ -248,7 +248,7 @@ ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
   QString varName = s.left(eqPos),
     varValue = expandVars(s.mid(eqPos + 1).trimmed());
 
-  mVars.insert( varName.latin1(), varValue );
+  mVars.insert( varName.toLatin1(), varValue );
 }
 
 QString
@@ -1364,11 +1364,11 @@ void AccountDialog::setupSettings()
     kmkernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
     while (i < mFolderNames.count())
     {
-      Q3ValueList<QPointer<KMFolder> >::Iterator it = mFolderList.at(i);
-      KMFolder *folder = *it;
+      //QList<QPointer<KMFolder> >::Iterator it = mFolderList.at(i);
+      KMFolder *folder = mFolderList.at(i);
       if (folder->isSystemFolder())
       {
-        mFolderList.remove(it);
+        mFolderList.removeAll(folder);
         mFolderNames.remove(mFolderNames.at(i));
       } else {
         if (folder == acctFolder) curIndex = i;
@@ -1531,7 +1531,7 @@ unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l
   unsigned int capa = 0;
   kdDebug( 5006 ) << k_funcinfo << l << endl;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).upper();
+    QString cur = (*it).toUpper();
     if ( cur == "PLAIN" )
       capa |= Plain;
     else if ( cur == "LOGIN" )
@@ -1643,7 +1643,7 @@ unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & 
 {
   unsigned int capa = 0;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).upper();
+    QString cur = (*it).toUpper();
     if ( cur == "AUTH=PLAIN" )
       capa |= Plain;
     else if ( cur == "AUTH=LOGIN" )
@@ -1752,7 +1752,7 @@ void AccountDialog::saveSettings()
 
     mAccount->setPrecommand( mLocal.precommand->text() );
 
-    mAccount->setFolder( *mFolderList.at(mLocal.folderCombo->currentItem()) );
+    mAccount->setFolder( mFolderList.at(mLocal.folderCombo->currentItem()) );
 
   }
   else if( accountType == "pop" )
@@ -1765,7 +1765,7 @@ void AccountDialog::saveSettings()
 #endif
     mAccount->setCheckExclude( !mPop.includeInCheck->isChecked() );
 
-    mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
+    mAccount->setFolder( mFolderList.at(mPop.folderCombo->currentItem()) );
 
     initAccountForConnect();
     PopAccount &epa = *(PopAccount*)mAccount;
@@ -1851,7 +1851,7 @@ void AccountDialog::saveSettings()
         mAccount->setName( mMaildir.nameEdit->text() );
         acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
 
-        KMFolder *targetFolder = *mFolderList.at(mMaildir.folderCombo->currentItem());
+        KMFolder *targetFolder = mFolderList.at(mMaildir.folderCombo->currentItem());
         if ( targetFolder->location()  == acctMaildir->location() ) {
             /*
                Prevent data loss if the user sets the destination folder to be the same as the
@@ -1902,11 +1902,11 @@ void AccountDialog::saveSettings()
   if (newAcct)
   {
     if( accountType == "local" ) {
-      newAcct->setFolder( *mFolderList.at(mLocal.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mLocal.folderCombo->currentItem()), true );
     } else if ( accountType == "pop" ) {
-      newAcct->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mPop.folderCombo->currentItem()), true );
     } else if ( accountType == "maildir" ) {
-      newAcct->setFolder( *mFolderList.at(mMaildir.folderCombo->currentItem()), true );
+      newAcct->setFolder( mFolderList.at(mMaildir.folderCombo->currentItem()), true );
     } else if ( accountType == "imap" ) {
       newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
     } else if ( accountType == "cachedimap" ) {

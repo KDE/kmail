@@ -335,7 +335,7 @@ QString AccountWizard::accountName() const
   int pos = email.find( '@' );
   if ( pos != -1 ) {
     name = email.mid( pos + 1 );
-    name[ 0 ] = name[ 0 ].upper();
+    name[ 0 ] = name[ 0 ].toUpper();
   }
 
   return name;
@@ -691,7 +691,7 @@ uint AccountWizard::popCapabilitiesFromStringList( const QStringList & l )
   unsigned int capa = 0;
 
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).upper();
+    QString cur = (*it).toUpper();
     if ( cur == "PLAIN" )
       capa |= Plain;
     else if ( cur == "LOGIN" )
@@ -718,7 +718,7 @@ uint AccountWizard::imapCapabilitiesFromStringList( const QStringList & l )
   unsigned int capa = 0;
 
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    QString cur = (*it).upper();
+    QString cur = (*it).toUpper();
     if ( cur == "AUTH=PLAIN" )
       capa |= Plain;
     else if ( cur == "AUTH=LOGIN" )
@@ -744,7 +744,7 @@ uint AccountWizard::authMethodsFromString( const QString & s )
 {
   unsigned int result = 0;
 
-  QStringList sl = QStringList::split( '\n', s.upper() );
+  QStringList sl = QStringList::split( '\n', s.toUpper() );
   for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
     if (  *it == "SASL/LOGIN" )
       result |= Login;

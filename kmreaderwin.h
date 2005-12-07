@@ -12,7 +12,7 @@
 #include <QCloseEvent>
 #include <QEvent>
 #include <Q3Frame>
-#include <Q3ValueList>
+#include <QList>
 #include <QResizeEvent>
 #include <kurl.h>
 #include <kservice.h>
@@ -481,7 +481,7 @@ private:
   QStringList mTempDirs;
   int mMimeTreeMode;
   bool mMimeTreeAtBottom;
-  Q3ValueList<int> mSplitterSizes;
+  QList<int> mSplitterSizes;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;

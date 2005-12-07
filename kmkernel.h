@@ -8,7 +8,7 @@
 #include <qpointer.h>
 //Added by qt3to4:
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 //#include <weaver.h>
 //#include <weaverlogger.h>
@@ -372,7 +372,7 @@ public:
   KMMainWidget *getKMMainWidget();
 
   /** @return a list of all folders from all folder managers. */
-  Q3ValueList< QPointer<KMFolder> > allFolders();
+  QList< QPointer<KMFolder> > allFolders();
 
   void raise();
 
@@ -471,7 +471,7 @@ private:
   // context menus and the pinentry program
   bool mContextMenuShown;
 
-  Q3ValueList<const KSystemTray*> systemTrayApplets;
+  QList<const KSystemTray*> systemTrayApplets;
 
   /* Weaver */
 //  KPIM::ThreadWeaver::Weaver *the_weaver;

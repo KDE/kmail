@@ -24,10 +24,10 @@
 #include <q3cstring.h>
 #include <q3dict.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 template <typename T>
-class Q3ValueList;
+class QList;
 class QTextCodec;
 
 class KMMessagePart
@@ -81,7 +81,7 @@ public:
                                   bool willBeSigned = false);
   /** Same for text */
   virtual void setBodyAndGuessCte(const Q3CString& aBuf,
-				  Q3ValueList<int>& allowedCte,
+				  QList<int>& allowedCte,
 				  bool allow8Bit = false,
                                   bool willBeSigned = false);
 

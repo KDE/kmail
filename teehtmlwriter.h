@@ -65,7 +65,7 @@ namespace KMail {
 
   private:
     /** We own the HtmlWriters added to us! */
-    Q3ValueList<KMail::HtmlWriter*> mWriters;
+    QList<KMail::HtmlWriter*> mWriters;
   };
 
 } // namespace KMail

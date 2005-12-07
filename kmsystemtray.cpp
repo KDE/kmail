@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QMouseEvent>
-#include <Q3ValueList>
+#include <QList>
 using KMail::AccountManager;
 #include "globalsettings.h"
 
@@ -265,7 +265,7 @@ void KMSystemTray::foldersChanged()
   disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
 
   QStringList folderNames;
-  Q3ValueList<QPointer<KMFolder> > folderList;
+  QList<QPointer<KMFolder> > folderList;
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
@@ -273,13 +273,13 @@ void KMSystemTray::foldersChanged()
 
   QStringList::iterator strIt = folderNames.begin();
 
-  for(Q3ValueList<QPointer<KMFolder> >::iterator it = folderList.begin();
+  for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
      it != folderList.end() && strIt != folderNames.end(); ++it, ++strIt)
   {
     KMFolder * currentFolder = *it;
     QString currentName = *strIt;
 
-    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
+    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().toLower() == "inbox")) ||
          (currentFolder->folderType() == KMFolderTypeImap)) &&
          !currentFolder->ignoreNewMail() )
     {

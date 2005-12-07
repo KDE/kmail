@@ -167,7 +167,7 @@ namespace KMail {
   }
 
   const AttachmentStrategy * AttachmentStrategy::create( const QString & type ) {
-    QString lowerType = type.lower();
+    QString lowerType = type.toLower();
     if ( lowerType == "iconic" )  return iconic();
     //if ( lowerType == "smart" )   return smart(); // not needed, see below
     if ( lowerType == "inlined" ) return inlined();

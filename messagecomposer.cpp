@@ -78,7 +78,7 @@
 #include <q3textedit.h>
 #include <qtimer.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 
 #include <gpgmepp/key.h>
@@ -304,7 +304,7 @@ void MessageComposer::applyChanges( bool disableCrypto )
   // Do the initial setup
   if( getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0 ) {
     Q3CString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
-    mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
+    mDebugComposerCrypto = cE == "1" || cE.toUpper() == "ON" || cE.toUpper() == "TRUE";
     kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
   } else {
     mDebugComposerCrypto = false;
@@ -573,7 +573,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
       return;
     }
     // everything ok, so let's fill in the part again:
-    Q3ValueList<int> dummy;
+    QList<int> dummy;
     part->setBodyAndGuessCte( resultData, dummy );
     part->setTypeStr( "application" );
     part->setSubtypeStr( "vnd.de.bund.bsi.chiasmus" );
@@ -1309,7 +1309,7 @@ void MessageComposer::composeChiasmusMessage( KMMessage& theMessage, Kleo::Crypt
     //mOldBodyPart.setBodyEncodedBinary( encryptedBody );
 
     bool doSign = false;
-    Q3ValueList<int> allowedCTEs;
+    QList<int> allowedCTEs;
     mOldBodyPart.setBodyAndGuessCte( encryptedBody, allowedCTEs,
                                      !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
 				     doSign );
@@ -1422,7 +1422,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     DwMediaType tmpCT;
     tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
     boundaryCStr = tmpCT.Boundary().c_str();
-    Q3ValueList<int> allowedCTEs;
+    QList<int> allowedCTEs;
 
     KMMessagePart textBodyPart;
     textBodyPart.setTypeStr("text");
@@ -1483,12 +1483,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // respect the CRLF->LF de-canonicalisation. We should
     // eventually get rid of this:
     if( it->sign || it->encrypt ) {
-      Q3CString cte = it->part->cteStr().lower();
+      Q3CString cte = it->part->cteStr().toLower();
       if( ( "8bit" == cte )
           || ( ( it->part->type() == DwMime::kTypeText )
                && ( "7bit" == cte ) ) ) {
         const QByteArray body = it->part->bodyDecodedBinary();
-        Q3ValueList<int> dummy;
+        QList<int> dummy;
         it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
         kdDebug(5006) << "Changed encoding of message part from "
                       << cte << " to " << it->part->cteStr() << endl;
@@ -1512,7 +1512,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       innerBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
     }
     innerBodyPart.setContentDisposition( "inline" );
-    Q3ValueList<int> allowedCTEs;
+    QList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
                                       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -1551,7 +1551,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     }
     body += "\n--" + boundaryCStr + "--\n";
   } else { // !earlyAddAttachments
-    Q3ValueList<int> allowedCTEs;
+    QList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                    doSign);

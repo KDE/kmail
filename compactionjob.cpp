@@ -112,7 +112,7 @@ int MboxCompactionJob::executeNow( bool silent )
   const QFileInfo pathInfo( realLocation() );
   // Use /dir/.mailboxname.compacted so that it's hidden, and doesn't show up after restarting kmail
   // (e.g. due to an unfortunate crash while compaction is happening)
-  mTempName = pathInfo.dirPath() + "/." + pathInfo.fileName() + ".compacted";
+  mTempName = pathInfo.path() + "/." + pathInfo.fileName() + ".compacted";
 
   mode_t old_umask = umask(077);
   mTmpFile = fopen(QFile::encodeName(mTempName), "w");

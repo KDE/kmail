@@ -37,7 +37,7 @@
 #include <q3valuevector.h>
 //Added by qt3to4:
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 
 class QCheckBox;
 class QPushButton;
@@ -174,7 +174,7 @@ public:
   bool isNewFolder() const { return mIsNewFolder; }
 
   KMFolderDir* folderDir() const { return mFolderDir; }
-  typedef Q3ValueList<QPointer<KMFolder> > FolderList;
+  typedef QList<QPointer<KMFolder> > FolderList;
 
   KMFolder* parentFolder() const { return mParentFolder; }
 

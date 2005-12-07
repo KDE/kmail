@@ -35,7 +35,7 @@
 #include <klistview.h> // include for the base class
 //Added by qt3to4:
 #include <QPixmap>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 
 class KMMsgBase;
@@ -195,7 +195,7 @@ public:
 
   void setup();
 
-  typedef Q3ValueList<QPixmap> PixmapList;
+  typedef QList<QPixmap> PixmapList;
 
   QPixmap pixmapMerge( PixmapList pixmaps ) const;
 

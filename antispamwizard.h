@@ -39,7 +39,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 #include <QBoxLayout>
 
 class KActionCollection;
@@ -219,15 +219,15 @@ namespace KMail {
       {
         public:
           ConfigReader( WizardMode mode,
-                        Q3ValueList<SpamToolConfig> & configList );
+                        QList<SpamToolConfig> & configList );
           ~ConfigReader( );
 
-          Q3ValueList<SpamToolConfig> & getToolList() { return mToolList; }
+          QList<SpamToolConfig> & getToolList() { return mToolList; }
 
           void readAndMergeConfig();
 
         private:
-          Q3ValueList<SpamToolConfig> & mToolList;
+          QList<SpamToolConfig> & mToolList;
           KConfig *mConfig;
           WizardMode mMode;
 
@@ -272,7 +272,7 @@ namespace KMail {
       ASWizSummaryPage * mSummaryPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
-      Q3ValueList<SpamToolConfig> mToolList;
+      QList<SpamToolConfig> mToolList;
 
       /* Are any spam tools selected? */
       bool mSpamToolsUsed;

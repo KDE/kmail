@@ -691,7 +691,7 @@ std::vector<Kleo::KeyResolver::Item> Kleo::KeyResolver::getEncryptionItems( cons
   std::vector<Item> items;
   items.reserve( addresses.size() );
   for ( QStringList::const_iterator it = addresses.begin() ; it != addresses.end() ; ++it ) {
-    QString addr = canonicalAddress( *it ).lower();
+    QString addr = canonicalAddress( *it ).toLower();
     const ContactPreferences pref = lookupContactPreferences( addr );
 
     items.push_back( Item( *it, /*getEncryptionKeys( *it, true ),*/
@@ -820,7 +820,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     it->keys = getEncryptionKeys( it->address, false );
     if ( it->keys.empty() )
       return Kpgp::Canceled;
-    QString addr = canonicalAddress( it->address ).lower();
+    QString addr = canonicalAddress( it->address ).toLower();
     const ContactPreferences pref = lookupContactPreferences( addr );
     it->pref = pref.encryptionPreference;
     it->signPref = pref.signingPreference;
@@ -833,7 +833,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
     it->keys = getEncryptionKeys( it->address, false );
     if ( it->keys.empty() )
       return Kpgp::Canceled;
-    QString addr = canonicalAddress( it->address ).lower();
+    QString addr = canonicalAddress( it->address ).toLower();
     const ContactPreferences pref = lookupContactPreferences( addr );
     it->pref = pref.encryptionPreference;
     it->signPref = pref.signingPreference;
@@ -1317,7 +1317,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, c
 
 std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & person, bool quiet ) const {
 
-  const QString address = canonicalAddress( person ).lower();
+  const QString address = canonicalAddress( person ).toLower();
 
   // First look for this person's address in the address->key dictionary
   const QStringList fingerprints = keysForAddress( address );
@@ -1525,7 +1525,7 @@ QStringList Kleo::KeyResolver::keysForAddress( const QString & address ) const {
   if( address.isEmpty() ) {
     return QStringList();
   }
-  QString addr = canonicalAddress( address ).lower();
+  QString addr = canonicalAddress( address ).toLower();
   const ContactPreferences pref = lookupContactPreferences( addr );
   return pref.pgpKeyFingerprints + pref.smimeCertFingerprints;
 }
@@ -1534,7 +1534,7 @@ void Kleo::KeyResolver::setKeysForAddress( const QString& address, const QString
   if( address.isEmpty() ) {
     return;
   }
-  QString addr = canonicalAddress( address ).lower();
+  QString addr = canonicalAddress( address ).toLower();
   ContactPreferences pref = lookupContactPreferences( addr );
   pref.pgpKeyFingerprints = pgpKeyFingerprints;
   pref.smimeCertFingerprints = smimeCertFingerprints;

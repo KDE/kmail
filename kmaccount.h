@@ -50,7 +50,7 @@ using KMail::FolderJob;
 using KPIM::ProgressItem;
 
 class KMAccount;
-typedef Q3ValueList< ::KMAccount* > AccountList;
+typedef QList< ::KMAccount* > AccountList;
 
 class KMPrecommand : public QObject
 {
@@ -309,7 +309,7 @@ protected:
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
-  Q3ValueList<KMMessage*> mReceipts;
+  QList<KMMessage*> mReceipts;
   Q3PtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
   ProgressItem *mMailCheckProgressItem;

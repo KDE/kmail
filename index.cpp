@@ -43,7 +43,7 @@
 #include <q3ptrlist.h>
 #include <qfileinfo.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #ifdef HAVE_INDEXLIB
 #include <indexlib/create.h>
 #endif
@@ -61,18 +61,18 @@ const char* const folderIndexDisabledKey = "fulltextIndexDisabled";
 }
 
 static
-Q3ValueList<int> vectorToQValueList( const std::vector<quint32>& input ) {
-	Q3ValueList<int> res;
+QList<int> vectorToQValueList( const std::vector<quint32>& input ) {
+	QList<int> res;
 	std::copy( input.begin(), input.end(), std::back_inserter( res ) );
 	return res;
 }
 
 
 static
-std::vector<quint32> QValueListToVector( const Q3ValueList<int>& input ) {
+std::vector<quint32> QValueListToVector( const QList<int>& input ) {
 	std::vector<quint32> res;
 	// res.assign( input.begin(), input.end() ) doesn't work for some reason
-	for ( Q3ValueList<int>::const_iterator first = input.begin(), past = input.end(); first != past; ++first ) {
+	for ( QList<int>::const_iterator first = input.begin(), past = input.end(); first != past; ++first ) {
 		res.push_back( *first );
 	}
 	return res;
@@ -141,7 +141,7 @@ KMMsgIndex::~KMMsgIndex() {
 #ifdef HAVE_INDEXLIB
 	KConfigGroup cfg( KMKernel::config(), "text-index" );
 	cfg.writeEntry( "creating", mState == s_creating );
-	Q3ValueList<int> pendingMsg;
+	QList<int> pendingMsg;
 	if ( mState == s_processing ) {
 		Q_ASSERT( mAddedMsgs.empty() );
 		pendingMsg = vectorToQValueList( mPendingMsgs );
@@ -291,8 +291,8 @@ int KMMsgIndex::addMessage( quint32 serNum ) {
 	 * We keep signature to get the person's name
 	 */
 	QString body = msg->asPlainText( false, false );
-	if ( !body.isEmpty() && static_cast<const char*>( body.latin1() ) ) {
-		mIndex->add( body.latin1(), QString::number( serNum ).latin1() );
+	if ( !body.isEmpty() && static_cast<const char*>( body.toLatin1() ) ) {
+		mIndex->add( body.toLatin1(), QString::number( serNum ).toLatin1() );
 	} else {
 		kdDebug( 5006 ) << "Funny, no body" << endl;
 	}
@@ -447,7 +447,7 @@ bool KMMsgIndex::stopQuery( KMSearch* s ) {
 }
 
 std::vector<quint32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
-	kdDebug( 5006 ) << "KMMsgIndex::simpleSearch( -" << s.latin1() << "- )" << endl;
+	kdDebug( 5006 ) << "KMMsgIndex::simpleSearch( -" << s.toLatin1() << "- )" << endl;
 	if ( mState == s_error || mState == s_disabled ) {
 		if ( ok ) *ok = false;
 		return std::vector<quint32>();
@@ -455,7 +455,7 @@ std::vector<quint32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 	std::vector<quint32> res;
 #ifdef HAVE_INDEXLIB
 	assert( mIndex );
-	std::vector<unsigned> residx = mIndex->search( s.latin1() )->list();
+	std::vector<unsigned> residx = mIndex->search( s.toLatin1() )->list();
 	res.reserve( residx.size() );
 	for ( std::vector<unsigned>::const_iterator first = residx.begin(), past = residx.end();first != past; ++first ) {
 		res.push_back( std::atoi( mIndex->lookup_docname( *first ).c_str() ) );
@@ -511,7 +511,7 @@ void KMMsgIndex::removeMessage( quint32 serNum ) {
 	if ( mState == s_error || mState == s_disabled ) return;
 	
 #ifdef HAVE_INDEXLIB
-	mIndex->remove_doc( QString::number( serNum ).latin1() );
+	mIndex->remove_doc( QString::number( serNum ).toLatin1() );
 	++mMaintenanceCount;
 	if ( mMaintenanceCount > MaintenanceLimit && mRemovedMsgs.empty() ) {
 		QTimer::singleShot( 100, this, SLOT( maintenance() ) );

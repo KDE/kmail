@@ -5,7 +5,7 @@
 
 #include "accountmanager.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 using KMail::AccountManager;
 #include "kmacctfolder.h"
@@ -387,7 +387,7 @@ void KMAccount::mailCheck()
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipts()
 {
-  Q3ValueList<KMMessage*>::Iterator it;
+  QList<KMMessage*>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
     kmkernel->msgSender()->send(*it); //might process events
   mReceipts.clear();

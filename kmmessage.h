@@ -20,11 +20,11 @@
 #include<libemailfunctions/email.h>
 //Added by qt3to4:
 #include <Q3StrList>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 
 template <typename T>
-class Q3ValueList;
+class QList;
 
 class QStringList;
 class QString;
@@ -44,8 +44,8 @@ namespace KMime {
   namespace Types {
     class AddrSpec;
     class Address;
-    typedef Q3ValueList<Address> AddressList;
-    typedef Q3ValueList<AddrSpec> AddrSpecList;
+    typedef QList<Address> AddressList;
+    typedef QList<AddrSpec> AddrSpecList;
   }
 }
 
@@ -200,7 +200,7 @@ public:
   KMMessage* createMDN( KMime::MDN::ActionMode a,
           KMime::MDN::DispositionType d,
           bool allowGUI=false,
-          Q3ValueList<KMime::MDN::DispositionModifier> m=Q3ValueList<KMime::MDN::DispositionModifier>() );
+          QList<KMime::MDN::DispositionModifier> m=QList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
   void fromDwString(const DwString& str, bool setStatus=FALSE);
@@ -446,7 +446,7 @@ public:
   /** Returns a list of the raw values of all header fields with the given
       name.
   */
-  Q3ValueList<Q3CString> rawHeaderFields( const Q3CString & field ) const;
+  QList<Q3CString> rawHeaderFields( const Q3CString & field ) const;
 
   /** Splits the given address list into separate addresses. */
   static KMime::Types::AddressList splitAddrField( const Q3CString & str );
@@ -532,7 +532,7 @@ public:
   /** Returns a list of content-transfer-encodings that can be used with
       the given result of the character frequency analysis of a message or
       message part under the given restrictions. */
-  static Q3ValueList<int> determineAllowedCtes( const KMime::CharFreq& cf,
+  static QList<int> determineAllowedCtes( const KMime::CharFreq& cf,
                                                bool allow8Bit,
                                                bool willBeSigned );
 
@@ -550,7 +550,7 @@ public:
                                  bool allow8Bit = false,
                                  bool willBeSigned = false );
   void setBodyAndGuessCte( const Q3CString& aBuf,
-                                   Q3ValueList<int>& allowedCte,
+                                   QList<int>& allowedCte,
                                    bool allow8Bit = false,
                                    bool willBeSigned = false );
 

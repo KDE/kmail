@@ -31,7 +31,7 @@
 #include <QEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
-#include <Q3ValueList>
+#include <QList>
 #include <QResizeEvent>
 #include <QDragEnterEvent>
 #include <QMouseEvent>
@@ -135,7 +135,7 @@ public:
 
   /** create a folderlist */
   void createFolderList( QStringList *str,
-                         Q3ValueList<QPointer<KMFolder> > *folders,
+                         QList<QPointer<KMFolder> > *folders,
                          bool localFolders=true,
                          bool imapFolders=true,
                          bool dimapFolders=true,

@@ -31,7 +31,7 @@
 #include <qtooltip.h>
 //Added by qt3to4:
 #include <QLabel>
-#include <Q3ValueList>
+#include <QList>
 #include <QKeyEvent>
 #include <QResizeEvent>
 #include <Q3PtrList>
@@ -50,7 +50,7 @@ class SideWidget;
 class Recipient
 {
   public:
-    typedef Q3ValueList<Recipient> List;
+    typedef QList<Recipient> List;
 
     enum Type { To, Cc, Bcc, Undefined };
 

@@ -208,14 +208,14 @@ namespace KMail {
     if ( customHeader.hasKey( "headers to display" ) ) {
       mHeadersToDisplay = customHeader.readListEntry( "headers to display" );
       for ( QStringList::iterator it = mHeadersToDisplay.begin() ; it != mHeadersToDisplay.end() ; ++ it )
-	*it = (*it).lower();
+	*it = (*it).toLower();
     } else
       mHeadersToDisplay = stringList( standardHeaders, numStandardHeaders );
 
     if ( customHeader.hasKey( "headers to hide" ) ) {
       mHeadersToHide = customHeader.readListEntry( "headers to hide" );
       for ( QStringList::iterator it = mHeadersToHide.begin() ; it != mHeadersToHide.end() ; ++ it )
-	*it = (*it).lower();
+	*it = (*it).toLower();
     }
 
     mDefaultPolicy = customHeader.readEntry( "default policy", "hide" ) == "display" ? Display : Hide ;
@@ -242,8 +242,8 @@ namespace KMail {
   }
 
   bool HeaderStrategy::showHeader( const QString & header ) const {
-    if ( headersToDisplay().contains( header.lower() ) ) return true;
-    if ( headersToHide().contains( header.lower() ) ) return false;
+    if ( headersToDisplay().contains( header.toLower() ) ) return true;
+    if ( headersToHide().contains( header.toLower() ) ) return false;
     return defaultPolicy() == Display;
   }
 
@@ -261,7 +261,7 @@ namespace KMail {
   }
 
   const HeaderStrategy * HeaderStrategy::create( const QString & type ) {
-    QString lowerType = type.lower();
+    QString lowerType = type.toLower();
     if ( lowerType == "all" )  return all();
     if ( lowerType == "rich" )   return HeaderStrategy::rich();
     //if ( lowerType == "standard" ) return standard(); // not needed, see below

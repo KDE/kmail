@@ -408,7 +408,7 @@ namespace KMail {
   namespace {
     struct DoesntMatchEMailAddress {
       explicit DoesntMatchEMailAddress( const QString & s )
-	: email( s.trimmed().lower() ) {}
+	: email( s.trimmed().toLower() ) {}
       bool operator()( const GpgME::Key & key ) const;
     private:
       bool checkForEmail( const char * email ) const;
@@ -601,10 +601,10 @@ void IdentityDialog::slotOk() {
     QString email = mEmailEdit->text();
     ident.setEmailAddr( email );
     // "Cryptography" tab:
-    ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().latin1() );
-    ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().latin1() );
-    ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().latin1() );
-    ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().latin1() );
+    ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().toLatin1() );
+    ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
+    ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
+    ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setPreferredCryptoMessageFormat( cb2format( mPreferredCryptoMessageFormat->currentItem() ) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );

@@ -268,7 +268,7 @@ void KMPopHeadersViewItem::paintFocus(QPainter *, const QColorGroup &, const QRe
 
 QString KMPopHeadersViewItem::key(int col, bool) const
 {
-  if (col == 3) return KMMsgBase::skipKeyword(text(col).lower());
+  if (col == 3) return KMMsgBase::skipKeyword(text(col).toLower());
   if (col == 5) return text(7);
   if (col == 6)
   {

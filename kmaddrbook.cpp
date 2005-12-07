@@ -102,11 +102,11 @@ QString KabcBridge::expandNickName( const QString& nickName )
   if ( nickName.isEmpty() )
     return QString::null;
 
-  const QString lowerNickName = nickName.lower();
+  const QString lowerNickName = nickName.toLower();
   const KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   for( KABC::AddressBook::ConstIterator it = addressBook->begin();
        it != addressBook->end(); ++it ) {
-    if ( (*it).nickName().lower() == lowerNickName )
+    if ( (*it).nickName().toLower() == lowerNickName )
       return (*it).fullEmail();
   }
   return QString::null;

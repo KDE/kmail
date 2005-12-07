@@ -30,7 +30,7 @@
 #include "kmkernel.h"
 #include "folderjob.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 using KMail::FolderJob;
@@ -38,7 +38,7 @@ using KMail::FolderJob;
 using KMail::MailingList;
 //#include "kmaccount.h" // for AccountList
 class KMAccount;
-typedef Q3ValueList<KMAccount*> AccountList;
+typedef QList<KMAccount*> AccountList;
 
 #include "mimelib/string.h"
 
@@ -59,7 +59,7 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-typedef Q3ValueList<quint32> SerNumList;
+typedef QList<quint32> SerNumList;
 
 /** Mail folder.
  * (description will be here).
@@ -241,7 +241,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical
    * to addMsg(msg)
    */
-  int addMsg(Q3PtrList<KMMessage>&, Q3ValueList<int>& index_return);
+  int addMsg(Q3PtrList<KMMessage>&, QList<int>& index_return);
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -489,7 +489,7 @@ public:
   void setStatus(int idx, const MessageStatus& status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  void setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle=false);
+  void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle=false);
 
   /** Icon related methods */
   bool useCustomIcons() const { return mUseCustomIcons; }

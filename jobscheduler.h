@@ -123,7 +123,7 @@ private:
   void restartTimer();
   void interruptCurrentTask();
   void runTaskNow( ScheduledTask* task );
-  typedef Q3ValueList<ScheduledTask *> TaskList;
+  typedef QList<ScheduledTask *> TaskList;
   void removeTask( TaskList::Iterator& it );
 private:
   TaskList mTaskList; // FIFO of tasks to be run

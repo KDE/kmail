@@ -36,10 +36,10 @@
 #include <q3intdict.h>
 #include <q3dict.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 template< typename T> class Q3PtrList;
-template< typename T> class Q3ValueList;
+template< typename T> class QList;
 
 class KMFolderTreeItem;
 class KMFolderImap;
@@ -192,7 +192,7 @@ public:
   /**
    * Change the status of several messages indicated by @p ids
    */
-  virtual void setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle);
+  virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle);
 
   /** generates sets of uids */
   static QStringList makeSets( QList<ulong>&, bool sort = true);
@@ -203,7 +203,7 @@ public:
                                               Q3PtrList<KMMessage>& msgList);
 
   /** gets the uids of the given ids */
-  void getUids(Q3ValueList<int>& ids, QList<ulong>& uids);
+  void getUids(QList<int>& ids, QList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
   void getUids(const Q3PtrList<KMMessage>& msgList, QList<ulong>& uids);
@@ -266,7 +266,7 @@ public:
   /**
    * Splits a uid-set into single uids
    */
-  static Q3ValueList<ulong> splitSets(const QString);
+  static QList<ulong> splitSets(const QString);
 
   virtual void ignoreJobsForMessage( KMMessage* );
 
@@ -350,7 +350,7 @@ public slots:
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  virtual int addMsg(Q3PtrList<KMMessage>&, Q3ValueList<int>& index_return);
+  virtual int addMsg(Q3PtrList<KMMessage>&, QList<int>& index_return);
 
   /** Copy the messages to this folder */
   void copyMsg(Q3PtrList<KMMessage>& msgList/*, KMFolder* parent*/);
@@ -380,7 +380,7 @@ public slots:
   /**
    * Called from the SearchJob when the folder is done or messages where found
    */
-  void slotSearchDone( Q3ValueList<quint32> serNums,
+  void slotSearchDone( QList<quint32> serNums,
                        const KMSearchPattern* pattern,
                        bool complete );
 

@@ -911,7 +911,7 @@ namespace KMail {
     digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
     digestHeaderStr += str.mid( 0, thisDelim );
     insertAndParseNewChildNode( *curNode,
-                                digestHeaderStr.latin1(),
+                                digestHeaderStr.toLatin1(),
                                 "Digest Header", true );
     //mReader->queueHtml("<br><hr><br>");
     // temporarily change curent node's Content-Type
@@ -948,8 +948,8 @@ namespace KMail {
       }
       kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
       insertAndParseNewChildNode( *curNode,
-                                  partStr.latin1(),
-                                  subject.latin1(), true );
+                                  partStr.toLatin1(),
+                                  subject.toLatin1(), true );
       //mReader->queueHtml("<br><hr><br>");
       thisDelim = nextDelim+1;
       nextDelim = str.indexOf(delim1, thisDelim, Qt::CaseInsensitive );
@@ -975,7 +975,7 @@ namespace KMail {
     partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
     partStr += str.mid( thisDelim );
     insertAndParseNewChildNode( *curNode,
-                                partStr.latin1(),
+                                partStr.toLatin1(),
                                 "Digest Footer", true );
     return true;
   }
@@ -1430,7 +1430,7 @@ namespace KMail {
 
     CryptPlugWrapper * smimeCrypto = CryptPlugFactory::instance()->smime();
 
-    const QString smimeType = node->contentTypeParameter("smime-type").lower();
+    const QString smimeType = node->contentTypeParameter("smime-type").toLower();
 
     if ( smimeType == "certs-only" ) {
       result.setNeverDisplayInline( true );
@@ -1806,7 +1806,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
     showKeyInfos = true;
     QString result;
     if( cryptPlug ) {
-        if( cryptPlug->protocol().lower() == "openpgp" ) {
+        if( cryptPlug->protocol().toLower() == "openpgp" ) {
             // process enum according to it's definition to be read in
             // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
             switch( status_code ) {
@@ -1844,7 +1844,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 break;
             }
         }
-        else if ( cryptPlug->protocol().lower() == "smime" ) {
+        else if ( cryptPlug->protocol().toLower() == "smime" ) {
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
 
@@ -1977,7 +1977,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    bool isSMIME = cryptPlug && cryptPlug->protocol().lower() == "smime";
+    bool isSMIME = cryptPlug && cryptPlug->protocol().toLower() == "smime";
     QString signer = block.signer;
 
     QString htmlStr;
@@ -2599,7 +2599,7 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
     }
 
     for (int p=0; p<line.length(); p++) {
-      switch (line[p].latin1()) {
+      switch (line[p].toLatin1()) {
         case '>':
         case '|':
           actQuoteLevel++;

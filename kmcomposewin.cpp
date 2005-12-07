@@ -39,7 +39,7 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <Q3CString>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 #include <QLabel>
 using KMail::AttachmentListView;
@@ -478,7 +478,7 @@ void KMComposeWin::addAttachment(const QString &name,
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(name);
-    Q3ValueList<int> dummy;
+    QList<int> dummy;
     msgPart->setBodyAndGuessCte(data, dummy,
                                 kmkernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
@@ -501,7 +501,7 @@ void KMComposeWin::addImageFromClipboard()
   mTempDir = new KTempDir();
   mTempDir->setAutoDelete( true );
 
-  if ( attName.lower().endsWith(".png") )
+  if ( attName.toLower().endsWith(".png") )
     tmpFile = new QFile(mTempDir->name() + attName );
   else
     tmpFile = new QFile(mTempDir->name() + attName + ".png" );
@@ -1847,8 +1847,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     int firstAttachment = 0;
 
     mMsg->bodyPart(1, &bodyPart);
-    if ( bodyPart.typeStr().lower() == "text" &&
-         bodyPart.subtypeStr().lower() == "html" ) {
+    if ( bodyPart.typeStr().toLower() == "text" &&
+         bodyPart.subtypeStr().toLower() == "html" ) {
       // check whether we are inside a mp/al body part
       partNode *root = partNode::fromMessage( mMsg );
       partNode *node = root->findType( DwMime::kTypeText,
@@ -1866,7 +1866,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     }
     if ( firstAttachment == 0 ) {
         mMsg->bodyPart(0, &bodyPart);
-        if ( bodyPart.typeStr().lower() == "text" ) {
+        if ( bodyPart.typeStr().toLower() == "text" ) {
           // we have a mp/mx body with a text body
         kdDebug(5006) << "KMComposeWin::setMsg() : text/* found" << endl;
           firstAttachment = 1;
@@ -1901,8 +1901,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     {
       KMMessagePart *msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
-      Q3CString mimeType = msgPart->typeStr().lower() + '/'
-                        + msgPart->subtypeStr().lower();
+      Q3CString mimeType = msgPart->typeStr().toLower() + '/'
+                        + msgPart->subtypeStr().toLower();
       // don't add the detached signature as attachment when editting a
       // PGP/MIME signed message
       if( mimeType != "application/pgp-signature" ) {
@@ -2166,7 +2166,7 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.data = QByteArray();
   ld.insert = false;
   if( !aUrl.fileEncoding().isEmpty() )
-    ld.encoding = aUrl.fileEncoding().latin1();
+    ld.encoding = aUrl.fileEncoding().toLatin1();
 
   mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -2229,7 +2229,7 @@ void KMComposeWin::slotUpdateAttachActions()
 
 QString KMComposeWin::prettyMimeType( const QString& type )
 {
-  QString t = type.lower();
+  QString t = type.toLower();
   KServiceType::Ptr st = KServiceType::serviceType( t );
   return st ? st->comment() : t;
 }
@@ -2422,7 +2422,7 @@ void KMComposeWin::setCharset(const Q3CString& aCharset, bool forceDefault)
   if ((forceDefault && GlobalSettings::self()->forceReplyCharset()) || aCharset.isEmpty())
     mCharset = mDefCharset;
   else
-    mCharset = aCharset.lower();
+    mCharset = aCharset.toLower();
 
   if ( mCharset.isEmpty() || mCharset == "default" )
      mCharset = mDefCharset;
@@ -2508,7 +2508,7 @@ void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
   assert(it != mMapAtmLoadData.end());
   QBuffer buff(&(*it).data);
   buff.open(QIODevice::WriteOnly | QIODevice::Append);
-  buff.writeBlock(data.data(), data.size());
+  buff.write(data.data(), data.size());
   buff.close();
 }
 
@@ -2537,7 +2537,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   }
   const Q3CString partCharset = (*it).url.fileEncoding().isEmpty()
                              ? mCharset
-                             : Q3CString((*it).url.fileEncoding().latin1());
+                             : Q3CString((*it).url.fileEncoding().toLatin1());
 
   KMMessagePart* msgPart;
 
@@ -2585,15 +2585,15 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(name);
-  Q3ValueList<int> allowedCTEs;
+  QList<int> allowedCTEs;
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
                               !kmkernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
   int slash = mimeType.find( '/' );
   if( slash == -1 )
     slash = mimeType.length();
-  msgPart->setTypeStr( mimeType.left( slash ).latin1() );
-  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).latin1() );
+  msgPart->setTypeStr( mimeType.left( slash ).toLatin1() );
+  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).toLatin1() );
   msgPart->setContentDisposition(Q3CString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
@@ -2607,7 +2607,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     const KCursorSaver saver( Qt::ArrowCursor );
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
-    for ( Q3ValueListConstIterator<int> it = allowedCTEs.begin() ;
+    for ( QList<int>::ConstIterator it = allowedCTEs.begin() ;
           it != allowedCTEs.end() ; ++it )
       switch ( *it ) {
       case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
@@ -2625,7 +2625,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     }
   }
   mAtmModified = TRUE;
-  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(Q3CString());
+  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(Q3CString());
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2654,7 +2654,7 @@ void KMComposeWin::slotInsertFile()
   {
     KConfig *config = KMKernel::config();
     KConfigGroup group( config, "Composer" );
-    QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).latin1();
+    QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).toLatin1();
     QStringList urls = group.readListEntry( "recent-urls" );
     QStringList encodings = group.readListEntry( "recent-encodings" );
     // Prevent config file from growing without bound
@@ -2698,7 +2698,7 @@ void KMComposeWin::slotInsertRecentFile(const KURL& u)
     int index = urls.findIndex( u.prettyURL() );
     if (index != -1) {
       QString encoding = encodings[ index ];
-      ld.encoding = encoding.latin1();
+      ld.encoding = encoding.toLatin1();
     }
   }
   mMapAtmLoadData.insert(job, ld);
@@ -2720,7 +2720,7 @@ void KMComposeWin::slotSetCharset()
   mAutoCharset = false;
 
   mCharset = KGlobal::charsets()->encodingForName( mEncodingAction->
-    currentText() ).latin1();
+    currentText() ).toLatin1();
 }
 
 
@@ -2853,9 +2853,9 @@ void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QB
   msgPart->setName( i18n("OpenPGP key 0x%1").arg( mFingerprint ) );
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  Q3ValueList<int> dummy;
+  QList<int> dummy;
   msgPart->setBodyAndGuessCte(keydata, dummy, false);
-  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + Q3CString( mFingerprint.latin1() ) + ".asc" );
+  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + Q3CString( mFingerprint.toLatin1() ) + ".asc" );
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2961,7 +2961,7 @@ void KMComposeWin::slotAttachProperties()
       }
     }
   }
-  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(Q3CString());
+  if (msgPart->typeStr().toLower() != "text") msgPart->setCharset(Q3CString());
 }
 
 //-----------------------------------------------------------------------------
@@ -3172,7 +3172,7 @@ void KMComposeWin::openAttach( int index )
 {
   KMMessagePart* msgPart = mAtmList.at(index);
   const QString contentTypeStr =
-    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).lower();
+    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).toLower();
 
   KMimeType::Ptr mimetype;
   mimetype = KMimeType::mimeType( contentTypeStr );
@@ -3318,8 +3318,8 @@ void KMComposeWin::slotPasteAsAttachment()
       return;
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(attName);
-    Q3ValueList<int> dummy;
-    msgPart->setBodyAndGuessCte(Q3CString(QApplication::clipboard()->text().latin1()), dummy,
+    QList<int> dummy;
+    msgPart->setBodyAndGuessCte(Q3CString(QApplication::clipboard()->text().toLatin1()), dummy,
                                 kmkernel->msgSender()->sendQuotedPrintable());
     addAttach(msgPart);
   }
@@ -4539,7 +4539,7 @@ void KMComposeWin::fontChanged( const QFont &f )
 void KMComposeWin::alignmentChanged( int a )
 {
     //toggleMarkup();
-    alignLeftAction->setChecked( ( a == Qt::AlignAuto ) || ( a & Qt::AlignLeft ) );
+    alignLeftAction->setChecked( ( a == Qt::AlignLeft ) || ( a & Qt::AlignLeft ) );
     alignCenterAction->setChecked( ( a & Qt::AlignHCenter ) );
     alignRightAction->setChecked( ( a & Qt::AlignRight ) );
 }

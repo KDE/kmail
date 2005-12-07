@@ -6,7 +6,7 @@
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 //-----------------------------------------------------------------------------
 
@@ -71,11 +71,11 @@ void KMFolderComboBox::showImapFolders(bool shown)
 //-----------------------------------------------------------------------------
 
 void KMFolderComboBox::createFolderList(QStringList *names,
-                                        Q3ValueList<QPointer<KMFolder> > *folders)
+                                        QList<QPointer<KMFolder> > *folders)
 {
   kmkernel->folderMgr()->createI18nFolderList( names, folders );
   if ( !mOutboxShown ) {
-    Q3ValueList< QPointer<KMFolder> >::iterator folderIt = folders->begin();
+    QList< QPointer<KMFolder> >::iterator folderIt = folders->begin();
     QStringList::iterator namesIt = names->begin();
     for ( ; folderIt != folders->end(); ++folderIt, ++namesIt ) {
       KMFolder *folder = *folderIt;
@@ -99,7 +99,7 @@ void KMFolderComboBox::createFolderList(QStringList *names,
 void KMFolderComboBox::refreshFolders()
 {
   QStringList names;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   KMFolder *folder = getFolder();
@@ -113,7 +113,7 @@ void KMFolderComboBox::refreshFolders()
 void KMFolderComboBox::setFolder( KMFolder *aFolder )
 {
   QStringList names;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   int idx = folders.findIndex( aFolder );
@@ -149,7 +149,7 @@ KMFolder *KMFolderComboBox::getFolder()
     return mFolder;
 
   QStringList names;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   if (currentItem() == mSpecialIdx)
@@ -160,7 +160,7 @@ KMFolder *KMFolderComboBox::getFolder()
   QStringList::Iterator it;
   for ( it = names.begin(); it != names.end(); ++it ) {
     if ( ! (*it).compare( text ) )
-      return *folders.at( idx );
+      return folders.at( idx );
     idx++;
   }
 
@@ -172,7 +172,7 @@ KMFolder *KMFolderComboBox::getFolder()
 void KMFolderComboBox::slotActivated(int index)
 {
   QStringList names;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   createFolderList( &names, &folders );
 
   if (index == mSpecialIdx)
@@ -181,7 +181,7 @@ void KMFolderComboBox::slotActivated(int index)
   }
   else
   {
-     mFolder = *folders.at( index );
+     mFolder = folders.at( index );
   }
 }
 

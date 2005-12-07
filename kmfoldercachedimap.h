@@ -225,7 +225,7 @@ public:
 
   // Reimplemented so the mStatusChangedLocally bool can be set
   virtual void setStatus( int id, const MessageStatus& status, bool toggle );
-  virtual void setStatus( Q3ValueList<int>& ids, const MessageStatus& status, bool toggle );
+  virtual void setStatus( QList<int>& ids, const MessageStatus& status, bool toggle );
 
   QString annotationFolderType() const { return mAnnotationFolderType; }
 
@@ -304,10 +304,10 @@ protected:
 
   /** Utility methods for syncing. Finds new messages
       in the local cache that must be uploaded */
-  virtual Q3ValueList<unsigned long> findNewMessages();
+  virtual QList<unsigned long> findNewMessages();
   /** Utility methods for syncing. Finds new subfolders
       in the local cache that must be created in the server */
-  virtual Q3ValueList<KMFolderCachedImap*> findNewFolders();
+  virtual QList<KMFolderCachedImap*> findNewFolders();
 
   /** This returns false if we have subfolders. Otherwise it returns ::canRemoveFolder() */
   virtual bool canRemoveFolder() const;
@@ -416,11 +416,11 @@ private:
 
   Q3IntDict<int> uidsOnServer;
   QList<ulong> uidsForDeletionOnServer;
-  Q3ValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
-  Q3ValueList<ulong> mUidsForDownload;
+  QList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
+  QList<ulong> mUidsForDownload;
   QStringList       foldersForDeletionOnServer;
 
-  Q3ValueList<KMFolderCachedImap*> mSubfoldersForSync;
+  QList<KMFolderCachedImap*> mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
 
   /** Mapping uid -> index

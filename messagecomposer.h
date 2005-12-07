@@ -37,7 +37,7 @@
 #include <qobject.h>
 #include <q3valuevector.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 
 #include <mimelib/mediatyp.h>
@@ -274,7 +274,7 @@ private:
   // The boundary is saved for later addition into mp/a body
   DwString  mSaveBoundary;
 
-  Q3ValueList<MessageComposerJob*> mJobs;
+  QList<MessageComposerJob*> mJobs;
   bool mEncryptWithChiasmus;
 };
 

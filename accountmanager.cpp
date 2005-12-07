@@ -368,7 +368,7 @@ void AccountManager::addToTotalNewMailCount( const QMap<QString, int> & newInFol
 //-----------------------------------------------------------------------------
 uint AccountManager::createId()
 {
-  Q3ValueList<uint> usedIds;
+  QList<uint> usedIds;
   for ( AccountList::ConstIterator it( mAcctList.begin() ), end( mAcctList.end() ); it != end; ++it ) {
     usedIds << (*it)->id();
   }

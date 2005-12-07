@@ -11,7 +11,7 @@
 #include <qcombobox.h>
 #include <qpointer.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 class KMFolderComboBox : public QComboBox
 {
@@ -41,7 +41,7 @@ private slots:
 private:
   /** Create folder list using the folder manager. */
   void createFolderList(QStringList *names,
-                        Q3ValueList<QPointer<KMFolder> > *folders);
+                        QList<QPointer<KMFolder> > *folders);
   void init();
 
   QPointer<KMFolder> mFolder;

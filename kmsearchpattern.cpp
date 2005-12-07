@@ -133,8 +133,8 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const Q3CString &field2 = config->readEntry( field + cIdx ).latin1();
-  Function func2 = configValueToFunc( config->readEntry( func + cIdx ).latin1() );
+  const Q3CString &field2 = config->readEntry( field + cIdx ).toLatin1();
+  Function func2 = configValueToFunc( config->readEntry( func + cIdx ).toLatin1() );
   const QString & contents2 = config->readEntry( contents + cIdx );
 
   if ( field2 == "<To or Cc>" ) // backwards compat
@@ -401,10 +401,10 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 {
   switch ( function() ) {
   case KMSearchRule::FuncEquals:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) == 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) == 0 );
 
   case KMSearchRule::FuncNotEqual:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) != 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) != 0 );
 
   case KMSearchRule::FuncContains:
     return ( msgContents.find( contents(), 0, false ) >= 0 );
@@ -425,21 +425,21 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     }
 
   case FuncIsGreater:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) > 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) > 0 );
 
   case FuncIsLessOrEqual:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) <= 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) <= 0 );
 
   case FuncIsLess:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) < 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) < 0 );
 
   case FuncIsGreaterOrEqual:
-      return ( QString::compare( msgContents.lower(), contents().lower() ) >= 0 );
+      return ( QString::compare( msgContents.toLower(), contents().toLower() ) >= 0 );
 
   case FuncIsInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
     QStringList addressList =
-      KPIM::splitEmailAddrList( msgContents.lower() );
+      KPIM::splitEmailAddrList( msgContents.toLower() );
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
@@ -452,7 +452,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
   case FuncIsNotInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
     QStringList addressList =
-      KPIM::splitEmailAddrList( msgContents.lower() );
+      KPIM::splitEmailAddrList( msgContents.toLower() );
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
@@ -464,7 +464,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsInCategory: {
     QString category = contents();
-    QStringList addressList =  KPIM::splitEmailAddrList( msgContents.lower() );
+    QStringList addressList =  KPIM::splitEmailAddrList( msgContents.toLower() );
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
 
     for( QStringList::ConstIterator it = addressList.begin();
@@ -481,7 +481,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
     case FuncIsNotInCategory: {
       QString category = contents();
-      QStringList addressList =  KPIM::splitEmailAddrList( msgContents.lower() );
+      QStringList addressList =  KPIM::splitEmailAddrList( msgContents.toLower() );
       KABC::AddressBook *stdAb = KABC::StdAddressBook::self( true );
 
       for( QStringList::ConstIterator it = addressList.begin();
@@ -827,8 +827,8 @@ void KMSearchPattern::readConfig( const KConfig * config ) {
 }
 
 void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
-  KMSearchRule * rule = KMSearchRule::createInstance( config->readEntry("fieldA").latin1(),
-					  config->readEntry("funcA").latin1(),
+  KMSearchRule * rule = KMSearchRule::createInstance( config->readEntry("fieldA").toLatin1(),
+					  config->readEntry("funcA").toLatin1(),
 					  config->readEntry("contentsA") );
   if ( rule->isEmpty() ) {
     // if the first rule is invalid,
@@ -841,8 +841,8 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
   const QString sOperator = config->readEntry("operator");
   if ( sOperator == "ignore" ) return;
 
-  rule = KMSearchRule::createInstance( config->readEntry("fieldB").latin1(),
-			   config->readEntry("funcB").latin1(),
+  rule = KMSearchRule::createInstance( config->readEntry("fieldB").toLatin1(),
+			   config->readEntry("funcB").toLatin1(),
 			   config->readEntry("contentsB") );
   if ( rule->isEmpty() ) {
     delete rule;

@@ -29,7 +29,7 @@
 #include <qtimer.h>
 #include <qpointer.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 #include <kio/global.h>
@@ -499,9 +499,9 @@ namespace KMail {
     bool mCheckingSingleFolder : 1;
 
     // folders that should be checked for new mails
-    Q3ValueList<QPointer<KMFolder> > mMailCheckFolders;
+    QList<QPointer<KMFolder> > mMailCheckFolders;
     // folders that should be checked after the current check is done
-    Q3ValueList<QPointer<KMFolder> > mFoldersQueuedForChecking;
+    QList<QPointer<KMFolder> > mFoldersQueuedForChecking;
     // holds messageparts from the bodystructure
     Q3PtrList<KMMessagePart> mBodyPartList;
     // the current message for the bodystructure

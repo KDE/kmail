@@ -47,7 +47,7 @@
 #include "accountmanager.h"
 using KMail::AccountManager;
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 
 #include <qtimer.h>
@@ -61,7 +61,7 @@ typedef Q3PtrList<KMMsgBase> KMMessageList;
 KMFolderMgr* ActionScheduler::tempFolderMgr = 0;
 int ActionScheduler::refCount = 0;
 int ActionScheduler::count = 0;
-Q3ValueList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
+QList<ActionScheduler*> *ActionScheduler::schedulerList = 0;
 bool ActionScheduler::sEnabled = false;
 bool ActionScheduler::sEnabledChecked = false;
 
@@ -118,7 +118,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
     setSourceFolder( tempFolder );
   }
   if (!schedulerList)
-      schedulerList = new Q3ValueList<ActionScheduler*>;
+      schedulerList = new QList<ActionScheduler*>;
   schedulerList->append( this );
 }
 
@@ -203,7 +203,7 @@ int ActionScheduler::tempOpenFolder( KMFolder* aFolder )
 void ActionScheduler::tempCloseFolders()
 {
   // close temp opened folders
-  Q3ValueListConstIterator<QPointer<KMFolder> > it;
+  QList<QPointer<KMFolder> >::ConstIterator it;
   for (it = mOpenFolders.begin(); it != mOpenFolders.end(); ++it) {
     KMFolder *folder = *it;
     if (folder)
@@ -212,9 +212,9 @@ void ActionScheduler::tempCloseFolders()
   mOpenFolders.clear();
 }
 
-void ActionScheduler::execFilters(const Q3ValueList<quint32> serNums)
+void ActionScheduler::execFilters(const QList<quint32> serNums)
 {
-  Q3ValueListConstIterator<quint32> it;
+  QList<quint32>::ConstIterator it;
   for (it = serNums.begin(); it != serNums.end(); ++it)
     execFilters( *it );
 }
@@ -362,7 +362,7 @@ void ActionScheduler::finish()
 
 void ActionScheduler::fetchMessage()
 {
-  Q3ValueListIterator<quint32> mFetchMessageIt = mFetchSerNums.begin();
+  QList<quint32>::Iterator mFetchMessageIt = mFetchSerNums.begin();
   while (mFetchMessageIt != mFetchSerNums.end()) {
     if (!MessageProperty::transferInProgress(*mFetchMessageIt))
       break;
@@ -771,7 +771,7 @@ void ActionScheduler::fetchTimeOut()
 QString ActionScheduler::debug()
 {
     QString res;
-    Q3ValueList<ActionScheduler*>::iterator it;
+    QList<ActionScheduler*>::iterator it;
     int i = 1;
     for ( it = schedulerList->begin(); it != schedulerList->end(); ++it ) {
 	res.append( QString( "ActionScheduler #%1.\n" ).arg( i ) );

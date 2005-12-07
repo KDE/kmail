@@ -65,8 +65,8 @@ void AntiSpamConfig::readConfig()
     KConfigGroup tool( &config, QString("Spamtool #%1").arg( i ) );
     if ( tool.hasKey( "ScoreHeader" ) ) {
       QString name      = tool.readEntry( "ScoreName" );
-      Q3CString header   = tool.readEntry( "ScoreHeader" ).latin1();
-      Q3CString type     = tool.readEntry( "ScoreType" ).latin1();
+      Q3CString header   = tool.readEntry( "ScoreHeader" ).toLatin1();
+      Q3CString type     = tool.readEntry( "ScoreType" ).toLatin1();
       QString score     = tool.readEntryUntranslated( "ScoreValueRegexp" );
       QString threshold = tool.readEntryUntranslated( "ScoreThresholdRegexp" );
       SpamAgentTypes typeE = SpamAgentNone;

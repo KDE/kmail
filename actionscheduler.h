@@ -41,7 +41,7 @@
 #include <qpointer.h>
 #include <qtimer.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 #include <QTime>
 
@@ -88,7 +88,7 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(const Q3ValueList<quint32> serNums);
+  void execFilters(const QList<quint32> serNums);
   void execFilters(const Q3PtrList<KMMsgBase> msgList);
   void execFilters(KMMsgBase* msgBase);
   void execFilters(quint32 serNum);
@@ -131,15 +131,15 @@ private slots:
   void fetchTimeOut();
 
 private:
-  static Q3ValueList<ActionScheduler*> *schedulerList; // for debugging
+  static QList<ActionScheduler*> *schedulerList; // for debugging
   static KMFolderMgr *tempFolderMgr;
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
-  Q3ValueListIterator<quint32> mMessageIt;
+  QList<quint32>::Iterator mMessageIt;
   QList<KMFilter*>::iterator mFilterIt;
   QList<KMFilterAction*>::iterator mFilterActionIt;
-  Q3ValueList<quint32> mSerNums, mFetchSerNums;
-  Q3ValueList<QPointer<KMFolder> > mOpenFolders;
+  QList<quint32> mSerNums, mFetchSerNums;
+  QList<QPointer<KMFolder> > mOpenFolders;
   QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
   KMFilterMgr::FilterSet mSet;

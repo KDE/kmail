@@ -30,7 +30,7 @@
 
 #include <qstringlist.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include "folderjob.h"
 
 class KMFolderImap;
@@ -109,7 +109,7 @@ protected slots:
 
 signals:
   // emitted when a list of matching serial numbers was found
-  void searchDone( Q3ValueList<quint32>, const KMSearchPattern*, bool complete );
+  void searchDone( QList<quint32>, const KMSearchPattern*, bool complete );
 
   // emitted when a single message (identified by the serial number) was checked
   void searchDone( quint32, const KMSearchPattern*, bool matches );
@@ -123,7 +123,7 @@ protected:
     // saves the results of the imap search
   QStringList mImapSearchHits;
   // collects the serial numbers from imap and local search
-  Q3ValueList<quint32> mSearchSerNums;
+  QList<quint32> mSearchSerNums;
   // the remaining messages that have to be downloaded for local search
   uint mRemainingMsgs;
   // progress item for local searches

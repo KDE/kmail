@@ -29,7 +29,7 @@
 #include "accountmanager.h"
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3ValueList>
+#include <QList>
 using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
 #include "kmversion.h"
@@ -153,7 +153,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // In the case of Japan. Japanese locale name is "eucjp" but
   // The Japanese mail systems normally used "iso-2022-jp" of locale name.
   // We want to change locale name from eucjp to iso-2022-jp at KMail only.
-  if ( Q3CString(QTextCodec::codecForLocale()->name()).lower() == "eucjp" )
+  if ( Q3CString(QTextCodec::codecForLocale()->name()).toLower() == "eucjp" )
   {
     netCodec = QTextCodec::codecForName("jis7");
     // QTextCodec *cdc = QTextCodec::codecForName("jis7");
@@ -379,11 +379,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   // tentatively decode to, cc and bcc because invokeMailer calls us with
   // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
   if (!to.isEmpty())
-    msg->setTo( KMMsgBase::decodeRFC2047String( to.latin1() ) );
+    msg->setTo( KMMsgBase::decodeRFC2047String( to.toLatin1() ) );
   if (!cc.isEmpty())
-    msg->setCc( KMMsgBase::decodeRFC2047String( cc.latin1() ) );
+    msg->setCc( KMMsgBase::decodeRFC2047String( cc.toLatin1() ) );
   if (!bcc.isEmpty())
-    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.latin1() ) );
+    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLatin1() ) );
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QByteArray str = KPIM::kFileToByteArray( messageFile.path(), true, false );
@@ -1541,16 +1541,16 @@ void KMKernel::cleanup(void)
 
   mICalIface->cleanup();
 
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
   the_folderMgr->createFolderList(&strList, &folders);
 #warning Port me!
   // FIXME KMail crashes without the additional size() check bolow:
   //for (int i = 0; folders.at(i) != folders.end(); i++)
-  for (int i = 0; i < folders.size() && folders.at(i) != folders.end(); i++)
+  for (int i = 0; i < folders.size() && folders.at(i) != *folders.end(); i++)
   {
-    folder = *folders.at(i);
+    folder = folders.at(i);
     if (!folder || folder->isDir()) continue;
     folder->close(TRUE);
   }
@@ -1560,9 +1560,9 @@ void KMKernel::cleanup(void)
 #warning Port me!
   // FIXME KMail crashes without the additional size() check bolow:
   //for (int i = 0; folders.at(i) != folders.end(); i++)
-  for (int i = 0; i < folders.size() && folders.at(i) != folders.end(); i++)
+  for (int i = 0; i < folders.size() && folders.at(i) != *folders.end(); i++)
   {
-    folder = *folders.at(i);
+    folder = folders.at(i);
     if (!folder || folder->isDir()) continue;
     folder->close(TRUE);
   }
@@ -1820,7 +1820,7 @@ bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
 
 bool KMKernel::unregisterSystemTrayApplet( const KSystemTray* applet )
 {
-  Q3ValueList<const KSystemTray*>::iterator it =
+  QList<const KSystemTray*>::iterator it =
     systemTrayApplets.find( applet );
   if ( it != systemTrayApplets.end() ) {
     systemTrayApplets.remove( it );
@@ -2152,10 +2152,10 @@ Wallet *KMKernel::wallet() {
   return mWallet;
 }
 
-Q3ValueList< QPointer<KMFolder> > KMKernel::allFolders()
+QList< QPointer<KMFolder> > KMKernel::allFolders()
 {
   QStringList names;
-  Q3ValueList<QPointer<KMFolder> > folders;
+  QList<QPointer<KMFolder> > folders;
   folderMgr()->createFolderList(&names, &folders);
   imapFolderMgr()->createFolderList(&names, &folders);
   dimapFolderMgr()->createFolderList(&names, &folders);

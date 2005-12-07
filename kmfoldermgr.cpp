@@ -18,7 +18,7 @@
 
 #include <qdir.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -408,21 +408,21 @@ void KMFolderMgr::reload(void)
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str,
-				   Q3ValueList<QPointer<KMFolder> > *folders)
+				   QList<QPointer<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, "" );
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createI18nFolderList(QStringList *str,
-				   Q3ValueList<QPointer<KMFolder> > *folders)
+				   QList<QPointer<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str,
-				   Q3ValueList<QPointer<KMFolder> > *folders,
+				   QList<QPointer<KMFolder> > *folders,
 				   KMFolderDir *adir,
 				   const QString& prefix,
 				   bool i18nized)

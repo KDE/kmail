@@ -34,11 +34,11 @@
 #ifndef __KMAIL_SPAMHEADERANALYZER_H__
 #define __KMAIL_SPAMHEADERANALYZER_H__
 
-#include <q3valuelist.h>
 
 class QString;
 class KMMessage;
-
+#include <qstring.h>
+#include <QList>
 namespace KMail {
 
   /**
@@ -67,8 +67,8 @@ namespace KMail {
     float mScore;
     QString mHeader;
   };
-  typedef Q3ValueList<SpamScore> SpamScores;
-  typedef Q3ValueListIterator<SpamScore> SpamScoresIterator;
+  typedef QList<SpamScore> SpamScores;
+  typedef QList<SpamScore>::Iterator SpamScoresIterator;
 
 
   /**

@@ -52,7 +52,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -60,12 +60,12 @@
 namespace KMail {
 
 // Get messages
-CachedImapJob::CachedImapJob( const Q3ValueList<MsgForDownload>& msgs,
+CachedImapJob::CachedImapJob( const QList<MsgForDownload>& msgs,
                               JobType type, KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mMsgsForDownload( msgs ),
     mTotalBytes(0), mMsg(0), mParentFolder( 0 )
 {
-  Q3ValueList<MsgForDownload>::ConstIterator it = msgs.begin();
+  QList<MsgForDownload>::ConstIterator it = msgs.begin();
   for ( ; it != msgs.end() ; ++it )
     mTotalBytes += (*it).size;
 }
@@ -79,7 +79,7 @@ CachedImapJob::CachedImapJob( const Q3PtrList<KMMessage>& msgs, JobType type,
 {
 }
 
-CachedImapJob::CachedImapJob( const Q3ValueList<unsigned long>& msgs,
+CachedImapJob::CachedImapJob( const QList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
   : FolderJob( Q3PtrList<KMMessage>(), QString::null, type, folder?folder->folder():0 ),
     mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( msgs.count() ), mMsg( 0 ),
@@ -88,7 +88,7 @@ CachedImapJob::CachedImapJob( const Q3ValueList<unsigned long>& msgs,
 }
 
 // Add sub folders
-CachedImapJob::CachedImapJob( const Q3ValueList<KMFolderCachedImap*>& fList,
+CachedImapJob::CachedImapJob( const QList<KMFolderCachedImap*>& fList,
                               JobType type, KMFolderCachedImap* folder )
   : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg( 0 ),
     mParentFolder ( 0 )

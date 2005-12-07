@@ -43,7 +43,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -66,15 +66,15 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mIgnoreNewMail( false )
 {
   if( aFolderType == KMFolderTypeCachedImap )
-    mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
+    mStorage = new KMFolderCachedImap( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeImap )
-    mStorage = new KMFolderImap( this, aFolderName.latin1() );
+    mStorage = new KMFolderImap( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeMaildir )
-    mStorage = new KMFolderMaildir( this, aFolderName.latin1() );
+    mStorage = new KMFolderMaildir( this, aFolderName.toLatin1() );
   else if( aFolderType == KMFolderTypeSearch )
-    mStorage = new KMFolderSearch( this, aFolderName.latin1() );
+    mStorage = new KMFolderSearch( this, aFolderName.toLatin1() );
   else
-    mStorage = new KMFolderMbox( this, aFolderName.latin1() );
+    mStorage = new KMFolderMbox( this, aFolderName.toLatin1() );
 
   assert( mStorage );
 
@@ -391,7 +391,7 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
-int KMFolder::addMsg( Q3PtrList<KMMessage>& list, Q3ValueList<int>& index_return )
+int KMFolder::addMsg( Q3PtrList<KMMessage>& list, QList<int>& index_return )
 {
   return mStorage->addMsg( list, index_return );
 }
@@ -791,7 +791,7 @@ void KMFolder::setStatus( int idx, const MessageStatus& status, bool toggle )
   mStorage->setStatus( idx, status, toggle );
 }
 
-void KMFolder::setStatus( Q3ValueList<int>& ids, const MessageStatus& status,
+void KMFolder::setStatus( QList<int>& ids, const MessageStatus& status,
                           bool toggle )
 {
   mStorage->setStatus( ids, status, toggle);

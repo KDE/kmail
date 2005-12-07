@@ -45,7 +45,7 @@
 #include "kmcommands.h"
 #include "listjob.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 using KMail::ListJob;
 #include "kmsearchpattern.h"
@@ -246,7 +246,7 @@ int FolderStorage::expungeOldMsg(int days)
   int i, msgnb=0;
   time_t msgTime, maxTime;
   const KMMsgBase* mb;
-  Q3ValueList<int> rmvMsgList;
+  QList<int> rmvMsgList;
 
   maxTime = time(0) - days * 3600 * 24;
 
@@ -609,7 +609,7 @@ int FolderStorage::moveMsg(Q3PtrList<KMMessage> msglist, int* aIndex_ret)
   if (msgParent)
     msgParent->open();
 
-  Q3ValueList<int> index;
+  QList<int> index;
   open();
   int rc = addMsg(msglist, index);
   close();
@@ -1002,9 +1002,9 @@ void FolderStorage::setStatus(int idx, const MessageStatus& status, bool toggle)
 
 
 //-----------------------------------------------------------------------------
-void FolderStorage::setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle)
+void FolderStorage::setStatus(QList<int>& ids, const MessageStatus& status, bool toggle)
 {
-  for ( Q3ValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
+  for ( QList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
     FolderStorage::setStatus(*it, status, toggle);
   }
@@ -1082,7 +1082,7 @@ void FolderStorage::search( const KMSearchPattern* pattern )
 void FolderStorage::slotProcessNextSearchBatch()
 {
   if ( !mSearchPattern ) return;
-  Q3ValueList<quint32> matchingSerNums;
+  QList<quint32> matchingSerNums;
   int end = ( count() - mCurrentSearchedMsg > 100 ) ? 100+mCurrentSearchedMsg : count();
   for ( int i = mCurrentSearchedMsg; i < end; ++i )
   {
@@ -1106,7 +1106,7 @@ void FolderStorage::search( const KMSearchPattern* pattern, quint32 serNum )
 }
 
 //-----------------------------------------------------------------------------
-int FolderStorage::addMsg( Q3PtrList<KMMessage>& msgList, Q3ValueList<int>& index_ret )
+int FolderStorage::addMsg( Q3PtrList<KMMessage>& msgList, QList<int>& index_ret )
 {
   int ret = 0;
   int index;

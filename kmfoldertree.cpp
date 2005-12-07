@@ -19,7 +19,7 @@
 #include <QEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
-#include <Q3ValueList>
+#include <QList>
 #include <QResizeEvent>
 #include <QDragEnterEvent>
 #include <QMouseEvent>
@@ -57,7 +57,7 @@ using namespace KPIM;
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                                     KFolderTreeItem::Protocol protocol )
-  : QObject( parent, name.latin1() ),
+  : QObject( parent, name.toLatin1() ),
     KFolderTreeItem( parent, name, protocol, Root ),
     mFolder( 0 ), mNeedsRepaint( true )
 {
@@ -68,7 +68,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 //-----------------------------------------------------------------------------
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder )
-  : QObject( parent, name.latin1() ),
+  : QObject( parent, name.toLatin1() ),
     KFolderTreeItem( parent, name ),
     mFolder( folder ), mNeedsRepaint( true )
 {
@@ -79,7 +79,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 //-----------------------------------------------------------------------------
 KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & name,
                     KMFolder* folder )
-  : QObject( 0, name.latin1() ),
+  : QObject( 0, name.toLatin1() ),
     KFolderTreeItem( parent, name ),
     mFolder( folder ), mNeedsRepaint( true )
 {
@@ -1665,7 +1665,7 @@ void KMFolderTree::slotNewMessageToMailingList()
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::createFolderList( QStringList *str,
-                                     Q3ValueList<QPointer<KMFolder> > *folders,
+                                     QList<QPointer<KMFolder> > *folders,
                                      bool localFolders,
                                      bool imapFolders,
                                      bool dimapFolders,

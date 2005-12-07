@@ -112,7 +112,7 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   KMFolderNode* fNode;
   int index = 0;
   for (fNode=first(); fNode; fNode=next()) {
-    if (fNode->name().lower() > fld->name().lower()) {
+    if (fNode->name().toLower() > fld->name().toLower()) {
       insert( index, fld );
       break;
     }

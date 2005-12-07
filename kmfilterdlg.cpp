@@ -42,7 +42,7 @@ using KMail::AccountManager;
 #include <Q3Frame>
 #include <QGridLayout>
 #include <Q3CString>
-#include <Q3ValueList>
+#include <QList>
 #include <QVBoxLayout>
 #include <Q3PtrList>
 #include <QHBoxLayout>
@@ -703,7 +703,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   else
     fm = kmkernel->filterMgr();
 
-  Q3ValueList<KMFilter*> newFilters;
+  QList<KMFilter*> newFilters;
   QStringList emptyFilters;
   Q3PtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {

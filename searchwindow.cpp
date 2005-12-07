@@ -303,7 +303,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
 //-----------------------------------------------------------------------------
 SearchWindow::~SearchWindow()
 {
-  Q3ValueListIterator<QPointer<KMFolder> > fit;
+  QList<QPointer<KMFolder> >::Iterator fit;
   for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
     if (!(*fit))
       continue;

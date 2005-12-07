@@ -11,7 +11,7 @@
 #include <Q3PtrList>
 #include <QEvent>
 #include <QKeyEvent>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PopupMenu>
 #include <QMouseEvent>
 using KMail::HeaderItem;
@@ -238,7 +238,7 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
     if ( mPaintInfo.showReceiver )
       mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
     else
-      if ( mFolder && (mFolder->whoField().lower() == "to") )
+      if ( mFolder && (mFolder->whoField().toLower() == "to") )
         mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Sender"));
       else
         mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
@@ -356,7 +356,7 @@ void KMHeaders::slotToggleColumn(int id, int mode)
   // the sender column has to show either the sender or the receiver
   if ( static_cast<KPaintInfo::ColumnIds>(id) ==  KPaintInfo::COL_RECEIVER ) {
     QString colText = i18n( "Sender" );
-    if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+    if ( mFolder && (mFolder->whoField().toLower() == "to") && !mPaintInfo.showReceiver)
       colText = i18n( "Receiver" );
     setColumnText( mPaintInfo.senderCol, colText );
   }
@@ -524,7 +524,7 @@ void KMHeaders::reset()
   noRepaint = true;
   clear();
   QString colText = i18n( "Sender" );
-  if ( mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+  if ( mFolder && (mFolder->whoField().toLower() == "to") && !mPaintInfo.showReceiver)
     colText = i18n( "Receiver" );
   setColumnText( mPaintInfo.senderCol, colText );
   noRepaint = false;
@@ -732,7 +732,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
     setFolderInfoStatus();
 
     QString colText = i18n( "Sender" );
-    if (mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+    if (mFolder && (mFolder->whoField().toLower() == "to") && !mPaintInfo.showReceiver)
       colText = i18n("Receiver");
     setColumnText( mPaintInfo.senderCol, colText);
 
@@ -775,7 +775,7 @@ void KMHeaders::msgChanged()
   disconnect(this,SIGNAL(currentChanged(Q3ListViewItem*)),
              this,SLOT(highlightMessage(Q3ListViewItem*)));
   // remember all selected messages
-  Q3ValueList<int> curItems = selectedItems();
+  QList<int> curItems = selectedItems();
   updateMessageList(); // do not change the selection
   // restore the old state, but move up when there are unread message just out of view
   HeaderItem *topOfList = mItems[i];
@@ -1317,7 +1317,7 @@ void KMHeaders::applyFiltersOnMsg()
       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget()) {
     // uses action scheduler
     KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
-    Q3ValueList<KMFilter*> filters = kmkernel->filterMgr()->filters();
+    QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
     ActionScheduler *scheduler = new ActionScheduler( set, filters, this );
     scheduler->setAutoDestruct( true );
 
@@ -1608,9 +1608,9 @@ void KMHeaders::setSelected( Q3ListViewItem *item, bool selected )
   }
 }
 
-void KMHeaders::setSelectedByIndex( Q3ValueList<int> items, bool selected )
+void KMHeaders::setSelectedByIndex( QList<int> items, bool selected )
 {
-  for ( Q3ValueList<int>::Iterator it = items.begin(); it != items.end(); ++it )
+  for ( QList<int>::Iterator it = items.begin(); it != items.end(); ++it )
   {
     if ( ((*it) >= 0) && ((*it) < (int)mItems.size()) )
     {
@@ -1657,9 +1657,9 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 }
 
 //-----------------------------------------------------------------------------
-Q3ValueList<int> KMHeaders::selectedItems()
+QList<int> KMHeaders::selectedItems()
 {
-  Q3ValueList<int> items;
+  QList<int> items;
   for ( Q3ListViewItemIterator it(this); it.current(); it++ )
   {
     if ( it.current()->isSelected() && it.current()->isVisible() )

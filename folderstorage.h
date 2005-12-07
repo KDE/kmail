@@ -44,7 +44,7 @@
 #include "kmglobal.h"
 #include "folderjob.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 using KMail::FolderJob;
@@ -66,7 +66,7 @@ namespace KMail {
 }
 using KMail::AttachmentStrategy;
 
-typedef Q3ValueList<quint32> SerNumList;
+typedef QList<quint32> SerNumList;
 
 /**
  * @short The FolderStorage class is the bass class for the storage related
@@ -208,7 +208,7 @@ public:
    * Adds the given messages to the folder. Behaviour is identical 
    * to addMsg(msg) 
    */
-  virtual int addMsg( Q3PtrList<KMMessage>&, Q3ValueList<int>& index_return );
+  virtual int addMsg( Q3PtrList<KMMessage>&, QList<int>& index_return );
 
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
@@ -361,7 +361,7 @@ public:
   virtual void setStatus(int idx, const MessageStatus& status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  virtual void setStatus(Q3ValueList<int>& ids, const MessageStatus& status, bool toggle=false);
+  virtual void setStatus(QList<int>& ids, const MessageStatus& status, bool toggle=false);
 
   void removeJobs();
   
@@ -471,7 +471,7 @@ signals:
    * The matching serial numbers are included
    * If @p complete is true the search is done
    */
-  void searchResult( KMFolder*, Q3ValueList<quint32>, 
+  void searchResult( KMFolder*, QList<quint32>, 
                      const KMSearchPattern*, bool complete );
 
   /**

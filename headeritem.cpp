@@ -33,7 +33,7 @@
 #include <qpainter.h>
 //Added by qt3to4:
 #include <QPixmap>
-#include <Q3ValueList>
+#include <QList>
 
 #include <kio/netaccess.h>
 
@@ -153,7 +153,7 @@ QString HeaderItem::text( int col) const
     return QString();
 
   if ( col == headers->paintInfo()->senderCol ) {
-    if ( (headers->folder()->whoField().lower() == "to") && !headers->paintInfo()->showReceiver )
+    if ( (headers->folder()->whoField().toLower() == "to") && !headers->paintInfo()->showReceiver )
       tmp = mMsgBase->toStrip();
     else
       tmp = mMsgBase->fromStrip();
@@ -201,7 +201,7 @@ void HeaderItem::setup()
   setHeight( h );
 }
 
-typedef Q3ValueList<QPixmap> PixmapList;
+typedef QList<QPixmap> PixmapList;
 
 QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
 {
@@ -442,21 +442,21 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     }
   } else if (column == paintInfo->senderCol) {
     QString tmp;
-    if ( (headers->folder()->whoField().lower() == "to") && !headers->paintInfo()->showReceiver )
+    if ( (headers->folder()->whoField().toLower() == "to") && !headers->paintInfo()->showReceiver )
       tmp = msg->toStrip();
     else
       tmp = msg->fromStrip();
-    return ret + tmp.lower() + ' ' + sortArrival;
+    return ret + tmp.toLower() + ' ' + sortArrival;
   } else if (column == paintInfo->receiverCol) {
     QString tmp = msg->toStrip();
-    return ret + tmp.lower() + ' ' + sortArrival;
+    return ret + tmp.toLower() + ' ' + sortArrival;
   } else if (column == paintInfo->subCol) {
     QString tmp;
     tmp = ret;
     if (paintInfo->status) {
       tmp += msg->status().getSortRank() + ' ';
     }
-    tmp += KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
+    tmp += KMMessage::stripOffPrefixes( msg->subject().toLower() ) + ' ' + sortArrival;
     return tmp;
   }
   else if (column == paintInfo->sizeCol) {

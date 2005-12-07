@@ -40,7 +40,7 @@
     numbers of all messages that currently match the search.
 **/
 
-typedef Q3ValueList<quint32> SerNumList;
+typedef QList<quint32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
 class KMFolderSearchJob;
@@ -85,7 +85,7 @@ signals:
 
 protected slots:
   void slotProcessNextBatch();
-  void slotSearchFolderResult( KMFolder*, Q3ValueList<quint32>,
+  void slotSearchFolderResult( KMFolder*, QList<quint32>,
                                const KMSearchPattern*, bool );
 
 protected:
@@ -99,8 +99,8 @@ private:
   bool mRecursive, mRunning, mIdle, mRunByIndex;
   QPointer<KMFolder> mRoot;
   KMSearchPattern* mSearchPattern;
-  Q3ValueList<QPointer<KMFolder> > mFolders, mOpenedFolders;
-  Q3ValueList<QPointer<KMFolderImap> > mIncompleteFolders;
+  QList<QPointer<KMFolder> > mFolders, mOpenedFolders;
+  QList<QPointer<KMFolderImap> > mIncompleteFolders;
   SerNumList mSerNums;
   QString mLastFolder;
   int mFoundCount;
@@ -205,7 +205,7 @@ protected:
 
 private:
   Q3ValueVector<quint32> mSerNums;
-  Q3ValueList<QPointer<KMFolder> > mFolders;
+  QList<QPointer<KMFolder> > mFolders;
   Q3ValueStack<quint32> mUnexaminedMessages;
   FILE *mIdsStream;
   KMSearch *mSearch;

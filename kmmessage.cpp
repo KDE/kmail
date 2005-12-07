@@ -14,7 +14,7 @@
 #include "messageproperty.h"
 //Added by qt3to4:
 #include <Q3StrList>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 #include <Q3PtrList>
 using KMail::MessageProperty;
@@ -327,7 +327,7 @@ Q3CString KMMessage::headerAsSendableString() const
   msg.fromString(asString());
   msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
-  return msg.headerAsString().latin1();
+  return msg.headerAsString().toLatin1();
 }
 
 void KMMessage::removePrivateHeaderFields() {
@@ -405,13 +405,13 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
   mMsg->Parse();
 
   if (aSetStatus) {
-    setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
+    setStatus(headerField("Status").toLatin1(), headerField("X-Status").toLatin1());
     if ( !headerField( "X-KMail-EncryptionState" ).isEmpty() )
       setEncryptionStateChar( headerField( "X-KMail-EncryptionState" ).at(0) );
     if ( !headerField( "X-KMail-SignatureState" ).isEmpty() )
       setSignatureStateChar( headerField( "X-KMail-SignatureState" ).at(0));
     if ( !headerField("X-KMail-MDN-Sent").isEmpty() )
-      setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
+      setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).toLatin1() ) );
   }
   if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
     updateAttachmentState();
@@ -1038,7 +1038,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
   if (!noQuote) {
     if( selectionIsBody ){
-      Q3CString cStr = selection.latin1();
+      Q3CString cStr = selection.toLatin1();
       msg->setBody( cStr );
     }else{
       msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
@@ -1068,10 +1068,10 @@ Q3CString KMMessage::getRefStr() const
   Q3CString firstRef, lastRef, refStr, retRefStr;
   int i, j;
 
-  refStr = headerField("References").trimmed().latin1();
+  refStr = headerField("References").trimmed().toLatin1();
 
   if (refStr.isEmpty())
-    return headerField("Message-Id").latin1();
+    return headerField("Message-Id").toLatin1();
 
   i = refStr.find('<');
   j = refStr.find('>');
@@ -1086,7 +1086,7 @@ Q3CString KMMessage::getRefStr() const
   if (!lastRef.isEmpty() && lastRef != firstRef)
     retRefStr += lastRef + ' ';
 
-  retRefStr += headerField("Message-Id").latin1();
+  retRefStr += headerField("Message-Id").toLatin1();
   return retRefStr;
 }
 
@@ -1316,7 +1316,7 @@ static int requestAdviceOnMDN( const char * what ) {
 KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 				 MDN::DispositionType d,
 				 bool allowGUI,
-				 Q3ValueList<MDN::DispositionModifier> m )
+				 QList<MDN::DispositionModifier> m )
 {
   // RFC 2298: At most one MDN may be issued on behalf of each
   // particular recipient by their user agent.  That is, once an MDN
@@ -1531,7 +1531,7 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   Q_ASSERT( rx.isValid() );
   int idx = 0;
   while ( ( idx = rx.search( result, idx ) ) != -1 ) {
-    QString replacement = headerField( rx.cap(1).latin1() );
+    QString replacement = headerField( rx.cap(1).toLatin1() );
     result.replace( idx, rx.matchedLength(), replacement );
     idx += replacement.length();
   }
@@ -1558,7 +1558,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   str += "--------------------------------------------\n";
   // Conversion to latin1 is correct here as Mail headers should contain
   // ascii only
-  receipt->setBody(str.latin1());
+  receipt->setBody(str.toLatin1());
   receipt->setAutomaticFields();
 
   return receipt;
@@ -2155,13 +2155,13 @@ Q3CString KMMessage::rawHeaderField( const Q3CString & name ) const {
   return header.FieldBody( name.data() ).AsString().c_str();
 }
 
-Q3ValueList<Q3CString> KMMessage::rawHeaderFields( const Q3CString& field ) const
+QList<Q3CString> KMMessage::rawHeaderFields( const Q3CString& field ) const
 {
   if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
-    return Q3ValueList<Q3CString>();
+    return QList<Q3CString>();
 
   std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
-  Q3ValueList<Q3CString> headerFields;
+  QList<Q3CString> headerFields;
   for ( uint i = 0; i < v.size(); ++i ) {
     headerFields.append( v[i]->AsString().c_str() );
   }
@@ -2485,11 +2485,11 @@ Q3CString KMMessage::bodyDecoded() const
 
 
 //-----------------------------------------------------------------------------
-Q3ValueList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
+QList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
                                                  bool allow8Bit,
                                                  bool willBeSigned )
 {
-  Q3ValueList<int> allowedCtes;
+  QList<int> allowedCtes;
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:
@@ -2557,7 +2557,7 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyAndGuessCte( const Q3CString& aBuf,
-                                    Q3ValueList<int> & allowedCte,
+                                    QList<int> & allowedCte,
                                     bool allow8Bit,
                                     bool willBeSigned )
 {
@@ -2837,7 +2837,7 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
     while(param)
     {
       if (!qstricmp(param->Attribute().c_str(), "charset"))
-        aPart->setCharset(Q3CString(param->Value().c_str()).lower());
+        aPart->setCharset(Q3CString(param->Value().c_str()).toLower());
       else if (param->Attribute().c_str()=="name*")
         aPart->setName(KMMsgBase::decodeRFC2231String(
               param->Value().c_str()));
@@ -3223,7 +3223,7 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 {
   QString result;
   result = KURL::decode_string( url );
-  result = KMMsgBase::decodeRFC2047String( result.latin1() );
+  result = KMMsgBase::decodeRFC2047String( result.toLatin1() );
   return result;
 }
 
@@ -3414,7 +3414,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
     ch = aStr[index];
     switch ( context ) {
     case TopLevel : {
-      switch ( ch.latin1() ) {
+      switch ( ch.toLatin1() ) {
       case '"' : inQuotedString = !inQuotedString;
                  break;
       case '(' : if ( !inQuotedString ) {
@@ -3476,7 +3476,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
       break;
     }
     case InComment : {
-      switch ( ch.latin1() ) {
+      switch ( ch.toLatin1() ) {
       case '(' : ++commentLevel;
                  comment += ch;
                  break;
@@ -3498,7 +3498,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
       break;
     }
     case InAngleAddress : {
-      switch ( ch.latin1() ) {
+      switch ( ch.toLatin1() ) {
       case '"' : inQuotedString = !inQuotedString;
                  angleAddress += ch;
                  break;
@@ -3557,7 +3557,7 @@ QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
   unsigned int strLength(str.length());
   result.reserve( 6*strLength ); // maximal possible length
   for( unsigned int i = 0; i < strLength; ++i )
-    switch ( str[i].latin1() ) {
+    switch ( str[i].toLatin1() ) {
     case '<':
       result += "&lt;";
       break;
@@ -3803,7 +3803,7 @@ Q3CString KMMessage::defaultCharset()
   Q3CString retval;
 
   if (!sPrefCharsets.isEmpty())
-    retval = sPrefCharsets[0].latin1();
+    retval = sPrefCharsets[0].toLatin1();
 
   if (retval.isEmpty()  || (retval == "locale")) {
     retval = Q3CString(kmkernel->networkCodec()->mimeName());
@@ -4115,7 +4115,7 @@ void KMMessage::setBodyFromUnicode( const QString & str ) {
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
-  Q3ValueList<int> dummy;
+  QList<int> dummy;
   setCharset( encoding );
   setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
@@ -4128,7 +4128,7 @@ const QTextCodec * KMMessage::codec() const {
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
-    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().latin1() );
+    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().toLatin1() );
   }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should

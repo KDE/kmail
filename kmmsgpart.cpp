@@ -21,7 +21,7 @@
 #include <kiconloader.h>
 #include <qtextcodec.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3CString>
 
 #include <assert.h>
@@ -120,7 +120,7 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
     encoding = "utf-8";
   const QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
-  Q3ValueList<int> dummy;
+  QList<int> dummy;
   setCharset( encoding );
   setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
@@ -131,7 +131,7 @@ const QTextCodec * KMMessagePart::codec() const {
   if ( !c ) {
     // Ok, no override and nothing in the message, let's use the fallback
     // the user configured
-    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().latin1() );
+    c = KMMsgBase::codecForName( GlobalSettings::self()->fallbackCharacterEncoding().toLatin1() );
   }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
@@ -222,7 +222,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 }
 
 void KMMessagePart::setBodyAndGuessCte(const Q3CString& aBuf,
-				       Q3ValueList<int> & allowedCte,
+				       QList<int> & allowedCte,
 				       bool allow8Bit,
                                        bool willBeSigned )
 {
@@ -376,8 +376,8 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
   QString mimetype = result->mimeType();
   const int sep = mimetype.find('/');
-  mType = mimetype.left(sep).latin1();
-  mSubtype = mimetype.mid(sep+1).latin1();
+  mType = mimetype.left(sep).toLatin1();
+  mSubtype = mimetype.mid(sep+1).toLatin1();
 }
 
 

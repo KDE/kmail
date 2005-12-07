@@ -221,8 +221,8 @@ bool KMAcctLocal::fetchMsg()
       fileD0.close();  // If data is 0 we just create a zero length file.
     }
 #endif
-    msg->setStatus( msg->headerField( "Status" ).latin1(),
-                    msg->headerField( "X-Status" ).latin1());
+    msg->setStatus( msg->headerField( "Status" ).toLatin1(),
+                    msg->headerField( "X-Status" ).toLatin1());
     if ( !msg->headerField( "X-KMail-EncryptionState" ).isEmpty() )
       msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
     if ( !msg->headerField( "X-KMail-SignatureState" ).isEmpty() )

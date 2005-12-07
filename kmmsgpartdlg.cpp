@@ -74,7 +74,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // row 0: Type combobox:
   mMimeType = new KComboBox( true, plainPage() );
-  mMimeType->setInsertionPolicy( QComboBox::NoInsertion );
+  mMimeType->setInsertPolicy( QComboBox::NoInsert );
   mMimeType->setValidator( new KMimeTypeValidator( mMimeType ) );
   mMimeType->insertStringList( QStringList()
 			       << QString::fromLatin1("text/html")
@@ -413,7 +413,7 @@ void KMMsgPartDialogCompat::applyChanges()
     mMsgPart->setContentDescription( desc );
 
   // apply Content-Type:
-  Q3CString type = mimeType().latin1();
+  Q3CString type = mimeType().toLatin1();
   Q3CString subtype;
   int idx = type.find('/');
   if ( idx < 0 )

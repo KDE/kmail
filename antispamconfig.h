@@ -74,8 +74,8 @@ namespace KMail {
     QRegExp mScore;
     QRegExp mThreshold;
   };
-  typedef Q3ValueList<SpamAgent> SpamAgents;
-  typedef Q3ValueListIterator<SpamAgent> SpamAgentsIterator;
+  typedef QList<SpamAgent> SpamAgents;
+  typedef QList<SpamAgent>::Iterator SpamAgentsIterator;
 
   /**
      @short Singleton to manage loading the kmail.antispamrc file.

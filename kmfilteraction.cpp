@@ -473,7 +473,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", false );
   int idx = 0;
   while ( ( idx = header_rx.search( result, idx ) ) != -1 ) {
-    QString replacement = KProcess::quote( aMsg->headerField( header_rx.cap(1).latin1() ) );
+    QString replacement = KProcess::quote( aMsg->headerField( header_rx.cap(1).toLatin1() ) );
     result.replace( idx, header_rx.matchedLength(), replacement );
     idx += replacement.length();
   }
@@ -965,7 +965,7 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
 QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
 {
   QComboBox *cb = new QComboBox( TRUE/*editable*/, parent );
-  cb->setInsertionPolicy( QComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::AtBottom );
   setParamWidgetValue( cb );
   return cb;
 }
@@ -974,8 +974,8 @@ KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) c
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  while ( !msg->headerField( mParameter.latin1() ).isEmpty() )
-    msg->removeHeaderField( mParameter.latin1() );
+  while ( !msg->headerField( mParameter.toLatin1() ).isEmpty() )
+    msg->removeHeaderField( mParameter.toLatin1() );
   return GoOn;
 }
 
@@ -1039,7 +1039,7 @@ KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMMessage* msg) cons
 {
   if ( mParameter.isEmpty() ) return ErrorButGoOn;
 
-  msg->setHeaderField( mParameter.latin1(), mValue );
+  msg->setHeaderField( mParameter.toLatin1(), mValue );
   return GoOn;
 }
 
@@ -1049,7 +1049,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QHBoxLayout *hbl = new QHBoxLayout( w );
   hbl->setSpacing( 4 );
   QComboBox *cb = new QComboBox( TRUE, w, "combo" );
-  cb->setInsertionPolicy( QComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
   QLabel *l = new QLabel( i18n("With value:"), w );
   l->setFixedWidth( l->sizeHint().width() );
@@ -1187,10 +1187,10 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
 #warning Port me!
 //  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
 
-//  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
+//  QString newValue = rx.replace( msg->headerField( mParameter.toLatin1() ),
 //                                     mReplacementString );
 
-//  msg->setHeaderField( mParameter.latin1(), newValue );
+//  msg->setHeaderField( mParameter.toLatin1(), newValue );
   return GoOn;
 }
 
@@ -1201,7 +1201,7 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   hbl->setSpacing( 4 );
 
   QComboBox *cb = new QComboBox( TRUE, w, "combo" );
-  cb->setInsertionPolicy( QComboBox::AtBottom );
+  cb->setInsertPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
 
   QLabel *l = new QLabel( i18n("Replace:"), w );
@@ -1646,7 +1646,7 @@ class PipeJob : public KPIM::ThreadWeaver::Job
       }
       pclose(p);
       if ( !ba.isEmpty() ) {
-        KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).latin1() );
+        KPIM::ThreadWeaver::debug (1, "PipeJob::run: %s", QString(ba).toLatin1() );
         KMFolder *filterFolder =  mMsg->parent(); 
         mMsg->fromByteArray( ba );
         if ( filterFolder ) {

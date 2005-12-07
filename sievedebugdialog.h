@@ -1,5 +1,5 @@
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 /*
     sievedebugdialog.h
 
@@ -27,7 +27,7 @@
 class QString;
 class QStringList;
 class Q3TextEdit;
-template <typename T> class Q3ValueList;
+template <typename T> class QList;
 
 class KMAccount;
 
@@ -36,7 +36,7 @@ namespace KMime
   namespace Types
   {
     struct AddrSpec;
-    typedef Q3ValueList<AddrSpec> AddrSpecList;
+    typedef QList<AddrSpec> AddrSpecList;
   }
 }
 
@@ -83,7 +83,7 @@ protected:
     // WARNING: When copy/pasting this code, be aware that accounts may
     //          get removed inbetween! For debugging this is good enough
     //          though. - Martijn
-    Q3ValueList<KMAccount *> mAccountList;
+    QList<KMAccount *> mAccountList;
     QStringList mScriptList;
     KMail::ImapAccountBase *mAccountBase;
 };
