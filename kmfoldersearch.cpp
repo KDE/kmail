@@ -459,7 +459,7 @@ void KMFolderSearch::addSerNum(quint32 serNum)
 
 void KMFolderSearch::removeSerNum(quint32 serNum)
 {
-    Q3ValueVector<quint32>::const_iterator it;
+    QVector<quint32>::const_iterator it;
     int i = 0;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it, ++i)
         if ((*it) == serNum) {
@@ -697,7 +697,7 @@ int KMFolderSearch::find(const KMMsgBase* msg) const
 {
     int pos = 0;
     quint32 serNum = msg->getMsgSerNum();
-    Q3ValueVector<quint32>::const_iterator it;
+    QVector<quint32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum)
             return pos;
@@ -762,7 +762,7 @@ int KMFolderSearch::writeIndex( bool )
         return -1;
     }
 
-    Q3ValueVector<quint32>::iterator it;
+    QVector<quint32>::iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         quint32 serNum = *it;
         if (!fwrite(&serNum, sizeof(serNum), 1, tmpIndexStream))
@@ -896,7 +896,7 @@ KMMsgBase* KMFolderSearch::takeIndexEntry(int idx)
 {
     assert(idx >= 0 && idx < (int)mSerNums.count());
     KMMsgBase *msgBase = getMsgBase(idx);
-    Q3ValueVector<quint32>::iterator it = mSerNums.begin();
+    QVector<quint32>::iterator it = mSerNums.begin();
     mSerNums.erase(&it[idx]);
     return msgBase;
 }
@@ -982,7 +982,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
     folder->close();
 
     if ( !matches ) {
-        Q3ValueVector<quint32>::const_iterator it;
+        QVector<quint32>::const_iterator it;
         it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
         if (it != mSerNums.end()) {
             removeSerNum( serNum );
@@ -994,7 +994,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
 //        mSearch->stop();
 //        mExecuteSearchTimer->start( 0, true );
 //    } else {
-        Q3ValueVector<quint32>::const_iterator it;
+        QVector<quint32>::const_iterator it;
         it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
         if (it == mSerNums.end()) {
             addSerNum( serNum );
@@ -1030,7 +1030,7 @@ void KMFolderSearch::examineChangedMessage(KMFolder *aFolder, quint32 serNum, in
         open();
         mTempOpened = true;
     }
-    Q3ValueVector<quint32>::const_iterator it;
+    QVector<quint32>::const_iterator it;
     it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
     if (it != mSerNums.end()) {
         mUnreadMsgs += delta;
@@ -1091,7 +1091,7 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
     }
 
     quint32 serNum = KMMsgDict::instance()->getMsgSerNum(aFolder, idx);
-    Q3ValueVector<quint32>::const_iterator it;
+    QVector<quint32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
         if ((*it) == serNum) {
             emit msgHeaderChanged(folder(), pos);

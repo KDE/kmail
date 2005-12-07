@@ -41,7 +41,7 @@ class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
 class FolderStorage;
-template <typename T> class Q3ValueVector;
+template <typename T> class QVector;
 
 namespace KIO {
   class Job;
@@ -53,7 +53,7 @@ namespace KPIM {
 
 namespace KMail {
   struct ACLListEntry;
-  typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
+  typedef QVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
 

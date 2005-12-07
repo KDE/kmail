@@ -82,7 +82,7 @@ private:
     void insertStatus(KMail::StatusValueTypes which);
     QComboBox *mStatusCombo;
     KPIM::MessageStatus mStatus;
-    Q3ValueVector<QString> statusList;
+    QVector<QString> statusList;
 };
 
 }

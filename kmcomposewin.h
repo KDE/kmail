@@ -684,7 +684,7 @@ private:
   KMEdit* mEditor;
   QGridLayout* mGrid;
   KMMessage *mMsg;
-  Q3ValueVector<KMMessage*> mComposedMessages;
+  QVector<KMMessage*> mComposedMessages;
   KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;

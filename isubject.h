@@ -55,7 +55,7 @@ namespace KMail {
       void notify();
 
   private:
-      Q3ValueVector<Interface::Observer*> mObserverList;
+      QVector<Interface::Observer*> mObserverList;
   };
 
 } // namespace KMail

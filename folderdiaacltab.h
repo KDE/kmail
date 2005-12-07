@@ -50,7 +50,7 @@ namespace KMail {
 enum IMAPUserIdFormat { FullEmail, UserName };
 
 struct ACLListEntry;
-typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
+typedef QVector<KMail::ACLListEntry> ACLList;
 
 class ImapAccountBase;
 

@@ -561,7 +561,7 @@ void MessageComposer::chiasmusEncryptAllAttachments() {
   assert( chiasmus ); // kmcomposewin code should have made sure
 
 
-  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
+  for ( QVector<Attachment>::iterator it = mAttachments.begin(), end = mAttachments.end() ; it != end ; ++it ) {
     KMMessagePart * part = it->part;
     const QString filename = part->fileName();
     if ( filename.endsWith( ".xia", false ) )
@@ -944,13 +944,13 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 
 void MessageComposer::markAllAttachmentsForSigning( bool sign ) {
   mSignBody = sign;
-  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+  for ( QVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->sign = sign;
 }
 
 void MessageComposer::markAllAttachmentsForEncryption( bool enc ) {
   mEncryptBody = enc;
-  for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+  for ( QVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->encrypt = enc;
 }
 
@@ -1389,7 +1389,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   // test whether there ARE attachments that can be included into the body
   if( mEarlyAddAttachments ) {
     bool someOk = false;
-    for ( Q3ValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( QVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody )
         someOk = true;
       else
@@ -1474,7 +1474,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   // Prepare attachments that will be signed/encrypted
-  for ( Q3ValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+  for ( QVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
     // signed/encrypted body parts must be either QP or base64 encoded
     // Why not 7 bit? Because the LF->CRLF canonicalization would render
     // e.g. 7 bit encoded shell scripts unusable because of the CRs.
@@ -1540,7 +1540,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerDwPart = 0;
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
-    for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( QVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
       if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
@@ -1759,7 +1759,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     // add Attachments
     // create additional bodyparts for the attachments (if any)
     KMMessagePart newAttachPart;
-    for ( Q3ValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    for ( QVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
 
       const bool cryptFlagsDifferent = ( it->encrypt != doEncryptBody || it->sign != doSignBody ) ;
 

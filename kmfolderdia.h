@@ -199,7 +199,7 @@ private:
 
   bool mIsNewFolder; // if true, save() did set mFolder.
 
-  Q3ValueVector<KMail::FolderDiaTab*> mTabs;
+  QVector<KMail::FolderDiaTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day
   KMFolderTree* mFolderTree;
 };

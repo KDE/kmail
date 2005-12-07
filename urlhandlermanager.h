@@ -76,7 +76,7 @@ namespace KMail {
     QString statusBarMessage( const KURL & url, KMReaderWin * w=0 ) const;
 
   private:
-    typedef Q3ValueVector<const URLHandler*> HandlerList;
+    typedef QVector<const URLHandler*> HandlerList;
     HandlerList mHandlers;
     class BodyPartURLHandlerManager;
     BodyPartURLHandlerManager * mBodyPartURLHandlerManager;

@@ -161,7 +161,7 @@ public:
   void unregisterHandler( const Interface::BodyPartURLHandler * handler );
 
 private:
-  typedef Q3ValueVector<const Interface::BodyPartURLHandler*> BodyPartHandlerList;
+  typedef QVector<const Interface::BodyPartURLHandler*> BodyPartHandlerList;
   BodyPartHandlerList mHandlers;
 };
 

@@ -83,7 +83,7 @@ private:
   QPixmap mDefaultIcon;
   QImage mLightIconImage;
 
-  Q3ValueVector<KMFolder*> mPopupFolders;
+  QVector<KMFolder*> mPopupFolders;
   QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
   QMap<QPointer<KMFolder>, bool> mPendingUpdates;
   QTimer *mUpdateTimer;

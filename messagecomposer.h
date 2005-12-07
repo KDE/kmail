@@ -91,7 +91,7 @@ public:
 
   void setDisableBreaking( bool b ) { mDisableBreaking = b; }
 
-  const Q3ValueVector<KMMessage*> & composedMessageList() const {
+  const QVector<KMMessage*> & composedMessageList() const {
     return mMessageList;
   }
 
@@ -226,7 +226,7 @@ private:
   KMComposeWin* mComposeWin;
   MessageComposerJob * mCurrentJob;
   KMMessage* mReferenceMessage;
-  Q3ValueVector<KMMessage*> mMessageList;
+  QVector<KMMessage*> mMessageList;
 
   Kleo::KeyResolver * mKeyResolver;
 
@@ -239,7 +239,7 @@ private:
     bool sign;
     bool encrypt;
   };
-  Q3ValueVector<Attachment> mAttachments;
+  QVector<Attachment> mAttachments;
 
   QString mPGPSigningKey, mSMIMESigningKey;
   bool mUseOpportunisticEncryption;

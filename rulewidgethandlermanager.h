@@ -91,10 +91,10 @@ namespace KMail {
                  QStackedWidget *valueStack ) const;
 
   private:
-    typedef Q3ValueVector<const RuleWidgetHandler*>::const_iterator const_iterator;
-    typedef Q3ValueVector<const RuleWidgetHandler*>::iterator iterator;
+    typedef QVector<const RuleWidgetHandler*>::const_iterator const_iterator;
+    typedef QVector<const RuleWidgetHandler*>::iterator iterator;
 
-    Q3ValueVector<const RuleWidgetHandler*> mHandlers;
+    QVector<const RuleWidgetHandler*> mHandlers;
   };
 
 } // namespace KMail

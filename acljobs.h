@@ -48,7 +48,7 @@ namespace KMail {
     bool changed; ///< special flag for KMFolderCachedImap
   };
 
-  typedef Q3ValueVector<ACLListEntry> ACLList;
+  typedef QVector<ACLListEntry> ACLList;
 
 /**
  * This namespace contains functions that return jobs for ACL operations.

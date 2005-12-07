@@ -700,7 +700,7 @@ protected:
   KMMoveCommand( quint32 sernum );
   void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
   void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
-  Q3ValueVector<KMFolder*> mOpenedFolders;
+  QVector<KMFolder*> mOpenedFolders;
 
 private:
   virtual Result execute();

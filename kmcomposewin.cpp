@@ -3796,7 +3796,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     return;
   }
 
-  for ( Q3ValueVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
+  for ( QVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
     (*it)->cleanupHeader();

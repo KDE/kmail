@@ -23,7 +23,7 @@ namespace KMail {
   }
 
   void ISubject::detach( Interface::Observer * pObserver ) {
-    Q3ValueVector<Interface::Observer*>::iterator it = qFind( mObserverList.begin(), mObserverList.end(), pObserver );
+    QVector<Interface::Observer*>::iterator it = qFind( mObserverList.begin(), mObserverList.end(), pObserver );
     if ( it != mObserverList.end() )
       mObserverList.erase( it );
   }
@@ -31,7 +31,7 @@ namespace KMail {
   void ISubject::notify()
   {
     kdDebug(5006) << "ISubject::notify " << mObserverList.size() << endl;
-    for ( Q3ValueVector<Interface::Observer*>::iterator it = mObserverList.begin() ; it != mObserverList.end() ; ++it )
+    for ( QVector<Interface::Observer*>::iterator it = mObserverList.begin() ; it != mObserverList.end() ; ++it )
       (*it)->update( this );
   }
 

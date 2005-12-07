@@ -1503,7 +1503,7 @@ void KMailICalIfaceImpl::readConfig()
   // Globally there are 3 cases: nothing found, some stuff found by type/name heuristics, or everything found OK
   bool noneFound = true;
   bool mustFix = false; // true when at least one was found by heuristics
-  Q3ValueVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
+  QVector<StandardFolderSearchResult> results( KMail::ContentsTypeLast + 1 );
   for ( int i = 0; i < KMail::ContentsTypeLast+1; ++i ) {
     if ( i != KMail::ContentsTypeMail ) {
       results[i] = findStandardResourceFolder( folderParentDir, static_cast<KMail::FolderContentsType>(i) );

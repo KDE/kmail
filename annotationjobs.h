@@ -47,7 +47,7 @@ struct AnnotationAttribute {
   QString value;
 };
 
-typedef Q3ValueVector<AnnotationAttribute> AnnotationList;
+typedef QVector<AnnotationAttribute> AnnotationList;
 
 /**
  * This namespace contains functions that return jobs for annotation operations.

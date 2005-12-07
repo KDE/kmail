@@ -217,7 +217,7 @@ public:
   void setUserRights( unsigned int userRights );
 
   /// Return the list of ACL for this folder
-  typedef Q3ValueVector<KMail::ACLListEntry> ACLList;
+  typedef QVector<KMail::ACLListEntry> ACLList;
   const ACLList& aclList() const { return mACLList; }
 
   /// Set the list of ACL for this folder (for FolderDiaACLTab)

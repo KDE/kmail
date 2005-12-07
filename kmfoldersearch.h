@@ -202,7 +202,7 @@ protected:
   virtual void truncateIndex();
 
 private:
-  Q3ValueVector<quint32> mSerNums;
+  QVector<quint32> mSerNums;
   QList<QPointer<KMFolder> > mFolders;
   QStack<quint32> mUnexaminedMessages;
   FILE *mIdsStream;
