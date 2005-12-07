@@ -32,7 +32,7 @@ using KIO::UDSEntry;
 namespace KMail {
 
   SieveJob::SieveJob( const KURL & url, const QString & script,
-		      const Q3ValueStack<Command> & commands,
+		      const QStack<Command> & commands,
 		      QObject * parent, const char * name )
     : QObject( parent, name ),
       mUrl( url ), mJob( 0 ), mDec( 0 ),
@@ -224,7 +224,7 @@ namespace KMail {
 
   SieveJob * SieveJob::put( const KURL & dest, const QString & script,
 			    bool makeActive, bool wasActive ) {
-    Q3ValueStack<Command> commands;
+    QStack<Command> commands;
     if ( makeActive )
       commands.push( Activate );
     if ( wasActive )
@@ -234,25 +234,25 @@ namespace KMail {
   }
 
   SieveJob * SieveJob::get( const KURL & src ) {
-    Q3ValueStack<Command> commands;
+    QStack<Command> commands;
     commands.push( Get );
     commands.push( SearchActive );
     return new SieveJob( src, QString::null, commands );
   }
 
   SieveJob * SieveJob::list( const KURL & src ) {
-    Q3ValueStack<Command> commands;
+    QStack<Command> commands;
     commands.push( List );
     return new SieveJob( src, QString::null, commands );
   }
   SieveJob * SieveJob::del( const KURL & url ) {
-    Q3ValueStack<Command> commands;
+    QStack<Command> commands;
     commands.push( Delete );
     return new SieveJob( url, QString::null, commands );
   }
 
   SieveJob * SieveJob::activate( const KURL & url ) {
-    Q3ValueStack<Command> commands;
+    QStack<Command> commands;
     commands.push( Activate );
     commands.push( Deactivate );
     return new SieveJob( url, QString::null, commands );

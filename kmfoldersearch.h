@@ -21,9 +21,7 @@
 #define kmfoldersearch_h
 
 #include <qpointer.h>
-#include <q3valuelist.h>
-#include <q3valuevector.h>
-#include <q3valuestack.h>
+#include <QStack>
 #include <qmap.h>
 //Added by qt3to4:
 #include <Q3CString>
@@ -206,7 +204,7 @@ protected:
 private:
   Q3ValueVector<quint32> mSerNums;
   QList<QPointer<KMFolder> > mFolders;
-  Q3ValueStack<quint32> mUnexaminedMessages;
+  QStack<quint32> mUnexaminedMessages;
   FILE *mIdsStream;
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;

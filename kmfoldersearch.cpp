@@ -640,7 +640,7 @@ const KMMsgBase* KMFolderSearch::getMsgBase(int idx) const
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    if (idx < 0 || (quint32)idx >= mSerNums.count())
+    if (idx < 0 || (qint32)idx >= mSerNums.count())
         return 0;
     KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
@@ -651,7 +651,7 @@ KMMsgBase* KMFolderSearch::getMsgBase(int idx)
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
-    if (idx < 0 || (quint32)idx >= mSerNums.count())
+    if (idx < 0 || (qint32)idx >= mSerNums.count())
         return 0;
     KMMsgDict::instance()->getLocation(mSerNums[idx], &folder, &folderIdx);
     if (!folder || folderIdx == -1)

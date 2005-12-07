@@ -377,7 +377,7 @@ void KMMsgIndex::create() {
 		mState = s_error;
 		return;
 	}
-	Q3ValueStack<KMFolderDir*> folders;
+	QStack<KMFolderDir*> folders;
 	folders.push(&(kmkernel->folderMgr()->dir()));
 	folders.push(&(kmkernel->dimapFolderMgr()->dir()));
 	while ( !folders.empty() ) {
