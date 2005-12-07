@@ -583,8 +583,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown->setAutoRepeat( true );
   mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
-  QToolTip::add( mBtnUp, i18n("Up") );
-  QToolTip::add( mBtnDown, i18n("Down") );
+  mBtnUp->setToolTip( i18n("Up") );
+  mBtnDown->setToolTip( i18n("Down") );
   mBtnUp->setWhatsThis( i18n(_wt_filterlist_up) );
   mBtnDown->setWhatsThis( i18n(_wt_filterlist_down) );
 
@@ -601,9 +601,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
-  QToolTip::add( mBtnNew, i18n("New") );
-  QToolTip::add( mBtnCopy, i18n("Copy") );
-  QToolTip::add( mBtnDelete, i18n("Delete"));
+  mBtnNew->setToolTip( i18n("New") );
+  mBtnCopy->setToolTip( i18n("Copy") );
+  mBtnDelete->setToolTip( i18n("Delete"));
   mBtnNew->setWhatsThis( i18n(_wt_filterlist_new) );
   mBtnCopy->setWhatsThis( i18n(_wt_filterlist_copy) );
   mBtnDelete->setWhatsThis( i18n(_wt_filterlist_delete) );

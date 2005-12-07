@@ -120,7 +120,7 @@ using KMime::DateFormatter;
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <q3widgetstack.h>
-#include <q3whatsthis.h>
+
 
 // other headers:
 #include <assert.h>
@@ -163,7 +163,7 @@ namespace {
   void checkLockDown( QWidget * w, const KConfigBase & c, const char * key ) {
     if ( c.entryIsImmutable( key ) ) {
       w->setEnabled( false );
-      QToolTip::add( w, i18n( lockedDownWarning ) );
+      w->setToolTip( i18n( lockedDownWarning ) );
     } else {
       QToolTip::remove( w );
     }
@@ -1119,7 +1119,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
     new QCheckBox( i18n( "Deta&iled new mail notification" ), group );
   mVerboseNotificationCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                          QSizePolicy::Fixed ) );
-  QToolTip::add( mVerboseNotificationCheck,
+  mVerboseNotificationCheck->setToolTip(
                  i18n( "Show for each folder the number of newly arrived "
                        "messages" ) );
   mVerboseNotificationCheck->setWhatsThis(
@@ -3309,7 +3309,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
   mOutlookCompatibleCheck =
     new QCheckBox( i18n( "Outlook-compatible attachment naming" ), this );
   mOutlookCompatibleCheck->setChecked( false );
-  QToolTip::add( mOutlookCompatibleCheck, i18n(
+  mOutlookCompatibleCheck->setToolTip( i18n(
     "Turn this option on to make Outlook(tm) understand attachment names "
     "containing non-English characters" ) );
   connect( mOutlookCompatibleCheck, SIGNAL( stateChanged( int ) ),
@@ -3970,7 +3970,6 @@ SecurityPageSMimeTab::~SecurityPageSMimeTab()
 
 static void disableDirmngrWidget( QWidget* w ) {
   w->setEnabled( false );
-  Q3WhatsThis::remove( w );
   w->setWhatsThis( i18n( "This option requires dirmngr >= 0.9.0" ) );
 }
 
@@ -4518,7 +4517,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 
   mEnableImapResCB =
     new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
-  QToolTip::add( mEnableImapResCB,  i18n( "This enables the IMAP storage for "
+  mEnableImapResCB->setToolTip(  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
   mEnableImapResCB->setWhatsThis(
         i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().utf8() ) );
@@ -4537,7 +4536,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   QString whatsThis = i18n( GlobalSettings::self()
         ->theIMAPResourceStorageFormatItem()->whatsThis().utf8() );
   grid->addWidget( storageFormatLA, 0, 0 );
-  QToolTip::add( storageFormatLA, toolTip );
+  storageFormatLA->setToolTip( toolTip );
   storageFormatLA->setWhatsThis( whatsThis );
   mStorageFormatCombo = new QComboBox( false, mBox );
   storageFormatLA->setBuddy( mStorageFormatCombo );
@@ -4545,7 +4544,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   formatLst << i18n("Standard (Ical / Vcard)") << i18n("Kolab (XML)");
   mStorageFormatCombo->insertStringList( formatLst );
   grid->addWidget( mStorageFormatCombo, 0, 1 );
-  QToolTip::add( mStorageFormatCombo, toolTip );
+  mStorageFormatCombo->setToolTip( toolTip );
   mStorageFormatCombo->setWhatsThis( whatsThis );
   connect( mStorageFormatCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotStorageFormatChanged( int ) ) );
@@ -4557,7 +4556,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   whatsThis = i18n( GlobalSettings::self()
         ->theIMAPResourceFolderLanguageItem()->whatsThis().utf8() );
   grid->addWidget( languageLA, 1, 0 );
-  QToolTip::add( languageLA, toolTip );
+  languageLA->setToolTip( toolTip );
   languageLA->setWhatsThis( whatsThis );
   mLanguageCombo = new QComboBox( false, mBox );
   languageLA->setBuddy( mLanguageCombo );
@@ -4565,7 +4564,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
   grid->addWidget( mLanguageCombo, 1, 1 );
-  QToolTip::add( mLanguageCombo, toolTip );
+  mLanguageCombo->setToolTip( toolTip );
   mLanguageCombo->setWhatsThis( whatsThis );
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -4573,7 +4572,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mFolderComboLabel = new QLabel( mBox ); // text depends on storage format
   toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().utf8() );
-  QToolTip::add( mFolderComboLabel, toolTip );
+  mFolderComboLabel->setToolTip( toolTip );
   mFolderComboLabel->setWhatsThis( whatsThis );
   grid->addWidget( mFolderComboLabel, 2, 0 );
 
@@ -4585,7 +4584,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mFolderCombo = new FolderRequester( mBox,
       kmkernel->getKMMainWidget()->folderTree() );
   mFolderComboStack->addWidget( mFolderCombo, 0 );
-  QToolTip::add( mFolderCombo, toolTip );
+  mFolderCombo->setToolTip( toolTip );
   mFolderCombo->setWhatsThis( whatsThis );
   connect( mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -4595,7 +4594,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   // are always under the inbox.
   mAccountCombo = new KMail::AccountComboBox( mBox );
   mFolderComboStack->addWidget( mAccountCombo, 1 );
-  QToolTip::add( mAccountCombo, toolTip );
+  mAccountCombo->setToolTip( toolTip );
   mAccountCombo->setWhatsThis( whatsThis );
   connect( mAccountCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -4603,7 +4602,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
   grid->addMultiCellWidget( mHideGroupwareFolders, 3, 3, 0, 1 );
-  QToolTip::add( mHideGroupwareFolders,
+  mHideGroupwareFolders->setToolTip(
                  i18n( "When this is checked, you will not see the IMAP "
                        "resource folders in the folder tree." ) );
   mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
@@ -4626,13 +4625,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
 #endif
   mEnableGwCB = 0;
   mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
-  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
+  mLegacyMangleFromTo->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyMangleFromToHeadersItem()->whatsThis().utf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
-  QToolTip::add( mLegacyBodyInvites, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  mLegacyBodyInvites->setToolTip( i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().utf8() ) );
   connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
@@ -4640,7 +4639,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
-  QToolTip::add( mAutomaticSending, i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
+  mAutomaticSending->setToolTip( i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
   mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
            automaticSendingItem()->whatsThis().utf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),

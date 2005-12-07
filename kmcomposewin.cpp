@@ -226,10 +226,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     //mBtnFrom = new QPushButton("...",mMainWidget);
 
     QString tip = i18n("Select email address(es)");
-    QToolTip::add( mBtnTo, tip );
-    QToolTip::add( mBtnCc, tip );
-    QToolTip::add( mBtnBcc, tip );
-    QToolTip::add( mBtnReplyTo, tip );
+    mBtnTo->setToolTip( tip );
+    mBtnCc->setToolTip( tip );
+    mBtnBcc->setToolTip( tip );
+    mBtnReplyTo->setToolTip( tip );
 
     mBtnTo->setFocusPolicy(Qt::NoFocus);
     mBtnCc->setFocusPolicy(Qt::NoFocus);
@@ -1014,7 +1014,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
   {
     aLbl->setText(aLabelStr);
     if ( !toolTip.isEmpty() )
-      QToolTip::add( aLbl, toolTip );
+      aLbl->setToolTip( toolTip );
     if ( !whatsThis.isEmpty() )
       aLbl->setWhatsThis( whatsThis );
     aLbl->setFixedWidth( mLabelWidth );

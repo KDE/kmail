@@ -384,7 +384,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), this );
   gl->addWidget( sender_label, row, 0 );
   mShowSenderReceiverComboBox = new QComboBox( this );
-  QToolTip::add( mShowSenderReceiverComboBox, tip );
+  mShowSenderReceiverComboBox->setToolTip( tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
   gl->addWidget( mShowSenderReceiverComboBox, row, 1 );
   mShowSenderReceiverComboBox->insertItem(i18n("Default"), 0);

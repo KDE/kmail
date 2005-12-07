@@ -71,7 +71,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   mBtnTo = new QPushButton( QString::null, hbox, "toBtn" );
   mBtnTo->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
   mBtnTo->setMinimumSize( mBtnTo->sizeHint() * 1.2 );
-  QToolTip::add( mBtnTo, i18n("Use the Address-Selection Dialog") );
+  mBtnTo->setToolTip( i18n("Use the Address-Selection Dialog") );
   mBtnTo->setWhatsThis( i18n("This button opens a separate dialog "
                                  "where you can select recipients out "
                                  "of all available addresses." ) );
