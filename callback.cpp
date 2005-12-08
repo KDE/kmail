@@ -79,7 +79,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
-    if( identity != KPIM::Identity::null )
+    if( identity != KPIM::Identity::null() )
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
       msg->setHeaderField("X-KMail-Identity", QString::number( identity.uoid() ));
@@ -119,7 +119,7 @@ QString Callback::receiver() const
     int found = 0;
     for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
       if( kmkernel->identityManager()->identityForAddress( *it ) !=
-          KPIM::Identity::null ) {
+          KPIM::Identity::null() ) {
 	// Ok, this could be us
         ++found;
         mReceiver = *it;
