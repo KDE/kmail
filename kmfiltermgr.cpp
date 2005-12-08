@@ -311,8 +311,9 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
   QList<KMFilter*>::const_iterator it = mFilters.begin();
   for ( ; it != mFilters.end() ; ++it ) {
     KMFilter *filter = *it;
-    QList<KMFilterAction*>::const_iterator jt( filter->actions()->begin() );
-    for ( ; jt != filter->actions()->end() ; ++jt ) {
+    QList<KMFilterAction*>::const_iterator jt = filter->actions()->begin();
+    const QList<KMFilterAction*>::const_iterator jtend = filter->actions()->end();
+    for ( ; jt != jtend ; ++jt ) {
       KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
       if (!f)
         continue;
