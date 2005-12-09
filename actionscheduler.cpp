@@ -592,7 +592,7 @@ void ActionScheduler::filterMessage()
                                     FilterLog::patternResult );
       }
       mFilterActionIt = (*mFilterIt)->actions()->begin();
-      mFilterAction = (*mFilterActionIt)++;
+      mFilterAction = (*mFilterActionIt);
       actionMessage();
       return;
     }
@@ -617,7 +617,9 @@ void ActionScheduler::actionMessage(KMFilterAction::ReturnCode res)
       }
       KMFilterAction *action = mFilterAction;
 //      mFilterAction = (*mFilterIt).actions()->next();
-      mFilterAction = (*mFilterActionIt)++;
+      if ( ++mFilterActionIt == (*mFilterIt)->actions()->end() )
+        mFilterAction = 0;
+      else mFilterAction = (*mFilterActionIt);
       action->processAsync( msg );
     }
   } else {
