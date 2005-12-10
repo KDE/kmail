@@ -1780,6 +1780,18 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       item = item->nextSibling();
       continue;
     }
+    if ( action == MoveFolder ) {
+      // FIXME remove in KDE 4
+      // skip all but local folders if a folder is to be moved
+      // because moving of nested folders to IMAP and DIMAP
+      // looses all messages in the subfolders
+      if ( fti->protocol() != KFolderTreeItem::Local
+        && fti->protocol() != KFolderTreeItem::NONE )
+      {
+        item = item->nextSibling();
+        continue;
+      }
+    }
     QString label = fti->text( 0 );
     label.replace( "&","&&" );
     if ( fti->firstChild() )
