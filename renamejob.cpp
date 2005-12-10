@@ -58,6 +58,7 @@ RenameJob::RenameJob( FolderStorage* storage, const QString& newName,
    mStorage( storage ), mNewParent( newParent ),
    mNewName( newName ), mNewFolder( 0 )
 {
+  mStorageTempOpened = 0;
   mOldName = storage->name();
   if ( storage->folderType() == KMFolderTypeImap ) {
     mOldImapPath = static_cast<KMFolderImap*>(storage)->imapPath();
@@ -77,7 +78,8 @@ void RenameJob::execute()
     // move the folder to a different parent
     KMFolderType type = mStorage->folderType();
     if ( ( type == KMFolderTypeMbox || type == KMFolderTypeMaildir ) &&
-         mNewParent->type() == KMStandardDir )
+         mNewParent->type() == KMStandardDir &&
+         mStorage->folderType() != KMFolderTypeCachedImap )
     {
       // local folders can handle this on their own
       mStorage->rename( mNewName, mNewParent );
@@ -131,7 +133,11 @@ void RenameJob::execute()
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mNewFolder->storage());
       KMFolderCachedImap* owner = static_cast<KMFolderCachedImap*>(mNewParent->owner()->storage());
       newStorage->initializeFrom( owner );
-      slotMoveMessages();
+      moveSubFoldersBeforeMessages();
+    } else if ( mStorage->folderType() == KMFolderTypeCachedImap )
+    {
+      // from (d)IMAP to local account
+      moveSubFoldersBeforeMessages();
     } else
     {
       // local
@@ -219,6 +225,8 @@ void RenameJob::slotMoveMessages()
   mStorage->blockSignals( true );
   // move all messages to the new folder
   QPtrList<KMMsgBase> msgList;
+  if ( !mStorage->isOpened() )
+    mStorageTempOpened = mStorage->open() ? mStorage : 0;
   for ( int i = 0; i < mStorage->count(); i++ )
   {
     KMMsgBase* msgBase = mStorage->getMsgBase( i );
@@ -240,6 +248,10 @@ void RenameJob::slotMoveMessages()
 void RenameJob::slotMoveCompleted( KMCommand* command )
 {
   kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
+  if ( mStorageTempOpened ) {
+    mStorageTempOpened->close();
+    mStorageTempOpened = 0;
+  }
   if ( command ) {
     // just make sure nothing bounces
     disconnect( command, SIGNAL( completed( KMCommand * ) ),
@@ -263,6 +275,10 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
       config->writeEntry( it.key(), it.data() );
     }
     mNewFolder->readConfig( config );
+    // make sure the children state is correct
+    if ( mNewFolder->child() &&
+         ( mNewFolder->storage()->hasChildren() == FolderStorage::HasNoChildren ) )
+      mNewFolder->storage()->updateChildrenState();
 
     // delete the old folder
     mStorage->blockSignals( false );
@@ -313,6 +329,39 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     emit renameDone( mNewName, false );
   }
   delete this;
+}
+
+void RenameJob::slotMoveSubFolders( QString newName, bool success )
+{
+  if ( !success ) {
+      emit renameDone( newName, false );
+  } else {
+    KMFolderDir* child = mStorage->folder()->child();
+    if ( child && child->first() )
+    {
+      KMFolderNode* node = child->first();
+      {
+        FolderStorage* childStorage = static_cast<KMFolder*>(node)->storage();
+        if ( !mNewFolder->child() )
+          mNewFolder->createChildFolder();
+        RenameJob* job = new RenameJob( childStorage, childStorage->name(),
+                                        mNewFolder->child() );
+        connect( job, SIGNAL( renameDone( QString, bool ) ),
+            this, SLOT( slotMoveSubFolders( QString, bool ) ) );
+        job->start();
+      }
+    }
+    else slotMoveMessages();
+  }
+}
+
+void RenameJob::moveSubFoldersBeforeMessages()
+{
+  // move child folders recursive if present - else simply move the messages
+  KMFolderDir* child = mStorage->folder()->child();
+  if ( child )
+    slotMoveSubFolders( "", true );
+  else slotMoveMessages();
 }
 
 #include "renamejob.moc"
