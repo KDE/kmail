@@ -47,7 +47,6 @@
 #include <kiconloader.h>
 
 #include <q3header.h>
-#include <q3popupmenu.h>
 #include <qstyle.h>
 //Added by qt3to4:
 #include <Q3PtrList>
@@ -127,11 +126,11 @@ void KMMimePartTree::itemRightClicked( Q3ListViewItem* item,
     else {
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
 
-        Q3PopupMenu* popup = new Q3PopupMenu;
-        popup->insertItem( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
-        popup->insertItem( i18n( "Save as &Encoded..." ), this,
+        QMenu* popup = new QMenu;
+        popup->addAction( SmallIcon("filesaveas"),i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
+        popup->addAction( i18n( "Save as &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
-        popup->insertItem( i18n( "Save All Attachments..." ), this,
+        popup->addAction( i18n( "Save All Attachments..." ), this,
                            SLOT( slotSaveAll() ) );
         popup->exec( point );
         delete popup;

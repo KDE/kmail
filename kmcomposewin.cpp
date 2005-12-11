@@ -2886,19 +2886,19 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
 {
   if (!mAttachMenu)
   {
-     mAttachMenu = new Q3PopupMenu(this);
+     mAttachMenu = new QMenu(this);
 
-     mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
+     mOpenId = mAttachMenu->addAction(i18n("to open", "Open"), this,
                              SLOT(slotAttachOpen()));
-     mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
+     mViewId = mAttachMenu->addAction(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
-     mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-     mSaveAsId = mAttachMenu->insertItem( SmallIconSet("filesaveas"), i18n("Save As..."), this,
+     mRemoveId = mAttachMenu->addAction(i18n("Remove"), this, SLOT(slotAttachRemove()));
+     mSaveAsId = mAttachMenu->addAction( SmallIconSet("filesaveas"), i18n("Save As..."), this,
                                           SLOT( slotAttachSave() ) );
-     mPropertiesId = mAttachMenu->insertItem( i18n("Properties"), this,
+     mPropertiesId = mAttachMenu->addAction( i18n("Properties"), this,
                                               SLOT( slotAttachProperties() ) );
      mAttachMenu->insertSeparator();
-     mAttachMenu->insertItem(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));
+     mAttachMenu->addAction(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));
   }
 
   int selectedCount = 0;
@@ -2908,11 +2908,11 @@ void KMComposeWin::slotAttachPopupMenu(Q3ListViewItem *, const QPoint &, int)
     }
   }
 
-  mAttachMenu->setItemEnabled( mOpenId, selectedCount > 0 );
-  mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
-  mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
-  mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
-  mAttachMenu->setItemEnabled( mPropertiesId, selectedCount == 1 );
+  mOpenId->setEnabled( selectedCount > 0 );
+  mViewId->setEnabled( selectedCount > 0 );
+  mRemoveId->setEnabled( selectedCount > 0 );
+  mSaveAsId->setEnabled( selectedCount == 1 );
+  mPropertiesId->setEnabled( selectedCount == 1 );
 
   mAttachMenu->popup(QCursor::pos());
 }

@@ -11,7 +11,6 @@
 #include <QMenu>
 #include <QDropEvent>
 
-class Q3PopupMenu;
 
 class KMLineEdit : public KPIM::AddresseeLineEdit
 {

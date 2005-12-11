@@ -694,8 +694,8 @@ private:
   int mAtmCompressColWidth;
   Q3PtrList<Q3ListViewItem> mAtmItemList;
   Q3PtrList<KMMessagePart> mAtmList;
-  Q3PopupMenu *mAttachMenu;
-  int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  QMenu *mAttachMenu;
+  QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId;
   bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
   bool mLastSignActionState, mLastEncryptActionState;
