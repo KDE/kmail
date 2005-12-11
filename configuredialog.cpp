@@ -496,14 +496,14 @@ void IdentityPage::slotContextMenu( KListView *, Q3ListViewItem * i,
                                     const QPoint & pos ) {
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
-  Q3PopupMenu * menu = new Q3PopupMenu( this );
-  menu->insertItem( i18n("Add..."), this, SLOT(slotNewIdentity()) );
+  QMenu * menu = new QMenu( this );
+  menu->addAction( i18n("Add..."), this, SLOT(slotNewIdentity()) );
   if ( item ) {
-    menu->insertItem( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
+    menu->addAction( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
     if ( mIdentityList->childCount() > 1 )
-      menu->insertItem( i18n("Remove"), this, SLOT(slotRemoveIdentity()) );
+      menu->addAction( i18n("Remove"), this, SLOT(slotRemoveIdentity()) );
     if ( !item->identity().isDefault() )
-      menu->insertItem( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
+      menu->addAction( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
   }
   menu->exec( pos );
   delete menu;
