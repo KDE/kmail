@@ -8,7 +8,7 @@
 #include <libkdepim/addresseelineedit.h>
 //Added by qt3to4:
 #include <QKeyEvent>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QDropEvent>
 
 class Q3PopupMenu;
@@ -30,8 +30,8 @@ protected:
 
     virtual void keyPressEvent(QKeyEvent*);
 
-    virtual Q3PopupMenu *createPopupMenu();
-
+    virtual void contextMenuEvent( QContextMenuEvent*e );
+    
 private slots:
     void editRecentAddresses();
 

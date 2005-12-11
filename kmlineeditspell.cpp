@@ -27,7 +27,6 @@
 #include <qcursor.h>
 //Added by qt3to4:
 #include <QKeyEvent>
-#include <Q3PopupMenu>
 #include <QDropEvent>
 
 
@@ -129,18 +128,13 @@ void KMLineEdit::dropEvent(QDropEvent *event)
   }
 }
 
-Q3PopupMenu *KMLineEdit::createPopupMenu()
+void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 {
-#warning Port me!
-    Q3PopupMenu *menu = 0;//KPIM::AddresseeLineEdit::createPopupMenu();
-    if ( !menu )
-        return 0;
-
-    menu->insertSeparator();
-    menu->insertItem( i18n( "Edit Recent Addresses..." ),
-                      this, SLOT( editRecentAddresses() ) );
-
-    return menu;
+   QMenu *popup = KLineEdit::createStandardContextMenu();
+   popup->insertSeparator();
+   popup->insertItem( i18n( "Edit Recent Addresses..." ),this, SLOT( editRecentAddresses() ) );
+   popup->exec( e->globalPos() );
+   delete popup;
 }
 
 void KMLineEdit::editRecentAddresses()
