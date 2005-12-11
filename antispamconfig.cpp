@@ -37,8 +37,6 @@
 
 #include <kstaticdeleter.h>
 #include <kconfig.h>
-//Added by qt3to4:
-#include <Q3CString>
 #include <QStringList>
 
 using namespace KMail;
@@ -65,8 +63,8 @@ void AntiSpamConfig::readConfig()
     KConfigGroup tool( &config, QString("Spamtool #%1").arg( i ) );
     if ( tool.hasKey( "ScoreHeader" ) ) {
       QString name      = tool.readEntry( "ScoreName" );
-      Q3CString header   = tool.readEntry( "ScoreHeader" ).toLatin1();
-      Q3CString type     = tool.readEntry( "ScoreType" ).toLatin1();
+      QByteArray header   = tool.readEntry( "ScoreHeader" ).latin1();
+      QByteArray type     = tool.readEntry( "ScoreType" ).latin1();
       QString score     = tool.readEntryUntranslated( "ScoreValueRegexp" );
       QString threshold = tool.readEntryUntranslated( "ScoreThresholdRegexp" );
       SpamAgentTypes typeE = SpamAgentNone;

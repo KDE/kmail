@@ -34,13 +34,9 @@
 #ifndef __KMAIL_ANTISPAMCONFIG_H__
 #define __KMAIL_ANTISPAMCONFIG_H__
 
-#include <q3valuelist.h>
 #include <qregexp.h>
-//Added by qt3to4:
-#include <Q3CString>
-
+#include <QList>
 class QString;
-class Q3CString;
 
 namespace KMail {
 
@@ -56,21 +52,21 @@ namespace KMail {
   class SpamAgent {
   public:
     SpamAgent() : mType( SpamAgentNone ) {}
-    SpamAgent( const QString & name, SpamAgentTypes type, const Q3CString & field,
+    SpamAgent( const QString & name, SpamAgentTypes type, const QByteArray & field,
                const QRegExp & score, const QRegExp & threshold )
       : mName( name ), mType( type ), mField( field ),
         mScore( score ), mThreshold( threshold ) {}
 
     QString name() const { return mName; }
     SpamAgentTypes scoreType() const { return mType; }
-    Q3CString header() const { return mField; }
+    QByteArray header() const { return mField; }
     QRegExp scorePattern() const { return mScore; }
     QRegExp thresholdPattern() const { return mThreshold; }
 
   private:
     QString mName;
     SpamAgentTypes mType;
-    Q3CString mField;
+    QByteArray mField;
     QRegExp mScore;
     QRegExp mThreshold;
   };
