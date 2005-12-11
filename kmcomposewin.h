@@ -32,7 +32,6 @@
 #include <QEvent>
 #include <Q3Frame>
 #include <QList>
-#include <Q3PopupMenu>
 
 #include <kio/job.h>
 #include <kglobalsettings.h>
@@ -52,7 +51,6 @@ class QComboBox;
 class Q3Frame;
 class QGridLayout;
 class Q3ListView;
-class Q3PopupMenu;
 class QPushButton;
 class Q3CString;
 class KCompletion;

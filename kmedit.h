@@ -25,7 +25,6 @@ class KTempFile;
 class KDictSpellingHighlighter;
 class KDirWatch;
 class KProcess;
-class Q3PopupMenu;
 
 
 class KMEdit : public KEdit {
