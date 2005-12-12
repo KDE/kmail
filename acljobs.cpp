@@ -34,7 +34,9 @@
 
 using namespace KMail;
 
-static unsigned int IMAPRightsToPermission( const QString& str ) {
+// Convert str to an ACLPermissions value.
+// url and user are there only for the error message
+static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url, const QString& user ) {
   unsigned int perm = 0;
   bool foundSeenPerm = false;
   uint len = str.length();
@@ -57,7 +59,7 @@ static unsigned int IMAPRightsToPermission( const QString& str ) {
     // Reading without 'seen' is, well, annoying. Unusable, even.
     // So we treat 'rs' as a single one.
     // But if the permissions were set out of kmail, better check that both are set
-    kdWarning(5006) << "IMAPRightsToPermission: found read (r) but not seen (s). Things will not work well." << endl;
+    kdWarning(5006) << "IMAPRightsToPermission: found read (r) but not seen (s). Things will not work well for folder " << url << " and user " << ( user.isEmpty() ? "myself" : user ) << endl;
     if ( perm & ACLJobs::Administer )
       kdWarning(5006) << "You can change this yourself in the ACL dialog" << endl;
     else
@@ -177,7 +179,7 @@ void ACLJobs::GetACLJob::slotInfoMessage( KIO::Job*, const QString& str )
   {
     QString user = lst.front(); lst.pop_front();
     QString imapRights = lst.front(); lst.pop_front();
-    unsigned int perm = IMAPRightsToPermission( imapRights );
+    unsigned int perm = IMAPRightsToPermission( imapRights, url(), user );
     m_entries.append( ACLListEntry( user, imapRights, perm ) );
   }
 }
@@ -193,7 +195,7 @@ ACLJobs::GetUserRightsJob::GetUserRightsJob( const KURL& url, const QByteArray &
 void ACLJobs::GetUserRightsJob::slotInfoMessage( KIO::Job*, const QString& str )
 {
   // Parse the result
-  m_permissions = IMAPRightsToPermission( str );
+  m_permissions = IMAPRightsToPermission( str, url(), QString::null );
 }
 
 ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,
