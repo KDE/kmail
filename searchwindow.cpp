@@ -45,7 +45,6 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 #include <QKeyEvent>
-#include <Q3Frame>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>

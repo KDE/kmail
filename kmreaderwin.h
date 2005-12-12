@@ -11,7 +11,6 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 #include <QEvent>
-#include <Q3Frame>
 #include <QList>
 #include <QResizeEvent>
 #include <kurl.h>
@@ -22,7 +21,6 @@ using KPIM::MessageStatus;
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "interfaces/observer.h"
 
-class Q3Frame;
 class QSplitter;
 class KHBox;
 class Q3ListViewItem;

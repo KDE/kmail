@@ -47,7 +47,6 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QVBoxLayout>
-#include <Q3Frame>
 #include <QHBoxLayout>
 using namespace KIO;
 #include <kxface.h>
@@ -103,7 +102,7 @@ namespace KMail {
     mXFaceLabel->setWhatsThis(
                     i18n( "This is a preview of the picture selected/entered below." ) );
     mXFaceLabel->setFixedSize(48, 48);
-    mXFaceLabel->setFrameShape( Q3Frame::Box );
+    mXFaceLabel->setFrameShape( QFrame::Box );
     hlay->addWidget( mXFaceLabel );
 
 //     label1 = new QLabel( "X-Face:", this );

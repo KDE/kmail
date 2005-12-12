@@ -30,7 +30,6 @@
 #include <QGridLayout>
 #include <QCloseEvent>
 #include <QEvent>
-#include <Q3Frame>
 #include <QList>
 
 #include <kio/job.h>
@@ -48,7 +47,6 @@
 
 class QCloseEvent;
 class QComboBox;
-class Q3Frame;
 class QGridLayout;
 class Q3ListView;
 class QPushButton;

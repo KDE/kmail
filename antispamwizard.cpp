@@ -59,7 +59,6 @@
 #include <QPixmap>
 #include <Q3CString>
 #include <QGridLayout>
-#include <Q3Frame>
 #include <QHBoxLayout>
 #include <QBoxLayout>
 #include <QVBoxLayout>
@@ -847,8 +846,8 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   mBannerLabel = new QLabel( this );
   mBannerLabel->setPixmap( *mPixmap );
   mBannerLabel->setScaledContents( false );
-  mBannerLabel->setFrameShape( Q3Frame::StyledPanel );
-  mBannerLabel->setFrameShadow( Q3Frame::Sunken );
+  mBannerLabel->setFrameShape( QFrame::StyledPanel );
+  mBannerLabel->setFrameShadow( QFrame::Sunken );
 
   mLayout->addWidget( mBannerLabel );
   mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );

@@ -420,8 +420,8 @@ void KMTransportDialog::makeSmtpPage()
   label->setBuddy(mSmtp.precommand);
   grid->addWidget( mSmtp.precommand, 5, 1 );
 
-  Q3Frame* line = new Q3Frame( page1 );
-  line->setFrameStyle( Q3Frame::HLine | Q3Frame::Plain );
+  QFrame* line = new QFrame( page1 );
+  line->setFrameStyle( QFrame::HLine | QFrame::Plain );
   grid->addMultiCellWidget( line, 6, 6, 0, 1 );
 
   mSmtp.authCheck =

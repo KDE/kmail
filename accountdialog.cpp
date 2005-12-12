@@ -36,7 +36,6 @@
 #include <qtoolbutton.h>
 #include <q3grid.h>
 //Added by qt3to4:
-#include <Q3Frame>
 #include <QGridLayout>
 #include <QTextStream>
 #include <QList>
@@ -469,8 +468,9 @@ void AccountDialog::makeMaildirAccountPage()
   QFont titleFont( mMaildir.titleLabel->font() );
   titleFont.setBold( true );
   mMaildir.titleLabel->setFont( titleFont );
-  Q3Frame *hline = new Q3Frame( page );
-  hline->setFrameStyle( Q3Frame::Sunken | Q3Frame::HLine );
+  QFrame *hline = new QFrame( page );
+  hline->setFrameShape ( QFrame::HLine );
+  hline->setFrameShadow( QFrame::Sunken);
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
   mMaildir.nameEdit = new KLineEdit( page );
