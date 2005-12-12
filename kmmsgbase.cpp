@@ -140,14 +140,16 @@ void KMMsgBase::toggleStatus(const MessageStatus& aStatus, int idx)
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const MessageStatus& aStatus, int idx)
 {
-  mDirty = TRUE;
   MessageStatus oldStatus = mStatus;
   mStatus.set( aStatus );
-  if ( oldStatus != mStatus && storage() ) {
-    if (idx < 0)
-      idx = storage()->find( this );
-    storage()->msgStatusChanged( oldStatus, mStatus, idx );
-    storage()->headerOfMsgChanged( this, idx );
+  if ( oldStatus != mStatus ) {
+    mDirty = TRUE;
+    if ( storage() ) {
+      if (idx < 0)
+        idx = storage()->find( this );
+      storage()->msgStatusChanged( oldStatus, mStatus, idx );
+      storage()->headerOfMsgChanged( this, idx );
+    }
   }
 }
 
