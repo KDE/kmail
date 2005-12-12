@@ -44,7 +44,6 @@
 #include <Q3CString>
 #include <QTextStream>
 #include <Q3PtrList>
-#include <Q3Frame>
 #include <QTimerEvent>
 #include <QVBoxLayout>
 using KMail::AccountManager;
@@ -1775,7 +1774,7 @@ void KMFolderCachedImap::listDirectory2()
   }
 
   // Find all subfolders present on server but not on disk
-  for (uint i = 0; i < mSubfolderNames.count(); i++) {
+  for (int i = 0; i < mSubfolderNames.count(); i++) {
 
     // Find the subdir, if already present
     for (node = folder()->child()->first(); node;
