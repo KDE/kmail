@@ -554,8 +554,8 @@ time_t KMMsgInfo::date(void) const
 //-----------------------------------------------------------------------------
 size_t KMMsgInfo::msgSizeServer(void) const
 {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::SIZESERVER_SET) 
-      return kd->msgSizeServer; 
+    if (kd && kd->modifiers & KMMsgInfoPrivate::SIZESERVER_SET)
+      return kd->msgSizeServer;
     return getLongPart(MsgSizeServerPart);
 }
 
@@ -635,6 +635,7 @@ void KMMsgInfo::setFileName(const QString& file)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
 {
+    // ## this test is wrong since setStatus is also used to set one more bit, not just to set a complete status
     if(aStatus == status())
 	return;
     KMMsgBase::setStatus(aStatus, idx); //base does more "stuff"

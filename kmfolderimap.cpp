@@ -1090,21 +1090,26 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 //-----------------------------------------------------------------------------
 void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  if (flags & 4)
+  const KMMsgStatus oldStatus = msg->status();
+  // Set flags if they are new
+  if ( (flags & 4) && (oldStatus & KMMsgStatusFlag) == 0 )
     msg->setStatus( KMMsgStatusFlag );
-  if (flags & 2)
+  if ( (flags & 2) && (oldStatus & KMMsgStatusReplied) == 0 )
     msg->setStatus( KMMsgStatusReplied );
-  if (flags & 1)
+  if ( (flags & 1) && (oldStatus & KMMsgStatusOld) == 0 )
     msg->setStatus( KMMsgStatusOld );
 
   // In case the message does not have the seen flag set, override our local
   // notion that it is read. Otherwise the count of unread messages and the
   // number of messages which actually show up as read can go out of sync.
   if (msg->isOfUnknownStatus() || !(flags&1) ) {
-    if (newMsg)
-      msg->setStatus( KMMsgStatusNew );
-    else
-      msg->setStatus( KMMsgStatusUnread );
+    if (newMsg) {
+      if ( (oldStatus & KMMsgStatusNew) == 0 )
+        msg->setStatus( KMMsgStatusNew );
+    } else {
+      if ( (oldStatus & KMMsgStatusUnread) == 0 )
+        msg->setStatus( KMMsgStatusUnread );
+    }
   }
 }
 
