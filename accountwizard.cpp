@@ -40,7 +40,6 @@
 #include <qpushbutton.h>
 
 //Added by qt3to4:
-#include <Q3Frame>
 #include <QGridLayout>
 #include <kvbox.h>
 
@@ -345,7 +344,7 @@ QString AccountWizard::accountName() const
 QLabel *AccountWizard::createInfoLabel( const QString &msg )
 {
   QLabel *label = new QLabel( msg, this );
-  label->setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
+  label->setFrameStyle( QFrame::Panel | QFrame::Raised );
   label->resize( fontMetrics().width( msg ) + 20, label->height() * 2 );
   label->move( width() / 2 - label->width() / 2, height() / 2 - label->height() / 2 );
   label->show();
