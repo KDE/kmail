@@ -18,7 +18,7 @@
 #include <qlayout.h>
 #include <q3listview.h>
 #include <q3textedit.h>
-#include <q3popupmenu.h>
+#include <QMenu>
 //Added by qt3to4:
 #include <QVBoxLayout>
 
@@ -156,15 +156,15 @@ void KMail::ManageSieveScriptsDialog::slotContextMenuRequested( Q3ListViewItem *
     return;
   if ( !item->depth() && !mUrls.count( item ) )
     return;
-  Q3PopupMenu menu;
+  QMenu menu;
   mContextMenuItem = item;
   if ( item->depth() ) {
     // script items:
-    menu.insertItem( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
-    menu.insertItem( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
+    menu.addAction( i18n( "Delete Script" ), this, SLOT(slotDeleteScript()) );
+    menu.addAction( i18n( "Edit Script..." ), this, SLOT(slotEditScript()) );
   } else {
     // top-levels:
-    menu.insertItem( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
+    menu.addAction( i18n( "New Script..." ), this, SLOT(slotNewScript()) );
   }
   menu.exec( p );
   mContextMenuItem = 0;
