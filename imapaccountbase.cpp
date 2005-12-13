@@ -202,10 +202,8 @@ namespace KMail {
     namespaceDelim entries = config.entryMap( config.group() );
     namespaceDelim namespaceToDelimiter;
     for ( namespaceDelim::ConstIterator it = entries.begin(); 
-          it != entries.end(); ++it )
-    {
-      if ( it.key().startsWith( "Namespace:" ) )
-      {
+          it != entries.end(); ++it ) {
+      if ( it.key().startsWith( "Namespace:" ) ) {
         QString key = it.key().right( it.key().length() - 10 );
         namespaceToDelimiter[key] = it.data();
       }
@@ -226,18 +224,15 @@ namespace KMail {
     config.writeEntry( "loadondemand", loadOnDemand() );
     config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
     QString data;
-    for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it )
-    {
-      if ( !it.data().isEmpty() )
-      {
+    for ( nsMap::Iterator it = mNamespaces.begin(); it != mNamespaces.end(); ++it ) {
+      if ( !it.data().isEmpty() ) {
         data = "\"" + it.data().join("\",\"") + "\"";
         config.writeEntry( QString::number( it.key() ), data );
       }
     }
     QString key;
     for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
-          it != mNamespaceToDelimiter.end(); ++it )
-    {
+          it != mNamespaceToDelimiter.end(); ++it ) {
       key = "Namespace:" + it.key();
       config.writeEntry( key, it.data() );
     }
@@ -688,14 +683,14 @@ namespace KMail {
         QString msg = i18n("KMail has detected a prefix entry in the "
             "configuration of the account \"%1\" which is obsolete with the "
             "support of IMAP namespaces.").arg( name() );
-        if ( list.contains( QString::null ) ) {
+        if ( list.contains( "" ) ) {
           // replace empty entry with the old prefix
-          list.remove( QString::null );
+          list.remove( "" );
           list += mOldPrefix;
           mNamespaces[PersonalNS] = list;
-          if ( mNamespaceToDelimiter.contains( QString::null ) ) {
-            QString delim = mNamespaceToDelimiter[QString::null];
-            mNamespaceToDelimiter.remove( QString::null );
+          if ( mNamespaceToDelimiter.contains( "" ) ) {
+            QString delim = mNamespaceToDelimiter[""];
+            mNamespaceToDelimiter.remove( "" );
             mNamespaceToDelimiter[mOldPrefix] = delim;
           }
           kdDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
@@ -726,7 +721,7 @@ namespace KMail {
     {
       kdDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
-    mOldPrefix = QString::null;
+    mOldPrefix = "";
   }
 
   //-----------------------------------------------------------------------------
@@ -771,8 +766,7 @@ namespace KMail {
     // then try if the prefix is part of a namespace
     // exclude empty namespace
     for ( namespaceDelim::ConstIterator it = mNamespaceToDelimiter.begin(); 
-          it != mNamespaceToDelimiter.end(); ++it )
-    {
+          it != mNamespaceToDelimiter.end(); ++it ) {
       // the namespace definition sometimes contains the delimiter
       // make sure we also match this version
       QString stripped = it.key().left( it.key().length() - 1 );
@@ -782,8 +776,9 @@ namespace KMail {
       }
     }
     // see if we have an empty namespace
-    if ( mNamespaceToDelimiter.contains( QString::null ) ) {
-      return mNamespaceToDelimiter[QString::null];
+    // this should always be the case
+    if ( mNamespaceToDelimiter.contains( "" ) ) {
+      return mNamespaceToDelimiter[""];
     }
     // well, we tried
     kdDebug(5006) << "delimiterForNamespace - not found" << endl;
@@ -1273,6 +1268,7 @@ namespace KMail {
   QString ImapAccountBase::createImapPath( const QString& parent, 
                                            const QString& folderName )
   {
+    kdDebug(5006) << "createImapPath parent="<<parent<<", folderName="<<folderName<<endl;  
     QString newName = parent;
     // strip / at the end
     if ( newName.endsWith("/") ) {
