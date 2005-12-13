@@ -241,11 +241,28 @@ void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotSave()
 {
+  KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
+  if( !account->onlySubscribedFolders() ) {
+      int result = KMessageBox::questionYesNoCancel( this,
+              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?")
+              .arg( account->name() ),
+              i18n("Enable Subscriptions?"), i18n("Enable"), i18n("Do Not Enable"));
+      switch(result) {
+          case KMessageBox::Yes:
+              mForceSubscriptionEnable = true;
+              break;
+          case KMessageBox::No:
+              break;
+          case KMessageBox::Cancel:
+              cancel();
+      }
+  }
+
   // subscribe
   QListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
   {
-    static_cast<ImapAccountBase*>(account())->changeSubscription(true,
+    account->changeSubscription(true,
         static_cast<GroupItem*>(it.current())->info().path);
   }
 
@@ -253,16 +270,12 @@ void SubscriptionDialog::slotSave()
   QListViewItemIterator it2(unsubView);
   for ( ; it2.current(); ++it2)
   {
-    static_cast<ImapAccountBase*>(account())->changeSubscription(false,
+    account->changeSubscription(false,
         static_cast<GroupItem*>(it2.current())->info().path);
   }
 
-  if( mForceSubscriptionEnable ) {
-    KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
-    if( account )
-    {
-      account->setOnlySubscribedFolders(true);
-    }
+  if ( mForceSubscriptionEnable ) {
+    account->setOnlySubscribedFolders(true);
   }
 }
 
@@ -368,27 +381,6 @@ void SubscriptionDialog::slotConnectionResult( int errorCode, const QString& err
 void SubscriptionDialog::show()
 {
   KDialogBase::show();
-  KMail::ImapAccountBase *account = static_cast<KMail::ImapAccountBase*>(mAcct);
-  if( account )
-  {
-    if( !account->onlySubscribedFolders() )
-    {
-      kdDebug() << "Not subscribed!!!" << endl;
-      int result = KMessageBox::questionYesNoCancel( this,
-              i18n("Currently subscriptions are not used for server %1\ndo you want to enable subscriptions?")
-              .arg( account->name() ),
-            i18n("Enable Subscriptions?"), i18n("Enable"), i18n("Do Not Enable"));
-        switch(result) {
-            case KMessageBox::Yes:
-                mForceSubscriptionEnable = true;
-                break;
-            case KMessageBox::No:
-                break;
-            case KMessageBox::Cancel:
-                cancel();
-        }
-    }
-  }
 }
 
 } // namespace
