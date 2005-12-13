@@ -2396,7 +2396,7 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
 
   inlineSignatureState  = KMMsgNotSigned;
   inlineEncryptionState = KMMsgNotEncrypted;
-  Q3PtrList<Kpgp::Block> pgpBlocks;
+  QList<Kpgp::Block> pgpBlocks;
   QList<QByteArray> nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
@@ -2409,12 +2409,10 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
       QString decryptionError;
       Kpgp::Validity keyTrust = Kpgp::KPGP_VALIDITY_FULL;
 
-      Q3PtrListIterator<Kpgp::Block> pbit( pgpBlocks );
-
+      QList<Kpgp::Block>::iterator pbit =  pgpBlocks.begin();
       QListIterator<QByteArray> npbit( nonPgpBlocks );
-
       QString htmlStr;
-      for( ; *pbit != 0; ++pbit )
+      for( ; pbit != pgpBlocks.end(); ++pbit )
       {
           // insert the next Non-OpenPGP block
           QByteArray str( npbit.next() );
@@ -2441,20 +2439,20 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
 
           //htmlStr += "<br>";
 
-          Kpgp::Block* block = *pbit;
-          if( ( block->type() == Kpgp::PgpMessageBlock &&
+          Kpgp::Block &block = *pbit;
+          if( ( block.type() == Kpgp::PgpMessageBlock &&
                 // ### Workaround for bug 56693
                 !kmkernel->contextMenuShown() ) ||
-              ( block->type() == Kpgp::ClearsignedBlock ) )
+              ( block.type() == Kpgp::ClearsignedBlock ) )
           {
               isPgpMessage = true;
-              if( block->type() == Kpgp::PgpMessageBlock )
+              if( block.type() == Kpgp::PgpMessageBlock )
               {
                 if ( mReader )
                   emit mReader->noDrag();
                 // try to decrypt this OpenPGP block
-                couldDecrypt = block->decrypt();
-                isEncrypted = block->isEncrypted();
+                couldDecrypt = block.decrypt();
+                isEncrypted = block.isEncrypted();
                 if (!couldDecrypt) {
                   decryptionError = pgp->lastErrorMsg();
                 }
@@ -2462,17 +2460,17 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
               else
               {
                   // try to verify this OpenPGP block
-                  block->verify();
+                  block.verify();
               }
 
-              isSigned = block->isSigned();
+              isSigned = block.isSigned();
               if( isSigned )
               {
-                  keyId = block->signatureKeyId();
-                  signer = block->signatureUserId();
+                  keyId = block.signatureKeyId();
+                  signer = block.signatureUserId();
                   if( !signer.isEmpty() )
                   {
-                      goodSignature = block->goodSignature();
+                      goodSignature = block.goodSignature();
 
                       if( !keyId.isEmpty() ) {
                         keyTrust = pgp->keyTrust( keyId );
@@ -2509,11 +2507,11 @@ void ObjectTreeParser::writeBodyStr( const Q3CString& aStr, const QTextCodec *aC
 
               htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
-              htmlStr += quotedHTML( aCodec->toUnicode( block->text() ), decorate );
+              htmlStr += quotedHTML( aCodec->toUnicode( block.text() ), decorate );
               htmlStr += writeSigstatFooter( messagePart );
           }
           else // block is neither message block nor clearsigned block
-            htmlStr += quotedHTML( aCodec->toUnicode( block->text() ),
+            htmlStr += quotedHTML( aCodec->toUnicode( block.text() ),
                                    decorate );
       }
 

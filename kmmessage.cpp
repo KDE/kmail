@@ -759,7 +759,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
 
   // decrypt
   if ( allowDecryption ) {
-    Q3PtrList<Kpgp::Block> pgpBlocks;
+    QList<Kpgp::Block> pgpBlocks;
     QList<QByteArray>  nonPgpBlocks;
     if ( Kpgp::Module::prepareMessageForDecryption( parsedString,
 						    pgpBlocks,
@@ -767,20 +767,20 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
       // Only decrypt/strip off the signature if there is only one OpenPGP
       // block in the message
       if ( pgpBlocks.count() == 1 ) {
-	Kpgp::Block * block = pgpBlocks.first();
-	if ( block->type() == Kpgp::PgpMessageBlock ||
-	     block->type() == Kpgp::ClearsignedBlock ) {
-	  if ( block->type() == Kpgp::PgpMessageBlock ) {
+	Kpgp::Block &block = pgpBlocks.first();
+	if ( block.type() == Kpgp::PgpMessageBlock ||
+	     block.type() == Kpgp::ClearsignedBlock ) {
+	  if ( block.type() == Kpgp::PgpMessageBlock ) {
 	    // try to decrypt this OpenPGP block
-	    block->decrypt();
+	    block.decrypt();
 	  } else {
 	    // strip off the signature
-	    block->verify();
+	    block.verify();
 	    clearSigned = true;
 	  }
 
 	  result = codec->toUnicode( nonPgpBlocks.first() )
-	         + codec->toUnicode( block->text() )
+	         + codec->toUnicode( block.text() )
 	         + codec->toUnicode( nonPgpBlocks.last() );
 	}
       }

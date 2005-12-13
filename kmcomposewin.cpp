@@ -1622,7 +1622,7 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 //-----------------------------------------------------------------------------
 void KMComposeWin::decryptOrStripOffCleartextSignature( Q3CString& body )
 {
-  Q3PtrList<Kpgp::Block> pgpBlocks;
+  QList<Kpgp::Block> pgpBlocks;
   QList<QByteArray> nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( body,
                                                  pgpBlocks, nonPgpBlocks ) )
@@ -1631,19 +1631,19 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( Q3CString& body )
     // block in the message
     if( pgpBlocks.count() == 1 )
     {
-      Kpgp::Block* block = pgpBlocks.first();
-      if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-          ( block->type() == Kpgp::ClearsignedBlock ) )
+      Kpgp::Block& block = pgpBlocks.first();
+      if( ( block.type() == Kpgp::PgpMessageBlock ) ||
+          ( block.type() == Kpgp::ClearsignedBlock ) )
       {
-        if( block->type() == Kpgp::PgpMessageBlock )
+        if( block.type() == Kpgp::PgpMessageBlock )
           // try to decrypt this OpenPGP block
-          block->decrypt();
+          block.decrypt();
         else
           // strip off the signature
-          block->verify();
+          block.verify();
 
         body = nonPgpBlocks.first();
-        body.append( block->text() );
+        body.append( block.text() );
         body.append( nonPgpBlocks.last() );
       }
     }
