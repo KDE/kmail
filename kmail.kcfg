@@ -109,6 +109,9 @@
         <default>0</default>
 	<min>0</min>
       </entry>
+      <entry name="FolderLoadingTimeout" type="Int" hidden="true">
+         <default>1000</default>
+      </entry>
    
 
     </group>
