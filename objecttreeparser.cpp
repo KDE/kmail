@@ -1258,15 +1258,9 @@ namespace KMail {
     }
     QCString rfc822messageStr( node->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
-    DwMessage* rfc822DwMessage = 0; // will be deleted by c'tor of rfc822headers
-    if ( node->dwPart()->Body().Message() )
-      rfc822DwMessage = new DwMessage( *(node->dwPart()->Body().Message()) );
-    else
-    {
-      rfc822DwMessage = new DwMessage();
-      rfc822DwMessage->FromString( rfc822messageStr );
-      rfc822DwMessage->Parse();
-    }
+    DwMessage* rfc822DwMessage = new DwMessage(); // will be deleted by c'tor of rfc822headers
+    rfc822DwMessage->FromString( rfc822messageStr );
+    rfc822DwMessage->Parse();
     KMMessage rfc822message( rfc822DwMessage );
     node->setFromAddress( rfc822message.from() );
     kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
