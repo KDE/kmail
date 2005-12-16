@@ -1964,14 +1964,8 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
   assert(aMsgPart!=0);
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  KMMessage* msg;
-  if (node && node->dwPart()->Body().Message()) {
-    // make a deep copy
-    msg = new KMMessage( new DwMessage(*node->dwPart()->Body().Message()) );
-  } else {
-    msg = new KMMessage;
-    msg->fromString(aMsgPart->bodyDecoded());
-  }
+  KMMessage* msg = new KMMessage;
+  msg->fromString(aMsgPart->bodyDecoded());
   assert(msg != 0);
   msg->setMsgSerNum( 0 ); // because lookups will fail
   // some information that is needed for imap messages with LOD
