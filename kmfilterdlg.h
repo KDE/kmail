@@ -11,19 +11,19 @@
 
 #include <kwidgetlister.h>
 #include <kdialogbase.h>
+#include <kvbox.h>
 
 #include <q3groupbox.h>
 
-#include <qstring.h>
-#include <qlist.h>
-#include <qradiobutton.h>
+#include <QString>
+#include <QList>
 #include <q3buttongroup.h>
-#include <qmap.h>
-#include <kvbox.h>
+#include <QMap>
+#include <QRadioButton>
 
 class KMSearchPatternEdit;
 class QLabel;
-class Q3ListBox;
+class QListWidget;
 class QPushButton;
 class QComboBox;
 class QStackedWidget;
@@ -63,6 +63,9 @@ class KMFilterListBox : public Q3GroupBox
 public:
   /** Constuctor. */
   KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
+
+  /** Destructor. */
+  ~KMFilterListBox();
 
   /** Called from KMFilterDlg. Creates a new filter and presets
       the first rule with "field equals value". It's there mainly to
@@ -136,9 +139,9 @@ protected slots:
 
 protected:
   /** The deep copy of the filter list. */
-  Q3PtrList<KMFilter> mFilterList;
+  QList<KMFilter*> mFilterList;
   /** The listbox displaying the filter list. */
-  Q3ListBox *mListBox;
+  QListWidget *mListWidget;
   /** The various action buttons. */
   QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
   /** The index of the currently selected item. */

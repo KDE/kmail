@@ -6,7 +6,8 @@
 #define _kmfawidgets_h_
 
 #include <klineedit.h>
-#include <qstring.h>
+
+#include <QString>
 
 /** The param widget for KMFilterActionWithAddress..
     @author Marc Mutz <mutz@kde.org>

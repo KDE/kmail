@@ -39,14 +39,15 @@ using KMail::AccountManager;
 #include <qvalidator.h>
 #include <QStackedWidget>
 //Added by qt3to4:
+#include <Q3ButtonGroup>
 #include <Q3Frame>
 #include <QGridLayout>
 #include <Q3CString>
 #include <QList>
+#include <QListWidget>
 #include <QVBoxLayout>
 #include <Q3PtrList>
 #include <QHBoxLayout>
-#include <Q3ListBox>
 
 // other headers:
 #include <assert.h>
@@ -565,13 +566,12 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   : Q3GroupBox( 1, Qt::Horizontal, title, parent, name ),
     bPopFilter(popFilter)
 {
-  mFilterList.setAutoDelete(TRUE);
   mIdxSelItem = -1;
 
   //----------- the list box
-  mListBox = new Q3ListBox(this);
-  mListBox->setMinimumWidth(150);
-  mListBox->setWhatsThis( i18n(_wt_filterlist) );
+  mListWidget = new QListWidget(this);
+  mListWidget->setMinimumWidth(150);
+  mListWidget->setWhatsThis( i18n(_wt_filterlist) );
 
   //----------- the first row of buttons
   KHBox *hb = new KHBox(this);
@@ -612,9 +612,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 
 
   //----------- now connect everything
-  connect( mListBox, SIGNAL(highlighted(int)),
+  connect( mListWidget, SIGNAL(highlighted(int)),
 	   this, SLOT(slotSelected(int)) );
-  connect( mListBox, SIGNAL( doubleClicked ( Q3ListBoxItem * )),
+  connect( mListWidget, SIGNAL( doubleClicked ( Q3ListBoxItem * )),
            this, SLOT( slotRename()) );
   connect( mBtnUp, SIGNAL(clicked()),
 	   this, SLOT(slotUp()) );
@@ -632,6 +632,13 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   // the dialog should call loadFilterList()
   // when all signals are connected.
   enableControls();
+}
+
+
+KMFilterListBox::~KMFilterListBox()
+{
+  while (!mFilterList.isEmpty())
+    delete mFilterList.takeFirst();
 }
 
 
@@ -663,7 +670,7 @@ void KMFilterListBox::slotUpdateFilterName()
   if ( !p ) return;
 
   QString shouldBeName = p->name();
-  QString displayedName = mListBox->text( mIdxSelItem );
+  QString displayedName = mListWidget->item( mIdxSelItem )->text();
 
   if ( shouldBeName.trimmed().isEmpty() ) {
     mFilterList.at(mIdxSelItem)->setAutoNaming( true );
@@ -680,9 +687,9 @@ void KMFilterListBox::slotUpdateFilterName()
 
   if ( displayedName == shouldBeName ) return;
 
-  mListBox->blockSignals(TRUE);
-  mListBox->changeItem( shouldBeName, mIdxSelItem );
-  mListBox->blockSignals(FALSE);
+  mListWidget->blockSignals(TRUE);
+  mListWidget->item( mIdxSelItem )->setText( shouldBeName );
+  mListWidget->blockSignals(FALSE);
 }
 
 void KMFilterListBox::slotShowLaterToggled(bool aOn)
@@ -693,7 +700,7 @@ void KMFilterListBox::slotShowLaterToggled(bool aOn)
 void KMFilterListBox::slotApplyFilterChanges()
 {
   if ( mIdxSelItem >= 0 )
-    slotSelected( mListBox->currentItem() );
+    slotSelected( mListWidget->currentRow() );
 
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
@@ -706,8 +713,8 @@ void KMFilterListBox::slotApplyFilterChanges()
 
   QList<KMFilter*> newFilters;
   QStringList emptyFilters;
-  Q3PtrListIterator<KMFilter> it( mFilterList );
-  for ( it.toFirst() ; it.current() ; ++it ) {
+  QList<KMFilter*>::const_iterator it;
+  for ( it = mFilterList.begin() ; it != mFilterList.end() ; ++it ) {
     KMFilter *f = new KMFilter( **it ); // deep copy
     f->purify();
     if ( !f->isEmpty() )
@@ -797,25 +804,25 @@ void KMFilterListBox::slotDelete()
   int oIdxSelItem = mIdxSelItem;
   mIdxSelItem = -1;
   // unselect all
-  mListBox->selectAll(FALSE);
+  mListWidget->clearSelection();
   // broadcast that all widgets let go
   // of the filter
   emit resetWidgets();
 
   // remove the filter from both the filter list...
-  mFilterList.remove( oIdxSelItem );
+  mFilterList.takeAt( oIdxSelItem );
   // and the listbox
-  mListBox->removeItem( oIdxSelItem );
+  mListWidget->takeItem( oIdxSelItem );
 
-  int count = (int)mListBox->count();
+  int count = (int)mListWidget->count();
   // and set the new current item.
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
-    mListBox->setSelected( oIdxSelItem, TRUE );
+    mListWidget->setItemSelected( mListWidget->item( oIdxSelItem ), TRUE );
   else if ( count )
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
-    mListBox->setSelected( count - 1, TRUE );
+    mListWidget->setItemSelected( mListWidget->item( count - 1 ), TRUE );
   // the list is empty - keep index -1
 
   enableControls();
@@ -842,7 +849,7 @@ void KMFilterListBox::slotDown()
     kdDebug(5006) << "KMFilterListBox::slotDown called while no filter is selected, ignoring." << endl;
     return;
   }
-  if ( mIdxSelItem == (int)mListBox->count() - 1 ) {
+  if ( mIdxSelItem == (int)mListWidget->count() - 1 ) {
     kdDebug(5006) << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
     return;
   }
@@ -905,12 +912,12 @@ void KMFilterListBox::enableControls()
   mBtnRename->setEnabled( aFilterIsSelected );
 
   if ( aFilterIsSelected )
-    mListBox->ensureCurrentVisible();
+    mListWidget->scrollToItem( mListWidget->currentItem() );
 }
 
 void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
-  assert(mListBox);
+  assert(mListWidget);
   setEnabled(FALSE);
   // we don't want the insertion to
   // cause flicker in the edit widgets.
@@ -918,7 +925,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
 
   // clear both lists
   mFilterList.clear();
-  mListBox->clear();
+  mListWidget->clear();
 
   const KMFilterMgr *manager = 0;
   if(bPopFilter)
@@ -935,7 +942,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   QList<KMFilter*>::const_iterator it;
   for ( it = manager->filters().begin() ; it != manager->filters().end() ; ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
-    mListBox->insertItem( (*it)->pattern()->name() );
+    mListWidget->insertItem( 0, (*it)->pattern()->name() );
   }
 
   blockSignals(FALSE);
@@ -944,11 +951,11 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   // create an empty filter when there's none, to avoid a completely
   // disabled dialog (usability tests indicated that the new-filter
   // button is too hard to find that way):
-  if ( !mListBox->count() && createDummyFilter )
+  if ( !mListWidget->count() && createDummyFilter )
     slotNew();
 
-  if ( mListBox->count() > 0 )
-    mListBox->setSelected( 0, true );
+  if ( mListWidget->count() > 0 )
+    mListWidget->setItemSelected( mListWidget->item( 0 ), true );
 
   enableControls();
 }
@@ -959,17 +966,16 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
   assert( aFilter );
 
   // if mIdxSelItem < 0, QListBox::insertItem will append.
-  mListBox->insertItem( aFilter->pattern()->name(), mIdxSelItem );
+  mListWidget->insertItem( mIdxSelItem, aFilter->pattern()->name() );
   if ( mIdxSelItem < 0 ) {
     // none selected -> append
     mFilterList.append( aFilter );
-    mListBox->setSelected( mListBox->count() - 1, TRUE );
-    //    slotSelected( mListBox->count() - 1 );
+    mListWidget->setItemSelected(
+        mListWidget->item( mListWidget->count() - 1 ), TRUE );
   } else {
     // insert just before selected
     mFilterList.insert( mIdxSelItem, aFilter );
-    mListBox->setSelected( mIdxSelItem, TRUE );
-    //    slotSelected( mIdxSelItem );
+    mListWidget->setItemSelected( mListWidget->item( mIdxSelItem ), TRUE );
   }
 
 }
@@ -981,13 +987,13 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 
   // untouchedOne is at idx. to move it down(up),
   // remove item at idx+(-)1 w/o deleting it.
-  Q3ListBoxItem *item = mListBox->item( movedOne );
-  mListBox->takeItem( item );
+  QListWidgetItem *item = mListWidget->item( movedOne );
+  mListWidget->takeItem( movedOne );
   // now selected item is at idx(idx-1), so
   // insert the other item at idx, ie. above(below).
-  mListBox->insertItem( item, untouchedOne );
+  mListWidget->insertItem( untouchedOne, item );
 
-  KMFilter* filter = mFilterList.take( movedOne );
+  KMFilter* filter = mFilterList.takeAt( movedOne );
   mFilterList.insert( untouchedOne, filter );
 
   mIdxSelItem += movedOne - untouchedOne;
