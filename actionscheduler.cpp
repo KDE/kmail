@@ -46,13 +46,11 @@
 #include "broadcaststatus.h"
 #include "accountmanager.h"
 using KMail::AccountManager;
-//Added by qt3to4:
-#include <QList>
-#include <Q3PtrList>
 
-#include <qtimer.h>
 #include <kconfig.h>
 #include <kstandarddirs.h>
+
+#include <QTimer>
 
 using namespace KMail;
 typedef Q3PtrList<KMMsgBase> KMMessageList;

@@ -37,12 +37,7 @@
 #include "kmfiltermgr.h" // KMFilterMgr::FilterSet
 #include "kmcommands.h"
 
-#include <qobject.h>
-#include <qpointer.h>
-#include <qtimer.h>
-//Added by qt3to4:
 #include <QList>
-#include <Q3PtrList>
 #include <QTime>
 
 class KMHeaders;
