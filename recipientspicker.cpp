@@ -371,12 +371,12 @@ void RecipientsPicker::initCollections()
 
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 
-  Q3PtrList<KABC::Resource> resources = addressbook->resources();
-  KABC::Resource *res;
-  for( res = resources.first(); res; res = resources.next() ) {
+  QList<KABC::Resource*> resources = addressbook->resources();
+  QList<KABC::Resource*>::const_iterator rit;
+  for( rit = resources.constBegin(); rit != resources.constEnd() ; ++rit ) {
     RecipientsCollection *collection = new RecipientsCollection;
-    collectionMap.insert( res, collection );
-    collection->setTitle( res->resourceName() );
+    collectionMap.insert( *rit, collection );
+    collection->setTitle( (*rit)->resourceName() );
   }
 
   QMap<QString,RecipientsCollection *> categoryMap;
