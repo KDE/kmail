@@ -110,7 +110,7 @@ void AnnotationJobs::MultiGetAnnotationJob::slotResult( KIO::Job *job )
     KIO::Job::slotResult( job ); // will set the error and emit result(this)
     return;
   }
-  subjobs.remove( job );
+  removeSubjob( job );
   const QString& entry = *mEntryListIterator;
   QString value;
   bool found = false;
@@ -169,7 +169,7 @@ void AnnotationJobs::MultiSetAnnotationJob::slotResult( KIO::Job *job )
     KIO::Job::slotResult( job ); // will set the error and emit result(this)
     return;
   }
-  subjobs.remove( job );
+  removeSubjob( job );
   const AnnotationAttribute& attr = *mAnnotationListIterator;
   emit annotationChanged( attr.entry, attr.name, attr.value );
 
