@@ -2007,9 +2007,10 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       setMsg(msg, true);
       setAutoDelete(true);
   } else if (kasciistricmp(aMsgPart->typeStr(), "text")==0) {
-      if (kasciistricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
+      if (kasciistricmp(aMsgPart->subtypeStr(), "x-vcard") == 0 ||
+          kasciistricmp(aMsgPart->subtypeStr(), "directory") == 0) {
         showVCard( aMsgPart );
-	return;
+        return;
       }
       htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
@@ -2103,7 +2104,8 @@ void KMReaderWin::slotAtmView( int id, const QString& name )
     if (kasciistricmp(msgPart.typeStr(), "message")==0) {
       atmViewMsg(&msgPart);
     } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
-	       (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
+               ( (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0) ||
+                 (kasciistricmp(msgPart.subtypeStr(), "directory")==0) )) {
       setMsgPart( &msgPart, htmlMail(), name, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
@@ -2137,7 +2139,8 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   Q3CString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
   KPIM::kAsciiToLower( contentTypeStr.data() );
 
-  if ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) {
+  if ( ( qstrcmp( contentTypeStr, "text/directory" ) == 0 ) ||
+       ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) ) {
     showVCard( &msgPart );
     return;
   }

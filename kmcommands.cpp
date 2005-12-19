@@ -2795,7 +2795,7 @@ KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
   const QString contentTypeStr =
     ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).toLower();
 
-  if ( contentTypeStr == "text/x-vcard" ) {
+  if ( contentTypeStr == "text/x-vcard" || contentTypeStr == "text/directory" ) {
     atmView();
     return 0;
   }
