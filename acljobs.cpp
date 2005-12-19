@@ -243,7 +243,7 @@ void ACLJobs::MultiSetACLJob::slotResult( KIO::Job *job )
     KIO::Job::slotResult( job ); // will set the error and emit result(this)
     return;
   }
-  subjobs.remove(job);
+  removeSubjob(job);
   const ACLListEntry& entry = *mACLListIterator;
   emit aclChanged( entry.userId, entry.permissions );
 

@@ -2989,8 +2989,7 @@ void KMComposeWin::compressAttach( int idx )
   }
 
   zip.setCompression( KZip::DeflateCompression );
-  if ( ! zip.writeFile( msgPart->name(), "", "", decoded.size(),
-           decoded.data() ) ) {
+  if ( ! zip.writeFile( msgPart->name(), "", "", decoded.data(),decoded.size())) {
     KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
     static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
     return;
