@@ -620,7 +620,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 {
   // we keep our current directory to restore it later
   char path_buffer[PATH_MAX];
-  if(::getcwd(path_buffer, PATH_MAX - 1))
+  if(!::getcwd(path_buffer, PATH_MAX - 1))
     return;
 
   ::chdir(QFile::encodeName(dir));
