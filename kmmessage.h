@@ -19,7 +19,6 @@
 
 #include<libemailfunctions/email.h>
 //Added by qt3to4:
-#include <Q3StrList>
 #include <QList>
 #include <Q3CString>
 
@@ -29,7 +28,6 @@ class QList;
 class QStringList;
 class QString;
 class QTextCodec;
-class Q3StrList;
 
 class KMFolder;
 class KMFolderIndex;

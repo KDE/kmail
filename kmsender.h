@@ -32,7 +32,6 @@
 #include <qstringlist.h>
 #include <qobject.h>
 //Added by qt3to4:
-#include <Q3StrList>
 #include <kdeversion.h>
 
 class KMMessage;
@@ -43,7 +42,6 @@ class KProcess;
 class KMSendProc;
 class KMSendSendmail;
 class KMSendSMTP;
-class Q3StrList;
 class KMTransportInfo;
 class KMPrecommand;
 

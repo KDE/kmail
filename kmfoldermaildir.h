@@ -2,8 +2,6 @@
 #define kmfoldermaildir_h
 
 #include "kmfolderindex.h"
-//Added by qt3to4:
-#include <Q3StrList>
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -154,7 +152,6 @@ private:
   */
   virtual IndexStatus indexStatus();
 
-  Q3StrList mIdxToFileList;
   int mIdxCount;
 };
 #endif /*kmfoldermaildir_h*/

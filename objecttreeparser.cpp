@@ -90,7 +90,6 @@
 #include <qapplication.h>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3StrList>
 #include <Q3PtrList>
 #include <kstyle.h>
 #include <qbuffer.h>
