@@ -37,6 +37,7 @@ Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
 Comment[eu]=Gorputz-zati formateatzaile plugin bat aplikazio/zortikote-jarioentzat
 Comment[fr]=Un module formateur de corps pour application (flux d'octets)
 Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
+Comment[is]=Sniðmátstól fyrir application/octet-stream
 Comment[it]=Un plugin per formattare application/octet-stream
 Comment[ja]=application/octet-stream の Bodypart フォーマッタプラグイン
 Comment[nb]=Et programtillegg for meldingstekst-formatering for application/octet-stream
