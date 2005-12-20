@@ -603,11 +603,12 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
-    mOverrideCodec( 0 ),
+    mOldGlobalOverrideEncoding( "---" ), // init with dummy value
     mCSSHelper( 0 ),
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
-    mHtmlWriter( 0 )
+    mHtmlWriter( 0 ),
+    mSelectEncodingAction( 0 )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -641,6 +642,16 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 void KMReaderWin::createActions( KActionCollection * ac ) {
   if ( !ac )
       return;
+
+  // Set Encoding submenu
+  mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
+                                 this, SLOT( slotSetEncoding() ),
+                                 ac, "encoding" );
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  encodings.prepend( i18n( "Auto" ) );
+  mSelectEncodingAction->setItems( encodings );
+  mSelectEncodingAction->setCurrentItem( 0 );
+
 
   mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
 				    SLOT(slotMailtoCompose()), ac,
@@ -954,11 +965,60 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
   update( true );
 }
 
-void KMReaderWin::setOverrideCodec( const QTextCodec * codec ) {
-  if ( mOverrideCodec == codec )
+//-----------------------------------------------------------------------------
+void KMReaderWin::setOverrideEncoding( const QString & encoding )
+{
+  if ( encoding == mOverrideEncoding )
     return;
-  mOverrideCodec = codec;
+
+  mOverrideEncoding = encoding;
+  if ( mSelectEncodingAction ) {
+    if ( encoding.isEmpty() ) {
+      mSelectEncodingAction->setCurrentItem( 0 );
+    }
+    else {
+      QStringList encodings = mSelectEncodingAction->items();
+      int i = 0;
+      for ( QStringList::const_iterator it = encodings.begin(), end = encodings.end(); it != end; ++it, ++i ) {
+        if ( KGlobal::charsets()->encodingForName( *it ) == encoding ) {
+          mSelectEncodingAction->setCurrentItem( i );
+          break;
+        }
+      }
+    }
+  }
   update( true );
+}
+
+//-----------------------------------------------------------------------------
+const QTextCodec * KMReaderWin::overrideCodec() const
+{
+  kdDebug(5006) << k_funcinfo << " mOverrideEncoding == '" << mOverrideEncoding << "'" << endl;
+  if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
+    return 0;
+  else
+    return KMMsgBase::codecForName( mOverrideEncoding.latin1() );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotSetEncoding()
+{
+  if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
+    mOverrideEncoding = QString();
+  else
+    mOverrideEncoding = KGlobal::charsets()->encodingForName( mSelectEncodingAction->currentText() );
+  update( true );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::readGlobalOverrideCodec()
+{
+  // if the global character encoding wasn't changed then there's nothing to do
+  if ( GlobalSettings::self()->overrideCharacterEncoding() == mOldGlobalOverrideEncoding )
+    return;
+
+  setOverrideEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
+  mOldGlobalOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
 }
 
 //-----------------------------------------------------------------------------
@@ -1795,7 +1855,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( overrideCodec(), msg );
+  win->showMsg( overrideEncoding(), msg );
   win->show();
 }
 
@@ -1926,7 +1986,7 @@ void KMReaderWin::slotAtmView()
       setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-	mAtmCurrentName, pname, overrideCodec() );
+	mAtmCurrentName, pname, overrideEncoding() );
       win->show();
     }
   }

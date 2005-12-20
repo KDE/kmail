@@ -19,7 +19,6 @@
 
 class QVBoxLayout;
 class QSplitter;
-class QTextCodec;
 
 class KActionMenu;
 class KActionCollection;
@@ -302,7 +301,6 @@ protected slots:
   void slotHideAttachments();
   void slotCycleHeaderStyles();
   void slotCycleAttachmentStrategy();
-  void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
   void slotMarkAll();
@@ -375,6 +373,9 @@ protected slots:
   void slotConfigChanged();
 
 private:
+  /** Get override character encoding. */
+  QString overrideEncoding() const;
+
   void initializeIMAPActions( bool setState );
 
 private:
@@ -431,11 +432,8 @@ private:
   KToolBar     *mSearchToolBar;
   KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
-  const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
-  KSelectAction *mEncoding;
   KAction       *mlistFilterAction;
-  QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mBeepOnNew;
   bool          mConfirmEmpty;

@@ -2710,7 +2710,7 @@ void KMComposeWin::viewAttach( int index )
   KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
-    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
+    atmTempFile->name(), pname, mCharset );
   win->show();
 }
 

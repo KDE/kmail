@@ -344,7 +344,8 @@ class KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL() );
+  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL(),
+                    const QString & encoding = QString() );
 
 private:
   virtual Result execute();
@@ -358,6 +359,7 @@ private:
   KURL mUrl;
   DwString mMsgString;
   KIO::TransferJob *mJob;
+  const QString mEncoding;
 };
 
 class KMSaveAttachmentsCommand : public KMCommand
@@ -531,13 +533,14 @@ class KMPrintCommand : public KMCommand
 
 public:
   KMPrintCommand( QWidget *parent, KMMessage *msg, 
-                  bool htmlOverride=false, const QTextCodec *codec = 0 );
+                  bool htmlOverride=false,
+                  const QString & encoding = QString() );
 
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
-  const QTextCodec *mCodec;
+  QString mEncoding;
 };
 
 class KMSetStatusCommand : public KMCommand

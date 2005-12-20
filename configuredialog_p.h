@@ -443,7 +443,6 @@ public:
   void installProfile( KConfig * profile );
 
 protected: // data
-  QCheckBox    *mShowColorbarCheck;
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
@@ -475,6 +474,30 @@ protected: // data
   QLineEdit    *mCustomDateFormatEdit;
 };
 
+class AppearancePageReaderTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  AppearancePageReaderTab( QWidget * parent=0, const char * name=0 );
+
+  QString helpAnchor() const;
+
+  void load();
+  void save();
+  void defaults() {}
+  void installProfile( KConfig * profile );
+
+private:
+  //FIXME virtual void doResetToDefaultsOther();
+  void readCurrentFallbackCodec();
+  void readCurrentOverrideCodec();
+
+private: // data
+  QCheckBox *mShowColorbarCheck;
+  QComboBox *mCharsetCombo;
+  QComboBox *mOverrideCharsetCombo;
+};
+
+
 class AppearancePageSystemTrayTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -504,6 +527,7 @@ public:
   typedef AppearancePageColorsTab ColorsTab;
   typedef AppearancePageLayoutTab LayoutTab;
   typedef AppearancePageHeadersTab HeadersTab;
+  typedef AppearancePageReaderTab ReaderTab;
   typedef AppearancePageSystemTrayTab SystemTrayTab;
 
 protected:
@@ -511,6 +535,7 @@ protected:
   ColorsTab     *mColorsTab;
   LayoutTab     *mLayoutTab;
   HeadersTab    *mHeadersTab;
+  ReaderTab     *mReaderTab;
   SystemTrayTab *mSystemTrayTab;
 };
 

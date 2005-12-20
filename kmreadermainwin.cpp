@@ -60,11 +60,11 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *codec, char *name )
+    const QString & encoding, char *name )
   : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
-  mReaderWin->setOverrideCodec( codec );
+  mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   setCentralWidget( mReaderWin );
   setupAccel();
@@ -80,9 +80,10 @@ KMReaderMainWin::~KMReaderMainWin()
 }
 
 
-void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg )
 {
-  mReaderWin->setOverrideCodec( codec );
+  mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsg( msg, true );
   setCaption( msg->subject() );
   mMsg = msg;
@@ -93,7 +94,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride(), mReaderWin->overrideCodec() );
+      mReaderWin->htmlOverride(), mReaderWin->overrideEncoding() );
   command->start();
 }
 

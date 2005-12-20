@@ -889,9 +889,11 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 
 //-----------------------------------------------------------------------------
 
-KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url )
+KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url,
+                                    const QString & encoding )
   : KMCommand( parent ),
-    mUrl( url )
+    mUrl( url ),
+    mEncoding( encoding )
 {
   setDeletesItself( true );
 }
@@ -980,7 +982,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
     KMMessage *msg = new KMMessage( dwMsg );
     msg->setReadyToShow( true );
     KMReaderMainWin *win = new KMReaderMainWin();
-    win->showMsg( kmkernel->networkCodec(), msg );
+    win->showMsg( mEncoding, msg );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
@@ -1339,8 +1341,8 @@ KMCommand::Result KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMessage *msg, bool htmlOverride, const QTextCodec* codec )
-  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mCodec( codec )
+  KMMessage *msg, bool htmlOverride, const QString & encoding )
+  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ), mEncoding( encoding )
 {
 }
 
@@ -1350,7 +1352,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setPrinting(TRUE);
   printWin.readConfig();
   printWin.setHtmlOverride( mHtmlOverride );
-  printWin.setOverrideCodec( mCodec );
+  printWin.setOverrideEncoding( mEncoding );
   printWin.setMsg(retrievedMessage(), TRUE);
   printWin.printMsg();
 

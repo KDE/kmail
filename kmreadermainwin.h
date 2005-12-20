@@ -7,7 +7,6 @@
 
 #include <kurl.h>
 
-class QTextCodec;
 class KMReaderWin;
 class KMMessage;
 class KMMessagePart;
@@ -25,10 +24,10 @@ public:
   KMReaderMainWin( char *name = 0 );
   KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *codec, char *name = 0 );
+    const QString & encoding, char *name = 0 );
   virtual ~KMReaderMainWin();
   // take ownership of and show @param msg
-  void showMsg( const QTextCodec *codec, KMMessage *msg );
+  void showMsg( const QString & encoding, KMMessage *msg );
 
 private slots:
   void slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint);

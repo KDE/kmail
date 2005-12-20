@@ -1457,7 +1457,13 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("H&eaders") );
+  addTab( mHeadersTab, i18n("M&essage List") );
+
+  //
+  // "Reader window" tab:
+  //
+  mReaderTab = new ReaderTab();
+  addTab( mReaderTab, i18n("Message W&indow") );
 
   //
   // "System Tray" tab:
@@ -1816,10 +1822,6 @@ static const EnumConfigEntry readerWindowMode = {
   readerWindowModes, DIM(readerWindowModes), 1
 };
 
-static const BoolConfigEntry showColorbarMode = {
-  "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
-};
-
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
@@ -1827,12 +1829,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   QVBoxLayout * vlay;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-
-  // "show colorbar" check box:
-  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
-  vlay->addWidget( mShowColorbarCheck );
-  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
 
   // "folder list" radio buttons:
   populateButtonGroup( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
@@ -1865,7 +1861,6 @@ void AppearancePage::LayoutTab::load() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  loadWidget( mShowColorbarCheck, reader, showColorbarMode );
   loadWidget( mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1876,7 +1871,6 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup reader( profile, "Reader" );
   const KConfigGroup geometry( profile, "Geometry" );
 
-  loadProfile( mShowColorbarCheck, reader, showColorbarMode );
   loadProfile( mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1887,7 +1881,6 @@ void AppearancePage::LayoutTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -2126,6 +2119,141 @@ void AppearancePage::HeadersTab::save() {
   general.writeEntry( "dateFormat",
 		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
+}
+
+
+//
+// Message Window
+//
+
+
+static const BoolConfigEntry showColorbarMode = {
+  "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
+};
+
+
+QString AppearancePage::ReaderTab::helpAnchor() const {
+  return QString::fromLatin1("configure-appearance-reader");
+}
+
+AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
+                                                  const char * name )
+  : ConfigModuleTab( parent, name )
+{
+  QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "show colorbar" check box:
+  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
+  vlay->addWidget( mShowColorbarCheck );
+  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // Fallback Character Encoding
+  QHBoxLayout *hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mCharsetCombo = new QComboBox( this );
+  mCharsetCombo->insertStringList( KMMsgBase::supportedEncodings( false ) );
+
+  connect( mCharsetCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString fallbackCharsetWhatsThis =
+    i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
+  QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
+
+  QLabel *label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
+  label->setBuddy( mCharsetCombo );
+
+  hlay->addWidget( label );
+  hlay->addWidget( mCharsetCombo );
+
+  // Override Character Encoding
+  QHBoxLayout *hlay2 = new QHBoxLayout( vlay ); // inherits spacing
+  mOverrideCharsetCombo = new QComboBox( this );
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  encodings.prepend( i18n( "Auto" ) );
+  mOverrideCharsetCombo->insertStringList( encodings );
+  mOverrideCharsetCombo->setCurrentItem(0);
+
+  connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString overrideCharsetWhatsThis =
+    i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
+  QWhatsThis::add( mOverrideCharsetCombo, overrideCharsetWhatsThis );
+
+  label = new QLabel( i18n("&Override character encoding:"), this );
+  label->setBuddy( mOverrideCharsetCombo );
+
+  hlay2->addWidget( label );
+  hlay2->addWidget( mOverrideCharsetCombo );
+
+  vlay->addStretch( 100 ); // spacer
+}
+
+
+void AppearancePage::ReaderTab::readCurrentFallbackCodec()
+{
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList::ConstIterator it( encodings.begin() );
+  QStringList::ConstIterator end( encodings.end() );
+  const QString &currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
+  int i = 0;
+  for( ; it != end; ++it)
+  {
+    if( KGlobal::charsets()->encodingForName(*it) == currentEncoding )
+    {
+      mCharsetCombo->setCurrentItem( i );
+      break;
+    }
+    i++;
+  }
+}
+
+void AppearancePage::ReaderTab::readCurrentOverrideCodec()
+{
+  const QString &currentOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
+  if ( currentOverrideEncoding.isEmpty() ) {
+    mOverrideCharsetCombo->setCurrentItem( 0 );
+    return;
+  }
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  encodings.prepend( i18n( "Auto" ) );
+  QStringList::Iterator it( encodings.begin() );
+  QStringList::Iterator end( encodings.end() );
+  int i = 0;
+  for( ; it != end; ++it)
+  {
+    if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
+    {
+      mOverrideCharsetCombo->setCurrentItem( i );
+      break;
+    }
+    i++;
+  }
+}
+
+void AppearancePage::ReaderTab::load() {
+  readCurrentFallbackCodec();
+  readCurrentOverrideCodec();
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  loadWidget( mShowColorbarCheck, reader, showColorbarMode );
+}
+
+void AppearancePage::ReaderTab::save() {
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
+  GlobalSettings::self()->setFallbackCharacterEncoding(
+      KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
+  GlobalSettings::self()->setOverrideCharacterEncoding(
+      mOverrideCharsetCombo->currentItem() == 0 ?
+        QString() :
+        KGlobal::charsets()->encodingForName( mOverrideCharsetCombo->currentText() ) );
+}
+
+
+void AppearancePage::ReaderTab::installProfile( KConfig * /* profile */ ) {
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  loadProfile( mShowColorbarCheck, reader, showColorbarMode );
 }
 
 
