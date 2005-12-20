@@ -33,10 +33,21 @@ if [ $? != 0 ] ; then
 fi 
 export TEMPFILE
 cat > $TEMPFILE
-if clamscan --stdout --no-summary --mbox $TEMPFILE | grep -q FOUND; then
-echo "X-Virus-Flag: yes"
+
+# check for a running daemon
+if [ `ps -eo comm|grep clamd` = "clamd" ]; then
+    chmod a+r $TEMPFILE
+    CLAMCOMANDO="clamdscan --stdout --no-summary "
 else
-echo "X-Virus-Flag: no"
+    CLAMCOMANDO="clamscan --stdout --no-summary --mbox"
 fi
+
+# analyze the message
+if $CLAMCOMANDO $TEMPFILE | grep -q FOUND; then
+    echo "X-Virus-Flag: yes"
+else
+    echo "X-Virus-Flag: no"
+fi
+
 cat $TEMPFILE
 rm $TEMPFILE
