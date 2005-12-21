@@ -167,7 +167,7 @@ bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
 void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
 	KConfigGroup config( KMKernel::config(), "text-index" );
-	if ( config.readBoolEntry( "enabled", e ) == e ) return;
+	if ( config.readBoolEntry( "enabled", !e ) == e ) return;
 	config.writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
