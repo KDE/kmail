@@ -622,7 +622,8 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
 {
   // we keep our current directory to restore it later
   char path_buffer[PATH_MAX];
-  ::getcwd(path_buffer, PATH_MAX - 1);
+  if (!::getcwd(path_buffer, PATH_MAX - 1))
+    return;
   ::chdir(QFile::encodeName(dir));
 
   // messages in the 'cur' directory are Read by default.. but may
