@@ -51,6 +51,8 @@ using KRecentAddress::RecentAddresses;
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+#include <ksettings/dispatcher.h>
+
 
 #include <qlayout.h>
 #include <kglobal.h>
@@ -85,15 +87,15 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
-  KMKernel *kmailKernel = new KMKernel();
-  kmailKernel->init();
-  kmailKernel->setXmlGuiInstance( KMailFactory::instance() );
+  KMKernel *mKMailKernel = new KMKernel();
+  mKMailKernel->init();
+  mKMailKernel->setXmlGuiInstance( KMailFactory::instance() );
 
   // and session management
-  kmailKernel->doSessionManagement();
+  mKMailKernel->doSessionManagement();
 
   // any dead letters?
-  kmailKernel->recoverDeadLetters();
+  mKMailKernel->recoverDeadLetters();
 
   kmsetSignalHandler(kmsignalHandler);
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
@@ -139,6 +141,9 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmail_part.rc" );
 #endif
+
+  KSettings::Dispatcher::self()->registerInstance( KMailFactory::instance(), mKMailKernel,
+                                                   SLOT( slotConfigChanged() ) );
 }
 
 KMailPart::~KMailPart()
@@ -234,7 +239,6 @@ KMainWindow * KMailStatusBarExtension::mainWindow() const
 {
   return static_cast<KMainWindow*>( mParent->parentWidget() );
 }
-
 
 #include "kmail_part.moc"
 
