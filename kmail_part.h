@@ -76,7 +76,7 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     virtual void guiActivateEvent(KParts::GUIActivateEvent *e);
 
   private:
-    KMKernel *kmailKernel;
+    KMKernel *mKMailKernel;
     KMMainWidget *mainWidget;
     ActionManager *mActionManager;
     KMailBrowserExtension *m_extension;
