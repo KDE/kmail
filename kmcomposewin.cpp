@@ -1450,6 +1450,11 @@ void KMComposeWin::setupActions(void)
 
   editorFocusChanged(false);
   createGUI("kmcomposerui.rc");
+  // In Kontact, this entry would read "Configure Kontact", but bring
+  // up KMail's config dialog. That's sensible, though, so fix the label.
+  KAction* configureAction = actionCollection()->action("options_configure" );
+  if ( configureAction )
+    configureAction->setText( i18n("Configure KMail" ) );
 }
 
 //-----------------------------------------------------------------------------
