@@ -824,7 +824,7 @@ void KMFilterListBox::slotDelete()
   // and the listbox
   mListWidget->takeItem( oIdxSelItem );
 
-  int count = (int)mListWidget->count();
+  int count = mListWidget->count();
   // and set the new current item.
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
@@ -833,8 +833,16 @@ void KMFilterListBox::slotDelete()
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
     mListWidget->setCurrentRow( count - 1 );
-  // the list is empty - keep index -1
 
+  // work around a problem when deleting the first item in a QListWidget:
+  // after takeItem, slotSelectionChanged is emitted with 1, but the row 0 
+  // remains selected and another selectCurrentRow(0) does not trigger the 
+  // selectionChanged signal
+  // (qt-copy as of 2006-12-22 / gungl)
+  if ( oIdxSelItem == 0 )
+    slotSelected( 0 );
+
+  mIdxSelItem = mListWidget->currentRow();
   enableControls();
 }
 
