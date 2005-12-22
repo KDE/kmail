@@ -25,6 +25,7 @@ using namespace KMime::Types;
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include "globalsettings.h"
 #include "kmfiltermgr.h"
 
 #include "kcursorsaver.h"
@@ -40,6 +41,8 @@ using namespace KMime::Types;
 #include "protocols.h"
 #include "kmcommands.h"
 #include <mimelib/mediatyp.h>
+#include <mimelib/enum.h>
+#include <mimelib/param.h>
 
 #define SENDER_GROUP "sending mail"
 
@@ -240,6 +243,28 @@ void KMSender::emitProgressInfo( int currentFileProgress )
   int percent = (mTotalBytes) ? ( 100 * (mSentBytes+currentFileProgress) / mTotalBytes ) : 0;
   if (percent > 100) percent = 100;
   mProgressItem->setProgress(percent);
+}
+
+static bool messageIsDispositionNotificationReport( KMMessage *msg )
+{
+    if ( msg->type() == DwMime::kTypeMessage &&
+         msg->subtype() == DwMime::kSubtypeDispositionNotification )
+      return true;
+
+    if ( msg->type() != DwMime::kTypeMultipart ||
+         msg->subtype() != DwMime::kSubtypeReport )
+      return false;
+
+    DwMediaType& ct = msg->dwContentType();
+    DwParameter *param = ct.FirstParameter();
+    while( param ) {
+      if ( !qstricmp( param->Attribute().c_str(), "report-type")
+        && !qstricmp( param->Value().c_str(), "disposition-notification" ) )
+        return true;
+      else
+        param = param->Next();
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -1011,7 +1036,11 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   KMTransportInfo *ti = mSender->transportInfo();
   assert(aMsg != 0);
 
-  const QString sender = aMsg->sender();
+  // MDNs are required to have an empty envelope from as per RFC2298.
+  QString sender = aMsg->sender();
+  if ( messageIsDispositionNotificationReport( aMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
+    sender = "<>";
+
   if ( sender.isEmpty() )
     return false;
 
