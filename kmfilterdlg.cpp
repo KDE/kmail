@@ -612,7 +612,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 
 
   //----------- now connect everything
-  connect( mListWidget, SIGNAL(highlighted(int)),
+  connect( mListWidget, SIGNAL(currentRowChanged(int)),
 	   this, SLOT(slotSelected(int)) );
   connect( mListWidget, SIGNAL( doubleClicked ( Q3ListBoxItem * )),
            this, SLOT( slotRename()) );
@@ -666,6 +666,11 @@ bool KMFilterListBox::showLaterMsgs()
 
 void KMFilterListBox::slotUpdateFilterName()
 {
+  if ( mIdxSelItem < 0 ) {
+    kdDebug(5006) << "KMFilterListBox::slotUpdateFilterName called while no filter is selected, ignoring. idx=" << mIdxSelItem << endl;
+    return;
+  }
+
   KMSearchPattern *p = mFilterList.at(mIdxSelItem)->pattern();
   if ( !p ) return;
 
@@ -756,13 +761,18 @@ void KMFilterListBox::slotApplyFilterChanges()
 
 void KMFilterListBox::slotSelected( int aIdx )
 {
+  kdDebug(5006) << "KMFilterListBox::slotSelected called. idx=" << aIdx << endl;
   mIdxSelItem = aIdx;
-  // QPtrList::at(i) will return 0 if i is out of range.
-  KMFilter *f = mFilterList.at(aIdx);
-  if ( f )
-    emit filterSelected( f );
-  else
+
+  if ( mIdxSelItem >= 0 && mIdxSelItem < mFilterList.count() ) {
+    KMFilter *f = mFilterList.at(aIdx);
+    if ( f )
+      emit filterSelected( f );
+    else
+      emit resetWidgets();
+  } else {
     emit resetWidgets();
+  }
   enableControls();
 }
 
@@ -804,7 +814,7 @@ void KMFilterListBox::slotDelete()
   int oIdxSelItem = mIdxSelItem;
   mIdxSelItem = -1;
   // unselect all
-  mListWidget->clearSelection();
+  // TODO remove this line: mListWidget->clearSelection();
   // broadcast that all widgets let go
   // of the filter
   emit resetWidgets();
@@ -818,11 +828,11 @@ void KMFilterListBox::slotDelete()
   // and set the new current item.
   if ( count > oIdxSelItem )
     // oIdxItem is still a valid index
-    mListWidget->setItemSelected( mListWidget->item( oIdxSelItem ), TRUE );
+    mListWidget->setCurrentRow( oIdxSelItem );
   else if ( count )
     // oIdxSelIdx is no longer valid, but the
     // list box isn't empty
-    mListWidget->setItemSelected( mListWidget->item( count - 1 ), TRUE );
+    mListWidget->setCurrentRow( count - 1 );
   // the list is empty - keep index -1
 
   enableControls();
@@ -970,12 +980,11 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
   if ( mIdxSelItem < 0 ) {
     // none selected -> append
     mFilterList.append( aFilter );
-    mListWidget->setItemSelected(
-        mListWidget->item( mListWidget->count() - 1 ), TRUE );
+    mListWidget->setCurrentRow( mListWidget->count() - 1 );
   } else {
     // insert just before selected
     mFilterList.insert( mIdxSelItem, aFilter );
-    mListWidget->setItemSelected( mListWidget->item( mIdxSelItem ), TRUE );
+    mListWidget->setCurrentRow( mIdxSelItem );
   }
 
 }
