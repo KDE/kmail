@@ -342,7 +342,7 @@ RecipientLine *RecipientsView::activeLine()
 RecipientLine *RecipientsView::emptyLine()
 {
   RecipientLine *line;
-  for( line = mLines.first(); line; line = mLines.next() ) {
+  Q_FOREACH( line , mLines ) {
     if ( line->isEmpty() ) return line;
   }
 
@@ -430,7 +430,7 @@ void RecipientsView::calculateTotal()
   int empty = 0;
 
   RecipientLine *line;
-  for( line = mLines.first(); line; line = mLines.next() ) {
+  Q_FOREACH( line , mLines ) {
     if ( line->isEmpty() ) ++empty;
     else count += line->recipientsCount();
   }
@@ -451,7 +451,7 @@ void RecipientsView::slotReturnPressed( RecipientLine *line )
 
 void RecipientsView::slotDownPressed( RecipientLine *line )
 {
-  int pos = mLines.find( line );
+  int pos = mLines.indexOf( line );
   if ( pos >= (int)mLines.count() - 1 ) {
     emit focusDown();
   } else if ( pos >= 0 ) {
@@ -461,7 +461,7 @@ void RecipientsView::slotDownPressed( RecipientLine *line )
 
 void RecipientsView::slotUpPressed( RecipientLine *line )
 {
-  int pos = mLines.find( line );
+  int pos = mLines.indexOf( line );
   if ( pos > 0 ) {
     activateLine( mLines.at( pos - 1 ) );
   } else {
@@ -487,7 +487,7 @@ void RecipientsView::slotDeleteLine()
     return;
 
   RecipientLine *line = mCurDelLine;
-  int pos = mLines.find( line );
+  int pos = mLines.indexOf( line );
 
   int newPos;
   if ( pos == 0 ) newPos = pos + 1;
@@ -566,14 +566,13 @@ Recipient::List RecipientsView::recipients() const
 {
   Recipient::List recipients;
 
-  Q3PtrListIterator<RecipientLine> it( mLines );
+  QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
-  while( ( line = it.current() ) ) {
+  while( it.hasNext()) {
+		  line = it.next();
     if ( !line->recipient().isEmpty() ) {
       recipients.append( line->recipient() );
     }
-
-    ++it;
   }
 
   return recipients;
@@ -583,14 +582,14 @@ void RecipientsView::removeRecipient( const QString & recipient,
                                       Recipient::Type type )
 {
   // search a line which matches recipient and type
-  Q3PtrListIterator<RecipientLine> it( mLines );
+  QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
-  while( ( line = it.current() ) ) {
+  while (it.hasNext()) {
+	line = it.next();
     if ( ( line->recipient().email() == recipient ) &&
          ( line->recipientType() == type ) ) {
       break;
     }
-    ++it;
   }
   if ( line )
     line->clear();
@@ -601,13 +600,13 @@ bool RecipientsView::isModified()
   if ( mModified )
     return true;
 
-  Q3PtrListIterator<RecipientLine> it( mLines );
+  QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
-  while( ( line = it.current() ) ) {
+  while( it.hasNext()) {
+	line = it.next();
     if ( line->isModified() ) {
       return true;
     }
-    ++it;
   }
 
   return false;
@@ -617,11 +616,11 @@ void RecipientsView::clearModified()
 {
   mModified = false;
 
-  Q3PtrListIterator<RecipientLine> it( mLines );
+  QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
-  while( ( line = it.current() ) ) {
+  while( it.hasNext() ) {
+	line = it.next();
     line->clearModified();
-    ++it;
   }
 }
 
@@ -649,11 +648,11 @@ int RecipientsView::setFirstColumnWidth( int w )
 {
   mFirstColumnWidth = w;
 
-  Q3PtrListIterator<RecipientLine> it( mLines );
+  QListIterator<RecipientLine*> it( mLines );
   RecipientLine *line;
-  while( ( line = it.current() ) ) {
+  while(it.hasNext()) {
+	line = it.next();
     mFirstColumnWidth = line->setComboWidth( mFirstColumnWidth );
-    ++it;
   }
 
   resizeView();

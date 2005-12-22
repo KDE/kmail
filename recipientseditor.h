@@ -34,7 +34,6 @@
 #include <QList>
 #include <QKeyEvent>
 #include <QResizeEvent>
-#include <Q3PtrList>
 
 #include "kmlineeditspell.h"
 #include <qcombobox.h>
@@ -238,7 +237,7 @@ class RecipientsView : public Q3ScrollView
     void slotTypeModified( RecipientLine * );
 
   private:
-    Q3PtrList<RecipientLine> mLines;
+    QList<RecipientLine*> mLines;
     QPointer<RecipientLine> mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
