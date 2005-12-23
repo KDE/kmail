@@ -9,7 +9,7 @@
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>
-#include <Q3CString>
+#include <QByteArray>
 //#include <weaver.h>
 //#include <weaverlogger.h>
 
@@ -121,26 +121,26 @@ public:
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
                     const QString &attachName,
-                    const Q3CString &attachCte,
-                    const Q3CString &attachData,
-                    const Q3CString &attachType,
-                    const Q3CString &attachSubType,
-                    const Q3CString &attachParamAttr,
+                    const QByteArray &attachCte,
+                    const QByteArray &attachData,
+                    const QByteArray &attachType,
+                    const QByteArray &attachSubType,
+                    const QByteArray &attachParamAttr,
                     const QString &attachParamValue,
-                    const Q3CString &attachContDisp);
+                    const QByteArray &attachContDisp);
 
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
                     const QString &attachName,
-                    const Q3CString &attachCte,
-                    const Q3CString &attachData,
-                    const Q3CString &attachType,
-                    const Q3CString &attachSubType,
-                    const Q3CString &attachParamAttr,
+                    const QByteArray &attachCte,
+                    const QByteArray &attachData,
+                    const QByteArray &attachType,
+                    const QByteArray &attachSubType,
+                    const QByteArray &attachParamAttr,
                     const QString &attachParamValue,
-                    const Q3CString &attachContDisp,
-                    const Q3CString &attachCharset);
+                    const QByteArray &attachContDisp,
+                    const QByteArray &attachCharset);
 
   DCOPRef openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,

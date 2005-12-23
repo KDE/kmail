@@ -7,7 +7,6 @@
 #include <kurl.h>
 #include <qstringlist.h>
 //Added by qt3to4:
-#include <Q3CString>
 
 /** checkMail wont show reader but will check mail. use openReader to
     show if you give a filename to openReader it will show mbox or
@@ -43,25 +42,25 @@ k_dcop:
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const Q3CString &attachCte,
-                            const Q3CString &attachData,
-                            const Q3CString &attachType,
-                            const Q3CString &attachSubType,
-                            const Q3CString &attachParamAttr,
+                            const QByteArray &attachCte,
+                            const QByteArray &attachData,
+                            const QByteArray &attachType,
+                            const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr,
                             const QString &attachParamValue,
-                            const Q3CString &attachContDisp) = 0;
+                            const QByteArray &attachContDisp) = 0;
   virtual int openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const Q3CString &attachCte,
-                            const Q3CString &attachData,
-                            const Q3CString &attachType,
-                            const Q3CString &attachSubType,
-                            const Q3CString &attachParamAttr,
+                            const QByteArray &attachCte,
+                            const QByteArray &attachData,
+                            const QByteArray &attachType,
+                            const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr,
                             const QString &attachParamValue,
-                            const Q3CString &attachContDisp,
-                            const Q3CString &attachCharset) = 0;
+                            const QByteArray &attachContDisp,
+                            const QByteArray &attachCharset) = 0;
   /** Open composer and return reference to DCOP interface of composer window.
     If hidden is true, the window will not be shown. If you use that option,
     it's your responsibility to call the send() function of the composer in

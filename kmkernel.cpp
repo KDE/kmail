@@ -28,7 +28,7 @@
 #include "undostack.h"
 #include "accountmanager.h"
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <QList>
 using KMail::AccountManager;
 #include <libkdepim/kfileio.h>
@@ -153,7 +153,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // In the case of Japan. Japanese locale name is "eucjp" but
   // The Japanese mail systems normally used "iso-2022-jp" of locale name.
   // We want to change locale name from eucjp to iso-2022-jp at KMail only.
-  if ( Q3CString(QTextCodec::codecForLocale()->name()).toLower() == "eucjp" )
+  if ( QByteArray(QTextCodec::codecForLocale()->name()).toLower() == "eucjp" )
   {
     netCodec = QTextCodec::codecForName("jis7");
     // QTextCodec *cdc = QTextCodec::codecForName("jis7");
@@ -413,34 +413,34 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const Q3CString &attachCte,
-                            const Q3CString &attachData,
-                            const Q3CString &attachType,
-                            const Q3CString &attachSubType,
-                            const Q3CString &attachParamAttr,
+                            const QByteArray &attachCte,
+                            const QByteArray &attachData,
+                            const QByteArray &attachType,
+                            const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr,
                             const QString &attachParamValue,
-                            const Q3CString &attachContDisp )
+                            const QByteArray &attachContDisp )
 {
   kdDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
 
   return openComposer ( to, cc, bcc, subject, body, hidden,
                         attachName, attachCte, attachData,
                         attachType, attachSubType, attachParamAttr,
-                        attachParamValue, attachContDisp, Q3CString() );
+                        attachParamValue, attachContDisp, QByteArray() );
 }
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const QString &attachName,
-                            const Q3CString &attachCte,
-                            const Q3CString &attachData,
-                            const Q3CString &attachType,
-                            const Q3CString &attachSubType,
-                            const Q3CString &attachParamAttr,
+                            const QByteArray &attachCte,
+                            const QByteArray &attachData,
+                            const QByteArray &attachType,
+                            const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr,
                             const QString &attachParamValue,
-                            const Q3CString &attachContDisp,
-                            const Q3CString &attachCharset )
+                            const QByteArray &attachContDisp,
+                            const QByteArray &attachCharset )
 {
   kdDebug(5006) << "KMKernel::openComposer()" << endl;
 
