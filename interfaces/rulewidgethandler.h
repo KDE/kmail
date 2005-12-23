@@ -35,11 +35,11 @@
 
 #include "../kmsearchpattern.h"
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 class QWidget;
 class QStackedWidget;
-class Q3CString;
+class QByteArray;
 class QString;
 class QObject;
 
@@ -57,21 +57,21 @@ namespace KMail {
     virtual QWidget * createValueWidget( int number,
                                          QStackedWidget *valueStack,
                                          const QObject *receiver ) const = 0;
-    virtual KMSearchRule::Function function( const Q3CString & field,
+    virtual KMSearchRule::Function function( const QByteArray & field,
                                              const QStackedWidget *functionStack ) const = 0;
-    virtual QString value( const Q3CString & field,
+    virtual QString value( const QByteArray & field,
                            const QStackedWidget *functionStack,
                            const QStackedWidget *valueStack ) const = 0;
-    virtual QString prettyValue( const Q3CString & field,
+    virtual QString prettyValue( const QByteArray & field,
                                  const QStackedWidget *functionStack,
                                  const QStackedWidget *valueStack ) const = 0;
-    virtual bool handlesField( const Q3CString & field ) const = 0;
+    virtual bool handlesField( const QByteArray & field ) const = 0;
     virtual void reset( QStackedWidget *functionStack,
                         QStackedWidget *valueStack ) const = 0;
     virtual bool setRule( QStackedWidget *functionStack,
                           QStackedWidget *valueStack,
                           const KMSearchRule *rule ) const = 0;
-    virtual bool update( const Q3CString & field,
+    virtual bool update( const QByteArray & field,
                          QStackedWidget *functionStack,
                          QStackedWidget *valueStack ) const = 0;
 

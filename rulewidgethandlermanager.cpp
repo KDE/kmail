@@ -69,21 +69,21 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const Q3CString & field,
+    KMSearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
-    QString value( const Q3CString & field,
+    QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
                    const QStackedWidget *valueStack ) const;
-    QString prettyValue( const Q3CString & field,
+    QString prettyValue( const QByteArray & field,
                          const QStackedWidget *functionStack,
                          const QStackedWidget *valueStack ) const;
-    bool handlesField( const Q3CString & field ) const;
+    bool handlesField( const QByteArray & field ) const;
     void reset( QStackedWidget *functionStack,
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
-    bool update( const Q3CString & field,
+    bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
@@ -104,21 +104,21 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const Q3CString & field,
+    KMSearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
-    QString value( const Q3CString & field,
+    QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
                    const QStackedWidget *valueStack ) const;
-    QString prettyValue( const Q3CString & field,
+    QString prettyValue( const QByteArray & field,
                          const QStackedWidget *functionStack,
                          const QStackedWidget *valueStack ) const;
-    bool handlesField( const Q3CString & field ) const;
+    bool handlesField( const QByteArray & field ) const;
     void reset( QStackedWidget *functionStack,
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
-    bool update( const Q3CString & field,
+    bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
@@ -140,21 +140,21 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const Q3CString & field,
+    KMSearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
-    QString value( const Q3CString & field,
+    QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
                    const QStackedWidget *valueStack ) const;
-    QString prettyValue( const Q3CString & field,
+    QString prettyValue( const QByteArray & field,
                          const QStackedWidget *functionStack,
                          const QStackedWidget *valueStack ) const;
-    bool handlesField( const Q3CString & field ) const;
+    bool handlesField( const QByteArray & field ) const;
     void reset( QStackedWidget *functionStack,
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
-    bool update( const Q3CString & field,
+    bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
@@ -174,21 +174,21 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const Q3CString & field,
+    KMSearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
-    QString value( const Q3CString & field,
+    QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
                    const QStackedWidget *valueStack ) const;
-    QString prettyValue( const Q3CString & field,
+    QString prettyValue( const QByteArray & field,
                          const QStackedWidget *functionStack,
                          const QStackedWidget *valueStack ) const;
-    bool handlesField( const Q3CString & field ) const;
+    bool handlesField( const QByteArray & field ) const;
     void reset( QStackedWidget *functionStack,
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
-    bool update( const Q3CString & field,
+    bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
@@ -281,7 +281,7 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
   }
 }
 
-KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const Q3CString& field,
+KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const QByteArray& field,
                                                                   const QStackedWidget *functionStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
@@ -293,7 +293,7 @@ KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const Q3CStrin
   return KMSearchRule::FuncNone;
 }
 
-QString KMail::RuleWidgetHandlerManager::value( const Q3CString& field,
+QString KMail::RuleWidgetHandlerManager::value( const QByteArray& field,
                                                 const QStackedWidget *functionStack,
                                                 const QStackedWidget *valueStack ) const
 {
@@ -305,7 +305,7 @@ QString KMail::RuleWidgetHandlerManager::value( const Q3CString& field,
   return QString::null;
 }
 
-QString KMail::RuleWidgetHandlerManager::prettyValue( const Q3CString& field,
+QString KMail::RuleWidgetHandlerManager::prettyValue( const QByteArray& field,
                                                       const QStackedWidget *functionStack,
                                                       const QStackedWidget *valueStack ) const
 {
@@ -338,7 +338,7 @@ void KMail::RuleWidgetHandlerManager::setRule( QStackedWidget *functionStack,
   }
 }
 
-void KMail::RuleWidgetHandlerManager::update( const Q3CString &field,
+void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
                                               QStackedWidget *functionStack,
                                               QStackedWidget *valueStack ) const
 {
@@ -486,7 +486,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function TextRuleWidgetHandler::function( const Q3CString &,
+  KMSearchRule::Function TextRuleWidgetHandler::function( const QByteArray &,
                                                           const QStackedWidget *functionStack ) const
   {
     return currentFunction( functionStack );
@@ -536,7 +536,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString TextRuleWidgetHandler::value( const Q3CString &,
+  QString TextRuleWidgetHandler::value( const QByteArray &,
                                         const QStackedWidget *functionStack,
                                         const QStackedWidget *valueStack ) const
   {
@@ -551,7 +551,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString TextRuleWidgetHandler::prettyValue( const Q3CString &,
+  QString TextRuleWidgetHandler::prettyValue( const QByteArray &,
                                               const QStackedWidget *functionStack,
                                               const QStackedWidget *valueStack ) const
   {
@@ -566,7 +566,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool TextRuleWidgetHandler::handlesField( const Q3CString & ) const
+  bool TextRuleWidgetHandler::handlesField( const QByteArray & ) const
   {
     return true; // we handle all fields (as fallback)
   }
@@ -684,7 +684,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool TextRuleWidgetHandler::update( const Q3CString &,
+  bool TextRuleWidgetHandler::update( const QByteArray &,
                                       QStackedWidget *functionStack,
                                       QStackedWidget *valueStack ) const
   {
@@ -808,7 +808,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function MessageRuleWidgetHandler::function( const Q3CString & field,
+  KMSearchRule::Function MessageRuleWidgetHandler::function( const QByteArray & field,
                                                              const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
@@ -840,7 +840,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString MessageRuleWidgetHandler::value( const Q3CString & field,
+  QString MessageRuleWidgetHandler::value( const QByteArray & field,
                                            const QStackedWidget *functionStack,
                                            const QStackedWidget *valueStack ) const
   {
@@ -858,7 +858,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString MessageRuleWidgetHandler::prettyValue( const Q3CString & field,
+  QString MessageRuleWidgetHandler::prettyValue( const QByteArray & field,
                                                  const QStackedWidget *functionStack,
                                                  const QStackedWidget *valueStack ) const
   {
@@ -876,7 +876,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool MessageRuleWidgetHandler::handlesField( const Q3CString & field ) const
+  bool MessageRuleWidgetHandler::handlesField( const QByteArray & field ) const
   {
     return ( field == "<message>" );
   }
@@ -968,7 +968,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool MessageRuleWidgetHandler::update( const Q3CString & field,
+  bool MessageRuleWidgetHandler::update( const QByteArray & field,
                                       QStackedWidget *functionStack,
                                       QStackedWidget *valueStack ) const
   {
@@ -1082,7 +1082,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function StatusRuleWidgetHandler::function( const Q3CString & field,
+  KMSearchRule::Function StatusRuleWidgetHandler::function( const QByteArray & field,
                                                             const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
@@ -1112,7 +1112,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString StatusRuleWidgetHandler::value( const Q3CString & field,
+  QString StatusRuleWidgetHandler::value( const QByteArray & field,
                                           const QStackedWidget *,
                                           const QStackedWidget *valueStack ) const
   {
@@ -1128,7 +1128,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString StatusRuleWidgetHandler::prettyValue( const Q3CString & field,
+  QString StatusRuleWidgetHandler::prettyValue( const QByteArray & field,
                                                 const QStackedWidget *,
                                                 const QStackedWidget *valueStack ) const
   {
@@ -1144,7 +1144,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool StatusRuleWidgetHandler::handlesField( const Q3CString & field ) const
+  bool StatusRuleWidgetHandler::handlesField( const QByteArray & field ) const
   {
     return ( field == "<status>" );
   }
@@ -1238,7 +1238,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool StatusRuleWidgetHandler::update( const Q3CString &field,
+  bool StatusRuleWidgetHandler::update( const QByteArray &field,
                                         QStackedWidget *functionStack,
                                         QStackedWidget *valueStack ) const
   {
@@ -1338,7 +1338,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function NumericRuleWidgetHandler::function( const Q3CString & field,
+  KMSearchRule::Function NumericRuleWidgetHandler::function( const QByteArray & field,
                                                              const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
@@ -1368,7 +1368,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString NumericRuleWidgetHandler::value( const Q3CString & field,
+  QString NumericRuleWidgetHandler::value( const QByteArray & field,
                                            const QStackedWidget *,
                                            const QStackedWidget *valueStack ) const
   {
@@ -1380,7 +1380,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString NumericRuleWidgetHandler::prettyValue( const Q3CString & field,
+  QString NumericRuleWidgetHandler::prettyValue( const QByteArray & field,
                                                  const QStackedWidget *,
                                                  const QStackedWidget *valueStack ) const
   {
@@ -1392,7 +1392,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool NumericRuleWidgetHandler::handlesField( const Q3CString & field ) const
+  bool NumericRuleWidgetHandler::handlesField( const QByteArray & field ) const
   {
     return ( field == "<size>" || field == "<age in days>" );
   }
@@ -1425,7 +1425,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  void initNumInput( KIntNumInput *numInput, const Q3CString &field )
+  void initNumInput( KIntNumInput *numInput, const QByteArray &field )
   {
     if ( field == "<size>" ) {
       numInput->setMinValue( 0 );
@@ -1492,7 +1492,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  bool NumericRuleWidgetHandler::update( const Q3CString &field,
+  bool NumericRuleWidgetHandler::update( const QByteArray &field,
                                          QStackedWidget *functionStack,
                                          QStackedWidget *valueStack ) const
   {

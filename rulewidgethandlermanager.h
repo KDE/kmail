@@ -37,10 +37,10 @@
 
 #include <q3valuevector.h>
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 class QObject;
-class Q3CString;
+class QByteArray;
 class QString;
 class QStackedWidget;
 
@@ -70,15 +70,15 @@ namespace KMail {
     void createWidgets( QStackedWidget *functionStack,
                         QStackedWidget *valueStack,
                         const QObject *receiver ) const;
-    KMSearchRule::Function function( const Q3CString & field,
+    KMSearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
-    QString value( const Q3CString & field,
+    QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
                    const QStackedWidget *valueStack ) const;
-    QString prettyValue( const Q3CString & field,
+    QString prettyValue( const QByteArray & field,
                          const QStackedWidget *functionStack,
                          const QStackedWidget *valueStack ) const;
-    bool handlesField( const Q3CString & field,
+    bool handlesField( const QByteArray & field,
                        const QStackedWidget *functionStack,
                        const QStackedWidget *valueStack ) const;
     void reset( QStackedWidget *functionStack,
@@ -86,7 +86,7 @@ namespace KMail {
     void setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
                   const KMSearchRule *rule ) const;
-    void update( const Q3CString & field,
+    void update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
