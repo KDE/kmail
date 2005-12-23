@@ -21,7 +21,7 @@
 #include <kmime_header_parsing.h>
 //Added by qt3to4:
 #include <QGridLayout>
-#include <Q3CString>
+#include <QByteArray>
 using KMime::Types::AddrSpecList;
 using KMime::Types::AddressList;
 using KMime::Types::MailboxList;
@@ -119,7 +119,7 @@ namespace KMail {
   }
 
   AddrSpecList VacationDialog::mailAliases() const {
-    Q3CString text = mMailAliasesEdit->text().toLatin1(); // ### IMAA: !ok
+    QByteArray text = mMailAliasesEdit->text().toLatin1(); // ### IMAA: !ok
     AddressList al;
     const char * s = text.begin();
     parseAddressList( s, text.end(), al );

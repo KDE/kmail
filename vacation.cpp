@@ -22,7 +22,7 @@
 #include "vacationdialog.h"
 #include "sievejob.h"
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "accountmanager.h"
@@ -263,7 +263,7 @@ namespace KMail {
     // The trimmed() call below prevents parsing errors. The
     // slave somehow omits the last \n, which results in a lone \r at
     // the end, leading to a parse error.
-    const Q3CString scriptUTF8 = script.trimmed().utf8();
+    const QByteArray scriptUTF8 = script.trimmed().utf8();
     kdDebug(5006) << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
     KSieve::Parser parser( scriptUTF8.begin(),
 			   scriptUTF8.begin() + scriptUTF8.length() );
