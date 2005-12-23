@@ -24,9 +24,6 @@
 #include <kapplication.h>
 
 #include <qregexp.h>
-#include <q3valuelist.h>
-//Added by qt3to4:
-#include <Q3CString>
 #include <krandom.h>
 
 using namespace KMail;
@@ -80,7 +77,7 @@ void AccountManager::readConfig(void)
   KConfig* config = KMKernel::config();
   KMAccount* acct;
   QString acctType, acctName;
-  Q3CString groupName;
+  QString groupName;
   int i, num;
   uint id;
 

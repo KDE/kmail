@@ -36,8 +36,6 @@
 
 #include <qfile.h>
 #include <qtextstream.h>
-//Added by qt3to4:
-#include <Q3CString>
 
 class QString;
 
@@ -54,7 +52,7 @@ namespace KMail {
     void write( const QString & str );
     void queue( const QString & str );
     void flush();
-    void embedPart( const Q3CString & contentId, const QString & url );
+    void embedPart( const QByteArray & contentId, const QString & url );
 
   private:
     void openOrWarn();
