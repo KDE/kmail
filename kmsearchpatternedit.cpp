@@ -378,14 +378,14 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //=============================================================================
 
 KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly, bool absoluteDates )
-  : Q3GroupBox( 1/*columns*/, Qt::Horizontal, parent, name )
+  : QGroupBox( "", parent )
 {
   setTitle( i18n("Search Criteria") );
   initLayout( headersOnly, absoluteDates );
 }
 
 KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly, bool absoluteDates)
-  : Q3GroupBox( 1/*column*/, Qt::Horizontal, title, parent, name )
+  : QGroupBox( title, parent )
 {
   initLayout( headersOnly, absoluteDates );
 }
@@ -396,25 +396,29 @@ KMSearchPatternEdit::~KMSearchPatternEdit()
 
 void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
 {
+  QVBoxLayout *layout = new QVBoxLayout( this );
+
   //------------the radio buttons
-  mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this, "mAllRBtn" );
-  mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this, "mAnyRBtn" );
+  mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this );
+  mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this );
 
   mAllRBtn->setChecked(TRUE);
   mAnyRBtn->setChecked(FALSE);
 
-  Q3ButtonGroup *bg = new Q3ButtonGroup( this );
-  bg->hide();
-  bg->insert( mAllRBtn, (int)KMSearchPattern::OpAnd );
-  bg->insert( mAnyRBtn, (int)KMSearchPattern::OpOr );
+  layout->addWidget( mAllRBtn );
+  layout->addWidget( mAnyRBtn );
+
+  QButtonGroup *bg = new QButtonGroup( this );
+  bg->addButton( mAllRBtn );
+  bg->addButton( mAnyRBtn );
+
+  //------------connect a few signals
+  connect( bg, SIGNAL(buttonClicked(QAbstractButton *)),
+	   this, SLOT(slotRadioClicked(QAbstractButton *)) );
 
   //------------the list of KMSearchRuleWidget's
   mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly, absoluteDates );
   mRuleLister->slotClear();
-
-  //------------connect a few signals
-  connect( bg, SIGNAL(clicked(int)),
-	   this, SLOT(slotRadioClicked(int)) );
 
   KMSearchRuleWidget *srw = (KMSearchRuleWidget*)mRuleLister->mWidgetList.first();
   if ( srw ) {
@@ -424,6 +428,8 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
 	     this, SLOT(slotAutoNameHack()) );
   } else
     kdDebug(5006) << "KMSearchPatternEdit: no first KMSearchRuleWidget, though slotClear() has been called!" << endl;
+
+  layout->addWidget( mRuleLister );
 }
 
 void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
@@ -460,10 +466,14 @@ void KMSearchPatternEdit::reset()
   setEnabled( FALSE );
 }
 
-void KMSearchPatternEdit::slotRadioClicked(int aIdx)
+void KMSearchPatternEdit::slotRadioClicked(QAbstractButton *aRBtn)
 {
-  if ( mPattern )
-    mPattern->setOp( (KMSearchPattern::Operator)aIdx );
+  if ( mPattern ) {
+    if ( aRBtn == mAllRBtn )
+      mPattern->setOp( KMSearchPattern::OpAnd );
+    else
+      mPattern->setOp( KMSearchPattern::OpOr );
+  }
 }
 
 void KMSearchPatternEdit::slotAutoNameHack()

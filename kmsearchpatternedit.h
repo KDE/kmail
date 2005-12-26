@@ -8,10 +8,10 @@
 
 #include "kwidgetlister.h"
 
-#include <q3groupbox.h>
-#include <qstringlist.h>
-//Added by qt3to4:
 #include <QLabel>
+#include <QGroupBox>
+#include <QStringList>
+//Added by qt3to4:
 #include <Q3CString>
 #include <Q3PtrList>
 
@@ -22,6 +22,7 @@ template <typename T> class Q3PtrList;
 class QString;
 class QComboBox;
 class QLineEdit;
+class QAbstractButton;
 class QRadioButton;
 class QStackedWidget;
 class QLabel;
@@ -166,7 +167,7 @@ private:
     @author Marc Mutz <Marc@Mutz.com>
 */
 
-class KMSearchPatternEdit : public Q3GroupBox  {
+class KMSearchPatternEdit : public QGroupBox  {
   Q_OBJECT
 public:
   /** Constructor. The parent and name parameters are passed to the underlying
@@ -201,7 +202,7 @@ signals:
   void maybeNameChanged();
 
 private slots:
-  void slotRadioClicked(int aIdx);
+  void slotRadioClicked( QAbstractButton *aRBtn );
   void slotAutoNameHack();
 
 private:
