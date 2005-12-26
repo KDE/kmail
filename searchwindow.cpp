@@ -123,7 +123,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false, true );
 #warning Port me!
 //  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
-  mPatternEdit->setInsideMargin( 0 );
+#warning Port me!
+//  mPatternEdit->setInsideMargin( 0 );
   mSearchPattern = new KMSearchPattern();
   KMFolderSearch *searchFolder = 0;
   if (curFolder)
