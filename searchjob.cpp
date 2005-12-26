@@ -35,8 +35,7 @@
 #include "kmmsgdict.h"
 
 #include <progressmanager.h>
-//Added by qt3to4:
-#include <QList>
+
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 
@@ -104,7 +103,8 @@ QString SearchJob::searchStringFromPattern( const KMSearchPattern* pattern )
   mLocalSearchPattern = new KMSearchPattern();
   mLocalSearchPattern->setOp( pattern->op() );
 
-  for ( Q3PtrListIterator<KMSearchRule> it( *pattern ) ; it.current() ; ++it )
+  QList<KMSearchRule*>::const_iterator it;
+  for ( it = pattern->begin() ; it != pattern->end() ; ++it )
   {
     // construct an imap search command
     bool accept = true;
@@ -428,7 +428,9 @@ void SearchJob::slotAbortSearch( KPIM::ProgressItem* item )
 //-----------------------------------------------------------------------------
 bool SearchJob::needsDownload()
 {
-  for ( Q3PtrListIterator<KMSearchRule> it( *mLocalSearchPattern ) ; it.current() ; ++it ) {
+  QList<KMSearchRule*>::const_iterator it;
+  for ( it = mLocalSearchPattern->begin() ;
+        it != mLocalSearchPattern->end() ; ++it ) {
     if ( (*it)->field() != "<status>" ) {
       return true;
     }

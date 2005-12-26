@@ -280,7 +280,7 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 {
 }
 
-void KMSearchRuleWidgetLister::setRuleList( Q3PtrList<KMSearchRule> *aList )
+void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 {
   assert ( aList );
 
@@ -313,10 +313,10 @@ void KMSearchRuleWidgetLister::setRuleList( Q3PtrList<KMSearchRule> *aList )
   setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(),mMinWidgets) );
 
   // load the actions into the widgets
-  Q3PtrListIterator<KMSearchRule> rIt( *mRuleList );
+  QList<KMSearchRule*>::const_iterator rIt;
   Q3PtrListIterator<QWidget> wIt( mWidgetList );
-  for ( rIt.toFirst(), wIt.toFirst() ;
-	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
+  for ( rIt = mRuleList->begin(), wIt.toFirst() ;
+	rIt != mRuleList->end() && wIt.current() ; ++rIt, ++wIt ) {
     (static_cast<KMSearchRuleWidget*>(*wIt))->setRule( (*rIt) );
   }
   for ( ; wIt.current() ; ++wIt )
@@ -377,14 +377,14 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //
 //=============================================================================
 
-KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly, bool absoluteDates )
+KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, bool headersOnly, bool absoluteDates )
   : QGroupBox( "", parent )
 {
   setTitle( i18n("Search Criteria") );
   initLayout( headersOnly, absoluteDates );
 }
 
-KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly, bool absoluteDates)
+KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, bool headersOnly, bool absoluteDates)
   : QGroupBox( title, parent )
 {
   initLayout( headersOnly, absoluteDates );

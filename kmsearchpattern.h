@@ -7,11 +7,12 @@
 #define _kmsearchpattern_h_
 
 #include <klocale.h>
-#include <q3ptrlist.h>
-#include <qstring.h>
-#include <q3cstring.h>
 #include <messagestatus.h>
 using KPIM::MessageStatus;
+
+#include <QList>
+#include <QString>
+#include <q3cstring.h>
 
 class KMMessage;
 class KConfig;
@@ -302,7 +303,7 @@ public:
     @short An abstraction of a search over messages.
     @author Marc Mutz <Marc@Mutz.com>
 */
-class KMSearchPattern : public Q3PtrList<KMSearchRule>
+class KMSearchPattern : public QList<KMSearchRule*>
 {
 
 public:

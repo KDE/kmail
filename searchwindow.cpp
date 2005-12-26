@@ -120,7 +120,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   spacer->setMinimumHeight( 2 );
   vbl->addWidget( spacer );
 
-  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false, true );
+  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , false, true );
 #warning Port me!
 //  mPatternEdit->setFrameStyle( Q3Frame::NoFrame | Q3Frame::Plain );
 #warning Port me!

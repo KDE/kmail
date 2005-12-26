@@ -468,10 +468,9 @@ std::vector<quint32> KMMsgIndex::simpleSearch( QString s, bool* ok ) const {
 bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 	kdDebug( 5006 ) << "KMMsgIndex::canHandleQuery( . )" << endl;
 	if ( !pat ) return false;
-	Q3PtrListIterator<KMSearchRule> it( *pat );
 	KMSearchRule* rule;
-	while ( (rule = it.current()) != 0 ) {
-		++it;
+	QListIterator<KMSearchRule*> it( *pat );
+	while ( it.hasNext() && (rule = it.next()) != 0 ) {
 		if ( !rule->field().isEmpty() && !rule->contents().isEmpty() &&
 				rule->function() == KMSearchRule::FuncContains &&
 				rule->field() == "<body>" )  return true;
@@ -545,7 +544,9 @@ void KMMsgIndex::Search::act() {
 		case s_starting: {
 			KMSearchPattern* pat = mSearch->searchPattern();
 			QString terms;
-			for ( KMSearchRule* rule = pat->first(); rule; rule = pat->next() ) {
+			KMSearchRule* rule;
+			QListIterator<KMSearchRule*> it( *pat );
+			while ( it.hasNext() && (rule = it.next()) != 0 ) {
 				Q_ASSERT( rule->function() == KMSearchRule::FuncContains );
 				terms += QString::fromLatin1( " %1 " ).arg( rule->contents() );
 			}

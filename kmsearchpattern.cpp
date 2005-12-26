@@ -9,13 +9,10 @@
 #include "kmsearchpattern.h"
 #include "kmmsgdict.h"
 #include "filterlog.h"
+using KMail::FilterLog;
 #include "kmkernel.h"
 #include "kmmsgdict.h"
 #include "kmfolder.h"
-//Added by qt3to4:
-#include <Q3CString>
-#include <Q3PtrList>
-using KMail::FilterLog;
 
 #include <libemailfunctions/email.h>
 
@@ -27,6 +24,8 @@ using KMail::FilterLog;
 #include <kabc/stdaddressbook.h>
 
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
@@ -688,9 +687,8 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 //==================================================
 
 KMSearchPattern::KMSearchPattern( const KConfig * config )
-  : Q3PtrList<KMSearchRule>()
+  : QList<KMSearchRule*>()
 {
-  setAutoDelete( true );
   if ( config )
     readConfig( config );
   else
@@ -699,6 +697,8 @@ KMSearchPattern::KMSearchPattern( const KConfig * config )
 
 KMSearchPattern::~KMSearchPattern()
 {
+  while (!isEmpty())
+    delete takeFirst();
 }
 
 bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
@@ -706,16 +706,16 @@ bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
   if ( isEmpty() )
     return true;
 
-  Q3PtrListIterator<KMSearchRule> it( *this );
+  QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
-    for ( it.toFirst() ; it.current() ; ++it )
+    for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
         if ( !(*it)->matches( msg ) )
           return false;
     return true;
   case OpOr:  // at least one rule must match
-    for ( it.toFirst() ; it.current() ; ++it )
+    for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
         if ( (*it)->matches( msg ) )
           return true;
@@ -731,16 +731,16 @@ bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
     return true;
 
   KMMessage msg;
-  Q3PtrListIterator<KMSearchRule> it( *this );
+  QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
-    for ( it.toFirst() ; it.current() ; ++it )
+    for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
         if ( !(*it)->matches( aStr, msg ) )
           return false;
     return true;
   case OpOr:  // at least one rule must match
-    for ( it.toFirst() ; it.current() ; ++it )
+    for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
         if ( (*it)->matches( aStr, msg ) )
           return true;
@@ -782,24 +782,24 @@ bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
 }
 
 bool KMSearchPattern::requiresBody() const {
-  Q3PtrListIterator<KMSearchRule> it( *this );
-    for ( it.toFirst() ; it.current() ; ++it )
+  QList<KMSearchRule*>::const_iterator it;
+    for ( it = begin() ; it != end() ; ++it )
       if ( (*it)->requiresBody() )
 	return true;
   return false;
 }
 
 void KMSearchPattern::purify() {
-  Q3PtrListIterator<KMSearchRule> it( *this );
-  it.toLast();
-  while ( it.current() )
-    if ( (*it)->isEmpty() ) {
+  KMSearchRule* rule;
+  QMutableListIterator<KMSearchRule*> it( *this );
+  it.toBack();
+  while ( it.hasPrevious() )
+    rule = it.previous();
+    if ( rule->isEmpty() ) {
 #ifndef NDEBUG
-      kdDebug(5006) << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
+      kdDebug(5006) << "KMSearchPattern::purify(): removing " << rule->asString() << endl;
 #endif
-      remove( *it );
-    } else {
-      --it;
+      it.remove();
     }
 }
 
@@ -874,7 +874,8 @@ void KMSearchPattern::writeConfig( KConfig * config ) const {
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
   int i = 0;
-  for ( Q3PtrListIterator<KMSearchRule> it( *this ) ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it )
+  QList<KMSearchRule*>::const_iterator it;
+  for ( it = begin() ; it != end() && i < FILTER_MAX_RULES ; ++i , ++it )
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
     (*it)->writeConfig( config, i );
@@ -896,7 +897,8 @@ QString KMSearchPattern::asString() const {
   else
     result = i18n("(match all of the following)");
 
-  for ( Q3PtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
+  QList<KMSearchRule*>::const_iterator it;
+  for ( it = begin() ; it != end() ; ++it )
     result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
   return result;
@@ -910,7 +912,8 @@ const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & othe
   setName( other.name() );
 
   clear(); // ###
-  for ( Q3PtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
+  QList<KMSearchRule*>::const_iterator it;
+  for ( it = other.begin() ; it != other.end() ; ++it )
     append( KMSearchRule::createInstance( **it ) ); // deep copy
 
   return *this;

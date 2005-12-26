@@ -8,25 +8,18 @@
 
 #include "kwidgetlister.h"
 
-#include <QLabel>
 #include <QGroupBox>
-#include <QStringList>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3PtrList>
 
 class KMSearchRule;
 class KMSearchPattern;
+class KMSearchPatternEdit;
 
-template <typename T> class Q3PtrList;
-class QString;
-class QComboBox;
-class QLineEdit;
 class QAbstractButton;
+class QComboBox;
 class QRadioButton;
 class QStackedWidget;
-class QLabel;
-class KMSearchPatternEdit;
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable QComboBox for the field,
@@ -117,7 +110,7 @@ public:
 
   virtual ~KMSearchRuleWidgetLister();
 
-  void setRuleList( Q3PtrList<KMSearchRule> * aList );
+  void setRuleList( QList<KMSearchRule*> * aList );
   void setHeadersOnly( bool headersOnly );
 
 public slots:
@@ -129,7 +122,7 @@ protected:
 
 private:
   void regenerateRuleListFromWidgets();
-  Q3PtrList<KMSearchRule> *mRuleList;
+  QList<KMSearchRule*> *mRuleList;
   bool mHeadersOnly;
   bool mAbsoluteDates;
 };
@@ -172,10 +165,12 @@ class KMSearchPatternEdit : public QGroupBox  {
 public:
   /** Constructor. The parent and name parameters are passed to the underlying
       QGroupBox, as usual. */
-  KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false, bool absoluteDates = false);
+  KMSearchPatternEdit(QWidget *parent=0, bool headersOnly = false,
+                      bool absoluteDates = false);
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
-  KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0, bool headersOnly = false, bool absoluteDates = false);
+  KMSearchPatternEdit(const QString & title, QWidget *parent=0,
+                      bool headersOnly = false, bool absoluteDates = false);
   ~KMSearchPatternEdit();
 
   /** Set the search pattern. Rules are inserted regardless of the
