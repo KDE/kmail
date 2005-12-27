@@ -148,7 +148,6 @@ public:
     NewByteArray &appendNULL();
     NewByteArray &operator+=( const char * );
     NewByteArray &operator+=( const QByteArray & );
-    NewByteArray &operator+=( const Q3CString & );
     QByteArray& qByteArray();
 };
 
@@ -182,17 +181,6 @@ NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
 }
-/*NewByteArray& NewByteArray::operator+=( const Q3CString & newData )
-{
-    if ( newData.isEmpty() )
-        return *this;
-    QByteArray::detach();
-    uint len1 = size();
-    uint len2 = newData.length(); // forget about the trailing 0x00 !
-    QByteArray::resize( len1 + len2 )
-    memcpy( data() + len1, newData.data(), len2 );
-    return *this;
-}*/
 QByteArray& NewByteArray::qByteArray()
 {
     return *((QByteArray*)this);
