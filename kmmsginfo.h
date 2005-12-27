@@ -35,7 +35,7 @@ public:
   virtual ~KMMsgInfo();
 
   /** left for old style index files */
-  void compat_fromOldIndexString(const Q3CString& str, bool toUtf8);
+  void compat_fromOldIndexString(const QByteArray& str, bool toUtf8);
 
 
   /** Initialize with given values and set dirty flag to FALSE. */
