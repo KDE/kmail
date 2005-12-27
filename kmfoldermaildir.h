@@ -2,7 +2,6 @@
 #define kmfoldermaildir_h
 
 #include "kmfolderindex.h"
-#include <Q3CString>
 #include <Q3PtrList>
 
 
