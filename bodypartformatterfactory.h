@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <Q3CString>
 /*  -*- mode: C++; c-file-style: "gnu" -*-
     bodypartformatterfactory.h
 
@@ -37,8 +35,7 @@
 #define __KMAIL_BODYPARTFORMATTERFACTORY_H__
 
 class QString;
-class Q3CString;
-
+#include <QByteArray>
 namespace KMail {
 
   namespace Interface {
@@ -55,7 +52,7 @@ namespace KMail {
 
     const Interface::BodyPartFormatter * createFor( const char * type, const char * subtype ) const;
     const Interface::BodyPartFormatter * createFor( const QString & type, const QString & subtype ) const;
-    const Interface::BodyPartFormatter * createFor( const Q3CString & type, const Q3CString & subtype ) const;
+    const Interface::BodyPartFormatter * createFor( const QByteArray & type, const QByteArray & subtype ) const;
 
     //
     // Only boring stuff below:
