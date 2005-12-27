@@ -884,7 +884,7 @@ Q3CString KMFolderMbox::escapeFrom( const Q3CString & str ) {
 #undef STRDIM
 
 //-----------------------------------------------------------------------------
-Q3CString& KMFolderMbox::getMsgString(int idx, Q3CString &mDest)
+QByteArray& KMFolderMbox::getMsgString(int idx, QByteArray &mDest)
 {
   size_t msgSize;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];

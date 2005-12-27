@@ -593,7 +593,7 @@ DwString KMFolderMaildir::getDwString(int idx)
 }
 
 
-Q3CString& KMFolderMaildir::getMsgString(int idx, Q3CString& mDest)
+QByteArray& KMFolderMaildir::getMsgString(int idx, QByteArray& mDest)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 

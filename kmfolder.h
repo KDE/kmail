@@ -185,7 +185,7 @@ public:
   bool isMessage(int idx);
 
   /** Read a message and return a referece to a string */
-  Q3CString& getMsgString(int idx, Q3CString& mDest);
+  QByteArray& getMsgString(int idx, QByteArray& mDest);
 
   /** Read a message and returns a DwString */
   DwString getDwString(int idx);

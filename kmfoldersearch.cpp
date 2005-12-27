@@ -477,7 +477,7 @@ void KMFolderSearch::removeSerNum(quint32 serNum)
     }
 }
 
-Q3CString& KMFolderSearch::getMsgString(int idx, Q3CString& mDest)
+QByteArray& KMFolderSearch::getMsgString(int idx, QByteArray& mDest)
 {
     KMFolder *folder = getMsgBase(idx)->parent();
     assert(folder);

@@ -322,7 +322,7 @@ bool KMFolder::isMessage( int idx )
   return mStorage->isMessage( idx );
 }
 
-Q3CString& KMFolder::getMsgString( int idx, Q3CString& mDest )
+QByteArray& KMFolder::getMsgString( int idx, QByteArray& mDest )
 {
   return mStorage->getMsgString( idx,  mDest );
 }

@@ -150,7 +150,7 @@ public:
   virtual KMMessage* readTemporaryMsg(int idx);
 
   /** Read a message and return a referece to a string */
-  virtual Q3CString& getMsgString(int idx, Q3CString& mDest) = 0;
+  virtual QByteArray& getMsgString(int idx, QByteArray& mDest) = 0;
 
   /** Read a message and returns a DwString */
   virtual DwString getDwString(int idx) = 0;

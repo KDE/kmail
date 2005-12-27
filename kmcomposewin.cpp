@@ -2420,7 +2420,7 @@ void KMComposeWin::addrBookSelIntoNew()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setCharset(const Q3CString& aCharset, bool forceDefault)
+void KMComposeWin::setCharset(const QByteArray& aCharset, bool forceDefault)
 {
   if ((forceDefault && GlobalSettings::self()->forceReplyCharset()) || aCharset.isEmpty())
     mCharset = mDefCharset;

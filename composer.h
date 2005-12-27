@@ -95,7 +95,7 @@ namespace KMail {
     /**
      * Recode to the specified charset
      */
-    virtual void setCharset( const Q3CString & aCharset, bool forceDefault=false ) = 0;
+    virtual void setCharset( const QByteArray & aCharset, bool forceDefault=false ) = 0;
 
   public: // kmcommand
     /**

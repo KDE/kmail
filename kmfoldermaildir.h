@@ -31,7 +31,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeMaildir; }
 
   /** Read a message and return a referece to a string */
-  virtual Q3CString& getMsgString(int idx, Q3CString& mDest);
+  virtual QByteArray& getMsgString(int idx, QByteArray& mDest);
   virtual DwString getDwString(int idx);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.

@@ -204,7 +204,7 @@ public: // kmkernel, kmcommand, mailserviceimpl
   /**
    * Recode to the specified charset
    */
-   void setCharset(const Q3CString& aCharset, bool forceDefault = FALSE);
+   void setCharset(const QByteArray& aCharset, bool forceDefault = FALSE);
 
 public: // kmcommand
   /**

@@ -64,7 +64,7 @@ public:
   virtual KMFolderType folderType() const { return KMFolderTypeMbox; }
 
   /** Read a message and return a referece to a string */
-  virtual Q3CString& getMsgString(int idx, Q3CString& mDest);
+  virtual QByteArray& getMsgString(int idx, QByteArray& mDest);
   DwString getDwString(int idx);
 
   /** Add the given message to the folder. Usually the message
