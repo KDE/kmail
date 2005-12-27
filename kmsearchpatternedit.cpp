@@ -402,7 +402,9 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this );
   mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this );
 
+  mAllRBtn->setObjectName( "mAllRBtn" );
   mAllRBtn->setChecked(TRUE);
+  mAnyRBtn->setObjectName( "mAnyRBtn" );
   mAnyRBtn->setChecked(FALSE);
 
   layout->addWidget( mAllRBtn );
