@@ -186,7 +186,7 @@ class KMMsgIndex : public QObject {
 #endif
 		std::set<KMFolder*> mOpenedFolders;
 		std::vector<Search*> mSearches;
-		Q3CString mIndexPath;
+		QByteArray mIndexPath;
 		QTimer* mTimer;
 		bool mSlowDown;
 };

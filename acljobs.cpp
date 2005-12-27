@@ -31,8 +31,6 @@
 #include "acljobs.h"
 #include <kio/scheduler.h>
 #include <kdebug.h>
-//Added by qt3to4:
-#include <Q3CString>
 
 using namespace KMail;
 

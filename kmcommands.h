@@ -9,7 +9,6 @@
 #include <q3valuevector.h>
 //Added by qt3to4:
 #include <Q3PopupMenu>
-#include <Q3CString>
 #include <kio/job.h>
 #include <mimelib/string.h>
 #include <messagestatus.h>
@@ -555,12 +554,12 @@ class KDE_EXPORT KMFilterCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMFilterCommand( const Q3CString &field, const QString &value );
+  KMFilterCommand( const QByteArray &field, const QString &value );
 
 private:
   virtual Result execute();
 
-  Q3CString mField;
+  QByteArray mField;
   QString mValue;
 };
 

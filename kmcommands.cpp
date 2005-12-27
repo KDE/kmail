@@ -1442,7 +1442,7 @@ KMCommand::Result KMSetStatusCommand::execute()
 }
 
 
-KMFilterCommand::KMFilterCommand( const Q3CString &field, const QString &value )
+KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value )
   : mField( field ), mValue( value )
 {
 }
