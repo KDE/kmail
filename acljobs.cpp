@@ -72,8 +72,8 @@ static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url,
   return perm;
 }
 
-static Q3CString permissionsToIMAPRights( unsigned int permissions ) {
-  Q3CString str = "";
+static QByteArray permissionsToIMAPRights( unsigned int permissions ) {
+  QByteArray str = "";
   if ( permissions & ACLJobs::List )
     str += 'l';
   if ( permissions & ACLJobs::Read )

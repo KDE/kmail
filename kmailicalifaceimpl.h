@@ -47,7 +47,6 @@
 #include <qmap.h>
 //Added by qt3to4:
 #include <QList>
-#include <Q3CString>
 
 class KMFolder;
 class KMMessage;

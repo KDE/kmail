@@ -60,9 +60,6 @@
 
 #include <qstringlist.h>
 #include <q3tl.h>
-//Added by qt3to4:
-#include <Q3CString>
-
 #include <algorithm>
 #include <memory>
 #include <iterator>
@@ -408,7 +405,7 @@ struct FormatInfo {
 };
 
 struct Kleo::KeyResolver::Private {
-  std::set<Q3CString> alreadyWarnedFingerprints;
+  std::set<QByteArray> alreadyWarnedFingerprints;
 
   std::vector<GpgME::Key> mOpenPGPSigningKeys; // signing
   std::vector<GpgME::Key> mSMIMESigningKeys; // signing

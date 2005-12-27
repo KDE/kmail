@@ -57,7 +57,6 @@
 
 //Added by qt3to4:
 #include <QPixmap>
-#include <Q3CString>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QBoxLayout>
@@ -213,7 +212,7 @@ void AntiSpamWizard::accept()
         {
           if ( (*it).isVirusTool() )
           {
-              const Q3CString header = (*it).getDetectionHeader().ascii();
+              const QByteArray header = (*it).getDetectionHeader().ascii();
               const QString & pattern = (*it).getDetectionPattern();
               if ( (*it).isUseRegExp() )
                 virusFilterPattern->append(
@@ -299,7 +298,7 @@ void AntiSpamWizard::accept()
       {
           if ( (*it).isSpamTool() )
           {
-            const Q3CString header = (*it).getDetectionHeader().ascii();
+            const QByteArray header = (*it).getDetectionHeader().ascii();
             const QString & pattern = (*it).getDetectionPattern();
             if ( (*it).isUseRegExp() )
               spamFilterPattern->append(
@@ -341,7 +340,7 @@ void AntiSpamWizard::accept()
             if ( (*it).isSpamTool() && (*it).hasTristateDetection())
             {
               atLeastOneUnsurePattern = true;
-              const Q3CString header = (*it).getDetectionHeader().ascii();
+              const QByteArray header = (*it).getDetectionHeader().ascii();
               const QString & pattern = (*it).getDetectionPattern2();
               if ( (*it).isUseRegExp() )
                 unsureFilterPattern->append(

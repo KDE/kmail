@@ -9,7 +9,6 @@
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
 //Added by qt3to4:
-#include <Q3CString>
 using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 using KPIM::ProgressManager;

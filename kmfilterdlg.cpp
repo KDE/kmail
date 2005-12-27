@@ -42,7 +42,6 @@ using KMail::AccountManager;
 #include <Q3ButtonGroup>
 #include <Q3Frame>
 #include <QGridLayout>
-#include <Q3CString>
 #include <QList>
 #include <QListWidget>
 #include <QVBoxLayout>
