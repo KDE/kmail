@@ -22,7 +22,7 @@
 
 #include <qmap.h>
 #include <qpointer.h>
-#include <q3valuevector.h>
+
 #include <qpixmap.h>
 #include <qimage.h>
 //Added by qt3to4:

@@ -32,8 +32,8 @@
 #ifndef __KMAIL_URLHANDLERMANAGER_H__
 #define __KMAIL_URLHANDLERMANAGER_H__
 
-#include <q3valuevector.h>
 
+#include <QVector>
 class KURL;
 
 class QString;

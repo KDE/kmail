@@ -32,7 +32,7 @@
 #include <qapplication.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3valuevector.h>
+
 #include <qtimer.h>
 //Added by qt3to4:
 #include <QEvent>

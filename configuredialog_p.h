@@ -10,7 +10,7 @@
 #include <qpointer.h>
 #include <q3ptrlist.h>
 #include <qstring.h>
-#include <q3valuelist.h>
+
 #include <qstringlist.h>
 //Added by qt3to4:
 #include <QLabel>

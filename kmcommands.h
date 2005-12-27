@@ -5,8 +5,8 @@
 
 #include <qpointer.h>
 #include <q3ptrlist.h>
-#include <q3valuelist.h>
-#include <q3valuevector.h>
+
+
 //Added by qt3to4:
 #include <Q3PopupMenu>
 #include <kio/job.h>

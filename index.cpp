@@ -39,7 +39,6 @@
 #include <kapplication.h>
 #include <qfile.h>
 #include <qtimer.h>
-#include <q3valuestack.h>
 #include <q3ptrlist.h>
 #include <qfileinfo.h>
 //Added by qt3to4:

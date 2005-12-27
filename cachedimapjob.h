@@ -49,7 +49,7 @@
 #include <kio/global.h>
 
 #include <q3ptrlist.h>
-#include <q3valuelist.h>
+
 #include <q3cstring.h>
 
 class KMFolderCachedImap;

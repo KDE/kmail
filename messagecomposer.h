@@ -35,7 +35,7 @@
 #include "keyresolver.h"
 
 #include <qobject.h>
-#include <q3valuevector.h>
+
 //Added by qt3to4:
 #include <QList>
 #include <Q3CString>

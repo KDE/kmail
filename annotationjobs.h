@@ -33,7 +33,7 @@
 #define ANNOTATIONJOBS_H
 
 #include <kio/job.h>
-#include <q3valuevector.h>
+#include <QVector>
 
 namespace KMail {
 

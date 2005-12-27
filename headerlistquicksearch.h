@@ -34,7 +34,7 @@
 #include <messagestatus.h>
 #include "kmsearchpattern.h"
 #include <klistviewsearchline.h>
-#include <q3valuevector.h>
+
 //Added by qt3to4:
 #include <QLabel>
 #include <QEvent>

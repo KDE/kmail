@@ -5,7 +5,7 @@
 #define kmfoldermgr_h
 
 #include <qstring.h>
-#include <q3valuelist.h>
+
 #include <qobject.h>
 #include <qpointer.h>
 

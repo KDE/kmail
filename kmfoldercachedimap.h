@@ -34,8 +34,8 @@
 
 #include <kdialogbase.h>
 #include <kstandarddirs.h>
-#include <q3valuelist.h>
-#include <q3valuevector.h>
+
+
 #include <q3ptrlist.h>
 #include <qdialog.h>
 //Added by qt3to4:

@@ -23,7 +23,7 @@
 #include <kdialogbase.h>
 #include <kabc/addressee.h>
 
-#include <q3valuelist.h>
+
 
 class QString;
 

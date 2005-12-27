@@ -25,7 +25,7 @@
 
 #include <qstring.h>
 #include <qpointer.h>
-#include <q3valuelist.h>
+
 #include <qmap.h>
 //Added by qt3to4:
 #include <Q3PtrList>

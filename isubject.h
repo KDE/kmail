@@ -32,8 +32,8 @@
 #define __KMAIL_ISUBJECT_H__
 
 #include "interfaces/observable.h"
+#include <QVector>
 
-#include <q3valuevector.h>
 
 namespace KMail {
 

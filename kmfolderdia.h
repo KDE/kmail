@@ -34,7 +34,7 @@
 
 #include <kdialogbase.h>
 #include "configuredialog_p.h"
-#include <q3valuevector.h>
+
 //Added by qt3to4:
 #include <QLabel>
 #include <QList>

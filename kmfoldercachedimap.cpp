@@ -75,7 +75,7 @@ using KMail::ListJob;
 #include <qfile.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <q3valuelist.h>
+
 #include "annotationjobs.h"
 using namespace KMail;
 #include <globalsettings.h>

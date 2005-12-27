@@ -33,7 +33,7 @@
 
 #include <qobject.h>
 #include <q3cstring.h>
-#include <q3valuelist.h>
+
 #include <qtimer.h>
 #include <config.h>
 #ifdef HAVE_INDEXLIB
