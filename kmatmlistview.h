@@ -24,14 +24,14 @@ public:
   virtual void paintCell( QPainter * p, const QColorGroup & cg,
                           int column, int width, int align );
 
-  void setUncompressedMimeType( const Q3CString & type, const Q3CString & subtype ) {
+  void setUncompressedMimeType( const QByteArray & type, const QByteArray & subtype ) {
     mType = type; mSubtype = subtype;
   }
-  void uncompressedMimeType( Q3CString & type, Q3CString & subtype ) const {
+  void uncompressedMimeType( QByteArray & type, QByteArray & subtype ) const {
     type = mType; subtype = mSubtype;
   }
-  void setUncompressedCodec( const Q3CString & codec ) { mCodec = codec; }
-  Q3CString uncompressedCodec() const { return mCodec; }
+  void setUncompressedCodec( const QByteArray & codec ) { mCodec = codec; }
+  QByteArray uncompressedCodec() const { return mCodec; }
 
 signals:
   void compress( int );
@@ -55,7 +55,7 @@ private:
   QCheckBox* mCBSign;
   QCheckBox* mCBCompress;
   bool mCBSignEnabled, mCBEncryptEnabled;
-  Q3CString mType, mSubtype, mCodec;
+  QByteArray mType, mSubtype, mCodec;
 };
 
 

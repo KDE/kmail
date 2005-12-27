@@ -42,7 +42,7 @@ namespace KMail {
     QString signClass;
     QString signer;
     QStringList signerMailAddresses;
-    Q3CString keyId;
+    QByteArray keyId;
     Kpgp::Validity keyTrust;
     QString status;  // to be used for unknown plug-ins
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
