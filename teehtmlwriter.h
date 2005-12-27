@@ -34,9 +34,7 @@
 
 #include "interfaces/htmlwriter.h"
 
-#include <q3valuelist.h>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QList>
 
 class QString;
 
@@ -61,7 +59,7 @@ namespace KMail {
     void write( const QString & str );
     void queue( const QString & str );
     void flush();
-    void embedPart( const Q3CString & contentId, const QString & url );
+    void embedPart( const QByteArray & contentId, const QString & url );
 
   private:
     /** We own the HtmlWriters added to us! */

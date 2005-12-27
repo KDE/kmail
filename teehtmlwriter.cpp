@@ -92,7 +92,7 @@ namespace KMail {
       (*it)->flush();
   }
 
-  void TeeHtmlWriter::embedPart( const Q3CString & contentId, const QString & url ) {
+  void TeeHtmlWriter::embedPart( const QByteArray & contentId, const QString & url ) {
     for ( QList<HtmlWriter*>::Iterator it = mWriters.begin(); it != mWriters.end(); ++it )
       (*it)->embedPart( contentId, url );
   }
