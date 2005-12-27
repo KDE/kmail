@@ -49,7 +49,7 @@ public:
 		  FuncIsInAddressbook, FuncIsNotInAddressbook,
                   FuncIsInCategory, FuncIsNotInCategory,
 		  FuncHasAttachment, FuncHasNoAttachment};
-  KMSearchRule ( const Q3CString & field=0, Function=FuncContains,
+  KMSearchRule ( const QByteArray & field=0, Function=FuncContains,
                  const QString &contents=QString::null );
   KMSearchRule ( const KMSearchRule &other );
 
@@ -57,11 +57,11 @@ public:
 
   /** Create a search rule of a certain type by instantiating the appro-
       priate subclass depending on the @p field. */
-  static KMSearchRule* createInstance( const Q3CString & field=0,
+  static KMSearchRule* createInstance( const QByteArray & field=0,
                                       Function function=FuncContains,
 		                      const QString & contents=QString::null );
 
-  static KMSearchRule* createInstance( const Q3CString & field,
+  static KMSearchRule* createInstance( const QByteArray & field,
                                        const char * function,
                                        const QString & contents );
 
@@ -125,11 +125,11 @@ public:
       @li \<age in days\>: Try to match against age of message (numerical).
       @li \<status\>: Try to match against status of message (status).
   */
-  Q3CString field() const { return mField; }
+  QByteArray field() const { return mField; }
 
   /** Set message header field name (make sure there's no trailing
       colon ':') */
-  void setField( const Q3CString & field ) { mField = field; }
+  void setField( const QByteArray & field ) { mField = field; }
 
   /** Return the value. This can be either a substring to search for in
       or a regexp pattern to match against the header. */
@@ -144,7 +144,7 @@ private:
   static Function configValueToFunc( const char * str );
   static QString functionToString( Function function );
 
-  Q3CString mField;
+  QByteArray mField;
   Function mFunction;
   QString  mContents;
 };
@@ -161,7 +161,7 @@ private:
 class KMSearchRuleString : public KMSearchRule
 {
 public:
-  KMSearchRuleString( const Q3CString & field=0, Function function=FuncContains,
+  KMSearchRuleString( const QByteArray & field=0, Function function=FuncContains,
 		const QString & contents=QString::null );
   KMSearchRuleString( const KMSearchRuleString & other );
   const KMSearchRuleString & operator=( const KMSearchRuleString & other );
@@ -196,7 +196,7 @@ private:
 class KMSearchRuleNumerical : public KMSearchRule
 {
 public:
-  KMSearchRuleNumerical( const Q3CString & field=0, Function function=FuncContains,
+  KMSearchRuleNumerical( const QByteArray & field=0, Function function=FuncContains,
 		         const QString & contents=QString::null );
   virtual bool isEmpty() const ;
 
@@ -270,7 +270,7 @@ namespace KMail {
 class KMSearchRuleStatus : public KMSearchRule
 {
 public:
-   KMSearchRuleStatus( const Q3CString & field=0, Function function=FuncContains,
+   KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
 		       const QString & contents=QString::null );
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;

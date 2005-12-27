@@ -25,7 +25,7 @@ using KMail::FilterLog;
 
 #include <qregexp.h>
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
@@ -72,7 +72,7 @@ static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNa
 //
 //==================================================
 
-KMSearchRule::KMSearchRule( const Q3CString & field, Function func, const QString & contents )
+KMSearchRule::KMSearchRule( const QByteArray & field, Function func, const QString & contents )
   : mField( field ),
     mFunction( func ),
     mContents( contents )
@@ -97,7 +97,7 @@ const KMSearchRule & KMSearchRule::operator=( const KMSearchRule & other ) {
   return *this;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const Q3CString & field,
+KMSearchRule * KMSearchRule::createInstance( const QByteArray & field,
                                              Function func,
                                              const QString & contents )
 {
@@ -112,7 +112,7 @@ KMSearchRule * KMSearchRule::createInstance( const Q3CString & field,
   return ret;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const Q3CString & field,
+KMSearchRule * KMSearchRule::createInstance( const QByteArray & field,
                                      const char *func,
                                      const QString & contents )
 {
@@ -132,7 +132,7 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const Q3CString &field2 = config->readEntry( field + cIdx ).toLatin1();
+  const QByteArray &field2 = config->readEntry( field + cIdx ).toLatin1();
   Function func2 = configValueToFunc( config->readEntry( func + cIdx ).toLatin1() );
   const QString & contents2 = config->readEntry( contents + cIdx );
 
@@ -196,7 +196,7 @@ const QString KMSearchRule::asString() const
 //
 //==================================================
 
-KMSearchRuleString::KMSearchRuleString( const Q3CString & field,
+KMSearchRuleString::KMSearchRuleString( const QByteArray & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
@@ -285,7 +285,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
       while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
         stop = aStr.find( '\n', stop + 1 );
       const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
-      const Q3CString codedValue( aStr.data() + start, len + 1 );
+      const QByteArray codedValue( aStr.data() + start, len + 1 );
       const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
       rc = matchesInternal( msgContents );
     }
@@ -508,7 +508,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 //
 //==================================================
 
-KMSearchRuleNumerical::KMSearchRuleNumerical( const Q3CString & field,
+KMSearchRuleNumerical::KMSearchRuleNumerical( const QByteArray & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
@@ -614,7 +614,7 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 //==================================================
 
 
-KMSearchRuleStatus::KMSearchRuleStatus( const Q3CString & field,
+KMSearchRuleStatus::KMSearchRuleStatus( const QByteArray & field,
                                         Function func, const QString & aContents )
           : KMSearchRule(field, func, aContents)
 {
