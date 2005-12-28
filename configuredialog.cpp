@@ -2459,7 +2459,7 @@ ComposerPage::ComposerPage( KInstance *instance, QWidget *parent, const QStringL
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("M&essage List") );
+  addTab( mHeadersTab, i18n("H&eaders") );
 
   //
   // "Attachments" tab:
