@@ -86,7 +86,7 @@ namespace KMail {
       mAutoExpunge( true ),
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
-      mLoadOnDemand( true ),
+      mLoadOnDemand( false ),
       mListOnlyOpenFolders( false ),
       mProgressEnabled( false ),
       mErrorDialogIsActive( false ),
@@ -117,7 +117,7 @@ namespace KMail {
     mAutoExpunge = true;
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
-    mLoadOnDemand = true;
+    mLoadOnDemand = false;
     mListOnlyOpenFolders = false;
     mProgressEnabled = false;
   }
