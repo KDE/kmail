@@ -217,7 +217,6 @@ void lockOrDie() {
 
 void insertLibraryCataloguesAndIcons() {
   static const char * const catalogues[] = {
-    "libkdenetwork",
     "libkdepim",
     "libksieve",
     "libkleopatra",
