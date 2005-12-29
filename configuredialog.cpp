@@ -2449,7 +2449,7 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("M&essage List") );
+  addTab( mHeadersTab, i18n("H&eaders") );
 
   //
   // "Attachments" tab:
