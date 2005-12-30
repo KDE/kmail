@@ -1120,7 +1120,7 @@ void KMFolderCachedImap::uploadNewMessages()
             "have sufficient access rights on the folder now to upload them. "
             "Please contact your administrator to allow upload of new messages "
             "to you, or move them out of this folder.</p> "
-            "<p>Do you want to move those messages to another folder now?</p>") );
+            "<p>Do you want to move these messages to another folder now?</p>") );
       if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Messages to Folder"), true );

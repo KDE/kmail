@@ -1542,9 +1542,9 @@ void KMailICalIfaceImpl::readConfig()
         if ( i != KMail::ContentsTypeMail ) {
           QString typeName = localizedDefaultFolderName( static_cast<KMail::FolderContentsType>( i ) );
           if ( results[i].found == StandardFolderSearchResult::NotFound )
-            operations += "<li>" + i18n( "%1: no folder found, will create it" ).arg( typeName ) + "</li>";
+            operations += "<li>" + i18n( "%1: no folder found. It will be created." ).arg( typeName ) + "</li>";
           else if ( results[i].found == StandardFolderSearchResult::FoundByType || results[i].found == StandardFolderSearchResult::FoundByName )
-            operations += "<li>" + i18n( "%1: found folder %2, will set it as main groupware folder" ).
+            operations += "<li>" + i18n( "%1: found folder %2. It will be set as the main groupware folder." ).
                           arg( typeName ).arg( results[i].folder->label() ) + "</li>";
         }
       }

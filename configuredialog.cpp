@@ -4429,7 +4429,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   msg = i18n( "what's this help",
 		  "<qt><p>Full text indexing allows very fast searches on the content "
 		  "of your messages. When enabled, the search dialog will work very fast. "
-		  "Also, the search tool bar will also select messages based on content.</p>"
+		  "Also, the search tool bar will select messages based on content.</p>"
 		  "<p>It takes up a certain amount of disk space "
 		  "(about half the disk space for the messages).</p>"
 		  "<p>After enabling, the index will need to be built, but you can continue to use KMail "

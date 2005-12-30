@@ -525,7 +525,7 @@ void AntiSpamWizard::checkToolAvailability()
                                     : i18n("Scanning for anti-virus tools finished.") );
   else
     mInfoPage->setScanProgressText( ( mMode == AntiSpam )
-                                    ? i18n("<p>Sorry, no spam detection tools have been found. "
+                                    ? i18n("<p>No spam detection tools have been found. "
                                            "Install your spam detection software and "
                                            "re-run this wizard.</p>")
                                     : i18n("Scanning complete. No anti-virus tools found.") );

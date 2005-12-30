@@ -2286,7 +2286,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
-  (void) new KAction( i18n("Onlinestatus (unknown)"), "online_status", 0, this,
+  (void) new KAction( i18n("Online Status (unknown)"), "online_status", 0, this,
                      SLOT(slotOnlineStatus()), actionCollection(), "online_status");
 
   KActionMenu *sendActionMenu = new
