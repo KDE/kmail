@@ -2791,13 +2791,14 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
-    if (curpart && curpart->hasHeaders() ) {
+    if ( curpart && curpart->hasHeaders() && curpart->Headers().HasContentType() ) {
       kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
 		<< "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
     }
 
     if (curpart &&
 	curpart->hasHeaders() &&
+        curpart->Headers().HasContentType() &&
 	curpart->Headers().ContentType().Type() == type &&
 	curpart->Headers().ContentType().Subtype() == subtype) {
 	part = curpart;
@@ -3818,13 +3819,15 @@ const QStringList &KMMessage::preferredCharsets()
 //-----------------------------------------------------------------------------
 QCString KMMessage::charset() const
 {
-  DwMediaType &mType=mMsg->Headers().ContentType();
-  mType.Parse();
-  DwParameter *param=mType.FirstParameter();
-  while(param){
-    if (!kasciistricmp(param->Attribute().c_str(), "charset"))
-      return param->Value().c_str();
-    else param=param->Next();
+  if ( mMsg->Headers().HasContentType() ) {  
+    DwMediaType &mType=mMsg->Headers().ContentType();
+    mType.Parse();
+    DwParameter *param=mType.FirstParameter();
+    while(param){
+      if (!kasciistricmp(param->Attribute().c_str(), "charset"))
+        return param->Value().c_str();
+      else param=param->Next();
+    }
   }
   return ""; // us-ascii, but we don't have to specify it
 }
