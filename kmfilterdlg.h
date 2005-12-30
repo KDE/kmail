@@ -15,11 +15,11 @@
 
 #include <q3groupbox.h>
 
-#include <QString>
 #include <QList>
 #include <q3buttongroup.h>
 #include <QMap>
 #include <QRadioButton>
+#include <QString>
 
 class KMSearchPatternEdit;
 class QLabel;
@@ -184,6 +184,9 @@ public:
       selected. */
   KMFilterActionWidget( QWidget* parent=0, const char* name=0 );
 
+  /** Destructor. Clears mActionList. */
+  ~KMFilterActionWidget();
+
   /** Set an action. The action's type is determined and the
       corresponding widget it loaded with @p aAction's parameters and
       then raised. If @ aAction is 0, the widget is cleared. */
@@ -199,7 +202,7 @@ private:
       subclass. The only reason that these 'slave' actions exist is
       that they are 'forced' to create parameter widgets for the
       widget stack and to clear them on setAction. */
-  Q3PtrList<KMFilterAction> mActionList;
+  QList<KMFilterAction*> mActionList;
   /** The combo box that contains the labels of all KMFilterActions.
       It's @p activated(int) signal is internally
       connected to the @p raiseWidget(int) slot of @p mWidgetStack. */

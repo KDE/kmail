@@ -12,7 +12,6 @@ using KPIM::MessageStatus;
 
 #include <QList>
 #include <QString>
-#include <q3cstring.h>
 
 class KMMessage;
 class KConfig;

@@ -9,8 +9,7 @@
 #include "kwidgetlister.h"
 
 #include <QGroupBox>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 class KMSearchRule;
 class KMSearchPattern;
@@ -79,10 +78,10 @@ signals:
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english. */
-  static Q3CString ruleFieldToEnglish(const QString & i18nVal);
+  static QByteArray ruleFieldToEnglish(const QString & i18nVal);
   /** Used internally to find the corresponding index into the field
       ComboBox. Returns the index if found or -1 if the search failed, */
-  int indexOfRuleField( const Q3CString & aName ) const;
+  int indexOfRuleField( const QByteArray & aName ) const;
 
 protected slots:
   void slotRuleFieldChanged( const QString & );

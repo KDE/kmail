@@ -47,10 +47,6 @@ using KMail::FilterLog;
 KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
   : bPopFilter(popFilter)
 {
-#warning Port me!
-//  if (!bPopFilter)
-//    mActions.setAutoDelete( true );
-
   if ( aConfig )
     readConfig( aConfig );
   else if ( bPopFilter )
@@ -71,10 +67,6 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
 KMFilter::KMFilter( const KMFilter & aFilter )
 {
   bPopFilter = aFilter.isPopFilter();
-
-#warning Port me!
-//  if (!bPopFilter)
-//    mActions.setAutoDelete( true );
 
   mPattern = aFilter.mPattern;
 
@@ -108,6 +100,14 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     QList<int>::ConstIterator it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
+  }
+}
+
+KMFilter::~KMFilter()
+{
+  if ( !bPopFilter ) {
+    while (!mActions.isEmpty())
+      delete mActions.takeFirst();
   }
 }
 

@@ -42,11 +42,10 @@ using KMail::AccountManager;
 #include <Q3ButtonGroup>
 #include <Q3Frame>
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QList>
 #include <QListWidget>
 #include <QVBoxLayout>
-#include <Q3PtrList>
-#include <QHBoxLayout>
 
 // other headers:
 #include <assert.h>
@@ -1026,7 +1025,6 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   : KHBox( parent )
 {
   int i;
-  mActionList.setAutoDelete(TRUE);
 
   mComboBox = new QComboBox( FALSE, this );
   assert( mComboBox );
@@ -1070,6 +1068,12 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   // now connect the combo box and the widget stack
   connect( mComboBox, SIGNAL(activated(int)),
 	   mWidgetStack, SLOT(setCurrentIndex (int)) );
+}
+
+KMFilterActionWidget::~KMFilterActionWidget()
+{
+  while (!mActionList.isEmpty())
+    delete mActionList.takeFirst();
 }
 
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )

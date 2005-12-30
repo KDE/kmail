@@ -9,21 +9,19 @@
 #include <QStackedWidget>
 #include "kmsearchpattern.h"
 #include "rulewidgethandlermanager.h"
-//Added by qt3to4:
-#include <QHBoxLayout>
-#include <Q3CString>
-#include <Q3PtrList>
 using KMail::RuleWidgetHandlerManager;
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdebug.h>
 
-#include <qradiobutton.h>
-#include <qcombobox.h>
-#include <q3buttongroup.h>
-#include <q3widgetstack.h>
-#include <qlayout.h>
+//Added by qt3to4:
+#include <Q3PtrList>  // KWidgetLister in libkdepim needs to be ported
+
+#include <QButtonGroup>
+#include <QByteArray>
+#include <QComboBox>
+#include <QRadioButton>
 
 #include <assert.h>
 
@@ -73,7 +71,7 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  Q3CString currentText = rule()->field();
+  QByteArray currentText = rule()->field();
   initFieldList( headersOnly, mAbsoluteDates );
   
   mRuleField->clear();
@@ -154,7 +152,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const {
-  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const QByteArray ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   const KMSearchRule::Function function =
     RuleWidgetHandlerManager::instance()->function( ruleField,
                                                     mFunctionStack );
@@ -177,7 +175,7 @@ void KMSearchRuleWidget::reset()
 
 void KMSearchRuleWidget::slotFunctionChanged()
 {
-  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const QByteArray ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   RuleWidgetHandlerManager::instance()->update( ruleField,
                                                 mFunctionStack,
                                                 mValueStack );
@@ -185,7 +183,7 @@ void KMSearchRuleWidget::slotFunctionChanged()
 
 void KMSearchRuleWidget::slotValueChanged()
 {
-  const Q3CString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const QByteArray ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   const QString prettyValue =
     RuleWidgetHandlerManager::instance()->prettyValue( ruleField,
                                                        mFunctionStack,
@@ -193,7 +191,7 @@ void KMSearchRuleWidget::slotValueChanged()
   emit contentsChanged( prettyValue );
 }
 
-Q3CString KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
+QByteArray KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
 {
   for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
     if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
@@ -211,7 +209,7 @@ int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
   return -1; // no pseudo header
 }
 
-int KMSearchRuleWidget::indexOfRuleField( const Q3CString & aName ) const
+int KMSearchRuleWidget::indexOfRuleField( const QByteArray & aName ) const
 {
   if ( aName.isEmpty() )
     return -1;

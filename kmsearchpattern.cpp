@@ -23,8 +23,7 @@ using KMail::FilterLog;
 
 #include <kabc/stdaddressbook.h>
 
-#include <qregexp.h>
-//Added by qt3to4:
+#include <QRegExp>
 #include <QByteArray>
 
 #include <mimelib/string.h>
