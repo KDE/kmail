@@ -163,41 +163,43 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
     mActionGroup = new KMPopFilterActionWidget( i18n("Filter Action"), w );
     vbl->addWidget( mActionGroup, 0, Qt::AlignTop );
 
-    mGlobalsBox = new Q3GroupBox(1, Qt::Horizontal,i18n("Global Options"), w);
-    mShowLaterBtn = new QCheckBox(i18n("Always &show matched 'Download Later' messages in confirmation dialog"), mGlobalsBox);
+    mGlobalsBox = new QGroupBox( i18n("Global Options"), w);
+    QHBoxLayout *layout = new QHBoxLayout;
+    mShowLaterBtn = new QCheckBox( i18n("Always &show matched 'Download Later' messages in confirmation dialog"), mGlobalsBox);
     mShowLaterBtn->setWhatsThis( i18n(_wt_filterdlg_showLater) );
+    layout->addWidget( mShowLaterBtn );
+    mGlobalsBox->setLayout( layout );
     vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
   }
   else {
-    Q3GroupBox *agb = new Q3GroupBox( 1 /*column*/, Qt::Vertical, i18n("Filter Actions"), page1 );
+    QGroupBox *agb = new QGroupBox( i18n("Filter Actions"), page1 );
+    QHBoxLayout *layout = new QHBoxLayout;
     mActionLister = new KMFilterActionWidgetLister( agb );
+    layout->addWidget( mActionLister );
+    agb->setLayout( layout );
     vbl->addWidget( agb, 0, Qt::AlignTop );
 
-    mAdvOptsGroup = new Q3GroupBox ( 1 /*columns*/, Qt::Vertical,
-				    i18n("Advanced Options"), page2);
+    mAdvOptsGroup = new QGroupBox (i18n("Advanced Options"), page2);
     {
-      QWidget *adv_w = new QWidget( mAdvOptsGroup );
-      QGridLayout *gl = new QGridLayout( adv_w, 8 /*rows*/, 3 /*cols*/,
-      				         0 /*border*/, spacingHint() );
-
+      QGridLayout *gl = new QGridLayout();
       QVBoxLayout *vbl3 = new QVBoxLayout( gl, spacingHint(), "vbl3" );
       vbl3->addStretch( 1 );
-      mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), adv_w );
+      mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), mAdvOptsGroup );
       vbl3->addWidget( mApplyOnIn );
       Q3ButtonGroup *bg = new Q3ButtonGroup( 0, "bg" );
       bg->setExclusive( true );
-      mApplyOnForAll = new QRadioButton( i18n("from all accounts"), adv_w );
+      mApplyOnForAll = new QRadioButton( i18n("from all accounts"), mAdvOptsGroup );
       bg->insert( mApplyOnForAll );
       vbl3->addWidget( mApplyOnForAll );
-      mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), adv_w );
+      mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), mAdvOptsGroup );
       bg->insert( mApplyOnForTraditional );
       vbl3->addWidget( mApplyOnForTraditional );
-      mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), adv_w );
+      mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), mAdvOptsGroup );
       bg->insert( mApplyOnForChecked );
       vbl3->addWidget( mApplyOnForChecked );
       vbl3->addStretch( 2 );
 
-      mAccountList = new KListView( adv_w );
+      mAccountList = new KListView( mAdvOptsGroup );
       mAccountList->setObjectName( "accountList" );
       mAccountList->addColumn( i18n("Account Name") );
       mAccountList->addColumn( i18n("Type") );
@@ -206,28 +208,28 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mAccountList->setSorting( -1 );
       gl->addMultiCellWidget( mAccountList, 0, 3, 1, 3 );
 
-      mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), adv_w );
+      mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
       gl->addMultiCellWidget( mApplyOnOut, 4, 4, 0, 3 );
 
-      mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), adv_w );
+      mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), mAdvOptsGroup );
       gl->addMultiCellWidget( mApplyOnCtrlJ, 5, 5, 0, 3 );
 
-      mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), adv_w );
+      mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), mAdvOptsGroup );
       gl->addMultiCellWidget( mStopProcessingHere,
 			      6, 6, /*from to row*/
   			      0, 3 /*from to col*/ );
-      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
+      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), mAdvOptsGroup );
       gl->addMultiCellWidget( mConfigureShortcut, 7, 7, 0, 1 );
-      QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), adv_w );
+      QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
       keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
-      mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
+      mKeyButton = new KKeyButton( mAdvOptsGroup, "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
-      mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
+      mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
       mConfigureToolbar->setEnabled( false );
 
-      KHBox *hbox = new KHBox( adv_w );
+      KHBox *hbox = new KHBox( mAdvOptsGroup );
       mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
                                        hbox );
       mFilterActionLabel->setEnabled( false );
@@ -240,6 +242,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mFilterActionIconButton->setEnabled( false );
 
       gl->addMultiCellWidget( hbox, 9, 9, 0, 3 );
+
+      mAdvOptsGroup->setLayout( gl );
     }
     vbl2->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
@@ -560,16 +564,22 @@ void KMFilterDlg::slotUpdateAccountList()
 //
 //=============================================================================
 
-KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const char* name, bool popFilter )
-  : Q3GroupBox( 1, Qt::Horizontal, title, parent, name ),
+KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
+                                  const char* name, bool popFilter )
+  : QGroupBox( title, parent ),
     bPopFilter(popFilter)
 {
+  setObjectName( name );
+  QVBoxLayout *layout = new QVBoxLayout();
+
   mIdxSelItem = -1;
 
   //----------- the list box
   mListWidget = new QListWidget(this);
   mListWidget->setMinimumWidth(150);
   mListWidget->setWhatsThis( i18n(_wt_filterlist) );
+
+  layout->addWidget( mListWidget );
 
   //----------- the first row of buttons
   KHBox *hb = new KHBox(this);
@@ -586,6 +596,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown->setToolTip( i18n("Down") );
   mBtnUp->setWhatsThis( i18n(_wt_filterlist_up) );
   mBtnDown->setWhatsThis( i18n(_wt_filterlist_down) );
+
+  layout->addWidget( hb );
 
   //----------- the second row of buttons
   hb = new KHBox(this);
@@ -608,6 +620,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete->setWhatsThis( i18n(_wt_filterlist_delete) );
   mBtnRename->setWhatsThis( i18n(_wt_filterlist_rename) );
 
+  layout->addWidget( hb );
+  setLayout( layout );
 
   //----------- now connect everything
   connect( mListWidget, SIGNAL(currentRowChanged(int)),

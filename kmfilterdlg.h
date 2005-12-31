@@ -13,8 +13,7 @@
 #include <kdialogbase.h>
 #include <kvbox.h>
 
-#include <q3groupbox.h>
-
+#include <QGroupBox>
 #include <QList>
 #include <q3buttongroup.h>
 #include <QMap>
@@ -57,7 +56,7 @@ class KListView;
     @see KMFilter KMFilterDlg KMFilterActionEdit KMSearchPatternEdit
 
  */
-class KMFilterListBox : public Q3GroupBox
+class KMFilterListBox : public QGroupBox
 {
   Q_OBJECT
 public:
@@ -387,8 +386,8 @@ protected:
   QLabel *mFilterActionLabel;
   KIconButton *mFilterActionIconButton;
   KKeyButton *mKeyButton;
-  Q3GroupBox *mAdvOptsGroup;
-  Q3GroupBox *mGlobalsBox;
+  QGroupBox *mAdvOptsGroup;
+  QGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;
 
   KMFilter *mFilter;
