@@ -40,7 +40,7 @@ using KMail::RegExpLineEdit;
 #include <kurlrequester.h>
 
 //Added by qt3to4:
-#include <q3stylesheet.h>
+#include <QTextDocument>
 #include <QHBoxLayout>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -164,7 +164,7 @@ const QString KMFilterActionWithUOID::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 
@@ -215,7 +215,7 @@ const QString KMFilterActionWithString::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -333,7 +333,7 @@ const QString KMFilterActionWithFolder::displayString() const
     result = mFolder->prettyURL();
   else
     result = mFolderName;
-  return label() + " \"" + Q3StyleSheet::escape( result ) + "\"";
+  return label() + " \"" + Qt::escape( result ) + "\"";
 }
 
 bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
@@ -832,7 +832,7 @@ const QString KMFilterActionSetStatus::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -927,7 +927,7 @@ const QString KMFilterActionFakeDisposition::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -1113,7 +1113,7 @@ const QString KMFilterActionAddHeader::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 void KMFilterActionAddHeader::argsFromString( const QString argsStr )
@@ -1292,7 +1292,7 @@ const QString KMFilterActionRewriteHeader::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
@@ -1609,6 +1609,7 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 #warning Port me!
 #if 0
 #include <weaver.h>
+#include <QTextDocument>
 class PipeJob : public KPIM::ThreadWeaver::Job
 {
   public:
@@ -1796,7 +1797,7 @@ const QString KMFilterActionWithTest::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 
@@ -1873,7 +1874,7 @@ const QString KMFilterActionWithUrl::displayString() const
 {
   // FIXME after string freeze:
   // return i18n("").arg( );
-  return label() + " \"" + Q3StyleSheet::escape( argsAsString() ) + "\"";
+  return label() + " \"" + Qt::escape( argsAsString() ) + "\"";
 }
 
 

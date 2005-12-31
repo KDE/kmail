@@ -140,6 +140,7 @@ using KMail::TeeHtmlWriter;
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #include <kvbox.h>
+#include <QTextDocument>
 #endif
 
 class NewByteArray : public QByteArray
@@ -2066,7 +2067,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
           "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
           str.length());
     }
-    htmlWriter()->write( Q3StyleSheet::escape( str ) );
+    htmlWriter()->write( Qt::escape( str ) );
     htmlWriter()->queue("</body></html>");
     htmlWriter()->flush();
     mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));

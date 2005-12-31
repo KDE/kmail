@@ -72,6 +72,7 @@ using KIO::PasswordDialog;
 
 #include <qregexp.h>
 #include <q3stylesheet.h>
+#include <QTextDocument>
 
 namespace KMail {
 
@@ -839,9 +840,9 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), Q3StyleSheet::escape( from ), Q3StyleSheet::escape( subject ) )
+      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), Qt::escape( from ), Q3StyleSheet::escape( subject ) )
       + "</p><p>"
-      + i18n("The destination folder was %1, which has the URL %2.").arg( Q3StyleSheet::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) )
+      + i18n("The destination folder was %1, which has the URL %2.").arg( Qt::escape( folder->label() ), Q3StyleSheet::escape( jd.htmlURL() ) )
       + "</p><p>"
       + i18n("The error message from the server communication is here:") + "</p>";
     return handleJobError( job, myError );

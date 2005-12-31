@@ -52,6 +52,7 @@
 #include <QBoxLayout>
 #include <QResizeEvent>
 #include <QVBoxLayout>
+#include <QTextDocument>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )
   : mEmail( email ), mType( type )
@@ -670,7 +671,7 @@ QString RecipientsToolTip::line( const Recipient &r )
 {
   QString txt = r.email();
 
-  return "&nbsp;&nbsp;" + Q3StyleSheet::escape( txt ) + "<br/>";
+  return "&nbsp;&nbsp;" + Qt::escape( txt ) + "<br/>";
 }
 
 void RecipientsToolTip::maybeTip( const QPoint & p )

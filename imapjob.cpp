@@ -52,6 +52,7 @@ using KPIM::ProgressManager;
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/string.h>
+#include <QTextDocument>
 
 
 namespace KMail {
@@ -310,7 +311,7 @@ void ImapJob::slotGetNextMessage()
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
-  const QString escapedSubject = Q3StyleSheet::escape( msg->subject() );
+  const QString escapedSubject = Qt::escape( msg->subject() );
   jd.progressItem = ProgressManager::createProgressItem(
                           mParentProgressItem,
                           "ImapJobDownloading"+ProgressManager::getUniqueID(),

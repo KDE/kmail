@@ -126,6 +126,7 @@ using KPIM::ProgressManager;
 #include "managesievescriptsdialog.h"
 #include <q3stylesheet.h>
 #include <kvbox.h>
+#include <QTextDocument>
 
 #include "kmmainwidget.moc"
 
@@ -978,7 +979,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroup group(config, "General");
 
   if (group.readBoolEntry("warn-before-expire", true)) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Q3StyleSheet::escape( mFolder->label() ));
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Qt::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
@@ -1001,7 +1002,7 @@ void KMMainWidget::slotEmptyFolder()
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
-           "folder <b>%1</b> to the trash?</qt>").arg( Q3StyleSheet::escape( mFolder->label() ) );
+           "folder <b>%1</b> to the trash?</qt>").arg( Qt::escape( mFolder->label() ) );
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edittrash"))
       != KMessageBox::Continue) return;
@@ -1040,33 +1041,33 @@ void KMMainWidget::slotRemoveFolder()
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br>"
                 "Any messages it shows will still be available in their original folder.</qt>")
-           .arg( Q3StyleSheet::escape( mFolder->label() ) );
+           .arg( Qt::escape( mFolder->label() ) );
   } else {
     title = i18n("Delete Folder");
     if ( mFolder->count() == 0 ) {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b>?</qt>")
-              .arg( Q3StyleSheet::escape( mFolder->label() ) );
+              .arg( Qt::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the empty folder "
                    "<b>%1</b> and all its subfolders? Those subfolders "
                    "might not be empty and their  contents will be "
                    "discarded as well.</qt>")
-              .arg( Q3StyleSheet::escape( mFolder->label() ) );
+              .arg( Qt::escape( mFolder->label() ) );
       }
     } else {
       if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b>, discarding its contents?</qt>")
-              .arg( Q3StyleSheet::escape( mFolder->label() ) );
+              .arg( Qt::escape( mFolder->label() ) );
       }
       else {
         str = i18n("<qt>Are you sure you want to delete the folder "
                  "<b>%1</b> and all its subfolders, discarding their "
                  "contents?</qt>")
-            .arg( Q3StyleSheet::escape( mFolder->label() ) );
+            .arg( Qt::escape( mFolder->label() ) );
       }
     }
   }
