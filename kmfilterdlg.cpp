@@ -186,16 +186,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       vbl3->addStretch( 1 );
       mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), mAdvOptsGroup );
       vbl3->addWidget( mApplyOnIn );
-      Q3ButtonGroup *bg = new Q3ButtonGroup( 0, "bg" );
-      bg->setExclusive( true );
+      QButtonGroup *bg = new QButtonGroup( mAdvOptsGroup );
+      bg->setObjectName( "bg" );
       mApplyOnForAll = new QRadioButton( i18n("from all accounts"), mAdvOptsGroup );
-      bg->insert( mApplyOnForAll );
+      bg->addButton( mApplyOnForAll );
       vbl3->addWidget( mApplyOnForAll );
       mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), mAdvOptsGroup );
-      bg->insert( mApplyOnForTraditional );
+      bg->addButton( mApplyOnForTraditional );
       vbl3->addWidget( mApplyOnForTraditional );
       mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), mAdvOptsGroup );
-      bg->insert( mApplyOnForChecked );
+      bg->addButton( mApplyOnForChecked );
       vbl3->addWidget( mApplyOnForChecked );
       vbl3->addStretch( 2 );
 
@@ -1038,6 +1038,8 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   : KHBox( parent )
 {
+  setObjectName( name );
+
   int i;
 
   mComboBox = new QComboBox( FALSE, this );
@@ -1231,17 +1233,29 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 //=============================================================================
 
 KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget *parent, const char* name )
-  : Q3VButtonGroup( title, parent, name )
+  : QGroupBox( title, parent )
 {
-  mActionMap[Down] = new QRadioButton( i18n("&Download mail"), this );
-  mActionMap[Later] = new QRadioButton( i18n("Download mail la&ter"), this );
-  mActionMap[Delete] = new QRadioButton( i18n("D&elete mail from server"), this );
-  mIdMap[id(mActionMap[Later])] = Later;
-  mIdMap[id(mActionMap[Down])] = Down;
-  mIdMap[id(mActionMap[Delete])] = Delete;
+  setObjectName( name );
+  QButtonGroup *bg = new QButtonGroup( this );
 
-  connect( this, SIGNAL(clicked(int)),
-	   this, SLOT( slotActionClicked(int)) );
+  QRadioButton *downBtn = new QRadioButton( i18n("&Download mail"), this );
+  QRadioButton *laterBtn = new QRadioButton( i18n("Download mail la&ter"), this );
+  QRadioButton *deleteBtn = new QRadioButton( i18n("D&elete mail from server"), this );
+
+  bg->addButton( downBtn );
+  bg->addButton( laterBtn );
+  bg->addButton( deleteBtn );
+
+  mActionMap.insert( Down, downBtn );
+  mActionMap.insert( Later, laterBtn );
+  mActionMap.insert( Delete, deleteBtn );
+
+  mButtonMap.insert( downBtn, Down );
+  mButtonMap.insert( laterBtn, Later );
+  mButtonMap.insert( deleteBtn, Delete );
+
+  connect( bg, SIGNAL(buttonClicked(QAbstractButton*)),
+	   this, SLOT(slotActionClicked(QAbstractButton*)) );
 }
 
 void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
@@ -1268,10 +1282,10 @@ KMPopFilterAction  KMPopFilterActionWidget::action()
   return mAction;
 }
 
-void KMPopFilterActionWidget::slotActionClicked(int aId)
+void KMPopFilterActionWidget::slotActionClicked( QAbstractButton *btn )
 {
-  emit actionChanged(mIdMap[aId]);
-  setAction(mIdMap[aId]);
+  emit actionChanged( mButtonMap[btn] );
+  setAction( mButtonMap[btn] );
 }
 
 void KMPopFilterActionWidget::reset()

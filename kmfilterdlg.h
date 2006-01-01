@@ -211,7 +211,7 @@ private:
   QStackedWidget   *mWidgetStack;
 };
 
-class KMPopFilterActionWidget : public Q3VButtonGroup
+class KMPopFilterActionWidget : public QGroupBox
 {
   Q_OBJECT
 public:
@@ -223,16 +223,16 @@ public slots:
   void reset();
 
 private slots:
-  void slotActionClicked(int aId);
+  void slotActionClicked( QAbstractButton *btn );
 
 private:
   KMPopFilterAction mAction;
   KMFilter mFilter;
   QMap<KMPopFilterAction, QRadioButton*> mActionMap;
-  QMap<int, KMPopFilterAction> mIdMap;
+  QMap<QAbstractButton*, KMPopFilterAction> mButtonMap;
 
 signals: // Signals
-  void actionChanged(const KMPopFilterAction aAction);
+  void actionChanged( const KMPopFilterAction aAction );
 };
 
 class KMFilterActionWidgetLister : public KWidgetLister
