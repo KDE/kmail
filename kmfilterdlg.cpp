@@ -1236,12 +1236,16 @@ KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget 
   : QGroupBox( title, parent )
 {
   setObjectName( name );
+  QVBoxLayout *layout = new QVBoxLayout( this );
   QButtonGroup *bg = new QButtonGroup( this );
 
   QRadioButton *downBtn = new QRadioButton( i18n("&Download mail"), this );
   QRadioButton *laterBtn = new QRadioButton( i18n("Download mail la&ter"), this );
   QRadioButton *deleteBtn = new QRadioButton( i18n("D&elete mail from server"), this );
 
+  layout->addWidget( downBtn );
+  layout->addWidget( laterBtn );
+  layout->addWidget( deleteBtn );
   bg->addButton( downBtn );
   bg->addButton( laterBtn );
   bg->addButton( deleteBtn );
