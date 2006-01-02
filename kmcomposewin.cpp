@@ -492,7 +492,7 @@ void KMComposeWin::addImageFromClipboard()
   bool ok;
   QFile *tmpFile;
 
-  QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
+  QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
   if ( !ok )
     return;
 
@@ -1559,7 +1559,7 @@ QString KMComposeWin::to() const
   } else if ( mRecipientsEditor ) {
     return mRecipientsEditor->recipientString( Recipient::To );
   } else {
-    return QString::null;
+    return QString();
   }
 }
 
@@ -1571,7 +1571,7 @@ QString KMComposeWin::cc() const
   } else if ( mRecipientsEditor ) {
     return mRecipientsEditor->recipientString( Recipient::Cc );
   } else {
-    return QString::null;
+    return QString();
   }
 }
 
@@ -1583,7 +1583,7 @@ QString KMComposeWin::bcc() const
   } else if ( mRecipientsEditor ) {
     return mRecipientsEditor->recipientString( Recipient::Bcc );
   } else {
-    return QString::null;
+    return QString();
   }
 }
 
@@ -1599,7 +1599,7 @@ QString KMComposeWin::replyTo() const
   if ( mEdtReplyTo ) {
     return cleanedUpHeaderString( mEdtReplyTo->text() );
   } else {
-    return QString::null;
+    return QString();
   }
 }
 
@@ -2004,7 +2004,7 @@ bool KMComposeWin::queryClose ()
     const int rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to save the message for later or discard it?"),
            i18n("Close Composer"),
-           KGuiItem(i18n("&Save as Draft"), "filesave", QString::null,
+           KGuiItem(i18n("&Save as Draft"), "filesave", QString(),
                   i18n("Save this message in the Drafts folder. It can "
                   "then be edited and sent at a later time.")),
            KStdGuiItem::discard() );
@@ -2491,7 +2491,7 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  KFileDialog fdlg(QString(), QString(), this, 0, TRUE);
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption(i18n("Attach File"));
   fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
@@ -2638,7 +2638,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  KFileDialog fdlg(QString(), QString(), this, 0, TRUE);
   fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));
@@ -3001,7 +3001,7 @@ void KMComposeWin::compressAttach( int idx )
   zip.close();
   if ( array.size() >= decoded.size() ) {
     if ( KMessageBox::questionYesNo( this, i18n("The compressed file is larger "
-        "than the original. Do you want to keep the original one?" ), QString::null, i18n("Keep"), i18n("Compress") )
+        "than the original. Do you want to keep the original one?" ), QString(), i18n("Keep"), i18n("Compress") )
          == KMessageBox::Yes ) {
       static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
       return;
@@ -3222,7 +3222,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, i18n("Save Attachment As"));
+  KURL url = KFileDialog::getSaveURL(QString(), QString(), 0, i18n("Save Attachment As"));
 
   if( url.isEmpty() )
     return;
@@ -3283,7 +3283,7 @@ void KMComposeWin::slotUpdateFont()
 QString KMComposeWin::quotePrefixName() const
 {
     if ( !msg() )
-        return QString::null;
+        return QString();
 
     int languageNr = GlobalSettings::self()->replyCurrentLanguage();
     ReplyPhrases replyPhrases( QString::number(languageNr) );
@@ -3315,7 +3315,7 @@ void KMComposeWin::slotPasteAsAttachment()
 
   if ( QApplication::clipboard()->image().isNull() )  {
     bool ok;
-    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
+    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString(), &ok, this );
     if ( !ok )
       return;
     KMMessagePart *msgPart = new KMMessagePart;
@@ -4376,7 +4376,7 @@ void KMComposeWin::cleanupAutoSave()
                   << mAutoSaveFilename << endl;
     KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
                                  mAutoSaveFilename );
-    mAutoSaveFilename = QString();
+    mAutoSaveFilename.clear();
   }
 }
 

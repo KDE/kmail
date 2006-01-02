@@ -60,7 +60,7 @@ public slots:
      * Updates search to only make visible the items that match \a s.  If
      * \a s is null then the line edit's text will be used.
      */
-    virtual void updateSearch(const QString &s = QString::null);
+    virtual void updateSearch(const QString &s = QString());
 
 protected:
     virtual bool itemMatches(const Q3ListViewItem *item, const QString &s) const;

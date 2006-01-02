@@ -156,7 +156,7 @@ namespace {
       mContext = None;
       mNotificationInterval = 0;
       mAliases.clear();
-      mMessageText = QString::null;
+      mMessageText.clear();
     }
   };
 

@@ -442,7 +442,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
         tf->close();
         delete tf;
         kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
-        return QString::null;
+        return QString();
       }
       tf->setAutoDelete(TRUE);
       aTempFileList.append( tf );
@@ -823,7 +823,7 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 const QString KMFilterActionSetStatus::argsAsString() const
 {
   int idx = mParameterList.findIndex( mParameter );
-  if ( idx < 1 ) return QString::null;
+  if ( idx < 1 ) return QString();
 
   return stati[idx-1].getStatusStr();
 }
@@ -918,7 +918,7 @@ void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
 const QString KMFilterActionFakeDisposition::argsAsString() const
 {
   int idx = mParameterList.findIndex( mParameter );
-  if ( idx < 1 ) return QString::null;
+  if ( idx < 1 ) return QString();
 
   return QString( QChar( idx < 2 ? 'I' : char(mdns[idx-2]) ) );
 }

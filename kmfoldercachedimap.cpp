@@ -88,7 +88,7 @@ static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
   case KMFolderCachedImap::IncForAdmins: return "admins";
   case KMFolderCachedImap::IncForReaders: return "readers";
   }
-  return QString::null; // can't happen
+  return QString(); // can't happen
 }
 
 static KMFolderCachedImap::IncidencesFor incidencesForFromString( const QString& str ) {
@@ -537,7 +537,7 @@ void KMFolderCachedImap::slotTroubleshoot()
 void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
-    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ), QString::null, i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
+    if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ), QString(), i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
       mSyncState = SYNC_STATE_INITIAL;
     } else return;
   }
@@ -812,7 +812,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_GET_MESSAGES;
     if( !noContent() ) {
       newState( mProgress, i18n("Expunging deleted messages"));
-      CachedImapJob *job = new CachedImapJob( QString::null,
+      CachedImapJob *job = new CachedImapJob( QString(),
                                               CachedImapJob::tExpungeFolder, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
       connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
@@ -896,7 +896,7 @@ void KMFolderCachedImap::serverSyncInternal()
       // for a folder we didn't create ourselves: get annotation from server
       if ( mAnnotationFolderType == "FROMSERVER" ) {
         needToGetInitialAnnotations = true;
-        mAnnotationFolderType = QString::null;
+        mAnnotationFolderType.clear();
       } else {
         updateAnnotationFolderType();
       }
@@ -1127,7 +1127,7 @@ void KMFolderCachedImap::uploadNewMessages()
             "Please contact your administrator to allow upload of new messages "
             "to you, or move them out of this folder.</p> "
             "<p>Do you want to move those messages to another folder now?</p>") );
-      if ( KMessageBox::warningYesNo( 0, msg, QString::null, i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
+      if ( KMessageBox::warningYesNo( 0, msg, QString(), i18n("Move"), i18n("Do Not Move") ) == KMessageBox::Yes ) {
         KMail::KMFolderSelDlg dlg( kmkernel->getKMMainWidget(),
             i18n("Move Messages to Folder"), true );
         if ( dlg.exec() ) {
@@ -1159,7 +1159,7 @@ void KMFolderCachedImap::slotPutProgress( unsigned long done, unsigned long tota
 {
   // (going from mProgress to mProgress+10)
   int progressSpan = 10;
-  newState( mProgress + (progressSpan * done) / total, QString::null );
+  newState( mProgress + (progressSpan * done) / total, QString() );
   if ( done == total ) // we're done
     mProgress += progressSpan;
 }
@@ -1507,7 +1507,7 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   //kdDebug(5006) << "KMFolderCachedImap::slotProgress done=" << done << " total=" << total << "=> mProgress=" << mProgress + ( progressSpan * done ) / total << endl;
   // Progress info while retrieving new emails
   // (going from mProgress to mProgress+progressSpan)
-  newState( mProgress + (progressSpan * done) / total, QString::null );
+  newState( mProgress + (progressSpan * done) / total, QString() );
 }
 
 
@@ -1794,7 +1794,7 @@ void KMFolderCachedImap::listDirectory2()
       // (could be that the folder was deleted & recreated meanwhile from another client...)
       if ( !locallyDeleted && mAccount->isPreviouslyDeletedFolder( subfolderPath ) ) {
            locallyDeleted = KMessageBox::warningYesNo(
-             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ), QString::null, KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
+             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ), QString(), KStdGuiItem::del(), KStdGuiItem::cancel() ) == KMessageBox::Yes;
       }
 
       if ( locallyDeleted ) {
@@ -2097,7 +2097,7 @@ void KMFolderCachedImap::updateAnnotationFolderType()
 
   //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << newType << " " << newSubType << endl;
   if ( newType != oldType || newSubType != oldSubType ) {
-    mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString::null : "."+newSubType );
+    mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString() : "."+newSubType );
     mAnnotationFolderTypeChanged = true; // force a "set annotation" on next sync
     kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was (" << oldType << " " << oldSubType << ") => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }

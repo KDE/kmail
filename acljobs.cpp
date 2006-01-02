@@ -195,7 +195,7 @@ ACLJobs::GetUserRightsJob::GetUserRightsJob( const KURL& url, const QByteArray &
 void ACLJobs::GetUserRightsJob::slotInfoMessage( KIO::Job*, const QString& str )
 {
   // Parse the result
-  m_permissions = IMAPRightsToPermission( str, url(), QString::null );
+  m_permissions = IMAPRightsToPermission( str, url(), QString() );
 }
 
 ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,

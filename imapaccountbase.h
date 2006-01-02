@@ -137,7 +137,7 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), progressItem(0),
+      jobData() : url(QString()), parent(0), total(1), done(0), offset(0), progressItem(0),
                   onlySubscribed(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,

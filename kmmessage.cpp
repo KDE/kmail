@@ -378,7 +378,7 @@ QString KMMessage::headerAsString() const
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
   if ( header.AsString().empty() )
-    return QString::null;
+    return QString();
   return QString::fromLatin1( header.AsString().c_str() );
 }
 
@@ -537,7 +537,7 @@ static QString splitLine( QString &line)
     if ( i == l )
     {
        QString result = line.left(j);
-       line = QString::null;
+       line.clear();
        return result;
     }
 
@@ -579,7 +579,7 @@ static QString flowText(QString &text, const QString& indent, int maxLength)
       if (i < (int) text.length())
          text = text.mid(i);
       else
-         text = QString::null;
+         text.clear();
 
       result += indent + line + '\n';
 
@@ -663,7 +663,7 @@ QString KMMessage::smartQuote( const QString & msg, int maxLineLength )
      if ( line.isEmpty())
      {
         if (!firstPart)
-           part.append(QString::null);
+           part.append(QString());
         continue;
      };
 
@@ -752,7 +752,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
     codec = this->codec();
 
   if ( parsedString.isEmpty() )
-    return QString::null;
+    return QString();
 
   bool clearSigned = false;
   QString result;
@@ -817,7 +817,7 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
 
 QString KMMessage::asQuotedString( const QString& aHeaderStr,
 				   const QString& aIndentStr,
-				   const QString& selection /* = QString::null */,
+				   const QString& selection /*.clear() */,
 				   bool aStripSignature /* = true */,
 				   bool allowDecryption /* = true */) const
 {
@@ -844,7 +844,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
 
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
-                                   QString selection /* = QString::null */,
+                                   QString selection /*.clear() */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
                                    bool selectionIsBody /* = false */)
@@ -1152,7 +1152,7 @@ Q3CString KMMessage::createForwardBody()
   if (sHeaderStrategy == HeaderStrategy::all()) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
-    str = asQuotedString(s, "", QString::null, false, false).utf8();
+    str = asQuotedString(s, "", QString(), false, false).utf8();
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1165,7 +1165,7 @@ Q3CString KMMessage::createForwardBody()
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", QString::null, false, false).utf8();
+    str = asQuotedString(s, "", QString(), false, false).utf8();
     str += "\n-------------------------------------------------------\n";
   }
 
@@ -1396,7 +1396,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // SHOULD be obtained (or no MDN sent) if there is no Return-Path
   // header in the message [...]
   AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
-  QString returnPath = returnPathList.isEmpty() ? QString::null
+  QString returnPath = returnPathList.isEmpty() ? QString()
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
   kdDebug(5006) << "clean return path: " << returnPath << endl;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
@@ -1601,12 +1601,12 @@ void KMMessage::applyIdentity( uint id )
     setHeaderField("X-KMail-Transport", ident.transport());
 
   if (ident.fcc().isEmpty())
-    setFcc( QString::null );
+    setFcc( QString() );
   else
     setFcc( ident.fcc() );
 
   if (ident.drafts().isEmpty())
-    setDrafts( QString::null );
+    setDrafts( QString() );
   else
     setDrafts( ident.drafts() );
 }
@@ -1924,7 +1924,7 @@ QString KMMessage::sender() const {
   if ( asl.empty() )
     asl = extractAddrSpecs( "From" );
   if ( asl.empty() )
-    return QString::null;
+    return QString();
   return asl.front().asString();
 }
 
@@ -2022,7 +2022,7 @@ QString KMMessage::references() const
   if( !references.isEmpty() && references[0] == '<' )
     return references;
   else
-    return QString::null;
+    return QString();
 }
 
 //-----------------------------------------------------------------------------
@@ -2172,10 +2172,10 @@ QList<Q3CString> KMMessage::rawHeaderFields( const Q3CString& field ) const
 QString KMMessage::headerField(const Q3CString& aName) const
 {
   if ( aName.isEmpty() )
-    return QString::null;
+    return QString();
 
   if ( !mMsg->Headers().FindField( aName ) )
-    return QString::null;
+    return QString();
 
   return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
 }
@@ -3393,7 +3393,7 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   //kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
-    return QString::null;
+    return QString();
 
   QString result;
 
@@ -3464,9 +3464,9 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
                    else if ( !angleAddress.isEmpty() ) {
                      result += angleAddress;
                    }
-                   name = QString::null;
-                   comment = QString::null;
-                   angleAddress = QString::null;
+                   name.clear();
+                   comment.clear();
+                   angleAddress.clear();
                  }
                  else
                    name += ch;

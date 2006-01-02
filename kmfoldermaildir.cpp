@@ -1091,7 +1091,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
 
   QDir d;
   if (d.rename(oldLoc, dest) == false)
-    return QString::null;
+    return QString();
   else
     return dest;
 }

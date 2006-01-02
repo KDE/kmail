@@ -159,7 +159,7 @@ public:
 
   /**
    * Returns the name of the standard icon for a folder of given type or
-   * QString::null if the type is no groupware type.
+   * QString() if the type is no groupware type.
    */
   QString folderPixmap( KFolderTreeItem::Type type ) const;
 

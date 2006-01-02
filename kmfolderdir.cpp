@@ -58,7 +58,7 @@ QString KMFolderRootDir::prettyURL() const
   if ( !mBaseURL.isEmpty() )
     return i18n( mBaseURL.data() );
   else
-    return QString::null;
+    return QString();
 }
 
 
@@ -150,7 +150,7 @@ QString KMFolderDir::label() const
   if ( mOwner )
     return mOwner->label();
   else
-    return QString::null;
+    return QString();
 }
 
 

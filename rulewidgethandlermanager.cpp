@@ -302,7 +302,7 @@ QString KMail::RuleWidgetHandlerManager::value( const QByteArray& field,
     if ( !val.isEmpty() )
       return val;
   }
-  return QString::null;
+  return QString();
 }
 
 QString KMail::RuleWidgetHandlerManager::prettyValue( const QByteArray& field,
@@ -314,7 +314,7 @@ QString KMail::RuleWidgetHandlerManager::prettyValue( const QByteArray& field,
     if ( !val.isEmpty() )
       return val;
   }
-  return QString::null;
+  return QString();
 }
 
 void KMail::RuleWidgetHandlerManager::reset( QStackedWidget *functionStack,
@@ -512,7 +512,7 @@ namespace {
       else {
         kdDebug(5006) << "TextRuleWidgetHandler::currentValue: "
                          "categoryCombo not found." << endl;
-        return QString::null;
+        return QString();
       }
     }
 
@@ -531,7 +531,7 @@ namespace {
                        "regExpLineEdit not found." << endl;
 
     // or anything else, like addressbook
-    return QString::null;
+    return QString();
   }
 
   //---------------------------------------------------------------------------
@@ -835,7 +835,7 @@ namespace {
       kdDebug(5006) << "MessageRuleWidgetHandler::currentValue: "
                        "regExpLineEdit not found." << endl;
 
-    return QString::null;
+    return QString();
   }
 
   //---------------------------------------------------------------------------
@@ -845,7 +845,7 @@ namespace {
                                            const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncHasAttachment )
@@ -863,7 +863,7 @@ namespace {
                                                  const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     KMSearchRule::Function func = currentFunction( functionStack );
     if ( func == KMSearchRule::FuncHasAttachment )
@@ -1117,13 +1117,13 @@ namespace {
                                           const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
       return QString::fromLatin1( KMail::StatusValues[ status ].text );
     else
-      return QString::null;
+      return QString();
   }
 
   //---------------------------------------------------------------------------
@@ -1133,13 +1133,13 @@ namespace {
                                                 const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
       return i18n( KMail::StatusValues[ status ].text );
     else
-      return QString::null;
+      return QString();
   }
 
   //---------------------------------------------------------------------------
@@ -1363,7 +1363,7 @@ namespace {
     else
       kdDebug(5006) << "NumericRuleWidgetHandler::currentValue: "
                        "KIntNumInput not found." << endl;
-    return QString::null;
+    return QString();
   }
 
   //---------------------------------------------------------------------------
@@ -1373,7 +1373,7 @@ namespace {
                                            const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     return currentValue( valueStack );
   }
@@ -1385,7 +1385,7 @@ namespace {
                                                  const QStackedWidget *valueStack ) const
   {
     if ( !handlesField( field ) )
-      return QString::null;
+      return QString();
 
     return currentValue( valueStack );
   }

@@ -60,7 +60,7 @@ class ImapJob : public FolderJob
 
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
-           QString partSpecifier = QString::null, const AttachmentStrategy *as = 0 );
+           QString partSpecifier = QString(), const AttachmentStrategy *as = 0 );
   ImapJob( Q3PtrList<KMMessage>& msgList, QString sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();

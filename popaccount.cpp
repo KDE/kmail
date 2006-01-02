@@ -145,7 +145,7 @@ void PopAccount::processNewMail(bool _interactive)
       bool b = storePasswd();
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
         i18n("You need to supply a username and a password to access this "
-        "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
+        "mailbox."), FALSE, QString(), mName, i18n("Account:"))
         != QDialog::Accepted)
       {
         checkDone( false, CheckAborted );

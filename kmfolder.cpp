@@ -226,17 +226,17 @@ KMFolderType KMFolder::folderType() const
 
 QString KMFolder::fileName() const
 {
-  return mStorage ? mStorage->fileName() : QString::null;
+  return mStorage ? mStorage->fileName() : QString();
 }
 
 QString KMFolder::location() const
 {
-  return mStorage ? mStorage->location() : QString::null;
+  return mStorage ? mStorage->location() : QString();
 }
 
 QString KMFolder::indexLocation() const
 {
-  return mStorage ? mStorage->indexLocation() : QString::null;
+  return mStorage ? mStorage->indexLocation() : QString();
 }
 
 QString KMFolder::subdirLocation() const
@@ -586,7 +586,7 @@ QString KMFolder::mailingListPostAddress() const
         return (*it).path();
     }
   }
-  return QString::null;
+  return QString();
 }
 
 void KMFolder::setMailingListEnabled( bool enabled )

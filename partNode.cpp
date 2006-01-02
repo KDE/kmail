@@ -240,10 +240,10 @@ int partNode::childCount() const {
 
 QString partNode::contentTypeParameter( const char * name ) const {
   if ( !mDwPart || !mDwPart->hasHeaders() )
-    return QString::null;
+    return QString();
   DwHeaders & headers = mDwPart->Headers();
   if ( !headers.HasContentType() )
-    return QString::null;
+    return QString();
   DwString attr = name;
   attr.ConvertToLowerCase();
   for ( DwParameter * param = headers.ContentType().FirstParameter() ; param ; param = param->Next() ) {
@@ -253,7 +253,7 @@ QString partNode::contentTypeParameter( const char * name ) const {
       return QString::fromLatin1( param->Value().data(), param->Value().size() );
     // warning: misses rfc2231 handling!
   }
-  return QString::null;
+  return QString();
 }
 
 KMMsgEncryptionState partNode::overallEncryptionState() const
@@ -452,7 +452,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
 
     if( mNext )
         mNext->fillMimePartTree( parentItem, mimePartTree,
-                                 QString::null, QString::null, QString::null, 0,
+                                 QString(), QString(), QString(), 0,
                                  revertOrder );
 
     QString cntDesc, cntType, cntEnc;
@@ -515,7 +515,7 @@ kdDebug(5006) << "                Content-Type: " << cntType << endl;
     mMimePartTreeItem->setOpen( true );
     if( mChild )
         mChild->fillMimePartTree( mMimePartTreeItem, 0,
-                                  QString::null, QString::null, QString::null, 0,
+                                  QString(), QString(), QString(), 0,
                                   revertOrder );
 
   }

@@ -168,8 +168,8 @@ private:
 class HeaderItem : public KListViewItem
 {
 public:
-  HeaderItem( Q3ListView* parent, int msgId, const QString& key = QString::null );
-  HeaderItem( Q3ListViewItem* parent, int msgId, const QString& key = QString::null );
+  HeaderItem( Q3ListView* parent, int msgId, const QString& key = QString() );
+  HeaderItem( Q3ListViewItem* parent, int msgId, const QString& key = QString() );
   ~HeaderItem ();
 
   /** Set the message id of this item, which is the offset/index in the folder

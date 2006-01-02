@@ -431,7 +431,7 @@ namespace KMail {
 
     QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
       if ( !e || !*e )
-	return QString::null;
+	return QString();
       const QString em = QString::fromUtf8( e );
       if ( e[0] == '<' )
 	return em.mid( 1, em.length() - 2 );
@@ -610,12 +610,12 @@ void IdentityDialog::slotOk() {
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
-                        mTransportCombo->currentText() : QString::null );
+                        mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionary() );
     ident.setFcc( mFccCombo->folder() ?
-                  mFccCombo->folder()->idString() : QString::null );
+                  mFccCombo->folder()->idString() : QString() );
     ident.setDrafts( mDraftsCombo->folder() ?
-                     mDraftsCombo->folder()->idString() : QString::null );
+                     mDraftsCombo->folder()->idString() : QString() );
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
     ident.setXFace( mXFaceConfigurator->xface() );

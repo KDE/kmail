@@ -259,7 +259,7 @@ void NewFolderDialog::slotOk()
         }
         KMFolderImap* newStorage = static_cast<KMFolderImap*>( newFolder->storage() );
         selectedStorage->createFolder(fldName, parent); // create it on the server
-        newStorage->initializeFrom( selectedStorage, imapPath, QString::null );
+        newStorage->initializeFrom( selectedStorage, imapPath, QString() );
         static_cast<KMFolderImap*>(mFolder->storage())->setAccount( selectedStorage->account() );
         success = true;
       }

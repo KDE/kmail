@@ -99,10 +99,10 @@ private:
 struct LanguageItem
 {
   LanguageItem() {}
-  LanguageItem( const QString & language, const QString & reply=QString::null,
-                const QString & replyAll=QString::null,
-                const QString & forward=QString::null,
-                const QString & indentPrefix=QString::null ) :
+  LanguageItem( const QString & language, const QString & reply=QString(),
+                const QString & replyAll=QString(),
+                const QString & forward=QString(),
+                const QString & indentPrefix=QString() ) :
     mLanguage( language ), mReply( reply ), mReplyAll( replyAll ),
     mForward( forward ), mIndentPrefix( indentPrefix ) {}
 

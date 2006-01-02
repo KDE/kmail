@@ -2660,25 +2660,25 @@ void KMMainWidget::setupActions()
   mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
 
-  (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString(),
 			       i18n("Expand the current thread") ),
 		     Qt::Key_Period, this,
 		     SLOT(slotExpandThread()),
 		     actionCollection(), "expand_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString(),
 			       i18n("Collapse the current thread") ),
 		     Qt::Key_Comma, this,
 		     SLOT(slotCollapseThread()),
 		     actionCollection(), "collapse_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString(),
 			       i18n("Expand all threads in the current folder") ),
 		     Qt::CTRL+Qt::Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
 		     actionCollection(), "expand_all_threads" );
 
-  (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString(),
 			       i18n("Collapse all threads in the current folder") ),
 		     Qt::CTRL+Qt::Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
@@ -2694,7 +2694,7 @@ void KMMainWidget::setupActions()
   dukeOfMonmoth->plugAccel( actionCollection()->kaccel() );
 
   //----- Go Menu
-  new KAction( KGuiItem( i18n("&Next Message"), QString::null,
+  new KAction( KGuiItem( i18n("&Next Message"), QString(),
                          i18n("Go to the next message") ),
                          "N;Right", this, SLOT(slotNextMessage()),
                          actionCollection(), "go_next_message" );
@@ -2706,13 +2706,13 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_unread_message" );
 
   /* ### needs better support from folders:
-  new KAction( KGuiItem( i18n("Next &Important Message"), QString::null,
+  new KAction( KGuiItem( i18n("Next &Important Message"), QString(),
                          i18n("Go to the next important message") ),
                          0, this, SLOT(slotNextImportantMessage()),
                          actionCollection(), "go_next_important_message" );
   */
 
-  new KAction( KGuiItem( i18n("&Previous Message"), QString::null,
+  new KAction( KGuiItem( i18n("&Previous Message"), QString(),
                          i18n("Go to the previous message") ),
                          "P;Left", this, SLOT(slotPrevMessage()),
                          actionCollection(), "go_prev_message" );
@@ -2724,14 +2724,14 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_prev_unread_message" );
 
   /* needs better support from folders:
-  new KAction( KGuiItem( i18n("Previous I&mportant Message"), QString::null,
+  new KAction( KGuiItem( i18n("Previous I&mportant Message"), QString(),
                          i18n("Go to the previous important message") ),
                          0, this, SLOT(slotPrevImportantMessage()),
                          actionCollection(), "go_prev_important_message" );
   */
 
   KAction *action =
-    new KAction( KGuiItem( i18n("Next Unread &Folder"), QString::null,
+    new KAction( KGuiItem( i18n("Next Unread &Folder"), QString(),
                            i18n("Go to the next folder with unread messages") ),
                            Qt::ALT+Qt::Key_Plus, this, SLOT(slotNextUnreadFolder()),
                            actionCollection(), "go_next_unread_folder" );
@@ -2740,7 +2740,7 @@ void KMMainWidget::setupActions()
   action->setShortcut( shortcut );
 
   action =
-    new KAction( KGuiItem( i18n("Previous Unread F&older"), QString::null,
+    new KAction( KGuiItem( i18n("Previous Unread F&older"), QString(),
                            i18n("Go to the previous folder with unread messages") ),
                            Qt::ALT+Qt::Key_Minus, this, SLOT(slotPrevUnreadFolder()),
                            actionCollection(), "go_prev_unread_folder" );
@@ -2748,7 +2748,7 @@ void KMMainWidget::setupActions()
   shortcut.append( KKey( Qt::CTRL+Qt::Key_Minus ) );
   action->setShortcut( shortcut );
 
-  new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString::null,
+  new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString(),
                          i18n("Go to the next unread text"),
                          i18n("Scroll down current message. "
                               "If at end of current message, "
@@ -2757,7 +2757,7 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_unread_text" );
 
   //----- Settings Menu
-  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString::null,
+  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString(),
                                        0, this, SLOT(slotToggleShowQuickSearch()),
                                        actionCollection(), "show_quick_search");
   mToggleShowQuickSearchAction->setChecked( GlobalSettings::self()->quickSearchActive() );
@@ -3176,7 +3176,7 @@ void KMMainWidget::slotShowStartupFolder()
 
 void KMMainWidget::slotShowTip()
 {
-  KTipDialog::showTip( this, QString::null, true );
+  KTipDialog::showTip( this, QString(), true );
 }
 
 //-----------------------------------------------------------------------------

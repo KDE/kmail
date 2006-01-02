@@ -122,7 +122,7 @@ namespace KMail {
   void RegExpLineEdit::slotEditRegExp()
   {
     if ( !mRegExpEditDialog )
-      mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString::null, this );
+      mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     KRegExpEditorInterface *iface =
      dynamic_cast<KRegExpEditorInterface *>( mRegExpEditDialog );

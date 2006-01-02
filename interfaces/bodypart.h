@@ -83,7 +83,7 @@ namespace KMail {
       /**
 	 @return the decoded (CTE, canonicalisation, and charset
 	 encoding undone) text contained in the body part, or
-	 QString::null, it the body part is not of type "text".
+	 QString(), it the body part is not of type "text".
       */
       virtual QString asText() const = 0;
 
@@ -95,7 +95,7 @@ namespace KMail {
 
       /**
 	 @return the value of the content-type header field parameter
-	 with name \a parameter, or QString::null, if that that
+	 with name \a parameter, or QString(), if that that
 	 parameter is not present in the body's content-type header
 	 field. RFC 2231 encoding is removed first.
 
@@ -113,7 +113,7 @@ namespace KMail {
 
       /**
 	 @return the content of the content-description header field,
-	 or QString::null if that header is not present in this body
+	 or QString() if that header is not present in this body
 	 part. RFC 2047 encoding is decoded first.
       */
       virtual QString contentDescription() const = 0;
@@ -121,7 +121,7 @@ namespace KMail {
       //virtual int contentDisposition() const = 0;
       /**
 	 @return the value of the content-disposition header field
-	 parameter with name \a parameter, or QString::null if that
+	 parameter with name \a parameter, or QString() if that
 	 parameter is not present in the body's content-disposition
 	 header field. RFC 2231 encoding is removed first.
 

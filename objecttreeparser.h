@@ -240,7 +240,7 @@ namespace KMail {
     QString writeSigstatHeader( KMail::PartMetaData & part,
                                 CryptPlugWrapper * cryptPlug,
                                 const QString & fromAddress,
-                                const QString & filename = QString::null );
+                                const QString & filename = QString() );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
     void writeBodyStr( const Q3CString & bodyString,

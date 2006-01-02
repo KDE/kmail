@@ -83,7 +83,7 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
       (currentText != "<body>"))
     mRuleField->changeItem( QString::fromAscii( currentText ), 0 );
   else
-    mRuleField->changeItem( QString::null, 0 );
+    mRuleField->changeItem( QString(), 0 );
 }
 
 void KMSearchRuleWidget::initWidget()
@@ -141,7 +141,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
     mRuleField->changeItem( QString::fromLatin1( aRule->field() ), 0 );
     i = 0;
   } else { // found in the list of predefined fields
-    mRuleField->changeItem( QString::null, 0 );
+    mRuleField->changeItem( QString(), 0 );
   }
 
   mRuleField->setCurrentItem( i );

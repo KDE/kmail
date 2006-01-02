@@ -43,7 +43,7 @@ class DistributionListItem : public Q3CheckListItem
 {
   public:
     DistributionListItem( Q3ListView *list )
-      : Q3CheckListItem( list, QString::null, CheckBox )
+      : Q3CheckListItem( list, QString(), CheckBox )
     {
     }
 
@@ -108,7 +108,7 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   mTitleEdit->setFocus();
   
   mRecipientsList = new KListView( topFrame );
-  mRecipientsList->addColumn( QString::null );
+  mRecipientsList->addColumn( QString() );
   mRecipientsList->addColumn( i18n("Name") );
   mRecipientsList->addColumn( i18n("Email") );
   topLayout->addWidget( mRecipientsList );
@@ -178,7 +178,7 @@ void DistributionListDialog::slotUser1()
   if ( name.isEmpty() ) {
     bool ok = false;
     name = KInputDialog::getText( i18n("New Distribution List"),
-      i18n("Please enter name:"), QString::null, &ok, this );
+      i18n("Please enter name:"), QString(), &ok, this );
     if ( !ok || name.isEmpty() )
       return;
   }

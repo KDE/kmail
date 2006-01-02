@@ -74,7 +74,7 @@ public:
 
      @return true on success.
   */
-  bool sendQueued( const QString & transport=QString::null ) { return doSendQueued( transport ); }
+  bool sendQueued( const QString & transport=QString() ) { return doSendQueued( transport ); }
 
   virtual void readConfig() = 0;
   virtual void writeConfig( bool withSync = true ) = 0;

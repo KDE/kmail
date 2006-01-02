@@ -381,12 +381,12 @@ namespace {
 QString KMMsgBase::decodeRFC2047String(const Q3CString& aStr)
 {
   if ( aStr.isEmpty() )
-    return QString::null;
+    return QString();
 
   const Q3CString str = unfold( aStr );
 
   if ( str.isEmpty() )
-    return QString::null;
+    return QString();
 
   if ( str.find( "=?" ) < 0 )
     return kmkernel->networkCodec()->toUnicode( str );
@@ -1091,7 +1091,7 @@ void KMMsgBase::readConfig()
 QString KMMsgBase::stripOffPrefixes( const QString& str )
 {
   return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
-                          true, QString::null ).trimmed();
+                          true, QString() ).trimmed();
 }
 
 //-----------------------------------------------------------------------------
@@ -1132,7 +1132,7 @@ QString KMMsgBase::replacePrefixes( const QString& str,
 QString KMMsgBase::cleanSubject() const
 {
   return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
-		       true, QString::null ).trimmed();
+		       true, QString() ).trimmed();
 }
 
 //-----------------------------------------------------------------------------

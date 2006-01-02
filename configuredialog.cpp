@@ -893,7 +893,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   KPIM::IdentityManager * im = kmkernel->identityManager();
   for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
     if ( item->text( 0 ) == (*it).transport() ) {
-      (*it).setTransport( QString::null );
+      (*it).setTransport( QString() );
       changedIdents += (*it).identityName();
     }
   }
@@ -901,7 +901,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
   // if the deleted transport is the currently used transport reset it to default
   const QString& currentTransport = GlobalSettings::self()->currentTransport();
   if ( item->text( 0 ) == currentTransport ) {
-    GlobalSettings::self()->setCurrentTransport( QString::null );
+    GlobalSettings::self()->setCurrentTransport( QString() );
   }
 
   if ( !changedIdents.isEmpty() ) {
@@ -934,7 +934,7 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
       }
     }
   } else {
-    GlobalSettings::self()->setDefaultTransport( QString::null );
+    GlobalSettings::self()->setDefaultTransport( QString() );
   }
 
   delete item;
@@ -2116,7 +2116,7 @@ void AppearancePage::HeadersTab::save() {
     int result = KMessageBox::warningContinueCancel( this,
                    i18n("Changing the global threading setting will override "
                         "all folder specific values."),
-                   QString::null, KStdGuiItem::cont(), "threadOverride" );
+                   QString(), KStdGuiItem::cont(), "threadOverride" );
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
@@ -2815,7 +2815,7 @@ void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
                    locale.translate("Forwarded Message"),
                    locale.translate(">%_") ) );
   mRemoveButton->setEnabled( true );
-  slotLanguageChanged( QString::null );
+  slotLanguageChanged( QString() );
 }
 
 void ComposerPage::PhrasesTab::slotRemoveLanguage()
@@ -3046,7 +3046,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
   }
 
   KMessageBox::sorry( this, i18n("This charset is not supported.") );
-  charset = QString::null;
+  charset.clear();
 }
 
 void ComposerPage::CharsetTab::doLoadOther() {
@@ -3686,7 +3686,7 @@ void SecurityPage::GeneralTab::save() {
   if (reader.readBoolEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
-      "HTML setting will override all folder specific values."), QString::null,
+      "HTML setting will override all folder specific values."), QString(),
       KStdGuiItem::cont(), "htmlMailOverride") == KMessageBox::Continue)
     {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
@@ -4487,7 +4487,7 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
-                                  mOnStartupOpenFolder->folder()->idString() : QString::null );
+                                  mOnStartupOpenFolder->folder()->idString() : QString() );
 
   GlobalSettings::self()->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::self()->setDelayedMarkTime( mDelayedMarkTime->value() );
@@ -4664,7 +4664,7 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
                         "resulting messages look very odd.<br>People that have email "
                         "programs that do understand invitations will still "
                         "be able to work with this.</qt>" );
-    KMessageBox::information( this, txt, QString::null,
+    KMessageBox::information( this, txt, QString(),
                               "LegacyBodyInvitesWarning" );
   }
   // Invitations in the body are autosent in any case (no point in editing raw ICAL)

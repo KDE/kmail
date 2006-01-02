@@ -257,7 +257,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
   assert( ft );
 
   QString preSelection = mUseGlobalSettings ?
-    GlobalSettings::self()->lastSelectedFolder() : QString::null;
+    GlobalSettings::self()->lastSelectedFolder() : QString();
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
                                            preSelection, mustBeReadWrite );
   init();
@@ -274,7 +274,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
     mUseGlobalSettings( useGlobalSettings )
 {
   QString preSelection = mUseGlobalSettings ?
-    GlobalSettings::self()->lastSelectedFolder() : QString::null;
+    GlobalSettings::self()->lastSelectedFolder() : QString();
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), tree,
                                            preSelection, mustBeReadWrite );
   init();

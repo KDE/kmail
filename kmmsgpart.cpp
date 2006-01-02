@@ -72,11 +72,11 @@ void KMMessagePart::clear()
   mContentDisposition = Q3CString();
   mBody.truncate( 0 );
   mAdditionalCTypeParamStr = Q3CString();
-  mName = QString::null;
+  mName.clear();
   mParameterAttribute = Q3CString();
-  mParameterValue = QString::null;
+  mParameterValue.clear();
   mCharset = Q3CString();
-  mPartSpecifier = QString::null;
+  mPartSpecifier.clear();
   mBodyDecodedSize = 0;
   mParent = 0;
   mLoadHeaders = false;
@@ -387,7 +387,7 @@ QString KMMessagePart::iconName() const
   Q3CString mimeType( mType + "/" + mSubtype );
   KPIM::kAsciiToLower( mimeType.data() );
   QString fileName =
-    KMimeType::mimeType( mimeType )->icon( QString::null, false );
+    KMimeType::mimeType( mimeType )->icon( QString(), false );
   fileName =
     KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
   return fileName;
@@ -505,7 +505,7 @@ QString KMMessagePart::fileName(void) const
   else {
     startOfFilename = cd.indexOf("filename=");
     if (startOfFilename < 0)
-      return QString::null;
+      return QString();
     startOfFilename += 9;
   }
 

@@ -406,7 +406,7 @@ protected:
   QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false);
 
   /** Writes the given message part to a temporary file and returns the
-      name of this file or QString::null if writing failed.
+      name of this file or QString() if writing failed.
   */
   QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
 

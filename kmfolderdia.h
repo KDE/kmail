@@ -165,7 +165,7 @@ class KMFolderDialog : public KDialogBase
 public:
   KMFolderDialog( KMFolder *folder, KMFolderDir *aFolderDir,
 		  KMFolderTree* parent, const QString& caption,
-                  const QString& name = QString::null );
+                  const QString& name = QString() );
 
   KMFolder* folder() const { return mFolder; }
   void setFolder( KMFolder* folder );

@@ -1609,7 +1609,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       mRc = false;
       return;
     }
-    mRc = processStructuringInfo( QString::null,
+    mRc = processStructuringInfo( QString(),
 				  mOldBodyPart.contentDescription(),
 				  mOldBodyPart.typeStr(),
 				  mOldBodyPart.subtypeStr(),

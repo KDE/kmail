@@ -288,12 +288,12 @@ namespace KMail {
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
       if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,
-					       QString::null, name(),
+					       QString(), name(),
 					       i18n("Account:") )
           != QDialog::Accepted ) {
         mPasswordDialogIsActive = false;
         mAskAgain = false;
-        emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
+        emit connectionResult( KIO::ERR_USER_CANCELED, QString() );
         return Error;
       }
       mPasswordDialogIsActive = false;
@@ -527,7 +527,7 @@ namespace KMail {
       const QString &errorMsg)
   {
     if (aSlave != mSlave) return;
-    handleError( errorCode, errorMsg, 0, QString::null, true );
+    handleError( errorCode, errorMsg, 0, QString(), true );
     if ( mAskAgain )
       makeConnection();
     else {
@@ -550,7 +550,7 @@ namespace KMail {
     if (aSlave != mSlave) return;
     mSlaveConnected = true;
     mNoopTimer.start( 60000 ); // make sure we start sending noops
-    emit connectionResult( 0, QString::null ); // success
+    emit connectionResult( 0, QString() ); // success
 
     if ( mNamespaces.isEmpty() || mNamespaceToDelimiter.isEmpty() ) {
       connect( this, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
@@ -600,7 +600,7 @@ namespace KMail {
     jd.progressItem = ProgressManager::createProgressItem( 
         ProgressManager::getUniqueID(),
         i18n("Retrieving Namespaces"),
-        QString::null, true, useSSL() || useTLS() );
+        QString(), true, useSSL() || useTLS() );
     jd.progressItem->setTotalItems( 1 );
     connect ( jd.progressItem,
         SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
@@ -693,14 +693,14 @@ namespace KMail {
         QString msg = i18n("KMail has detected a prefix entry in the "
             "configuration of the account \"%1\" which is obsolete with the "
             "support of IMAP namespaces.").arg( name() );
-        if ( list.contains( QString::null ) ) {
+        if ( list.contains( QString() ) ) {
           // replace empty entry with the old prefix
-          list.remove( QString::null );
+          list.remove( QString() );
           list += mOldPrefix;
           mNamespaces[PersonalNS] = list;
-          if ( mNamespaceToDelimiter.contains( QString::null ) ) {
-            QString delim = mNamespaceToDelimiter[QString::null];
-            mNamespaceToDelimiter.remove( QString::null );
+          if ( mNamespaceToDelimiter.contains( QString() ) ) {
+            QString delim = mNamespaceToDelimiter[QString()];
+            mNamespaceToDelimiter.remove( QString() );
             mNamespaceToDelimiter[mOldPrefix] = delim;
           }
           kdDebug(5006) << "migratePrefix - replaced empty with " << mOldPrefix << endl;
@@ -731,7 +731,7 @@ namespace KMail {
     {
       kdDebug(5006) << "migratePrefix - no migration needed" << endl;
     }
-    mOldPrefix = QString::null;
+    mOldPrefix.clear();
   }
 
   //-----------------------------------------------------------------------------
@@ -761,7 +761,7 @@ namespace KMail {
         }
       }
     }
-    return QString::null;
+    return QString();
   }  
 
   //-----------------------------------------------------------------------------
@@ -787,12 +787,12 @@ namespace KMail {
       }
     }
     // see if we have an empty namespace
-    if ( mNamespaceToDelimiter.contains( QString::null ) ) {
-      return mNamespaceToDelimiter[QString::null];
+    if ( mNamespaceToDelimiter.contains( QString() ) ) {
+      return mNamespaceToDelimiter[QString()];
     }
     // well, we tried
     kdDebug(5006) << "delimiterForNamespace - not found" << endl;
-    return QString::null;
+    return QString();
   }
 
   //-----------------------------------------------------------------------------
@@ -815,7 +815,7 @@ namespace KMail {
     }
     if (job->error()) {
       if (!quiet)
-        handleJobError(job, QString::null );
+        handleJobError(job, QString() );
       else {
         if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
           // make sure ERR_CONNECTION_BROKEN is properly handled and the slave

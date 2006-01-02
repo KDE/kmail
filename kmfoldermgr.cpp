@@ -36,7 +36,7 @@ using KMail::RenameJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
-  QObject(), mDir(this, QString::null, dirType)
+  QObject(), mDir(this, QString(), dirType)
 {
   if ( dirType == KMStandardDir )
     mDir.setBaseURL( I18N_NOOP("Local Folders") );
@@ -50,7 +50,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  mBasePath = QString::null;
+  mBasePath.clear();
 }
 
 
@@ -210,7 +210,7 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findById(const uint id)
 {
-  return findIdString( QString::null, id );
+  return findIdString( QString(), id );
 }
 
 //-----------------------------------------------------------------------------
@@ -417,7 +417,7 @@ void KMFolderMgr::createFolderList(QStringList *str,
 void KMFolderMgr::createI18nFolderList(QStringList *str,
 				   QList<QPointer<KMFolder> > *folders)
 {
-  createFolderList( str, folders, 0, QString::null, true );
+  createFolderList( str, folders, 0, QString(), true );
 }
 
 //-----------------------------------------------------------------------------

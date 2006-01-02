@@ -608,7 +608,7 @@ QList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( co
   QList<SubResource> subResources;
 
   // Add the default one
-  KMFolder* f = folderFromType( contentsType, QString::null );
+  KMFolder* f = folderFromType( contentsType, QString() );
   if ( f ) {
     subResources.append( SubResource( f->location(),  f->prettyURL(), !f->isReadOnly() ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
@@ -1010,7 +1010,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
   if( mUseResourceIMAP ) {
-    signalRefresh( type, QString::null /* PENDING(bo) folder->location() */ );
+    signalRefresh( type, QString() /* PENDING(bo) folder->location() */ );
     kdDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
   }
 }
@@ -1376,7 +1376,7 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
   }
 
   httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
-  httpURL.setQuery( QString::null );
+  httpURL.setQuery( QString() );
   // Ensure that we encode everything with UTF8
   httpURL = KURL( httpURL.url(0,106), 106 );
   kdDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
@@ -1754,7 +1754,7 @@ void KMailICalIfaceImpl::cleanup()
 QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
 {
   if( !mUseResourceIMAP )
-    return QString::null;
+    return QString();
 
   if( type == KFolderTreeItem::Contacts )
     return QString::fromLatin1( "kmgroupware_folder_contacts" );
@@ -1767,7 +1767,7 @@ QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
   else if( type == KFolderTreeItem::Journals )
     return QString::fromLatin1( "kmgroupware_folder_journals" );
 
-  return QString::null;
+  return QString();
 }
 
 static void reloadFolderTree()

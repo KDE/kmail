@@ -31,7 +31,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
   hbl->setSpacing(4);
   mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
-  mBtn = new QPushButton( QString::null ,this );
+  mBtn = new QPushButton( QString() ,this );
   mBtn->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
   mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
   hbl->addWidget( mBtn );

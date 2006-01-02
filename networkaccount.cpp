@@ -72,10 +72,10 @@ namespace KMail {
     KMAccount::init();
 
     mSieveConfig = SieveConfig();
-    mLogin = QString::null;
-    mPasswd = QString::null;
+    mLogin.clear();
+    mPasswd.clear();
     mAuth = "*";
-    mHost = QString::null;
+    mHost.clear();
     mPort = defaultPort();
     mStorePasswd = false;
     mUseSSL = false;

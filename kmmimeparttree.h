@@ -87,14 +87,14 @@ public:
   KMMimePartTreeItem( KMMimePartTree * parent,
                       partNode* node,
                       const QString & labelDescr,
-                      const QString & labelCntType  = QString::null,
-                      const QString & labelEncoding = QString::null,
+                      const QString & labelCntType  = QString(),
+                      const QString & labelEncoding = QString(),
                       KIO::filesize_t size=0 );
   KMMimePartTreeItem( KMMimePartTreeItem * parent,
                       partNode* node,
                       const QString & labelDescr,
-                      const QString & labelCntType  = QString::null,
-                      const QString & labelEncoding = QString::null,
+                      const QString & labelCntType  = QString(),
+                      const QString & labelEncoding = QString(),
                       KIO::filesize_t size=0,
                       bool revertOrder = false );
   partNode* node() const { return mPartNode; }

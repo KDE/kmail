@@ -164,7 +164,7 @@ void KMAccount::writeConfig(KConfig& config)
   KAccount::writeConfig(config);
 
   config.writeEntry("Type", type());
-  config.writeEntry("Folder", mFolder ? mFolder->idString() : QString::null);
+  config.writeEntry("Folder", mFolder ? mFolder->idString() : QString());
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writePathEntry("precommand", mPrecommand);

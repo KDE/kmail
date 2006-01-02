@@ -33,11 +33,11 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialo
       : KListView(aParent)
 {
   mDialog=aDialog;
-  int mDownIndex=addColumn(QIcon(QPixmap(mDown)), QString::null, 24);
+  int mDownIndex=addColumn(QIcon(QPixmap(mDown)), QString(), 24);
   assert( mDownIndex == Down ); //This code relies on the fact that radiobuttons are the first three columns for easier Column-Action mapping
 			        //it does not necessarily be true - you could redefine mapToColumn and mapToAction to eg. shift those numbers by 1
-  addColumn(QIcon(QPixmap(mLater)), QString::null, 24);
-  addColumn(QIcon(QPixmap(mDel)), QString::null, 24);
+  addColumn(QIcon(QPixmap(mLater)), QString(), 24);
+  addColumn(QIcon(QPixmap(mDel)), QString(), 24);
 
   /*int subjCol =*/ addColumn(i18n("Subject"), 180);
   /*int sendCol =*/ addColumn(i18n("Sender"), 150);

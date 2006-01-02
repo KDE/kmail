@@ -140,7 +140,7 @@ namespace KMail {
       return KURL();
 
     if ( url.hasPass() )
-      url.setPass( QString::null );
+      url.setPass( QString() );
 
     return url;
   }

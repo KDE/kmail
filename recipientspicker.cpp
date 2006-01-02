@@ -86,7 +86,7 @@ QString RecipientItem::name() const
 {
   if ( !mAddressee.isEmpty() ) return mAddressee.realName();
   else if ( mDistributionList ) return mDistributionList->name();
-  else return QString::null;
+  else return QString();
 }
 
 QString RecipientItem::email() const
@@ -97,7 +97,7 @@ QString RecipientItem::email() const
   } else {
     return mEmail;
   }
-  return QString::null;
+  return QString();
 }
 
 QString RecipientItem::recipient() const
@@ -513,7 +513,7 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
   RecipientItem::List allRecipients = mAllRecipients->items();
   RecipientItem::List::ConstIterator itAll;
   for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
-    (*itAll)->setRecipientType( QString::null );
+    (*itAll)->setRecipientType( QString() );
   }
 
   mSelectedRecipients->clear();
@@ -684,7 +684,7 @@ void RecipientsPicker::setFocusList()
 
 void RecipientsPicker::resetSearch()
 {
-  mSearchLine->setText( QString::null );
+  mSearchLine->setText( QString() );
 }
 
 #include "recipientspicker.moc"

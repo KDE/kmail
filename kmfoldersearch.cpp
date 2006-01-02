@@ -196,7 +196,7 @@ void KMSearch::start()
     }
 
     mRemainingFolders = mFolders.count();
-    mLastFolder = QString::null;
+    mLastFolder.clear();
     mProcessNextBatchTimer->start( 0, true );
 }
 
@@ -227,7 +227,7 @@ void KMSearch::stop()
     mRemainingFolders = -1;
     mOpenedFolders.clear();
     mFolders.clear();
-    mLastFolder = QString::null;
+    mLastFolder.clear();
     mRunByIndex = mRunning = false;
     emit finished(false);
 }
@@ -292,7 +292,7 @@ void KMSearch::slotSearchFolderResult( KMFolder* folder,
       {
         mRemainingFolders = 0;
         mRunning = false;
-        mLastFolder = QString::null;
+        mLastFolder.clear();
         mRemainingFolders = -1;
         mFolders.clear();
         emit finished( true );

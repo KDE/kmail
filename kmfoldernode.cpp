@@ -32,7 +32,7 @@ bool KMFolderNode::isDir(void) const
 QString KMFolderNode::path() const
 {
   if (parent()) return parent()->path();
-  return QString::null;
+  return QString();
 }
 
 //-----------------------------------------------------------------------------

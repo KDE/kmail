@@ -49,7 +49,7 @@ namespace KMail {
 
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
     KAccount *acct, QString startPath )
-  : KSubscription( parent, caption, acct, User1, QString::null, false ),
+  : KSubscription( parent, caption, acct, User1, QString(), false ),
     mStartPath( startPath ), mSubscribed( false ), mForceSubscriptionEnable( false)
 {
   // hide unneeded checkboxes

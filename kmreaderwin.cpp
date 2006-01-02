@@ -1020,7 +1020,7 @@ void KMReaderWin::initHtmlWidget(void)
 
   if ( !htmlWriter() )
 #ifdef KMAIL_READER_HTML_DEBUG
-    mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString::null ),
+    mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString() ),
 				     new KHtmlPartHtmlWriter( mViewer, 0 ) );
 #else
     mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
@@ -1053,7 +1053,7 @@ void KMReaderWin::contactStatusChanged( const QString &uid)
     kdDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
     kdDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
     QString newPresence = kmkernel->imProxy()->presenceString( uid );
-    if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString::null )
+    if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString() )
       newPresence = QString::fromLatin1( "ENOIMRUNNING" );
     n.firstChild().setNodeValue( newPresence );
 //    kdDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
@@ -1112,7 +1112,7 @@ const QTextCodec * KMReaderWin::overrideCodec() const
 void KMReaderWin::slotSetEncoding()
 {
   if ( mSelectEncodingAction->currentItem() == 0 ) // Auto
-    mOverrideEncoding = QString();
+    mOverrideEncoding.clear();
   else
     mOverrideEncoding = KGlobal::charsets()->encodingForName( mSelectEncodingAction->currentText() );
   update( true );
@@ -1355,7 +1355,7 @@ void KMReaderWin::displayAboutPage()
 			  "an incoming as well as outgoing mail account."
 			  "</p>\n") );
   } else {
-    info = info.arg( QString::null );
+    info = info.arg( QString() );
   }
 
   if ( ( numKMailChanges > 1 ) || ( numKMailChanges == 1 && strlen(kmailChanges[0]) > 0 ) ) {
@@ -1652,7 +1652,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     fileName = aMsgPart->name();
 
   //--- Sven's save attachments to /tmp start ---
-  KTempFile *tempFile = new KTempFile( QString::null,
+  KTempFile *tempFile = new KTempFile( QString(),
                                        "." + QString::number( aPartNum ) );
   tempFile->setAutoDelete( true );
   QString fname = tempFile->name();
@@ -1662,7 +1662,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     // Not there or not writable
     if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
         || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
-      return QString::null; //failed create
+      return QString(); //failed create
 
   assert( !fname.isNull() );
 
@@ -1682,7 +1682,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     data.truncate( newsize );
   }
   if( !KPIM::kByteArrayToFile( data, fname, false, false, false ) )
-    return QString::null;
+    return QString();
 
   mTempFiles.append( fname );
   // make file read-only so that nobody gets the impression that he might
@@ -2013,7 +2013,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
         ObjectTreeParser otp( this );
         otp.writeBodyStr( str,
                           overrideCodec() ? overrideCodec() : aMsgPart->codec(),
-                          message() ? message()->from() : QString::null );
+                          message() ? message()->from() : QString() );
       }
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
@@ -2470,7 +2470,7 @@ QString KMReaderWin::createAtmFileLink() const
     return linkName; // success
   }
   kdWarning(5006) << "Couldn't link to " << mAtmCurrentName << endl;
-  return QString::null;
+  return QString();
 }
 
 //-----------------------------------------------------------------------------

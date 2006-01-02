@@ -116,7 +116,7 @@ namespace KMail {
   QString BriefHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing ) const {
-    if ( !message ) return QString::null;
+    if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::brief();
 
@@ -214,7 +214,7 @@ namespace KMail {
   QString PlainHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing ) const {
-    if ( !message ) return QString::null;
+    if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::rich();
 
@@ -410,7 +410,7 @@ namespace KMail {
   QString FancyHeaderStyle::format( const KMMessage * message,
                                     const HeaderStrategy * strategy,
                                     const QString & vCardName, bool printing ) const {
-    if ( !message ) return QString::null;
+    if ( !message ) return QString();
     if ( !strategy )
       strategy = HeaderStrategy::rich();
 

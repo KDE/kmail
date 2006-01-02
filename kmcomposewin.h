@@ -507,8 +507,8 @@ private:
   void rethinkHeaderLine( int aValue, int aMask, int& aRow,
                           const QString &aLabelStr, QLabel* aLbl,
                           QLineEdit* aEdt, QPushButton* aBtn = 0,
-                          const QString &toolTip = QString::null,
-                          const QString &whatsThis = QString::null );
+                          const QString &toolTip = QString(),
+                          const QString &whatsThis = QString() );
 
   void rethinkHeaderLine( int value, int mask, int& row,
                           const QString& labelStr, QLabel* lbl,

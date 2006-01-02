@@ -287,7 +287,7 @@ void KMAcctImap::processNewMail(bool interactive)
     ProgressManager::createProgressItem(
         "MailCheckAccount" + name(),
         i18n("Checking account: " ) + name(),
-        QString::null, // status
+        QString(), // status
         true, // can be canceled
         useSSL() || useTLS() );
 
@@ -497,7 +497,7 @@ void KMAcctImap::slotUpdateFolderList()
   QStringList strList;
   mMailCheckFolders.clear();
   kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
-    mFolder->folder()->child(), QString::null, false);
+    mFolder->folder()->child(), QString(), false);
   // the new list
   QList<QPointer<KMFolder> > includedFolders;
   // check for excluded folders

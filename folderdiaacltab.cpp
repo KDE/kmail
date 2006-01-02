@@ -252,7 +252,7 @@ static QString permissionsToUserString( unsigned int permissions, const QString&
 void KMail::FolderDiaACLTab::ListViewItem::setPermissions( unsigned int permissions )
 {
   mPermissions = permissions;
-  setText( 1, permissionsToUserString( permissions, QString::null ) );
+  setText( 1, permissionsToUserString( permissions, QString() ) );
 }
 
 void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
@@ -299,14 +299,14 @@ void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList,
       QString email = (*it).email;
       if ( email.isEmpty() )
         email = addresseeToUserId( (*it).addressee, userIdFormat );
-      ACLListEntry entry( email, QString::null, mPermissions );
+      ACLListEntry entry( email, QString(), mPermissions );
       entry.changed = true;
       aclList.append( entry );
     }
   } else { // it wasn't a distribution list
     ACLListEntry entry( userId(), mInternalRightsList, mPermissions );
     if ( mModified ) {
-      entry.internalRightsList = QString::null;
+      entry.internalRightsList.clear();
       entry.changed = true;
     }
     aclList.append( entry );
@@ -452,12 +452,12 @@ void KMail::FolderDiaACLTab::load()
   mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
-    slotConnectionResult( -1, QString::null );
+    slotConnectionResult( -1, QString() );
   } else if ( state == ImapAccountBase::Connecting ) {
     connect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
              this, SLOT( slotConnectionResult(int, const QString&) ) );
   } else { // Connected
-    slotConnectionResult( 0, QString::null );
+    slotConnectionResult( 0, QString() );
   }
 }
 
@@ -701,7 +701,7 @@ bool KMail::FolderDiaACLTab::save()
   for ( QStringList::ConstIterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
     // We use permissions == -1 to signify deleting. At least on cyrus, setacl(0) or deleteacl are the same,
     // but I'm not sure if that's true for all servers.
-    ACLListEntry entry( *rit, QString::null, -1 );
+    ACLListEntry entry( *rit, QString(), -1 );
     entry.changed = true;
     aclList.append( entry );
   }

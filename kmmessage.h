@@ -157,7 +157,7 @@ public:
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          QString selection=QString::null, bool noQuote=FALSE,
+                          QString selection=QString(), bool noQuote=FALSE,
                           bool allowDecryption=TRUE, bool selectionIsBody=FALSE);
 
   /** Create a new message that is a redirect to this message, filling all
@@ -831,7 +831,7 @@ public:
     get converted to plain text when allowDecryption is true. */
   QString asQuotedString( const QString & headerStr,
           const QString & indentStr,
-          const QString & selection=QString::null,
+          const QString & selection=QString(),
           bool aStripSignature=true,
           bool allowDecryption=true) const;
 

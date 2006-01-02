@@ -175,7 +175,7 @@ public:
    * by default
    */
   void createFolder(const QString &name, 
-      const QString& imapPath = QString::null, bool askUser = true);
+      const QString& imapPath = QString(), bool askUser = true);
 
   /**
    * Delete a message
@@ -441,7 +441,7 @@ protected slots:
   /**
    * Get the folder now (internal)
    */
-  void reallyGetFolder(const QString &startUid = QString::null);
+  void reallyGetFolder(const QString &startUid = QString());
 
   /**
    * For listing the contents of a folder

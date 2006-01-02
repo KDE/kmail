@@ -47,7 +47,7 @@ namespace KMail {
 
     public:
       SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct,
-         QString startPath = QString::null );
+         QString startPath = QString() );
 
       void show();
 

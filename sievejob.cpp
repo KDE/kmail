@@ -138,7 +138,7 @@ namespace KMail {
       data.resize( data.size() - 1 );
 
     // mark mScript sent:
-    mScript = QString::null;
+    mScript.clear();
   }
 
   void SieveJob::slotEntries( Job *, const UDSEntryList & l ) {
@@ -200,7 +200,7 @@ namespace KMail {
     if ( !mCommands.empty() ) {
       // Don't fail get'ting a non-existant script:
       if ( mCommands.top() == Get && mFileExists == No ) {
-	mScript = QString::null;
+	mScript.clear();
 	mCommands.pop();
       }
     }
@@ -237,25 +237,25 @@ namespace KMail {
     QStack<Command> commands;
     commands.push( Get );
     commands.push( SearchActive );
-    return new SieveJob( src, QString::null, commands );
+    return new SieveJob( src, QString(), commands );
   }
 
   SieveJob * SieveJob::list( const KURL & src ) {
     QStack<Command> commands;
     commands.push( List );
-    return new SieveJob( src, QString::null, commands );
+    return new SieveJob( src, QString(), commands );
   }
   SieveJob * SieveJob::del( const KURL & url ) {
     QStack<Command> commands;
     commands.push( Delete );
-    return new SieveJob( url, QString::null, commands );
+    return new SieveJob( url, QString(), commands );
   }
 
   SieveJob * SieveJob::activate( const KURL & url ) {
     QStack<Command> commands;
     commands.push( Activate );
     commands.push( Deactivate );
-    return new SieveJob( url, QString::null, commands );
+    return new SieveJob( url, QString(), commands );
   }
 
 } // namespace KMail

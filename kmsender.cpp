@@ -769,7 +769,7 @@ void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
 //-----------------------------------------------------------------------------
 KMSendProc* KMSender::createSendProcFromString( const QString & transport )
 {
-  mTransportInfo->type = QString::null;
+  mTransportInfo->type.clear();
   int nr = KMTransportInfo::findTransport(transport);
   if (nr)
   {
@@ -873,7 +873,7 @@ void KMSendProc::reset()
 {
   mSending = FALSE;
   mSendOk = FALSE;
-  mLastErrorMessage = QString::null;
+  mLastErrorMessage.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -1072,7 +1072,7 @@ bool KMSendSMTP::doSend( const QString & sender, const QStringList & to, const Q
       QString passwd = ti->passwd();
       result = KIO::PasswordDialog::getNameAndPassword(ti->user, passwd,
 	&b, i18n("You need to supply a username and a password to use this "
-	     "SMTP server."), FALSE, QString::null, ti->name, QString::null);
+	     "SMTP server."), FALSE, QString(), ti->name, QString());
 
       if ( result != QDialog::Accepted )
       {

@@ -584,11 +584,11 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   //----------- the first row of buttons
   KHBox *hb = new KHBox(this);
   hb->setSpacing(4);
-  mBtnUp = new KPushButton( QString::null, hb );
+  mBtnUp = new KPushButton( QString(), hb );
   mBtnUp->setAutoRepeat( true );
   mBtnUp->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
-  mBtnDown = new KPushButton( QString::null, hb );
+  mBtnDown = new KPushButton( QString(), hb );
   mBtnDown->setAutoRepeat( true );
   mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
@@ -602,13 +602,13 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
   //----------- the second row of buttons
   hb = new KHBox(this);
   hb->setSpacing(4);
-  mBtnNew = new QPushButton( QString::null, hb );
+  mBtnNew = new QPushButton( QString(), hb );
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
-  mBtnCopy = new QPushButton( QString::null, hb );
+  mBtnCopy = new QPushButton( QString(), hb );
   mBtnCopy->setPixmap( BarIcon( "editcopy", KIcon::SizeSmall ) );
   mBtnCopy->setMinimumSize( mBtnCopy->sizeHint() * 1.2 );
-  mBtnDelete = new QPushButton( QString::null, hb );
+  mBtnDelete = new QPushButton( QString(), hb );
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
@@ -754,7 +754,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 		       "IMAP account. Such filters will only be applied "
 		       "when manually filtering and when filtering "
 		       "incoming online IMAP mail.");
-    KMessageBox::information( this, str, QString::null,
+    KMessageBox::information( this, str, QString(),
 			      "filterDlgOnlineImapCheck" );
   }
   // allow usage of the filters again.
@@ -766,7 +766,7 @@ void KMFilterListBox::slotApplyFilterChanges()
     QString msg = i18n("The following filters have not been saved because they "
 		       "were invalid (e.g. containing no actions or no search "
 		       "rules).");
-    KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
+    KMessageBox::informationList( 0, msg, emptyFilters, QString(),
 				  "ShowInvalidFilterWarning" );
   }
 }
@@ -1097,7 +1097,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
   int i=0;
   bool found = FALSE;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
-  QString label = ( aAction ) ? aAction->label() : QString::null ;
+  QString label = ( aAction ) ? aAction->label() : QString() ;
 
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.

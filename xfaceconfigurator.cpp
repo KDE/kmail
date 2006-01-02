@@ -228,7 +228,7 @@ namespace KMail {
   {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
     QString filter = mimeTypes.join (" ");
-    KURL url = KFileDialog::getOpenURL( QString::null, filter, this, QString::null );
+    KURL url = KFileDialog::getOpenURL( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
       setXfaceFromFile( url );
   }

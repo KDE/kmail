@@ -165,7 +165,7 @@ public:
    * for each derived KMFolder).
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0, QString partSpecifier = QString::null,
+                                KMFolder *folder = 0, QString partSpecifier = QString(),
                                 const AttachmentStrategy *as = 0 ) const;
   virtual FolderJob* createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,

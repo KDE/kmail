@@ -188,8 +188,8 @@ public:
   virtual void argsFromString(const QString) {};
 
   /** Return extra arguments as string. Must not contain newlines. We
-      return QString::null, because we have no parameter. */
-  virtual const QString argsAsString() const { return QString::null; }
+      return QString(), because we have no parameter. */
+  virtual const QString argsAsString() const { return QString(); }
 
   /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */

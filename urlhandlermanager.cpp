@@ -114,7 +114,7 @@ namespace {
     bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
       return false;
     }
-    QString statusBarMessage( const KURL &, KMReaderWin * ) const { return QString::null; }
+    QString statusBarMessage( const KURL &, KMReaderWin * ) const { return QString(); }
   };
 
   class AttachmentURLHandler : public KMail::URLHandler {
@@ -238,7 +238,7 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
   QString path;
   partNode * node = partNodeFromXKMailUrl( url, w, &path );
   if ( !node )
-    return QString::null;
+    return QString();
 
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it ) {
@@ -246,7 +246,7 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
     if ( !msg.isEmpty() )
       return msg;
   }
-  return QString::null;
+  return QString();
 }
 
 //
@@ -313,7 +313,7 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
     if ( !msg.isEmpty() )
       return msg;
   }
-  return QString::null;
+  return QString();
 }
 
 
@@ -380,7 +380,7 @@ namespace {
       if ( url.path() == "goOnline" )
         return i18n("Work online");
     }
-    return QString::null ;
+    return QString() ;
   }
 }
 
@@ -414,7 +414,7 @@ namespace {
           else
             return i18n("Collapse quoted text.");
       }
-      return QString::null ;
+      return QString() ;
   }
 
 }
@@ -442,7 +442,7 @@ namespace {
   QString SMimeURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
     QString displayName, libName, keyId;
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
-      return QString::null;
+      return QString();
     return i18n("Show certificate 0x%1").arg( keyId );
   }
 }
@@ -460,7 +460,7 @@ namespace {
 namespace {
   QString MailToURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
     if ( url.protocol() != "mailto" )
-      return QString::null;
+      return QString();
     return KMMessage::decodeMailtoUrl( url.url() );
   }
 }
@@ -488,10 +488,10 @@ namespace {
 
   QString AttachmentURLHandler::statusBarMessage( const KURL & url, KMReaderWin * w ) const {
     if ( !w || !w->message() )
-      return QString::null;
+      return QString();
     const partNode * node = w->partNodeFromUrl( url );
     if ( !node )
-      return QString::null;
+      return QString();
     const KMMessagePart & msgPart = node->msgPart();
     QString name = msgPart.fileName();
     if ( name.isEmpty() )

@@ -200,7 +200,7 @@ public:
    * for each derived KMFolder).
    */
   FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                        KMFolder *folder = 0, QString partSpecifier = QString::null,
+                        KMFolder *folder = 0, QString partSpecifier = QString(),
                         const AttachmentStrategy *as = 0 ) const;
   FolderJob* createJob( Q3PtrList<KMMessage>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
@@ -602,7 +602,7 @@ private:
   bool mHasIndex :1;
   bool mExportsSernums :1;
 
-  /** nationalized label or QString::null (then name() should be used) */
+  /** nationalized label or QString() (then name() should be used) */
   QString mLabel;
   QString mSystemLabel;
 

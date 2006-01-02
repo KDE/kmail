@@ -124,7 +124,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     if ( !(buttons & Down) )
       kdDebug(5006) << "Are you sure you want to use an Up button "
 	"without a Down button??" << endl;
-    mUpButton = new KPushButton( QString::null, this );
+    mUpButton = new KPushButton( QString(), this );
     mUpButton->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
     mUpButton->setAutoDefault( false );
     mUpButton->setEnabled( false ); // no selection yet
@@ -137,7 +137,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     if ( !(buttons & Up) )
       kdDebug(5006) << "Are you sure you want to use a Down button "
 	"without an Up button??" << endl;
-    mDownButton = new KPushButton( QString::null, this );
+    mDownButton = new KPushButton( QString(), this );
     mDownButton->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
     mDownButton->setAutoDefault( false );
     mDownButton->setEnabled( false ); // no selection yet
@@ -206,7 +206,7 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
 void SimpleStringListEditor::slotAdd() {
   bool ok = false;
   QString newEntry = KInputDialog::getText( i18n("New Value"),
-                                            mAddDialogLabel, QString::null,
+                                            mAddDialogLabel, QString(),
 					    &ok, this );
   // let the user verify the string before adding
   emit aboutToAdd( newEntry );

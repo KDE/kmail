@@ -249,15 +249,15 @@ namespace KMail {
     if ( sig.type() == Signature::Inlined )
       setInlineText( sig.text() );
     else
-      setInlineText( QString::null );
+      setInlineText( QString() );
     if ( sig.type() == Signature::FromFile )
       setFileURL( sig.url() );
     else
-      setFileURL( QString::null );
+      setFileURL( QString() );
     if ( sig.type() == Signature::FromCommand )
       setCommandURL( sig.url() );
     else
-      setCommandURL( QString::null );
+      setCommandURL( QString() );
   }
 
   void SignatureConfigurator::slotEnableEditButton( const QString & url ) {

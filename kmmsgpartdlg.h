@@ -43,7 +43,7 @@ class KMMsgPartDialog: public KDialogBase
   Q_OBJECT
 
 public:
-  KMMsgPartDialog( const QString & caption=QString::null,
+  KMMsgPartDialog( const QString & caption=QString(),
 		   QWidget * parent=0, const char * name=0 );
   virtual ~KMMsgPartDialog();
 

@@ -66,7 +66,7 @@ public:
    * @param item a parent ProgressItem
    */
   ListJob( ImapAccountBase* account, ImapAccountBase::ListType type,
-           FolderStorage* storage = 0, const QString& path = QString::null,
+           FolderStorage* storage = 0, const QString& path = QString(),
            bool complete = false, KPIM::ProgressItem* item = 0 );
 
   virtual ~ListJob();

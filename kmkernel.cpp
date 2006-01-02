@@ -214,7 +214,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      // command line arguments and those include "-session ..." if
      // kmail/kontact was restored by session management
      if ( subj == "ession" ) {
-       subj = QString::null;
+       subj.clear();
        calledWithSession = true;
      }
      else
@@ -810,7 +810,7 @@ int KMKernel::dcopAddMessage( const QString & foldername,const KURL & msgUrl,
 void KMKernel::dcopResetAddMessage()
 {
   mAddMessageMsgIds.clear();
-  mAddMessageLastFolder = QString();
+  mAddMessageLastFolder.clear();
 }
 
 int KMKernel::dcopAddMessage_fastImport( const QString & foldername,
@@ -1003,11 +1003,11 @@ QString KMKernel::getFrom( quint32 serialNumber )
   KMFolder *folder = 0;
   KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
   if (!folder || (idx == -1))
-    return QString::null;
+    return QString();
   folder->open();
   KMMsgBase *msgBase = folder->getMsgBase(idx);
   if (!msgBase)
-    return QString::null;
+    return QString();
   bool unGet = !msgBase->isMessage();
   KMMessage *msg = folder->getMsg(idx);
   QString result = msg->from();
@@ -1244,7 +1244,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_inboxFolder->setSystemFolder(TRUE);
   if ( the_inboxFolder->userWhoField().isEmpty() )
-    the_inboxFolder->setUserWhoField( QString::null );
+    the_inboxFolder->setUserWhoField( QString() );
   // inboxFolder->open();
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
@@ -1255,7 +1255,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_outboxFolder->setSystemFolder(TRUE);
   if ( the_outboxFolder->userWhoField().isEmpty() )
-    the_outboxFolder->setUserWhoField( QString::null );
+    the_outboxFolder->setUserWhoField( QString() );
   /* Nuke the oubox's index file, to make sure that no ghost messages are in
    * it from a previous crash. Ghost messages happen in the outbox because it
    * the only folder where messages enter and leave within 5 seconds, which is
@@ -1272,7 +1272,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_sentFolder->setSystemFolder(TRUE);
   if ( the_sentFolder->userWhoField().isEmpty() )
-    the_sentFolder->setUserWhoField( QString::null );
+    the_sentFolder->setUserWhoField( QString() );
   // the_sentFolder->open();
 
   the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
@@ -1281,7 +1281,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_trashFolder->setSystemFolder(TRUE);
   if ( the_trashFolder->userWhoField().isEmpty() )
-    the_trashFolder->setUserWhoField( QString::null );
+    the_trashFolder->setUserWhoField( QString() );
   // the_trashFolder->open();
 
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
@@ -1290,7 +1290,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_draftsFolder->setSystemFolder(TRUE);
   if ( the_draftsFolder->userWhoField().isEmpty() )
-    the_draftsFolder->setUserWhoField( QString::null );
+    the_draftsFolder->setUserWhoField( QString() );
   the_draftsFolder->open();
 }
 

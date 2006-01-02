@@ -65,7 +65,7 @@ protected slots:
   void slotResult(KIO::Job *job);
   void slotMetaData( const KIO::MetaData & );
   void slotSlaveResult(KIO::Slave *aSlave, int error,
-    const QString &errorText = QString::null);
+    const QString &errorText = QString());
 
 protected:
   KIO::MetaData slaveConfig() const;

@@ -98,7 +98,7 @@ QString KMail::HtmlStatusBar::message() const {
 		 "<br>M<br>e<br>s<br>s<br>a<br>g<br>e</qt>" );
   default:
   case Neutral:
-    return QString::null;
+    return QString();
   }
 }
 

@@ -93,7 +93,7 @@ public:
   /**
    * Returns type of the account
    */
-  virtual QString type() const { return QString::null; }
+  virtual QString type() const { return QString(); }
 
   /**
    * Reimplemented, set account name

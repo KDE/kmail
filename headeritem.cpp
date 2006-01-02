@@ -424,7 +424,7 @@ QString HeaderItem::generate_key( KMHeaders *headers,
   // It appears, that QListView in Qt-3.0 asks for the key
   // in QListView::clear(), which is called from
   // readSortOrder()
-  if (!msg) return QString::null;
+  if (!msg) return QString();
   MessageStatus status = msg->status();
 
   int column = sortOrder & ((1 << 5) - 1);

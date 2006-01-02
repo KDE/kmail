@@ -59,10 +59,10 @@ public:
   /** Constructor. Populates the list with @p strings. */
   SimpleStringListEditor( QWidget * parent=0, const char * name=0,
 			  ButtonCode buttons=Unsorted,
-			  const QString & addLabel=QString::null,
-			  const QString & removeLabel=QString::null,
-			  const QString & modifyLabel=QString::null,
-			  const QString & addDialogLabel=QString::null );
+			  const QString & addLabel=QString(),
+			  const QString & removeLabel=QString(),
+			  const QString & modifyLabel=QString(),
+			  const QString & addDialogLabel=QString() );
 
   /** Sets the list of strings displayed to @p strings */
   void setStringList( const QStringList & strings );
@@ -76,7 +76,7 @@ public:
 
 signals:
   /** Connected slots can alter the argument to be added or set the
-      argument to QString::null to suppress adding.
+      argument to QString() to suppress adding.
   */
   void aboutToAdd(QString&);
   void changed(void);

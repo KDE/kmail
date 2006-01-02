@@ -136,7 +136,7 @@ QString Callback::receiver() const
                                      "is yours:" ),
                                addrs, 0, FALSE, &ok, kmkernel->mainWin() );
       if( !ok )
-        mReceiver = QString::null;
+        mReceiver.clear();
     }
   }
 

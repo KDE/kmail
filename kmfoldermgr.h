@@ -50,10 +50,10 @@ public:
   virtual KMFolder* findById(const uint id);
 
   virtual void        getFolderURLS( QStringList& flist,
-                                     const QString& prefix=QString::null,
+                                     const QString& prefix=QString(),
                                      KMFolderDir *adir=0 );
   virtual KMFolder*   getFolderByURL( const QString& vpath,
-                                      const QString& prefix=QString::null,
+                                      const QString& prefix=QString(),
                                       KMFolderDir *adir=0 );
 
   /** Create a mail folder in the root folder directory dir()

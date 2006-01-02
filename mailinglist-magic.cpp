@@ -27,7 +27,7 @@ static QString check_sender(const KMMessage  *message,
   QString header = message->headerField( "Sender" );
 
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   if ( header.left( 6 ) == "owner-" )
   {
@@ -38,7 +38,7 @@ static QString check_sender(const KMMessage  *message,
   } else {
     int index = header.find( "-owner@ " );
     if ( index == -1 )
-      return QString::null;
+      return QString();
 
     header.truncate( index );
     header_name = "Sender";
@@ -55,7 +55,7 @@ static QString check_x_beenthere(const KMMessage  *message,
 {
   QString header = message->headerField( "X-BeenThere" );
   if ( header.isNull() || header.find( '@' ) == -1 )
-    return QString::null;
+    return QString();
 
   header_name = "X-BeenThere";
   header_value = header;
@@ -71,7 +71,7 @@ static QString check_delivered_to(const KMMessage  *message,
   QString header = message->headerField( "Delivered-To" );
   if ( header.isNull() || header.left(13 ) != "mailing list"
        || header.find( '@' ) == -1 )
-    return QString::null;
+    return QString();
 
   header_name = "Delivered-To";
   header_value = header;
@@ -86,10 +86,10 @@ static QString check_x_mailing_list(const KMMessage  *message,
 {
   QString header = message->headerField( "X-Mailing-List");
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   if ( header.find( '@' ) < 1 )
-    return QString::null;
+    return QString();
 
   header_name = "X-Mailing-List";
   header_value = header;
@@ -108,15 +108,15 @@ static QString check_list_id(const KMMessage  *message,
   int lAnglePos, firstDotPos;
   QString header = message->headerField( "List-Id" );
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   lAnglePos = header.find( '<' );
   if ( lAnglePos < 0 )
-    return QString::null;
+    return QString();
 
   firstDotPos = header.find( '.', lAnglePos );
   if ( firstDotPos < 0 )
-    return QString::null;
+    return QString();
 
   header_name = "List-Id";
   header_value = header.mid( lAnglePos );
@@ -132,11 +132,11 @@ static QString check_list_post(const KMMessage  *message,
 {
   QString header = message->headerField( "List-Post" );
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   int lAnglePos = header.find( "<mailto:" );
   if ( lAnglePos < 0 )
-    return QString::null;
+    return QString();
 
   header_name = "List-Post";
   header_value = header;
@@ -152,10 +152,10 @@ static QString check_mailing_list(const KMMessage  *message,
 {
   QString header = message->headerField( "Mailing-List");
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   if (header.left( 5 ) != "list " || header.find( '@' ) < 5 )
-    return QString::null;
+    return QString();
 
   header_name = "Mailing-List";
   header_value = header;
@@ -170,10 +170,10 @@ static QString check_x_loop(const KMMessage  *message,
                             QString &header_value ){
   QString header = message->headerField( "X-Loop");
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   if (header.find( '@' ) < 2 )
-    return QString::null;
+    return QString();
 
   header_name = "X-Loop";
   header_value = header;
@@ -187,7 +187,7 @@ static QString check_x_ml_name(const KMMessage  *message,
                                QString &header_value ){
   QString header = message->headerField( "X-ML-Name");
   if ( header.isEmpty() )
-    return QString::null;
+    return QString();
 
   header_name = "X-ML-Name";
   header_value = header;
@@ -257,10 +257,10 @@ MailingList::name( const KMMessage  *message, QByteArray &header_name,
 {
   QString mlist;
   header_name = QByteArray();
-  header_value = QString::null;
+  header_value.clear();
 
   if ( !message )
-    return QString::null;
+    return QString();
 
   for (int i = 0; i < num_detectors; i++) {
     mlist = magic_detector[i] (message, header_name, header_value);
@@ -268,7 +268,7 @@ MailingList::name( const KMMessage  *message, QByteArray &header_name,
       return mlist;
   }
 
-  return QString::null;
+  return QString();
 }
 
 MailingList::MailingList()

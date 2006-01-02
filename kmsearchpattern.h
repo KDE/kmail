@@ -49,7 +49,7 @@ public:
                   FuncIsInCategory, FuncIsNotInCategory,
 		  FuncHasAttachment, FuncHasNoAttachment};
   KMSearchRule ( const QByteArray & field=0, Function=FuncContains,
-                 const QString &contents=QString::null );
+                 const QString &contents=QString() );
   KMSearchRule ( const KMSearchRule &other );
 
   const KMSearchRule & operator=( const KMSearchRule & other );
@@ -58,7 +58,7 @@ public:
       priate subclass depending on the @p field. */
   static KMSearchRule* createInstance( const QByteArray & field=0,
                                       Function function=FuncContains,
-		                      const QString & contents=QString::null );
+		                      const QString & contents=QString() );
 
   static KMSearchRule* createInstance( const QByteArray & field,
                                        const char * function,
@@ -161,7 +161,7 @@ class KMSearchRuleString : public KMSearchRule
 {
 public:
   KMSearchRuleString( const QByteArray & field=0, Function function=FuncContains,
-		const QString & contents=QString::null );
+		const QString & contents=QString() );
   KMSearchRuleString( const KMSearchRuleString & other );
   const KMSearchRuleString & operator=( const KMSearchRuleString & other );
 
@@ -196,7 +196,7 @@ class KMSearchRuleNumerical : public KMSearchRule
 {
 public:
   KMSearchRuleNumerical( const QByteArray & field=0, Function function=FuncContains,
-		         const QString & contents=QString::null );
+		         const QString & contents=QString() );
   virtual bool isEmpty() const ;
 
   virtual bool matches( const KMMessage * msg ) const;
@@ -270,7 +270,7 @@ class KMSearchRuleStatus : public KMSearchRule
 {
 public:
    KMSearchRuleStatus( const QByteArray & field=0, Function function=FuncContains,
-		       const QString & contents=QString::null );
+		       const QString & contents=QString() );
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;
   //Not possible to implement this form for status searching
@@ -362,7 +362,7 @@ public:
   */
   void readConfig( const KConfig * config );
   /** Writes itself into @p config. The group has to be preset. Tries
-      to delete old-style keys by overwriting them with QString::null.
+      to delete old-style keys by overwriting them with QString().
 
       Derived classes reimplementing writeConfig() should also call this
       method, or else the rules will not be stored.

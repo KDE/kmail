@@ -230,7 +230,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         const QString & encoding,
                                         KIO::filesize_t size )
   : Q3ListViewItem( parent, description,
-		   QString::null, // set by setIconAndTextForType()
+		   QString(), // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
     mPartNode( node ), mOrigSize(size)
@@ -250,7 +250,7 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
                                         KIO::filesize_t size,
                                         bool revertOrder )
   : Q3ListViewItem( parent, description,
-		   QString::null, // set by setIconAndTextForType()
+		   QString(), // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
     mPartNode( node ), mOrigSize(size)

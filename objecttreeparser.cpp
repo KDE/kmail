@@ -204,7 +204,7 @@ namespace KMail {
     if ( startNode.mimePartTreeItem() ) {
       kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
       newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
-                                 QString::null, QString::null, QString::null, 0,
+                                 QString(), QString(), QString(), 0,
                                  append );
       kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
     } else {
@@ -631,7 +631,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       QString& aErrorText )
 {
   passphraseError = false;
-  aErrorText = QString::null;
+  aErrorText.clear();
   bool bDecryptionOk = false;
   enum { NO_PLUGIN, NOT_INITIALIZED, CANT_DECRYPT }
     cryptPlugError = NO_PLUGIN;

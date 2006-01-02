@@ -57,7 +57,7 @@ QString KMail::PartNodeBodyPart::makeLink( const QString & path ) const {
 
 QString KMail::PartNodeBodyPart::asText() const {
   if ( mPartNode.type() != DwMime::kTypeText )
-    return QString::null;
+    return QString();
   return mPartNode.msgPart().bodyToUnicode( mCodec );
 }
 
@@ -75,7 +75,7 @@ QString KMail::PartNodeBodyPart::contentDescription() const {
 
 QString KMail::PartNodeBodyPart::contentDispositionParameter( const char * ) const {
   kdWarning( 5006 ) << "Sorry, not yet implemented: PartNodeBodyPart::contentDispositionParameter()" << endl;
-  return QString::null;
+  return QString();
 }
 
 bool KMail::PartNodeBodyPart::hasCompleteBody() const {

@@ -289,7 +289,7 @@ void KMail::ManageSieveScriptsDialog::slotNewScript() {
   (void) new Q3CheckListItem( mContextMenuItem, name, Q3CheckListItem::RadioButton );
 
   mCurrentURL = u;
-  slotGetResult( 0, true, QString::null, false );
+  slotGetResult( 0, true, QString(), false );
 }
 
 KMail::SieveEditor::SieveEditor( QWidget * parent, const char * name )

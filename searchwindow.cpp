@@ -228,7 +228,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   mStatusBar->changeItem(i18n("Ready."), 0);
   mStatusBar->setItemAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
-  mStatusBar->insertItem(QString::null, 1, 1, true);
+  mStatusBar->insertItem(QString(), 1, 1, true);
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
   vbl->addWidget(mStatusBar);
 

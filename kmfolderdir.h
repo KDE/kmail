@@ -20,7 +20,7 @@ class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 
 public:
   KMFolderDir( KMFolder * owner, KMFolderDir * parent = 0,
-               const QString& path = QString::null,
+               const QString& path = QString(),
 	       KMFolderDirType = KMStandardDir );
   virtual ~KMFolderDir();
 
@@ -70,7 +70,7 @@ class KMFolderRootDir: public KMFolderDir
 
 public:
   KMFolderRootDir(KMFolderMgr* manager,
-		  const QString& path=QString::null,
+		  const QString& path=QString(),
 		  KMFolderDirType dirType = KMStandardDir);
   virtual ~KMFolderRootDir();
   virtual QString path() const;

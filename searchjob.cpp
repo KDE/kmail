@@ -79,7 +79,7 @@ void SearchJob::searchCompleteFolder()
   QString searchString = searchStringFromPattern( mSearchPattern );
 
   if ( searchString.isEmpty() ) // skip imap search and download the messages
-    return slotSearchData( 0, QString::null );
+    return slotSearchData( 0, QString() );
 
   // do the IMAP search  
   KURL url = mAccount->getUrl();
@@ -355,7 +355,7 @@ void SearchJob::searchSingleMessage()
   if ( searchString.isEmpty() )
   {
     // no imap search
-    slotSearchDataSingleMessage( 0, QString::null );
+    slotSearchDataSingleMessage( 0, QString() );
   } else
   {
     // imap search

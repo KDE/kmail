@@ -614,7 +614,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 {
   if ( mUrl.isEmpty() )
     return OK;
-  KURL saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString::null,
+  KURL saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString(),
                                          parentWidget() );
   if ( saveUrl.isEmpty() )
     return Canceled;
@@ -715,7 +715,7 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
 static KURL subjectToUrl( const QString & subject ) {
     return KFileDialog::getSaveURL( subject.trimmed()
                                            .replace( QDir::separator(), '_' ),
-                                    QString::null );
+                                    QString() );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
@@ -1145,7 +1145,7 @@ KMCommand::Result KMForwardCommand::execute()
 
     if (KMessageBox::questionYesNo( parentWidget(),
                                     i18n("Forward selected messages as "
-                                         "a MIME digest?"), QString::null, i18n("Send Digest"), i18n("Send") )
+                                         "a MIME digest?"), QString(), i18n("Send Digest"), i18n("Send") )
         == KMessageBox::Yes) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
@@ -2147,7 +2147,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" )
-        .arg( mUrl.prettyURL() ), QString::null, i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
+        .arg( mUrl.prettyURL() ), QString(), i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
         return Canceled;
     }
     (void) new KRun( mUrl, mMainWidget );
@@ -2239,7 +2239,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   KURL url, dirUrl;
   if ( mAttachmentMap.count() > 1 ) {
     // get the dir
-    dirUrl = KDirSelectDialog::selectDirectory( QString::null, false,
+    dirUrl = KDirSelectDialog::selectDirectory( QString(), false,
                                                 parentWidget(),
                                                 i18n("Save Attachments To") );
     if ( !dirUrl.isValid() ) {
@@ -2262,8 +2262,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = node->msgPart().name().trimmed().replace( ':', '_' );
     if ( s.isEmpty() )
       s = i18n("filename for an unnamed attachment", "attachment.1");
-    url = KFileDialog::getSaveURL( s, QString::null, parentWidget(),
-                                   QString::null );
+    url = KFileDialog::getSaveURL( s, QString(), parentWidget(),
+                                   QString() );
     if ( url.isEmpty() ) {
       setResult( Canceled );
       emit completed( this );
@@ -2786,7 +2786,7 @@ QString KMHandleAttachmentCommand::createAtmFileLink() const
   if ( ::link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {
     return linkName; // success
   }
-  return QString::null;
+  return QString();
 }
 
 KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
@@ -3019,7 +3019,7 @@ void KMHandleAttachmentCommand::slotAtmDecryptWithChiasmusResult( const GpgME::E
     return;
   }
 
-  const KURL url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString::null, parentWidget() );
+  const KURL url = KFileDialog::getSaveURL( chomp( mAtmName, ".xia", false ), QString(), parentWidget() );
   if ( url.isEmpty() )
     return;
 

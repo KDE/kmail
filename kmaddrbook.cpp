@@ -58,7 +58,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
       email = *mit;
       if (!email.isEmpty()) {
 	if (n.isEmpty() || (email.find( '<' ) != -1))
-	  addr = QString::null;
+	  addr.clear();
 	else { // do we really need quotes around this name ?
           if (n.find(needQuotes) != -1)
 	    addr = '"' + n + endQuote;
@@ -100,7 +100,7 @@ QStringList KabcBridge::addresses()
 QString KabcBridge::expandNickName( const QString& nickName )
 {
   if ( nickName.isEmpty() )
-    return QString::null;
+    return QString();
 
   const QString lowerNickName = nickName.toLower();
   const KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
@@ -109,7 +109,7 @@ QString KabcBridge::expandNickName( const QString& nickName )
     if ( (*it).nickName().toLower() == lowerNickName )
       return (*it).fullEmail();
   }
-  return QString::null;
+  return QString();
 }
 
 

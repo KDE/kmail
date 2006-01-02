@@ -25,7 +25,7 @@ namespace KMail {
 
       /** Reload the tree and select what folders to show and what not */
       void reload( bool mustBeReadWrite, bool showOutbox, bool showImapFolders,
-                   const QString& preSelection = QString::null );
+                   const QString& preSelection = QString() );
 
       /** Return the current folder */
       const KMFolder * folder() const;

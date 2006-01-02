@@ -89,7 +89,7 @@ namespace KMail {
 class ProcmailRCParser
 {
 public:
-  ProcmailRCParser(QString fileName = QString::null);
+  ProcmailRCParser(QString fileName = QString());
   ~ProcmailRCParser();
 
   QStringList getLockFilesList() const { return mLockFiles; }
@@ -1447,7 +1447,7 @@ void AccountDialog::slotPipeliningClicked()
       "Supports\" button at the bottom of the dialog;\n"
       "if your server does not announce it, but you want more speed, then "
       "you should do some testing first by sending yourself a batch "
-      "of mail and downloading it."), QString::null,
+      "of mail and downloading it."), QString(),
       "pipelining");
 }
 
@@ -1920,7 +1920,7 @@ void AccountDialog::slotLocationChooser()
 {
   static QString directory( "/" );
 
-  KFileDialog dialog( directory, QString::null, this, 0, true );
+  KFileDialog dialog( directory, QString(), this, 0, true );
   dialog.setCaption( i18n("Choose Location") );
 
   bool result = dialog.exec();
@@ -2045,8 +2045,8 @@ void AccountDialog::slotReloadNamespaces()
   {
     initAccountForConnect();
     mImap.personalNS->setText( i18n("Fetching Namespaces...") );
-    mImap.otherUsersNS->setText( QString::null );
-    mImap.sharedNS->setText( QString::null );
+    mImap.otherUsersNS->setText( QString() );
+    mImap.sharedNS->setText( QString() );
     ImapAccountBase* ai = static_cast<ImapAccountBase*>( mAccount );
     connect( ai, SIGNAL( namespacesFetched( const ImapAccountBase::nsDelimMap& ) ),
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
@@ -2064,16 +2064,16 @@ void AccountDialog::slotConnectionResult( int errorCode, const QString& )
         this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
     disconnect( ai, SIGNAL( connectionResult(int, const QString&) ),
           this, SLOT( slotConnectionResult(int, const QString&) ) );
-    mImap.personalNS->setText( QString::null );
+    mImap.personalNS->setText( QString() );
   }
 }
 
 void AccountDialog::slotSetupNamespaces( const ImapAccountBase::nsDelimMap& map )
 {
   disconnect( this, SLOT( slotSetupNamespaces( const ImapAccountBase::nsDelimMap& ) ) );
-  mImap.personalNS->setText( QString::null );
-  mImap.otherUsersNS->setText( QString::null );
-  mImap.sharedNS->setText( QString::null );
+  mImap.personalNS->setText( QString() );
+  mImap.otherUsersNS->setText( QString() );
+  mImap.sharedNS->setText( QString() );
   mImap.nsMap = map;
 
   ImapAccountBase::namespaceDelim ns = map[ImapAccountBase::PersonalNS];
@@ -2208,7 +2208,7 @@ void NamespaceLineEdit::setText( const QString& text )
 
 NamespaceEditDialog::NamespaceEditDialog( QWidget *parent,
     ImapAccountBase::imapNamespace type, ImapAccountBase::nsDelimMap* map )
-  : KDialogBase( parent, "edit_namespace", false, QString::null,
+  : KDialogBase( parent, "edit_namespace", false, QString(),
       Ok|Cancel, Ok, true ), mType( type ), mNamespaceMap( map )
 {
   QFrame *page = makeVBoxMainWidget();

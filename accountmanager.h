@@ -52,7 +52,7 @@ public:
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
   KMAccount* create( const QString& type,
-                             const QString& name = QString::null,
+                             const QString& name = QString(),
                              uint id = 0);
 
   /** Adds an account to the list of accounts */

@@ -67,7 +67,7 @@ namespace KMail {
     void slotEditRegExp();
 
   private:
-    void initWidget( const QString & = QString::null );
+    void initWidget( const QString & = QString() );
 
     KLineEdit * mLineEdit;
     QPushButton * mRegExpEditButton;

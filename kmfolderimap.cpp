@@ -461,7 +461,7 @@ int KMFolderImap::addMsg(Q3PtrList<KMMessage>& msgList, QList<int>& aIndex_ret)
       if ( !msg->transferInProgress() )
         msg->setTransferInProgress( true );
     }
-    imapJob = new ImapJob( msgList, QString::null, ImapJob::tPutMessage, this );
+    imapJob = new ImapJob( msgList, QString(), ImapJob::tPutMessage, this );
     if ( !mAddMessageProgressItem && msgList.count() > 1 )
     {
       // use a parent progress if we have more than 1 message
@@ -877,7 +877,7 @@ void KMFolderImap::initInbox()
     kmkernel->imapFolderMgr()->contentsChanged();
   }
   f->initializeFrom( this, "/INBOX/", "message/directory" );
-  f->setChildrenState( QString::null );
+  f->setChildrenState( QString() );
   // so we have an INBOX
   mAccount->setHasInbox( true );
 }
@@ -1277,7 +1277,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   // strip the flags from the list of uids, so it can be reused
   for (uid = (*it).items.begin(); uid != (*it).items.end(); ++uid)
     (*uid).truncate((*uid).find(","));
-  ImapAccountBase::jobData jd( QString::null, (*it).parent );
+  ImapAccountBase::jobData jd( QString(), (*it).parent );
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
@@ -1428,7 +1428,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       if ( ok && exists < count() ) {
         kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" <<
           exists << ") then folder (" << count() << "), so reload" << endl;
-        reallyGetFolder( QString::null );
+        reallyGetFolder( QString() );
         (*it).cdata.remove(0, pos);
         return;
       } else if ( ok ) {
@@ -1546,7 +1546,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   } else {
     // download complete message or part (attachment)
     if ( partSpecifier == "STRUCTURE" ) // hide from outside
-      partSpecifier = QString::null;
+      partSpecifier.clear();
 
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
     job->setParentFolder( this );
@@ -1801,7 +1801,7 @@ void KMFolderImap::setStatus(QList<int>& ids, const MessageStatus& status, bool 
     kdDebug(5006) << "Set status during folder listing, restarting listing." << endl;
     disconnect(this, SLOT(slotListFolderResult(KIO::Job *)));
     quiet( false );
-    reallyGetFolder( QString::null );
+    reallyGetFolder( QString() );
   }
 }
 
@@ -2010,7 +2010,7 @@ QList<ulong> KMFolderImap::splitSets(const QString uids)
   QList<ulong> uidlist;
 
   // ex: 1205,1204,1203,1202,1236:1238
-  QString buffer = QString::null;
+  QString buffer = QString();
   int setstart = -1;
   // iterate over the uids
   for (int i = 0; i < uids.length(); i++)

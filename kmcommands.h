@@ -398,7 +398,7 @@ class KDE_EXPORT KMReplyToCommand : public KMCommand
 
 public:
   KMReplyToCommand( QWidget *parent, KMMessage *msg,
-                    const QString &selection = QString::null );
+                    const QString &selection = QString() );
 
 private:
   virtual Result execute();
@@ -424,7 +424,7 @@ class KMReplyListCommand : public KMCommand
 
 public:
   KMReplyListCommand( QWidget *parent, KMMessage *msg,
-		      const QString &selection = QString::null );
+		      const QString &selection = QString() );
 
 private:
   virtual Result execute();
@@ -439,7 +439,7 @@ class KDE_EXPORT KMReplyToAllCommand : public KMCommand
 
 public:
   KMReplyToAllCommand( QWidget *parent, KMMessage *msg,
-		       const QString &selection = QString::null );
+		       const QString &selection = QString() );
 
 private:
   virtual Result execute();
@@ -454,7 +454,7 @@ class KDE_EXPORT KMReplyAuthorCommand : public KMCommand
 
 public:
   KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
-                        const QString &selection = QString::null );
+                        const QString &selection = QString() );
 
 private:
   virtual Result execute();

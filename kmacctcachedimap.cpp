@@ -252,7 +252,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + QString::number( id() ),
     folder->label(), // will be changed immediately in serverSync anyway
-    QString::null,
+    QString(),
     true, // can be cancelled
     useSSL() || useTLS() );
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
@@ -327,7 +327,7 @@ void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   QStringList::const_iterator it = oldPaths.begin();
   QStringList::const_iterator nameit = newNames.begin();
   for( ; it != oldPaths.end() && nameit != newNames.end(); ++it, ++nameit ) {
-    addRenamedFolder( *it, QString::null, *nameit );
+    addRenamedFolder( *it, QString(), *nameit );
   }
 }
 
@@ -358,7 +358,7 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
   QStringList strList;
   QList<QPointer<KMFolder> > folderList;
   kmkernel->dimapFolderMgr()->createFolderList( &strList, &folderList,
-						folder->folder()->child(), QString::null,
+						folder->folder()->child(), QString(),
 						false );
   QList<QPointer<KMFolder> >::Iterator it;
   mCountLastUnread = 0;
@@ -455,7 +455,7 @@ void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
   killAllJobs( abortConnection );
   if ( abortConnection ) {
     // If we were trying to connect, tell kmfoldercachedimap so that it moves on
-    emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
+    emit connectionResult( KIO::ERR_USER_CANCELED, QString() );
   }
 }
 
@@ -470,7 +470,7 @@ QString KMAcctCachedImap::renamedFolder( const QString& imapPath ) const
   QMap<QString, RenamedFolder>::ConstIterator renit = mRenamedFolders.find( imapPath );
   if ( renit != mRenamedFolders.end() )
     return (*renit).mNewName;
-  return QString::null;
+  return QString();
 }
 
 #include "kmacctcachedimap.moc"

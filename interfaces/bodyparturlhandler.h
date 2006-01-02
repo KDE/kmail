@@ -91,7 +91,7 @@ namespace KMail {
       /** Called when hovering over a link.
 
           @return a string to be shown in the status bar while
-	  hovering over this link or QString::null if the link was not
+	  hovering over this link or QString() if the link was not
 	  handled by this handler.
       */
       virtual QString statusBarMessage( BodyPart * part, const QString & path ) const = 0;
