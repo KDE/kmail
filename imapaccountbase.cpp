@@ -186,11 +186,11 @@ namespace KMail {
   void ImapAccountBase::readConfig( /*const*/ KConfig/*Base*/ & config ) {
     NetworkAccount::readConfig( config );
 
-    setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
-    setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
-    setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
-    setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
-    setListOnlyOpenFolders( config.readBoolEntry( "listOnlyOpenFolders", false ) );
+    setAutoExpunge( config.readEntry( "auto-expunge", QVariant( false ) ).toBool() );
+    setHiddenFolders( config.readEntry( "hidden-folders", QVariant( false ) ).toBool() );
+    setOnlySubscribedFolders( config.readEntry( "subscribed-folders", QVariant( false ) ).toBool() );
+    setLoadOnDemand( config.readEntry( "loadondemand", QVariant( false ) ).toBool() );
+    setListOnlyOpenFolders( config.readEntry( "listOnlyOpenFolders", QVariant( false ) ).toBool() );
     // read namespaces
     nsMap map;
     QStringList list = config.readListEntry( QString::number( PersonalNS ) );
@@ -958,7 +958,10 @@ namespace KMail {
   QString ImapAccountBase::jobData::htmlURL() const
   {
     KURL u(  url );
-    return u.htmlURL();
+#warning Port me!
+// I've changed htmlURL() to prettyURL() to make the file compile.
+// However I'm not sure this is really the correct replacement.
+    return u.prettyURL();
   }
 
   //-----------------------------------------------------------------------------

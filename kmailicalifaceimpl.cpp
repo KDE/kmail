@@ -1304,7 +1304,7 @@ void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges change
 KMailICalIfaceImpl::FolderInfo KMailICalIfaceImpl::readFolderInfo( const KMFolder * const folder ) const
 {
   KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
-  QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "unset" );
+  QString str = configGroup.readEntry( folder->idString() + "-storageFormat", QString( "unset" ) );
   FolderInfo info;
   if ( str == "unset" ) {
     info.mStorageFormat = globalStorageFormat();
@@ -1313,7 +1313,8 @@ KMailICalIfaceImpl::FolderInfo KMailICalIfaceImpl::readFolderInfo( const KMFolde
   } else {
     info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
   }
-  info.mChanges = (FolderChanges) configGroup.readNumEntry( folder->idString() + "-changes" );
+  info.mChanges = (FolderChanges) configGroup.readEntry( folder->idString() + "-changes",
+        QVariant( 0 ) ).toInt();
   return info;
 }
 

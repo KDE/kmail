@@ -247,27 +247,28 @@ void KMFilter::readConfig(KConfig* config)
       bApplyOnInbound = bool(sets.contains("check-mail"));
       bApplyOnOutbound = bool(sets.contains("send-mail"));
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
-      mApplicability = (AccountType)config->readNumEntry( "Applicability", ButImap );
+      mApplicability = (AccountType) config->readEntry( 
+            "Applicability", ButImap ).toInt();
     }
 
-    bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
-    bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", false);
-    QString shortcut( config->readEntry( "Shortcut" ) );
+    bStopProcessingHere = config->readEntry( "StopProcessingHere", QVariant( true ) ).toBool();
+    bConfigureShortcut = config->readEntry( "ConfigureShortcut", QVariant( false ) ).toBool();
+    QString shortcut( config->readEntry( "Shortcut", QString() ) );
     if ( !shortcut.isEmpty() ) {
       KShortcut sc( shortcut );
       setShortcut( sc );
     }
-    bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
+    bConfigureToolbar = config->readEntry( "ConfigureToolbar", QVariant( false ) ).toBool();
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
-    bAutoNaming = config->readBoolEntry("AutomaticName", false);
+    bAutoNaming = config->readEntry( "AutomaticName", QVariant( false ) ).toBool();
 
     int i, numActions;
     QString actName, argsName;
 
     mActions.clear();
 
-    numActions = config->readNumEntry("actions",0);
+    numActions = config->readEntry( "actions", 0 ).toInt();
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
       KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>").arg( mPattern.name() ) );
@@ -277,13 +278,14 @@ void KMFilter::readConfig(KConfig* config)
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
       // get the action description...
-      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( config->readEntry( actName ) );
+      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( 
+            config->readEntry( actName, QString() ) );
       if ( desc ) {
         //...create an instance...
         KMFilterAction *fa = desc->create();
         if ( fa ) {
           //...load it with it's parameter...
-          fa->argsFromString( config->readEntry( argsName ) );
+          fa->argsFromString( config->readEntry( argsName, QString() ) );
           //...check if it's emoty and...
           if ( !fa->isEmpty() )
             //...append it if it's not and...
@@ -294,8 +296,9 @@ void KMFilter::readConfig(KConfig* config)
         }
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
-                                  i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
-                                       .arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
+            i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
+            .arg( config->readEntry( actName, QString() ) )
+            .arg( mPattern.name() ) );
     }
 
     mAccounts = config->readIntListEntry( "accounts-set" );

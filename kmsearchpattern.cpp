@@ -131,9 +131,9 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const QByteArray &field2 = config->readEntry( field + cIdx ).toLatin1();
-  Function func2 = configValueToFunc( config->readEntry( func + cIdx ).toLatin1() );
-  const QString & contents2 = config->readEntry( contents + cIdx );
+  const QByteArray &field2 = config->readEntry( field + cIdx, QString() ).toLatin1();
+  Function func2 = configValueToFunc( config->readEntry( func + cIdx, QString() ).toLatin1() );
+  const QString & contents2 = config->readEntry( contents + cIdx, QString() );
 
   if ( field2 == "<To or Cc>" ) // backwards compat
     return KMSearchRule::createInstance( "<recipients>", func2, contents2 );
@@ -814,7 +814,7 @@ void KMSearchPattern::readConfig( const KConfig * config ) {
 
   mOperator = config->readEntry("operator") == "or" ? OpOr : OpAnd;
 
-  const int nRules = config->readNumEntry( "rules", 0 );
+  const int nRules = config->readEntry( "rules", QVariant( 0 ) ).toInt();
 
   for ( int i = 0 ; i < nRules ; i++ ) {
     KMSearchRule * r = KMSearchRule::createInstanceFromConfig( config, i );

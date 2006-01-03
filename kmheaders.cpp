@@ -402,18 +402,18 @@ void KMHeaders::readColorConfig (void)
   QColor c6=QColor(0,0x98,0);
   QColor c7=KGlobalSettings::alternateBackgroundColor();
 
-  if (!config.readBoolEntry("defaultColors",true)) {
-    mPaintInfo.colFore = config.readColorEntry("ForegroundColor",&c1);
-    mPaintInfo.colBack = config.readColorEntry("BackgroundColor",&c4);
+  if (!config.readEntry( "defaultColors", QVariant( true) ).toBool() ) {
+    mPaintInfo.colFore = config.readEntry( "ForegroundColor", QVariant( &c1 ) ).value<QColor>();
+    mPaintInfo.colBack = config.readEntry( "BackgroundColor", QVariant( &c4 ) ).value<QColor>();
     QPalette newPal = kapp->palette();
     newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
     newPal.setColor( QColorGroup::Text, mPaintInfo.colFore );
     setPalette( newPal );
-    mPaintInfo.colNew = config.readColorEntry("NewMessage",&c2);
-    mPaintInfo.colUnread = config.readColorEntry("UnreadMessage",&c3);
-    mPaintInfo.colFlag = config.readColorEntry("FlagMessage",&c5);
-    mPaintInfo.colTodo = config.readColorEntry("TodoMessage",&c6);
-    c7 = config.readColorEntry("AltBackgroundColor",&c7);
+    mPaintInfo.colNew = config.readEntry( "NewMessage", QVariant( &c2 ) ).value<QColor>();
+    mPaintInfo.colUnread = config.readEntry( "UnreadMessage", QVariant( &c3 ) ).value<QColor>();
+    mPaintInfo.colFlag = config.readEntry( "FlagMessage", QVariant( &c5 ) ).value<QColor>();
+    mPaintInfo.colTodo = config.readEntry( "TodoMessage", QVariant( &c6 ) ).value<QColor>();
+    c7 = config.readEntry( "AltBackgroundColor", QVariant( &c7 ) ).value<QColor>();
   }
   else {
     mPaintInfo.colFore = c1;
@@ -446,42 +446,55 @@ void KMHeaders::readConfig (void)
 
   { // area for config group "General"
     KConfigGroup config( KMKernel::config(), "General" );
-    bool show = config.readBoolEntry("showMessageSize");
+    bool show = config.readEntry( "showMessageSize", 
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_SIZE, show);
 
-    show = config.readBoolEntry("showAttachmentColumn");
+    show = config.readEntry( "showAttachmentColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_ATTACHMENT, show);
 
-    show = config.readBoolEntry("showImportantColumn");
+    show = config.readEntry( "showImportantColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_IMPORTANT, show);
 
-    show = config.readBoolEntry("showTodoColumn");
+    show = config.readEntry( "showTodoColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_TODO, show);
 
-    show = config.readBoolEntry("showSpamHamColumn");
+    show = config.readEntry( "showSpamHamColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_SPAM_HAM, show);
 
-    show = config.readBoolEntry("showWatchedIgnoredColumn");
+    show = config.readEntry( "showWatchedIgnoredColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_WATCHED_IGNORED, show);
 
-    show = config.readBoolEntry("showStatusColumn");
+    show = config.readEntry( "showStatusColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_STATUS, show);
 
-    show = config.readBoolEntry("showSignedColumn");
+    show = config.readEntry( "showSignedColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_SIGNED, show);
 
-    show = config.readBoolEntry("showCryptoColumn");
+    show = config.readEntry( "showCryptoColumn",
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_CRYPTO, show);
 
-    show = config.readBoolEntry("showReceiverColumn");
+    show = config.readEntry( "showReceiverColumn", 
+                    QVariant( false ) ).toBool();
     slotToggleColumn(KPaintInfo::COL_RECEIVER, show);
 
-    mPaintInfo.showCryptoIcons = config.readBoolEntry( "showCryptoIcons", false );
-    mPaintInfo.showAttachmentIcon = config.readBoolEntry( "showAttachmentIcon", true );
+    mPaintInfo.showCryptoIcons = config.readEntry( "showCryptoIcons",
+                    QVariant( false ) ).toBool();
+    mPaintInfo.showAttachmentIcon = config.readEntry( "showAttachmentIcon",
+                    QVariant( true ) ).toBool();
 
     KMime::DateFormatter::FormatType t =
-      (KMime::DateFormatter::FormatType) config.readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
-    mDate.setCustomFormat( config.readEntry("customDateFormat") );
+      (KMime::DateFormatter::FormatType) config.readEntry( "dateFormat", 
+      QVariant( KMime::DateFormatter::Fancy ) ).toInt();
+    mDate.setCustomFormat( config.readEntry( "customDateFormat", QString() ) );
     mDate.setFormat( t );
   }
 
@@ -490,17 +503,17 @@ void KMHeaders::readConfig (void)
   // Custom/System fonts
   { // area for config group "General"
     KConfigGroup config( KMKernel::config(), "Fonts" );
-    if (!(config.readBoolEntry("defaultFonts",true)))
+    if ( !( config.readEntry( "defaultFonts", QVariant( true ) ).toBool() ) )
     {
       QFont listFont( KGlobalSettings::generalFont() );
-      listFont = config.readFontEntry( "list-font", &listFont );
+      listFont = config.readEntry( "list-font", QVariant( &listFont ) ).value<QFont>();
       setFont( listFont );
-      mNewFont = config.readFontEntry( "list-new-font", &listFont );
-      mUnreadFont = config.readFontEntry( "list-unread-font", &listFont );
-      mImportantFont = config.readFontEntry( "list-important-font", &listFont );
-      mTodoFont = config.readFontEntry( "list-todo-font", &listFont );
+      mNewFont = config.readEntry( "list-new-font", QVariant( &listFont ) ).value<QFont>();
+      mUnreadFont = config.readEntry( "list-unread-font", QVariant( &listFont ) ).value<QFont>();
+      mImportantFont = config.readEntry( "list-important-font", QVariant( &listFont ) ).value<QFont>();
+      mTodoFont = config.readEntry( "list-todo-font", QVariant( &listFont ) ).value<QFont>();
       mDateFont = KGlobalSettings::fixedFont();
-      mDateFont = config.readFontEntry( "list-date-font", &mDateFont );
+      mDateFont = config.readEntry( "list-date-font", QVariant( &mDateFont ) ).value<QFont>();
     } else {
       mNewFont= mUnreadFont = mImportantFont = mDateFont = mTodoFont =
         KGlobalSettings::generalFont();
@@ -541,9 +554,9 @@ void KMHeaders::refreshNestedState(void)
   bool oldState = isThreaded();
   NestingPolicy oldNestPolicy = nestingPolicy;
   KConfigGroup config( KMKernel::config(), "Geometry" );
-  mNested = config.readBoolEntry( "nestedMessages", false );
+  mNested = config.readEntry( "nestedMessages", QVariant( false ) ).toBool();
 
-  nestingPolicy = (NestingPolicy)config.readNumEntry( "nestingPolicy", OpenUnread );
+  nestingPolicy = (NestingPolicy)config.readEntry( "nestingPolicy", QVariant( OpenUnread ) ).toInt();
   if ((nestingPolicy != oldNestPolicy) ||
     (oldState != isThreaded()))
   {
@@ -559,26 +572,26 @@ void KMHeaders::readFolderConfig (void)
   if (!mFolder) return;
 
   KConfigGroup config( KMKernel::config(), "Folder-" + mFolder->idString() );
-  mNestedOverride = config.readBoolEntry( "threadMessagesOverride", false );
-  mSortCol = config.readNumEntry("SortColumn", mSortCol /* inited to  date column */);
+  mNestedOverride = config.readEntry( "threadMessagesOverride", QVariant( false ) ).toBool();
+  mSortCol = config.readEntry( "SortColumn", QVariant( mSortCol /* inited to date column */) ).toInt();
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
 
-  mTopItem = config.readNumEntry("Top", 0);
-  mCurrentItem = config.readNumEntry("Current", 0);
-  mCurrentItemSerNum = config.readNumEntry("CurrentSerialNum", 0);
+  mTopItem = config.readEntry( "Top", QVariant( 0 ) ).toInt();
+  mCurrentItem = config.readEntry( "Current", QVariant( 0 ) ).toInt();
+  mCurrentItemSerNum = config.readEntry( "CurrentSerialNum", QVariant( 0 ) ).toInt();
 
-  mPaintInfo.orderOfArrival = config.readBoolEntry( "OrderOfArrival", true );
-  mPaintInfo.status = config.readBoolEntry( "Status", false );
+  mPaintInfo.orderOfArrival = config.readEntry( "OrderOfArrival", QVariant( true ) ).toBool();
+  mPaintInfo.status = config.readEntry( "Status", QVariant( false ) ).toBool();
 
   { //area for config group "Geometry"
     KConfigGroup config( KMKernel::config(), "Geometry" );
-    mNested = config.readBoolEntry( "nestedMessages", false );
-    nestingPolicy = (NestingPolicy)config.readNumEntry( "nestingPolicy", OpenUnread );
+    mNested = config.readEntry( "nestedMessages", QVariant( false ) ).toBool();
+    nestingPolicy = (NestingPolicy)config.readEntry( "nestingPolicy", QVariant( OpenUnread ) ).toInt();
   }
 
   setRootIsDecorated( nestingPolicy != AlwaysOpen && isThreaded() );
-  mSubjThreading = config.readBoolEntry( "threadMessagesBySubject", true );
+  mSubjThreading = config.readEntry( "threadMessagesBySubject", QVariant( true ) ).toBool();
 }
 
 
@@ -596,10 +609,10 @@ void KMHeaders::writeFolderConfig (void)
   ulong sernum = 0;
   if ( current && mFolder->getMsgBase( current->msgId() ) )
     sernum = mFolder->getMsgBase( current->msgId() )->getMsgSerNum();
-  config.writeEntry("CurrentSerialNum", sernum);
+  config.writeEntry("CurrentSerialNum", QVariant( (qulonglong) sernum ));
 
-  config.writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
-  config.writeEntry("Status", mPaintInfo.status);
+  config.writeEntry("OrderOfArrival", QVariant( mPaintInfo.orderOfArrival ) );
+  config.writeEntry("Status", QVariant( mPaintInfo.status ) );
 }
 
 //-----------------------------------------------------------------------------
