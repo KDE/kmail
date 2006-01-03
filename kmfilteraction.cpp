@@ -6,6 +6,7 @@
 
 #include "kmfilteraction.h"
 
+// other KMail headers:
 #include "kmcommands.h"
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
@@ -30,6 +31,7 @@ using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 
+// other KDE headers:
 #warning Port me!
 //#include <kregexp3.h>
 #include <ktempfile.h>
@@ -39,14 +41,11 @@ using KMail::RegExpLineEdit;
 #include <kaudioplayer.h>
 #include <kurlrequester.h>
 
-//Added by qt3to4:
+// Qt headers:
+#include <QTextCodec>
 #include <QTextDocument>
-#include <QHBoxLayout>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtextcodec.h>
-#include <qtimer.h>
 
+// other headers:
 #include <assert.h>
 
 

@@ -27,6 +27,7 @@ using KMail::AccountManager;
 #include <kkeybutton.h>
 #include <klistview.h>
 #include <kpushbutton.h>
+#include <kvbox.h>
 
 // Qt headers:
 #include <QCheckBox>
@@ -38,7 +39,6 @@ using KMail::AccountManager;
 
 // other headers:
 #include <assert.h>
-#include <kvbox.h>
 
 
 // What's this help texts
