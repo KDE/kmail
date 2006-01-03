@@ -28,23 +28,12 @@ using KMail::AccountManager;
 #include <klistview.h>
 #include <kpushbutton.h>
 
-// other Qt headers:
-#include <qcheckbox.h>
-#include <qcombobox.h>
-
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtabwidget.h>
-#include <qtooltip.h>
-#include <qvalidator.h>
-#include <QStackedWidget>
-//Added by qt3to4:
-#include <Q3ButtonGroup>
-#include <Q3Frame>
+// Qt headers:
+#include <QCheckBox>
 #include <QGridLayout>
-#include <QHBoxLayout>
-#include <QList>
+#include <QLabel>
 #include <QListWidget>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 
 // other headers:
@@ -204,7 +193,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
       mAccountList->addColumn( i18n("Account Name") );
       mAccountList->addColumn( i18n("Type") );
       mAccountList->setAllColumnsShowFocus( true );
-      mAccountList->setFrameStyle( Q3Frame::WinPanel + Q3Frame::Sunken );
+      mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
       mAccountList->setSorting( -1 );
       gl->addMultiCellWidget( mAccountList, 0, 3, 1, 3 );
 
