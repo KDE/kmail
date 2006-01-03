@@ -73,7 +73,7 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
   QByteArray currentText = rule()->field();
   initFieldList( headersOnly, mAbsoluteDates );
-  
+
   mRuleField->clear();
   mRuleField->insertStringList( mFilterFieldList );
   mRuleField->setMaxCount( mRuleField->count() );

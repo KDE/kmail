@@ -82,10 +82,10 @@ void KMTransportInfo::readConfig(int id)
   precommand = config.readPathEntry("precommand");
   encryption = config.readEntry("encryption");
   authType = config.readEntry("authtype");
-  auth = config.readBoolEntry("auth");
-  mStorePasswd = config.readBoolEntry("storepass");
-  specifyHostname = config.readBoolEntry("specifyHostname", false);
-  localHostname = config.readEntry("localHostname");
+  auth = config.readEntry("auth", QVariant( false ) ).toBool();
+  mStorePasswd = config.readEntry("storepass", QVariant( false ) ).toBool();
+  specifyHostname = config.readEntry("specifyHostname", QVariant( false ) ).toBool();
+  localHostname = config.readEntry("localHostname", QVariant( false ) ).toBool();
 
   if ( !storePasswd() )
     return;
@@ -174,7 +174,7 @@ void KMTransportInfo::writeConfig(int id)
 int KMTransportInfo::findTransport(const QString &name)
 {
   KConfigGroup config( KMKernel::config(), "General" );
-  int numTransports = config.readNumEntry("transports", 0);
+  int numTransports = config.readEntry("transports", QVariant( 0 ) ).toInt();
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );
@@ -188,7 +188,7 @@ QStringList KMTransportInfo::availableTransports()
 {
   QStringList result;
   KConfigGroup config( KMKernel::config(), "General" );
-  int numTransports = config.readNumEntry("transports", 0);
+  int numTransports = config.readEntry("transports", QVariant( 0 ) ).toInt();
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroup config( KMKernel::config(), "Transport " + QString::number(i) );

@@ -421,10 +421,13 @@ void KMFolderTree::readColorConfig (void)
   QColor c2=QColor("blue");
   QColor c4=QColor(kapp->palette().active().base());
 
-  if (!conf.readBoolEntry("defaultColors",TRUE)) {
-    mPaintInfo.colFore = conf.readColorEntry("ForegroundColor",&c1);
-    mPaintInfo.colUnread = conf.readColorEntry("UnreadMessage",&c2);
-    mPaintInfo.colBack = conf.readColorEntry("BackgroundColor",&c4);
+  if (!conf.readEntry( "defaultColors", QVariant( true ) ).toBool() ) {
+    mPaintInfo.colFore = conf.readEntry( "ForegroundColor",
+                                        QVariant( &c1 ) ).value<QColor>();
+    mPaintInfo.colUnread = conf.readEntry( "UnreadMessage",
+                                        QVariant( &c2 ) ).value<QColor>();
+    mPaintInfo.colBack = conf.readEntry( "BackgroundColor",
+                                        QVariant( &c4 ) ).value<QColor>();
   }
   else {
     mPaintInfo.colFore = c1;
@@ -445,9 +448,10 @@ void KMFolderTree::readConfig (void)
   // Custom/Ssystem font support
   {
     KConfigGroup conf( KMKernel::config(), "Fonts" );
-    if (!conf.readBoolEntry("defaultFonts",TRUE)) {
+    if (!conf.readEntry( "defaultFonts", QVariant( true ) ).toBool() ) {
       QFont folderFont( KGlobalSettings::generalFont() );
-      setFont(conf.readFontEntry("folder-font", &folderFont));
+      setFont(conf.readEntry("folder-font",
+          QVariant( &folderFont ) ).value<QFont>() );
     }
     else
       setFont(KGlobalSettings::generalFont());
@@ -1208,7 +1212,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   }
   KConfigGroup config( KMKernel::config(), name );
 
-  return config.readBoolEntry("isOpen", false);
+  return config.readEntry( "isOpen", QVariant( false ) ).toBool();
 }
 
 //-----------------------------------------------------------------------------

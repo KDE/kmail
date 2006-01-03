@@ -4,12 +4,12 @@
  * KMail is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as
  * published by the Free Software Foundation.
- * 
+ *
  * KMail is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -90,7 +90,7 @@ KMMsgIndex::KMMsgIndex( QObject* parent ):
 	//mSyncTimer( new QTimer( this ) ),
 	mSlowDown( false ) {
 	kdDebug( 5006 ) << "KMMsgIndex::KMMsgIndex()" << endl;
-	
+
 	connect( kmkernel->folderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
 	connect( kmkernel->folderMgr(), SIGNAL( msgAdded( KMFolder*, quint32 ) ), SLOT( slotAddMessage( KMFolder*, quint32 ) ) );
 	connect( kmkernel->dimapFolderMgr(), SIGNAL( msgRemoved( KMFolder*, quint32 ) ), SLOT( slotRemoveMessage( KMFolder*, quint32 ) ) );
@@ -160,13 +160,13 @@ bool KMMsgIndex::isIndexable( KMFolder* folder ) const {
 bool KMMsgIndex::isIndexed( KMFolder* folder ) const {
 	if ( !isIndexable( folder ) ) return false;
 	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
-	return !config.readBoolEntry( folderIndexDisabledKey, false );
+	return !config.readEntry( folderIndexDisabledKey, QVariant( false ) ).toBool();
 }
 
 void KMMsgIndex::setEnabled( bool e ) {
 	kdDebug( 5006 ) << "KMMsgIndex::setEnabled( " << e << " )" << endl;
 	KConfigGroup config( KMKernel::config(), "text-index" );
-	if ( config.readBoolEntry( "enabled", !e ) == e ) return;
+	if ( config.readEntry( "enabled", QVariant( !e ) ).toBool() == e ) return;
 	config.writeEntry( "enabled", e );
 	if ( e ) {
 		switch ( mState ) {
@@ -190,7 +190,8 @@ void KMMsgIndex::setEnabled( bool e ) {
 
 void KMMsgIndex::setIndexingEnabled( KMFolder* folder, bool e ) {
 	KConfigGroup config( KMKernel::config(), "Folder-" + folder->idString() );
-	if ( config.readBoolEntry( folderIndexDisabledKey, e ) == e ) return; // nothing to do
+	if ( config.readEntry( folderIndexDisabledKey, QVariant( e ) ).toBool() == e )
+		return; // nothing to do
 	config.writeEntry( folderIndexDisabledKey, e );
 
 	if ( e ) {
@@ -224,7 +225,7 @@ void KMMsgIndex::setIndexingEnabled( KMFolder* folder, bool e ) {
 				//else  fall-through
 			case s_idle:
 			case s_processing:
-				
+
 			case s_error:
 			case s_disabled:
 				// nothing can be done
@@ -326,7 +327,7 @@ void KMMsgIndex::act() {
 		}
 		const KMMsgDict* dict = KMMsgDict::instance();
 		KConfigGroup config( KMKernel::config(), "Folder-" + f->idString() );
-		if ( config.readBoolEntry( folderIndexDisabledKey, true ) ) {
+		if ( config.readEntry( folderIndexDisabledKey, QVariant( true ) ).toBool() ) {
 			for ( int i = 0; i < f->count(); ++i ) {
 				mPendingMsgs.push_back( dict->getMsgSerNum( f, i ) );
 			}
@@ -364,7 +365,7 @@ void KMMsgIndex::continueCreation() {
 
 void KMMsgIndex::create() {
 	kdDebug( 5006 ) << "KMMsgIndex::create()" << endl;
-	
+
 #ifdef HAVE_INDEXLIB
 	if ( !QFileInfo( mIndexPath ).exists() ) {
 		::mkdir( mIndexPath, S_IRWXU );
@@ -425,7 +426,7 @@ bool KMMsgIndex::startQuery( KMSearch* s ) {
 //}
 //
 //void KMMsgIndex::finishSync() {
-//	
+//
 //}
 
 void KMMsgIndex::removeSearch( QObject* destroyed ) {
@@ -480,7 +481,7 @@ bool KMMsgIndex::canHandleQuery( const KMSearchPattern* pat ) const {
 void KMMsgIndex::slotAddMessage( KMFolder* folder, quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::slotAddMessage( . , " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
-	
+
 	if ( mState == s_creating ) mAddedMsgs.push_back( serNum );
 	else mPendingMsgs.push_back( serNum );
 
@@ -507,7 +508,7 @@ void KMMsgIndex::scheduleAction() {
 void KMMsgIndex::removeMessage( quint32 serNum ) {
 	kdDebug( 5006 ) << "KMMsgIndex::removeMessage( " << serNum << " )" << endl;
 	if ( mState == s_error || mState == s_disabled ) return;
-	
+
 #ifdef HAVE_INDEXLIB
 	mIndex->remove_doc( QString::number( serNum ).toLatin1() );
 	++mMaintenanceCount;

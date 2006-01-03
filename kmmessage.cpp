@@ -1351,7 +1351,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
   // default:
-  int mode = mdnConfig.readNumEntry( "default-policy", 0 );
+  int mode = mdnConfig.readEntry( "default-policy", QVariant( 0 ) ).toInt();
   if ( !mode || mode < 0 || mode > 3 ) {
     // early out for ignore:
     setMDNSentState( KMMsgMDNIgnore );
@@ -1476,7 +1476,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   receipt->addBodyPart( &secondMsgPart );
 
   // message/rfc822 or text/rfc822-headers body part:
-  int num = mdnConfig.readNumEntry( "quote-message", 0 );
+  int num = mdnConfig.readEntry( "quote-message", QVariant( 0 ) ).toInt();
   if ( num < 0 || num > 2 ) num = 0;
   MDN::ReturnContent returnContent = static_cast<MDN::ReturnContent>( num );
 
@@ -1706,7 +1706,8 @@ QString KMMessage::dateStr() const
   //kdDebug(5006)<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
 
   return KMime::DateFormatter::formatDate(
-      static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
+      static_cast<KMime::DateFormatter::FormatType>(general.readEntry( "dateFormat",
+          QVariant( KMime::DateFormatter::Fancy ) ).toInt()),
       unixTime, general.readEntry( "customDateFormat" ));
 }
 
@@ -3120,7 +3121,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   QString msgIdSuffix;
   KConfigGroup general( KMKernel::config(), "General" );
 
-  if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
+  if( general.readEntry( "useCustomMessageIdSuffix", QVariant (false ) ).toBool() )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix" );
 
   if( !msgIdSuffix.isEmpty() )
@@ -3765,7 +3766,7 @@ void KMMessage::readConfig()
 
   KConfigGroup config( KMKernel::config(), "General" );
 
-  int languageNr = config.readNumEntry("reply-current-language",0);
+  int languageNr = config.readEntry( "reply-current-language", QVariant( 0 ) ).toInt();
 
   { // area for config group "KMMessage #n"
     KConfigGroup config( KMKernel::config(), QString("KMMessage #%1").arg(languageNr) );
