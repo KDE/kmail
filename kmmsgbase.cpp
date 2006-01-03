@@ -1079,11 +1079,13 @@ void KMMsgBase::readConfig()
   sReplySubjPrefixes = composerGroup.readListEntry("reply-prefixes", ',');
   if (sReplySubjPrefixes.isEmpty())
     sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
-  sReplaceSubjPrefix = composerGroup.readBoolEntry("replace-reply-prefix", true);
+  sReplaceSubjPrefix =
+      composerGroup.readEntry( "replace-reply-prefix", QVariant( true ) ).toBool();
   sForwardSubjPrefixes = composerGroup.readListEntry("forward-prefixes", ',');
   if (sForwardSubjPrefixes.isEmpty())
     sForwardSubjPrefixes << "Fwd:" << "FW:";
-  sReplaceForwSubjPrefix = composerGroup.readBoolEntry("replace-forward-prefix", true);
+  sReplaceForwSubjPrefix =
+      composerGroup.readEntry( "replace-forward-prefix", QVariant( true ) ).toBool();
 }
 
 //-----------------------------------------------------------------------------

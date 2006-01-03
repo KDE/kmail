@@ -145,9 +145,9 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
   mFolder = 0;
   folderName = config.readEntry("Folder");
-  setCheckInterval(config.readNumEntry("check-interval", 0));
+  setCheckInterval(config.readEntry("check-interval", QVariant( 0 ) ).toInt() );
   setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
-  setCheckExclude(config.readBoolEntry("check-exclude", false));
+  setCheckExclude(config.readEntry("check-exclude", QVariant( false ) ).toBool() );
   setPrecommand(config.readPathEntry("precommand"));
 
   if (!folderName.isEmpty())
@@ -179,7 +179,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg)
 
   KConfigGroup cfg( KMKernel::config(), "General" );
 
-  sendReceipts = cfg.readBoolEntry("send-receipts", false);
+  sendReceipts = cfg.readEntry("send-receipts", QVariant( false ) ).toBool();
   if (!sendReceipts) return;
 
   KMMessage *newMsg = aMsg->createDeliveryReceipt();

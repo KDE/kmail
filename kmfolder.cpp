@@ -152,32 +152,34 @@ KMFolder::~KMFolder()
 
 void KMFolder::readConfig( KConfig* config )
 {
-  if ( !config->readEntry("SystemLabel").isEmpty() )
-    mSystemLabel = config->readEntry("SystemLabel");
-  mExpireMessages = config->readBoolEntry("ExpireMessages", false);
-  mReadExpireAge = config->readNumEntry("ReadExpireAge", 3);
-  mReadExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
-  mUnreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
-  mUnreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
-  mExpireAction = config->readEntry("ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
-  mExpireToFolderId = config->readEntry("ExpireToFolder");
+  if ( !config->readEntry( "SystemLabel" ).isEmpty() )
+    mSystemLabel = config->readEntry( "SystemLabel" );
+  mExpireMessages = config->readEntry( "ExpireMessages", QVariant( false ) ).toBool();
+  mReadExpireAge = config->readEntry( "ReadExpireAge", QVariant( 3 ) ).toInt();
+  mReadExpireUnits = (ExpireUnits)
+      config->readEntry( "ReadExpireUnits", QVariant( expireMonths ) ).toInt();
+  mUnreadExpireAge = config->readEntry( "UnreadExpireAge", QVariant( 12 ) ).toInt();
+  mUnreadExpireUnits = (ExpireUnits)
+      config->readEntry( "UnreadExpireUnits", QVariant( expireNever ) ).toInt();
+  mExpireAction = config->readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
+  mExpireToFolderId = config->readEntry( "ExpireToFolder" );
 
-  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
-  mNormalIconPath = config->readEntry("NormalIconPath" );
-  mUnreadIconPath = config->readEntry("UnreadIconPath" );
+  mUseCustomIcons = config->readEntry( "UseCustomIcons", QVariant( false ) ).toBool();
+  mNormalIconPath = config->readEntry( "NormalIconPath" );
+  mUnreadIconPath = config->readEntry( "UnreadIconPath" );
 
-  mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
+  mMailingListEnabled = config->readEntry( "MailingListEnabled", QVariant( false ) ).toBool();
   mMailingList.readConfig( config );
 
-  mIdentity = config->readUnsignedNumEntry("Identity",0);
+  mIdentity = config->readEntry("Identity", QVariant( (uint) 0 ) ).toUInt();
 
-  setUserWhoField( config->readEntry("WhoField"), false );
-  uint savedId = config->readUnsignedNumEntry("Id", 0);
+  setUserWhoField( config->readEntry( "WhoField" ), false );
+  uint savedId = config->readEntry( "Id" , QVariant( (uint) 0 ) ).toUInt();
   // make sure that we don't overwrite a valid id
   if ( savedId != 0 && mId == 0 )
     mId = savedId;
-  mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
-  mIgnoreNewMail = config->readBoolEntry( "IgnoreNewMail", false );
+  mPutRepliesInSameFolder = config->readEntry( "PutRepliesInSameFolder", QVariant( false ) ).toBool();
+  mIgnoreNewMail = config->readEntry( "IgnoreNewMail", QVariant( false ) ).toBool();
 
   if ( mUseCustomIcons )
     emit iconsChanged();

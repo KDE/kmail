@@ -60,7 +60,7 @@ void KMFolderMgr::expireAll() {
   KConfigGroup   group(config, "General");
   int                 ret = KMessageBox::Continue;
 
-  if (group.readBoolEntry("warn-before-expire", true)) {
+  if ( group.readEntry( "warn-before-expire", QVariant( true ) ).toBool() ) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
 			 i18n("Are you sure you want to expire old messages?"),
 			 i18n("Expire Old Messages?"), i18n("Expire"));
@@ -294,7 +294,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
       KConfigGroup group(config, "General");
       if (config->hasKey("default-mailbox-format"))
       {
-        if (group.readNumEntry("default-mailbox-format", 1) == 0)
+        if (group.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt() == 0)
           type = KMFolderTypeMbox;
 
       }

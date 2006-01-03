@@ -106,7 +106,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
     {
       KConfig *config = KMKernel::config();
       KConfigGroup group(config, "General");
-      int type = group.readNumEntry("default-mailbox-format", 1);
+      int type = group.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
       if ( type < 0 || type > 1 ) type = 1;
       mFormatComboBox->setCurrentItem( type );
     }
@@ -272,7 +272,7 @@ void NewFolderDialog::slotOk()
       newStorage->initializeFrom( selectedStorage );
       if ( mNamespacesComboBox ) {
         // create folder with namespace
-        QString path = selectedStorage->account()->createImapPath( 
+        QString path = selectedStorage->account()->createImapPath(
             mNamespacesComboBox->currentText(), fldName );
         newStorage->setImapPathForCreation( path );
       }

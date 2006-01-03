@@ -86,7 +86,7 @@ void AccountManager::readConfig(void)
   mAcctList.clear();
 
   KConfigGroup general(config, "General");
-  num = general.readNumEntry("accounts", 0);
+  num = general.readEntry( "accounts", QVariant( 0 ) ).toInt();
 
   for (i=1; i<=num; i++)
   {
@@ -97,7 +97,7 @@ void AccountManager::readConfig(void)
     if (acctType == "advanced pop" || acctType == "experimental pop")
       acctType = "pop";
     acctName = group.readEntry("Name");
-    id = config->readUnsignedNumEntry("Id", 0);
+    id = config->readEntry( "Id", QVariant( (uint) 0 ) ).toUInt();
     if (acctName.isEmpty()) acctName = i18n("Account %1").arg(i);
     acct = create(acctType, acctName, id);
     if (!acct) continue;

@@ -125,7 +125,7 @@ void AccountWizard::start( KMKernel *kernel, QWidget *parent )
 {
   KConfigGroup wizardConfig( KMKernel::config(), "AccountWizard" );
 
-  if ( wizardConfig.readBoolEntry( "ShowOnStartup", true ) ) {
+  if ( wizardConfig.readEntry( "ShowOnStartup", QVariant( true ) ).toBool() ) {
     AccountWizard wizard( kernel, parent );
     int result = wizard.exec();
     if ( result == QDialog::Accepted ) {
@@ -372,7 +372,7 @@ void AccountWizard::createTransport()
   // create outgoing account
   KConfigGroup general( KMKernel::config(), "General" );
 
-  uint numTransports = general.readNumEntry( "transports", 0 );
+  uint numTransports = general.readEntry( "transports", QVariant( 0 ) ).toInt();
 
   for ( uint i = 1 ; i <= numTransports ; i++ ) {
     KMTransportInfo *info = new KMTransportInfo();

@@ -339,7 +339,7 @@ namespace KMail {
 
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new FolderRequester( tab, 
+    mFccCombo = new FolderRequester( tab,
         kmkernel->getKMMainWidget()->folderTree() );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
@@ -381,7 +381,7 @@ namespace KMail {
 
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
-      resize( geometry.readSizeEntry( "Identity Dialog size" ) );
+      resize( geometry.readEntry( "Identity Dialog size", QVariant( QSize() ) ).toSize() );
     mNameEdit->setFocus();
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
@@ -450,13 +450,13 @@ bool IdentityDialog::validateAddresses( const QString & addresses )
                       "</p></qt>" );
     KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
     return false;
-  } 
+  }
   return true;
 }
 
 void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().trimmed();
- 
+
     // Validate email addresses
     if ( !isValidSimpleEmailAddress( email )) {
       QString errorMsg( simpleEmailAddressErrorMsg());
@@ -467,7 +467,7 @@ void IdentityDialog::slotOk() {
     if ( !validateAddresses( mReplyToEdit->text().trimmed() ) ) {
       return;
     }
- 
+
     if ( !validateAddresses( mBccEdit->text().trimmed() ) ) {
       return;
     }

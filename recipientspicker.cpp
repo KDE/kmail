@@ -658,11 +658,11 @@ void RecipientsPicker::readConfig()
 {
   KConfig *cfg = KGlobal::config();
   cfg->setGroup( "RecipientsPicker" );
-  QSize size = cfg->readSizeEntry( "Size" );
+  QSize size = cfg->readEntry( "Size", QVariant( QSize() ) ).toSize();
   if ( !size.isEmpty() ) {
     resize( size );
   }
-  int currentCollection = cfg->readNumEntry( "CurrentCollection", -1 );
+  int currentCollection = cfg->readEntry( "CurrentCollection", QVariant( -1 ) ).toInt();
   if ( currentCollection >= 0 &&
        currentCollection < mCollectionCombo->count() ) {
     mCollectionCombo->setCurrentItem( currentCollection );

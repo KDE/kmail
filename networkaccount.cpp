@@ -45,7 +45,7 @@ using KWallet::Wallet;
 
 namespace KMail {
 
-    
+
  // for restricting number of concurrent connections to the same server
   static QMap<QString, int> s_serverConnections;
 
@@ -152,7 +152,7 @@ namespace KMail {
 
     setLogin( config.readEntry( "login" ) );
 
-    if ( config.readNumEntry( "store-passwd", false ) ) { // ### s/Num/Bool/
+    if ( config.readEntry( "store-passwd", QVariant( false ) ).toBool() ) {
       mStorePasswd = true;
       QString encpasswd = config.readEntry( "pass" );
       if ( encpasswd.isEmpty() ) {
@@ -184,13 +184,13 @@ namespace KMail {
 
     setHost( config.readEntry( "host" ) );
 
-    unsigned int port = config.readUnsignedNumEntry( "port", defaultPort() );
+    unsigned int port = config.readEntry( "port", QVariant( (uint) defaultPort() ) ).toUInt();
     if ( port > USHRT_MAX ) port = defaultPort();
     setPort( port );
 
     setAuth( config.readEntry( "auth", "*" ) );
-    setUseSSL( config.readBoolEntry( "use-ssl", false ) );
-    setUseTLS( config.readBoolEntry( "use-tls", false ) );
+    setUseSSL( config.readEntry( "use-ssl", QVariant( false ) ).toBool() );
+    setUseTLS( config.readEntry( "use-tls", QVariant( false ) ).toBool() );
 
     mSieveConfig.readConfig( config );
   }
@@ -337,7 +337,7 @@ namespace KMail {
             }
     }
 }
-  
+
   bool NetworkAccount::mailCheckCanProceed() const
   {
       bool offlineMode = KMKernel::isOffline();
@@ -353,7 +353,7 @@ namespace KMail {
               && s_serverConnections[host()] >= GlobalSettings::self()->maxConnectionsPerHost();
       kdDebug(5006) << "connection limit reached: "
               << connectionLimitForHostReached << endl;
-      
+
       return ( !connectionLimitForHostReached && !offlineMode );
   }
 

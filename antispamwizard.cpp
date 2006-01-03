@@ -701,11 +701,11 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // read the configuration from the global config file
   mConfig->setReadDefaults( true );
   KConfigGroup general( mConfig, "General" );
-  int registeredTools = general.readNumEntry( "tools", 0 );
+  int registeredTools = general.readEntry( "tools", QVariant( 0 ) ).toInt();
   for (int i = 1; i <= registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    if( !toolConfig.readBoolEntry( "HeadersOnly", false ) )
+    if( !toolConfig.readEntry( "HeadersOnly", QVariant( false ) ).toBool() )
       mToolList.append( readToolConfig( toolConfig ) );
   }
 
@@ -713,11 +713,11 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // and merge newer config data
   mConfig->setReadDefaults( false );
   KConfigGroup user_general( mConfig, "General" );
-  int user_registeredTools = user_general.readNumEntry( "tools", 0 );
+  int user_registeredTools = user_general.readEntry( "tools", QVariant( 0 ) ).toInt();
   for (int i = 1; i <= user_registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    if( !toolConfig.readBoolEntry( "HeadersOnly", false ) )
+    if( !toolConfig.readEntry( "HeadersOnly", QVariant( false ) ).toBool() )
       mergeToolConfig( readToolConfig( toolConfig ) );
   }
   // Make sure to have add least one tool listed even when the
@@ -735,12 +735,12 @@ AntiSpamWizard::SpamToolConfig
     AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
 {
   QString id = configGroup.readEntry( "Ident" );
-  int version = configGroup.readNumEntry( "Version" );
+  int version = configGroup.readEntry( "Version", QVariant( 0 ) ).toInt();
 #ifndef NDEBUG
   kdDebug(5006) << "Found predefined tool: " << id << endl;
   kdDebug(5006) << "With config version  : " << version << endl;
 #endif
-  int prio = configGroup.readNumEntry( "Priority", 1 );
+  int prio = configGroup.readEntry( "Priority", QVariant( 1 ) ).toInt();
   QString name = configGroup.readEntry( "VisibleName" );
   QString executable = configGroup.readEntry( "Executable" );
   QString url = configGroup.readEntry( "URL" );
@@ -752,10 +752,10 @@ AntiSpamWizard::SpamToolConfig
   QString pattern = configGroup.readEntry( "DetectionPattern" );
   QString pattern2 = configGroup.readEntry( "DetectionPattern2" );
   QString serverPattern = configGroup.readEntry( "ServerPattern" );
-  bool detectionOnly = configGroup.readBoolEntry( "DetectionOnly", false );
-  bool useRegExp = configGroup.readBoolEntry( "UseRegExp" );
-  bool supportsBayes = configGroup.readBoolEntry( "SupportsBayes", false );
-  bool supportsUnsure = configGroup.readBoolEntry( "SupportsUnsure", false );
+  bool detectionOnly = configGroup.readEntry( "DetectionOnly", QVariant( false ) ).toBool();
+  bool useRegExp = configGroup.readEntry( "UseRegExp", QVariant( false ) ).toBool();
+  bool supportsBayes = configGroup.readEntry( "SupportsBayes", QVariant( false ) ).toBool();
+  bool supportsUnsure = configGroup.readEntry( "SupportsUnsure", QVariant( false ) ).toBool();
   return SpamToolConfig( id, version, prio, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd,
                          header, pattern, pattern2, serverPattern,

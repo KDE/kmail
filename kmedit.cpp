@@ -240,11 +240,11 @@ void KMEdit::initializeAutoSpellChecking()
 
   QColor c = Qt::red;
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
-  QColor col1 = readerConfig.readColorEntry( "ForegroundColor", &defaultForeground );
-  QColor col2 = readerConfig.readColorEntry( "QuotedText3", &defaultColor3 );
-  QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
-  QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
-  QColor misspelled = readerConfig.readColorEntry( "MisspelledColor", &c );
+  QColor col1 = readerConfig.readEntry( "ForegroundColor", QVariant( &defaultForeground ) ).value<QColor>();
+  QColor col2 = readerConfig.readEntry( "QuotedText3", QVariant( &defaultColor3 ) ).value<QColor>();
+  QColor col3 = readerConfig.readEntry( "QuotedText2", QVariant( &defaultColor2 ) ).value<QColor>();
+  QColor col4 = readerConfig.readEntry( "QuotedText1", QVariant( &defaultColor1 ) ).value<QColor>();
+  QColor misspelled = readerConfig.readEntry( "MisspelledColor", QVariant( &c ) ).value<QColor>();
   mSpellChecker = new KDictSpellingHighlighter( this, /*active*/ true,
                                                 /*autoEnabled*/ false,
                                                 /*spellColor*/ misspelled,

@@ -116,7 +116,7 @@ bool KMSearch::read(QString location)
     mSearchPattern->readConfig( &config );
     QString rootString = config.readEntry( "Base" );
     mRoot = kmkernel->findFolderById( rootString );
-    mRecursive = config.readBoolEntry( "Recursive" );
+    mRecursive = config.readEntry( "Recursive", QVariant( false ) ).toBool();
     return true;
 }
 
@@ -944,18 +944,18 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, quint32 serNum)
       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
     } else {
-      connect( folder->storage(), 
+      connect( folder->storage(),
               SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32,
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
     }
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
-                                               quint32 serNum, 
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
+                                               quint32 serNum,
                                                const KMSearchPattern* pattern,
                                                bool matches )
 {
@@ -1107,10 +1107,10 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
       unsigned int count = mFoldersCurrentlyBeingSearched[aFolder];
       mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
     } else {
-      connect( aFolder->storage(), 
+      connect( aFolder->storage(),
               SIGNAL( searchDone( KMFolder*, quint32, const KMSearchPattern*, bool ) ),
               this,
-              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32, 
+              SLOT( slotSearchExamineMsgDone( KMFolder*, quint32,
                       const KMSearchPattern*, bool ) ) );
       mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
     }

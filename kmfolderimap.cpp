@@ -173,7 +173,7 @@ void KMFolderImap::readConfig()
 {
   KConfig* config = KMKernel::config();
   KConfigGroup group(config, "Folder-" + folder()->idString());
-  mCheckMail = group.readBoolEntry("checkmail", true);
+  mCheckMail = group.readEntry( "checkmail", QVariant( true ) ).toBool();
 
   mUidValidity = group.readEntry("UidValidity");
   if ( mImapPath.isEmpty() ) {
@@ -184,8 +184,8 @@ void KMFolderImap::readConfig()
     folder()->setSystemFolder( true );
     folder()->setLabel( i18n("inbox") );
   }
-  mNoContent = group.readBoolEntry("NoContent", FALSE);
-  mReadOnly = group.readBoolEntry("ReadOnly", FALSE);
+  mNoContent = group.readEntry( "NoContent", QVariant( false ) ).toBool();
+  mReadOnly = group.readEntry( "ReadOnly", QVariant( false ) ).toBool();
 
   KMFolderMbox::readConfig();
 }

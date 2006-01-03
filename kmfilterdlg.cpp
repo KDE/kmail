@@ -331,7 +331,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
   const char * configKey
     = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
   if ( geometry.hasKey( configKey ) )
-    resize( geometry.readSizeEntry( configKey ) );
+    resize( geometry.readEntry( configKey, QVariant( QSize() ) ).toSize() );
   else
     adjustSize();
 
@@ -847,8 +847,8 @@ void KMFilterListBox::slotDelete()
     mListWidget->setCurrentRow( count - 1 );
 
   // work around a problem when deleting the first item in a QListWidget:
-  // after takeItem, slotSelectionChanged is emitted with 1, but the row 0 
-  // remains selected and another selectCurrentRow(0) does not trigger the 
+  // after takeItem, slotSelectionChanged is emitted with 1, but the row 0
+  // remains selected and another selectCurrentRow(0) does not trigger the
   // selectionChanged signal
   // (qt-copy as of 2006-12-22 / gungl)
   if ( oIdxSelItem == 0 )

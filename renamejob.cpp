@@ -100,7 +100,7 @@ void RenameJob::execute()
     // get the default mailbox type
     KConfig *config = KMKernel::config();
     KConfigGroup group(config, "General");
-    int deftype = group.readNumEntry("default-mailbox-format", 1);
+    int deftype = group.readEntry("default-mailbox-format", QVariant( 1 ) ).toInt();
     if ( deftype < 0 || deftype > 1 ) deftype = 1;
 
     // the type of the new folder
@@ -129,7 +129,7 @@ void RenameJob::execute()
           this, SLOT( slotMoveMessages() ) );
       KMFolderImap* imapFolder =
         static_cast<KMFolderImap*>(mNewParent->owner()->storage());
-      imapFolder->createFolder( mNewName, QString(), false ); 
+      imapFolder->createFolder( mNewName, QString(), false );
     } else if ( mNewParent->type() == KMDImapDir )
     {
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mNewFolder->storage());

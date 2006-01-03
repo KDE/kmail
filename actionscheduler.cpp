@@ -233,7 +233,7 @@ void ActionScheduler::execFilters(KMMsgBase* msgBase)
 void ActionScheduler::execFilters(quint32 serNum)
 {
   if (mResult != ResultOk) {
-      if ((mResult != ResultCriticalError) && 
+      if ((mResult != ResultCriticalError) &&
 	  !mExecuting && !mExecutingLock && !mFetchExecuting) {
 	  mResult = ResultOk; // Recoverable error
 	  if (!mFetchSerNums.isEmpty()) {
@@ -422,10 +422,10 @@ void ActionScheduler::messageFetched( KMMessage *msg )
       fetchMessageTimer->start( 0, true );
       return;
   }
-	
+
   mFetchSerNums.remove( msg->getMsgSerNum() );
 
-  // Note: This may not be necessary. What about when it's time to 
+  // Note: This may not be necessary. What about when it's time to
   //       delete the original message?
   //       Is the new serial number being set correctly then?
   if ((mSet & KMFilterMgr::Explicit) ||
@@ -530,7 +530,7 @@ kdDebug(5006) << debug() << endl;
   bool mdnEnabled = true;
   {
     KConfigGroup mdnConfig( kmkernel->config(), "MDN" );
-    int mode = mdnConfig.readNumEntry( "default-policy", 0 );
+    int mode = mdnConfig.readEntry( "default-policy", QVariant( 0 ) ).toInt();
     if (!mode || mode < 0 || mode > 3)
       mdnEnabled = false;
   }
@@ -586,7 +586,7 @@ void ActionScheduler::filterMessage()
     }
     if (mAlwaysMatch || (*mFilterIt)->pattern()->matches( *mMessageIt )) {
       if ( FilterLog::instance()->isLogging() ) {
-        FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+        FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                     FilterLog::patternResult );
       }
       mFilterActionIt = (*mFilterIt)->actions()->begin();
@@ -704,7 +704,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
     msg = message( mOriginalSerNum );
     emit filtered( mOriginalSerNum );
   }
-  
+
   mResult = mOldReturnCode; // ignore errors in deleting original message
   KMCommand *cmd = 0;
   if (msg && msg->parent()) {
@@ -720,7 +720,7 @@ void ActionScheduler::moveMessageFinished( KMCommand *command )
     else
 	processMessageTimer->start( 0, true );
   } else {
-    // Note: An alternative to consider is just calling 
+    // Note: An alternative to consider is just calling
     //       finishTimer->start and returning
     if (cmd)
 	connect( cmd, SIGNAL( completed( KMCommand * ) ),
@@ -737,7 +737,7 @@ void ActionScheduler::copyMessageFinished( KMCommand *command )
 {
   if ( command->result() != KMCommand::OK )
     actionMessage( KMFilterAction::ErrorButGoOn );
-  else 
+  else
     actionMessage();
 }
 
@@ -797,7 +797,7 @@ QString ActionScheduler::debug()
 	    res.append( QString( "ResultCriticalError.\n" ) );
 	else
 	    res.append( QString( "Unknown.\n" ) );
-	    
+
 	++i;
     }
     return res;
@@ -811,7 +811,7 @@ bool ActionScheduler::isEnabled()
     sEnabledChecked = true;
     KConfig* config = KMKernel::config();
     KConfigGroup group(config, "General");
-    sEnabled = group.readBoolEntry("action-scheduler", false);
+    sEnabled = group.readEntry("action-scheduler", QVariant( false ) ).toBool();
     return sEnabled;
 }
 

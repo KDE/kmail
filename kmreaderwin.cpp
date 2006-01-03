@@ -901,14 +901,14 @@ void KMReaderWin::readConfig(void)
   delete mCSSHelper;
   mCSSHelper = new KMail::CSSHelper( mViewer->view() );
 
-  mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
+  mNoMDNsWhenEncrypted = mdnGroup.readEntry( "not-send-when-encrypted", QVariant( true ) ).toBool();
 
-  mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
+  mUseFixedFont = reader.readEntry( "useFixedFont", QVariant( false ) ).toBool();
   if ( mToggleFixFontAction )
     mToggleFixFontAction->setChecked( mUseFixedFont );
 
-  mHtmlMail = reader.readBoolEntry( "htmlMail", false );
-  mHtmlLoadExternal = reader.readBoolEntry( "htmlLoadExternal", false );
+  mHtmlMail = reader.readEntry( "htmlMail", QVariant( false ) ).toBool();
+  mHtmlLoadExternal = reader.readEntry( "htmlLoadExternal", QVariant( false ) ).toBool();
 
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
@@ -923,7 +923,8 @@ void KMReaderWin::readConfig(void)
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
-  mShowColorbar = reader.readBoolEntry( "showColorbar", Kpgp::Module::getKpgp()->usePGP() );
+  mShowColorbar = reader.readEntry( "showColorbar",
+      QVariant( Kpgp::Module::getKpgp()->usePGP() ) ).toBool();
   // if the value defaults to enabled and KMail (with color bar) is used for
   // the first time the config dialog doesn't know this if we don't save the
   // value now
@@ -938,8 +939,8 @@ void KMReaderWin::readConfig(void)
   else
     mMimeTreeMode = 1;
 
-  const int mimeH = reader.readNumEntry( "MimePaneHeight", 100 );
-  const int messageH = reader.readNumEntry( "MessagePaneHeight", 180 );
+  const int mimeH = reader.readEntry( "MimePaneHeight", QVariant( 100 ) ).toInt();
+  const int messageH = reader.readEntry( "MessagePaneHeight", QVariant( 180 ) ).toInt();
   mSplitterSizes.clear();
   if ( mMimeTreeAtBottom )
     mSplitterSizes << messageH << mimeH;
@@ -1541,7 +1542,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   bool emitReplaceMsgByUnencryptedVersion = false;
   const KConfigGroup reader( KMKernel::config(), "Reader" );
-  if ( reader.readBoolEntry( "store-displayed-messages-unencrypted", false ) ) {
+  if ( reader.readEntry( "store-displayed-messages-unencrypted", QVariant( false ) ).toBool() ) {
 
   // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
   // of german government:

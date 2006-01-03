@@ -95,71 +95,74 @@
 
 static inline bool warnSendUnsigned() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-warning-unsigned", false );
+    return group.readEntry( "crypto-warning-unsigned", QVariant( false ) ).toBool();
 }
 static inline bool warnSendUnencrypted() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-warning-unencrypted", false );
+    return group.readEntry( "crypto-warning-unencrypted", QVariant( false ) ).toBool();
 }
 static inline bool saveMessagesEncrypted() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-store-encrypted", true );
+    return group.readEntry( "crypto-store-encrypted", QVariant( true ) ).toBool();
 }
 static inline bool encryptToSelf() {
     // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-encrypt-to-self", true );
+    return group.readEntry( "crypto-encrypt-to-self", QVariant( true ) ).toBool();
 }
 static inline bool showKeyApprovalDialog() {
     KConfigGroup group( KMKernel::config(), "Composer" );
-    return group.readBoolEntry( "crypto-show-keys-for-approval", true );
+    return group.readEntry( "crypto-show-keys-for-approval", QVariant( true ) ).toBool();
 }
 
 static inline int encryptKeyNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-encr-key-near-expire-int", 14 );
+  const int num = composer.readEntry( "crypto-warn-encr-key-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 
 static inline int signingKeyNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 );
+  const int num = composer.readEntry( "crypto-warn-sign-key-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 
 static inline int encryptRootCertNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-encr-root-near-expire-int", 14 );
+  const int num = composer.readEntry( "crypto-warn-encr-root-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 
 static inline int signingRootCertNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-sign-root-near-expire-int", 14 );
+  const int num =
+      composer.readEntry( "crypto-warn-sign-root-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 
 static inline int encryptChainCertNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 );
+  const int num =
+      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 
 static inline int signingChainCertNearExpiryWarningThresholdInDays() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
-  if ( ! composer.readBoolEntry( "crypto-warn-when-near-expire", true ) )
+  if ( ! composer.readEntry( "crypto-warn-when-near-expire", QVariant( true ) ).toBool() )
     return -1;
-  const int num = composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
+  const int num =
+      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", QVariant( 14 ) ).toInt();
   return qMax( 1, num );
 }
 

@@ -118,10 +118,10 @@ QColor KMail::HtmlStatusBar::fgColor() const {
   switch ( mode() ) {
   case Html:
     def = Qt::white;
-    return conf.readColorEntry( "ColorbarForegroundHTML", &def );
+    return conf.readEntry( "ColorbarForegroundHTML", QVariant( &def ) ).value<QColor>();
   case Normal:
     def = Qt::black;
-    return conf.readColorEntry( "ColorbarForegroundPlain", &def );
+    return conf.readEntry( "ColorbarForegroundPlain", QVariant( &def ) ).value<QColor>();
   default:
   case Neutral:
     return Qt::black;
@@ -135,10 +135,10 @@ QColor KMail::HtmlStatusBar::bgColor() const {
   switch ( mode() ) {
   case Html:
     def = Qt::black;
-    return conf.readColorEntry( "ColorbarBackgroundHTML", &def );
+    return conf.readEntry( "ColorbarBackgroundHTML", QVariant( &def ) ).value<QColor>();
   case Normal:
     def = Qt::lightGray;
-    return conf.readColorEntry( "ColorbarBackgroundPlain", &def );
+    return conf.readEntry( "ColorbarBackgroundPlain", QVariant( &def ) ).value<QColor>();
   default:
   case Neutral:
     return Qt::white;

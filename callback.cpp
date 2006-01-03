@@ -50,7 +50,7 @@
 using namespace KMail;
 
 
-Callback::Callback( KMMessage* msg, KMReaderWin* readerWin ) 
+Callback::Callback( KMMessage* msg, KMReaderWin* readerWin )
   : mMsg( msg ), mReaderWin( readerWin ), mReceiverSet( false )
 {
 }
@@ -75,7 +75,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   // Outlook will only understand the reply if the From: header is the
   // same as the To: header of the invitation message.
   KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( !options.readBoolEntry( "LegacyMangleFromToHeaders", true ) ) {
+  if( !options.readEntry( "LegacyMangleFromToHeaders", QVariant( true ) ).toBool() ) {
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
@@ -93,7 +93,7 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->slotWordWrapToggled( false );
   cWin->setSigningAndEncryptionDisabled( true );
 
-  if ( options.readBoolEntry( "AutomaticSending", true ) ) {
+  if ( options.readEntry( "AutomaticSending", QVariant( true ) ).toBool() ) {
     cWin->setAutoDeleteWindow(  true );
     cWin->slotSendNow();
   } else {

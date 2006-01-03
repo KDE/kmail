@@ -34,10 +34,12 @@
 namespace KMail {
 
   void SieveConfig::readConfig( const KConfigBase & config ) {
-    mManagesieveSupported = config.readBoolEntry( "sieve-support", false );
-    mReuseConfig = config.readBoolEntry( "sieve-reuse-config", true );
+    mManagesieveSupported =
+        config.readEntry( "sieve-support", QVariant( false ) ).toBool();
+    mReuseConfig =
+        config.readEntry( "sieve-reuse-config", QVariant( true ) ).toBool();
 
-    int port = config.readNumEntry( "sieve-port", 2000 );
+    int port = config.readEntry( "sieve-port", QVariant( 2000 ) ).toInt();
     if ( port < 1 || port > USHRT_MAX ) port = 2000;
     mPort = static_cast<unsigned short>( port );
 

@@ -32,7 +32,7 @@ namespace KMail {
   {
     KConfigGroup general( KMKernel::config(), "General");
 
-    int numTransports = general.readNumEntry("transports", 0);
+    int numTransports = general.readEntry( "transports", QVariant( 0 ) ).toInt();
 
     QStringList transportNames;
     for ( int i = 1 ; i <= numTransports ; i++ ) {
@@ -50,7 +50,7 @@ namespace KMail {
     QList<unsigned int> usedIds;
 
     KConfigGroup general( KMKernel::config(), "General");
-    int numTransports = general.readNumEntry( "transports", 0 );
+    int numTransports = general.readEntry( "transports", QVariant( 0 ) ).toInt();
 
     for ( int i = 1 ; i <= numTransports ; i++ ) {
       KMTransportInfo ti;

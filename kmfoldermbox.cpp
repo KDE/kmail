@@ -147,7 +147,7 @@ int KMFolderMbox::open()
         {
           KConfigGroup configGroup( KMKernel::config(), "Notification Messages" );
           bool showMessage =
-            configGroup.readBoolEntry( "showIndexRegenerationMessage", true );
+            configGroup.readEntry( "showIndexRegenerationMessage", QVariant( true ) ).toBool();
           if (showMessage)
             KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                            msg, i18n("Index Out of Date"),

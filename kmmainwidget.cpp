@@ -269,10 +269,14 @@ void KMMainWidget::readFolderConfig(void)
 
   KConfig *config = KMKernel::config();
   KConfigGroup group(config, "Folder-" + mFolder->idString());
-  mFolderThreadPref = group.readBoolEntry( "threadMessagesOverride", false );
-  mFolderThreadSubjPref = group.readBoolEntry( "threadMessagesBySubject", true );
-  mFolderHtmlPref = group.readBoolEntry( "htmlMailOverride", false );
-  mFolderHtmlLoadExtPref = group.readBoolEntry( "htmlLoadExternalOverride", false );
+  mFolderThreadPref =
+      group.readEntry( "threadMessagesOverride", QVariant( false ) ).toBool();
+  mFolderThreadSubjPref =
+      group.readEntry( "threadMessagesBySubject", QVariant( true ) ).toBool();
+  mFolderHtmlPref =
+      group.readEntry( "htmlMailOverride", QVariant( false ) ).toBool();
+  mFolderHtmlLoadExtPref =
+      group.readEntry( "htmlLoadExternalOverride", QVariant( false ) ).toBool();
 }
 
 
@@ -326,24 +330,25 @@ void KMMainWidget::readConfig(void)
 
   // read "Reader" config options
   KConfigGroup readerConfig( config, "Reader" );
-  mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
-  mHtmlLoadExtPref = readerConfig.readBoolEntry( "htmlLoadExternal", false );
+  mHtmlPref = readerConfig.readEntry( "htmlMail", QVariant( false ) ).toBool();
+  mHtmlLoadExtPref =
+      readerConfig.readEntry( "htmlLoadExternal", QVariant( false ) ).toBool();
 
   { // area for config group "Geometry"
     KConfigGroup group(config, "Geometry");
-    mThreadPref = group.readBoolEntry( "nestedMessages", false );
+    mThreadPref = group.readEntry( "nestedMessages", QVariant( false ) ).toBool();
     // size of the mainwin
     QSize defaultSize(750,560);
-    siz = group.readSizeEntry("MainWin", &defaultSize);
+    siz = group.readEntry("MainWin", QVariant( &defaultSize ) ).toSize();
     if (!siz.isEmpty())
       resize(siz);
     // default width of the foldertree
     static const int folderpanewidth = 250;
 
-    const int folderW = group.readNumEntry( "FolderPaneWidth", folderpanewidth );
-    const int headerW = group.readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-    const int headerH = group.readNumEntry( "HeaderPaneHeight", 180 );
-    const int readerH = group.readNumEntry( "ReaderPaneHeight", 280 );
+    const int folderW = group.readEntry( "FolderPaneWidth", QVariant( folderpanewidth ) ).toInt();
+    const int headerW = group.readEntry( "HeaderPaneWidth", QVariant( width()-folderpanewidth ) ).toInt();
+    const int headerH = group.readEntry( "HeaderPaneHeight", QVariant( 180 ) ).toInt();
+    const int readerH = group.readEntry( "ReaderPaneHeight", QVariant( 280 ) ).toInt();
 
     mPanner1Sep.clear();
     mPanner2Sep.clear();
@@ -364,8 +369,10 @@ void KMMainWidget::readConfig(void)
        * it's better to manage these here */
       // The columns are shown by default.
 
-      const int unreadColumn = group.readNumEntry("UnreadColumn", 1);
-      const int totalColumn = group.readNumEntry("TotalColumn", 2);
+      const int unreadColumn =
+          group.readEntry( "UnreadColumn", QVariant( 1 ) ).toInt();
+      const int totalColumn =
+          group.readEntry( "TotalColumn", QVariant( 2 ) ).toInt();
 
       /* we need to _activate_ them in the correct order
       * this is ugly because we can't use header()->moveSection
@@ -395,15 +402,14 @@ void KMMainWidget::readConfig(void)
 
   { // area for config group "General"
     KConfigGroup group(config, "General");
-    mBeepOnNew = group.readBoolEntry("beep-on-mail", false);
-    mConfirmEmpty = group.readBoolEntry("confirm-before-empty", true);
+    mBeepOnNew = group.readEntry("beep-on-mail", QVariant( false ) ).toBool();
+    mConfirmEmpty = group.readEntry("confirm-before-empty", QVariant( true ) ).toBool();
     // startup-Folder, defaults to system-inbox
 	mStartupFolder = group.readEntry("startupFolder", kmkernel->inboxFolder()->idString());
     if (!mStartupDone)
     {
       // check mail on startup
-      bool check = group.readBoolEntry("checkmail-startup", false);
-      if (check)
+      if ( group.readEntry("checkmail-startup", QVariant( false ) ).toBool() )
         // do it after building the kmmainwin, so that the progressdialog is available
         QTimer::singleShot( 0, this, SLOT( slotCheckMail() ) );
     }
@@ -978,7 +984,7 @@ void KMMainWidget::slotExpireFolder()
   KConfig           *config = KMKernel::config();
   KConfigGroup group(config, "General");
 
-  if (group.readBoolEntry("warn-before-expire", true)) {
+  if (group.readEntry("warn-before-expire", QVariant( true ) ).toBool() ) {
     str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(Qt::escape( mFolder->label() ));
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
@@ -1177,7 +1183,7 @@ void KMMainWidget::slotExpireAll() {
 
   KConfigGroup group(config, "General");
 
-  if (group.readBoolEntry("warn-before-expire", true)) {
+  if (group.readEntry("warn-before-expire", QVariant( true ) ).toBool() ) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
 			 i18n("Are you sure you want to expire all old messages?"),
 			 i18n("Expire Old Messages?"), i18n("Expire"));
@@ -1606,7 +1612,7 @@ void KMMainWidget::slotPrintMsg()
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                               : reader.readBoolEntry( "useFixedFont", false );
+                               : reader.readEntry( "useFixedFont", QVariant( false ) ).toBool();
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, htmlLoadExtOverride,
@@ -2111,7 +2117,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                               : reader.readBoolEntry( "useFixedFont", false );
+                               : reader.readEntry( "useFixedFont", QVariant( false ) ).toBool();
   win->setUseFixedFont( useFixedFont );
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );

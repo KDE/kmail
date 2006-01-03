@@ -72,10 +72,10 @@ void KMFilterMgr::readConfig(void)
   KConfigGroup group(config, "General");
 
   if (bPopFilter) {
-    numFilters = group.readNumEntry("popfilters",0);
-    mShowLater = group.readNumEntry("popshowDLmsgs",0);
+    numFilters = group.readEntry( "popfilters", QVariant( 0 ) ).toInt();
+    mShowLater = group.readEntry( "popshowDLmsgs", QVariant( 0 ) ).toInt();
   } else {
-    numFilters = group.readNumEntry("filters",0);
+    numFilters = group.readEntry( "filters", QVariant( 0 ) ).toInt();
   }
 
   for ( int i=0 ; i < numFilters ; ++i ) {
@@ -197,7 +197,7 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
 
   if (filter->pattern()->matches( msg )) {
     if ( FilterLog::instance()->isLogging() ) {
-      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                   FilterLog::patternResult );
     }
     if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
@@ -251,7 +251,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
       if ( (*it)->pattern()->matches( msg ) ) {
         // filter matches
         if ( FilterLog::instance()->isLogging() ) {
-          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
+          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                       FilterLog::patternResult );
         }
         atLeastOneRuleMatched = true;
@@ -263,8 +263,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
   }
 
   KMFolder *folder = MessageProperty::filterFolder( msg );
-  /* endFilter does a take() and addButKeepUID() to ensure the changed 
-   * message is on disk. This is unnessecary if nothing matched, so just 
+  /* endFilter does a take() and addButKeepUID() to ensure the changed
+   * message is on disk. This is unnessecary if nothing matched, so just
    * reset state and don't update the listview at all. */
   if ( atLeastOneRuleMatched )
     endFiltering( msg );
@@ -373,7 +373,7 @@ void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
     // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
-    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter, 
+    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter,
                                    checkForEmptyFilterList );
   }
   mEditDialog->show();
@@ -403,7 +403,7 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
         found = true;
         ++counter;
         uniqueName = name;
-        uniqueName += QString( " (" ) + QString::number( counter ) 
+        uniqueName += QString( " (" ) + QString::number( counter )
                     + QString( ")" );
         break;
       }
@@ -454,7 +454,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
   bool rem = false;
   QList<KMFilter*>::const_iterator it = mFilters.begin();
   for ( ; it != mFilters.end() ; ++it )
-    if ( (*it)->folderRemoved(aFolder, aNewFolder) ) 
+    if ( (*it)->folderRemoved(aFolder, aNewFolder) )
       rem = true;
 
   return rem;

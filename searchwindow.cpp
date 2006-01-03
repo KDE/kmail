@@ -182,13 +182,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLbxMatches->setAllColumnsShowFocus(true);
   mLbxMatches->setSelectionModeExt(KListView::Extended);
   mLbxMatches->addColumn(i18n("Subject"),
-                         config->readNumEntry("SubjectWidth", 150));
+      config->readEntry( "SubjectWidth", QVariant( 150) ).toInt() );
   mLbxMatches->addColumn(i18n("Sender/Receiver"),
-                         config->readNumEntry("SenderWidth", 120));
+      config->readEntry( "SenderWidth", QVariant( 120) ).toInt() );
   mLbxMatches->addColumn(i18n("Date"),
-                         config->readNumEntry("DateWidth", 120));
+      config->readEntry( "DateWidth", QVariant( 120) ).toInt() );
   mLbxMatches->addColumn(i18n("Folder"),
-                         config->readNumEntry("FolderWidth", 100));
+      config->readEntry( "FolderWidth", QVariant( 100 ) ).toInt() );
 
   mLbxMatches->addColumn(""); // should be hidden
   mLbxMatches->setColumnWidthMode( MSGID_COLUMN, Q3ListView::Manual );
@@ -232,8 +232,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
   vbl->addWidget(mStatusBar);
 
-  int mainWidth = config->readNumEntry("SearchWidgetWidth", 0);
-  int mainHeight = config->readNumEntry("SearchWidgetHeight", 0);
+  int mainWidth = config->readEntry("SearchWidgetWidth", QVariant( 0 ) ).toInt();
+  int mainHeight = config->readEntry("SearchWidgetHeight", QVariant( 0 ) ).toInt();
 
   if (mainWidth || mainHeight)
     resize(mainWidth, mainHeight);

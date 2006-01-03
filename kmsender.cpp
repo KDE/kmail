@@ -91,8 +91,8 @@ void KMSender::readConfig(void)
   QString str;
   KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
-  mSendImmediate = config.readBoolEntry("Immediate", TRUE);
-  mSendQuotedPrintable = config.readBoolEntry("Quoted-Printable", TRUE);
+  mSendImmediate = config.readEntry( "Immediate", QVariant( true ) ).toBool();
+  mSendQuotedPrintable = config.readEntry( "Quoted-Printable", QVariant( true ) ).toBool();
 }
 
 
@@ -320,10 +320,10 @@ void KMSender::doSendMsg()
         imapSentFolder =
           kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
     }
-    // No, or no usable sentFolder, and no, or no usable imapSentFolder, 
+    // No, or no usable sentFolder, and no, or no usable imapSentFolder,
     // let's try the on in the identity
     if ( ( sentFolder == 0 || sentFolder->isReadOnly() )
-      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() ) 
+      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() )
       && !id.fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
@@ -587,7 +587,7 @@ void KMSender::doSendMsgAux()
   QStringList to, cc, bcc;
   QString sender;
   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
-  
+
   // MDNs are required to have an empty envelope from as per RFC2298.
   if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
     sender = "<>";
