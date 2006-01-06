@@ -3658,7 +3658,7 @@ bool KMComposeWin::validateAddresses( QWidget * parent, const QString & addresse
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend( KMail::MessageSender::SendMethod method, bool saveInDrafts)
 {
-  if ( kmkernel->isOffline() ) {
+  if ( method != KMail::MessageSender::SendLater && kmkernel->isOffline() ) {
     KMessageBox::information( this,
                               i18n("KMail is currently in offline mode,"
                                    "your messages will be kept in the outbox until you go online."),
