@@ -61,14 +61,14 @@ public:
 
   /**
    * Returns whether at least one filter applies to this account,
-   * which means that mail must be downloaded in order to be filtered, 
+   * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
   bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
 
   /**
    * Returns whether at least one incoming filter applies to this account,
-   * which means that mail must be downloaded in order to be filtered, 
+   * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
   bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
@@ -102,14 +102,14 @@ public:
       @param msg The message to process.
       @param aSet Select the filter set to use.
       @param account true if an account id is specified else false
-      @param accountId The id of the KMAccount that the message was 
+      @param accountId The id of the KMAccount that the message was
              retrieved from
       @return 2 if a critical error occurred (eg out of disk space)
       1 if the caller is still owner of the message and
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( KMMessage * msg, FilterSet aSet = Inbound, 
+  int process( KMMessage * msg, FilterSet aSet = Inbound,
 	       bool account = false, uint accountId = 0 );
 
   /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
@@ -173,6 +173,8 @@ signals:
 
 private:
   int processPop( KMMessage * msg ) const;
+  /** Find out if a message matches the filter criteria */
+  bool isMatching( KMMessage * msg, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;
   QVector<KMFolder *> mOpenFolders;

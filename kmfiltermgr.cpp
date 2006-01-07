@@ -184,22 +184,13 @@ void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
 }
 
 int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
-  if ( !msg || !filter || !beginFiltering( msg ))
-    return 1;
   bool stopIt = false;
   int result = 1;
 
-  if ( FilterLog::instance()->isLogging() ) {
-    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
-    logText.append( filter->pattern()->asString() );
-    FilterLog::instance()->add( logText, FilterLog::patternDesc );
-  }
+  if ( !msg || !filter || !beginFiltering( msg ))
+    return 1;
 
-  if (filter->pattern()->matches( msg )) {
-    if ( FilterLog::instance()->isLogging() ) {
-      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
-                                  FilterLog::patternResult );
-    }
+  if ( isMatching( msg, filter ) ) {
     if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
       return 2;
 
@@ -243,17 +234,8 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
 
-      if ( FilterLog::instance()->isLogging() ) {
-        QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
-        logText.append( (*it)->pattern()->asString() );
-        FilterLog::instance()->add( logText, FilterLog::patternDesc );
-      }
-      if ( (*it)->pattern()->matches( msg ) ) {
+      if ( isMatching( msg, (*it) ) ) {
         // filter matches
-        if ( FilterLog::instance()->isLogging() ) {
-          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
-                                      FilterLog::patternResult );
-        }
         atLeastOneRuleMatched = true;
         // execute actions:
         if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
@@ -278,6 +260,23 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
   return 1;
 }
 
+bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
+{
+  bool result = false;
+  if ( FilterLog::instance()->isLogging() ) {
+    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
+    logText.append( filter->pattern()->asString() );
+    FilterLog::instance()->add( logText, FilterLog::patternDesc );
+  }
+  if ( filter->pattern()->matches( msg ) ) {
+    if ( FilterLog::instance()->isLogging() ) {
+      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
+                                  FilterLog::patternResult );
+    }
+    result = true;
+  }
+  return result;
+}
 
 bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
 {
