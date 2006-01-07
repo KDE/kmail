@@ -143,56 +143,12 @@ using KMail::TeeHtmlWriter;
 #include <QTextDocument>
 #endif
 
-class NewByteArray : public QByteArray
-{
-public:
-    NewByteArray &appendNULL();
-    NewByteArray &operator+=( const char * );
-    NewByteArray &operator+=( const QByteArray & );
-    QByteArray& qByteArray();
-};
-
-NewByteArray& NewByteArray::appendNULL()
-{
-    QByteArray::detach();
-    uint len1 = size();
-    QByteArray::resize( len1 + 1 );
-    *(data() + len1) = '\0';
-    return *this;
-}
-NewByteArray& NewByteArray::operator+=( const char * newData )
-{
-    if ( !newData )
-        return *this;
-    QByteArray::detach();
-    uint len1 = size();
-    uint len2 = qstrlen( newData );
-    QByteArray::resize( len1 + len2 );
-    memcpy( data() + len1, newData, len2 );
-    return *this;
-}
-NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
-{
-    if ( newData.isNull() )
-        return *this;
-    QByteArray::detach();
-    uint len1 = size();
-    uint len2 = newData.size();
-    QByteArray::resize( len1 + len2 );
-    memcpy( data() + len1, newData.data(), len2 );
-    return *this;
-}
-QByteArray& NewByteArray::qByteArray()
-{
-    return *((QByteArray*)this);
-}
-
 // This function returns the complete data that were in this
 // message parts - *after* all encryption has been removed that
 // could be removed.
 // - This is used to store the message in decrypted form.
 void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
-                                            NewByteArray& resultingData,
+                                            QByteArray& resultingData,
                                             KMMessage& theMessage,
                                             bool weAreReplacingTheRootNode,
                                             int recCount )
@@ -391,11 +347,11 @@ kdDebug(5006) << "is valid Multipart, processing children:" << endl;
 kdDebug(5006) << "--boundary" << endl;
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
-            resultingData += QByteArray( "\n" );
-          resultingData += QByteArray( "\n" );
+            resultingData += '\n';
+          resultingData += '\n';
           resultingData += "--";
           resultingData += boundary;
-          resultingData += "\n";
+          resultingData += '\n';
           // note: We are processing a harmless multipart that is *not*
           //       to be replaced by one of it's children, therefor
           //       we set their doStoreHeaders to true.
@@ -1581,18 +1537,15 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
 
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
 
-    NewByteArray decryptedData;
+    QByteArray decryptedData;
     // note: The following call may change the message's headers.
     objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-    // add a \0 to the data
-    decryptedData.appendNULL();
-    Q3CString resultString( decryptedData.data() );
-kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
+kdDebug(5006) << "KMReaderWin  -  resulting data:" << decryptedData << endl;
 
-    if( !resultString.isEmpty() ) {
+    if( !decryptedData.isEmpty() ) {
 kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
       // try this:
-      aMsg->setBody( resultString );
+      aMsg->setBody( decryptedData );
       KMMessage* unencryptedMessage = new KMMessage( *aMsg );
       unencryptedMessage->setParent( 0 );
       // because this did not work:

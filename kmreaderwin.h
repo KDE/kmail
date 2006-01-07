@@ -65,8 +65,6 @@ namespace KMail {
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
-class NewByteArray; // providing operator+ on a QByteArray (khz, 21.06.2002)
-
 namespace KParts {
   struct URLArgs;
 }
@@ -240,7 +238,7 @@ public:
   // could be removed.
   // - This is used to store the message in decrypted form.
   void objectTreeToDecryptedMsg( partNode* node,
-                                 NewByteArray& resultingData,
+                                 QByteArray& resultingData,
                                  KMMessage& theMessage,
                                  bool weAreReplacingTheRootNode = false,
                                  int recCount = 0 );
