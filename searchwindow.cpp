@@ -88,7 +88,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   KWin::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIcon::Desktop),IconSize(KIcon::Desktop)), qApp->windowIcon().pixmap(IconSize(KIcon::Small),IconSize(KIcon::Small)));
 
   KConfig* config = KMKernel::config();
-  config->setGroup("SearchDialog");
+  KConfigGroup group( config, "SearchDialog" );
 
   QWidget* searchWidget = new QWidget(this);
   QVBoxLayout *vbl = new QVBoxLayout( searchWidget, 0, spacingHint(), "kmfs_vbl" );
@@ -182,13 +182,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mLbxMatches->setAllColumnsShowFocus(true);
   mLbxMatches->setSelectionModeExt(KListView::Extended);
   mLbxMatches->addColumn(i18n("Subject"),
-      config->readEntry( "SubjectWidth", QVariant( 150) ).toInt() );
+      group.readEntry( "SubjectWidth", QVariant( 150) ).toInt() );
   mLbxMatches->addColumn(i18n("Sender/Receiver"),
-      config->readEntry( "SenderWidth", QVariant( 120) ).toInt() );
+      group.readEntry( "SenderWidth", QVariant( 120) ).toInt() );
   mLbxMatches->addColumn(i18n("Date"),
-      config->readEntry( "DateWidth", QVariant( 120) ).toInt() );
+      group.readEntry( "DateWidth", QVariant( 120) ).toInt() );
   mLbxMatches->addColumn(i18n("Folder"),
-      config->readEntry( "FolderWidth", QVariant( 100 ) ).toInt() );
+      group.readEntry( "FolderWidth", QVariant( 100 ) ).toInt() );
 
   mLbxMatches->addColumn(""); // should be hidden
   mLbxMatches->setColumnWidthMode( MSGID_COLUMN, Q3ListView::Manual );
@@ -232,8 +232,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mStatusBar->setItemAlignment(1, Qt::AlignLeft | Qt::AlignVCenter);
   vbl->addWidget(mStatusBar);
 
-  int mainWidth = config->readEntry("SearchWidgetWidth", QVariant( 0 ) ).toInt();
-  int mainHeight = config->readEntry("SearchWidgetHeight", QVariant( 0 ) ).toInt();
+  int mainWidth = group.readEntry("SearchWidgetWidth", QVariant( 0 ) ).toInt();
+  int mainHeight = group.readEntry("SearchWidgetHeight", QVariant( 0 ) ).toInt();
 
   if (mainWidth || mainHeight)
     resize(mainWidth, mainHeight);
@@ -311,13 +311,13 @@ SearchWindow::~SearchWindow()
   }
 
   KConfig* config = KMKernel::config();
-  config->setGroup("SearchDialog");
-  config->writeEntry("SubjectWidth", mLbxMatches->columnWidth(0));
-  config->writeEntry("SenderWidth", mLbxMatches->columnWidth(1));
-  config->writeEntry("DateWidth", mLbxMatches->columnWidth(2));
-  config->writeEntry("FolderWidth", mLbxMatches->columnWidth(3));
-  config->writeEntry("SearchWidgetWidth", width());
-  config->writeEntry("SearchWidgetHeight", height());
+  KConfigGroup group( config, "SearchDialog" );
+  group.writeEntry("SubjectWidth", mLbxMatches->columnWidth(0));
+  group.writeEntry("SenderWidth", mLbxMatches->columnWidth(1));
+  group.writeEntry("DateWidth", mLbxMatches->columnWidth(2));
+  group.writeEntry("FolderWidth", mLbxMatches->columnWidth(3));
+  group.writeEntry("SearchWidgetWidth", width());
+  group.writeEntry("SearchWidgetHeight", height());
   config->sync();
 }
 

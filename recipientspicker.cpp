@@ -657,12 +657,12 @@ void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
 void RecipientsPicker::readConfig()
 {
   KConfig *cfg = KGlobal::config();
-  cfg->setGroup( "RecipientsPicker" );
-  QSize size = cfg->readEntry( "Size", QVariant( QSize() ) ).toSize();
+  KConfigGroup group( cfg, "RecipientsPicker" );
+  QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
   if ( !size.isEmpty() ) {
     resize( size );
   }
-  int currentCollection = cfg->readEntry( "CurrentCollection", QVariant( -1 ) ).toInt();
+  int currentCollection = group.readEntry( "CurrentCollection", QVariant( -1 ) ).toInt();
   if ( currentCollection >= 0 &&
        currentCollection < mCollectionCombo->count() ) {
     mCollectionCombo->setCurrentItem( currentCollection );
@@ -672,9 +672,9 @@ void RecipientsPicker::readConfig()
 void RecipientsPicker::writeConfig()
 {
   KConfig *cfg = KGlobal::config();
-  cfg->setGroup( "RecipientsPicker" );
-  cfg->writeEntry( "Size", size() );
-  cfg->writeEntry( "CurrentCollection", mCollectionCombo->currentItem() );
+  KConfigGroup group( cfg, "RecipientsPicker" );
+  group.writeEntry( "Size", size() );
+  group.writeEntry( "CurrentCollection", mCollectionCombo->currentItem() );
 }
 
 void RecipientsPicker::setFocusList()

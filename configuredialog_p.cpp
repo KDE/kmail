@@ -220,9 +220,9 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
 	it != pathList.end(); ++it )
   {
     KSimpleConfig entry( *it );
-    entry.setGroup( "KCM Locale" );
+    KConfigGroup group( &entry, "KCM Locale" );
     // full name:
-    QString name = entry.readEntry( "Name" );
+    QString name = group.readEntry( "Name" );
     // {2,3}-letter abbreviation:
     // we extract it from the path: "/prefix/de/entry.desktop" -> "de"
     QString acronym = (*it).section( '/', -2, -2 );
@@ -258,8 +258,8 @@ int LanguageComboBox::insertLanguage( const QString & language )
 {
   static QString entryDesktop = QString::fromLatin1("/entry.desktop");
   KSimpleConfig entry( locate("locale", language + entryDesktop) );
-  entry.setGroup( "KCM Locale" );
-  QString name = entry.readEntry( "Name" );
+  KConfigGroup group( &entry, "KCM Locale" );
+  QString name = group.readEntry( "Name" );
   QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
   insertItem( QPixmap( locate("locale", language + flagPng ) ), output );
   return findText(output);

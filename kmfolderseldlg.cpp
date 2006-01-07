@@ -345,8 +345,8 @@ void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox,
 void KMFolderSelDlg::readConfig()
 {
   KConfig *config = KGlobal::config();
-  config->setGroup( "FolderSelectionDialog" );
-  QSize size = config->readEntry( "Size", QVariant( QSize() ) ).toSize();
+  KConfigGroup group( config, "FolderSelectionDialog" );
+  QSize size = group.readEntry( "Size", QVariant( QSize() ) ).toSize();
   if ( !size.isEmpty() ) resize( size );
   else resize( 220, 300 );
 }
@@ -354,8 +354,8 @@ void KMFolderSelDlg::readConfig()
 void KMFolderSelDlg::writeConfig()
 {
   KConfig *config = KGlobal::config();
-  config->setGroup( "FolderSelectionDialog" );
-  config->writeEntry( "Size", size() );
+  KConfigGroup group( config, "FolderSelectionDialog" );
+  group.writeEntry( "Size", size() );
 }
 
 } // namespace KMail
