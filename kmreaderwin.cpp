@@ -1200,13 +1200,7 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("Full namespace support for IMAP"),
-  I18N_NOOP("Offline mode"),
-  I18N_NOOP("Sieve script management and editing"),
-  I18N_NOOP("Account specific filtering"),
-  I18N_NOOP("Filtering of incoming mail for online IMAP accounts"),
-  I18N_NOOP("Online IMAP folders can be used when filtering into folders"),
-  I18N_NOOP("Automatically delete older mails on POP servers")
+  ""
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1272,10 +1266,9 @@ void KMReaderWin::displayAboutPage()
 {
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
-	 "%4: prior KMail version; %5: prior KDE version; "
-	 "%6: generated list of new features; "
-	 "%7: First-time user text (only shown on first start); "
-         "%8: generated list of important changes; "
+	 "%4: generated list of new features; "
+	 "%5: First-time user text (only shown on first start); "
+         "%6: generated list of important changes; "
 	 "--- end of comment ---",
 	 "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
 	 "Desktop Environment. It is designed to be fully compatible with "
@@ -1285,24 +1278,29 @@ void KMReaderWin::displayAboutPage()
 	 "<a href=\"%2\">documentation</a></li>\n"
 	 "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
 	 "new versions of KMail</li></ul>\n"
-         "%8\n" // important changes
-	 "<p>Some of the new features in this release of KMail include "
-	 "(compared to KMail %4, which is part of KDE %5):</p>\n"
-	 "<ul>\n%6</ul>\n"
-	 "%7\n"
+         "%6\n" // important changes
+         "%4\n" // new features
+	 "%5\n" // first start info
 	 "<p>We hope that you will enjoy KMail.</p>\n"
 	 "<p>Thank you,</p>\n"
 	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
-    .arg("http://kmail.kde.org/") // KMail homepage URL
-    .arg("1.8").arg("3.4"); // prior KMail and KDE version
+    .arg("http://kmail.kde.org/"); // KMail homepage URL
 
-  QString featureItems;
-  for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
-    featureItems += i18n("<li>%1</li>\n").arg( i18n( kmailNewFeatures[i] ) );
-
-  info = info.arg( featureItems );
+  if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
+    QString featuresText =
+      i18n("<p>Some of the new features in this release of KMail include "
+           "(compared to KMail %1, which is part of KDE %2):</p>\n")
+      .arg("1.9").arg("3.5"); // prior KMail and KDE version
+    featuresText += "<ul>\n";
+    for ( int i = 0 ; i < numKMailChanges ; i++ )
+      featuresText += "<li>" + i18n( kmailNewFeatures[i] ) + "</li>\n";
+    featuresText += "</ul>\n";
+    info = info.arg( featuresText );
+  }
+  else
+    info = info.arg( QString::null ); // remove the place holder
 
   if( kmkernel->firstStart() ) {
     info = info.arg( i18n("<p>Please take a moment to fill in the KMail "
@@ -1312,14 +1310,14 @@ void KMReaderWin::displayAboutPage()
 			  "an incoming as well as outgoing mail account."
 			  "</p>\n") );
   } else {
-    info = info.arg( QString() );
+    info = info.arg( QString::null ); // remove the place holder
   }
 
   if ( ( numKMailChanges > 1 ) || ( numKMailChanges == 1 && strlen(kmailChanges[0]) > 0 ) ) {
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
            "Important changes</span> (compared to KMail %1):</p>\n")
-      .arg("1.8");
+      .arg("1.9");
     changesText += "<ul>\n";
     for ( int i = 0 ; i < numKMailChanges ; i++ )
       changesText += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
@@ -1327,7 +1325,7 @@ void KMReaderWin::displayAboutPage()
     info = info.arg( changesText );
   }
   else
-    info = info.arg(""); // remove the %8
+    info = info.arg( QString::null ); // remove the place holder
 
   displaySplashPage( info );
 }
