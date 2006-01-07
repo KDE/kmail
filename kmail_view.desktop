@@ -1,16 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KMail
-Name[ar]=البريد
-Name[be]=K Пошта
-Name[eo]=Retpoŝto
-Name[hi]=के-मेल
-Name[lv]=KPasts
-Name[pa]=ਕੇ-ਪੱਤਰ
-Name[sv]=Kmail
-Name[ta]=Kஅஞ்சல்
-Name[th]=จัดการจดหมาย - K
-Name[xx]=xxKMailxx
+Name[x-test]=xxKMailxx
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
