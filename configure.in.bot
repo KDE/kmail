@@ -3,12 +3,15 @@ yes)
 	echo "You are missing indexlib, which is required to"
 	echo "enable full-text indexing in KMail. You can use"
 	echo "--with-indexlib to enable indexlib."
+        echo
 	;;
 no)
 	echo "You have indexlib enabled. Good luck!"
+        echo
 	;;
 ignore)
 	echo "If you would like to build-in KMail's experimental full-text"
 	echo "indexing please re-run configure with the --enable-indexlib option."
+        echo
 	;;
 esac
