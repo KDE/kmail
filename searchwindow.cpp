@@ -132,8 +132,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   if (searchFolder) {
       KConfig config(curFolder->location());
       KMFolder *root = searchFolder->search()->root();
-      config.setGroup("Search Folder");
-      mSearchPattern->readConfig(&config);
+      KConfigGroup group( &config, "Search Folder" );
+      mSearchPattern->readConfig( group );
       if (root) {
           mChkbxSpecificFolders->setChecked(true);
           mCbxFolders->setFolder(root);

@@ -44,12 +44,10 @@ using KMail::FilterLog;
 #include <assert.h>
 
 
-KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
+KMFilter::KMFilter( bool popFilter )
   : bPopFilter(popFilter)
 {
-  if ( aConfig )
-    readConfig( aConfig );
-  else if ( bPopFilter )
+  if ( bPopFilter )
     mAction = Down;
   else {
     bApplyOnInbound = true;
@@ -61,6 +59,13 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bAutoNaming = true;
     mApplicability = All;
   }
+}
+
+
+KMFilter::KMFilter( KConfigGroup & aConfig, bool popFilter )
+  : bPopFilter(popFilter)
+{
+  readConfig( aConfig );
 }
 
 
@@ -218,7 +223,7 @@ bool KMFilter::applyOnAccount( uint id ) const
 
 
 //-----------------------------------------------------------------------------
-void KMFilter::readConfig(KConfig* config)
+void KMFilter::readConfig(KConfigGroup & config)
 {
   // MKSearchPattern::readConfig ensures
   // that the pattern is purified.
@@ -226,7 +231,7 @@ void KMFilter::readConfig(KConfig* config)
 
   if (bPopFilter) {
     // get the action description...
-    QString action = config->readEntry( "action" );
+    QString action = config.readEntry( "action" );
     if ( action == "down" )
       mAction = Down;
     else if ( action == "later" )
@@ -237,8 +242,8 @@ void KMFilter::readConfig(KConfig* config)
       mAction = NoAction;
   }
   else {
-    QStringList sets = config->readListEntry("apply-on");
-    if ( sets.isEmpty() && !config->hasKey("apply-on") ) {
+    QStringList sets = config.readListEntry("apply-on");
+    if ( sets.isEmpty() && !config.hasKey("apply-on") ) {
       bApplyOnOutbound = false;
       bApplyOnInbound = true;
       bApplyOnExplicit = true;
@@ -247,28 +252,28 @@ void KMFilter::readConfig(KConfig* config)
       bApplyOnInbound = bool(sets.contains("check-mail"));
       bApplyOnOutbound = bool(sets.contains("send-mail"));
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
-      mApplicability = (AccountType) config->readEntry( 
+      mApplicability = (AccountType) config.readEntry(
             "Applicability", ButImap ).toInt();
     }
 
-    bStopProcessingHere = config->readEntry( "StopProcessingHere", QVariant( true ) ).toBool();
-    bConfigureShortcut = config->readEntry( "ConfigureShortcut", QVariant( false ) ).toBool();
-    QString shortcut( config->readEntry( "Shortcut", QString() ) );
+    bStopProcessingHere = config.readEntry( "StopProcessingHere", QVariant( true ) ).toBool();
+    bConfigureShortcut = config.readEntry( "ConfigureShortcut", QVariant( false ) ).toBool();
+    QString shortcut( config.readEntry( "Shortcut", QString() ) );
     if ( !shortcut.isEmpty() ) {
       KShortcut sc( shortcut );
       setShortcut( sc );
     }
-    bConfigureToolbar = config->readEntry( "ConfigureToolbar", QVariant( false ) ).toBool();
+    bConfigureToolbar = config.readEntry( "ConfigureToolbar", QVariant( false ) ).toBool();
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
-    mIcon = config->readEntry( "Icon", "gear" );
-    bAutoNaming = config->readEntry( "AutomaticName", QVariant( false ) ).toBool();
+    mIcon = config.readEntry( "Icon", "gear" );
+    bAutoNaming = config.readEntry( "AutomaticName", QVariant( false ) ).toBool();
 
     int i, numActions;
     QString actName, argsName;
 
     mActions.clear();
 
-    numActions = config->readEntry( "actions", 0 ).toInt();
+    numActions = config.readEntry( "actions", 0 ).toInt();
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
       KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>").arg( mPattern.name() ) );
@@ -278,14 +283,14 @@ void KMFilter::readConfig(KConfig* config)
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
       // get the action description...
-      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( 
-            config->readEntry( actName, QString() ) );
+      KMFilterActionDesc *desc = kmkernel->filterActionDict()->value(
+            config.readEntry( actName, QString() ) );
       if ( desc ) {
         //...create an instance...
         KMFilterAction *fa = desc->create();
         if ( fa ) {
           //...load it with it's parameter...
-          fa->argsFromString( config->readEntry( argsName, QString() ) );
+          fa->argsFromString( config.readEntry( argsName, QString() ) );
           //...check if it's emoty and...
           if ( !fa->isEmpty() )
             //...append it if it's not and...
@@ -297,32 +302,32 @@ void KMFilter::readConfig(KConfig* config)
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
             i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
-            .arg( config->readEntry( actName, QString() ) )
+            .arg( config.readEntry( actName, QString() ) )
             .arg( mPattern.name() ) );
     }
 
-    mAccounts = config->readIntListEntry( "accounts-set" );
+    mAccounts = config.readIntListEntry( "accounts-set" );
   }
 }
 
 
-void KMFilter::writeConfig(KConfig* config) const
+void KMFilter::writeConfig(KConfigGroup & config) const
 {
   mPattern.writeConfig(config);
 
   if (bPopFilter) {
     switch ( mAction ) {
     case Down:
-      config->writeEntry( "action", "down" );
+      config.writeEntry( "action", "down" );
       break;
     case Later:
-      config->writeEntry( "action", "later" );
+      config.writeEntry( "action", "later" );
       break;
     case Delete:
-      config->writeEntry( "action", "delete" );
+      config.writeEntry( "action", "delete" );
       break;
     default:
-      config->writeEntry( "action", "" );
+      config.writeEntry( "action", "" );
     }
   } else {
     QStringList sets;
@@ -332,29 +337,29 @@ void KMFilter::writeConfig(KConfig* config) const
       sets.append( "send-mail" );
     if ( bApplyOnExplicit )
       sets.append( "manual-filtering" );
-    config->writeEntry( "apply-on", sets );
+    config.writeEntry( "apply-on", sets );
 
-    config->writeEntry( "StopProcessingHere", bStopProcessingHere );
-    config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
+    config.writeEntry( "StopProcessingHere", bStopProcessingHere );
+    config.writeEntry( "ConfigureShortcut", bConfigureShortcut );
     if ( !mShortcut.isNull() )
-      config->writeEntry( "Shortcut", mShortcut.toString() );
-    config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
-    config->writeEntry( "Icon", mIcon );
-    config->writeEntry( "AutomaticName", bAutoNaming );
-    config->writeEntry( "Applicability", mApplicability );
+      config.writeEntry( "Shortcut", mShortcut.toString() );
+    config.writeEntry( "ConfigureToolbar", bConfigureToolbar );
+    config.writeEntry( "Icon", mIcon );
+    config.writeEntry( "AutomaticName", bAutoNaming );
+    config.writeEntry( "Applicability", mApplicability );
 
     QString key;
     int i;
 
     QList<KMFilterAction*>::const_iterator it;
     for ( i=0, it = mActions.begin() ; it != mActions.end() ; ++it, ++i ) {
-      config->writeEntry( key.sprintf("action-name-%d", i),
+      config.writeEntry( key.sprintf("action-name-%d", i),
                           (*it)->name() );
-      config->writeEntry( key.sprintf("action-args-%d", i),
+      config.writeEntry( key.sprintf("action-args-%d", i),
                           (*it)->argsAsString() );
     }
-    config->writeEntry( "actions", i );
-    config->writeEntry( "accounts-set", mAccounts );
+    config.writeEntry( "actions", i );
+    config.writeEntry( "accounts-set", mAccounts );
   }
 }
 
@@ -395,7 +400,8 @@ const QString KMFilter::asString() const
 {
   QString result;
 
-  result += mPattern.asString();
+  result += "Filter name: " + name() + "\n";
+  result += mPattern.asString() + "\n";
 
   if (bPopFilter){
     result += "    action: ";

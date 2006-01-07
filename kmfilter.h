@@ -26,7 +26,7 @@
 #include <kshortcut.h>
 
 class QString;
-class KConfig;
+class KConfigGroup;
 class KMMessage;
 class KMFilterAction;
 class KMFolder;
@@ -54,18 +54,21 @@ public:
   /** Account type codes used by setApplicability. They mean:
 
       @param All Apply to all accounts
-      
+
       @param ButImap Apply to all but online-IMAP accounts
-      
+
       @param Checked apply to all accounts specified by setApplyOnAccount
 
   */
   enum AccountType { All, ButImap, Checked };
 
-  /** Constructor that initializes from given config file, if given.
-    * Filters are stored one by one in config groups, i.e. one filter, one group.
-    * The config group has to be preset if config is not 0. */
-  KMFilter( KConfig* aConfig=0 , bool popFilter = false);
+  /** Constructor that initializes basic settings. */
+  KMFilter( bool popFilter = false);
+
+  /** Constructor that initializes from given config group.
+    * Filters are stored one by one in config groups, i.e.
+    * one filter, one group. */
+  KMFilter( KConfigGroup & aConfig, bool popFilter = false);
 
   /** Copy constructor. Constructs a deep copy of @p aFilter. */
   KMFilter( const KMFilter & other );
@@ -101,17 +104,11 @@ public:
   /** No descriptions */
   void setAction(const KMPopFilterAction aAction);
 
-  /** Write contents to given config file. The config group (see the
-      constructor above) has to be preset.  The config object will be
-      deleted by higher levels, so it is not allowed to store a
-      pointer to it anywhere inside this function. */
-  void writeConfig( KConfig* config ) const;
+  /** Write contents to given config group. */
+  void writeConfig( KConfigGroup& config ) const;
 
-  /** Initialize from given config file. The config group (see
-      constructor above) has to be preset. The config object will be
-      deleted by higher levels, so it is not allowed to store a
-      pointer to it anywhere inside this function. */
-  void readConfig( KConfig* config );
+  /** Initialize from given config group. */
+  void readConfig( KConfigGroup& config );
 
   /** Remove empty rules (and actions one day). */
   void purify();

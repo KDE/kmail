@@ -648,7 +648,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
 {
   KMSearchRule *newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
 
-  KMFilter *newFilter = new KMFilter(0, bPopFilter);
+  KMFilter *newFilter = new KMFilter( bPopFilter );
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
@@ -780,7 +780,7 @@ void KMFilterListBox::slotSelected( int aIdx )
 void KMFilterListBox::slotNew()
 {
   // just insert a new filter.
-  insertFilter( new KMFilter(0, bPopFilter) );
+  insertFilter( new KMFilter( bPopFilter ) );
   enableControls();
 }
 
@@ -961,7 +961,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   QList<KMFilter*>::const_iterator it;
   for ( it = manager->filters().begin() ; it != manager->filters().end() ; ++it ) {
     mFilterList.append( new KMFilter( **it ) ); // deep copy
-    mListWidget->insertItem( 0, (*it)->pattern()->name() );
+    mListWidget->addItem( (*it)->pattern()->name() );
   }
 
   blockSignals(FALSE);
@@ -974,7 +974,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
     slotNew();
 
   if ( mListWidget->count() > 0 )
-    mListWidget->setItemSelected( mListWidget->item( 0 ), true );
+    mListWidget->setCurrentRow( 0 );
 
   enableControls();
 }

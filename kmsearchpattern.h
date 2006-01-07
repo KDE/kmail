@@ -14,7 +14,7 @@ using KPIM::MessageStatus;
 #include <QString>
 
 class KMMessage;
-class KConfig;
+class KConfigGroup;
 class DwBoyerMoore;
 class DwString;
 
@@ -66,12 +66,12 @@ public:
 
   static KMSearchRule * createInstance( const KMSearchRule & other );
 
-  /** Initialize the object from a given config file. The group must
-      be preset. @p aIdx is an identifier that is used to distinguish
+  /** Initialize the object from a given config group.
+      @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
       validation of the data obtained from the config file. You should
       call isEmpty yourself if you need valid rules. */
-  static KMSearchRule* createInstanceFromConfig( const KConfig * config, int aIdx );
+  static KMSearchRule* createInstanceFromConfig( const KConfigGroup & config, int aIdx );
 
   virtual ~KMSearchRule() {};
 
@@ -100,12 +100,12 @@ public:
   virtual bool requiresBody() const { return true; }
 
 
-  /** Save the object into a given config file. The group must be
-      preset. @p aIdx is an identifier that is used to distinguish
+  /** Save the object into a given config group.
+      @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function will happily
       write itself even when it's not valid, assuming higher layers to
       Do The Right Thing(TM). */
-  void writeConfig( KConfig * config, int aIdx ) const;
+  void writeConfig( KConfigGroup & config, int aIdx ) const;
 
   /** Return filter function. This can be any of the operators
       defined in Function. */
@@ -290,7 +290,7 @@ public:
     KConfig group and there is a constructor, mainly used by KMFilter
     to initialize from a preset KConfig-Group.
 
-    From a class hierarchy point of view, it is a QPtrList of 
+    From a class hierarchy point of view, it is a QPtrList of
     KMSearchRule's that adds the boolean operators (see Operator)
     'and' and 'or' that connect the rules logically, and has a name
     under which it could be stored in the config file.
@@ -312,15 +312,19 @@ public:
       any of it's rules matches.
   */
   enum Operator { OpAnd, OpOr };
-  /** Constructor that initializes from a given KConfig group, if
-      given. This feature is mainly (solely?) used in KMFilter,
-      as we don't allow to store search patterns in the config (yet).
-      If config is 0, provides a pattern with minimal, but
+
+  /** Constructor which provides a pattern with minimal, but
       sufficient initialization. Unmodified, such a pattern will fail
       to match any KMMessage. You can query for such an empty
       rule by using isEmpty, which is inherited from QPtrList.
   */
-  KMSearchPattern( const KConfig * config=0 );
+  KMSearchPattern();
+
+  /** Constructor that initializes from a given KConfig group, if
+      given. This feature is mainly (solely?) used in KMFilter,
+      as we don't allow to store search patterns in the config (yet).
+  */
+  KMSearchPattern( const KConfigGroup & config );
 
   /** Destructor. Deletes all stored rules! */
   ~KMSearchPattern();
@@ -348,10 +352,9 @@ public:
   */
   void purify();
 
-  /** Reads a search pattern from a KConfig.  The group has to be
-      preset. If it does not find a valid saerch pattern in the preset
-      group, initializes the pattern as if it were constructed using
-      the default constructor.
+  /** Reads a search pattern from a KConfigGroup. If it does not find
+      a valid saerch pattern in the preset group, initializes the pattern
+      as if it were constructed using the default constructor.
 
       For backwards compatibility with previous versions of KMail, it
       checks for old-style filter rules (e.g. using @p OpIgnore)
@@ -360,14 +363,15 @@ public:
       Derived classes reimplementing readConfig() should also call this
       method, or else the rules will not be loaded.
   */
-  void readConfig( const KConfig * config );
-  /** Writes itself into @p config. The group has to be preset. Tries
-      to delete old-style keys by overwriting them with QString().
+  void readConfig( const KConfigGroup & config );
+
+  /** Writes itself into @p config. Tries to delete old-style keys by
+      overwriting them with QString().
 
       Derived classes reimplementing writeConfig() should also call this
       method, or else the rules will not be stored.
   */
-  void writeConfig( KConfig * config ) const;
+  void writeConfig( KConfigGroup & config ) const;
 
   /** Get the name of the search pattern. */
   QString name() const { return mName; }
@@ -394,7 +398,8 @@ private:
       and also makes sure that this method is called from an initialized
       object.
   */
-  void importLegacyConfig( const KConfig * config );
+  void importLegacyConfig( const KConfigGroup & config );
+
   /** Initializes the object. Clears the list of rules, sets the name
       to "<i18n("unnamed")>", and the boolean operator to @p OpAnd. */
   void init();

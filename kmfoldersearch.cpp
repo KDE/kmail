@@ -96,27 +96,27 @@ KMSearch::~KMSearch()
 bool KMSearch::write(QString location) const
 {
     KConfig config(location);
-    config.setGroup("Search Folder");
+    KConfigGroup group( &config, "Search Folder" );
     if (mSearchPattern)
-        mSearchPattern->writeConfig(&config);
+        mSearchPattern->writeConfig(group);
     if (mRoot.isNull())
-        config.writeEntry("Base", "");
+        group.writeEntry("Base", "");
     else
-        config.writeEntry("Base", mRoot->idString());
-    config.writeEntry("Recursive", recursive());
+        group.writeEntry("Base", mRoot->idString());
+    group.writeEntry("Recursive", recursive());
     return true;
 }
 
 bool KMSearch::read(QString location)
 {
     KConfig config( location );
-    config.setGroup( "Search Folder" );
+    KConfigGroup group( &config, "Search Folder" );
     if ( !mSearchPattern )
         mSearchPattern = new KMSearchPattern();
-    mSearchPattern->readConfig( &config );
-    QString rootString = config.readEntry( "Base" );
+    mSearchPattern->readConfig( group );
+    QString rootString = group.readEntry( "Base" );
     mRoot = kmkernel->findFolderById( rootString );
-    mRecursive = config.readEntry( "Recursive", QVariant( false ) ).toBool();
+    mRecursive = group.readEntry( "Recursive", QVariant( false ) ).toBool();
     return true;
 }
 

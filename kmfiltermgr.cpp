@@ -81,7 +81,7 @@ void KMFilterMgr::readConfig(void)
   for ( int i=0 ; i < numFilters ; ++i ) {
     grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
     KConfigGroup group(config, grpName);
-    KMFilter * filter = new KMFilter(config, bPopFilter);
+    KMFilter * filter = new KMFilter(group, bPopFilter);
     filter->purify();
     if ( filter->isEmpty() ) {
 #ifndef NDEBUG
@@ -118,7 +118,7 @@ void KMFilterMgr::writeConfig(bool withSync)
       else
         grpName.sprintf("Filter #%d", i);
       KConfigGroup group(config, grpName);
-      (*it)->writeConfig(config);
+      (*it)->writeConfig( group );
       ++i;
     }
   }

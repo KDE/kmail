@@ -123,7 +123,7 @@ KMSearchRule * KMSearchRule::createInstance( const KMSearchRule & other )
   return ( createInstance( other.field(), other.function(), other.contents() ) );
 }
 
-KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, int aIdx )
+KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfigGroup & config, int aIdx )
 {
   const char cIdx = char( int('A') + aIdx );
 
@@ -131,9 +131,9 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const QByteArray &field2 = config->readEntry( field + cIdx, QString() ).toLatin1();
-  Function func2 = configValueToFunc( config->readEntry( func + cIdx, QString() ).toLatin1() );
-  const QString & contents2 = config->readEntry( contents + cIdx, QString() );
+  const QByteArray &field2 = config.readEntry( field + cIdx, QString() ).toLatin1();
+  Function func2 = configValueToFunc( config.readEntry( func + cIdx, QString() ).toLatin1() );
+  const QString & contents2 = config.readEntry( contents + cIdx, QString() );
 
   if ( field2 == "<To or Cc>" ) // backwards compat
     return KMSearchRule::createInstance( "<recipients>", func2, contents2 );
@@ -159,15 +159,15 @@ QString KMSearchRule::functionToString( Function function )
     return "invalid";
 }
 
-void KMSearchRule::writeConfig( KConfig * config, int aIdx ) const {
+void KMSearchRule::writeConfig( KConfigGroup & config, int aIdx ) const {
   const char cIdx = char('A' + aIdx);
   static const QString & field = KGlobal::staticQString( "field" );
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  config->writeEntry( field + cIdx, QString(mField) );
-  config->writeEntry( func + cIdx, functionToString( mFunction ) );
-  config->writeEntry( contents + cIdx, mContents );
+  config.writeEntry( field + cIdx, QString(mField) );
+  config.writeEntry( func + cIdx, functionToString( mFunction ) );
+  config.writeEntry( contents + cIdx, mContents );
 }
 
 bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
@@ -685,13 +685,16 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 //
 //==================================================
 
-KMSearchPattern::KMSearchPattern( const KConfig * config )
+KMSearchPattern::KMSearchPattern()
   : QList<KMSearchRule*>()
 {
-  if ( config )
-    readConfig( config );
-  else
-    init();
+  init();
+}
+
+KMSearchPattern::KMSearchPattern( const KConfigGroup & config )
+  : QList<KMSearchRule*>()
+{
+  readConfig( config );
 }
 
 KMSearchPattern::~KMSearchPattern()
@@ -802,19 +805,19 @@ void KMSearchPattern::purify() {
     }
 }
 
-void KMSearchPattern::readConfig( const KConfig * config ) {
+void KMSearchPattern::readConfig( const KConfigGroup & config ) {
   init();
 
-  mName = config->readEntry("name");
-  if ( !config->hasKey("rules") ) {
+  mName = config.readEntry("name");
+  if ( !config.hasKey("rules") ) {
     kdDebug(5006) << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
     importLegacyConfig( config );
     return;
   }
 
-  mOperator = config->readEntry("operator") == "or" ? OpOr : OpAnd;
+  mOperator = config.readEntry("operator") == "or" ? OpOr : OpAnd;
 
-  const int nRules = config->readEntry( "rules", QVariant( 0 ) ).toInt();
+  const int nRules = config.readEntry( "rules", QVariant( 0 ) ).toInt();
 
   for ( int i = 0 ; i < nRules ; i++ ) {
     KMSearchRule * r = KMSearchRule::createInstanceFromConfig( config, i );
@@ -825,10 +828,10 @@ void KMSearchPattern::readConfig( const KConfig * config ) {
   }
 }
 
-void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
-  KMSearchRule * rule = KMSearchRule::createInstance( config->readEntry("fieldA").toLatin1(),
-					  config->readEntry("funcA").toLatin1(),
-					  config->readEntry("contentsA") );
+void KMSearchPattern::importLegacyConfig( const KConfigGroup & config ) {
+  KMSearchRule * rule = KMSearchRule::createInstance( config.readEntry("fieldA").toLatin1(),
+					  config.readEntry("funcA").toLatin1(),
+					  config.readEntry("contentsA") );
   if ( rule->isEmpty() ) {
     // if the first rule is invalid,
     // we really can't do much heuristics...
@@ -837,12 +840,12 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
   }
   append( rule );
 
-  const QString sOperator = config->readEntry("operator");
+  const QString sOperator = config.readEntry("operator");
   if ( sOperator == "ignore" ) return;
 
-  rule = KMSearchRule::createInstance( config->readEntry("fieldB").toLatin1(),
-			   config->readEntry("funcB").toLatin1(),
-			   config->readEntry("contentsB") );
+  rule = KMSearchRule::createInstance( config.readEntry("fieldB").toLatin1(),
+			   config.readEntry("funcB").toLatin1(),
+			   config.readEntry("contentsB") );
   if ( rule->isEmpty() ) {
     delete rule;
     return;
@@ -868,9 +871,9 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
   // treat any other case as "and" (our default).
 }
 
-void KMSearchPattern::writeConfig( KConfig * config ) const {
-  config->writeEntry("name", mName);
-  config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
+void KMSearchPattern::writeConfig( KConfigGroup & config ) const {
+  config.writeEntry("name", mName);
+  config.writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
   int i = 0;
   QList<KMSearchRule*>::const_iterator it;
@@ -880,7 +883,7 @@ void KMSearchPattern::writeConfig( KConfig * config ) const {
     (*it)->writeConfig( config, i );
 
   // save the total number of rules.
-  config->writeEntry( "rules", i );
+  config.writeEntry( "rules", i );
 }
 
 void KMSearchPattern::init() {
