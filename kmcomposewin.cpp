@@ -2638,7 +2638,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg(QString(), QString(), this, 0, TRUE);
+  KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
   fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));

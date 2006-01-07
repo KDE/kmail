@@ -1277,7 +1277,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   // strip the flags from the list of uids, so it can be reused
   for (uid = (*it).items.begin(); uid != (*it).items.end(); ++uid)
     (*uid).truncate((*uid).find(","));
-  ImapAccountBase::jobData jd( QString(), (*it).parent );
+  ImapAccountBase::jobData jd( QString::null, (*it).parent );
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
