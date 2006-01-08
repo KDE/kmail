@@ -363,7 +363,7 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
 <customwidgets>
     <customwidget>
         <class>Kleo::KeyRequester</class>
-        <header location="global">keyrequester.h</header>
+        <header location="global">ui/keyrequester.h</header>
         <sizehint>
             <width>-1</width>
             <height>-1</height>
@@ -411,6 +411,6 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kleo::keyrequester.h</includehint>
+    <includehint>ui/keyrequester.h</includehint>
 </includehints>
 </UI>
